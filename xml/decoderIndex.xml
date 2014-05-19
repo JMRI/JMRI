@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20140515-1056-heap on Thu May 15 20:56:47 EST 2014 $Id$-->
-  <decoderIndex version="380">
+  <!--Written by JMRI version 20140519-0717-heap on Mon May 19 17:17:39 EST 2014 $Id$-->
+  <decoderIndex version="386">
     <mfgList nmraListDate="2012-12-05" updated="2013-04-11" lastadd="106">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -12302,19 +12302,46 @@
       <family name="Servo Decoder" mfg="Uhlenbrock Elektronik" file="Uhlenbrock_67800.xml">
         <model model="67800" highVersionID="3" lowVersionID="85" comment="67800 is programmable Servo Decoder" />
       </family>
-      <family name="Mini-Multiprotocol Decoder" mfg="Uhlenbrock Elektronik" highVersionID="4" file="Uhlenbrock_73400.xml">
-        <model model="73400" highVersionID="4" numOuts="2" maxMotorCurrent="0.6A" formFactor="N" comment="wired version">
-          <output name="1" label="F0F" connection="wire" maxcurrent="0.2A" />
-          <output name="2" label="F0R" connection="wire" maxcurrent="0.2A" />
-          <size length="10.8 " width="7.5 " height="2.4 " units="mm" />
+      <family name="Multi-Protocol Decoder" mfg="Uhlenbrock Elektronik" comment="Decoders not sorted (necessarily) in numerical order" file="Uhlenbrock_73100.xml">
+        <model model="73100" numOuts="4" numFns="14" maxMotorCurrent="1.5A" formFactor="N" productID="73100" comment="N-Scale, wired">
+          <output name="1" label="White" connection="wire" />
+          <output name="2" label="Yellow" connection="wire" />
+          <output name="3" label=". A1 ." connection="solder" />
+          <output name="4" label=". A2 ." connection="solder" />
+          <output name="Shunting" label="mode" />
+          <output name="Start/brake" label="inertia" />
+          <size length="14.5" width="8.3" height="2.4" units="mm" />
         </model>
-        <model model="73410" highVersionID="4" numOuts="2" maxMotorCurrent="0.6A" formFactor="N" comment="NEM651 version" connector="NMRAsmall">
-          <output name="1" label="F0F" connection="plug" maxcurrent="0.2A" />
-          <output name="2" label="F0R" connection="plug" maxcurrent="0.2A" />
-          <size length="10.8 " width="7.5 " height="2.4 " units="mm" />
+        <model model="73110" numOuts="2" numFns="14" maxMotorCurrent="1.5A" formFactor="N" connector="NEM651" productID="73110" comment="N-Scale, with NEM651 plug">
+          <output name="1" label="F0(F)" connection="plug" />
+          <output name="2" label="F0(R)" connection="plug" />
+          <output name="Shunting" label="mode" />
+          <output name="Start/brake" label="inertia" />
+          <size length="14.5" width="8.3" height="2.4" units="mm" />
+        </model>
+        <model model="73140" numOuts="4" numFns="14" maxMotorCurrent="1.5A" formFactor="N" connector="PluX12" productID="73140" comment="N-Scale, with PluX12 plug (Piko #46211)">
+          <output name="1" label="F0(F)" connection="plug" />
+          <output name="2" label="F0(R)" connection="plug" />
+          <output name="3" label=". A1 ." connection="plug" />
+          <output name="4" label=". A2 ." connection="plug" />
+          <output name="Shunting" label="mode" />
+          <output name="Start/brake" label="inertia" />
+          <size length="14.5" width="8.3" height="2.4" units="mm" />
         </model>
       </family>
-      <family name="Mini-Multiprotocoll Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="8" highVersionID="8" file="Uhlenbrock_73500.xml">
+      <family name="Mini Multi-Protocol Decoder" mfg="Uhlenbrock Elektronik" highVersionID="4" comment="Decoders not sorted (necessarily) in numerical order" file="Uhlenbrock_73400.xml">
+        <model model="73400" numOuts="2" maxMotorCurrent="0.6A" formFactor="N" productID="73400" comment="wired version">
+          <output name="1" label="F0F" connection="wire" maxcurrent="0.2A" />
+          <output name="2" label="F0R" connection="wire" maxcurrent="0.2A" />
+          <size length="10.8" width="7.5" height="2.4" units="mm" />
+        </model>
+        <model model="73410" numOuts="2" maxMotorCurrent="0.6A" formFactor="N" productID="73410" connector="NEM651" comment="NEM651 version (Piko #46210)">
+          <output name="1" label="F0F" connection="plug" maxcurrent="0.2A" />
+          <output name="2" label="F0R" connection="plug" maxcurrent="0.2A" />
+          <size length="10.8" width="7.5" height="2.4" units="mm" />
+        </model>
+      </family>
+      <family name="Mini Multi-Protocol Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="8" highVersionID="8" comment="Decoders not sorted (necessarily) in numerical order" file="Uhlenbrock_73500.xml">
         <model model="73500" />
         <model model="73510" />
       </family>
@@ -12325,12 +12352,95 @@
         <model model="74400" />
         <model model="74420" />
       </family>
-      <family name="Multiprotocoll Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="9" highVersionID="20" file="Uhlenbrock_76400.xml">
-        <model model="76400" />
-        <model model="76420" />
+      <family name="Multi-Protocol Decoder" mfg="Uhlenbrock Elektronik" comment="Decoders not sorted (necessarily) in numerical order" file="Uhlenbrock_75330.xml">
+        <model model="75330" numOuts="8" numFns="14" maxMotorCurrent="0.65A" formFactor="HO" connector="21MTC" productID="75330" comment="HO-Scale, IntelliDrive Comfort with 21 pin MTC plug (NEM 660)">
+          <output name="1" label="F0(f)" connection="plug" />
+          <output name="2" label="F0(r)" connection="plug" />
+          <output name="3" label=". A1 ." connection="plug" />
+          <output name="4" label=". A2 ." connection="plug" />
+          <output name="5" label=". A3 ." connection="plug" />
+          <output name="6" label=". A4 ." connection="plug" />
+          <output name="7" label=". A5 ." connection="plug" />
+          <output name="8" label=". A6 ." connection="plug" />
+          <output name="Shunting" label="mode" />
+          <output name="Start/brake" label="inertia" />
+          <size length="20.5" width="15.4" height="5" units="mm" />
+        </model>
       </family>
-      <family name="Multiprotocoll Decoder" mfg="Uhlenbrock Elektronik" file="Uhlenbrock_77500.xml">
-        <model model="77500" maxMotorCurrent="3 A (peak 5 A)" maxTotalCurrent="3 A (peak 5 A)" numOuts="8" numFns="28" formFactor="G" connector="other">
+      <family name="Multi-Protocol Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="9" comment="Decoders not sorted (necessarily) in numerical order" file="Uhlenbrock_76150.xml">
+        <model model="76150" numOuts="4" numFns="14" maxMotorCurrent="1.2A" formFactor="HO" connector="PluX16" productID="76150" comment="HO-Scale, IntelliDrive Deluxe with PluX16 plug (Piko #46121)">
+          <output name="1" label="F0(F)" connection="plug" />
+          <output name="2" label="F0(R)" connection="plug" />
+          <output name="3" label=". A1 ." connection="plug" />
+          <output name="4" label=". A2 ." connection="plug" />
+          <output name="Shunting" label="mode" />
+          <output name="Start/brake" label="inertia" />
+          <size length="22" width="15" height="3,8" units="mm" />
+        </model>
+        <model model="76320" numOuts="2" numFns="14" maxMotorCurrent="1.20" formFactor="HO" connector="NEM652" productID="76320" comment="HO-Scale, IntelliDrive Comfort with NEM652 plug (Piko #56122)">
+          <output name="1" label="F0(F)" connection="plug" />
+          <output name="2" label="F0(R)" connection="plug" />
+          <output name="Shunting" label="mode" />
+          <output name="Start/brake" label="inertia" />
+          <size length="19" width="15.4" height="5" units="mm" />
+        </model>
+      </family>
+      <family name="Multi-Protocol Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="9" comment="Decoders not sorted (necessarily) in numerical order" file="Uhlenbrock_76400.xml">
+        <model model="76200" highVersionID="20" numOuts="4" numFns="8" maxMotorCurrent="1.2A" formFactor="HO" productID="76200" comment="HO-Scale, wired, for universal (Märklin) motors">
+          <output name="1" label="White" connection="wire" />
+          <output name="2" label="Yellow" connection="wire" />
+          <output name="3" label=". A1 ." connection="solder" />
+          <output name="4" label=". A2 ." connection="solder" />
+          <output name="Shunting" label="mode" />
+          <output name="Start/brake" label="inertia" />
+          <size length="33.5" width="19" height="5.5" units="mm" />
+        </model>
+        <model model="76400" highVersionID="20" numOuts="4" numFns="8" maxMotorCurrent="1.0A" formFactor="HO" productID="76400" comment="HO-Scale, wired">
+          <output name="1" label="White" connection="wire" />
+          <output name="2" label="Yellow" connection="wire" />
+          <output name="3" label=". A1 ." connection="solder" />
+          <output name="4" label=". A2 ." connection="solder" />
+          <output name="Shunting" label="mode" />
+          <output name="Start/brake" label="inertia" />
+          <size length="22" width="12.5" height="5.5" units="mm" />
+        </model>
+        <model model="76420" highVersionID="20" numOuts="4" numFns="10" maxMotorCurrent="1.0A" formFactor="HO" connector="NEM652" productID="76420" comment="HO-Scale, IntelliDrive Deluxe with NEM 652 plug">
+          <output name="1" label="White" connection="plug" />
+          <output name="2" label="Yellow" connection="plug" />
+          <output name="3" label=". A1 ." connection="plug" />
+          <output name="4" label=". A2 ." connection="solder" />
+          <output name="Shunting" label="mode" />
+          <output name="Start/brake" label="inertia" />
+          <size length="22" width="12.5" height="5.5" units="mm" />
+        </model>
+        <model model="76425" numOuts="4" numFns="14" maxMotorCurrent="1.4A" formFactor="HO" connector="NEM652" productID="76425" comment="HO-Scale, IntelliDrive Deluxe with NEM 652 plug and RailCom(R)">
+          <output name="1" label="White" connection="plug" />
+          <output name="2" label="Yellow" connection="plug" />
+          <output name="3" label=". A1 ." connection="plug" />
+          <output name="4" label=". A2 ." connection="solder" />
+          <output name="Shunting" label="mode" />
+          <output name="Start/brake" label="inertia" />
+          <size length="22" width="12.5" height="5.5" units="mm" />
+        </model>
+      </family>
+      <family name="Multi-Protocol Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="9" comment="Decoders not sorted (necessarily) in numerical order" file="Uhlenbrock_76560.xml">
+        <model model="76560" numOuts="9" numFns="14" maxMotorCurrent="1.2A" formFactor="HO" connector="PluX22" productID="76560" comment="HO-Scale, IntelliDrive Deluxe with PluX22 plug and RailCom(R)">
+          <output name="1" label="F0(f)" connection="plug" />
+          <output name="2" label="F0(r)" connection="plug" />
+          <output name="3" label=". A1 ." connection="plug" />
+          <output name="4" label=". A2 ." connection="plug" />
+          <output name="5" label=". A3 ." connection="plug" />
+          <output name="6" label=". A4 ." connection="plug" />
+          <output name="7" label=". A5 ." connection="plug" />
+          <output name="8" label=". A6 ." connection="plug" />
+          <output name="9" label=". A7 ." connection="plug" />
+          <output name="Shunting" label="mode" />
+          <output name="Start/brake" label="inertia" />
+          <size length="22" width="15" height="3.8" units="mm" />
+        </model>
+      </family>
+      <family name="Multi-Protocol Decoder" mfg="Uhlenbrock Elektronik" comment="Decoders not sorted (necessarily) in numerical order" file="Uhlenbrock_77500.xml">
+        <model model="77500" maxMotorCurrent="3 A (peak 5 A)" maxTotalCurrent="3 A (peak 5 A)" numOuts="8" numFns="28" formFactor="O" connector="other" comment="O,I,II,LGB-Scale, IntelliDrive Deluxe">
           <output name="1" label="Front light" maxcurrent="1 A" connection="other" />
           <output name="2" label="Rear light " maxcurrent="1 A" connection="other" />
           <output name="3" label="   A1      " maxcurrent="1 A" connection="other" />

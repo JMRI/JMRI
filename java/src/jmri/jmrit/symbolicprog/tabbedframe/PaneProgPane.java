@@ -158,6 +158,12 @@ public class PaneProgPane extends javax.swing.JPanel
             // load each grid
             p.add(newGrid( ((gridList.get(i))), showItem, modelElem));
         }
+        // for all "group" elements ...
+        List<Element> groupList = pane.getChildren("group");
+        for (int i=0; i<groupList.size(); i++) {
+            // load each group
+            p.add(newGroup( ((groupList.get(i))), showItem, modelElem));
+        }
 
         // add glue to the right to allow resize - but this isn't working as expected? Alignment?
         add(Box.createHorizontalGlue());
@@ -1797,8 +1803,8 @@ public class PaneProgPane extends javax.swing.JPanel
     }
 
     class GridGlobals {
-    public int gridxCurrent = GridBagConstraints.RELATIVE;
-    public int gridyCurrent = GridBagConstraints.RELATIVE;
+    public int gridxCurrent = -1;
+    public int gridyCurrent = -1;
     public List<Attribute> gridAttList;
     public GridBagConstraints gridConstraints;
     }
@@ -1812,20 +1818,28 @@ public class PaneProgPane extends javax.swing.JPanel
                 List<Attribute> itemAttList = element.getAttributes(); // get item-level attributes
                 List<Attribute> attList = new ArrayList<Attribute>(globs.gridAttList);
                 attList.addAll(itemAttList); // merge grid and item-level attributes
+//                log.info("Attribute list:"+attList);
+//                log.info("Previous gridxCurrent="+globs.gridxCurrent+";gridyCurrent="+globs.gridyCurrent);
                 for (int j = 0; j < attList.size(); j++) {
                     Attribute attrib = attList.get(j);
                     String attribName = attrib.getName();
                     String attribRawValue = attrib.getValue();
                     Field constraint = null;
                     String constraintType = null;
-                    if ( ( attribName.equals("gridx") || attribName.equals("gridy") ) && attribRawValue.equals("NEXT") ) {
-                        attribRawValue = "RELATIVE"; // NEXT is a synonym for Relative
+                    if ( ( attribName.equals("gridx") || attribName.equals("gridy") ) && attribRawValue.equals("RELATIVE") ) {
+                        attribRawValue = "NEXT"; // NEXT is a synonym for Relative
                     }
                     if ( attribName.equals("gridx")  && attribRawValue.equals("CURRENT") ) {
-                        attribRawValue = String.valueOf(globs.gridxCurrent);
+                        attribRawValue = String.valueOf(Math.max(0,globs.gridxCurrent));
                     }
                     if ( attribName.equals("gridy")  && attribRawValue.equals("CURRENT") ) {
-                        attribRawValue = String.valueOf(globs.gridyCurrent);
+                        attribRawValue = String.valueOf(Math.max(0,globs.gridyCurrent));
+                    }
+                    if ( attribName.equals("gridx")  && attribRawValue.equals("NEXT") ) {
+                        attribRawValue = String.valueOf(++globs.gridxCurrent);
+                    }
+                    if ( attribName.equals("gridy")  && attribRawValue.equals("NEXT") ) {
+                        attribRawValue = String.valueOf(++globs.gridyCurrent);
                     }
                     try {
                         constraint = globs.gridConstraints.getClass().getDeclaredField(attribName);
@@ -1889,6 +1903,7 @@ public class PaneProgPane extends javax.swing.JPanel
                         log.error("Please file a JMRI bug report at https://sourceforge.net/p/jmri/bugs/new/");
                     }
                 }
+//                log.info("Updated globs.GridBagConstraints.gridx="+globs.gridConstraints.gridx+";globs.GridBagConstraints.gridy="+globs.gridConstraints.gridy);
 
 
         // create a panel to add as a new grid item
@@ -2024,18 +2039,9 @@ public class PaneProgPane extends javax.swing.JPanel
             }
         }
 
-                if ( globs.gridConstraints.gridx == GridBagConstraints.RELATIVE ){
-                    globs.gridxCurrent++;
-                }
-                else {
-                    globs.gridxCurrent = globs.gridConstraints.gridx;
-                }
-                if ( globs.gridConstraints.gridy == GridBagConstraints.RELATIVE ){
-                    globs.gridyCurrent++;
-                }
-                else {
-                globs.gridyCurrent = globs.gridConstraints.gridy;
-                }
+			globs.gridxCurrent = globs.gridConstraints.gridx;
+			globs.gridyCurrent = globs.gridConstraints.gridy;
+//                log.info("Updated gridxCurrent="+globs.gridxCurrent+";gridyCurrent="+globs.gridyCurrent);
 
         // add glue to the bottom to allow resize
         if (c.getComponentCount() > 0) {
@@ -2219,6 +2225,7 @@ public class PaneProgPane extends javax.swing.JPanel
             if (log.isDebugEnabled()) log.debug("Variable \""+name+"\" not found, omitted");
             return;
         }
+//        log.info("Display item="+name);
 
         // check label orientation
         Attribute attr;
