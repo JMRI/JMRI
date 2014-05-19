@@ -4,6 +4,7 @@ package jmri.jmrit.operations.locations;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
@@ -321,6 +322,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		_toolMenu.add(new TrackRoadEditAction(this));
 		_toolMenu.add(new TrackEditCommentsAction(this));
 		_toolMenu.add(new PoolTrackAction(this));
+		_toolMenu.add(new ShowTrainsServingLocationAction(Bundle.getMessage("MenuItemShowTrainsTrack"), _location, _track));
 
 		menuBar.add(_toolMenu);
 		setJMenuBar(menuBar);

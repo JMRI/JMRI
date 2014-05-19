@@ -268,6 +268,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		toolMenu.add(new TrackCopyAction(this));
 		toolMenu.add(new ChangeTracksTypeAction(this));
 		toolMenu.add(new ModifyLocationsAction(Bundle.getMessage("TitleModifyLocation"), _location));
+		toolMenu.add(new ShowTrainsServingLocationAction(Bundle.getMessage("MenuItemShowTrainsLocation"), _location, null));
 		toolMenu.add(new ShowCarsByLocationAction(false, locationName, null));
 		if (Setup.isVsdPhysicalLocationEnabled())
 			toolMenu.add(new SetPhysicalLocationAction(Bundle.getMessage("MenuSetPhysicalLocation"), _location));
