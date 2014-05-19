@@ -4,7 +4,7 @@
 * 
 * This script defines the web throttle behaviour.
 * 
-* >>> This file version: 2.1 - by Oscar Moutinho (oscar.moutinho@gmail.com)
+* >>> This file version: 2.2 - by Oscar Moutinho (oscar.moutinho@gmail.com)
 * 
 * This script relies on 'jquery.jmriConnect.js v2.1' (read its header for dependencies).
 * 
@@ -74,10 +74,10 @@ var $speedStep = 0.10;
 var $speedFeedback = true;
 var $speedAux = 0;
 var $hasTouch = ('ontouchstart' in window);
-var $hasMovement = (window.orientation != null) && $hasTouch;
+var $hasMovement = (window.orientation !== null) && $hasTouch;
 var $orientation = null;
 var $movementTilt = null;
-var $movementActive = $hasMovement;
+var $movementActive = false;
 var $movementOn = false;
 var $movementCtrl = 0;
 var $locoAddress = "none";
@@ -332,8 +332,8 @@ var startJMRI = function() {
 		//*** Callback Functions available in '$jmri' object
 		toSend: function(data) {$debug && window.console && console.log(new Date() + ' - ' + document.title + '\n' + 'JSONtoSend: ' + data);},	//Nothing to do
 		fullData: function(data) {$debug && window.console && console.log(new Date() + ' - ' + document.title + '\n' + 'JSONreceived: ' + data);},	//Nothing to do
-		error: function(code, message) {if (code == 0) throw new Error('private~' + message); else smoothAlert('Error: ' + code + ' - ' + message);},
-		end: function() {throw new Error('private~The JMRI WebSocket service was turned off.\nSolve the problem and refresh web page.');},
+		error: function(code, message) {if (code == 0) jmriLostComm(message); else smoothAlert('Error: ' + code + ' - ' + message);},
+		end: function() {jmriLostComm('The JMRI WebSocket service was turned off.\nSolve the problem and refresh web page.');},
 		ready: function(jsonVersion, jmriVersion, railroadName) {jmriReady(jsonVersion, jmriVersion, railroadName);},	//When WebSocket connection established - continue next steps
 		throttle: function(name, address, speed, forward, fs) {throttleState(name, address, speed, forward, fs);},
 		light: function(name, userName, comment, state) {},	//Nothing to do
@@ -347,10 +347,23 @@ var startJMRI = function() {
         power: function(state) {layoutPowerState(state);},
     });
 	if (!$jmri) throw new Error('private~Could not open JMRI WebSocket.');
-}
+};
+
+//----------------------------------------- Lost communication with JMRI
+var jmriLostComm = function(message) {
+	var timer = loadLocalInfo('webThrottle.timerReload');
+	if (timer && !isNaN(timer) && Number(timer) >= 0 && Number(timer) == Math.abs(timer)) timer = Number(timer); else saveLocalInfo('webThrottle.timerReload', timer = new Date().getTime());	// Miliseconds
+	if (new Date().getTime() - timer < 30000) {	// Reload if less than 30s after communication lost
+		smoothAlert('Communication lost.\nRestarting ...');
+		location.reload(true);
+	} else {
+		throw new Error('private~' + message);
+	}
+};
 
 //----------------------------------------- JMRI ready
 var jmriReady = function(jsonVersion, jmriVersion, railroadName) {
+	removeLocalInfo('webThrottle.timerReload');	// Communication OK -> Restart count for communication lost
 	var body = $('body');
 	var bodyFrameOuter = $('<div>');
 	bodyFrameOuter.attr('id', 'bodyFrameOuter');
@@ -668,12 +681,12 @@ var jmriReady = function(jsonVersion, jmriVersion, railroadName) {
 			break;
 		case 'panel':
 			$help.push(
-				'This uses \'/panel\'' +
+				'This uses \'showPanel.html\'' +
 				'\ninside an iframe.' +
 				''
 			);
 			document.title+= ' (panel: ' + $paramPanelName + ')';
-			var panel = $('<iframe>').attr('src', '/panel?name=' + $paramPanelName).addClass('panel');
+			var panel = $('<iframe>').attr('src', 'showPanel.html?name=' + $paramPanelName).addClass('panel');
 			panel.load(function() {	// Force resize some miliseconds after loading
 				setTimeout(function() {$panelLoaded = true; $viewportHeight = 0;}, $resizeCheckInterval * 5);
 			});
@@ -850,6 +863,10 @@ var resizeRosterLayout = function() {
 	var w = $(window).width();
 	var bodyFrameOuter = $('#bodyFrameOuter');
 	var bodyFrameInner = $('#bodyFrameInner');
+	var cellWidthCtrl;
+	var horizontalCells;
+	var cellWidth;
+	var cellHeight;
 	bodyFrameOuter.css('top', 0).css('left', 0);
 	setOuterHeight(bodyFrameOuter, h, true);
 	setOuterWidth(bodyFrameOuter, w, true);
@@ -892,11 +909,10 @@ var resizeRosterLayout = function() {
 	var l = 0;
 	if ($isRoster) {	// Roster
 		var rosterCell = $('.rosterCell');
-		var cellWidthCtrl = $sizeCtrlPercent * $cellWidthRef;
-		var horizontalCells = Math.floor(bodyFrameInner.width() / cellWidthCtrl);
-		var cellWidth = (horizontalCells == 0) ? bodyFrameInner.width() : bodyFrameInner.width() / horizontalCells;
+		cellWidthCtrl = $sizeCtrlPercent * $cellWidthRef;
+		horizontalCells = Math.floor(bodyFrameInner.width() / cellWidthCtrl);
+		cellWidth = (horizontalCells == 0) ? bodyFrameInner.width() : bodyFrameInner.width() / horizontalCells;
 		var cellHeightIni = $sizeCtrlPercent * $cellHeightRef;
-		var cellHeight;
 		rosterCell.each(function(index) {
 			var o = $(this);
 			var locoImageContainer = o.children('.imageContainer');
@@ -959,10 +975,10 @@ var resizeRosterLayout = function() {
 		});
 	} else {	// Panels
 		var panelCell = $('.panelCell');
-		var cellWidthCtrl = $sizeCtrlPercent * $cellWidthRef * 2;
-		var horizontalCells = Math.floor(bodyFrameInner.width() / cellWidthCtrl) + 1;
-		var cellWidth = bodyFrameInner.width() / horizontalCells;
-		var cellHeight = $sizeCtrlPercent * $cellHeightRef * 0.5;
+		cellWidthCtrl = $sizeCtrlPercent * $cellWidthRef * 2;
+		horizontalCells = Math.floor(bodyFrameInner.width() / cellWidthCtrl) + 1;
+		cellWidth = bodyFrameInner.width() / horizontalCells;
+		cellHeight = $sizeCtrlPercent * $cellHeightRef * 0.5;
 		cellHeight*= 4;
 		panelCell.each(function(index) {
 			var o = $(this);
@@ -1195,6 +1211,8 @@ var resizePanelLayout = function() {
 	var w = $(window).width();
 	var bodyFrameOuter = $('#bodyFrameOuter');
 	var bodyFrameInner = $('#bodyFrameInner');
+	var divA = null;
+	var divB = null;
 	bodyFrameOuter.css('top', 0).css('left', 0);
 	setOuterHeight(bodyFrameOuter, h, true);
 	setOuterWidth(bodyFrameOuter, w, true);
@@ -1212,13 +1230,13 @@ var resizePanelLayout = function() {
 		realCanvas.attr('originalWidth', realCanvas.width());
 		panel.contents().find('html').css('overflow', 'hidden');
 		realPanel.css('position', 'absolute');
-		var divA = $('<div>').attr('id', 'wtDivA').addClass('wtInside').addClass('wtCoverObjects').css('position', 'absolute').css('background-color', $('body').css('background-color')).css('z-index', '+200');
+		divA = $('<div>').attr('id', 'wtDivA').addClass('wtInside').addClass('wtCoverObjects').css('position', 'absolute').css('background-color', $('body').css('background-color')).css('z-index', '+200');
 		panel.contents().find('body').append(divA);
-		var divB = $('<div>').attr('id', 'wtDivB').addClass('wtInside').addClass('wtCoverObjects').css('position', 'absolute').css('background-color', $('body').css('background-color')).css('z-index', '+200');
+		divB = $('<div>').attr('id', 'wtDivB').addClass('wtInside').addClass('wtCoverObjects').css('position', 'absolute').css('background-color', $('body').css('background-color')).css('z-index', '+200');
 		panel.contents().find('body').append(divB);
 	} else {
-		var divA = panel.contents().find('#wtDivA');
-		var divB = panel.contents().find('#wtDivB');
+		divA = panel.contents().find('#wtDivA');
+		divB = panel.contents().find('#wtDivB');
 	}
 	var outerHeight = bodyFrameInner.height() - $nextBlockTop;
 	var outerWidth = bodyFrameInner.width();
@@ -1668,7 +1686,7 @@ var fontSizeChange = function(e, increment) {
 	if (fontSize < $fontSizeMin) fontSize = $fontSizeMin;
 	if (fontSize > $fontSizeMax) fontSize = $fontSizeMax;
 	saveLocalInfo('webThrottle.fontSize', fontSize);
-	smoothAlert('text size: ' + fontSize + 'px', 2)
+	smoothAlert('text size: ' + fontSize + 'px', 2);
 };
 
 //----------------------------------------- Show help - Click (mouse and touch with simulation)
