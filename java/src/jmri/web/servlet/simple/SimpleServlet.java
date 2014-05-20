@@ -2,7 +2,6 @@
 package jmri.web.servlet.simple;
 
 import java.io.IOException;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,8 +32,6 @@ import org.slf4j.LoggerFactory;
 public class SimpleServlet extends WebSocketServlet {
 
     private final Set<SimpleWebSocket> sockets = new CopyOnWriteArraySet<SimpleWebSocket>();
-    private static final ResourceBundle html = ResourceBundle.getBundle("jmri.web.server.Html");
-    private static final ResourceBundle wsHtml = ResourceBundle.getBundle("jmri.web.servlet.simple.Simple");
     private static final Logger log = LoggerFactory.getLogger(SimpleServlet.class);
 
     public SimpleServlet() {
