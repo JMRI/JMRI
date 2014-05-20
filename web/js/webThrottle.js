@@ -4,7 +4,7 @@
 * 
 * This script defines the web throttle behaviour.
 * 
-* >>> This file version: 2.2 - by Oscar Moutinho (oscar.moutinho@gmail.com)
+* >>> This file version: 2.3 - by Oscar Moutinho (oscar.moutinho@gmail.com)
 * 
 * This script relies on 'jquery.jmriConnect.js v2.1' (read its header for dependencies).
 * 
@@ -681,12 +681,12 @@ var jmriReady = function(jsonVersion, jmriVersion, railroadName) {
 			break;
 		case 'panel':
 			$help.push(
-				'This uses \'showPanel.html\'' +
+				'This uses \'/panel\'' +
 				'\ninside an iframe.' +
 				''
 			);
 			document.title+= ' (panel: ' + $paramPanelName + ')';
-			var panel = $('<iframe>').attr('src', 'showPanel.html?name=' + $paramPanelName).addClass('panel');
+			var panel = $('<iframe>').attr('src', '/panel?name=' + $paramPanelName).addClass('panel');
 			panel.load(function() {	// Force resize some miliseconds after loading
 				setTimeout(function() {$panelLoaded = true; $viewportHeight = 0;}, $resizeCheckInterval * 5);
 			});
