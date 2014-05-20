@@ -2,7 +2,6 @@
 package jmri.web.servlet.simple;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -18,8 +17,10 @@ import jmri.jmris.simpleserver.SimpleReporterServer;
 import jmri.jmris.simpleserver.SimpleSensorServer;
 import jmri.jmris.simpleserver.SimpleSignalHeadServer;
 import jmri.jmris.simpleserver.SimpleTurnoutServer;
+import jmri.util.FileUtil;
 import jmri.util.node.NodeIdentity;
 import jmri.web.server.WebServerManager;
+import jmri.web.servlet.ServletUtil;
 import org.eclipse.jetty.websocket.WebSocket;
 import org.eclipse.jetty.websocket.WebSocketServlet;
 import org.slf4j.Logger;
@@ -61,21 +62,19 @@ public class SimpleServlet extends WebSocketServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Date now = new Date();
         response.setStatus(HttpServletResponse.SC_OK);
-        response.setContentType("text/html");
-        response.setHeader("Connection", "Keep-Alive");
-        response.setDateHeader("Date", now.getTime());
-        response.setDateHeader("Last-Modified", now.getTime());
-        response.setDateHeader("Expires", now.getTime());
-
-        response.getWriter().println(String.format(html.getString("HeadFormat"),
-                html.getString("HTML5DocType"),
-                "JMRI Simple Network Console",
-                SimpleServlet.class.getSimpleName(),
-                wsHtml.getString("HeadAdditions")));
-        response.getWriter().println(wsHtml.getString("BodyContent"));
-        response.getWriter().println(String.format(html.getString("TailFormat"), "", ""));
+        response.setContentType(ServletUtil.TEXT_HTML); // NOI18N
+        response.getWriter().print(String.format(request.getLocale(),
+                FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Simple.html"))),
+                String.format(request.getLocale(),
+                        Bundle.getMessage(request.getLocale(), "HtmlTitle"),
+                        ServletUtil.getInstance().getRailroadName(false),
+                        Bundle.getMessage(request.getLocale(), "SimpleTitle")
+                ),
+                ServletUtil.getInstance().getNavBar(request.getLocale(), request.getContextPath()),
+                ServletUtil.getInstance().getRailroadName(false),
+                ServletUtil.getInstance().getFooter(request.getLocale(), request.getContextPath())
+        ));
     }
 
     public class SimpleWebSocket implements WebSocket.OnTextMessage {
