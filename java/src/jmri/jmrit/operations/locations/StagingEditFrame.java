@@ -4,6 +4,7 @@ package jmri.jmrit.operations.locations;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.awt.GridBagLayout;
 
 import javax.swing.BorderFactory;
@@ -70,6 +71,7 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 		super.initComponents(location, track);
 		_type = Track.STAGING;
 
+		_toolMenu.add(new ShowTrainsServingLocationAction(Bundle.getMessage("MenuItemShowTrainsTrack"), _location, _track));
 		_toolMenu.add(new ShowCarsByLocationAction(false, location.getName(), trackName));
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Staging", true); // NOI18N
 

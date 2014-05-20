@@ -322,7 +322,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		_toolMenu.add(new TrackRoadEditAction(this));
 		_toolMenu.add(new TrackEditCommentsAction(this));
 		_toolMenu.add(new PoolTrackAction(this));
-		_toolMenu.add(new ShowTrainsServingLocationAction(Bundle.getMessage("MenuItemShowTrainsTrack"), _location, _track));
 
 		menuBar.add(_toolMenu);
 		setJMenuBar(menuBar);

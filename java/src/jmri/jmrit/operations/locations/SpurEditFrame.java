@@ -4,6 +4,7 @@ package jmri.jmrit.operations.locations;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 
@@ -52,6 +53,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
 		_toolMenu.add(new AlternateTrackAction(this));
 		_toolMenu.add(new IgnoreUsedTrackAction(this));
 		_toolMenu.add(new ChangeTrackTypeAction(this));
+		_toolMenu.add(new ShowTrainsServingLocationAction(Bundle.getMessage("MenuItemShowTrainsTrack"), _location, _track));
 		_toolMenu.add(new ShowCarsByLocationAction(false, location.getName(), trackName));
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Sidings", true); // NOI18N
 

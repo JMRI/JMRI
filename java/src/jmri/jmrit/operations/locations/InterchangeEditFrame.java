@@ -4,6 +4,7 @@ package jmri.jmrit.operations.locations;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.swing.BorderFactory;
 
 /**
@@ -28,6 +29,7 @@ public class InterchangeEditFrame extends TrackEditFrame implements java.beans.P
 		_toolMenu.add(new IgnoreUsedTrackAction(this));
 		_toolMenu.add(new TrackDestinationEditAction(this));
 		_toolMenu.add(new ChangeTrackTypeAction(this));
+		_toolMenu.add(new ShowTrainsServingLocationAction(Bundle.getMessage("MenuItemShowTrainsTrack"), _location, _track));
 		_toolMenu.add(new ShowCarsByLocationAction(false, location.getName(), trackName));
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Interchange", true); // NOI18N
 
