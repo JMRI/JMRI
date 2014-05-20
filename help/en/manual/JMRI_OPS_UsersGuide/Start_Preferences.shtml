@@ -53,47 +53,47 @@ run the program.)
 <table align="center" border="1" cellpadding="1" cellspacing="1" width="80%">
   <tbody>
     <tr>
-      <td align="left" valign="top" width="22%"><strong><a href="file:///G:/JMRI%20SVN%2020130109/3-2_DecoderPro/Start_Preferences.shtml#Connections">Connections</a></strong></td>
+      <td align="left" valign="top" width="22%"><strong><a href="Start_Preferences.shtml#Connections">Connections</a></strong></td>
       <td align="left" valign="top" width="78%">Allows you to select the system connection that you are using for controlling DCC and the connection to your computer.</td>
     </tr>
     <tr>
-      <td align="left" valign="top"><strong><a href="file:///G:/JMRI%20SVN%2020130109/3-2_DecoderPro/Start_Preferences.shtml#Defaults">Defaults</a></strong></td>
+      <td align="left" valign="top"><strong><a href="Start_Preferences.shtml#Defaults">Defaults</a></strong></td>
       <td align="left" valign="top">Shows system default settings</td>
     </tr>
     <tr>
-      <td align="left" valign="top"><strong><a href="file:///G:/JMRI%20SVN%2020130109/3-2_DecoderPro/Start_Preferences.shtml#FileLocations">File Locations</a></strong></td>
+      <td align="left" valign="top"><strong><a href="Start_Preferences.shtml#FileLocations">File Locations</a></strong></td>
       <td align="left" valign="top">Set default location for saving User files and Script Files</td>
     </tr>
     <tr>
-      <td align="left" valign="top"><strong><a href="file:///G:/JMRI%20SVN%2020130109/3-2_DecoderPro/Start_Preferences.shtml#StartUp">Start Up</a></strong></td>
+      <td align="left" valign="top"><strong><a href="Start_Preferences.shtml#StartUp">Start Up</a></strong></td>
       <td align="left" valign="top">Allows you to set Actions, Buttons, Files and Scripts that run at Start Up</td>
     </tr>
     <tr>
-      <td align="left" valign="top"><strong><a href="file:///G:/JMRI%20SVN%2020130109/3-2_DecoderPro/Start_Preferences.shtml#Display">Display</a></strong></td>
+      <td align="left" valign="top"><strong><a href="Start_Preferences.shtml#Display">Display</a></strong></td>
       <td align="left" valign="top">Allows you to select your computer display mode</td>
     </tr>
     <tr>
-      <td align="left" valign="top"><strong><a href="file:///G:/JMRI%20SVN%2020130109/3-2_DecoderPro/Start_Preferences.shtml#Messages">Messages</a></strong></td>
+      <td align="left" valign="top"><strong><a href="Start_Preferences.shtml#Messages">Messages</a></strong></td>
       <td align="left" valign="top">Set default actions for system message when displayed</td>
     </tr>
     <tr>
-      <td align="left" valign="top"><strong><a href="file:///G:/JMRI%20SVN%2020130109/3-2_DecoderPro/Start_Preferences.shtml#Roster">Roster</a></strong></td>
+      <td align="left" valign="top"><strong><a href="Start_Preferences.shtml#Roster">Roster</a></strong></td>
       <td align="left" valign="top">Allows you to set your default Programmer and roster location</td>
     </tr>
     <tr>
-      <td align="left" valign="top"><strong><a href="file:///G:/JMRI%20SVN%2020130109/3-2_DecoderPro/Start_Preferences.shtml#Throttle">Throttle</a></strong></td>
+      <td align="left" valign="top"><strong><a href="Start_Preferences.shtml#Throttle">Throttle</a></strong></td>
       <td align="left" valign="top">Allows you to set up you Throttle preferences</td>
     </tr>
     <tr>
-      <td align="left" valign="top"><strong><a href="file:///G:/JMRI%20SVN%2020130109/3-2_DecoderPro/Start_Preferences.shtml#WiThrottle">Wi Throttle</a></strong></td>
+      <td align="left" valign="top"><strong><a href="Start_Preferences.shtml#WiThrottle">Wi Throttle</a></strong></td>
       <td align="left" valign="top">Allows you to set up a Wi Throttle settings</td>
     </tr>
     <tr>
-      <td align="left" valign="top"><a href="file:///G:/JMRI%20SVN%2020130109/3-2_DecoderPro/Start_Preferences.shtml#JOSN"><strong>JSON Server</strong></a></td>
+      <td align="left" valign="top"><a href="Start_Preferences.shtml#JOSN"><strong>JSON Server</strong></a></td>
       <td align="left" valign="top">Opens JSON Server Prefence settings pane</td>
     </tr>
     <tr>
-      <td align="left" valign="top"><strong><a href="file:///G:/JMRI%20SVN%2020130109/3-2_DecoderPro/Start_Preferences.shtml#MiniServer">WebServer</a></strong></td>
+      <td align="left" valign="top"><strong><a href="Start_Preferences.shtml#MiniServer">WebServer</a></strong></td>
       <td align="left" valign="top">Sets up the Decoder Pro&reg; WebServer</td>
     </tr>
   </tbody>
