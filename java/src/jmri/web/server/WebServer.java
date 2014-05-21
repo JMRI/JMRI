@@ -11,6 +11,7 @@ import static jmri.jmris.json.JSON.JSON;
 import static jmri.jmris.json.JSON.JSON_PROTOCOL_VERSION;
 import jmri.util.FileUtil;
 import jmri.util.zeroconf.ZeroConfService;
+import jmri.web.servlet.directory.DirectoryHandler;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
@@ -20,9 +21,7 @@ import org.eclipse.jetty.server.handler.DefaultHandler;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.server.nio.SelectChannelConnector;
-import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.component.LifeCycle;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.slf4j.Logger;
@@ -95,16 +94,14 @@ public final class WebServer implements LifeCycle.Listener {
                     if (filePaths.getProperty(path).startsWith("program:web")) { // NOI18N
                         log.debug("Setting up handler chain for {}", path);
                         // make it possible to override anything under program:web/ with an identical path under preference:web/
-                        ResourceHandler preferenceHandler = new ResourceHandler();
+                        ResourceHandler preferenceHandler = new DirectoryHandler();
                         preferenceHandler.setDirectoriesListed(true);
                         preferenceHandler.setWelcomeFiles(new String[]{"index.html"}); // NOI18N
                         preferenceHandler.setResourceBase(FileUtil.getAbsoluteFilename(filePaths.getProperty(path).replace("program:", "preference:"))); // NOI18N
-                        preferenceHandler.setStylesheet(FileUtil.getAbsoluteFilename(filePaths.getProperty("/css")) + "/miniServer.css"); // NOI18N
-                        ResourceHandler programHandler = new ResourceHandler();
+                        ResourceHandler programHandler = new DirectoryHandler();
                         programHandler.setDirectoriesListed(true);
                         programHandler.setWelcomeFiles(new String[]{"index.html"}); // NOI18N
                         programHandler.setResourceBase(FileUtil.getAbsoluteFilename(filePaths.getProperty(path)));
-                        programHandler.setStylesheet(FileUtil.getAbsoluteFilename(filePaths.getProperty("/css")) + "/miniServer.css"); // NOI18N
                         HandlerList handlers = new HandlerList();
                         handlers.setHandlers(new Handler[]{preferenceHandler, programHandler, new DefaultHandler()});
                         ContextHandler handlerContext = new ContextHandler();
@@ -113,9 +110,17 @@ public final class WebServer implements LifeCycle.Listener {
                         contexts.addHandler(handlerContext);
                         continue;
                     }
-                    ServletHolder holder = servletContext.addServlet(DefaultServlet.class, "/*"); // NOI18N
-                    holder.setInitParameter("resourceBase", FileUtil.getAbsoluteFilename(filePaths.getProperty(path))); // NOI18N
-                    holder.setInitParameter("stylesheet", FileUtil.getAbsoluteFilename(filePaths.getProperty("/css")) + "/miniServer.css"); // NOI18N
+                    ResourceHandler handler = new DirectoryHandler();
+                    handler.setDirectoriesListed(true);
+                    handler.setWelcomeFiles(new String[]{"index.html"});
+                    handler.setResourceBase(FileUtil.getAbsoluteFilename(filePaths.getProperty(path)));
+                    HandlerList handlers = new HandlerList();
+                    handlers.setHandlers(new Handler[]{handler, new DefaultHandler()});
+                    ContextHandler handlerContext = new ContextHandler();
+                    handlerContext.setContextPath(path);
+                    handlerContext.setHandler(handlers);
+                    contexts.addHandler(handlerContext);
+                    continue;
                 } else if (services.getProperty(path).equals("redirectHandler")) { // NOI18N
                     servletContext.addServlet("jmri.web.servlet.RedirectionServlet", ""); // NOI18N
                 } else if (services.getProperty(path).startsWith("jmri.web.servlet.config.ConfigServlet") && !this.preferences.allowRemoteConfig()) {

@@ -143,10 +143,9 @@ public class JmriJFrameServlet extends HttpServlet {
 //            Point pf = FrameContentPane.getLocationOnScreen();
 //           	x -= (int)(pc.getX() - pf.getX());
 //           	y -= (int)(pc.getY() - pf.getY());
-
-            for (int i = 0; i < la.length; i++) {
+            for (MouseListener ml : la) {
                 log.debug("Send click sequence at {},{}", x, y);
-                sendClickSequence(la[i], c, x, y);
+                sendClickSequence(ml, c, x, y);
             }
         }
     }
