@@ -72,7 +72,7 @@ public class DirectoryResource extends Resource {
             table.append(String.format(this.locale, row,
                     path,
                     deTag(l),
-                    item.length(),
+                    Bundle.getMessage(this.locale, "SizeInBytes", item.length()),
                     dfmt.format(new Date(item.lastModified())))
             );
         }
