@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.web.server;
 
 import java.io.File;
@@ -17,6 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Provide interface for managing the JMRI web server, including migrating from
+ * the older 2.n Mini Web Server.
  *
  * @author rhwood
  */
@@ -37,8 +35,6 @@ public class WebServerManager {
             } else {
                 InstanceManager.store(new WebServerPreferences(FileUtil.getUserFilesPath() + "networkServices" + File.separator + "WebServerPreferences.xml"), WebServerPreferences.class); // NOI18N
             }
-            // disable during testing
-            // this.removeV2Index();
         }
         preferences = InstanceManager.getDefault(WebServerPreferences.class);
     }
@@ -72,20 +68,6 @@ public class WebServerManager {
         return getInstance().getServer();
     }
 
-    /*
-     private void removeV2Index() {
-     File indexFile = new File(FileUtil.getAbsoluteFilename(FileUtil.PREFERENCES + "index.html"));
-     File backup = new File(FileUtil.getAbsoluteFilename(FileUtil.PREFERENCES + "index.v2.html"));
-     try {
-     if (indexFile.exists()) {
-     indexFile.renameTo(backup);
-     log.info("Renamed existing index.html in Preferences to index.v2.html.");
-     }
-     } catch (Exception ex) {
-     log.error("Failed to move index.html.", ex);
-     }
-     }
-     */
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "REC_CATCH_EXCEPTION",
             justification = "Catch is covering both JDOMException and IOException, FindBugs seems confused")
     private void preferencesFromMiniServerPreferences(File MSFile, File WSFile) {
