@@ -172,7 +172,7 @@ public class Track {
 	public static final String SERVICE_ORDER_CHANGED_PROPERTY = "trackServiceOrder"; // NOI18N
 
 	public Track(String id, String name, String type, Location location) {
-		log.debug("New track " + name + " " + id);
+		log.debug("New ({}) track ({}) id: {}", type, name, id);
 		_location = location;
 		_trackType = type;
 		_name = name;

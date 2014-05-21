@@ -50,8 +50,8 @@ public class YardTableModel extends TrackTableModel {
 	// this table listens for changes to a location and it's yards
 	public void propertyChange(PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
-					+ e.getNewValue()); // NOI18N
+			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+					.getNewValue());
 		super.propertyChange(e);
 		if (e.getSource().getClass().equals(Track.class)) {
 			Track track = ((Track) e.getSource());

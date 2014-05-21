@@ -199,7 +199,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	public static final String AUTO = Bundle.getMessage("Auto"); // how engines are assigned to this train
 
 	public Train(String id, String name) {
-		log.debug("New train " + name + " " + id);
+		log.debug("New train ({}) id: {}", name, id);
 		_name = name;
 		_id = id;
 		// a new train accepts all types

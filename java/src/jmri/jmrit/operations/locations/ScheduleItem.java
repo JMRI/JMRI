@@ -41,10 +41,10 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 	 * 
 	 * @param id
 	 * @param type
-	 *            car type to schedule
+	 *            car type for schedule
 	 */
 	public ScheduleItem(String id, String type) {
-		log.debug("New schedule item type (" + type + ") id: " + id);
+		log.debug("New schedule item, car type ({}) id: {}", type, id);
 		_type = type;
 		_id = id;
 	}

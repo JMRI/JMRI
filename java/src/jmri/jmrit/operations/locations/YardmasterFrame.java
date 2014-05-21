@@ -37,7 +37,7 @@ import jmri.jmrit.operations.trains.TrainManifestText;
  */
 
 public class YardmasterFrame extends CommonConductorYardmasterFrame {
-	
+
 	protected static final boolean isManifest = false;
 
 	int _visitNumber = 1;
@@ -48,7 +48,7 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 	// combo boxes
 	JComboBox trainComboBox = new JComboBox();
 	JComboBox trainVisitComboBox = new JComboBox();
-	
+
 	// buttons
 	JButton nextButton = new JButton(Bundle.getMessage("Next"));
 
@@ -61,16 +61,16 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 
 	public void initComponents(Location location) {
 		super.initComponents();
-		
+
 		_location = location;
 
 		// row 2
 		JPanel pRow2 = new JPanel();
 		pRow2.setLayout(new BoxLayout(pRow2, BoxLayout.X_AXIS));
 
-		pRow2.add(pLocationName);	// row 2a (location name)
-		pRow2.add(pRailRoadName);	// row 2b (railroad name)
-		
+		pRow2.add(pLocationName); // row 2a (location name)
+		pRow2.add(pRailRoadName); // row 2b (railroad name)
+
 		// row 5 (switch list comment)
 		JPanel pSwitchListComment = new JPanel();
 		pSwitchListComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Comment")));
@@ -94,8 +94,8 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 
 		pRow6.add(pTrainName);
 		pRow6.add(pTrainVisit);
-		pRow6.add(pTrainDescription);	// row 6c (train description)
-		
+		pRow6.add(pTrainDescription); // row 6c (train description)
+
 		pButtons.setMaximumSize(new Dimension(2000, 200));
 
 		getContentPane().add(pRow2);
@@ -114,20 +114,21 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 		if (_location != null) {
 			textLocationName.setText(_location.getName());
 			textLocationComment.setText(lineWrap(_location.getComment()));
-			pLocationComment.setVisible(!_location.getComment().equals("")
-					&& Setup.isPrintLocationCommentsEnabled());
+			pLocationComment.setVisible(!_location.getComment().equals("") && Setup.isPrintLocationCommentsEnabled());
 			textSwitchListComment.setText(lineWrap(_location.getSwitchListComment()));
 			pSwitchListComment.setVisible(!_location.getSwitchListComment().equals(""));
 			updateTrainsComboBox();
-			
-			//	build menu
+
+			// build menu
 			JMenuBar menuBar = new JMenuBar();
 			JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
-			JMenuItem print = toolMenu.add(new PrintSwitchListAction(Bundle.getMessage("MenuItemPrint"), _location, false));
-			JMenuItem preview = toolMenu.add(new PrintSwitchListAction(Bundle.getMessage("MenuItemPreview"), _location, true));			
+			JMenuItem print = toolMenu.add(new PrintSwitchListAction(Bundle.getMessage("MenuItemPrint"), _location,
+					false));
+			JMenuItem preview = toolMenu.add(new PrintSwitchListAction(Bundle.getMessage("MenuItemPreview"), _location,
+					true));
 			menuBar.add(toolMenu);
 			setJMenuBar(menuBar);
-			
+
 			// add tool tip if in consolidation mode: "Disabled when switch list is in consolidation mode"
 			if (!Setup.isSwitchListRealTime()) {
 				print.setToolTipText(Bundle.getMessage("TipDisabled"));
@@ -140,11 +141,11 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 
 		addComboBoxAction(trainComboBox);
 		addComboBoxAction(trainVisitComboBox);
-		
+
 		addButtonAction(nextButton);
 
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true); // NOI18N
-		
+
 		// listen for trains being built
 		addTrainListeners();
 
@@ -165,13 +166,13 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 		log.debug("next button activated");
 		if (trainComboBox.getItemCount() > 1) {
 			if (pTrainVisit.isVisible()) {
-				int index = trainVisitComboBox.getSelectedIndex()+1;
+				int index = trainVisitComboBox.getSelectedIndex() + 1;
 				if (index < trainVisitComboBox.getItemCount()) {
 					trainVisitComboBox.setSelectedIndex(index);
-					return;	// done
+					return; // done
 				}
 			}
-			int index = trainComboBox.getSelectedIndex()+1;
+			int index = trainComboBox.getSelectedIndex() + 1;
 			if (index >= trainComboBox.getItemCount())
 				index = 0;
 			trainComboBox.setSelectedIndex(index);
@@ -183,8 +184,7 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 		// made the combo box not visible during updates, so ignore if not visible
 		if (ae.getSource() == trainComboBox && trainComboBox.isVisible()) {
 			_train = null;
-			if (trainComboBox.getSelectedItem() != null && !trainComboBox.getSelectedItem().equals("")
-					) {
+			if (trainComboBox.getSelectedItem() != null && !trainComboBox.getSelectedItem().equals("")) {
 				_train = (Train) trainComboBox.getSelectedItem();
 				_visitNumber = 1;
 			}
@@ -198,9 +198,9 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 			}
 		}
 	}
-	
-	private void clearAndUpdate(){
-		trainCommon.clearUtilityCarTypes();	// reset the utility car counts
+
+	private void clearAndUpdate() {
+		trainCommon.clearUtilityCarTypes(); // reset the utility car counts
 		carCheckBoxes.clear();
 		isSetMode = false;
 		update();
@@ -213,7 +213,7 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 		// turn everything off and re-enable if needed
 		pButtons.setVisible(false);
 		pTrainVisit.setVisible(false);
-		trainVisitComboBox.setVisible(false);	// Use visible as a flag to ignore updates
+		trainVisitComboBox.setVisible(false); // Use visible as a flag to ignore updates
 		pTrainComment.setVisible(false);
 		pTrainRouteComment.setVisible(false);
 		pTrainRouteLocationComment.setVisible(false);
@@ -247,7 +247,8 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 			List<RouteLocation> routeList = route.getLocationsBySequenceList();
 			int visitNumber = 0;
 			for (int i = 0; i < routeList.size(); i++) {
-				if (TrainCommon.splitString(routeList.get(i).getName()).equals(TrainCommon.splitString(_location.getName()))) {
+				if (TrainCommon.splitString(routeList.get(i).getName()).equals(
+						TrainCommon.splitString(_location.getName()))) {
 					visitNumber++;
 					if (visitNumber == _visitNumber) {
 						rl = routeList.get(i);
@@ -257,16 +258,16 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 				}
 			}
 
-			if (rl != null) {	
+			if (rl != null) {
 				// update visit numbers
 				if (visitNumber > 1) {
-					trainVisitComboBox.removeAllItems();	// this fires an action change!
+					trainVisitComboBox.removeAllItems(); // this fires an action change!
 					for (int i = 0; i < visitNumber; i++) {
 						trainVisitComboBox.addItem(i + 1);
 					}
 					trainVisitComboBox.setSelectedItem(_visitNumber);
-					trainVisitComboBox.setVisible(true);	// now pay attention to changes
-					pTrainVisit.setVisible(true);		// show the visit panel
+					trainVisitComboBox.setVisible(true); // now pay attention to changes
+					pTrainVisit.setVisible(true); // show the visit panel
 				}
 
 				// update comment and location name
@@ -276,7 +277,7 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 
 				// check for locos
 				updateLocoPanes(rl);
-				
+
 				// now update the car pick ups and set outs
 				blockCars(rl, isManifest);
 
@@ -293,7 +294,7 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 
 	private void updateTrainsComboBox() {
 		Object selectedItem = trainComboBox.getSelectedItem();
-		trainComboBox.setVisible(false);	// used as a flag to ignore updates
+		trainComboBox.setVisible(false); // used as a flag to ignore updates
 		trainComboBox.removeAllItems();
 		trainComboBox.addItem("");
 		if (_location != null) {
@@ -307,7 +308,7 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 			trainComboBox.setSelectedItem(selectedItem);
 		trainComboBox.setVisible(true);
 	}
-	
+
 	private void addTrainListeners() {
 		log.debug("Adding train listerners");
 		List<Train> trains = TrainManager.instance().getTrainsByIdList();
@@ -339,11 +340,10 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " for: " + e.getSource().toString() + " old: "
-					+ e.getOldValue() + " new: " + e.getNewValue()); // NOI18N
+			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+					.getNewValue());
 		if ((e.getPropertyName().equals(RollingStock.ROUTE_LOCATION_CHANGED_PROPERTY) && e.getNewValue() == null)
-				|| (e.getPropertyName().equals(RollingStock.ROUTE_DESTINATION_CHANGED_PROPERTY) && e
-						.getNewValue() == null)
+				|| (e.getPropertyName().equals(RollingStock.ROUTE_DESTINATION_CHANGED_PROPERTY) && e.getNewValue() == null)
 				|| e.getPropertyName().equals(RollingStock.TRAIN_CHANGED_PROPERTY)) {
 			// remove car from list
 			if (e.getSource().getClass().equals(Car.class)) {

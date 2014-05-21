@@ -24,7 +24,7 @@ public class Engine extends RollingStock {
 
 	public Engine(String road, String number) {
 		super(road, number);
-		log.debug("New loco " + road + " " + number);
+		log.debug("New engine ({} {})", road, number);
 		addPropertyChangeListeners();
 	}
 
@@ -189,8 +189,7 @@ public class Engine extends RollingStock {
 			if (getConsist() == null || (getConsist() != null && getConsist().isLead(this))) {
 				if (getTrain() != null && getRouteLocation() != getRouteDestination()
 						&& getTrain().getLeadEngine() != this) {
-					log.debug("New lead locomotive (" + toString() + ") for train "
-							+ getTrain().getName());
+					log.debug("New lead locomotive ({}) for train ({})", toString(), getTrain().getName());
 					getTrain().setLeadEngine(this);
 					getTrain().createTrainIcon();
 				}

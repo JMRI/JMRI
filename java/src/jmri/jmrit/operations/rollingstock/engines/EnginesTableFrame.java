@@ -126,7 +126,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		// row 2
 		JPanel cp2 = new JPanel();
 		cp2.setLayout(new BoxLayout(cp2, BoxLayout.X_AXIS));
-		
+
 		JPanel cp2Add = new JPanel();
 		cp2Add.setBorder(BorderFactory.createTitledBorder(""));
 		cp2Add.add(numEngines);
@@ -134,7 +134,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		cp2Add.add(textSep1);
 		cp2Add.add(addButton);
 		cp2.add(cp2Add);
-		
+
 		JPanel cp2Find = new JPanel();
 		cp2Find.setBorder(BorderFactory.createTitledBorder(""));
 		findButton.setToolTipText(Bundle.getMessage("findEngine"));
@@ -153,7 +153,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
 		controlPanel.add(cp1);
 		controlPanel.add(cp2);
-		
+
 		// some tool tips
 		sortByLast.setToolTipText(Bundle.getMessage("LastMoved"));
 
@@ -276,9 +276,8 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 			int rowindex = enginesModel.findEngineByRoadNumber(findEngineTextBox.getText());
 			if (rowindex < 0) {
 				JOptionPane.showMessageDialog(this, MessageFormat.format(
-						Bundle.getMessage("engineWithRoadNumNotFound"),
-						new Object[] { findEngineTextBox.getText() }), Bundle
-						.getMessage("engineCouldNotFind"), JOptionPane.INFORMATION_MESSAGE);
+						Bundle.getMessage("engineWithRoadNumNotFound"), new Object[] { findEngineTextBox.getText() }),
+						Bundle.getMessage("engineCouldNotFind"), JOptionPane.INFORMATION_MESSAGE);
 				return;
 
 			}
@@ -324,13 +323,12 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 
 	public void propertyChange(PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue()); // NOI18N
+			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+					.getNewValue());
 		if (e.getPropertyName().equals(EngineManager.LISTLENGTH_CHANGED_PROPERTY)) {
 			numEngines.setText(Integer.toString(engineManager.getNumEntries()));
 		}
 	}
 
-	static Logger log = LoggerFactory.getLogger(EnginesTableFrame.class
-			.getName());
+	static Logger log = LoggerFactory.getLogger(EnginesTableFrame.class.getName());
 }

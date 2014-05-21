@@ -58,7 +58,7 @@ public class Car extends RollingStock {
 
 	public Car(String road, String number) {
 		super(road, number);
-		log.debug("New car " + road + " " + number);
+		log.debug("New car ({} {})", road, number);
 		addPropertyChangeListeners();
 	}
 	

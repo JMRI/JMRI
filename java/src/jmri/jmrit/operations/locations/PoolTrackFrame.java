@@ -362,9 +362,8 @@ class PoolTrackFrame extends OperationsFrame implements
 		// Just call LogEvent(e); instead. It will figure out if logging is
 		// enabled, etc.
 		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: "
-					+ e.getOldValue() + " new: " + e.getNewValue());	// NOI18N
-
+			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+					.getNewValue());
 		if (e.getPropertyName().equals(Location.POOL_LENGTH_CHANGED_PROPERTY))
 			updatePoolsComboBox();
 

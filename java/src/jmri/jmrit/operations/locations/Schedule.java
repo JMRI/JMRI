@@ -32,7 +32,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 	public static final String DISPOSE = "scheduleDispose"; // NOI18N
 
 	public Schedule(String id, String name) {
-		log.debug("New schedule (" + name + ") id: " + id);
+		log.debug("New schedule ({}) id: {}", name, id);
 		_name = name;
 		_id = id;
 	}
@@ -356,9 +356,8 @@ public class Schedule implements java.beans.PropertyChangeListener {
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("schedule (" + getName() + ") sees property change: " + e.getPropertyName() + " from ("
-					+ e.getSource() + ") old: " + e.getOldValue() + " new: " // NOI18N
-					+ e.getNewValue());
+			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+					.getNewValue());
 		// forward all schedule item changes
 		setDirtyAndFirePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
 	}

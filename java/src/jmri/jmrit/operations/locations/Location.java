@@ -98,7 +98,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	public static final String SWITCHLIST_COMMENT_CHANGED_PROPERTY = "switchListComment";// NOI18N
 
 	public Location(String id, String name) {
-		log.debug("New location " + name + " " + id);
+		log.debug("New location ({}) id: {}", name, id);
 		_name = name;
 		_id = id;
 		// a new location accepts all types
@@ -1309,9 +1309,8 @@ public class Location implements java.beans.PropertyChangeListener {
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("location (" + getName() + ") sees property change: " + e.getPropertyName()
-					+ " source: (" + e.getSource() + ") old: " + e.getOldValue() + " new: "// NOI18N
-					+ e.getNewValue());
+			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+					.getNewValue());
 		// update length of tracks at this location if track length changes
 		if (e.getPropertyName().equals(Track.LENGTH_CHANGED_PROPERTY)) {
 			setLength(getLength() - Integer.parseInt((String) e.getOldValue())

@@ -45,7 +45,7 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
 
 	// combo box
 	JComboBox comboBoxRoads = CarRoads.instance().getComboBox();
-	
+
 	// labels
 	JLabel trackName = new JLabel();
 
@@ -88,37 +88,37 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
 
 		p1.add(pTrackName);
 		p1.add(pLocationName);
-		
+
 		// row 3
 		JPanel p3 = new JPanel();
 		p3.setLayout(new BoxLayout(p3, BoxLayout.Y_AXIS));
 		JScrollPane pane3 = new JScrollPane(p3);
 		pane3.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("RoadsTrack")));
 		pane3.setMaximumSize(new Dimension(2000, 400));
-		
+
 		JPanel pRoadRadioButtons = new JPanel();
 		pRoadRadioButtons.setLayout(new FlowLayout());
-		
+
 		pRoadRadioButtons.add(roadNameAll);
 		pRoadRadioButtons.add(roadNameInclude);
 		pRoadRadioButtons.add(roadNameExclude);
-		
+
 		pRoadControls.setLayout(new FlowLayout());
-		
+
 		pRoadControls.add(comboBoxRoads);
 		pRoadControls.add(addRoadButton);
 		pRoadControls.add(deleteRoadButton);
 		pRoadControls.add(deleteAllRoadsButton);
-		
+
 		pRoadControls.setVisible(false);
-		
+
 		p3.add(pRoadRadioButtons);
 		p3.add(pRoadControls);
 
 		// row 4
 		panelRoads.setLayout(new GridBagLayout());
 		paneRoads.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Roads")));
-		
+
 		ButtonGroup roadGroup = new ButtonGroup();
 		roadGroup.add(roadNameAll);
 		roadGroup.add(roadNameInclude);
@@ -129,7 +129,7 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
 		panelButtons.setLayout(new GridBagLayout());
 		panelButtons.setBorder(BorderFactory.createTitledBorder(""));
 		panelButtons.setMaximumSize(new Dimension(2000, 200));
-		
+
 		// row 13
 		addItem(panelButtons, saveTrackButton, 0, 0);
 
@@ -159,15 +159,15 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
 		}
 
 		// build menu
-//		JMenuBar menuBar = new JMenuBar();
-//		_toolMenu = new JMenu(Bundle.getMessage("Tools"));
-//		menuBar.add(_toolMenu);
-//		setJMenuBar(menuBar);
+		// JMenuBar menuBar = new JMenuBar();
+		// _toolMenu = new JMenu(Bundle.getMessage("Tools"));
+		// menuBar.add(_toolMenu);
+		// setJMenuBar(menuBar);
 
 		// load
 		updateRoadComboBox();
 		updateRoadNames();
-		
+
 		initMinimumSize(new Dimension(Control.panelWidth, Control.mediumPanelHeight));
 	}
 
@@ -226,7 +226,7 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
 			roadNameAll.setSelected(_track.getRoadOption().equals(Track.ALL_ROADS));
 			roadNameInclude.setSelected(_track.getRoadOption().equals(Track.INCLUDE_ROADS));
 			roadNameExclude.setSelected(_track.getRoadOption().equals(Track.EXCLUDE_ROADS));
-			
+
 			pRoadControls.setVisible(!roadNameAll.isSelected());
 
 			if (!roadNameAll.isSelected()) {
@@ -281,11 +281,11 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
 		CarRoads.instance().removePropertyChangeListener(this);
 		super.dispose();
 	}
-	
+
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue()); // NOI18N
+			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+					.getNewValue());
 		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY)) {
 			updateRoadComboBox();
 			updateRoadNames();
@@ -295,6 +295,5 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
 		}
 	}
 
-	static Logger log = LoggerFactory.getLogger(TrackRoadEditFrame.class
-			.getName());
+	static Logger log = LoggerFactory.getLogger(TrackRoadEditFrame.class.getName());
 }

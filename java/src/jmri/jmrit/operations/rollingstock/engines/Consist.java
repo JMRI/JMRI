@@ -19,7 +19,7 @@ public class Consist extends RollingStockGroup{
 	
 	public Consist(String name){
 		super(name);
-		log.debug("New Consist (" + name +")");
+		log.debug("New Consist ({})", name);
 	}
 
 	public List<Engine> getEngines(){

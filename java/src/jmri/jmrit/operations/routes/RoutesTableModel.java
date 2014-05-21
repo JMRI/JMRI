@@ -23,8 +23,7 @@ import jmri.util.table.ButtonRenderer;
  * @author Daniel Boudreau Copyright (C) 2008
  * @version $Revision$
  */
-public class RoutesTableModel extends javax.swing.table.AbstractTableModel implements
-		PropertyChangeListener {
+public class RoutesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
 	RouteManager manager; // There is only one manager
 
@@ -197,8 +196,8 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 
 	public void propertyChange(PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue()); // NOI18N
+			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+					.getNewValue());
 		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)) {
 			fireTableDataChanged();
 		} else if (e.getPropertyName().equals(RouteManager.LISTLENGTH_CHANGED_PROPERTY)) {
@@ -235,6 +234,5 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 		removePropertyChangeRoutes();
 	}
 
-	static Logger log = LoggerFactory.getLogger(RoutesTableModel.class
-			.getName());
+	static Logger log = LoggerFactory.getLogger(RoutesTableModel.class.getName());
 }

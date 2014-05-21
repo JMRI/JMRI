@@ -61,7 +61,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	public static final String DEPARTURE_TIME_CHANGED_PROPERTY = "routeDepartureTimeChange"; // NOI18N
 
 	public RouteLocation(String id, Location location) {
-		log.debug("New route location (" + location.getName() + ") id: " + id);
+		log.debug("New route location ({}) id: {}", location.getName(), id);
 		_location = location;
 		_id = id;
 		// listen for name change or delete
@@ -464,8 +464,8 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("route location (" + getName() + ") id (" + getId() + ") sees property change "
-					+ e.getPropertyName() + " old: " + e.getOldValue() + " new: " + e.getNewValue()); // NOI18N
+			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+					.getNewValue());
 		if (e.getPropertyName().equals(Location.DISPOSE_CHANGED_PROPERTY)) {
 			if (_location != null)
 				_location.removePropertyChangeListener(this);
