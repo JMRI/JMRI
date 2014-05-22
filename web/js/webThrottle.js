@@ -4,7 +4,7 @@
 * 
 * This script defines the web throttle behaviour.
 * 
-* >>> This file version: 2.3 - by Oscar Moutinho (oscar.moutinho@gmail.com)
+* >>> This file version: 2.4 - by Oscar Moutinho (oscar.moutinho@gmail.com)
 * 
 * This script relies on 'jquery.jmriConnect.js v2.1' (read its header for dependencies).
 * 
@@ -681,15 +681,32 @@ var jmriReady = function(jsonVersion, jmriVersion, railroadName) {
 			break;
 		case 'panel':
 			$help.push(
-				'This uses \'/panel\'' +
-				'\ninside an iframe.' +
+				'This shows an' +
+				'\ninteractive panel.' +
 				''
 			);
 			document.title+= ' (panel: ' + $paramPanelName + ')';
+			var iframeAux = $('<div>').attr('id', 'iframeAux');
 			var panel = $('<iframe>').attr('src', '/panel?name=' + $paramPanelName).addClass('panel');
-			panel.load(function() {	// Force resize some miliseconds after loading
-				setTimeout(function() {$panelLoaded = true; $viewportHeight = 0;}, $resizeCheckInterval * 5);
+			panel.load(function() {
+				var bodyFrameOuter = $('#bodyFrameOuter');
+				var bodyFrameInner = $('#bodyFrameInner');
+				var panel = $('.panel');
+				var panelBody = panel.contents().find('body');
+				bodyFrameInner.css('top', 0).css('left', 0);
+				panel.css('top', 0).css('left', 0);
+				panelBody.css('padding-top', 0).css('padding-bottom', 0);
+				panelBody.children('footer').remove();
+				panelBody.children('#wrap').children('#panel-area').appendTo(panelBody);
+				panelBody.children('#wrap').remove();
+				panelBody.children('#panel-area').css('border', 'none').css('position', 'absolute');
+				panelBody.css('background-color', $('#iframeAux').css('background-color'))
+				setTimeout(function() {$panelLoaded = true; $viewportHeight = 0;}, $resizeCheckInterval * 5);	// Force resize some miliseconds after loading
 			});
+			iframeAux.css('position', 'absolute').css('background-color', $('body').css('background-color')).css('z-index', '+199');
+			iframeAux.css('top', 0).css('left', 0);
+			bodyFrameInner.append(iframeAux);
+			panel.css('z-index', '+200');
 			bodyFrameInner.append(panel);
 			break;
 	}
@@ -1205,108 +1222,38 @@ var resizeTurnoutsRoutesLayout = function() {
 
 //----------------------------------------- [from 'checkLayoutSizeChange()'] Panel layout resize when screen or font changes size
 var resizePanelLayout = function() {
-	if (!$panelLoaded) return;	// If loading not complete, give up ! (onload event will force resize)
+	if (!$panelLoaded) return;	// If loading not complete, give up! (onload event will force resize)
 	$nextBlockTop-= $('#header').outerHeight(true);
 	var h = $(window).height();
 	var w = $(window).width();
 	var bodyFrameOuter = $('#bodyFrameOuter');
 	var bodyFrameInner = $('#bodyFrameInner');
-	var divA = null;
-	var divB = null;
-	bodyFrameOuter.css('top', 0).css('left', 0);
+	var iframeAux = $('#iframeAux');
+	var panel = $('.panel');
+	var panelBody = panel.contents().find('body');
+	var panelArea = panelBody.children('#panel-area');
+	var offsetV = 0;
+	var scrollbarV = 0;
+	var offsetH = 0;
+	var scrollbarH = 0;
 	setOuterHeight(bodyFrameOuter, h, true);
 	setOuterWidth(bodyFrameOuter, w, true);
-	bodyFrameInner.css('top', 0).css('left', 0);
 	setOuterHeight(bodyFrameInner, bodyFrameOuter.height(), true);
 	setOuterWidth(bodyFrameInner, bodyFrameOuter.width(), true);
-	var panel = $('.panel');
-	var realPanel = panel.contents().find('#panelArea');
-	var realCanvas = panel.contents().find('#panelCanvas');
-	var original = (panel.contents().find('.wtInside').length == 0);
-	if (original) {
-		realPanel.attr('originalHeight', realPanel.height());
-		realPanel.attr('originalWidth', realPanel.width());
-		realCanvas.attr('originalHeight', realCanvas.height());
-		realCanvas.attr('originalWidth', realCanvas.width());
-		panel.contents().find('html').css('overflow', 'hidden');
-		realPanel.css('position', 'absolute');
-		divA = $('<div>').attr('id', 'wtDivA').addClass('wtInside').addClass('wtCoverObjects').css('position', 'absolute').css('background-color', $('body').css('background-color')).css('z-index', '+200');
-		panel.contents().find('body').append(divA);
-		divB = $('<div>').attr('id', 'wtDivB').addClass('wtInside').addClass('wtCoverObjects').css('position', 'absolute').css('background-color', $('body').css('background-color')).css('z-index', '+200');
-		panel.contents().find('body').append(divB);
-	} else {
-		divA = panel.contents().find('#wtDivA');
-		divB = panel.contents().find('#wtDivB');
+	setOuterHeight(iframeAux, bodyFrameInner.height(), true);
+	setOuterWidth(iframeAux, bodyFrameInner.width(), true);
+	setOuterHeight(panel, bodyFrameInner.height(), true);
+	setOuterWidth(panel, bodyFrameInner.width(), true);
+	if (panel.height() >= panelArea.height()) offsetV = (panel.height() - panelArea.height()) / 2;
+	else scrollbarV = $vScrollbarWidth;
+	if (panel.width() >= panelArea.width()) offsetH = (panel.width() - panelArea.width()) / 2;
+	else scrollbarH = $vScrollbarWidth;
+	if (scrollbarV > 0 && scrollbarH > 0) {
+		scrollbarV = 0;
+		scrollbarH = 0;
 	}
-	var outerHeight = bodyFrameInner.height() - $nextBlockTop;
-	var outerWidth = bodyFrameInner.width();
-	setOuterHeight(panel, outerHeight, true);
-	setOuterWidth(panel, outerWidth, true);
-	setTopFromParentContent(panel, $nextBlockTop);
-	setLeftFromParentContent(panel, 0);
-	var outerRatio = outerHeight / outerWidth;
-	var innerRatio = realPanel.attr('originalHeight') / realPanel.attr('originalWidth');
-	var contentHeight;
-	var contentWidth;
-	if (outerRatio > innerRatio) {
-		contentWidth = outerWidth;
-		contentHeight = contentWidth * innerRatio;
-		var aux1 = (outerHeight - contentHeight) / 2;
-		realPanel.css('top', aux1);
-		realPanel.css('left', 0);
-		realCanvas.css('top', aux1);
-		realCanvas.css('left', 0);
-		divA.css('top', 0);
-		divA.css('left', 0);
-		divA.height(aux1);
-		divA.width(contentWidth);
-		divB.css('top', aux1 + contentHeight);
-		divB.css('left', 0);
-		divB.height(aux1);
-		divB.width(contentWidth);
-	} else {
-		contentHeight = outerHeight;
-		contentWidth = contentHeight / innerRatio;
-		var aux1 = (outerWidth - contentWidth) / 2;
-		realPanel.css('top', 0);
-		realPanel.css('left', aux1);
-		realCanvas.css('top', 0);
-		realCanvas.css('left', aux1);
-		divA.css('top', 0);
-		divA.css('left', 0);
-		divA.height(contentHeight);
-		divA.width(aux1);
-		divB.css('top', 0);
-		divB.css('left', aux1 + contentWidth);
-		divB.height(contentHeight);
-		divB.width(aux1);
-	}
-	realPanel.height(contentHeight);
-	realPanel.width(contentWidth);
-	realCanvas.height(contentHeight);
-	realCanvas.width(contentWidth);
-	var contentHeightFactor = contentHeight / realPanel.attr('originalHeight');
-	var contentWidthFactor = contentWidth / realPanel.attr('originalWidth');
-	realPanel.find('*').each(function(index) {
-		var o = $(this);
-		if (original) {
-			o.attr('originalFontSize', o.css('font-size').split('px')[0]);
-			o.attr('originalTop', o.css('top').split('px')[0]);
-			o.attr('originalLeft', o.css('left').split('px')[0]);
-			o.attr('originalHeight', o.height());
-			o.attr('originalWidth', o.width());
-		}
-		var oFS = o.attr('originalFontSize');
-		var oT = o.attr('originalTop');
-		var oL = o.attr('originalLeft');
-		var oH = o.attr('originalHeight');
-		var oW = o.attr('originalWidth');
-		o.css('font-size', oFS * contentHeightFactor);
-		o.css('top', oT * contentHeightFactor);
-		o.css('left', oL * contentWidthFactor);
-		o.height(Math.ceil(oH * contentHeightFactor));
-		o.width(Math.ceil(oW * contentWidthFactor));
-	});
+	panelArea.css('top', offsetV + scrollbarH);
+	panelArea.css('left', offsetH + scrollbarV);
 };
 
 //----------------------------------------- [from 'checkLayoutSizeChange()' and 'selectionList'] Selection list layout resize when screen or font changes size
