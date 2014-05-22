@@ -354,8 +354,9 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 	 * 
 	 */
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		log.debug("ScheduleManager sees property change: " + e.getPropertyName() + " old: " + e.getOldValue() + " new "
-				+ e.getNewValue()); // NOI18N
+		if (Control.showProperty && log.isDebugEnabled())
+			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+					.getNewValue());
 		if (e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY)) {
 			replaceType((String) e.getOldValue(), (String) e.getNewValue());
 		}

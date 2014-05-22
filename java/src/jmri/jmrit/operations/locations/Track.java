@@ -691,7 +691,7 @@ public class Track {
 		if (type == null || _typeList.contains(type))
 			return;
 		_typeList.add(0, type);
-		log.debug("track (" + getName() + ") add rolling stock type " + type);
+		log.debug("Track ({}) add rolling stock type ({})",  getName() , type);
 		setDirtyAndFirePropertyChange(TYPES_CHANGED_PROPERTY, _typeList.size() - 1,
 				_typeList.size());
 	}
@@ -700,7 +700,7 @@ public class Track {
 		if (!_typeList.contains(type))
 			return;
 		_typeList.remove(type);
-		log.debug("track (" + getName() + ") delete rolling stock type " + type);
+		log.debug("Track ({}) delete rolling stock type ({})" , getName() , type);
 		setDirtyAndFirePropertyChange(TYPES_CHANGED_PROPERTY, _typeList.size() + 1,
 				_typeList.size());
 	}
@@ -770,14 +770,14 @@ public class Track {
 		if (_roadList.contains(road))
 			return;
 		_roadList.add(road);
-		log.debug("track (" + getName() + ") add car road " + road);
+		log.debug("Track ({}) add car road ({})", getName(), road);
 		setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, _roadList.size() - 1,
 				_roadList.size());
 	}
 
 	public void deleteRoadName(String road) {
 		_roadList.remove(road);
-		log.debug("track (" + getName() + ") delete car road " + road);
+		log.debug("Track ({}) delete car road ({})", getName(), road);
 		setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, _roadList.size() + 1,
 				_roadList.size());
 	}
@@ -1086,13 +1086,13 @@ public class Track {
 		if (_dropList.contains(id))
 			return;
 		_dropList.add(id);
-		log.debug("track " + getName() + " add drop id " + id);
+		log.debug("Track ({}) add drop id: {}", getName(), id);
 		setDirtyAndFirePropertyChange(DROP_CHANGED_PROPERTY, null, id);
 	}
 
 	public void deleteDropId(String id) {
 		_dropList.remove(id);
-		log.debug("track " + getName() + " delete drop id " + id);
+		log.debug("Track ({}) delete drop id: {}", getName(), id);
 		setDirtyAndFirePropertyChange(DROP_CHANGED_PROPERTY, id, null);
 	}
 

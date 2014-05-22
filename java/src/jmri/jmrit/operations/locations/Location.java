@@ -578,7 +578,7 @@ public class Location implements java.beans.PropertyChangeListener {
 		if (type == null || _listTypes.contains(type))
 			return;
 		_listTypes.add(0, type);
-		log.debug("location (" + getName() + ") add rolling stock type " + type);
+		log.debug("Location ({}) add rolling stock type ({})", getName() , type);
 		setDirtyAndFirePropertyChange(TYPES_CHANGED_PROPERTY, _listTypes.size() - 1, _listTypes.size());
 	}
 
@@ -586,7 +586,7 @@ public class Location implements java.beans.PropertyChangeListener {
 		if (!_listTypes.contains(type))
 			return;
 		_listTypes.remove(type);
-		log.debug("location (" + getName() + ") delete rolling stock type " + type);
+		log.debug("Location ({}) delete rolling stock type ({})", getName() , type);
 		setDirtyAndFirePropertyChange(TYPES_CHANGED_PROPERTY, _listTypes.size() + 1, _listTypes.size());
 	}
 
@@ -608,7 +608,7 @@ public class Location implements java.beans.PropertyChangeListener {
 		if (track == null) {
 			_IdNumber++;
 			String id = _id + "s" + Integer.toString(_IdNumber);
-			log.debug("adding new " + type + " to " + getName() + " track name: "+ name +" id: " + id);
+			log.debug("Adding new ({}) to ({}) track name ({}) id: {}", type, getName(), name, id);
 			track = new Track(id, name, type, this);
 			register(track);
 		}

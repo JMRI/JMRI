@@ -379,9 +379,9 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	}
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		if (log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
-					+ e.getNewValue()); // NOI18N
+		if (Control.showProperty && log.isDebugEnabled())
+			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+					.getNewValue());
 		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)) {
 			updateComboBoxes();
 		}

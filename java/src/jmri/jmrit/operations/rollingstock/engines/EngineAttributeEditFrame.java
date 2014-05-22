@@ -322,7 +322,9 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 	}
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		log.debug("EnginesAttributeFrame sees propertyChange " + e.getPropertyName() + " " + e.getNewValue());
+		if (Control.showProperty && log.isDebugEnabled())
+			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+					.getNewValue());
 		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY))
 			CarRoads.instance().updateComboBox(comboBox);
 		if (e.getPropertyName().equals(EngineModels.ENGINEMODELS_CHANGED_PROPERTY))
