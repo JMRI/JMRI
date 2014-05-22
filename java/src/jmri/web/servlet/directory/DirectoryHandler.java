@@ -17,7 +17,7 @@ public class DirectoryHandler extends ResourceHandler {
     protected void doDirectory(HttpServletRequest request, HttpServletResponse response, Resource resource) throws IOException {
         if (this.isDirectoriesListed()) {
             response.setStatus(HttpServletResponse.SC_OK);
-            response.setContentType(ServletUtil.TEXT_HTML);
+            response.setContentType(ServletUtil.UTF8_TEXT_HTML);
             response.getWriter().print((new DirectoryResource(request.getLocale(), resource)).getListHTML(request.getRequestURI(), request.getPathInfo().lastIndexOf("/") > 0)); // NOI18N
         } else {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);

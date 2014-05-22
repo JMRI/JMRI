@@ -60,7 +60,7 @@ public class SimpleServlet extends WebSocketServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setStatus(HttpServletResponse.SC_OK);
-        response.setContentType(ServletUtil.TEXT_HTML); // NOI18N
+        response.setContentType(ServletUtil.UTF8_TEXT_HTML); // NOI18N
         response.getWriter().print(String.format(request.getLocale(),
                 FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Simple.html"))),
                 String.format(request.getLocale(),

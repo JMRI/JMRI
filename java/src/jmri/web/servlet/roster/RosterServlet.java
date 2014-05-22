@@ -34,9 +34,9 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
 import jmri.util.StringUtil;
 import jmri.web.servlet.ServletUtil;
-import static jmri.web.servlet.ServletUtil.APPLICATION_JSON;
+import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
 import static jmri.web.servlet.ServletUtil.IMAGE_PNG;
-import static jmri.web.servlet.ServletUtil.TEXT_HTML;
+import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
 import static jmri.web.servlet.ServletUtil.UTF8;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -126,7 +126,7 @@ public class RosterServlet extends HttpServlet {
      */
     protected void doList(HttpServletRequest request, HttpServletResponse response, Boolean groups) throws ServletException, IOException {
         JsonNode data;
-        if (request.getContentType() != null && request.getContentType().contains(APPLICATION_JSON)) {
+        if (request.getContentType() != null && request.getContentType().contains(UTF8_APPLICATION_JSON)) {
             data = this.mapper.readTree(request.getReader());
             if (!data.path(DATA).isMissingNode()) {
                 data = data.path(DATA);
@@ -195,9 +195,9 @@ public class RosterServlet extends HttpServlet {
         } else if (type.equals("icon")) {
             this.doImage(request, response, new File(FileUtil.getAbsoluteFilename(re.getIconPath())));
         } else if (type.equals("file")) {
-            ServletUtil.getInstance().writeFile(response, new File(Roster.getFileLocation(), "roster" + File.separator + re.getFileName()), ServletUtil.APPLICATION_XML); // NOI18N
+            ServletUtil.getInstance().writeFile(response, new File(Roster.getFileLocation(), "roster" + File.separator + re.getFileName()), ServletUtil.UTF8_APPLICATION_XML); // NOI18N
         } else if (type.equals("throttle")) {
-            ServletUtil.getInstance().writeFile(response, new File(FileUtil.getUserFilesPath(), "throttle" + File.separator + id + ".xml"), ServletUtil.APPLICATION_XML); // NOI18N
+            ServletUtil.getInstance().writeFile(response, new File(FileUtil.getUserFilesPath(), "throttle" + File.separator + id + ".xml"), ServletUtil.UTF8_APPLICATION_XML); // NOI18N
         } else {
             // don't know what to do
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -221,7 +221,7 @@ public class RosterServlet extends HttpServlet {
         ServletUtil.getInstance().setNonCachingHeaders(response);
         String group = (!filter.path(GROUP).isMissingNode()) ? filter.path(GROUP).asText() : null;
         if (JSON.JSON.equals(request.getParameter("format"))) { // NOI18N
-            response.setContentType(APPLICATION_JSON);
+            response.setContentType(UTF8_APPLICATION_JSON);
             response.getWriter().print(JsonUtil.getRoster(request.getLocale(), filter));
         } else if (("html").equals(request.getParameter("format"))) {
             String row;
@@ -231,7 +231,7 @@ public class RosterServlet extends HttpServlet {
                 row = FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "TableRow.html")));
             }
             StringBuilder builder = new StringBuilder();
-            response.setContentType(TEXT_HTML); // NOI18N
+            response.setContentType(UTF8_TEXT_HTML); // NOI18N
             if (Roster.ALLENTRIES.equals(group)) {
                 group = null;
             }
@@ -269,7 +269,7 @@ public class RosterServlet extends HttpServlet {
             }
             response.getWriter().print(builder.toString());
         } else {
-            response.setContentType(TEXT_HTML); // NOI18N
+            response.setContentType(UTF8_TEXT_HTML); // NOI18N
             response.getWriter().print(String.format(request.getLocale(),
                     FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Roster.html"))),
                     String.format(request.getLocale(),
