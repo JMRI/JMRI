@@ -48,7 +48,7 @@ function getManifest(id) {
 function getConductor(id, location) {
     var data = (location !== false) ? {format: "html", location: location} : {format: "html"};
     $.ajax({
-        url: "/operations/conductor/" + id,
+        url: "/operations/trains/" + id + "/conductor",
         data: JSON.stringify(data),
         type: "PUT",
         contentType: "application/json; charset=utf-8",
@@ -167,16 +167,7 @@ $(document).ready(function() {
                 getConductor(id, false);
             }
         });
-        if (jmri.socket && jmri.socket.readyState === 1) {
-            jmri.getTrain($("html").data("train"));
-        } else {
-            // wait one second, and getTrain if jmri.socker is not open
-            setTimeout(function() {
-                if (!jmri.socket || jmri.socket.readyState !== 1) {
-                    jmri.getTrain($("html").data("train"));
-                }
-            }, 1000);
-        }
+        jmri.connect();
     } else {
         getTrains(getParameterByName('show') === "all");
         $("#show-all-trains > input").prop("checked", getParameterByName('show') === "all");
@@ -188,8 +179,8 @@ $(document).ready(function() {
     // setup the functional menu items
     if ($("html").data("train") !== "") {
         getTrainName($("html").data("train"));
-        $("#navbar-operations-manifest > a").attr("href", "/operations/manifest/" + $("html").data("train"));
-        $("#navbar-operations-conductor > a").attr("href", "/operations/conductor/" + $("html").data("train"));
+        $("#navbar-operations-manifest > a").attr("href", "/operations/trains/" + $("html").data("train") + "/manifest");
+        $("#navbar-operations-conductor > a").attr("href", "/operations/trains/" + $("html").data("train") + "/conductor");
     } else {
         $("#navbar-operations-train-divider").addClass("hidden").removeClass("show");
         $("#navbar-operations-train").addClass("hidden").removeClass("show");
