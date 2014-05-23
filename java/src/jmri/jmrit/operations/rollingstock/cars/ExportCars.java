@@ -128,7 +128,7 @@ public class ExportCars extends XmlFile {
 			}
 			line = car.getNumber() + del + car.getRoadName() + del + carType + del + car.getLength() + del
 					+ car.getWeight() + del + car.getColor() + del + car.getOwner() + del + car.getBuilt() + del
-					+ carLocationName + ",-," + carTrackName + del + car.getLoadName() + del + car.getKernelName()
+					+ carLocationName + ",-," + carTrackName + del + car.getLoadName() + del + car.getKernelName() // NOI18N
 					+ value; // NOI18N
 			fileOut.println(line);
 		}

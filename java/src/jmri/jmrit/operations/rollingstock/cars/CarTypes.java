@@ -92,7 +92,7 @@ public class CarTypes {
 		String[] types = TYPES.split(","); // NOI18N
 		if (convert.length != types.length) {
 			log.error(
-					"Properties file doesn't have equal length conversion strings, carTypeNames {}, carTypeConvert {}",
+					"Properties file doesn't have equal length conversion strings, carTypeNames {}, carTypeConvert {}", // NOI18N
 					types.length, convert.length);
 			return;
 		}

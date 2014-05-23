@@ -1902,7 +1902,7 @@ public class TrainBuilder extends TrainCommon {
 						if (car.getDestination() == null && car.getTrack() == _departStageTrack
 								&& _terminateStageTrack != null) {
 							log.debug(
-									"Car ({}) departing staging with final destination ({}) but no destination, try staging",
+									"Car ({}) departing staging with final destination ({}) but no destination, try staging", // NOI18N
 									car.toString(), car.getFinalDestinationName());
 							findDestinationAndTrack(car, rl, _train.getTrainTerminatesRouteLocation());
 						}

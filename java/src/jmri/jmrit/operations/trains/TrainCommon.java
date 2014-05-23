@@ -54,6 +54,7 @@ public class TrainCommon {
 
 	protected static final boolean PICKUP = true;
 	protected static final boolean LOCAL = true;
+	protected static final boolean ENGINE = true;
 
 	CarManager carManager = CarManager.instance();
 	EngineManager engineManager = EngineManager.instance();
@@ -1236,35 +1237,35 @@ public class TrainCommon {
 	}
 
 	public String getPickupEngineHeader() {
-		return getHeader(Setup.getPickupEngineMessageFormat(), PICKUP, !LOCAL);
+		return getHeader(Setup.getPickupEngineMessageFormat(), PICKUP, !LOCAL, ENGINE);
 	}
 
 	public String getDropEngineHeader() {
-		return getHeader(Setup.getDropEngineMessageFormat(), !PICKUP, !LOCAL);
+		return getHeader(Setup.getDropEngineMessageFormat(), !PICKUP, !LOCAL, ENGINE);
 	}
 
 	public String getPickupCarHeader(boolean isManifest) {
 		if (isManifest)
-			return getHeader(Setup.getPickupCarMessageFormat(), PICKUP, !LOCAL);
+			return getHeader(Setup.getPickupCarMessageFormat(), PICKUP, !LOCAL, !ENGINE);
 		else
-			return getHeader(Setup.getSwitchListPickupCarMessageFormat(), PICKUP, !LOCAL);
+			return getHeader(Setup.getSwitchListPickupCarMessageFormat(), PICKUP, !LOCAL, !ENGINE);
 	}
 
 	public String getDropCarHeader(boolean isManifest) {
 		if (isManifest)
-			return getHeader(Setup.getDropCarMessageFormat(), !PICKUP, !LOCAL);
+			return getHeader(Setup.getDropCarMessageFormat(), !PICKUP, !LOCAL, !ENGINE);
 		else
-			return getHeader(Setup.getSwitchListDropCarMessageFormat(), !PICKUP, !LOCAL);
+			return getHeader(Setup.getSwitchListDropCarMessageFormat(), !PICKUP, !LOCAL, !ENGINE);
 	}
 
 	public String getLocalMoveHeader(boolean isManifest) {
 		if (isManifest)
-			return getHeader(Setup.getLocalMessageFormat(), !PICKUP, LOCAL);
+			return getHeader(Setup.getLocalMessageFormat(), !PICKUP, LOCAL, !ENGINE);
 		else
-			return getHeader(Setup.getSwitchListLocalMessageFormat(), !PICKUP, LOCAL);
+			return getHeader(Setup.getSwitchListLocalMessageFormat(), !PICKUP, LOCAL, !ENGINE);
 	}
 
-	private String getHeader(String[] format, boolean isPickup, boolean isLocal) {
+	private String getHeader(String[] format, boolean isPickup, boolean isLocal, boolean isEngine) {
 		StringBuffer buf = new StringBuffer();
 		for (String attribute : format) {
 			if (attribute.equals(Setup.NONE))
@@ -1273,8 +1274,12 @@ public class TrainCommon {
 				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Road(), CarRoads.instance()
 						.getCurMaxNameLength())
 						+ " ");
-			else if (attribute.equals(Setup.NUMBER))
+			else if (attribute.equals(Setup.NUMBER) && !isEngine)
 				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Number(),
+						Control.max_len_string_road_number - trimRoadNumber)
+						+ " ");
+			else if (attribute.equals(Setup.NUMBER) && isEngine)
+				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_EngineNumber(),
 						Control.max_len_string_road_number - trimRoadNumber)
 						+ " ");
 			else if (attribute.equals(Setup.TYPE))
