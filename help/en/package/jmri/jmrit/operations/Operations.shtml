@@ -884,7 +884,7 @@
     name. Where C = Caboose, F = FRED, H = Hazardous, and U = Utility.</P>
    <P>The loco parameters for pick up loco (PL) and set out loco (SL) are: road, number, model,
     length, type, hp, location name, track name, destination name, destination track name, owner
-    name, consist name, car comment, RFID.</P>
+    name, consist name, is lead loco in consist, car comment, RFID.</P>
 
    <P>
     You can find some examples of custom manifests at <A
