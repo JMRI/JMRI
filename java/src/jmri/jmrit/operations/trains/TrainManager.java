@@ -297,7 +297,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 			if (train.getName().toLowerCase().equals(name.toLowerCase()))
 				return train;
 		}
-		log.debug("train " + name + " doesn't exist");
+		log.debug("Train ({}) doesn't exist", name);
 		return null;
 	}
 
