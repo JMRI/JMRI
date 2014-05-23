@@ -919,7 +919,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (type == null || _typeList.contains(type))
 			return;
 		_typeList.add(0, type);
-		log.debug("train " + getName() + " add car type " + type);
+		log.debug("Train ({}) add car type ({})", getName(), type);
 		setDirtyAndFirePropertyChange(TYPES_CHANGED_PROPERTY, _typeList.size() - 1, _typeList.size());
 	}
 
@@ -927,7 +927,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (!_typeList.contains(type))
 			return;
 		_typeList.remove(type);
-		log.debug("train (" + getName() + ") delete car type (" + type + ")");
+		log.debug("Train ({}) delete car type ({})", getName(), type);
 		setDirtyAndFirePropertyChange(TYPES_CHANGED_PROPERTY, _typeList.size() + 1, _typeList.size());
 	}
 

@@ -108,7 +108,7 @@ public class Engine extends RollingStock {
 		if (!length.equals(_length)) {
 			if (_lengthChange) // return "old" length, used for track reserve changes
 				return _length;
-			log.debug("Loco " + toString() + " length has been modified");
+			log.debug("Loco ({}) length has been modified", toString());
 			super.setLength(length); // adjust track lengths
 		}
 		return length;

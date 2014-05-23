@@ -102,7 +102,7 @@ public class TrainBuilder extends TrainCommon {
 	}
 
 	private void build() throws BuildFailedException {
-		log.debug("Building train {}", _train.getName());
+		log.debug("Building train ({})", _train.getName());
 
 		_train.setStatus(Train.CODE_BUILDING);
 		_train.setBuilt(false);
@@ -547,7 +547,7 @@ public class TrainBuilder extends TrainCommon {
 			new TrainCsvManifest(_train);
 		// now create and place train icon
 		_train.moveTrainIcon(_train.getTrainDepartsRouteLocation());
-		log.debug("Done building train {}", _train.getName());
+		log.debug("Done building train ({})", _train.getName());
 	}
 
 	private void showTrainRequirements() {

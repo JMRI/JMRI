@@ -32,7 +32,7 @@ public class TrainIconAnimation extends Thread {
 			while (_previous.isAlive())
 				sleep();
 		}
-		log.debug("TrainIconAnimation starts for train " + _trainIcon.getTrain().getName());
+		log.debug("Icon animation starts for train ({})", _trainIcon.getTrain().getName());
 		int x = _trainIcon.getX();
 		int y = _trainIcon.getY();
 		int newX = _rl.getTrainIconX();
