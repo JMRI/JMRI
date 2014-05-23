@@ -218,6 +218,9 @@ public class TrainCsvCommon extends TrainCommon {
     		log.debug("Engine ("+engine.toString()+") has delimiter in consist name field: "+engineConsistName);
     		engineConsistName = ESC+engineConsistName+ESC;
     	}
+    	String engineIsLead = "";
+    	if (engine.getConsist() != null && engine.getConsist().isLead(engine))
+    		engineIsLead = "Lead loco"; // NOI18N
 
 		addLine(fileOut, operation
 				+DEL+engineRoad
@@ -232,6 +235,7 @@ public class TrainCsvCommon extends TrainCommon {
 				+DEL+engineDestTrackName
 				+DEL+engineOwner
 				+DEL+engineConsistName
+				+DEL+engineIsLead
 				+DEL+ESC+engine.getComment()+ESC
 				+DEL+ESC+engine.getRfid()+ESC);
 	}
