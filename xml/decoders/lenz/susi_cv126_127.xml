@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012 All rights reserved -->
+<!-- $Id: accelDecel.xml 22090 2012-12-29 02:30:04Z jacobsen $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2012</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+    </author>
+	<author>
+      <personname>
+        <firstname>Bernd (Ba)</firstname>
+        <surname>Wisotzki</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>6</revnumber>
+      <date>2014-05-18</date>
+      <authorinitials>Ba</authorinitials>
+      <revremark>Initial release as separate file</revremark>
+    </revision>
+    <revision>
+      <revnumber>5</revnumber>
+      <date>2005-08-14</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Revision in original Lenz_Gold.xml file</revremark>
+    </revision>
+  </revhistory>
+  <!-- Add Your the "includes" here -->
+  <variable CV="126" minOut="4" item="SUSI Indicator" default="102" comment="Range 0-255">
+	<decVal min="0" max="255"/>
+	<label>CV indicator for SUSI, offset 800</label>
+	<label xml:lang="it">Indicatore Cv per SUSI, offset 800</label>
+	<comment>Range 0-255</comment>
+	<comment xml:lang="it">Valori da 0 a 255</comment>
+	<label xml:lang="de">Zeiger-CV für SUSI, offset 800</label>
+	<comment xml:lang="de">Wertebereich 0-255</comment>
+  </variable>
+  <variable CV="127" minOut="4" item="SUSI transport" default="0" comment="Range 0-255">
+	<decVal min="0" max="255"/>
+	<label>CV transport device for SUSI</label>
+	<label xml:lang="it">Dispositivo trasferimento SUSI</label>
+	<comment>Range 0-255</comment>
+	<comment xml:lang="it">Valori da 0 a 255</comment>
+	<label xml:lang="de">Transport-CV für SUSI</label>
+	<comment xml:lang="de">Wertebereich 0-255</comment>
+  </variable>
+  
+</variables>
