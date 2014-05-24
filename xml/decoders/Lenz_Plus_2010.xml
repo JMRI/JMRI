@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Bernd Wisotzki (Ba)" version="3" lastUpdated="20140524"/>
   <version author="Jeff Schmaltz escopetas@comcast.net" version="2" lastUpdated="20130825"/>
   <version author="John A. Stewart alex.stewart@crc.ca" version="1" lastUpdated="20100427"/>
   <!-- 
@@ -40,7 +41,12 @@ Silver direct+ Silent-Back EMF DCC Decoder
     2) Modified function mapping based on http://www.digital-plus.de/pdf/GOLD_SILVER_plus_manual.pdf,
        dated "4. Auflage / 4rd Edition / 4. Edition 06 11, B.10.112"
     3) Family low/high version came from p. 67 of http://www.digital-plus.de/pdf/b_90008_d.pdf, dated "Ausgabe 11 10"
-       
+    
+	
+	Comments for version 3
+	
+	Complete refactoring and added German
+	
 -->
   <!--
 nmraWarrant="yes" nmraWarrantStart="200604"
@@ -133,305 +139,17 @@ nmraWarrant="yes" nmraWarrantStart="200604"
       <xi:include href="http://jmri.org/xml/decoders/lenz/motorControl2_cv112_114.xml"/>
       <!-- CV115 not listed in Plus manual -->
 	  <xi:include href="http://jmri.org/xml/decoders/lenz/susi_cv126_127.xml"/>
-	  
-      <!-- From this point on there is a complete new feature. -->
-	  <!-- But it should be moved to the lenz directory for future use. -->
-      <variable item="Enable forward coupling with F1" CV="145" mask="XXXXXXXV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable forward coupling with F1</label>
-        <label xml:lang="de">Enable forward coupling with F1</label>
-      </variable>
-      <variable item="Enable forward coupling with F2" CV="145" mask="XXXXXXVX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable forward coupling with F2</label>
-        <label xml:lang="de">Enable forward coupling with F2</label>
-      </variable>
-      <variable item="Enable forward coupling with F3" CV="145" mask="XXXXXVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable forward coupling with F3</label>
-        <label xml:lang="de">Enable forward coupling with F3</label>
-      </variable>
-      <variable item="Enable forward coupling with F4" CV="145" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable forward coupling with F4</label>
-        <label xml:lang="de">Enable forward coupling with F4</label>
-      </variable>
-      <variable item="Enable forward coupling with F5" CV="145" mask="XXXVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable forward coupling with F5</label>
-        <label xml:lang="de">Enable forward coupling with F5</label>
-      </variable>
-      <variable item="Enable forward coupling with F6" CV="145" mask="XXVXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable forward coupling with F6</label>
-        <label xml:lang="de">Enable forward coupling with F6</label>
-      </variable>
-      <variable item="Enable forward coupling with F7" CV="145" mask="XVXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable forward coupling with F7</label>
-        <label xml:lang="de">Enable forward coupling with F7</label>
-      </variable>
-      <variable item="Enable forward coupling with F8" CV="145" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable forward coupling with F8</label>
-        <label xml:lang="de">Enable forward coupling with F8</label>
-      </variable>
-      <variable item="Enable backward coupling with F1" CV="146" mask="XXXXXXXV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable backward coupling with F1</label>
-        <label xml:lang="de">Enable backward coupling with F1</label>
-      </variable>
-      <variable item="Enable backward coupling with F2" CV="146" mask="XXXXXXVX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable backward coupling with F2</label>
-        <label xml:lang="de">Enable backward coupling with F2</label>
-      </variable>
-      <variable item="Enable backward coupling with F3" CV="146" mask="XXXXXVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable backward coupling with F3</label>
-        <label xml:lang="de">Enable backward coupling with F3</label>
-      </variable>
-      <variable item="Enable backward coupling with F4" CV="146" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable backward coupling with F4</label>
-        <label xml:lang="de">Enable backward coupling with F4</label>
-      </variable>
-      <variable item="Enable backward coupling with F5" CV="146" mask="XXXVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable backward coupling with F5</label>
-        <label xml:lang="de">Enable backward coupling with F5</label>
-      </variable>
-      <variable item="Enable backward coupling with F6" CV="146" mask="XXVXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable backward coupling with F6</label>
-        <label xml:lang="de">Enable backward coupling with F6</label>
-      </variable>
-      <variable item="Enable backward coupling with F7" CV="146" mask="XVXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable backward coupling with F7</label>
-        <label xml:lang="de">Enable backward coupling with F7</label>
-      </variable>
-      <variable item="Enable backward coupling with F8" CV="146" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable backward coupling with F8</label>
-        <label xml:lang="de">Enable backward coupling with F8</label>
-      </variable>
-      <variable CV="147" item="CKICK" default="30" tooltip="Range 0-255">
-        <decVal min="0" max="255"/>
-        <label>    Coupler kick duration</label>
-        <label xml:lang="de">CKICK</label>
-        <tooltip xml:lang="de">Range 0-255</tooltip>
-      </variable>
-      <variable CV="148" item="CMOVE" default="80" tooltip="Range 0-255">
-        <decVal min="0" max="255"/>
-        <label>    Decoupling movement</label>
-        <label xml:lang="de">CMOVE</label>
-        <tooltip xml:lang="de">Range 0-255</tooltip>
-      </variable>
+	  <xi:include href="http://jmri.org/xml/decoders/lenz/serviceNo_cv128.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/extendedCoupling_cv145_148.xml"/>
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="33"/>
     </resets>
   </decoder>
-  <pane>
-    <name>Lenz Extended Mapping</name>
-    <name xml:lang="de">Lenz Extended Mapping</name>
-    <column>
-      <label>
-        <text>F1 Forward/backward mapping.               </text>
-        <text xml:lang="de">F1 Forward/backward mapping.               </text>
-      </label>
-      <label>
-        <text> </text>
-      </label>
-      <row>
-        <column>
-          <row>
-            <label>
-              <text>Output</text>
-              <text xml:lang="de">Output</text>
-            </label>
-          </row>
-          <row>
-            <label>
-              <text>Function 1 forward</text>
-              <text xml:lang="de">Function 1 forward</text>
-            </label>
-          </row>
-          <row>
-            <label>
-              <text>Function 1 backward</text>
-              <text xml:lang="de">Function 1 backward</text>
-            </label>
-          </row>
-        </column>
-        <column>
-          <row>
-            <label>
-              <text>A</text>
-              <text xml:lang="de">A</text>
-            </label>
-          </row>
-          <row>
-            <display item="F1f controls output 1" format="checkbox" label=""/>
-          </row>
-          <row>
-            <display item="F1r controls output 1" format="checkbox" label=""/>
-          </row>
-        </column>
-        <column>
-          <row>
-            <label>
-              <text>B</text>
-              <text xml:lang="de">B</text>
-            </label>
-          </row>
-          <row>
-            <display item="F1f controls output 2" format="checkbox" label=""/>
-          </row>
-          <row>
-            <display item="F1r controls output 2" format="checkbox" label=""/>
-          </row>
-        </column>
-        <column>
-          <row>
-            <label>
-              <text>C</text>
-              <text xml:lang="de">C</text>
-            </label>
-          </row>
-          <row>
-            <display item="F1f controls output 3" format="checkbox" label=""/>
-          </row>
-          <row>
-            <display item="F1r controls output 3" format="checkbox" label=""/>
-          </row>
-        </column>
-        <column>
-          <row>
-            <label>
-              <text>D</text>
-              <text xml:lang="de">D</text>
-            </label>
-          </row>
-          <row>
-            <display item="F1f controls output 4" format="checkbox" label=""/>
-          </row>
-          <row>
-            <display item="F1r controls output 4" format="checkbox" label=""/>
-          </row>
-        </column>
-        <column>
-          <row>
-            <label>
-              <text>E</text>
-              <text xml:lang="de">E</text>
-            </label>
-          </row>
-          <row>
-            <display item="F1f controls output 5" format="checkbox" label=""/>
-          </row>
-          <row>
-            <display item="F1r controls output 5" format="checkbox" label=""/>
-          </row>
-        </column>
-        <column>
-          <row>
-            <label>
-              <text>F</text>
-              <text xml:lang="de">F</text>
-            </label>
-          </row>
-          <row>
-            <display item="F1f controls output 6" format="checkbox" label=""/>
-          </row>
-          <row>
-            <display item="F1r controls output 6" format="checkbox" label=""/>
-          </row>
-        </column>
-        <column>
-          <row>
-            <label>
-              <text>G</text>
-              <text xml:lang="de">G</text>
-            </label>
-          </row>
-          <row>
-            <display item="F1f controls output 7" format="checkbox" label=""/>
-          </row>
-          <row>
-            <display item="F1r controls output 7" format="checkbox" label=""/>
-          </row>
-        </column>
-        <column>
-          <row>
-            <label>
-              <text>H</text>
-              <text xml:lang="de">H</text>
-            </label>
-          </row>
-          <row>
-            <display item="F1f controls output 8" format="checkbox" label=""/>
-          </row>
-          <row>
-            <display item="F1r controls output 8" format="checkbox" label=""/>
-          </row>
-        </column>
-      </row>
-    </column>
-    <column>
-      <label>
-        <text>Select which function</text>
-        <text xml:lang="de">Select which function</text>
-      </label>
-      <label>
-        <text>which enables coupling control forward:</text>
-        <text xml:lang="de">which enables coupling control forward:</text>
-      </label>
-      <label>
-        <text> </text>
-      </label>
-      <display item="Enable forward coupling with F1" format="checkbox"/>
-      <display item="Enable forward coupling with F2" format="checkbox"/>
-      <display item="Enable forward coupling with F3" format="checkbox"/>
-      <display item="Enable forward coupling with F4" format="checkbox"/>
-      <display item="Enable forward coupling with F5" format="checkbox"/>
-      <display item="Enable forward coupling with F6" format="checkbox"/>
-      <display item="Enable forward coupling with F7" format="checkbox"/>
-      <display item="Enable forward coupling with F8" format="checkbox"/>
-      <label>
-        <text> </text>
-      </label>
-      <display item="CKICK"/>
-    </column>
-    <column>
-      <label>
-        <text>Select which function</text>
-        <text xml:lang="de">Select which function</text>
-      </label>
-      <label>
-        <text>which enables coupling control backward:</text>
-        <text xml:lang="de">which enables coupling control backward:</text>
-      </label>
-      <label>
-        <text> </text>
-      </label>
-      <display item="Enable backward coupling with F1" format="checkbox"/>
-      <display item="Enable backward coupling with F2" format="checkbox"/>
-      <display item="Enable backward coupling with F3" format="checkbox"/>
-      <display item="Enable backward coupling with F4" format="checkbox"/>
-      <display item="Enable backward coupling with F5" format="checkbox"/>
-      <display item="Enable backward coupling with F6" format="checkbox"/>
-      <display item="Enable backward coupling with F7" format="checkbox"/>
-      <display item="Enable backward coupling with F8" format="checkbox"/>
-      <label>
-        <text> </text>
-      </label>
-      <display item="CMOVE"/>
-    </column>
-  </pane>
+  
   <xi:include href="http://jmri.org/xml/decoders/lenz/paneFunctionMap.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/lenz/paneLenz.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/lenz/paneLighting.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/lenz/paneSUSI.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/lenz/paneExtendedCoupling.xml"/>
 </decoder-config>
