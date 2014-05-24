@@ -34,10 +34,10 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
 import jmri.util.StringUtil;
 import jmri.web.servlet.ServletUtil;
-import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
 import static jmri.web.servlet.ServletUtil.IMAGE_PNG;
-import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
 import static jmri.web.servlet.ServletUtil.UTF8;
+import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
+import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -232,7 +232,7 @@ public class RosterServlet extends HttpServlet {
             }
             StringBuilder builder = new StringBuilder();
             response.setContentType(UTF8_TEXT_HTML); // NOI18N
-            if (Roster.ALLENTRIES.equals(group)) {
+            if (Roster.AllEntries(request.getLocale()).equals(group)) {
                 group = null;
             }
             List<RosterEntry> entries = Roster.instance().getEntriesMatchingCriteria(
@@ -269,6 +269,9 @@ public class RosterServlet extends HttpServlet {
             }
             response.getWriter().print(builder.toString());
         } else {
+            if (group == null) {
+                group = Roster.AllEntries(request.getLocale());
+            }
             response.setContentType(UTF8_TEXT_HTML); // NOI18N
             response.getWriter().print(String.format(request.getLocale(),
                     FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Roster.html"))),
