@@ -48,7 +48,7 @@
   <variable CV="9" item="Total PWM Period" default="15" comment="Range 0-63">
 	<decVal min="0" max="63"/>
 	<label>Back EMF Repetition Rate (0-63)</label>
-	<label xml:lang="it">frequenza ripetizione retroazione EMF (0-63)</label>
+	<label xml:lang="it">Frequenza ripetizione retroazione EMF (0-63)</label>
 	<comment>Range 0-63</comment>
 	<label xml:lang="de">Wiederholrate der EMK (0-63)</label>
 	<comment xml:lang="de">Wertebereich 0-63</comment>

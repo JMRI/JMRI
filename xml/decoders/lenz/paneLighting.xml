@@ -50,10 +50,12 @@
         </label>
         <label>
           <text>The CV values on this page are unique in that each CV represents the lighting selection for two different outputs.</text>
+          <text xml:lang="it">I valori in questa pagina sono unici e ogni CV rappresenta l'effetto luci per due uscite</text>          
           <text xml:lang="de">Die Werte in den CV stellen die Lichteffekte für jeweils zwei Ausgänge ein.</text>
         </label>
         <label>
           <text>The tens digit of the value corresponds to one output, and the ones digit corresponds to the other output.</text>
+          <text xml:lang="it">Le decine corrispondono ad una uscita e le unità all'altra uscita</text>  
           <text xml:lang="de">Der Zehnerwert bestimmt den Wert für den einen Ausgang der Einerwert für den anderen.</text>
         </label>
         <label>
@@ -65,6 +67,7 @@
         </label>
         <label>
           <text>Example:  A value of 23 below results in a Gyra light at output B and a strobe at output A.</text>
+          <text xml:lang="it">Un valore di 23 ad esempio risulta come (Gyra light all'uscita B) e ( Lampeggiante all'uscita A)</text>
           <text xml:lang="de">Beipiel:  Der Wert 23 unten ergibt Gyralight am Ausgang B und Strobe (Blitz) am Ausgang A.</text>
         </label>
         <label>
@@ -80,10 +83,12 @@
         </label>
         <label>
           <text>The following lighting effects are</text>
+          <text xml:lang="it">I seguenti effetti luce</text>
           <text xml:lang="de">Folgende Lichteffekte sind</text>
         </label>
         <label>
           <text>available for outputs A and B</text>
+          <text xml:lang="it">sono disponibili per le uscite A e B</text>
           <text xml:lang="de">an den Ausgängen A und B verfügbar</text>
         </label>
         <label>
@@ -91,22 +96,27 @@
         </label>
         <label>
           <text>No effect    </text>
+          <text xml:lang="it">Nessun effetto</text>
           <text xml:lang="de">Kein Effekt    </text>
         </label>
         <label>
           <text>Mars light   </text>
+          <text xml:lang="it">Luci Mars</text>
           <text xml:lang="de">Marslight   </text>
         </label>
         <label>
           <text>Gyra light   </text>
           <text xml:lang="de">Gyralight   </text>
+          <text xml:lang="it">Gyra light   </text>
         </label>
         <label>
           <text>Strobe       </text>
+          <text xml:lang="it">Lampeggiante   </text>
           <text xml:lang="de">Strobe  (Blitz)     </text>
         </label>
         <label>
           <text>Double Strobe</text>
+           <text xml:lang="it">Doppio Lampeggiante   </text>
           <text xml:lang="de">Doublestrobe (Doppelblitz)</text>
         </label>
         <label>
@@ -124,10 +134,12 @@
         </label>
         <label>
           <text>Output B</text>
+           <text xml:lang="it">Uscita B </text>
           <text xml:lang="de">Ausgang B</text>
         </label>
         <label>
           <text> (Tens)</text>
+          <text xml:lang="it">(Decine) </text>
           <text xml:lang="de"> (Zehner)</text>
         </label>
         <label>
@@ -168,10 +180,12 @@
         </label>
         <label>
           <text>Output A</text>
+          <text xml:lang="it">Uscita A </text>
           <text xml:lang="de">Ausgang A</text>
         </label>
         <label>
           <text> (Ones)</text>
+          <text xml:lang="it">(Unità) </text>
           <text xml:lang="de"> (Einer)</text>
         </label>
         <label>
@@ -223,10 +237,12 @@
         </label>
         <label>
           <text>The following lighting effects are</text>
+          <text xml:lang="it">I seguenti effetti luce</text>
           <text xml:lang="de">Folgende Lichteffekte sind</text>
         </label>
         <label>
           <text>available for output D</text>
+          <text xml:lang="it">sono disponibili per l'uscita D</text>
           <text xml:lang="de">am Ausgang D verfügbar</text>
         </label>
         <label>
@@ -234,26 +250,32 @@
         </label>
         <label>
           <text>No effect                      </text>
+          <text xml:lang="it">Nessun effetto              </text>
           <text xml:lang="de">No effect                      </text>
         </label>
         <label>
           <text>Flashing with output C         </text>
+          <text xml:lang="it">Lampeggia con uscita C                            </text>
           <text xml:lang="de">Blinken im Gleichtakt zu Ausgang C         </text>
         </label>
         <label>
           <text>Flashing alternate to output C </text>
+          <text xml:lang="it">Lampeggia alternandosi con uscita C </text>
           <text xml:lang="de">Blinken im Gegentakt zu Ausgang C </text>
         </label>
         <label>
           <text>Flickering type 2 (less smooth)</text>
+          <text xml:lang="it">Luce tremolante tipo 2(agitata) </text>
           <text xml:lang="de">Flackern Typ 2 (unruhiger)</text>
         </label>
         <label>
           <text>Flickering type 3 (excitedly)  </text>
+          <text xml:lang="it">Luce tremolante tipo 3(eccitata) </text>
           <text xml:lang="de">Flackern Typ 3 (hektisch)  </text>
         </label>
         <label>
           <text>Dimming enabled                </text>
+          <text xml:lang="it">Abilita Luci smorzate    </text>
           <text xml:lang="de">Dimmen ein                </text>
         </label>
         <label>
@@ -271,10 +293,12 @@
         </label>
         <label>
           <text>Output D</text>
+          <text xml:lang="it">Uscita D</text>
           <text xml:lang="de">Ausgang D</text>
         </label>
         <label>
           <text> (Tens)</text>
+          <text xml:lang="it">(Decine)</text>
           <text xml:lang="de"> (Zehner)</text>
         </label>
         <label>
@@ -319,10 +343,12 @@
         </label>
         <label>
           <text>Output C</text>
+          <text xml:lang="it">Uscita C</text>
           <text xml:lang="de">Ausgang C</text>
         </label>
         <label>
           <text> (Ones)</text>
+          <text xml:lang="it">(Unità)</text>
           <text xml:lang="de"> (Einer)</text>
         </label>
         <label>
@@ -365,10 +391,12 @@
         </label>
         <label>
           <text>The following lighting effects are</text>
+          <text xml:lang="it">I seguenti effetti luce</text>
           <text xml:lang="de">Folgende Lichteffekte sind</text>
         </label>
         <label>
           <text>available for output C</text>
+          <text xml:lang="it">sono disponibili per l'uscita C</text>
           <text xml:lang="de">am Ausgang C verfügbar</text>
         </label>
         <label>
@@ -376,18 +404,22 @@
         </label>
         <label>
           <text>No effect                 </text>
+          <text xml:lang="it">Nessun effetto             </text>
           <text xml:lang="de">Kein Effekt                 </text>
         </label>
         <label>
           <text>Flashing                  </text>
+          <text xml:lang="it">Lampeggiante        </text>
           <text xml:lang="de">Blinken                  </text>
         </label>
         <label>
           <text>Flickering type 1 (smooth)</text>
+          <text xml:lang="it">Luce tremolante tipo 1(calma) </text>
           <text xml:lang="de">Flackern Typ 1 (ruhig)</text>
         </label>
         <label>
           <text>Dimming enabled           </text>
+           <text xml:lang="it">Abilita Luci smorzate    </text>
           <text xml:lang="de">Dimmen ein           </text>
         </label>
         <label>
