@@ -81,12 +81,15 @@
       </enumChoice>
       <enumChoice choice="2">
         <choice>2</choice>
+        <choice xml:lang="de">2</choice>
       </enumChoice>
       <enumChoice choice="3">
         <choice>3</choice>
+        <choice xml:lang="de">3</choice>
       </enumChoice>
       <enumChoice>
         <choice>4</choice>
+        <choice xml:lang="de">4</choice>
       </enumChoice>
     </enumVal>
     <label xml:lang="it">ID Costruttore: </label>

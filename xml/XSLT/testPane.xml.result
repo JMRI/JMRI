@@ -33,6 +33,7 @@
       <text>First line of text in attribute, with translations in label elements</text>
       <text xml:lang="it">Italian for 1st line</text>
       <text xml:lang="fr">French for 1st line</text>
+      <text xml:lang="de">German for 1st line</text>
     </label>
     <label>
       <text>Second line of text, without any translation in original file.</text>
@@ -42,11 +43,13 @@
       <text>Third line of text, as a label subelement</text>
       <text xml:lang="it">Italian for 3rd line</text>
       <text xml:lang="fr">French for 3rd line</text>
+      <text xml:lang="de">German for 3rd line</text>
     </label>
     <label>
       <text>Fourth line of text, as a text subelement</text>
       <text xml:lang="it">Italian for 4th line</text>
       <text xml:lang="fr">French for 4th line</text>
+      <text xml:lang="de">German for 4th line</text>
     </label>
     <label>
       <text>Fifth line of text, as only a label subelement without an attribute</text>

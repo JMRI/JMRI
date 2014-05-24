@@ -36,9 +36,20 @@
 <xsl:output method="xml" encoding="utf-8"/>
 
 <!--specific template match for enumChoice element with specific-language choice element -->
-    <xsl:template match="enumChoice[choice[@xml:lang = '&target;']]" priority="5">
+    <xsl:template match="enumChoice[choice[@xml:lang = '&target;']]" priority="6">
       <xsl:copy>
         <xsl:apply-templates select="@*|node()" />
+      </xsl:copy>
+    </xsl:template>
+
+<!--specific template match for enumChoice element with default-language choice element -->
+    <xsl:template match="enumChoice[choice]" priority="5">
+      <xsl:copy>
+        <xsl:apply-templates select="@*|*[not(self::choice[@xml:lang = '&target;'])]" />
+        <xsl:element name="choice">
+          <xsl:attribute name="xml:lang">&target;</xsl:attribute>
+          <xsl:value-of select="choice"/>
+        </xsl:element>
       </xsl:copy>
     </xsl:template>
 
