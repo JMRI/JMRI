@@ -334,7 +334,7 @@ public class TrainManifestHeaderText {
 			}
 		}
 		if (emts.getChild(Xml.LENGTH) != null) {
-			if ((a = emts.getChild(Xml.ROAD).getAttribute(Xml.LENGTH)) != null) {
+			if ((a = emts.getChild(Xml.LENGTH).getAttribute(Xml.TEXT)) != null) {
 				setStringHeader_Length(a.getValue());
 			}
 		}
