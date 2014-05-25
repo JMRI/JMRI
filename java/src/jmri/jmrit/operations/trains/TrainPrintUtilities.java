@@ -37,6 +37,8 @@ import jmri.util.davidflanagan.HardcopyWriter;
 public class TrainPrintUtilities {
 	
 	static final String NEW_LINE = "\n";	// NOI18N
+	static final char HORIZONTAL_LINE_SEPARATOR = '-'; // NOI18N
+	static final char VERTICAL_LINE_SEPARATOR = '|'; // NOI18N
 
 	/**
 	 * Print or preview a train manifest, build report, or switch list.
@@ -119,6 +121,28 @@ public class TrainPrintUtilities {
 					continue;
 				// printing the train manifest
 			} else {
+				// determine if there's a line separator
+				boolean horizontialLineSeparatorFound = true;
+				for (int i = 0; i < line.length(); i++) {
+					if (line.charAt(i) != HORIZONTAL_LINE_SEPARATOR) {
+						horizontialLineSeparatorFound = false;
+						break;
+					}
+				}
+				if (horizontialLineSeparatorFound) {
+					writer.write(writer.getCurrentLineNumber(), 0, writer.getCurrentLineNumber(), line.length());
+					c = null;
+					continue;
+				}
+				for (int i = 0; i < line.length(); i++) {
+					if (line.charAt(i) == VERTICAL_LINE_SEPARATOR) {
+						// make a frame (manifest two column format)
+						writer.write(writer.getCurrentLineNumber(), 0, writer.getCurrentLineNumber() + 1, 0);
+						writer.write(writer.getCurrentLineNumber(), i + 1, writer.getCurrentLineNumber() + 1, i + 1);
+						writer.write(writer.getCurrentLineNumber(), writer.getCharactersPerLine(), writer
+								.getCurrentLineNumber() + 1, writer.getCharactersPerLine());
+					}
+				}
 				// determine if line is a pickup or drop
 				if ((!Setup.getPickupEnginePrefix().equals("") && line.startsWith(Setup
 						.getPickupEnginePrefix()))

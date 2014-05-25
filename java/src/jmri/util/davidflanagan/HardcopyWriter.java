@@ -39,7 +39,7 @@ public class HardcopyWriter extends Writer {
 	protected String line;
 	protected int fontsize;
 	protected String time;
-	protected Dimension pagesize = new Dimension(612, 792);
+	protected Dimension pagesize = new Dimension(595, 841);
 	protected int pagedpi = 72;
 	protected Font font, headerfont;
 	protected String fontName = "Monospaced";
@@ -107,10 +107,10 @@ public class HardcopyWriter extends Writer {
 		if (landscape) {
 			pageAttributes.setOrientationRequested(PageAttributes.OrientationRequestedType.LANDSCAPE);
 			if (preview)
-				pagesize = new Dimension(792, 612);
+				pagesize = new Dimension(841, 595);
 		} else if (!printHeader && preview) {
 			// Paper size is 3.25 x 11 if there isn't a header
-			pagesize = new Dimension(290, 792);
+			pagesize = new Dimension(290, 841);
 		}
 
 		hardcopyWriter(frame, jobname, fontsize, leftmargin, rightmargin, topmargin, bottommargin, preview);

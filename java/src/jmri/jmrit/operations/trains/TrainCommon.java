@@ -1540,12 +1540,6 @@ public class TrainCommon {
 	}
 
 	private static int getLineLength(String orientation, int fontSize, String fontName) {
-		// page size has been adjusted to account for margins of .5
-		Dimension pagesize = new Dimension(540, 792); // Portrait
-		if (orientation.equals(Setup.LANDSCAPE))
-			pagesize = new Dimension(720, 612);
-		if (orientation.equals(Setup.HANDHELD))
-			pagesize = new Dimension(206, 792);
 		// Metrics don't always work for the various font names, so use
 		// Monospaced
 		Font font = new Font(fontName, Font.PLAIN, fontSize); // NOI18N
@@ -1554,7 +1548,7 @@ public class TrainCommon {
 		int charwidth = metrics.charWidth('m');
 
 		// compute lines and columns within margins
-		return pagesize.width / charwidth;
+		return getPageSize(orientation).width / charwidth;
 	}
 
 	private boolean checkStringLength(String string, boolean isManifest) {
@@ -1573,17 +1567,21 @@ public class TrainCommon {
 	 * @return true if string length is longer than page width
 	 */
 	private boolean checkStringLength(String string, String orientation, String fontName, int fontSize) {
-		// page size has been adjusted to account for margins of .5
-		Dimension pagesize = new Dimension(540, 792); // Portrait
-		if (orientation.equals(Setup.LANDSCAPE))
-			pagesize = new Dimension(720, 612);
-		if (orientation.equals(Setup.HANDHELD))
-			pagesize = new Dimension(206, 792);
 		Font font = new Font(fontName, Font.PLAIN, fontSize); // NOI18N
 		JLabel label = new JLabel();
 		FontMetrics metrics = label.getFontMetrics(font);
 		int stringWidth = metrics.stringWidth(string);
-		return stringWidth <= pagesize.width;
+		return stringWidth <= getPageSize(orientation).width;
+	}
+	
+	private static Dimension getPageSize(String orientation) {
+		// page size has been adjusted to account for margins of .5
+		Dimension pagesize = new Dimension(523, 769); // Portrait 8.5 x 11
+		if (orientation.equals(Setup.LANDSCAPE))
+			pagesize = new Dimension(769, 523);
+		if (orientation.equals(Setup.HANDHELD))
+			pagesize = new Dimension(206, 769);
+		return pagesize;
 	}
 
 	/**
