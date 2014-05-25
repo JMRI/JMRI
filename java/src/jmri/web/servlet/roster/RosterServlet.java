@@ -24,6 +24,7 @@ import static jmri.jmris.json.JSON.DECODER_FAMILY;
 import static jmri.jmris.json.JSON.DECODER_MODEL;
 import static jmri.jmris.json.JSON.GROUP;
 import static jmri.jmris.json.JSON.ID;
+import static jmri.jmris.json.JSON.LIST;
 import static jmri.jmris.json.JSON.MFG;
 import static jmri.jmris.json.JSON.NAME;
 import static jmri.jmris.json.JSON.NUMBER;
@@ -79,9 +80,15 @@ public class RosterServlet extends HttpServlet {
             this.doList(request, response, true);
         } else {
             // split the path after removing the leading /
-            String[] pathInfo = request.getPathInfo().substring(1).split("/");
-            if (pathInfo[0].equals("list")) {
+            String[] pathInfo = request.getPathInfo().substring(1).split("/"); // NOI18N
+            if (pathInfo[0].equals(LIST)) {
                 this.doList(request, response, false);
+            } else if (pathInfo[0].equals(GROUP)) {
+                if (pathInfo.length == 2) {
+                    this.doGroup(request, response, pathInfo[1]);
+                } else {
+                    this.doList(request, response, true);
+                }
             } else {
                 this.doEntry(request, response);
             }
@@ -101,6 +108,52 @@ public class RosterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         this.doGet(request, response);
+    }
+
+    /**
+     * Get a roster group.
+     *
+     * Lists roster entries in the specified group and return an XML document
+     * conforming to the JMRI JSON schema. This method can be passed multiple
+     * filters matching the filter in {@link jmri.jmrit.roster.Roster#getEntriesMatchingCriteria(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+     * }. <b>Note:</b> Any given filter can be specified only once.
+     *
+     * This method responds to the following GET URL patterns: <ul>
+     * <li>/roster/group/&lt;group%20name&gt;</li>
+     * <li>/roster/group/&lt;group%20name&gt;?filter=filter[&filter=filter]</li>
+     * </ul>
+     *
+     * This method responds to the POST URL
+     * <code>/roster/group/&lt;group%20name&gt;</code> with a JSON payload for
+     * the filter.
+     *
+     * @param request
+     * @param response
+     * @param group
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void doGroup(HttpServletRequest request, HttpServletResponse response, String group) throws ServletException, IOException {
+        log.debug("Getting group {}", group);
+        ObjectNode data;
+        if (request.getContentType() != null && request.getContentType().contains(UTF8_APPLICATION_JSON)) {
+            data = (ObjectNode) this.mapper.readTree(request.getReader());
+            if (data.path(DATA).isObject()) {
+                data = (ObjectNode) data.path(DATA);
+            }
+        } else {
+            data = this.mapper.createObjectNode();
+            for (String filter : request.getParameterMap().keySet()) {
+                if (filter.equals(ID)) {
+                    data.put(NAME, URLDecoder.decode(request.getParameter(filter), UTF8));
+                } else {
+                    data.put(filter, URLDecoder.decode(request.getParameter(filter), UTF8));
+                }
+            }
+        }
+        data.put(GROUP, URLDecoder.decode(group, UTF8));
+        log.debug("Getting roster with {}", data);
+        this.doRoster(request, response, data, true);
     }
 
     /**
@@ -125,24 +178,24 @@ public class RosterServlet extends HttpServlet {
      * @throws IOException
      */
     protected void doList(HttpServletRequest request, HttpServletResponse response, Boolean groups) throws ServletException, IOException {
-        JsonNode data;
+        ObjectNode data;
         if (request.getContentType() != null && request.getContentType().contains(UTF8_APPLICATION_JSON)) {
-            data = this.mapper.readTree(request.getReader());
-            if (!data.path(DATA).isMissingNode()) {
-                data = data.path(DATA);
+            data = (ObjectNode) this.mapper.readTree(request.getReader());
+            if (data.path(DATA).isObject()) {
+                data = (ObjectNode) data.path(DATA);
             }
         } else {
             data = this.mapper.createObjectNode();
             for (String filter : request.getParameterMap().keySet()) {
                 if (filter.equals(GROUP)) {
                     String group = URLDecoder.decode(request.getParameter(filter), UTF8);
-                    if (!group.equals(Roster.ALLENTRIES)) {
-                        ((ObjectNode) data).put(GROUP, group);
+                    if (!group.equals(Roster.AllEntries(request.getLocale()))) {
+                        data.put(GROUP, group);
                     }
                 } else if (filter.equals(ID)) {
-                    ((ObjectNode) data).put(NAME, URLDecoder.decode(request.getParameter(filter), UTF8));
+                    data.put(NAME, URLDecoder.decode(request.getParameter(filter), UTF8));
                 } else {
-                    ((ObjectNode) data).put(filter, URLDecoder.decode(request.getParameter(filter), UTF8));
+                    data.put(filter, URLDecoder.decode(request.getParameter(filter), UTF8));
                 }
             }
         }
@@ -217,9 +270,11 @@ public class RosterServlet extends HttpServlet {
      * @throws ServletException
      * @throws IOException
      */
-    void doRoster(HttpServletRequest request, HttpServletResponse response, JsonNode filter, Boolean groups) throws ServletException, IOException {
+    protected void doRoster(HttpServletRequest request, HttpServletResponse response, JsonNode filter, Boolean groups) throws ServletException, IOException {
         ServletUtil.getInstance().setNonCachingHeaders(response);
+        log.debug("Getting roster with filter {}", filter);
         String group = (!filter.path(GROUP).isMissingNode()) ? filter.path(GROUP).asText() : null;
+        log.debug("Group {} was in filter", group);
         if (JSON.JSON.equals(request.getParameter("format"))) { // NOI18N
             response.setContentType(UTF8_APPLICATION_JSON);
             response.getWriter().print(JsonUtil.getRoster(request.getLocale(), filter));
