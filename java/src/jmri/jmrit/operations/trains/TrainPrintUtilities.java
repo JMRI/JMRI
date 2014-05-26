@@ -67,15 +67,15 @@ public class TrainPrintUtilities {
 		Frame mFrame = new Frame();
 		boolean isLandScape = false;
 		boolean printHeader = true;
-		double leftmargin = .5;
+		double margin = .5;
 		if (orientation.equals(Setup.LANDSCAPE)) {
-			leftmargin = .75;
+			margin = .65;
 			isLandScape = true;
 		}
 		if (orientation.equals(Setup.HANDHELD))
 			printHeader = false;
 		try {
-			writer = new HardcopyWriter(mFrame, name, fontSize, leftmargin, .5, .5, .5,
+			writer = new HardcopyWriter(mFrame, name, fontSize, margin, margin, .5, .5,
 					isPreview, printerName, isLandScape, printHeader);
 		} catch (HardcopyWriter.PrintCanceledException ex) {
 			log.debug("Print cancelled");
