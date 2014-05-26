@@ -67,12 +67,15 @@ public class TrainPrintUtilities {
 		Frame mFrame = new Frame();
 		boolean isLandScape = false;
 		boolean printHeader = true;
-		if (orientation.equals(Setup.LANDSCAPE))
+		double leftmargin = .5;
+		if (orientation.equals(Setup.LANDSCAPE)) {
+			leftmargin = .75;
 			isLandScape = true;
+		}
 		if (orientation.equals(Setup.HANDHELD))
 			printHeader = false;
 		try {
-			writer = new HardcopyWriter(mFrame, name, fontSize, .5, .5, .5, .5,
+			writer = new HardcopyWriter(mFrame, name, fontSize, leftmargin, .5, .5, .5,
 					isPreview, printerName, isLandScape, printHeader);
 		} catch (HardcopyWriter.PrintCanceledException ex) {
 			log.debug("Print cancelled");
@@ -139,8 +142,8 @@ public class TrainPrintUtilities {
 						// make a frame (manifest two column format)
 						writer.write(writer.getCurrentLineNumber(), 0, writer.getCurrentLineNumber() + 1, 0);
 						writer.write(writer.getCurrentLineNumber(), i + 1, writer.getCurrentLineNumber() + 1, i + 1);
-						writer.write(writer.getCurrentLineNumber(), writer.getCharactersPerLine(), writer
-								.getCurrentLineNumber() + 1, writer.getCharactersPerLine());
+						writer.write(writer.getCurrentLineNumber(), line.length(), writer
+								.getCurrentLineNumber() + 1, line.length());
 					}
 				}
 				// determine if line is a pickup or drop

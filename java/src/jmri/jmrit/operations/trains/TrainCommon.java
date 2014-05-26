@@ -75,13 +75,14 @@ public class TrainCommon {
 		int lineLength = getLineLength(isManifest);
 		for (Engine engine : engineList) {
 			if (engine.getRouteLocation() == rl && !engine.getTrackName().equals("")) {
-				String s = padAndTruncateString(pickupEngine(engine).trim(), lineLength / 2, true) + VERTICAL_LINE_CHAR;
-				newLine(file, s, isManifest);
+				String s = padAndTruncateString(pickupEngine(engine).trim(), lineLength / 2, true);
+				s = padAndTruncateString(s + VERTICAL_LINE_CHAR, lineLength, true);	
+				addLine(file, s);
 			}
 			if (engine.getRouteDestination() == rl) {
 				String s = padAndTruncateString(tabString("", lineLength / 2, true) + VERTICAL_LINE_CHAR
 						+ dropEngine(engine).trim(), lineLength, true);
-				newLine(file, s, isManifest);
+				addLine(file, s);
 			}
 		}
 	}
@@ -370,7 +371,7 @@ public class TrainCommon {
 					return so;
 			}
 		}
-		return s + VERTICAL_LINE_CHAR;
+		return  padAndTruncateString(s + VERTICAL_LINE_CHAR, getLineLength(isManfest));
 	}
 
 	private String appendSetoutString(String s, List<Car> carList, RouteLocation rl, Car car, boolean isManifest) {
@@ -1147,15 +1148,18 @@ public class TrainCommon {
 																											// right!
 	}
 
+	/**
+	 * Two column header format.  Left side pick ups, right side set outs
+	 * @param file
+	 * @param isManifest
+	 */
 	public void printEngineHeader(PrintWriter file, boolean isManifest) {
 		if (!Setup.isPrintHeadersEnabled())
 			return;
 		int lineLength = getLineLength(isManifest);
 		printHorizontalLine(file, 0, lineLength);
 		String s = padAndTruncateString(getPickupEngineHeader(), lineLength / 2, true);
-		s = s + VERTICAL_LINE_CHAR + getDropEngineHeader();
-		if (s.length() > lineLength)
-			s = s.substring(0, lineLength);
+		s = padAndTruncateString(s + VERTICAL_LINE_CHAR + getDropEngineHeader(), lineLength, true);
 		addLine(file, s);
 		printHorizontalLine(file, 0, lineLength);
 	}
@@ -1179,7 +1183,7 @@ public class TrainCommon {
 	}
 
 	/**
-	 * Prints the two column header for cars
+	 * Prints the two column header for cars. Left side pick ups, right side set outs.
 	 * 
 	 * @param file
 	 * @param isManifest
@@ -1192,16 +1196,14 @@ public class TrainCommon {
 		// center pick up and set out text
 		String s = padAndTruncateString(tabString(Setup.getPickupCarPrefix(), lineLength / 4
 				- Setup.getPickupCarPrefix().length() / 2, true), lineLength / 2, true)
-				+ VERTICAL_LINE_CHAR
-				+ padAndTruncateString(tabString(Setup.getDropCarPrefix(), lineLength / 4
-						- Setup.getDropCarPrefix().length() / 2, true), lineLength / 2 - 1, true);
+				+ VERTICAL_LINE_CHAR + tabString(Setup.getDropCarPrefix(), lineLength / 4
+						- Setup.getDropCarPrefix().length() / 2, true);
+		s = padAndTruncateString (s, lineLength);
 		addLine(file, s);
 		printHorizontalLine(file, 0, lineLength);
 
-		s = padAndTruncateString(getPickupCarHeader(isManifest), lineLength / 2, true) + VERTICAL_LINE_CHAR
-				+ getDropCarHeader(isManifest);
-		if (s.length() > lineLength)
-			s = s.substring(0, lineLength);
+		s = padAndTruncateString(getPickupCarHeader(isManifest), lineLength / 2, true);
+		s = padAndTruncateString(s + VERTICAL_LINE_CHAR + getDropCarHeader(isManifest), lineLength, true);
 		addLine(file, s);
 		printHorizontalLine(file, 0, lineLength);
 	}
@@ -1576,11 +1578,12 @@ public class TrainCommon {
 	
 	private static Dimension getPageSize(String orientation) {
 		// page size has been adjusted to account for margins of .5
-		Dimension pagesize = new Dimension(523, 769); // Portrait 8.5 x 11
+		Dimension pagesize = new Dimension(523, 720); // Portrait 8.5 x 11
+		// landscape has a .7 left margin
 		if (orientation.equals(Setup.LANDSCAPE))
-			pagesize = new Dimension(769, 523);
+			pagesize = new Dimension(702, 523);
 		if (orientation.equals(Setup.HANDHELD))
-			pagesize = new Dimension(206, 769);
+			pagesize = new Dimension(206, 720);
 		return pagesize;
 	}
 
