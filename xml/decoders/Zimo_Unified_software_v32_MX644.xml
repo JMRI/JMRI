@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007 All rights reserved -->
 <!-- $Id: Zimo_MX640_v26.xml,v 1.0 2010/05/10 03:38:52 jacobsen Exp $ -->
@@ -28,8 +28,7 @@
   <!-- V 1 new file, MX644, which is MTC-21 pin socket version, Zimo document as MTC21 version of MX645, Nigel Cliffe. 27 May 2014  -->
   <decoder>
     <family name="Zimo Unified software (version 32+)" mfg="Zimo">
-
-	  <model model="MX644 version 32+" lowVersionID="32" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="222">
+      <model model="MX644 version 32+" lowVersionID="32" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="222">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -40,7 +39,6 @@
         <output name="8" label="FO 6"/>
         <size length="30" width="15" height="4" units="mm"/>
       </model>
-
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
@@ -50,19 +48,19 @@
       <!-- CV158 has both sound and Railcom information -->
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV158version32.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
-      <variable label="Decoder ID 1" CV="250" default="222" readOnly="yes">
+      <variable item="Decoder ID 1" CV="250" default="222" readOnly="yes">
         <decVal/>
         <label>Decoder ID 1</label>
       </variable>
-      <variable label="Decoder ID 2" CV="251" readOnly="yes">
+      <variable item="Decoder ID 2" CV="251" readOnly="yes">
         <decVal/>
         <label>Decoder ID 2</label>
       </variable>
-      <variable label="Decoder ID 3" CV="252" readOnly="yes">
+      <variable item="Decoder ID 3" CV="252" readOnly="yes">
         <decVal/>
         <label>Decoder ID 3</label>
       </variable>
-      <variable label="Decoder ID 4" CV="253" readOnly="yes">
+      <variable item="Decoder ID 4" CV="253" readOnly="yes">
         <decVal/>
         <label>Decoder ID 4</label>
       </variable>
@@ -76,7 +74,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV430-CV489.xml"/>
       <!-- more sound variables -->
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV500-CV603.xml"/>
-	  <xi:include href="http://jmri.org/xml/decoders/zimo/CV604-CV699.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV604-CV699.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV739-CV744oneSwitchIP.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV745-CV768.xml"/>
       <!-- end of more sound variables -->
