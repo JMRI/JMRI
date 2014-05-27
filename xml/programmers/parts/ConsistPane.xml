@@ -3,14 +3,17 @@
   <name>Consist</name>
   <name xml:lang="ca">Tracció-Múltiple [TM]</name>
   <name xml:lang="it">Consist (Multi-Trazione)</name>
+  <name xml:lang="de">Consist</name>
   <column>
     <row>
       <column>
         <display item="Consist Address" tooltip="Sets the multiple unit (consist) address">
           <tooltip xml:lang="it">Imposta Indirizzi per Unità Multiple</tooltip>
+          <tooltip xml:lang="de">Sets the multiple unit (consist) address</tooltip>
         </display>
         <display item="Consist Direction" tooltip="Sets the relative direction of the loco when consist is told to move forward">
           <tooltip xml:lang="it">Imposta Direzione relativa della Loco quando il gruppo di loco va in Avanti</tooltip>
+          <tooltip xml:lang="de">Sets the relative direction of the loco when consist is told to move forward</tooltip>
         </display>
       </column>
       <column>
@@ -21,18 +24,23 @@
       <column>
         <display item="Consist Acceleration Adjustment" tooltip="Sets additional acceleration rate information">
           <tooltip xml:lang="it">Imposta informazioni addizionali per l'accellerazione</tooltip>
+          <tooltip xml:lang="de">Sets additional acceleration rate information</tooltip>
         </display>
         <display item="Consist Acceleration Adjustment Sign" tooltip="Determines whether value is added to or subtracted from loco base acceleration rate">
           <tooltip xml:lang="it">Imposta se sommare o sottrarre valori dalla curva di accellerazione della loco</tooltip>
+          <tooltip xml:lang="de">Determines whether value is added to or subtracted from loco base acceleration rate</tooltip>
         </display>
         <display item="Consist Deceleration Adjustment" tooltip="Sets additional deceleration rate information">
           <tooltip xml:lang="it">Imposta informazioni addizionali per la decellerazione</tooltip>
+          <tooltip xml:lang="de">Sets additional deceleration rate information</tooltip>
         </display>
         <display item="Consist Deceleration Adjustment Sign" tooltip="Determines whether value is added to or subtracted from loco base deceleration rate">
           <tooltip xml:lang="it">Imposta se sommare o sottrarre valori dalla curva di decellerazione della loco</tooltip>
+          <tooltip xml:lang="de">Determines whether value is added to or subtracted from loco base deceleration rate</tooltip>
         </display>
         <display item="Consist Adjustments Active" tooltip="Enables the consist adjustments">
           <tooltip xml:lang="it">Abilita aggiustamenti del gruppo Consist</tooltip>
+          <tooltip xml:lang="de">Enables the consist adjustments</tooltip>
         </display>
         <display item="Consist Option 1">
           <tooltip xml:lang="it">Opzione Consist 1</tooltip>
@@ -51,16 +59,18 @@
     </label>
     <label>
       <text>Will decoder respond to function requests at consist address?</text>
-      <text xml:lang="it">Il decoder risponde alle Funzioni usando l'indirizzo di Consist?</text>
+      <text xml:lang="de">Will decoder respond to function requests at consist address?</text>
     </label>
     <label>
       <text> </text>
     </label>
     <display item="Consist Function" tooltip=" Sets functions to follow base address or consist address">
       <tooltip xml:lang="it">Imposta se comandi Funzioni seguono Indirizzo di Base o Indirizzo Consist</tooltip>
+      <tooltip xml:lang="de"> Sets functions to follow base address or consist address</tooltip>
     </display>
     <display item="Consist Function Mode" tooltip="Lighting mode for consist">
       <tooltip xml:lang="it">Modalità Luci per il Consist</tooltip>
+      <tooltip xml:lang="de">Lighting mode for consist</tooltip>
     </display>
     <label>
       <text> </text>
@@ -69,112 +79,147 @@
       <column>
         <display item="Consist Address Active For FL in Forward" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione Luci frontali in Avanti risponde all'indirizzo Multi-trazione</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <display item="Consist Address Active For FL in Reverse" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione Luci Frontali in Indietro risponde all'indirizzo Multi-trazione</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <display item="Consist Address Active For F0" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione F0 risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <display item="Consist Address Active For F1" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione F1 risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <display item="Consist Address Active For F2" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione F2 risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <display item="Consist Address Active For F3" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione F3 risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <display item="Consist Address Active For F4" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione F4 risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <display item="Consist Address Active For F5" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione F5 risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <display item="Consist Address Active For F6" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione F6 risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <display item="Consist Address Active For F7" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione F7 risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <display item="Consist Address Active For F8" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione F8 risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <display item="Consist Address Active For F9" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione F9 risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <!-- the next two are special for certain sound decoders, generally wont appear -->
         <display item="Consist Address Active For F9 in Forward" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <display item="Consist Address Active For F9 in Reverse" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <display item="Consist Address Active For F10" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <!-- the next two are special for certain sound decoders, generally wont appear -->
         <display item="Consist Address Active For F10 in Forward" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <display item="Consist Address Active For F10 in Reverse" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <display item="Consist Address Active For F11" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <display item="Consist Address Active For F12" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
       </column>
       <column>
         <display item="Consist Address Active For F13" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <display item="Consist Address Active For F14" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <display item="Consist Address Active For F15" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <display item="Consist Address Active For F16" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <display item="Consist Address Active For F17" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <display item="Consist Address Active For F18" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <display item="Consist Address Active For F19" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <display item="Consist Address Active For F20" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <display item="Consist Address Active For F21" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <display item="Consist Address Active For F22" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <display item="Consist Address Active For F23" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <display item="Consist Address Active For F24" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <display item="Consist Address Active For F25" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <display item="Consist Address Active For F26" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <display item="Consist Address Active For F27" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
         <display item="Consist Address Active For F28" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="de">Determines whether the function will respond to the consist address</tooltip>
         </display>
       </column>
     </row>

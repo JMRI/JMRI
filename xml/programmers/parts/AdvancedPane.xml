@@ -2,12 +2,16 @@
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
   <name>Advanced</name>
   <name xml:lang="ca">Avançat</name>
+  <name xml:lang="it">Avanzato</name>
+  <name xml:lang="de">Advanced</name>
   <column>
     <display item="Advanced Ack" tooltip="Enable advanced acknowledgment">
       <tooltip xml:lang="it">Enable advanced acknowledgment</tooltip>
+      <tooltip xml:lang="de">Enable advanced acknowledgment</tooltip>
     </display>
     <display item="Packet Time-out Value" tooltip="The maximum time period that the decoder will maintain its speed without receiving a valid packet addressed to it">
       <tooltip xml:lang="it">The maximum time period that the decoder will maintain its speed without receiving a valid packet addressed to it</tooltip>
+      <tooltip xml:lang="de">The maximum time period that the decoder will maintain its speed without receiving a valid packet addressed to it</tooltip>
     </display>
   </column>
   <column>
@@ -59,5 +63,4 @@
     <display item="Advanced Group 2 Option 19" format="checkbox"/>
     <display item="Advanced Group 2 Option 20" format="checkbox"/>
   </column>
-  <name xml:lang="it">Avanzato</name>
 </pane>

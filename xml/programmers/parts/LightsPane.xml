@@ -6,6 +6,8 @@
 <!-- Version 4 - added full items for functions 5 to 8			-->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
   <name>Lights</name>
+  <name xml:lang="it">Luci</name>
+  <name xml:lang="de">Lights</name>
   <column>
     <label>
       <text> </text>
@@ -126,7 +128,7 @@
     <display item="Function 5 check 2" format="checkbox"/>
     <display item="Function 5 check 3" format="checkbox"/>
     <display item="Function 5 check 4" format="checkbox"/>
-    <display item="Function 5 check 5" format="checkbox"/>		
+    <display item="Function 5 check 5" format="checkbox"/>
     <label>
       <text> </text>
     </label>
@@ -141,7 +143,7 @@
     <display item="Function 6 check 2" format="checkbox"/>
     <display item="Function 6 check 3" format="checkbox"/>
     <display item="Function 6 check 4" format="checkbox"/>
-    <display item="Function 6 check 5" format="checkbox"/>		
+    <display item="Function 6 check 5" format="checkbox"/>
     <label>
       <text> </text>
     </label>
@@ -156,7 +158,7 @@
     <display item="Function 7 check 2" format="checkbox"/>
     <display item="Function 7 check 3" format="checkbox"/>
     <display item="Function 7 check 4" format="checkbox"/>
-    <display item="Function 7 check 5" format="checkbox"/>		
+    <display item="Function 7 check 5" format="checkbox"/>
     <label>
       <text> </text>
     </label>
@@ -171,7 +173,7 @@
     <display item="Function 8 check 2" format="checkbox"/>
     <display item="Function 8 check 3" format="checkbox"/>
     <display item="Function 8 check 4" format="checkbox"/>
-    <display item="Function 8 check 5" format="checkbox"/>		
+    <display item="Function 8 check 5" format="checkbox"/>
     <label>
       <text> </text>
     </label>
@@ -272,5 +274,4 @@
     <display item="Output 10 effect generated"/>
     <display item="Output 10 behavior"/>
   </column>
-  <name xml:lang="it">Luci</name>
 </pane>

@@ -115,8 +115,8 @@ nmraWarrant="yes" nmraWarrantStart="200604"
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/vStartHighMid.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/accelDecel.xml"/>
-	  <xi:include href="http://jmri.org/xml/decoders/lenz/mfgVersionId_cv7_8.xml"/>
-	  <xi:include href="http://jmri.org/xml/decoders/lenz/bemfRep_cv9.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/mfgVersionId_cv7_8.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/bemfRep_cv9.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <!-- this were moved earlier to fix a Xerces XInclude bug that would not -->
       <!-- allow you to next inclusion of parts/enum-disabledEnabled.xml if it -->
@@ -124,13 +124,13 @@ nmraWarrant="yes" nmraWarrantStart="200604"
       <xi:include href="http://jmri.org/xml/decoders/lenz/braking_cv51.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/abc_cv51.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/railcom_cv28_29.xml"/>
-	  <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
-	  <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
-	  <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
-	  <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/protection_cv30.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/functionmap_plus.xml"/>
-	  <xi:include href="http://jmri.org/xml/decoders/lenz/motorControl_cv50.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/motorControl_cv50.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/lightingOptions2_cv55_56_116_118.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/fn_ctrl_57_59.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/lighting_cv60_cv64.xml"/>
@@ -138,15 +138,14 @@ nmraWarrant="yes" nmraWarrantStart="200604"
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/motorControl2_cv112_114.xml"/>
       <!-- CV115 not listed in Plus manual -->
-	  <xi:include href="http://jmri.org/xml/decoders/lenz/susi_cv126_127.xml"/>
-	  <xi:include href="http://jmri.org/xml/decoders/lenz/serviceNo_cv128.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/susi_cv126_127.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/serviceNo_cv128.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/extendedCoupling_cv145_148.xml"/>
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="33"/>
     </resets>
   </decoder>
-  
   <xi:include href="http://jmri.org/xml/decoders/lenz/paneFunctionMap.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/lenz/paneLenz.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/lenz/paneLighting.xml"/>
