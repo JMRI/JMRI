@@ -411,6 +411,9 @@
         <antcall target="-java-compile-internal">
             <param name="java.source.directory" value="${genjavasrcdir}"/>
         </antcall>
+        <copy todir="${target}/jmri" overwrite="true">
+            <fileset dir="${genjavasrcdir}/jmri" includes="*.properties"/>
+        </copy>
     </target>
 
 
