@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20140519-0717-heap on Mon May 19 17:17:39 EST 2014 $Id$-->
-  <decoderIndex version="386">
+  <!--Written by JMRI version 20140528-1041-heap on Wed May 28 20:41:53 EST 2014 $Id$-->
+  <decoderIndex version="394">
     <mfgList nmraListDate="2012-12-05" updated="2013-04-11" lastadd="106">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -2266,13 +2266,14 @@
       </family>
       <family name="ESU LokPilot V4.0" mfg="Electronic Solutions Ulm GmbH" file="ESU_LokPilotV4.0.xml">
         <model model="LokPilot V4.0" numOuts="105" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LPV4">
-          <output name="97" label="not|used" />
-          <output name="98" label="not|used" />
-          <output name="99" label="not|used" />
-          <output name="100" label="not|used" />
-          <output name="101" label="not|used" />
-          <output name="102" label="not|used" />
-          <output name="103" label="not|used" />
+          <output name="97" label="" />
+          <output name="98" label="" />
+          <output name="99" label="" />
+          <output name="100" label="" />
+          <output name="101" label="" />
+          <output name="102" label="" />
+          <output name="103" label="" />
+          <output name="104" label="" />
           <output name="105" label="Virtual|Drv Snd" />
           <size length="21.3" width="15.5" height="5.5" units="mm" />
           <!-- connector="NEM651, NEM 652, 21MTC, Plux12, wires" -->
@@ -2283,25 +2284,27 @@
           </protocols>
         </model>
         <model model="LokPilot DCC V4.0" numOuts="105" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LPV4DCC">
-          <output name="97" label="not|used" />
-          <output name="98" label="not|used" />
-          <output name="99" label="not|used" />
-          <output name="100" label="not|used" />
-          <output name="101" label="not|used" />
-          <output name="102" label="not|used" />
-          <output name="103" label="not|used" />
+          <output name="97" label="" />
+          <output name="98" label="" />
+          <output name="99" label="" />
+          <output name="100" label="" />
+          <output name="101" label="" />
+          <output name="102" label="" />
+          <output name="103" label="" />
+          <output name="104" label="" />
           <output name="105" label="Virtual|Drv Snd" />
           <size length="21.3" width="15.5" height="5.5" units="mm" />
           <!-- connector="NEM651, NEM 652, 21MTC" -->
         </model>
         <model model="LokPilot Micro V4.0" numOuts="105" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LPmV4">
-          <output name="97" label="not|used" />
-          <output name="98" label="not|used" />
-          <output name="99" label="not|used" />
-          <output name="100" label="not|used" />
-          <output name="101" label="not|used" />
-          <output name="102" label="not|used" />
-          <output name="103" label="not|used" />
+          <output name="97" label="" />
+          <output name="98" label="" />
+          <output name="99" label="" />
+          <output name="100" label="" />
+          <output name="101" label="" />
+          <output name="102" label="" />
+          <output name="103" label="" />
+          <output name="104" label="" />
           <output name="105" label="Virtual|Drv Snd" />
           <size length="10.5" width="5.8" height="2.8" units="mm" />
           <!-- connector="NEM651, NEM 652, Next18" -->
@@ -2312,33 +2315,35 @@
           </protocols>
         </model>
         <model model="LokPilot Micro DCC V4.0" numOuts="105" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LPmV4DCC">
-          <output name="97" label="not|used" />
-          <output name="98" label="not|used" />
-          <output name="99" label="not|used" />
-          <output name="100" label="not|used" />
-          <output name="101" label="not|used" />
-          <output name="102" label="not|used" />
-          <output name="103" label="not|used" />
+          <output name="97" label="" />
+          <output name="98" label="" />
+          <output name="99" label="" />
+          <output name="100" label="" />
+          <output name="101" label="" />
+          <output name="102" label="" />
+          <output name="103" label="" />
+          <output name="104" label="" />
           <output name="105" label="Virtual|Drv Snd" />
           <size length="10.5" width="5.8" height="2.8" units="mm" />
           <!-- connector="NEM651, Next18" -->
         </model>
         <model model="LokPilot Fx V4.0" numOuts="105" numFns="32" extFnsESU="yes" productID="LPfxV4">
-          <output name="65" label="not|used" />
-          <output name="66" label="not|used" />
-          <output name="67" label="not|used" />
-          <output name="68" label="not|used" />
-          <output name="69" label="not|used" />
-          <output name="70" label="not|used" />
-          <output name="71" label="not|used" />
-          <output name="72" label="not|used" />
-          <output name="97" label="not|used" />
-          <output name="98" label="not|used" />
-          <output name="99" label="not|used" />
-          <output name="100" label="not|used" />
-          <output name="101" label="not|used" />
-          <output name="102" label="not|used" />
-          <output name="103" label="not|used" />
+          <output name="65" label="" />
+          <output name="66" label="" />
+          <output name="67" label="" />
+          <output name="68" label="" />
+          <output name="69" label="" />
+          <output name="70" label="" />
+          <output name="71" label="" />
+          <output name="72" label="" />
+          <output name="97" label="" />
+          <output name="98" label="" />
+          <output name="99" label="" />
+          <output name="100" label="" />
+          <output name="101" label="" />
+          <output name="102" label="" />
+          <output name="103" label="" />
+          <output name="104" label="" />
           <output name="105" label="Virtual|Drv Snd" />
           <size length="17.5" width="15.5" height="5.5" units="mm" />
           <!-- connector="NEM651, 21MTC" -->
@@ -2349,13 +2354,14 @@
           </protocols>
         </model>
         <model model="LokPilot XL V4.0" numOuts="105" numFns="32" maxMotorCurrent="4A" extFnsESU="yes" productID="LPV4">
-          <output name="97" label="not|used" />
-          <output name="98" label="not|used" />
-          <output name="99" label="not|used" />
-          <output name="100" label="not|used" />
-          <output name="101" label="not|used" />
-          <output name="102" label="not|used" />
-          <output name="103" label="not|used" />
+          <output name="97" label="" />
+          <output name="98" label="" />
+          <output name="99" label="" />
+          <output name="100" label="" />
+          <output name="101" label="" />
+          <output name="102" label="" />
+          <output name="103" label="" />
+          <output name="104" label="" />
           <output name="105" label="Virtual|Drv Snd" />
           <size length="55" width="25" height="10" units="mm" />
           <!-- connector="screw terminals" -->
@@ -15630,6 +15636,19 @@
           <output name="10" label="FO 8 (+5v)" />
           <output name="11" label="FO 9 (+5v)" />
           <size length="32" width="15.5" height="6" units="mm" />
+        </model>
+      </family>
+      <family name="Zimo Unified software (version 32+)" mfg="Zimo" file="Zimo_Unified_software_v32_MX644.xml">
+        <model model="MX644 version 32+" lowVersionID="32" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="222">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <size length="30" width="15" height="4" units="mm" />
         </model>
       </family>
       <family name="Zimo Unified software (version 32+)" mfg="Zimo" file="Zimo_Unified_software_v32_MX645.xml">

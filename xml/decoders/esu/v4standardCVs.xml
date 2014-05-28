@@ -439,5 +439,4 @@
   </variable>
   <!-- Function Outputs -->
   <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutCVs.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/esu/v4fnMapCVs.xml"/>
 </variables>

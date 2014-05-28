@@ -91,11 +91,11 @@
       <!-- default padding for all grid items -->
         <griditem gridx="3" gridy="0">
           <display item="Sound Random Min" layout="above" label=""/>
-          <display item="Sound Random Min" format="hslider" layout="above" label="Min interval between sounds"/>
+          <display item="Sound Random Min" format="hslider" layout="above" label="Min time between sounds"/>
         </griditem>
         <griditem gridx="4" gridy="0">
           <display item="Sound Random Max" layout="above" label=""/>
-          <display item="Sound Random Max" format="hslider" layout="above" label="Max interval between sounds"/>
+          <display item="Sound Random Max" format="hslider" layout="above" label="Max time between sounds"/>
         </griditem>
       <griditem gridx="0" gridy="0" weightx="1" gridheight="REMAINDER" anchor="LINE_START">
         <!-- gridheight for full-depth row heading, weightx for right-justified row -->

@@ -34,7 +34,7 @@ import org.jdom.ProcessingInstruction;
 class LocoFile extends XmlFile {
 
     /**
-     * Convert to a cannonical text form for ComboBoxes, etc
+     * Convert to a canonical text form for ComboBoxes, etc
      */
     public String titleString() {
         return "no title form yet";
@@ -82,7 +82,8 @@ class LocoFile extends XmlFile {
 
                 cvObject = cvModel.allCvMap().get(name);
                 if (cvObject == null) {
-                    log.warn("CV "+name+" was in loco file, but not defined by the decoder definition");
+                    // need to disable this warning as ESU files do not generate CV entries until panel load time
+                    // log.warn("CV "+name+" was in loco file, but not defined by the decoder definition");
                     cvModel.addCV(name, false, false, false);
                     cvObject = cvModel.allCvMap().get(name);
                 }
