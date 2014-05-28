@@ -284,8 +284,8 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
 
 	public void propertyChange(PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
-					+ e.getNewValue());
+			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+					.getNewValue());
 		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)) {
 			updateList();
 			fireTableDataChanged();

@@ -54,6 +54,7 @@ public class TrainCommon {
 
 	protected static final boolean PICKUP = true;
 	protected static final boolean LOCAL = true;
+	protected static final boolean ENGINE = true;
 
 	CarManager carManager = CarManager.instance();
 	EngineManager engineManager = EngineManager.instance();
@@ -74,13 +75,14 @@ public class TrainCommon {
 		int lineLength = getLineLength(isManifest);
 		for (Engine engine : engineList) {
 			if (engine.getRouteLocation() == rl && !engine.getTrackName().equals("")) {
-				String s = padAndTruncateString(pickupEngine(engine).trim(), lineLength / 2, true) + VERTICAL_LINE_CHAR;
-				newLine(file, s, isManifest);
+				String s = padAndTruncateString(pickupEngine(engine).trim(), lineLength / 2, true);
+				s = padAndTruncateString(s + VERTICAL_LINE_CHAR, lineLength, true);	
+				addLine(file, s);
 			}
 			if (engine.getRouteDestination() == rl) {
 				String s = padAndTruncateString(tabString("", lineLength / 2, true) + VERTICAL_LINE_CHAR
 						+ dropEngine(engine).trim(), lineLength, true);
-				newLine(file, s, isManifest);
+				addLine(file, s);
 			}
 		}
 	}
@@ -369,7 +371,7 @@ public class TrainCommon {
 					return so;
 			}
 		}
-		return s + VERTICAL_LINE_CHAR;
+		return  padAndTruncateString(s + VERTICAL_LINE_CHAR, getLineLength(isManfest));
 	}
 
 	private String appendSetoutString(String s, List<Car> carList, RouteLocation rl, Car car, boolean isManifest) {
@@ -1146,15 +1148,18 @@ public class TrainCommon {
 																											// right!
 	}
 
+	/**
+	 * Two column header format.  Left side pick ups, right side set outs
+	 * @param file
+	 * @param isManifest
+	 */
 	public void printEngineHeader(PrintWriter file, boolean isManifest) {
 		if (!Setup.isPrintHeadersEnabled())
 			return;
 		int lineLength = getLineLength(isManifest);
 		printHorizontalLine(file, 0, lineLength);
 		String s = padAndTruncateString(getPickupEngineHeader(), lineLength / 2, true);
-		s = s + VERTICAL_LINE_CHAR + getDropEngineHeader();
-		if (s.length() > lineLength)
-			s = s.substring(0, lineLength);
+		s = padAndTruncateString(s + VERTICAL_LINE_CHAR + getDropEngineHeader(), lineLength, true);
 		addLine(file, s);
 		printHorizontalLine(file, 0, lineLength);
 	}
@@ -1178,7 +1183,7 @@ public class TrainCommon {
 	}
 
 	/**
-	 * Prints the two column header for cars
+	 * Prints the two column header for cars. Left side pick ups, right side set outs.
 	 * 
 	 * @param file
 	 * @param isManifest
@@ -1191,16 +1196,14 @@ public class TrainCommon {
 		// center pick up and set out text
 		String s = padAndTruncateString(tabString(Setup.getPickupCarPrefix(), lineLength / 4
 				- Setup.getPickupCarPrefix().length() / 2, true), lineLength / 2, true)
-				+ VERTICAL_LINE_CHAR
-				+ padAndTruncateString(tabString(Setup.getDropCarPrefix(), lineLength / 4
-						- Setup.getDropCarPrefix().length() / 2, true), lineLength / 2 - 1, true);
+				+ VERTICAL_LINE_CHAR + tabString(Setup.getDropCarPrefix(), lineLength / 4
+						- Setup.getDropCarPrefix().length() / 2, true);
+		s = padAndTruncateString (s, lineLength);
 		addLine(file, s);
 		printHorizontalLine(file, 0, lineLength);
 
-		s = padAndTruncateString(getPickupCarHeader(isManifest), lineLength / 2, true) + VERTICAL_LINE_CHAR
-				+ getDropCarHeader(isManifest);
-		if (s.length() > lineLength)
-			s = s.substring(0, lineLength);
+		s = padAndTruncateString(getPickupCarHeader(isManifest), lineLength / 2, true);
+		s = padAndTruncateString(s + VERTICAL_LINE_CHAR + getDropCarHeader(isManifest), lineLength, true);
 		addLine(file, s);
 		printHorizontalLine(file, 0, lineLength);
 	}
@@ -1236,35 +1239,35 @@ public class TrainCommon {
 	}
 
 	public String getPickupEngineHeader() {
-		return getHeader(Setup.getPickupEngineMessageFormat(), PICKUP, !LOCAL);
+		return getHeader(Setup.getPickupEngineMessageFormat(), PICKUP, !LOCAL, ENGINE);
 	}
 
 	public String getDropEngineHeader() {
-		return getHeader(Setup.getDropEngineMessageFormat(), !PICKUP, !LOCAL);
+		return getHeader(Setup.getDropEngineMessageFormat(), !PICKUP, !LOCAL, ENGINE);
 	}
 
 	public String getPickupCarHeader(boolean isManifest) {
 		if (isManifest)
-			return getHeader(Setup.getPickupCarMessageFormat(), PICKUP, !LOCAL);
+			return getHeader(Setup.getPickupCarMessageFormat(), PICKUP, !LOCAL, !ENGINE);
 		else
-			return getHeader(Setup.getSwitchListPickupCarMessageFormat(), PICKUP, !LOCAL);
+			return getHeader(Setup.getSwitchListPickupCarMessageFormat(), PICKUP, !LOCAL, !ENGINE);
 	}
 
 	public String getDropCarHeader(boolean isManifest) {
 		if (isManifest)
-			return getHeader(Setup.getDropCarMessageFormat(), !PICKUP, !LOCAL);
+			return getHeader(Setup.getDropCarMessageFormat(), !PICKUP, !LOCAL, !ENGINE);
 		else
-			return getHeader(Setup.getSwitchListDropCarMessageFormat(), !PICKUP, !LOCAL);
+			return getHeader(Setup.getSwitchListDropCarMessageFormat(), !PICKUP, !LOCAL, !ENGINE);
 	}
 
 	public String getLocalMoveHeader(boolean isManifest) {
 		if (isManifest)
-			return getHeader(Setup.getLocalMessageFormat(), !PICKUP, LOCAL);
+			return getHeader(Setup.getLocalMessageFormat(), !PICKUP, LOCAL, !ENGINE);
 		else
-			return getHeader(Setup.getSwitchListLocalMessageFormat(), !PICKUP, LOCAL);
+			return getHeader(Setup.getSwitchListLocalMessageFormat(), !PICKUP, LOCAL, !ENGINE);
 	}
 
-	private String getHeader(String[] format, boolean isPickup, boolean isLocal) {
+	private String getHeader(String[] format, boolean isPickup, boolean isLocal, boolean isEngine) {
 		StringBuffer buf = new StringBuffer();
 		for (String attribute : format) {
 			if (attribute.equals(Setup.NONE))
@@ -1273,8 +1276,12 @@ public class TrainCommon {
 				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Road(), CarRoads.instance()
 						.getCurMaxNameLength())
 						+ " ");
-			else if (attribute.equals(Setup.NUMBER))
+			else if (attribute.equals(Setup.NUMBER) && !isEngine)
 				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Number(),
+						Control.max_len_string_road_number - trimRoadNumber)
+						+ " ");
+			else if (attribute.equals(Setup.NUMBER) && isEngine)
+				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_EngineNumber(),
 						Control.max_len_string_road_number - trimRoadNumber)
 						+ " ");
 			else if (attribute.equals(Setup.TYPE))
@@ -1535,12 +1542,6 @@ public class TrainCommon {
 	}
 
 	private static int getLineLength(String orientation, int fontSize, String fontName) {
-		// page size has been adjusted to account for margins of .5
-		Dimension pagesize = new Dimension(540, 792); // Portrait
-		if (orientation.equals(Setup.LANDSCAPE))
-			pagesize = new Dimension(720, 612);
-		if (orientation.equals(Setup.HANDHELD))
-			pagesize = new Dimension(206, 792);
 		// Metrics don't always work for the various font names, so use
 		// Monospaced
 		Font font = new Font(fontName, Font.PLAIN, fontSize); // NOI18N
@@ -1549,7 +1550,7 @@ public class TrainCommon {
 		int charwidth = metrics.charWidth('m');
 
 		// compute lines and columns within margins
-		return pagesize.width / charwidth;
+		return getPageSize(orientation).width / charwidth;
 	}
 
 	private boolean checkStringLength(String string, boolean isManifest) {
@@ -1568,17 +1569,22 @@ public class TrainCommon {
 	 * @return true if string length is longer than page width
 	 */
 	private boolean checkStringLength(String string, String orientation, String fontName, int fontSize) {
-		// page size has been adjusted to account for margins of .5
-		Dimension pagesize = new Dimension(540, 792); // Portrait
-		if (orientation.equals(Setup.LANDSCAPE))
-			pagesize = new Dimension(720, 612);
-		if (orientation.equals(Setup.HANDHELD))
-			pagesize = new Dimension(206, 792);
 		Font font = new Font(fontName, Font.PLAIN, fontSize); // NOI18N
 		JLabel label = new JLabel();
 		FontMetrics metrics = label.getFontMetrics(font);
 		int stringWidth = metrics.stringWidth(string);
-		return stringWidth <= pagesize.width;
+		return stringWidth <= getPageSize(orientation).width;
+	}
+	
+	private static Dimension getPageSize(String orientation) {
+		// page size has been adjusted to account for margins of .5
+		Dimension pagesize = new Dimension(523, 720); // Portrait 8.5 x 11
+		// landscape has a .65 margins
+		if (orientation.equals(Setup.LANDSCAPE))
+			pagesize = new Dimension(702, 523);
+		if (orientation.equals(Setup.HANDHELD))
+			pagesize = new Dimension(206, 720);
+		return pagesize;
 	}
 
 	/**

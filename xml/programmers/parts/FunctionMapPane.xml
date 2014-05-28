@@ -2,12 +2,14 @@
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
   <name>Function Map</name>
   <name xml:lang="ca">Mapejat de funcions</name>
+  <name xml:lang="it">Mappa Funzioni</name>
+  <name xml:lang="de">Function Map</name>
   <column>
     <row>
       <column>
         <label>
           <text>Use this sheet to determine which functions will control which outputs</text>
-          <text xml:lang="it">Usa questo Pannello per associare le uscite alle Funzioni</text>
+          <text xml:lang="de">Use this sheet to determine which functions will control which outputs</text>
         </label>
         <label>
           <text> </text>
@@ -24,5 +26,4 @@
       <display item="Function Map Option 1"/>
     </row>
   </column>
-  <name xml:lang="it">Mappa Funzioni</name>
 </pane>

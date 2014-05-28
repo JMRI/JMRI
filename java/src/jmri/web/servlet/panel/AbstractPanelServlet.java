@@ -25,6 +25,9 @@ import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
 import jmri.web.server.WebServer;
 import jmri.web.servlet.ServletUtil;
+import static jmri.web.servlet.ServletUtil.IMAGE_PNG;
+import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
+import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
 import org.jdom.Attribute;
 import org.jdom.Element;
 import org.slf4j.Logger;
@@ -38,8 +41,6 @@ abstract class AbstractPanelServlet extends HttpServlet {
 
     protected ObjectMapper mapper;
     private static final long serialVersionUID = 3134679703461026038L;
-    protected static final String JSON_CONTENT_TYPE = "application/json; charset=utf-8";
-    protected static final String XML_CONTENT_TYPE = "application/xml; charset=utf-8";
     static Logger log = LoggerFactory.getLogger(AbstractPanelServlet.class.getName());
 
     abstract protected String getPanelType();
@@ -67,7 +68,7 @@ abstract class AbstractPanelServlet extends HttpServlet {
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     ImageIO.write(panel, "png", baos);
                     baos.close();
-                    response.setContentType("image/png");
+                    response.setContentType(IMAGE_PNG);
                     response.setStatus(HttpServletResponse.SC_OK);
                     response.setContentLength(baos.size());
                     response.getOutputStream().write(baos.toByteArray());
@@ -77,7 +78,7 @@ abstract class AbstractPanelServlet extends HttpServlet {
                 this.listPanels(request, response);
             } else {
                 boolean useXML = (!JSON.JSON.equals(request.getParameter("format")));
-                response.setContentType(XML_CONTENT_TYPE);
+                response.setContentType(UTF8_APPLICATION_JSON);
                 String panel = getPanelText(panelName, useXML);
                 if (panel == null) {
                     response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "See the JMRI console for details.");
@@ -94,13 +95,13 @@ abstract class AbstractPanelServlet extends HttpServlet {
 
     protected void listPanels(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (JSON.JSON.equals(request.getParameter("format"))) {
-            response.setContentType("application/json"); // NOI18N
+            response.setContentType(UTF8_APPLICATION_JSON);
             ServletUtil.getInstance().setNonCachingHeaders(response);
             response.getWriter().print(JsonUtil.getPanels(request.getLocale(), JSON.XML));
         } else if (JSON.XML.equals(request.getParameter("format"))) {
             response.sendRedirect("/xmlio/list?type=panel");
         } else {
-            response.setContentType("text/html"); // NOI18N
+            response.setContentType(UTF8_TEXT_HTML);
             response.getWriter().print(String.format(request.getLocale(),
                     FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Panel.html"))),
                     String.format(request.getLocale(),

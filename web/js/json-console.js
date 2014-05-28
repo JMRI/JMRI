@@ -52,10 +52,79 @@ $(document).ready(function() {
                         $("#sendCmd").removeClass("btn-success").addClass("btn-primary");
                     },
                     1000);
-            if (window.console) {
-                window.console.log("Heartbeat response received.");
+            jmri.log("Heartbeat response received.");
+        },
+        /*
+         * Hide the reconnecting dialog on a successful automatic reconnection.
+         */
+        didReconnect: function() {
+            $('#modal-websocket-reconnecting').modal("hide");
+        },
+        /*
+         * Show a reconnecting dialog if a websocket fails. This dialog, defined
+         * in NavBar.html, will be maintained until a successful reconnection or
+         * user's manual action to dismiss.
+         */
+        willReconnect: function(attempts, milliseconds) {
+            $('#modal-websocket-reconnecting').modal("show");
+            $('#modal-websocket-reconnecting-attempts').text(attempts);
+            trigger = milliseconds;
+            if (milliseconds >= 120000) {
+                $('#modal-websocket-reconnecting-next').text("in " + parseInt(milliseconds / 60000) + " minutes");
+                milliseconds = milliseconds - 60000;
+                trigger = 60000;
+            } else if (milliseconds >= 70000) {
+                $('#modal-websocket-reconnecting-next').text("in 1 minute");
+                milliseconds = milliseconds - 10000;
+                trigger = 10000;
+            } else if (milliseconds >= 60000) {
+                $('#modal-websocket-reconnecting-next').text("in 1 minute");
+                milliseconds = milliseconds - 10000;
+                trigger = 1000;
+            } else if (milliseconds >= 2000) {
+                $('#modal-websocket-reconnecting-next').text("in " + parseInt(milliseconds / 1000) + " seconds");
+                milliseconds = milliseconds - 1000;
+                trigger = 1000;
+            } else if (milliseconds >= 1000) {
+                $('#modal-websocket-reconnecting-next').text("in 1 second");
+                milliseconds = milliseconds - 1000;
+                trigger = 1000;
+            } else {
+                $('#modal-websocket-reconnecting-next').text("now");
+                trigger = -1;
             }
+            if (trigger > 0) {
+                setTimeout(
+                        function() {
+                            /* Change "jmri" to the name of your JMRI object */
+                            jmri.willReconnect(attempts, milliseconds);
+                        }, trigger);
+            }
+        },
+        /*
+         * Modify the reconnecting dialog if a successful reconnection did not
+         * happen within an hour of the initial failure.
+         */
+        failedReconnect: function() {
+            $('#modal-websocket-reconnecting-attempt').removeClass("show").addClass("hide");
+            $('#modal-websocket-reconnecting-failed').removeClass("hide").addClass("show");
+            $('#modal-websocket-reconnecting-now').removeClass("show").addClass("hide");
+            $('#modal-websocket-reconnecting-reload').removeClass("btn-danger").addClass("btn-primary");
         }
+    });
+    /*
+     * Enable the reconnect now button in the reconnecting dialog.
+     */
+    $('#modal-websocket-reconnecting-now').click(function(event) {
+        nbJmri.reconnect();
+        $('#modal-websocket-reconnecting').addClass('hide').removeClass('show');
+    });
+    /*
+     * Enable the reload page button in the reconnecting dialog.
+     */
+    $('#modal-websocket-reconnecting-reload').click(function(event) {
+        location.reload(false);
+        $('#modal-websocket-reconnecting').addClass('hide').removeClass('show');
     });
     $('input#clearConsole').click(function() {
         $('div#console').empty(); //clear the console

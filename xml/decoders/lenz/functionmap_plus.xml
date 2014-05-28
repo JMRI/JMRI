@@ -37,6 +37,7 @@
   <variable CV="33" mask="XXXXXXXV" item="FL(f) controls output 1" default="1" minOut="1" minFn="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(f) controls output A</label>
+    <label xml:lang="it">Luci in avanti controlla uscita A</label>
     <label xml:lang="de">FL(f) steuert Ausgang A</label>
   </variable>
   <variable CV="33" mask="XXXXXXVX" item="FL(f) controls output 2" minOut="2" minFn="0">

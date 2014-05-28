@@ -24,6 +24,9 @@ import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.FileUtil;
 import jmri.web.server.WebServer;
 import jmri.web.servlet.ServletUtil;
+import static jmri.web.servlet.ServletUtil.APPLICATION_JSON;
+import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
+import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,7 +87,7 @@ public class OperationsServlet extends HttpServlet {
 
     protected void processTrains(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (JSON.JSON.equals(request.getParameter("format"))) {
-            response.setContentType("application/json"); // NOI18N
+            response.setContentType(UTF8_APPLICATION_JSON);
             ServletUtil.getInstance().setNonCachingHeaders(response);
             try {
                 response.getWriter().print(JsonUtil.getTrains(request.getLocale()));
@@ -93,7 +96,7 @@ public class OperationsServlet extends HttpServlet {
                 response.sendError(code, (new ObjectMapper()).writeValueAsString(ex.getJsonMessage()));
             }
         } else if ("html".equals(request.getParameter("format"))) {
-            response.setContentType("text/html"); // NOI18N
+            response.setContentType(UTF8_TEXT_HTML);
             ServletUtil.getInstance().setNonCachingHeaders(response);
             boolean showAll = ("all".equals(request.getParameter("show")));
             StringBuilder html = new StringBuilder();
@@ -116,7 +119,7 @@ public class OperationsServlet extends HttpServlet {
             }
             response.getWriter().print(html.toString());
         } else {
-            response.setContentType("text/html"); // NOI18N
+            response.setContentType(UTF8_TEXT_HTML);
             response.getWriter().print(String.format(request.getLocale(),
                     FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Operations.html"))),
                     String.format(request.getLocale(),
@@ -138,7 +141,7 @@ public class OperationsServlet extends HttpServlet {
             log.debug("Getting manifest HTML code for train {}", id);
             HtmlManifest manifest = new HtmlManifest(request.getLocale(), train);
             ServletUtil.getInstance().setNonCachingHeaders(response);
-            response.setContentType("text/html"); // NOI18N
+            response.setContentType(UTF8_TEXT_HTML);
             response.getWriter().print(String.format(request.getLocale(),
                     FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "ManifestSnippet.html"))),
                     train.getIconName(),
@@ -156,11 +159,11 @@ public class OperationsServlet extends HttpServlet {
                 ((ObjectNode) manifest).put(JSON.IMAGE_FILE_NAME, WebServer.URIforPortablePath(FileUtil.getPortableFilename(manifest.path(JSON.IMAGE_FILE_NAME).asText())));
             }
             String content = this.mapper.writeValueAsString(manifest);
-            response.setContentType(ServletUtil.APPLICATION_JSON);
+            response.setContentType(ServletUtil.UTF8_APPLICATION_JSON);
             response.setContentLength(content.length());
             response.getWriter().print(content);
         } else {
-            response.setContentType("text/html"); // NOI18N
+            response.setContentType(UTF8_TEXT_HTML);
             response.getWriter().print(String.format(request.getLocale(),
                     FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Operations.html"))),
                     String.format(request.getLocale(),
@@ -183,7 +186,7 @@ public class OperationsServlet extends HttpServlet {
     private void processConductor(String id, HttpServletRequest request, HttpServletResponse response) throws IOException {
         Train train = TrainManager.instance().getTrainById(id);
         JsonNode data;
-        if (request.getContentType() != null && request.getContentType().contains("application/json")) {
+        if (request.getContentType() != null && request.getContentType().contains(APPLICATION_JSON)) {
             data = this.mapper.readTree(request.getReader());
             if (!data.path(DATA).isMissingNode()) {
                 data = data.path(DATA);
@@ -204,10 +207,10 @@ public class OperationsServlet extends HttpServlet {
             log.debug("Getting conductor HTML code for train {}", id);
             HtmlConductor conductor = new HtmlConductor(request.getLocale(), train);
             ServletUtil.getInstance().setNonCachingHeaders(response);
-            response.setContentType("text/html"); // NOI18N
+            response.setContentType(UTF8_TEXT_HTML);
             response.getWriter().print(conductor.getLocation());
         } else {
-            response.setContentType("text/html"); // NOI18N
+            response.setContentType(UTF8_TEXT_HTML);
             response.getWriter().print(String.format(request.getLocale(),
                     FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Operations.html"))),
                     String.format(request.getLocale(),

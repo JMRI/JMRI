@@ -268,6 +268,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		toolMenu.add(new TrackCopyAction(this));
 		toolMenu.add(new ChangeTracksTypeAction(this));
 		toolMenu.add(new ModifyLocationsAction(Bundle.getMessage("TitleModifyLocation"), _location));
+		toolMenu.add(new ShowTrainsServingLocationAction(Bundle.getMessage("MenuItemShowTrainsLocation"), _location, null));
 		toolMenu.add(new ShowCarsByLocationAction(false, locationName, null));
 		if (Setup.isVsdPhysicalLocationEnabled())
 			toolMenu.add(new SetPhysicalLocationAction(Bundle.getMessage("MenuSetPhysicalLocation"), _location));
@@ -675,8 +676,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
-					+ e.getNewValue());
+			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+					.getNewValue());
 		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(EngineTypes.ENGINETYPES_LENGTH_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY)) {

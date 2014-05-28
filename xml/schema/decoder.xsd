@@ -160,6 +160,15 @@
     </xs:unique>
   </xs:element>
 
+  <xs:element name="group" type="PaneGenericGroupType">
+    <xs:annotation>
+      <xs:documentation>
+      Provides a base element that can be used in "group" fragment files, those
+      little files that are XIncluded into primary decoder files.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
   <xs:element name="enumVal" type="EnumValType">
     <xs:annotation>
       <xs:documentation>

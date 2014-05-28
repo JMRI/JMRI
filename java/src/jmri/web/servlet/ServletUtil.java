@@ -22,6 +22,9 @@ public class ServletUtil {
     public static final String APPLICATION_XML = "application/xml"; // NOI18N
     public static final String IMAGE_PNG = "image/png"; // NOI18N
     public static final String TEXT_HTML = "text/html"; // NOI18N
+    public static final String UTF8_APPLICATION_JSON = APPLICATION_JSON + "; charset=utf-8"; // NOI18N
+    public static final String UTF8_APPLICATION_XML = APPLICATION_XML + "; charset=utf-8"; // NOI18N
+    public static final String UTF8_TEXT_HTML = TEXT_HTML + "; charset=utf-8"; // NOI18N
 
     public String getRailroadName(boolean inComments) {
         if (inComments) {

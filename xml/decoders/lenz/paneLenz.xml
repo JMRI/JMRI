@@ -155,6 +155,7 @@
         </label>
         <label>
           <text>Tip: Constant Braking only works when momementum is enabled, and when not in switching gear</text>
+          <text xml:lang="it">Nota: frenata costante funziona solo se è abilitata l'inerzia e non in velocità da manovra</text>
           <text xml:lang="de">Hinweis: Konstanter Bremsweg funktioniert nur wenn "Anfahr- / Bremsverzögerung" eingeschaltet und der Rangiergang ausgeschaltet ist.</text>
         </label>
         <label>

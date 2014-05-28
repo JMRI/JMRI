@@ -458,8 +458,9 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 	}
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		log.debug("CarsAttributeFrame sees propertyChange " + e.getPropertyName() + " old: " + e.getOldValue()
-				+ " new: " + e.getNewValue()); // NOI18N
+		if (Control.showProperty && log.isDebugEnabled())
+			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+					.getNewValue());
 		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY))
 			CarRoads.instance().updateComboBox(comboBox);
 		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY))

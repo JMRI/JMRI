@@ -2,16 +2,79 @@
 
 package jmri.jmrit.operations.rollingstock;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+
+import javax.swing.BoxLayout;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import jmri.jmrit.operations.setup.Control;
+import jmri.util.FileUtil;
 
 /**
  * Provides common routes for importing cars and locomotives
+ * 
  * @author Dan Boudreau Copyright (C) 2013
  * @version $Revision: 24463 $
  */
 public class ImportRollingStock extends Thread {
 
 	protected static final String NEW_LINE = "\n"; // NOI18N
+
+	protected JLabel lineNumber = new JLabel();
+	protected JLabel importLine = new JLabel();
+
+	protected jmri.util.JmriJFrame fstatus;
+
+	// Get file to read from
+	protected File getFile() {
+		JFileChooser fc = new JFileChooser(FileUtil.getUserFilesPath());
+		fc.addChoosableFileFilter(new ImportFilter());
+		int retVal = fc.showOpenDialog(null);
+		if (retVal != JFileChooser.APPROVE_OPTION)
+			return null; // canceled
+		if (fc.getSelectedFile() == null)
+			return null; // canceled
+		File file = fc.getSelectedFile();
+		return file;
+	}
+	
+	protected BufferedReader getBufferedReader(File file) {
+		BufferedReader in = null;
+		try {
+			in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8")); // NOI18N
+		} catch (FileNotFoundException e) {
+			return null;
+		} catch (UnsupportedEncodingException e) {
+			log.error("UTF-8 encoding not supported");
+			return null;
+		}
+		return in;
+	}
+
+	// create a status frame showing line number and imported text
+	protected void createStatusFrame(String title) {
+		JPanel ps = new JPanel();
+		ps.setLayout(new BoxLayout(ps, BoxLayout.Y_AXIS));
+		fstatus = new jmri.util.JmriJFrame(title);
+		fstatus.setLocation(10, 10);
+		fstatus.setSize(Control.tablePanelWidth, 100);
+
+		ps.add(lineNumber);
+		ps.add(importLine);
+
+		fstatus.getContentPane().add(ps);
+		fstatus.setVisible(true);
+	}
 
 	protected String[] parseCommaLine(String line, int arraySize) {
 		String[] outLine = new String[arraySize];
@@ -68,4 +131,6 @@ public class ImportRollingStock extends Thread {
 			return Bundle.getMessage("Text&CSV");
 		}
 	}
+
+	static Logger log = LoggerFactory.getLogger(ImportRollingStock.class.getName());
 }

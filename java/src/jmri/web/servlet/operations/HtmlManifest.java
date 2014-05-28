@@ -463,6 +463,8 @@ public class HtmlManifest extends HtmlTrainCommon {
                         strings.getProperty(this.resourcePrefix + "Validity"),
                         getDate((new ISO8601DateFormat()).parse(this.getJsonManifest().path(JSON.DATE).textValue())));
             }
+        } catch (NullPointerException ex) {
+            log.warn("Manifest for train {} (id {}) does not have any validity.", this.train.getIconName(), this.train.getId());
         } catch (ParseException ex) {
             log.error("Date of JSON manifest could not be parsed as a Date.");
         } catch (IOException ex) {

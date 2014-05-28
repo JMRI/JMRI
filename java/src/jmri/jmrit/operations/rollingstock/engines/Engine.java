@@ -24,7 +24,7 @@ public class Engine extends RollingStock {
 
 	public Engine(String road, String number) {
 		super(road, number);
-		log.debug("New loco " + road + " " + number);
+		log.debug("New engine ({} {})", road, number);
 		addPropertyChangeListeners();
 	}
 
@@ -108,7 +108,7 @@ public class Engine extends RollingStock {
 		if (!length.equals(_length)) {
 			if (_lengthChange) // return "old" length, used for track reserve changes
 				return _length;
-			log.debug("Loco " + toString() + " length has been modified");
+			log.debug("Loco ({}) length has been modified", toString());
 			super.setLength(length); // adjust track lengths
 		}
 		return length;
@@ -189,8 +189,7 @@ public class Engine extends RollingStock {
 			if (getConsist() == null || (getConsist() != null && getConsist().isLead(this))) {
 				if (getTrain() != null && getRouteLocation() != getRouteDestination()
 						&& getTrain().getLeadEngine() != this) {
-					log.debug("New lead locomotive (" + toString() + ") for train "
-							+ getTrain().getName());
+					log.debug("New lead locomotive ({}) for train ({})", toString(), getTrain().getName());
 					getTrain().setLeadEngine(this);
 					getTrain().createTrainIcon();
 				}

@@ -26,7 +26,7 @@ public class TrainSchedule {
 	protected List<String> _trainIds = new ArrayList<String>();
 
 	public TrainSchedule(String id, String name) {
-		log.debug("New train schedule, name: " + name + " id: " + id);
+		log.debug("New train schedule ({}) id: {}", name, id);
 		_name = name;
 		_id = id;
 	}
@@ -131,9 +131,8 @@ public class TrainSchedule {
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("schedule (" + getName() + ") sees property change: " + e.getPropertyName()
-					+ " from (" + e.getSource() + ") old: " + e.getOldValue() + " new: " // NOI18N
-					+ e.getNewValue());
+			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+					.getNewValue());
 	}
 
 	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
@@ -151,7 +150,6 @@ public class TrainSchedule {
 		pcs.firePropertyChange(p, old, n);
 	}
 
-	static Logger log = LoggerFactory.getLogger(TrainSchedule.class
-			.getName());
+	static Logger log = LoggerFactory.getLogger(TrainSchedule.class.getName());
 
 }

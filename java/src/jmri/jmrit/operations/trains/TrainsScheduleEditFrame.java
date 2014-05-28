@@ -100,7 +100,9 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
 	}
 	
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		log.debug ("TrainsScheduleEditFrame sees propertyChange "+e.getPropertyName()+" old: "+e.getOldValue()+" new: "+e.getNewValue());
+		if (Control.showProperty && log.isDebugEnabled())
+			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+					.getNewValue());
 		trainScheduleManager.updateComboBox(comboBox);
 	}
 

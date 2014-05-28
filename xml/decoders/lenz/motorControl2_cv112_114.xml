@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012 All rights reserved -->
+<!-- $Id: accelDecel.xml 22090 2012-12-29 02:30:04Z jacobsen $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2012</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+    </author>
+	<author>
+      <personname>
+        <firstname>Bernd (Ba)</firstname>
+        <surname>Wisotzki</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>6</revnumber>
+      <date>2014-05-18</date>
+      <authorinitials>Ba</authorinitials>
+      <revremark>Initial release as separate file</revremark>
+    </revision>
+    <revision>
+      <revnumber>5</revnumber>
+      <date>2005-08-14</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Revision in original Lenz_Gold.xml file</revremark>
+    </revision>
+  </revhistory>
+  <!-- Add Your the "includes" here -->
+  <variable CV="112" tooltip="Duration of motor timeout t = value * 16 ms" item="Motor Timeout" default="16" comment="Range 0-255">
+	<decVal min="0" max="255"/>
+	<label>Motor timeout on loss of DCC</label>
+	<label xml:lang="it">Timeout Motore per mancanza di DCC</label>
+	<comment>Range 0-255</comment>
+	<comment xml:lang="it">Valori da 0 a 255</comment>
+	<label xml:lang="de">Motor Timeout bei nicht vorhandenem DCC</label>
+	<comment xml:lang="de">Wertebereich 0-255</comment>
+	<tooltip xml:lang="de">Motor Timeout t = Wert * 16 ms</tooltip>
+  </variable>
+  <variable CV="113" item="Minimum PWM Value" default="40" comment="Range 0-255">
+	<decVal min="0" max="255"/>
+	<label>Minimum PWM (Types 4, 5 only)</label>
+	<label xml:lang="it">PWM Minino (solo tipi 4 e 5)</label>
+	<comment>Range 0-255</comment>
+	<comment xml:lang="it">Valori da 0 a 255</comment>
+	<label xml:lang="de">Miniamler PWM Wert (Motortyp 4 und 5) (0-255)</label>
+	<comment xml:lang="de">Wertebereich 0-255</comment>
+  </variable>
+  <variable CV="114" item="Motor Duty Cycle" default="10" comment="Range 0-255">
+	<decVal min="0" max="255"/>
+	<label>Duty Cycle (Types 4, 5 only)</label>
+	<label xml:lang="it">Tempo di Ciclo (solo tipi 4 e 5)</label>
+	<comment>Range 0-255</comment>
+	<comment xml:lang="it">Valori da 0 a 255</comment>
+	<label xml:lang="de">Motor Duty Cycle (Motortyp 4 und 5) (0-255)</label>
+	<comment xml:lang="de">Wertebereich 0-255</comment>
+  </variable>
+  
+</variables>

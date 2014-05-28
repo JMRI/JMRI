@@ -17,7 +17,7 @@ public class Kernel extends RollingStockGroup{
 	
 	public Kernel(String name){
 		super(name);
-		log.debug("New Kernel (" + name +")");
+		log.debug("New Kernel ({})", name);
 	}
 	
 	public List<Car> getCars(){

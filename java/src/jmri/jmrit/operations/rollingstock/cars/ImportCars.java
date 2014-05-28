@@ -7,25 +7,17 @@ import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
 
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.ImportRollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.util.FileUtil;
 
 /**
  * This routine will import cars into the operation database.
@@ -38,9 +30,6 @@ import jmri.util.FileUtil;
 public class ImportCars extends ImportRollingStock {
 
 	CarManager manager = CarManager.instance();
-
-	javax.swing.JLabel textLine = new javax.swing.JLabel();
-	javax.swing.JLabel lineNumber = new javax.swing.JLabel();
 
 	private int weightResults = JOptionPane.NO_OPTION; // Automatically calculate weight for car if weight entry is not
 														// found
@@ -66,38 +55,14 @@ public class ImportCars extends ImportRollingStock {
 
 	// we use a thread so the status frame will work!
 	public void run() {
-		// Get file to read from
-		JFileChooser fc = new JFileChooser(FileUtil.getUserFilesPath());
-		fc.addChoosableFileFilter(new ImportFilter());
-		int retVal = fc.showOpenDialog(null);
-		if (retVal != JFileChooser.APPROVE_OPTION)
-			return; // canceled
-		if (fc.getSelectedFile() == null)
-			return; // canceled
-		File file = fc.getSelectedFile();
-		BufferedReader in = null;
-		try {
-			in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8")); // NOI18N
-		} catch (FileNotFoundException e) {
+		File file = getFile();
+		if (file == null)
 			return;
-		} catch (UnsupportedEncodingException e) {
-			log.error("UTF-8 encoding not supported");
+		BufferedReader in = getBufferedReader(file);
+		if (in == null)
 			return;
-		}
 
-		// create a status frame
-		JPanel ps = new JPanel();
-		jmri.util.JmriJFrame fstatus = new jmri.util.JmriJFrame(Bundle.getMessage("ImportCars"));
-		fstatus.setLocationRelativeTo(null);
-		fstatus.setSize(200, 100);
-
-		ps.add(textLine);
-		ps.add(lineNumber);
-		fstatus.getContentPane().add(ps);
-		textLine.setText(Bundle.getMessage("LineNumber"));
-		textLine.setVisible(true);
-		lineNumber.setVisible(true);
-		fstatus.setVisible(true);
+		createStatusFrame(Bundle.getMessage("ImportCars"));
 
 		// Now read the input file
 		boolean importOkay = false;
@@ -125,7 +90,7 @@ public class ImportCars extends ImportRollingStock {
 		}
 
 		while (true) {
-			lineNumber.setText(Integer.toString(++lineNum));
+			lineNumber.setText(Bundle.getMessage("LineNumber") + " " + Integer.toString(++lineNum));
 			try {
 				line = in.readLine();
 			} catch (IOException e) {
@@ -145,6 +110,8 @@ public class ImportCars extends ImportRollingStock {
 			if (log.isDebugEnabled()) {
 				log.debug("Import: " + line);
 			}
+			importLine.setText(line);
+
 			if (line.startsWith(Bundle.getMessage("Number"))) {
 				continue; // skip header
 			}

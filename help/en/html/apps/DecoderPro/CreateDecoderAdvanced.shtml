@@ -365,12 +365,29 @@ variable has a too-low value:
       &lt;/qualifier&gt;
     &lt;/label&gt;
 </pre>
-
-Once you've read the Version Number (variable or CV) from the decoder,
-this label will display iff that version number is too low.  Note
-that initially, before the values are read from the decoder, this 
-display will depend on the default value from the file, which might
-be misleading to the user.
+<p>
+  You can use the same qualifier for multiple elements by enclosing the elements in a
+  "group" element and adding the qualifier to the "group" element:
+</p>
+<pre>
+    &lt;group&gt;
+      &lt;qualifier&gt;
+        &lt;variableref&gt;Version Number&lt;/variableref&gt;
+        &lt;relation&gt;lt&lt;/relation&gt;
+        &lt;value&gt;3&lt;/value&gt;
+      &lt;/qualifier&gt;
+      &lt;label label="Version number too low!"/&gt;
+      &lt;label label=" "/&gt;
+      &lt;label label="Please update."/&gt;
+    &lt;/group&gt;
+</pre>
+<p>
+  Once you've read the Version Number (variable or CV) from the decoder,
+  the label(s) will display iff that version number is too low.  Note
+  that initially, before the values are read from the decoder, this 
+  display will depend on the default value from the file, which might
+  be misleading to the user.
+</p>
 
 
 <!--#include virtual="/Footer" -->

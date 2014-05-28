@@ -25,7 +25,7 @@ import javax.swing.*;
 public class TrackDestinationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
 	Track _track = null;
-	
+
 	LocationManager locationManager = LocationManager.instance();
 
 	// panels
@@ -134,9 +134,9 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 		} else {
 			enableButtons(false);
 		}
-		
+
 		updateDestinations();
-		
+
 		locationManager.addPropertyChangeListener(this);
 
 		// build menu
@@ -180,7 +180,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 		}
 		updateDestinations();
 	}
-	
+
 	private void updateDestinations() {
 		log.debug("Update destinations");
 		panelDestinations.removeAll();
@@ -198,7 +198,8 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 			addCheckBoxAction(cb);
 			if (destinationsAll.isSelected()) {
 				cb.setSelected(true);
-			} else if (_track != null && _track.acceptsDestination(loc) ^ _track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS)) {
+			} else if (_track != null && _track.acceptsDestination(loc)
+					^ _track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS)) {
 				cb.setSelected(true);
 			}
 		}
@@ -228,8 +229,8 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
-					+ e.getNewValue()); // NOI18N
+			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+					.getNewValue());
 		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)) {
 			updateDestinations();
 		}

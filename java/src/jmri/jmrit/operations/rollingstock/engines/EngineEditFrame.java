@@ -617,7 +617,9 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 	}
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		log.debug("EngineEditFrame sees propertyChange " + e.getPropertyName() + " " + e.getNewValue());
+		if (Control.showProperty && log.isDebugEnabled())
+			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+					.getNewValue());
 		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY)) {
 			CarRoads.instance().updateComboBox(roadComboBox);
 			if (_engine != null)

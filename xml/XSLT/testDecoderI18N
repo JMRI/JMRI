@@ -1,0 +1,23 @@
+#! /bin/csh
+
+#
+# Check the operation of putting decoders in normal, then I18N form
+#
+# Uses the tmp directory
+#
+# Known to work on Mac OS X, expected to work on Linux, Windows situation not clear.
+#
+#  Bob Jacobsen 3/2014
+# 
+mkdir tmp >& /dev/null
+
+rm -f tmp/testDecoder.xml
+
+./normalizeDecoder testDecoder.xml
+
+mv tmp/testDecoder.xml /tmp/testDecoderI18N.xml
+
+./i18nDecoder /tmp/testDecoderI18N.xml
+
+diff testDecoderI18N.xml.result tmp/testDecoderI18N.xml
+

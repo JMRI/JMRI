@@ -13,6 +13,7 @@ public class TrainManifestHeaderText {
 	
 	private static String road = Bundle.getMessage("Road"); // the supported message format options
 	private static String number = Bundle.getMessage("Number");
+	private static String engine_number = Bundle.getMessage("Number");
 	private static String type = Bundle.getMessage("Type");
 	private static String model = Bundle.getMessage("Model");
 	private static String length = Bundle.getMessage("Length");
@@ -47,6 +48,14 @@ public class TrainManifestHeaderText {
 
 	public static void setStringHeader_Number(String s) {
 		number = s;
+	}
+	
+	public static String getStringHeader_EngineNumber() {
+		return engine_number;
+	}
+
+	public static void setStringHeader_EngineNumber(String s) {
+		engine_number = s;
 	}
 	
 	public static String getStringHeader_Type() {
@@ -210,6 +219,10 @@ public class TrainManifestHeaderText {
 			e.addContent(values = new Element(Xml.NUMBER));
 			values.setAttribute(Xml.TEXT, getStringHeader_Number());
 		}
+		if (!getStringHeader_EngineNumber().equals(Bundle.getMessage("Number"))) {
+			e.addContent(values = new Element(Xml.ENGINE_NUMBER));
+			values.setAttribute(Xml.TEXT, getStringHeader_EngineNumber());
+		}
 		if (!getStringHeader_Type().equals(Bundle.getMessage("Type"))) {
 			e.addContent(values = new Element(Xml.TYPE));
 			values.setAttribute(Xml.TEXT, getStringHeader_Type());
@@ -305,6 +318,11 @@ public class TrainManifestHeaderText {
 				setStringHeader_Number(a.getValue());
 			}
 		}
+		if (emts.getChild(Xml.ENGINE_NUMBER) != null) {
+			if ((a = emts.getChild(Xml.ENGINE_NUMBER).getAttribute(Xml.TEXT)) != null) {
+				setStringHeader_EngineNumber(a.getValue());
+			}
+		}
 		if (emts.getChild(Xml.TYPE) != null) {
 			if ((a = emts.getChild(Xml.TYPE).getAttribute(Xml.TEXT)) != null) {
 				setStringHeader_Type(a.getValue());
@@ -316,7 +334,7 @@ public class TrainManifestHeaderText {
 			}
 		}
 		if (emts.getChild(Xml.LENGTH) != null) {
-			if ((a = emts.getChild(Xml.ROAD).getAttribute(Xml.LENGTH)) != null) {
+			if ((a = emts.getChild(Xml.LENGTH).getAttribute(Xml.TEXT)) != null) {
 				setStringHeader_Length(a.getValue());
 			}
 		}

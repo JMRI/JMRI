@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jmri.util.FileUtil;
 import jmri.web.servlet.ServletUtil;
+import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
 
 /**
  *
@@ -16,7 +17,7 @@ public class HomeServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
-        response.setContentType("text/html"); // NOI18N
+        response.setContentType(UTF8_TEXT_HTML);
         response.getWriter().print(String.format(request.getLocale(),
                 FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Home.html"))),
                 ServletUtil.getInstance().getRailroadName(false),

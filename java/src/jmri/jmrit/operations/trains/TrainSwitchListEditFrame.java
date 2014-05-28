@@ -512,8 +512,8 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 
 	public void propertyChange(PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue()); // NOI18N
+			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+					.getNewValue());
 		if (e.getPropertyName().equals(Location.SWITCHLIST_CHANGED_PROPERTY)) {
 			changeLocationCheckboxes(e);
 			enableChangeButtons();

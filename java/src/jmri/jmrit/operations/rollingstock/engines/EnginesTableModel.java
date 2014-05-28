@@ -26,8 +26,7 @@ import jmri.util.table.ButtonRenderer;
  * @author Daniel Boudreau Copyright (C) 2008, 2012
  * @version $Revision$
  */
-public class EnginesTableModel extends javax.swing.table.AbstractTableModel implements
-		PropertyChangeListener {
+public class EnginesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
 	EngineManager manager = EngineManager.instance(); // There is only one manager
 
@@ -210,9 +209,9 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 		_frame = frame;
 		initTable();
 	}
-	
+
 	// Engines frame table column widths (12), starts with Number column and ends with Edit
-	private int[] _enginesTableColumnWidths = {60, 60, 65, 65, 35, 75, 190, 190, 65, 50, 65, 70};
+	private int[] _enginesTableColumnWidths = { 60, 60, 65, 65, 35, 75, 190, 190, 65, 50, 65, 70 };
 
 	void initTable() {
 		// Install the button handlers
@@ -479,8 +478,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 
 	public void propertyChange(PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue()); // NOI18N
+			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+					.getNewValue());
 		if (e.getPropertyName().equals(EngineManager.LISTLENGTH_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(EngineManager.CONSISTLISTLENGTH_CHANGED_PROPERTY)) {
 			updateList();

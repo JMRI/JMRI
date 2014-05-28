@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
 import javax.swing.JOptionPane;
@@ -19,11 +20,11 @@ import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.jmrit.symbolicprog.SymbolicProgBundle;
 import jmri.util.FileUtil;
 import jmri.util.StringUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.ProcessingInstruction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Roster manages and manipulates a roster of locomotives. <P> It works with the
@@ -1048,6 +1049,16 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     public final static String ALLENTRIES = Bundle.getMessage("ALLENTRIES");
     // initialize logging
     static Logger log = LoggerFactory.getLogger(Roster.class.getName());
+
+    /**
+     * Get the identifier for all entries in the roster.
+     *
+     * @param locale - The desired locale
+     * @return "All Entries" in the specified locale
+     */
+    public static String AllEntries(Locale locale) {
+        return Bundle.getMessage(locale, "ALLENTRIES"); // NOI18N
+    }
 
     /**
      * Get the default roster group.

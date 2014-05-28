@@ -71,5 +71,5 @@ function hideEmptyColumns(selector) {
 
 //-----------------------------------------javascript processing starts here (main) ---------------------------------------------
 $(document).ready(function() {
-    getTrains(getParameterByName("group"));
+    getTrains($("html").data("roster-group"));
 });

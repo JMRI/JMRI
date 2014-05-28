@@ -48,7 +48,7 @@ public class Route implements java.beans.PropertyChangeListener {
 	public static final String ERROR = Bundle.getMessage("Error");
 
 	public Route(String id, String name) {
-		log.debug("New route " + name + " " + id);
+		log.debug("New route ({}) id: {}", name, id);
 		_name = name;
 		_id = id;
 	}
@@ -400,9 +400,8 @@ public class Route implements java.beans.PropertyChangeListener {
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("route (" + getName() + ") sees property change: " + e.getPropertyName() + " from ("
-					+ e.getSource() + ") old: " + e.getOldValue() + " new: " // NOI18N
-					+ e.getNewValue());
+			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+					.getNewValue());
 		// forward drops, pick ups, train direction, and max moves as a list change
 		if (e.getPropertyName().equals(RouteLocation.DROP_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(RouteLocation.PICKUP_CHANGED_PROPERTY)

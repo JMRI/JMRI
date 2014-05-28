@@ -187,25 +187,26 @@ public class Xml {
 	// TrainManifestHeaderText.jafa
 	static final String MANIFEST_HEADER_TEXT_STRINGS = "manifestHeaderTextStrings"; // NOI18N
 	static final String ROAD = "road"; // the supported message format options NOI18N 
-	static final String NUMBER = "number";
-	static final String TYPE = "type";
-	static final String MODEL = "model";
-	static final String LENGTH = "length";
-	static final String LOAD = "load";
-	static final String COLOR = "color";
-	static final String TRACK = "track";
-	//static final String DESTINATION = "destination";
-	static final String DEST_TRACK = "dest_Track";
-	//static final String FINAL_DEST = "Final_Dest";
-	static final String FINAL_DEST_TRACK = "fd_Track";
-	//static final String LOCATION = "location";
-	static final String CONSIST = "consist";
-	static final String KERNEL = "kernel";
-	static final String OWNER = "owner";
-	static final String RWE = "rwe";
-	//static final String COMMENT = "Comment";
-	static final String DROP_COMMENT = "setOut_msg";
-	static final String PICKUP_COMMENT = "pickUp_msg";
-	static final String HAZARDOUS = "hazardous";
+	static final String NUMBER = "number"; // NOI18N
+	static final String ENGINE_NUMBER = "engineNumber"; // NOI18N
+	static final String TYPE = "type"; // NOI18N
+	static final String MODEL = "model"; // NOI18N
+	static final String LENGTH = "length"; // NOI18N
+	static final String LOAD = "load"; // NOI18N
+	static final String COLOR = "color"; // NOI18N
+	static final String TRACK = "track"; // NOI18N
+	//static final String DESTINATION = "destination"; // NOI18N
+	static final String DEST_TRACK = "dest_Track"; // NOI18N
+	//static final String FINAL_DEST = "Final_Dest"; // NOI18N
+	static final String FINAL_DEST_TRACK = "fd_Track"; // NOI18N
+	//static final String LOCATION = "location"; // NOI18N
+	static final String CONSIST = "consist"; // NOI18N
+	static final String KERNEL = "kernel"; // NOI18N
+	static final String OWNER = "owner"; // NOI18N
+	static final String RWE = "rwe"; // NOI18N
+	//static final String COMMENT = "Comment"; // NOI18N
+	static final String DROP_COMMENT = "setOut_msg"; // NOI18N
+	static final String PICKUP_COMMENT = "pickUp_msg"; // NOI18N
+	static final String HAZARDOUS = "hazardous"; // NOI18N
 	
 }

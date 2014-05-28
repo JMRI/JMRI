@@ -38,6 +38,7 @@ public class EditManifestHeaderTextFrame extends OperationsFrame {
 	// car and engine attributes
 	JTextField road_TextField = new JTextField(25);
 	JTextField number_TextField = new JTextField(25);
+	JTextField engineNumber_TextField = new JTextField(25);
 	JTextField type_TextField = new JTextField(25);
 	JTextField length_TextField = new JTextField(25);
 	JTextField owner_TextField = new JTextField(25);
@@ -84,10 +85,18 @@ public class EditManifestHeaderTextFrame extends OperationsFrame {
 		pManifest.add(pRoad_TextField);
 
 		JPanel pNumber_TextField = new JPanel();
-		pNumber_TextField.setBorder(BorderFactory.createTitledBorder(rb.getString("Number")));
+		pNumber_TextField.setBorder(BorderFactory.createTitledBorder(rb.getString("Number") + " ("
+				+ rb.getString("Car") + ")"));
 		pNumber_TextField.add(number_TextField);
 		number_TextField.setText(TrainManifestHeaderText.getStringHeader_Number());
 		pManifest.add(pNumber_TextField);
+
+		JPanel pEngineNumber_TextField = new JPanel();
+		pEngineNumber_TextField.setBorder(BorderFactory.createTitledBorder(rb.getString("Number") + " ("
+				+ rb.getString("Loco") + ")"));
+		pEngineNumber_TextField.add(engineNumber_TextField);
+		engineNumber_TextField.setText(TrainManifestHeaderText.getStringHeader_EngineNumber());
+		pManifest.add(pEngineNumber_TextField);
 		
 		JPanel pType_TextField = new JPanel();
 		pType_TextField.setBorder(BorderFactory.createTitledBorder(rb.getString("Type")));
@@ -235,6 +244,7 @@ public class EditManifestHeaderTextFrame extends OperationsFrame {
 		if (ae.getSource() == resetButton) {
 			road_TextField.setText(rb.getString("Road"));
 			number_TextField.setText(rb.getString("Number"));
+			engineNumber_TextField.setText(rb.getString("Number"));
 			type_TextField.setText(rb.getString("Type"));
 			length_TextField.setText(rb.getString("Length"));
 			owner_TextField.setText(rb.getString("Owner"));
@@ -261,6 +271,7 @@ public class EditManifestHeaderTextFrame extends OperationsFrame {
 			// car and engine attributes
 			TrainManifestHeaderText.setStringHeader_Road(road_TextField.getText());
 			TrainManifestHeaderText.setStringHeader_Number(number_TextField.getText());
+			TrainManifestHeaderText.setStringHeader_EngineNumber(engineNumber_TextField.getText());
 			TrainManifestHeaderText.setStringHeader_Type(type_TextField.getText());
 			TrainManifestHeaderText.setStringHeader_Length(length_TextField.getText());
 			TrainManifestHeaderText.setStringHeader_Owner(owner_TextField.getText());

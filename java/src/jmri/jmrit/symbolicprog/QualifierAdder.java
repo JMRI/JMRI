@@ -43,7 +43,7 @@ public abstract class QualifierAdder {
         List<Element> le = e.getChildren("qualifier"); // we assign to this to allow us to suppress unchecked error
         processList(le, lq, model);
         
-        // search for enclosing <variables> element
+        // search for enclosing <variables> or <group> element
         Parent p = e;
         while ( (p = p.getParent()) != null && p instanceof Element) {
             Element el = (Element)p;

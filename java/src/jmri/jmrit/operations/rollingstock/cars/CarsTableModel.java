@@ -167,10 +167,10 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 		boolean isVisible = tcm.isColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN));
 		tcm.setColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN), !isVisible);
 	}
-	
+
 	public void resetCheckboxes() {
-		for ( RollingStock car : sysList ) {
-			car.setSelected(false);		
+		for (RollingStock car : sysList) {
+			car.setSelected(false);
 		}
 	}
 
@@ -633,8 +633,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 
 	public void propertyChange(PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
-					+ e.getNewValue()); // NOI18N
+			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+					.getNewValue());
 		if (e.getPropertyName().equals(CarManager.LISTLENGTH_CHANGED_PROPERTY)) {
 			updateList();
 			fireTableDataChanged();

@@ -52,7 +52,7 @@ public class Pool extends Bean {
 	}
 
 	public Pool(String id, String name) {
-		log.debug("New pool (" + name + ") id: " + id);
+		log.debug("New pool ({}) id: {}", name, id);
 		_name = name;
 		_id = id;
 	}

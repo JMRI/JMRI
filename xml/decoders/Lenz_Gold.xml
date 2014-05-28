@@ -13,7 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Bernd Wisotzki (Ba)" version="7" lastUpdated="20140518"/>
+  <version author="Bernd Wisotzki (Ba)" version="7" lastUpdated="20140522"/>
   <version author="Jeff Schmaltz escopetas@comcast.net" version="6" lastUpdated="20130724"/>
   <version author="Bob Jacobsen" version="5" lastUpdated="20121227"/>
   <version author="Paul Bender" version="4" lastUpdated="20050814"/>
@@ -25,7 +25,7 @@
   <!-- Version 4 - added factory reset menu items (Paul Bender) -->
   <!-- Version 5 - XInclude (Bob Jacobsen) -->
   <!-- Version 6 - Added GOLD maxi, changed high version for family to 72, removed writeOnly from CV127 (Jeff Schmaltz) -->
-  <!-- Version 7 - Added German translation (Bob Jacobsen) -->
+  <!-- Version 7 - Added German translation (Bob Jacobsen) and refactoring (Ba) -->
   <!-- These are the Gold decoders, with "6th gen BEMF", "Precision Braking Control" -->
   <!-- and "Low Gear Switching Drive" -->
   <decoder>
@@ -60,146 +60,13 @@
       <xi:include href="http://jmri.org/xml/decoders/lenz/bemfRep_cv9.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/railcom_cv28_29.xml"/>
-      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-            <choice xml:lang="it">Normale</choice>
-            <choice xml:lang="de">Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-            <choice xml:lang="it">Invertita</choice>
-            <choice xml:lang="de">Vertauscht</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Locomotive Direction in Forward</label>
-        <label xml:lang="it">Direzione Loco in Avanti</label>
-        <label xml:lang="de">Richtung der Lok</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-            <choice xml:lang="de">14</choice>
-          </enumChoice>
-          <enumChoice choice="28/128">
-            <choice>28/128</choice>
-            <choice xml:lang="de">28/128</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Steps (Headlight Mode)</label>
-        <label xml:lang="it">Step velocità (modo Luci di testa)</label>
-        <label xml:lang="de">Fahrstufenmodus</label>
-      </variable>
-      <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Loco can operate on conventional DC</label>
-        <label xml:lang="it">La Loco può operare in Analogico</label>
-        <label xml:lang="de">Beriebsart analog</label>
-      </variable>
-      <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition">
-        <enumVal>
-          <enumChoice choice="Use Vstart, Vmid, Vhigh">
-            <choice>Use Vstart, Vmid, Vhigh</choice>
-            <choice xml:lang="it">Usa Vstart, Vmid e VHigh</choice>
-            <choice xml:lang="de">Verwende Vmin, Vmittel, Vmax</choice>
-          </enumChoice>
-          <enumChoice choice="Use the Speed Table">
-            <choice>Use the Speed Table</choice>
-            <choice xml:lang="it">Usa Tabella Velocità</choice>
-            <choice xml:lang="de">Verwende Geschwindigkeitskennlinie</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Table Selection</label>
-        <label xml:lang="it">Selezione Tabella Velocità</label>
-        <label xml:lang="de">Geschwindigkeitskennlinie auswählen</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/protection_cv30.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/functionmap.xml"/>
-      <variable CV="50" mask="XXXXVVVV" item="Motor type" default="0" comment="Range 0-5">
-        <enumVal>
-          <enumChoice choice="0 ">
-            <choice>0 </choice>
-            <choice xml:lang="de">0 </choice>
-          </enumChoice>
-          <enumChoice choice="1 ">
-            <choice>1 </choice>
-            <choice xml:lang="de">1 </choice>
-          </enumChoice>
-          <enumChoice choice="2 ">
-            <choice>2 </choice>
-            <choice xml:lang="de">2 </choice>
-          </enumChoice>
-          <enumChoice choice="3 ">
-            <choice>3 </choice>
-            <choice xml:lang="de">3 </choice>
-          </enumChoice>
-          <enumChoice choice="4 ">
-            <choice>4 </choice>
-            <choice xml:lang="de">4 </choice>
-          </enumChoice>
-          <enumChoice choice="5 ">
-            <choice>5 </choice>
-            <choice xml:lang="de">5 </choice>
-          </enumChoice>
-        </enumVal>
-        <label>Motor Type(0-5)</label>
-        <label xml:lang="it">Tipo Motore (0-5)</label>
-        <comment>Range 0-5</comment>
-        <comment xml:lang="it">Valori da 0 a 5</comment>
-        <label xml:lang="de">Motortyp (0-5)</label>
-        <comment xml:lang="de">Wertebereich 0-5</comment>
-      </variable>
-      <variable CV="50" mask="XXVXXXXX" item="EMF Switch" default="0">
-        <enumVal>
-          <enumChoice choice="Inactive">
-            <choice>Inactive</choice>
-            <choice xml:lang="it">Inattivo</choice>
-            <choice xml:lang="de">Aus</choice>
-          </enumChoice>
-          <enumChoice choice="Active">
-            <choice>Active</choice>
-            <choice xml:lang="it">Attivo</choice>
-            <choice xml:lang="de">Ein</choice>
-          </enumChoice>
-        </enumVal>
-        <label>EMF Switch</label>
-        <label xml:lang="it">Interruttore EMF</label>
-        <label xml:lang="de">EMK Teiler</label>
-      </variable>
-      <variable CV="50" mask="XVXXXXXX" item="BEMF Control" default="0">
-        <enumVal>
-          <enumChoice choice="On ">
-            <choice>On </choice>
-            <choice xml:lang="de">Ein </choice>
-          </enumChoice>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-            <choice xml:lang="de">Aus</choice>
-          </enumChoice>
-        </enumVal>
-        <label>BEMF Control</label>
-        <label xml:lang="it">Controllo BEMF</label>
-        <label xml:lang="de">Regelung</label>
-      </variable>
-      <variable CV="50" mask="VXXXXXXX" item="Motor Frequency" default="0">
-        <enumVal>
-          <enumChoice choice="High ">
-            <choice>High </choice>
-            <choice xml:lang="it">Alta</choice>
-            <choice xml:lang="de">Hoch </choice>
-          </enumChoice>
-          <enumChoice choice="Low ">
-            <choice>Low </choice>
-            <choice xml:lang="it">bassa</choice>
-            <choice xml:lang="de">Niedrig </choice>
-          </enumChoice>
-        </enumVal>
-        <label>Motor Drive Frequency</label>
-        <label xml:lang="it">Frequenza Pilotaggio Motore</label>
-        <label xml:lang="de">Frequenz zur Motoransteuerung</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/motorControl_cv50.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/braking_cv51.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/abc_cv51.xml"/>
       <variable CV="51" mask="XVXXXXXX" item="Signal stop activated with external contact" minOut="8" default="0">
@@ -212,81 +79,14 @@
         <label>Push-pull operation activated with external contact</label>
         <label xml:lang="de">Pendelzugbetrieb durch externen Kontakt aktiviert</label>
       </variable>
-      <variable CV="55" item="Global lighting option 1" default="255" tooltip="Sets intensity of output A and C (larger number = brighter light)">
-        <decVal min="0" max="255"/>
-        <label>Dimming Intensity, Outputs A and C (0-255)</label>
-        <label xml:lang="it">Intensità attenuazione Uscite A e C (0-255)</label>
-        <label xml:lang="de">Helligkeit an Ausgang A und C (0-255)</label>
-        <tooltip xml:lang="de">Helligkeit an Ausgang A und C (größer = heller)</tooltip>
-      </variable>
-      <variable CV="56" item="Global lighting option 2" default="255" tooltip="Sets intensity of output B and D (larger number = brighter light)">
-        <decVal min="0" max="255"/>
-        <label>Dimming Intensity, Outputs B and D (0-255)</label>
-        <label xml:lang="it">Intensità attenuazione Uscite B e D (0-255)</label>
-        <label xml:lang="de">Helligkeit an Ausgang B und D</label>
-        <tooltip xml:lang="de">Helligkeit an Ausgang B und D (größer = heller)</tooltip>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/lightingOptions1_cv55_56.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/fn_ctrl_57_59.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/lighting_cv60_cv64.xml"/>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-        <label xml:lang="it">Tabella velocità</label>
-        <label xml:lang="de">Geschwindikeitskennlinie</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/speedTable_cv67.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
-      <variable CV="112" tooltip="Duration of motor timeout t = value * 16 ms" item="Motor Timeout" default="16" comment="Range 0-255">
-        <decVal min="0" max="255"/>
-        <label>Motor timeout on loss of DCC</label>
-        <label xml:lang="it">Timeout Motore per mancanza di DCC</label>
-        <comment>Range 0-255</comment>
-        <comment xml:lang="it">Valori da 0 a 255</comment>
-        <label xml:lang="de">Motor Timeout bei nicht vorhandenem DCC</label>
-        <comment xml:lang="de">Wertebereich 0-255</comment>
-        <tooltip xml:lang="de">Motor Timeout t = Wert * 16 ms</tooltip>
-      </variable>
-      <variable CV="113" item="Minimum PWM Value" default="40" comment="Range 0-255">
-        <decVal min="0" max="255"/>
-        <label>Minimum PWM (Types 4, 5 only)</label>
-        <label xml:lang="it">PWM Minino (solo tipi 4 e 5)</label>
-        <comment>Range 0-255</comment>
-        <comment xml:lang="it">Valori da 0 a 255</comment>
-        <label xml:lang="de">Miniamler PWM Wert (Motortyp 4 und 5) (0-255)</label>
-        <comment xml:lang="de">Wertebereich 0-255</comment>
-      </variable>
-      <variable CV="114" item="Motor Duty Cycle" default="10" comment="Range 0-255">
-        <decVal min="0" max="255"/>
-        <label>Duty Cycle (Types 4, 5 only)</label>
-        <label xml:lang="it">Tempo di Ciclo (solo tipi 4 e 5)</label>
-        <comment>Range 0-255</comment>
-        <comment xml:lang="it">Valori da 0 a 255</comment>
-        <label xml:lang="de">Motor Duty Cycle (Motortyp 4 und 5) (0-255)</label>
-        <comment xml:lang="de">Wertebereich 0-255</comment>
-      </variable>
-      <variable CV="126" minOut="4" item="SUSI Indicator" default="102" comment="Range 0-255">
-        <decVal min="0" max="255"/>
-        <label>CV indicator for SUSI, offset 800</label>
-        <label xml:lang="it">Indicatore Cv per SUSI, offset 800</label>
-        <comment>Range 0-255</comment>
-        <comment xml:lang="it">Valori da 0 a 255</comment>
-        <label xml:lang="de">Zeiger-CV für SUSI, offset 800</label>
-        <comment xml:lang="de">Wertebereich 0-255</comment>
-      </variable>
-      <variable CV="127" minOut="4" item="SUSI transport" default="0" comment="Range 0-255">
-        <decVal min="0" max="255"/>
-        <label>CV transport device for SUSI</label>
-        <label xml:lang="it">Dispositivo trasferimento SUSI</label>
-        <comment>Range 0-255</comment>
-        <comment xml:lang="it">Valori da 0 a 255</comment>
-        <label xml:lang="de">Transport-CV für SUSI</label>
-        <comment xml:lang="de">Wertebereich 0-255</comment>
-      </variable>
-      <variable CV="128" readOnly="yes" item="Product Number">
-        <decVal/>
-        <label>Decoder Software Version (read only): </label>
-        <label xml:lang="it">Versione Software Decoder (sola lettura)</label>
-        <label xml:lang="de">Softwareversion des Dekoders (nur lesen)</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/motorControl2_cv112_114.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/susi_cv126_127.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/serviceNo_cv128.xml"/>
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="33"/>

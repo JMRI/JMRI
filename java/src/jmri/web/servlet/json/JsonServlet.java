@@ -93,6 +93,8 @@ import static jmri.jmrit.operations.trains.Train.TRAIN_ROUTE_CHANGED_PROPERTY;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.FileUtil;
 import jmri.web.servlet.ServletUtil;
+import static jmri.web.servlet.ServletUtil.APPLICATION_JSON;
+import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
 import org.eclipse.jetty.websocket.WebSocket;
 import org.eclipse.jetty.websocket.WebSocketServlet;
 import org.slf4j.Logger;
@@ -215,7 +217,7 @@ public class JsonServlet extends WebSocketServlet {
         String[] rest = request.getPathInfo().split("/"); // NOI18N
         String type = (rest.length > 1) ? rest[1] : null;
         if (type != null) {
-            response.setContentType("application/json"); // NOI18N
+            response.setContentType(UTF8_APPLICATION_JSON);
             ServletUtil.getInstance().setNonCachingHeaders(response);
             final String name = (rest.length > 2) ? rest[2] : null;
             ObjectNode parameters = this.mapper.createObjectNode();
@@ -417,7 +419,7 @@ public class JsonServlet extends WebSocketServlet {
                 this.sendError(response, code, this.mapper.writeValueAsString(reply));
             }
         } else {
-            response.setContentType(ServletUtil.TEXT_HTML); // NOI18N
+            response.setContentType(ServletUtil.UTF8_TEXT_HTML); // NOI18N
             response.getWriter().print(String.format(request.getLocale(),
                     FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Json.html"))),
                     String.format(request.getLocale(),
@@ -436,7 +438,7 @@ public class JsonServlet extends WebSocketServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setStatus(HttpServletResponse.SC_OK);
-        response.setContentType("application/json"); // NOI18N
+        response.setContentType(UTF8_APPLICATION_JSON);
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
         ServletUtil.getInstance().setNonCachingHeaders(response);
 
@@ -446,7 +448,7 @@ public class JsonServlet extends WebSocketServlet {
         JsonNode data;
         JsonNode reply;
         try {
-            if (request.getContentType().contains("application/json")) {
+            if (request.getContentType().contains(APPLICATION_JSON)) {
                 data = this.mapper.readTree(request.getReader());
                 if (!data.path(DATA).isMissingNode()) {
                     data = data.path(DATA);
@@ -529,7 +531,7 @@ public class JsonServlet extends WebSocketServlet {
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setStatus(HttpServletResponse.SC_OK);
-        response.setContentType("application/json"); // NOI18N
+        response.setContentType(UTF8_APPLICATION_JSON);
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
         ServletUtil.getInstance().setNonCachingHeaders(response);
 
@@ -539,7 +541,7 @@ public class JsonServlet extends WebSocketServlet {
         JsonNode data;
         JsonNode reply;
         try {
-            if (request.getContentType().contains("application/json")) {
+            if (request.getContentType().contains(APPLICATION_JSON)) {
                 data = this.mapper.readTree(request.getReader());
                 if (!data.path(DATA).isMissingNode()) {
                     data = data.path(DATA);
@@ -601,7 +603,7 @@ public class JsonServlet extends WebSocketServlet {
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setStatus(HttpServletResponse.SC_OK);
-        response.setContentType("application/json"); // NOI18N
+        response.setContentType(UTF8_APPLICATION_JSON);
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
         ServletUtil.getInstance().setNonCachingHeaders(response);
 

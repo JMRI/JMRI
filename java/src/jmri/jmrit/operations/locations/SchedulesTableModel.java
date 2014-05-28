@@ -372,8 +372,8 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 	// check for change in number of schedules, or a change in a schedule
 	public void propertyChange(PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
-					+ e.getNewValue());
+			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+					.getNewValue());
 		if (e.getPropertyName().equals(ScheduleManager.LISTLENGTH_CHANGED_PROPERTY)) {
 			updateList();
 			fireTableDataChanged();

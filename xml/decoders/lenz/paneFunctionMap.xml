@@ -54,10 +54,12 @@
         <label>
           <text>Select which function</text>
           <text xml:lang="de">Auswahl der Funktion für</text>
+          <text xml:lang="it">Seleziona quale funzione</text>
         </label>
         <label>
           <text>disables momentum:</text>
           <text xml:lang="de">Anfahr- und Bremsverzögerung:</text>
+          <text xml:lang="it">Disabilita l'Inerzia</text>
         </label>
         <label>
           <text> </text>
@@ -86,10 +88,12 @@
         <label>
           <text>Select which function</text>
           <text xml:lang="de">Auswahl der Funktion für</text>
+          <text xml:lang="it">Seleziona quale funzione</text>
         </label>
         <label>
           <text>enables switching gear:</text>
           <text xml:lang="de">den Rangiergang:</text>
+          <text xml:lang="it">Abilita Velocità da manovra</text>
         </label>
         <label>
           <text> </text>
@@ -118,10 +122,12 @@
         <label>
           <text>Select which function enables</text>
           <text xml:lang="de">Auswahl der Funktion für</text>
+          <text xml:lang="it">Seleziona quale funzione</text>
         </label>
         <label>
           <text>light dimming for A and B outputs:</text>
           <text xml:lang="de">das Dimmen der Ausgänge A und B:</text>
+          <text xml:lang="it">Smorza uscite A e B</text>
         </label>
         <label>
           <text> </text>
@@ -147,10 +153,12 @@
         <label>
           <text>Select which function toggles</text>
           <text xml:lang="de">Auswahl der Funktion für die</text>
+          <text xml:lang="it">Seleziona quale funzione inverte</text>
         </label>
         <label>
           <text>lighting effects on/off for outputs A and B:</text>
           <text xml:lang="de">Lichteffekte an den Ausgängen A und B:</text>
+          <text xml:lang="it">effetti luce per uscite A e B</text>
         </label>
         <label>
           <text> </text>
@@ -182,10 +190,12 @@
         <label>
           <text>Select which function toggles</text>
           <text xml:lang="de">Auswahl der Funktion für die</text>
+          <text xml:lang="it">Seleziona quale funzione inverte</text>
         </label>
         <label>
           <text>lighting effects on/off for outputs C and D:</text>
           <text xml:lang="de">Lichteffekte an den Ausgängen C und D:</text>
+          <text xml:lang="it">effetti luce per uscite A e B</text>
         </label>
         <label>
           <text> </text>

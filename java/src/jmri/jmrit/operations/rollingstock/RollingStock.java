@@ -85,7 +85,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 	}
 
 	public RollingStock(String road, String number) {
-		log.debug("New rolling stock " + road + " " + number);
+		log.debug("New rolling stock ({} {})", road, number);
 		_road = road;
 		_number = number;
 		_id = createId(road, number);
