@@ -1966,8 +1966,10 @@
     Boxcar 40 3.8 Yellow DB 1934 York - York Freight
    </P>
 
-   <P>If you prefer to use comma delimiters instead of spaces, use a file with a .csv extension
-    or place the word "comma" at the start of your import file and use commas instead of spaces. The
+   <P>If you prefer to use comma delimiters instead of spaces (Comma Separated Values), use a
+    file with a .csv extension or place the word "comma" at the start of your import file and use
+    commas instead of spaces. You can also have the program create a csv file for you by selecting
+    the <A HREF="#CarsTools">Export to file</A> under the "Tools-&gt;Car Roster" menu in the "Cars" window. The
     following are two examples of importing cars with comma deliminters.</P>
    <P>
     comma <BR> 336,GCR,Flat Car,40,3.8,Black,AT,1930,Home Town USA,-,George's Oil Terminal <BR>
@@ -1982,9 +1984,9 @@
    </P>
 
    <P>To import a file, use the "Tools" menu in the upper left hand corner of the
-    Tools-&gt;Operations-&gt;Cars menu. Then select "Tools-&gt;Roster-&gt;Import from file". Note
-    that the program will only add cars that don't exist in the program's car roster. It the car
-    already exists, the import will be skipped by the program.</P>
+    Tools-&gt;Operations-&gt;Cars window. Then select "Tools-&gt;Car Roster-&gt;Import from file".
+    Note that the program will only add cars that don't exist in the program's car roster. It the
+    car already exists, the import will be skipped by the program.</P>
 
    <P>
     During the import, if a car's location or track doesn't exist in the program's database, the
@@ -2282,6 +2284,7 @@
     <P> After making your changes, be sure to press "Save" in the Cars window if you want to
     keep your changes.</P>
 
+   <A NAME="CarsTools"></A>
    <H3>Cars Tools</H3>
 
    The cars "Tools" menu allows you to perform some useful functions to your car roster. In addition
@@ -2366,9 +2369,9 @@
    <P>You need to be very careful with spaces when importing a comma delimitated file. The
     program will include leading and trailing spaces if they exist between the commas.</P>
    <P>To import a file, use the "Tools" menu in the upper left hand corner of the
-    Tools-&gt;Operations-&gt;Locomotives menu. Select "Tools-&gt;Roster-&gt;Import. Note that the
-    program will only add locomotives that don't exist in the program's locomotive roster. It the
-    locomotive already exists, it will be skipped by the program.</P>
+    Tools-&gt;Operations-&gt;Locomotives menu. Select "Tools-&gt;Locomotive Roster-&gt;Import from
+    file. Note that the program will only add locomotives that don't exist in the program's
+    locomotive roster. It the locomotive already exists, it will be skipped by the program.</P>
 
    <P>After importing your locomotives, you must save them if you want to keep them as part of
     your roster. Press the "Save" button located at the bottom of the Locomotives window, or select

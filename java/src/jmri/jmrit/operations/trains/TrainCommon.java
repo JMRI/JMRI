@@ -1579,7 +1579,7 @@ public class TrainCommon {
 	private static Dimension getPageSize(String orientation) {
 		// page size has been adjusted to account for margins of .5
 		Dimension pagesize = new Dimension(523, 720); // Portrait 8.5 x 11
-		// landscape has a .7 left margin
+		// landscape has a .65 margins
 		if (orientation.equals(Setup.LANDSCAPE))
 			pagesize = new Dimension(702, 523);
 		if (orientation.equals(Setup.HANDHELD))
