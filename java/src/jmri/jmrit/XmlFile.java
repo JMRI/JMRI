@@ -13,16 +13,12 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import javax.swing.JFileChooser;
 import jmri.util.FileUtil;
 import jmri.util.JmriLocalEntityResolver;
 import jmri.util.NoArchiveFileFilter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.jdom.Comment;
-import org.jdom.Content;
 import org.jdom.DocType;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -31,6 +27,8 @@ import org.jdom.ProcessingInstruction;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handle common aspects of XML files. <P> JMRI needs to be able to operate
@@ -464,7 +462,7 @@ public abstract class XmlFile {
                 try {
                     doc = processOneInstruction((ProcessingInstruction)c, doc);
                 } catch (org.jdom.transform.XSLTransformException ex) {
-                    log.error("error while transforming with "+(ProcessingInstruction)c+", ignoring transform", ex);
+                    log.error("error while transforming with {}, ignoring transform", c, ex);
                 }
             }
         }
