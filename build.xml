@@ -263,7 +263,7 @@
 
     <target name="get-version-string"
             description="Gets the current version string"
-            depends="compile-generated-source">
+            depends="compile">
         <java classname="jmri.Version"
               dir="${basedir}"
               fork="yes"
