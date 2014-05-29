@@ -3,13 +3,13 @@
   <name>Function Map</name>
   <name xml:lang="ca">Mapejat de funcions</name>
   <name xml:lang="it">Mappa Funzioni</name>
-  <name xml:lang="de">Function Map</name>
+  <name xml:lang="de">Funktionszuordnung</name>
   <column>
     <row>
       <column>
         <label>
           <text>Use this sheet to determine which functions will control which outputs</text>
-          <text xml:lang="de">Use this sheet to determine which functions will control which outputs</text>
+          <text xml:lang="de">Hier einstellen, welche Funktion welchen Ausgang steuert</text>
         </label>
         <label>
           <text> </text>
