@@ -209,21 +209,24 @@ public class JmriJFrameServlet extends HttpServlet {
         if (name != null) {
             if (disallowedFrames.contains(name)) {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN, "Frame [" + name + "] not allowed (check Preferences)");
+                return;
             }
             frame = JmriJFrame.getFrame(name);
             if (frame == null) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, "Can not find frame [" + name + "]");
+                return;
             } else if (!frame.getAllowInFrameServlet()) {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN, "Frame [" + name + "] not allowed by design");
+                return;
             }
         }
         this.populateParameterMap(request.getParameterMap());
         if (parameters.containsKey("coords") && !(parameters.containsKey("protect") && Boolean.valueOf(parameters.get("protect")[0]))) {
             this.doClick(frame, parameters.get("coords")[0]);
         }
-        if (frame != null && request.getRequestURI().contains("html")) {
+        if (frame != null && request.getRequestURI().contains(".html")) {
             this.doHtml(frame, request, response);
-        } else if (frame != null && request.getRequestURI().contains("png")) {
+        } else if (frame != null && request.getRequestURI().contains(".png")) {
             this.doImage(frame, request, response);
         } else {
             this.doList(request, response);
