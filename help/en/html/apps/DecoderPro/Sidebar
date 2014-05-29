@@ -1,1 +1,32 @@
-<!-- Sidebar --><hr class="hide"><div id="mBody"><div id="side"> <!-- Block of text on left side of page --><dl class=toc><h3>User Guide</h3></dt><DD><UL><LI><a href="./Tour.shtml">Quick tour</A><LI><a href="./MoreInfo.shtml">Details</A><LI><a HREF="./Files.shtml">Configuration files</a><LI><a HREF="./Roster.shtml">Working with the roster</a><LI><a HREF="./FAQ.shtml">Frequently asked questions</a><LI><a HREF="./Install.shtml">Downloading and installing DecoderPro</a></UL><dt><h3>More advanced information</h3></dt><DD><UL><LI><a HREF="./IntroXML.shtml">Intro to XML files</a><LI><a href="./CreateDecoder.shtml">Create your own decoder definition</a><LI><a href="./Programmer.shtml">Create a custom programmer definition</a><LI><a HREF="./RosterFile.shtml">How the roster is stored; updating it by hand</a><LI><a HREF="./LocoFile.shtml">Locomotive (roster) files</a><LI><a HREF="./Debug.shtml">Debugging</a><LI><a HREF="./NetworkFiles.shtml">Sharing Rosters Among Computers</a><LI><a HREF="./FileUpdate.shtml">Updating Decoder Definitions</a></UL></dl></div> <!-- End of block of text on left side of page -->
+<!-- Sidebar -->
+<hr class="hide">
+<div id="mBody">
+<div id="side"> <!-- Block of text on left side of page -->
+
+<dl class=toc>
+
+<h3>User Guide</h3></dt><DD><UL>
+<LI><a href="./Tour.shtml">Quick tour</A>
+<LI><a href="./MoreInfo.shtml">Details</A>
+<LI><a HREF="./Files.shtml">Configuration files</a>
+<LI><a HREF="./Roster.shtml">Working with the roster</a>
+<LI><a HREF="./FAQ.shtml">Frequently asked questions</a>
+<LI><a HREF="./Install.shtml">Downloading and installing DecoderPro</a>
+</UL>
+
+<dt><h3>More advanced information</h3></dt><DD><UL>
+
+<LI><a HREF="./IntroXML.shtml">Intro to XML files</a>
+<LI><a href="./CreateDecoder.shtml">Create your own decoder definition</a>
+<LI><a href="./Programmer.shtml">Create a custom programmer definition</a>
+<LI><a HREF="./RosterFile.shtml">How the roster is stored; updating it by hand</a>
+<LI><a HREF="./LocoFile.shtml">Locomotive (roster) files</a>
+<LI><a HREF="./Debug.shtml">Debugging</a>
+<LI><a HREF="./NetworkFiles.shtml">Sharing Rosters Among Computers</a>
+<LI><a HREF="./FileUpdate.shtml">Updating Decoder Definitions</a>
+</UL>
+
+</dl>
+
+</div> <!-- End of block of text on left side of page -->
+
