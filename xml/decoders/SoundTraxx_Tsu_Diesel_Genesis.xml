@@ -24,6 +24,7 @@
   <version author="Michael Mosher" version="9" lastUpdated="20130731"/>
   <version author="Ken Mazer" version="10" lastUpdated="20140105"/>
   <version author="Dave Heap" version="11" lastUpdated="20140401"/>
+  <version author="Alain Le Marchand" version="12" lastUpdated="20140530"/>    
   <!-- This file contains the Tsunami definitions for Genesis OEM diesel locomotives	-->
   <!-- version 1	Based on the "SoundTraxx_Tsu_Diesel.xml" Ver 7 file.						-->
   <!-- version 2	Add Rule 17 bit to CV51 & 52 and add CV 53, 54, 57, 58 and add N scale models -->
@@ -36,6 +37,7 @@
   <!-- version 9	Add GP50 -->
   <!-- version 10	Added GP40-2 & fix include statement for CV153 to 160 -->
   <!-- version 11	Implement live function group exchange -->
+  <!-- version 6        Function labels according to Genesis mapping, Output names normalized with other TSU Diesel -->  
   <!-- Decoder Model information follows -->
   <decoder>
     <family name="Tsunami Diesel Genesis OEM" mfg="Throttle-Up (SoundTraxx)" comment="These are OEM for Athearn Genesis Tsunami diesel decoders">
@@ -45,12 +47,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamics"/>
-        <output name="Short Horn"/>
-        <output name="Fans(+)"/>
+        <output name="Dynamic" label="Brakes"/>
+        <output name="Short" label="Horn"/>
+	<output name="Reserved"/>
+        <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
-        <output name="Comp(-)"/>
+        <output name="Compressor" label="RPM -"/>
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
@@ -60,12 +63,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamics"/>
-        <output name="Short Horn"/>
-        <output name="Fans(+)"/>
+        <output name="Dynamic" label="Brakes"/>
+        <output name="Short" label="Horn"/>
+	<output name="Reserved"/>
+        <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
-        <output name="Comp(-)"/>
+        <output name="Compressor" label="RPM -"/>
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
@@ -75,12 +79,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamics"/>
-        <output name="Short Horn"/>
-        <output name="Fans(+)"/>
+        <output name="Dynamic" label="Brakes"/>
+        <output name="Short" label="Horn"/>
+	<output name="Reserved"/>
+        <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
-        <output name="Comp(-)"/>
+        <output name="Compressor" label="RPM -"/>
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
@@ -90,12 +95,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamics"/>
-        <output name="Short Horn"/>
-        <output name="Fans(+)"/>
+        <output name="Dynamic" label="Brakes"/>
+        <output name="Short" label="Horn"/>
+	<output name="Reserved"/>
+        <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
-        <output name="Comp(-)"/>
+        <output name="Compressor" label="RPM -"/>
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
@@ -105,12 +111,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamics"/>
-        <output name="Short Horn"/>
-        <output name="Fans(+)"/>
+        <output name="Dynamic" label="Brakes"/>
+        <output name="Short" label="Horn"/>
+	<output name="Reserved"/>
+        <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
-        <output name="Comp(-)"/>
+        <output name="Compressor" label="RPM -"/>
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
@@ -120,12 +127,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamics"/>
-        <output name="Short Horn"/>
-        <output name="Fans(+)"/>
+        <output name="Dynamic" label="Brakes"/>
+        <output name="Short" label="Horn"/>
+	<output name="Reserved"/>
+        <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
-        <output name="Comp(-)"/>
+        <output name="Compressor" label="RPM -"/>
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
@@ -135,12 +143,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamics"/>
-        <output name="Short Horn"/>
-        <output name="Fans(+)"/>
+        <output name="Dynamic" label="Brakes"/>
+        <output name="Short" label="Horn"/>
+	<output name="Reserved"/>
+        <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
-        <output name="Comp(-)"/>
+        <output name="Compressor" label="RPM -"/>
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
@@ -150,12 +159,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamics"/>
-        <output name="Short Horn"/>
-        <output name="Fans(+)"/>
+        <output name="Dynamic" label="Brakes"/>
+        <output name="Short" label="Horn"/>
+	<output name="Reserved"/>
+        <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
-        <output name="Comp(-)"/>
+        <output name="Compressor" label="RPM -"/>
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
@@ -165,12 +175,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamics"/>
-        <output name="Short Horn"/>
-        <output name="Fans(+)"/>
+        <output name="Dynamic" label="Brakes"/>
+        <output name="Short" label="Horn"/>
+	<output name="Reserved"/>
+        <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
-        <output name="Comp(-)"/>
+        <output name="Compressor" label="RPM -"/>
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
@@ -180,12 +191,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamics"/>
-        <output name="Short Horn"/>
-        <output name="Fans(+)"/>
+        <output name="Dynamic" label="Brakes"/>
+        <output name="Short" label="Horn"/>
+	<output name="Reserved"/>
+        <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
-        <output name="Comp(-)"/>
+        <output name="Compressor" label="RPM -"/>
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
@@ -195,12 +207,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamics"/>
-        <output name="Short Horn"/>
-        <output name="Fans(+)"/>
+        <output name="Dynamic" label="Brakes"/>
+        <output name="Short" label="Horn"/>
+	<output name="Reserved"/>
+        <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
-        <output name="Comp(-)"/>
+        <output name="Compressor" label="RPM -"/>
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
@@ -210,12 +223,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamics"/>
-        <output name="Short Horn"/>
-        <output name="Fans(+)"/>
+        <output name="Dynamic" label="Brakes"/>
+        <output name="Short" label="Horn"/>
+	<output name="Reserved"/>
+        <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
-        <output name="Comp(-)"/>
+        <output name="Compressor" label="RPM -"/>
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
@@ -225,12 +239,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamics"/>
-        <output name="Short Horn"/>
-        <output name="Fans(+)"/>
+        <output name="Dynamic" label="Brakes"/>
+        <output name="Short" label="Horn"/>
+	<output name="Reserved"/>
+        <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
-        <output name="Comp(-)"/>
+        <output name="Compressor" label="RPM -"/>
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
@@ -240,12 +255,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamics"/>
-        <output name="Short Horn"/>
-        <output name="Fans(+)"/>
+        <output name="Dynamic" label="Brakes"/>
+        <output name="Short" label="Horn"/>
+	<output name="Reserved"/>
+        <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
-        <output name="Comp(-)"/>
+        <output name="Compressor" label="RPM -"/>
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
@@ -255,12 +271,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamics"/>
-        <output name="Short Horn"/>
-        <output name="Fans(+)"/>
+        <output name="Dynamic" label="Brakes"/>
+        <output name="Short" label="Horn"/>
+	<output name="Reserved"/>
+        <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
-        <output name="Comp(-)"/>
+        <output name="Compressor" label="RPM -"/>
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
@@ -270,12 +287,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamics"/>
-        <output name="Short Horn"/>
-        <output name="Fans(+)"/>
+        <output name="Dynamic" label="Brakes"/>
+        <output name="Short" label="Horn"/>
+	<output name="Reserved"/>
+        <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
-        <output name="Comp(-)"/>
+        <output name="Compressor" label="RPM -"/>
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
@@ -285,12 +303,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamics"/>
-        <output name="Short Horn"/>
-        <output name="Fans(+)"/>
+        <output name="Dynamic" label="Brakes"/>
+        <output name="Short" label="Horn"/>
+	<output name="Reserved"/>
+        <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
-        <output name="Comp(-)"/>
+        <output name="Compressor" label="RPM -"/>
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
@@ -300,12 +319,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamics"/>
-        <output name="Short Horn"/>
-        <output name="Fans(+)"/>
+        <output name="Dynamic" label="Brakes"/>
+        <output name="Short" label="Horn"/>
+	<output name="Reserved"/>
+        <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
-        <output name="Comp(-)"/>
+        <output name="Compressor" label="RPM -"/>
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
@@ -315,12 +335,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamics"/>
-        <output name="Short Horn"/>
-        <output name="Fans(+)"/>
+        <output name="Dynamic" label="Brakes"/>
+        <output name="Short" label="Horn"/>
+	<output name="Reserved"/>
+        <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
-        <output name="Comp(-)"/>
+        <output name="Compressor" label="RPM -"/>
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
@@ -330,12 +351,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamics"/>
-        <output name="Short Horn"/>
-        <output name="Fans(+)"/>
+        <output name="Dynamic" label="Brakes"/>
+        <output name="Short" label="Horn"/>
+	<output name="Reserved"/>
+        <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
-        <output name="Comp(-)"/>
+        <output name="Compressor" label="RPM -"/>
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
@@ -345,12 +367,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamics"/>
-        <output name="Short Horn"/>
-        <output name="Fans(+)"/>
+        <output name="Dynamic" label="Brakes"/>
+        <output name="Short" label="Horn"/>
+	<output name="Reserved"/>
+        <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
-        <output name="Comp(-)"/>
+        <output name="Compressor" label="RPM -"/>
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
@@ -360,12 +383,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamics"/>
-        <output name="Short Horn"/>
-        <output name="Fans(+)"/>
+        <output name="Dynamic" label="Brakes"/>
+        <output name="Short" label="Horn"/>
+	<output name="Reserved"/>
+        <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
-        <output name="Comp(-)"/>
+        <output name="Compressor" label="RPM -"/>
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
@@ -375,12 +399,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamics"/>
-        <output name="Short Horn"/>
-        <output name="Fans(+)"/>
+        <output name="Dynamic" label="Brakes"/>
+        <output name="Short" label="Horn"/>
+	<output name="Reserved"/>
+        <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
-        <output name="Comp(-)"/>
+        <output name="Compressor" label="RPM -"/>
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
@@ -390,12 +415,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamics"/>
-        <output name="Short Horn"/>
-        <output name="Fans(+)"/>
+        <output name="Dynamic" label="Brakes"/>
+        <output name="Short" label="Horn"/>
+	<output name="Reserved"/>
+        <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
-        <output name="Comp(-)"/>
+        <output name="Compressor" label="RPM -"/>
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
@@ -405,12 +431,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamics"/>
-        <output name="Short Horn"/>
-        <output name="Fans(+)"/>
+        <output name="Dynamic" label="Brakes"/>
+        <output name="Short" label="Horn"/>
+	<output name="Reserved"/>
+        <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
-        <output name="Comp(-)"/>
+        <output name="Compressor" label="RPM -"/>
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
@@ -424,10 +451,8 @@
         <functionlabel num="6" lockable="true">FX6 Light</functionlabel>
         <functionlabel num="7" lockable="true">Dimmer</functionlabel>
         <functionlabel num="8" lockable="true">Mute</functionlabel>
-        <functionlabel num="9" lockable="true">Fans</functionlabel>
-        <functionlabel num="10" lockable="true">Air Comprssor</functionlabel>
-        <functionlabel num="11" lockable="true">Brake Squeal</functionlabel>
-        <functionlabel num="12" lockable="true">Coupler</functionlabel>
+        <functionlabel num="9" lockable="true">Brake Squeal</functionlabel>
+        <functionlabel num="10" lockable="true">Coupler</functionlabel>
       </functionlabels>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
@@ -646,193 +671,193 @@
         <label>Function Group 2 and 3 Exchange</label>
       </variable>
       <!-- Function Mapping follows -->
-      <variable CV="33" mask="XXXXXXXV" item="FL(f) controls output 1" minOut="1" default="1">
+      <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(f) controls Headlight</label>
       </variable>
-      <variable CV="33" mask="XXXXXXVX" item="FL(f) controls output 2" minOut="2" default="0">
+      <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(f) controls Backup Light</label>
       </variable>
       <variable item="FL(f) controls output 5" CV="33" mask="XXXXXVXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>FL(f) controls output 5</label>
+        <label>FL(f) controls output Air Horn</label>
       </variable>
       <variable item="FL(f) controls output 6" CV="33" mask="XXXXVXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>FL(f) controls output 6</label>
+        <label>FL(f) controls output Bell</label>
       </variable>
       <variable item="FL(f) controls output 3" CV="33" mask="XXXVXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>FL(f) controls output 3</label>
+        <label>FL(f) controls output FX5</label>
       </variable>
       <variable item="FL(f) controls output 4" CV="33" mask="XXVXXXXX" minOut="2" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>FL(f) controls output 4</label>
+        <label>FL(f) controls output FX6</label>
       </variable>
       <variable item="FL(f) controls output 7" CV="33" mask="XVXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>FL(f) controls output 7</label>
+        <label>FL(f) controls output Dynamics</label>
       </variable>
       <variable item="FL(f) controls output 8" CV="33" mask="VXXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>FL(f) controls output 8</label>
+        <label>FL(f) controls output Short Horn</label>
       </variable>
-      <variable CV="34" mask="XXXXXXXV" item="FL(r) controls output 1" minOut="1" default="0">
+      <variable item="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(r) controls Headlight</label>
       </variable>
-      <variable CV="34" mask="XXXXXXVX" item="FL(r) controls output 2" minOut="2" default="1">
+      <variable item="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(r) controls Backup Light</label>
       </variable>
       <variable item="FL(r) controls output 5" CV="34" mask="XXXXXVXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>FL(r) controls output 5</label>
+        <label>FL(r) controls output Air Horn</label>
       </variable>
       <variable item="FL(r) controls output 6" CV="34" mask="XXXXVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>FL(r) controls output 6</label>
+        <label>FL(r) controls output Bell</label>
       </variable>
       <variable item="FL(r) controls output 3" CV="34" mask="XXXVXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>FL(r) controls output 3</label>
+        <label>FL(r) controls output FX5</label>
       </variable>
       <variable item="FL(r) controls output 4" CV="34" mask="XXVXXXXX" minOut="2" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>FL(r) controls output 4</label>
+        <label>FL(r) controls output FX6</label>
       </variable>
       <variable item="FL(r) controls output 7" CV="34" mask="XVXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>FL(r) controls output 7</label>
+        <label>FL(r) controls output Dynamics</label>
       </variable>
       <variable item="FL(r) controls output 8" CV="34" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>FL(r) controls output 8</label>
+        <label>FL(r) controls output Short Horn</label>
       </variable>
-      <variable CV="35" mask="XXXXXXXV" item="F1 controls output 1" minOut="1" default="0">
+      <variable item="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F1 controls Headlight</label>
       </variable>
-      <variable CV="35" mask="XXXXXXVX" item="F1 controls output 2" minOut="2" default="0">
+      <variable item="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F1 controls Backup Light</label>
       </variable>
       <variable item="F1 controls output 5" CV="35" mask="XXXXXVXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>F1 controls output 5</label>
+        <label>F1 controls output Air Horn</label>
       </variable>
       <variable item="F1 controls output 6" CV="35" mask="XXXXVXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>F1 controls output 6</label>
+        <label>F1 controls output Bell</label>
       </variable>
       <variable item="F1 controls output 3" CV="35" mask="XXXVXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>F1 controls output 3</label>
+        <label>F1 controls output FX5</label>
       </variable>
       <variable item="F1 controls output 4" CV="35" mask="XXVXXXXX" minOut="2" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>F1 controls output 4</label>
+        <label>F1 controls output FX6</label>
       </variable>
       <variable item="F1 controls output 7" CV="35" mask="XVXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>F1 controls output 7</label>
+        <label>F1 controls output Dynamics</label>
       </variable>
       <variable item="F1 controls output 8" CV="35" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>F1 controls output 8</label>
+        <label>F1 controls output Short Horn</label>
       </variable>
-      <variable CV="36" mask="XXXXXXXV" item="F2 controls output 1" minOut="1" default="0">
+      <variable item="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F2 controls Headlight</label>
       </variable>
-      <variable CV="36" mask="XXXXXXVX" item="F2 controls output 2" minOut="2" default="0">
+      <variable item="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F2 controls Backup Light</label>
       </variable>
       <variable item="F2 controls output 5" CV="36" mask="XXXXXVXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>F2 controls output 5</label>
+        <label>F2 controls output Air Horn</label>
       </variable>
       <variable item="F2 controls output 6" CV="36" mask="XXXXVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>F2 controls output 6</label>
+        <label>F2 controls output Bell</label>
       </variable>
       <variable item="F2 controls output 3" CV="36" mask="XXXVXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>F2 controls output 3</label>
+        <label>F2 controls output FX5</label>
       </variable>
       <variable item="F2 controls output 4" CV="36" mask="XXVXXXXX" minOut="2" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>F2 controls output 4</label>
+        <label>F2 controls output FX6</label>
       </variable>
       <variable item="F2 controls output 7" CV="36" mask="XVXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>F2 controls output 7</label>
+        <label>F2 controls output Dynamics</label>
       </variable>
       <variable item="F2 controls output 8" CV="36" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>F2 controls output 8</label>
+        <label>F2 controls output Short Horn</label>
       </variable>
       <variable item="F3 controls output 6" CV="37" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>F3 controls output 6</label>
+        <label>F3 controls output Bell</label>
       </variable>
       <variable item="F3 controls output 3" CV="37" mask="XXXXXXVX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>F3 controls output 3</label>
+        <label>F3 controls output FX5</label>
       </variable>
       <variable item="F3 controls output 4" CV="37" mask="XXXXXVXX" minOut="2" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>F3 controls output 4</label>
+        <label>F3 controls output FX6</label>
       </variable>
       <variable item="F3 controls output 7" CV="37" mask="XXXXVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>F3 controls output 7</label>
+        <label>F3 controls output Dynamics</label>
       </variable>
       <variable item="F3 controls output 8" CV="37" mask="XXXVXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>F3 controls output 8</label>
+        <label>F3 controls output Short Horn</label>
       </variable>
-      <variable item="F3 controls output 9" CV="37" mask="XVXXXXXX" default="0">
+      <variable item="F3 controls output 10" CV="37" mask="XVXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>F3 controls output 9</label>
+        <label>F3 controls output Fans(+)</label>
       </variable>
-      <variable item="F3 controls output 10" CV="37" mask="VXXXXXXX" default="0">
+      <variable item="F3 controls output 11" CV="37" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>F3 controls output 10</label>
+        <label>F3 controls output Dimming</label>
       </variable>
       <variable item="F4 controls output 6" CV="38" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>F4 controls output 6</label>
+        <label>F4 controls output Bell</label>
       </variable>
       <variable item="F4 controls output 3" CV="38" mask="XXXXXXVX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>F4 controls output 3</label>
+        <label>F4 controls output FX5</label>
       </variable>
       <variable item="F4 controls output 4" CV="38" mask="XXXXXVXX" minOut="2" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>F4 controls output 4</label>
+        <label>F4 controls output FX6</label>
       </variable>
       <variable item="F4 controls output 7" CV="38" mask="XXXXVXXX" default="0" include="MP15">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>F4 controls output 7</label>
+        <label>F4 controls output Dynamics</label>
       </variable>
       <variable item="F4 controls output 7" CV="38" mask="XXXXVXXX" default="1" exclude="MP15">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>F4 controls output 7</label>
+        <label>F4 controls output Dynamics</label>
       </variable>
       <variable item="F4 controls output 8" CV="38" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>F4 controls output 8</label>
+        <label>F4 controls output Short Horn</label>
       </variable>
-      <variable item="F4 controls output 9" CV="38" mask="XVXXXXXX" default="0">
+      <variable item="F4 controls output 10" CV="38" mask="XVXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>F4 controls output 9</label>
+        <label>F4 controls output Fans(+)</label>
       </variable>
-      <variable item="F4 controls output 10" CV="38" mask="VXXXXXXX" default="0">
+      <variable item="F4 controls output 11" CV="38" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>F4 controls output 10</label>
+        <label>F4 controls output Dimming</label>
       </variable>
       <!-- begin exchangeable function groups -->
       <variables>
@@ -844,257 +869,257 @@
         <!-- begin normal function group 2 -->
         <variable item="F5 controls output 6" CV="39" mask="XXXXXXXV" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F5 controls output 6</label>
+          <label>F5 controls output Bell</label>
         </variable>
         <variable item="F5 controls output 3" CV="39" mask="XXXXXXVX" minOut="1" default="0" include="N_F45">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F5 controls output 3</label>
+          <label>F5 controls output FX5</label>
         </variable>
         <variable item="F5 controls output 3" CV="39" mask="XXXXXXVX" minOut="1" default="1" exclude="N_F45">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F5 controls output 3</label>
+          <label>F5 controls output FX5</label>
         </variable>
         <variable item="F5 controls output 4" CV="39" mask="XXXXXVXX" minOut="2" default="0" include="DD,F2,GP15,MP15,F45,N_F45">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F5 controls output 4</label>
+          <label>F5 controls output FX6</label>
         </variable>
         <variable item="F5 controls output 4" CV="39" mask="XXXXXVXX" minOut="2" default="1" include="GP9,GP38,GP40,SD60,SD70,ES">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F5 controls output 4</label>
+          <label>F5 controls output FX6</label>
         </variable>
         <variable item="F5 controls output 7" CV="39" mask="XXXXVXXX" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F5 controls output 7</label>
+          <label>F5 controls output Dynamics</label>
         </variable>
         <variable item="F5 controls output 8" CV="39" mask="XXXVXXXX" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F5 controls output 8</label>
+          <label>F5 controls output Short Horn</label>
         </variable>
-        <variable item="F5 controls output 9" CV="39" mask="XVXXXXXX" default="0">
+        <variable item="F5 controls output 10" CV="39" mask="XVXXXXXX" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F5 controls output 9</label>
+          <label>F5 controls output Fans(+)</label>
         </variable>
-        <variable item="F5 controls output 10" CV="39" mask="VXXXXXXX" default="0">
+        <variable item="F5 controls output 11" CV="39" mask="VXXXXXXX" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F5 controls output 10</label>
+          <label>F5 controls output Dimming</label>
         </variable>
         <variable item="F6 controls output 6" CV="40" mask="XXXXXXXV" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F6 controls output 6</label>
+          <label>F6 controls output Bell</label>
         </variable>
         <variable item="F6 controls output 3" CV="40" mask="XXXXXXVX" minOut="1" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F6 controls output 3</label>
+          <label>F6 controls output FX5</label>
         </variable>
         <variable item="F6 controls output 4" CV="40" mask="XXXXXVXX" minOut="2" default="0" include="ES,GP9,GP38,GP40,SD60,N_F45,SD70">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F6 controls output 4</label>
+          <label>F6 controls output FX6</label>
         </variable>
         <variable item="F6 controls output 4" CV="40" mask="XXXXXVXX" minOut="2" default="1" include="DD,F2,GP15,MP15,F45">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F6 controls output 4</label>
+          <label>F6 controls output FX6</label>
         </variable>
         <variable item="F6 controls output 7" CV="40" mask="XXXXVXXX" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F6 controls output 7</label>
+          <label>F6 controls output Dynamics</label>
         </variable>
         <variable item="F6 controls output 8" CV="40" mask="XXXVXXXX" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F6 controls output 8</label>
+          <label>F6 controls output Short Horn</label>
         </variable>
-        <variable item="F6 controls output 9" CV="40" mask="XVXXXXXX" default="0">
+        <variable item="F6 controls output 10" CV="40" mask="XVXXXXXX" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F6 controls output 9</label>
+          <label>F6 controls output Fans(+)</label>
         </variable>
-        <variable item="F6 controls output 10" CV="40" mask="VXXXXXXX" default="0">
+        <variable item="F6 controls output 11" CV="40" mask="VXXXXXXX" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F6 controls output 10</label>
+          <label>F6 controls output Dimming</label>
         </variable>
         <variable item="F7 controls output 7" CV="41" mask="XXXXXXXV" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F7 controls output 7</label>
+          <label>F7 controls output Dynamics</label>
         </variable>
         <variable item="F7 controls output 8" CV="41" mask="XXXXXXVX" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F7 controls output 8</label>
+          <label>F7 controls output Short Horn</label>
         </variable>
-        <variable item="F7 controls output 9" CV="41" mask="XXXXVXXX" default="0">
+        <variable item="F7 controls output 10" CV="41" mask="XXXXVXXX" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F7 controls output 9</label>
+          <label>F7 controls output Fans(+)</label>
         </variable>
-        <variable item="F7 controls output 10" CV="41" mask="XXXVXXXX" default="0" include="N_F45">
+        <variable item="F7 controls output 11" CV="41" mask="XXXVXXXX" default="0" include="N_F45">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F7 controls output 10</label>
+          <label>F7 controls output Dimming</label>
         </variable>
-        <variable item="F7 controls output 10" CV="41" mask="XXXVXXXX" default="1" exclude="N_F45">
+        <variable item="F7 controls output 11" CV="41" mask="XXXVXXXX" default="1" exclude="N_F45">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F7 controls output 10</label>
+          <label>F7 controls output Dimming</label>
         </variable>
-        <variable item="F7 controls output 11" CV="41" mask="XXVXXXXX" default="0">
+        <variable item="F7 controls output 12" CV="41" mask="XXVXXXXX" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F7 controls output 11</label>
+          <label>F7 controls output Mute</label>
         </variable>
-        <variable item="F7 controls output 12" CV="41" mask="XVXXXXXX" default="0">
+        <variable item="F7 controls output 13" CV="41" mask="XVXXXXXX" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F7 controls output 12</label>
+          <label>F7 controls output Comp(-)</label>
         </variable>
-        <variable item="F7 controls output 13" CV="41" mask="VXXXXXXX" default="0">
+        <variable item="F7 controls output 14" CV="41" mask="VXXXXXXX" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F7 controls output 13</label>
+          <label>F7 controls output Brake</label>
         </variable>
         <variable item="F8 controls output 7" CV="42" mask="XXXXXXXV" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F8 controls output 7</label>
+          <label>F8 controls output Dynamics</label>
         </variable>
         <variable item="F8 controls output 8" CV="42" mask="XXXXXXVX" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F8 controls output 8</label>
+          <label>F8 controls output Short Horn</label>
         </variable>
-        <variable item="F8 controls output 9" CV="42" mask="XXXXVXXX" default="0">
+        <variable item="F8 controls output 10" CV="42" mask="XXXXVXXX" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F8 controls output 9</label>
+          <label>F8 controls output Fans(+)</label>
         </variable>
-        <variable item="F8 controls output 10" CV="42" mask="XXXVXXXX" default="0">
+        <variable item="F8 controls output 11" CV="42" mask="XXXVXXXX" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F8 controls output 10</label>
+          <label>F8 controls output Dimming</label>
         </variable>
-        <variable item="F8 controls output 11" CV="42" mask="XXVXXXXX" default="0" include="N_F45">
+        <variable item="F8 controls output 12" CV="42" mask="XXVXXXXX" default="0" include="N_F45">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F8 controls output 11</label>
+          <label>F8 controls output Mute</label>
         </variable>
-        <variable item="F8 controls output 11" CV="42" mask="XXVXXXXX" default="1" exclude="N_F45">
+        <variable item="F8 controls output 12" CV="42" mask="XXVXXXXX" default="1" exclude="N_F45">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F8 controls output 11</label>
+          <label>F8 controls output Mute</label>
         </variable>
-        <variable item="F8 controls output 12" CV="42" mask="XVXXXXXX" default="0">
+        <variable item="F8 controls output 13" CV="42" mask="XVXXXXXX" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F8 controls output 12</label>
+          <label>F8 controls output Comp(-)</label>
         </variable>
-        <variable item="F8 controls output 13" CV="42" mask="VXXXXXXX" default="0">
+        <variable item="F8 controls output 14" CV="42" mask="VXXXXXXX" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F8 controls output 13</label>
+          <label>F8 controls output Brake</label>
         </variable>
         <!-- end normal function group 2 -->
         <!-- begin normal function group 3 -->
         <variable item="F9 controls output 7" CV="43" mask="XXXXXXXV" default="0" minFn="9">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F9 controls output 7</label>
+          <label>F9 controls output Dynamics</label>
         </variable>
         <variable item="F9 controls output 8" CV="43" mask="XXXXXXVX" default="0" minFn="9">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F9 controls output 8</label>
+          <label>F9 controls output Short Horn</label>
         </variable>
-        <variable item="F9 controls output 9" CV="43" mask="XXXXVXXX" default="0" minFn="9">
+        <variable item="F9 controls output 10" CV="43" mask="XXXXVXXX" default="0" minFn="9">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F9 controls output 9</label>
+          <label>F9 controls output Fans(+)</label>
         </variable>
-        <variable item="F9 controls output 10" CV="43" mask="XXXVXXXX" default="0" minFn="9">
+        <variable item="F9 controls output 11" CV="43" mask="XXXVXXXX" default="0" minFn="9">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F9 controls output 10</label>
+          <label>F9 controls output Dimming</label>
         </variable>
-        <variable item="F9 controls output 11" CV="43" mask="XXVXXXXX" default="0" minFn="9">
+        <variable item="F9 controls output 12" CV="43" mask="XXVXXXXX" default="0" minFn="9">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F9 controls output 11</label>
+          <label>F9 controls output Mute</label>
         </variable>
-        <variable item="F9 controls output 12" CV="43" mask="XVXXXXXX" default="0" minFn="9">
+        <variable item="F9 controls output 13" CV="43" mask="XVXXXXXX" default="0" minFn="9">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F9 controls output 12</label>
+          <label>F9 controls output Comp(-)</label>
         </variable>
-        <variable item="F9 controls output 13" CV="43" mask="VXXXXXXX" default="1" minFn="9">
+        <variable item="F9 controls output 14" CV="43" mask="VXXXXXXX" default="1" minFn="9">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F9 controls output 13</label>
+          <label>F9 controls output Brake</label>
         </variable>
         <variable item="F10 controls output 8" CV="44" mask="XXXXXXXV" default="0" minFn="10">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F10 controls output 8</label>
+          <label>F10 controls output Short Horn</label>
         </variable>
-        <variable item="F10 controls output 9" CV="44" mask="XXXXXVXX" default="0" minFn="10">
+        <variable item="F10 controls output 10" CV="44" mask="XXXXXVXX" default="0" minFn="10">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F10 controls output 9</label>
+          <label>F10 controls output Fans(+)</label>
         </variable>
-        <variable item="F10 controls output 10" CV="44" mask="XXXXVXXX" default="0" minFn="10">
+        <variable item="F10 controls output 11" CV="44" mask="XXXXVXXX" default="0" minFn="10">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F10 controls output 10</label>
+          <label>F10 controls output Dimming</label>
         </variable>
-        <variable item="F10 controls output 11" CV="44" mask="XXXVXXXX" default="0" minFn="10">
+        <variable item="F10 controls output 12" CV="44" mask="XXXVXXXX" default="0" minFn="10">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F10 controls output 11</label>
+          <label>F10 controls output Mute</label>
         </variable>
-        <variable item="F10 controls output 12" CV="44" mask="XXVXXXXX" default="0" minFn="10">
+        <variable item="F10 controls output 13" CV="44" mask="XXVXXXXX" default="0" minFn="10">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F10 controls output 12</label>
+          <label>F10 controls output Comp(-)</label>
         </variable>
-        <variable item="F10 controls output 13" CV="44" mask="XVXXXXXX" default="0" minFn="10">
+        <variable item="F10 controls output 14" CV="44" mask="XVXXXXXX" default="0" minFn="10">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F10 controls output 13</label>
+          <label>F10 controls output Brake</label>
         </variable>
-        <variable item="F10 controls output 14" CV="44" mask="VXXXXXXX" default="1" minFn="10">
+        <variable item="F10 controls output 15" CV="44" mask="VXXXXXXX" default="1" minFn="10">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F10 controls output 14</label>
+          <label>F10 controls output Coupler</label>
         </variable>
         <variable item="F11 controls output 8" CV="45" mask="XXXXXXXV" default="0" minFn="11">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F11 controls output 8</label>
+          <label>F11 controls output Short Horn</label>
         </variable>
-        <variable item="F11 controls output 9" CV="45" mask="XXXXXVXX" default="0" minFn="11">
+        <variable item="F11 controls output 10" CV="45" mask="XXXXXVXX" default="0" minFn="11">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F11 controls output 9</label>
+          <label>F11 controls output Fans(+)</label>
         </variable>
-        <variable item="F11 controls output 10" CV="45" mask="XXXXVXXX" default="0" minFn="11" exclude="N_F45">
+        <variable item="F11 controls output 11" CV="45" mask="XXXXVXXX" default="0" minFn="11" exclude="N_F45">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F11 controls output 10</label>
+          <label>F11 controls output Dimming</label>
         </variable>
-        <variable item="F11 controls output 10" CV="45" mask="XXXXVXXX" default="1" minFn="11" include="N_F45">
+        <variable item="F11 controls output 11" CV="45" mask="XXXXVXXX" default="1" minFn="11" include="N_F45">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F11 controls output 10</label>
+          <label>F11 controls output Dimming</label>
         </variable>
-        <variable item="F11 controls output 11" CV="45" mask="XXXVXXXX" default="0" minFn="11">
+        <variable item="F11 controls output 12" CV="45" mask="XXXVXXXX" default="0" minFn="11">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F11 controls output 11</label>
+          <label>F11 controls output Mute</label>
         </variable>
-        <variable item="F11 controls output 12" CV="45" mask="XXVXXXXX" default="0" minFn="11">
+        <variable item="F11 controls output 13" CV="45" mask="XXVXXXXX" default="0" minFn="11">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F11 controls output 12</label>
+          <label>F11 controls output Comp(-)</label>
         </variable>
-        <variable item="F11 controls output 13" CV="45" mask="XVXXXXXX" default="0" minFn="11">
+        <variable item="F11 controls output 14" CV="45" mask="XVXXXXXX" default="0" minFn="11">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F11 controls output 13</label>
+          <label>F11 controls output Brake</label>
         </variable>
-        <variable item="F11 controls output 14" CV="45" mask="VXXXXXXX" default="0" minFn="11">
+        <variable item="F11 controls output 15" CV="45" mask="VXXXXXXX" default="0" minFn="11">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F11 controls output 14</label>
+          <label>F11 controls output Coupler</label>
         </variable>
         <variable item="F12 controls output 8" CV="46" mask="XXXXXXXV" default="0" minFn="12">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F12 controls output 8</label>
+          <label>F12 controls output Short Horn</label>
         </variable>
-        <variable item="F12 controls output 9" CV="46" mask="XXXXXVXX" default="0" minFn="12">
+        <variable item="F12 controls output 10" CV="46" mask="XXXXXVXX" default="0" minFn="12">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F12 controls output 9</label>
+          <label>F12 controls output Fans(+)</label>
         </variable>
-        <variable item="F12 controls output 10" CV="46" mask="XXXXVXXX" default="0" minFn="12">
+        <variable item="F12 controls output 11" CV="46" mask="XXXXVXXX" default="0" minFn="12">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F12 controls output 10</label>
+          <label>F12 controls output Dimming</label>
         </variable>
-        <variable item="F12 controls output 11" CV="46" mask="XXXVXXXX" default="0" minFn="12" exclude="N_F45">
+        <variable item="F12 controls output 12" CV="46" mask="XXXVXXXX" default="0" minFn="12" exclude="N_F45">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F12 controls output 11</label>
+          <label>F12 controls output Mute</label>
         </variable>
-        <variable item="F12 controls output 11" CV="46" mask="XXXVXXXX" default="1" minFn="12" include="N_F45">
+        <variable item="F12 controls output 12" CV="46" mask="XXXVXXXX" default="1" minFn="12" include="N_F45">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F12 controls output 11</label>
+          <label>F12 controls output Mute</label>
         </variable>
-        <variable item="F12 controls output 12" CV="46" mask="XXVXXXXX" default="0" minFn="12">
+        <variable item="F12 controls output 13" CV="46" mask="XXVXXXXX" default="0" minFn="12">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F12 controls output 12</label>
+          <label>F12 controls output Comp(-)</label>
         </variable>
-        <variable item="F12 controls output 13" CV="46" mask="XVXXXXXX" default="0" minFn="12">
+        <variable item="F12 controls output 14" CV="46" mask="XVXXXXXX" default="0" minFn="12">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F12 controls output 13</label>
+          <label>F12 controls output Brake</label>
         </variable>
-        <variable item="F12 controls output 14" CV="46" mask="VXXXXXXX" default="0" minFn="12">
+        <variable item="F12 controls output 15" CV="46" mask="VXXXXXXX" default="0" minFn="12">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F12 controls output 14</label>
+          <label>F12 controls output Coupler</label>
         </variable>
         <!-- end normal function group 3 -->
       </variables>
@@ -1133,13 +1158,13 @@
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F9 controls output 8(alt)</label>
         </variable>
-        <variable item="F9 controls output 9(alt)" CV="39" mask="XVXXXXXX" default="0">
-          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F9 controls output 9(alt)</label>
-        </variable>
-        <variable item="F9 controls output 10(alt)" CV="39" mask="VXXXXXXX" default="0">
+        <variable item="F9 controls output 10(alt)" CV="39" mask="XVXXXXXX" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F9 controls output 10(alt)</label>
+        </variable>
+        <variable item="F9 controls output 11(alt)" CV="39" mask="VXXXXXXX" default="0">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+          <label>F9 controls output 11(alt)</label>
         </variable>
         <variable item="F10 controls output 6(alt)" CV="40" mask="XXXXXXXV" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -1165,13 +1190,13 @@
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F10 controls output 8(alt)</label>
         </variable>
-        <variable item="F10 controls output 9(alt)" CV="40" mask="XVXXXXXX" default="0">
-          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F10 controls output 9(alt)</label>
-        </variable>
-        <variable item="F10 controls output 10(alt)" CV="40" mask="VXXXXXXX" default="0">
+        <variable item="F10 controls output 10(alt)" CV="40" mask="XVXXXXXX" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F10 controls output 10(alt)</label>
+        </variable>
+        <variable item="F10 controls output 11(alt)" CV="40" mask="VXXXXXXX" default="0">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+          <label>F10 controls output 11(alt)</label>
         </variable>
         <variable item="F11 controls output 7(alt)" CV="41" mask="XXXXXXXV" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -1181,29 +1206,29 @@
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F11 controls output 8(alt)</label>
         </variable>
-        <variable item="F11 controls output 9(alt)" CV="41" mask="XXXXVXXX" default="0">
-          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F11 controls output 9(alt)</label>
-        </variable>
-        <variable item="F11 controls output 10(alt)" CV="41" mask="XXXVXXXX" default="0" include="N_F45">
+        <variable item="F11 controls output 10(alt)" CV="41" mask="XXXXVXXX" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F11 controls output 10(alt)</label>
         </variable>
-        <variable item="F11 controls output 10(alt)" CV="41" mask="XXXVXXXX" default="1" exclude="N_F45">
-          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F11 controls output 10(alt)</label>
-        </variable>
-        <variable item="F11 controls output 11(alt)" CV="41" mask="XXVXXXXX" default="0">
+        <variable item="F11 controls output 11(alt)" CV="41" mask="XXXVXXXX" default="0" include="N_F45">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F11 controls output 11(alt)</label>
         </variable>
-        <variable item="F11 controls output 12(alt)" CV="41" mask="XVXXXXXX" default="0">
+        <variable item="F11 controls output 11(alt)" CV="41" mask="XXXVXXXX" default="1" exclude="N_F45">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+          <label>F11 controls output 11(alt)</label>
+        </variable>
+        <variable item="F11 controls output 12(alt)" CV="41" mask="XXVXXXXX" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F11 controls output 12(alt)</label>
         </variable>
-        <variable item="F11 controls output 13(alt)" CV="41" mask="VXXXXXXX" default="0">
+        <variable item="F11 controls output 13(alt)" CV="41" mask="XVXXXXXX" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F11 controls output 13(alt)</label>
+        </variable>
+        <variable item="F11 controls output 14(alt)" CV="41" mask="VXXXXXXX" default="0">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+          <label>F11 controls output 14(alt)</label>
         </variable>
         <variable item="F12 controls output 7(alt)" CV="42" mask="XXXXXXXV" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -1213,29 +1238,29 @@
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F12 controls output 8(alt)</label>
         </variable>
-        <variable item="F12 controls output 9(alt)" CV="42" mask="XXXXVXXX" default="0">
-          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F12 controls output 9(alt)</label>
-        </variable>
-        <variable item="F12 controls output 10(alt)" CV="42" mask="XXXVXXXX" default="0">
+        <variable item="F12 controls output 10(alt)" CV="42" mask="XXXXVXXX" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F12 controls output 10(alt)</label>
         </variable>
-        <variable item="F12 controls output 11(alt)" CV="42" mask="XXVXXXXX" default="0" include="N_F45">
+        <variable item="F12 controls output 11(alt)" CV="42" mask="XXXVXXXX" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F12 controls output 11(alt)</label>
         </variable>
-        <variable item="F12 controls output 11(alt)" CV="42" mask="XXVXXXXX" default="1" exclude="N_F45">
-          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F12 controls output 11(alt)</label>
-        </variable>
-        <variable item="F12 controls output 12(alt)" CV="42" mask="XVXXXXXX" default="0">
+        <variable item="F12 controls output 12(alt)" CV="42" mask="XXVXXXXX" default="0" include="N_F45">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F12 controls output 12(alt)</label>
         </variable>
-        <variable item="F12 controls output 13(alt)" CV="42" mask="VXXXXXXX" default="0">
+        <variable item="F12 controls output 12(alt)" CV="42" mask="XXVXXXXX" default="1" exclude="N_F45">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+          <label>F12 controls output 12(alt)</label>
+        </variable>
+        <variable item="F12 controls output 13(alt)" CV="42" mask="XVXXXXXX" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F12 controls output 13(alt)</label>
+        </variable>
+        <variable item="F12 controls output 14(alt)" CV="42" mask="VXXXXXXX" default="0">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+          <label>F12 controls output 14(alt)</label>
         </variable>
         <!-- end exchanged function group 2 -->
         <!-- begin exchanged function group 3 -->
@@ -1247,117 +1272,117 @@
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F5 controls output 8(alt)</label>
         </variable>
-        <variable item="F5 controls output 9(alt)" CV="43" mask="XXXXVXXX" default="0" minFn="9">
-          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F5 controls output 9(alt)</label>
-        </variable>
-        <variable item="F5 controls output 10(alt)" CV="43" mask="XXXVXXXX" default="0" minFn="9">
+        <variable item="F5 controls output 10(alt)" CV="43" mask="XXXXVXXX" default="0" minFn="9">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F5 controls output 10(alt)</label>
         </variable>
-        <variable item="F5 controls output 11(alt)" CV="43" mask="XXVXXXXX" default="0" minFn="9">
+        <variable item="F5 controls output 11(alt)" CV="43" mask="XXXVXXXX" default="0" minFn="9">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F5 controls output 11(alt)</label>
         </variable>
-        <variable item="F5 controls output 12(alt)" CV="43" mask="XVXXXXXX" default="0" minFn="9">
+        <variable item="F5 controls output 12(alt)" CV="43" mask="XXVXXXXX" default="0" minFn="9">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F5 controls output 12(alt)</label>
         </variable>
-        <variable item="F5 controls output 13(alt)" CV="43" mask="VXXXXXXX" default="1" minFn="9">
+        <variable item="F5 controls output 13(alt)" CV="43" mask="XVXXXXXX" default="0" minFn="9">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F5 controls output 13(alt)</label>
+        </variable>
+        <variable item="F5 controls output 14(alt)" CV="43" mask="VXXXXXXX" default="1" minFn="9">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+          <label>F5 controls output 14(alt)</label>
         </variable>
         <variable item="F6 controls output 8(alt)" CV="44" mask="XXXXXXXV" default="0" minFn="10">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F6 controls output 8(alt)</label>
         </variable>
-        <variable item="F6 controls output 9(alt)" CV="44" mask="XXXXXVXX" default="0" minFn="10">
-          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F6 controls output 9(alt)</label>
-        </variable>
-        <variable item="F6 controls output 10(alt)" CV="44" mask="XXXXVXXX" default="0" minFn="10">
+        <variable item="F6 controls output 10(alt)" CV="44" mask="XXXXXVXX" default="0" minFn="10">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F6 controls output 10(alt)</label>
         </variable>
-        <variable item="F6 controls output 11(alt)" CV="44" mask="XXXVXXXX" default="0" minFn="10">
+        <variable item="F6 controls output 11(alt)" CV="44" mask="XXXXVXXX" default="0" minFn="10">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F6 controls output 11(alt)</label>
         </variable>
-        <variable item="F6 controls output 12(alt)" CV="44" mask="XXVXXXXX" default="0" minFn="10">
+        <variable item="F6 controls output 12(alt)" CV="44" mask="XXXVXXXX" default="0" minFn="10">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F6 controls output 12(alt)</label>
         </variable>
-        <variable item="F6 controls output 13(alt)" CV="44" mask="XVXXXXXX" default="0" minFn="10">
+        <variable item="F6 controls output 13(alt)" CV="44" mask="XXVXXXXX" default="0" minFn="10">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F6 controls output 13(alt)</label>
         </variable>
-        <variable item="F6 controls output 14(alt)" CV="44" mask="VXXXXXXX" default="1" minFn="10">
+        <variable item="F6 controls output 14(alt)" CV="44" mask="XVXXXXXX" default="0" minFn="10">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F6 controls output 14(alt)</label>
+        </variable>
+        <variable item="F6 controls output 15(alt)" CV="44" mask="VXXXXXXX" default="1" minFn="10">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+          <label>F6 controls output 15(alt)</label>
         </variable>
         <variable item="F7 controls output 8(alt)" CV="45" mask="XXXXXXXV" default="0" minFn="11">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F7 controls output 8(alt)</label>
         </variable>
-        <variable item="F7 controls output 9(alt)" CV="45" mask="XXXXXVXX" default="0" minFn="11">
-          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F7 controls output 9(alt)</label>
-        </variable>
-        <variable item="F7 controls output 10(alt)" CV="45" mask="XXXXVXXX" default="0" minFn="11" exclude="N_F45">
+        <variable item="F7 controls output 10(alt)" CV="45" mask="XXXXXVXX" default="0" minFn="11">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F7 controls output 10(alt)</label>
         </variable>
-        <variable item="F7 controls output 10(alt)" CV="45" mask="XXXXVXXX" default="1" minFn="11" include="N_F45">
-          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F7 controls output 10(alt)</label>
-        </variable>
-        <variable item="F7 controls output 11(alt)" CV="45" mask="XXXVXXXX" default="0" minFn="11">
+        <variable item="F7 controls output 11(alt)" CV="45" mask="XXXXVXXX" default="0" minFn="11" exclude="N_F45">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F7 controls output 11(alt)</label>
         </variable>
-        <variable item="F7 controls output 12(alt)" CV="45" mask="XXVXXXXX" default="0" minFn="11">
+        <variable item="F7 controls output 11(alt)" CV="45" mask="XXXXVXXX" default="1" minFn="11" include="N_F45">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+          <label>F7 controls output 11(alt)</label>
+        </variable>
+        <variable item="F7 controls output 12(alt)" CV="45" mask="XXXVXXXX" default="0" minFn="11">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F7 controls output 12(alt)</label>
         </variable>
-        <variable item="F7 controls output 13(alt)" CV="45" mask="XVXXXXXX" default="0" minFn="11">
+        <variable item="F7 controls output 13(alt)" CV="45" mask="XXVXXXXX" default="0" minFn="11">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F7 controls output 13(alt)</label>
         </variable>
-        <variable item="F7 controls output 14(alt)" CV="45" mask="VXXXXXXX" default="0" minFn="11">
+        <variable item="F7 controls output 14(alt)" CV="45" mask="XVXXXXXX" default="0" minFn="11">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F7 controls output 14(alt)</label>
+        </variable>
+        <variable item="F7 controls output 15(alt)" CV="45" mask="VXXXXXXX" default="0" minFn="11">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+          <label>F7 controls output 15(alt)</label>
         </variable>
         <variable item="F8 controls output 8(alt)" CV="46" mask="XXXXXXXV" default="0" minFn="12">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F8 controls output 8(alt)</label>
         </variable>
-        <variable item="F8 controls output 9(alt)" CV="46" mask="XXXXXVXX" default="0" minFn="12">
-          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F8 controls output 9(alt)</label>
-        </variable>
-        <variable item="F8 controls output 10(alt)" CV="46" mask="XXXXVXXX" default="0" minFn="12">
+        <variable item="F8 controls output 10(alt)" CV="46" mask="XXXXXVXX" default="0" minFn="12">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F8 controls output 10(alt)</label>
         </variable>
-        <variable item="F8 controls output 11(alt)" CV="46" mask="XXXVXXXX" default="0" minFn="12" exclude="N_F45">
+        <variable item="F8 controls output 11(alt)" CV="46" mask="XXXXVXXX" default="0" minFn="12">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F8 controls output 11(alt)</label>
         </variable>
-        <variable item="F8 controls output 11(alt)" CV="46" mask="XXXVXXXX" default="1" minFn="12" include="N_F45">
-          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-          <label>F8 controls output 11(alt)</label>
-        </variable>
-        <variable item="F8 controls output 12(alt)" CV="46" mask="XXVXXXXX" default="0" minFn="12">
+        <variable item="F8 controls output 12(alt)" CV="46" mask="XXXVXXXX" default="0" minFn="12" exclude="N_F45">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F8 controls output 12(alt)</label>
         </variable>
-        <variable item="F8 controls output 13(alt)" CV="46" mask="XVXXXXXX" default="0" minFn="12">
+        <variable item="F8 controls output 12(alt)" CV="46" mask="XXXVXXXX" default="1" minFn="12" include="N_F45">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+          <label>F8 controls output 12(alt)</label>
+        </variable>
+        <variable item="F8 controls output 13(alt)" CV="46" mask="XXVXXXXX" default="0" minFn="12">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F8 controls output 13(alt)</label>
         </variable>
-        <variable item="F8 controls output 14(alt)" CV="46" mask="VXXXXXXX" default="0" minFn="12">
+        <variable item="F8 controls output 14(alt)" CV="46" mask="XVXXXXXX" default="0" minFn="12">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F8 controls output 14(alt)</label>
+        </variable>
+        <variable item="F8 controls output 15(alt)" CV="46" mask="VXXXXXXX" default="0" minFn="12">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+          <label>F8 controls output 15(alt)</label>
         </variable>
         <!-- end exchanged function group 3 -->
       </variables>
