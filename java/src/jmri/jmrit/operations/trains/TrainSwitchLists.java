@@ -194,7 +194,7 @@ public class TrainSwitchLists extends TrainCommon {
 						dropEngines(fileOut, engineList, rl, isManifest);
 						blockCarsByTrack(fileOut, train, carList, routeList, rl, r, true, isManifest);
 					}
-					if (Setup.isPrintHeadersEnabled())
+					if (Setup.isPrintHeadersEnabled() || Setup.isTwoColumnFormatEnabled())
 						printHorizontalLine(fileOut, isManifest);
 						
 					stops++;

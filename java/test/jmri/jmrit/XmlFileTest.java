@@ -133,6 +133,10 @@ public class XmlFileTest extends TestCase {
         try {
             SAXBuilder builder = XmlFile.getBuilder(false);  // argument controls validation
             doc = builder.build(new BufferedInputStream(fs));
+        } catch (java.io.IOException e) {
+            throw e;
+        } catch (org.jdom.JDOMException e) {
+            throw e;
         } finally {
             fs.close();
         }

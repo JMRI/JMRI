@@ -53,7 +53,7 @@ Pour plus d'informations sur FindBugs, voir
 Nous ex&#233;cutons sous forme d'une routine FindBugs comme une partie de notre
 <a href="ContinuousIntegration.shtml">processus continue d'int&#233;gration</a>.
 Vous pouvez voir les r&#233;sultats des plus r&#233;centes constructions en ligne
-<a href="http://builds.jmri.org/jenkins/job/FindBugs/lastBuild/">ici</a>.
+<a href="https://jmri.ci.cloudbees.com/job/Development/job/FindBugs/lastBuild/">ici</a>.
  
 <p>
 Si findBugs trouve une erreur positive, un bug qui n'est pas r&#233;ellemnt un bug, vous pouvez l'&#233;teindre avec une annotation tels que:

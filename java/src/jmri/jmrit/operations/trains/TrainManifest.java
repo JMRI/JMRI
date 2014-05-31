@@ -158,7 +158,7 @@ public class TrainManifest extends TrainCommon {
 				RouteLocation rlNext = routeList.get(r + 1);
 				if (!routeLocationName.equals(splitString(rlNext.getName()))) {
 					if (newWork) {
-						if (Setup.isPrintHeadersEnabled())
+						if (Setup.isPrintHeadersEnabled() || Setup.isTwoColumnFormatEnabled())
 							printHorizontalLine(fileOut, isManifest);
 						// Message format: Train departs Boston Westbound with 12 cars, 450 feet, 3000 tons
 						String trainDeparts = MessageFormat.format(TrainManifestText.getStringTrainDepartsCars(),
@@ -209,7 +209,7 @@ public class TrainManifest extends TrainCommon {
 					}
 				}
 			} else {
-				if (Setup.isPrintHeadersEnabled())
+				if (Setup.isPrintHeadersEnabled() || Setup.isTwoColumnFormatEnabled())
 					printHorizontalLine(fileOut, isManifest);
 				newLine(fileOut, MessageFormat.format(TrainManifestText.getStringTrainTerminates(),
 						new Object[] { routeLocationName }));

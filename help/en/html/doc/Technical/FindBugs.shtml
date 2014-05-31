@@ -51,7 +51,7 @@ We routinely run FindBugs as part of our
 <a href="ContinuousIntegration.shtml">continuous integration process</a>.
 You can see the results of the most
 recent build online
-<a href="http://builds.jmri.org/jenkins/job/FindBugs/lastBuild/">here</a>.
+<a href="https://jmri.ci.cloudbees.com/job/Development/job/FindBugs/lastBuild/">here</a>.
 
 <p>
 If FindBugs is finding a false positive, a bug that's not really a 

@@ -49,13 +49,13 @@ Specific results of interest:
 <li><a href="http://builds.jmri.org/jenkins/job/Development/">Development</a> page, 
 showing status of the builds done after every series of commits.
 There are also pages of the 
-<a href="http://builds.jmri.org/jenkins/job/Development/changes">most recent changes<a> and the
-<a href="http://builds.jmri.org/jenkins/job/Development/lastBuild/">most results<a>.
-<li><a href="http://builds.jmri.org/jenkins/job/FindBugs/">FindBugs</a> page, 
+<a href="http://builds.jmri.org/jenkins/view/All/job/Development/job/Packages/changes">most recent changes<a> and the
+<a href="http://builds.jmri.org/jenkins/job/Development/job/Builds/lastBuild/">most results<a>.
+<li><a href="https://jmri.ci.cloudbees.com/job/Development/job/FindBugs/">FindBugs</a> page, 
 showing status of the more-extensive tests done periodically.
 There are also pages of the 
-<a href="http://builds.jmri.org/jenkins/job/FindBugs/changes">most recent changes<a> and the
-<a href="http://builds.jmri.org/jenkins/job/FindBugs/lastBuild/">most recent results<a>.
+<a href="https://jmri.ci.cloudbees.com/job/Development/job/FindBugs/changes">most recent changes<a> and the
+<a href="https://jmri.ci.cloudbees.com/job/Development/job/FindBugs/lastBuild/">most recent results<a>.
 <p>
 For more information on JMRI's use of FindBugs, see the
 <a href="FindBugs.shtml">separate FindBugs page</a>.
