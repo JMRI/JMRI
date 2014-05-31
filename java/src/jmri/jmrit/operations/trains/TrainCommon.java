@@ -246,8 +246,8 @@ public class TrainCommon {
 			}
 			// now do set outs and local moves
 			for (Car car : carList) {
-				if (Setup.isSortByTrackEnabled()) {
-					// sort local moves by the car's current track name
+				if (Setup.isSortByTrackEnabled() && car.getRouteLocation() != null && car.getRouteDestination() == rl) {
+				// sort local moves by the car's current track name
 					if (isLocalMove(car)) {
 						if (!splitString(track.getName()).equals(splitString(car.getTrackName())))
 							continue;
