@@ -906,10 +906,10 @@
         </manifestclasspath>
         <jar jarfile="${jartarget}/jmri.jar"
              basedir="${target}"
-             index="true"
-             compress="true">
+             compress="true"
+             index="true">  <!--  java -jar jmri.jar doesn't start when apps.PanelPro.PanelPro is specified & index="true" -->
           <manifest>
-            <attribute name="Main-Class" value="jmri.Version"/>  <!-- java -jar jmri.jar doesn't seem to start when apps.PanelPro.PanelPro is specified here -->
+            <attribute name="Main-Class" value="jmri.Version"/>  
             <attribute name="Class-Path" value="${jar.classpath}"/>
             <section name="jmri">
               <attribute name="Specification-Title" value="Java Model Railroad Interface Classes"/>
@@ -936,13 +936,13 @@
             depends="debug, rmic">
         <jar jarfile="${jartarget}/jmri.jar"
              basedir="${target}"
-             index="true"
-             compress="true">
+             compress="true"
+             index="true">  <!--  java -jar jmri.jar doesn't start when apps.PanelPro.PanelPro is specified & index="true" -->
             <fileset dir="."
                      includes="xml/,resources/,help/,web/,jython/"
                      excludes="help/en/manual/**" />
           <manifest>
-            <attribute name="Main-Class" value="jmri.Version"/>  <!-- java -jar jmri.jar doesn't seem to start when apps.PanelPro.PanelPro is specified here -->
+            <attribute name="Main-Class" value="jmri.Version"/> 
             <attribute name="Class-Path" value="${jar.classpath}"/>
             <section name="jmri">
               <attribute name="Specification-Title" value="Java Model Railroad Interface Classes"/>
