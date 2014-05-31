@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20140530-2250-Alain Le Marchand on Sat May 31 00:50:12 CEST 2014 $Id$-->
-  <decoderIndex version="400">
+  <!--Written by JMRI version 20140531-0851-Alain Le Marchand on Sat May 31 10:51:49 CEST 2014 $Id$-->
+  <decoderIndex version="402">
     <mfgList nmraListDate="2012-12-05" updated="2013-04-11" lastadd="106">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -7300,6 +7300,7 @@
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
           <output name="Dynamic" label="Brakes" />
           <output name="Short" label="Horn" />
           <output name="Reserved" />

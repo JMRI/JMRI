@@ -990,6 +990,7 @@
         <output name="Air Horn"/>
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>        
         <output name="Dynamic" label="Brakes"/>
         <output name="Short" label="Horn"/>
 	<output name="Reserved"/>
