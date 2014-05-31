@@ -932,6 +932,8 @@ public class TrainCommon {
 	 * @return true if the move is at the same location
 	 */
 	protected boolean isLocalMove(Car car) {
+		if (car.getRouteLocation() == null || car.getRouteDestination() == null)
+			return false;
 		if (car.getRouteLocation().equals(car.getRouteDestination()) && car.getTrack() != null)
 			return true;
 		if (car.getTrain() != null
