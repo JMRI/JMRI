@@ -92,7 +92,7 @@ public class CircuitBuilder  {
 
     public final static Color _editGroupColor = new Color(100, 200, 255);
     public final static Color _pathColor = Color.green;
-    public final static Color _highlightColor = new Color(255, 100, 200);
+    public final static Color _highlightColor = new Color(255, 150, 220);
     
     /******************************************************************/
 

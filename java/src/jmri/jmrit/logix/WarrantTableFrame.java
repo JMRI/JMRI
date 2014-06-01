@@ -75,8 +75,10 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener
 	static boolean _defaultHaltStart = false;
 	static boolean _defaultAddTracker = false;
 	static String _defaultSearchdepth = "15";
-	static String _defaultSpeed = "0.5";
+	static String _defaultMaxSpeed = "0.5";
+	static String _defaultMinSpeed = "0.075";
 	static String _defaultIntervalTime = "4.0";
+	static String _defaultNumSteps = "8";
     public static int _maxHistorySize = 30;
 
 	private JTextField  _startWarrant = new JTextField(30);

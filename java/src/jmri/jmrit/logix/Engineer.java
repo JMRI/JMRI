@@ -61,8 +61,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             }
             _runOnET = _setRunOnET;		// OK to set here
             long time = ts.getTime();
-            if (log.isDebugEnabled()) log.debug("Start of Command "+(_idxCurrentCommand+1)+" Block \""+ts.getBlockName()+
-                    "\" in order #"+cmdBlockIdx+" Warrant order#"+_warrant.getCurrentOrderIndex());
+            if (log.isDebugEnabled()) log.debug("Start Cmd #"+(_idxCurrentCommand+1)+" for block \""+ts.getBlockName()+
+            		"\" currently in \""+_warrant.getBlockAt(cmdBlockIdx).getDisplayName()+"\". Warrant "+_warrant.getDisplayName());
             if (cmdBlockIdx < _warrant.getCurrentOrderIndex()) {
             	// Train advancing too fast, need to process commands more quickly,
             	// allowing half second for whistle toots etc.
@@ -85,9 +85,11 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                         // wait for train to arrive at block and send sync notification.
                         // note, blind runs cannot detect entrance.
                         if (!_runOnET && _syncIdx > _warrant.getCurrentOrderIndex()) {
-                            // commands are ahead of current train position 
-                            if (log.isDebugEnabled()) log.debug("Command Block \""+ts.getBlockName()+
-                                                      "\" wait for train to enter. "+_warrant.getDisplayName());
+                            // commands are ahead of current train position
+                        	// When the next block goes active or a control command is made, a call to rampSpeedTo()
+                        	// will test these indexes again and can trigger a notify() to free the wait
+                            if (log.isDebugEnabled()) log.debug("Wait for train to enter \""+ts.getBlockName()+
+                                                      "\".  Warrant "+_warrant.getDisplayName());
                             _waitForSync = true;
                             _warrant.fireRunStatus("Command", Integer.valueOf(_idxCurrentCommand), Integer.valueOf(_idxCurrentCommand+1));
                             wait();
@@ -144,7 +146,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 	_warrant.startTracker();
                 } else if (command.equals("RUN WARRANT")) {
                     runWarrant(ts);
-                } else if (_runOnET && command.equals("NOOP")) {	// let warrant know engineer expects entry to dark block
+                } else if (_runOnET && command.equals("NOOP")) {	// let warrant know engineer expects entry into dark block
                     _warrant.goingActive(_warrant.getBlockAt(cmdBlockIdx));
                 }
                 _warrant.fireRunStatus("Command", Integer.valueOf(_idxCurrentCommand), Integer.valueOf(_idxCurrentCommand+1));
