@@ -406,7 +406,16 @@ abstract public class PaneProgFrame extends JmriJFrame
                 for (int i=0; i<paneList.size(); i++) {
                     // load each pane
                     String pname = jmri.util.jdom.LocaleSelector.getAttribute(paneList.get(i), "name");
-                    newPane( pname, paneList.get(i), modelElem, true);  // show even if empty??
+
+                    // handle include/exclude
+                    a = modelElem.getAttribute("productID");
+                    String pID = null;
+                            if (a != null) {
+                        pID = a.getValue();
+                    }
+                    if ( DecoderFile.isIncluded(paneList.get(i), pID, modelElem.getAttribute("model").getValue(), _rosterEntry.getDecoderFamily(), "", "") ) {
+                        newPane( pname, paneList.get(i), modelElem, true);  // show even if empty??
+                    }
                 }
             }
         }

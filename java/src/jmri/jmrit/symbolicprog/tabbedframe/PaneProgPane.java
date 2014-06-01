@@ -25,6 +25,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import javax.swing.*;
 import javax.swing.table.*;
+import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.*;
 import jmri.util.davidflanagan.HardcopyWriter;
@@ -1202,6 +1203,16 @@ public class PaneProgPane extends javax.swing.JPanel
         GridBagConstraints cs = new GridBagConstraints();
         c.setLayout(g);
 
+        // handle include/exclude
+        Attribute a = modelElem.getAttribute("productID");
+        String pID = null;
+        if (a != null) {
+            pID = a.getValue();
+        }
+        if ( !DecoderFile.isIncluded(element, pID, modelElem.getAttribute("model").getValue(), rosterEntry.getDecoderFamily(), "", "") ) {
+            return c;
+        }
+
         // handle the xml definition
         // for all elements in the column or row
         List<Element> elemList = element.getChildren();
@@ -1336,6 +1347,16 @@ public class PaneProgPane extends javax.swing.JPanel
     @SuppressWarnings("unchecked")
 	protected void newGridGroup(Element element, final JPanel c, GridBagLayout g, GridGlobals globs, boolean showStdName, Element modelElem) {
 
+        // handle include/exclude
+        Attribute a = modelElem.getAttribute("productID");
+        String pID = null;
+        if (a != null) {
+            pID = a.getValue();
+        }
+        if ( !DecoderFile.isIncluded(element, pID, modelElem.getAttribute("model").getValue(), rosterEntry.getDecoderFamily(), "", "") ) {
+            return;
+        }
+
         // handle the xml definition
         // for all elements in the column or row
         List<Element> elemList = element.getChildren();
@@ -1353,17 +1374,17 @@ public class PaneProgPane extends javax.swing.JPanel
                     g.setConstraints(l, globs.gridConstraints);
                     c.add(l);
 //                     globs.gridConstraints.gridwidth = 1;
-					// handle qualification if any
-					QualifierAdder qa = new QualifierAdder() {
-						protected Qualifier createQualifier(VariableValue var, String relation, String value) {
-							return new JComponentQualifier(l, var, Integer.parseInt(value), relation);
-						}
-						protected void addListener(java.beans.PropertyChangeListener qc) {
-							l.addPropertyChangeListener(qc);
-						}
-					};
-		
-					qa.processModifierElements(e, _varModel);
+                    // handle qualification if any
+                    QualifierAdder qa = new QualifierAdder() {
+                        protected Qualifier createQualifier(VariableValue var, String relation, String value) {
+                            return new JComponentQualifier(l, var, Integer.parseInt(value), relation);
+                        }
+                        protected void addListener(java.beans.PropertyChangeListener qc) {
+                            l.addPropertyChangeListener(qc);
+                        }
+                    };
+        
+                    qa.processModifierElements(e, _varModel);
                 }
             } else if (name.equals("group")) {
                                 // nested "group" elements ...
