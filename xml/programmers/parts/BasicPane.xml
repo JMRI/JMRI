@@ -22,7 +22,7 @@
     <display item="Address Format" tooltip="Determines whether loco will use short or long address">
       <tooltip xml:lang="it">Determina se la Loco usa l'indirizzo corto o quello esteso</tooltip>
       <tooltip xml:lang="ca">Determina si es fa servir adreÁa curta o llargaî</tooltip>
-      <tooltip xml:lang="de">Lok nenutzt lange oder kurze Adresse</tooltip>
+      <tooltip xml:lang="de">Lok benutzt lange oder kurze Adresse</tooltip>
     </display>
     <label>
       <text> </text>
@@ -40,7 +40,7 @@
     <display item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)">
       <tooltip xml:lang="it">Determina se la Loco può operare in DC (analogica)</tooltip>
       <tooltip xml:lang="ca">Estableix que la locomotora pot circular en analÚgic [CC] (ConversiÛ de Font de potËncia)</tooltip>
-      <tooltip xml:lang="de">Legt fest, obe die Lok auch analog (DC) fahren kann</tooltip>
+      <tooltip xml:lang="de">Legt fest, ob die Lok auch analog (DC) fahren kann</tooltip>
     </display>
   </column>
   <column>

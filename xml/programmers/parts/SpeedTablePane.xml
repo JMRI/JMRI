@@ -36,7 +36,7 @@
         <display item="Speed Table Selection" tooltip="Select manufacturer's speed table or user table">
           <tooltip xml:lang="it">Seleziona Tabella Velocità del Costruttore o Tabella Personalizzata</tooltip>
           <tooltip xml:lang="ca">Selecciona taula de velocitats del fabricant o de l'usuari</tooltip>
-          <tooltip xml:lang="de">Die Geschwindigkeitskennlinie des Herstellers uder des Benutzers verwenden</tooltip>
+          <tooltip xml:lang="de">Die Geschwindigkeitskennlinie des Herstellers oder die des Benutzers verwenden</tooltip>
         </display>
       </column>
     </row>
