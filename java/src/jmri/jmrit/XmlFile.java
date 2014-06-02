@@ -13,12 +13,16 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import javax.swing.JFileChooser;
 import jmri.util.FileUtil;
 import jmri.util.JmriLocalEntityResolver;
 import jmri.util.NoArchiveFileFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Comment;
+import org.jdom.Content;
 import org.jdom.DocType;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -27,8 +31,6 @@ import org.jdom.ProcessingInstruction;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle common aspects of XML files. <P> JMRI needs to be able to operate
@@ -462,7 +464,11 @@ public abstract class XmlFile {
                 try {
                     doc = processOneInstruction((ProcessingInstruction)c, doc);
                 } catch (org.jdom.transform.XSLTransformException ex) {
-                    log.error("error while transforming with {}, ignoring transform", c, ex);
+                    log.error("XSLT error while transforming with "+(ProcessingInstruction)c+", ignoring transform", ex);
+                } catch (org.jdom.JDOMException ex) {
+                    log.error("JDOM error while transforming with "+(ProcessingInstruction)c+", ignoring transform", ex);
+                } catch (java.io.IOException ex) {
+                    log.error("IO error while transforming with "+(ProcessingInstruction)c+", ignoring transform", ex);
                 }
             }
         }
@@ -470,7 +476,7 @@ public abstract class XmlFile {
         return doc ;
     }
     
-    Document processOneInstruction(ProcessingInstruction p, Document doc) throws org.jdom.transform.XSLTransformException {
+    Document processOneInstruction(ProcessingInstruction p, Document doc) throws org.jdom.transform.XSLTransformException, org.jdom.JDOMException, java.io.IOException {
         log.debug("handling ",p);
         
         // check target
@@ -482,7 +488,10 @@ public abstract class XmlFile {
         if (! href.startsWith("http://jmri.org/")) return doc;
         href = href.substring(16);
         
-        org.jdom.transform.XSLTransformer transformer = new org.jdom.transform.XSLTransformer(href);
+        // read the XSLT transform into a Document to get XInclude done
+        SAXBuilder builder = getBuilder(verify);  // argument controls validation
+        Document xdoc = builder.build(new BufferedInputStream(new FileInputStream(new File(href))));
+        org.jdom.transform.XSLTransformer transformer = new org.jdom.transform.XSLTransformer(xdoc);
         return transformer.transform(doc);
     }
     
