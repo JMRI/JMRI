@@ -24,7 +24,7 @@
 <h1>DecoderPro User Guide - Advanced Decoder Definitions</h1>
 
 <p>This page provides information on advanced features in
-the decoder definiton
+the decoder definition
 files for the DecoderPro Symbolic Programmer.</p>
 
 <h3>Formatting on the page</h3>
@@ -227,7 +227,7 @@ These are particularly useful when using a common fragment file
 that might be included by multiple decoder definition files (defining
 different-but-similar families)
 
-<h4 name="include">Include/Exclude During Expansion</h4>
+<h4 name="include">Include/Exclude During Variable Expansion</h4>
 
 Whether a variable element is expanded and used can be made conditional on the 
 decoder type using "include" and "exclude" attributes on &lt;variables&gt; and &lt;variable&gt; elements.
@@ -252,15 +252,66 @@ Example:
 </pre>
 
 <p>
-The variable above will only appear when expanding the decode definition
+The variable above will only appear when expanding the decoder definition
 for ModelA or product ID 400.
 <p>
-You can also put include and exclue attributes on individual choices in an enumeration-type
+You can also put include and exclude attributes on individual choices in an enumeration-type
 variable.  This can be used to e.g. only include specific lighting options in certain
 decoder families.
 <p>
-Attributes on a &lt;variables&gt; element acts on all the &lt;variable&gt; elements within it,
+Attributes on a &lt;variables&gt; element act on all the &lt;variable&gt; elements within it,
 along with any include or exclude attributes on those individual variables. 
+
+<h4 name="pane_include">Include/Exclude During Pane Creation</h4>
+
+Whether a pane (or part of a pane) is created can be made conditional on the 
+decoder type using "include" and "exclude" attributes on &lt;pane&gt; and &lt;group&gt; elements.
+<p>
+A pane will not be created:
+<ul>
+<li>If an exclude attribute is present, neither the
+decoders product ID, model name, nor family name is found in the exclude list.
+<li>If an include attribute is present, at least one of the
+decoders product ID, model name, nor family name is found in the include list.
+</ul>
+Both of these conditions must be true, and it's possible to use 
+both include and exclude on the same element, but it's more usual to just 
+use one.
+<p>
+Example:
+
+<pre>
+      &lt;pane label="My Pane" include="ModelA,400"&gt;
+        ...
+      &lt;/pane&gt;
+</pre>
+
+<p>
+&quot;My Pane&quot; will be created only when expanding the decoder definition
+for ModelA or product ID 400.
+<p>
+You can also create a &lt;group&gt; element with include and exclude attributes.
+Elements within the &lt;group&gt; will be created only if the <group> conditions are met.
+This can be used to e.g. display specific text labels only for certain
+decoder models.
+<p>
+Example:
+
+<pre>
+      &lt;group include="ModelA,400"&gt;
+        &lt;label&gt;
+          &lt;text&gt;These decoders are very old.&lt;/text&gt;
+        &lt;/label&gt;
+        &lt;label&gt;
+          &lt;text&gt;Some features are unavailable.&lt;/text&gt;
+        &lt;/label&gt;
+      &lt;/group&gt;
+</pre>
+
+<p>
+The text will be created only when expanding the decoder definition
+for ModelA or product ID 400.
+
 
 <h4 name="qualify">Run-time Qualification of Variables</h4>
 <h5>Qualifying Variables</h5>
