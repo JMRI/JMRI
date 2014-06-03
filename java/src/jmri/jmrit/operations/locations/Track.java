@@ -1285,9 +1285,6 @@ public class Track {
 				}
 			}
 		}
-		// Is rolling stock too long for this track?
-		if (getLength() < length)
-			return CAPACITY + " (" + length + ") " + Setup.getLengthUnit().toLowerCase();// NOI18N
 		if (rs.getTrack() != this && rs.getDestinationTrack() != this
 				&& (getUsedLength() + getReserved() + length) > getLength()) {
 			// not enough track length check to see if track is in a pool
@@ -1298,6 +1295,9 @@ public class Track {
 					return OKAY;
 			// Note that a lot of the code checks for track length being an issue, therefore it has to be the last
 			// check.
+			// Is rolling stock too long for this track?
+			if (getLength() < length)
+				return CAPACITY + " (" + length + ") " + Setup.getLengthUnit().toLowerCase();// NOI18N
 			log.debug("Rolling stock (" + rs.toString() + ") not accepted at location (" + getLocation().getName()
 					+ ", " + getName() + ") no room!"); // NOI18N
 			return LENGTH + " (" + length + ") " + Setup.getLengthUnit().toLowerCase();// NOI18N

@@ -265,7 +265,7 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertTrue("Try routing final track with Acton Local", router.setDestination(c3, ActonTrain, null));
 		Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
 		Assert.assertEquals("Check car's destination track", "", c3.getDestinationTrackName());
-		Assert.assertTrue("Should report that the issue was track length", router.getStatus().startsWith(Track.LENGTH));
+		Assert.assertTrue("Should report that the issue was track length", router.getStatus().startsWith(Track.CAPACITY));
 		
 		// restore track length
 		AS2.setLength(300);
@@ -739,7 +739,9 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertTrue("Try routing, only active trains deselected", router.setDestination(c3, null, null));
 		
 		// test yard and alternate track options
-		BS1.setLength(c3.getTotalLength()-1);
+		BS1.setLength(c3.getTotalLength());
+		// c4 is the same length as c3, so the track is now full
+		Assert.assertEquals("Use up all of the space for BS1", Track.OKAY, c4.setLocation(Bedford, BS1));	
 		c3.setDestination(null, null);	// clear previous destination
 		c3.setFinalDestination(Bedford);
 		c3.setFinalDestinationTrack(BS1);
@@ -849,7 +851,8 @@ public class OperationsCarRouterTest extends TestCase {
 		c3.setDestination(null, null);	// clear previous destination
 		c3.setFinalDestination(Bedford);	// the final destination for the car
 		c3.setFinalDestinationTrack(BS1);
-		Assert.assertTrue("Try routing two trains to yard track", router.setDestination(c3, ActonTrain2, null));
+		router.setDestination(c3, ActonTrain2, null);
+		Assert.assertFalse("Try routing two trains to yard track", router.setDestination(c3, ActonTrain2, null));
 		Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
 		Assert.assertEquals("Check car's destination track", "", c3.getDestinationTrackName());
 
@@ -930,6 +933,15 @@ public class OperationsCarRouterTest extends TestCase {
 		Setup.setCarRoutingViaYardsEnabled(false);
 		c3.setDestination(null, null);	// clear previous destination
 		c3.setFinalDestination(Clinton);	// the final destination for the car
+		// both interchange tracks are too short, so there isn't a route
+		Assert.assertFalse("Try routing three trains to yard track, option disabled", router.setDestination(c3, ActonTrain2, null));
+		Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
+		Assert.assertEquals("Check car's destination track", "", c3.getDestinationTrackName());
+		
+		// Try again with an interchange track that is long enough for car c3.
+		AI.setLength(c3.getTotalLength());
+		Assert.assertEquals("c4 consumes all of the interchange track", Track.OKAY, c4.setLocation(AI.getLocation(), AI));
+		// Track AI is long enough, but c4 is consuming all of the track, but there is a route!
 		Assert.assertTrue("Try routing three trains to yard track, option disabled", router.setDestination(c3, ActonTrain2, null));
 		Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
 		Assert.assertEquals("Check car's destination track", "", c3.getDestinationTrackName());
