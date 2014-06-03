@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2013 All rights reserved -->
+<!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2013, 2014 All rights reserved -->
 <!-- $Id:  $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -18,12 +18,12 @@
   <variable CV="7" readOnly="yes" item="Decoder Version">
     <decVal/>
     <label>Version ID</label>
-    <label xml:lang="it">Version ID</label>
+    <label xml:lang="it">ID Versione</label>
   </variable>
   <variable CV="8" readOnly="yes" item="Manufacturer">
     <decVal/>
     <label>Manufacturer ID</label>
-    <label xml:lang="it">Manufacturer ID</label>
+    <label xml:lang="it">ID Costruttore</label>
   </variable>
   <variable CV="13" mask="XXXXXXXV" default="1" minOut="1" item="Analog Mode Function Status - FL(f)">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -49,79 +49,91 @@
   <variable CV="19" mask="XVVVVVVV" item="Consist Address">
     <decVal/>
     <label>Consist Address</label>
-    <label xml:lang="it">Consist Address</label>
+    <label xml:lang="it">Indirizzo Consist</label>
   </variable>
   <variable item="Consist Direction" CV="19" mask="VXXXXXXX">
     <enumVal>
       <enumChoice choice="Normal">
         <choice>Normal</choice>
+        <choice xml:lang="it">Normale</choice>
       </enumChoice>
       <enumChoice choice="Reversed">
         <choice>Reversed</choice>
+        <choice xml:lang="it">Invertita</choice>
       </enumChoice>
     </enumVal>
     <label>Consist Direction</label>
-    <label xml:lang="it">Consist Direction</label>
+    <label xml:lang="it">Direzione Consist</label>
   </variable>
   <variable CV="21" mask="XXXXXXXV" minOut="1" item="Consist Address Active For F1">
     <enumVal>
       <enumChoice choice="Locomotive Address Only">
         <choice>Locomotive Address Only</choice>
+        <choice xml:lang="it">Solo Indirizzo Loco</choice>
       </enumChoice>
       <enumChoice choice="Respond to Consist Address">
         <choice>Respond to Consist Address</choice>
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
       </enumChoice>
     </enumVal>
     <label>Consist Address Active For Green</label>
-    <label xml:lang="it">Consist Address Active For Green</label>
+    <label xml:lang="it">Indirizzo Consist Attivo per Verde</label>
   </variable>
   <variable CV="21" mask="XXXXXXVX" minOut="2" item="Consist Address Active For F2">
     <enumVal>
       <enumChoice choice="Locomotive Address Only">
         <choice>Locomotive Address Only</choice>
+        <choice xml:lang="it">Solo Indirizzo Loco</choice>
       </enumChoice>
       <enumChoice choice="Respond to Consist Address">
         <choice>Respond to Consist Address</choice>
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
       </enumChoice>
     </enumVal>
     <label>Consist Address Active For Purple</label>
-    <label xml:lang="it">Consist Address Active For Purple</label>
+    <label xml:lang="it">Indirizzo Consist Attivo per Porpora</label>
   </variable>
   <variable CV="21" mask="XXXXXVXX" minOut="3" item="Consist Address Active For F3">
     <enumVal>
       <enumChoice choice="Locomotive Address Only">
         <choice>Locomotive Address Only</choice>
+        <choice xml:lang="it">Solo Indirizzo Loco</choice>
       </enumChoice>
       <enumChoice choice="Respond to Consist Address">
         <choice>Respond to Consist Address</choice>
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
       </enumChoice>
     </enumVal>
     <label>Consist Address Active For Brown</label>
-    <label xml:lang="it">Consist Address Active For Brown</label>
+    <label xml:lang="it">Indirizzo Consist Attivo per Marrone</label>
   </variable>
   <variable CV="21" mask="XXXXVXXX" minOut="4" item="Consist Address Active For F4">
     <enumVal>
       <enumChoice choice="Locomotive Address Only">
         <choice>Locomotive Address Only</choice>
+        <choice xml:lang="it">Solo Indirizzo Loco</choice>
       </enumChoice>
       <enumChoice choice="Respond to Consist Address">
         <choice>Respond to Consist Address</choice>
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
       </enumChoice>
     </enumVal>
     <label>Consist Address Active For Pink</label>
-    <label xml:lang="it">Consist Address Active For Pink</label>
+    <label xml:lang="it">Indirizzo Consist Attivo per Rosa</label>
   </variable>
   <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
     <enumVal>
       <enumChoice choice="forward">
         <choice>forward</choice>
+        <choice xml:lang="it">avanti</choice>
       </enumChoice>
       <enumChoice choice="reverse">
         <choice>reverse</choice>
+        <choice xml:lang="it">indietro</choice>
       </enumChoice>
     </enumVal>
     <label>Normal direction of motion</label>
-    <label xml:lang="it">Normal direction of motion</label>
+    <label xml:lang="it">Normale direzione di marcia</label>
   </variable>
   <variable CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
