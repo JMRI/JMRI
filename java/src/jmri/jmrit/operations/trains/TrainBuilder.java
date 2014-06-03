@@ -1866,7 +1866,16 @@ public class TrainBuilder extends TrainCommon {
 								new Object[] { car.getFinalDestination().getName(),
 										car.getFinalDestinationTrack().getName(), car.toString(), car.getLoadName(),
 										status }));
-						if (car.getTrack() == _departStageTrack) {
+						// is this car or kernel being sent to a track that is too short?
+						if (status.startsWith(Track.CAPACITY)) {
+							addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
+									.getMessage("buildRemovingFinalDestination"), new Object[] {
+									car.getFinalDestinationTrack().getName(), car.toString(),
+									car.getFinalDestination().getName(), car.getFinalDestinationTrack().getName() }));
+							car.setFinalDestination(null);
+						car.setFinalDestinationTrack(null);
+						}
+						else if (car.getTrack() == _departStageTrack) {
 							addLine(_buildReport, ONE, MessageFormat.format(
 									Bundle.getMessage("buildErrorCarStageDest"), new Object[] { car.toString() }));
 						} else {

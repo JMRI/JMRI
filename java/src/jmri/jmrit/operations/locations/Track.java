@@ -144,7 +144,7 @@ public class Track {
 	public static final String TYPE = Bundle.getMessage("type");
 	public static final String ROAD = Bundle.getMessage("road");
 	public static final String LOAD = Bundle.getMessage("load");
-//	public static final String CAPACITY = Bundle.getMessage("capacity");
+	public static final String CAPACITY = Bundle.getMessage("capacity");
 	public static final String SCHEDULE = Bundle.getMessage("schedule");
 	public static final String CUSTOM = Bundle.getMessage("custom");
 	public static final String DESTINATION = Bundle.getMessage("carDestination");
@@ -438,11 +438,14 @@ public class Track {
 		int carLength = car.getTotalLength();
 		if (car.getKernel() != null)
 			carLength = car.getKernel().getTotalLength();
+		int trackLength = getLength();
+		// is the car or kernel too long for the track?
+		if (trackLength < carLength)
+			return false;
 		// ignore reservation factor unless car is departing staging
 		if (car.getTrack() != null && car.getTrack().getTrackType().equals(STAGING))
 			return (getLength() * getReservationFactor() / 100 - (getReservedInRoute() + carLength) >= 0);
 		// if there's alternate, include that length in the calculation
-		int trackLength = getLength();
 		if (getAlternateTrack() != null)
 			trackLength = trackLength + getAlternateTrack().getLength();
 		return (trackLength - (getReservedInRoute() + carLength) >= 0);
@@ -1282,6 +1285,9 @@ public class Track {
 				}
 			}
 		}
+		// Is rolling stock too long for this track?
+		if (getLength() < length)
+			return CAPACITY + " (" + length + ") " + Setup.getLengthUnit().toLowerCase();// NOI18N
 		if (rs.getTrack() != this && rs.getDestinationTrack() != this
 				&& (getUsedLength() + getReserved() + length) > getLength()) {
 			// not enough track length check to see if track is in a pool
@@ -1296,15 +1302,6 @@ public class Track {
 					+ ", " + getName() + ") no room!"); // NOI18N
 			return LENGTH + " (" + length + ") " + Setup.getLengthUnit().toLowerCase();// NOI18N
 		}
-		// a spur with a schedule can overload in aggressive mode, check track capacity
-//		if (Setup.isBuildAggressive() && !getScheduleId().equals("") && getUsedLength() + getReserved() > getLength()) {
-//			// ignore used length option?
-//			if (checkPlannedPickUps(length))
-//				return OKAY;
-//			log.debug("Can't set (" + rs.toString() + ") due to exceeding maximum capacity for track (" + getName()
-//					+ ")"); // NOI18N
-//			return CAPACITY;
-//		}
 		return OKAY;
 	}
 	
