@@ -139,6 +139,18 @@ public class XmlFileTest extends TestCase {
             e = doc.getRootElement();
             Assert.assertTrue("Original root element found", e!=null);
 
+            XmlFile x = new XmlFile() {};
+            Document d = x.processInstructions(doc);
+            Assert.assertNotNull(d);
+        
+            // test transform changes <contains> element to <content>
+            e = d.getRootElement();
+            Assert.assertTrue("Transformed root element found", e!=null);
+            Assert.assertTrue("Transformed root element is right type", e.getName().equals("top"));
+            Assert.assertTrue("Old element gone", e.getChild("contains")==null);
+            Assert.assertTrue("New element there", e.getChild("content")!=null);
+            Assert.assertTrue("New element has content", e.getChild("content").getChildren().size() == 2);
+
         } catch (java.io.IOException ex) {
             throw ex;
         } catch (org.jdom.JDOMException ex) {
@@ -146,20 +158,7 @@ public class XmlFileTest extends TestCase {
         } finally {
             fs.close();
         }
-        
-
-        XmlFile x = new XmlFile() {};
-        Document d = x.processInstructions(doc);
-        Assert.assertNotNull(d);
-        
-        // test transform changes <contains> element to <content>
-        e = d.getRootElement();
-        Assert.assertTrue("Transformed root element found", e!=null);
-        Assert.assertTrue("Transformed root element is right type", e.getName().equals("top"));
-        Assert.assertTrue("Old element gone", e.getChild("contains")==null);
-        Assert.assertTrue("New element there", e.getChild("content")!=null);
-        Assert.assertTrue("New element has content", e.getChild("content").getChildren().size() == 2);
-        
+                
     }
     
     
