@@ -129,24 +129,26 @@ public class XmlFileTest extends TestCase {
     public void testProcessPI() throws org.jdom.JDOMException, java.io.IOException {
         // Document from test file
         Document doc;
+        Element e;
         FileInputStream fs = new FileInputStream(new File("java/test/jmri/jmrit/XmlFileTest_PI.xml"));
         try {
             SAXBuilder builder = XmlFile.getBuilder(false);  // argument controls validation
             doc = builder.build(new BufferedInputStream(fs));
-        } catch (java.io.IOException e) {
-            throw e;
-        } catch (org.jdom.JDOMException e) {
-            throw e;
+
+            Assert.assertTrue("Original Document found", doc!=null);
+            e = doc.getRootElement();
+            Assert.assertTrue("Original root element found", e!=null);
+
+        } catch (java.io.IOException ex) {
+            throw ex;
+        } catch (org.jdom.JDOMException ex) {
+            throw ex;
         } finally {
             fs.close();
         }
         
-        XmlFile x = new XmlFile() {};
 
-        Assert.assertTrue("Original Document found", doc!=null);
-        Element e = doc.getRootElement();
-        Assert.assertTrue("Original root element found", e!=null);
-        
+        XmlFile x = new XmlFile() {};
         Document d = x.processInstructions(doc);
         Assert.assertNotNull(d);
         
