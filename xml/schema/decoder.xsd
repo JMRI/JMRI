@@ -308,6 +308,7 @@
                 <xs:enumeration value="16pin"/>
                 <xs:enumeration value="21pin"/>
                 <xs:enumeration value="DropIn"/>
+                <xs:enumeration value="SUSI"/>
                 <xs:enumeration value="other"/>
               </xs:restriction>
             </xs:simpleType>
