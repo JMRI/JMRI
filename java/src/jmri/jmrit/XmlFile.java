@@ -464,11 +464,11 @@ public abstract class XmlFile {
                 try {
                     doc = processOneInstruction((ProcessingInstruction)c, doc);
                 } catch (org.jdom.transform.XSLTransformException ex) {
-                    log.error("XSLT error while transforming with "+(ProcessingInstruction)c+", ignoring transform", ex);
+                    log.error("XSLT error while transforming with "+c+", ignoring transform", ex);
                 } catch (org.jdom.JDOMException ex) {
-                    log.error("JDOM error while transforming with "+(ProcessingInstruction)c+", ignoring transform", ex);
+                    log.error("JDOM error while transforming with "+c+", ignoring transform", ex);
                 } catch (java.io.IOException ex) {
-                    log.error("IO error while transforming with "+(ProcessingInstruction)c+", ignoring transform", ex);
+                    log.error("IO error while transforming with "+c+", ignoring transform", ex);
                 }
             }
         }
