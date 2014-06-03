@@ -462,10 +462,9 @@ abstract public class PaneProgFrame extends JmriJFrame
      * </ul>
      * @param e XML             element with possible "include" and "exclude" attributes to be checked
      * @param aModelElement     "model" element from the Decoder Index, used to get "model" and "productID".
-     * @param pRosterEntry      The current roster entry, used to get "family".
-     * @param productID         the specific ID of the decoder being loaded, to check against include/exclude conditions
-     * @param extraInclude      additional "include" terms
-     * @param extraExclude      additional "exclude" terms
+     * @param aRosterEntry      The current roster entry, used to get "family".
+     * @param extraIncludes     additional "include" terms
+     * @param extraExcludes     additional "exclude" terms
      */
 
 
