@@ -408,12 +408,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                     String pname = jmri.util.jdom.LocaleSelector.getAttribute(paneList.get(i), "name");
 
                     // handle include/exclude
-                    a = modelElem.getAttribute("productID");
-                    String pID = null;
-                            if (a != null) {
-                        pID = a.getValue();
-                    }
-                    if ( DecoderFile.isIncluded(paneList.get(i), pID, modelElem.getAttribute("model").getValue(), _rosterEntry.getDecoderFamily(), "", "") ) {
+                    if ( isIncludedFE(paneList.get(i), modelElem, _rosterEntry, "", "") ) {
                         newPane( pname, paneList.get(i), modelElem, true);  // show even if empty??
                     }
                 }
@@ -455,6 +450,48 @@ abstract public class PaneProgFrame extends JmriJFrame
                                             +"\" constructed for file "+_rosterEntry.getFileName()
                                             +", unconstrained size is "+super.getPreferredSize()
                                             +", constrained to "+getPreferredSize());
+    }
+
+    /**
+     * Front end to DecoderFile.isIncluded()
+     * <ul>
+     * <li>Retrieves "productID" and "model attributes from the "model" element 
+     * and "family" attribute from the roster entry. </li>
+     * <li>Then invokes DecoderFile.isIncluded() with the retrieved values.</li>
+     * <li>Deals deals gracefully with null or missing elements and attributes.</li>
+     * </ul>
+     * @param e XML             element with possible "include" and "exclude" attributes to be checked
+     * @param aModelElement     "model" element from the Decoder Index, used to get "model" and "productID".
+     * @param pRosterEntry      The current roster entry, used to get "family".
+     * @param productID         the specific ID of the decoder being loaded, to check against include/exclude conditions
+     * @param extraInclude      additional "include" terms
+     * @param extraExclude      additional "exclude" terms
+     */
+
+
+    public static boolean isIncludedFE(Element e, Element aModelElement, RosterEntry aRosterEntry, String extraIncludes, String extraExcludes) {
+
+        String pID;
+        try {
+            pID = aModelElement.getAttribute("productID").getValue();
+        } catch (Exception ex){
+            pID = null;
+        }
+
+        String modelName;
+        try {
+            modelName = aModelElement.getAttribute("model").getValue();
+        } catch (Exception ex){
+            modelName = null;
+        }
+
+        String familyName;
+        try {
+            familyName = aRosterEntry.getDecoderFamily();
+        } catch (Exception ex){
+            familyName = null;
+        }
+        return DecoderFile.isIncluded(e, pID, modelName, familyName, extraIncludes, extraExcludes);
     }
 
     protected void pickProgrammerMode(@NonNull Element programming) {
@@ -733,7 +770,11 @@ abstract public class PaneProgFrame extends JmriJFrame
         for (int i=0; i<paneList.size(); i++) {
             // load each pane
             String name = jmri.util.jdom.LocaleSelector.getAttribute(paneList.get(i), "name");
-            newPane( name, paneList.get(i), modelElem, false);  // dont force showing if empty
+
+            // handle include/exclude
+            if ( isIncludedFE(paneList.get(i), modelElem, _rosterEntry, "", "") ) {
+                newPane( name, paneList.get(i), modelElem, false);  // dont force showing if empty
+            }
         }
     }
 

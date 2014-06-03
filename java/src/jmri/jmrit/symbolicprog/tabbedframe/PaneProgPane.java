@@ -310,11 +310,11 @@ public class PaneProgPane extends javax.swing.JPanel
         bottom.add(readChangesButton);
         bottom.add(writeChangesButton);
         if (_cvTable)
-        	bottom.add(confirmChangesButton);
+            bottom.add(confirmChangesButton);
         bottom.add(readAllButton);
         bottom.add(writeAllButton);
         if (_cvTable)
-        	bottom.add(confirmAllButton);
+            bottom.add(confirmAllButton);
 
         // don't show buttons if no programmer at all
         if (_cvModel.getProgrammer()!= null) add(bottom);
@@ -1194,7 +1194,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * Create a new group from the JDOM group Element
      */
     @SuppressWarnings("unchecked")
-	protected JPanel newGroup(Element element, boolean showStdName, Element modelElem) {
+    protected JPanel newGroup(Element element, boolean showStdName, Element modelElem) {
 
         // create a panel to add as a new column or row
         final JPanel c = new JPanel();
@@ -1204,12 +1204,7 @@ public class PaneProgPane extends javax.swing.JPanel
         c.setLayout(g);
 
         // handle include/exclude
-        Attribute a = modelElem.getAttribute("productID");
-        String pID = null;
-        if (a != null) {
-            pID = a.getValue();
-        }
-        if ( !DecoderFile.isIncluded(element, pID, modelElem.getAttribute("model").getValue(), rosterEntry.getDecoderFamily(), "", "") ) {
+        if ( !PaneProgFrame.isIncludedFE(element, modelElem, rosterEntry, "", "") ) {
             return c;
         }
 
@@ -1345,15 +1340,10 @@ public class PaneProgPane extends javax.swing.JPanel
      * Create a new grid group from the JDOM group Element
      */
     @SuppressWarnings("unchecked")
-	protected void newGridGroup(Element element, final JPanel c, GridBagLayout g, GridGlobals globs, boolean showStdName, Element modelElem) {
+    protected void newGridGroup(Element element, final JPanel c, GridBagLayout g, GridGlobals globs, boolean showStdName, Element modelElem) {
 
         // handle include/exclude
-        Attribute a = modelElem.getAttribute("productID");
-        String pID = null;
-        if (a != null) {
-            pID = a.getValue();
-        }
-        if ( !DecoderFile.isIncluded(element, pID, modelElem.getAttribute("model").getValue(), rosterEntry.getDecoderFamily(), "", "") ) {
+        if ( !PaneProgFrame.isIncludedFE(element, modelElem, rosterEntry, "", "") ) {
             return;
         }
 
@@ -1405,7 +1395,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * Create a single column from the JDOM column Element
      */
     @SuppressWarnings("unchecked")
-	public JPanel newColumn(Element element, boolean showStdName, Element modelElem) {
+    public JPanel newColumn(Element element, boolean showStdName, Element modelElem) {
 
         // create a panel to add as a new column or row
         final JPanel c = new JPanel();
@@ -1550,7 +1540,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * Create a single row from the JDOM column Element
      */
     @SuppressWarnings("unchecked")
-	public JPanel newRow(Element element, boolean showStdName, Element modelElem) {
+    public JPanel newRow(Element element, boolean showStdName, Element modelElem) {
 
         // create a panel to add as a new column or row
         final JPanel c = new JPanel();
@@ -1594,7 +1584,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 makeCvTable(cs, g, c);
             } else if (name.equals("indxcvtable")) {
                 log.debug("starting to build IndexedCvTable pane");
-                JTable	indxcvTable	= new JTable(_indexedCvModel);
+                JTable indxcvTable = new JTable(_indexedCvModel);
                 JScrollPane cvScroll = new JScrollPane(indxcvTable);
                 indxcvTable.setDefaultRenderer(JTextField.class, new ValueRenderer());
                 indxcvTable.setDefaultRenderer(JButton.class, new ValueRenderer());
@@ -1762,7 +1752,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * Create a griditem from the JDOM  Element
      */
     @SuppressWarnings("unchecked")
-	public JPanel newGridItem(Element element, boolean showStdName, Element modelElem, GridGlobals globs) {
+    public JPanel newGridItem(Element element, boolean showStdName, Element modelElem, GridGlobals globs) {
 
                 List<Attribute> itemAttList = element.getAttributes(); // get item-level attributes
                 List<Attribute> attList = new ArrayList<Attribute>(globs.gridAttList);
@@ -1893,7 +1883,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 makeCvTable(cs, g, c);
             } else if (name.equals("indxcvtable")) {
                 log.debug("starting to build IndexedCvTable pane");
-                JTable	indxcvTable	= new JTable(_indexedCvModel);
+                JTable indxcvTable = new JTable(_indexedCvModel);
                 JScrollPane cvScroll = new JScrollPane(indxcvTable);
                 indxcvTable.setDefaultRenderer(JTextField.class, new ValueRenderer());
                 indxcvTable.setDefaultRenderer(JButton.class, new ValueRenderer());
@@ -1972,8 +1962,8 @@ public class PaneProgPane extends javax.swing.JPanel
             }
         }
 
-			globs.gridxCurrent = globs.gridConstraints.gridx;
-			globs.gridyCurrent = globs.gridConstraints.gridy;
+            globs.gridxCurrent = globs.gridConstraints.gridx;
+            globs.gridyCurrent = globs.gridConstraints.gridy;
 //                log.info("Updated gridxCurrent="+globs.gridxCurrent+";gridyCurrent="+globs.gridyCurrent);
 
         // add glue to the bottom to allow resize
@@ -2085,7 +2075,7 @@ public class PaneProgPane extends javax.swing.JPanel
         // instead of forcing the columns to fill the frame (and only fill)
         cvTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        JScrollPane 	cvScroll	= new JScrollPane(cvTable);
+        JScrollPane  cvScroll = new JScrollPane(cvTable);
         cvScroll.setColumnHeaderView(cvTable.getTableHeader());
 
         cs.gridheight = GridBagConstraints.REMAINDER;
