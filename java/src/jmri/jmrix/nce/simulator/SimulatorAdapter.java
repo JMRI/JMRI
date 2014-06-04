@@ -368,17 +368,17 @@ public class SimulatorAdapter extends NcePortController implements
 			accessoryCommand(m, reply);
 			break;
 		case NceMessage.READ_DIR_CV_CMD:
-			reply.setElement(0, 172);			// dummy data
+			reply.setElement(0, 123);			// dummy data
 			//reply.setElement(1,NCE_DATA_OUT_OF_RANGE);  // forces fail
 			reply.setElement(1,NCE_OKAY);  // forces succeed
 			break;
 		case NceMessage.READ_PAGED_CV_CMD:
-			reply.setElement(0, 172);			// dummy data
+			reply.setElement(0, 123);			// dummy data
 			//reply.setElement(1,NCE_DATA_OUT_OF_RANGE);  // forces fail
 			reply.setElement(1,NCE_OKAY);  // forces succeed
 			break;
 		case NceMessage.READ_REG_CMD:
-			reply.setElement(0, 172);			// dummy data
+			reply.setElement(0, 123);			// dummy data
 			//reply.setElement(1,NCE_DATA_OUT_OF_RANGE);  // forces fail
 			reply.setElement(1,NCE_OKAY);  // forces succeed
 			break;
