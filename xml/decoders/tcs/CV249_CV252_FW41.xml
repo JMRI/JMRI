@@ -17,24 +17,24 @@
   <variable item="decoderID" CV="249" default="0" readOnly="yes">
     <decVal/>
     <label>Decoder ID</label>
-    <label xml:lang="it">Decoder ID</label>
+    <label xml:lang="it">ID Decoder</label>
   </variable>
   <variable CV="250" readOnly="yes" item="mfgMonth" tooltip="Date TCS made this decoder">
     <decVal/>
     <label>Month of Decoder Manufacture</label>
-    <label xml:lang="it">Month of Decoder Manufacture</label>
-    <tooltip xml:lang="it">Date TCS made this decoder</tooltip>
+    <label xml:lang="it">Mese di produzione Decoder</label>
+    <tooltip xml:lang="it">Data in cui TCS ha prodotto il decoder</tooltip>
   </variable>
   <variable CV="251" readOnly="yes" item="mfgDay" tooltip="Date TCS made this decoder">
     <decVal/>
     <label>Day of Decoder Manufacture</label>
-    <label xml:lang="it">Day of Decoder Manufacture</label>
-    <tooltip xml:lang="it">Date TCS made this decoder</tooltip>
+    <label xml:lang="it">Giorno di produzione Decoder</label>
+    <tooltip xml:lang="it">Data in cui TCS ha prodotto il decoder</tooltip>
   </variable>
   <variable CV="252" readOnly="yes" item="mfgYear" tooltip="Date TCS made this decoder">
     <decVal/>
     <label>Year of Decoder Manufacture</label>
-    <label xml:lang="it">Year of Decoder Manufacture</label>
-    <tooltip xml:lang="it">Date TCS made this decoder</tooltip>
+    <label xml:lang="it">Anno di produzione Decoder</label>
+    <tooltip xml:lang="it">Data in cui TCS ha prodotto il decoder</tooltip>
   </variable>
 </variables>

@@ -18,7 +18,7 @@
   <column>
     <label>
       <text>Must have JMRI 3.3.6 or later.</text>
-      <text xml:lang="it">Must have JMRI 3.3.6 or later.</text>
+      <text xml:lang="it">Dovete avere JMRI 3.3.6 o successivo.</text>
     </label>
     <label>
       <text>   </text>
@@ -539,5 +539,5 @@
       </column>
     </row>
   </column>
-  <name xml:lang="it">Chuff Rate</name>
+  <name xml:lang="it">Frequenza Chuff</name>
 </pane>

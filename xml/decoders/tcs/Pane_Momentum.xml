@@ -20,15 +20,15 @@
       <column>
         <label>
           <text>If Accel 2 and 3 Rate and Starting Points are set to zero, then Accel Rate 1 applies to whole speed range</text>
-          <text xml:lang="it">If Accel 2 and 3 Rate and Starting Points are set to zero, then Accel Rate 1 applies to whole speed range</text>
+          <text xml:lang="it">Se Accell.2 e 3 Frequenza e Punti Inizio sono zero, allora Frequenza Accell.1 si applica a tutta la gamma di velocità</text>
         </label>
         <label>
           <text>If Decel 2 and 3 Rate and Ending Points are set to zero, then Decel Rate 1 applies to whole speed range</text>
-          <text xml:lang="it">If Decel 2 and 3 Rate and Ending Points are set to zero, then Decel Rate 1 applies to whole speed range</text>
+          <text xml:lang="it">Se Decell.2 e 3 Frequenza e Punti di Fine sono zero, allora Frequenza Decell.1 si applica a tutta la gamma di velocità</text>
         </label>
         <label>
           <text>If Brake Button Control active, Decel 2 Rate applies when button active and Decel 1 Rate applies to throttle reduction</text>
-          <text xml:lang="it">If Brake Button Control active, Decel 2 Rate applies when button active and Decel 1 Rate applies to throttle reduction</text>
+          <text xml:lang="it">Se il pulsante controllo Freni è attivo, Frequenza Decell.2 si applica quando il pulsante è attivo e Frequenza Decell.1 è applicata alla riduzione del throttle</text>
         </label>
         <label>
           <text> </text>
@@ -93,5 +93,5 @@
       </column>
     </row>
   </column>
-  <name xml:lang="it">Momentum</name>
+  <name xml:lang="it">Inerzia</name>
 </pane>

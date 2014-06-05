@@ -17,218 +17,646 @@
 <!-- version 4 - add models 175,186,202,1048,1049,2048,2049,3048,3049,4048,4049,5048,5049-->
 <!-- function output choices for output 15 thru 30 when moving and in neutral -->
 <ienumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <ienumChoice choice="Air pump 1 Westinghouse 2 Stage" value="124"/>
-  <ienumChoice choice="Air pump 2 Westinghouse Cross Compound" value="125"/>
-  <ienumChoice choice="Air pump 3 Westinghouse Single Stage" value="126"/>
-  <ienumChoice choice="Air pump 4 Westinghouse Single Stage " value="128"/>
-  <ienumChoice choice="Air pump 5 Westinghouse Single Stage" value="127"/>
-  <ienumChoice choice="Bell Conrail 2233 GP30 air powered" value="7"/>
-  <ienumChoice choice="Bell Heisler Class 53833 Num 4 Hand Powered" value="12"/>
-  <ienumChoice choice="Bell John Bull Replica Hand Powered" value="9"/>
-  <ienumChoice choice="Bell Leetonia 1 Shay" value="13"/>
-  <ienumChoice choice="Bell PRR 1187 2-8-0 H3 Hand Powered" value="10"/>
-  <ienumChoice choice="Bell PRR 1223 American 4-4-0 D16SB hand powered" value="6"/>
-  <ienumChoice choice="Bell PRR 2846 2-8-0 H3 Air Powered" value="11"/>
-  <ienumChoice choice="Bell PRR 7002 4-4-2 hand powered" value="5"/>
-  <ienumChoice choice="Bell PRR GG1" value="8"/>
-  <ienumChoice choice="Bell Reading 1251 0-6-0 Tank Engine air powered" value="3"/>
-  <ienumChoice choice="Bell Strasburg 475 Air Powered" value="1"/>
-  <ienumChoice choice="Bell Strasburg 475 Hand Powered" value="0"/>
-  <ienumChoice choice="Bell Strasburg 89 Air Powered" value="2"/>
-  <ienumChoice choice="Bell Strasburg 90 hand powered" value="16"/>
-  <ienumChoice choice="Bell Strasburg 90 hand powered variation" value="17"/>
-  <ienumChoice choice="Bell Unknown from Strasburg museum floor" value="14"/>
-  <ienumChoice choice="Bell Virginia Truckee 2-6-0 hand powered" value="4"/>
-  <ienumChoice choice="Bell Williams Grove PRR 643 0-6-0" value="15"/>
-  <ienumChoice choice="Blow Down 1" value="99"/>
-  <ienumChoice choice="Blow Down 2" value="98"/>
-  <ienumChoice choice="Blow Down 3" value="100"/>
-  <ienumChoice choice="Blower 1" value="101"/>
-  <ienumChoice choice="Blower 2" value="102"/>
-  <ienumChoice choice="Brake grinding to a stop" value="211"/>
-  <ienumChoice choice="Brake Release 1 Independent" value="212"/>
-  <ienumChoice choice="Brake Release 2" value="213"/>
-  <ienumChoice choice="Brake Squeal 1" value="205"/>
-  <ienumChoice choice="Brake Squeal 2" value="206"/>
-  <ienumChoice choice="Brake Squeal 3" value="207"/>
-  <ienumChoice choice="Brake Squeal 4" value="208"/>
-  <ienumChoice choice="Brake Squeal 5" value="209"/>
-  <ienumChoice choice="Brake Squeal 6" value="210"/>
-  <ienumChoice choice="Coupler Clank 1" value="103"/>
-  <ienumChoice choice="Coupler Clank 2" value="104"/>
-  <ienumChoice choice="Cylinder Cocks 1" value="105"/>
-  <ienumChoice choice="Cylinder Cocks 10" value="114"/>
-  <ienumChoice choice="Cylinder Cocks 11" value="115"/>
-  <ienumChoice choice="Cylinder Cocks 12" value="116"/>
-  <ienumChoice choice="Cylinder Cocks 13" value="117"/>
-  <ienumChoice choice="Cylinder Cocks 14" value="118"/>
-  <ienumChoice choice="Cylinder Cocks 2" value="106"/>
-  <ienumChoice choice="Cylinder Cocks 3" value="107"/>
-  <ienumChoice choice="Cylinder Cocks 4" value="108"/>
-  <ienumChoice choice="Cylinder Cocks 5" value="109"/>
-  <ienumChoice choice="Cylinder Cocks 6" value="110"/>
-  <ienumChoice choice="Cylinder Cocks 7" value="111"/>
-  <ienumChoice choice="Cylinder Cocks 8" value="112"/>
-  <ienumChoice choice="Cylinder Cocks 9" value="113"/>
-  <ienumChoice choice="Direction Change Power Reverser" value="97"/>
-  <ienumChoice choice="Generator 1" value="119"/>
-  <ienumChoice choice="Generator 2" value="120"/>
-  <ienumChoice choice="Horn 1" value="90"/>
-  <ienumChoice choice="Horn 2" value="91"/>
-  <ienumChoice choice="Horn 3" value="92"/>
-  <ienumChoice choice="Horn Nathan K5LA Forward" value="156"/>
-  <ienumChoice choice="Horn Nathan K5LA Long" value="88"/>
-  <ienumChoice choice="Horn Nathan K5LA Quill" value="89"/>
-  <ienumChoice choice="Horn Nathan K5LA Reverse" value="180"/>
-  <ienumChoice choice="Horn Nathan K5LA Short" value="87"/>
-  <ienumChoice choice="Horn Nathan K5LA Stop" value="204"/>
-  <ienumChoice choice="Injector 1" value="121"/>
-  <ienumChoice choice="Injector 2" value="122"/>
-  <ienumChoice choice="Injector 3" value="123"/>
-  <ienumChoice choice="Rod Clank 1" value="93"/>
-  <ienumChoice choice="Rod Clank 2" value="94"/>
-  <ienumChoice choice="Rod Clank 3" value="95"/>
-  <ienumChoice choice="Rod Clank 4" value="96"/>
-  <ienumChoice choice="Safety 1" value="129"/>
-  <ienumChoice choice="Safety 2" value="130"/>
-  <ienumChoice choice="Shovelling 1 Butterfly - Air Powered" value="131"/>
-  <ienumChoice choice="Shovelling 2 Butterfly - Air Powered" value="132"/>
-  <ienumChoice choice="Whistle 14 - Forward" value="146"/>
-  <ienumChoice choice="Whistle 14 - Long" value="58"/>
-  <ienumChoice choice="Whistle 14 - Quill" value="59"/>
-  <ienumChoice choice="Whistle 14 - Reverse" value="170"/>
-  <ienumChoice choice="Whistle 14 - Short" value="57"/>
-  <ienumChoice choice="Whistle 14 - Stop" value="194"/>
-  <ienumChoice choice="Whistle 16 - Forward" value="148"/>
-  <ienumChoice choice="Whistle 16 - Long" value="64"/>
-  <ienumChoice choice="Whistle 16 - Quill" value="65"/>
-  <ienumChoice choice="Whistle 16 - Reverse" value="172"/>
-  <ienumChoice choice="Whistle 16 - Short" value="63"/>
-  <ienumChoice choice="Whistle 16 - Stop" value="196"/>
-  <ienumChoice choice="Whistle 17 - Forward" value="149"/>
-  <ienumChoice choice="Whistle 17 - Long" value="67"/>
-  <ienumChoice choice="Whistle 17 - Quill" value="68"/>
-  <ienumChoice choice="Whistle 17 - Reverse" value="173"/>
-  <ienumChoice choice="Whistle 17 - Short" value="66"/>
-  <ienumChoice choice="Whistle 17 - Stop" value="197"/>
-  <ienumChoice choice="Whistle Alamo Michigan Plant Forward" value="133"/>
-  <ienumChoice choice="Whistle Alamo Michigan Plant Long" value="19"/>
-  <ienumChoice choice="Whistle Alamo Michigan Plant Quill" value="20"/>
-  <ienumChoice choice="Whistle Alamo Michigan Plant Reverse" value="157"/>
-  <ienumChoice choice="Whistle Alamo Michigan Plant Short" value="18"/>
-  <ienumChoice choice="Whistle Alamo Michigan Plant Stop" value="181"/>
-  <ienumChoice choice="Whistle B &amp; O Forward" value="142"/>
-  <ienumChoice choice="Whistle B &amp; O Long" value="46"/>
-  <ienumChoice choice="Whistle B &amp; O Quill" value="47"/>
-  <ienumChoice choice="Whistle B &amp; O Reverse" value="166"/>
-  <ienumChoice choice="Whistle B &amp; O Short" value="45"/>
-  <ienumChoice choice="Whistle B &amp; O Stop" value="190"/>
-  <ienumChoice choice="Whistle Great Northern 5 Chime Forward" value="155"/>
-  <ienumChoice choice="Whistle Great Northern 5 Chime Long" value="85"/>
-  <ienumChoice choice="Whistle Great Northern 5 Chime Quill" value="86"/>
-  <ienumChoice choice="Whistle Great Northern 5 Chime Reverse" value="179"/>
-  <ienumChoice choice="Whistle Great Northern 5 Chime Short" value="84"/>
-  <ienumChoice choice="Whistle Great Northern 5 Chime Stop" value="203"/>
-  <ienumChoice choice="Whistle Hancock 3 Chime Forward" value="150"/>
-  <ienumChoice choice="Whistle Hancock 3 Chime Long" value="70"/>
-  <ienumChoice choice="Whistle Hancock 3 Chime Quill" value="71"/>
-  <ienumChoice choice="Whistle Hancock 3 Chime Reverse" value="174"/>
-  <ienumChoice choice="Whistle Hancock 3 Chime Short" value="69"/>
-  <ienumChoice choice="Whistle Hancock 3 Chime Stop" value="198"/>
-  <ienumChoice choice="Whistle Kingsly 4 Chime Forward" value="135"/>
-  <ienumChoice choice="Whistle Kingsly 4 Chime Long" value="25"/>
-  <ienumChoice choice="Whistle Kingsly 4 Chime Quill" value="26"/>
-  <ienumChoice choice="Whistle Kingsly 4 Chime Reverse" value="159"/>
-  <ienumChoice choice="Whistle Kingsly 4 Chime Short" value="24"/>
-  <ienumChoice choice="Whistle Kingsly 4 Chime Stop" value="183"/>
-  <ienumChoice choice="Whistle Lunkenheimer 3 chime Forward" value="145"/>
-  <ienumChoice choice="Whistle Lunkenheimer 3 chime Long" value="55"/>
-  <ienumChoice choice="Whistle Lunkenheimer 3 chime Quill" value="56"/>
-  <ienumChoice choice="Whistle Lunkenheimer 3 chime Reverse" value="169"/>
-  <ienumChoice choice="Whistle Lunkenheimer 3 chime Short" value="54"/>
-  <ienumChoice choice="Whistle Lunkenheimer 3 chime Stop" value="193"/>
-  <ienumChoice choice="Whistle Lunkenheimer Single Note Forward" value="147"/>
-  <ienumChoice choice="Whistle Lunkenheimer Single Note Long" value="61"/>
-  <ienumChoice choice="Whistle Lunkenheimer Single Note Quill" value="62"/>
-  <ienumChoice choice="Whistle Lunkenheimer Single Note Reverse" value="171"/>
-  <ienumChoice choice="Whistle Lunkenheimer Single Note Short" value="60"/>
-  <ienumChoice choice="Whistle Lunkenheimer Single Note Stop" value="195"/>
-  <ienumChoice choice="Whistle NPR 765 Foward" value="137"/>
-  <ienumChoice choice="Whistle NPR 765 Long" value="31"/>
-  <ienumChoice choice="Whistle NPR 765 Quill" value="32"/>
-  <ienumChoice choice="Whistle NPR 765 Reverse" value="161"/>
-  <ienumChoice choice="Whistle NPR 765 Short" value="30"/>
-  <ienumChoice choice="Whistle NPR 765 Stop" value="185"/>
-  <ienumChoice choice="Whistle NW Single Chime Forward" value="144"/>
-  <ienumChoice choice="Whistle NW Single Chime Long" value="52"/>
-  <ienumChoice choice="Whistle NW Single Chime Quill" value="53"/>
-  <ienumChoice choice="Whistle NW Single Chime Reverse" value="168"/>
-  <ienumChoice choice="Whistle NW Single Chime Short" value="51"/>
-  <ienumChoice choice="Whistle NW single chime short bell forward" value="154"/>
-  <ienumChoice choice="Whistle NW single chime short bell Long" value="82"/>
-  <ienumChoice choice="Whistle NW single chime short bell Quill" value="83"/>
-  <ienumChoice choice="Whistle NW single chime short bell Reverse" value="178"/>
-  <ienumChoice choice="Whistle NW single chime short bell Short" value="81"/>
-  <ienumChoice choice="Whistle NW single chime short bell Stop" value="202"/>
-  <ienumChoice choice="Whistle NW Single Chime Stop" value="192"/>
-  <ienumChoice choice="Whistle PA 3 Chime Forward" value="134"/>
-  <ienumChoice choice="Whistle PA 3 Chime Long" value="22"/>
-  <ienumChoice choice="Whistle PA 3 Chime Quill" value="23"/>
-  <ienumChoice choice="Whistle PA 3 Chime Reverse" value="158"/>
-  <ienumChoice choice="Whistle PA 3 Chime Short" value="21"/>
-  <ienumChoice choice="Whistle PA 3 Chime Stop" value="182"/>
-  <ienumChoice choice="Whistle Pennsy K4 Forward" value="143"/>
-  <ienumChoice choice="Whistle Pennsy K4 Long" value="49"/>
-  <ienumChoice choice="Whistle Pennsy K4 Quill" value="50"/>
-  <ienumChoice choice="Whistle Pennsy K4 Reverse" value="167"/>
-  <ienumChoice choice="Whistle Pennsy K4 Short" value="48"/>
-  <ienumChoice choice="Whistle Pennsy K4 Stop" value="191"/>
-  <ienumChoice choice="Whistle Reading 6 Chime 2 Forward" value="136"/>
-  <ienumChoice choice="Whistle Reading 6 Chime 2 Long" value="28"/>
-  <ienumChoice choice="Whistle Reading 6 Chime 2 Quill" value="29"/>
-  <ienumChoice choice="Whistle Reading 6 Chime 2 Reverse" value="160"/>
-  <ienumChoice choice="Whistle Reading 6 Chime 2 Short" value="27"/>
-  <ienumChoice choice="Whistle Reading 6 Chime 2 Stop" value="184"/>
-  <ienumChoice choice="Whistle Reading 6 Chime Forward" value="138"/>
-  <ienumChoice choice="Whistle Reading 6 Chime Long" value="34"/>
-  <ienumChoice choice="Whistle Reading 6 Chime Quill" value="35"/>
-  <ienumChoice choice="Whistle Reading 6 Chime Reverse" value="162"/>
-  <ienumChoice choice="Whistle Reading 6 Chime Short" value="33"/>
-  <ienumChoice choice="Whistle Reading 6 Chime Stop" value="186"/>
-  <ienumChoice choice="Whistle Reading Pacific G2 Forward" value="139"/>
-  <ienumChoice choice="Whistle Reading Pacific G2 Long" value="37"/>
-  <ienumChoice choice="Whistle Reading Pacific G2 Quill" value="38"/>
-  <ienumChoice choice="Whistle Reading Pacific G2 Reverse" value="163"/>
-  <ienumChoice choice="Whistle Reading Pacific G2 Short" value="36"/>
-  <ienumChoice choice="Whistle Reading Pacific G2 Stop" value="187"/>
-  <ienumChoice choice="Whistle Reading Single Chime Forward" value="140"/>
-  <ienumChoice choice="Whistle Reading Single Chime Long" value="40"/>
-  <ienumChoice choice="Whistle Reading Single Chime Quill" value="41"/>
-  <ienumChoice choice="Whistle Reading Single Chime Reverse" value="164"/>
-  <ienumChoice choice="Whistle Reading Single Chime Short" value="39"/>
-  <ienumChoice choice="Whistle Reading Single Chime Stop" value="188"/>
-  <ienumChoice choice="Whistle Santa Fe 6 Chime Forward" value="153"/>
-  <ienumChoice choice="Whistle Santa Fe 6 Chime Long" value="79"/>
-  <ienumChoice choice="Whistle Santa Fe 6 Chime Quill" value="80"/>
-  <ienumChoice choice="Whistle Santa Fe 6 Chime Reverse" value="177"/>
-  <ienumChoice choice="Whistle Santa Fe 6 Chime Short" value="78"/>
-  <ienumChoice choice="Whistle Santa Fe 6 Chime Stop" value="201"/>
-  <ienumChoice choice="Whistle Southern 6 Chime Forward" value="151"/>
-  <ienumChoice choice="Whistle Southern 6 Chime Long" value="72"/>
-  <ienumChoice choice="Whistle Southern 6 Chime Quill" value="74"/>
-  <ienumChoice choice="Whistle Southern 6 Chime Reverse" value="175"/>
-  <ienumChoice choice="Whistle Southern 6 Chime Short" value="72"/>
-  <ienumChoice choice="Whistle Southern 6 Chime Stop" value="199"/>
-  <ienumChoice choice="Whistle Wabash 3 Chime Forward" value="141"/>
-  <ienumChoice choice="Whistle Wabash 3 Chime Long" value="43"/>
-  <ienumChoice choice="Whistle Wabash 3 Chime Quill" value="44"/>
-  <ienumChoice choice="Whistle Wabash 3 Chime Reverse" value="165"/>
-  <ienumChoice choice="Whistle Wabash 3 Chime Short" value="42"/>
-  <ienumChoice choice="Whistle Wabash 3 Chime Stop" value="189"/>
-  <ienumChoice choice="Whistle Wabash 6 Chime Forward" value="152"/>
-  <ienumChoice choice="Whistle Wabash 6 Chime Long" value="76"/>
-  <ienumChoice choice="Whistle Wabash 6 Chime Quill" value="77"/>
-  <ienumChoice choice="Whistle Wabash 6 Chime Reverse" value="176"/>
-  <ienumChoice choice="Whistle Wabash 6 Chime Short" value="75"/>
-  <ienumChoice choice="Whistle Wabash 6 Chime Stop" value="200"/>
+  <ienumChoice choice="Air pump 1 Westinghouse 2 Stage" value="124">
+     <choice xml:lang="it">="Pompa Aria 1 Westinghouse 2 Fasi</choice>
+  </ienumChoice>
+  <ienumChoice choice="Air pump 2 Westinghouse Cross Compound" value="125">
+     <choice xml:lang="it">="Pompa Aria 2 Westinghouse Composta</choice>
+  </ienumChoice>
+  <ienumChoice choice="Air pump 3 Westinghouse Single Stage" value="126">
+     <choice xml:lang="it">="Pompa Aria 3 Westinghouse Una Fase</choice>
+  </ienumChoice>
+  <ienumChoice choice="Air pump 4 Westinghouse Single Stage " value="128">
+     <choice xml:lang="it">="Pompa Aria 4 Westinghouse Una Fase</choice>
+  </ienumChoice>
+  <ienumChoice choice="Air pump 5 Westinghouse Single Stage" value="127">
+     <choice xml:lang="it">="Pompa Aria 5 Westinghouse Una Fase</choice>
+  </ienumChoice>
+  <ienumChoice choice="Bell Conrail 2233 GP30 air powered" value="7">
+     <choice xml:lang="it">="Bell Conrail 2233 GP30 aria compressa</choice>
+  </ienumChoice>
+  <ienumChoice choice="Bell Heisler Class 53833 Num 4 Hand Powered" value="12">
+     <choice xml:lang="it">="Bell Heisler Classe 53833 N.4 Manuale</choice>
+  </ienumChoice>
+  <ienumChoice choice="Bell John Bull Replica Hand Powered" value="9">
+     <choice xml:lang="it">="Bell John Bull Replica Manuale</choice>
+  </ienumChoice>
+  <ienumChoice choice="Bell Leetonia 1 Shay" value="13">
+     <choice xml:lang="it">="Bell Leetonia N.1 Shay</choice>
+  </ienumChoice>
+  <ienumChoice choice="Bell PRR 1187 2-8-0 H3 Hand Powered" value="10">
+     <choice xml:lang="it">="Bell PRR 1187 2-8-0 H3 Manuale</choice>
+  </ienumChoice>
+  <ienumChoice choice="Bell PRR 1223 American 4-4-0 D16SB hand powered" value="6">
+     <choice xml:lang="it">="Bell PRR 1223 American 4-4-0 D16SB Manuale</choice>
+  </ienumChoice>
+  <ienumChoice choice="Bell PRR 2846 2-8-0 H3 Air Powered" value="11">
+     <choice xml:lang="it">="Bell PRR 2846 2-8-0 H3 aria compressa</choice>
+  </ienumChoice>
+  <ienumChoice choice="Bell PRR 7002 4-4-2 hand powered" value="5">
+     <choice xml:lang="it">="Bell PRR 7002 4-4-2 Manuale</choice>
+  </ienumChoice>
+  <ienumChoice choice="Bell PRR GG1" value="8">
+     <choice xml:lang="it">="Bell PRR GG1</choice>
+  </ienumChoice>
+  <ienumChoice choice="Bell Reading 1251 0-6-0 Tank Engine air powered" value="3">
+     <choice xml:lang="it">="Bell Reading 1251 0-6-0 Tank aria compressa</choice>
+  </ienumChoice>
+  <ienumChoice choice="Bell Strasburg 475 Air Powered" value="1">
+     <choice xml:lang="it">="Bell Strasburg 475 aria compressa</choice>
+  </ienumChoice>
+  <ienumChoice choice="Bell Strasburg 475 Hand Powered" value="0">
+     <choice xml:lang="it">="Bell Strasburg 475 Manuale</choice>
+  </ienumChoice>
+  <ienumChoice choice="Bell Strasburg 89 Air Powered" value="2">
+     <choice xml:lang="it">="Bell Strasburg 89 aria compressa</choice>
+  </ienumChoice>
+  <ienumChoice choice="Bell Strasburg 90 hand powered" value="16">
+     <choice xml:lang="it">="Bell Strasburg 90 Manuale</choice>
+  </ienumChoice>
+  <ienumChoice choice="Bell Strasburg 90 hand powered variation" value="17">
+     <choice xml:lang="it">="Bell Strasburg 90 Manuale Variante</choice>
+  </ienumChoice>
+  <ienumChoice choice="Bell Unknown from Strasburg museum floor" value="14">
+     <choice xml:lang="it">="Bell StrasburgSconosciuta dal Museo</choice>
+  </ienumChoice>
+  <ienumChoice choice="Bell Virginia Truckee 2-6-0 hand powered" value="4">
+     <choice xml:lang="it">="Bell Virginia Truckee 2-6-0 Manuale</choice>
+  </ienumChoice>
+  <ienumChoice choice="Bell Williams Grove PRR 643 0-6-0" value="15">
+     <choice xml:lang="it">="Bell Williams Grove PRR 643 0-6-0 Manuale</choice>
+  </ienumChoice>
+  <ienumChoice choice="Blow Down 1" value="99">
+     <choice xml:lang="it">="Depressurizzazione 1</choice>
+  </ienumChoice>
+  <ienumChoice choice="Blow Down 2" value="98">
+     <choice xml:lang="it">="Depressurizzazione 2</choice>
+  </ienumChoice>
+  <ienumChoice choice="Blow Down 3" value="100">
+     <choice xml:lang="it">="Depressurizzazione 3</choice>
+  </ienumChoice>
+  <ienumChoice choice="Blower 1" value="101">
+     <choice xml:lang="it">="Turbina 1</choice>
+  </ienumChoice>
+  <ienumChoice choice="Blower 2" value="102">
+     <choice xml:lang="it">="Turbina 2</choice>
+  </ienumChoice>
+  <ienumChoice choice="Brake grinding to a stop" value="211">
+     <choice xml:lang="it">="Bloccaggio Freni allo Stop</choice>
+  </ienumChoice>
+  <ienumChoice choice="Brake Release 1 Independent" value="212">
+     <choice xml:lang="it">="Rilascio Freni 1 Indipendente</choice>
+  </ienumChoice>
+  <ienumChoice choice="Brake Release 2" value="213">
+     <choice xml:lang="it">="Rilascio Freni 2</choice>
+  </ienumChoice>
+  <ienumChoice choice="Brake Squeal 1" value="205">
+     <choice xml:lang="it">="Stridio Freni 1</choice>
+  </ienumChoice>
+  <ienumChoice choice="Brake Squeal 2" value="206">
+     <choice xml:lang="it">="Stridio Freni 2</choice>
+  </ienumChoice>
+  <ienumChoice choice="Brake Squeal 3" value="207">
+     <choice xml:lang="it">="Stridio Freni 3</choice>
+  </ienumChoice>
+  <ienumChoice choice="Brake Squeal 4" value="208">
+     <choice xml:lang="it">="Stridio Freni 4</choice>
+  </ienumChoice>
+  <ienumChoice choice="Brake Squeal 5" value="209">
+     <choice xml:lang="it">="Stridio Freni 5</choice>
+  </ienumChoice>
+  <ienumChoice choice="Brake Squeal 6" value="210">
+     <choice xml:lang="it">="Stridio Freni 6</choice>
+  </ienumChoice>
+  <ienumChoice choice="Coupler Clank 1" value="103">
+     <choice xml:lang="it">="Clangore Gancio 1</choice>
+  </ienumChoice>
+  <ienumChoice choice="Coupler Clank 2" value="104">
+     <choice xml:lang="it">="Clangore Gancio 2</choice>
+  </ienumChoice>
+  <ienumChoice choice="Cylinder Cocks 1" value="105">
+     <choice xml:lang="it">="Rubinetti Cilindri 1</choice>
+  </ienumChoice>
+  <ienumChoice choice="Cylinder Cocks 10" value="114">
+     <choice xml:lang="it">="Rubinetti Cilindri 10</choice>
+  </ienumChoice>
+  <ienumChoice choice="Cylinder Cocks 11" value="115">
+     <choice xml:lang="it">="Rubinetti Cilindri 11</choice>
+  </ienumChoice>
+  <ienumChoice choice="Cylinder Cocks 12" value="116">
+     <choice xml:lang="it">="Rubinetti Cilindri 12</choice>
+  </ienumChoice>
+  <ienumChoice choice="Cylinder Cocks 13" value="117">
+     <choice xml:lang="it">="Rubinetti Cilindri 13</choice>
+  </ienumChoice>
+  <ienumChoice choice="Cylinder Cocks 14" value="118">
+     <choice xml:lang="it">="Rubinetti Cilindri 14</choice>
+  </ienumChoice>
+  <ienumChoice choice="Cylinder Cocks 2" value="106">
+     <choice xml:lang="it">="Rubinetti Cilindri 2</choice>
+  </ienumChoice>
+  <ienumChoice choice="Cylinder Cocks 3" value="107">
+     <choice xml:lang="it">="Rubinetti Cilindri 3</choice>
+  </ienumChoice>
+  <ienumChoice choice="Cylinder Cocks 4" value="108">
+     <choice xml:lang="it">="Rubinetti Cilindri 4</choice>
+  </ienumChoice>
+  <ienumChoice choice="Cylinder Cocks 5" value="109">
+     <choice xml:lang="it">="Rubinetti Cilindri 5</choice>
+  </ienumChoice>
+  <ienumChoice choice="Cylinder Cocks 6" value="110">
+     <choice xml:lang="it">="Rubinetti Cilindri 6</choice>
+  </ienumChoice>
+  <ienumChoice choice="Cylinder Cocks 7" value="111">
+     <choice xml:lang="it">="Rubinetti Cilindri 7</choice>
+  </ienumChoice>
+  <ienumChoice choice="Cylinder Cocks 8" value="112">
+     <choice xml:lang="it">="Rubinetti Cilindri 8</choice>
+  </ienumChoice>
+  <ienumChoice choice="Cylinder Cocks 9" value="113">
+     <choice xml:lang="it">="Rubinetti Cilindri 9</choice>
+  </ienumChoice>
+  <ienumChoice choice="Direction Change Power Reverser" value="97">
+     <choice xml:lang="it">="Invertitore Cambio Direzione</choice>
+  </ienumChoice>
+  <ienumChoice choice="Generator 1" value="119">
+     <choice xml:lang="it">="Generatore 1</choice>
+  </ienumChoice>
+  <ienumChoice choice="Generator 2" value="120">
+     <choice xml:lang="it">="Generatore 2</choice>
+  </ienumChoice>
+  <ienumChoice choice="Horn 1" value="90">
+     <choice xml:lang="it">="Tromba 1</choice>
+  </ienumChoice>
+  <ienumChoice choice="Horn 2" value="91">
+     <choice xml:lang="it">="Tromba 2</choice>
+  </ienumChoice>
+  <ienumChoice choice="Horn 3" value="92">
+     <choice xml:lang="it">="Tromba 3</choice>
+  </ienumChoice>
+  <ienumChoice choice="Horn Nathan K5LA Forward" value="156">
+     <choice xml:lang="it">="Tromba Nathan K5LA Anteriore</choice>
+  </ienumChoice>
+  <ienumChoice choice="Horn Nathan K5LA Long" value="88">
+     <choice xml:lang="it">="Tromba Nathan K5LA Lunga</choice>
+  </ienumChoice>
+  <ienumChoice choice="Horn Nathan K5LA Quill" value="89">
+     <choice xml:lang="it">="Tromba Nathan K5LA a Penna</choice>
+  </ienumChoice>
+  <ienumChoice choice="Horn Nathan K5LA Reverse" value="180">
+     <choice xml:lang="it">="Tromba Nathan K5LA Invertita</choice>
+  </ienumChoice>
+  <ienumChoice choice="Horn Nathan K5LA Short" value="87">
+     <choice xml:lang="it">="Tromba Nathan K5LA Corta</choice>
+  </ienumChoice>
+  <ienumChoice choice="Horn Nathan K5LA Stop" value="204">
+     <choice xml:lang="it">="Tromba Nathan K5LA Stop</choice>
+  </ienumChoice>
+  <ienumChoice choice="Injector 1" value="121">
+     <choice xml:lang="it">="Iniettore 1</choice>
+  </ienumChoice>
+  <ienumChoice choice="Injector 2" value="122">
+     <choice xml:lang="it">="Iniettore 2</choice>
+  </ienumChoice>
+  <ienumChoice choice="Injector 3" value="123">
+     <choice xml:lang="it">="Iniettore 3</choice>
+  </ienumChoice>
+  <ienumChoice choice="Rod Clank 1" value="93">
+     <choice xml:lang="it">="Clangore Biella 1</choice>
+  </ienumChoice>
+  <ienumChoice choice="Rod Clank 2" value="94">
+     <choice xml:lang="it">="Clangore Biella 2</choice>
+  </ienumChoice>
+  <ienumChoice choice="Rod Clank 3" value="95">
+     <choice xml:lang="it">="Clangore Biella 3</choice>
+  </ienumChoice>
+  <ienumChoice choice="Rod Clank 4" value="96">
+     <choice xml:lang="it">="Clangore Biella 4</choice>
+  </ienumChoice>
+  <ienumChoice choice="Safety 1" value="129">
+     <choice xml:lang="it">="Valvola Sicurezza 1</choice>
+  </ienumChoice>
+  <ienumChoice choice="Safety 2" value="130">
+     <choice xml:lang="it">="Valvola Sicurezza 2</choice>
+  </ienumChoice>
+  <ienumChoice choice="Shovelling 1 Butterfly - Air Powered" value="131">
+     <choice xml:lang="it">="Spalatore a Farfalla 1 - Aria Compressa</choice>
+  </ienumChoice>
+  <ienumChoice choice="Shovelling 2 Butterfly - Air Powered" value="132">
+     <choice xml:lang="it">="Spalatore a Farfalla 2 - Aria Compressa</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle 14 - Forward" value="146">
+     <choice xml:lang="it">="Fischio 14 - Anteriore</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle 14 - Long" value="58">
+     <choice xml:lang="it">="Fischio 14 - Lungo</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle 14 - Quill" value="59">
+     <choice xml:lang="it">="Fischio 14 - Penna</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle 14 - Reverse" value="170">
+     <choice xml:lang="it">="Fischio 14 - Invertito</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle 14 - Short" value="57">
+     <choice xml:lang="it">="Fischio 14 - Corto</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle 14 - Stop" value="194">
+     <choice xml:lang="it">="Fischio 14 - Stop</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle 16 - Forward" value="148">
+     <choice xml:lang="it">="Fischio 16 - Anteriore</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle 16 - Long" value="64">
+     <choice xml:lang="it">="Fischio 16 - Lungo</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle 16 - Quill" value="65">
+     <choice xml:lang="it">="Fischio 16 - Penna</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle 16 - Reverse" value="172">
+     <choice xml:lang="it">="Fischio 16 - Invertito</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle 16 - Short" value="63">
+     <choice xml:lang="it">="Fischio 16 - Corto</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle 16 - Stop" value="196">
+     <choice xml:lang="it">="Fischio 16 - Stop</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle 17 - Forward" value="149">
+     <choice xml:lang="it">="Fischio 17 - Anteriore</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle 17 - Long" value="67">
+     <choice xml:lang="it">="Fischio 17 - Lungo</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle 17 - Quill" value="68">
+     <choice xml:lang="it">="Fischio 17 - Penna</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle 17 - Reverse" value="173">
+     <choice xml:lang="it">="Fischio 17 - Invertito</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle 17 - Short" value="66">
+     <choice xml:lang="it">="Fischio 17 - Corto</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle 17 - Stop" value="197">
+     <choice xml:lang="it">="Fischio 17 - Stop</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Alamo Michigan Plant Forward" value="133">
+     <choice xml:lang="it">="Fischio Alamo Michigan Plant - Anteriore</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Alamo Michigan Plant Long" value="19">
+     <choice xml:lang="it">="Fischio Alamo Michigan Plant - Lungo</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Alamo Michigan Plant Quill" value="20">
+     <choice xml:lang="it">="Fischio Alamo Michigan Plant - Penna</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Alamo Michigan Plant Reverse" value="157">
+     <choice xml:lang="it">="Fischio Alamo Michigan Plant - Invertito</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Alamo Michigan Plant Short" value="18">
+     <choice xml:lang="it">="Fischio Alamo Michigan Plant - </choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Alamo Michigan Plant Stop" value="181">
+     <choice xml:lang="it">="Fischio Alamo Michigan Plant - Stop</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle B &amp; O Forward" value="142">
+     <choice xml:lang="it">="Fischio B &amp; O - Anteriore</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle B &amp; O Long" value="46">
+     <choice xml:lang="it">="Fischio B &amp; O - Lungo</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle B &amp; O Quill" value="47">
+     <choice xml:lang="it">="Fischio B &amp; O - Penna</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle B &amp; O Reverse" value="166">
+     <choice xml:lang="it">="Fischio B &amp; O - Invertito</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle B &amp; O Short" value="45">
+     <choice xml:lang="it">="Fischio B &amp; O - Corto</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle B &amp; O Stop" value="190">
+     <choice xml:lang="it">="Fischio B &amp; O - Stop</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Great Northern 5 Chime Forward" value="155">
+     <choice xml:lang="it">="Fischio Great Northern 5 toni - Anteriore</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Great Northern 5 Chime Long" value="85">
+     <choice xml:lang="it">="Fischio Great Northern 5 toni - Lungo</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Great Northern 5 Chime Quill" value="86">
+     <choice xml:lang="it">="Fischio Great Northern 5 toni - Penna</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Great Northern 5 Chime Reverse" value="179">
+     <choice xml:lang="it">="Fischio Great Northern 5 toni - Invertito</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Great Northern 5 Chime Short" value="84">
+     <choice xml:lang="it">="Fischio Great Northern 5 toni - Corto</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Great Northern 5 Chime Stop" value="203">
+     <choice xml:lang="it">="Fischio Great Northern 5 toni - Stop</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Hancock 3 Chime Forward" value="150">
+     <choice xml:lang="it">="Fischio Hancock 3 toni - Anteriore</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Hancock 3 Chime Long" value="70">
+     <choice xml:lang="it">="Fischio Hancock 3 toni - Lungo</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Hancock 3 Chime Quill" value="71">
+     <choice xml:lang="it">="Fischio Hancock 3 toni - Penna</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Hancock 3 Chime Reverse" value="174">
+     <choice xml:lang="it">="Fischio Hancock 3 toni - Invertito</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Hancock 3 Chime Short" value="69">
+     <choice xml:lang="it">="Fischio Hancock 3 toni - Corto</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Hancock 3 Chime Stop" value="198">
+     <choice xml:lang="it">="Fischio Hancock 3 toni - Stop</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Kingsly 4 Chime Forward" value="135">
+     <choice xml:lang="it">="Fischio Kingsly 4 toni - Anteriore</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Kingsly 4 Chime Long" value="25">
+     <choice xml:lang="it">="Fischio Kingsly 4 toni - Lungo</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Kingsly 4 Chime Quill" value="26">
+     <choice xml:lang="it">="Fischio Kingsly 4 toni - Penna</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Kingsly 4 Chime Reverse" value="159">
+     <choice xml:lang="it">="Fischio Kingsly 4 toni - Invertito</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Kingsly 4 Chime Short" value="24">
+     <choice xml:lang="it">="Fischio Kingsly 4 toni - Corto</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Kingsly 4 Chime Stop" value="183">
+     <choice xml:lang="it">="Fischio Kingsly 4 toni - Stop</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Lunkenheimer 3 chime Forward" value="145">
+     <choice xml:lang="it">="Fischio Lunkenheimer 3 toni - Anteriore</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Lunkenheimer 3 chime Long" value="55">
+     <choice xml:lang="it">="Fischio Lunkenheimer 3 toni - Lungo</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Lunkenheimer 3 chime Quill" value="56">
+     <choice xml:lang="it">="Fischio Lunkenheimer 3 toni - Penna</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Lunkenheimer 3 chime Reverse" value="169">
+     <choice xml:lang="it">="Fischio Lunkenheimer 3 toni - Invertito</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Lunkenheimer 3 chime Short" value="54">
+     <choice xml:lang="it">="Fischio Lunkenheimer 3 toni - Corto</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Lunkenheimer 3 chime Stop" value="193">
+     <choice xml:lang="it">="Fischio Lunkenheimer 3 toni - Stop</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Lunkenheimer Single Note Forward" value="147">
+     <choice xml:lang="it">="Fischio Lunkenheimer 1 Tono - Anteriore</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Lunkenheimer Single Note Long" value="61">
+     <choice xml:lang="it">="Fischio Lunkenheimer 1 Tono - Lungo</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Lunkenheimer Single Note Quill" value="62">
+     <choice xml:lang="it">="Fischio Lunkenheimer 1 Tono - Penna</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Lunkenheimer Single Note Reverse" value="171">
+     <choice xml:lang="it">="Fischio Lunkenheimer 1 Tono - Invertito</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Lunkenheimer Single Note Short" value="60">
+     <choice xml:lang="it">="Fischio Lunkenheimer 1 Tono - Corto</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Lunkenheimer Single Note Stop" value="195">
+     <choice xml:lang="it">="Fischio Lunkenheimer 1 Tono - Stop</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle NPR 765 Foward" value="137">
+     <choice xml:lang="it">="Fischio NPR 765 - Anteriore</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle NPR 765 Long" value="31">
+     <choice xml:lang="it">="Fischio NPR 765 - Lungo</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle NPR 765 Quill" value="32">
+     <choice xml:lang="it">="Fischio NPR 765 - Penna</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle NPR 765 Reverse" value="161">
+     <choice xml:lang="it">="Fischio NPR 765 - Invertito</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle NPR 765 Short" value="30">
+     <choice xml:lang="it">="Fischio NPR 765 - Corto</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle NPR 765 Stop" value="185">
+     <choice xml:lang="it">="Fischio NPR 765 - Stop</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle NW Single Chime Forward" value="144">
+     <choice xml:lang="it">="Fischio NW 1 Tono - Anteriore</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle NW Single Chime Long" value="52">
+     <choice xml:lang="it">="Fischio NW 1 Tono - Lungo</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle NW Single Chime Quill" value="53">
+     <choice xml:lang="it">="Fischio NW Tono - Penna</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle NW Single Chime Reverse" value="168">
+     <choice xml:lang="it">="Fischio NW 1 Tono - Invertito</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle NW Single Chime Short" value="51">
+     <choice xml:lang="it">="Fischio NW 1 Tono - Corto</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle NW single chime short bell forward" value="154">
+     <choice xml:lang="it">="Fischio NW 1 Tono campana corta - Anteriore</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle NW single chime short bell Long" value="82">
+     <choice xml:lang="it">="Fischio NW 1 Tono campana corta - Lungo</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle NW single chime short bell Quill" value="83">
+     <choice xml:lang="it">="Fischio NW 1 Tono campana corta - Penna</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle NW single chime short bell Reverse" value="178">
+     <choice xml:lang="it">="Fischio NW 1 Tono campana corta - Invertito</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle NW single chime short bell Short" value="81">
+     <choice xml:lang="it">="Fischio NW 1 Tono campana corta - Corto</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle NW single chime short bell Stop" value="202">
+     <choice xml:lang="it">="Fischio NW 1 Tono campana corta - Stop</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle NW Single Chime Stop" value="192">
+     <choice xml:lang="it">="Fischio NW 1 Tono - Stop</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle PA 3 Chime Forward" value="134">
+     <choice xml:lang="it">="Fischio PA 3 Toni - Anteriore</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle PA 3 Chime Long" value="22">
+     <choice xml:lang="it">="Fischio PA 3 Toni - Lungo</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle PA 3 Chime Quill" value="23">
+     <choice xml:lang="it">="Fischio  PA 3 Toni - Penna</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle PA 3 Chime Reverse" value="158">
+     <choice xml:lang="it">="Fischio PA 3 Toni - Invertito</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle PA 3 Chime Short" value="21">
+     <choice xml:lang="it">="Fischio PA 3 Toni - Corto</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle PA 3 Chime Stop" value="182">
+     <choice xml:lang="it">="Fischio PA 3 Toni - Stop</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Pennsy K4 Forward" value="143">
+     <choice xml:lang="it">="Fischio  Pennsy K4 - Anteriore</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Pennsy K4 Long" value="49">
+     <choice xml:lang="it">="Fischio Pennsy K4 - Lungo</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Pennsy K4 Quill" value="50">
+     <choice xml:lang="it">="Fischio Pennsy K4 - Penna</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Pennsy K4 Reverse" value="167">
+     <choice xml:lang="it">="Fischio Pennsy K4 - Invertito</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Pennsy K4 Short" value="48">
+     <choice xml:lang="it">="Fischio Pennsy K4 - Corto</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Pennsy K4 Stop" value="191">
+     <choice xml:lang="it">="Fischio Pennsy K4 - Stop</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Reading 6 Chime 2 Forward" value="136">
+     <choice xml:lang="it">="Fischio Reading 6 Toni 2 - Anteriore</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Reading 6 Chime 2 Long" value="28">
+     <choice xml:lang="it">="Fischio Reading 6 Toni 2 - Lungo</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Reading 6 Chime 2 Quill" value="29">
+     <choice xml:lang="it">="Fischio Reading 6 Toni 2 - Penna</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Reading 6 Chime 2 Reverse" value="160">
+     <choice xml:lang="it">="Fischio Reading 6 Toni 2 - Invertito</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Reading 6 Chime 2 Short" value="27">
+     <choice xml:lang="it">="Fischio Reading 6 Toni 2 - Corto</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Reading 6 Chime 2 Stop" value="184">
+     <choice xml:lang="it">="Fischio Reading 6 Toni 2 - Stop</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Reading 6 Chime Forward" value="138">
+     <choice xml:lang="it">="Fischio Reading 6 Toni - Anteriore</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Reading 6 Chime Long" value="34">
+     <choice xml:lang="it">="Fischio Reading 6 Toni - Lungo</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Reading 6 Chime Quill" value="35">
+     <choice xml:lang="it">="Fischio Reading 6 Toni - Penna</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Reading 6 Chime Reverse" value="162">
+     <choice xml:lang="it">="Fischio Reading 6 Toni - Invertito</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Reading 6 Chime Short" value="33">
+     <choice xml:lang="it">="Fischio Reading 6 Toni - Corto</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Reading 6 Chime Stop" value="186">
+     <choice xml:lang="it">="Fischio Reading 6 Toni - Stop</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Reading Pacific G2 Forward" value="139">
+     <choice xml:lang="it">="Fischio Reading Pacific G2 - Anteriore</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Reading Pacific G2 Long" value="37">
+     <choice xml:lang="it">="Fischio Reading Pacific G2 - Lungo</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Reading Pacific G2 Quill" value="38">
+     <choice xml:lang="it">="Fischio Reading Pacific G2 - Penna</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Reading Pacific G2 Reverse" value="163">
+     <choice xml:lang="it">="Fischio Reading Pacific G2 - Invertito</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Reading Pacific G2 Short" value="36">
+     <choice xml:lang="it">="Fischio Reading Pacific G2 - Corto</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Reading Pacific G2 Stop" value="187">
+     <choice xml:lang="it">="Fischio Reading Pacific G2 - Stop</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Reading Single Chime Forward" value="140">
+     <choice xml:lang="it">="Fischio Reading 1 Tono - Anteriore</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Reading Single Chime Long" value="40">
+     <choice xml:lang="it">="Fischio Reading 1 Tono - Lungo</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Reading Single Chime Quill" value="41">
+     <choice xml:lang="it">="Fischio Reading 1 Tono - Penna</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Reading Single Chime Reverse" value="164">
+     <choice xml:lang="it">="Fischio Reading 1 Tono - Invertito</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Reading Single Chime Short" value="39">
+     <choice xml:lang="it">="Fischio Reading 1 Tono - Corto</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Reading Single Chime Stop" value="188">
+     <choice xml:lang="it">="Fischio Reading 1 Tono - Stop</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Santa Fe 6 Chime Forward" value="153">
+     <choice xml:lang="it">="Fischio Santa Fe 6 Toni - Anteriore</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Santa Fe 6 Chime Long" value="79">
+     <choice xml:lang="it">="Fischio Santa Fe 6 Toni - Lungo</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Santa Fe 6 Chime Quill" value="80">
+     <choice xml:lang="it">="Fischio Santa Fe 6 Toni - Penna</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Santa Fe 6 Chime Reverse" value="177">
+     <choice xml:lang="it">="Fischio Santa Fe 6 Toni - Invertito</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Santa Fe 6 Chime Short" value="78">
+     <choice xml:lang="it">="Fischio Santa Fe 6 Toni - Corto</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Santa Fe 6 Chime Stop" value="201">
+     <choice xml:lang="it">="Fischio Santa Fe 6 Toni - Stop</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Southern 6 Chime Forward" value="151">
+     <choice xml:lang="it">="Fischio Southern 6 Toni - Anteriore</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Southern 6 Chime Long" value="72">
+     <choice xml:lang="it">="Fischio Southern 6 Toni - Lungo</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Southern 6 Chime Quill" value="74">
+     <choice xml:lang="it">="Fischio Southern 6 Toni - Penna</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Southern 6 Chime Reverse" value="175">
+     <choice xml:lang="it">="Fischio Southern 6 Toni - Invertito</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Southern 6 Chime Short" value="72">
+     <choice xml:lang="it">="Fischio Southern 6 Toni - Corto</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Southern 6 Chime Stop" value="199">
+     <choice xml:lang="it">="Fischio Southern 6 Toni - Stop</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Wabash 3 Chime Forward" value="141">
+     <choice xml:lang="it">="Fischio Wabash 3 Toni - Anteriore</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Wabash 3 Chime Long" value="43">
+     <choice xml:lang="it">="Fischio Wabash 3 Toni - Lungo</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Wabash 3 Chime Quill" value="44">
+     <choice xml:lang="it">="Fischio Wabash 3 Toni - Penna</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Wabash 3 Chime Reverse" value="165">
+     <choice xml:lang="it">="Fischio Wabash 3 Toni - Invertito</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Wabash 3 Chime Short" value="42">
+     <choice xml:lang="it">="Fischio Wabash 3 Toni - Corto</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Wabash 3 Chime Stop" value="189">
+     <choice xml:lang="it">="Fischio Wabash 3 Toni - Stop</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Wabash 6 Chime Forward" value="152">
+     <choice xml:lang="it">="Fischio Wabash 6 Toni - Anteriore</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Wabash 6 Chime Long" value="76">
+     <choice xml:lang="it">="Fischio Wabash 6 Toni - Lungo</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Wabash 6 Chime Quill" value="77">
+     <choice xml:lang="it">="Fischio Wabash 6 Toni - Penna</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Wabash 6 Chime Reverse" value="176">
+     <choice xml:lang="it">="Fischio Wabash 6 Toni - Invertito</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Wabash 6 Chime Short" value="75">
+     <choice xml:lang="it">="Fischio Wabash 6 Toni - Corto</choice>
+  </ienumChoice>
+  <ienumChoice choice="Whistle Wabash 6 Chime Stop" value="200">
+     <choice xml:lang="it">="Fischio Wabash 6 Toni - Stop</choice>
+  </ienumChoice>
 </ienumVal>
