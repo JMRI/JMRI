@@ -39,6 +39,7 @@ public class TrainPrintUtilities {
 	static final String NEW_LINE = "\n";	// NOI18N
 	static final char HORIZONTAL_LINE_SEPARATOR = '-'; // NOI18N
 	static final char VERTICAL_LINE_SEPARATOR = '|'; // NOI18N
+	static final char SPACE = ' ';
 
 	/**
 	 * Print or preview a train manifest, build report, or switch list.
@@ -133,7 +134,7 @@ public class TrainPrintUtilities {
 					}
 				}
 				if (horizontialLineSeparatorFound) {
-					writer.write(writer.getCurrentLineNumber(), 0, writer.getCurrentLineNumber(), line.length());
+					writer.write(writer.getCurrentLineNumber(), 0, writer.getCurrentLineNumber(), line.length() + 1);
 					c = null;
 					continue;
 				}
@@ -142,10 +143,11 @@ public class TrainPrintUtilities {
 						// make a frame (manifest two column format)
 						writer.write(writer.getCurrentLineNumber(), 0, writer.getCurrentLineNumber() + 1, 0);
 						writer.write(writer.getCurrentLineNumber(), i + 1, writer.getCurrentLineNumber() + 1, i + 1);
-						writer.write(writer.getCurrentLineNumber(), line.length(), writer
-								.getCurrentLineNumber() + 1, line.length());
+						writer.write(writer.getCurrentLineNumber(), line.length() + 1,
+								writer.getCurrentLineNumber() + 1, line.length() + 1);
 					}
 				}
+				line = line.replace(VERTICAL_LINE_SEPARATOR, SPACE);
 				// determine if line is a pickup or drop
 				if ((!Setup.getPickupEnginePrefix().equals("") && line.startsWith(Setup
 						.getPickupEnginePrefix()))

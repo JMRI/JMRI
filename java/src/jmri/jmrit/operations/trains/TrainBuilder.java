@@ -1442,7 +1442,8 @@ public class TrainBuilder extends TrainCommon {
 			// use only the lead car in a kernel for building trains
 			if (c.getKernel() != null) {
 				addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCarPartOfKernel"),
-						new Object[] { c.toString(), c.getKernelName(), c.getKernel().getSize() }));
+						new Object[] { c.toString(), c.getKernelName(), c.getKernel().getSize(),
+								c.getKernel().getTotalLength(), Setup.getLengthUnit().toLowerCase() }));
 				checkKernel(c);
 				if (!c.getKernel().isLead(c)) {
 					_carList.remove(c); // remove this car from the list
@@ -2031,7 +2032,8 @@ public class TrainBuilder extends TrainCommon {
 			weightTons = car.getKernel().getAdjustedWeightTons();
 			List<Car> kCars = car.getKernel().getCars();
 			addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildCarPartOfKernel"), new Object[] {
-					car.toString(), car.getKernelName(), kCars.size() }));
+					car.toString(), car.getKernelName(), kCars.size(), car.getKernel().getTotalLength(),
+					Setup.getLengthUnit().toLowerCase() }));
 			for (Car kCar : kCars) {
 				if (kCar == car)
 					continue;
@@ -2608,6 +2610,11 @@ public class TrainBuilder extends TrainCommon {
 		addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildSearchForSpur"),
 				new Object[] { car.toString(), car.getTypeName(), car.getLoadName(),
 						car.getLocationName() + ", " + car.getTrackName() }));
+		if (car.getKernel() != null) {
+			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarPartOfKernel"),
+					new Object[] { car.toString(), car.getKernelName(), car.getKernel().getSize(),
+							car.getKernel().getTotalLength(), Setup.getLengthUnit().toLowerCase() }));
+		}
 		List<Track> tracks = locationManager.getTracksByMoves(Track.SPUR);
 		log.debug("Found {} spurs", tracks.size());
 		List<Location> locations = new ArrayList<Location>(); // locations not reachable
@@ -2793,6 +2800,11 @@ public class TrainBuilder extends TrainCommon {
 		}
 		addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildSearchTrackNewLoad"), new Object[] {
 				car.toString(), car.getTypeName(), car.getLoadName(), car.getLocationName(), car.getTrackName() }));
+		if (car.getKernel() != null) {
+			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarPartOfKernel"),
+					new Object[] { car.toString(), car.getKernelName(), car.getKernel().getSize(),
+							car.getKernel().getTotalLength(), Setup.getLengthUnit().toLowerCase() }));
+		}
 		List<Track> tracks = locationManager.getTracksByMoves(Track.SPUR);
 		log.debug("Found {} spurs", tracks.size());
 		for (Track track : tracks) {
