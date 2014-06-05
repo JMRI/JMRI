@@ -999,9 +999,9 @@
     option is selected.</P>
    <P>
     After selecting "Tabular" and pressing the "Save" button, you will find three additional "Tab"
-    options at the end of the message drop down menus. Use these three tabs to spacing out the
-    manifest or switch list to your liking. You can change the length of the tab characters if you
-    wish, see <A HREF="#ManifestPrintOptionsTools">Tools</A>.
+    options at the end of the <A HREF="#MessageFormats">Message Format</A> drop down menus. Use
+    these three tabs to space out the manifest or switch list to your liking. You can change the
+    length of the tab characters if you wish, see <A HREF="#ManifestPrintOptionsTools">Tools</A>.
    </P>
 
    <H3>Set Out Text Color</H3>
