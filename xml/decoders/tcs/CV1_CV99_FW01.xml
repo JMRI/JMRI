@@ -542,7 +542,7 @@
   <variable item="FL(f) controls output 6" CV="40" mask="XXXXXXXV" minOut="6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(f) controls output 6</label>
-    <label xml:lang="it">"&gt;Luci(in avanti) controlla uscita 6</label>
+    <label xml:lang="it">"Luci(in avanti) controlla uscita 6</label>
   </variable>
   <variable item="FL(r) controls output 6" CV="40" mask="XXXXXXVX" minOut="6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
