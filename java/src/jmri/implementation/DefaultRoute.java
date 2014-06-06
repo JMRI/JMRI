@@ -902,6 +902,8 @@ public class DefaultRoute extends AbstractNamedBean
                     }
                 }, getLockControlTurnout(), "Route " + getDisplayName());
         }
+        
+        checkTurnoutAlignment();
 // register for updates to the Output Turnouts
 
         
