@@ -134,10 +134,9 @@ public class XmlFileTest extends TestCase {
         try {
             SAXBuilder builder = XmlFile.getBuilder(false);  // argument controls validation
             doc = builder.build(new BufferedInputStream(fs));
-
-            Assert.assertTrue("Original Document found", doc!=null);
+            Assert.assertNotNull("Original Document found", doc);
             e = doc.getRootElement();
-            Assert.assertTrue("Original root element found", e!=null);
+            Assert.assertNotNull("Original root element found", e);
 
             XmlFile x = new XmlFile() {};
             Document d = x.processInstructions(doc);
@@ -145,7 +144,7 @@ public class XmlFileTest extends TestCase {
         
             // test transform changes <contains> element to <content>
             e = d.getRootElement();
-            Assert.assertTrue("Transformed root element found", e!=null);
+            Assert.assertNotNull("Transformed root element found", e);
             Assert.assertTrue("Transformed root element is right type", e.getName().equals("top"));
             Assert.assertTrue("Old element gone", e.getChild("contains")==null);
             Assert.assertTrue("New element there", e.getChild("content")!=null);
