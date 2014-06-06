@@ -1,53 +1,102 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
       <enumChoice choice="Constant bright light">
+
          <choice xml:lang="it">Luce luminosità costante</choice>
+
       </enumChoice>
+
       <enumChoice choice="Random flicker (fire box)">
+
          <choice xml:lang="it">Tremolio casuale(caldaia)</choice>
+
       </enumChoice>
+
       <enumChoice choice="Mars light">
+
          <choice xml:lang="it">Luci Mars</choice>
+
       </enumChoice>
+
       <enumChoice choice="Flashing light">
+
          <choice xml:lang="it">Lampeggiante</choice>
+
       </enumChoice>
+
       <enumChoice choice="Single pulse strobe">
+
           <choice xml:lang="it">Strobe singolo impulso</choice>
+
       </enumChoice>
+
       <enumChoice choice="Double pulse strobe">
+
           <choice xml:lang="it">Strobe doppio impulso</choice>
+
       </enumChoice>
+
       <enumChoice choice="Rotary beacon">
+
           <choice xml:lang="it">Faro Rotante</choice>
+
       </enumChoice>
+
       <enumChoice choice="Gyra light">
+
           <choice xml:lang="it">Luce Gyra light</choice>
+
       </enumChoice>
+
       <enumChoice choice="Rule 17 (dimmable)">
+
           <choice xml:lang="it">Regola 17(regolabile)</choice>
+
       </enumChoice>
+
       <enumChoice choice="Momentary pulse">
+
           <choice xml:lang="it">Impulso Momentaneo</choice>
+
       </enumChoice>
+
       <enumChoice choice="Ditch light A">
+
           <choice xml:lang="it">Luce Ditch A</choice>
+
       </enumChoice>
+
       <enumChoice choice="Ditch light B">
+
           <choice xml:lang="it">Luce Ditch B</choice>
+
       </enumChoice>
+
       <enumChoice choice="Constant dim">
+
          <choice xml:lang="it">Smorzata Costante</choice>
+
       </enumChoice>
+
       <enumChoice choice="Auto Mars">
+
          <choice xml:lang="it">Mars Automatica</choice>
+
       </enumChoice>
+
       <enumChoice choice="Brake lights">
+
          <choice xml:lang="it">Luce Freni</choice>
+
       </enumChoice>
+
     <enumChoice choice="Single pulse strobe 2">
+
         <choice xml:lang="it">Strobe singolo impulso 2</choice>
+
       </enumChoice>
+
     </enumVal>
+

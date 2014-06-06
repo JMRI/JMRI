@@ -1,21 +1,38 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
       <enumChoice choice="Function on running forward">
+
         <choice>Function on running forward</choice>
+
         <choice xml:lang="it">Funzione in marcia avanti</choice>
+
       </enumChoice>
+
       <enumChoice choice="Function on running reverse">
+
         <choice>Function on running reverse</choice>
+
         <choice xml:lang="it">Funzione in marcia indietro</choice>
+
       </enumChoice>
+
       <enumChoice choice="Function on both directions">
+
         <choice>Function on both directions</choice>
+
         <choice xml:lang="it">Funzione in entrambe le direzioni</choice>
+
       </enumChoice>
+
       <enumChoice choice="Reserved">
+
         <choice>Reserved</choice>
+
         <choice xml:lang="it">Riservato</choice>
+
       </enumChoice>
+
     </enumVal>
+
