@@ -557,8 +557,8 @@ public class Router extends TrainCommon {
 			return false;
 		}
 		
-		// state that routing begins using three or more trains
-		addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterMultipleTrains"), new Object[] { car
+		// state that routing begins using three trains
+		addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterThreeTrains"), new Object[] { car
 			.getFinalDestinationName() }));
 		
 		if (log.isDebugEnabled()) {
@@ -604,8 +604,10 @@ public class Router extends TrainCommon {
 		if (foundRoute)
 			return foundRoute; // 3 train route, but there was an issue with the first stop in the route
 		log.debug("Using 3 trains to route car to ({}) was unsuccessful", car.getFinalDestinationName());
-		log.debug("Try to find route using 4 trains");
+		addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterFourTrains"), new Object[] { car
+			.getFinalDestinationName() }));
 		for (Track nlt : _nextLocationTracks) {
+			otherloop:
 			for (Track mlt : _otherLocationTracks) {
 				testCar.setTrack(nlt); // set car to this location and track
 				testCar.setDestinationTrack(mlt); // set car to this destination and track
@@ -632,7 +634,7 @@ public class Router extends TrainCommon {
 											car.getFinalDestinationName(), car.getFinalDestinationTrackName() }));
 							if (finshSettingRouteFor(car, nlt))
 								return true; // done 4 train routing
-							break; // there was an issue with the first stop in the route
+							break otherloop; // there was an issue with the first stop in the route
 						}
 					}
 				}
@@ -641,8 +643,10 @@ public class Router extends TrainCommon {
 		if (foundRoute)
 			return foundRoute;  // 4 train route, but there was an issue with the first stop in the route
 		log.debug("Using 4 trains to route car to ({}) was unsuccessful", car.getFinalDestinationName());
-		log.debug("Try to find route using 5 trains");
+		addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterFiveTrains"), new Object[] { car
+			.getFinalDestinationName() }));
 		for (Track nlt : _nextLocationTracks) {
+			otherloop:
 			for (Track mlt1 : _otherLocationTracks) {
 				testCar.setTrack(nlt); // set car to this location and track
 				testCar.setDestinationTrack(mlt1); // set car to this destination and track
@@ -686,7 +690,7 @@ public class Router extends TrainCommon {
 									// only set car's destination if specific train can service car
 									if (finshSettingRouteFor(car, nlt))
 										return true; // done 5 train routing
-									break; // there was an issue with the first stop in the route
+									break otherloop; // there was an issue with the first stop in the route
 								}
 							}
 						}
