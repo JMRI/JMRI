@@ -262,7 +262,7 @@
     <label xml:lang="it">Step Velocità</label>
   </variable>
   <variable CV="29" mask="XXXXXVXX" default="1" tooltip="'4' bit. Allows the loco to run on DC, default is Off" item="Analog (DC) Operation">
-    <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Analog conversion mode</label>
     <label xml:lang="it">Modo Conversione Analogica</label>
     <tooltip xml:lang="it">'4' bit. Permette alla loco di andare in DC, per default è Off</tooltip>
@@ -826,7 +826,7 @@
   <variable CV="53" mask="XXVVXXXX" minOut="5" item="Output 5 behavior" default="2">
     <xi:include href="http://jmri.org/xml/decoders/tcs/enum-frw_rev_both.xml"/>
     <label>Brown Wire Timing</label>
-    <label xml:lang="it">Temporizzazioni filo Marrone</label>el&gt;
+    <label xml:lang="it">Temporizzazioni filo Marrone</label>
   </variable>
   <variable CV="54" mask="XXXXVVVV" minOut="6" item="Output 6 effect generated">
     <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_1_99_light.xml"/>

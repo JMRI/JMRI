@@ -3,67 +3,131 @@
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
          <enumChoice choice="Function on when loco going forward">
+
             <choice>Function on when loco going forward</choice>
+
             <choice xml:lang="it">Funz.On in marcia avanti</choice>
+
           </enumChoice>
+
           <enumChoice choice="Function on when loco going reverse">
+
             <choice>Function on when loco going reverse</choice>
+
             <choice xml:lang="it">Funz.On in marcia indietro</choice>
-          <ienumChoice>
-          <enumChoice choice="Normal on/off control">
-            <choice>Normal on/off control</choice>
-            <choice xml:lang="it">Controllo normale On/Off</choice>
+
           </enumChoice>
+
           <enumChoice choice="Normal on/off control">
+
             <choice>Normal on/off control</choice>
+
             <choice xml:lang="it">Controllo normale On/Off</choice>
+
           </enumChoice>
+
+          <enumChoice choice="Normal on/off control">
+
+            <choice>Normal on/off control</choice>
+
+            <choice xml:lang="it">Controllo normale On/Off</choice>
+
+          </enumChoice>
+
           <enumChoice choice="Function on when loco forward and FL on">
+
             <choice>Function on when loco forward and FL on</choice>
+
             <choice xml:lang="it">Funz.On in marcia avanti e Luci On</choice>
+
           </enumChoice>
+
           <enumChoice choice="Function on when loco reverse and FL on">
+
             <choice>Function on when loco reverse and FL on</choice>
+
             <choice xml:lang="it">Funz.On in marcia indietro e Luci On</choice>
+
           </enumChoice>
+
           <enumChoice choice="Reserved (0x6)">
+
             <choice>Reserved (0x6)</choice>
+
             <choice xml:lang="it">Riservato (0x6)</choice>
+
           </enumChoice>
+
           <enumChoice choice="Reserved (0x7)">
+
             <choice>Reserved (0x7)</choice>
+
             <choice xml:lang="it">Riservato (0x7)</choice>
+
           </enumChoice>
+
           <enumChoice choice="Reserved (0x8)">
+
             <choice>Reserved (0x8)</choice>
+
             <choice xml:lang="it">Riservato (0x8)</choice>
+
           </enumChoice>
+
           <enumChoice choice="Reserved (0x9)">
+
             <choice>Reserved (0x9)</choice>
+
             <choice xml:lang="it">Riservato (0x9)</choice>
+
           </enumChoice>
+
           <enumChoice choice="Reserved (0xA)">
+
             <choice>Reserved (0xA)</choice>
+
             <choice xml:lang="it">Riservato (0xA)</choice>
+
           </enumChoice>
+
           <enumChoice choice="Reserved (0xB)">
+
             <choice>Reserved (0xB)</choice>
+
             <choice xml:lang="it">Riservato (0xB)</choice>
+
           </enumChoice>
+
           <enumChoice choice="Reserved (0xC)">
+
             <choice>Reserved (0xC)</choice>
+
             <choice xml:lang="it">Riservato (0xC)</choice>
+
           </enumChoice>
+
           <enumChoice choice="Reserved (0xD)">
+
             <choice>Reserved (0xD)</choice>
+
             <choice xml:lang="it">Riservato (0xD)</choice>
+
           </enumChoice>
+
           <enumChoice choice="Reserved (0xE)">
+
             <choice>Reserved (0xE)</choice>
+
             <choice xml:lang="it">Riservato (0xE)</choice>
+
           </enumChoice>
+
           <enumChoice choice="Reserved (0xF)">
+
             <choice>Reserved (0xF)</choice>
+
             <choice xml:lang="it">Riservato (0xF)</choice>
+
           </enumChoice>
+
       </enumVal>
