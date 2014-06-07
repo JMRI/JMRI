@@ -611,7 +611,7 @@
    types of moves, select the appropriate checkbox.
    <P>
    You should note that schedules can override the switcher options.  So if you need certain car movements
-   for a switcher, it's best to use a schedule to define them.</P>
+   for a switcher, it's best to use a <A HREF="#Schedules">schedule</A> to define them.</P>
 
    <H3>Staging</H3>
    <A NAME="TypeRoadLoadRestrictionsStaging"></A>

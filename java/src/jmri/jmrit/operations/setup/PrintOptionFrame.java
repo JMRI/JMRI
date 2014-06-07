@@ -228,7 +228,6 @@ public class PrintOptionFrame extends OperationsFrame {
 		p1.add(pPickupColor);
 		p1.add(pDropColor);
 		p1.add(pLocalColor);
-		p1.add(pSwitchFormat);
 
 		// load all of the message combo boxes
 		loadFormatComboBox();
@@ -245,6 +244,7 @@ public class PrintOptionFrame extends OperationsFrame {
 		addItem(pSwitchListOrientation, new JLabel(" "), 2, 0); // pad
 		addItem(pSwitchListOrientation, new JLabel(" "), 3, 0); // pad
 
+		pSl.add(pSwitchFormat);
 		pSl.add(pSwitchListOrientation);
 
 		// Manifest comments

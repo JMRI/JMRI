@@ -201,8 +201,7 @@ public class TrainBuilder extends TrainCommon {
 				_train.getName(), _train.getRoute().getName() }));
 		// get the number of requested car moves for this train
 		int requested = 0;
-		for (int i = 0; i < _routeList.size(); i++) {
-			RouteLocation rl = _routeList.get(i);
+		for (RouteLocation rl :  _routeList) {
 			// check to see if there's a location for each stop in the route
 			Location l = locationManager.getLocationByName(rl.getName());
 			if (l == null || rl.getLocation() == null) {
@@ -210,7 +209,8 @@ public class TrainBuilder extends TrainCommon {
 						new Object[] { _train.getRoute().getName() }));
 			}
 			// train doesn't drop or pick up cars from staging locations found in middle of a route
-			if (l.getLocationOps() == Location.STAGING && i != 0 && i != _routeList.size() - 1) {
+			if (l.getLocationOps() == Location.STAGING && rl != _train.getTrainDepartsRouteLocation()
+					&& rl != _train.getTrainTerminatesRouteLocation()) {
 				addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildLocStaging"), new Object[] { rl
 						.getName() }));
 				rl.setCarMoves(rl.getMaxCarMoves()); // don't allow car moves for this location
@@ -330,8 +330,8 @@ public class TrainBuilder extends TrainCommon {
 				_terminateStageTrack = PromptToStagingDialog();
 				startTime = new Date(); // reset build time
 			} else
-				for (int i = 0; i < stagingTracksTerminate.size(); i++) {
-					_terminateStageTrack = stagingTracksTerminate.get(i);
+				for (Track track : stagingTracksTerminate) {
+					_terminateStageTrack = track;
 					if (checkTerminateStagingTrack(_terminateStageTrack)) {
 						addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildStagingAvail"),
 								new Object[] { _terminateStageTrack.getName(), _terminateLocation.getName() }));
@@ -379,8 +379,8 @@ public class TrainBuilder extends TrainCommon {
 									engineTerminatesFirstLeg.getName() }));
 				}
 			} else
-				for (int i = 0; i < stagingTracks.size(); i++) {
-					_departStageTrack = stagingTracks.get(i);
+				for (Track track : stagingTracks) {
+					_departStageTrack = track;
 					addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildStagingHas"),
 							new Object[] { _departStageTrack.getName(),
 									Integer.toString(_departStageTrack.getNumberEngines()),

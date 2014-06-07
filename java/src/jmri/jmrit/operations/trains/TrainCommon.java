@@ -1189,10 +1189,12 @@ public class TrainCommon {
 									+ splitString(rs.getLocationName()), locationManager.getMaxLocationNameLength()
 									+ TrainManifestText.getStringFrom().length() + 1);
 		else if (attribute.equals(Setup.DESTINATION) && isPickup) {
-			if (Setup.isTabEnabled())
-				return Setup.isPrintHeadersEnabled() ? " "
+			if (Setup.isPrintHeadersEnabled())
+				return " "
 						+ padAndTruncateString(splitString(rs.getDestinationName()), locationManager
-								.getMaxLocationNameLength()) : " "
+								.getMaxLocationNameLength());
+			if (Setup.isTabEnabled())
+				return " "
 						+ padAndTruncateString(TrainManifestText.getStringDest() + " "
 								+ splitString(rs.getDestinationName()), TrainManifestText.getStringDest().length()
 								+ locationManager.getMaxLocationNameLength() + 1);
