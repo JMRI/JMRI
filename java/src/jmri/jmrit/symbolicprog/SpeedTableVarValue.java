@@ -101,7 +101,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         _range = maxVal-minVal;
         mfx = mfxFlag;
 
-		if (mfx) {
+		if (false) {
 			numCvs = nValues + 2;
 			cvList = new String[numCvs];
 			cvList[nValues] = VSTART_CV;
@@ -476,7 +476,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 		DecVariableValue decVal;
 		JLabel label;
 
-        if (mfx) {
+        if (false) {
             GridBagLayout gx = new GridBagLayout();
             l.setLayout(gx);
             GridBagConstraints csx = new GridBagConstraints();

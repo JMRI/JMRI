@@ -1757,6 +1757,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 List<Attribute> itemAttList = element.getAttributes(); // get item-level attributes
                 List<Attribute> attList = new ArrayList<Attribute>(globs.gridAttList);
                 attList.addAll(itemAttList); // merge grid and item-level attributes
+//                log.info("New gridtiem -----------------------------------------------");
 //                log.info("Attribute list:"+attList);
 //                log.info("Previous gridxCurrent="+globs.gridxCurrent+";gridyCurrent="+globs.gridyCurrent);
                 for (int j = 0; j < attList.size(); j++) {
@@ -1780,6 +1781,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     if ( attribName.equals("gridy")  && attribRawValue.equals("NEXT") ) {
                         attribRawValue = String.valueOf(++globs.gridyCurrent);
                     }
+//                     log.info("attribName="+attribName+";attribRawValue="+attribRawValue);
                     try {
                         constraint = globs.gridConstraints.getClass().getDeclaredField(attribName);
                         constraintType = constraint.getType().toString();
