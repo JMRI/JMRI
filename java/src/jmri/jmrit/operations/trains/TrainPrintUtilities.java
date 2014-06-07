@@ -141,10 +141,12 @@ public class TrainPrintUtilities {
 				for (int i = 0; i < line.length(); i++) {
 					if (line.charAt(i) == VERTICAL_LINE_SEPARATOR) {
 						// make a frame (manifest two column format)
-						writer.write(writer.getCurrentLineNumber(), 0, writer.getCurrentLineNumber() + 1, 0);
+						if (Setup.isTabEnabled()) {
+							writer.write(writer.getCurrentLineNumber(), 0, writer.getCurrentLineNumber() + 1, 0);
+							writer.write(writer.getCurrentLineNumber(), line.length() + 1,
+									writer.getCurrentLineNumber() + 1, line.length() + 1);
+						}
 						writer.write(writer.getCurrentLineNumber(), i + 1, writer.getCurrentLineNumber() + 1, i + 1);
-						writer.write(writer.getCurrentLineNumber(), line.length() + 1,
-								writer.getCurrentLineNumber() + 1, line.length() + 1);
 					}
 				}
 				line = line.replace(VERTICAL_LINE_SEPARATOR, SPACE);
