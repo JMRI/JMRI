@@ -1,69 +1,133 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
         <enumChoice choice="Normal on/off control">
+
             <choice>Normal on/off control</choice>
+
             <choice xml:lang="it">Normale controllo On/Off</choice>
+
           </enumChoice>
+
           <enumChoice choice="Random flicker (fire box)">
+
             <choice>Random flicker (fire box)</choice>
+
             <choice xml:lang="it">Sfarfallio casuale (caldaia)</choice>
+
           </enumChoice>
+
           <enumChoice choice="Mars">
+
             <choice>Mars light</choice>
+
             <choice xml:lang="it">Luci Mars</choice>
+
           </enumChoice>
+
           <enumChoice choice="Flashing light">
+
             <choice>Flashing light</choice>
+
             <choice xml:lang="it">Luci Lampeggianti</choice>
+
           </enumChoice>
+
           <enumChoice choice="Single pulse strobe">
+
             <choice>Single pulse strobe</choice>
+
             <choice xml:lang="it">Lampeggiante Singolo Impulso</choice>
+
           </enumChoice>
+
           <enumChoice choice="Double pulse strobe">
+
             <choice>Double pulse strobe</choice>
+
             <choice xml:lang="it">Lampeggiante Doppio Impulso</choice>
+
           </enumChoice>
+
           <enumChoice choice="Rotary beacon">
+
             <choice>Rotary beacon</choice>
+
             <choice xml:lang="it">Faro Rotante</choice>
+
           </enumChoice>
+
           <enumChoice choice="Gyra lite">
+
             <choice>Gyra lite</choice>
+
             <choice xml:lang="it">Faro Gyra-Light</choice>
+
           </enumChoice>
+
           <enumChoice choice="Rule 17">
+
             <choice>Rule 17</choice>
+
             <choice xml:lang="it">Regola 17 (regolabile)</choice>
+
           </enumChoice>
+
           <enumChoice choice="Normal on/off control">
+
             <choice>Normal on/off control</choice>
+
             <choice xml:lang="it">Normale controllo On/Off</choice>
+
           </enumChoice>
+
           <enumChoice choice="Blinking ditch light A">
+
             <choice>Blinking ditch light A</choice>
+
             <choice xml:lang="it">Lampeggiante Ditch tipo A</choice>
+
           </enumChoice>
+
           <enumChoice choice="Blinking ditch light B">
+
             <choice>Blinking ditch light B</choice>
+
             <choice xml:lang="it">Lampeggiante Ditch tipo B</choice>
+
           </enumChoice>
+
           <enumChoice choice="Dim">
+
             <choice>Dim</choice>
+
             <choice xml:lang="it">Smorzamento Costante</choice>
+
           </enumChoice>
+
           <enumChoice choice="Reserved (0x0D)">
+
             <choice>Reserved (0x0D)</choice>
+
             <choice xml:lang="it">Riservato (0x0D)</choice>
+
           </enumChoice>
+
           <enumChoice choice="Reserved (0x0E)">
+
             <choice>Reserved (0x0E)</choice>
+
             <choice xml:lang="it">Riservato (0x0E)</choice>
+
           </enumChoice>
+
           <enumChoice choice="Reserved (0x0F)">
+
             <choice>Reserved (0x0F)</choice>
+
             <choice xml:lang="it">Riservato (0x0F)</choice>
+
           </enumChoice>
+
     </enumVal>
