@@ -208,7 +208,11 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
     }
 
     public void propertyChange(PropertyChangeEvent e) {
-        fireTableDataChanged();
+        // don't need to forward Busy, do need to forward Value
+        // not sure about any others
+        if (! e.getPropertyName().equals("Busy")) {
+            fireTableDataChanged();
+        }
     }
 
     public void addCV(String s, boolean readOnly, boolean infoOnly, boolean writeOnly) {
