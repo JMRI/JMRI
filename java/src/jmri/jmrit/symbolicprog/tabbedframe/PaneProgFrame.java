@@ -888,6 +888,9 @@ abstract public class PaneProgFrame extends JmriJFrame
         if (addMode==null) log.debug("DCC Address monitor didnt find an Address Format variable");
         else addMode.addPropertyChangeListener(dccNews);
 
+        // get right address to start
+        updateDccAddress();
+        
         return outer;
     }
 
