@@ -5,8 +5,8 @@
   <name xml:lang="it">Tabella Velocità</name>
   <name xml:lang="de">Geschwindigkeitskennlinie</name>
   <column>
-      <grid>
-        <griditem gridx="0" gridy="NEXT" gridwidth="REMAINDER">
+      <grid gridx="0" gridy="NEXT">
+        <griditem gridwidth="REMAINDER">
           <column>
             <row>
               <column>
@@ -54,7 +54,7 @@
           </column>
         </griditem>
         <group include="ESU LokSound V4.0,ESU LokSound Select,ESU LokPilot V4.0">
-            <griditem gridx="0" gridy="NEXT" weightx="0" anchor="LINE_START">
+            <griditem weightx="0" anchor="LINE_START">
               <display item="Vstart" tooltip="Sets the starting voltage at throttle speed step 1">
                 <tooltip xml:lang="it">Imposta Tensione Motore iniziale a Velocità 1</tooltip>
                 <tooltip xml:lang="ca">Estableix el voltatge inicial al pas 1</tooltip>
@@ -79,13 +79,13 @@
                 <tooltip xml:lang="de">Geschwindigkeit bei höchster Fahrstufe einstellen</tooltip>
               </display>
             </griditem>
-        <griditem gridx="0" gridy="NEXT" gridwidth="REMAINDER">
+        <griditem gridwidth="REMAINDER">
           <label>
               <text> </text>
           </label>
         </griditem>
         </group>
-        <griditem gridx="0" gridy="NEXT" gridwidth="REMAINDER">
+        <griditem gridwidth="REMAINDER">
           <row>
             <column>
               <label>

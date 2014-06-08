@@ -71,6 +71,9 @@ import org.jdom.Element;
 public class PaneProgPane extends javax.swing.JPanel
     implements java.beans.PropertyChangeListener  {
 
+    static final String LAST_GRIDX = "last_gridx";
+    static final String LAST_GRIDY = "last_gridy";
+
     protected CvTableModel _cvModel;
     IndexedCvTableModel _indexedCvModel;
     protected VariableTableModel _varModel;
@@ -1759,6 +1762,12 @@ public class PaneProgPane extends javax.swing.JPanel
                 attList.addAll(itemAttList); // merge grid and item-level attributes
 //                log.info("New gridtiem -----------------------------------------------");
 //                log.info("Attribute list:"+attList);
+                attList.add(new Attribute(LAST_GRIDX,""));
+                attList.add(new Attribute(LAST_GRIDY,""));
+//                log.info("Updated Attribute list:"+attList);
+//                 Attribute ax = attList.get(attList.size()-2);
+//                 Attribute ay = attList.get(attList.size()-1);
+//                log.info("ax="+ax+";ay="+ay);
 //                log.info("Previous gridxCurrent="+globs.gridxCurrent+";gridyCurrent="+globs.gridyCurrent);
                 for (int j = 0; j < attList.size(); j++) {
                     Attribute attrib = attList.get(j);
@@ -1766,6 +1775,25 @@ public class PaneProgPane extends javax.swing.JPanel
                     String attribRawValue = attrib.getValue();
                     Field constraint = null;
                     String constraintType = null;
+                    // make sure we only process the last gridx or gridy attribute in the list
+                    if ( attribName.equals("gridx") ) {
+                        Attribute a =new Attribute(LAST_GRIDX,attribRawValue);
+                        attList.set(attList.size()-2,a);
+//                        log.info("Moved & Updated Attribute list:"+attList);
+                        continue;
+                    }
+                    if ( attribName.equals("gridy") ) {
+                        Attribute a =new Attribute(LAST_GRIDY,attribRawValue);
+                        attList.set(attList.size()-1,a);
+//                        log.info("Moved & Updated Attribute list:"+attList);
+                        continue;
+                    }
+                    if ( attribName.equals(LAST_GRIDX) ) { // we must be at end of original list, restore last gridx
+                    attribName = "gridx";
+                    }
+                    if ( attribName.equals(LAST_GRIDY) ) { // we must be at end of original list, restore last gridy
+                    attribName = "gridy";
+                    }
                     if ( ( attribName.equals("gridx") || attribName.equals("gridy") ) && attribRawValue.equals("RELATIVE") ) {
                         attribRawValue = "NEXT"; // NEXT is a synonym for Relative
                     }
@@ -1781,7 +1809,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     if ( attribName.equals("gridy")  && attribRawValue.equals("NEXT") ) {
                         attribRawValue = String.valueOf(++globs.gridyCurrent);
                     }
-//                     log.info("attribName="+attribName+";attribRawValue="+attribRawValue);
+//                    log.info("attribName="+attribName+";attribRawValue="+attribRawValue);
                     try {
                         constraint = globs.gridConstraints.getClass().getDeclaredField(attribName);
                         constraintType = constraint.getType().toString();
