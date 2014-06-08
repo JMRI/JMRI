@@ -1780,22 +1780,28 @@ public class PaneProgPane extends javax.swing.JPanel
                         Attribute a =new Attribute(LAST_GRIDX,attribRawValue);
                         attList.set(attList.size()-2,a);
 //                        log.info("Moved & Updated Attribute list:"+attList);
-                        continue;
+                        continue; //. don't process now
                     }
                     if ( attribName.equals("gridy") ) {
                         Attribute a =new Attribute(LAST_GRIDY,attribRawValue);
                         attList.set(attList.size()-1,a);
 //                        log.info("Moved & Updated Attribute list:"+attList);
-                        continue;
+                        continue; //. don't process now
                     }
                     if ( attribName.equals(LAST_GRIDX) ) { // we must be at end of original list, restore last gridx
-                    attribName = "gridx";
+                        attribName = "gridx";
+                        if ( attribRawValue.equals("") ) { // don't process blank (unused)
+                            continue;
+                        }
                     }
                     if ( attribName.equals(LAST_GRIDY) ) { // we must be at end of original list, restore last gridy
-                    attribName = "gridy";
+                        attribName = "gridy";
+                        if ( attribRawValue.equals("") ) { // don't process blank (unused)
+                            continue;
+                        }
                     }
                     if ( ( attribName.equals("gridx") || attribName.equals("gridy") ) && attribRawValue.equals("RELATIVE") ) {
-                        attribRawValue = "NEXT"; // NEXT is a synonym for Relative
+                        attribRawValue = "NEXT"; // NEXT is a synonym for RELATIVE
                     }
                     if ( attribName.equals("gridx")  && attribRawValue.equals("CURRENT") ) {
                         attribRawValue = String.valueOf(Math.max(0,globs.gridxCurrent));
