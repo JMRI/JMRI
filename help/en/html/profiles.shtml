@@ -36,10 +36,25 @@
     profile to use. You may specify that the application always start with the
     same profile.</p>
 
+<p>By default, when a JMRI application starts up, it prompts the user 
+for which configuration profile to use:
+<p><img src="Set_Active_Profile.png"/>
+<p>If the user doesn't select a new profile and click OK, the program will
+continue with the default profile after a short delay. You can check a box in the
+preferences to bypass this step and go directly to the last-used profile.
+
 <h2>Profile Management</h2>
 
 <p>Configuration profiles can be managed in the application preferences, under
     the Profile Configuration tab.</p>
+
+<img src="Profile_Preferences_prompt.png"/>
+
+<p>The "Currently active profile" is being used by this run of the JMRI application, 
+and is also where preferences changes will be saved.
+
+<p>To use or configure a different profile, select it, click "Activate", and restart
+the program.
 
 <h2>Upgrading from Earlier Versions of JMRI</h2>
 
