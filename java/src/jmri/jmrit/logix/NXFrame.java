@@ -606,7 +606,7 @@ public class NXFrame extends WarrantRoute {
     private float rampSpeed(Warrant w, int time, float speed, float delta, String blockName, int incr) {
      	for (int i=0; i<incr; i++) {
     		speed += delta;
-        	w.addThrottleCommand(new ThrottleSetting((int)time, "Speed", Float.toString(speed), blockName));        		    		
+        	w.addThrottleCommand(new ThrottleSetting(time, "Speed", Float.toString(speed), blockName));        		    		
     	}
     	return speed;
     }

@@ -45,7 +45,7 @@ public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
      */
     public byte[] getDestinationAddress() {
         int destinationMode = getDestinationAddressMode();
-        int sourceMode = getSourceAddressMode();
+        //int sourceMode = getSourceAddressMode();	// not used
         int offset = 4; // position of first byte of destination address if
                         // it is present.
         int length = 0; // minimum destination address length.
