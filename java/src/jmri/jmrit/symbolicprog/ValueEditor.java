@@ -137,6 +137,7 @@ public class ValueEditor extends JComboBox implements TableCellEditor, FocusList
         listeners.removeElement(cel);
     }
     
+    @SuppressWarnings("unchecked")
     protected void fireEditingCanceled() {
         if (log.isDebugEnabled()) log.debug("fireEditingCancelled, but we are not setting back the old value");
         Vector<CellEditorListener> local;
@@ -149,6 +150,7 @@ public class ValueEditor extends JComboBox implements TableCellEditor, FocusList
         }
     }
     
+    @SuppressWarnings("unchecked")
     protected void fireEditingStopped() {
         if (log.isDebugEnabled()) log.debug("fireEditingStopped");
         Vector<CellEditorListener> local;
