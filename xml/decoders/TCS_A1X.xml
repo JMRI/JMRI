@@ -113,7 +113,7 @@
         <label xml:lang="it">Luci Frontali (in avanti) Effetti</label>
       </variable>
       <variable CV="49" mask="VVVVXXXX" item="Function F0F behavior">
-        <xi:include href="http://jmri.org/xml/decoders/tcs/ienum-frw_rev_both.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-frw_rev_both.xml"/>
         <label>Forward light F0F behavior</label>
         <label xml:lang="it">Luci Frontali (in avanti) Modalità</label>
       </variable>
@@ -123,7 +123,7 @@
         <label xml:lang="it">Luci posteriori (in avanti) Effetti</label>
       </variable>
       <variable CV="50" mask="VVVVXXXX" item="Function F0R behavior" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/tcs/ienum-frw_rev_both.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-frw_rev_both.xml"/>
         <label>Reverse light F0R behavior</label>
         <label xml:lang="it">Luci posteriori (in avanti) Modalità</label>
       </variable>
@@ -133,7 +133,7 @@
         <label xml:lang="it">Funzione 1 Effetti</label>
       </variable>
       <variable item="Function 1 behavior" CV="51" mask="VVVVXXXX" minFn="1">
-        <xi:include href="http://jmri.org/xml/decoders/tcs/ienum-frw_rev_both.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-frw_rev_both.xml"/>
         <label>Function 1 behavior</label>
         <label xml:lang="it">Funzione 1 Modalità</label>
       </variable>
@@ -143,7 +143,7 @@
         <label xml:lang="it">Funzione 2 Effetti</label>
       </variable>
       <variable item="Function 2 behavior" CV="52" mask="VVVVXXXX" minFn="2">
-        <xi:include href="http://jmri.org/xml/decoders/tcs/ienum-frw_rev_both.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-frw_rev_both.xml"/>
         <label>Function 2 behavior</label>
         <label xml:lang="it">Funzione 2 Modalità</label>
       </variable>
