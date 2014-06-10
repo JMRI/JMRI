@@ -29,7 +29,41 @@
                 http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/DocBook.xsd
             "
         >
-
+    <xs:complexType name="SectionPropertyType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing a single property within a sections element's properties element.
+        </xs:documentation>
+        <xs:appinfo>
+            <jmri:usingclass configurexml="true">jmri.configurexml.SectionManagerXml</jmri:usingclass>
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="key" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="class" type="classType" use="required">
+                  <xs:annotation><xs:documentation>Specifies the implementing Java class</xs:documentation></xs:annotation>
+                </xs:attribute>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="value" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="class" type="classType" use="required">
+                  <xs:annotation><xs:documentation>Specifies the implementing Java class</xs:documentation></xs:annotation>
+                </xs:attribute>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+    
     <xs:complexType name="SectionManagerType">
       <xs:annotation>
         <xs:documentation>
@@ -64,6 +98,13 @@
                   <xs:attribute name="direction" type="xs:integer" />
                   <xs:attribute name="fixed" type="xs:string" /> <!-- yes/no -->
                   <xs:attribute name="fromblockdirection" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="properties" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="property" type="SignalMastPropertyType" minOccurs="0" maxOccurs="unbounded"/>
+                  </xs:sequence>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>
