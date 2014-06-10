@@ -34,12 +34,14 @@ class OpSessionLog {
     	return _instance;
     }
     
-    public synchronized void showFileChooser(java.awt.Component parent) {
+    public synchronized boolean showFileChooser(java.awt.Component parent) {
     	JFileChooser fileChooser = new JFileChooser(FileUtil.getUserFilesPath());
     	fileChooser.setDialogTitle(Bundle.getMessage("logSession"));
     	fileChooser.setFileFilter(new FileNameExtensionFilter("Text files", "txt", "TXT"));
     	int retVal = fileChooser.showDialog(parent, Bundle.getMessage("logFile"));
-        if (retVal != JFileChooser.APPROVE_OPTION) return;
+        if (retVal != JFileChooser.APPROVE_OPTION) {
+        	return false;
+        }
         
         File file = fileChooser.getSelectedFile();
         String fileName = file.getAbsolutePath();
@@ -53,7 +55,7 @@ class OpSessionLog {
             if (JOptionPane.showConfirmDialog(parent,
             		Bundle.getMessage("overWritefile", fileName), Bundle.getMessage("QuestionTitle"),
             		JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE) != JOptionPane.OK_OPTION) {
-            	return;
+            	return false;
             }
         }
         try {
@@ -62,8 +64,9 @@ class OpSessionLog {
         } catch (FileNotFoundException fnfe) {
             JOptionPane.showMessageDialog(parent, fnfe.getMessage(), 
             		Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);        	
+        	return false;
         }
-        
+        return true;
     }
     
     void writeHeader(String fileName) {

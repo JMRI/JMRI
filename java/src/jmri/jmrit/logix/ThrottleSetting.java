@@ -41,7 +41,7 @@ public class ThrottleSetting {
     public String getBlockName() { return _blockName; }
 
     public String toString() {
-        return "ThrottleSetting: wait "+_time+"ms for "+_command+"= "+_value+" at block "+_blockName; 
+        return "ThrottleSetting: wait "+_time+"ms then set "+_command+" "+_value+" at block "+_blockName; 
     }
 
     static Logger log = LoggerFactory.getLogger(ThrottleSetting.class.getName());

@@ -530,15 +530,18 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         	_shareTOBlock.removePropertyChangeListener(this);
         	_shareTOBlock = null;
         }
-        deAllocate();
         if (_student !=null) {
-            _student.dispose();
+            _student.dispose();		// releases throttle
             _student = null;
         }
-        if (_engineer!=null && _engineer.getRunState() != ABORT) {
-        	_engineer.abort();
+        if (_engineer!=null) {
+        	if (_engineer.getRunState() != ABORT) {
+            	_engineer.abort();
+        	}
+            _engineer.releaseThrottle();
         	_engineer = null;
         }
+        deAllocate();
         int oldMode = _runMode;
         _runMode = MODE_NONE;
         firePropertyChange("runMode", Integer.valueOf(oldMode), Integer.valueOf(_runMode));
@@ -640,8 +643,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             firePropertyChange("throttleFail", null, msg);
             return msg;
         }
-        if (!InstanceManager.throttleManagerInstance().
-                requestThrottle(address.getNumber(), address.isLongAddress(),this)) {
+        if (!InstanceManager.throttleManagerInstance().requestThrottle(address.getNumber(), address.isLongAddress(),this)) {
                 msg = Bundle.getMessage("trainInUse", address.getNumber());
                 abortWarrant(msg);
                 firePropertyChange("throttleFail", null, msg);

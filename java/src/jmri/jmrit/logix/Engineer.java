@@ -151,8 +151,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 }
                 _warrant.fireRunStatus("Command", Integer.valueOf(_idxCurrentCommand), Integer.valueOf(_idxCurrentCommand+1));
                 et = System.currentTimeMillis()-et;
-                if (log.isDebugEnabled()) log.debug("Cmd #"+(_idxCurrentCommand)+": ("+
-                                                    ts.toString()+") et= "+et+" warrant "+_warrant.getDisplayName());
+                if (log.isDebugEnabled()) log.debug("Cmd #"+(_idxCurrentCommand)+": "+
+                                                    ts.toString()+" et= "+et+" warrant "+_warrant.getDisplayName());
             } catch (NumberFormatException e) {
                   log.error("Command failed! "+ts.toString()+" - "+e);
             }
@@ -376,6 +376,10 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             }
         }
         if (log.isDebugEnabled()) log.debug("Engineer shut down. warrant "+_warrant.getDisplayName());
+    }
+    
+    protected void releaseThrottle() {
+        InstanceManager.throttleManagerInstance().releaseThrottle(_throttle, _warrant);
     }
 
     private void setFunction(int cmdNum, boolean isSet) {

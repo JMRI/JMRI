@@ -1038,6 +1038,10 @@ public class WarrantFrame extends WarrantRoute {
         _statusBox.setText(Bundle.getMessage("LearningStop"));
     }
     
+    protected Warrant getWarrant() {
+    	return _warrant;
+    }
+    
     /**
     * Property names from Warrant:
     *   "runMode" - from setRunMode

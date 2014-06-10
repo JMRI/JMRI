@@ -160,7 +160,10 @@ public class WarrantTableAction extends AbstractAction {
             	{
                     public void actionPerformed(ActionEvent e) {
                     	_log = OpSessionLog.getInstance();
-                    	_log.showFileChooser(_tableFrame);
+                    	if (!_log.showFileChooser(_tableFrame)) {
+                    		_log = null;
+                    		return;
+                    	}
                         if (_shutDownTask == null) {
                         	_shutDownTask = new SwingShutDownTask("PanelPro Save default icon check",
                         			null, null, null)
