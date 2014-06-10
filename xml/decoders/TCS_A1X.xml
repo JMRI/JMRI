@@ -171,43 +171,43 @@
         <enumVal>
           <enumChoice choice="Normal operation for both" value="0">
             <choice>Normal operation for both</choice>
-            <label xml:lang="it">Funzionalità Normali per entrambe</label>
+            <choice xml:lang="it">Funzionalità Normali per entrambe</choice>
           </enumChoice>
           <enumChoice choice="Headlights dims when stopped" value="16">
             <choice>Headlights dims when stopped</choice>
-            <label xml:lang="it">Luci frontali smorzate quando fermo</label>
+            <choice xml:lang="it">Luci frontali smorzate quando fermo</choice>
           </enumChoice>
           <enumChoice choice="Opposite light is dimmed" value="32">
             <choice>Opposite light is dimmed</choice>
-            <label xml:lang="it">Luci opposte smorzate</label>
+            <choice xml:lang="it">Luci opposte smorzate</choice>
           </enumChoice>
           <enumChoice choice="Both lights dim" value="48">
             <choice>Both lights dim</choice>
-            <label xml:lang="it">Entrambe le Luci smorzate</label>
+            <choice xml:lang="it">Entrambe le Luci smorzate</choice>
           </enumChoice>
           <enumChoice choice="Manual control + headlight dim" value="80">
             <choice>Manual control + headlight dim</choice>
-            <label xml:lang="it">Controllo Manuale + Luci frontali smorzate</label>
+            <choice xml:lang="it">Controllo Manuale + Luci frontali smorzate</choice>
           </enumChoice>
           <enumChoice choice="Manual control + opposite dim" value="96">
             <choice>Manual control + opposite dim</choice>
-            <label xml:lang="it">Controllo Manuale + Luci opposte smorzate</label>
+            <choice xml:lang="it">Controllo Manuale + Luci opposte smorzate</choice>
           </enumChoice>
           <enumChoice choice="Manual control + both dim" value="112">
             <choice>Manual control + both dim</choice>
-            <label xml:lang="it">Controllo Manuale + Entrambe le Luci smorzate</label>
+            <choice xml:lang="it">Controllo Manuale + Entrambe le Luci smorzate</choice>
           </enumChoice>
           <enumChoice choice="Auto reverse + headlight dim" value="84">
             <choice>Auto reverse + headlight dim</choice>
-            <label xml:lang="it">Inversione automatica + Luci frontali smorzate</label>
+            <choice xml:lang="it">Inversione automatica + Luci frontali smorzate</choice>
           </enumChoice>
           <enumChoice choice="Auto reverse + opposite dim" value="100">
             <choice>Auto reverse + opposite dim</choice>
-            <label xml:lang="it">Inversione automatica + Luci opposte smorzate</label>
+            <choice xml:lang="it">Inversione automatica + Luci opposte smorzate</choice>
           </enumChoice>
           <enumChoice choice="Auto reverse + both dim" value="116">
             <choice>Auto reverse + both dim</choice>
-            <label xml:lang="it">Inversione automatica + entrambe le Luci smorzate</label>
+            <choice xml:lang="it">Inversione automatica + entrambe le Luci smorzate</choice>
           </enumChoice>
         </enumVal>
         <label>Light dimming and button control</label>
@@ -1202,10 +1202,10 @@
       </variable>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="8" default="2"/>
-      <decVal/>
+      <factReset label="Reset All CVs" CV="8" default="2">
         <label>Reset All CVs</label>
         <label xml:lang="it">Reset di tutte le CV</label>
+      </factReset>
     </resets>
   </decoder>
   <pane>
