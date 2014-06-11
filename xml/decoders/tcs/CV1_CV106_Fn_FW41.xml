@@ -441,7 +441,7 @@
     <label xml:lang="it">Temporizzazioni filo Porpora</label>
   </variable>
   <variable CV="53" mask="XXXXVVVV" minOut="3" item="Output 5 effect generated">
-   <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_1-106_light.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_1-106_light.xml"/>
     <label>Brown Wire Effect</label>
     <label xml:lang="it">Effetti filo Marrone</label>
   </variable>

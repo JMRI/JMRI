@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Pierre</firstname>
+        <surname>Billon</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-06-03</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Creation</revremark>
+    </revision>
+  </revhistory>
+  <!-- Using JMRI item "Sound Setting 31" to 33 -->
+  <variable CV="968" default="128" tooltip="CV968" item="Sound Setting 31" exclude="SH10A_1.00,SH10A_1.01,SH10A_1.02">
+    <decVal/>
+    <label>Volume dynamic sounds</label>
+    <label xml:lang="fr">Volume sons dynamiques</label>
+    <label xml:lang="de">Lautstärke Dynamikgeräusche</label>
+  </variable>
+  <variable CV="969" default="128" tooltip="CV969" item="Sound Setting 32" exclude="SH10A_1.00,SH10A_1.01,SH10A_1.02">
+    <decVal/>
+    <label>Volume turbo sounds</label>
+    <label xml:lang="fr">Volume sons turbo</label>
+    <label xml:lang="de">Lautstärke Turbogeräusche</label>
+  </variable>
+  <variable CV="970" default="0" tooltip="CV970" item="Sound Setting 33" exclude="SH10A_1.00,SH10A_1.01,SH10A_1.02">
+    <decVal/>
+    <label>Volume dynamic braking</label>
+    <label xml:lang="fr">Volume freinage dynamique</label>
+    <label xml:lang="de">Modulation dynamische Bremse</label>
+  </variable>
+  <variable CV="971" default="0" tooltip="CV971" item="Sound Setting 34" exclude="SH10A_1.00,SH10A_1.01,SH10A_1.02">
+    <decVal/>
+    <label>Volume dynamic run</label>
+    <label xml:lang="fr">Volume marche dynamique</label>
+    <label xml:lang="de">Modulation dynamische Fahrt</label>
+  </variable>
+  <variable CV="972" default="0" tooltip="CV972" item="Sound Setting 35" exclude="SH10A_1.00,SH10A_1.01,SH10A_1.02">
+    <decVal/>
+    <label>Volume turbo (proportional)</label>
+    <label xml:lang="fr">Volume sons turbo (proportionnel)</label>
+    <label xml:lang="de">Modulation Turbogeräusche Proportionalteil</label>
+  </variable>
+  <variable CV="973" default="0" tooltip="CV973" item="Sound Setting 36" exclude="SH10A_1.00,SH10A_1.01,SH10A_1.02">
+    <decVal/>
+    <label>Volume turbo (integral)</label>
+    <label xml:lang="fr">Volume sons turbo (intégral)</label>
+    <label xml:lang="de">Modulation Turbogeräusche Integralteil</label>
+  </variable>
+</variables>

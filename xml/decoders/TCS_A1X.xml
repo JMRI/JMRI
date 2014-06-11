@@ -215,36 +215,36 @@
       </variable>
       <variable CV="22" mask="XXXXXXXV" item="Consist Address Active For FL in Forward">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-       <label>Headlight active in Consist (MU)</label>
-       <label xml:lang="it">Luci frontali Attive in Consist</label>
+        <label>Headlight active in Consist (MU)</label>
+        <label xml:lang="it">Luci frontali Attive in Consist</label>
       </variable>
       <variable CV="22" mask="XXXXXXVX" item="Consist Address Active For FL in Reverse">
-         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Rear light active in Consist (MU)</label>
         <label xml:lang="it">Luci Posteriori Attive in Consist</label>
       </variable>
       <variable CV="21" mask="XXXXXXXV" item="Consist Address Active For F1">
-         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Output 1 (green) active in Consist (MU)</label>
         <label xml:lang="it">Uscita 1 (verde) Attiva in Consist</label>
       </variable>
       <variable CV="21" mask="XXXXXXVX" item="Consist Address Active For F2">
-         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Output 2 (purple) active in Consist (MU)</label>
         <label xml:lang="it">Uscita 2 (porpora) Attiva in Consist</label>
       </variable>
       <variable CV="13" mask="XXXXXXXV" item="Analog Mode Function Status - FL(f)">
-         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Both lights active in analog mode</label>
         <label xml:lang="it">Entrambe le Luci Attive in Analogico</label>
       </variable>
       <variable CV="13" mask="XXXXXXVX" item="Analog Mode Function Status - F1">
-         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Output 1 (green) active in analog mode</label>
         <label xml:lang="it">Uscita 1 (verde) Attiva in Analogico</label>
       </variable>
       <variable CV="13" mask="XXXXXVXX" item="Analog Mode Function Status - F2">
-         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Output 2 (purple) active in analog mode</label>
         <label xml:lang="it">Uscita 2 (porpora) Attiva in Analogico</label>
       </variable>
@@ -267,7 +267,7 @@
 	to a control CV, rather than a particular function key like other vendors. The standard
 	mapping table doesn't work; I've created a TCS-specific mapping pane - joe -->
       <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output 1</label>
         <label xml:lang="it">Luci (avanti) controlla uscita 1</label>
       </variable>
@@ -347,7 +347,7 @@
         <label xml:lang="it">Luci (retro) controlla uscita 8</label>
       </variable>
       <variable item="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="1">
-       <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output 1</label>
         <label xml:lang="it">F1 controlla uscita 1</label>
       </variable>
@@ -831,7 +831,7 @@
         <enumVal>
           <enumChoice choice="Controlled by F0(f)" value="1">
             <choice>Controlled by F0(f)</choice>
-           <choice xml:lang="it">Controllato da F0  (avanti)</choice>
+            <choice xml:lang="it">Controllato da F0  (avanti)</choice>
           </enumChoice>
           <enumChoice choice="Controlled by F0(r)" value="2">
             <choice>Controlled by F0(r)</choice>

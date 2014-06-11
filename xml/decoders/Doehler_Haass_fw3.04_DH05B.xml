@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2006 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version version="3" author="PB, pierre.bln@me.com" lastUpdated="20140603"/>
+  <!-- 3 2014/06/03 2 changes for new firmware from May 31st:
+  		1) Changed how CV7 indicates Fw version. CV7 is now the revision date (previously version number), as "MMY".
+  		This means Selectrix (SX) is no longuer required to detect the exact Fw version. Example: 054 is revision from May 2014.
+  		Adapted low/high ID variables for automatic detection.
+  		2) Added CV12 (support for Motoral old and new formats). 
+		-->
+  <version version="2" author="PB, pierre.bln@me.com" lastUpdated="20140220"/>
+  <!-- 2 2014/02/20 Update: future proofing
+		This is a complete rewrite of my original submission for many D&H decoders.
+		This updates ensure a cleaner, more future proof organisation (despite more files). 
+		FIRMWARE INFORMATION: from http://doehler-haass.de/cms/pages/haeufige-fragen/decoder-cv-tabelle.php
+		DECODER VERSION INFORMATION: from the changelog files, downloaded through the D&H Update program.
+		Please note that the "firmware" and "decoder" versions differ in their numbering, despite a common
+		software platform for most D&H decoders. Each decoder version is incremented individually, whereas the
+		global firmware version as published on the website is numbered as an absolute number.
+		These definitions include both numbers (Firmware version & Decoder version).
+		-->
+  <version version="1" author="PB, pierre.bln@me.com" lastUpdated="20130731"/>
+  <!-- 1 2013/07/31 Creation 
+		First decoder template for the Doehler & Haass decoder range.
+		This LOCOMOTIVE decoder file creates the corresponding family, and 
+		includes all decoders defs & specs. 
+		It requires variables and panes as defined in the doehler_hass/ folder.
+  -->
+  <decoder>
+    <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass">
+      <model model="DH05B v2.09 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="4" numFns="14" productID="DH05B_3.04" comment="DH05B-0 / DH05B-1 / DH05B-3 with update from 31 May 2014" maxInputVolts="18V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+        <output name="1" label="Front Light" maxcurrent="150mA"/>
+        <output name="2" label="Rear Light" maxcurrent="150mA"/>
+        <output name="3" label="AUX 1" maxcurrent="300mA"/>
+        <output name="4" label="AUX 2" maxcurrent="300mA"/>
+        <size length="13.2" width="6.8" height="1.4" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+          <protocol>motorola</protocol>
+        </protocols>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <!-- Common D&H variable files -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common.xml"/>
+      <!-- NON common D&H variable files. Deactivate or Activate depending on decoder model and firmware version -->
+      <!-- SECTION 1a - Standard variables with defaults for regular decoders  -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common_pwr_normal.xml"/>
+      <!-- SECTION 1b - Standard variables with defaults for low current decoder FH06  -->
+      <!--  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common_pwr_low.xml"/> -->
+      <!-- SECTION 2 - Standard variables for decoders released after around 2012  -->
+      <!--  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_base.xml"/> -->
+      <!--  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_dc.xml"/> -->
+      <!-- SECTION 3	- Analog functions  -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv29_analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv14_analogModeFunction.xml"/>
+      <!-- SECTION 4	- Basic Railcom feedback  -->
+      <!-- <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv28-29_railcom_base.xml"/> -->
+      <!-- SECTION 5	- Extra Railcom feedback options as of fw3.03 -->
+      <!-- <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv135-136_railcom_fw3.03.xml"/> -->
+      <!-- SECTION 6	- Extra general options as of fw3.03 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_energysaving_fw3.03.xml"/>
+      <!-- SECTION 7	- Extra SUSI options as of fw3.03 -->
+      <!-- <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_susi_fw3.03.xml"/> -->
+      <!-- SECTION 8	- Motorola format as of fw3.04 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv14_motorola.xml"/>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="8"/>
+    </resets>
+  </decoder>
+  <!-- Common pane(s) for all Doehler und Haass decoders  -->
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_map_adv.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_common.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_firmware.xml"/>
+  <!-- Pane(s) valid for some decoders only  -->
+  <!-- <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_railcom.xml"/> -->
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_motorola.xml"/>
+</decoder-config>

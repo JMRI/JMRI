@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- version 1 - 2014-02-20 - for common D&H software -->
+<!-- version 2 - 2014-06-03 - PB - improved XML -->
+<!-- version 1 - 2014-02-20 - PB - for common D&H software -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>DH Options</name>
   <column>
     <row>
       <column>
@@ -10,7 +12,6 @@
         </label>
         <label>
           <text>Dimming options</text>
-          <text xml:lang="it">Opzioni Luci Smorzate</text>
           <text xml:lang="fr">Options d'intensité</text>
           <text xml:lang="de">Dimmer Optionen</text>
         </label>
@@ -75,7 +76,6 @@
         </label>
         <label>
           <text>Timer options</text>
-          <text xml:lang="it">Opzioni Temporizzazioni</text>
           <text xml:lang="fr">Options de temporisation</text>
           <text xml:lang="de">Timer Optionen</text>
         </label>
@@ -141,7 +141,6 @@
       <column>
         <label>
           <text>'Preclusion' options</text>
-          <text xml:lang="it">Opzioni di Blocco Funzioni</text>
           <text xml:lang="fr">Option de blocage des fonctions</text>
           <text xml:lang="de">Ausschaltfunktionen</text>
         </label>
@@ -150,13 +149,11 @@
         </label>
         <label>
           <text>Blocks an output even if its main function is activated</text>
-          <text xml:lang="it">Blocco uscita anche se la sua funzione è attivata</text>
           <text xml:lang="fr">Bloque certaines sorties, même si la fonction est activée</text>
           <text xml:lang="de">Schaltet eine Funktion ab, trozt eingeschaltetem Ausgang</text>
         </label>
         <label>
           <text>E.g. turn off front lights if the engine is pushing a train</text>
-          <text xml:lang="it">Ad esempio: spegni luci frontali quando la loco spinge un treno</text>
           <text xml:lang="fr">Par exemple, éteindre feux avant si la loco pousse un convoi</text>
           <text xml:lang="de">z.B.: Stirnbeleuchtung aus im Wendezugbetrieb</text>
         </label>
@@ -174,7 +171,6 @@
             </label>
             <label>
               <text> F1 precludes  </text>
-              <text xml:lang="it">F1 Blocca </text>
               <text xml:lang="fr"> F1 bloque  </text>
               <text xml:lang="de"> F1 schaltet aus  </text>
             </label>
@@ -201,7 +197,6 @@
             </label>
             <label>
               <text> F2 precludes  </text>
-              <text xml:lang="it">F2 Blocca </text>
               <text xml:lang="fr"> F2 bloque  </text>
               <text xml:lang="de"> F2 schaltet aus  </text>
             </label>
@@ -228,7 +223,6 @@
             </label>
             <label>
               <text> F3 precludes  </text>
-              <text xml:lang="it">F3 Blocca </text>
               <text xml:lang="fr"> F3 bloque  </text>
               <text xml:lang="de"> F3 schaltet aus  </text>
             </label>
@@ -255,7 +249,6 @@
             </label>
             <label>
               <text> F4 precludes  </text>
-              <text xml:lang="it">F4 Blocca </text>
               <text xml:lang="fr"> F4 bloque  </text>
               <text xml:lang="de"> F4 schaltet aus  </text>
             </label>
@@ -289,7 +282,6 @@
             </label>
             <label>
               <text> F5 precludes  </text>
-              <text xml:lang="it">F5 Blocca </text>
               <text xml:lang="fr"> F5 bloque  </text>
               <text xml:lang="de"> F5 schaltet aus  </text>
             </label>
@@ -316,7 +308,6 @@
             </label>
             <label>
               <text> F6 precludes  </text>
-              <text xml:lang="it">F6 Blocca </text>
               <text xml:lang="fr"> F6 bloque  </text>
               <text xml:lang="de"> F6 schaltet aus  </text>
             </label>
@@ -343,7 +334,6 @@
             </label>
             <label>
               <text> F7 precludes  </text>
-              <text xml:lang="it">F7 Blocca </text>
               <text xml:lang="fr"> F7 bloque  </text>
               <text xml:lang="de"> F7 schaltet aus  </text>
             </label>
@@ -370,7 +360,6 @@
             </label>
             <label>
               <text> F8 precludes  </text>
-              <text xml:lang="it">F8 Blocca </text>
               <text xml:lang="fr"> F8 bloque  </text>
               <text xml:lang="de"> F8 schaltet aus  </text>
             </label>
@@ -455,5 +444,4 @@
       <text> </text>
     </label>
   </column>
-  <name>DH Options</name>
 </pane>

@@ -123,10 +123,10 @@
   <variable item="Consist Direction" CV="19" mask="VXXXXXXX" tooltip="This loco runs Normal(default) or Reversed(address+128) when in the consist">
     <enumVal>
       <enumChoice choice="Normal">
-      <choice xml:lang="it">Normale</choice>
+        <choice xml:lang="it">Normale</choice>
       </enumChoice>
       <enumChoice choice="Reversed">
-      <choice xml:lang="it">Invertita</choice>
+        <choice xml:lang="it">Invertita</choice>
       </enumChoice>
     </enumVal>
     <label>Consist Direction</label>
@@ -136,10 +136,10 @@
   <variable CV="21" mask="XXXXXXXV" minOut="3" default="1" item="Consist Address Active For F1">
     <enumVal>
       <enumChoice choice="Locomotive Address Only">
-      <choice xml:lang="it">Solo Indirizzo Loco</choice>
+        <choice xml:lang="it">Solo Indirizzo Loco</choice>
       </enumChoice>
       <enumChoice choice="Respond to Consist Address">
-      <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
       </enumChoice>
     </enumVal>
     <label>Consist Address Active For Green</label>
@@ -148,10 +148,10 @@
   <variable CV="21" mask="XXXXXXVX" minOut="4" default="1" item="Consist Address Active For F2">
     <enumVal>
       <enumChoice choice="Locomotive Address Only">
-      <choice xml:lang="it">Solo Indirizzo Loco</choice>
+        <choice xml:lang="it">Solo Indirizzo Loco</choice>
       </enumChoice>
       <enumChoice choice="Respond to Consist Address">
-      <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
       </enumChoice>
     </enumVal>
     <label>Consist Address Active For Purple</label>
@@ -160,10 +160,10 @@
   <variable CV="21" mask="XXXXXVXX" minOut="5" default="1" item="Consist Address Active For F3">
     <enumVal>
       <enumChoice choice="Locomotive Address Only">
-      <choice xml:lang="it">Solo Indirizzo Loco</choice>
+        <choice xml:lang="it">Solo Indirizzo Loco</choice>
       </enumChoice>
       <enumChoice choice="Respond to Consist Address">
-      <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
       </enumChoice>
     </enumVal>
     <label>Consist Address Active For Brown</label>
@@ -172,10 +172,10 @@
   <variable CV="21" mask="XXXXVXXX" minOut="6" default="1" item="Consist Address Active For F4">
     <enumVal>
       <enumChoice choice="Locomotive Address Only">
-      <choice xml:lang="it">Solo Indirizzo Loco</choice>
+        <choice xml:lang="it">Solo Indirizzo Loco</choice>
       </enumChoice>
       <enumChoice choice="Respond to Consist Address">
-      <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
       </enumChoice>
     </enumVal>
     <label>Consist Address Active For Pink</label>
@@ -184,10 +184,10 @@
   <variable CV="21" mask="XXXVXXXX" minOut="7" default="1" item="Consist Address Active For F5">
     <enumVal>
       <enumChoice choice="Locomotive Address Only">
-      <choice xml:lang="it">Solo Indirizzo Loco</choice>
+        <choice xml:lang="it">Solo Indirizzo Loco</choice>
       </enumChoice>
       <enumChoice choice="Respond to Consist Address">
-      <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
       </enumChoice>
     </enumVal>
     <label>Consist Address Active For Pink/Purple</label>
@@ -196,10 +196,10 @@
   <variable CV="21" mask="XXVXXXXX" minOut="8" default="1" item="Consist Address Active For F6">
     <enumVal>
       <enumChoice choice="Locomotive Address Only">
-      <choice xml:lang="it">Solo Indirizzo Loco</choice>
+        <choice xml:lang="it">Solo Indirizzo Loco</choice>
       </enumChoice>
       <enumChoice choice="Respond to Consist Address">
-      <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
       </enumChoice>
     </enumVal>
     <label>Consist Address Active For Green/Brown</label>
@@ -208,10 +208,10 @@
   <variable CV="22" mask="XXXXXXXV" minOut="1" item="Consist Address Active For FL in Forward">
     <enumVal>
       <enumChoice choice="Locomotive Address Only">
-      <choice xml:lang="it">Solo Indirizzo Loco</choice>
+        <choice xml:lang="it">Solo Indirizzo Loco</choice>
       </enumChoice>
       <enumChoice choice="Respond to Consist Address">
-      <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
       </enumChoice>
     </enumVal>
     <label>Consist Address Active For White</label>
@@ -220,10 +220,10 @@
   <variable CV="22" mask="XXXXXXVX" minOut="2" item="Consist Address Active For FL in Reverse">
     <enumVal>
       <enumChoice choice="Locomotive Address Only">
-      <choice xml:lang="it">Solo Indirizzo Loco</choice>
+        <choice xml:lang="it">Solo Indirizzo Loco</choice>
       </enumChoice>
       <enumChoice choice="Respond to Consist Address">
-      <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
       </enumChoice>
     </enumVal>
     <label>Consist Address Active For Yellow</label>
@@ -244,10 +244,10 @@
   <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
     <enumVal>
       <enumChoice choice="forward">
-       <choice xml:lang="it">avanti</choice>
+        <choice xml:lang="it">avanti</choice>
       </enumChoice>
       <enumChoice choice="reverse">
-       <choice xml:lang="it">indietro</choice>
+        <choice xml:lang="it">indietro</choice>
       </enumChoice>
     </enumVal>
     <label>Normal direction of motion</label>
@@ -270,10 +270,10 @@
   <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition">
     <enumVal>
       <enumChoice choice="Use Vstart, Vmid, Vhigh">
-         <choice xml:lang="it">Usa Vstart, Vmid, Vhigh</choice>
+        <choice xml:lang="it">Usa Vstart, Vmid, Vhigh</choice>
       </enumChoice>
       <enumChoice choice="Use Table">
-         <choice xml:lang="it">Usa Tabella Velocità</choice>
+        <choice xml:lang="it">Usa Tabella Velocità</choice>
       </enumChoice>
     </enumVal>
     <label>Use Speed Table</label>
@@ -297,12 +297,12 @@
   <variable item="F2 controls output 1" CV="33" mask="XXXXVXXX" minOut="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2 controls output 1</label>
-     <label xml:lang="it">F2 controlla uscita 1</label>
+    <label xml:lang="it">F2 controlla uscita 1</label>
   </variable>
   <variable item="F3 controls output 1" CV="33" mask="XXXVXXXX" minOut="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3 controls output 1</label>
-     <label xml:lang="it">F3 controlla uscita 1</label>
+    <label xml:lang="it">F3 controlla uscita 1</label>
   </variable>
   <variable item="F4 controls output 1" CV="33" mask="XXVXXXXX" minOut="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -451,6 +451,7 @@
   </variable>
   <variable item="F9 controls output 3" CV="37" mask="XXXVXXXX" minOut="3">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F9 controls output 3</label>
     <label xml:lang="it">F9 controlla uscita 3</label>
   </variable>
   <variable item="F10 controls output 3" CV="37" mask="XXVXXXXX" minOut="3">
@@ -611,7 +612,7 @@
   <variable item="F7 controls output 6" CV="42" mask="XXXXXVXX" minOut="6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F7 controls output 6</label>
-  <label xml:lang="it">F7 controlla uscita 6</label>
+    <label xml:lang="it">F7 controlla uscita 6</label>
   </variable>
   <variable item="F8 controls output 6" CV="42" mask="XXXXVXXX" minOut="6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -771,7 +772,7 @@
   <variable item="F11 controls output 8" CV="46" mask="XVXXXXXX" minOut="8">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F11 controls output 8</label>
-     <label xml:lang="it">F11 controlla uscita 8</label>
+    <label xml:lang="it">F11 controlla uscita 8</label>
   </variable>
   <variable item="F12 controls output 8" CV="46" mask="VXXXXXXX" minOut="8">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -901,10 +902,10 @@
   <variable CV="61" mask="XVXXXXXX" item="EMF Static Config" tooltip="Motor controlled by Function button">
     <enumVal>
       <enumChoice choice="Disabled">
-         <choice xml:lang="it">Disabilita</choice>
+        <choice xml:lang="it">Disabilita</choice>
       </enumChoice>
       <enumChoice choice="Button control of motor">
-         <choice xml:lang="it">Pulsante controllo Motore</choice>
+        <choice xml:lang="it">Pulsante controllo Motore</choice>
       </enumChoice>
     </enumVal>
     <label>Motor Button Control</label>
@@ -917,7 +918,7 @@
         <choice xml:lang="it">Manuale: F2-avanti, F3-retro</choice>
       </enumChoice>
       <enumChoice choice="Auto F2 for/rev">
-         <choice xml:lang="it">Automatico: F2-avanti/retro</choice>
+        <choice xml:lang="it">Automatico: F2-avanti/retro</choice>
       </enumChoice>
     </enumVal>
     <label>Button Control Direction</label>

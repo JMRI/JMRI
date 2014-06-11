@@ -18,18 +18,18 @@
 <!-- function output choices for output 15 thru 30 when moving and in neutral -->
 <ienumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <ienumChoice choice="Westinghouse 2 Stage" value="121">
-     <choice xml:lang="it">Westinghouse 2 fasi</choice>
+    <choice xml:lang="it">Westinghouse 2 fasi</choice>
   </ienumChoice>
   <ienumChoice choice="Westinghouse Cross Compound" value="122">
-     <choice xml:lang="it">Westinghouse Composita</choice>
+    <choice xml:lang="it">Westinghouse Composita</choice>
   </ienumChoice>
   <ienumChoice choice="Westinghouse Single Stage" value="123">
-     <choice xml:lang="it">Westinghouse1 fase</choice>
+    <choice xml:lang="it">Westinghouse1 fase</choice>
   </ienumChoice>
   <ienumChoice choice="Westinghouse Single Stage" value="125">
-     <choice xml:lang="it">Westinghouse 1 fase</choice>
+    <choice xml:lang="it">Westinghouse 1 fase</choice>
   </ienumChoice>
   <ienumChoice choice="Westinghouse Single Stage" value="124">
-     <choice xml:lang="it">Westinghouse 1 fase</choice>
+    <choice xml:lang="it">Westinghouse 1 fase</choice>
   </ienumChoice>
 </ienumVal>

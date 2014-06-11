@@ -3,7 +3,10 @@
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
 <!-- $Id$ -->
-<title>JMRI: Signaling</title>
+<title>JMRI: Signaling introduction</title>
+<meta name="Author" content="Bob Jacobsen">
+<meta name="Author" content="Egbert Broerse">
+<meta name="Date.Modified" content="20140515"/>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -22,436 +25,232 @@
 
 
 <!-- Page Body -->
-<H2>
+<h1>
 JMRI: Signaling
-</H2>
+</h1>
+		<p>This page introduces Signaling, lists the JMRI Signaling Tools and points to more advanced methods.</p>
+<p>Modeling railroad signaling on a layout can be done in many different ways,
+ranging from simple "stoplights" to a complete emulation of a particular prototype's
+	signaling rules. JMRI provides a combination of tools to implement Signaling. JMRI supports <a href="AspectSignaling.shtml">prototypical signaling</a> based on signal <a href="#aspect">Aspects</a> and <a href="#appearance">Appearances</a> along with CTC dispatching and interlocking, without requiring the user to write any script or Java code.</p>
 
+	<ul>
+	<li><a href="#terms">Signaling Vocabulary</a></li>
+	<li><a href="#signaling">Prototype Railroad Signaling</a></li>
+	<li><a href="#tools">JMRI Signaling Tools</a></li>
+<li><a href="#advanced">Advanced Signaling</a></li>
+	</ul>
+		
+<a name="terms"><h2>Signaling Vocabulary</h2></a></dt>
 
-Modeling railroad signaling on a layout can be done many different ways,
-ranging from "stoplights" to complete emulation of a particular prototype's
-signaling logic.
+<h3>Prototype Railroad Signaling terms:</h3>
+<a href="http://commons.wikimedia.org/wiki/File:CSX_River_Sub_Kingston_CP_90.jpg"><img src="images/132px-CSX_River_Sub_Kingston_CP_90.jpg" width="132" height="240" align="right"></a>
+<!-- With some very useful information from the JMRI developers structure site -->
 
-<p>
-Elmer McKay has provided a very nice 
-<a href="IntroToSignalingYourMRR.html">discussion of how to get started</a>
-with signals on your layout.
+	<ul>
+	<li><a name="head"><b>Signal Head</b></a> or <b>Signal Arm</b> Each individual signal unit on a lit or semaphore Signal Mast. It shows exactly one Appearance, generally a color (though not always, e.g. semaphores).</li>
+<li><b>Light</b> The individual lamp in a signal. A light may indicate multiple <a href="#aspect">Aspects</a> if it changes color like in a Searchlight signal, or it may take multiple lights to indicate a single <a href="#aspect">Aspect</a>, for example in Position Light Signals.</li>
+<li><b>Marker</b> A Signal Head or Arm that does not change color or position.</li>
+		<li><b>Signal</b> The object that conveys an Indication via a specific pattern of its visible parts. It can be as simple as a sign, saying "start CTC"; that conveys a particular indication and invokes a rule. Usually we're referring to lit or movable Signals, though, which can show more than one Indication. The Signal might have one light and use different colors to convey different Indications, or it needs more than one set of lights to display a wider range of Aspects to fit the location.</li>
+		<li><b>Signal Mast</b> The pole that mounts one or more Signal Heads or Arms and (usually) controls one individual track. Also used to refer to an entire signal made up of one or more Signal Heads. Dwarf Signals are also considerd Signal Masts.</li>
+<li><a name="appearance"><b>Appearance</b></a> One of a series of allowed options for a <a href="#head">Signal Head</a> or Signal Arm, e.g. Red, Green, Raised.
+		<li><a name="aspect"><b>Aspect</b></a> One of a series of allowed options for the visual pattern of a Signal Mast using one or more Signal Heads or Arms to convey a speed or route <a href="#indication">Indication</a>. Different Signal Mast types can use different Aspects for a specific Indication, but a particular Signal Mast type always conveys a particular Indication via just one Aspect. For example, to convey "You can run at full speed" - an Indication (Rule 281, "Clear") - one signal might display a single green light, another might show a green over red, and a third might have an upward semaphore. Those are all different Aspects showing the same Indication. As all these different Aspects are assigned the same descriptive name, e.g. "Approach", when you think of these Aspects as "Approach on a triple searchlight signal" and "Approach on a single semaphore" and the difference is evident.
+			<li><a name="indication"><b>Indication</b></a> On (most) western US railroads, "Indication" refers to the message that a Signal is sending. It generally has a name, like "Clear" or "Approach", but officially it's a railroad Rule (like 281 or 285) that the train must obey when governed by that Signal. So Indication is the <em>meaning</em> a signal conveys to the engineer, say the full instruction for a signal Aspect, e.g. "Proceed preparing to stop at next signal. Train exceeding medium speed must at once reduce to that speed." (for the "Approach" Aspect according to the AAR 1946 Rule Book).</li>
+<li><b>Distant Signal</b> The signal you are controlling is called a Distant Signal if it is programmed to show the same or a more restrictive Aspect as the next signal in the direction and route of travel.</li>
+		<li><b>Dark Territory</b> Section of running track not controlled by signals. <a href="http://en.wikipedia.org/wiki/Dark_territory"> Dark Territory</a> is governed by other methods like Timetable and Train Order (TT &amp; TO) Operation, Direct Traffic Control or Track Warrants.</li>
+	</ul>
 
-<P>
-JMRI provides several different things that can help with this:
-<OL>
-<LI>The JMRI 
-<A HREF="#table">"Signal Head Table"</A>
-tool lets you control the appearance
-of individual signal heads on your layout.  This can be useful for
-debugging, for example.
-<LI>The JMRI 
-<A HREF="#logic">"Simple Signal Logic"</A>
-tool can provide simple versions
-of block and interlocking signaling.
-<li>The JMRI 
-<A HREF="#logix">"Logix"</a>
-tools are basic logical building blocks for 
-controlling parts of the layout.  
-They can be used
-to configure custom signaling logic
-by filling out forms, without writing any code.
-<LI>JMRI 
-    <a href="../scripting/index.shtml">scripting</a>
-    provides a comprehensive programming capability
-    for controlling signals exactly as you'd like.
-<LI>The JMRI 
-<A HREF="#automat">Automation classes</A>
-makes it easy to code your own signal
-logic into the program.  This is how Nick Kulp's Cornwall Railroad 
-was signalled.
-<LI>JMRI provides a 
-<A HREF="#widgets">complete toolkit</A>
-to make it easy to
-do any kind of automation on your layout by writing a new program
-of your own.
-</OL>
-<BR>
-There's more information on each of these below.
-As you move down that list, the task becomes more and more technical, 
-but you have more freedom to model exactly what you want.  
-
-<P>
-In addition, there are people working on more advanced signaling
-capabilities within the JMRI project.  
-Although it's too early to talk
-in detail, the idea is to provide ways of driving 
-<a href="AspectSignaling.shtml">prototypical signaling based on aspects and appearances</a>
-along with CTC dispatching and interlocking, 
-without requiring the user to write any  scripting or Java code.
-The 
-<a href="http://groups.yahoo.com/group/jmriusers/">jmriusers discussion group</A>
-will have more info on this as it becomes available.
-
-<a name="contents"><h3>Contents</h3></a>
-
-
-	<p>The documentation below describes Signaling with JMRI, and discusses how to set 
-	up the basic signal situations. The documentation is divided into sections; click below for 
-	easy access to a listed section. If you prefer to try before reading much,
-	read <a href="#intro">Introduction to SSL</a>, 
-	then click <a href="#start">Getting Started</a>
-	and follow those instructions. Return here to read about what you did.
-	</p><ul>
-	<li><a href="#terms">Basic Vocabulary</a></li>
-	<li><a href="#table">The Signal Head Table</a></li>
-	<li><a href="#intro">Introduction to Simple Signal Logic Tools</a>
-	</li><li><a href="#start">Getting Started with Simple Signal Logic</a>
-	</li><li><a href="#logix">Introduction to Logix Use</a>
-	</li><li><a href="#variable">Available Logix State Variables</a>
-	</li><li><a href="#action">Available Logix Actions</a>
-	</li><li><a href="#automat">The Automation Classes</a>
-	</li></ul>
-
-<a name="terms"><h3>Vocabulary</h3></a></dt>
-
-<p><b>Some basic signal terms:</b><br>
-<ul>
-<li><b>Signal Arm</b> or <b>Signal Head</b> Each individual signal unit.</li>
-<li><b>Aspect</b> The speed or route indication given by one or more signal heads or arms.<br>
-</li>
-<li><b>Marker</b> A signal head or arm that does not change color or position.</li>
-<li>
-<b>Light</b> The individual lamp in a signal. A light may indicate multiple aspects
-if it changes color like  in a searchlight signal, or it may take multiple lights
-to indicate a single aspect, for example in position light signals.</li>
-<li>
-<b>Mast</b> The pole that mounts one or more signal arms that (usually) control each
-individual track, also used to refer to an entire signal made up of one or more heads.</li>
-<li><b>Distant Signal</b> The signal you are controlling shows the same or 
-more restrictive aspect as the next signal in the direction and route of travel.</li></ul>
+	<p>Different railroads have different Rules to operate rail traffic, using different terms. In their respective Rule Books, they use different Aspects for rules of the same name. And some will have different Appearances to make up those Aspects (e.g. semaphore vs. single lamps vs. color-position signals vs. position light signals vs. cab signals vs ...)<br/>
+		Picture on the right: a CSX Searchlight Signal Mast with 2 Signal Heads, showing a "red over red" Aspect, meaning the "Stop" Indication.</p>
 	
-<p><b>Some JMRI specific SSL and Signal terms:</b><br>
-<ul><li><b>Signal Head Table</b> The list of signal heads in JMRI. 
-Signal heads must first be added into 
-the Signal Head Table before they may be included in a SSL entry or Logix.</li>
-<li>
-<b>Triple Output Head</b> A signal head that has each aspect of the signal directly driven 
-from an individual output line. 
-The individual output lines are controlled by JMRI Turnout logic, and are controlled via the
-Turnout Table.
-Each aspect change requires that three turnout commands be sent.</li>
-<li>
-<b>Double Output Head</b> A signal head that uses just two output lines to indicate 4 signal aspects.
-Usually these aspects will be Clear, Approach, Stop, and Dark. 
-The output lines are controlled by JMRI Turnout logic, and are controlled via the
-Turnout Table.
-The output coding is such that 
-one turnout thrown (on) controls the stop and the other thrown (on) controls the clear. 
-Both outputs thrown (on) controls the
-approach, and both closed (off) are dark. 
-Each aspect change requires that two turnout commands be sent.</li>
-<li>
-<b>Single Output Head</b> A signal head that uses just one output line to indicate upto 3 appearances (including flashing).
-The appearances available to configure are Dark, Red, Yellow, Green and Lunar.
-
-The output lines are controlled by JMRI Turnout logic, and are controlled via the
-Turnout Table.
-The output coding is such that 
-With the turnout thrown (on) controls one appearance and turnout closed (off) controls the other. 
-Flashing allows for a third appearance, which will flash between the two appearances configured.
-</li>
-<li>
-<b>SE8c</b> A signal head controlled by a single turnout command per aspect change. One turnout command changes between 
-stop and clear, and the second turnout command changes between approach and dark.</li>
+	<h3>JMRI specific Signaling terms:</h3>
+<ul>
 <li> <b>Virtual</b> Virtual signals are JMRI internal signals with no actual hardware attached. 
-Before the advent of Logix,
-Virtual Signals were required to solve more complex operations than can be done with with a single SSL alone.</li>
-<li><b>Protected Sensor</b> The next block sensor/s following the signal you are controlling in the 
+Virtual Signals may represent theoretical Aspects at buffer stops or in staging that are used by prior signals.</li>
+<li><b>Protected Sensor</b> The next block occupancy sensor(s) following the signal you are controlling in the 
 direction and route of travel. The "protection" is to prevent a train from entering an 
 occupied block without warning.</li>
 <li><b>Protected Signal</b> The next signal after the one you are controlling in the 
 direction and route of travel. The "protection" is to prevent a train from approaching a stop signal without sufficient warning to allow it to be stopped short of reaching the "protected" signal.</li>
-</li>
-<li><b>System Name</b> The internal JMRI representation for the actual hardware being used
-to control the signal. This will vary depending on your hardware, and must match your system.
+<li><b>Signaling System</b> A set of icons, definition files and rules following either a prototype Rule Book or a simplified set of rules (see <a href="AspectSignaling.shtml#systems">this list</a>).</li>
+	<li><b>System Name</b> The name of a JMRI object identifying either a virtul (Internal) or physical piece of hardware being used, e.g. an output on a decoder to control a signal. The System Name must follow certain <a href="../../doc/Technical/Names.shtml">Naming Rules</a> to be correctly interpreted bij JMRI, and the name will vary depending on your hardware so it must match your DCC system.</li>
 </ul>
 
-<A name="table">
-<h3>Signal Head Table</h3></a>
-
-<A href="../../../images/SigTable.gif"><IMG SRC="../../../images/SigTable.gif" ALIGN=RIGHT WIDTH="296" HEIGHT="355" HSPACE="0" VSPACE="0"></A>
-All the signal heads that JMRI knows about can be referenced
-using the "Signal Head Table" tool in the Tools menu of most JMRI programs.
-There are five columns in the table:
-<UL>
-<LI>The <b>system name</b> is assigned to the signal head when it's created, 
-and can't be changed.
-<LI>If you're interested in having your signal heads carry "human readable"
-names, you can click in the <b>User Name</b> column and change that information
-to whatever you want.
-<LI>As the signal head changes, for whatever reason, the current
-appearance will show in the <b>State</b> column of the table.  You can also click on the
-appearance button to cycle through the avilable appearances:
-red, yellow, green, flashing red, flashing yellow, flashing green, and dark. 
-(Some signal heads can also do lunar and flashing lunar)
-The system hardware will follow these changes.
-
-<LI>The check box in the <b>Lit</b> column lets you see whether the
-signal head on the layout is lit (checked) or stays dark (unchecked). This may 
-also be controlled automatically with the SSL "approach" lighting option or 
-from Logix. <i>Note:</i> This only affects the actual layout hardware, not any 
-panel indications nor signal state logic.
-<LI>The check box in the <b>Held</b> column shows the "held" property of the
-signal, and allows you to change it.  This property may be used by CTC
-machine logic or Logix to say "Don't change this signal head from red, even if it 
-would be safe to do so, because I want to hold a train here".
-</UL>
-<A href="../../../images/SigAdd.gif"><IMG SRC="../../../images/SigAdd.gif" ALIGN=RIGHT WIDTH="181" HEIGHT="218" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
-<P>To define a new signal head, click on the 
-<a href="../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml"><b>Add New Signal Head</b></a>
-button.  It will
-prompt you for the signal head type (controlled by turnout outputs; SE8c; etc), and
-whatever setup information is needed for your choice.
-<P> This information is saved with the configuration in an XML file, along
-with control panel setup, Logix, Routes, and similar stuff.  For more information
-on creating and displaying panels, including how to show signal heads
-on your panels, please see the 
-<A HREF="../../apps/PanelPro/Panels.shtml">Panels help page</a>
-and the web pages on the 
-<A HREF="http://jmri.sourceforge.net/community/examples/Panels-Cornwall/Cornwall.html">Cornwall Railroad control panel</a>.	
-<a name="logic">
-<a name="intro"><h3>Introduction to Simple Signal Logic</h3></a></a></dt>
-
-Simple Signal Logic (SSL)
-is a JMRI tool to enable the rapid setup of basic ABS style signaling. 
-	The SSL user interface is designed to be user friendly to
-	all users with basic familiarity with JMRI. SSL provides a means
-	for setting up basic signaling in an intuitive manner, without the 
-	user having to be familiar with all of the logic necessary to 
-	account for the different aspects.
-	For more complex operations beyond the capability of SSL refer to the section on 
-	<A HREF="../Logix.shtml">Logix</a>.
-	
-
-<A href="../../../images/SSLLogic.gif"><IMG SRC="../../../images/SSLLogic.gif" ALIGN=RIGHT WIDTH="354" HEIGHT="364" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
-
-Much of basic ABS signaling can be boiled down to "a signal head goes red when a train
-can't safely enter the block it protects; it goes yellow when the block following 
-the protected block can't be entered". Although that's a simplication, it can serve
-as a powerful starting point for understanding signaling logic.
-<P>
-
-The Simple Signal Logic tool allows you to configure JMRI to 
-use this basic ABS type of logic to set the appearance of a signal head. 
-Using the panel, you enter information on:
-<UL>
-<li><b>Signal Head Named</b> The signal hread being driven.</li>
-<li><b>Protects Sensor/s</b> Which sensors (occupancy detectors) cover the block
-immediately past the signal. When any of these sensors show "active" the 
-signal head will be set to red.</li>
-<li><b>Red When Turnout</b> If the block contains a turnout, 
-configure the turnout name and use the selection button to choose whether you're entering
-the closed or thrown leg. The signal head will be set to red
-whenever the turnout is set against this track.</li>
-<li><b>Protects Signal</b> The next signal head that the train will reach;
-this signal head will be set yellow if the next signal head is
-red.</li>  
-<li><b>With Flashing Yellow</b> If the checkbox is checked, the signal head will be set
-flashing yellow (JMRI will alternate between dark and yellow) if the
-next protected signal head is yellow, thereby giving four-block signaling.</li>
-<li><b>Limited Speed</b> If the checkbox is checked, this signal head will be set
-to yellow as the least restrictive aspect.</li>
-<li><b>Is Distant Signal</b> If the checkbox is checked, this signal will be set
-to the most restrictive aspect of this signal head or the next protected signal head.</li>
-<li><b>Approach Lighting Sensor</b> The sensor that controls the lighting of this signal head. Only the
-actual hardware signal head will go dark. Panel indicators will show the normal signal appearance. 
-Leave this entry blank to always show lit.</li>
-<li><b>Facing Point Turnout</b> The signal head is located on the single track line, 
-facing a choice of two or more tracks in the direction of travel.</li>
-<li><b>Trailing Point Turnout</b> The signal head is located on the double track line, 
-facing a single track in the direction of travel.</li></ul>
-
+<h2><a name="signaling">Prototype Railroad Signaling</a></h2>
 <p>
-The case of a facing point turnout which leads to two different "Protected Signal Heads" 
-is also covered although the above figure doesn't show it.
-If a single signal head is used to control both branches, then choose "On Facing-Point
-Turnout". If a different head will control each route, then simply choose "Main"
-or "Diverging" leg of turnout, as required for each one.
+Across the world railroads have developed a wide range of signaling hardware such as Flags (not supported in JMRI), Semaphores, Position Light Signals and Color Light Signals. Different physical signals may show the same "Indication" using different combinations of lights, semaphore positions, and/or placards; these patterns of lights are called "Aspects". For example, the "Stop" Aspect will be a single red light on a signal mast with only one lamp, red over red lamps for a signal mast with two lamps, etc. To learn the rules of the railroad you model is part of the hobby but JMRI helps by providing more than 20 prototypical signaling systems from different countries to choose from. Still, it's up to the engineer to interpret the Signal Aspects displayed and adjust the throttle...
+	
+	<p>Much of basic <a href="http://en.wikipedia.org/wiki/Automatic_block_signaling#Automatic_traffic_control">Automatic Block Signaling</a> (ABS) can be boiled down to "a Signal goes Red when a train
+can't safely enter the block it protects; it goes Yellow when the block following 
+the protected block can't be entered". Although that's a simplification, it can serve
+		as a good starting point for understanding signaling logic. More modern signaling systems are <a href="http://en.wikipedia.org/wiki/Automatic_block_signaling#Automatic_traffic_control">Absolute Permissive Block</a> (APB) signaling used by many western US railroads and <a href="http://en.wikipedia.org/wiki/Centralized_traffic_control">Centralized Traffic Control</a> (CTC) remotely operated from large switchboards. 
 
-<p>Pause your mouse over any entry or item in the SSL creation window for a brief "tooltip" help 
-reminder.</p>
+	<p>There are a lot of excellent sources of information on prototype signaling, including:
+<ul>
+	<li>The <a href="http://en.wikipedia.org/wiki/Railway_signal">Wikipedia Signaling page</a></li>
+	<li><a href="http://www.alkrug.vcn.com/rrfacts/signals/signals.htm">Signaling simply explained</a> by A.A. Krug</li>
+	<li><a href="http://www.lundsten.dk/us_signaling/">North American Signaling</a> is a comprehensive website by Carsten S. Lundsten
+		<li>The <a href="http://www.railway-technical.com/sigind.shtml">Railway Technical Index Signaling chapter</a> provides lots of information from all over the world
+	<li>John Armstrong's book <em>The Railroad: What It Is, What It Does</em>, Simmons-Boardman Books Inc., 1990
+		<li>Dr. Bruce Chubb's <em>Computer/Model Railroad Interface (C/MRI) User Manual rev 3.0</em> has signaling information in chapter 12.
+<li>US prototype AAR rules section 2 (<a href="http://www.rrsignalpix.com/AAR_2_sec.pdf">http://www.rrsignalpix.com/AAR_2_sec.pdf</a>) provides a starting point for understanding US signaling rules.</li>
+<li>The <a href="http://www.docstoc.com/docs/25141693/Recommended-Circuit-Nomenclature/">AREMA Manual section on Circuit Nomenclature</a> describes prototypical naming of parts of a signaling system.</li>
+</ul>
 
-<p>It's clear that this won't cover complicated interlockings nor will it 
-cover the speed-signaling seen on some prototypes. For those situations use a 
-combination of Logix and Routes. Logix cover the conditions, and Routes control the actions
-to be taken.</p>
+<a name="tools"><h2>JMRI Signaling Tools</h2></a>
+<p>It is really straight forward to use Aspect Signaling, especially if suitable signal hardware is already configured in JMRI or you want to use Signal Masts with more than one Signal Head.
+	Aspect Signaling in JMRI uses of a series of Aspect definition files that come with JMRI since version 2.9. In addition to tapping into one of the more than 20 prototypical <a href="AspectSignaling.shtml#systems">Signaling Systems</a> that come with JMRI, you can tweak one to suit your hardware and operations or define your own and share it as part of a next version of JMRI.<br/>
+	JMRI provides the following core Signaling Tools, available from the <b>Tools > Tables > Signals ></b> menu:</p>
+	
+	<p>1. <b><a href="SignalHeads.shtml">Signal Head</a></b> objects represent the individual lights of a signal and can be created, changed, deleted and set to specific Appearances (colors) in the <a href="../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Heads Table</a>. One or more Signal Heads usually are part of a Signal Mast. For signaling decoders that directly support multiple Aspects, it may not be necessary to create individual Signal Heads before creating Signal Mast objects.</p>
+	
+	<p>2. <b><a href="SignalMasts.shtml">Signal Mast</a></b> objects represent an entire signal with one or more Signal Heads. Using Signal Mast objects allows you to display prototypical Aspects on signals. You specify what kind of <a href="AspectSignaling.shtml#systems">Signaling System</a> is to be used,
+the specific Signal Mast type e.g. "double searchlight" or "single head dwarf" and which Signal Heads or aspect aware signal hardware this Signal Mast is going to drive. 
+		When the <a href="#aspect">Aspect</a> of a Signal Mast is set to e.g. "Approach medium", JMRI handles the layout communication needed to make the signal on the layout display the right colors.<br/>
+<a href="../../../package/jmri/jmrit/beantable/SignalMasts.png">
+   <img src="../../../package/jmri/jmrit/beantable/SignalMasts.png" 
+        width="338" height="86" align="right">
+</a>
+Signal Masts are configured through the
+	<a href="../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Masts Table</a>. From the Signal Masts Table, you can create and edit Signal Masts and set individual Signal Masts to any Aspect that they're able to display by clicking in the "Aspect" column.
+	<br/>
+	You can add a Signal Mast icon in the Panel Editor in the usual way. The Signal Mast icon will display the images from the Appearance definition for that particular Signal Mast type and Signal System. </p>
+	<p>3. <b><a href="../../../package/jmri/jmrit/beantable/SignalGroupAddEdit.shtml">Signal Groups</a></b> are used to define a number of signal heads, where only one signal head can be illuminated at any given time, depending upon the status of the associated signal mast and a set of conditions.<br>
+		Signal Groups would be used where additional indicators are used to support the main signal mast, such as Junction, Route or Speed displays. These indicators provide additional information to the driver (US: engineer) that is not given by the main signal mast. Such indicators are frequently seen in European and UK signalling.</p>
+	
+	<p>4. The <b><a href="SignalMastLogic.shtml">Signal Mast Logic</a></b> tool allows the Signaling Logic to be built up as pairs of conditionals between Signal Masts on the layout.
+Each Signal Mast Logic will use the states of Blocks, Turnouts, Sensors and other
+		Signal Masts to determine what Aspect a particular Signal Mast should be displaying.<br/>
+If the layout has been drawn up using the Layout Editor and Signal Masts have
+been placed on the panel using the various tools, then it is possible for all the Signal Mast Logic to be dynamically built, with little user intervention. For panels created with Control Panel Editor some of this information is to be entered manually.</p>
 
-<P>
-However, when combined with the logic capabilities of JMRI
-<A HREF="../Routes.shtml">Routes</a>
-and 
-<A HREF="../Logix.shtml">Logix</a> units,
-SSL can be used 
-to create a CTC panel, as Bob Bucklew shows on
-<A HREF="http://www.quaker-valley.com/CTC/QV_CTCnew.html">his web site</a>.
+<p> All the information in the Tables is saved with the configuration in an XML file, along
+with control panel setup, Logix, Routes, and similar stuff.  For more information
+on creating and displaying panels, including how to show signals
+on your panels, please see the 
+	<a HREF="../../apps/PanelPro/Panels.shtml">Panels help page</a>.</p>	
 
-<a name="start"><h3>Getting Started with Simple Signal Logic</h3></a>
+	<p>What's next?</p>
+<ul>	
+	<li>More information on Aspect Signaling and the available options in JMRI can be found on the <a href="AspectSignaling.shtml">Aspect Signaling help page</a>.</li>
+	<li>Suzie Tall and Jim Duncan wrote <a href="SignalingSetup.shtml">Signaling Quickstart</a> instructions.</li>
+	<li>Elmer McKay provided a general overview <a href="IntroToSignalingYourMRR.html">How to get started</a> with signals on your layout.</li>
+	</ul>
 
-	    <p>Follow the following steps to create a signal and become familiar
-	    with how the SSL user interface works.
-	    </p><ol>
-		<li> Select <b>Turnout Table</b> in the <b>Tools</b> menu.
-		</li><li> Check to be sure that the output lines (turnouts) that will control your signal are in the table. If not, click the <b>Add</b> button at the bottom of the Turnout Table.
-		</li><li> In the Add New Turnout window that appears, enter a system name, (E.g. LT1)
-		and "test" for user name, then click <b>OK</b>. <i>Note:</i> System names must start 
-		with CT, IT, LT, NT, XT, etc. and be followed by the actual hardware number of the turnout.
-		</li> <li> Clicking on the correct <b>Closed/Thrown</b> entries in the Turnout Table should now cause your signal to change.
-		</li><li> Next select <b>Signal Head Table</b> in the <b>Tools</b> menu.
-		</li><li> In the Signal Head Table window that appears, click <b>Add</b> to begin defining a new signal head.
-		</li><li> In the Add New Signal window that appears choose the correct signal type to 
-		match your hardware. The required item boxes will appear.
-		</li><li> Enter a system name. For example LH152. <i>Note:</i> System names must start 
-		with CH, IH, LH, NH, XH, etc. and be followed by the number of this head.
-		</li><li> Next enter one or more turnout numbers that will control this signal. <i>Note:</i> In the case of
-		SE8c style signals just enter the first turnout number of each pair. The second is automatically known. 
-		</li><li> Click <b>OK</b> to enter this head into the Signal Head Table.  
-		</li><li> Enter all the signal heads that you will be using for this test.
-		<li> Now select <b>Simple Signal Logic</b> in the <b>Tools</b> menu.
-		</li>
-		<li> Fill in the various entries to match your signals requirements as 
-		previously shown in the <a href="#intro">SSL</a> section.
-		</li><li> Click <b>Apply</b> to make this entry active.</li>
-		<li> Be sure to save your work.
-		</ol>
-    	<p>You have just created an SSL entry to control a signal head. It's as 
-		simple as that. It took 
-    	you more time to read this tutorial than to create the SSL entry.</p>	    
+<a name="advanced"><h2>Advanced Signaling</h2></a>
+	
+<ul>
+	<li><a href="interlock/index.shtml">Interlocking Entry/Exit</a>
+		<li><a href="#logix">Logix</a>: basic logic for controlling parts of the layout
+	</li><li><a href="#scripting">Scripting</a>: customize JMRI including user interaction
+	</li><li><a href="#automat">Automation Classes</a>
+<li><a href="#widgets">Toolkit</a> for experienced users to do any kind of automation on a layout by writing a new program
+	</ul>
+	
+<a name="logix"><h3>Signaling with Logix</h3></a>
+<p>A JMRI <a href="../Logix.shtml">Logix</a> provides logic and control capabilities for JMRI objects, including
+Signal Heads and Masts. Logix can be used to configure custom signaling logic by filling out forms, without writing any code. A user defines "Conditional" logic and the "Actions"
+	that take place depending on the state of the logic. The following sub-sections show how Logix can examine and control Signals.</p>
 
-<P>
-A
-<A HREF="SimpleSignalExample.shtml">worked-out example</a>
-is also available.
+	<h4><a name="variable">Signal State Variables in Logix</a></h4>
 
-<A name="logix"><h3>Signal Support in Logix</h3></a>
-
-A JMRI
-<A HREF="../Logix.shtml">Logix</a>
-provides logic and control capabilities for JMRI objects, including
-signals. A user defines "Conditional" logic and the "Actions"
-that take place depending on the state of the logic.  
-The following sub-sections talk about how Logix
-can examine and control signals.
-
-	<a name="variable"><h3>Available Signal State Variables in Logix</h3></a></dt>
-
-	<p>State variables related to signals that are currently available for use 
+	<p>State variables related to Signal Heads and Masts currently available for use 
 	in Logix Conditionals
 	are listed below, along with information on each. State variables
-	must always evaluate to either true or false. The condition resulting in 
-	true is given for each. If the condition is not met, the state variable
-	evaluates to false. When a Logix is active, the states of entities (sensor,
-	turnout, signal red, etc.) specified in state variables in its Conditionals are 
+	must always evaluate to either True or False. The condition resulting in 
+	True is given for each. If the condition is not met, the state variable
+	evaluates to False. When a Logix is active, the states of entities (Sensor,
+	Turnout, Signal Mast, etc.) specified in state variables in its Conditionals are 
 	monitored. A calculation of all Conditionals in the Logix is triggered
-	when any monitored state changes as noted below (if not obvious). <i>Note:</i> 
-	Not all possible Logix conditionals are listed here.
-	    </p><ul>
-		</li><li><b>Signal Red</b>: Evaluates to true if the appearance of the 
-		specified signal head is red. Calculation is 
-		triggered when the appearance change to or from red.
-		</li><li><b>Signal Yellow</b>: Evaluates to true if the appearance of the 
-		specified signal head is yellow. Calculation is 
-		triggered when the appearance change to or from yellow.
-		</li><li><b>Signal Green</b>: Evaluates to true if the appearance of the 
-		specified signal head is green. Calculation is 
-		triggered when the appearance change to or from green.
-		</li><li><b>Signal Dark</b>: Evaluates to true if the appearance of the 
-		specified signal head is dark. Calculation is 
-		triggered when the appearance change to or from dark.
-		</li><li><b>Signal Flashing Red</b>: Evaluates to true if the appearance of 
-		the specified signal head is flashing red. Calculation 
-		is triggered when the appearance change to or from flashing red.
-		</li><li><b>Signal Flashing Yellow</b>: Evaluates to true if the appearance of 
-		the specified signal head is flashing yellow. Calculation 
-		is triggered when the appearance change to or from flashing yellow.
-		</li><li><b>Signal Flashing Green</b>: Evaluates to true if the appearance of 
-		the specified signal head is flashing green. Calculation 
-		is triggered when the appearance change to or from flashing green.
-		</li><li><b>Signal Lit</b>: Evaluates to true if the specified signal head is 
-		lit. 
-		</li><li><b>Signal Held</b>: Evaluates to true if the specified signal head 
-		is being held. 
-    	</li></ul>  
-    
-	<a name="action"><h4>Available Signal Actions in Logix</h4></a></dt>
+		when any monitored state changes as noted below. <i>Note:</i> Not all Logix conditionals are listed here.
+	    </p>
 
-	<p>Actions related to signals that are currently available for use in Logix Conditionals are listed 
-	below along with information on each. <i>Note:</i> 
-	Not all possible Logix actions are included here.
-	    </p><ul>
-		</li><li><b>Set Signal Appearance</b>: Sets the specified signal head  to 
-		the chosen appearance. Specify the signal head to set by entering its 
-		system name or user name.  Specify the appearance to set by choosing 
-		from the popup menu.		
- 		</li><li><b>Set Signal Held</b>: Sets the specified signal head to hold.
-		Specify the signal head to hold by entering its system name or user name.  
-  		</li><li><b>Clear Signal Held</b>: Clears the hold on the specified signal 
-  		head. Specify the signal head by entering its system name or user name.  
-  		</li><li><b>Set Signal Dark</b>: Sets the specified signal head to not lit.
-		Specify the signal head by entering its system name or user name.  
-  		</li><li><b>Set Signal Lit</b>: Sets the specified signal head to lit.
-		Specify the signal head by entering its system name or user name.  
-		</li><li><b>Play Sound File</b>: Plays the specified sound file. (for 
-		example CTC relay clicks) 
-  		</li><li><b>Run Script</b>: Starts the specified script.
+	<a href="../../../package/jmri/jmrit/beantable/LogixSignalHeadVariable.png">
+   <img src="../../../package/jmri/jmrit/beantable/LogixSignalHeadVariable.png" 
+	   width="423" height="92" align="right"></a>
+	
+	<p>Conditionals for Variable Type "Signal Head":</p>
+	<ul>
+<li><b>Signal Head Appearance Equals</b>: Evaluates to True if the Appearance of the specified Signal Head equals the Appearance specified in the 'State' variable. Calculation is triggered when the Appearance of the Signal Head changes.
+</li><li><b>Signal Head Lit</b>: Evaluates to True if the specified Signal Head is lit.
+	</li><li><b>Signal Head Held</b>: Evaluates to True if the specified Signal Head is being held.</li>
+	</ul>
+	<p>Conditionals for Variable Type "Signal Mast":</p>
+	
+	<ul><li><b>Signal Mast Aspect Equals</b>: Evaluates to True if the Aspect of the specified Signal Mast equals the Aspect specified in the 'State' variable. Calculation is triggered when the Aspect of the Signal Mast changes.
+</li><li><b>Signal Mast Lit</b>: Evaluates to True if the specified Signal Mast is lit.
+</li><li><b>Signal Mast Held</b>: Evaluates to True if the specified Signal Mast is being held.
+</li></ul>  
+
+	<a name="action"><h4>Signal Actions in Logix</h4>
+
+	<p>Actions related to Signals Heads and Masts currently available for use in Logix Conditionals are listed 
+	below along with information on each. <i>Note:</i> Not all Logix actions are included here.</p>
+<ul>
+	<li><b>Set Signal Head Appearance</b>: Sets the specified Signal Head to the chosen Appearance. Specify the Signal Head to set by entering its System Name or User Name. Specify the Appearance to set by choosing from the popup menu that appears after you enter a Signal Head System Name (or drag it from one of the Pick Lists).
+</li><li><b>Set Signal Head Held</b>: Sets the specified Signal Head to Hold. Specify the Signal Head to hold by entering its System Name or User Name.
+</li><li><b>Clear Signal Head Held</b>: Clears the Hold on the specified Signal Head. Specify the Signal Head by entering its System Name or User Name.
+</li><li><b>Set Signal Head Dark</b>: Sets the specified Signal Head to Not lit. Specify the Signal Head by entering its System Name or User Name.
+	</li><li><b>Set Signal Head Lit</b>: Sets the specified Signal Head to Lit. Specify the Signal Head by entering its System Name or User Name.<br/> &nbsp;
+</li><li><b>Set Signal Mast Aspect</b>: Sets the specified Signal Mast to the chosen Aspect. Specify the Signal Mast to set by entering its System Name or User Name. Specify the Aspect to set by choosing from the popup menu.
+</li><li><b>Set Signal Mast Held</b>: Sets the specified Signal Mast to hold. Specify the Signal Mast to hold by entering its System Name or User Name.
+</li><li><b>Clear Signal Mast Held</b>: Clears the Hold on the specified Signal Mast. Specify the Signal Mast by entering its System Name or User Name.
+</li><li><b>Set Signal Mast Dark</b>: Sets the specified Signal Mast to Not lit. Specify the Signal Mast by entering its System Name or User Name.
+</li><li><b>Clear Signal Mast Dark</b>: Sets the specified Signal Mast to Lit. Specify the Signal Mast by entering its System Name or User Name.<br/> &nbsp;
+		</li><li><b>Play Sound File</b>: Plays the specified sound file (for 
+		example CTC relay clicks). 
+  		</li><li><b>Run Script</b>: Starts the specified Script.
 		</li></ul>
+	<p>For more information see the <a href="../Logix.shtml">Logix help pages</a>.</p>
+	
+<a name="scripting"><h3>Scripting</h3></a>
 
-<A name="automat"><h3>Automation classes</h3></a>
+	<a href="../../../package/jmri/jmrit/beantable/jmriScriptWindow.png">
+   <img src="../../../package/jmri/jmrit/beantable/jmriScriptWindow.png" 
+	   width="250" height="136" align="right"></a>
+	
+<p>Just like other objects in JMRI you can set and read Signal Heads, Signal Masts and Signal Mast Logic via Scripts. Instead of defining our own language to accomplish this, 
+	<a href="../scripting/index.shtml">JMRI Scripting</a> uses the "Python" language that's commonly used in web development.
+		<br/>
+	Several methods from the jmri_default.py file can be used to work with signaling. Methods that may be used in a Python script to interact with Signal Masts include: getAspect(), getSignalSystem(), getValidAspects() and setAspect(Stop). See these <a href="AspectSignaling.shtml#mastscripting">Examples</a>.<br/>
+	To script a Signal Head the 'getSignalHead' method can be used. Then, 'setAppearance' is a method of the returned SignalHead object. Example:
+	<pre>signals.getSignalHead("IH1").setAppearance(YELLOW)</pre>
+	
+<p><a href="../../../../../jython/SigletExample.py">SigletExample.py</a><br/>
+An example script for a JMRI "Siglet" in
+Python. It listens for changes to two Sensors and a Turnout, and then
+	recalculates a Signal Head Appearance based on the values.</p>
 
-JMRI provides classes to help you write Java code to control
-your layout.  The most powerful of these are aimed
-at general automation; see the 
-<A HREF="../automation/viaJava.shtml">automation web page</a>.
+For more information see the <a href="../scripting/index.shtml">JMRI Scripting help page</a>.
+
+<a name="automat"><h3>Automation Classes</h3></a>
+
+JMRI provides classes to help you write Java code to control your layout. The most powerful of these are aimed
+at general automation and make it easy to code your own signal logic into the program; see the <a href="../automation/viaJava.shtml">Automation page</a>.
 The 
-<A HREF="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrit/automat/Siglet.html">"Siglet" class</A> 
+<a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrit/automat/Siglet.html">"Siglet" class</a> 
 and it's kin are meant to make it
-easy to write signal logic; a varient of these was used
-for the Cornwall Railroad.
-<P>
-Although these require writing code, instead of just filling
-out a GUI form, the program handles all of the details of reading
+easy to write complex custom signal logic; a variant of these was used by Nick Kulp's for signaling automation on his <a href="http://jmri.sourceforge.net/community/examples/Panels-Cornwall/CornwallRunning.html">Cornwall Railroad</a>.
+<p>
+Although Automation Classes require writing code instead of just filling
+out a GUI form, JMRI handles all of the details of reading
 status changes from the layout, writing desired aspect changes
 back to the layout, and even the details of "which outputs do I have
-to set to get signal Apple Siding East to show yellow?".  You can
+to set to get signal Apple Siding East to show Yellow?".  You can
 concentrate on just the signal logic in the code you write.
 
-<A name="widgets"><h3>Toolkit</h3></a>
+<a name="widgets"><h3>Toolkit</h3></a>
 
 The entire
-<A HREF="../../doc/Technical/index.shtml">JMRI toolkit</A>
-is available for use if you really want to do something
-in detail. JMRI provides control of most DCC and C/MRI systems,
+<a href="../../doc/Technical/index.shtml">JMRI toolkit</a>
+is available for use if you really want to develop new tools, controlling every detail. Programming with the JMRI Toolkit provides control of most DCC and C/MRI systems,
 with useful tools for manipulating turnouts, sensors, signals, locomotives,
-etc as well as powerful tools for working on the user screen.
-
-<h2>For more information on signaling</h2>
-
-There are a lot of excellent sources of information on prototype signaling.
+etc. as well as powerful tools for working on the user screen.
+		
+	<h2>Legacy tools</h2>
 <ul>
-<li>
-John Armstrong's book "The Railroad: What It Is, What It Does"
-
-<li>
-Dr. Bruce Chubb's C/MRI User Manual rev 3.0 has signaling information 
-in chapter 12.
-See particularly 12-11 on page 12-27.
-
-</ul>
-
-For information on the specifics of the technology:
-<ul>
-<li>
-<a href="http://www.docstoc.com/docs/25141693/Recommended-Circuit-Nomenclature/">AREMA manual section on Circuit Nomenclature</a>
-
-<li>
-<a href="http://www.rrsignalpix.com/AAR_2_sec.pdf">AAR rules section 2</a>
-
-</ul>
-
+	<li>The JMRI 
+		<a href="../../../package/jmri/jmrit/blockboss/BlockBossFrame.shtml">Simple Signal Logic</a> tool provided the first basic version of ABS and Interlocking signaling using single head Signal Masts. The Simple Signal Logic (SSL) Tool is still available in the Tools menu. However, to prevent logic conflicts and strange Signal Aspects, do not attempt to combine the use of the SSL Tool and the newer Signal Mast Logic tools for the same signals.
+	</ul>
 
 <!--#include virtual="/Footer" -->
 </body>

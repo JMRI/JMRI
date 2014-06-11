@@ -12,6 +12,9 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version version="3" author="PB, pierre.bln@me.com" lastUpdated="20140603"/>
+  <!-- 3 2014/06/03 Update: corrected connector + low/high IDs
+		-->
   <version version="2" author="PB, pierre.bln@me.com" lastUpdated="20140220"/>
   <!-- 2 2014/02/20 Update: future proofing
 		This is a complete rewrite of my original submission for many D&H decoders.
@@ -32,7 +35,7 @@
   -->
   <decoder>
     <family name="Train Decoders (firmware 3.02+)" mfg="Doehler und Haass">
-      <model model="DH16A" lowVersionID="1" highVersionID="1" numOuts="6" numFns="14" productID="DH16A" comment="DH16A-0 /DH16A-1 /DH16A-2 /DH16A-3" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="Wires/NEM652">
+      <model model="DH16A" lowVersionID="3" highVersionID="3" numOuts="6" numFns="14" productID="DH16A" comment="DH16A-0 /DH16A-1 /DH16A-2 /DH16A-3" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX16">
         <output name="1" label="Front Light" maxcurrent="150mA"/>
         <output name="2" label="Rear Light" maxcurrent="150mA"/>
         <output name="3" label="AUX 1" maxcurrent="300mA"/>

@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: Signals.shtml 22290 2013-01-06 20:27:31Z jacobsen $ -->
+<html lang="en">
+<head>
+  <TITLE>
+ 	JMRI: Signal Heads Documentation
+  </TITLE>
+  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+
+<meta name="Author" content="Bob Jacobsen, Egbert Broerse">
+<meta name="Date.Modified" content="20140515"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <meta name="keywords"
+        content="turnout model railroad JMRI decoderpro panelpro">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+  <div id="container">
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+      <div id="mainContent">
+      <!-- Page Body -->
+        <h1>
+		JMRI: Signal Heads
+        </h1>
+
+		  Signals Heads are how JMRI represents the individual lights/LEDs in a signal on your layout. JMRI handles Signal Heads as a specific kind of
+		  outputs that can be set to various colors: Red, Yellow, Green, Flashing Yellow, etc. Depending on the hardware used to connect your model signals tot the DCC system, the program deploys a different technique to turn each of these colors on or off. <br/>
+		  Signal Heads may be used to build Signal Masts using the <a href="SignalMasts.shtml">Signal Masts Tool</a>. Depending on the way your signals on the layout are connected to the DCC system, Signal Heads are normally part of a Signal Mast, but <a href="../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml">some signal hardware</a> is able to support multiple Aspects directly, and will not require the use of individual Signal Heads.
+
+<a name="table"><h3>The Signal Heads Table</h3></a>
+
+	<a href="../../../package/jmri/jmrit/beantable/SignalHeads.png"><img src="../../../package/jmri/jmrit/beantable/SignalHeads.png" ALIGN=RIGHT WIDTH="554" HEIGHT="184" HSPACE="0" VSPACE="0" ALT="Signal Heads Table figure"></a>
+<!-- The following section is taken from, and should be kept consistent with -->
+<!-- help/en/package/jmri/jmrit/beantable/SignalHeadTable.html -->
+
+All the Signal Heads that JMRI knows about can be referenced
+using the "Signal Heads Table" tool in the Tools menu of most JMRI programs.
+<p>		  
+
+	For more information on configuring Signal Heads with the Signal Heads
+Table, please see the 
+	<a href="../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Heads Table help page</a>.
+
+<a name="add"><h3>Creating a Signal Head</h3></a>
+	<a href="../../../package/jmri/jmrit/beantable/SignalHeadAdd1.png"><IMG SRC="../../../package/jmri/jmrit/beantable/SignalHeadAdd1.png" ALIGN=RIGHT WIDTH="181" HEIGHT="218" HSPACE="0" VSPACE="0" ALT="Add Signal Head window figure"></a>
+
+<p>To define a new Signal Head, click on the 
+	<a href="../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml">Add...</a> button at the bottom of the Signal Heads Table. This will prompt you for the Signal Head type and whatever further information is needed for the selected type.
+		  </br>
+There's more information on the
+	<a href="../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml">Adding Signal Heads help page</a>.
+
+<a name="edit"><h3>Editing an Existing Signal Head</h3>
+	<p> Click on the <b>Edit</b> button at the right of the Signal Heads Table to open the Edit Signal Head window. 
+<p>Once a Signal Head has been defined, its connection Type and System Name can't be changed. You can ignore Signal Heads that you've defined 
+and don't use; they don't hurt anything. If preferred you can delete a Signal Head from the Signal Heads Table by clicking the Delete button. Save
+a copy of the JMRI Configuration file as a backup first and carefully read the warning message that pops up if the Signal Head is used by other parts of JMRI!
+
+<h3>Controlling a Signal Head</h3>
+
+	Apart from manually setting the Aspect of a Signal Head from the Signal Heads Table by clicking on the "Appearance" button in the State column, Signal Heads can be automatically controlled by JMRI in various ways, including:
+<ul>
+	<li><a href="AspectSignaling.shtml">Aspect Signaling</a>, the most versatile method to display various prototype signaling Rule Books of many US and foreign railroads, driven automatically by the state of Turnouts and (Occupancy) Sensors;
+	<li>Via <a href="../Logix.shtml">Logix</a>, a graphical way of controlling Signal Heads with simple logic statements;
+	<li>By <a href="../scripting/index.shtml">Scripts</a>, using a full programming language to do whatever you'd like;
+		<li>Using the <a href="../../../package/jmri/jmrit/blockboss/BlockBossFrame.shtml">Simple Signal Logic</a> Tool, for basic ABS signaling of the North American type (more easily available via the first method).
+</ul>
+
+<h2>Saving and Reloading Configuration</h2>
+
+The Signal Head information is saved as part of the JMRI configuration in an XML file, along with control panel setup and similar stuff. For more information on creating and displaying panels, including how to show signals on your panels, please see the <A HREF="../../apps/PanelPro/Panels.shtml">Panels pages</a>.
+
+<p>Back to the <a href="index.shtml#tools">Signaling main help page</a>.
+	
+<!--#include virtual="/Footer" -->
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
+  </div> <!-- closes #container -->
+</body>
+</html>
+
+
