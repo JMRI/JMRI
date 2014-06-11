@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006 All rights reserved -->
 <!--                                                                        -->
@@ -39,50 +39,50 @@
   -->
   <decoder>
     <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass">
-	  <model model="Generic DH v3.04 (firmware 3.04+)" numOuts="6" numFns="14" productID="GenericDH_3.04" comment="Generic DH profile for unknown or unlisted decoders with update from 31 May 2014">
-		<protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
+      <model model="Generic DH v3.04 (firmware 3.04+)" numOuts="6" numFns="14" productID="GenericDH_3.04" comment="Generic DH profile for unknown or unlisted decoders with update from 31 May 2014">
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+          <protocol>motorola</protocol>
         </protocols>
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-		<!-- Common D&H variable files -->
-		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common.xml"/>
-		<!-- NON common D&H variable files. Deactivate or Activate depending on decoder model and firmware version -->
-			<!-- SECTION 1a - Standard variables with defaults for regular decoders  -->
-				<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common_pwr_normal.xml"/>
-			<!-- SECTION 1b - Standard variables with defaults for low current decoder FH06  -->
-				<!--  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common_pwr_low.xml"/> -->
-			<!-- SECTION 2 - Standard variables for decoders released after around 2012  -->
-				<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_base.xml"/>
-				<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_dc.xml"/>
-			<!-- SECTION 3	- Analog functions  -->
-				<xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv29_analog.xml"/>
-				<xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction.xml"/>
-				<xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv14_analogModeFunction.xml"/>
-			<!-- SECTION 4	- Basic Railcom feedback  -->
-				<xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv28-29_railcom_base.xml"/>
-			<!-- SECTION 5	- Extra Railcom feedback options as of fw3.03 -->
-				<xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv135-136_railcom_fw3.03.xml"/>
-			<!-- SECTION 6	- Extra general options as of fw3.03 -->
-				<xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_energysaving_fw3.03.xml"/>
-			<!-- SECTION 7	- Extra SUSI options as of fw3.03 -->
-				<xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_susi_fw3.03.xml"/>
-			<!-- SECTION 8	- Motorola format as of fw3.04 -->
-				<xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv14_motorola.xml"/>
+      <!-- Common D&H variable files -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common.xml"/>
+      <!-- NON common D&H variable files. Deactivate or Activate depending on decoder model and firmware version -->
+      <!-- SECTION 1a - Standard variables with defaults for regular decoders  -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common_pwr_normal.xml"/>
+      <!-- SECTION 1b - Standard variables with defaults for low current decoder FH06  -->
+      <!--  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common_pwr_low.xml"/> -->
+      <!-- SECTION 2 - Standard variables for decoders released after around 2012  -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_base.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_dc.xml"/>
+      <!-- SECTION 3	- Analog functions  -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv29_analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv14_analogModeFunction.xml"/>
+      <!-- SECTION 4	- Basic Railcom feedback  -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv28-29_railcom_base.xml"/>
+      <!-- SECTION 5	- Extra Railcom feedback options as of fw3.03 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv135-136_railcom_fw3.03.xml"/>
+      <!-- SECTION 6	- Extra general options as of fw3.03 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_energysaving_fw3.03.xml"/>
+      <!-- SECTION 7	- Extra SUSI options as of fw3.03 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_susi_fw3.03.xml"/>
+      <!-- SECTION 8	- Motorola format as of fw3.04 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv14_motorola.xml"/>
     </variables>
-	<resets>
+    <resets>
       <factReset label="Reset All CVs" CV="8" default="8"/>
     </resets>
   </decoder>
-	<!-- Common pane(s) for all Doehler und Haass decoders  -->
-	<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_map_adv.xml"/>
-	<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_common.xml"/>
-	<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_firmware.xml"/>
-	<!-- Pane(s) valid for some decoders only  -->
-		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_railcom.xml"/>
-		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_motorola.xml"/>
+  <!-- Common pane(s) for all Doehler und Haass decoders  -->
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_map_adv.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_common.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_firmware.xml"/>
+  <!-- Pane(s) valid for some decoders only  -->
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_railcom.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_motorola.xml"/>
 </decoder-config>

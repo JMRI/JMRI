@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <!--                                                                        -->
@@ -31,15 +31,17 @@
       <authorinitials>PB</authorinitials>
       <revremark>Creation</revremark>
     </revision>
-   </revhistory>
-<!-- Using JMRI items "Sound options" 13,14,21,22 (see "Sound_cv950.xml", "Sound_cv951-925.xml", "Sound_cv960-962.xml" for other items) --> 
-  <variable label="Breaking noise speed step 1" CV="964" tooltip="CV964 (0-127)" default="6" item="Sound Option 13" exclude="SH10A_1.00">
+  </revhistory>
+  <!-- Using JMRI items "Sound options" 13,14,21,22 (see "Sound_cv950.xml", "Sound_cv951-925.xml", "Sound_cv960-962.xml" for other items) -->
+  <variable CV="964" tooltip="CV964 (0-127)" default="6" item="Sound Option 13" exclude="SH10A_1.00">
     <decVal min="0" max="127"/>
+    <label>Breaking noise speed step 1</label>
     <label xml:lang="fr">Bruit freinage vitesse 1</label>
     <label xml:lang="de">Bremsenquietschen Endfahrstufe</label>
   </variable>
-  <variable label="Breaking noise delay" CV="965" tooltip="CV965 (0-255)" default="3" item="Sound Option 14" exclude="SH10A_1.00">
+  <variable CV="965" tooltip="CV965 (0-255)" default="3" item="Sound Option 14" exclude="SH10A_1.00">
     <decVal min="0" max="255"/>
+    <label>Breaking noise delay</label>
     <label xml:lang="fr">Bruit freinage (délai)</label>
     <label xml:lang="de">Bremsenquietschen Verzögerungszeit</label>
   </variable>

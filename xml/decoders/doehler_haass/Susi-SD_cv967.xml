@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <!--                                                                        -->
@@ -31,16 +31,18 @@
       <authorinitials>PB</authorinitials>
       <revremark>Creation</revremark>
     </revision>
-   </revhistory>
-<!-- Using JMRI item "Advanced Group 2 Option 2" and 3 --> 
-  <variable label="Random stillstand sounds" CV="967" tooltip="CV967 bit 0" mask="XXXXXXXV" default="1" item="Advanced Group 2 Option 2" exclude="SH10A_1.00,SH10A_1.01">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
-	<label xml:lang="fr">Sons aléatoire à l'arrêt</label>
-	<label xml:lang="de">Zufallsgeräusche im Stand</label>
+  </revhistory>
+  <!-- Using JMRI item "Advanced Group 2 Option 2" and 3 -->
+  <variable CV="967" tooltip="CV967 bit 0" mask="XXXXXXXV" default="1" item="Advanced Group 2 Option 2" exclude="SH10A_1.00,SH10A_1.01">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
+    <label>Random stillstand sounds</label>
+    <label xml:lang="fr">Sons aléatoire à l'arrêt</label>
+    <label xml:lang="de">Zufallsgeräusche im Stand</label>
   </variable>
-  <variable label="Random running sound" CV="967" tooltip="CV967 bit 1" mask="XXXXXXVX" default="1" item="Advanced Group 2 Option 3" exclude="SH10A_1.00,SH10A_1.01">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
-	<label xml:lang="fr">Sons aléatoire en marche</label>
-	<label xml:lang="de">Zufallsgeräusche während der Fahrt</label>
+  <variable CV="967" tooltip="CV967 bit 1" mask="XXXXXXVX" default="1" item="Advanced Group 2 Option 3" exclude="SH10A_1.00,SH10A_1.01">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
+    <label>Random running sound</label>
+    <label xml:lang="fr">Sons aléatoire en marche</label>
+    <label xml:lang="de">Zufallsgeräusche während der Fahrt</label>
   </variable>
 </variables>

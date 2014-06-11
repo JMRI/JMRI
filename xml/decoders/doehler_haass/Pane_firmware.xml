@@ -1,102 +1,123 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 2 - 2014-06-03 - PB - improved XML -->
 <!-- version 1 - 2014-02-20 - PB - for common D&H software -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-	<name>Firmware</name>	
-		<column>
-			<row>
-				<column>
-					<row>
-						<label>
-							<text>Finding your Doehler Haass decoder model:</text>
-							<text xml:lang="fr">S'assurer du modèle de décodeur Doehler Haass:</text>
-							<text xml:lang="de">Doehler Haass Decoder Modele herausfinden:</text>
-						</label>
-					</row>
-					<label><text> </text></label>
-					<label>
-						<text>The decoder model cannot be read in DCC. You need use Selectrix (SX2) programming and read PAR 102.</text>
-						<text xml:lang="fr">Déterminer le modèle de décodeur est impossible en DCC, il faut lire le PAR 102 en programmation Selectrix (SX2).</text>
-						<text xml:lang="de">Mit DCC Programmierung kann mann den Decoder nicht erkennen. Mit SX2 (Selectrix) Programmierung ist PAR 102 aber lesbar.</text>
-					</label>
-					<label><text> </text></label>
-					<separator/>
-					<label><text> </text></label>
-					<row>
-						<label>
-							<text>Finding the firmware version:</text>
-							<text xml:lang="fr">Lire la version de firmware (micrologiciel):</text>
-							<text xml:lang="de">Firmware Version herausfinden:</text>
-						</label>
-					</row>
-					<label><text> </text></label>
-					<label>
-						<text>If CV7 is inferior to 10: CV7 it is the main firmware version, for versions before May 2014.</text>
-						<text xml:lang="fr">Si le CV7 est inférieur à 10: le CV7 indique la version principale d'un firmware d'avant Mai 2014.</text>
-						<text xml:lang="de">Mit CV7 unter 10: CV7 ist die Firmware Hauptversion, für Firmwares älter als Mai 2014.</text>
-					</label>
-					<label>
-						<text>Exact Firmware versions before May 2014 cannot be read in DCC (except the main version in CV7).</text>
-						<text xml:lang="fr">La version exacte d'un firmware d'avant Mai 2014 n'est pas lisible en DCC.</text>
-						<text xml:lang="de">Mit DCC Programmierung kann mann dann die genaue Firmware Version nicht lesen.</text>
-					</label>
-					<label>
-						<text>You need to use a Selectrix (SX2) command station, and read:</text>
-						<text xml:lang="fr">Il faut utiliser une centrale Sélectrix (SX2) et lire:</text>
-						<text xml:lang="de">Eine SX2 (Selectrix) Zentrale ist erforderlich. Damit kann mann ablesen:</text>
-					</label>
-				</column>
-			</row>
-			<row>
-				<column>
-					<label><text>PAR 103</text></label>
-					<label><text>PAR 104</text></label>
-					<label><text>PAR 105</text></label>
-					<label><text>PAR 106</text></label>
-				</column>
-				<column>
-					<label>
-						<text>  Main Fw version number (e.g. 1 in 1.33)</text>
-						<text xml:lang="fr">  Version de firmware principale (exemple: 1 dans 1.33)</text>
-						<text xml:lang="de">  Versionsnummer (z.B. 1 in 1.33)</text>
-					</label>
-					<label>
-						<text>  Date (MMY)</text>
-						<text xml:lang="fr">  Date (MMA)</text>
-						<text xml:lang="de">  Datum (MMJ)</text>
-					</label>
-					<label>
-						<text>  Firmware revision number (e.g. 10 in 8.10)</text>
-						<text xml:lang="fr">  Révision de firmware (exemple: 10 dans 8.10)</text>
-						<text xml:lang="de">  Revisionsnummer (z.B. 10 in 8.10)</text>
-					</label>
-					<label>
-						<text>  Date (MMY)</text>
-						<text xml:lang="fr">  Date (MMA)</text>
-						<text xml:lang="de">  Datum (MMJ)</text>
-					</label>
-				</column>
-			</row>
-			<label><text> </text></label>
-			<row>
-				<column>
-						<label>
-							<text>If CV7 is 10 or higher: CV7 is the revision date, for firmwares from May 2014 or later.</text>
-							<text xml:lang="fr">Si CV7 n'est pas inférieur à 10: le CV7 est la date de révision, pour les firmwares de Mai 2014 et ultérieurs</text>
-							<text xml:lang="de">Falls CV7 ist 10 oder mehr: CV7 ist das Revisionsdatum, für Firmwares ab Mai 2014.</text>
-						</label>
-					<label><text> </text></label>
-					<row>
-						<label>
-							<text>Format is then MMY. Example: 054 is Firmware from May 2014.</text>
-							<text xml:lang="fr">Format: MMA. Exemple: 054 est le firmware de Mai 2014</text>
-							<text xml:lang="de">Format ist: MMJ. Beispiel: 054 bedeutet Mai 2014</text>
-						</label>
-					</row>
-				</column>
-			</row>
-			<label><text> </text></label>
-		</column>
-	</pane>
-  
+  <name>Firmware</name>
+  <column>
+    <row>
+      <column>
+        <row>
+          <label>
+            <text>Finding your Doehler Haass decoder model:</text>
+            <text xml:lang="fr">S'assurer du modèle de décodeur Doehler Haass:</text>
+            <text xml:lang="de">Doehler Haass Decoder Modele herausfinden:</text>
+          </label>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>The decoder model cannot be read in DCC. You need use Selectrix (SX2) programming and read PAR 102.</text>
+          <text xml:lang="fr">Déterminer le modèle de décodeur est impossible en DCC, il faut lire le PAR 102 en programmation Selectrix (SX2).</text>
+          <text xml:lang="de">Mit DCC Programmierung kann mann den Decoder nicht erkennen. Mit SX2 (Selectrix) Programmierung ist PAR 102 aber lesbar.</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <separator/>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <label>
+            <text>Finding the firmware version:</text>
+            <text xml:lang="fr">Lire la version de firmware (micrologiciel):</text>
+            <text xml:lang="de">Firmware Version herausfinden:</text>
+          </label>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>If CV7 is inferior to 10: CV7 it is the main firmware version, for versions before May 2014.</text>
+          <text xml:lang="fr">Si le CV7 est inférieur à 10: le CV7 indique la version principale d'un firmware d'avant Mai 2014.</text>
+          <text xml:lang="de">Mit CV7 unter 10: CV7 ist die Firmware Hauptversion, für Firmwares älter als Mai 2014.</text>
+        </label>
+        <label>
+          <text>Exact Firmware versions before May 2014 cannot be read in DCC (except the main version in CV7).</text>
+          <text xml:lang="fr">La version exacte d'un firmware d'avant Mai 2014 n'est pas lisible en DCC.</text>
+          <text xml:lang="de">Mit DCC Programmierung kann mann dann die genaue Firmware Version nicht lesen.</text>
+        </label>
+        <label>
+          <text>You need to use a Selectrix (SX2) command station, and read:</text>
+          <text xml:lang="fr">Il faut utiliser une centrale Sélectrix (SX2) et lire:</text>
+          <text xml:lang="de">Eine SX2 (Selectrix) Zentrale ist erforderlich. Damit kann mann ablesen:</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <label>
+          <text>PAR 103</text>
+        </label>
+        <label>
+          <text>PAR 104</text>
+        </label>
+        <label>
+          <text>PAR 105</text>
+        </label>
+        <label>
+          <text>PAR 106</text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text>  Main Fw version number (e.g. 1 in 1.33)</text>
+          <text xml:lang="fr">  Version de firmware principale (exemple: 1 dans 1.33)</text>
+          <text xml:lang="de">  Versionsnummer (z.B. 1 in 1.33)</text>
+        </label>
+        <label>
+          <text>  Date (MMY)</text>
+          <text xml:lang="fr">  Date (MMA)</text>
+          <text xml:lang="de">  Datum (MMJ)</text>
+        </label>
+        <label>
+          <text>  Firmware revision number (e.g. 10 in 8.10)</text>
+          <text xml:lang="fr">  Révision de firmware (exemple: 10 dans 8.10)</text>
+          <text xml:lang="de">  Revisionsnummer (z.B. 10 in 8.10)</text>
+        </label>
+        <label>
+          <text>  Date (MMY)</text>
+          <text xml:lang="fr">  Date (MMA)</text>
+          <text xml:lang="de">  Datum (MMJ)</text>
+        </label>
+      </column>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <column>
+        <label>
+          <text>If CV7 is 10 or higher: CV7 is the revision date, for firmwares from May 2014 or later.</text>
+          <text xml:lang="fr">Si CV7 n'est pas inférieur à 10: le CV7 est la date de révision, pour les firmwares de Mai 2014 et ultérieurs</text>
+          <text xml:lang="de">Falls CV7 ist 10 oder mehr: CV7 ist das Revisionsdatum, für Firmwares ab Mai 2014.</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <label>
+            <text>Format is then MMY. Example: 054 is Firmware from May 2014.</text>
+            <text xml:lang="fr">Format: MMA. Exemple: 054 est le firmware de Mai 2014</text>
+            <text xml:lang="de">Format ist: MMJ. Beispiel: 054 bedeutet Mai 2014</text>
+          </label>
+        </row>
+      </column>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+  </column>
+</pane>

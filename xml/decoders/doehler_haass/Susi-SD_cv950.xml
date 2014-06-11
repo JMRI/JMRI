@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <!--                                                                        -->
@@ -31,11 +31,12 @@
       <authorinitials>PB</authorinitials>
       <revremark>Creation</revremark>
     </revision>
-   </revhistory>
-<!-- Using JMRI items "Sound options" 8 (see "Sound_cv951-925.xml", "Sound_cv960-965.xml" for other items)-->  
-  <variable label="Max time to standstill sound" CV="950" tooltip="CV950 (0-255 x100ms)" default="0" item="Sound Option 8" exclude="SH10A_1.00,SH10A_1.01">
-	<decVal min="0" max="255"/>
-	<label xml:lang="fr">Délai max avant son marche arrêt</label>
-	<label xml:lang="de">Leerlauf Verzögerungszeit</label>
-   </variable>
+  </revhistory>
+  <!-- Using JMRI items "Sound options" 8 (see "Sound_cv951-925.xml", "Sound_cv960-965.xml" for other items)-->
+  <variable CV="950" tooltip="CV950 (0-255 x100ms)" default="0" item="Sound Option 8" exclude="SH10A_1.00,SH10A_1.01">
+    <decVal min="0" max="255"/>
+    <label>Max time to standstill sound</label>
+    <label xml:lang="fr">Délai max avant son marche arrêt</label>
+    <label xml:lang="de">Leerlauf Verzögerungszeit</label>
+  </variable>
 </variables>

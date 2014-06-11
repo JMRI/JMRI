@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <!--                                                                        -->
@@ -31,22 +31,25 @@
       <authorinitials>PB</authorinitials>
       <revremark>Creation</revremark>
     </revision>
-   </revhistory>
-<!-- Using JMRI item "Advanced Group 2 Option 1" --> 
-  <variable label="Flash-ROM protection" CV="960" mask="XXXXXXXV" default="0" item="Advanced Group 2 Option 1" readOnly="yes" exclude="SH10A_1.00">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-	<label xml:lang="fr">Protection mémoire flash</label>
-	<label xml:lang="de">Schreibschutz Flash-ROM</label>
+  </revhistory>
+  <!-- Using JMRI item "Advanced Group 2 Option 1" -->
+  <variable CV="960" mask="XXXXXXXV" default="0" item="Advanced Group 2 Option 1" readOnly="yes" exclude="SH10A_1.00">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>Flash-ROM protection</label>
+    <label xml:lang="fr">Protection mémoire flash</label>
+    <label xml:lang="de">Schreibschutz Flash-ROM</label>
   </variable>
-<!-- Using JMRI items "Sound options" 13,14,21,22 (see "Sound_cv950.xml", "Sound_cv951-925.xml", "Sound_cv964-965.xml" for other items) --> 
-  <variable label="Threshold ZVS" CV="961" tooltip="CV961 (0-14)" default="9" item="Sound Option 21" exclude="SH10A_1.00">
-	<decVal min="0" max="14"/>
-	<label xml:lang="fr">Seuil ZVS</label>
-	<label xml:lang="de">Schwellenwert ZVS</label>
-   </variable>
-   <variable label="Smoke puffs at speed 127" CV="962" tooltip="CV962 (0-255)" default="0" item="Sound Option 22" exclude="SH10A_1.00">
-	<decVal min="0" max="255"/>
-	<label xml:lang="fr">Poussée de fumée en vitesse 127</label>
-	<label xml:lang="de">Dampfstöße bei Fahrstufe 127</label>
-   </variable>
+  <!-- Using JMRI items "Sound options" 13,14,21,22 (see "Sound_cv950.xml", "Sound_cv951-925.xml", "Sound_cv964-965.xml" for other items) -->
+  <variable CV="961" tooltip="CV961 (0-14)" default="9" item="Sound Option 21" exclude="SH10A_1.00">
+    <decVal min="0" max="14"/>
+    <label>Threshold ZVS</label>
+    <label xml:lang="fr">Seuil ZVS</label>
+    <label xml:lang="de">Schwellenwert ZVS</label>
+  </variable>
+  <variable CV="962" tooltip="CV962 (0-255)" default="0" item="Sound Option 22" exclude="SH10A_1.00">
+    <decVal min="0" max="255"/>
+    <label>Smoke puffs at speed 127</label>
+    <label xml:lang="fr">Poussée de fumée en vitesse 127</label>
+    <label xml:lang="de">Dampfstöße bei Fahrstufe 127</label>
+  </variable>
 </variables>

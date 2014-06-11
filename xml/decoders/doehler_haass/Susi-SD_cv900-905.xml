@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <!--                                                                        -->
@@ -31,38 +31,44 @@
       <authorinitials>PB</authorinitials>
       <revremark>Creation</revremark>
     </revision>
-   </revhistory>
-<!-- Using JMRI identification pane (Product ID item in JMRI isn't bound to a specific NMRA CV) --> 
-  <variable label="Product ID: " CV="901" tooltip="CV901" readOnly="yes" item="Product Number" default="100">
+  </revhistory>
+  <!-- Using JMRI identification pane (Product ID item in JMRI isn't bound to a specific NMRA CV) -->
+  <variable CV="901" tooltip="CV901" readOnly="yes" item="Product Number" default="100">
     <decVal/>
+    <label>Product ID: </label>
     <label xml:lang="fr">ID produit: </label>
     <label xml:lang="de">Decoderkennzeichen: </label>
   </variable>
-<!-- Using JMRI item "Advanced Group 1" since identification CVs for SUSI are not standard.--> 
-  <variable label="Manufacturer ID: " CV="900" tooltip="CV900" readOnly="yes" item="Advanced Group 1 Option 1">
+  <!-- Using JMRI item "Advanced Group 1" since identification CVs for SUSI are not standard.-->
+  <variable CV="900" tooltip="CV900" readOnly="yes" item="Advanced Group 1 Option 1">
     <decVal/>
+    <label>Manufacturer ID: </label>
     <label xml:lang="it">ID Costruttore: </label>
     <label xml:lang="fr">ID constructeur: </label>
     <label xml:lang="de">ID Hersteller: </label>
   </variable>
-  <variable label="Decoder Version No: " CV="902" tooltip="CV902" readOnly="yes" item="Advanced Group 1 Option 2">
+  <variable CV="902" tooltip="CV902" readOnly="yes" item="Advanced Group 1 Option 2">
     <decVal/>
+    <label>Decoder Version No: </label>
     <label xml:lang="it">Versione Decoder Costruttore: </label>
     <label xml:lang="fr">Version décodeur: </label>
     <label xml:lang="de">Versionsnummer: </label>
   </variable>
-  <variable label="Version date (MMY): " CV="903" tooltip="CV903" readOnly="yes" item="Advanced Group 1 Option 3">
+  <variable CV="903" tooltip="CV903" readOnly="yes" item="Advanced Group 1 Option 3">
     <decVal/>
+    <label>Version date (MMY): </label>
     <label xml:lang="fr">Date version décodeur (MMY): </label>
     <label xml:lang="de">Datum Versionsnummer (MMY): </label>
   </variable>
-  <variable label="Revision No: " CV="904" tooltip="CV904" readOnly="yes" item="Advanced Group 1 Option 4">
+  <variable CV="904" tooltip="CV904" readOnly="yes" item="Advanced Group 1 Option 4">
     <decVal/>
+    <label>Revision No: </label>
     <label xml:lang="fr">Révision décodeur: </label>
     <label xml:lang="de">Revisionsnummer: </label>
   </variable>
-   <variable label="Revision Date (MMY): " CV="905" tooltip="CV905" readOnly="yes" item="Advanced Group 1 Option 5">
+  <variable CV="905" tooltip="CV905" readOnly="yes" item="Advanced Group 1 Option 5">
     <decVal/>
+    <label>Revision Date (MMY): </label>
     <label xml:lang="fr">Date révision décodeur (MMY): </label>
     <label xml:lang="de">Revisionsnummer Datum (MMY): </label>
   </variable>
