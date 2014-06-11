@@ -3,8 +3,9 @@
 <head>
 <!-- Copyright ($Author$) 2009 -->
 <!-- $Id$ -->
-<title>JMRI: Signal Group Table</title>
-
+<title>JMRI: Signal Groups Table</title>
+<meta name="Author" content="Bob Jacobsen, Egbert Broerse">
+<meta name="Date.Modified" content="20140515">
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -21,45 +22,48 @@
 <div id="mainContent">
 
 <h1> 
-JMRI: Signal Group Table
+JMRI: Signal Groups
 </h1>
-Signal Groups.
 
-Signal groups are used to define a number of signal heads, where only one signal head can be illuminated at any given time, depending upon the status of the associated signal mast and a set of conditions.<br>
+<p>Signal Groups are used to define a number of Signal Heads, where only one Signal Head can be illuminated at any given time, depending upon the state of the associated Signal Mast and a set of conditions.<br>
 
-Signal groups would be used where additional indicators are used to support the main signal mast, such as Junction, Route or Speed displays.  These indicators provide additional information to the driver that is not given by the main signal mast.  Such indicators are frequently seen in European and UK signalling.<br>
+Signal Groups would be used where additional indicators are used to support the main Signal Mast, such as Junction, Route or Speed displays. These indicators provide additional information to the driver that is not given by the main Signal Mast. Such indicators are frequently seen in European and UK signaling.<br>&nbsp;<br>
 
+	<a href="SignalGroupsTable.png">
+   <img src="SignalGroupsTable.png" 
+        width="386" height="165">
+</a>
+	
 <h2>Junction Indicators</h2>
-A Junction indicator can be configured to display anything from 1 to 6 diverging routes.  A single indicator will frequently be found where a branch line diverges off from a main line.  Multiple indicators will be found in more complex areas such as the approach to stations and good yards, where multiple routes can be taken.  The junction indicator informs the driver that he is about to take a different route and should therefore adjust his speed according to the signage.<br>
+A Junction Indicator can be configured to display anything from 1 to 6 diverging routes. A single indicator will frequently be found where a branch line diverges off from a main line.  Multiple indicators will be found in more complex areas such as the approach to stations and good yards, where multiple routes can be taken. The junction indicator informs the driver that he is about to take a different route and should therefore adjust his speed according to the signage.<br>
 
-The Junction indicators themselves will be set according to a given set of turnouts on for that junction.<br>
+The Junction Indicators themselves will be set according to a given set of Turnouts on for that junction.<br>
 
 <h2>Route Indicators</h2>
-A route indicator as used in the UK, will display a number or letter, they are predominately found attached to signals on the approach to a Station.  They display which platform the train has been routed into, given the complexity of some station throats, there may be a number of different physical routes that could be take from the signal to the destination. Thus a junction indicator could not be used when tided in with turnout positions.  In addition the junction indicator can only deal with 6 different routes, and some stations have more than 6 platforms.<br>
+A Route Indicator as used in the UK, will display a number or letter. They are predominately found attached to signals on the approach to a Station and display which platform the train has been routed into. Given the complexity of some station throats, there may be a number of different physical routes that could be take from the signal to the destination. Thus a junction indicator could not be used when tied in with turnout positions. In addition the junction indicator can only deal with 6 different routes, and some stations have more than 6 platforms.<br>
 
-Therefore, the route indicator can only display one destination at time.  The displaying of a route doesn't necessarily indicate that the driver will take the same route to get to the destination platform.<br>
+Therefore, the Route Indicator can only display one destination at time. The displaying of a route doesn't necessarily indicate that the driver will take the same route to get to the destination platform.<br>
 
-<a href="SignalGroup.png">
-   <img src="SignalGroup.png" 
-        height="274" width="306">
+<a href="SignalGroupAdd.png">
+   <img src="SignalGroupAdd.png" 
+        width="306" height="274" >
 </a>
 
-<h2>Each signal group comprises of the following</h2>
-
-A Signal Mast - to which this group is attached.<br>
-A list of appearances that can be valid for the signal group to become active.<br>
-	eg. The Signal Mast, must be set for Proceed or Caution, but not Danger.<br>
-
-<p>The signal heads that make up each indication of the group.
-Signal heads within the group are made up from signal heads created using the single output type, from the signal head table.<br>
+	<p>Each Signal Group comprises the following:
+<ul>
+	<li>A Signal Mast - to which this Signal Group is attached.<br>
+<li>A list of Appearances that can be valid for the Signal Group to become active eg. the Signal Mast must be set for Proceed or Caution, but not Danger.
+	<li>The Signal Heads that make up each indication of the Signal Group.<br/>
+Signal Heads within the Signal Group are made up from Signal Heads from the Signal Heads Table, created using the Single Output connection type.
 <a href="SingleSignalHead.png">
    <img src="SingleSignalHead.png" 
-        height="159" width="121">
-</a>
-<p>Each Signal head then has a set of criteria that have to be met before that signal head is illuminated.  This is made up from Turnouts and/Or Sensor states.<br>
-
+        height="159" width="121" align="right">
+		</a>
+<li>Each Signal Head has a set of criteria that have to be met before that Signal Head is illuminated. These are made up from Turnouts and/or Sensor states and can be changed by clicking on one of the Edit buttons.<br/>
+	</ul>
+	
 <h2>Example - Junction Indicator</h2>
-Consider the following track diagram, here you have 6 possible junctions of off the main running line.<br>
+Consider the following track diagram, where you have 6 possible junctions off the main running line.<br>
 
 <a href="SignalGroupTrackDiagram.png">
    <img src="SignalGroupTrackDiagram.png" 
@@ -72,9 +76,9 @@ Consider the following track diagram, here you have 6 possible junctions of off 
         height="90" width="262">
 </a>
 
-<p>With this configuration, you would create a single turnout signal head for each position, configured with a Dark and Lunar appearances.  You can use any two combinations of colours you like, however Dark and Lunar are more suitable for this situation.
+<p>With this configuration, you would create a single turnout Signal Head for each position, configured with a Dark and Lunar appearances. You can use any two combinations of colours you like, however Dark and Lunar are more suitable for this situation.
 
-<p> Within the SignalGroup, you would then select each of the Signalheads that are used to create the junction indicator.  The logic for each signalhead is then configured as follows.
+	<p> Within the Signal Group, you would then select each of the Signal Heads that are used to create the junction indicator. The logic for each Signal Head is then configured as follows:
 <table>
   <td width=200 valign=top>
   <p>Position 1 - Set Turnouts</p>
@@ -118,6 +122,12 @@ Consider the following track diagram, here you have 6 possible junctions of off 
  </tr>
 </table>
 
+	<h2>Saving changes</h2>
+To permanently save changes to the Signal Groups Table, use one of the "Store to file" options in the "File"
+	menu before quitting JMRI.
+
+<p>Back to the <a href="../../../../html/tools/signaling/index.shtml#tools">Signaling main help page</a>.
+	
 <!--#include virtual="/Footer" -->
 </body>
 </html>

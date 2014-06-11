@@ -52,78 +52,15 @@ JMRI: Signal Head Documentation
 
       <div id="mainContent">
       <!-- Page Body -->
-<h1> JMRI Documentation T&#234;te de Signal</h1>
+<h1> JMRI Documentation de la Signalisation</h1>
 
-Les Signaux (ou plus formellementement les T&#234;tes de Signal) sont comment JMRI repr&#233;sente et
-contr&#244;le les t&#234;tes de signal sur un r&#233;seau. Ils sont un type sp&#233;cifique de
-p&#233;riph&#233;rique de sortie qui peut &#234;tre r&#233;gl&#233; pour diff&#233;rentes couleurs: Rouge, Jaune, Vert, Jaune clignotant, etc
-
-<p>
-Beaucoup plus d'informations &#224; propos de la signalisation JMRI est disponible
-depuis la
-<a href="signaling/index.shtml"> page d'aide de la signalisation JMRI </a>.
-
-<a name="table"><h3> Le Tableau T&#234;te de Signal </h3></a>
-
-<A Href="./images/SigTable.gif"><IMG SRC="./images/SigTable.gif" ALIGN= RIGHT WIDTH= "149" height= "179" hspace = "0" vspace = "0" ALT = " simple panneau de signaux logiques"></a>
-<!-- La section suivante est tir&#233;e de, et doit &#234;tre conserv&#233; compatible avec-->
-<!-- help/fr/package/JMRI/jmrit/beantable/SignalHeadTable.html -->
-
-Toutes les t&#234;tes signal que JMRI conna&#238;t peuvent &#234;tre r&#233;f&#233;renc&#233;es
-en utilisant l'outil "Tableau T&#234;te Signal" dans le menu Outils des programmes JMRI.
-<p>
-Pour plus d'informations sur la configuration et l'exploitation des signaux avec le Tableau T&#234;te Signal
-, s'il vous pla&#238;t voir la
-<a href="../../package/jmri/jmrit/beantable/SignalHeadTable.shtml"> page d'aide du tableau T&#234;te de Signal </a>.
-
-<a name="add"><h3> Cr&#233;er une T&#234;te Signal </h3></a>
-<A Href="./images/SigAdd.gif"><IMG SRC="./images/SigAdd.gif" ALIGN=RIGHT WIDTH="181" height="218" hspace="0" vspace="0" ALT ="Simple Signal Logic panel figure"></a> >
-
-<! - La section suivante est tir&#233;e de, et doit &#234;tre conserv&#233; compatible avec ->
-<! - help/fr/package/JMRI/jmrit/beantable/SignalAddEdit.html ->
-
-<P> Pour d&#233;finir une nouvelle t&#234;te signal , cliquez sur le bouton <b>Ajouter Nouvelle T&#234;te Signal</b> dans le Tableau T&#234;te Signal .
-Il vous sera
- demander le type de t&#234;te signal (sorties contr&#244;l&#233;es par l'aiguillage; SE8c; etc), et
-toutes les informations de configuration n&#233;cessaire pour votre choix.
-Il y a plus d'informations sur la
-page d'aide <a href="../../package/jmri/jmrit/beantable/SignalAddEdit.shtml"> sur l'ajout des t&#234;tes signal </a>.
-
-<a name="edit"><h3> Modification d'une t&#234;te signal existante </h3>
-
-<P> Une fois qu'une t&#234;te signal a &#233;t&#233; d&#233;finie, vous ne pouvez pas actuellement changer
-son type directement depuis le programme.
-Ceci n&#233;cessite des capacit&#233;s, un jour peut &#234;tre quelqu'un l'&#233;crira probablement.
-En attendant, vous pouvez simplement ignorer les t&#234;tes signal que vous avez d&#233;fini
-et que nous ne voulez pas utiliser, ils ne d&#233;range en rien.
-Ou vous pouvez &#233;diter vos fichiers de configuration sauvegard&#233; pour retirer l'ensemble de la
-ligne contenant la d&#233;finition de signal, cherchez le nom du signal
-pour localiser la ligne droite. Notez que vous devez supprimer la ligne enti&#232;re, et
-ne pas laisser toute partie de celui-ci, en particulier l'ouverture et la fermeture de parenth&#232;ses. Enregistrer
-une copie du fichier comme une premi&#232;re sauvegarde!
-
-<h3> Commande d'une T&#234;te Signal </h3>
-
-Les T&#234;tes Signal peuvent &#234;tre contr&#244;l&#233;es de diff&#233;rentes fa&#231;ons par JMRI, y compris
-<ul>
-<LI><a Href="signaling/index.shtml"> logique simple signal</a>, pour la signalisation de base ABS* de signalisation de type  Nord am&#233;ricain
-<li><a href="Logix.shtml"> Logix </a>, un moyen graphique de contr&#244;le des t&#234;tes signal avec une logique simple
-<li> <a href="scripting/index.shtml"> scripts JMRI</a>, en utilisant un langage de programmation complet pour faire tout ce que vous aimeriez
-</UL>
-
-
-<h2> Sauvegarder et Recharger la configuration </h2>
-
-L'informations t&#234;te de signal est enregistr&#233;e avec la configuration dans un fichier XML, le long
-avec l'installation du panneau de commande et des trucs similaires. Pour plus d'informations
-sur la cr&#233;ation et l'affichage des panneaux, y compris la fa&#231;on de montrer les t&#234;tes signal
-sur vos panneaux,
-S'il vous pla&#238;t voir les
-<A HREF="../apps/PanelPro/Panels.html"> pages Panneaux</a>.
-<p>
-* ABS= Block Syst&#232;me Automatique
+<!-- Nouveau pages en Anglais, Avril 2014 -->
+	<p>
+Venez &aacute; la 
+<a href="signaling/index.shtml">page d'aide de la Signalisation JMRI</a>.
 </p>
-<!--#include virtual="/Footer" -->
+
+		  <!--#include virtual="/Footer" -->
 
       </div><!-- closes #mainContent-->
     </div> <!-- closes #mBody-->

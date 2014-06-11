@@ -4,7 +4,8 @@
 <HEAD>
 <TITLE>JMRI: SignalMast Logic Table Help</TITLE>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Kevin Dickerson" NAME="Author">
+<meta name="Date.Modified" content="20140328"/>
+<META NAME="Author" CONTENT="Kevin Dickerson, Egbert Broerse">
 <META NAME="keywords" CONTENT="JMRI help Signal Mast Logic Table">
 
 <!-- Style -->
@@ -23,69 +24,78 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>The SignalMast Logic Table</H1>
+<H1>The Signal Mast Logic Table</H1>
 
-<P>A SignalMast logic, consists of a destination Mast, one or more turnouts, 
-block, sensors or other signalmasts that must be in a specific state before the 
-source signalmast can be set from a "Danger" aspect.
-<P>If you have drawn up your layout on layout editor correctly with all the block 
+<P>A Signal Mast Logic for a certain Source Signal Mast consists of a Destination Signal Mast, one or more Turnouts, 
+Blocks, Sensors or other Signal Masts that must be in a specific state before the 
+source Signal Mast can be set from a "Danger" aspect.
+<P>If you have correctly drawn up your layout on Layout Editor with all the block 
 information then it is possible for the system to automatically build up all 
-the SignalMast source and destination pairs, along with blocks, turnouts and their 
-settings.
-<H2>SignalMast Logic Table Columns</H2>
-
+the Signal Mast source and destination pairs, along with Blocks, Turnouts and their 
+	settings.</br>
+This information is managed via the Signal Mast Logic Table.
+	
+		</br>
+	  <a href="SignalMastLogic.png"><img src="SignalMastLogic.png" width="530" height="166" align="right"></a>
+	
+<h3>Signal Mast Logic Table Columns</h3>
+	  <p>The information in the Signal Mast Logic Table is displayed in 8 columns:
 <DL>
-	<DT>Source</DT>
-	<DD>This is the signal mast that you wish to set the logic up from.  There
-    can be multiple instances of the source mast in the table, depending upon
-    the number of different destination masts that are reachable from it.
+	<DT>1. Source</DT>
+	<DD>This is the Signal Mast that you wish to set the Signal Mast Logic up for. There
+    can be multiple instances of a source Signal Mast in the Signal Mast Logic Table, depending upon
+    the number of different destination Signal Masts that are reachable from the source Signal Mast on the layout.
     <br>
-    Consider it as the signal mast that the driver is currently facing.</DD>
+    Consider it as the Signal Mast that the engineer is currently facing.</DD>
 
-    <DT>Appearance</DT>
-    <DD>The current appearance of the source mast</DD>
+    <DT>2. Appearance</DT>
+    <DD>The current Appearance of the source Signal Mast.</DD>
     
-	<DT>Destination</DT>
-	<DD>This is the destination signal mast which is next down the line from the
-    source mast.  There can be multiple instances of the destination mast, all 
-    with different source masts.
+	<DT>3. Destination</DT>
+	<DD>This is the destination Signal Mast which is next down the line from the
+    source Signal Mast. There can be multiple instances of the destination Signal Mast, each 
+    with a different source Signal Mast.
 	</DD>
 
-    <DT>Appearance</DT>
-    <DD>The current appearance of the destination mast</DD>
+    <DT>4. Appearance</DT>
+    <DD>The current Appearance of the destination Signal Mast.</DD>
 
-    <DT>Comment</DT>
+    <DT>5. Comment</DT>
     <DD>A free form user editable field for the user to assign comment against 
-    the logic</DT>
+    the logic. Doubleclick the field to edit it.</DT>
 
-	<DT>Delete</DT>
-	<DD>Pushing the "Delete" button will remove the Signal Mast Logic from the
-	table. 
-	<p>
+	<DT>6. Delete</DT>
+	<DD>Pushing one of the "Delete" buttons will remove that line of Signal Mast Logic from the
+		table.<br/>
 	Note that this doesn't remove the Signal Mast Logic from any files you've
-	saved that contain it.  If you load one of those files, perhaps
-	when you restart the program, the route will reappear.
+	saved that contain it. If you load one of those files, perhaps
+	when you restart JMRI, the Signal Mast Logic will reappear.
 	You should use one of the "Store to file" options in the "File"
-	menu to save new versions of any files that contain this route.
+	menu to save new versions of any files that contain the updated Signal Mast Logic.
 	</DD>
 
+	<DT>7. Enabled</DT>
+	<DD>To disable a Signal Mast Logic from triggering, uncheck the "Enabled" box
+	for the Signal Mast Logic.</DD>
 
-	<DT>Enabled</DT>
-	<DD>To disable a SignalMast Logic from triggering, uncheck the "Enabled" box
-	for the route.</DD>
-
-	<DT>Edit</DT>
-	<DD>Push this button to edit the Signal Mast Logic. For more information see <A
-		HREF="../Signalling/AddEditSignallingLogic.shtml">Adding/Editing Signal Mast Logic</A>.</DD>
+	<DT>8. Edit</DT>
+	<DD>Push the Edit button to edit that Signal Mast Logic. For more information see <A
+		HREF="AddEditSignalingLogic.shtml">Adding/Editing Signal Mast Logic</A>.</DD>
 </DL>
 
-<H3>Add SignalMast Logic</H3>
+<H3>Add Signal Mast Logic</H3>
 
-<DD>This is done via the Add button at the bottom of the screen, for more information
+<DD>This is done via the Add... button at the bottom of the window. For more information
 on editing and adding Signal Mast Logics see 
-
-	<A HREF="../signalling/AddEditSignallingLogic.shtml">Adding/Editing SignalMast Logic</A>.</DD>
+<a HREF="AddEditSignalingLogic.shtml">Adding/Editing Signal Mast Logic</a>.</DD>
 </DL>
+	
+	<h2>Saving changes</h2>
+To permanently save changes to the Signal Mast Logic Table, use one of the "Store to file" options in the "File"
+	menu before quitting JMRI.
+	
+	<p>Back to the <a href="../../../../html/tools/signaling/SignalMastLogic.shtml">Signal Mast Logic help page</a>.
+	
 <!--#include virtual="/Footer" -->
 </BODY>
 </HTML>
