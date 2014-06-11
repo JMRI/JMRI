@@ -988,20 +988,31 @@
    <H3>Message Format</H3>
 
    If you would like your manifest and switch lists printed in a tabular (columns) format select the
-   "Tabular" checkbox. The "Two Column" format creates manifests with two major columns, the left
-   column shows the car pick ups for a location, and the right column shows the set outs. The "Two
-   Column" only uses half the page for the car information, so you might have to limit the number of
-   car attributes (see
-   <A HREF="#MessageFormats">Message Formats</A> below) in order get the data to fit. The text color
-   options for set outs, pick ups, and local move are not available for the "Two Column" format.
+   "Tabular" checkbox. The program determines the maximum character length for each attribute (Road,
+   Number, Type, Length, Color, Load, etc.) when determining the width of each column. Location
+   names and track names can be up to 25 characters, so you might want to consider reasonable length
+   names when using the "Tabular" feature. FYI, the program reports the maximum track and location
+   names to the system console when creating manifests.
+
+   <P>There are three options with regards to how your manifests and switch lists
+   are formated. "Standard" provides one line for each car pick up or set out. The "Two Column"
+   format creates manifests with two major columns, the left column shows the car pick ups for a
+   location, and the right column shows the set outs. The "Two Column" only uses half the page for
+   the car information, so you might have to limit the number of car attributes (see
+   <A HREF="#MessageFormats">Message Formats</A> below) in order get the data to fit. The next
+   format available is "Two Column (Track)". This format prints the track name in both columns in a
+   header format. The text color options for set outs, pick ups, and local move are not available
+   for the "Two Column" formats.</P>
    <P>The "Tabular" and "Two Column" formats use equally spaced fonts like "Courier New" or
-    "Monospaced" so only equally spaced fonts are shown in the "Font" selection box when either
+    "Monospaced" so only equally spaced fonts are shown in the font selection box when either
     option is selected.</P>
    <P>
     After selecting "Tabular" and pressing the "Save" button, you will find three additional "Tab"
     options at the end of the <A HREF="#MessageFormats">Message Format</A> drop down menus. Use
     these three tabs to space out the manifest or switch list to your liking. You can change the
     length of the tab characters if you wish, see <A HREF="#ManifestPrintOptionsTools">Tools</A>.
+    Goto <A HREF="#PrintingManifests">Printing Manifests</A> to see examples of manifests and switch
+    lists using the described options.
    </P>
 
    <H3>Set Out Text Color</H3>
@@ -1109,11 +1120,10 @@
    <A NAME="ManifestPrintOptionsTools"></A>
    <H3>Manifest Print Options Tools</H3>
 
-   The menu bar of the "Manifest Print Options" provides several options listed under "Tools". The
-   first is the ability to control the length of the tab character when using the "Tabular" feature.
-   Select "More Print Options" to adjust the tab character lengths.
-   The other three options "Edit Manifest Header Text", "Edit Manifest Text" and "Edit Switch List
-   Text" allow you to modify any of the text found in a manifest or switch list. Each text line used
+   The menu bar of the "Manifest Print Options" provides additional features that can be found under "Tools". The
+   first "More Print Options" allows you to adjust the length of the tab character when using the "Tabular" feature.
+   The next three options "Edit Manifest Header Text", "Edit Manifest Text" and "Edit Switch List
+   Text" allows you to modify any of the text found in a manifest or switch list. Each text line used
    by the program is shown along with a text box with the same message. Edit the text box to change
    the default message to your liking and press "Save" to complete your change. You can always
    return the text to the original settings by pressing the "Reset" button followed by "Save". 
@@ -1324,9 +1334,10 @@
 
    There are three options for picking up cars from the yard. "Normal" uses the car's move count to
    determine the order cars are removed from the yard, "FIFO" (First In First Out), and "LIFO" (Last
-   In First Out). LIFO is useful if you have a single ended yard that you use to service cars. For
-   example storing empty coal cars, it would make more sense to pull an empty coal car from the
-   front of the line rather than digging one out from the middle of the yard.
+   In First Out). FIFO would be appropriate for a double ended track where cars are spotted at one end,
+   and pulled from the other. LIFO is useful if you have a single ended yard that you use to service
+   cars. For example storing empty coal cars, it would make more sense to pull an empty coal car
+   from the front of the line rather than digging one out from the middle of the yard.
 
    <H3>Comment</H3>
 
@@ -3345,11 +3356,24 @@
    <p>You can also access a train's manifest and build report from the "Tools" menu in the edit
     train window. The "Tools" menu option allows you to recover the manifest and build report for a
     train that has been terminated. Useful if you've accidentally terminated a train before printing
-    out the train's manifest.</p>
+    out the train's manifest. Below is a train manifest using the "Standard" format, with blue text for
+    car pick ups, and red text for car set outs.</p>
 
    <P>
     <img src="images/Manifest.png">
    </P>
+
+   <P>Below is a train manifest using the "Two Column (Track)" format, "Tabular" and "Print
+    Headers" selected, along with changes to the manifest header and manifest text fields. We've
+    seen cases where the text and the column lines don't line up properly with using the "Two
+    Column" formats. To fix this issue, you might have to play with the manifest font type and size
+    to get the text to line up properly. The page below was created with "Courier New" and a font
+    size of 10.</p>
+
+   <P>
+    <img src="images/ManifestTwoColumnTrack.png">
+   </P>
+
 
    <A NAME="SwitchList"></A>
    <H3>Switch Lists</H3>
@@ -3357,7 +3381,9 @@
    A switch list shows the work required to service all of the trains visiting that location.
    Normally a switch list is given to the person in charge of a yard or a location with many spurs
    or industries. You can modify the look of your switch lists from the
-   <A HREF="#PrintOptions">Manifest Print Options</A> window.
+   <A HREF="#PrintOptions">Manifest Print Options</A> window.  Below is a switch list using the
+   "Standard" format and "Tabular" selected, along with "Print Headers", and changes to the header
+   text fields.
 
    <P>
     <img src="images/SwitchList.png">
