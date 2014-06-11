@@ -88,6 +88,7 @@ public class MemoryContentsTest extends TestCase {
              MemoryContentsTestWrite_24AddrFile = java.io.File.createTempFile("MemContentsTestWrite_24Addr", null);
         } catch (IOException e) {
             Assert.fail("Unexpected IO Exception creating temp file: "+e);
+            return;
         }
         String tempFilePathAndName = MemoryContentsTestWrite_24AddrFile.getPath();
         
@@ -102,7 +103,13 @@ public class MemoryContentsTest extends TestCase {
             Assert.fail("Memory Addressing format exception attempting to write .hex file");
         }
         
-        log.info("Path to written hex file is: "+tempFilePathAndName);
+        if (log.isDebugEnabled()) {
+            log.debug("Path to written hex file is: "+tempFilePathAndName);
+        }
+        else {
+            MemoryContentsTestWrite_24AddrFile.delete();
+        }
+        
 
         // make sure the new file is in 24-bit address format
         m.setAddressFormat(jmri.jmrit.MemoryContents.LoadOffsetFieldType.ADDRESSFIELDSIZE24BITS);

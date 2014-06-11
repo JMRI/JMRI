@@ -707,10 +707,10 @@ public class MemoryContents {
      * The method generates only RECTYPs "00" and "01", and does not 
      * generate any comment lines in its output.
      * 
+     * @param writer Writer to which the character stream is sent
      * @param writeKeyVals determines whether key/value pairs (if any) are written
      *                      at the beginning of the stream
-     * @param writer Writer to which the character stream is sent
-     * @param blocksize is the maximum number of bytes defined in a data record
+     * @param blockSize is the maximum number of bytes defined in a data record
      * @throws IOException upon file access problem
      * @throws jmri.jmrit.MemoryContents.MemoryFileAddressingFormatException 
      */
@@ -1163,7 +1163,7 @@ public class MemoryContents {
         ADDRESSFIELDSIZE16BITS,
         ADDRESSFIELDSIZE24BITS,
         ADDRESSFIELDSIZEUNKNOWN
-    };
+    }
     
     /**
      * Configures the Addressing format used in the LOAD OFFSET field when
@@ -1173,7 +1173,7 @@ public class MemoryContents {
      * from the first record in the file and updates the stored address format 
      * based on the format found in the file.
      * 
-     * @param use24BitAddress addressing type to use
+     * @param addressingType addressing type to use
      */
     public void setAddressFormat(LoadOffsetFieldType addressingType) {
         loadOffsetFieldType = addressingType;
@@ -1184,7 +1184,7 @@ public class MemoryContents {
      * established by the last occurrence of the <code>setAddressFormat</code> 
      * method or <code>readHex</code> method invocation.
      * 
-     * @returns the current Addressing format setting
+     * @return the current Addressing format setting
      */
     public LoadOffsetFieldType getCurrentAddressFormat() {
         return loadOffsetFieldType;
