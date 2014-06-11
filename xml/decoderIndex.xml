@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20140611-0556-jake on Tue Jun 10 22:56:53 PDT 2014 $Id$-->
-  <decoderIndex version="406">
+  <!--Written by JMRI version 20140611-1344-jake on Wed Jun 11 06:44:50 PDT 2014 $Id$-->
+  <decoderIndex version="408">
     <mfgList nmraListDate="2012-12-05" updated="2013-04-11" lastadd="106">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -1838,7 +1838,7 @@
         </model>
       </family>
       <family name="Train Decoders (firmware 3.02+)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.02_DH12A.xml">
-        <model model="DH12A" lowVersionID="1" highVersionID="1" numOuts="6" numFns="14" productID="DH12A" comment="DH12A" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX12">
+        <model model="DH12A" lowVersionID="3" highVersionID="3" numOuts="6" numFns="14" productID="DH12A" comment="DH12A" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX12">
           <output name="1" label="Front Light" maxcurrent="150mA" />
           <output name="2" label="Rear Light" maxcurrent="150mA" />
           <output name="3" label="AUX 1" maxcurrent="300mA" />
@@ -1853,7 +1853,7 @@
         </model>
       </family>
       <family name="Train Decoders (firmware 3.02+)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.02_DH16A.xml">
-        <model model="DH16A" lowVersionID="1" highVersionID="1" numOuts="6" numFns="14" productID="DH16A" comment="DH16A-0 /DH16A-1 /DH16A-2 /DH16A-3" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="Wires/NEM652">
+        <model model="DH16A" lowVersionID="3" highVersionID="3" numOuts="6" numFns="14" productID="DH16A" comment="DH16A-0 /DH16A-1 /DH16A-2 /DH16A-3" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX16">
           <output name="1" label="Front Light" maxcurrent="150mA" />
           <output name="2" label="Rear Light" maxcurrent="150mA" />
           <output name="3" label="AUX 1" maxcurrent="300mA" />
@@ -1868,7 +1868,7 @@
         </model>
       </family>
       <family name="Train Decoders (firmware 3.02+)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.02_DH18A.xml">
-        <model model="DH18A" lowVersionID="1" highVersionID="1" numOuts="6" numFns="14" productID="DH18A" comment="DH18A" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="Next18">
+        <model model="DH18A" lowVersionID="3" highVersionID="3" numOuts="6" numFns="14" productID="DH18A" comment="DH18A" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="Next18">
           <output name="1" label="Front Light" maxcurrent="150mA" />
           <output name="2" label="Rear Light" maxcurrent="150mA" />
           <output name="3" label="AUX 1" maxcurrent="300mA" />
@@ -2023,7 +2023,7 @@
         </model>
       </family>
       <family name="Train Decoders (firmware 3.03+)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.03_DH12A.xml">
-        <model model="DH12A v1.10 (firmware 3.03+)" lowVersionID="1" highVersionID="1" numOuts="6" numFns="14" productID="DH12A_3.03" comment="DH12A with update from 15 Jan 2014" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX12">
+        <model model="DH12A v3.03 (firmware 3.03+)" lowVersionID="3" highVersionID="3" numOuts="6" numFns="14" productID="DH12A_3.03" comment="DH12A with update from 15 Jan 2014" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX12">
           <output name="1" label="Front Light" maxcurrent="150mA" />
           <output name="2" label="Rear Light" maxcurrent="150mA" />
           <output name="3" label="AUX 1" maxcurrent="300mA" />
@@ -2038,7 +2038,7 @@
         </model>
       </family>
       <family name="Train Decoders (firmware 3.03+)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.03_DH16A.xml">
-        <model model="DH16A v1.10 (firmware 3.03+)" lowVersionID="1" highVersionID="1" numOuts="6" numFns="14" productID="DH16A_3.03" comment="DH16A-0 /DH16A-1 /DH16A-2 /DH16A-3 with update from 15 Jan 2014" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="Wires/NEM652">
+        <model model="DH16A v3.03 (firmware 3.03+)" lowVersionID="3" highVersionID="3" numOuts="6" numFns="14" productID="DH16A_3.03" comment="DH16A-0 /DH16A-1 /DH16A-2 /DH16A-3 with update from 15 Jan 2014" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX16">
           <output name="1" label="Front Light" maxcurrent="150mA" />
           <output name="2" label="Rear Light" maxcurrent="150mA" />
           <output name="3" label="AUX 1" maxcurrent="300mA" />
@@ -2053,7 +2053,7 @@
         </model>
       </family>
       <family name="Train Decoders (firmware 3.03+)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.03_DH18A.xml">
-        <model model="DH18A v1.10 (firmware 3.03+)" lowVersionID="1" highVersionID="1" numOuts="6" numFns="14" productID="DH18A_3.03" comment="DH18A with update from 15 Jan 2014" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="Next18">
+        <model model="DH18A v3.03 (firmware 3.03+)" lowVersionID="3" highVersionID="3" numOuts="6" numFns="14" productID="DH18A_3.03" comment="DH18A with update from 15 Jan 2014" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="Next18">
           <output name="1" label="Front Light" maxcurrent="150mA" />
           <output name="2" label="Rear Light" maxcurrent="150mA" />
           <output name="3" label="AUX 1" maxcurrent="300mA" />
@@ -2061,6 +2061,21 @@
           <output name="5" label="AUX 3" maxcurrent="Logic" />
           <output name="6" label="AUX 4" maxcurrent="Logic" />
           <size length="13.5" width="9.0" height="2.8" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Train Decoders (firmware 3.03+)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.03_DH21A.xml">
+        <model model="DH21A v3.03 (firmware 3.03+)" lowVersionID="54" highVersionID="54" numOuts="6" numFns="14" productID="DH21A_3.03" comment="DH21A with release firmware" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="21MTC">
+          <output name="1" label="Front Light" maxcurrent="150mA" />
+          <output name="2" label="Rear Light" maxcurrent="150mA" />
+          <output name="3" label="AUX 1" maxcurrent="300mA" />
+          <output name="4" label="AUX 2" maxcurrent="300mA" />
+          <output name="5" label="AUX 3" maxcurrent="1A" />
+          <output name="6" label="AUX 4" maxcurrent="1A" />
+          <size length="20.7" width="15.8" height="5.2" units="mm" />
           <protocols>
             <protocol>dcc</protocol>
             <protocol>selectrix</protocol>
@@ -2132,6 +2147,261 @@
             <protocol>dcc</protocol>
             <protocol>selectrix</protocol>
           </protocols>
+        </model>
+      </family>
+      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.04_DH05A.xml">
+        <model model="DH05A v1.11 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="4" numFns="14" productID="DH05A_3.04" comment="DH05A-0 / DH05A-1 / DH05A-3 with update from 31 May 2014" maxInputVolts="18V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+          <output name="1" label="Front Light" maxcurrent="150mA" />
+          <output name="2" label="Rear Light" maxcurrent="150mA" />
+          <output name="3" label="AUX 1" maxcurrent="300mA" />
+          <output name="4" label="AUX 2" maxcurrent="300mA" />
+          <size length="13.2" width="6.8" height="1.4" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.04_DH05B.xml">
+        <model model="DH05B v2.09 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="4" numFns="14" productID="DH05B_3.04" comment="DH05B-0 / DH05B-1 / DH05B-3 with update from 31 May 2014" maxInputVolts="18V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+          <output name="1" label="Front Light" maxcurrent="150mA" />
+          <output name="2" label="Rear Light" maxcurrent="150mA" />
+          <output name="3" label="AUX 1" maxcurrent="300mA" />
+          <output name="4" label="AUX 2" maxcurrent="300mA" />
+          <size length="13.2" width="6.8" height="1.4" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.04_DH05C.xml">
+        <model model="DH05C v3.04 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="6" numFns="14" productID="DH05C_3.04" comment="DH05C-0 / DH05C-1 / DH05C-3 with update from 31 May 2014" maxInputVolts="18V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+          <output name="1" label="Front Light" maxcurrent="150mA" />
+          <output name="2" label="Rear Light" maxcurrent="150mA" />
+          <output name="3" label="AUX 1" maxcurrent="300mA" />
+          <output name="4" label="AUX 2" maxcurrent="300mA" />
+          <output name="5" label="AUX 3 (or SUSI ZCLK)" maxcurrent="300mA" />
+          <!-- New from fw3.03  -->
+          <output name="6" label="AUX 4 (or SUSI ZDAT)" maxcurrent="300mA" />
+          <!-- New from fw3.03  -->
+          <size length="13.2" width="6.8" height="1.4" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.04_DH06A.xml">
+        <model model="DH06A v3.04 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="3" numFns="14" productID="DH06A_3.04" comment="DH06A for Köf with no analog support, with update from 31 May 2014" maxInputVolts="30V" maxMotorCurrent="0.3A" maxTotalCurrent="0.3A">
+          <output name="1" label="Front Light" maxcurrent="20mA" />
+          <output name="2" label="Rear Light" maxcurrent="20mA" />
+          <output name="3" label="Onboard light LED" maxcurrent="20mA" />
+          <size length="16" width="9.3" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.04_DH10A.xml">
+        <model model="DH10A v1.11 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="4" numFns="14" productID="DH10A_3.04" comment="DH10A-0 / DH10A-1 / DH10A-3 with update from 31 May 2014" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
+          <output name="1" label="Front Light" maxcurrent="150mA" />
+          <output name="2" label="Rear Light" maxcurrent="150mA" />
+          <output name="3" label="AUX 1" maxcurrent="300mA" />
+          <output name="4" label="AUX 2" maxcurrent="300mA" />
+          <size length="14.3" width="9.2" height="1.8" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.04_DH10B.xml">
+        <model model="DH10B v2.09 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="4" numFns="14" productID="DH10B_3.04" comment="DH10B-0 / DH10B-1 / DH10B-3 with update from 31 May 2014" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
+          <output name="1" label="Front Light" maxcurrent="150mA" />
+          <output name="2" label="Rear Light" maxcurrent="150mA" />
+          <output name="3" label="AUX 1" maxcurrent="300mA" />
+          <output name="4" label="AUX 2" maxcurrent="300mA" />
+          <size length="14.3" width="9.2" height="1.8" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.04_DH10C.xml">
+        <model model="DH10C v3.04 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="6" numFns="14" productID="DH10C_3.04" comment="DH10C-0 / DH10C-1 / DH10C-3 with update from 31 May 2014" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
+          <output name="1" label="Front Light" maxcurrent="150mA" />
+          <output name="2" label="Rear Light" maxcurrent="150mA" />
+          <output name="3" label="AUX 1" maxcurrent="300mA" />
+          <output name="4" label="AUX 2" maxcurrent="300mA" />
+          <output name="5" label="AUX 3 (or SUSI ZCLK)" maxcurrent="300mA" />
+          <!-- New from fw3.03  -->
+          <output name="6" label="AUX 4 (or SUSI ZDAT)" maxcurrent="300mA" />
+          <!-- New from fw3.03  -->
+          <size length="14.2" width="9.3" height="1.5" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.04_DH12A.xml">
+        <model model="DH12A v3.04 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="6" numFns="14" productID="DH12A_3.04" comment="DH12A with update from 31 May 2014" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX12">
+          <output name="1" label="Front Light" maxcurrent="150mA" />
+          <output name="2" label="Rear Light" maxcurrent="150mA" />
+          <output name="3" label="AUX 1" maxcurrent="300mA" />
+          <output name="4" label="AUX 2" maxcurrent="300mA" />
+          <output name="5" label="AUX 3" maxcurrent="NC - Logic Level" />
+          <output name="6" label="AUX 4" maxcurrent="NC - Logic Level" />
+          <size length="14.5" width="8" height="2.8" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.04_DH16A.xml">
+        <model model="DH16A v3.04 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="6" numFns="14" productID="DH16A_3.04" comment="DH16A-0 /DH16A-1 /DH16A-2 /DH16A-3 with update from 31 May 2014" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX16">
+          <output name="1" label="Front Light" maxcurrent="150mA" />
+          <output name="2" label="Rear Light" maxcurrent="150mA" />
+          <output name="3" label="AUX 1" maxcurrent="300mA" />
+          <output name="4" label="AUX 2" maxcurrent="300mA" />
+          <output name="5" label="AUX 3" maxcurrent="1.0A" />
+          <output name="6" label="AUX 4" maxcurrent="1.0A" />
+          <size length="16.7" width="10.9" height="2.8" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.04_DH18A.xml">
+        <model model="DH18A v3.04 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="6" numFns="14" productID="DH18A_3.04" comment="DH18A with update from 31 May 2014" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="Next18">
+          <output name="1" label="Front Light" maxcurrent="150mA" />
+          <output name="2" label="Rear Light" maxcurrent="150mA" />
+          <output name="3" label="AUX 1" maxcurrent="300mA" />
+          <output name="4" label="AUX 2" maxcurrent="300mA" />
+          <output name="5" label="AUX 3" maxcurrent="Logic" />
+          <output name="6" label="AUX 4" maxcurrent="Logic" />
+          <size length="13.5" width="9.0" height="2.8" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.04_DH21A.xml">
+        <model model="DH21A v3.04 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="6" numFns="14" productID="DH21A_3.04" comment="DH21A with update from 31 May 2014" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="21MTC">
+          <output name="1" label="Front Light" maxcurrent="150mA" />
+          <output name="2" label="Rear Light" maxcurrent="150mA" />
+          <output name="3" label="AUX 1" maxcurrent="300mA" />
+          <output name="4" label="AUX 2" maxcurrent="300mA" />
+          <output name="5" label="AUX 3" maxcurrent="1A" />
+          <output name="6" label="AUX 4" maxcurrent="1A" />
+          <size length="20.7" width="15.8" height="5.2" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.04_DHP160.xml">
+        <model model="DHP160/161/163 v8.11 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="3" numFns="14" productID="DHP160_3.04" comment="DHP160 / DHP161 / DHP163 with update from 31 May 2014" maxInputVolts="25V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651/NEM652">
+          <output name="1" label="Front Light" maxcurrent="300mA" />
+          <output name="2" label="Rear Light" maxcurrent="300mA" />
+          <output name="3" label="AUX 1" maxcurrent="300mA" />
+          <size length="14.2" width="9.2" height="2.0" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.04_DHP250.xml">
+        <model model="DHP250/252/253 v8.11 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="6" numFns="14" productID="DHP250_3.04" comment="DHP250/252/253 with update from 31 May 2014" maxInputVolts="25V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="Wires/NEM652">
+          <output name="1" label="Front Light" maxcurrent="300mA" />
+          <output name="2" label="Rear Light" maxcurrent="300mA" />
+          <output name="3" label="AUX 1" maxcurrent="300mA" />
+          <output name="4" label="AUX 2" maxcurrent="1.0A" />
+          <output name="5" label="AUX 3" maxcurrent="1.0A" />
+          <output name="6" label="AUX 4" maxcurrent="1.0A" />
+          <size length="23.3" width="12.9" height="2.7" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.04_DHP260.xml">
+        <model model="DHP260 v8.11 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="6" numFns="14" productID="DHP260_3.04" comment="DHP260 with update from 31 May 2014" maxInputVolts="25V" maxMotorCurrent="2.0A" maxTotalCurrent="2.0A" connector="21MTC">
+          <output name="1" label="Front Light" maxcurrent="300mA" />
+          <output name="2" label="Rear Light" maxcurrent="300mA" />
+          <output name="3" label="AUX 1" maxcurrent="300mA" />
+          <output name="4" label="AUX 2" maxcurrent="1.0A" />
+          <output name="5" label="AUX 3" maxcurrent="1.0A" />
+          <output name="6" label="AUX 4" maxcurrent="1.0A" />
+          <size length="22.2" width="15.7" height="5.7" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.04_FH05A.xml">
+        <model model="FH05A v1.11 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="6" numFns="14" productID="FH05A_3.04" comment="FH05A-0 / FH05A-1 / FH05A-3 with update from 31 May 2014" maxInputVolts="30V" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+          <output name="1" label="Front Light" maxcurrent="150mA" />
+          <output name="2" label="Rear Light" maxcurrent="150mA" />
+          <output name="3" label="AUX 1" maxcurrent="300mA" />
+          <output name="4" label="AUX 2" maxcurrent="300mA" />
+          <output name="5" label="AUX 3 (or SUSI ZCLK)" maxcurrent="300mA" />
+          <!-- New from fw3.03  -->
+          <output name="6" label="AUX 4 (or SUSI ZDAT)" maxcurrent="300mA" />
+          <!-- New from fw3.03  -->
+          <size length="13.7" width="7.8" height="1.5" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.04_generic.xml">
+        <model model="Generic DH v3.04 (firmware 3.04+)" numOuts="6" numFns="14" productID="GenericDH_3.04" comment="Generic DH profile for unknown or unlisted decoders with update from 31 May 2014">
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="SUSI sound modules" mfg="Doehler und Haass" file="Doehler_Haass_susi_sd_SH10A.xml">
+        <model model="SH10A (firmware 1.00+)" numOuts="0" numFns="0" productID="SH10A_1.00" comment="SH10A with initial firmware 1.00 or later" maxInputVolts="30V" connector="SUSI">
+          <size length="20" width="12" height="1.9" units="mm" />
+        </model>
+        <model model="SH10A (firmware 1.01+)" numOuts="0" numFns="0" productID="SH10A_1.01" comment="SH10A with firmware 1.01 or later" maxInputVolts="30V" connector="SUSI">
+          <size length="20" width="12" height="1.9" units="mm" />
+        </model>
+        <model model="SH10A (firmware 1.02+)" numOuts="0" numFns="0" productID="SH10A_1.02" comment="SH10A with firmware 1.02 or later" maxInputVolts="30V" connector="SUSI">
+          <size length="20" width="12" height="1.9" units="mm" />
+        </model>
+        <model model="SH10A (firmware 1.03+)" numOuts="0" numFns="0" productID="SH10A_1.03" comment="SH10A with firmware 1.03 or later" maxInputVolts="30V" connector="SUSI">
+          <size length="20" width="12" height="1.9" units="mm" />
         </model>
       </family>
       <family name="Bachmann" mfg="Electronic Solutions Ulm GmbH" file="ESU_Bachmann_3_function.xml">
