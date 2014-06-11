@@ -124,6 +124,8 @@ public class Xml {
 	
 	static final String COLUMN_FORMAT = "columnFormat"; // NOI18N
 	static final String TWO_COLUMNS = "twoColumns"; // NOI18N
+	static final String MANIFEST_FORMAT = "manifestFormat";  // NOI18N
+	static final String VALUE = "value";
 	
 	static final String TRUNCATE = "truncate"; // NOI18N
 	static final String USE_DEPARTURE_TIME = "useDepartureTime"; // NOI18N

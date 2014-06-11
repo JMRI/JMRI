@@ -144,13 +144,17 @@ public class TrainManifest extends TrainCommon {
 							new Object[] { splitString(rl.getName()) }));
 			}
 			
-			if (Setup.isTwoColumnFormatEnabled()) {
-				blockLocosTwoColumn(fileOut, engineList, rl, isManifest);
-				blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, r, printHeader, isManifest);
-			} else {
+			if (Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {
 				pickupEngines(fileOut, engineList, rl, isManifest);
 				dropEngines(fileOut, engineList, rl, isManifest);
 				blockCarsByTrack(fileOut, train, carList, routeList, rl, r, printHeader, isManifest);
+			}
+			else if (Setup.getManifestFormat().equals(Setup.TWO_COLUMN_FORMAT)) {
+				blockLocosTwoColumn(fileOut, engineList, rl, isManifest);
+				blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, r, printHeader, isManifest);
+			} else {
+				blockLocosTwoColumn(fileOut, engineList, rl, isManifest);
+				blockCarsByTrackNameTwoColumn(fileOut, train, carList, routeList, rl, r, printHeader, isManifest);
 			}			
 
 			if (r != routeList.size() - 1) {
@@ -158,7 +162,7 @@ public class TrainManifest extends TrainCommon {
 				RouteLocation rlNext = routeList.get(r + 1);
 				if (!routeLocationName.equals(splitString(rlNext.getName()))) {
 					if (newWork) {
-						if (Setup.isPrintHeadersEnabled() || Setup.isTwoColumnFormatEnabled())
+						if (Setup.isPrintHeadersEnabled() || !Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT))
 							printHorizontalLine(fileOut, isManifest);
 						// Message format: Train departs Boston Westbound with 12 cars, 450 feet, 3000 tons
 						String trainDeparts = MessageFormat.format(TrainManifestText.getStringTrainDepartsCars(),
@@ -209,7 +213,7 @@ public class TrainManifest extends TrainCommon {
 					}
 				}
 			} else {
-				if (Setup.isPrintHeadersEnabled() || Setup.isTwoColumnFormatEnabled())
+				if (Setup.isPrintHeadersEnabled() || !Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT))
 					printHorizontalLine(fileOut, isManifest);
 				newLine(fileOut, MessageFormat.format(TrainManifestText.getStringTrainTerminates(),
 						new Object[] { routeLocationName }));

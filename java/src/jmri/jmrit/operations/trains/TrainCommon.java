@@ -367,7 +367,7 @@ public class TrainCommon {
 	 * Produces a two column format for car pick ups and set outs. Sorted by track and then by destination.
 	 * Track name in header format.
 	 */
-	protected void testBlockCarsByTrackTwoColumn(PrintWriter file, Train train, List<Car> carList,
+	protected void blockCarsByTrackNameTwoColumn(PrintWriter file, Train train, List<Car> carList,
 			List<RouteLocation> routeList, RouteLocation rl, int r, boolean printHeader, boolean isManifest) {
 		index = 0;
 		int lineLength = getLineLength(isManifest);
