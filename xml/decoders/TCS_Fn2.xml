@@ -1236,8 +1236,7 @@
       <factReset label="Reset All CVs" CV="8" default="2"/>
     </resets>
   </decoder>
-	<pane>
-	    <name>TCS</name>
+	<pane name="TCS">
 		<column>
 			<label label="TCS decoders support a decoder locking feature"/>
 			<label label="useful when several decoders are used in one loco"/>
