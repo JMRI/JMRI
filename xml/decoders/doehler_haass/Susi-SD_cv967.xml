@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Pierre</firstname>
+        <surname>Billon</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-06-03</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Creation</revremark>
+    </revision>
+   </revhistory>
+<!-- Using JMRI item "Advanced Group 2 Option 2" and 3 --> 
+  <variable label="Random stillstand sounds" CV="967" tooltip="CV967 bit 0" mask="XXXXXXXV" default="1" item="Advanced Group 2 Option 2" exclude="SH10A_1.00,SH10A_1.01">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
+	<label xml:lang="fr">Sons aléatoire à l'arrêt</label>
+	<label xml:lang="de">Zufallsgeräusche im Stand</label>
+  </variable>
+  <variable label="Random running sound" CV="967" tooltip="CV967 bit 1" mask="XXXXXXVX" default="1" item="Advanced Group 2 Option 3" exclude="SH10A_1.00,SH10A_1.01">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
+	<label xml:lang="fr">Sons aléatoire en marche</label>
+	<label xml:lang="de">Zufallsgeräusche während der Fahrt</label>
+  </variable>
+</variables>

@@ -12,26 +12,23 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version version="2" author="PB, pierre.bln@me.com" lastUpdated="20140603"/>
-  <!-- 2 2014/06/03 Update: corrected low/high IDs
-		-->
-  <version version="1" author="PB, pierre.bln@me.com" lastUpdated="20140220"/>
-  <!-- 1 2014/02/20 Creation 
-		Based on DH16A, minus 2 outputs.
+  <version version="1" author="PB, pierre.bln@me.com" lastUpdated="20140603"/>
+  <!-- 1 2014/06/03 Creation
 		-->
   <decoder>
-    <family name="Train Decoders (firmware 3.02+)" mfg="Doehler und Haass">
-	  <model model="DH12A" lowVersionID="3" highVersionID="3" numOuts="6" numFns="14" productID="DH12A" comment="DH12A" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX12">
+    <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass">
+	  <model model="DH21A v3.04 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="6" numFns="14" productID="DH21A_3.04" comment="DH21A with update from 31 May 2014" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="21MTC">
         <output name="1" label="Front Light" maxcurrent="150mA"/>
 		<output name="2" label="Rear Light" maxcurrent="150mA"/>
 		<output name="3" label="AUX 1" maxcurrent="300mA"/>
 		<output name="4" label="AUX 2" maxcurrent="300mA"/>
-		<output name="5" label="AUX 3" maxcurrent="NC - Logic Level"/>
-		<output name="6" label="AUX 4" maxcurrent="NC - Logic Level"/>
-        <size length="14.5" width="8" height="2.8" units="mm"/>
+		<output name="5" label="AUX 3" maxcurrent="1A"/>
+		<output name="6" label="AUX 4" maxcurrent="1A"/>
+        <size length="20.7" width="15.8" height="5.2" units="mm"/>
 		<protocols>
             <protocol>dcc</protocol>
             <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
         </protocols>
       </model>
     </family>
@@ -54,11 +51,13 @@
 			<!-- SECTION 4	- Basic Railcom feedback  -->
 				<xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv28-29_railcom_base.xml"/>
 			<!-- SECTION 5	- Extra Railcom feedback options as of fw3.03 -->
-				<!-- <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv135-136_railcom_fw3.03.xml"/> -->
+				<xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv135-136_railcom_fw3.03.xml"/>
 			<!-- SECTION 6	- Extra general options as of fw3.03 -->
-				<!-- <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_energysaving_fw3.03.xml"/> -->
+				<xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_energysaving_fw3.03.xml"/>
 			<!-- SECTION 7	- Extra SUSI options as of fw3.03 -->
 				<!-- <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_susi_fw3.03.xml"/> -->
+			<!-- SECTION 8	- Motorola format as of fw3.04 -->
+				<xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv14_motorola.xml"/>
     </variables>
 	<resets>
       <factReset label="Reset All CVs" CV="8" default="8"/>
@@ -70,4 +69,5 @@
 	<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_firmware.xml"/>
 	<!-- Pane(s) valid for some decoders only  -->
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_railcom.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_motorola.xml"/>
 </decoder-config>

@@ -1,44 +1,29 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- version 1 - 2014-02-20 - for common D&H software -->
+<!-- version 2 - 2014-06-03 - PB - improved XML -->
+<!-- version 1 - 2014-02-20 - PB - for common D&H software -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <column>
-    <label>
-      <text> </text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <display item="Feedback (RailCom)" format="checkbox"/>
-    <label>
-      <text> </text>
-    </label>
-    <display item="Address broadcast" format="checkbox"/>
-    <label>
-      <text> </text>
-    </label>
-    <display item="POM enable" format="checkbox"/>
-    <label>
-      <text> </text>
-    </label>
-    <separator/>
-    <label>
-      <text> </text>
-    </label>
-    <row>
-      <display item="Multiplicator for speed fedback"/>
-      <label>
-        <text> </text>
-      </label>
-      <display item="Multiplicator for speed fedback" label="" format="hslider"/>
-    </row>
-    <row>
-      <display item="Divider for speed fedback"/>
-      <label>
-        <text> </text>
-      </label>
-      <display item="Divider for speed fedback" label="" format="hslider"/>
-    </row>
-  </column>
-  <name>Railcom</name>
-</pane>
+	<name>Railcom</name>	
+		<column>
+		  <label><text> </text></label>
+		  <label><text> </text></label>
+		  <display item="Feedback (RailCom)" format="checkbox"/>
+		  <label><text> </text></label>
+		  <display item="Address broadcast" format="checkbox"/>
+		  <label><text> </text></label>
+		  <display item="POM enable" format="checkbox"/>
+		  <label><text> </text></label>
+		  <separator/>
+		  <label><text> </text></label>
+		  <row>
+				<display item="Multiplicator for speed fedback"/>
+				<label><text> </text></label>
+				<display item="Multiplicator for speed fedback" label="" format="hslider"/>
+		  </row>
+		  <row>
+				<display item="Divider for speed fedback"/>
+				<label><text> </text></label>
+				<display item="Divider for speed fedback" label="" format="hslider"/>
+		  </row>
+		</column>
+	  </pane>

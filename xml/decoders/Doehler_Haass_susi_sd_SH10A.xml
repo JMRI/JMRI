@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2006 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version version="1" author="PB, pierre.bln@me.com" lastUpdated="20140603"/>
+  <!-- 1 2014/06/03 Creation 
+	Sound module definition for firmwares 1.00, 1.01, 1.02 and 1.03.
+	-->
+  <decoder>
+    <family name="SUSI sound modules" mfg="Doehler und Haass">
+	  <model model="SH10A (firmware 1.00+)" numOuts="0" numFns="0" productID="SH10A_1.00" comment="SH10A with initial firmware 1.00 or later" maxInputVolts="30V" connector="SUSI">
+        <size length="20" width="12" height="1.9" units="mm"/>
+      </model>
+	  <model model="SH10A (firmware 1.01+)" numOuts="0" numFns="0" productID="SH10A_1.01" comment="SH10A with firmware 1.01 or later" maxInputVolts="30V" connector="SUSI">
+        <size length="20" width="12" height="1.9" units="mm"/>
+      </model>
+	  <model model="SH10A (firmware 1.02+)" numOuts="0" numFns="0" productID="SH10A_1.02" comment="SH10A with firmware 1.02 or later" maxInputVolts="30V" connector="SUSI">
+        <size length="20" width="12" height="1.9" units="mm"/>
+      </model>
+	  <model model="SH10A (firmware 1.03+)" numOuts="0" numFns="0" productID="SH10A_1.03" comment="SH10A with firmware 1.03 or later" maxInputVolts="30V" connector="SUSI">
+        <size length="20" width="12" height="1.9" units="mm"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+		<!-- Common D&H sound variable files -->
+			<!-- Address CVs of master decoder -->
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_address.xml"/>
+			<!-- Identification CVs  -->
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_cv900-905.xml"/>
+			<!-- Mapping & volume CVs  -->
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_cv911-948.xml"/>
+			<!-- Settings CVs  -->
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_cv951-959.xml"/>
+			<!-- CVs added in fw 1.01  -->
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_cv960-962.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_cv964-965.xml"/>
+			<!-- CVs added in fw 1.02  -->
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_cv950.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_cv967.xml"/>
+			<!-- CVs added in fw 1.03  -->
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_cv968-973.xml"/>
+    </variables>
+	<resets>
+      <factReset label="Reset All CVs" CV="900" default="101"/>
+    </resets>
+  </decoder>
+</decoder-config>

@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<enumChoice choice="-">
+		<choice xml:lang="fr">-</choice>
+		<choice xml:lang="de">-</choice>
+	</enumChoice>
+	<enumChoice choice="F1"></enumChoice>
+	<enumChoice choice="F2"></enumChoice>
+	<enumChoice choice="F3"></enumChoice>
+	<enumChoice choice="F4"></enumChoice>
+	<enumChoice choice="F5"></enumChoice>
+	<enumChoice choice="F6"></enumChoice>
+	<enumChoice choice="F7"></enumChoice>
+	<enumChoice choice="F8"></enumChoice>
+	<enumChoice choice="F9"></enumChoice>
+	<enumChoice choice="F10"></enumChoice>
+	<enumChoice choice="F11"></enumChoice>
+	<enumChoice choice="F12"></enumChoice>
+	<enumChoice choice="F13"></enumChoice>
+	<enumChoice choice="F14"></enumChoice>
+	<enumChoice choice="F15"></enumChoice>
+	<enumChoice choice="F16"></enumChoice>
+	<enumChoice choice="F17"></enumChoice>
+	<enumChoice choice="F18"></enumChoice>
+	<enumChoice choice="F19"></enumChoice>
+	<enumChoice choice="F20"></enumChoice>
+	<enumChoice choice="F21"></enumChoice>
+	<enumChoice choice="F22"></enumChoice>
+	<enumChoice choice="F23"></enumChoice>
+	<enumChoice choice="F24"></enumChoice>
+	<enumChoice choice="F25"></enumChoice>
+	<enumChoice choice="F26"></enumChoice>
+	<enumChoice choice="F27"></enumChoice>
+	<enumChoice choice="F28"></enumChoice>
+	<enumChoice choice="F0"></enumChoice>
+</enumVal>
