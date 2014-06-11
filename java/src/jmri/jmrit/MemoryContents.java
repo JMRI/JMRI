@@ -365,10 +365,9 @@ public class MemoryContents {
             MemoryFileNoDataRecordsException, MemoryFileNoEOFRecordException, 
             MemoryFileRecordFoundAfterEOFRecord, MemoryFileAddressingRangeException,
             IOException {
-        java.nio.charset.Charset fileCharSet = java.nio.charset.Charset.forName("US-ASCII");
         BufferedReader fileStream;
         try {
-            fileStream = java.nio.file.Files.newBufferedReader(file.toPath(),fileCharSet);
+            fileStream = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
         } catch (IOException ex) {
             throw new FileNotFoundException(ex.toString());
         }
