@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006 All rights reserved -->
 <!-- $Id: TCS_Fn.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
@@ -20,12 +20,12 @@
   <!-- Version 1.2- 20140602 Added CV 15 and missing lighting effects(jcrellin0661@gmail.com) -->
   <decoder>
     <family name="TCS FL2 and FL4 Decoders" mfg="Train Control Systems">
-      <model model="FL2" numOuts="2" numFns="14" >
+      <model model="FL2" numOuts="2" numFns="14">
         <output name="1" label="Green" connection="solder" maxcurrent="100 mA"/>
         <output name="2" label="Purple" connection="solder" maxcurrent="100 mA"/>
         <size length="1.000" width="0.650" height="0.160" units="inches"/>
       </model>
-      <model model="FL4" numOuts="4" numFns="14" >
+      <model model="FL4" numOuts="4" numFns="14">
         <output name="1" label="Green" connection="solder" maxcurrent="200 mA"/>
         <output name="2" label="Purple" connection="solder" maxcurrent="200 mA"/>
         <output name="3" label="Brown" connection="solder" maxcurrent="200 mA"/>
@@ -36,15 +36,15 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer">
+      <variable CV="8" readOnly="yes" item="Manufacturer">
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-      <variable label="Analog Mode Green" CV="13" mask="XXXXXXXV" default="1" minOut="1" item="Analog Mode Function Status - FL(f)">
+      <variable CV="13" mask="XXXXXXXV" default="1" minOut="1" item="Analog Mode Function Status - FL(f)">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -55,7 +55,7 @@
         </enumVal>
         <label>Analog Mode Green</label>
       </variable>
-      <variable label="Analog Mode Purple" CV="13" mask="XXXXXXVX" default="1" minOut="2" item="Analog Mode Function Status - FL(r)">
+      <variable CV="13" mask="XXXXXXVX" default="1" minOut="2" item="Analog Mode Function Status - FL(r)">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -66,7 +66,7 @@
         </enumVal>
         <label>Analog Mode Purple</label>
       </variable>
-      <variable label="Analog Mode Brown" CV="13" mask="XXXXXVXX" default="1" minOut="3" item="Analog Mode Function Status - F1">
+      <variable CV="13" mask="XXXXXVXX" default="1" minOut="3" item="Analog Mode Function Status - F1">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -77,7 +77,7 @@
         </enumVal>
         <label>Analog Mode Brown</label>
       </variable>
-      <variable label="Analog Mode Pick" CV="13" mask="XXXXVXXX" default="1" minOut="4" item="Analog Mode Function Status - F2">
+      <variable CV="13" mask="XXXXVXXX" default="1" minOut="4" item="Analog Mode Function Status - F2">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -88,12 +88,12 @@
         </enumVal>
         <label>Analog Mode Pick</label>
       </variable>
-	 <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
-      <variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
+      <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
+      <variable CV="19" mask="XVVVVVVV" item="Consist Address">
         <decVal/>
         <label>Consist Address</label>
       </variable>
-      <variable label="Consist Direction" CV="19" mask="VXXXXXXX">
+      <variable item="Consist Direction" CV="19" mask="VXXXXXXX">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -104,7 +104,7 @@
         </enumVal>
         <label>Consist Direction</label>
       </variable>
-      <variable label="Consist Address Active For Green" CV="21" mask="XXXXXXXV" minOut="1" item="Consist Address Active For F1">
+      <variable CV="21" mask="XXXXXXXV" minOut="1" item="Consist Address Active For F1">
         <enumVal>
           <enumChoice choice="Locomotive Address Only">
             <choice>Locomotive Address Only</choice>
@@ -115,7 +115,7 @@
         </enumVal>
         <label>Consist Address Active For Green</label>
       </variable>
-      <variable label="Consist Address Active For Purple" CV="21" mask="XXXXXXVX" minOut="2" item="Consist Address Active For F2">
+      <variable CV="21" mask="XXXXXXVX" minOut="2" item="Consist Address Active For F2">
         <enumVal>
           <enumChoice choice="Locomotive Address Only">
             <choice>Locomotive Address Only</choice>
@@ -126,7 +126,7 @@
         </enumVal>
         <label>Consist Address Active For Purple</label>
       </variable>
-      <variable label="Consist Address Active For Brown" CV="21" mask="XXXXXVXX" minOut="3" item="Consist Address Active For F3">
+      <variable CV="21" mask="XXXXXVXX" minOut="3" item="Consist Address Active For F3">
         <enumVal>
           <enumChoice choice="Locomotive Address Only">
             <choice>Locomotive Address Only</choice>
@@ -137,7 +137,7 @@
         </enumVal>
         <label>Consist Address Active For Brown</label>
       </variable>
-      <variable label="Consist Address Active For Pink" CV="21" mask="XXXXVXXX" minOut="4" item="Consist Address Active For F4">
+      <variable CV="21" mask="XXXXVXXX" minOut="4" item="Consist Address Active For F4">
         <enumVal>
           <enumChoice choice="Locomotive Address Only">
             <choice>Locomotive Address Only</choice>
@@ -148,7 +148,7 @@
         </enumVal>
         <label>Consist Address Active For Pink</label>
       </variable>
-      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
+      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
         <enumVal>
           <enumChoice choice="forward">
             <choice>forward</choice>
@@ -159,7 +159,7 @@
         </enumVal>
         <label>Normal direction of motion</label>
       </variable>
-      <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
+      <variable CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -170,7 +170,7 @@
         </enumVal>
         <label>Analog conversion mode</label>
       </variable>
-      <variable label="FL(f) controls output 1" CV="35" mask="XXXXXXXV" minOut="1">
+      <variable item="FL(f) controls output 1" CV="35" mask="XXXXXXXV" minOut="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -181,7 +181,7 @@
         </enumVal>
         <label>FL(f) controls output 1</label>
       </variable>
-      <variable label="FL(r) controls output 1" CV="35" mask="XXXXXXVX" minOut="1">
+      <variable item="FL(r) controls output 1" CV="35" mask="XXXXXXVX" minOut="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -192,7 +192,7 @@
         </enumVal>
         <label>FL(r) controls output 1</label>
       </variable>
-      <variable label="F1 controls output 1" CV="35" mask="XXXXXVXX" minOut="1" default="1">
+      <variable item="F1 controls output 1" CV="35" mask="XXXXXVXX" minOut="1" default="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -203,7 +203,7 @@
         </enumVal>
         <label>F1 controls output 1</label>
       </variable>
-      <variable label="F2 controls output 1" CV="35" mask="XXXXVXXX" minOut="1">
+      <variable item="F2 controls output 1" CV="35" mask="XXXXVXXX" minOut="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -214,7 +214,7 @@
         </enumVal>
         <label>F2 controls output 1</label>
       </variable>
-      <variable label="F3 controls output 1" CV="35" mask="XXXVXXXX" minOut="1">
+      <variable item="F3 controls output 1" CV="35" mask="XXXVXXXX" minOut="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -225,7 +225,7 @@
         </enumVal>
         <label>F3 controls output 1</label>
       </variable>
-      <variable label="F4 controls output 1" CV="35" mask="XXVXXXXX" minOut="1">
+      <variable item="F4 controls output 1" CV="35" mask="XXVXXXXX" minOut="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -236,7 +236,7 @@
         </enumVal>
         <label>F4 controls output 1</label>
       </variable>
-      <variable label="F5 controls output 1" CV="35" mask="XVXXXXXX" minOut="1">
+      <variable item="F5 controls output 1" CV="35" mask="XVXXXXXX" minOut="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -247,7 +247,7 @@
         </enumVal>
         <label>F5 controls output 1</label>
       </variable>
-      <variable label="F6 controls output 1" CV="35" mask="VXXXXXXX" minOut="1">
+      <variable item="F6 controls output 1" CV="35" mask="VXXXXXXX" minOut="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -258,7 +258,7 @@
         </enumVal>
         <label>F6 controls output 1</label>
       </variable>
-      <variable label="FL(f) controls output 2" CV="36" mask="XXXXXXXV" minOut="2">
+      <variable item="FL(f) controls output 2" CV="36" mask="XXXXXXXV" minOut="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -269,7 +269,7 @@
         </enumVal>
         <label>FL(f) controls output 2</label>
       </variable>
-      <variable label="FL(r) controls output 2" CV="36" mask="XXXXXXVX" minOut="2">
+      <variable item="FL(r) controls output 2" CV="36" mask="XXXXXXVX" minOut="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -280,7 +280,7 @@
         </enumVal>
         <label>FL(r) controls output 2</label>
       </variable>
-      <variable label="F1 controls output 2" CV="36" mask="XXXXXVXX" minOut="2">
+      <variable item="F1 controls output 2" CV="36" mask="XXXXXVXX" minOut="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -291,7 +291,7 @@
         </enumVal>
         <label>F1 controls output 2</label>
       </variable>
-      <variable label="F2 controls output 2" CV="36" mask="XXXXVXXX" minOut="2" default="1">
+      <variable item="F2 controls output 2" CV="36" mask="XXXXVXXX" minOut="2" default="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -302,7 +302,7 @@
         </enumVal>
         <label>F2 controls output 2</label>
       </variable>
-      <variable label="F3 controls output 2" CV="36" mask="XXXVXXXX" minOut="2">
+      <variable item="F3 controls output 2" CV="36" mask="XXXVXXXX" minOut="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -313,7 +313,7 @@
         </enumVal>
         <label>F3 controls output 2</label>
       </variable>
-      <variable label="F4 controls output 2" CV="36" mask="XXVXXXXX" minOut="2">
+      <variable item="F4 controls output 2" CV="36" mask="XXVXXXXX" minOut="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -324,7 +324,7 @@
         </enumVal>
         <label>F4 controls output 2</label>
       </variable>
-      <variable label="F5 controls output 2" CV="36" mask="XVXXXXXX" minOut="2">
+      <variable item="F5 controls output 2" CV="36" mask="XVXXXXXX" minOut="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -335,7 +335,7 @@
         </enumVal>
         <label>F5 controls output 2</label>
       </variable>
-      <variable label="F6 controls output 2" CV="36" mask="VXXXXXXX" minOut="2">
+      <variable item="F6 controls output 2" CV="36" mask="VXXXXXXX" minOut="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -346,7 +346,7 @@
         </enumVal>
         <label>F6 controls output 2</label>
       </variable>
-      <variable label="F7 controls output 1" CV="37" mask="XXXXXVXX" minOut="1">
+      <variable item="F7 controls output 1" CV="37" mask="XXXXXVXX" minOut="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -357,7 +357,7 @@
         </enumVal>
         <label>F7 controls output 1</label>
       </variable>
-      <variable label="F8 controls output 1" CV="37" mask="XXXXVXXX" minOut="1">
+      <variable item="F8 controls output 1" CV="37" mask="XXXXVXXX" minOut="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -368,7 +368,7 @@
         </enumVal>
         <label>F8 controls output 1</label>
       </variable>
-      <variable label="F9 controls output 1" CV="37" mask="XXXVXXXX" minOut="1">
+      <variable item="F9 controls output 1" CV="37" mask="XXXVXXXX" minOut="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -379,7 +379,7 @@
         </enumVal>
         <label>F9 controls output 1</label>
       </variable>
-      <variable label="F10 controls output 1" CV="37" mask="XXVXXXXX" minOut="1">
+      <variable item="F10 controls output 1" CV="37" mask="XXVXXXXX" minOut="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -390,7 +390,7 @@
         </enumVal>
         <label>F10 controls output 1</label>
       </variable>
-      <variable label="F11 controls output 1" CV="37" mask="XVXXXXXX" minOut="1">
+      <variable item="F11 controls output 1" CV="37" mask="XVXXXXXX" minOut="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -401,7 +401,7 @@
         </enumVal>
         <label>F11 controls output 1</label>
       </variable>
-      <variable label="F12 controls output 1" CV="37" mask="VXXXXXXX" minOut="1">
+      <variable item="F12 controls output 1" CV="37" mask="VXXXXXXX" minOut="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -412,7 +412,7 @@
         </enumVal>
         <label>F12 controls output 1</label>
       </variable>
-      <variable label="F7 controls output 2" CV="38" mask="XXXXXVXX" minOut="2">
+      <variable item="F7 controls output 2" CV="38" mask="XXXXXVXX" minOut="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -423,7 +423,7 @@
         </enumVal>
         <label>F7 controls output 2</label>
       </variable>
-      <variable label="F8 controls output 2" CV="38" mask="XXXXVXXX" minOut="2">
+      <variable item="F8 controls output 2" CV="38" mask="XXXXVXXX" minOut="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -434,7 +434,7 @@
         </enumVal>
         <label>F8 controls output 2</label>
       </variable>
-      <variable label="F9 controls output 2" CV="38" mask="XXXVXXXX" minOut="2">
+      <variable item="F9 controls output 2" CV="38" mask="XXXVXXXX" minOut="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -445,7 +445,7 @@
         </enumVal>
         <label>F9 controls output 2</label>
       </variable>
-      <variable label="F10 controls output 2" CV="38" mask="XXVXXXXX" minOut="2">
+      <variable item="F10 controls output 2" CV="38" mask="XXVXXXXX" minOut="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -456,7 +456,7 @@
         </enumVal>
         <label>F10 controls output 2</label>
       </variable>
-      <variable label="F11 controls output 2" CV="38" mask="XVXXXXXX" minOut="2">
+      <variable item="F11 controls output 2" CV="38" mask="XVXXXXXX" minOut="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -467,7 +467,7 @@
         </enumVal>
         <label>F11 controls output 2</label>
       </variable>
-      <variable label="F12 controls output 2" CV="38" mask="VXXXXXXX" minOut="2">
+      <variable item="F12 controls output 2" CV="38" mask="VXXXXXXX" minOut="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -478,7 +478,7 @@
         </enumVal>
         <label>F12 controls output 2</label>
       </variable>
-      <variable label="FL(f) controls output 3" CV="39" mask="XXXXXXXV" minOut="3">
+      <variable item="FL(f) controls output 3" CV="39" mask="XXXXXXXV" minOut="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -489,7 +489,7 @@
         </enumVal>
         <label>FL(f) controls output 3</label>
       </variable>
-      <variable label="FL(r) controls output 3" CV="39" mask="XXXXXXVX" minOut="3">
+      <variable item="FL(r) controls output 3" CV="39" mask="XXXXXXVX" minOut="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -500,7 +500,7 @@
         </enumVal>
         <label>FL(r) controls output 3</label>
       </variable>
-      <variable label="F1 controls output 3" CV="39" mask="XXXXXVXX" minOut="3">
+      <variable item="F1 controls output 3" CV="39" mask="XXXXXVXX" minOut="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -511,7 +511,7 @@
         </enumVal>
         <label>F1 controls output 3</label>
       </variable>
-      <variable label="F2 controls output 3" CV="39" mask="XXXXVXXX" minOut="3">
+      <variable item="F2 controls output 3" CV="39" mask="XXXXVXXX" minOut="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -522,7 +522,7 @@
         </enumVal>
         <label>F2 controls output 3</label>
       </variable>
-      <variable label="F3 controls output 3" CV="39" mask="XXXVXXXX" minOut="3" default="1">
+      <variable item="F3 controls output 3" CV="39" mask="XXXVXXXX" minOut="3" default="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -533,7 +533,7 @@
         </enumVal>
         <label>F3 controls output 3</label>
       </variable>
-      <variable label="F4 controls output 3" CV="39" mask="XXVXXXXX" minOut="3">
+      <variable item="F4 controls output 3" CV="39" mask="XXVXXXXX" minOut="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -544,7 +544,7 @@
         </enumVal>
         <label>F4 controls output 3</label>
       </variable>
-      <variable label="F5 controls output 3" CV="39" mask="XVXXXXXX" minOut="3">
+      <variable item="F5 controls output 3" CV="39" mask="XVXXXXXX" minOut="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -555,7 +555,7 @@
         </enumVal>
         <label>F5 controls output 3</label>
       </variable>
-      <variable label="F6 controls output 3" CV="39" mask="VXXXXXXX" minOut="3">
+      <variable item="F6 controls output 3" CV="39" mask="VXXXXXXX" minOut="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -566,7 +566,7 @@
         </enumVal>
         <label>F6 controls output 3</label>
       </variable>
-      <variable label="FL(f) controls output 4" CV="40" mask="XXXXXXXV" minOut="4">
+      <variable item="FL(f) controls output 4" CV="40" mask="XXXXXXXV" minOut="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -577,7 +577,7 @@
         </enumVal>
         <label>FL(f) controls output 4</label>
       </variable>
-      <variable label="FL(r) controls output 4" CV="40" mask="XXXXXXVX" minOut="4">
+      <variable item="FL(r) controls output 4" CV="40" mask="XXXXXXVX" minOut="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -588,7 +588,7 @@
         </enumVal>
         <label>FL(r) controls output 4</label>
       </variable>
-      <variable label="F1 controls output 4" CV="40" mask="XXXXXVXX" minOut="4">
+      <variable item="F1 controls output 4" CV="40" mask="XXXXXVXX" minOut="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -599,7 +599,7 @@
         </enumVal>
         <label>F1 controls output 4</label>
       </variable>
-      <variable label="F2 controls output 4" CV="40" mask="XXXXVXXX" minOut="4">
+      <variable item="F2 controls output 4" CV="40" mask="XXXXVXXX" minOut="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -610,7 +610,7 @@
         </enumVal>
         <label>F2 controls output 4</label>
       </variable>
-      <variable label="F3 controls output 4" CV="40" mask="XXXVXXXX" minOut="4">
+      <variable item="F3 controls output 4" CV="40" mask="XXXVXXXX" minOut="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -621,7 +621,7 @@
         </enumVal>
         <label>F3 controls output 4</label>
       </variable>
-      <variable label="F4 controls output 4" CV="40" mask="XXVXXXXX" minOut="4" default="1">
+      <variable item="F4 controls output 4" CV="40" mask="XXVXXXXX" minOut="4" default="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -632,7 +632,7 @@
         </enumVal>
         <label>F4 controls output 4</label>
       </variable>
-      <variable label="F5 controls output 4" CV="40" mask="XVXXXXXX" minOut="4">
+      <variable item="F5 controls output 4" CV="40" mask="XVXXXXXX" minOut="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -643,7 +643,7 @@
         </enumVal>
         <label>F5 controls output 4</label>
       </variable>
-      <variable label="F6 controls output 4" CV="40" mask="VXXXXXXX" minOut="4">
+      <variable item="F6 controls output 4" CV="40" mask="VXXXXXXX" minOut="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -654,7 +654,7 @@
         </enumVal>
         <label>F6 controls output 4</label>
       </variable>
-      <variable label="F7 controls output 3" CV="41" mask="XXXXXVXX" minOut="3">
+      <variable item="F7 controls output 3" CV="41" mask="XXXXXVXX" minOut="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -665,7 +665,7 @@
         </enumVal>
         <label>F7 controls output 3</label>
       </variable>
-      <variable label="F8 controls output 3" CV="41" mask="XXXXVXXX" minOut="3">
+      <variable item="F8 controls output 3" CV="41" mask="XXXXVXXX" minOut="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -676,7 +676,7 @@
         </enumVal>
         <label>F8 controls output 3</label>
       </variable>
-      <variable label="F9 controls output 3" CV="41" mask="XXXVXXXX" minOut="3">
+      <variable item="F9 controls output 3" CV="41" mask="XXXVXXXX" minOut="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -687,7 +687,7 @@
         </enumVal>
         <label>F9 controls output 3</label>
       </variable>
-      <variable label="F10 controls output 3" CV="41" mask="XXVXXXXX" minOut="3">
+      <variable item="F10 controls output 3" CV="41" mask="XXVXXXXX" minOut="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -698,7 +698,7 @@
         </enumVal>
         <label>F10 controls output 3</label>
       </variable>
-      <variable label="F11 controls output 3" CV="41" mask="XVXXXXXX" minOut="3">
+      <variable item="F11 controls output 3" CV="41" mask="XVXXXXXX" minOut="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -709,7 +709,7 @@
         </enumVal>
         <label>F11 controls output 3</label>
       </variable>
-      <variable label="F12 controls output 3" CV="41" mask="VXXXXXXX" minOut="3">
+      <variable item="F12 controls output 3" CV="41" mask="VXXXXXXX" minOut="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -720,7 +720,7 @@
         </enumVal>
         <label>F12 controls output 3</label>
       </variable>
-      <variable label="F7 controls output 4" CV="42" mask="XXXXXVXX" minOut="4">
+      <variable item="F7 controls output 4" CV="42" mask="XXXXXVXX" minOut="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -731,7 +731,7 @@
         </enumVal>
         <label>F7 controls output 4</label>
       </variable>
-      <variable label="F8 controls output 4" CV="42" mask="XXXXVXXX" minOut="4">
+      <variable item="F8 controls output 4" CV="42" mask="XXXXVXXX" minOut="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -742,7 +742,7 @@
         </enumVal>
         <label>F8 controls output 4</label>
       </variable>
-      <variable label="F9 controls output 4" CV="42" mask="XXXVXXXX" minOut="4">
+      <variable item="F9 controls output 4" CV="42" mask="XXXVXXXX" minOut="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -753,7 +753,7 @@
         </enumVal>
         <label>F9 controls output 4</label>
       </variable>
-      <variable label="F10 controls output 4" CV="42" mask="XXVXXXXX" minOut="4">
+      <variable item="F10 controls output 4" CV="42" mask="XXVXXXXX" minOut="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -764,7 +764,7 @@
         </enumVal>
         <label>F10 controls output 4</label>
       </variable>
-      <variable label="F11 controls output 4" CV="42" mask="XVXXXXXX" minOut="4">
+      <variable item="F11 controls output 4" CV="42" mask="XVXXXXXX" minOut="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -775,7 +775,7 @@
         </enumVal>
         <label>F11 controls output 4</label>
       </variable>
-      <variable label="F12 controls output 4" CV="42" mask="VXXXXXXX" minOut="4">
+      <variable item="F12 controls output 4" CV="42" mask="VXXXXXXX" minOut="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -786,129 +786,7 @@
         </enumVal>
         <label>F12 controls output 4</label>
       </variable>
-      <variable label="Green Wire Effect" CV="51" mask="XXXXVVVV" minOut="1" item="Output 3 effect generated">
-        <enumVal>
-			<enumChoice choice="Constant bright light">
-				<choice>Constant bright light</choice>
-			</enumChoice>
-			<enumChoice choice="Random flicker (fire box)">
-				<choice>Random flicker (fire box)</choice>
-			</enumChoice>
-			<enumChoice choice="Mars light">
-				<choice>Mars light</choice>
-			</enumChoice>
-			<enumChoice choice="Flashing light">
-				<choice>Flashing light</choice>
-			</enumChoice>
-			<enumChoice choice="Single pulse strobe">
-				<choice>Single pulse strobe</choice>
-			</enumChoice>
-			<enumChoice choice="Double pulse strobe">
-				<choice>Double pulse strobe</choice>
-			</enumChoice>
-			<enumChoice choice="Rotary beacon">
-				<choice>Rotary beacon</choice>
-			</enumChoice>
-			<enumChoice choice="Gyra light">
-				<choice>Gyra light</choice>
-			</enumChoice>
-			<enumChoice choice="Rule 17 (dimmable)">
-				<choice>Rule 17 (dimmable)</choice>
-			</enumChoice>
-			<enumChoice choice="Ditch light A">
-				<choice>Ditch light A</choice>
-			</enumChoice>
-			<enumChoice choice="Ditch light B">
-				<choice>Ditch light B</choice>
-			</enumChoice>
-			<enumChoice choice="Constant dim">
-				<choice>Constant dim</choice>
-			</enumChoice>
-			<enumChoice choice="Auto Mars">
-				<choice>Auto Mars</choice>
-			</enumChoice>
-		</enumVal>
-		<label>Green Wire Effect</label>
-	</variable>
-	<variable label="Green Wire Timing" CV="51" mask="XXVVXXXX" minOut="1" item="Output 3 behavior" default="2">
-		<enumVal>
-			<enumChoice choice="Function on running forward">
-				<choice>Function on running forward</choice>
-			</enumChoice>
-			<enumChoice choice="Function on running reverse">
-            <choice>Function on running reverse</choice>
-          </enumChoice>
-          <enumChoice choice="Function on both directions">
-            <choice>Function on both directions</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved">
-            <choice>Reserved</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Green Wire Timing</label>
-      </variable>
-      <variable label="Purple Wire Effect" CV="52" mask="XXXXVVVV" minOut="2" item="Output 4 effect generated">
-        <enumVal>
-			<enumChoice choice="Constant bright light">
-				<choice>Constant bright light</choice>
-			</enumChoice>
-			<enumChoice choice="Random flicker (fire box)">
-				<choice>Random flicker (fire box)</choice>
-			</enumChoice>
-			<enumChoice choice="Mars light">
-				<choice>Mars light</choice>
-			</enumChoice>
-			<enumChoice choice="Flashing light">
-				<choice>Flashing light</choice>
-			</enumChoice>
-			<enumChoice choice="Single pulse strobe">
-				<choice>Single pulse strobe</choice>
-			</enumChoice>
-			<enumChoice choice="Double pulse strobe">
-				<choice>Double pulse strobe</choice>
-			</enumChoice>
-			<enumChoice choice="Rotary beacon">
-				<choice>Rotary beacon</choice>
-			</enumChoice>
-			<enumChoice choice="Gyra light">
-				<choice>Gyra light</choice>
-			</enumChoice>
-			<enumChoice choice="Rule 17 (dimmable)">
-				<choice>Rule 17 (dimmable)</choice>
-			</enumChoice>
-			<enumChoice choice="Ditch light A">
-				<choice>Ditch light A</choice>
-			</enumChoice>
-			<enumChoice choice="Ditch light B">
-				<choice>Ditch light B</choice>
-			</enumChoice>
-			<enumChoice choice="Constant dim">
-				<choice>Constant dim</choice>
-			</enumChoice>
-			<enumChoice choice="Auto Mars">
-				<choice>Auto Mars</choice>
-			</enumChoice>
-		</enumVal>
-		<label>Purple Wire Effect</label>
-	</variable>
-	<variable label="Purple Wire Timing" CV="52" mask="XXVVXXXX" minOut="2" item="Output 4 behavior" default="2">
-		<enumVal>
-			<enumChoice choice="Function on running forward">
-				<choice>Function on running forward</choice>
-			</enumChoice>
-			<enumChoice choice="Function on running reverse">
-            <choice>Function on running reverse</choice>
-          </enumChoice>
-          <enumChoice choice="Function on both directions">
-            <choice>Function on both directions</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved">
-            <choice>Reserved</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Purple Wire Timing</label>
-      </variable>
-      <variable label="Brown Wire Effect" CV="53" mask="XXXXVVVV" minOut="3" item="Output 5 effect generated">
+      <variable CV="51" mask="XXXXVVVV" minOut="1" item="Output 3 effect generated">
         <enumVal>
           <enumChoice choice="Constant bright light">
             <choice>Constant bright light</choice>
@@ -936,7 +814,7 @@
           </enumChoice>
           <enumChoice choice="Rule 17 (dimmable)">
             <choice>Rule 17 (dimmable)</choice>
-          </enumChoice>          
+          </enumChoice>
           <enumChoice choice="Ditch light A">
             <choice>Ditch light A</choice>
           </enumChoice>
@@ -948,11 +826,133 @@
           </enumChoice>
           <enumChoice choice="Auto Mars">
             <choice>Auto Mars</choice>
-          </enumChoice>          
+          </enumChoice>
+        </enumVal>
+        <label>Green Wire Effect</label>
+      </variable>
+      <variable CV="51" mask="XXVVXXXX" minOut="1" item="Output 3 behavior" default="2">
+        <enumVal>
+          <enumChoice choice="Function on running forward">
+            <choice>Function on running forward</choice>
+          </enumChoice>
+          <enumChoice choice="Function on running reverse">
+            <choice>Function on running reverse</choice>
+          </enumChoice>
+          <enumChoice choice="Function on both directions">
+            <choice>Function on both directions</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved">
+            <choice>Reserved</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Green Wire Timing</label>
+      </variable>
+      <variable CV="52" mask="XXXXVVVV" minOut="2" item="Output 4 effect generated">
+        <enumVal>
+          <enumChoice choice="Constant bright light">
+            <choice>Constant bright light</choice>
+          </enumChoice>
+          <enumChoice choice="Random flicker (fire box)">
+            <choice>Random flicker (fire box)</choice>
+          </enumChoice>
+          <enumChoice choice="Mars light">
+            <choice>Mars light</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing light">
+            <choice>Flashing light</choice>
+          </enumChoice>
+          <enumChoice choice="Single pulse strobe">
+            <choice>Single pulse strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Double pulse strobe">
+            <choice>Double pulse strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Rotary beacon">
+            <choice>Rotary beacon</choice>
+          </enumChoice>
+          <enumChoice choice="Gyra light">
+            <choice>Gyra light</choice>
+          </enumChoice>
+          <enumChoice choice="Rule 17 (dimmable)">
+            <choice>Rule 17 (dimmable)</choice>
+          </enumChoice>
+          <enumChoice choice="Ditch light A">
+            <choice>Ditch light A</choice>
+          </enumChoice>
+          <enumChoice choice="Ditch light B">
+            <choice>Ditch light B</choice>
+          </enumChoice>
+          <enumChoice choice="Constant dim">
+            <choice>Constant dim</choice>
+          </enumChoice>
+          <enumChoice choice="Auto Mars">
+            <choice>Auto Mars</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Purple Wire Effect</label>
+      </variable>
+      <variable CV="52" mask="XXVVXXXX" minOut="2" item="Output 4 behavior" default="2">
+        <enumVal>
+          <enumChoice choice="Function on running forward">
+            <choice>Function on running forward</choice>
+          </enumChoice>
+          <enumChoice choice="Function on running reverse">
+            <choice>Function on running reverse</choice>
+          </enumChoice>
+          <enumChoice choice="Function on both directions">
+            <choice>Function on both directions</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved">
+            <choice>Reserved</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Purple Wire Timing</label>
+      </variable>
+      <variable CV="53" mask="XXXXVVVV" minOut="3" item="Output 5 effect generated">
+        <enumVal>
+          <enumChoice choice="Constant bright light">
+            <choice>Constant bright light</choice>
+          </enumChoice>
+          <enumChoice choice="Random flicker (fire box)">
+            <choice>Random flicker (fire box)</choice>
+          </enumChoice>
+          <enumChoice choice="Mars light">
+            <choice>Mars light</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing light">
+            <choice>Flashing light</choice>
+          </enumChoice>
+          <enumChoice choice="Single pulse strobe">
+            <choice>Single pulse strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Double pulse strobe">
+            <choice>Double pulse strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Rotary beacon">
+            <choice>Rotary beacon</choice>
+          </enumChoice>
+          <enumChoice choice="Gyra light">
+            <choice>Gyra light</choice>
+          </enumChoice>
+          <enumChoice choice="Rule 17 (dimmable)">
+            <choice>Rule 17 (dimmable)</choice>
+          </enumChoice>
+          <enumChoice choice="Ditch light A">
+            <choice>Ditch light A</choice>
+          </enumChoice>
+          <enumChoice choice="Ditch light B">
+            <choice>Ditch light B</choice>
+          </enumChoice>
+          <enumChoice choice="Constant dim">
+            <choice>Constant dim</choice>
+          </enumChoice>
+          <enumChoice choice="Auto Mars">
+            <choice>Auto Mars</choice>
+          </enumChoice>
         </enumVal>
         <label>Brown Wire Effect</label>
       </variable>
-      <variable label="Brown Wire Timing" CV="53" mask="XXVVXXXX" minOut="3" item="Output 5 behavior" default="2">
+      <variable CV="53" mask="XXVVXXXX" minOut="3" item="Output 5 behavior" default="2">
         <enumVal>
           <enumChoice choice="Function on running forward">
             <choice>Function on running forward</choice>
@@ -969,56 +969,56 @@
         </enumVal>
         <label>Brown Wire Timing</label>
       </variable>
-      <variable label="Pink Wire Effect" CV="54" mask="XXXXVVVV" minOut="4" item="Output 6 effect generated">
+      <variable CV="54" mask="XXXXVVVV" minOut="4" item="Output 6 effect generated">
         <enumVal>
-			<enumChoice choice="Constant bright light">
-				<choice>Constant bright light</choice>
-			</enumChoice>
-			<enumChoice choice="Random flicker (fire box)">
-				<choice>Random flicker (fire box)</choice>
-			</enumChoice>
-			<enumChoice choice="Mars light">
-				<choice>Mars light</choice>
-			</enumChoice>
-			<enumChoice choice="Flashing light">
-				<choice>Flashing light</choice>
-			</enumChoice>
-			<enumChoice choice="Single pulse strobe">
-				<choice>Single pulse strobe</choice>
-			</enumChoice>
-			<enumChoice choice="Double pulse strobe">
-				<choice>Double pulse strobe</choice>
-			</enumChoice>
-			<enumChoice choice="Rotary beacon">
-				<choice>Rotary beacon</choice>
-			</enumChoice>
-			<enumChoice choice="Gyra light">
-				<choice>Gyra light</choice>
-			</enumChoice>
-			<enumChoice choice="Rule 17 (dimmable)">
-				<choice>Rule 17 (dimmable)</choice>
-			</enumChoice>
-			<enumChoice choice="Ditch light A">
-				<choice>Ditch light A</choice>
-			</enumChoice>
-			<enumChoice choice="Ditch light B">
-				<choice>Ditch light B</choice>
-			</enumChoice>
-			<enumChoice choice="Constant dim">
-				<choice>Constant dim</choice>
-			</enumChoice>
-			<enumChoice choice="Auto Mars">
-				<choice>Auto Mars</choice>
-			</enumChoice>
-		</enumVal>
-		<label>Pink Wire Effect</label>
-	</variable>
-	<variable label="Pink Wire Timing" CV="54" mask="XXVVXXXX" minOut="4" item="Output 6 behavior" default="2">
-		<enumVal>
-			<enumChoice choice="Function on running forward">
-				<choice>Function on running forward</choice>
-			</enumChoice>
-			<enumChoice choice="Function on running reverse">
+          <enumChoice choice="Constant bright light">
+            <choice>Constant bright light</choice>
+          </enumChoice>
+          <enumChoice choice="Random flicker (fire box)">
+            <choice>Random flicker (fire box)</choice>
+          </enumChoice>
+          <enumChoice choice="Mars light">
+            <choice>Mars light</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing light">
+            <choice>Flashing light</choice>
+          </enumChoice>
+          <enumChoice choice="Single pulse strobe">
+            <choice>Single pulse strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Double pulse strobe">
+            <choice>Double pulse strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Rotary beacon">
+            <choice>Rotary beacon</choice>
+          </enumChoice>
+          <enumChoice choice="Gyra light">
+            <choice>Gyra light</choice>
+          </enumChoice>
+          <enumChoice choice="Rule 17 (dimmable)">
+            <choice>Rule 17 (dimmable)</choice>
+          </enumChoice>
+          <enumChoice choice="Ditch light A">
+            <choice>Ditch light A</choice>
+          </enumChoice>
+          <enumChoice choice="Ditch light B">
+            <choice>Ditch light B</choice>
+          </enumChoice>
+          <enumChoice choice="Constant dim">
+            <choice>Constant dim</choice>
+          </enumChoice>
+          <enumChoice choice="Auto Mars">
+            <choice>Auto Mars</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Pink Wire Effect</label>
+      </variable>
+      <variable CV="54" mask="XXVVXXXX" minOut="4" item="Output 6 behavior" default="2">
+        <enumVal>
+          <enumChoice choice="Function on running forward">
+            <choice>Function on running forward</choice>
+          </enumChoice>
+          <enumChoice choice="Function on running reverse">
             <choice>Function on running reverse</choice>
           </enumChoice>
           <enumChoice choice="Function on both directions">
@@ -1030,229 +1030,243 @@
         </enumVal>
         <label>Pink Wire Timing</label>
       </variable>
-		
-    <!--  Lighting effects starts here  -->
-		
-		<variable CV="62" default="60" item="Function 6 effect generated" tooltip="1 second = 60 to 4 seconds = 255">
-			<decVal/>
-			<label>Momentary Pulse</label>			
-		</variable>
-		
-		<variable CV="63" default="10" item="Function 2 effect generated" tooltip="1 second = about 12">
-			<decVal/>
-			<label>Ditch Light Blink Holdover Time</label>			
-		</variable>
-		<variable CV="117" default="3" mask="XXXXVVVV" item="Function 2 behavior">
-			<enumVal>
-				<enumChoice choice="1 slowest" value="1"/>
-				<enumChoice choice="2"/>
-				<enumChoice choice="3"/>
-				<enumChoice choice="4"/>
-				<enumChoice choice="5"/>
-				<enumChoice choice="6"/>
-				<enumChoice choice="7"/>
-				<enumChoice choice="8"/>
-				<enumChoice choice="9"/>
-				<enumChoice choice="10"/>
-				<enumChoice choice="11"/>
-				<enumChoice choice="12 fastest"/>
-			</enumVal>
-			<label>Ditch Light Blink Rate</label>
-			<label xml:lang="it">Ditch Light Blink Rate</label>
-		</variable>
-
-		<variable CV="64" default="16" item="Global lighting option 2" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
-			<decVal max="32"/>
-			<label>Constant Dim 1 Brightness</label>
-			<label xml:lang="it">Constant Dim 1 Brightness</label>
-			<tooltip xml:lang="it">16 = 50% for incandescent bulbs, 2-6 for LEDs</tooltip>
-		</variable>
-		<variable CV="153" default="5" item="Global lighting option 3" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
-			<decVal max="32"/>
-			<label>Constant Dim 2 Brightness</label>
-			<label xml:lang="it">Constant Dim 2 Brightness</label>
-			<tooltip xml:lang="it">16 = 50% for incandescent bulbs, 2-6 for LEDs</tooltip>
-		</variable>
-		<variable CV="154" default="5" item="Global lighting option 4" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
-			<decVal max="32"/>
-			<label>Constant Dim 3 Brightness</label>
-			<label xml:lang="it">Constant Dim 3 Brightness</label>
-			<tooltip xml:lang="it">16 = 50% for incandescent bulbs, 2-6 for LEDs</tooltip>
-		</variable>
-		<variable CV="155" default="5" item="Global lighting option 5" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
-			<decVal max="32"/>
-			<label>Constant Dim 4 Brightness</label>
-			<label xml:lang="it">Constant Dim 4 Brightness</label>
-			<tooltip xml:lang="it">16 = 50% for incandescent bulbs, 2-6 for LEDs</tooltip>
-		</variable>
-		
-		<variable CV="112" default="1" item="Function F0F effect generated">
-			<decVal min="1" max="5"/>
-			<label>Mars/Gyra Min Brightness</label>
-			<label xml:lang="it">Mars/Gyra Min Brightness</label>
-		</variable>
-		<variable CV="113" default="9" item="Function F0F option 2">
-			<decVal/>
-			<label>Mars/Gyra Max Bright Time</label>
-			<label xml:lang="it">Mars/Gyra Max Bright Time</label>
-		</variable>
-		<variable CV="114" default="1" item="Function F0F option 3">
-			<decVal/>
-			<label>Mars/Gyra Total Cycle Time</label>
-			<label xml:lang="it">Mars/Gyra Total Cycle Time</label>
-		</variable>
-		<variable CV="115" default="6" item="Function F0F behavior">
-			<decVal min="2" max="26"/>
-			<label>Mars/Gyra Mid Brightness</label>
-			<label xml:lang="it">Mars/Gyra Mid Brightness</label>
-		</variable>
-		<variable CV="116" default="22" item="Function F0F options">
-			<decVal min="4" max="28"/>
-			<label>Mars/Gyra Max Brightness</label>
-			<label xml:lang="it">Mars/Gyra Max Brightness</label>
-		</variable>
-
-		<variable CV="118" default="1" item="Function F0R effect generated">
-			<decVal min="1" max="5"/>
-			<label>Beacon Min Brightness</label>
-			<label xml:lang="it">Beacon Min Brightness</label>
-		</variable>
-		<variable CV="119" default="5" item="Function F0R option 2">
-			<decVal/>
-			<label>Beacon Max Bright Time</label>
-			<label xml:lang="it">Beacon Max Bright Time</label>
-		</variable>
-		<variable CV="120" default="1" item="Function F0R option 3">
-			<decVal/>
-			<label>Beacon Total Cycle Time</label>
-			<label xml:lang="it">Beacon Total Cycle Time</label>
-		</variable>
-		<variable CV="121" default="15" item="Function F0R behavior">
-			<decVal min="2" max="26"/>
-			<label>Beacon Mid Brightness</label>
-			<label xml:lang="it">Beacon Mid Brightness</label>
-		</variable>
-		<variable CV="122" default="25" item="Function F0R options">
-			<decVal min="4" max="28"/>
-			<label>Beacon Max Brightness</label>
-			<label xml:lang="it">Beacon Max Brightness</label>
-		</variable>
-
-		<variable CV="140" default="140" item="Function 3 effect generated">
-			<decVal/>
-			<label>Single Strobe 1 Off Duration</label>
-			<label xml:lang="it">Single Strobe 1 Off Duration</label>
-		</variable>
-		<variable CV="141" default="5" item="Function 3 behavior">
-			<decVal/>
-			<label>Single Strobe 1 On Duration</label>
-			<label xml:lang="it">Single Strobe 1 On Duration</label>
-		</variable>
-		<variable CV="142" default="124" item="Function 3 options">
-			<decVal/>
-			<label>Single Strobe 2 Off Duration</label>
-			<label xml:lang="it">Single Strobe 2 Off Duration</label>
-		</variable>
-		<variable CV="143" default="5" item="Function 3 option 1">
-			<decVal/>
-			<label>Single Strobe 2 On Duration</label>
-			<label xml:lang="it">Single Strobe 2 On Duration</label>
-		</variable>
-		<variable CV="144" default="144" item="Function 8 effect generated">
-			<decVal/>
-			<label>Flashing Light On Duration</label>
-			<label xml:lang="it">Flashing Light On Duration</label>
-		</variable>
-		<variable CV="145" default="48" item="Function 8 behavior">
-			<decVal/>
-			<label>Flashing Light Off Duration</label>
-			<label xml:lang="it">Flashing Light Off Duration</label>
-		</variable>
-		<variable CV="146" default="112" item="Function 4 effect generated">
-			<decVal/>
-			<label>Double Strobe 1 Long Off Duration</label>
-			<label xml:lang="it">Double Strobe 1 Long Off Duration</label>
-		</variable>
-		<variable CV="147" default="5" item="Function 4 behavior">
-			<decVal/>
-			<label>Double Strobe 1 On Duration</label>
-			<label xml:lang="it">Double Strobe 1 On Duration</label>
-		</variable>
-		<variable CV="148" default="16" item="Function 4 options">
-			<decVal/>
-			<label>Double Strobe 1 Short Off Duration</label>
-			<label xml:lang="it">Double Strobe 1 Short Off Duration</label>
-		</variable>
-		<variable CV="149" default="117" item="Function 4 option 1">
-			<decVal/>
-			<label>Double Strobe 2 Long Off Duration</label>
-			<label xml:lang="it">Double Strobe 2 Long Off Duration</label>
-		</variable>
-		<variable CV="150" default="16" item="Function 4 option 2">
-			<decVal/>
-			<label>Double Strobe 2 On Duration</label>
-			<label xml:lang="it">Double Strobe 2 On Duration</label>
-		</variable>
-		<variable CV="151" default="5" item="Function 4 option 3">
-			<decVal/>
-			<label>Double Strobe 2 Short Off Duration</label>
-			<label xml:lang="it">Double Strobe 2 Short Off Duration</label>
-		</variable>
-
-		<variable CV="135" default="16" item="Function 7 effect generated" tooltip="Random Flicker for fireboxes">
-			<decVal/>
-			<label>Random Flicker 1 Speed</label>
-			<label xml:lang="it">Random Flicker 1 Speed</label>
-			<tooltip xml:lang="it">Random Flicker for fireboxes</tooltip>
-		</variable>
-		<variable CV="152" default="16" item="Function 7 behavior" tooltip="Random Flicker 2 for fireboxes">
-			<decVal/>
-			<label>Random Flicker 2 Speed</label>
-			<label xml:lang="it">Random Flicker 2 Speed</label>
-			<tooltip xml:lang="it">Random Flicker 2 for fireboxes</tooltip>
-		</variable>
-     
-		<!--  Lighting effects ends here  -->
-		
-		<variable label="User Private ID #1" CV="105" item="User Id #1">
+      <!--  Lighting effects starts here  -->
+      <variable CV="62" default="60" item="Function 6 effect generated" tooltip="1 second = 60 to 4 seconds = 255">
+        <decVal/>
+        <label>Momentary Pulse</label>
+      </variable>
+      <variable CV="63" default="10" item="Function 2 effect generated" tooltip="1 second = about 12">
+        <decVal/>
+        <label>Ditch Light Blink Holdover Time</label>
+      </variable>
+      <variable CV="117" default="3" mask="XXXXVVVV" item="Function 2 behavior">
+        <enumVal>
+          <enumChoice choice="1 slowest" value="1"/>
+          <enumChoice choice="2"/>
+          <enumChoice choice="3"/>
+          <enumChoice choice="4"/>
+          <enumChoice choice="5"/>
+          <enumChoice choice="6"/>
+          <enumChoice choice="7"/>
+          <enumChoice choice="8"/>
+          <enumChoice choice="9"/>
+          <enumChoice choice="10"/>
+          <enumChoice choice="11"/>
+          <enumChoice choice="12 fastest"/>
+        </enumVal>
+        <label>Ditch Light Blink Rate</label>
+        <label xml:lang="it">Ditch Light Blink Rate</label>
+      </variable>
+      <variable CV="64" default="16" item="Global lighting option 2" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
+        <decVal max="32"/>
+        <label>Constant Dim 1 Brightness</label>
+        <label xml:lang="it">Constant Dim 1 Brightness</label>
+        <tooltip xml:lang="it">16 = 50% for incandescent bulbs, 2-6 for LEDs</tooltip>
+      </variable>
+      <variable CV="153" default="5" item="Global lighting option 3" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
+        <decVal max="32"/>
+        <label>Constant Dim 2 Brightness</label>
+        <label xml:lang="it">Constant Dim 2 Brightness</label>
+        <tooltip xml:lang="it">16 = 50% for incandescent bulbs, 2-6 for LEDs</tooltip>
+      </variable>
+      <variable CV="154" default="5" item="Global lighting option 4" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
+        <decVal max="32"/>
+        <label>Constant Dim 3 Brightness</label>
+        <label xml:lang="it">Constant Dim 3 Brightness</label>
+        <tooltip xml:lang="it">16 = 50% for incandescent bulbs, 2-6 for LEDs</tooltip>
+      </variable>
+      <variable CV="155" default="5" item="Global lighting option 5" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
+        <decVal max="32"/>
+        <label>Constant Dim 4 Brightness</label>
+        <label xml:lang="it">Constant Dim 4 Brightness</label>
+        <tooltip xml:lang="it">16 = 50% for incandescent bulbs, 2-6 for LEDs</tooltip>
+      </variable>
+      <variable CV="112" default="1" item="Function F0F effect generated">
+        <decVal min="1" max="5"/>
+        <label>Mars/Gyra Min Brightness</label>
+        <label xml:lang="it">Mars/Gyra Min Brightness</label>
+      </variable>
+      <variable CV="113" default="9" item="Function F0F option 2">
+        <decVal/>
+        <label>Mars/Gyra Max Bright Time</label>
+        <label xml:lang="it">Mars/Gyra Max Bright Time</label>
+      </variable>
+      <variable CV="114" default="1" item="Function F0F option 3">
+        <decVal/>
+        <label>Mars/Gyra Total Cycle Time</label>
+        <label xml:lang="it">Mars/Gyra Total Cycle Time</label>
+      </variable>
+      <variable CV="115" default="6" item="Function F0F behavior">
+        <decVal min="2" max="26"/>
+        <label>Mars/Gyra Mid Brightness</label>
+        <label xml:lang="it">Mars/Gyra Mid Brightness</label>
+      </variable>
+      <variable CV="116" default="22" item="Function F0F options">
+        <decVal min="4" max="28"/>
+        <label>Mars/Gyra Max Brightness</label>
+        <label xml:lang="it">Mars/Gyra Max Brightness</label>
+      </variable>
+      <variable CV="118" default="1" item="Function F0R effect generated">
+        <decVal min="1" max="5"/>
+        <label>Beacon Min Brightness</label>
+        <label xml:lang="it">Beacon Min Brightness</label>
+      </variable>
+      <variable CV="119" default="5" item="Function F0R option 2">
+        <decVal/>
+        <label>Beacon Max Bright Time</label>
+        <label xml:lang="it">Beacon Max Bright Time</label>
+      </variable>
+      <variable CV="120" default="1" item="Function F0R option 3">
+        <decVal/>
+        <label>Beacon Total Cycle Time</label>
+        <label xml:lang="it">Beacon Total Cycle Time</label>
+      </variable>
+      <variable CV="121" default="15" item="Function F0R behavior">
+        <decVal min="2" max="26"/>
+        <label>Beacon Mid Brightness</label>
+        <label xml:lang="it">Beacon Mid Brightness</label>
+      </variable>
+      <variable CV="122" default="25" item="Function F0R options">
+        <decVal min="4" max="28"/>
+        <label>Beacon Max Brightness</label>
+        <label xml:lang="it">Beacon Max Brightness</label>
+      </variable>
+      <variable CV="140" default="140" item="Function 3 effect generated">
+        <decVal/>
+        <label>Single Strobe 1 Off Duration</label>
+        <label xml:lang="it">Single Strobe 1 Off Duration</label>
+      </variable>
+      <variable CV="141" default="5" item="Function 3 behavior">
+        <decVal/>
+        <label>Single Strobe 1 On Duration</label>
+        <label xml:lang="it">Single Strobe 1 On Duration</label>
+      </variable>
+      <variable CV="142" default="124" item="Function 3 options">
+        <decVal/>
+        <label>Single Strobe 2 Off Duration</label>
+        <label xml:lang="it">Single Strobe 2 Off Duration</label>
+      </variable>
+      <variable CV="143" default="5" item="Function 3 option 1">
+        <decVal/>
+        <label>Single Strobe 2 On Duration</label>
+        <label xml:lang="it">Single Strobe 2 On Duration</label>
+      </variable>
+      <variable CV="144" default="144" item="Function 8 effect generated">
+        <decVal/>
+        <label>Flashing Light On Duration</label>
+        <label xml:lang="it">Flashing Light On Duration</label>
+      </variable>
+      <variable CV="145" default="48" item="Function 8 behavior">
+        <decVal/>
+        <label>Flashing Light Off Duration</label>
+        <label xml:lang="it">Flashing Light Off Duration</label>
+      </variable>
+      <variable CV="146" default="112" item="Function 4 effect generated">
+        <decVal/>
+        <label>Double Strobe 1 Long Off Duration</label>
+        <label xml:lang="it">Double Strobe 1 Long Off Duration</label>
+      </variable>
+      <variable CV="147" default="5" item="Function 4 behavior">
+        <decVal/>
+        <label>Double Strobe 1 On Duration</label>
+        <label xml:lang="it">Double Strobe 1 On Duration</label>
+      </variable>
+      <variable CV="148" default="16" item="Function 4 options">
+        <decVal/>
+        <label>Double Strobe 1 Short Off Duration</label>
+        <label xml:lang="it">Double Strobe 1 Short Off Duration</label>
+      </variable>
+      <variable CV="149" default="117" item="Function 4 option 1">
+        <decVal/>
+        <label>Double Strobe 2 Long Off Duration</label>
+        <label xml:lang="it">Double Strobe 2 Long Off Duration</label>
+      </variable>
+      <variable CV="150" default="16" item="Function 4 option 2">
+        <decVal/>
+        <label>Double Strobe 2 On Duration</label>
+        <label xml:lang="it">Double Strobe 2 On Duration</label>
+      </variable>
+      <variable CV="151" default="5" item="Function 4 option 3">
+        <decVal/>
+        <label>Double Strobe 2 Short Off Duration</label>
+        <label xml:lang="it">Double Strobe 2 Short Off Duration</label>
+      </variable>
+      <variable CV="135" default="16" item="Function 7 effect generated" tooltip="Random Flicker for fireboxes">
+        <decVal/>
+        <label>Random Flicker 1 Speed</label>
+        <label xml:lang="it">Random Flicker 1 Speed</label>
+        <tooltip xml:lang="it">Random Flicker for fireboxes</tooltip>
+      </variable>
+      <variable CV="152" default="16" item="Function 7 behavior" tooltip="Random Flicker 2 for fireboxes">
+        <decVal/>
+        <label>Random Flicker 2 Speed</label>
+        <label xml:lang="it">Random Flicker 2 Speed</label>
+        <tooltip xml:lang="it">Random Flicker 2 for fireboxes</tooltip>
+      </variable>
+      <!--  Lighting effects ends here  -->
+      <variable CV="105" item="User Id #1">
         <decVal/>
         <label>User Private ID #1</label>
       </variable>
-      <variable label="User Private ID #2" CV="106" item="User Id #2">
+      <variable CV="106" item="User Id #2">
         <decVal/>
         <label>User Private ID #2</label>
       </variable>
-		<variable label="Month of Decoder Manufacture" CV="250" readOnly="yes" item="mfgMonth" tooltip="Date TCS made this decoder">
-			<decVal/>
-		</variable>
-		<variable label="Day of Decoder Manufacture" CV="251" readOnly="yes" item="mfgDay" tooltip="Date TCS made this decoder">
-			<decVal/>
-		</variable>
-		<variable label="Year of Decoder Manufacture" CV="252" readOnly="yes" item="mfgYear" tooltip="Date TCS made this decoder">
-			<decVal/>
-		</variable>
+      <variable CV="250" readOnly="yes" item="mfgMonth" tooltip="Date TCS made this decoder">
+        <decVal/>
+        <label>Month of Decoder Manufacture</label>
+      </variable>
+      <variable CV="251" readOnly="yes" item="mfgDay" tooltip="Date TCS made this decoder">
+        <decVal/>
+        <label>Day of Decoder Manufacture</label>
+      </variable>
+      <variable CV="252" readOnly="yes" item="mfgYear" tooltip="Date TCS made this decoder">
+        <decVal/>
+        <label>Year of Decoder Manufacture</label>
+      </variable>
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="2"/>
     </resets>
   </decoder>
-	<pane name="TCS">
-		<column>
-			<label label="TCS decoders support a decoder locking feature"/>
-			<label label="useful when several decoders are used in one loco"/>
-			<label label="on the same address, e.g. for adding sound"/>
-			<label label="TCS suggests values of 1=mobile, 2=sound, 3=light/function only"/>
-			<label label=" "/>
-			<display item="Decoder Lock ID number"/>
-			<label label="Set CV15 equal to this number to unlock the decoder for programming"/>
-			<label label=" "/>
-			<!-- <display item="Decoder Lock control number" label="Decoder Lock control, CV15"/>  -->
-			<label label=" "/>
-			<display item="mfgMonth"/>
-			<display item="mfgDay"/>
-			<display item="mfgYear"/>
-			<label label=" "/>
-			<label label="TCS_Fn.xml Function Decoders"/>
-		</column>
-	</pane>
+  <pane>
+    <name>TCS</name>
+    <column>
+      <label>
+        <text>TCS decoders support a decoder locking feature</text>
+      </label>
+      <label>
+        <text>useful when several decoders are used in one loco</text>
+      </label>
+      <label>
+        <text>on the same address, e.g. for adding sound</text>
+      </label>
+      <label>
+        <text>TCS suggests values of 1=mobile, 2=sound, 3=light/function only</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Decoder Lock ID number"/>
+      <label>
+        <text>Set CV15 equal to this number to unlock the decoder for programming</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <!-- <display item="Decoder Lock control number" label="Decoder Lock control, CV15"/>  -->
+      <label>
+        <text> </text>
+      </label>
+      <display item="mfgMonth"/>
+      <display item="mfgDay"/>
+      <display item="mfgYear"/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>TCS_Fn.xml Function Decoders</text>
+      </label>
+    </column>
+  </pane>
 </decoder-config>
