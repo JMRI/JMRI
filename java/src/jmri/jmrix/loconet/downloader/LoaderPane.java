@@ -5,6 +5,11 @@ package jmri.jmrix.loconet.downloader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.awt.FlowLayout;
+import java.awt.Color;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 import javax.swing.*;
 
@@ -17,49 +22,67 @@ import jmri.jmrit.MemoryContents;
 import jmri.util.FileUtil;
 
 /**
- * Pane for downloading .hex files
+ * Pane for downloading .hex files and .dmf files to those LocoNet devices
+ * which support firmware updates via LocoNet IPL messages.
+ * 
+ * This version relies on the file contents interpretation mechanisms built into 
+ * the readHex() methods found in class jmri.jmrit.MemoryContents to 
+ * automatically interpret the file's addressing type - either 16-bit or 24-bit
+ * addressing.  The interpreted addressing type is reported in the pane after a 
+ * file is read.  The user cannot select the addressing type.
+ *  
+ * This version relies on the file contents checking mechanisms built into the 
+ * readHex() methods found in class jmri.jmrit.MemoryContents to check for a 
+ * wide variety of possible issues in the contents of the firmware update file.
+ * Any exception thrown by at method is used to select an error message to 
+ * display in the status line of the pane.
+ *  
  * @author	    Bob Jacobsen   Copyright (C) 2005
+ * @author          B. Milhaupt    Copyright (C) 2013, 2014
  * @version	    $Revision$
  */
-public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
+public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel 
+    implements ActionListener {
 
     // GUI member declarations
-    static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.loconet.downloader.Loader");
 
     JLabel inputFileName = new JLabel("");
 
-    JTextField bootload = new JTextField("1");
-    JTextField mfg      = new JTextField("1");
-    JTextField developer= new JTextField("1");
-    JTextField product  = new JTextField("1");
-    JTextField hardware = new JTextField("1");
-    JTextField software = new JTextField("1");
-    JTextField delay    = new JTextField("200");
-    JTextField eestart  = new JTextField("C00000");
+    JTextField bootload = new JTextField();
+    JTextField mfg      = new JTextField();
 
-    JRadioButton checkhardwareno = new JRadioButton(res.getString("ButtonCheckHardwareNo"));
-    JRadioButton checkhardwareexact = new JRadioButton(res.getString("ButtonCheckHardwareExact"));
-    JRadioButton checkhardwaregreater = new JRadioButton(res.getString("ButtonCheckHardwareGreater"));
+    JTextField developer= new JTextField();
+    JTextField product  = new JTextField();
+    JTextField hardware = new JTextField();
+    JTextField software = new JTextField();
+    JTextField delay    = new JTextField();
+    JTextField eestart  = new JTextField();
+
+    JRadioButton checkhardwareno = new JRadioButton(Bundle.getMessage("ButtonCheckHardwareNo"));
+    JRadioButton checkhardwareexact = new JRadioButton(Bundle.getMessage("ButtonCheckHardwareExact"));
+    JRadioButton checkhardwaregreater = new JRadioButton(Bundle.getMessage("ButtonCheckHardwareGreater"));
     ButtonGroup hardgroup = new ButtonGroup();
 
-    JRadioButton checksoftwareno = new JRadioButton(res.getString("ButtonCheckSoftwareNo"));
-    JRadioButton checksoftwareless = new JRadioButton(res.getString("ButtonCheckSoftwareLess"));
+    JRadioButton checksoftwareno = new JRadioButton(Bundle.getMessage("ButtonCheckSoftwareNo"));
+    JRadioButton checksoftwareless = new JRadioButton(Bundle.getMessage("ButtonCheckSoftwareLess"));
     ButtonGroup softgroup = new ButtonGroup();
 
-    JButton readButton;
     JButton loadButton;
     JButton verifyButton;
     JButton abortButton;
 
-    JRadioButton address24bit = new JRadioButton(res.getString("Button24bit"));
-    JRadioButton address16bit = new JRadioButton(res.getString("Button16bit"));
+    JRadioButton address24bit = new JRadioButton(Bundle.getMessage("Button24bit"));
+    JRadioButton address16bit = new JRadioButton(Bundle.getMessage("Button16bit"));
+    ButtonGroup addressSizeButtonGroup = new ButtonGroup();
     
     JProgressBar    bar;
     JLabel          status = new JLabel("");
+    JPanel          inputFileNamePanel;
 
     MemoryContents inputContent = new MemoryContents();
+    private int inputFileLabelWidth;
 
-    static int PXCT1DOWNLOAD     = 0x40;
+    private static final int PXCT1DOWNLOAD     = 0x40;
     static int PXCT2SETUP        = 0x00;
     static int PXCT2SENDADDRESS  = 0x10;
     static int PXCT2SENDDATA     = 0x20;
@@ -79,93 +102,180 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
     
     private static final int SW_FLAGS_MSK                         = 0x04;
     private static final int HW_FLAGS_MSK                         = 0x03;
+    
+    // some constant string declarations
+    private static final String MIN_VALUE_ZERO = "0";
+    private static final String MIN_VALUE_EIGHT = "8";
+    private static final String MAX_VALUE_255 = "255";
+    private static final String MAX_VALUE_65535 = "65535";
+    private static final String MAX_VALUE_FFFFF8 = "FFFFF8";
+    private static final String MIN_VALUE_10 = "10";
+    private static final String MAX_VALUE_500 = "500";
 
     public LoaderPane() { }
     
-    public String getHelpTarget() { return "package.jmri.jmrix.loconet.downloader.LoaderFrame"; }
-    public String getTitle() { return getTitle(res.getString("TitleLoader")); }
+    @Override public String getHelpTarget() { return "package.jmri.jmrix.loconet.downloader.LoaderFrame"; }
+    @Override public String getTitle() { return getTitle(Bundle.getMessage("TitleLoader")); }
 
-    public void initComponents(LocoNetSystemConnectionMemo memo) {
+    @Override public void initComponents(LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
     
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        {
+        { 
+            /* Create panels for displaying a filename and for providing a file 
+             * seleciton pushbutton
+             */
+        inputFileNamePanel = new JPanel();
+        inputFileNamePanel.setLayout(new FlowLayout());
+        JLabel l = new JLabel(Bundle.getMessage("LabelInpFile"));  
+        inputFileLabelWidth = l.getMinimumSize().width;
+        l.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
+        inputFileNamePanel.add(l);
+        inputFileNamePanel.add(new Box.Filler(new java.awt.Dimension(5, 20), 
+                new java.awt.Dimension(5, 20), 
+                new java.awt.Dimension(5, 20)));
+        inputFileNamePanel.add(inputFileName);
+
+        add(inputFileNamePanel);
+            
             JPanel p = new JPanel();
-            p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-            JButton b = new JButton(res.getString("ButtonSelect"));
-            b.addActionListener(new AbstractAction() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
+            p.setLayout(new FlowLayout());
+            JButton selectButton = new JButton(Bundle.getMessage("ButtonSelect"));
+            selectButton.addActionListener(new ActionListener() {
+                @Override public void actionPerformed(ActionEvent e) {
+                    inputContent = new MemoryContents();
+                    setDefaultFieldValues();
+                    updateDownloadVerifyButtons();
                     selectInputFile();
+                    doRead();
                 }
             });
-            p.add(b);
-            p.add(new JLabel(res.getString("LabelInpFile")));
-            p.add(inputFileName);
-
+            p.add(selectButton);
+            
             add(p);
         }
 
         {
+            // Create a panel for displaying the addressing type, via radio buttons
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-            p.add(new JLabel(res.getString("LabelBitMode")));
+            JLabel l = new JLabel(Bundle.getMessage("LabelBitMode")+" ");
+            l.setEnabled(false);
+            p.add(l);
             p.add(address16bit);
             p.add(address24bit);
-            ButtonGroup g = new ButtonGroup();
-            g.add(address16bit);
-            g.add(address24bit);
-            address16bit.setSelected(true);
+            addressSizeButtonGroup.add(address16bit);
+            addressSizeButtonGroup.add(address24bit);
+            addressSizeButtonGroup.clearSelection();
+            address16bit.setEnabled(false);
+            address24bit.setEnabled(false);
             add(p);
         }
 
-        {
-            JPanel p = new JPanel();
-            p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-            p.add(new JLabel(res.getString("LabelBootload")));
-            p.add(bootload);
-            add(p);
-        }
+        setDefaultFieldValues();
 
         add(new JSeparator());
-
+        
         {
+            // create a panel for displaying/modifying the bootloader version
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-            p.add(new JLabel(res.getString("LabelMfg")));
+            p.add(new JLabel(Bundle.getMessage("LabelBootload")+" "));  
+            p.add(bootload);
+            bootload.setToolTipText(Bundle.getMessage("TipValueRange",
+                    MIN_VALUE_ZERO,MAX_VALUE_255)); //NOI18N
+            bootload.addFocusListener(new FocusListener() {
+                @Override public void focusGained(FocusEvent e) {
+                }
+                @Override public void focusLost(FocusEvent e) {
+                    intParameterIsValid(bootload, 0, 255);
+                    updateDownloadVerifyButtons();
+                }
+            });
+            add(p);
+        }
+
+        {
+            // create a panel for displaying/modifying the manufacturer number
+            JPanel p = new JPanel();
+            p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+            p.add(new JLabel(Bundle.getMessage("LabelMfg")+" "));  
+            mfg.setToolTipText(Bundle.getMessage("TipValueRange",
+                    MIN_VALUE_ZERO,MAX_VALUE_255)); //NOI18N
             p.add(mfg);
-
+            mfg.addFocusListener(new FocusListener() {
+                @Override public void focusGained(FocusEvent e) {
+                }
+                @Override public void focusLost(FocusEvent e) {
+                    intParameterIsValid(mfg, 0, 255);
+                    updateDownloadVerifyButtons();                }
+            });
             add(p);
         }
 
         {
+            // create a panel for displaying/modifying the developer number
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-            p.add(new JLabel(res.getString("LabelDev")));
+            p.add(new JLabel(Bundle.getMessage("LabelDev")+
+                    " ")); //NOI18N
+            developer.setToolTipText(Bundle.getMessage("TipValueRange",
+                    MIN_VALUE_ZERO,MAX_VALUE_255)); //NOI18N
             p.add(developer);
-
+            developer.addFocusListener(new FocusListener() {
+                @Override public void focusGained(FocusEvent e) {
+                }
+                @Override public void focusLost(FocusEvent e) {
+                    intParameterIsValid(developer, 0, 255);
+                    updateDownloadVerifyButtons();
+                }
+            });
             add(p);
         }
 
         {
+            // create a panel for displaying/modifying the product number
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-            p.add(new JLabel(res.getString("LabelProduct")));
+            p.add(new JLabel(Bundle.getMessage("LabelProduct")+" ")); 
+            product.setToolTipText(Bundle.getMessage("TipValueRange",
+                    MIN_VALUE_ZERO,MAX_VALUE_65535)); //NOI18N
             p.add(product);
+            product.addFocusListener(new FocusListener() {
+                @Override public void focusGained(FocusEvent e) {
+                }
+                @Override public void focusLost(FocusEvent e) {
+                    intParameterIsValid(product, 0, 65535);
+                    updateDownloadVerifyButtons();
+                }
+            });
 
             add(p);
         }
 
         {
+            // create a panel for displaying/modifying the hardware version
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-            p.add(new JLabel(res.getString("LabelHardware")));
+            hardware.setToolTipText(Bundle.getMessage("TipValueRange",
+                    MIN_VALUE_ZERO,MAX_VALUE_255)); //NOI18N
+            p.add(new JLabel(Bundle.getMessage("LabelHardware")+" ")); 
             p.add(hardware);
+            hardware.addFocusListener(new FocusListener() {
+                @Override public void focusGained(FocusEvent e) {
+                }
+                @Override public void focusLost(FocusEvent e) {
+                    intParameterIsValid(hardware, 0, 255);
+                    updateDownloadVerifyButtons();
+                }
+            });
 
             add(p);
         }
 
         {
+            // create a panel for displaying/modifying the hardware options
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             p.add(checkhardwareno);
@@ -175,21 +285,56 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
             hardgroup.add(checkhardwareno);
             hardgroup.add(checkhardwareexact);
             hardgroup.add(checkhardwaregreater);
-            checkhardwareexact.setSelected(true);
-
+            
+//            checkhardwareno.addFocusListener(new FocusListener() {
+//                @Override public void focusGained(FocusEvent e) {
+//                }
+//                @Override public void focusLost(FocusEvent e) {
+//                    updateDownloadVerifyButtons();
+//                }
+//            });
+//            checkhardwareexact.addFocusListener(new FocusListener() {
+//                @Override public void focusGained(FocusEvent e) {
+//                }
+//                @Override public void focusLost(FocusEvent e) {
+//                    updateDownloadVerifyButtons();
+//                }
+//            });
+//            checkhardwaregreater.addFocusListener(new FocusListener() {
+//                @Override public void focusGained(FocusEvent e) {
+//                }
+//                @Override public void focusLost(FocusEvent e) {
+//                    updateDownloadVerifyButtons();
+//                }
+//            });
+            checkhardwareno.addActionListener(this);
+            checkhardwareexact.addActionListener(this);
+            checkhardwaregreater.addActionListener(this);
             add(p);
         }
 
         {
+            // create a panel for displaying/modifying the software version
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-            p.add(new JLabel(res.getString("LabelSoftware")));
+            p.add(new JLabel(Bundle.getMessage("LabelSoftware")+" ")); 
+            software.setToolTipText(Bundle.getMessage("TipValueRange",
+                    MIN_VALUE_ZERO,MAX_VALUE_255)); //NOI18N
             p.add(software);
+            software.addFocusListener(new FocusListener() {
+                @Override public void focusGained(FocusEvent e) {
+                }
+                @Override public void focusLost(FocusEvent e) {
+                    intParameterIsValid(software, 0, 255);
+                    updateDownloadVerifyButtons();
+                }
+            });
 
             add(p);
         }
 
         {
+            // create a panel for displaying/modifying the software options
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             p.add(checksoftwareno);
@@ -197,25 +342,49 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
 
             softgroup.add(checksoftwareno);
             softgroup.add(checksoftwareless);
-            checksoftwareno.setSelected(true);
+
+            checksoftwareno.addActionListener(this);
+            checksoftwareless.addActionListener(this);
 
             add(p);
         }
 
         {
+            // create a panel for displaying/modifying the delay value
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-            p.add(new JLabel(res.getString("LabelDelay")));
+            p.add(new JLabel(Bundle.getMessage("LabelDelay")+" ")); 
+            delay.setToolTipText(Bundle.getMessage("TipValueRange",
+                    MIN_VALUE_10,MAX_VALUE_500)); //NOI18N
+
             p.add(delay);
+            delay.addFocusListener(new FocusListener() {
+                @Override public void focusGained(FocusEvent e) {
+                }
+                @Override public void focusLost(FocusEvent e) {
+                    intParameterIsValid(hardware, 10, 500);
+                    updateDownloadVerifyButtons();
+                }
+            });
 
             add(p);
         }
 
         {
+            // create a panel for displaying/modifying the EEPROM start address
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-            p.add(new JLabel(res.getString("LabelEEStart")));
+            p.add(new JLabel(Bundle.getMessage("LabelEEStart")+" ")); 
+            eestart.setToolTipText(Bundle.getMessage("TipValueRange",
+                    MIN_VALUE_EIGHT,MAX_VALUE_FFFFF8)); //NOI18N
             p.add(eestart);
+            eestart.addFocusListener(new FocusListener() {
+                @Override public void focusGained(FocusEvent e) {
+                }
+                @Override public void focusLost(FocusEvent e) {
+                    updateDownloadVerifyButtons();
+                }
+            });
 
             add(p);
         }
@@ -223,47 +392,38 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
         add(new JSeparator());
 
         {
+            // create a panel for the upload, verify, and abort buttons
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout());
 
-            readButton = new JButton(res.getString("ButtonRead"));
-            readButton.setEnabled(false);
-            readButton.setToolTipText(res.getString("TipReadDisabled"));
-            p.add(readButton);
-            readButton.addActionListener(new AbstractAction() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    doRead();
-                }
-            });
-
-            loadButton = new JButton(res.getString("ButtonLoad"));
+            loadButton = new JButton(Bundle.getMessage("ButtonLoad")); 
             loadButton.setEnabled(false);
-            loadButton.setToolTipText(res.getString("TipLoadDisabled"));
+            loadButton.setToolTipText(Bundle.getMessage("TipLoadDisabled")); 
             p.add(loadButton);
-            loadButton.addActionListener(new AbstractAction() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
+            loadButton.addActionListener(new ActionListener() {
+                @Override public void actionPerformed(java.awt.event.ActionEvent e) {
                     doLoad();
                 }
             });
 
-            verifyButton = new JButton(res.getString("ButtonVerify"));
+            verifyButton = new JButton(Bundle.getMessage("ButtonVerify"));
             verifyButton.setEnabled(false);
-            verifyButton.setToolTipText(res.getString("TipVerifyDisabled"));
+            verifyButton.setToolTipText(Bundle.getMessage("TipVerifyDisabled"));
             p.add(verifyButton);
-            verifyButton.addActionListener(new AbstractAction() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
+            verifyButton.addActionListener(new ActionListener() {
+                @Override public void actionPerformed(java.awt.event.ActionEvent e) {
                     doVerify();
                 }
             });
 
             add(p);
 
-            abortButton = new JButton(res.getString("ButtonAbort"));
+            abortButton = new JButton(Bundle.getMessage("ButtonAbort"));
             abortButton.setEnabled(false);
-            abortButton.setToolTipText(res.getString("TipAbortDisabled"));
+            abortButton.setToolTipText(Bundle.getMessage("TipAbortDisabled"));
             p.add(abortButton);
-            abortButton.addActionListener(new AbstractAction() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
+            abortButton.addActionListener(new ActionListener() {
+                @Override public void actionPerformed(java.awt.event.ActionEvent e) {
                     setOperationAborted(true) ;
                 }
             });
@@ -272,15 +432,18 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
 
             add(new JSeparator());
 
-            bar = new JProgressBar();
+            // create progress bar
+            bar = new JProgressBar(0,100);
+            bar.setStringPainted(true);
             add(bar);
 
             add(new JSeparator());
 
             {
+            // create a panel for displaying a status message
                 p = new JPanel();
                 p.setLayout(new FlowLayout());
-                status.setText(res.getString("StatusSelectFile"));
+                status.setText(Bundle.getMessage("StatusSelectFile"));
                 status.setAlignmentX(JLabel.LEFT_ALIGNMENT);
                 p.add(status);
                 add(p);
@@ -298,109 +461,223 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
         }
         if (chooser == null) {
             chooser = new JFileChooser(name);
+            javax.swing.filechooser.FileNameExtensionFilter filter =
+                    new javax.swing.filechooser.FileNameExtensionFilter(
+                    Bundle.getMessage("FileFilterLabel",
+                        "*.dfm, *.hex"),  // NOI18N
+                        "dmf","hex");   // NOI18N
+                    
             chooser.addChoosableFileFilter(
                     new javax.swing.filechooser.FileNameExtensionFilter(
-                            "Digitrax Mangled Firmware (*.dmf)","dmf"));
+                            "Digitrax Mangled Firmware (*.dmf)","dmf")); //NOI18N
+            chooser.addChoosableFileFilter(
+                    new javax.swing.filechooser.FileNameExtensionFilter(
+                            "Intel Hex Format Firmware (*.hex)","hex")); //NOI18N
+            chooser.addChoosableFileFilter(filter);
+
+            // make the downloadable file filter the default active filter
+            chooser.setFileFilter(filter); 
+            
         }
         inputFileName.setText("");  // clear out in case of failure
         int retVal = chooser.showOpenDialog(this);
         if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
-        inputFileName.setText(chooser.getSelectedFile().getName());
+        
+        String newFileName = chooser.getSelectedFile().getName();
+        inputFileName.setText(newFileName);
+        // check to see if it fits on the screen
+        int currentStringWidth = inputFileName.getMinimumSize().width;
+        int allowedWidth;
+        inputFileName.setToolTipText(newFileName);
+        allowedWidth = ((int)(.8 * 
+                ((float)inputFileNamePanel.getSize().width))) - inputFileLabelWidth;
+        if (currentStringWidth > allowedWidth ) {
+            // Filename won't fit on the display.
+            // need to shorten the string.
+            int startPoint = 
+                    (int)((double)inputFileName.getText().length() 
+                    * (1 - ((double)allowedWidth/(double)currentStringWidth)));
+            String displayableName = "..." // NOI18N
+                    +inputFileName.getText().substring(startPoint);
+            log.info("Shortening display of filename "  // NOI18N
+                    + inputFileName.getText()
+                    + " to " +displayableName);   // NOI18N
+            log.debug("Width required to display the full file name = "  // NOI18N
+                    + currentStringWidth);
+            log.debug("Allowed width = " + allowedWidth);  // NOI18N
+            log.debug("Amount of text not displayed = " + startPoint);  // NOI18N
+            inputFileName.setText(displayableName);
+        }
+        inputFileName.updateUI();
+        inputFileNamePanel.updateUI();
+        updateUI();
 
-        readButton.setEnabled(true);
-        readButton.setToolTipText(res.getString("TipReadEnabled"));
+
         loadButton.setEnabled(false);
-        loadButton.setToolTipText(res.getString("TipLoadDisabled"));
+        loadButton.setToolTipText(Bundle.getMessage("TipLoadDisabled"));
         verifyButton.setEnabled(false);
-        verifyButton.setToolTipText(res.getString("TipVerifyDisabled"));
-        status.setText(res.getString("StatusReadFile"));
+        verifyButton.setToolTipText(Bundle.getMessage("TipVerifyDisabled"));
+        status.setText(Bundle.getMessage("StatusDoDownload"));
     }
 
     private void doRead() {
-        if (inputFileName.getText() == "") {
-            JOptionPane.showMessageDialog(this, res.getString("ErrorNoInputFile"),
-                                      res.getString("ErrorTitle"),
+        if (inputFileName.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorNoInputFile"),
+                                      Bundle.getMessage("ErrorTitle"),
                                       JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         // force load, verify disabled in case read fails
         loadButton.setEnabled(false);
-        loadButton.setToolTipText(res.getString("TipLoadDisabled"));
+        loadButton.setToolTipText(Bundle.getMessage("TipLoadDisabled"));
         verifyButton.setEnabled(false);
-        verifyButton.setToolTipText(res.getString("TipVerifyDisabled"));
+        verifyButton.setToolTipText(Bundle.getMessage("TipVerifyDisabled"));
         abortButton.setEnabled(false);
-        abortButton.setToolTipText(res.getString("TipAbortDisabled"));
+        abortButton.setToolTipText(Bundle.getMessage("TipAbortDisabled"));
 
         // clear the existing memory contents
         inputContent = new MemoryContents();
         
-        // set format
-        inputContent.setAddress24Bit(address24bit.isSelected());
-
+        bar.setValue(0);
+        
         // load
         try {
-            //FIXME: errors in file are not reported to user
             inputContent.readHex(new File(chooser.getSelectedFile().getPath()));
         } catch (FileNotFoundException f) {
-            JOptionPane.showMessageDialog(this, res.getString("ErrorFileNotFound"),
-                                      res.getString("ErrorTitle"),
+            log.error(f.getLocalizedMessage());
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorFileNotFound"),
+                                      Bundle.getMessage("ErrorTitle"),
                                       JOptionPane.ERROR_MESSAGE);
-            this.enableGUI();
+            status.setText(Bundle.getMessage("StatusFileNotFound"));
+            this.disableDownloadVerifyButtons();
+            return;
+        } catch ( MemoryContents.MemoryFileRecordLengthException f) {
+            log.error(f.getLocalizedMessage());
+            status.setText(Bundle.getMessage("ErrorFileContentsError"));
+            this.disableDownloadVerifyButtons();
+            return;
+        } catch ( MemoryContents.MemoryFileChecksumException f) {
+            log.error(f.getLocalizedMessage());
+            status.setText(Bundle.getMessage("ErrorFileContentsError"));
+            this.disableDownloadVerifyButtons();
+            return;
+        } catch ( MemoryContents.MemoryFileUnknownRecordType f) {
+            log.error(f.getLocalizedMessage());
+            status.setText(Bundle.getMessage("ErrorFileContentsError"));
+            this.disableDownloadVerifyButtons();
+            return;
+        } catch ( MemoryContents.MemoryFileRecordContentException f) {
+            log.error(f.getLocalizedMessage());
+            status.setText(Bundle.getMessage("ErrorFileContentsError"));
+            this.disableDownloadVerifyButtons();
+            return;
+        } catch ( MemoryContents.MemoryFileAddressingRangeException f) {
+            log.error(f.getLocalizedMessage());
+            status.setText(Bundle.getMessage("ErrorFileContentsError"));
+            this.disableDownloadVerifyButtons();
+            return;
+        } catch ( MemoryContents.MemoryFileNoDataRecordsException f) {
+            log.error(f.getLocalizedMessage());
+            status.setText(Bundle.getMessage("ErrorFileContentsError"));
+            this.disableDownloadVerifyButtons();
+            return;
+        } catch ( MemoryContents.MemoryFileNoEOFRecordException f) {
+            log.error(f.getLocalizedMessage());
+            status.setText(Bundle.getMessage("ErrorFileContentsError"));
+            this.disableDownloadVerifyButtons();
+            return;
+        } catch ( MemoryContents.MemoryFileRecordFoundAfterEOFRecord f) {
+            log.error(f.getLocalizedMessage());
+            status.setText(Bundle.getMessage("ErrorFileContentsError"));
+            this.disableDownloadVerifyButtons();
+            return;
+        } catch (IOException e) {
+            log.error(e.getLocalizedMessage());
+            status.setText(Bundle.getMessage("ErrorFileReadError"));
+            this.disableDownloadVerifyButtons();
             return;
         }
         loadButton.setEnabled(true);
-        loadButton.setToolTipText(res.getString("TipLoadEnabled"));
+        loadButton.setToolTipText(Bundle.getMessage("TipLoadEnabled"));
         verifyButton.setEnabled(true);
-        verifyButton.setToolTipText(res.getString("TipVerifyEnabled"));
-        status.setText(res.getString("StatusDoDownload"));
+        verifyButton.setToolTipText(Bundle.getMessage("TipVerifyEnabled"));
+        status.setText(Bundle.getMessage("StatusDoDownload"));
 
-        // get some contents & update
-        // Always load the from baseName "File.properties". There should be
-        // no translations because this defines the file format of dmf file.
-        ResourceBundle l = ResourceBundle.getBundle(
-                            "jmri.jmrix.loconet.downloader.File", Locale.ROOT);
+        // get some key/value pairs from the input file (if available)
 
-        String text = inputContent.getComment(l.getString("StringLoader"));
-        if (text!=null) bootload.setText(text);
+        String text = inputContent.extractValueOfKey("Bootloader Version");
+        if (text!=null) {
+            bootload.setText(text);
+        }
 
-        text = inputContent.getComment(l.getString("StringManufacturer"));
-        if (text!=null) mfg.setText(text);
+        text = inputContent.extractValueOfKey("Manufacturer Code");
+        if (text!=null) {
+            mfg.setText(text);
+        }
 
-        text = inputContent.getComment(l.getString("StringDeveloper"));
-        if (text!=null) developer.setText(text);
+        text = inputContent.extractValueOfKey("Developer Code");
+        if (text!=null) {
+            developer.setText(text);
+        }
 
-        text = inputContent.getComment(l.getString("StringProduct"));
-        if (text!=null) product.setText(text);
+        text = inputContent.extractValueOfKey("Product Code");
+        if (text!=null) {
+            product.setText(text);
+        }
 
-        text = inputContent.getComment(l.getString("StringHardware"));
-        if (text!=null) hardware.setText(text);
+        text = inputContent.extractValueOfKey("Hardware Version");
+        if (text!=null) {
+            hardware.setText(text);
+        }
 
-        text = inputContent.getComment(l.getString("StringSoftware"));
-        if (text!=null) software.setText(text);
+        text = inputContent.extractValueOfKey("Software Version");
+        if (text!=null) {
+            software.setText(text);
+        }
 
-        text = inputContent.getComment(l.getString("StringOptions"));
+        text = inputContent.extractValueOfKey("Options");
         if (text != null) {
             try {
-                this.setCheckBoxes(text);
-            } catch(NumberFormatException ex) {
+                this.setOptionsRadiobuttons(text);
+            } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this,
-                        res.getString("ErrorInvalidOptionInFile")+ex.getMessage(),
-                        res.getString("ErrorTitle"),
+                        Bundle.getMessage("ErrorInvalidOptionInFile", text, "Options"),
+                        Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
-                this.enableGUI();
+                this.disableDownloadVerifyButtons();
                 return;
             }
         }
 
-        text = inputContent.getComment(l.getString("StringDelay"));
-        if (text!=null) delay.setText(text);
+        text = inputContent.extractValueOfKey("Delay");
+        if (text!=null) {
+            delay.setText(text);
+        }
 
-        text = inputContent.getComment(l.getString("StringEEStart"));
-        if (text!=null) eestart.setText(text);
+        text = inputContent.extractValueOfKey("EEPROM Start Address");
+        if (text!=null) {
+            eestart.setText(text);
+        }
+        
+        MemoryContents.LoadOffsetFieldType addresstype = inputContent.getCurrentAddressFormat();
+        if (addresstype == MemoryContents.LoadOffsetFieldType.ADDRESSFIELDSIZE16BITS) {
+            address16bit.setSelected(true);
+            address24bit.setSelected(false);
+        }
+        else if (addresstype == MemoryContents.LoadOffsetFieldType.ADDRESSFIELDSIZE24BITS) {
+            address16bit.setSelected(false);
+            address24bit.setSelected(true);
+        }
+        if (!parametersAreValid()) {
+            status.setText(Bundle.getMessage("ErrorInvalidParameter"));
+            disableDownloadVerifyButtons();
+        } else if (!inputContent.isEmpty()) {
+            enableDownloadVerifyButtons();
+        }
     }
 
-    private void setCheckBoxes(String text) {
+    private void setOptionsRadiobuttons(String text) throws NumberFormatException {
         try {
             int control = Integer.parseInt(text);
             switch (control & SW_FLAGS_MSK) {
@@ -437,21 +714,19 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
                                                      +(control & HW_FLAGS_MSK));
             }
         } catch (NumberFormatException ex) {
-            log.error("Invalid Options: " + text, ex);
-            throw ex;
+            log.error("Invalid Option value: " + text);
+            throw new NumberFormatException(ex.getLocalizedMessage());
         }
     }
 
-    private void doLoad() {
-        status.setText(res.getString("StatusDownloading"));
-        readButton.setEnabled(false);
-        readButton.setToolTipText(res.getString("TipDisabledDownload"));
+    void doLoad() {
+        status.setText(Bundle.getMessage("StatusDownloading"));
         loadButton.setEnabled(false);
-        loadButton.setToolTipText(res.getString("TipDisabledDownload"));
+        loadButton.setToolTipText(Bundle.getMessage("TipDisabledDownload"));
         verifyButton.setEnabled(false);
-        verifyButton.setToolTipText(res.getString("TipDisabledDownload"));
+        verifyButton.setToolTipText(Bundle.getMessage("TipDisabledDownload"));
         abortButton.setEnabled(true);
-        abortButton.setToolTipText(res.getString("TipAbortEnabled"));
+        abortButton.setToolTipText(Bundle.getMessage("TipAbortEnabled"));
 
         // start the download itself
         operation = PXCT2SENDDATA;
@@ -459,40 +734,63 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
     }
 
     void doVerify() {
-        status.setText(res.getString("StatusVerifying"));
-        readButton.setEnabled(false);
-        readButton.setToolTipText(res.getString("TipDisabledDownload"));
+        status.setText(Bundle.getMessage("StatusVerifying"));
         loadButton.setEnabled(false);
-        loadButton.setToolTipText(res.getString("TipDisabledDownload"));
+        loadButton.setToolTipText(Bundle.getMessage("TipDisabledDownload"));
         verifyButton.setEnabled(false);
-        verifyButton.setToolTipText(res.getString("TipDisabledDownload"));
+        verifyButton.setToolTipText(Bundle.getMessage("TipDisabledDownload"));
         abortButton.setEnabled(true);
-        abortButton.setToolTipText(res.getString("TipAbortEnabled"));
+        abortButton.setToolTipText(Bundle.getMessage("TipAbortEnabled"));
 
         // start the download itself
         operation = PXCT2VERIFYDATA;
         sendSequence();
     }
 
-    private void enableGUI() {
+    /**
+     * Cleans up the GUI interface.  Updates status line to a localized "done" 
+     * message or a localized "aborted" message depending on the value returned 
+     * by isOperationAborted() .  Assumes that the file was properly read to memory 
+     * and is usable for firmware update and/or verify operations, and configures
+     * the Load, and Verify GUI buttons as enabled, and the Abort GUI button as 
+     * disabled.
+     **/
+    void enableDownloadVerifyButtons() {
         if (log.isDebugEnabled()) log.debug("enableGUI");
 
         if (isOperationAborted())
-          status.setText(res.getString("StatusAbort"));
+          status.setText(Bundle.getMessage("StatusAbort"));
         else
-          status.setText(res.getString("StatusDone"));
+          status.setText(Bundle.getMessage("StatusDone"));
 
           // remove the
         setOperationAborted(false);
 
-        readButton.setEnabled(true);
-        readButton.setToolTipText(res.getString("TipReadEnabled"));
         loadButton.setEnabled(true);
-        loadButton.setToolTipText(res.getString("TipLoadEnabled"));
+        loadButton.setToolTipText(Bundle.getMessage("TipLoadEnabled"));
         verifyButton.setEnabled(true);
-        verifyButton.setToolTipText(res.getString("TipVerifyEnabled"));
+        verifyButton.setToolTipText(Bundle.getMessage("TipVerifyEnabled"));
         abortButton.setEnabled(false);
-        abortButton.setToolTipText(res.getString("TipAbortDisabled"));
+        abortButton.setToolTipText(Bundle.getMessage("TipAbortDisabled"));
+    }
+
+    /**
+     * Cleans up the GUI interface after a firmware file read fails.  Assumes 
+     * that the invoking code will update the GUI status line as appropriate
+     * for the particular cause of failure.  Configures the Load, Verify and Abort
+     * GUI buttons as disabled.
+     **/
+    private void disableDownloadVerifyButtons() {
+        if (log.isDebugEnabled()) log.debug("disableGUI");
+
+        setOperationAborted(false);
+
+        loadButton.setEnabled(false);
+        loadButton.setToolTipText(Bundle.getMessage("TipLoadDisabled"));
+        verifyButton.setEnabled(false);
+        verifyButton.setToolTipText(Bundle.getMessage("TipVerifyDisabled"));
+        abortButton.setEnabled(false);
+        abortButton.setToolTipText(Bundle.getMessage("TipAbortDisabled"));
     }
 
       // boolean used to abort the threaded operation
@@ -522,48 +820,134 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
         int hardval;
         int softval;
         int control;
+        
+        // before starting the send sequence, check for bad values in the
+        // GUI text fields containing the parameters.
+        
+        if (!parametersAreValid()) {
+            disableDownloadVerifyButtons();
+            status.setText(Bundle.getMessage("ErrorInvalidParameter"));
+            return;
+        }
+        if (inputContent.isEmpty()) {
+            disableDownloadVerifyButtons();
+            status.setText(Bundle.getMessage("ErrorEmptyFirmwareFile"));
+            return;
+        }
+        
+        // now know that the GUI text fields are valid and have some data to move.
         try {
-            mfgval = Integer.valueOf(mfg.getText()).intValue();
+            mfgval = Integer.parseInt(mfg.getText());
             if(mfgval<0 || mfgval>0xff) {
-                throw new NumberFormatException("Invalid Manufacturer Code: "+mfgval);
+                throw new NumberFormatException("out of range");
             }
-            developerval = Integer.valueOf(developer.getText()).intValue();
-            if(developerval<0 || developerval>0xff) {
-                throw new NumberFormatException("Invalid Developer Code: "+developerval);
-            }
-            prodval = Integer.valueOf(product.getText()).intValue();
-            if(prodval<0 || prodval>0xffff) {
-                throw new NumberFormatException("Invalid Product Code: "+prodval);
-            }
-            hardval = Integer.valueOf(hardware.getText()).intValue();
-            if(hardval<0 || hardval>0xff) {
-                throw new NumberFormatException("Invalid Hardware Version: "+hardval);
-            }
-            softval = Integer.valueOf(software.getText()).intValue();
-            if(softval<0 || softval>0xff) {
-                throw new NumberFormatException("Invalid Software Version: "+softval);
-            }
-            control = 0;
-
-            if (checksoftwareless.isSelected()) {
-                control |= CHECK_SOFTWARE_VERSION_LESS;
-            }
-
-            if (checkhardwareexact.isSelected()) {
-                control |= REQUIRE_HARDWARE_VERSION_EXACT_MATCH;
-            } else if (checkhardwaregreater.isSelected()) {
-                control |= ACCEPT_LATER_HARDWARE_VERSIONS;
-            }
-
-            delayval = Integer.valueOf(delay.getText()).intValue();
-            eestartval = Integer.valueOf(eestart.getText(),16).intValue();
         } catch( NumberFormatException ex ) {
-            log.error("sendSequence() failed", ex);
-            JOptionPane.showMessageDialog(this,
-                    res.getString("ErrorInvalidInput")+ex.getLocalizedMessage(),
-                    res.getString("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
-            this.enableGUI();
+            log.error("sendSequence() failed due to bad Manufacturer Number value " + mfg.getText());
+            mfg.setForeground(Color.red);
+            mfg.requestFocusInWindow();
+            enableDownloadVerifyButtons();
+            status.setText(Bundle.getMessage("ErrorInvalidValueInGUI",
+                    Bundle.getMessage("LabelMfg"), 
+                    mfg.getText()));
+            return;
+        }
+
+        try {
+            developerval = Integer.parseInt(developer.getText());
+            if(developerval<0 || developerval>0xff) {
+                throw new NumberFormatException("out of range");
+            }
+        } catch( NumberFormatException ex ) {
+            log.error("sendSequence() failed due to bad Developer Number value " + developer.getText());
+            developer.setForeground(Color.red);
+            developer.requestFocusInWindow();
+            enableDownloadVerifyButtons();
+            status.setText(Bundle.getMessage("ErrorInvalidValueInGUI",
+                    Bundle.getMessage("LabelDev"), 
+                    developer.getText()));
+            return;
+        }
+        
+        try {
+            prodval = Integer.parseInt(product.getText());
+            if(prodval<0 || prodval>0xffff) {
+                throw new NumberFormatException("out of range");
+            }
+        } catch( NumberFormatException ex ) {
+            log.error("sendSequence() failed due to bad Product Code value " + product.getText());
+            product.setForeground(Color.red);
+            product.requestFocusInWindow();
+            this.enableDownloadVerifyButtons();
+            enableDownloadVerifyButtons();
+            status.setText(Bundle.getMessage("ErrorInvalidValueInGUI",
+                    Bundle.getMessage("LabelProduct"), 
+                    product.getText()));
+            return;
+        }
+
+        try {
+            hardval = Integer.parseInt(hardware.getText());
+            if(hardval<0 || hardval>0xff) {
+                throw new NumberFormatException("out of range");
+            }
+        } catch( NumberFormatException ex ) {
+            log.error("sendSequence() failed due to bad Hardware Version value " + hardware.getText());
+            hardware.setForeground(Color.red);
+            hardware.requestFocusInWindow();
+            enableDownloadVerifyButtons();
+            status.setText(Bundle.getMessage("ErrorInvalidValueInGUI", 
+                    Bundle.getMessage("LabelHardware"), 
+                    hardware.getText()));
+            return;
+        }
+
+        try {
+            softval = Integer.parseInt(software.getText());
+            if(softval<0 || softval>0xff) {
+                throw new NumberFormatException("out of range");
+            }
+        } catch( NumberFormatException ex ) {
+            log.error("sendSequence() failed due to bad Software Version value " + software.getText());
+            software.setForeground(Color.red);
+            software.requestFocusInWindow();
+            enableDownloadVerifyButtons();
+            status.setText(Bundle.getMessage("ErrorInvalidValueInGUI", 
+                    Bundle.getMessage("LabelSoftware"), 
+                    software.getText()));
+            return;
+        }
+
+        control = computeOptionsValFromRadiobuttons();
+
+        try {
+            delayval = Integer.parseInt(delay.getText());
+            if ((delayval < 10) || (delayval > 500)) {
+                throw new NumberFormatException("out of range");
+            }
+        } catch( NumberFormatException ex ) {
+            log.error("sendSequence() failed due to bad Delay value " + delay.getText());
+            delay.setForeground(Color.red);
+            delay.requestFocusInWindow();
+            enableDownloadVerifyButtons();
+            status.setText(Bundle.getMessage("ErrorInvalidValueInGUI", 
+                    Bundle.getMessage("LabelDelay"), 
+                    delay.getText()));
+            return;
+        }
+
+        try {
+            eestartval = Integer.parseInt(eestart.getText(),16);
+            if (eestartval < 8) {
+                throw new NumberFormatException("out of range");
+            }
+        } catch( NumberFormatException ex ) {
+            log.error("sendSequence() failed due to bad EESTART value "+eestart.getText());
+            eestart.setForeground(Color.red);
+            eestart.requestFocusInWindow();
+            enableDownloadVerifyButtons();
+            status.setText(Bundle.getMessage("ErrorInvalidValueInGUI", 
+                    Bundle.getMessage("LabelEEStart"), 
+                    eestart.getText()));
             return;
         }
 
@@ -622,7 +1006,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
         int sentmsgs;
 
         // send the next data, and a termination record when done
-        public void run() {
+        @Override public void run() {
             // define range to be checked for download
             startaddr = 0x000000;
             endaddr   = 0xFFFFFF;
@@ -699,7 +1083,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
 
             // signal end to GUI via the queue to ensure synchronization
             Runnable r = new Runnable() {
-                public void run() {
+                @Override public void run() {
                     enableGUI();
                 }
             };
@@ -746,7 +1130,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
          * Should be invoked on the Swing thread
          */
         void enableGUI() {
-            LoaderPane.this.enableGUI();
+            LoaderPane.this.enableDownloadVerifyButtons();
         }
 
         /**
@@ -754,7 +1138,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
          */
         void updateGUI(final int value) {
             javax.swing.SwingUtilities.invokeLater( new Runnable() {
-                public void run() {
+                @Override public void run() {
                     if (log.isDebugEnabled()) log.debug("updateGUI with "+value);
                     // update progress bar
                     bar.setValue(100*sentmsgs/totalmsgs);
@@ -763,9 +1147,181 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
         }
 
     }
+    
+    private void setDefaultFieldValues() {
+        addressSizeButtonGroup.clearSelection();
+        bootload.setText("1");
+        mfg.setText("1");
+        developer.setText("1");
+        product.setText("1");
+        hardware.setText("1");
+        software.setText("1");
+        delay.setText("200");
+        eestart.setText("C00000");
 
+        try {
+            setOptionsRadiobuttons(Integer.toString(DO_NOT_CHECK_SOFTWARE_VERSION + REQUIRE_HARDWARE_VERSION_EXACT_MATCH));
+        } catch (NumberFormatException ex) {
+            throw(new java.lang.Error("SetCheckboxes Failed to update the GUI for known-good parameters"));
+        }
+        parametersAreValid();
+    }
 
+    /**
+     * Checks the values in the GUI text boxes to determine if any are invalid.
+     * Intended for use immediately after reading a firmware file for the purpose
+     * of validating any key/value pairs found in the file.  Also intended for 
+     * use immediately before a "verify" or "download" operation to check that 
+     * the user has not changed any of the GUI text values to ones that are 
+     * unsupported.  
+     * 
+     * Note that this method cannot guarantee that the values are suitable for
+     * the hardware being updated and/or for the particular firmware information
+     * which was read from the firmware file.
+     * 
+     * @return  false if one or more GUI text box contains an invalid value
+     */
+    public boolean parametersAreValid() {
+        boolean allIsOk;
+        allIsOk = true; // assume that all GUI values are ok.
+        String text;    // temporary variable to hold text from GUI element
+        int junk;       // temporary variable to hold interpreted GUI value
+    
+        boolean temp;
+        temp = intParameterIsValid(bootload, 0, 255);
+        allIsOk &= temp;
+        if (!temp) {
+            log.info("Bootloader Version Number is not valid: "+bootload.getText());
+        }
+        temp = intParameterIsValid(mfg, 0, 255);
+        allIsOk &= temp;
+        if (!temp) {
+            log.info("Manufacturer Number is not valid: "+mfg.getText());
+        }
+        temp = intParameterIsValid(developer, 0, 255);
+        allIsOk &= temp;
+        if (!temp) {
+            log.info("Developer Number is not valid: "+bootload.getText());
+        }
+        temp = intParameterIsValid(product, 0, 65535);
+        allIsOk &= temp;
+        if (!temp) {
+            log.info("Product Code is not valid: "+product.getText());
+        }
+        temp = intParameterIsValid(hardware, 0, 255);
+        allIsOk &= temp;
+        if (!temp) {
+            log.info("Hardware Version Number is not valid: "+hardware.getText());
+        }
+        temp = intParameterIsValid(software, 0, 255);
+        allIsOk &= temp;
+        if (!temp) {
+            log.info("Software Version Number is not valid: "+software.getText());
+        }
+        temp = intParameterIsValid(delay, 10, 500);
+        allIsOk &= temp;
+        if (!temp) {
+            log.info("Delay is not valid: "+delay.getText());
+        }
+        temp = (hardgroup.getSelection() != null);
+        allIsOk &= temp;
+        if (!temp) {
+            log.info("No harware version check radio button is selected.");
+        }
+        temp = (softgroup.getSelection() != null);
+        allIsOk &= temp;
+        if (!temp) {
+            log.info("No software version check radio button is selected.");
+        }
+        temp = true;         
+        eestart.setForeground(Color.black);
+        text = eestart.getText();
+        if (text.equals("")) {
+            eestart.setText("0");
+            eestart.setForeground(Color.red);
+            temp = false;
+        } else {
+            try {
+                junk = Integer.parseInt(text, 16);
+            } catch (NumberFormatException ex) {
+                junk = -1;
+            }
+            if ((junk < 8) || ((junk % 8) != 0)) {
+                eestart.setForeground(Color.red);
+                temp = false;
+            } else {
+                eestart.setForeground(Color.black);
+                temp = true;
+            }
+        }
+        eestart.updateUI();
+        
+        allIsOk &= temp;
+        if (allIsOk == true) {
+            log.debug("No problems found when checking parameter values.");
+        }
+        
+        return allIsOk;
+    }
+    
+    private boolean intParameterIsValid(JTextField jtf, int minOk, int maxOk) {
+        String text;
+        int junk;
+        boolean allIsOk = true;
+        jtf.setForeground(Color.black);
+        text = jtf.getText();
+        if (text.equals("")) {
+            jtf.setText("0");
+            jtf.setForeground(Color.red);
+            allIsOk = false;
+        } else {
+            try {
+                junk = Integer.parseInt(text);
+            } catch (NumberFormatException ex) {
+                junk = -1;
+            }
+            if ((junk < minOk) || (junk > maxOk)) {
+                jtf.setForeground(Color.red);
+                allIsOk = false;
+            } else {
+                jtf.setForeground(Color.black);
+            }
+        }
+        jtf.updateUI();
+        return allIsOk;
+    }
 
-    static Logger log = LoggerFactory.getLogger(LoaderPane.class.getName());
+    private int computeOptionsValFromRadiobuttons() {
+        int control = 0;
+            if (checksoftwareless.isSelected()) {
+            control |= CHECK_SOFTWARE_VERSION_LESS;
+        }
+
+        if (checkhardwareexact.isSelected()) {
+            control |= REQUIRE_HARDWARE_VERSION_EXACT_MATCH;
+        } else if (checkhardwaregreater.isSelected()) {
+            control |= ACCEPT_LATER_HARDWARE_VERSIONS;
+        }
+        return control;
+    }
+
+    /**
+     * Conditionally enables or disables the Download and Verify GUI
+     * buttons based on the validity of the parameter values in the GUI
+     * and the state of the memory contents object.
+     */
+    private void updateDownloadVerifyButtons() {
+        if (parametersAreValid() && !inputContent.isEmpty()) {
+            enableDownloadVerifyButtons();
+        } else {
+            disableDownloadVerifyButtons();
+        }
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        updateDownloadVerifyButtons();
+        log.info("ActionListener");
+    }
+static Logger log = LoggerFactory.getLogger(LoaderPane.class.getName());
 
 }
