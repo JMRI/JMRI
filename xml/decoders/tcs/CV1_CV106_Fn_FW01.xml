@@ -141,7 +141,7 @@
     <label xml:lang="it">Modo Conversione Analogica</label>
   </variable>
   <variable item="FL(f) controls output 1" CV="35" mask="XXXXXXXV" minOut="1">
-   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(f) controls output 1</label>
     <label xml:lang="it">Luci(in avanti) controlla uscita 1</label>
   </variable>
@@ -181,7 +181,7 @@
     <label xml:lang="it">F6 controlla uscita 1</label>
   </variable>
   <variable item="FL(f) controls output 2" CV="36" mask="XXXXXXXV" minOut="2">
-     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(f) controls output 2</label>
     <label xml:lang="it">Luci(in avanti) controlla uscita 2</label>
   </variable>
@@ -231,7 +231,7 @@
     <label xml:lang="it">F8 controlla uscita 1</label>
   </variable>
   <variable item="F9 controls output 1" CV="37" mask="XXXVXXXX" minOut="1">
-   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F9 controls output 1</label>
     <label xml:lang="it">F9 controlla uscita 1</label>
   </variable>
@@ -256,7 +256,7 @@
     <label xml:lang="it">F7 controlla uscita 2</label>
   </variable>
   <variable item="F8 controls output 2" CV="38" mask="XXXXVXXX" minOut="2">
-   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F8 controls output 2</label>
     <label xml:lang="it">F8 controlla uscita 2</label>
   </variable>
@@ -271,7 +271,7 @@
     <label xml:lang="it">F10 controlla uscita 2</label>
   </variable>
   <variable item="F11 controls output 2" CV="38" mask="XVXXXXXX" minOut="2">
-     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F11 controls output 2</label>
     <label xml:lang="it">F11 controlla uscita 2</label>
   </variable>
@@ -286,7 +286,7 @@
     <label xml:lang="it">Luci(in avanti) controlla uscita 3</label>
   </variable>
   <variable item="FL(r) controls output 3" CV="39" mask="XXXXXXVX" minOut="3">
-     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(r) controls output 3</label>
     <label xml:lang="it">Luci(in retro) controlla uscita 3</label>
   </variable>
@@ -346,7 +346,7 @@
     <label xml:lang="it">F3 controlla uscita 4</label>
   </variable>
   <variable item="F4 controls output 4" CV="40" mask="XXVXXXXX" minOut="4" default="1">
-  <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F4 controls output 4</label>
     <label xml:lang="it">F4 controlla uscita 4</label>
   </variable>
@@ -431,7 +431,7 @@
     <label xml:lang="it">Temporizzazioni Filo Verde</label>
   </variable>
   <variable CV="52" mask="XXXXVVVV" minOut="2" item="Output 4 effect generated">
-   <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_1-106_light.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_1-106_light.xml"/>
     <label>Purple Wire Effect</label>
     <label xml:lang="it">Effetti filo Porpora</label>
   </variable>

@@ -18,57 +18,57 @@
 <!-- function output choices for output 15 thru 30 when moving and in neutral -->
 <ienumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <ienumChoice choice="Conrail Num 2233 GP30 air powered bell" value="7">
-     <choice xml:lang="it">Conrail N.2233 GP30 Campana aria compressa</choice>
+    <choice xml:lang="it">Conrail N.2233 GP30 Campana aria compressa</choice>
   </ienumChoice>
   <ienumChoice choice="Heisler Class 53833 Num 4 Hand powered bell" value="12">
-     <choice xml:lang="it">Heisler Classe 53833 N.4 Campana manuale</choice>
+    <choice xml:lang="it">Heisler Classe 53833 N.4 Campana manuale</choice>
   </ienumChoice>
   <ienumChoice choice="John Bull Replica hand powered bell" value="9">
-     <choice xml:lang="it">John Bull Replica Campana manuale</choice>
+    <choice xml:lang="it">John Bull Replica Campana manuale</choice>
   </ienumChoice>
   <ienumChoice choice="Leetonia RR Shay Num 1 bell" value="13">
-     <choice xml:lang="it">Leetonia RR Shay N.1 Campana</choice>
+    <choice xml:lang="it">Leetonia RR Shay N.1 Campana</choice>
   </ienumChoice>
   <ienumChoice choice="Num 89 Air Power Bell" value="2">
-     <choice xml:lang="it">N.89 Campana aria compressa</choice>
+    <choice xml:lang="it">N.89 Campana aria compressa</choice>
   </ienumChoice>
   <ienumChoice choice="PRR 280 H3 1187 Hand powered Bell" value="10">
-     <choice xml:lang="it">PRR 280 H3 1187 Campana manuale</choice>
+    <choice xml:lang="it">PRR 280 H3 1187 Campana manuale</choice>
   </ienumChoice>
   <ienumChoice choice="PRR 280 H3 2846 air Powered Bell" value="11">
-     <choice xml:lang="it">PRR 280 H3 2846 Campana aria compressa</choice>
+    <choice xml:lang="it">PRR 280 H3 2846 Campana aria compressa</choice>
   </ienumChoice>
   <ienumChoice choice="PRR 442 Num 7002 hand powered bell" value="5">
-     <choice xml:lang="it">PRR 442 N.7002 Campana manuale</choice>
+    <choice xml:lang="it">PRR 442 N.7002 Campana manuale</choice>
   </ienumChoice>
   <ienumChoice choice="PRR GG1 bell" value="8">
-     <choice xml:lang="it">PRR GG1 Campana</choice>
+    <choice xml:lang="it">PRR GG1 Campana</choice>
   </ienumChoice>
   <ienumChoice choice="PRR Num 1223 American 440 D16SB hand powered bell" value="6">
-     <choice xml:lang="it">PRR N.1223 American 440 D16SB Campana manuale</choice>
+    <choice xml:lang="it">PRR N.1223 American 440 D16SB Campana manuale</choice>
   </ienumChoice>
   <ienumChoice choice="Reading 060 Num 1251 Tank engine air powered bell" value="3">
-     <choice xml:lang="it">Reading 060 N.1251 Tank Campana aria compressa</choice>
+    <choice xml:lang="it">Reading 060 N.1251 Tank Campana aria compressa</choice>
   </ienumChoice>
   <ienumChoice choice="Strasburg 475 Air Powered bell" value="1">
-     <choice xml:lang="it">Strasburg 475 Campana aria compressa</choice>
+    <choice xml:lang="it">Strasburg 475 Campana aria compressa</choice>
   </ienumChoice>
   <ienumChoice choice="Strasburg 475 Hand Powered bell" value="0">
-     <choice xml:lang="it">Strasburg 475 Campana manuale</choice>
+    <choice xml:lang="it">Strasburg 475 Campana manuale</choice>
   </ienumChoice>
   <ienumChoice choice="Strasburg num 90 hand powered bell" value="16">
-     <choice xml:lang="it">Strasburg N.90 Campana manuale</choice>
+    <choice xml:lang="it">Strasburg N.90 Campana manuale</choice>
   </ienumChoice>
   <ienumChoice choice="Strasburg num 90 hand powered bell variation" value="17">
-     <choice xml:lang="it">Strasburg N.90 Campana manuale - variante</choice>
+    <choice xml:lang="it">Strasburg N.90 Campana manuale - variante</choice>
   </ienumChoice>
   <ienumChoice choice="Unknown bell from Strasburg museum floor" value="14">
-     <choice xml:lang="it">Campana sconosciuta dal museo Strasburg</choice>
+    <choice xml:lang="it">Campana sconosciuta dal museo Strasburg</choice>
   </ienumChoice>
   <ienumChoice choice="Virginia Truckee RR 260 hand powered bell" value="4">
-     <choice xml:lang="it">Virginia Truckee RR 260 Campana manuale</choice>
+    <choice xml:lang="it">Virginia Truckee RR 260 Campana manuale</choice>
   </ienumChoice>
   <ienumChoice choice="Williams Grove PRR #643 060 bell" value="15">
-     <choice xml:lang="it">Williams Grove PRR #643 060 Campana</choice>
+    <choice xml:lang="it">Williams Grove PRR #643 060 Campana</choice>
   </ienumChoice>
 </ienumVal>
