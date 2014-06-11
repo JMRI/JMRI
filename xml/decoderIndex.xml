@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
+<?xml-stylesheet type="text/xsl" href="/xml/XSLT/DecoderID.xsl"?>
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20140531-0851-Alain Le Marchand on Sat May 31 10:51:49 CEST 2014 $Id$-->
-  <decoderIndex version="402">
+  <!--Written by JMRI version 20140611-0556-jake on Tue Jun 10 22:56:53 PDT 2014 $Id$-->
+  <decoderIndex version="406">
     <mfgList nmraListDate="2012-12-05" updated="2013-04-11" lastadd="106">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -11108,13 +11108,13 @@
           <output name="Brake" />
         </model>
       </family>
-      <family name="TCS Function Decoders" mfg="Train Control Systems" file="TCS_Fn.xml">
-        <model show="no" model="FL2" numOuts="2" numFns="14" lowVersionID="30" highVersionID="37" formFactor="HO" replacementModel="FL2" replacementFamily="June 2007">
+      <family name="TCS FL2 and FL4 Decoders" mfg="Train Control Systems" file="TCS_Fn2.xml">
+        <model model="FL2" numOuts="2" numFns="14">
           <output name="1" label="Green" connection="solder" maxcurrent="100 mA" />
           <output name="2" label="Purple" connection="solder" maxcurrent="100 mA" />
           <size length="1.000" width="0.650" height="0.160" units="inches" />
         </model>
-        <model show="no" model="FL4" numOuts="4" numFns="14" lowVersionID="30" highVersionID="37" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" replacementModel="FL4" replacementFamily="June 2007">
+        <model model="FL4" numOuts="4" numFns="14">
           <output name="1" label="Green" connection="solder" maxcurrent="200 mA" />
           <output name="2" label="Purple" connection="solder" maxcurrent="200 mA" />
           <output name="3" label="Brown" connection="solder" maxcurrent="200 mA" />
