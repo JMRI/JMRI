@@ -1011,7 +1011,7 @@
     options at the end of the <A HREF="#MessageFormats">Message Format</A> drop down menus. Use
     these three tabs to space out the manifest or switch list to your liking. You can change the
     length of the tab characters if you wish, see <A HREF="#ManifestPrintOptionsTools">Tools</A>.
-    Goto <A HREF="#PrintingManifests">Printing Manifests</A> to see examples of manifests and switch
+    Go to <A HREF="#PrintingManifests">Printing Manifests</A> to see examples of manifests and switch
     lists using the described options.
    </P>
 
@@ -1031,12 +1031,6 @@
    to another at the same location. The car in this case is not added to the train. Select the
    desired color from the drop down box.
 
-   <H3>Switch List Format</H3>
-
-   You can use the same format as your manifest for your switch lists, or you can customize your
-   switch lists to your liking. Deselect the "Same as Manifest" if you want a different format for
-   your switch lists.
-
   <A NAME="MessageFormats"></A>
    <H3>Message Formats</H3>
 
@@ -1047,8 +1041,14 @@
    set outs and pick ups respectively. If you want to use the text color options, the set out, pick
    up, and move prefixes must be unique. 
    
+   <H3>Switch List Format</H3>
+
+   You can use the same format as your manifest for your switch lists, or you can customize your
+   switch lists to your liking. Deselect the "Same as Manifest" if you want a different format for
+   your switch lists.
+   
    <A NAME="ManifestComments"></A>
-   <H3>Manifests Options</H3>
+   <H3>Manifests and Switch List Options</H3>
 
    The program allows you to customize your train manifest to your liking. You can change the
    manifest or switch list text by using the "Edit Manifest Text" or "Edit Switch List Text" windows
@@ -1091,7 +1091,7 @@
     menu.
    </P>
 
-   <H3>Manifest Preview</H3>
+   <H3>Manifest and Switch List Preview</H3>
 
    If you want to use a text editor to preview your manifests and switch lists, select this option.
    This option also allows you to make manual changes to your manifests before you print them.
@@ -3365,7 +3365,7 @@
 
    <P>Below is a train manifest using the "Two Column (Track)" format, "Tabular" and "Print
     Headers" selected, along with changes to the manifest header and manifest text fields. We've
-    seen cases where the text and the column lines don't line up properly with using the "Two
+    seen cases where the text and the column lines don't line up properly when using the "Two
     Column" formats. To fix this issue, you might have to play with the manifest font type and size
     to get the text to line up properly. The page below was created with "Courier New" and a font
     size of 10.</p>
