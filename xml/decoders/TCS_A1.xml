@@ -119,9 +119,9 @@
         <label xml:lang="it">Usa Tabella Velocità</label>
       </variable>
       <variable CV="49" mask="XXXXVVVV" item="Function F0F effect generated">
-         <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_group_light.xml"/>
-         <label>Forward light F0F effect generated</label>
-         <label xml:lang="it">Luci (in avanti) Effetti</label>
+        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_group_light.xml"/>
+        <label>Forward light F0F effect generated</label>
+        <label xml:lang="it">Luci (in avanti) Effetti</label>
       </variable>
       <variable CV="49" mask="VVVVXXXX" item="Function F0F behavior">
         <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_group2.xml"/>
@@ -144,7 +144,7 @@
         <label xml:lang="it">Funzione 1 Effetti</label>
       </variable>
       <variable item="Function 1 behavior" CV="51" mask="VVVVXXXX" minFn="1">
-          <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_group2.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_group2.xml"/>
         <label>Function 1 behavior</label>
         <label xml:lang="it">Funzione 1 Modalità</label>
       </variable>
@@ -154,9 +154,9 @@
         <label xml:lang="it">Funzione 2 Effetti</label>
       </variable>
       <variable item="Function 2 behavior" CV="52" mask="VVVVXXXX" minFn="2">
-          <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_group2.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_group2.xml"/>
         <label>Function 2 behavior</label>
-         <label xml:lang="it">Funzione 2 Modalità</label>
+        <label xml:lang="it">Funzione 2 Modalità</label>
       </variable>
       <variable CV="56" item="Dither frequency">
         <decVal/>
@@ -370,7 +370,7 @@
       </variable>
       <variable item="F3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-         <label>F3 controls output 2</label>
+        <label>F3 controls output 2</label>
         <label xml:lang="it">F3 controlla uscita 2</label>
       </variable>
       <variable item="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="3">
@@ -455,7 +455,7 @@
       </variable>
       <variable item="F5 controls output 6" CV="39" mask="XXXXXVXX" minOut="6" minFn="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-         <label>F5 controls output 6</label>
+        <label>F5 controls output 6</label>
         <label xml:lang="it">F5 controlla uscita 6</label>
       </variable>
       <variable item="F5 controls output 7" CV="39" mask="XXXXVXXX" minOut="7" minFn="5">
