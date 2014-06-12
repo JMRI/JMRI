@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: kevin-dickerson $) 2008 -->
+<!-- $Id: index.shtml 20730 2012-07-02 19:31:41Z kevin-dickerson $ -->
+<title>JMRI: MRC Prodigy Advanced 2</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: MRC/GaugeMaster Prodigy Advanced<sup>2</sup>
+</h1>
+In the UK the MRC systems is rebranded, rebadged and sold by Gaugemaster.  
+The two systems are exactly the same in operation and components.
+<p>
+JMRI can connect to an MRC Prodigy Advanced<sup>2</sup> command station 
+via the USB Computer interface (MRC:1516 or Gaugemaster:DCC55).
+<p>
+The JMRI should be able to support all of the MRC Prodigy range of systems
+however it has only been tested and developed with the Advanced<sup>2</sup>
+<p>
+To configure the connection:
+<ul>
+<li>Open the JMRI "Preferences" under the "Edit" menu,
+<li>Select "MRC" as the Manufacturer.
+<li>Select "Serial" as the System Connection.
+<li>Select the Serial Port associated with the system.
+<li>Select the Cab Address that will be allocated to the interface. <br>Please note that this must be unique and not used by any other handset, if you are to use a number above 8, then you must refer to Prodigy instructions to ensure that the system is configured to address the cab correctly
+<li>Click "Save".
+</ul>
+
+<p>
+Programming, Turnout, Throttle and Power support is available for 
+a JMRI-connected Prodigy unit.
+<p>
+<h2>Programming</h2>
+There is full support for the reading/writing of decoders on the Programming along with the ability
+to write changes to a decoder on the Main.
+<p>
+Please note that the Prodigy Command Station will automatically determine the programming mode (ie Direct Byte/Direct Bit/Paged).
+<H2>Throttles</H2>
+The JMRI interface supports both 28 & 128 speed steps and all 28 functions. <br>
+If another handset has control of the same loco that a JMRI throttle has, the changes made by the second throttle 
+will be reflected on the JMRI throttle.
+Support for 14 speed steps has not been included.
+<p><b> Consisting is NOT currently supported</b>
+
+<H2>Turnouts</H2>
+MRC-connected turnouts have names like "MRT123", where "MR"
+is the system name for MRc System, "T" means turnout, and
+"123" is the address.<p>
+
+<h2>MRC Routes</h2>
+Triggering of MRC system routes are supported in JMRI, this is done by adding a 
+turnout with the route number + 1000 eg.
+For system route 15, you would add a turnout with an address of 1015.
+<p>
+There is no support for editing/adding/removal of system routes in the MRC.
+<p>
+Support for MRC Prodigy was first available in <br>
+<a href="http://jmri.sf.net/releasenotes/t.b.c">JMRI 3.9.x</a>.<br>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
