@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20140611-1344-jake on Wed Jun 11 06:44:50 PDT 2014 $Id$-->
-  <decoderIndex version="408">
+  <!--Written by JMRI version 20140611-1919-jake on Wed Jun 11 12:20:03 PDT 2014 $Id$-->
+  <decoderIndex version="410">
     <mfgList nmraListDate="2012-12-05" updated="2013-04-11" lastadd="106">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -12711,6 +12711,9 @@
       </family>
       <family name="Quad-LN gen2" mfg="Tam Valley Depot" type="stationary" comment="The Quad-LN is programmed in OPs mode except for the address." file="TamValleyDepot_QuadLn11.xml">
         <model model="Quad-LNv1" comment="4 Servo Driver" lowVersionID="5" />
+      </family>
+      <family name="Quad-LN_S" mfg="Tam Valley Depot" type="stationary" comment="The Quad-LN_S is programmed in OPs mode except for the device address." file="TamValleyDepot_QuadLn_S_11.xml">
+        <model model="Quad-LN_S_v1" comment="4 Servo Driver with Signaling or 4 additonal Servos" lowVersionID="6" />
       </family>
       <family name="Minitrix" mfg="Trix Modelleisenbahn" highVersionID="65" lowVersionID="65" comment="Trix Selectrix &amp; DCC decoder" file="Trix_66838.xml">
         <model model="66838" numOuts="0" numFns="0" lowVersionID="65" />

@@ -489,7 +489,7 @@ public abstract class XmlFile {
         href = href.substring(16);
         
         // read the XSLT transform into a Document to get XInclude done
-        SAXBuilder builder = getBuilder(verify);  // argument controls validation
+        SAXBuilder builder = getBuilder(false);  // argument controls validation
         Document xdoc = builder.build(new BufferedInputStream(new FileInputStream(new File(href))));
         org.jdom.transform.XSLTransformer transformer = new org.jdom.transform.XSLTransformer(xdoc);
         return transformer.transform(doc);
