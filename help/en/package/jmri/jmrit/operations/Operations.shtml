@@ -1950,6 +1950,15 @@
    <P>
     <img src="images/Cars.png">
    </P>
+   <H3>Table Sort</H3>
+
+   To sort cars by a particular attribute, select any of the radio buttons in the "Sort by" list.
+   One of the more useful sorts is by location. You can under "Tools-&gt;Car Roster" print a list of
+   cars by their location and track when the radio button "Location" is selected.  You can also
+   sort the table by clicking on any of the column headings.  To perform a double sort, select the
+   first sort by selecting one of the "Sort by" radio buttons, then click on the final sort by clicking
+   on one of the column headings.
+
    <H3>Add, Find, Save Buttons</H3>
 
    There are three buttons located at the bottom of the Cars window. The "Add" button allows you to
