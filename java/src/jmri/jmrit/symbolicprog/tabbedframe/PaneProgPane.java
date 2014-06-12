@@ -2431,6 +2431,13 @@ public class PaneProgPane extends javax.swing.JPanel
         fnMapList.clear();
         fnMapList = null;
 
+        // dispose of any fnMaps
+        for (int i=0; i<fnMapListESU.size(); i++) {
+            fnMapListESU.get(i).dispose();
+        }
+        fnMapListESU.clear();
+        fnMapListESU = null;
+
         readChangesButton = null;
         writeChangesButton = null;
 
