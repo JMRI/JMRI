@@ -5,6 +5,7 @@ package jmri.jmrit;
 import java.io.File;
 import java.io.IOException;
 import jmri.util.FileUtil;
+import jmri.util.JUnitAppender;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -15,6 +16,7 @@ import org.apache.log4j.Logger;
  * Test simple functioning of MemoryContents
  *
  * @author			Bob Jacobsen Copyright (C) 2008
+ * @suthor                      B. Milhaupt  Copyright (C) 2014
  * @version			$Revision$
  */
 
@@ -106,7 +108,6 @@ public class MemoryContentsTest extends TestCase {
         m.setAddressFormat(MemoryContents.LoadOffsetFieldType.ADDRESSFIELDSIZE24BITS);
         m.addKeyValueComment("Harrumph", "TRUE");
         
-            FileUtil.createDirectory("temp");
         try {
             java.io.FileWriter writer = new java.io.FileWriter(MemoryContentsTestWrite_24AddrFile);
             m.writeHex(writer,
@@ -166,17 +167,29 @@ public class MemoryContentsTest extends TestCase {
 
         verifyMemoryData(0x01, 0x29, n);
 
-        verifyMemoryData(0x02, -1, n);
+        if (m.locationInUse(0x02)) {
+            verifyMemoryData(0x02, -1, n);
+        }
 
-        verifyMemoryData(0x03, -1, n);
+        if (m.locationInUse(0x03)) {
+            verifyMemoryData(0x03, -1, n);
+        }
 
-        verifyMemoryData(0x04, -1, n);
+        if (m.locationInUse(0x04)) {
+            verifyMemoryData(0x04, -1, n);
+        }
 
-        verifyMemoryData(0x05, -1, n);
+        if (m.locationInUse(0x05)) {
+            verifyMemoryData(0x05, -1, n);
+        }
 
-        verifyMemoryData(0x06, -1, n);
+        if (m.locationInUse(0x06)) {
+            verifyMemoryData(0x06, -1, n);
+        }
 
-        verifyMemoryData(0x07, -1, n);
+        if (m.locationInUse(0x07)) {
+            verifyMemoryData(0x07, -1, n);
+        }
 
         verifyMemoryData(0xA0, 0x0B, n);
 
@@ -194,7 +207,6 @@ public class MemoryContentsTest extends TestCase {
     public void testReadFileCksumError() throws java.io.FileNotFoundException {
         MemoryContents m = new MemoryContents();
 
-        log.info("Expect a 'computed checksum error' in the log");
         boolean expectedExceptionHappened = false;
         try {
             m.readHex(new java.io.File("java/test/jmri/jmrit/MemoryContentsTestFiles/TestFiles/MemoryContentsTestFile_cksumErr.hex"));
@@ -217,15 +229,15 @@ public class MemoryContentsTest extends TestCase {
         } catch (IOException e) {
             Assert.fail("unexpected 'IOException' exception");
         }
+        JUnitAppender.assertErrorMessage(
+                "Data record checksum error in line 29 - computed checksum = 0x1f, expected checksum = 0x1e.");
         
         Assert.assertTrue("Checksum Exception was expected", expectedExceptionHappened);
-        log.info("Should have seen a 'computed checksum error' in the log immediately above this entry");
     }
     
     public void testReadFileRecordTypeError() throws java.io.FileNotFoundException {
         MemoryContents m = new MemoryContents();
         
-        log.info("Expect a 'Unknown hex record type error' in the log");
         boolean expectedExceptionHappened = false;
         try {
             m.readHex(new java.io.File("java/test/jmri/jmrit/MemoryContentsTestFiles/TestFiles/MemoryContentsTestFile_recordTypeError.hex"));
@@ -248,15 +260,16 @@ public class MemoryContentsTest extends TestCase {
         } catch (IOException e) {
             Assert.fail("unexpected 'IOException' exception");
         }
-        
+
+        JUnitAppender.assertErrorMessage(
+                "Unknown RECTYP 0x3 was found in line 16.  Aborting file read.");
+
         Assert.assertTrue("Record Type Exception was expected", expectedExceptionHappened);
-        log.info("Should have seen a 'Unknown hex record type error' in the log immediately above this entry");
     }
         
     public void testReadFileRecordLengthError() throws java.io.FileNotFoundException {
         MemoryContents m = new MemoryContents();
         
-        log.info("Expect a 'Record Length error' in the log.");
         boolean expectedExceptionHappened = false;
         try {
             m.readHex(new java.io.File("java/test/jmri/jmrit/MemoryContentsTestFiles/TestFiles/MemoryContentsTestFile_recordLenError.hex"));
@@ -280,6 +293,9 @@ public class MemoryContentsTest extends TestCase {
             Assert.fail("unexpected 'IOException' exception");
         }
         
+        JUnitAppender.assertErrorMessage(
+                "Data record line length is incorrect for inferred addressing type and for data count field in line 10");
+
         Assert.assertTrue("Record Length Exception was expected", expectedExceptionHappened);
 
         if (! (m.extractValueOfKey("KeyName2").matches("ValueInfo99"))) {
@@ -320,7 +336,7 @@ public class MemoryContentsTest extends TestCase {
         } catch (IOException e) {
             Assert.fail("unexpected 'IOException' exception");
         }
-        
+
         Assert.assertTrue("File-not-found Exception was expected", expectedExceptionHappened);
         
         // make sure that key/value from previous test is gone now.
@@ -355,6 +371,9 @@ public class MemoryContentsTest extends TestCase {
         } catch (IOException e) {
             Assert.fail("unexpected 'IOException' exception");
         }
+
+        JUnitAppender.assertErrorMessage(
+                "Data record line length is incorrect for inferred addressing type and for data count field in line 7");
         
         Assert.assertTrue("Record Content Length exception expected", expectedExceptionHappened);
     }
@@ -387,7 +406,10 @@ public class MemoryContentsTest extends TestCase {
             Assert.fail("unexpected 'IOException' exception");
         }
         
-            Assert.assertTrue("No EOF Record exception expected", expectedExceptionHappened);
+        JUnitAppender.assertErrorMessage(
+                "No EOF Record found in file - aborting.");
+        
+        Assert.assertTrue("No EOF Record exception expected", expectedExceptionHappened);
     }
     
     public void testReadFileNoContentFile() {
@@ -417,6 +439,9 @@ public class MemoryContentsTest extends TestCase {
         } catch (IOException e) {
             Assert.fail("unexpected 'IOException' exception");
         }
+        
+        JUnitAppender.assertErrorMessage(
+                "No Data Records found in file - aborting.");
         
         Assert.assertTrue("'No records found' exception expected", expectedExceptionHappened);
     }
@@ -452,7 +477,6 @@ public class MemoryContentsTest extends TestCase {
     public void testReadFileRecordType02BadFile() {
         MemoryContents m = new MemoryContents();
         
-        log.info("Expect an 'Unsupported Extended Segment Address Record data value' error in the log.");
         boolean expectedExceptionHappened = false;
         try {
             m.readHex(new java.io.File("java/test/jmri/jmrit/MemoryContentsTestFiles/TestFiles/MemoryContentsTestFile_RecType02bad.hex"));
@@ -478,14 +502,15 @@ public class MemoryContentsTest extends TestCase {
             Assert.fail("unexpected 'IOException' exception");
         }
         
+        JUnitAppender.assertErrorMessage(
+                "Unsupported Extended Segment Address Record data value 0x1000 in line 3");
+        
         Assert.assertTrue("'Addressing range' exception expected", expectedExceptionHappened);
-        log.info("Should have seen an 'Unsupported Extended Segment Address Record data value' error in the log.");
     }
     
     public void testReadFileRecordType02BadFile2() {
         MemoryContents m = new MemoryContents();
         
-        log.info("Expect an 'Unsupported Extended Segment Address Record data value' error in the log.");
         boolean expectedExceptionHappened = false;
         try {
             m.readHex(new java.io.File("java/test/jmri/jmrit/MemoryContentsTestFiles/TestFiles/MemoryContentsTestFile_RecType02bad_2.hex"));
@@ -511,8 +536,10 @@ public class MemoryContentsTest extends TestCase {
             Assert.fail("unexpected 'IOException' exception");
         }
         
+        JUnitAppender.assertErrorMessage(
+                "Unsupported Extended Segment Address Record data value 0x1000 in line 2");
+        
         Assert.assertTrue("'Addressing range' exception expected", expectedExceptionHappened);
-        log.info("Should have seen an 'Unsupported Extended Segment Address Record data value' error in the log.");
     }
     
     public void testReadFileHighSegments() {
@@ -544,9 +571,13 @@ public class MemoryContentsTest extends TestCase {
         
         verifyMemoryData(0xFFFFFF, 0x7B, m);
         
-        verifyMemoryData(0xFFFFFE, -1, m);
+        if (m.locationInUse(0xFFFFFE)) {
+            verifyMemoryData(0xFFFFFE, -1, m);
+        }
 
-        verifyMemoryData(0x0, -1, m);
+        if (m.locationInUse(0x0)) {
+            verifyMemoryData(0x0, -1, m);
+        }
         
         verifyMemoryData(0xF000FF, 0xD0, m);
 
@@ -562,7 +593,6 @@ public class MemoryContentsTest extends TestCase {
         
         boolean expectedExceptionHappened = false;
         
-        log.info("Expect a 'Data crosses boundary error' in the log");
         try {
             m.readHex(new java.io.File("java/test/jmri/jmrit/MemoryContentsTestFiles/TestFiles/MemoryContentsTestFile_16bit_pagecross.hex"));
         } catch (java.io.FileNotFoundException e) {
@@ -587,32 +617,50 @@ public class MemoryContentsTest extends TestCase {
             Assert.fail("unexpected 'IOException' exception");
         }
         
+        JUnitAppender.assertErrorMessage(
+                "Data crosses boundary which could lead to  mis-interpretation.  Aborting read at line :02FFFF000102FD");
+        
         Assert.assertTrue("Address Range exception was expected", expectedExceptionHappened);
-        log.info("Should have seen a 'Data crosses boundary error' in the log immediately above this entry");
         
-        log.info("Expect to find ten 'getLocation when no data at that location' errors in log.");
-
-        verifyMemoryData(0x00FFFF, -1, m);
+        if (m.locationInUse(0x00FFFF)) {
+            verifyMemoryData(0x00FFFF, -1, m);
+        }
         
-        verifyMemoryData(0x00FFFE, -1, m);
+        if (m.locationInUse(0x00FFFE)) {
+            verifyMemoryData(0x00FFFE, -1, m);
+        }
 
-        verifyMemoryData(0x00FF00, -1, m);
+        if (m.locationInUse(0x00FF00)) {
+            verifyMemoryData(0x00FF00, -1, m);
+        }
         
-        verifyMemoryData(0x00FF01, -1, m);
+        if (m.locationInUse(0x00FF01)) {
+            verifyMemoryData(0x00FF01, -1, m);
+        }
 
-        verifyMemoryData(0x00FF02, -1, m);
+        if (m.locationInUse(0x00FF02)) {
+            verifyMemoryData(0x00FF02, -1, m);
+        }
         
-        verifyMemoryData(0x00FF03, -1, m);
+        if (m.locationInUse(0x00FF03)) {
+            verifyMemoryData(0x00FF03, -1, m);
+        }
 
-        verifyMemoryData(0x010000, -1, m);
+        if (m.locationInUse(0x010000)) {
+            verifyMemoryData(0x010000, -1, m);
+        }
         
-        verifyMemoryData(0x010001, -1, m);
+        if (m.locationInUse(0x010001)) {
+            verifyMemoryData(0x010001, -1, m);
+        }
 
-        verifyMemoryData(0x010002, -1, m);
+        if (m.locationInUse(0x010002)) {
+            verifyMemoryData(0x010002, -1, m);
+        }
         
-        verifyMemoryData(0x010003, -1, m);
-
-        log.info("Should have seen ten 'getLocation when no data at that location' errors in log.");
+        if (m.locationInUse(0x010003)) {
+            verifyMemoryData(0x010003, -1, m);
+        }
     }
 
     public void testReadFile24bitPageCross() {
@@ -620,7 +668,6 @@ public class MemoryContentsTest extends TestCase {
         
         boolean expectedExceptionHappened = false;
         
-        log.info("Expect a 'Data crosses boundary error' in the log");
         try {
             m.readHex(new java.io.File("java/test/jmri/jmrit/MemoryContentsTestFiles/TestFiles/MemoryContentsTestFile_24bit_pagecross.hex"));
         } catch (java.io.FileNotFoundException e) {
@@ -645,30 +692,50 @@ public class MemoryContentsTest extends TestCase {
             Assert.fail("unexpected 'IOException' exception");
         }
         
+        JUnitAppender.assertErrorMessage(
+                "Data crosses boundary which could lead to  mis-interpretation.  Aborting read at line :0201FFFF000709EF");
+        
         Assert.assertTrue("Address Range exception was expected", expectedExceptionHappened);
-        log.info("Should have seen a 'Data crosses boundary error' in the log immediately above this entry");
 
-        log.info("Expect to find ten 'getLocation when no data at that location' errors in log.");
-        verifyMemoryData(0x01FFFF, -1, m);
+        if (m.locationInUse(0x01FFFF)) {
+            verifyMemoryData(0x01FFFF, -1, m);
+        }
         
-        verifyMemoryData(0x01FFFE, -1, m);
+        if (m.locationInUse(0x01FFFE)) {
+            verifyMemoryData(0x01FFFE, -1, m);
+        }
 
-        verifyMemoryData(0x020000, -1, m);
+        if (m.locationInUse(0x020000)) {
+            verifyMemoryData(0x020000, -1, m);
+        }
         
-        verifyMemoryData(0x020001, -1, m);
+        if (m.locationInUse(0x020001)) {
+            verifyMemoryData(0x020001, -1, m);
+        }
 
-        verifyMemoryData(0x020002, -1, m);
+        if (m.locationInUse(0x020002)) {
+            verifyMemoryData(0x020002, -1, m);
+        }
         
-        verifyMemoryData(0x020003, -1, m);
+        if (m.locationInUse(0x020003)) {
+            verifyMemoryData(0x020003, -1, m);
+        }
         
-        verifyMemoryData(0x010000, -1, m);
+        if (m.locationInUse(0x010000)) {
+            verifyMemoryData(0x010000, -1, m);
+        }
         
-        verifyMemoryData(0x010001, -1, m);
+        if (m.locationInUse(0x010001)) {
+            verifyMemoryData(0x010001, -1, m);
+        }
 
-        verifyMemoryData(0x010002, -1, m);
+        if (m.locationInUse(0x010002)) {
+            verifyMemoryData(0x010002, -1, m);
+        }
         
-        verifyMemoryData(0x010003, -1, m);
-        log.info("Should have seen ten 'getLocation when no data at that location' errors in log.");
+        if (m.locationInUse(0x010003)) {
+            verifyMemoryData(0x010003, -1, m);
+        }
         
     }
 
@@ -700,9 +767,14 @@ public class MemoryContentsTest extends TestCase {
 	}
 
         // The minimal setup for log4J
-        @Override protected void setUp() {apps.tests.Log4JFixture.setUp(); }
-        @Override protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
-
+        @Override protected void setUp() throws Exception { 
+            apps.tests.Log4JFixture.setUp(); 
+            super.setUp();
+        }
+        @Override protected void tearDown() throws Exception { 
+            super.tearDown();
+            apps.tests.Log4JFixture.tearDown(); 
+        }
 	static Logger log = Logger.getLogger(MemoryContentsTest.class.getName());
 
 }
