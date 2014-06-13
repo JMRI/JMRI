@@ -465,6 +465,9 @@ public class TrainCommon {
 		return padAndTruncateString(s + VERTICAL_LINE_CHAR, getLineLength(isManifest));
 	}
 
+	/**
+	 * Appends to string the vertical line character, and the car set out string.  Used in two column format.
+	 */
 	private String appendSetoutString(String s, List<Car> carList, RouteLocation rl, Car car, boolean isManifest) {
 		dropCars = true;
 		cars--;
@@ -489,7 +492,7 @@ public class TrainCommon {
 		} else {
 			newString = newString + dropCar(car, isManifest).trim();
 		}
-		return padAndTruncateString(newString, getLineLength(isManifest));
+		return padAndTruncateString(newString, getLineLength(isManifest), true);
 	}
 
 	/**
