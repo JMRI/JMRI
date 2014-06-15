@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2010, 2014 All rights reserved -->
-<!-- $Id: Digitrax_0SFX_Series6.xml 17977 2014-04-27 xx:x:xxZ xxx $ -->
+<!-- $Id: Digitrax_0SFX_Series6.xml xxxxx 2014-06-15 xx:x:xxZ xxx $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,13 +14,16 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Alain Le Marchand" version="1" lastUpdated="20140427"/>
+  <version author="Alain Le Marchand" version="1.1" lastUpdated="20140615"/>  
   <!-- Created from version 7 of the Digitrax_0SFX file -->
   <!--     and from Digitrax_2SFX file (John McMasters  1/26/2014, in JMRI Users file section)  -->
-  <!--    Version 1 (Alain Le Marchand)                                        -->
-  <!--    New series 6 sound decoders: SDH166D, SDXH166D, SDN136PS, SDXN136PS  -->
-  <!--                                 no variants/sound projects in version 1 -->
+  <!--    Version 1 (Alain Le Marchand)                                             -->
+  <!--    New series 6 sound decoders: SDH166D, SDXH166D, SDN136PS, SDXN136PS       -->
+  <!--                                 no variants/sound projects in version 1      -->
+  <!--    Version 1.1 (Alain Le Marchand) Fix sound selection for SDH166D/SDN166PS  -->
+  <!--           Added Function labels for John McMasters' extended sound projects  --> 
   <!-- WARNING :   Low and High Versions of decoders (CV07) unknown (by me) - to be adjusted after users feed back
-                                                                               -->
+                                                                                    -->
   <decoder>
     <family name="SFX Sound Decoders - Series 6" mfg="Digitrax" lowVersionID="16" highVersionID="16">
       <model model="SDH166D" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="SDH166D" comment="H0-Scale 8-bit Sound Decoder, wired">
@@ -61,6 +64,25 @@
         <output name="5" label="F3-Brown" connection="wire"/>
         <output name="6" label="F4-Yellow" connection="wire"/>
         <size length="1.28" width="0.67" height="0.25" units="inches"/>
+        <functionlabels>
+          <functionlabel num="11" lockable="false">Uncoupling</functionlabel>
+          <functionlabel num="12" lockable="false">Wheel Squeal</functionlabel>  
+          <functionlabel num="14" lockable="true">Emerg. Stop Shutdown</functionlabel>
+          <functionlabel num="15" lockable="false">Sander</functionlabel>
+          <functionlabel num="16" lockable="false">Misc. User Chatter</functionlabel>
+          <functionlabel num="17" lockable="false">Boxcar Boom</functionlabel>
+          <functionlabel num="18" lockable="false">Misc. User Sound</functionlabel>
+          <functionlabel num="19" lockable="true">Enables HEP mode</functionlabel>
+          <functionlabel num="20" lockable="false">Misc. User Sound</functionlabel>
+          <functionlabel num="21" lockable="false">Select Notch 1</functionlabel>
+          <functionlabel num="22" lockable="false">Select Notch 2</functionlabel>
+          <functionlabel num="23" lockable="false">Select Notch 3</functionlabel>
+          <functionlabel num="24" lockable="false">Select Notch 4</functionlabel>
+          <functionlabel num="25" lockable="false">Select Notch 5</functionlabel>
+          <functionlabel num="26" lockable="false">Select Notch 6</functionlabel>
+          <functionlabel num="27" lockable="false">Select Notch 7</functionlabel>
+          <functionlabel num="28" lockable="false">Select Notch 8</functionlabel>                                                       
+        </functionlabels>        
       </model>
       <functionlabels>
         <functionlabel num="0" lockable="true">Lights</functionlabel>
@@ -126,7 +148,7 @@
         <comment>0-15, use about 4-8</comment>
         <comment xml:lang="it">0-15, usabile circa da 4 a 8</comment>
       </variable>
-      <variable CV="60" item="Sound Option 1">
+      <variable CV="60" item="Sound Option 1" include="SDXH166D,SDXN136PS,SDXH166DExt">
         <enumVal>
           <enumChoice choice="GP38 Diesel"/>
           <enumChoice choice="GE Evo Diesel"/>
@@ -140,6 +162,18 @@
         <label>Locomotive Sound Scheme</label>
         <label xml:lang="it">Schema Suoni Loco</label>
       </variable>
+      <variable CV="60" item="Sound Option 1" include="SDH166D,SDN136PS">
+        <enumVal>
+          <enumChoice choice="Steam">
+            <choice xml:lang="it">Vapore</choice>
+          </enumChoice>
+          <enumChoice choice="GP38 Diesel">
+            <choice xml:lang="it">GP38 Diesel</choice>
+          </enumChoice>
+        </enumVal> 
+        <label>Steam/Diesel Option</label>
+        <label xml:lang="it">Opzioni Vapore-Diesel</label>
+      </variable>             
       <xi:include href="http://jmri.org/xml/decoders/digitrax/cv61Series6.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/cv62.63LightingOptions.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
@@ -383,11 +417,16 @@
         <label>Sound Project Author ID</label>
         <label xml:lang="it">ID autore progetto Suono</label>
       </variable>
-      <variable item="Sound Project ID" CV="153" default="168" readOnly="yes">
+      <variable item="Sound Project ID" CV="153" default="168" readOnly="yes"  include="SDXH166D,SDXN136PS,SDXH166DExt">
         <decVal/>
         <label>Sound Project ID</label>
         <label xml:lang="it">ID progetto Suono</label>
       </variable>
+      <variable item="Sound Project ID" CV="153" default="2" readOnly="yes"  include="SDH166D,SDN136PS">
+        <decVal/>
+        <label>Sound Project ID</label>
+        <label xml:lang="it">ID progetto Suono</label>
+      </variable>      
       <variable CV="154" item="Sound Setting 14" default="60">
         <decVal max="64"/>
         <label>Steam Blowdown/Safety Volume</label>
@@ -416,7 +455,7 @@
         <label>Playable Horn/Whistle Delay Rate</label>
         <label xml:lang="it">Tasso Ritardo Tromba</label>
       </variable>
-      <variable CV="157" item="Sound Option 4">
+      <variable CV="157" item="Sound Option 4" include="SDXH166D,SDXN136PS,SDXH166DExt">
         <enumVal>
           <enumChoice choice="Default Bell">
             <choice>Standard Bell</choice>
