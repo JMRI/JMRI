@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+          <enumChoice choice="Reserved (0x3)">
+            <choice>Reserved (0x3)</choice>
+            <choice xml:lang="it">Riservato (0x3)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x4)">
+            <choice>Reserved (0x4)</choice>
+            <choice xml:lang="it">Riservato (0x4)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x5)">
+            <choice>Reserved (0x5)</choice>
+            <choice xml:lang="it">Riservato (0x5)</choice>
+          </enumChoice>
+ </enumVal>
