@@ -3214,22 +3214,32 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 			TrackSegment tr = trackList.get(i);
 			Object o = tr.getConnect1();
 			int type = tr.getType1();
-			// get coordinates of first end point
-			Point2D pt1 = getEndCoords(o,type);
-			o = tr.getConnect2();
-			type = tr.getType2();
-			// get coordinates of second end point
-			Point2D pt2 = getEndCoords(o,type);
-			// construct a detection rectangle
-			double cX = (pt1.getX() + pt2.getX())/2.0D;
-			double cY = (pt1.getY() + pt2.getY())/2.0D;			
-			Rectangle2D r = new Rectangle2D.Double(
-						cX - SIZE2,cY - SIZE2,SIZE2+SIZE2,SIZE2+SIZE2);
-			// Test this detection rectangle
-			if (r.contains(loc)) {
-				// mouse was pressed in detection rectangle
-				return tr;
-			}
+            if(tr.getCircle()){
+                Rectangle2D r = new Rectangle2D.Double(
+                            tr.getCentreSegX() - SIZE2,tr.getCentreSegY() - SIZE2,SIZE2+SIZE2,SIZE2+SIZE2);
+                // Test this detection rectangle
+                if (r.contains(loc)) {
+                    // mouse was pressed in detection rectangle
+                    return tr;
+                }
+            } else {
+                // get coordinates of first end point
+                Point2D pt1 = getEndCoords(o,type);
+                o = tr.getConnect2();
+                type = tr.getType2();
+                // get coordinates of second end point
+                Point2D pt2 = getEndCoords(o,type);
+                // construct a detection rectangle
+                double cX = (pt1.getX() + pt2.getX())/2.0D;
+                double cY = (pt1.getY() + pt2.getY())/2.0D;			
+                Rectangle2D r = new Rectangle2D.Double(
+                            cX - SIZE2,cY - SIZE2,SIZE2+SIZE2,SIZE2+SIZE2);
+                // Test this detection rectangle
+                if (r.contains(loc)) {
+                    // mouse was pressed in detection rectangle
+                    return tr;
+                }
+            }
 		}
 		return null;
 	}
@@ -8461,11 +8471,18 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                     // Circle - Compute center
                     t.setCentreX(pt2x - java.lang.Math.cos(startRad) * radius);
                     t.setCentreY(pt2y + java.lang.Math.sin(startRad) * radius);
+                    
                     // Circle - Compute rectangle required by Arc2D.Double
                     t.setCW(radius * 2.0D);
                     t.setCH(radius * 2.0D);
                     t.setCX(t.getCentreX()-(radius));
                     t.setCY(t.getCentreY()-(radius));
+                    
+                    //Compute the vlues for locating the circle
+                    
+                    t.setCentreSegX(t.getCentreX() + radius*java.lang.Math.cos(startRad+halfAngle));
+                    t.setCentreSegY(t.getCentreY() - java.lang.Math.sin(startRad+halfAngle) * radius);
+                    
                 } 
                 else {
                     // Elipse - Round start angle to the closest multiple of 90
@@ -8556,24 +8573,26 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		// loop over all defined track segments
 		g2.setColor(defaultTrackColor);
 		for (int i = 0; i<trackList.size();i++) {
-			TrackSegment t = trackList.get(i);
-			Point2D pt1 = getCoords(t.getConnect1(),t.getType1());
-			Point2D pt2 = getCoords(t.getConnect2(),t.getType2());
-			double cX = (pt1.getX() + pt2.getX())/2.0D;
-			double cY = (pt1.getY() + pt2.getY())/2.0D;
-            g2.draw(new Ellipse2D.Double (cX-SIZE2, cY-SIZE2, SIZE2+SIZE2, SIZE2+SIZE2));
-            if (t.getArc()) {
-                LayoutBlock b = t.getLayoutBlock();
-				if (b!=null) g2.setColor(b.getBlockColor());
-				else g2.setColor(defaultTrackColor);
-                g2.draw(new Line2D.Double(getCoords(t.getConnect1(),t.getType1()), getCoords(t.getConnect2(),t.getType2())));
-                if (t.getCircle()){
-                    g2.draw(new Line2D.Double(getCoords(t.getConnect1(),t.getType1()), new Point2D.Double(t.getCentreX(),t.getCentreY())));
-                    g2.draw(new Line2D.Double(getCoords(t.getConnect2(),t.getType2()), new Point2D.Double(t.getCentreX(),t.getCentreY())));
-
+            TrackSegment t = trackList.get(i);
+            LayoutBlock b = t.getLayoutBlock();
+            if (b!=null) g2.setColor(b.getBlockColor());
+            else g2.setColor(defaultTrackColor);
+            if (t.getCircle()) {
+                g2.draw(new Line2D.Double(getCoords(t.getConnect1(),t.getType1()), new Point2D.Double(t.getCentreX(),t.getCentreY())));
+                g2.draw(new Line2D.Double(getCoords(t.getConnect2(),t.getType2()), new Point2D.Double(t.getCentreX(),t.getCentreY())));
+                
+                g2.draw(new Ellipse2D.Double (t.getCentreSegX()-SIZE2, t.getCentreSegY()-SIZE2, SIZE2+SIZE2, SIZE2+SIZE2));
+			} else {
+                Point2D pt1 = getCoords(t.getConnect1(),t.getType1());
+                Point2D pt2 = getCoords(t.getConnect2(),t.getType2());
+                double cX = (pt1.getX() + pt2.getX())/2.0D;
+                double cY = (pt1.getY() + pt2.getY())/2.0D;
+                g2.draw(new Ellipse2D.Double (cX-SIZE2, cY-SIZE2, SIZE2+SIZE2, SIZE2+SIZE2));
+                if(t.getArc()){
+                    g2.draw(new Line2D.Double(getCoords(t.getConnect1(),t.getType1()), getCoords(t.getConnect2(),t.getType2())));
                 }
-                g2.setColor(defaultTrackColor);
-			}
+            }
+            g2.setColor(defaultTrackColor);
 		}
 	}
 

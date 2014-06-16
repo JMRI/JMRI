@@ -686,6 +686,24 @@ public class TrackSegment
         startadj = Startadj;
     }
     
+    private double centreSegX;
+    public double getCentreSegX(){
+        return centreSegX;
+    }
+    
+    public void setCentreSegX(double CentreX){
+        centreSegX = CentreX;
+    }
+    
+    private double centreSegY;
+    public double getCentreSegY(){
+        return centreSegY;
+    }
+    
+    public void setCentreSegY(double CentreY){
+        centreSegY = CentreY;
+    }
+    
     private double centreX;
     public double getCentreX(){
         return centreX;
