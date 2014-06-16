@@ -184,7 +184,7 @@
         <label xml:lang="it">Tabella Velocità</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/digitrax/userId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <!-- Software information - Read-only -->
       <!-- Disabled for Series 6 - not documented in Digitrax Manual 2nd Edition     
       <variable label="Software Version" CV="121" readOnly="yes" default="3">
