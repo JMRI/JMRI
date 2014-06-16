@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variable CV="2" item="Vstart" default="0" tooltip="sets the motor voltage at Speed Step 1, range 0(default)-255" comment="Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration">
+    <decVal/>
+    <label>Start voltage</label>
+    <label xml:lang="it">Volt di Partenza</label>
+    <comment xml:lang="it">Valori 0-255, 0 in CV2, CV5, CV6 produce accellerazione lineare</comment>
+    <tooltip xml:lang="it">Progr. tensione motore a Velocità Step 1, valori 0(default)-255. Vedi anche CV56</tooltip>
+</variable>
+  <variable CV="3" item="Accel" default="1" tooltip="Sets the acceleration rate (delay or momentum), 1(default)" comment="Range 0-255">
+    <decVal max="255"/>
+    <label>Accel 1 Rate</label>
+    <label xml:lang="it">Grado Accell.1</label>
+    <comment xml:lang="it">Valori 0-255</comment>
+    <tooltip xml:lang="it">Progr. grado accellerazione (ritardo o inerzia), valori 0(default)-255</tooltip>
+  </variable>
+  <variable CV="4" item="Decel" default="1" tooltip="Sets the deceleration rate (delay or momentum), 1(default)" comment="Range 0-255">
+    <decVal max="255"/>
+    <label>Decel 1 Rate</label>
+    <label xml:lang="it">Grado Decell.1</label>
+    <comment xml:lang="it">Valori 0-255</comment>
+    <tooltip xml:lang="it">Progr. grado decellerazione (ritardo o inerzia), valori 0-255</tooltip>
+  </variable>
+  <variable CV="5" item="Vhigh" default="0" tooltip="sets the motor voltage at top throttle Speed Setting, range 0(default)-255" comment="Range 0-255, A value of 255 corresponds to 100%. 0 in CV 2, 6, 5 produces straight line acceleration">
+    <decVal/>
+    <label>Maximum Voltage</label>
+    <label xml:lang="it">Volt Massimi</label>
+    <comment xml:lang="it">Valori 0-255, Un valore di 255 corrisponde al 100%. 0 in CV 2, 6, 5 produce curva accellerazione linea retta</comment>
+    <tooltip xml:lang="it">Progr tensione motore alla massima velocità, valori 0(default)-255</tooltip>
+  </variable> 
+  <variable CV="6" item="Vmid" tooltip="sets the motor voltage at midrange throttle Speed Setting, range 0(default)-255" comment="Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration">
+    <decVal/>
+    <label>Midpoint Voltage</label>
+    <label xml:lang="it">Volt Intermedi</label>
+    <comment xml:lang="it">valori 0-255, 0 in CV 2, 6, 5 produce curva accellerazione linea retta</comment>
+    <tooltip xml:lang="it">Progr tensione motore a velocità intermedia, valori 0(default)-255</tooltip>
+  </variable>
+</variables>
