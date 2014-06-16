@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2007, 2014 All rights reserved -->
-<!-- $Id: Digitrax_01x6.xml 22115 2014-04-27 xx:x:xxZ jacobsen $ -->
+<!-- $Id: Digitrax_01x6.xml xxxxx 2014-06-15 xx:x:xxZ jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,11 +13,13 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Alain Le Marchand" version="0" lastUpdated="201404276"/>
+  <version author="Alain Le Marchand" version="0" lastUpdated="20140427"/>
+  <version author="Alain Le Marchand" version="1" lastUpdated="20140615"/>  
   <!-- Created from version 36 of the Digitrax_01x3 file -->
   <!-- Version 0 - New Series 6 non-sound Digitrax decoders (Alain Le Marchand) -->
   <!--             DH166D, DH166P, DH166PD, DN136D, DN136PS, DN146IP, DN166PS, DZ126, DZ126PS, DS126IN, DZ126T, DZ146, DZ146PS 
                    New definition of CV61 bit0 as per Digitrax manual 2nd edition 01/14     -->
+  <!-- Version 1 - Add N Scale Intermountain Board Replacement DN166I0, DN166I1A, DN166I1B, DN166I1C, DN166I1D, DN166I2 -->
   <!-- WARNING :   Low and High Versions of decoders (CV07) unknown (by me) - to be adjusted after users feed back  -->
   <decoder>
     <family name="Series 6 with FX3, silent, improved BEMF" mfg="Digitrax" lowVersionID="52" highVersionID="64">
@@ -67,6 +69,60 @@
         <output name="4" label="Pad (Violet)" connection="solder"/>
         <size length="1.158" width="0.386" height="0.115" units="inches"/>
       </model>
+      <model model="DN166I0" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale SD40T-2/SD45T-2 Tunnel Motor">
+        <output name="1" label="LED" connection="LED"/>
+        <output name="2" label="LED" connection="LED"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="3.5" width=".367" height="0.135" units="inches"/>
+      </model>
+      <model model="DN166I1A" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale FT-A Units">
+        <output name="1" label="Pad/LED" connection="solder"/>
+        <output name="2" label="Pad/LED" connection="solder"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="2.165" width="0.472" height="0.098" units="inches"/>
+      </model>
+      <model model="DN166I1B" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale FT-B Units">
+        <output name="1" label="Pad/LED" connection="solder"/>
+        <output name="2" label="Pad/LED" connection="solder"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="2.165" width="0.472" height="0.098" units="inches"/>
+      </model>
+      <model model="DN166I1C" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale F3 &amp; F7 Units">
+        <output name="1" label="Pad/LED" connection="solder"/>
+        <output name="2" label="Pad/LED" connection="solder"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="2.165" width="0.472" height="0.098" units="inches"/>
+      </model>
+      <model model="DN166I1D" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for New InterMountain N-Scale F7A/B, FP7 &amp; FP9 Units">
+        <output name="1" label="Pad/LED" connection="solder"/>
+        <output name="2" label="Pad/LED" connection="solder"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="2.165" width="0.472" height="0.098" units="inches"/>
+      </model>      
+      <model model="DN166I2" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale FP7 &amp; FP9 Units">
+        <output name="1" label="Pad/LED" connection="solder"/>
+        <output name="2" label="Pad/LED" connection="solder"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="2.165" width="0.472" height="0.098" units="inches"/>
+      </model>      
       <model model="DN166PS" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="N" connector="NMRAmedium" comment="N/HO-Scale, with Medium Plug">
         <output name="1" label="White" connection="plug"/>
         <output name="2" label="Yellow" connection="plug"/>
