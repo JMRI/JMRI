@@ -18,6 +18,6 @@
 <!-- function output choices for output 15 thru 30 when moving and in neutral -->
 <ienumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <ienumChoice choice="None" value="255">
-    <choice xml:lang="it">Nessuno</choice>
+     <choice xml:lang="it">Nessuno</choice>
   </ienumChoice>
 </ienumVal>
