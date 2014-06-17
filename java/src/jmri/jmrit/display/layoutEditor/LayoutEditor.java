@@ -222,6 +222,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 	private JCheckBoxMenuItem turnoutCirclesOnItem = null;
 	private JCheckBoxMenuItem skipTurnoutItem = null;
 	private JCheckBoxMenuItem turnoutDrawUnselectedLegItem = null;
+	private JCheckBoxMenuItem hideTrackSegmentConstructionLines = null;
 	private ButtonGroup trackColorButtonGroup = null;
 	private ButtonGroup trackOccupiedColorButtonGroup = null;
 	private ButtonGroup trackAlternativeColorButtonGroup = null;
@@ -1315,6 +1316,23 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                 }
             });                    
         autoAssignBlocksItem.setSelected(autoAssignBlocks);
+        
+        //hideTrackSegmentConstructionLines
+        hideTrackSegmentConstructionLines = new JCheckBoxMenuItem(rb.getString("HideTrackConLines"));
+        optionMenu.add(hideTrackSegmentConstructionLines);
+        hideTrackSegmentConstructionLines.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    int show = TrackSegment.SHOWCON;
+                    if(hideTrackSegmentConstructionLines.isSelected()){
+                        show = TrackSegment.HIDECONALL;
+                    }
+                    for (TrackSegment t: trackList) {
+                        t.hideConstructionLines(show);
+                    }
+                    repaint();
+                }
+            });                    
+        hideTrackSegmentConstructionLines.setSelected(autoAssignBlocks);
         
         return optionMenu;
 	}
@@ -8550,7 +8568,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		// loop over all defined turnouts
 		for (int i = 0; i<trackList.size();i++) {
 			TrackSegment t = trackList.get(i);
-            if (t.getCircle()){
+            if (t.getCircle() && t.showConstructionLinesLE()){
                 Point2D pt = t.getCoordsCenterCircle();
                 g2.setColor(Color.black);
                 g2.draw(new Rectangle2D.Double (
@@ -8578,9 +8596,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
             if (b!=null) g2.setColor(b.getBlockColor());
             else g2.setColor(defaultTrackColor);
             if (t.getCircle()) {
-                g2.draw(new Line2D.Double(getCoords(t.getConnect1(),t.getType1()), new Point2D.Double(t.getCentreX(),t.getCentreY())));
-                g2.draw(new Line2D.Double(getCoords(t.getConnect2(),t.getType2()), new Point2D.Double(t.getCentreX(),t.getCentreY())));
-                
+                if(t.showConstructionLinesLE()){
+                    g2.draw(new Line2D.Double(getCoords(t.getConnect1(),t.getType1()), new Point2D.Double(t.getCentreX(),t.getCentreY())));
+                    g2.draw(new Line2D.Double(getCoords(t.getConnect2(),t.getType2()), new Point2D.Double(t.getCentreX(),t.getCentreY())));
+                }
                 g2.draw(new Ellipse2D.Double (t.getCentreSegX()-SIZE2, t.getCentreSegY()-SIZE2, SIZE2+SIZE2, SIZE2+SIZE2));
 			} else {
                 Point2D pt1 = getCoords(t.getConnect1(),t.getType1());

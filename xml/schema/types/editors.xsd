@@ -1146,6 +1146,7 @@
       <xs:attribute name="flip" type="yesNoType" />
       <xs:attribute name="circle" type="yesNoType" />
       <xs:attribute name="angle" type="xs:float" />
+      <xs:attribute name="hideConLines" type="yesNoType" />
 
     </xs:complexType>
 
