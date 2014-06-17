@@ -55,18 +55,15 @@ for more information about indicator track icons.
 
  
 <H3>Mouse Operations</H3>
-When in one of the editing modes,
-Circuit Builder has different mouse click conventions from those of the panel editors.
-In the basic window frame it shares most of the operations with them.  
-You can easily move back and forth between the editors and editing modes.
-of Circuitbuilder.  Note the following:
+When in one of the editing modes of
+Circuit Builder, the mouse click conventions differ somewhat from those of the panel editors.
+When one the menu items is selected an editing window is opened and the panel is in Circuit 
+Builder editing mode. Note the following when in CircuitBuilder editing mode:
 <ul>
-<li>Dragging is not permitted in the editing modes. (except for portal icons when editing Portals)</li>
-<li>Popup menus for panel items can only be activated in the basic window frame.</li>
-<li>Adding, modifying and deleting panel items can only be done in the basic window frame.</li>
-<li>CircuitBuilder editing is done on window frames activated under the "Add/Edit Circuits" menu.</li>
-<li>When in an editing mode, only track and portal icons can be selected.</li>
-</ul> 
+<li>Dragging is not supported except for portal icons when creating or editing Portals</li>
+<li>Several Control Panel Menus are disabled.</li>
+<li>Only track and portal icons can be selected.</li>
+</ul>
 
 <H2>The Menus</H2>
    
@@ -79,21 +76,24 @@ The <b>Edit, Options, Zoom</b> and <b>Add Item</b> menus are identical to those 
 Panel Editor.  When in an editing mode (i.e. in any of menu items under the <b>Add/Edit Circuits</b>
 menu) these menus are disabled. 
 
-<H3>The Add/Edit Circuits Menu</H3>
+<H3>The Circuit Builder Menu</H3>
 Creates and Edit OBlocks, Portals and OPaths and their display icons. The menu has the following menu items:
 <ul>
  <li><b>Add Detector Circuit</b> - Create an OBlock track circuit and assign the icons that display it. 
         You will be prompted for the system and user names to create a new OBlock.  Then
         you will be in <b>circuit editing</b> mode.</li>
- <li><b>Edit Circuit Block</b> - Edit an existing circuit (OBlock).  You will be asked to select an OBlock
+ <li><b>Edit Circuit OBlock</b> - Edit an existing circuit (OBlock).  You will be asked to select an OBlock
         from a picklist.  Then you will be in <b>circuit editing</b> mode.</li>
  <li><b>Edit Circuit Portals</b> -  Create or edit Portals connecting two track circuits.  You will be 
         asked to select an OBlock from a picklist.  Then you will be in <b>portal editing</b> mode.</li>
  <li><b>Edit Circuit Paths</b> - Create or edit the paths (OPath) through a track circuit.  You will be 
         asked to select an OBlock from a picklist.  Then you will be in <b>path editing</b> mode.</li>
+ <li><b>Edit Portal Direction Icons</b> - Choose arrows to indicate the direction of a warrant route
+ 		through a block.  You will be asked to select an OBlock from a picklist.  
+        Then you will be in <b>Portal icon editing</b> mode.</li>
 </ul>
 
-<H3>The Error Check Menu</H3>
+<H3>The Error Check Menu Item</H3>
 Verify OBlocks, Portals and OPaths are complete and without errors. The menu has the following menu items:
 <ul>
  <li><b>Circuits without icons</b> - Has a submenu for each track circuit OBlock that does not have an icon.
