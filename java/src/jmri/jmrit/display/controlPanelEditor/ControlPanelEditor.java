@@ -113,13 +113,12 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _circuitBuilder = new CircuitBuilder(this);
         _shapeDrawer = new ShapeDrawer(this);
         makeDrawMenu();
-        makeCircuitMenu();
+        makeWarrantMenu(false);
         makeIconMenu();
         makeZoomMenu();
         makeMarkerMenu();
         makeOptionMenu();
         makeEditMenu();
-        makeWarrantMenu();
         makeFileMenu();
 
         setJMenuBar(_menuBar);
@@ -169,11 +168,13 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, ActionEvent.CTRL_MASK));
     }
     
-    protected void makeCircuitMenu() {
-    	if (_circuitMenu==null) {
-        	_circuitMenu = _circuitBuilder.makeMenu();
-    	}
-        _menuBar.add(_circuitMenu, 0);
+    protected void makeCircuitMenu(boolean edit) {
+    	_circuitMenu = _circuitBuilder.makeMenu();
+        if (edit) {
+        	int idx = _menuBar.getComponentIndex(_warrantMenu);
+        	_menuBar.add(_circuitMenu, ++idx);
+            _menuBar.validate();
+        }
     }
 
     protected void makeDrawMenu() {
@@ -187,6 +188,13 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 });
     	}
         _menuBar.add(_drawMenu, 0);
+    }
+    public boolean getShapeSelect() {
+    	return !_disableShapeSelection;
+    }
+    public void setShapeSelect(boolean set) {
+    	_disableShapeSelection = !set;
+    	disableShapeSelect.setSelected(_disableShapeSelection);
     }
 
     protected void makeZoomMenu() {
@@ -215,16 +223,25 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             });
     }
     
-    protected void makeWarrantMenu() {
+    protected void makeWarrantMenu(boolean edit) {
         _warrantMenu = jmri.jmrit.logix.WarrantTableAction.makeWarrantMenu();
         if (_warrantMenu==null) {
         	_warrantMenu = new JMenu(ResourceBundle.getBundle("jmri.jmrit.logix.WarrantBundle").getString("MenuWarrant"));
-            JMenuItem aboutItem = new JMenuItem("About Warrants");
+            JMenuItem aboutItem = new JMenuItem(Bundle.getMessage("AboutWarrant"));
             HelpUtil.getGlobalHelpBroker().enableHelpOnButton(aboutItem, "package.jmri.jmrit.logix.Warrant", null);
             _warrantMenu.add(aboutItem);
-            aboutItem = new JMenuItem("About OBlocks&Portals");
+            aboutItem = new JMenuItem(Bundle.getMessage("AboutOBlock"));
             HelpUtil.getGlobalHelpBroker().enableHelpOnButton(aboutItem, "package.jmri.jmrit.logix.OBlockTable", null);
             _warrantMenu.add(aboutItem);
+            aboutItem = new JMenuItem(Bundle.getMessage("OpenCircuitMenu"));
+            _warrantMenu.add(aboutItem);
+            aboutItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                	makeCircuitMenu(true);
+                }
+            });
+        } else {        	
+        	makeCircuitMenu(edit);
         }
     	_menuBar.add(_warrantMenu, 0);
     }
@@ -710,17 +727,15 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             if (_warrantMenu!=null) {
         		_menuBar.remove(_warrantMenu);
             }           
+            if (_circuitMenu!=null) {
+        		_menuBar.remove(_circuitMenu);
+            }           
             if (_drawMenu==null) {
             	makeDrawMenu();
             } else {
                 _menuBar.add(_drawMenu, 0);
             }          
-            if (_circuitMenu==null) {
-            	makeCircuitMenu();
-            } else {
-                _menuBar.add(_circuitMenu, 0);
-            }           
-            makeWarrantMenu();
+            makeWarrantMenu(edit);
  
             if (_iconMenu==null) {
                 makeIconMenu();
@@ -773,7 +788,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         		_menuBar.remove(_drawMenu);
             }
     		if (InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getSystemNameList().size() > 1) {
-    			makeWarrantMenu();
+    			makeWarrantMenu(edit);
     		}	
             if (_markerMenu==null) {
                 makeMarkerMenu();

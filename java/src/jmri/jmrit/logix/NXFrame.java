@@ -401,7 +401,7 @@ public class NXFrame extends WarrantRoute {
 
  		float rampLength = maxRampLength;		// actual ramp distance to use.
  		// adjust for room
-		float b = (2*minSpeed+delta)/(FACTOR*SCALE);
+//		float b = (2*minSpeed+delta)/(FACTOR*SCALE);
     	if (totalLen <= 2*maxRampLength) {
     		rampLength = 0;
     		numSteps = 0;

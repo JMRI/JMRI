@@ -110,13 +110,15 @@ public class CircuitBuilder  {
      * Called by ControlPanelEditor at init before contents have been loaded
      */
     protected JMenu makeMenu() {
-        _circuitMenu = new JMenu(Bundle.getMessage("CircuitBuilder"));
-        _circuitMap = new HashMap<OBlock, ArrayList<Positionable>>();
-        OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
-        String[] sysNames = manager.getSystemNameArray();
-        for (int i = 0; i < sysNames.length; i++) {
-            OBlock block = manager.getBySystemName(sysNames[i]);
-            _circuitMap.put(block, new ArrayList<Positionable>());
+    	if (_circuitMenu==null) {
+            _circuitMenu = new JMenu(Bundle.getMessage("CircuitBuilder"));
+            _circuitMap = new HashMap<OBlock, ArrayList<Positionable>>();
+            OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
+            String[] sysNames = manager.getSystemNameArray();
+            for (int i = 0; i < sysNames.length; i++) {
+                OBlock block = manager.getBySystemName(sysNames[i]);
+                _circuitMap.put(block, new ArrayList<Positionable>());    		
+            }
         }
         makeCircuitMenu();
         return _circuitMenu;
