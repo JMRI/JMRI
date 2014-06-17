@@ -2115,7 +2115,14 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             //details then there is no point in trying to gather them
             if((!useLayoutEditorTurnouts) && (!useLayoutEditorBlocks))
                 return;
-            
+            if(facingBlock==null){
+                log.error("No facing block found for source mast " + getSourceMast().getDisplayName());
+                throw new jmri.JmriException("No facing block found for source mast " + getSourceMast().getDisplayName());
+            }
+            if(destinationBlock==null){
+                log.error("No facing block found for destination mast " + destination.getDisplayName());
+                throw new jmri.JmriException("No facing block found for destination mast " + destination.getDisplayName());
+            }
             ArrayList<LayoutBlock> lblks = new ArrayList<LayoutBlock>();
             if(protectingBlock==null){
             	String pBlkNames = "";
@@ -2333,6 +2340,10 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             if(log.isDebugEnabled())
                 log.debug(destination.getDisplayName() + " add mast to auto list " + mast);
             String danger = mast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER);
+            if(danger==null){
+                log.error("Can not add SignalMast " + mast.getDisplayName() + " to logic for " + source.getDisplayName() + " to " + destination.getDisplayName() + " as it does not have a danger appearance configured");
+                return;
+            }
             this.autoMasts.put(mast, danger);
             if (destMastInit)
                 mast.addPropertyChangeListener(propertySignalMastListener);
