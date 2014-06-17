@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JPopupMenu;
+import javax.swing.SwingUtilities;
 import javax.swing.JCheckBoxMenuItem;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -61,6 +62,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
         pos._iconStateMap = cloneMap(_iconStateMap, pos);
         pos.setTristate(getTristate());
         pos.setMomentary(getMomentary());
+        pos.setDirectControl(getDirectControl());
         pos._iconFamily = _iconFamily;
         return super.finishClone(pos);
     }
@@ -217,7 +219,12 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     public boolean getMomentary() { return momentary; }
     public void setMomentary(boolean m) { momentary = m; }
 
+    boolean directControl = false;
+    public boolean getDirectControl() { return directControl; }
+    public void setDirectControl(boolean m) { directControl = m; }
+
     JCheckBoxMenuItem  momentaryItem = new JCheckBoxMenuItem(Bundle.getMessage("Momentary"));
+    JCheckBoxMenuItem  directControlItem = new JCheckBoxMenuItem(Bundle.getMessage("DirectControl"));
 
     /**
      * Pop-up displays unique attributes of turnouts
@@ -228,6 +235,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
             if (namedTurnout != null && getTurnout().getFeedbackMode() != Turnout.DIRECT) {
                 addTristateEntry(popup);
             }
+
             popup.add(momentaryItem);
             momentaryItem.setSelected (getMomentary());
             momentaryItem.addActionListener(new ActionListener(){
@@ -235,6 +243,15 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
                     setMomentary(momentaryItem.isSelected());
                 }
             });
+
+            popup.add(directControlItem);
+            directControlItem.setSelected (getDirectControl());
+            directControlItem.addActionListener(new ActionListener(){
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    setDirectControl(directControlItem.isSelected());
+                }
+            });
+
 
         }
         return true;
@@ -451,6 +468,21 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
         if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) return;
         if (e.isMetaDown() || e.isAltDown() || !buttonLive() || getMomentary()) return;
 
+        if (getDirectControl()) {
+            // right click closed
+            if (SwingUtilities.isRightMouseButton(e) || e.isControlDown()) {
+                getTurnout().setCommandedState(jmri.Turnout.CLOSED);
+            }
+            // else thrown
+            else {
+                getTurnout().setCommandedState(jmri.Turnout.CLOSED);
+            }
+        } else {
+            alternateOnClick();
+        }
+    }
+
+    void alternateOnClick() {
         if (getTurnout().getKnownState()==jmri.Turnout.CLOSED)  // if clear known state, set to opposite
             getTurnout().setCommandedState(jmri.Turnout.THROWN);
         else if (getTurnout().getKnownState()==jmri.Turnout.THROWN)
@@ -461,7 +493,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
         else
             getTurnout().setCommandedState(jmri.Turnout.CLOSED);  // just force closed.
     }
-
+    
     public void dispose() {
         if (namedTurnout != null) {
             getTurnout().removePropertyChangeListener(this);

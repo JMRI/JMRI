@@ -134,7 +134,7 @@ OPTIONS="${OPTIONS} -Djava.library.path=.:lib:$SYSLIBPATH"
 OPTIONS="${OPTIONS} -Dsun.java2d.noddraw"
 # memory start and max limits
 OPTIONS="${OPTIONS} -Xms30m"
-OPTIONS="${OPTIONS} -Xmx200m"
+OPTIONS="${OPTIONS} -Xmx640m"
 
 # RXTX options (only works in some versions)
 OPTIONS="${OPTIONS} -Dgnu.io.rxtx.NoVersionOutput=true"
