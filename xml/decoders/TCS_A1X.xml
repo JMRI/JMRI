@@ -26,31 +26,7 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable CV="2" item="Vstart" tooltip="Superseded by Dither">
-        <decVal/>
-        <label>Start voltage</label>
-        <label xml:lang="it">Volt di partenza</label>
-      </variable>
-      <variable CV="3" item="Accel">
-        <decVal max="255"/>
-        <label>Base Acceleration Rate</label>
-        <label xml:lang="it">Grado Accellerazione Base</label>
-      </variable>
-      <variable CV="4" item="Decel">
-        <decVal max="255"/>
-        <label>Base Deceleration Rate</label>
-        <label xml:lang="it">Grado Decellerazione</label>
-      </variable>
-      <variable CV="5" item="Vhigh">
-        <decVal/>
-        <label>Maximum Voltage</label>
-        <label xml:lang="it">Volt Massimi</label>
-      </variable>
-      <variable CV="6" item="Vmid">
-        <decVal/>
-        <label>Midpoint Voltage</label>
-        <label xml:lang="it">Volt Intermedi</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV1-6.xml"/>
       <variable CV="7" readOnly="yes" item="Decoder Version" default="32">
         <decVal/>
         <label>Version ID</label>
@@ -61,59 +37,15 @@
         <label>Manufacturer ID</label>
         <label xml:lang="it">ID Costruttore</label>
       </variable>
-      <variable CV="19" mask="XVVVVVVV" item="Consist Address">
-        <decVal/>
-        <label>Consist Address</label>
-        <label xml:lang="it">Indirizzo Consist</label>
-      </variable>
-      <variable item="Consist Direction" CV="19" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
-        <label>Consist Direction</label>
-        <label xml:lang="it">Direzione Consist</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
-        <label>Normal direction of motion</label>
-        <label xml:lang="it">Normale direzione di marcia</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-          </enumChoice>
-          <enumChoice choice="28/128">
-            <choice>28/128</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed steps</label>
-        <label xml:lang="it">Step Velocità</label>
-      </variable>
-      <variable CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Analog conversion mode</label>
-        <label xml:lang="it">Modo Conversione Analogico</label>
-      </variable>
-      <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition">
-        <enumVal>
-          <enumChoice choice="Use Vstart, Vmid, Vhigh">
-            <choice>Use Vstart, Vmid, Vhigh</choice>
-            <choice xml:lang="it">Usa Vstart, Vmid, Vhigh</choice>
-          </enumChoice>
-          <enumChoice choice="Use Table">
-            <choice>Use Table</choice>
-            <choice xml:lang="it">Usa Tabella</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Use Speed Table</label>
-        <label xml:lang="it">Usa Tabella Velocità</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV29.xml"/>
       <variable CV="49" mask="XXXXVVVV" item="Function F0F effect generated">
         <xi:include href="http://jmri.org/xml/decoders/tcs/enum-effect_generatedx1.xml"/>
         <label>Forward light F0F effect generated</label>
         <label xml:lang="it">Luci Frontali (in avanti) Effetti</label>
       </variable>
       <variable CV="49" mask="VVVVXXXX" item="Function F0F behavior">
-        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-frw_rev_both.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
         <label>Forward light F0F behavior</label>
         <label xml:lang="it">Luci Frontali (in avanti) Modalità</label>
       </variable>
@@ -123,7 +55,7 @@
         <label xml:lang="it">Luci posteriori (in avanti) Effetti</label>
       </variable>
       <variable CV="50" mask="VVVVXXXX" item="Function F0R behavior" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-frw_rev_both.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
         <label>Reverse light F0R behavior</label>
         <label xml:lang="it">Luci posteriori (in avanti) Modalità</label>
       </variable>
@@ -133,7 +65,7 @@
         <label xml:lang="it">Funzione 1 Effetti</label>
       </variable>
       <variable item="Function 1 behavior" CV="51" mask="VVVVXXXX" minFn="1">
-        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-frw_rev_both.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
         <label>Function 1 behavior</label>
         <label xml:lang="it">Funzione 1 Modalità</label>
       </variable>
@@ -143,7 +75,7 @@
         <label xml:lang="it">Funzione 2 Effetti</label>
       </variable>
       <variable item="Function 2 behavior" CV="52" mask="VVVVXXXX" minFn="2">
-        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-frw_rev_both.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
         <label>Function 2 behavior</label>
         <label xml:lang="it">Funzione 2 Modalità</label>
       </variable>
@@ -215,49 +147,40 @@
       </variable>
       <variable CV="22" mask="XXXXXXXV" item="Consist Address Active For FL in Forward">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Headlight active in Consist (MU)</label>
-        <label xml:lang="it">Luci frontali Attive in Consist</label>
+       <label>Headlight active in Consist (MU)</label>
+       <label xml:lang="it">Luci frontali Attive in Consist</label>
       </variable>
       <variable CV="22" mask="XXXXXXVX" item="Consist Address Active For FL in Reverse">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Rear light active in Consist (MU)</label>
         <label xml:lang="it">Luci Posteriori Attive in Consist</label>
       </variable>
       <variable CV="21" mask="XXXXXXXV" item="Consist Address Active For F1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Output 1 (green) active in Consist (MU)</label>
         <label xml:lang="it">Uscita 1 (verde) Attiva in Consist</label>
       </variable>
       <variable CV="21" mask="XXXXXXVX" item="Consist Address Active For F2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Output 2 (purple) active in Consist (MU)</label>
         <label xml:lang="it">Uscita 2 (porpora) Attiva in Consist</label>
       </variable>
       <variable CV="13" mask="XXXXXXXV" item="Analog Mode Function Status - FL(f)">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Both lights active in analog mode</label>
         <label xml:lang="it">Entrambe le Luci Attive in Analogico</label>
       </variable>
       <variable CV="13" mask="XXXXXXVX" item="Analog Mode Function Status - F1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Output 1 (green) active in analog mode</label>
         <label xml:lang="it">Uscita 1 (verde) Attiva in Analogico</label>
       </variable>
       <variable CV="13" mask="XXXXXVXX" item="Analog Mode Function Status - F2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Output 2 (purple) active in analog mode</label>
         <label xml:lang="it">Uscita 2 (porpora) Attiva in Analogico</label>
       </variable>
-      <variable CV="105" item="User Id #1">
-        <decVal/>
-        <label>User Private ID #1</label>
-        <label xml:lang="it">ID Utente Privato #1</label>
-      </variable>
-      <variable CV="106" item="User Id #2">
-        <decVal/>
-        <label>User Private ID #2</label>
-        <label xml:lang="it">ID Utente Privato #2</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <variable item="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
@@ -347,7 +270,7 @@
         <label xml:lang="it">Luci (retro) controlla uscita 8</label>
       </variable>
       <variable item="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+       <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output 1</label>
         <label xml:lang="it">F1 controlla uscita 1</label>
       </variable>
@@ -831,11 +754,11 @@
         <enumVal>
           <enumChoice choice="Controlled by F0(f)" value="1">
             <choice>Controlled by F0(f)</choice>
-            <choice xml:lang="it">Controllato da F0  (avanti)</choice>
+           <choice xml:lang="it">Controllato da F0 (avanti)</choice>
           </enumChoice>
           <enumChoice choice="Controlled by F0(r)" value="2">
             <choice>Controlled by F0(r)</choice>
-            <choice xml:lang="it">Controllato da F0  (Indietro)</choice>
+            <choice xml:lang="it">Controllato da F0 (Indietro)</choice>
           </enumChoice>
           <enumChoice choice="Controlled by F1" value="4">
             <choice>Controlled by F1</choice>
@@ -863,6 +786,7 @@
           </enumChoice>
         </enumVal>
         <label>Button control for White Tab</label>
+        <label xml:lang="it">Pulsante Funz. per Scheda Bianco</label>
       </variable>
       <variable CV="34" default="2" item="yellow">
         <enumVal>
@@ -900,6 +824,7 @@
           </enumChoice>
         </enumVal>
         <label>Button control for Yellow Tab</label>
+        <label xml:lang="it">Pulsante Funz. per Scheda Giallo</label>
       </variable>
       <variable CV="35" default="4" minOut="4" item="green_a" tooltip="Set both this and the next for higher than F4">
         <enumVal>
@@ -937,6 +862,8 @@
           </enumChoice>
         </enumVal>
         <label>Button control for Green Pad (Part 1)</label>
+        <label xml:lang="it">Pulsante Funz. per Scheda Verde(parte 1)</label>
+        <tooltip xml:lang="it">Programma questo e il seguente più alto di F4</tooltip>
       </variable>
       <variable CV="37" default="0" minOut="4" item="green_b" tooltip="Set this for higher than F4">
         <enumVal>
@@ -978,6 +905,8 @@
           </enumChoice>
         </enumVal>
         <label>Button control for Green Pad (Part 2)</label>
+        <label xml:lang="it">Pulsante Funz. per Scheda Verde(parte 2)</label>
+        <tooltip xml:lang="it">Programma più alto di F4</tooltip>
       </variable>
       <variable CV="36" default="4" minOut="4" item="purple_a" tooltip="Set both this and the next for higher than F4">
         <enumVal>
@@ -1015,6 +944,8 @@
           </enumChoice>
         </enumVal>
         <label>Button control for Purple Pad (Part 1)</label>
+        <label xml:lang="it">Pulsante Funz. per Scheda Porpora(parte 1)</label>
+        <tooltip xml:lang="it">Programma questo e il seguente più alto di F4</tooltip>
       </variable>
       <variable CV="38" default="0" minOut="4" item="purple_b" tooltip="Set this for higher than F4">
         <enumVal>
@@ -1056,6 +987,8 @@
           </enumChoice>
         </enumVal>
         <label>Button control for Purple Pad (Part 2)</label>
+        <label xml:lang="it">Pulsante Funz. per Scheda Porpora(parte 2)</label>
+        <tooltip xml:lang="it">Programma più alto di F4</tooltip>
       </variable>
       <variable CV="123" default="32" minOut="4" item="rule_17">
         <enumVal>
@@ -1093,11 +1026,13 @@
           </enumChoice>
         </enumVal>
         <label>On/Off Button for Rule 17 Dimming</label>
+        <label xml:lang="it">Pulsante On/Off. per Smorzamento regola 17</label>
       </variable>
       <variable CV="124" default="72" minOut="4" item="ditch_blink" tooltip="See decoder manual for note + values">
         <decVal/>
         <label>On/Off Button for Ditch Light Blink</label>
         <label xml:lang="it">Pulsante controllo Lampeggio Luci Ditch</label>
+        <tooltip xml:lang="it">Vedi manuale decoder per note e valori</tooltip>
       </variable>
       <variable item="Decoder Lock" CV="15" default="0" tooltip="All locked = 7">
         <decVal/>
@@ -1202,10 +1137,10 @@
       </variable>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="8" default="2">
+      <factReset label="Reset All CVs" CV="8" default="2"/>
+      <decVal/>
         <label>Reset All CVs</label>
         <label xml:lang="it">Reset di tutte le CV</label>
-      </factReset>
     </resets>
   </decoder>
   <pane>
@@ -1239,11 +1174,13 @@
       <display item="ditch_blink"/>
     </column>
     <name>TCS Mapping</name>
+    <name xml:lang="it">Mappatura TCS</name>
   </pane>
   <pane>
     <column>
       <label>
         <text>Mars/Gyra Light Modifications</text>
+        <text xml:lang="it">Modifica Luci Mars/Gyra</text>
       </label>
       <display item="mg_min"/>
       <display item="mg_time"/>
@@ -1259,6 +1196,7 @@
       </label>
       <label>
         <text>Beacon Light Modifications</text>
+        <text xml:lang="it">Modifica Luci Faro</text>
       </label>
       <display item="b_min"/>
       <display item="b_time"/>
@@ -1280,6 +1218,7 @@
       </label>
       <label>
         <text>Additional Momentum Adjustments</text>
+        <text xml:lang="it">Regolazioni aggiuntive Inerzia</text>
       </label>
       <display item="accel_2_start"/>
       <display item="accel_2"/>
