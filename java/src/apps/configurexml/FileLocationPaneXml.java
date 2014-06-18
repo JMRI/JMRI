@@ -59,19 +59,19 @@ public class FileLocationPaneXml extends jmri.configurexml.AbstractXmlAdapter {
     @Override
     public boolean load(Element e) {
         boolean result = true;
-        String value = loadUserLocations(e, "defaultScriptLocation");
-        if (value != null) {
-            FileUtil.setScriptsPath(value);
-        }
         //Attribute scriptLocation = e.getAttribute("defaultScriptLocation");
         //if (scriptLocation!=null)
         //FileUtil.setPythonScriptsPath(scriptLocation.getValue());
         /*Attribute userLocation = e.getAttribute("defaultUserLocation");
          if (userLocation!=null)
          FileUtil.setUserFilesPath(userLocation.getValue());*/
-        value = loadUserLocations(e, "defaultUserLocation");
+        String value = loadUserLocations(e, "defaultUserLocation");
         if (value != null) {
             FileUtil.setUserFilesPath(value);
+        }
+        value = loadUserLocations(e, "defaultScriptLocation");
+        if (value != null) {
+            FileUtil.setScriptsPath(value);
         }
         /*Attribute throttleLocation = e.getAttribute("defaultThrottleLocation");
          if (throttleLocation!=null)
@@ -87,9 +87,9 @@ public class FileLocationPaneXml extends jmri.configurexml.AbstractXmlAdapter {
     @SuppressWarnings("unchecked")
     private String loadUserLocations(Element messages, String attr) {
         List<Element> messageList = messages.getChildren("fileLocation");
-        for (int i = 0; i < messageList.size(); i++) {
-            if (messageList.get(i).getAttribute(attr) != null) {
-                return FileUtil.getExternalFilename(messageList.get(i).getAttribute(attr).getValue());
+        for (Element message : messageList) {
+            if (message.getAttribute(attr) != null) {
+                return FileUtil.getAbsoluteFilename(message.getAttribute(attr).getValue());
             }
         }
         return null;

@@ -182,8 +182,9 @@ public class CarTypes {
 		if (maxNameLength == 0) {
 			maxNameLength = MIN_NAME_LENGTH;
 			for (String name : getNames()) {
-				if (name.length() > maxNameLength)
-					maxNameLength = name.length();
+				String [] subString = name.split("-");
+				if (subString[0].length() > maxNameLength)
+					maxNameLength = subString[0].length();
 			}
 		}
 		return maxNameLength;
@@ -198,17 +199,13 @@ public class CarTypes {
 	 */
 	public int getMaxNameSubTypeLength() {
 		if (maxNameLengthSubType == 0) {
-			String[] types = getNames();
-			int length = MIN_NAME_LENGTH;
-			for (int i = 0; i < types.length; i++) {
-				if (types[i].length() > length)
-					length = types[i].length();
+			maxNameLengthSubType = MIN_NAME_LENGTH;
+			for (String name : getNames()) {
+				if (name.length() > maxNameLengthSubType)
+					maxNameLengthSubType = name.length();
 			}
-			maxNameLengthSubType = length;
-			return length;
-		} else {
-			return maxNameLengthSubType;
 		}
+		return maxNameLengthSubType;
 	}
 	
 	/**

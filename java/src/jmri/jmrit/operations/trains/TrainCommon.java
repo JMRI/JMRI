@@ -342,6 +342,8 @@ public class TrainCommon {
 								s = sl;
 								carList.remove(car); // done with this car, remove from list
 								k--;
+							} else {
+								s = padAndTruncateString(s + VERTICAL_LINE_CHAR, getLineLength(isManifest), true);
 							}
 						} else {
 							s = appendSetoutString(s, carList, rl, true, isManifest);
@@ -434,6 +436,9 @@ public class TrainCommon {
 
 	int index = 0;
 
+	/*
+	 * Used by two column format.  Local moves (pulls and spots) are lined up when using this format,
+	 */
 	private String appendSetoutString(String s, List<Car> carList, RouteLocation rl, boolean local, boolean isManifest) {
 		while (index < carList.size()) {
 			Car car = carList.get(index++);
@@ -447,9 +452,12 @@ public class TrainCommon {
 					return so;
 			}
 		}
-		return  padAndTruncateString(s + VERTICAL_LINE_CHAR, getLineLength(isManifest));
+		return  padAndTruncateString(s + VERTICAL_LINE_CHAR, getLineLength(isManifest), true);
 	}
 	
+	/*
+	 * Used by two column and track format.
+	 */
 	private String appendSetoutString(String s, String trackName, List<Car> carList, RouteLocation rl,
 			boolean isManifest) {
 		for (Car car : carList) {
@@ -462,9 +470,12 @@ public class TrainCommon {
 					return so;
 			}
 		}
-		return padAndTruncateString(s + VERTICAL_LINE_CHAR, getLineLength(isManifest));
+		return padAndTruncateString(s + VERTICAL_LINE_CHAR, getLineLength(isManifest), true);
 	}
 
+	/*
+	 * Appends to string the vertical line character, and the car set out string.  Used in two column format.
+	 */
 	private String appendSetoutString(String s, List<Car> carList, RouteLocation rl, Car car, boolean isManifest) {
 		dropCars = true;
 		cars--;
@@ -489,7 +500,7 @@ public class TrainCommon {
 		} else {
 			newString = newString + dropCar(car, isManifest).trim();
 		}
-		return padAndTruncateString(newString, getLineLength(isManifest));
+		return padAndTruncateString(newString, getLineLength(isManifest), true);
 	}
 
 	/**
@@ -807,7 +818,7 @@ public class TrainCommon {
 		boolean showDestination = false;
 		String[] carType = car.getTypeName().split("-");
 		String carAttributes;
-		// Note for car pick up: type, id, track name. For set out type, track name, id.
+		// Note for car pick up: type, id, track name. For set out type, track name, id (reversed).
 		if (isPickup) {
 			carAttributes = carType[0] + car.getRouteLocationId() + splitString(car.getTrackName());
 			showDestination = showUtilityCarDestination(format);
@@ -819,6 +830,8 @@ public class TrainCommon {
 			showLocation = showUtilityCarLocation(format);
 			if (showLocation && car.getTrack() != null)
 				carAttributes = carAttributes + car.getRouteLocationId();
+			if (isLocalMove(car))
+				carAttributes = carAttributes + splitString(car.getTrackName());
 		}
 		if (showLength)
 			carAttributes = carAttributes + car.getLength();
@@ -850,6 +863,7 @@ public class TrainCommon {
 				}
 				if (!isPickup && c.getRouteDestination() == rl
 						&& splitString(c.getDestinationTrackName()).equals(splitString(car.getDestinationTrackName()))
+						&& (splitString(c.getTrackName()).equals(splitString(car.getTrackName())) || !isLocalMove(c))
 						&& c.getRouteDestination().equals(car.getRouteDestination())) {
 					count++;
 				}
@@ -1296,7 +1310,7 @@ public class TrainCommon {
 				- Setup.getPickupCarPrefix().length() / 2, true), lineLength / 2, true)
 				+ VERTICAL_LINE_CHAR + tabString(Setup.getDropCarPrefix(), lineLength / 4
 						- Setup.getDropCarPrefix().length() / 2, true);
-		s = padAndTruncateString (s, lineLength);
+		s = padAndTruncateString (s, lineLength, true);
 		addLine(file, s);
 		printHorizontalLine(file, 0, lineLength);
 
@@ -1473,7 +1487,7 @@ public class TrainCommon {
 				- trackName.trim().length() / 2, true), lineLength / 2, true)
 				+ VERTICAL_LINE_CHAR + tabString(trackName.trim(), lineLength / 4
 						- trackName.trim().length() / 2, true);
-		s = padAndTruncateString (s, lineLength);
+		s = padAndTruncateString (s, lineLength, true);
 		addLine(file, s);
 		printHorizontalLine(file, isManifest);
 	}

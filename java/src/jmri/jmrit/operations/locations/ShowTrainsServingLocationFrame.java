@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -42,12 +41,14 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
 
 	// combo boxes
 	JComboBox typeComboBox = new JComboBox();
+	
+	// check boxes
+	JCheckBox showAllTrainsCheckBox = new JCheckBox(Bundle.getMessage("ShowAllTrains"));
+	
+	private static boolean isShowAllTrains = true;
 
 	// Blank space
 	String blank = "";
-
-	// The car currently selected
-	Car car;
 
 	public ShowTrainsServingLocationFrame() {
 		super();
@@ -62,6 +63,12 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
 		// Set up the panels
+		JPanel pOptions = new JPanel();
+		pOptions.setLayout(new GridBagLayout());
+		pOptions.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Options")));
+		
+		addItem(pOptions, showAllTrainsCheckBox, 0, 0);
+
 		JPanel pCarType = new JPanel();
 		pCarType.setLayout(new GridBagLayout());
 		pCarType.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Type")));
@@ -74,8 +81,14 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
 		trainsPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		trainsPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Trains")));
 
+		getContentPane().add(pOptions);
 		getContentPane().add(pCarType);
 		getContentPane().add(trainsPane);
+		
+		// show all trains
+		showAllTrainsCheckBox.setToolTipText(Bundle.getMessage("TipDeselectedShowAllTrains"));
+		addCheckBoxAction(showAllTrainsCheckBox);
+		showAllTrainsCheckBox.setSelected(isShowAllTrains);
 
 		// setup combo box
 		updateComboBox();
@@ -114,7 +127,8 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
 				continue;
 			for (RouteLocation rl : route.getLocationsBySequenceList()) {
 				if (rl.getName().equals(_location.getName())) {
-					addItemLeft(pTrains, new JLabel(train.getName()), 0, y);
+					boolean pickup = false;
+					boolean setout = false;
 					// monitor move count in the route for this location
 					train.getRoute().removePropertyChangeListener(this);
 					train.getRoute().addPropertyChangeListener(this);
@@ -127,9 +141,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
 							&& (train.isLocalSwitcher() || _track == null || ((rl.getTrainDirection() & _track
 									.getTrainDirections()) > 0))
 							&& (_track == null || _track.acceptsPickupTrain(train)))
-						addItem(pTrains, new JLabel(Bundle.getMessage("OkayPickUp")), 1, y);
-					else
-						addItem(pTrains, new JLabel(Bundle.getMessage("NoPickUp")), 1, y);
+						pickup = true;
 					if (rl.isDropAllowed()
 							&& rl.getMaxCarMoves() > 0
 							&& !train.skipsLocation(rl.getId())
@@ -138,15 +150,32 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
 							&& (train.isLocalSwitcher() || (rl.getTrainDirection() & _location.getTrainDirections()) > 0)
 							&& (train.isLocalSwitcher() || _track == null || ((rl.getTrainDirection() & _track
 									.getTrainDirections()) > 0)) && (_track == null || _track.acceptsDropTrain(train)))
-						addItem(pTrains, new JLabel(Bundle.getMessage("OkaySetOut")), 2, y);
-					else
-						addItem(pTrains, new JLabel(Bundle.getMessage("NoSetOut")), 2, y);
+						setout = true;						
+					// now display results
+					if (showAllTrainsCheckBox.isSelected() || pickup || setout) {
+						addItemLeft(pTrains, new JLabel(train.getName()), 0, y);
+						if (pickup)
+							addItem(pTrains, new JLabel(Bundle.getMessage("OkayPickUp")), 1, y);
+						else
+							addItem(pTrains, new JLabel(Bundle.getMessage("NoPickUp")), 1, y);
+						if (setout)
+							addItem(pTrains, new JLabel(Bundle.getMessage("OkaySetOut")), 2, y);
+						else
+							addItem(pTrains, new JLabel(Bundle.getMessage("NoSetOut")), 2, y);
+					}
 					y++;
 				}
 			}
 		}
 		pTrains.repaint();
 		pTrains.revalidate();
+	}
+	
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
+		log.debug("check box action");
+		isShowAllTrains = showAllTrainsCheckBox.isSelected();
+		updateTrainPane();
 	}
 
 	private String comboBoxSelect;
