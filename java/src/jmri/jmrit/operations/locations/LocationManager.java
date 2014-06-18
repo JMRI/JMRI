@@ -4,8 +4,8 @@ package jmri.jmrit.operations.locations;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.Enumeration;
 
+import java.util.Enumeration;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -17,6 +17,7 @@ import org.jdom.Element;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
+import jmri.jmrit.operations.trains.TrainCommon;
 
 /**
  * Manages locations.
@@ -333,23 +334,27 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 		if (_maxLocationNameLength != 0) // only do this once
 			return;
 		String maxTrackName = "";
+		String maxLocNameForTrack = "";
 		String maxLocationName = "";
 		String maxLocationAndTrackName = "";
 		for (Track track : getTracks(null)) {
-			if (track.getName().length() > _maxTrackNameLength) {
+			if (TrainCommon.splitString(track.getName()).length() > _maxTrackNameLength) {
 				maxTrackName = track.getName();
-				_maxTrackNameLength = track.getName().length();
+				maxLocNameForTrack = track.getLocation().getName();
+				_maxTrackNameLength = TrainCommon.splitString(track.getName()).length();
 			}
-			if (track.getLocation().getName().length() > _maxLocationNameLength) {
+			if (TrainCommon.splitString(track.getLocation().getName()).length() > _maxLocationNameLength) {
 				maxLocationName = track.getLocation().getName();
-				_maxLocationNameLength = track.getLocation().getName().length();
+				_maxLocationNameLength = TrainCommon.splitString(track.getLocation().getName()).length();
 			}
-			if (track.getLocation().getName().length() + track.getName().length() > _maxLocationAndTrackNameLength) {
+			if (TrainCommon.splitString(track.getLocation().getName()).length()
+					+ TrainCommon.splitString(track.getName()).length() > _maxLocationAndTrackNameLength) {
 				maxLocationAndTrackName = track.getLocation().getName() + ", " + track.getName();
-				_maxLocationAndTrackNameLength = track.getLocation().getName().length() + track.getName().length();
+				_maxLocationAndTrackNameLength = TrainCommon.splitString(track.getLocation().getName()).length()
+						+ TrainCommon.splitString(track.getName()).length();
 			}
 		}
-		log.info("Max track name ({}) length {}", maxTrackName, _maxTrackNameLength);
+		log.info("Max track name ({}) at ({}) length {}", maxTrackName, maxLocNameForTrack, _maxTrackNameLength);
 		log.info("Max location name ({}) length {}", maxLocationName, _maxLocationNameLength);
 		log.info("Max location and track name ({}) length {}", maxLocationAndTrackName, _maxLocationAndTrackNameLength);
 	}
