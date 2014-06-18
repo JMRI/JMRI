@@ -781,6 +781,9 @@ public class FileUtil {
      * @param path the scriptsPath to set
      */
     public static void setScriptsPath(String path) {
+        if (!path.endsWith(File.separator)) {
+            path = path + File.separator;
+        }
         scriptsPath = path;
     }
 
