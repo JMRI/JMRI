@@ -3,6 +3,7 @@ package jmri.jmrix;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.Socket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +50,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
             socketConn = new Socket(getHostAddress(), m_port);
             socketConn.setKeepAlive(true);
             opened = true;
-        } catch (Exception e) {
+        } catch (IOException e) {
             log.error("error opening network connection: " + e);
             if (m_port != 0) {
                 ConnectionStatus.instance().setConnectionState(
@@ -72,6 +73,8 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     /**
      * Query the status of this connection. If all OK, at least as far as is
      * known, return true
+     *
+     * @return true if connection is open
      */
     @Override
     public boolean status() {
@@ -118,7 +121,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     }
 
     /**
-     * Remeber the associated port number
+     * Remember the associated port number
      *
      * @param p
      *
@@ -274,7 +277,6 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
 
     @Override
     public void dispose() {
-        return;
     }
 
     //private boolean allowConnectionRecovery = false;
@@ -292,7 +294,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
         opened = false;
         try {
             socketConn.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
         }
         reconnect();
     }
