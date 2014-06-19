@@ -751,7 +751,7 @@ abstract public class AbstractMRTrafficController {
         recovery();
     }
 
-    private void recovery() {
+    protected final void recovery() {
         AbstractPortController adapter = controller;
         disconnectPort(controller);
         adapter.recover();
