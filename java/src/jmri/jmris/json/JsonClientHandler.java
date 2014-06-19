@@ -133,7 +133,7 @@ public class JsonClientHandler {
      * </li><li>a heartbeat in the form <code>{"type":"ping"}</code>. The
      * heartbeat gets a <code>{"type":"pong"}</code> response.</li> <li>a sign
      * off in the form: <code>{"type":"goodbye"}</code> to which an identical
-     * response is sent before the connection gets closed.</li>
+     * response is sent before the connection gets closed.</li></ul>
      *
      * @param string
      * @throws IOException
