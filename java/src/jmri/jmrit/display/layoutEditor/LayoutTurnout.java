@@ -684,6 +684,37 @@ public class LayoutTurnout
     
     public void setDisableWhenOccupied(boolean state) {disableWhenOccupied = state;}
 	public boolean isDisabledWhenOccupied() {return disableWhenOccupied;}
+    
+    public Object getConnection(int location) throws jmri.JmriException {
+        switch (location) {
+            case LayoutEditor.TURNOUT_A: return connectA;
+            case LayoutEditor.TURNOUT_B: return connectB;
+            case LayoutEditor.TURNOUT_C: return connectC;
+            case LayoutEditor.TURNOUT_D: return connectD;
+        }
+        log.error("Invalid Point Type " + location); //I18IN
+        throw new jmri.JmriException("Invalid Point");
+    }
+    
+    public void setConnection(int location, Object o, int type) throws jmri.JmriException {
+        if ( (type!=LayoutEditor.TRACK) && (type!=LayoutEditor.NONE) ) {
+			log.error("unexpected type of connection to layoutturnout - "+type);
+            throw new jmri.JmriException("unexpected type of connection to layoutturnout - "+type);
+		}
+        switch (location) {
+            case LayoutEditor.TURNOUT_A: connectA = o;
+                                         break;
+            case LayoutEditor.TURNOUT_B: connectB = o;
+                                        break;
+            case LayoutEditor.TURNOUT_C: connectC=o;
+                                        break;
+            case LayoutEditor.TURNOUT_D: connectD=o;
+                                        break;
+            default : log.error("Invalid Point Type " + location); //I18IN
+                throw new jmri.JmriException("Invalid Point");
+        }
+    }
+    
 	public void setConnectA(Object o,int type) {
 		connectA = o;
 		if ( (type!=LayoutEditor.TRACK) && (type!=LayoutEditor.NONE) ) {

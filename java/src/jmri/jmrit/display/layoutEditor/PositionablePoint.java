@@ -417,9 +417,9 @@ public class PositionablePoint
 	/**
 	 * Setup and remove connections to track
 	 */
-	public void setTrackConnection (TrackSegment track) {
+	public boolean setTrackConnection (TrackSegment track) {
 		if (track==null) {
-			return;
+			return false;
 		}
 		if ( (connect1!=track) && (connect2!=track) ) {
 			// not connected to this track
@@ -437,8 +437,10 @@ public class PositionablePoint
 			}
 			else {
 				log.error ("Attempt to assign more than allowed number of connections");
+                return false;
 			}
 		}
+        return true;
 	}
     
 	public void removeTrackConnection (TrackSegment track) {

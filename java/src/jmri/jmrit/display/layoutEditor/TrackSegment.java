@@ -123,6 +123,15 @@ public class TrackSegment
 	public int getType2() {return type2;}
 	public Object getConnect1() {return connect1;}
 	public Object getConnect2() {return connect2;}
+    protected void setNewConnect1(Object o, int type){
+        connect1 = o;
+        type1 = type;
+		
+    }
+    protected void setNewConnect2(Object o, int type){
+        connect2 = o;
+        type2 = type;
+    }
 	public boolean getDashed() {return dashed;}
 	public void setDashed(boolean dash) {dashed = dash;} 
 	public boolean getHidden() {return hidden;}

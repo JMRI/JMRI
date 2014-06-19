@@ -2915,27 +2915,33 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 
         return;
     }
+    
+    	private boolean checkSelect(Point2D loc, boolean requireUnconnected) {
+            return checkSelect(loc, requireUnconnected, null);
+        }
 	
-	private boolean checkSelect(Point2D loc, boolean requireUnconnected) {
+	private boolean checkSelect(Point2D loc, boolean requireUnconnected, Object avoid) {
 		// check positionable points, if any
 		for (int i = 0; i<pointList.size();i++) {
 			PositionablePoint p = pointList.get(i);
-			if ( (p!=selectedObject) && !requireUnconnected || 
-					(p.getConnect1()==null) || 
-					((p.getType()==PositionablePoint.ANCHOR) && 
-												(p.getConnect2()==null)) ) {
-				Point2D pt = p.getCoords();
-				Rectangle2D r = new Rectangle2D.Double(
-							pt.getX() - SIZE,pt.getY() - SIZE,SIZE2,SIZE2);
-				if (r.contains(loc)) {
-					// mouse was pressed on this connection point
-					foundLocation = pt;
-					foundObject = p;
-					foundPointType = POS_POINT;
-					foundNeedsConnect = ((p.getConnect1()==null)||(p.getConnect2()==null));
-					return true;
-				}
-			}
+            if(p!=avoid){
+                if ( (p!=selectedObject) && !requireUnconnected || 
+                        (p.getConnect1()==null) || 
+                        ((p.getType()==PositionablePoint.ANCHOR) && 
+                                                    (p.getConnect2()==null)) ) {
+                    Point2D pt = p.getCoords();
+                    Rectangle2D r = new Rectangle2D.Double(
+                                pt.getX() - SIZE,pt.getY() - SIZE,SIZE2,SIZE2);
+                    if (r.contains(loc)) {
+                        // mouse was pressed on this connection point
+                        foundLocation = pt;
+                        foundObject = p;
+                        foundPointType = POS_POINT;
+                        foundNeedsConnect = ((p.getConnect1()==null)||(p.getConnect2()==null));
+                        return true;
+                    }
+                }
+            }
 		}
 		// check turnouts, if any
 		for (int i = 0; i<turnoutList.size();i++) {
@@ -3581,7 +3587,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 						(!event.isShiftDown()) && (!event.isControlDown()) && isDragging ) {
                     // controlling layout, in edit mode
                     checkPointsOfTurnout((LayoutTurnout) selectedObject);
-			}
+			} else if (selectedObject!=null && selectedPointType==POS_POINT && 
+					allControlling() && (event.isMetaDown()) && (!event.isAltDown()) && 
+						(!event.isShiftDown()) && (!event.isControlDown()) && isDragging ){
+                    PositionablePoint p = (PositionablePoint) selectedObject;
+                    if(p.getConnect1()==null || p.getConnect2()==null){
+                        checkPointOfPositionable(p);
+                    }
+            }
 			if ( (trackBox.isSelected()) && (beginObject!=null) && (foundObject!=null) ) {
 				// user let up shift key before releasing the mouse when creating a track segment
 				setCursor(Cursor.getDefaultCursor());
@@ -3936,6 +3949,121 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         return;
 	}
 
+    private void checkPointOfPositionable(PositionablePoint p){
+        TrackSegment t = p.getConnect1();
+        if(t==null)
+            t=p.getConnect2();
+        //Nothing connected to this bit of track so ignore
+        if(t==null){
+            return;
+        }
+        beginObject = p;
+        beginPointType = POS_POINT;
+        Point2D loc = p.getCoords();
+        
+        if (checkSelect(loc, true, p)) {
+            switch (foundPointType) {
+                case POS_POINT: PositionablePoint p2 = (PositionablePoint)foundObject;
+                                if(p2.getType()==PositionablePoint.ANCHOR && p2.setTrackConnection(t)){
+                                    if(t.getConnect1()==p){
+                                        t.setNewConnect1(p2, POS_POINT);
+                                    } else {
+                                        t.setNewConnect2(p2, POS_POINT);
+                                    }
+                                    p.removeTrackConnection(t);
+                                    if(p.getConnect1()==null && p.getConnect2()==null){
+                                        removePositionablePoint(p);
+                                    }
+                                }
+                                break;
+                case TURNOUT_A: 
+                case TURNOUT_B: 
+                case TURNOUT_C: 
+                case TURNOUT_D: LayoutTurnout lt = (LayoutTurnout)foundObject;
+                                try {
+                                    if(lt.getConnection(foundPointType)==null){
+                                        lt.setConnection(foundPointType, t, TRACK);
+                                        if(t.getConnect1()==p)
+                                            t.setNewConnect1(lt, foundPointType);
+                                        else
+                                            t.setNewConnect2(lt, foundPointType);
+                                        p.removeTrackConnection(t);
+                                        if(p.getConnect1()==null && p.getConnect2()==null){
+                                            removePositionablePoint(p);
+                                        }
+                                    }
+                                } catch (jmri.JmriException e){
+                                    log.debug("Unable to set location");
+                                }
+                                break;
+            case LEVEL_XING_A:
+            case LEVEL_XING_B: 
+            case LEVEL_XING_C: 
+            case LEVEL_XING_D:  LevelXing lx = (LevelXing)foundObject;
+                                try {
+                                    if(lx.getConnection(foundPointType)==null){
+                                        lx.setConnection(foundPointType, t, TRACK);
+                                        if(t.getConnect1()==p)
+                                            t.setNewConnect1(lx, foundPointType);
+                                        else
+                                            t.setNewConnect2(lx, foundPointType);
+                                        p.removeTrackConnection(t);
+                                        if(p.getConnect1()==null && p.getConnect2()==null){
+                                            removePositionablePoint(p);
+                                        }
+                                    }
+                                } catch (jmri.JmriException e){
+                                    log.debug("Unable to set location");
+                                }
+                                break;
+            case SLIP_A:
+            case SLIP_B:
+            case SLIP_C:
+            case SLIP_D: LayoutSlip ls = (LayoutSlip)foundObject;
+                        try {
+                            if(ls.getConnection(foundPointType)==null){
+                                ls.setConnection(foundPointType, t, TRACK);
+                                if(t.getConnect1()==p)
+                                    t.setNewConnect1(ls, foundPointType);
+                                else
+                                    t.setNewConnect2(ls, foundPointType);
+                                p.removeTrackConnection(t);
+                                if(p.getConnect1()==null && p.getConnect2()==null){
+                                    removePositionablePoint(p);
+                                }
+                            }
+                        } catch (jmri.JmriException e){
+                            log.debug("Unable to set location");
+                        }
+                        break;
+            default:
+                    if (foundPointType>=TURNTABLE_RAY_OFFSET) {
+                        LayoutTurntable tt = (LayoutTurntable)foundObject;
+                        int ray = foundPointType-TURNTABLE_RAY_OFFSET;
+                        if(tt.getRayConnectIndexed(ray)==null){
+                            tt.setRayConnect(t, ray);
+                            if(t.getConnect1()==p)
+                                t.setNewConnect1(tt, foundPointType);
+                            else
+                                t.setNewConnect2(tt, foundPointType);
+                            p.removeTrackConnection(t);
+                            if(p.getConnect1()==null && p.getConnect2()==null){
+                                removePositionablePoint(p);
+                            }
+                        }
+                    } else {
+                        log.debug("No valid point, so will quit");
+                        return;
+                    }
+            }
+            repaint();
+            if(t.getLayoutBlock()!=null)
+                auxTools.setBlockConnectivityChanged();
+        }
+        beginObject = null;
+        foundObject = null;
+    }
+    
     private void checkPointsOfTurnout(LayoutTurnout lt){
         beginObject = lt;
         if(lt.getConnectA()==null){
@@ -3965,14 +4093,40 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     
     private void checkPointsOfTurnoutSub(Point2D dLoc){
         if (checkSelect(dLoc, true)) {
-            LayoutTurnout ft = (LayoutTurnout)foundObject;
             switch (foundPointType) {
-                case POS_POINT:
-                    break;
+                case POS_POINT: PositionablePoint p2 = (PositionablePoint)foundObject;
+                                if((p2.getConnect1()==null && p2.getConnect2()!=null) ||
+                                         (p2.getConnect1()!=null && p2.getConnect2()==null) ){
+                                    TrackSegment t = p2.getConnect1();
+                                    if(t==null)
+                                        t = p2.getConnect2();
+                                    if(t==null) return;
+                                    LayoutTurnout lt = (LayoutTurnout) beginObject;
+                                    try {
+                                        if(lt.getConnection(beginPointType)==null){
+                                            lt.setConnection(beginPointType, t, TRACK);
+                                            p2.removeTrackConnection(t);
+                                            if(t.getConnect1()==null)
+                                                t.setNewConnect1(lt, beginPointType);
+                                            else
+                                                t.setNewConnect2(lt, beginPointType);
+                                            
+                                            removePositionablePoint(p2);
+                                            
+                                            
+                                        }
+                                        if(t.getLayoutBlock()!=null)
+                                            auxTools.setBlockConnectivityChanged();
+                                    } catch (jmri.JmriException e){
+                                        log.debug("Unable to set location");
+                                    }
+                                }
+                                break;
                 case TURNOUT_A:
                 case TURNOUT_B:
                 case TURNOUT_C:
                 case TURNOUT_D:
+                    LayoutTurnout ft = (LayoutTurnout)foundObject;
                     addTrackSegment();
                     if(ft.getTurnoutType()==LayoutTurnout.RH_TURNOUT || ft.getTurnoutType()==LayoutTurnout.LH_TURNOUT){
                         rotateTurnout(ft);
@@ -5310,7 +5464,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
      * Add an Anchor point. 
      */
     public void addAnchor() {
-		numAnchors ++;
+        addAnchor(currentPoint);
+	}
+    
+    private PositionablePoint addAnchor(Point2D p){
+    	numAnchors ++;
 		// get unique name
 		String name = "";
 		boolean duplicate = true;
@@ -5321,12 +5479,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		}
 		// create object
 		PositionablePoint o = new PositionablePoint(name, 
-							PositionablePoint.ANCHOR, currentPoint, this);
+							PositionablePoint.ANCHOR, p, this);
 		//if (o!=null) {
 		pointList.add(o);
 		setDirty(true);
 		//}
-	}
+        return o;
+    }
 
     /**
      * Add an End Bumper point. 
@@ -5941,28 +6100,30 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
      * Remove a PositionablePoint -- an Anchor or an End Bumper. 
      */
 	protected boolean removePositionablePoint(PositionablePoint o) {
-		// First verify with the user that this is really wanted
-		if (!noWarnPositionablePoint) {
-			int selectedValue = JOptionPane.showOptionDialog(this,
-					rb.getString("Question2"),rb.getString("WarningTitle"),
-					JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,
-					new Object[]{rb.getString("ButtonYes"),rb.getString("ButtonNo"),
-					rb.getString("ButtonYesPlus")},rb.getString("ButtonNo"));
-			if (selectedValue == 1) return(false);   // return without creating if "No" response
-			if (selectedValue == 2) {
-				// Suppress future warnings, and continue
-				noWarnPositionablePoint = true;
-			}
-		}
-		// remove from selection information
-		if (selectedObject==o) selectedObject = null;
-		if (prevSelectedObject==o) prevSelectedObject = null;
-		// remove connections if any
-		TrackSegment t = o.getConnect1();
-		if (t!=null) removeTrackSegment(t);
-		t = o.getConnect2();
-		if (t!=null) removeTrackSegment(t);
-		// delete from array
+		// First verify with the user that this is really wanted, only show message if there is a bit of track connected
+        if(o.getConnect1()!=null || o.getConnect2()!=null){
+            if (!noWarnPositionablePoint) {
+                int selectedValue = JOptionPane.showOptionDialog(this,
+                        rb.getString("Question2"),rb.getString("WarningTitle"),
+                        JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,
+                        new Object[]{rb.getString("ButtonYes"),rb.getString("ButtonNo"),
+                        rb.getString("ButtonYesPlus")},rb.getString("ButtonNo"));
+                if (selectedValue == 1) return(false);   // return without creating if "No" response
+                if (selectedValue == 2) {
+                    // Suppress future warnings, and continue
+                    noWarnPositionablePoint = true;
+                }
+            }
+            // remove from selection information
+            if (selectedObject==o) selectedObject = null;
+            if (prevSelectedObject==o) prevSelectedObject = null;
+            // remove connections if any
+            TrackSegment t = o.getConnect1();
+            if (t!=null) removeTrackSegment(t);
+            t = o.getConnect2();
+            if (t!=null) removeTrackSegment(t);
+            // delete from array
+        }
 		for (int i = 0; i<pointList.size();i++) {
 			PositionablePoint p = pointList.get(i);
 			if (p==o) {
@@ -5985,7 +6146,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		// First verify with the user that this is really wanted
 		if (!noWarnLayoutTurnout) {
 			int selectedValue = JOptionPane.showOptionDialog(this,
-					rb.getString("Question1"),rb.getString("WarningTitle"),
+					rb.getString("Question1r"),rb.getString("WarningTitle"),
 					JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,
 					new Object[]{rb.getString("ButtonYes"),rb.getString("ButtonNo"),
 					rb.getString("ButtonYesPlus")},rb.getString("ButtonNo"));
@@ -6000,13 +6161,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		if (prevSelectedObject==o) prevSelectedObject = null;
 		// remove connections if any
 		TrackSegment t = (TrackSegment)o.getConnectA();
-		if (t!=null) removeTrackSegment(t);
+		if (t!=null) substituteAnchor(o.getCoordsA(), o, t);
 		t = (TrackSegment)o.getConnectB();
-		if (t!=null) removeTrackSegment(t);
+		if (t!=null) substituteAnchor(o.getCoordsB(), o, t);
 		t = (TrackSegment)o.getConnectC();
-		if (t!=null) removeTrackSegment(t);
+		if (t!=null) substituteAnchor(o.getCoordsC(), o, t);
 		t = (TrackSegment)o.getConnectD();
-		if (t!=null) removeTrackSegment(t);
+		if (t!=null) substituteAnchor(o.getCoordsD(), o, t);
 		// decrement Block use count(s)
 		LayoutBlock b = o.getLayoutBlock();
 		if (b!=null) b.decrementUse();
@@ -6034,6 +6195,17 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		}
 		return(false);	
 	}
+    
+    private void substituteAnchor(Point2D loc, Object o, TrackSegment t){
+        PositionablePoint p = addAnchor(loc);
+        if(t.getConnect1()==o){
+            t.setNewConnect1(p, POS_POINT);
+        }
+        if(t.getConnect2()==o) {
+            t.setNewConnect2(p, POS_POINT);
+        }
+        p.setTrackConnection(t);
+    }
 	
 	boolean noWarnLevelXing = false;
 	
@@ -6044,7 +6216,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		// First verify with the user that this is really wanted
 		if (!noWarnLevelXing) {
 			int selectedValue = JOptionPane.showOptionDialog(this,
-					rb.getString("Question3"),rb.getString("WarningTitle"),
+					rb.getString("Question3r"),rb.getString("WarningTitle"),
 					JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,
 					new Object[]{rb.getString("ButtonYes"),rb.getString("ButtonNo"),
 					rb.getString("ButtonYesPlus")},rb.getString("ButtonNo"));
@@ -6059,13 +6231,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		if (prevSelectedObject==o) prevSelectedObject = null;
 		// remove connections if any
 		TrackSegment t = (TrackSegment)o.getConnectA();
-		if (t!=null) removeTrackSegment(t);
+		if (t!=null) substituteAnchor(o.getCoordsA(), o, t);
 		t = (TrackSegment)o.getConnectB();
-		if (t!=null) removeTrackSegment(t);
+		if (t!=null) substituteAnchor(o.getCoordsB(), o, t);
 		t = (TrackSegment)o.getConnectC();
-		if (t!=null) removeTrackSegment(t);
+		if (t!=null) substituteAnchor(o.getCoordsC(), o, t);
 		t = (TrackSegment)o.getConnectD();
-		if (t!=null) removeTrackSegment(t);
+		if (t!=null) substituteAnchor(o.getCoordsD(), o, t);
 		// decrement block use count if any blocks in use
 		LayoutBlock lb = o.getLayoutBlockAC();
 		if (lb != null) lb.decrementUse();
@@ -6095,7 +6267,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		// First verify with the user that this is really wanted
 		if (!noWarnSlip) {
 			int selectedValue = JOptionPane.showOptionDialog(this,
-					rb.getString("Question5"),rb.getString("WarningTitle"),
+					rb.getString("Question5r"),rb.getString("WarningTitle"),
 					JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,
 					new Object[]{rb.getString("ButtonYes"),rb.getString("ButtonNo"),
 					rb.getString("ButtonYesPlus")},rb.getString("ButtonNo"));
@@ -6110,13 +6282,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		if (prevSelectedObject==o) prevSelectedObject = null;
 		// remove connections if any
 		TrackSegment t = (TrackSegment)o.getConnectA();
-		if (t!=null) removeTrackSegment(t);
+		if (t!=null) substituteAnchor(o.getCoordsA(), o, t);
 		t = (TrackSegment)o.getConnectB();
-		if (t!=null) removeTrackSegment(t);
+		if (t!=null) substituteAnchor(o.getCoordsB(), o, t);
 		t = (TrackSegment)o.getConnectC();
-		if (t!=null) removeTrackSegment(t);
+		if (t!=null) substituteAnchor(o.getCoordsC(), o, t);
 		t = (TrackSegment)o.getConnectD();
-		if (t!=null) removeTrackSegment(t);
+		if (t!=null) substituteAnchor(o.getCoordsD(), o, t);
 		// decrement block use count if any blocks in use
 		LayoutBlock lb = o.getLayoutBlock();
 		if (lb != null) lb.decrementUse();
@@ -6145,7 +6317,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		// First verify with the user that this is really wanted
 		if (!noWarnTurntable) {
 			int selectedValue = JOptionPane.showOptionDialog(this,
-					rb.getString("Question4"),rb.getString("WarningTitle"),
+					rb.getString("Question4r"),rb.getString("WarningTitle"),
 					JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,
 					new Object[]{rb.getString("ButtonYes"),rb.getString("ButtonNo"),
 					rb.getString("ButtonYesPlus")},rb.getString("ButtonNo"));
@@ -6161,7 +6333,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		// remove connections if any
 		for (int j = 0; j<o.getNumberRays();j++) {
 			TrackSegment t = o.getRayConnectOrdered(j);
-			if (t!=null) removeTrackSegment(t);
+			if (t!=null) substituteAnchor(o.getRayCoordsIndexed(j), o, t);
 		}
 		// delete from array
 		for (int i = 0; i<turntableList.size();i++) {
@@ -6281,7 +6453,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 			default:
 				if (type>=TURNTABLE_RAY_OFFSET) {
 					((LayoutTurntable)o).setRayConnect(null,type-TURNTABLE_RAY_OFFSET);
-				}					
+				}
 		}
 	}
 	
@@ -8419,7 +8591,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		for (int i = 0; i<trackList.size();i++) {
             setTrackStrokeWidth(g2, isMainline);
 			TrackSegment t = trackList.get(i);
-            //log.info("" + t.getID());
 			if ( (!t.getHidden()) && (!t.getDashed()) && (isMainline == t.getMainline()) ) {
 				LayoutBlock b = t.getLayoutBlock();
 				if (b!=null) g2.setColor(b.getBlockColor());
@@ -8430,9 +8601,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                     g2.draw(new Arc2D.Double(t.getCX(), t.getCY(), t.getCW(), t.getCH(), t.getStartadj(), t.getTmpAngle(), Arc2D.OPEN));
                 } else {
                     Point2D end1 = getCoords(t.getConnect1(),t.getType1());
-                    //log.info("" + end1);
                     Point2D end2 = getCoords(t.getConnect2(),t.getType2());
-                    //log.info("" + end2);
                     g2.draw(new Line2D.Double(end1, end2 ));
                 }
                 t.trackRedrawn();
