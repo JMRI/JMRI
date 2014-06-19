@@ -2,220 +2,484 @@
 
 package jmri.jmrix.mrc;
 
+import java.util.ResourceBundle;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Encodes a message to an EasyDCC command station.  The MrcReply
- * class handles the response from the command station.
- * <P>
- * The {@link MrcReply}
- * class handles the response from the command station.
- *
+ * Encodes and decoders messages to an MRC command station.
+ * <p>
+ * Some of the message formats used in this class are Copyright MRC, Inc.
+ * and used with permission as part of the JMRI project.  That permission
+ * does not extend to uses in other software products.  If you wish to
+ * use this code, algorithm or these message formats outside of JMRI, please
+ * contact MRC Inc for separate permission.
+ * <p>
  * @author			Bob Jacobsen  Copyright (C) 2001, 2004
+ * @author      Kevin Dickerson    Copyright (C) 2014
+ * @author		kcameron Copyright (C) 2014
  * @version			$Revision$
  */
-public class MrcMessage extends jmri.jmrix.AbstractMRMessage {
+public class MrcMessage {
 
-    public MrcMessage() {
-        super();
-    }
+    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.mrc.MrcMessageBundle");
 
     // create a new one
-    public  MrcMessage(int i) {
-        super(i);
+    public  MrcMessage(int len) {
+        if (len<1)
+            log.error(rb.getString("LogMrcMessageLengthError"), len);
+        _nDataChars = len;
+        _dataChars = new int[len];
     }
 
     // copy one
-    public  MrcMessage(MrcMessage m) {
-        super(m);
+    public MrcMessage(MrcMessage original) {
+        this(original._dataChars);
+    }
+    
+    public MrcMessage(int[] contents) {
+        this(contents.length);
+        for (int i=0; i<contents.length; i++) this.setElement(i, contents[i]);
     }
 
-    // from String
-    public  MrcMessage(String m) {
-        super(m);
+    public MrcMessage(byte[] contents) {
+        this(contents.length);
+        for (int i=0; i<contents.length; i++) this.setElement(i, contents[i]&0xFF);
     }
-
-    // diagnose format
-    public boolean isKillMain() {
-        return getOpCode() == 'K';
+    
+    MrcTrafficListener source = null;
+    
+    public void setSource(MrcTrafficListener s){
+        source = s;
     }
-
-    public boolean isEnableMain() {
-        return getOpCode() == 'E';
+    
+    public MrcTrafficListener getSource(){
+        return source;
     }
-
-
-    // static methods to return a formatted message
-    static public MrcMessage getEnableMain() {
-        MrcMessage m = new MrcMessage(1);
-        m.setBinary(false);
-        m.setOpCode('E');
+    
+    int msgClass = ~0;
+    
+    void setMessageClass(int i){
+        msgClass = i;
+    }
+    
+    public int getMessageClass(){
+        return msgClass;
+    }
+    
+    public void replyNotExpected(){
+        replyExpected=false;
+    }
+    
+    boolean replyExpected =true;
+    
+    public boolean isReplyExpected(){
+        return replyExpected;
+    }
+    
+    int SHORT_TIMEOUT = 150;
+    int SHORT_PROG_TIMEOUT = 4000;
+    
+    int timeout = SHORT_TIMEOUT;
+    
+    void setTimeout(int i) { timeout = i; }
+    public int getTimeout() { return timeout; }
+    
+    int retries = 3;
+    public int getRetries() { return retries; }
+    public void setRetries(int i) { retries=i; }
+    
+    boolean inError = false;
+    
+    public void setMessageInError(){
+        inError = true;
+    }
+    
+    public boolean isPacketInError(){return inError;}
+    
+    int putHeader(int[] insert){
+        int i = 0;
+        for (i=0; i<insert.length; i++) {
+            this.setElement(i, insert[i]);
+        }
+        return i;
+    }
+    
+    public String toString(){
+        return MrcPackets.toString(this);
+    }
+    
+    static public MrcMessage getSendSpeed128(int addressLo, int addressHi, int speed){
+        MrcMessage m = new MrcMessage(MrcPackets.getThrottlePacketLength());
+        m.setMessageClass(MrcInterface.THROTTLEINFO);
+        int i = m.putHeader(MrcPackets.THROTTLEPACKETHEADER);
+        
+        m.setElement(i++,addressHi);
+        m.setElement(i++, 0x00);
+        m.setElement(i++,addressLo);
+        m.setElement(i++,0x00);
+        m.setElement(i++,speed);
+        m.setElement(i++,0x00);
+        m.setElement(i++,0x02);
+        m.setElement(i++,0x00);
+        m.setElement(i++,getCheckSum(addressHi, addressLo, speed, 0x02));
+        m.setElement(i++,0x00);
+    //    m.setTimeout(100);
         return m;
     }
-
-    static public MrcMessage getKillMain() {
-        MrcMessage m = new MrcMessage(1);
-        m.setBinary(false);
-        m.setOpCode('K');
+    
+    static public MrcMessage getSendSpeed28(int addressLo, int addressHi, int speed, boolean fwd){
+        MrcMessage m = new MrcMessage(MrcPackets.getThrottlePacketLength());
+        m.setMessageClass(MrcInterface.THROTTLEINFO);
+        int i = m.putHeader(MrcPackets.THROTTLEPACKETHEADER);
+        
+        int speedC = (speed&0x1E) >> 1;
+        int c = (speed&0x01) << 4;
+        speedC = speedC + c;
+        speedC = (fwd ? 0x60 : 0x40)| speedC;
+        
+        m.setElement(i++,addressHi);
+        m.setElement(i++, 0x00);
+        m.setElement(i++,addressLo);
+        m.setElement(i++,0x00);
+        m.setElement(i++,speedC);
+        m.setElement(i++,0x00);
+        m.setElement(i++,0x00);
+        m.setElement(i++,0x00);
+        m.setElement(i++,getCheckSum(addressHi, addressLo, speedC, 0x00));
+        m.setElement(i++,0x00);
+    //    m.setTimeout(100);
         return m;
     }
+    
+    static public MrcMessage getSendFunction(int group, int addressLo, int addressHi, int data){
+        MrcMessage m = new MrcMessage(MrcPackets.getFunctionPacketLength());
+        m.setMessageClass(MrcInterface.THROTTLEINFO);
+        m.replyNotExpected();
+        int i= 0;
+        switch(group){
+            case 1: i = m.putHeader(MrcPackets.FUNCTIONGROUP1PACKETHEADER);
+                    break;
+            case 2: i = m.putHeader(MrcPackets.FUNCTIONGROUP2PACKETHEADER);
+                    break;
+            case 3: i = m.putHeader(MrcPackets.FUNCTIONGROUP3PACKETHEADER);
+                    break;
+            case 4: i= m.putHeader(MrcPackets.FUNCTIONGROUP4PACKETHEADER);
+                    break;
+            case 5: i = m.putHeader(MrcPackets.FUNCTIONGROUP5PACKETHEADER);
+                    break;
+            case 6: i = m.putHeader(MrcPackets.FUNCTIONGROUP6PACKETHEADER);
+                    break;
+            default: log.error(rb.getString("LogMrcMessageInvalidFunctionGroupError"), group);
+                    return null;
+        }
 
-    /* 
-     * get a static message to add a locomotive to a Standard Consist 
-     * in the normal direction
-     * @param ConsistAddress - a consist address in the range 1-255
-     * @param LocoAddress - a jmri.DccLocoAddress object representing the 
-     * locomotive to add
-     * @return an MrcMessage of the form GN cc llll 
-     */
-    static public MrcMessage getAddConsistNormal(int ConsistAddress,jmri.DccLocoAddress LocoAddress) {
-        MrcMessage m = new MrcMessage(10);
-        m.setBinary(false);
-        m.setOpCode('G');
-        m.setElement(1,'N');
-        m.setElement(2,' ');
-        m.addIntAsTwoHex(ConsistAddress, 3);
-        m.setElement(5,' ');
-        m.addIntAsFourHex(LocoAddress.getNumber(), 6);
+        m.setElement(i++,addressHi);
+        m.setElement(i++, 0x00);
+        m.setElement(i++,addressLo);
+        m.setElement(i++,0x00);
+        m.setElement(i++,data);
+        m.setElement(i++,0x00);
+        m.setElement(i++,getCheckSum(addressHi, addressLo, data, 0x00));
+        m.setElement(i++,0x00);
+    //    m.setTimeout(100);
         return m;
     }
-
-    /* 
-     * get a static message to add a locomotive to a standard consist in 
-     * the reverse direction
-     * @param ConsistAddress - a consist address in the range 1-255
-     * @param LocoAddress - a jmri.DccLocoAddress object representing the 
-     * locomotive to add
-     * @return an MrcMessage of the form GS cc llll 
-     */
-    static public MrcMessage getAddConsistReverse(int ConsistAddress,jmri.DccLocoAddress LocoAddress) {
-        MrcMessage m = new MrcMessage(10);
-        m.setBinary(false);
-        m.setOpCode('G');
-        m.setElement(1,'R');
-        m.setElement(2,' ');
-        m.addIntAsTwoHex(ConsistAddress, 3);
-        m.setElement(5,' ');
-        m.addIntAsFourHex(LocoAddress.getNumber(), 6);
-        return m;
+    
+    static int getCheckSum(int addressHi, int addressLo, int data1, int data2){
+        int address = addressHi^addressLo;
+        int data = data1^data2;
+        return (address^data);
     }
-
-    /* 
-     * get a static message to subtract a locomotive from a Standard Consist
-     * @param ConsistAddress - a consist address in the range 1-255
-     * @param LocoAddress - a jmri.DccLocoAddress object representing the 
-     * locomotive to remove
-     * @return an MrcMessage of the form GS cc llll 
-     */
-    static public MrcMessage getSubtractConsist(int ConsistAddress,jmri.DccLocoAddress LocoAddress) {
-        MrcMessage m = new MrcMessage(10);
-        m.setBinary(false);
-        m.setOpCode('G');
-        m.setElement(1,'S');
-        m.setElement(2,' ');
-        m.addIntAsTwoHex(ConsistAddress, 3);
-        m.setElement(5,' ');
-        m.addIntAsFourHex(LocoAddress.getNumber(), 6);
-        return m;
-    }
-
-    /* 
-     * get a static message to delete a standard consist
-     * @param ConsistAddress - a consist address in the range 1-255
-     * @return an MrcMessage of the form GK cc 
-     */
-    static public MrcMessage getKillConsist(int ConsistAddress) {
-        MrcMessage m = new MrcMessage(5);
-        m.setBinary(false);
-        m.setOpCode('G');
-        m.setElement(1,'K');
-        m.setElement(2,' ');
-        m.addIntAsTwoHex(ConsistAddress, 3);
-        return m;
-    }
-
-    /* 
-     * get a static message to display a standard consist
-     * @param ConsistAddress - a consist address in the range 1-255
-     * @return an MrcMessage of the form GD cc 
-     */
-    static public MrcMessage getDisplayConsist(int ConsistAddress) {
-        MrcMessage m = new MrcMessage(5);
-        m.setBinary(false);
-        m.setOpCode('G');
-        m.setElement(1,'D');
-        m.setElement(2,' ');
-        m.addIntAsTwoHex(ConsistAddress, 3);
-        return m;
-    }
-
-    static public MrcMessage getProgMode() {
-        MrcMessage m = new MrcMessage(1);
-        m.setBinary(false);
-        m.setOpCode('M');
-        return m;
-    }
-
-    static public MrcMessage getExitProgMode() {
-        MrcMessage m = new MrcMessage(1);
-        m.setBinary(false);
-        m.setOpCode('X');
-        return m;
-    }
-
-    static public MrcMessage getReadPagedCV(int cv) { //R xxx
-        MrcMessage m = new MrcMessage(5);
-        m.setBinary(false);
-        m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
+    
+    static public MrcMessage getReadCV(int cv) { //R xxx
+        int cvLo = (cv);
+        int cvHi = (cv>>8);
+        
+        MrcMessage m = new MrcMessage(MrcPackets.getReadCVPacketLength());
+        m.setMessageClass(MrcInterface.PROGRAMMING);
         m.setTimeout(LONG_TIMEOUT);
-        m.setOpCode('R');
-        m.setElement(1,' ');
-        m.addIntAsThreeHex(cv, 2);
+        //m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
+        int i = m.putHeader(MrcPackets.READCVHEADER);
+
+        m.setElement(i++, cvHi);
+        m.setElement(i++,0x00);
+        m.setElement(i++, cvLo);
+        m.setElement(i++, 0x00);
+        m.setElement(i++, getCheckSum(0x00, 0x00, cvHi, cvLo));
+        m.setElement(i++, 0x00);
+        return m;
+    }
+    
+    static public MrcMessage getPOM(int addressLo, int addressHi, int cv, int val){
+        MrcMessage m = new MrcMessage(MrcPackets.getWriteCVPOMPacketLength());
+        m.setMessageClass(MrcInterface.PROGRAMMING);
+        int i = m.putHeader(MrcPackets.WRITECVPOMHEADER);
+        
+        cv--;
+        m.setElement(i++,addressHi);
+        m.setElement(i++, 0x00);
+        m.setElement(i++,addressLo);
+        m.setElement(i++,0x00);
+        m.setElement(i++, 0xEC);
+        m.setElement(i++,0x00);
+        m.setElement(i++, cv);
+        m.setElement(i++, 0x00);
+        m.setElement(i++, val);
+        m.setElement(i++, 0x00);
+        int checksum = getCheckSum(addressHi, addressLo, 0xEC, cv);
+        checksum = getCheckSum(checksum, val, 0x00, 0x00);
+        m.setElement(i++, checksum);
+        return m;
+    }
+    
+    static public MrcMessage getWriteCV(int cv, int val){
+        MrcMessage m = new MrcMessage(MrcPackets.getWriteCVPROGPacketLength());
+        m.setMessageClass(MrcInterface.PROGRAMMING);
+        int i = m.putHeader(MrcPackets.WRITECVPROGHEADER);
+        
+        int cvLo = cv;
+        int cvHi = cv>>8;
+        
+        m.setElement(i++, cvHi);
+        m.setElement(i++,0x00);
+        m.setElement(i++, cvLo);
+        m.setElement(i++, 0x00);
+        m.setElement(i++, val);
+        m.setElement(i++, 0x00);
+        m.setElement(i++, getCheckSum(cvHi, cvLo, val, 0x00));
+        return m;
+    }
+       
+    static protected final int LONG_TIMEOUT=65000;  // e.g. for programming options
+    
+    public boolean validCheckSum() {
+        if (getNumDataElements() > 6) {
+            int result = 0;
+            for (int i = 4; i < getNumDataElements() - 2; i++) {
+                result = (getElement(i) & 255) ^ result;
+            }
+            if (result == (getElement(getNumDataElements() - 2) & 255)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public int value(){
+        int val = -1;
+        if(MrcPackets.startsWith(this, MrcPackets.READCVHEADERREPLY)){
+            if(getElement(4)==getElement(6)){
+                val = getElement(4)&0xff;
+            }
+            else
+                log.error(rb.getString("LogMrcMessageReturnedCvFormatError"));
+        } else {
+            log.error(rb.getString("LogMrcMessageNotCvReadFormatPacketError"));
+        }
+		return val;
+    }
+    
+    public int getLocoAddress(){
+        if(getMessageClass()!=MrcInterface.THROTTLEINFO && getMessageClass()!=MrcInterface.PROGRAMMING)
+            return -1;
+        int hi = getElement(4);
+        int lo = getElement(6);
+        if (hi == 0) {
+            return lo;
+        } else {
+            hi = (((hi & 255) - 192) << 8);
+            hi = hi + (lo & 255);
+            return hi;
+        }
+    }
+    
+    public int getAccAddress(){
+        if(getMessageClass()!=MrcInterface.TURNOUTS)
+            return -1;
+        int lowbyte = (getElement(4)&0xFF)&0x3f;
+        int highbyte = ((getElement(6)&0xFF)&0x70)>>4;
+        highbyte = ((~highbyte & 0x07)<<6);
+        
+        int address = (((lowbyte+highbyte)-1)<<2)+1;
+        
+        address +=((getElement(6)&0xFF) &0x07)>>1;
+        return address;
+    }
+    
+    public int getAccState(){
+        if(((getElement(6)&0x07) &0x01)==0x01) {
+            return jmri.Turnout.CLOSED;
+        } else {
+            return jmri.Turnout.THROWN;
+        }
+    }
+    
+        /**
+     * set the fast clock ratio
+     * ratio is integer and max of 60 and min of 1
+     * @param ratio
+     * @return MrcMessage
+     */
+    static public MrcMessage setClockRatio(int ratio) {
+        if (ratio < 0 || ratio > 60) {
+        	log.error(rb.getString("LogMrcMessageClockRatioRangeError"), ratio);
+        }
+        MrcMessage m = new MrcMessage(MrcPackets.getSetClockRatioPacketLength());
+        m.setMessageClass(MrcInterface.CLOCK);
+        int i = m.putHeader(MrcPackets.SETCLOCKRATIOHEADER);
+        
+        m.setElement(i++, ratio);
+        m.setElement(i++, 0x00);
+        m.setElement(i++, getCheckSum(ratio, 0x00, 0x00, 0x00));
+        m.replyNotExpected();
         return m;
     }
 
-    static public MrcMessage getWritePagedCV(int cv, int val) { //P xxx xx
-        MrcMessage m = new MrcMessage(8);
-        m.setBinary(false);
-        m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
-        m.setTimeout(LONG_TIMEOUT);
-        m.setOpCode('P');
-        m.setElement(1,' ');
-        m.addIntAsThreeHex(cv, 2);
-        m.setElement(5,' ');
-        m.addIntAsTwoHex(val, 6);
+    /**
+     * set the fast time clock
+     * @param hour
+     * @param minute
+     * @return MrcMessage
+     */
+    static public MrcMessage setClockTime(int hour, int minute) {
+        if (hour < 0 || hour > 23) {
+        	log.error(rb.getString("LogMrcMessageClockHourRangeError"), hour);
+        }
+        if (minute < 0 || minute > 59) {
+        	log.error(rb.getString("LogMrcMessageClockMinuteRangeError"), minute);
+        }
+        MrcMessage m = new MrcMessage(MrcPackets.getSetClockTimePacketLength());
+        m.setMessageClass(MrcInterface.CLOCK);
+        int i = m.putHeader(MrcPackets.SETCLOCKTIMEHEADER);
+        
+        m.setElement(i++, hour);
+        m.setElement(i++, 0x00);
+        m.setElement(i++, minute);
+        m.setElement(i++, 0x00);
+        m.setElement(i++, getCheckSum(hour, 0x00, minute, 0x00));
+        m.replyNotExpected();
         return m;
     }
 
-    static public MrcMessage getReadRegister(int reg) { //Vx
-        if (reg>8) log.error("register number too large: "+reg);
-        MrcMessage m = new MrcMessage(2);
-        m.setBinary(false);
-        m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
-        m.setTimeout(LONG_TIMEOUT);
-        m.setOpCode('V');
-        String s = ""+reg;
-        m.setElement(1, s.charAt(s.length()-1));
+    /**
+     * Toggle the AM/PM vs 24 hour mode
+     * @return MrcMessage
+     */
+    static public MrcMessage setClockAmPm() {
+        MrcMessage m = new MrcMessage(MrcPackets.getSetClockAmPmPacketLength());
+        m.setMessageClass(MrcInterface.CLOCK);
+        int i = m.putHeader(MrcPackets.SETCLOCKAMPMHEADER);
+        
+        m.setElement(i++, 0x32);
+        m.setElement(i++, 0x00);
+        m.setElement(i++, getCheckSum(0x32, 0x00, 0x00, 0x00));
+        m.replyNotExpected();
         return m;
     }
-
-    static public MrcMessage getWriteRegister(int reg, int val) { //Sx xx
-        if (reg>8) log.error("register number too large: "+reg);
-        MrcMessage m = new MrcMessage(5);
-        m.setBinary(false);
-        m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
-        m.setTimeout(LONG_TIMEOUT);
-        m.setOpCode('S');
-        String s = ""+reg;
-        m.setElement(1, s.charAt(s.length()-1));
-        m.setElement(2,' ');
-        m.addIntAsTwoHex(val, 3);
+    
+    /**
+     * Set Track Power Off/Emergency Stop
+     * @return MrcMessage
+     */
+    static public MrcMessage setPowerOff() {
+        MrcMessage m = new MrcMessage(MrcPackets.getPowerOffPacketLength());
+        m.setMessageClass(MrcInterface.POWER);
+        m.putHeader(MrcPackets.POWEROFF);
+        m.replyNotExpected();
         return m;
     }
+    
+    static public MrcMessage setPowerOn() {
+        MrcMessage m = new MrcMessage(MrcPackets.getPowerOffPacketLength());
+        m.setMessageClass(MrcInterface.POWER);
+        m.putHeader(MrcPackets.POWERON);
+        m.replyNotExpected();
+        return m;
+    }
+    
+    /**
+       Get a message for a "Switch Position Normal" command
+       to a specific accessory decoder on the layout.
+    */
+    static MrcMessage getSwitchMsg(int address, boolean closed){
+        MrcMessage m = new MrcMessage(MrcPackets.getAccessoryPacketLength());
+        m.setMessageClass(MrcInterface.TURNOUTS);
+        m.putHeader(MrcPackets.ACCESSORYPACKETHEADER);
+        byte[] packet = jmri.NmraPacket.accDecoderPkt(address, closed);
+        if(packet==null){
+            return null;
+        }
+        m.setElement(4,packet[0]);
+        m.setElement(5,0x00);
+        m.setElement(6,packet[1]);
+        m.setElement(7,0x00);
+        m.setElement(8,packet[2]);
+        m.setElement(9,0x00);
+        m.setRetries(2);
+        m.replyNotExpected();
+        m.setByteStream();
+	return m;
+    }
+    
+    static MrcMessage getRouteMsg(int address, boolean closed){
+        MrcMessage m = new MrcMessage(MrcPackets.getRouteControlPacketLength());
+        m.setMessageClass(MrcInterface.TURNOUTS);
+        m.putHeader(MrcPackets.ROUTECONTROLPACKETHEADER);
 
-    static protected final int LONG_TIMEOUT=180000;  // e.g. for programming options
+        int i = m.putHeader(MrcPackets.ROUTECONTROLPACKETHEADER);
+        m.setElement(i++,address);
+        m.setElement(i++, 0x00);
+        int state = closed ? 0x80 : 0x00;
+        m.setElement(i++, state);
+        m.setElement(i++,0x00);
+        m.setElement(i++, getCheckSum(address, 0x00, state, 0x00));
+        m.setElement(i++,0x00);
+        m.setRetries(2);
+        m.replyNotExpected();
+        m.setByteStream();
+	return m;
+    }
 
+    static public MrcMessage setNoData(){
+        MrcMessage m = new MrcMessage(4);
+        m.setMessageClass(MrcInterface.POLL);
+        m.setElement(0,0x00);
+        m.setElement(1,0x00);
+        m.setElement(2,0x00);
+        m.setElement(3,0x00);
+//Message is throw away, so if it doesn't get transmited correctly then forget about it, don't attempt retry.
+        m.setTimeout(0); 
+        m.setRetries(0);
+        m.setByteStream();
+        return m;
+    }
+    
+    byte[] byteStream;
+    
+    void setByteStream(){
+        int len = getNumDataElements();
+        byteStream = new byte[len];
+        for (int i=0; i< len; i++){
+             byteStream[i] = (byte) getElement(i);
+        }
+    }
+    
+    byte[] getByteStream(){ return byteStream; }
+    
+    public int getElement(int n) { return _dataChars[n];}
+
+
+    // accessors to the bulk data
+    public int getNumDataElements() { return _nDataChars;}
+
+    public void setElement(int n, int v) {_dataChars[n] = v;  }
+    
+    // contents (private)
+    private int _nDataChars = 0;
+    private int _dataChars[] = null;
+    
     static Logger log = LoggerFactory.getLogger(MrcMessage.class.getName());
 
 }

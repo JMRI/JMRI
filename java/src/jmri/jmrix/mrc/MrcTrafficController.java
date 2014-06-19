@@ -4,10 +4,8 @@ package jmri.jmrix.mrc;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.AbstractMRListener;
-import jmri.jmrix.AbstractMRMessage;
-import jmri.jmrix.AbstractMRReply;
-import jmri.jmrix.AbstractMRTrafficController;
+import java.util.Date;
+import java.util.Vector;
 
 /**
  * Converts Stream-based I/O to/from MRC messages.  The "MrcInterface"
@@ -24,83 +22,148 @@ import jmri.jmrix.AbstractMRTrafficController;
  * @author			Bob Jacobsen  Copyright (C) 2001
  * @version			$Revision$
  */
-public class MrcTrafficController extends AbstractMRTrafficController
-	implements MrcInterface {
+public abstract class MrcTrafficController implements MrcInterface{
 
     public MrcTrafficController() {
         super();
     }
 
-    // The methods to implement the MrcInterface
-
-    public synchronized void addMrcListener(MrcListener l) {
-        this.addListener(l);
+    public void setCabNumber(int x){
+        cabAddress = x;
     }
-
-    public synchronized void removeMrcListener(MrcListener l) {
-        this.removeListener(l);
+    
+    int cabAddress = 0;
+    
+    public int getCabNumber(){
+        return cabAddress;
     }
+    
+    // Abstract methods for the MrcInterface
+    abstract public boolean status();
+    
+    abstract public void sendMrcMessage(MrcMessage m);
+    
+    // The methods to implement adding and removing listeners
+    protected Vector<MrcTrafficListenerFilter> trafficListeners = new Vector<MrcTrafficListenerFilter>();
 
+    public synchronized void addTrafficListener(int mask, MrcTrafficListener l) {
+        if (l == null) throw new java.lang.NullPointerException();
 
-    /**
-     * Forward a MrcMessage to all registered MrcInterface listeners.
-     */
-    protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
-        ((MrcListener)client).message((MrcMessage)m);
-    }
-
-    /**
-     * Forward a MrcReply to all registered MrcInterface listeners.
-     */
-    protected void forwardReply(AbstractMRListener client, AbstractMRReply m) {
-        ((MrcListener)client).reply((MrcReply)m);
-    }
-
-    public void setSensorManager(jmri.SensorManager m) { }
-    protected AbstractMRMessage pollMessage() {
-		return null;
-    }
-    protected AbstractMRListener pollReplyHandler() {
-        return null;
-    }
-
-    /**
-     * Forward a preformatted message to the actual interface.
-     */
-    public void sendMrcMessage(MrcMessage m, MrcListener reply) {
-        sendMessage(m, reply);
-    }
-
-    protected AbstractMRMessage enterProgMode() {
-        return MrcMessage.getProgMode();
-    }
-    protected AbstractMRMessage enterNormalMode() {
-        return MrcMessage.getExitProgMode();
-    }
-
-    /**
-     * static function returning the MrcTrafficController instance to use.
-     * @return The registered MrcTrafficController instance for general use,
-     *         if need be creating one.
-     */
-    static public MrcTrafficController instance() {
-        if (self == null) {
-            if (log.isDebugEnabled()) log.debug("creating a new MrcTrafficController object");
-            self = new MrcTrafficController();
+        // add only if not already registered
+    	MrcTrafficListenerFilter adapter = new MrcTrafficListenerFilter(mask, l);
+        if (!trafficListeners.contains(adapter)) {
+            trafficListeners.addElement(adapter);
         }
-        return self;
     }
 
-    static volatile protected MrcTrafficController self = null;
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-                        justification="temporary until mult-system; only set at startup")
-    protected void setInstance() { self = this; }
+    public synchronized void removeTrafficListener(int mask, MrcTrafficListener l) {
+        if (l == null) throw new java.lang.NullPointerException();
 
-    protected AbstractMRReply newReply() { return new MrcReply(); }
+        MrcTrafficListenerFilter filter = new MrcTrafficListenerFilter(mask, l);
+    	if (trafficListeners.contains(filter)) {
+    		trafficListeners.remove(trafficListeners.indexOf(filter)).setFilter(mask);
+    	}
+    }
 
-    protected boolean endOfMessage(AbstractMRReply msg) {
-        // for now, _every_ character is a message
-        return true;
+    public synchronized void changeTrafficListener(int mask, MrcTrafficListener l) {
+        if (l == null) throw new java.lang.NullPointerException();
+
+        MrcTrafficListenerFilter filter = new MrcTrafficListenerFilter(mask, l);
+    	if (trafficListeners.contains(filter)) {
+    		trafficListeners.get(trafficListeners.indexOf(filter)).setFilter(mask);
+    	}
+    }
+    
+	@SuppressWarnings("unchecked")
+	public void notifyRcv(Date timestamp, MrcMessage m) {
+        
+        // make a copy of the listener vector to synchronized not needed for transmit
+        Vector<MrcTrafficListenerFilter> v;
+        synchronized(this) {
+            v = (Vector<MrcTrafficListenerFilter>) trafficListeners.clone();
+        }
+        if (log.isDebugEnabled()) log.debug("notify of incoming Mrc packet: " + m.toString());
+        
+        // forward to all listeners
+        for (MrcTrafficListenerFilter adapter : v) {
+        	adapter.fireRcv(timestamp, m);
+        }
+    }
+
+	@SuppressWarnings("unchecked")
+	public void notifyXmit(Date timestamp, MrcMessage m) {
+        
+        // make a copy of the listener vector to synchronized not needed for transmit
+        Vector<MrcTrafficListenerFilter> v;
+        synchronized(this) {
+            v = (Vector<MrcTrafficListenerFilter>) trafficListeners.clone();
+        }
+        if (log.isDebugEnabled()) log.debug("notify of send Mrc packet: " + m.toString());
+        
+        // forward to all listeners
+        for (MrcTrafficListenerFilter adapter : v) {
+        	adapter.fireXmit(timestamp, m);
+        }
+    }
+
+	/**
+     * Is there a backlog of information for the outbound link?
+     * This includes both in the program (e.g. the outbound queue)
+     * and in the command station interface (e.g. flow control from the port)
+     * @return true if busy, false if nothing waiting to send
+     */
+    abstract public boolean isXmtBusy();
+
+    /**
+     * Reset statistics (received message count, transmitted message count,
+     * received byte count)
+     */
+    public void resetStatistics() {
+        receivedMsgCount = 0;
+        transmittedMsgCount = 0;
+        receivedByteCount = 0;
+    }
+    
+    /**
+     * Monitor the number of MRC messaages received across the interface.
+     * This includes the messages this client has sent.
+     */
+    public int getReceivedMsgCount() {
+        return receivedMsgCount;
+    }
+    protected int receivedMsgCount = 0;
+    
+    /**
+     * Monitor the number of bytes in MRC messaages received across the interface.
+     * This includes the messages this client has sent.
+     */
+    public int getReceivedByteCount() {
+        return receivedByteCount;
+    }
+    protected int receivedByteCount = 0;
+    
+    /**
+     * Monitor the number of MRC messaages transmitted across the interface.
+     */
+    public int getTransmittedMsgCount() {
+        return transmittedMsgCount;
+    }
+    protected int transmittedMsgCount = 0;
+    
+    public void setAdapterMemo(MrcSystemConnectionMemo memo){
+        adaptermemo = memo;
+    }
+    
+    MrcSystemConnectionMemo adaptermemo;
+    
+    public String getUserName() { 
+        if(adaptermemo==null) return "MRC";
+        return adaptermemo.getUserName();
+    }
+    
+    public String getSystemPrefix() { 
+        if(adaptermemo==null) return "MR";
+        return adaptermemo.getSystemPrefix();
     }
 
     static Logger log = LoggerFactory.getLogger(MrcTrafficController.class.getName());

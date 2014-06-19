@@ -26,8 +26,11 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         super();
     }
 
-    public String name() { return "MRC"; }
+    public String name() { return "Serial"; }
 
-    protected void setInstance() { adapter = SerialDriverAdapter.instance(); }
+    protected void setInstance() {         
+        if (adapter == null)
+            adapter = new SerialDriverAdapter();
+    }
 }
 

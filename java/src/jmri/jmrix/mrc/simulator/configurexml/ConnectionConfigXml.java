@@ -1,14 +1,14 @@
-package jmri.jmrix.mrc.serialdriver.configurexml;
+package jmri.jmrix.mrc.simulator.configurexml;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
-import jmri.jmrix.mrc.serialdriver.ConnectionConfig;
-import jmri.jmrix.mrc.serialdriver.SerialDriverAdapter;
+import jmri.jmrix.mrc.simulator.ConnectionConfig;
+import jmri.jmrix.mrc.simulator.SimulatorAdapter;
 
 /**
- * Handle XML persistance of layout connections by persistening
+ * Handle XML persistence of layout connections by persisting
  * the SerialDriverAdapter (and connections). Note this is
  * named as the XML version of a ConnectionConfig object,
  * but it's actually persisting the SerialDriverAdapter.
@@ -18,7 +18,9 @@ import jmri.jmrix.mrc.serialdriver.SerialDriverAdapter;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision$
+ * copied from NCE code
+ * @author kcameron Copyright (c) 2014
+ * @version $Revision: 22821 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -26,12 +28,12 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         super();
     }
 
-    protected void getInstance() {
-        adapter = new SerialDriverAdapter();
-    }
-    
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig)object).getAdapter();
+    }
+    
+    protected void getInstance() {
+        adapter = new SimulatorAdapter();
     }
 
     protected void register() {
