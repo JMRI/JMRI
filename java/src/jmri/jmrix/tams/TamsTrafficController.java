@@ -129,7 +129,6 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
             }
         }
     }
-
     
     /**
 	 * Check Tams MC for updates.
@@ -196,11 +195,41 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
      * @return next location in the stream to fill
      */
     protected int addHeaderToOutput(byte[] msg, AbstractMRMessage m) {
-        if (m.isBinary()){
+        /*if (m.isBinary()){
             msg[0] = (byte) 0x58;
             return 1;
-        }
+        }*/
         return 0;
+    }
+    
+    /*protected int lengthOfByteStream(AbstractMRMessage m) {
+        int len = m.getNumDataElements();
+        //Binary has a one byte header, while ascii has a one byte footer
+        return len+1;
+    }*/
+    
+    /**
+     * Add trailer to the outgoing byte stream.
+     * @param msg  The output byte stream
+     * @param offset the first byte not yet used
+     */
+    protected void addTrailerToOutput(byte[] msg, int offset, AbstractMRMessage m) {
+        //if (m.isBinary()){
+        msg[offset] = 0x0d;
+        //}
+    }
+    
+    /**
+     * Determine how much many bytes the entire
+     * message will take, including space for header and trailer
+     * @param m  The message to be sent
+     * @return Number of bytes
+     */
+    protected int lengthOfByteStream(AbstractMRMessage m) {
+        int len = m.getNumDataElements();
+        int cr = 1;
+        //if (! m.isBinary()) cr = 1;  // space for return
+        return len+cr;
     }
     
     protected AbstractMRReply newReply() { 
@@ -211,7 +240,35 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
     protected boolean endOfMessage(AbstractMRReply msg) {
         int num = msg.getNumDataElements();
         if(num>2 && msg.getElement(num-2)==0x0d && msg.getElement(num-1)==0x5d){
+            //End character for an ASCII reply
+            msg.setBinary(false);
             return true;
+        }
+        //Binary Reply has no end character.
+        try {
+            
+            if(controller.getInputStream().available()==0){
+                int i = 0;
+                //Wait for upto 100ms just in case the Intellibox hasn't quite sending all the data out.
+                //As a binary message will not have an end of command byte set in the same way an Ascii does.
+                while(i<=10){
+                    i++;
+                    try {
+                        wait(10);
+                    } catch (InterruptedException e) { 
+                        Thread.currentThread().interrupt(); // retain if needed later
+                        //log.error(InterruptMessage); 
+                    }
+                    if(controller.getInputStream().available()>0)
+                        return false;
+                    //msg.setBinary(true);
+                    //return true;
+                }
+                msg.setBinary(true);
+                return true;
+            }
+        } catch (java.io.IOException ex){
+            log.error("IO Exception" + ex.toString());
         }
         return false;
     }

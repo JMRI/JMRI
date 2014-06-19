@@ -15,6 +15,7 @@ public class TamsConnectionTypeList implements jmri.jmrix.ConnectionTypeList{
     public String[] getAvailableProtocolClasses() { 
         return new String[] {
           "jmri.jmrix.tams.serialdriver.ConnectionConfig",
+          "jmri.jmrix.tams.simulator.ConnectionConfig"
         };
     }
 

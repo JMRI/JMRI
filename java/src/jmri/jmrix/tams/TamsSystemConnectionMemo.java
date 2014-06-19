@@ -72,8 +72,8 @@ public class TamsSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         throttleManager = new jmri.jmrix.tams.TamsThrottleManager(this);
         jmri.InstanceManager.setThrottleManager(throttleManager);
 
-        /*sensorManager = new jmri.jmrix.tams.TamsSensorManager(getTrafficController(), getSystemPrefix());
-        jmri.InstanceManager.setSensorManager(sensorManager);*/
+        sensorManager = new jmri.jmrix.tams.TamsSensorManager(this);
+        jmri.InstanceManager.setSensorManager(sensorManager);
         
     }
     
@@ -97,13 +97,13 @@ public class TamsSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     private ProgrammerManager programmerManager=null;
 
-    /*private TamsSensorManager sensorManager;*/
+    private TamsSensorManager sensorManager;
     private TamsTurnoutManager turnoutManager;
     private TamsThrottleManager throttleManager;
     private TamsPowerManager powerManager;
     
     public TamsTurnoutManager getTurnoutManager() { return turnoutManager; }
-    /*public TamsSensorManager getSensorManager() { return sensorManager; }*/
+    public TamsSensorManager getSensorManager() { return sensorManager; }
     public TamsThrottleManager getThrottleManager() { return throttleManager; }
     public TamsPowerManager getPowerManager() { return powerManager; }
     
@@ -119,8 +119,8 @@ public class TamsSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return true;
          if (type.equals(jmri.ProgrammerManager.class))
              return true;
-        /*if (type.equals(jmri.SensorManager.class))
-            return true;*/
+        if (type.equals(jmri.SensorManager.class))
+            return true;
         if (type.equals(jmri.TurnoutManager.class))
             return true;
         return false; // nothing, by default
@@ -136,8 +136,8 @@ public class TamsSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return (T)getPowerManager();
          if (T.equals(jmri.ProgrammerManager.class))
              return (T)getProgrammerManager();
-        /*if (T.equals(jmri.SensorManager.class))
-            return (T)getSensorManager();*/
+        if (T.equals(jmri.SensorManager.class))
+            return (T)getSensorManager();
         if (T.equals(jmri.TurnoutManager.class))
             return (T)getTurnoutManager();
         return null; // nothing, by default
@@ -145,10 +145,10 @@ public class TamsSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     
     @Override
     public void dispose(){
-        /*if(sensorManager!=null){
+        if(sensorManager!=null){
             sensorManager.dispose();
             sensorManager=null;
-        }*/
+        }
         if(turnoutManager!=null){
             turnoutManager.dispose();
             turnoutManager=null;

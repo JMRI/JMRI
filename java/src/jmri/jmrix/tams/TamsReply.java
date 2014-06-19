@@ -28,7 +28,7 @@ public class TamsReply extends jmri.jmrix.AbstractMRReply {
     }
 
     // these can be very large
-    public int maxSize() { return 1000; }
+    public int maxSize() { return 1024; }
 
 
     // no need to do anything

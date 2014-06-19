@@ -5,6 +5,7 @@ package jmri.jmrix.tams.swing.packetgen;
 import jmri.jmrix.tams.*;
 import java.awt.*;
 import javax.swing.*;
+import jmri.util.*;
 
 
 /**
@@ -19,6 +20,7 @@ public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel implements T
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(20);
+    javax.swing.JCheckBox checkBoxBinCmd = new javax.swing.JCheckBox ();
 
     public PacketGenPanel() {
         super();
@@ -40,8 +42,14 @@ public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel implements T
             packetTextField.setMaximumSize(new Dimension(packetTextField
                     .getMaximumSize().width, packetTextField.getPreferredSize().height));
             
+            checkBoxBinCmd.setText("Binary");
+            checkBoxBinCmd.setVisible(true);
+            checkBoxBinCmd.setToolTipText("Check to enable binary commands");
+            checkBoxBinCmd.setSelected(true);
+        
             add(jLabel1);
             add(packetTextField);
+            add(checkBoxBinCmd);
             add(sendButton);
 
             sendButton.addActionListener(new java.awt.event.ActionListener() {
@@ -64,14 +72,43 @@ public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel implements T
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
+        TamsMessage m;
+        if (checkBoxBinCmd.isSelected()) {
+			// Binary selected, convert ASCII to hex
 
-        TamsMessage m = new TamsMessage(packetTextField.getText().length());
-        for (int i = 0; i < packetTextField.getText().length(); i++)
-            m.setElement(i, packetTextField.getText().charAt(i));
+			m = createPacket(packetTextField.getText());
+			if (m == null) {
+				JOptionPane.showMessageDialog(PacketGenPanel.this,
+						"Enter hexadecimal numbers only", "Tams Binary Command",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			m.setBinary(true);
+		} else {
 
+            m = new TamsMessage(packetTextField.getText().length());
+            for (int i = 0; i < packetTextField.getText().length(); i++)
+                m.setElement(i, packetTextField.getText().charAt(i));
+        }
         memo.getTrafficController().sendTamsMessage(m, this);
 
 	}
+    
+    TamsMessage createPacket(String s) {
+    	// gather bytes in result
+    	byte b[];
+    	try {
+    		b = StringUtil.bytesFromHexString(s);
+    	} catch (NumberFormatException e) {
+    		return null;
+    	}
+    	if (b.length == 0)
+    		return null; // no such thing as a zero-length message
+    	TamsMessage m = new TamsMessage(b.length);
+    	for (int i = 0; i < b.length; i++)
+    		m.setElement(i, b[i]);
+    	return m;
+    }
 
     public void  message(TamsMessage m) {}  // ignore replies
     public void  reply(TamsReply r) {} // ignore replies
