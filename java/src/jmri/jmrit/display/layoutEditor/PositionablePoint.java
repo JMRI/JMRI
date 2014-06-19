@@ -317,7 +317,11 @@ public class PositionablePoint
     public void setEastBoundSignalMast(String signalMast) {
         SignalMast mast = null;
         if(signalMast!=null && !signalMast.equals("")){
-            mast = InstanceManager.signalMastManagerInstance().provideSignalMast(signalMast);
+            mast = InstanceManager.signalMastManagerInstance().getSignalMast(signalMast);
+            if(mast==null){
+                log.error("Unable to find Signal Mast " + signalMast);
+                return;
+            }
         }
         if(getType()==EDGE_CONNECTOR){
             int dir = getConnect1Dir();
@@ -369,7 +373,11 @@ public class PositionablePoint
     public void setWestBoundSignalMast(String signalMast) {
         SignalMast mast = null;
         if(signalMast!=null && !signalMast.equals("")){
-            mast = InstanceManager.signalMastManagerInstance().provideSignalMast(signalMast);
+            mast = InstanceManager.signalMastManagerInstance().getSignalMast(signalMast);
+            if(mast==null){
+                log.error("Unable to find Signal Mast " + signalMast);
+                return;
+            }
         }
         if(getType()==EDGE_CONNECTOR){
             int dir = getConnect1Dir();

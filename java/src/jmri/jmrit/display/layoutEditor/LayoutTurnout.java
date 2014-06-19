@@ -395,11 +395,12 @@ public class LayoutTurnout
             return;
         }
         
-        SignalMast mast = InstanceManager.signalMastManagerInstance().provideSignalMast(signalMast);
+        SignalMast mast = InstanceManager.signalMastManagerInstance().getSignalMast(signalMast);
         if (mast != null) {
             signalAMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
         } else {
             signalAMastNamed=null;
+            log.error("Signal Mast " + signalMast + " Not found for turnout " + getTurnoutName());
         }
     }
     
@@ -421,11 +422,12 @@ public class LayoutTurnout
             return;
         }
         
-        SignalMast mast = InstanceManager.signalMastManagerInstance().provideSignalMast(signalMast);
+        SignalMast mast = InstanceManager.signalMastManagerInstance().getSignalMast(signalMast);
         if (mast != null) {
             signalBMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
         } else {
             signalBMastNamed=null;
+            log.error("Signal Mast " + signalMast + " Not found for turnout " + getTurnoutName());
         }
     }
     
@@ -447,10 +449,11 @@ public class LayoutTurnout
             return;
         }
         
-        SignalMast mast = InstanceManager.signalMastManagerInstance().provideSignalMast(signalMast);
+        SignalMast mast = InstanceManager.signalMastManagerInstance().getSignalMast(signalMast);
         if (mast != null) {
             signalCMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
         } else {
+            log.error("Signal Mast " + signalMast + " Not found for turnout " + getTurnoutName());
             signalCMastNamed=null;
         }
     }
@@ -473,10 +476,11 @@ public class LayoutTurnout
             return;
         }
         
-        SignalMast mast = InstanceManager.signalMastManagerInstance().provideSignalMast(signalMast);
+        SignalMast mast = InstanceManager.signalMastManagerInstance().getSignalMast(signalMast);
         if (mast != null) {
             signalDMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
         } else {
+            log.error("Signal Mast " + signalMast + " Not found for turnout " + getTurnoutName());
             signalDMastNamed=null;
         }
     }

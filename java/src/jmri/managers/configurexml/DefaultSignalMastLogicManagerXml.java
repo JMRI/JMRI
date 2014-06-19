@@ -165,12 +165,11 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
 
     public boolean load(Element signalMastLogic) {
         // load individual Transits
-        loadSignalMastLogic(signalMastLogic);
-        return true;
+        return loadSignalMastLogic(signalMastLogic);
     }
 
     @SuppressWarnings("unchecked")
-    public void loadSignalMastLogic(Element signalMastLogic) {
+    public boolean loadSignalMastLogic(Element signalMastLogic) {
         List<Element> logicList = signalMastLogic.getChildren("signalmastlogic");
         if (log.isDebugEnabled()) log.debug("Found "+logicList.size()+" signal mast logics");
 
@@ -182,153 +181,166 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
         } catch (java.lang.NullPointerException e){
             //Considered normal if it doesn't exists
         }
+        boolean loadOk = true;
         for (Element so : logicList) {
             String source = so.getChild("sourceSignalMast").getText();
-            SignalMastLogic logic = sml.newSignalMastLogic(sm.getSignalMast(source));
-            List<Element> destList = so.getChildren("destinationMast");
-            for (Element s : destList){
-                String destination = s.getChild("destinationSignalMast").getText();
-                SignalMast dest = sm.getSignalMast(destination);
-                logic.setDestinationMast(dest);
-                if(s.getChild("comment")!=null){
-                    logic.setComment(s.getChild("comment").getText(), dest);
-                }
-                if(s.getChild("enabled")!=null){
-                    if (s.getChild("enabled").getText().equals("yes"))
-                        logic.setEnabled(dest);
-                    else
-                        logic.setDisabled(dest);
-                }
-                
-                if(s.getChild("allowAutoMaticSignalMastGeneration")!=null){
-                    if (s.getChild("allowAutoMaticSignalMastGeneration").getText().equals("no"))
-                        logic.allowAutoMaticSignalMastGeneration(false, dest);
-                    else
-                        logic.allowAutoMaticSignalMastGeneration(true , dest);
-                }
-                
-                boolean useLayoutEditorTurnout = true;
-                boolean useLayoutEditorBlock = true;
-                if(s.getChild("useLayoutEditorTurnouts")!=null){
-                    if (s.getChild("useLayoutEditorTurnouts").getText().equals("no"))
-                        useLayoutEditorTurnout=false;
-                }
-                
-                if(s.getChild("useLayoutEditorBlocks")!=null){
-                    if (s.getChild("useLayoutEditorBlocks").getText().equals("no"))
-                        useLayoutEditorBlock=false;
-                }
-                try {
-                    logic.useLayoutEditorDetails(useLayoutEditorTurnout, useLayoutEditorBlock, dest);
-                } catch (jmri.JmriException ex) {
-                
-                }
-                
-                if(s.getChild("useLayoutEditor")!=null){
-                    try{
-                        if (s.getChild("useLayoutEditor").getText().equals("yes"))
-                            logic.useLayoutEditor(true, dest);
-                        else
-                            logic.useLayoutEditor(false, dest);
-                    } catch (jmri.JmriException e){
-                        //Considered normal if layout editor hasn't yet been set up.
-                    }
-                }
-                
-                if(s.getChild("associatedSection")!=null){
-                    Section sect = InstanceManager.sectionManagerInstance().getSection(s.getChild("associatedSection").getText());
-                    logic.setAssociatedSection(sect, dest);
-                }
-                
-                Element turnoutElem = s.getChild("turnouts");
-                if(turnoutElem!=null){
-                    List<Element> turnoutList = turnoutElem.getChildren("turnout");
-                    if (turnoutList.size()>0){
-                        Hashtable<NamedBeanHandle<Turnout>, Integer> list = new Hashtable<NamedBeanHandle<Turnout>, Integer>();
-                        for (Element t : turnoutList){
-                            String turnout = t.getChild("turnoutName").getText();
-                            String state = t.getChild("turnoutState").getText();
-                            int value = Turnout.CLOSED;
-                            if (state.equals("thrown"))
-                                value = Turnout.THROWN;
-                            Turnout turn = InstanceManager.turnoutManagerInstance().getTurnout(turnout);
-                            if(turn!=null){
-                                NamedBeanHandle<Turnout> namedTurnout = nbhm.getNamedBeanHandle(turnout, turn);
-                                list.put(namedTurnout, value);
-                            } else if (debug)
-                                log.debug("Unable to add Turnout " + turnout + " as it does not exist in the panel file");
-
+            SignalMast sourceMast = sm.getSignalMast(source);
+            if(source!=null) {
+                SignalMastLogic logic = sml.newSignalMastLogic(sourceMast);
+                List<Element> destList = so.getChildren("destinationMast");
+                for (Element s : destList){
+                    String destination = s.getChild("destinationSignalMast").getText();
+                    SignalMast dest = sm.getSignalMast(destination);
+                    if(dest!=null){
+                        logic.setDestinationMast(dest);
+                        if(s.getChild("comment")!=null){
+                            logic.setComment(s.getChild("comment").getText(), dest);
                         }
-                        logic.setTurnouts(list, dest);
-                    }
-                }
-                Element sensorElem = s.getChild("sensors");
-                if(sensorElem!=null){
-                    List<Element> sensorList = sensorElem.getChildren("sensor");
-                    if (sensorList.size()>0){
-                        Hashtable<NamedBeanHandle<Sensor>, Integer> list = new Hashtable<NamedBeanHandle<Sensor>, Integer>();
-                        for (Element sl : sensorList){
-                            String sensorName = sl.getChild("sensorName").getText();
-                            String state = sl.getChild("sensorState").getText();
-                            int value = Sensor.INACTIVE;
-                            if (state.equals("active"))
-                                value = Sensor.ACTIVE;
-
-                            Sensor sen = InstanceManager.sensorManagerInstance().getSensor(sensorName);
-                            if(sen!=null){
-                                NamedBeanHandle<Sensor> namedSensor = nbhm.getNamedBeanHandle(sensorName, sen);
-                                list.put(namedSensor, value);
-                            } else if (debug)
-                                log.debug("Unable to add sensor " + sensorName + " as it does not exist in the panel file");
-
+                        if(s.getChild("enabled")!=null){
+                            if (s.getChild("enabled").getText().equals("yes"))
+                                logic.setEnabled(dest);
+                            else
+                                logic.setDisabled(dest);
                         }
-                        logic.setSensors(list, dest);
-                    }
-                }
-                Element blockElem = s.getChild("blocks");
-                if(blockElem!=null){
-                    List<Element> blockList = blockElem.getChildren("block");
-                    if (blockList.size()>0){
-                        Hashtable<Block, Integer> list = new Hashtable<Block, Integer>();
-                        for (Element b : blockList){
-                            String block = b.getChild("blockName").getText();
-                            String state = b.getChild("blockState").getText();
-                            int value = 0x03;
-                            if (state.equals("occupied"))
-                                value = Block.OCCUPIED;
-                            else if (state.equals("unoccupied"))
-                                value = Block.UNOCCUPIED;
-
-                            Block blk = InstanceManager.blockManagerInstance().getBlock(block);
-                            if (blk!=null)
-                                list.put(blk, value);
-                            else if (debug)
-                                log.debug("Unable to add Block " + block + " as it does not exist in the panel file");
+                        
+                        if(s.getChild("allowAutoMaticSignalMastGeneration")!=null){
+                            if (s.getChild("allowAutoMaticSignalMastGeneration").getText().equals("no"))
+                                logic.allowAutoMaticSignalMastGeneration(false, dest);
+                            else
+                                logic.allowAutoMaticSignalMastGeneration(true , dest);
                         }
-                        logic.setBlocks(list, dest);
-                    }
-                }
-                Element mastElem = s.getChild("masts");
-                if(mastElem!=null){
-                    List<Element> mastList = mastElem.getChildren("mast");
-                    if (mastList.size()>0){
-                        Hashtable<SignalMast, String> list = new Hashtable<SignalMast, String>();
-                        for (Element m : mastList){
-                            String mast = m.getChild("mastName").getText();
-                            String state = m.getChild("mastState").getText();
-                            SignalMast mst = InstanceManager.signalMastManagerInstance().getSignalMast(mast);
-                            if(mst!=null)
-                                list.put(mst, state);
-                            else if (debug)
-                                log.debug("Unable to add Signal Mast  " + mast + " as it does not exist in the panel file");
-
+                        
+                        boolean useLayoutEditorTurnout = true;
+                        boolean useLayoutEditorBlock = true;
+                        if(s.getChild("useLayoutEditorTurnouts")!=null){
+                            if (s.getChild("useLayoutEditorTurnouts").getText().equals("no"))
+                                useLayoutEditorTurnout=false;
                         }
-                        logic.setMasts(list, dest);
+                        
+                        if(s.getChild("useLayoutEditorBlocks")!=null){
+                            if (s.getChild("useLayoutEditorBlocks").getText().equals("no"))
+                                useLayoutEditorBlock=false;
+                        }
+                        try {
+                            logic.useLayoutEditorDetails(useLayoutEditorTurnout, useLayoutEditorBlock, dest);
+                        } catch (jmri.JmriException ex) {
+                        
+                        }
+                        
+                        if(s.getChild("useLayoutEditor")!=null){
+                            try{
+                                if (s.getChild("useLayoutEditor").getText().equals("yes"))
+                                    logic.useLayoutEditor(true, dest);
+                                else
+                                    logic.useLayoutEditor(false, dest);
+                            } catch (jmri.JmriException e){
+                                //Considered normal if layout editor hasn't yet been set up.
+                            }
+                        }
+                        
+                        if(s.getChild("associatedSection")!=null){
+                            Section sect = InstanceManager.sectionManagerInstance().getSection(s.getChild("associatedSection").getText());
+                            logic.setAssociatedSection(sect, dest);
+                        }
+                        
+                        Element turnoutElem = s.getChild("turnouts");
+                        if(turnoutElem!=null){
+                            List<Element> turnoutList = turnoutElem.getChildren("turnout");
+                            if (turnoutList.size()>0){
+                                Hashtable<NamedBeanHandle<Turnout>, Integer> list = new Hashtable<NamedBeanHandle<Turnout>, Integer>();
+                                for (Element t : turnoutList){
+                                    String turnout = t.getChild("turnoutName").getText();
+                                    String state = t.getChild("turnoutState").getText();
+                                    int value = Turnout.CLOSED;
+                                    if (state.equals("thrown"))
+                                        value = Turnout.THROWN;
+                                    Turnout turn = InstanceManager.turnoutManagerInstance().getTurnout(turnout);
+                                    if(turn!=null){
+                                        NamedBeanHandle<Turnout> namedTurnout = nbhm.getNamedBeanHandle(turnout, turn);
+                                        list.put(namedTurnout, value);
+                                    } else if (debug)
+                                        log.debug("Unable to add Turnout " + turnout + " as it does not exist in the panel file");
+
+                                }
+                                logic.setTurnouts(list, dest);
+                            }
+                        }
+                        Element sensorElem = s.getChild("sensors");
+                        if(sensorElem!=null){
+                            List<Element> sensorList = sensorElem.getChildren("sensor");
+                            if (sensorList.size()>0){
+                                Hashtable<NamedBeanHandle<Sensor>, Integer> list = new Hashtable<NamedBeanHandle<Sensor>, Integer>();
+                                for (Element sl : sensorList){
+                                    String sensorName = sl.getChild("sensorName").getText();
+                                    String state = sl.getChild("sensorState").getText();
+                                    int value = Sensor.INACTIVE;
+                                    if (state.equals("active"))
+                                        value = Sensor.ACTIVE;
+
+                                    Sensor sen = InstanceManager.sensorManagerInstance().getSensor(sensorName);
+                                    if(sen!=null){
+                                        NamedBeanHandle<Sensor> namedSensor = nbhm.getNamedBeanHandle(sensorName, sen);
+                                        list.put(namedSensor, value);
+                                    } else if (debug)
+                                        log.debug("Unable to add sensor " + sensorName + " as it does not exist in the panel file");
+
+                                }
+                                logic.setSensors(list, dest);
+                            }
+                        }
+                        Element blockElem = s.getChild("blocks");
+                        if(blockElem!=null){
+                            List<Element> blockList = blockElem.getChildren("block");
+                            if (blockList.size()>0){
+                                Hashtable<Block, Integer> list = new Hashtable<Block, Integer>();
+                                for (Element b : blockList){
+                                    String block = b.getChild("blockName").getText();
+                                    String state = b.getChild("blockState").getText();
+                                    int value = 0x03;
+                                    if (state.equals("occupied"))
+                                        value = Block.OCCUPIED;
+                                    else if (state.equals("unoccupied"))
+                                        value = Block.UNOCCUPIED;
+
+                                    Block blk = InstanceManager.blockManagerInstance().getBlock(block);
+                                    if (blk!=null)
+                                        list.put(blk, value);
+                                    else if (debug)
+                                        log.debug("Unable to add Block " + block + " as it does not exist in the panel file");
+                                }
+                                logic.setBlocks(list, dest);
+                            }
+                        }
+                        Element mastElem = s.getChild("masts");
+                        if(mastElem!=null){
+                            List<Element> mastList = mastElem.getChildren("mast");
+                            if (mastList.size()>0){
+                                Hashtable<SignalMast, String> list = new Hashtable<SignalMast, String>();
+                                for (Element m : mastList){
+                                    String mast = m.getChild("mastName").getText();
+                                    String state = m.getChild("mastState").getText();
+                                    SignalMast mst = InstanceManager.signalMastManagerInstance().getSignalMast(mast);
+                                    if(mst!=null)
+                                        list.put(mst, state);
+                                    else if (debug)
+                                        log.debug("Unable to add Signal Mast  " + mast + " as it does not exist in the panel file");
+
+                                }
+                                logic.setMasts(list, dest);
+                            }
+                        }
+                    } else {
+                        log.error("Destination Mast " + destination + " Not found, logic not loaded");
+                        loadOk = false;
                     }
                 }
+            } else {
+                log.error("Source Mast " + source + " Not found, logic not loaded");
+                loadOk = false;
             }
         }
         sml.initialise();
+        return loadOk;
     }
     
     public int loadOrder(){
