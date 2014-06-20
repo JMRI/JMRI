@@ -100,6 +100,7 @@ public class ServletUtil {
                 while ((bytes = fileInputStream.read()) != -1) {
                     response.getOutputStream().write(bytes);
                 }
+                fileInputStream.close();
             } else {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN);
             }

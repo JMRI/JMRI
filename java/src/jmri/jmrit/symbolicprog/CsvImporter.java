@@ -47,6 +47,7 @@ public class CsvImporter {
         while ((line = bufferedReader.readLine()) != null) {
             String[] lineStrings = line.split(" *, *");
             if ( lineStrings.length < 2) {
+                bufferedReader.close();
                 throw new IOException();
             } else if ( lineStrings[0].equals("CV") ) {
                 log.debug("Header OK");
