@@ -8,8 +8,6 @@ import jmri.util.*;
 import jmri.jmrix.mrc.*;
 
 import java.awt.*;
-import java.util.ResourceBundle;
-
 import javax.swing.*;
 
 

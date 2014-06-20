@@ -13,8 +13,6 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.*;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
 import jmri.jmrix.loconet.*;
 import java.io.*;
 

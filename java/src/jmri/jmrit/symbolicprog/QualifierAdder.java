@@ -4,7 +4,6 @@ package jmri.jmrit.symbolicprog;
 
 import java.util.*;
 import org.jdom.*;
-import javax.swing.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

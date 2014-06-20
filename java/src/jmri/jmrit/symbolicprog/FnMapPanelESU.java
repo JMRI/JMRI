@@ -15,7 +15,6 @@ import jmri.util.jdom.LocaleSelector;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
 import jmri.util.SystemType;
 import jmri.Application;
-import java.util.Arrays;
 import jmri.jmrit.roster.RosterEntry;
 import org.jdom.*;
 

@@ -4,8 +4,6 @@ package jmri.jmrit.symbolicprog;
 
 import org.apache.log4j.Logger;
 import jmri.progdebugger.ProgDebugger;
-import java.util.Vector;
-
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;

@@ -22,16 +22,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.Vector;
-import java.util.logging.Level;
 import javax.swing.*;
 import javax.swing.table.*;
-import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.*;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.jdom.LocaleSelector;
 import org.jdom.Attribute;
-import org.jdom.DataConversionException;
 import org.jdom.Element;
 
 /**

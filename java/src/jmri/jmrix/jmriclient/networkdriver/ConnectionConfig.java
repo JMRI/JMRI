@@ -6,10 +6,6 @@ import jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JCheckBox;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;

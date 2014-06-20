@@ -14,7 +14,6 @@ import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.io.IOException;
-import jmri.jmrix.tams.TamsMessage;
 import jmri.jmrix.tams.TamsReply;
 
 /**

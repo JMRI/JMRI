@@ -2,10 +2,8 @@
 
 package jmri.jmrix.mrc.swing;
 
-import java.util.ResourceBundle;
 import javax.swing.*;
 import jmri.jmrix.mrc.MrcSystemConnectionMemo;
-import jmri.jmrix.mrc.MrcTrafficController;
 
 /**
  * Create a "Systems" menu containing the JMRI MRC-specific tools.

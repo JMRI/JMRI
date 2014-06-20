@@ -2,8 +2,6 @@
 
 package jmri.jmrit.beantable.oblock;
 
-import java.util.ResourceBundle;
-
 import edu.umd.cs.findbugs.annotations.CheckReturnValue;
 import edu.umd.cs.findbugs.annotations.DefaultAnnotation;
 import edu.umd.cs.findbugs.annotations.NonNull;

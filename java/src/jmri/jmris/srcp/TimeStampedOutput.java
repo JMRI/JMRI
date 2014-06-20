@@ -2,7 +2,6 @@
 
 package jmri.jmris.srcp;
 
-import jmri.Timebase;
 import java.util.Date;
 
 /*

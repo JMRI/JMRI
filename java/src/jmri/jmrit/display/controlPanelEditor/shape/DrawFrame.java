@@ -3,7 +3,6 @@ package jmri.jmrit.display.controlPanelEditor.shape;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Stroke;

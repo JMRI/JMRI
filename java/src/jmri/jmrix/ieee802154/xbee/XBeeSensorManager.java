@@ -9,11 +9,7 @@ import jmri.Sensor;
 import jmri.JmriException;
 
 import com.rapplogic.xbee.api.ApiId;
-import com.rapplogic.xbee.api.XBeeAddress;
-import com.rapplogic.xbee.api.XBeeAddress16;
 import com.rapplogic.xbee.api.XBeeAddress64;
-import com.rapplogic.xbee.api.XBeeResponse;
-import com.rapplogic.xbee.api.zigbee.ZNetRxIoSampleResponse;
 import com.rapplogic.xbee.api.RemoteAtResponse;
 
 /**
