@@ -329,22 +329,29 @@ public class TrainBuilder extends TrainCommon {
 			if (stagingTracksTerminate.size() > 1 && Setup.isPromptToStagingEnabled()) {
 				_terminateStageTrack = PromptToStagingDialog();
 				startTime = new Date(); // reset build time
-			} else
-				for (Track track : stagingTracksTerminate) {
-					_terminateStageTrack = track;
-					if (checkTerminateStagingTrack(_terminateStageTrack)) {
-						addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildStagingAvail"),
-								new Object[] { _terminateStageTrack.getName(), _terminateLocation.getName() }));
-						break;
-					}
-					_terminateStageTrack = null;
-				}
-			if (_terminateStageTrack == null) {
+			} else {
 				// is this train returning to the same staging in aggressive mode?
 				if (_departLocation == _terminateLocation && Setup.isBuildAggressive()
 						&& Setup.isStagingTrackImmediatelyAvail()) {
 					addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildStagingReturn"),
 							new Object[] { _terminateLocation.getName() }));
+				} else {
+					for (Track track : stagingTracksTerminate) {
+						_terminateStageTrack = track;
+						if (checkTerminateStagingTrack(_terminateStageTrack)) {
+							addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildStagingAvail"),
+									new Object[] { _terminateStageTrack.getName(), _terminateLocation.getName() }));
+							break;
+						}
+						_terminateStageTrack = null;
+					}
+				}
+			}
+			if (_terminateStageTrack == null) {
+				// is this train returning to the same staging in aggressive mode?
+				if (_departLocation == _terminateLocation && Setup.isBuildAggressive()
+						&& Setup.isStagingTrackImmediatelyAvail()) {
+					log.debug("Train is returning to same track in staging");
 				} else {
 					addLine(_buildReport, ONE, Bundle.getMessage("buildErrorStagingFullNote"));
 					throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorStagingFull"),
@@ -1088,7 +1095,7 @@ public class TrainBuilder extends TrainCommon {
 			if (car.isCaboose()) {
 				cabooseTip = false; // found at least one caboose, so they exist!
 				addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarIsCaboose"), new Object[] {
-						car.toString(), car.getRoadName(), car.getLocationName() }));
+						car.toString(), car.getRoadName(), car.getLocationName(), car.getTrackName() }));
 				// car departing staging must leave with train
 				if (car.getTrack() == departTrack) {
 					foundCaboose = false;
@@ -1183,6 +1190,8 @@ public class TrainBuilder extends TrainCommon {
 	 * @throws BuildFailedException
 	 */
 	private void removeCaboosesAndCarsWithFredAndSaveFinalDestination() throws BuildFailedException {
+		addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+		addLine(_buildReport, SEVEN, Bundle.getMessage("buildRemoveCarsNotNeeded"));
 		for (_carIndex = 0; _carIndex < _carList.size(); _carIndex++) {
 			Car car = _carList.get(_carIndex);
 			if (car.isCaboose() || car.hasFred()) {
