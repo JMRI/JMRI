@@ -2457,10 +2457,10 @@
    <A NAME="Routes"></A>
    <H2>Routes</H2>
 
-   A route is a list of locations that a train will visit. Later you can decide if the train stops
-   at a location for work. Routes can be point to point or out and back. To build a route, select
-   "Tools-&gt;Operations-&gt;Routes". The Routes window also provides route status, for example,
-   "Orphan" means the route hasn't been assigned to a train.
+   A route is a list of locations (stations) that a train will visit. Later you can decide if the
+   train stops at a location for work. Routes can be point to point or out and back. To build a
+   route, select "Tools-&gt;Operations-&gt;Routes". The Routes window also provides route status,
+   for example, "Orphan" means the route hasn't been assigned to a train.
 
 
    <P>
@@ -2474,15 +2474,26 @@
    </P>
 
    <P>
-    Enter the route name and an optional comment. This comment is shown in the routes window, and <A
-     HREF="#ManifestComments">optionally</A> on your manifests. Each route must have unique name.
+    Enter the route name and an optional comment. This comment is shown in the routes window, and
+    <A HREF="#ManifestComments">optionally</A> on your manifests. Each route must have unique name.
     Then press the "Add Route" button located at the bottom of the window. Now select the location
     the train will depart by selecting the location in the menu box located at the left bottom side
-    of the window. Press "Add Location". Now build your route by selecting the next location the
-    train will visit, select all locations that the train will pass through even if the train will
-    not work the location. This way your train's engineer will know when reading his manifest the
-    towns he will be traveling through. Each time you add a location to the route, the table shows
-    the order in which the train will visit. You can move a location up or down in the sequence if
+    of the window. Press "Add Location". You should now see the train's departure location in the
+    table along with the train's departure direction, the requested number of car moves, whether car
+    set outs or pick ups are allowed, the train wait time, the maximum train length departing the
+    location, and the track grade between this location and the next location in the train's route.
+    The X and Y values are where to place the train icon on a panel. The
+    <A HREF="#EditRoute">Edit Route</A> below provides additional details about a location in a route.</P>
+    
+    <P> Now select the correct departure direction
+    for your train when using this route, along with the number of moves you wish, and the train's
+    maximum length. Double click on the cell in the table to change the car moves or train length. The
+    program remembers the last train direction, car moves, and maximum train length when adding new
+    locations to your train's route. Now build your route by selecting the next location the train
+    will visit, select all locations that the train will pass through even if the train will not
+    work the location. This way your train's engineer will know when reading his manifest the towns
+    he will be traveling through. Each time you add a location to the route, the table shows the
+    order in which the train will visit. You can move a location up or down in the sequence if
     needed.
    </P>
 
@@ -2504,7 +2515,7 @@
     example, if you want your train to depart with 15 cars, then 15 is the correct value for your
     moves at the start of the route. At the end of the route, if you want 12 cars in the train when
     it terminates, then 12 is the right value for the move count for the last location in your
-    train's route.
+    train's route.  Entering "0" moves means no car pick ups or set outs at the location.
    </P>
 
    <P>If you want to delay the departure of the train from a location or increase the train's
