@@ -35,7 +35,6 @@
 <UL>
 
 <a name="A"></A>
-	<LI>Jeffrey Machacek updated the WiThrottle server and updated Loconet SlotMonitor.
     <LI>Sakae Akanuma provided a Japanese translation.
     <LI>Kerry Albrecht, who helped debug a problem loading panel files
     <LI>Nelson Allison, who provided scripts for Roco cranes
@@ -312,6 +311,7 @@
     <LI>Jason M'Sadoques, who created the 
         <a href="http://jmri.org/help/en/package/jmri/jmrit/withrottle/EngineDriverAndroidThrottle.shtml">Android phone throttle application</a>
         and improved the WiThrottle support.
+	<LI>Jeffrey Machacek updated the WiThrottle server and updated Loconet SlotMonitor.
     <LI>Greg Madsen improved the operations backup and restore code
 	<LI>Jim Malone, who created a decoder file definition the Digitrax DN163K1a
     <li>Peter Mansvelder, who contributed Flieschmann decoder definitions
