@@ -354,7 +354,7 @@ public class MrcPackets {
 	        	txt.append(Integer.toString(m.getElement(8)&0xff));
 	    		break;
             case READCVHEADERREPLYCODE:
-                txt.append(rb.getString("MrcPacketsReadCv"));
+                txt.append(rb.getString("MrcPacketsReadCvValue"));
                 txt.append(Integer.toString(m.value()));
                 break;
             case BADCMDRECIEVEDCODE:
