@@ -178,6 +178,15 @@
     </xs:annotation>
   </xs:element>
 
+  <xs:element name="enumChoiceGroup" type="EnumChoiceGroupType">
+    <xs:annotation>
+      <xs:documentation>
+      Provides a base element that can be used in "enumVal" fragment files, those
+      little files that are XIncluded into primary decoder files.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
   <xs:element name="ienumVal" type="IEnumValType" >
     <xs:annotation>
       <xs:documentation>
@@ -726,14 +735,24 @@
 
   <xs:complexType name="EnumValType">
     <xs:annotation><xs:documentation>
-    A fixed set of choices is defined, each corresponding to a specific value
+    A variable containing a fixed set of choices is defined, each choice corresponding to a specific value
     </xs:documentation></xs:annotation>
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:element ref="docbook:copyright" minOccurs="0" maxOccurs="1" />
       <xs:element ref="docbook:authorgroup" minOccurs="0" maxOccurs="unbounded" />
       <xs:element ref="docbook:revhistory" minOccurs="0" maxOccurs="unbounded" />
-      <xs:element name="enumChoice" >
-        <xs:complexType>
+      <xs:element type="EnumChoiceType" name="enumChoice" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element type="EnumChoiceGroupType" name="enumChoiceGroup" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute ref="xml:base" />
+    <xs:attribute name="comment" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="EnumChoiceType">
+    <xs:annotation><xs:documentation>
+    Defines one choice within an enumVal element (though may be grouped in one or more
+    intermediate enumChoiceGroup elements)
+    </xs:documentation></xs:annotation>
           <xs:sequence minOccurs="0" maxOccurs="unbounded">
             <xs:annotation><xs:documentation>Provide an internationalized choice text</xs:documentation></xs:annotation>
             <xs:element name="choice" minOccurs="1" maxOccurs="unbounded" />
@@ -742,8 +761,19 @@
           <xs:attribute name="choice" type="xs:string" use="required"/>
           <xs:attribute name="value" type="xs:int" />
           <xs:attribute name="comment" type="xs:string"/>
-        </xs:complexType>
-      </xs:element>
+  </xs:complexType>
+
+  <xs:complexType name="EnumChoiceGroupType">
+    <xs:annotation><xs:documentation>
+    Allows grouping of enumChoice elements within an enumVal element.
+    This can be used for e.g. defining individual XML documents to be included.
+    </xs:documentation></xs:annotation>
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="docbook:copyright" minOccurs="0" maxOccurs="1" />
+      <xs:element ref="docbook:authorgroup" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element ref="docbook:revhistory" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element type="EnumChoiceType" name="enumChoice" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element type="EnumChoiceGroupType" name="enumChoiceGroup" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
     <xs:attribute ref="xml:base" />
     <xs:attribute name="comment" type="xs:string"/>
