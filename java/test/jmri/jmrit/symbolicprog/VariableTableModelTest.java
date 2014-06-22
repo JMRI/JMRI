@@ -196,6 +196,66 @@ public class VariableTableModelTest extends TestCase {
         Assert.assertEquals("find nonexistant variable ",-1, t.findVarIndex("not there, eh?"));
 
     }
+    
+    // Check creating an enumvar with various groupings
+    public void testVarEnumVar() {
+        String[] args = {"CV", "Name"};
+        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p), null);
+
+        // create a JDOM tree with just some elements
+        Element root = new Element("decoder-config");
+        Document doc = new Document(root);
+        doc.setDocType(new DocType("decoder-config","decoder-config.dtd"));
+
+        // add some elements
+        Element el0;
+        root.addContent(new Element("decoder")		// the sites information here lists all relevant
+            .addContent(new Element("variables")
+                .addContent(el0 = new Element("variable")
+                    .setAttribute("CV","99")
+                    .setAttribute("label","Enum Sample")
+                    .setAttribute("mask","VVVVVVVV")
+                    .setAttribute("readOnly", "")
+                    .addContent( new Element("enumVal")
+                        .addContent( new Element("enumChoice")
+                            .setAttribute("choice", "V0")
+                            )
+                        .addContent( new Element("enumChoice")
+                            .setAttribute("choice", "V1")
+                            )
+                        .addContent( new Element("enumChoiceGroup")
+                            .addContent( new Element("enumChoice")
+                                .setAttribute("choice", "V2")
+                                )
+                            .addContent( new Element("enumChoice")
+                                .setAttribute("choice", "V3")
+                                )
+                            )
+                        .addContent( new Element("enumChoice")
+                            .setAttribute("choice", "V4")
+                            )
+                        )
+                    )
+                )	// variables element
+            ) // decoder element
+            ; // end of adding contents
+
+        // and test reading this
+        t.setRow(0, el0);
+
+        // check
+        Assert.assertEquals("name of variable 1", "Enum Sample", t.getLabel(0));
+        EnumVariableValue ev = (EnumVariableValue)  t.getVariable(t.findVarIndex("Enum Sample"));
+        ev.setValue(1);
+        Assert.assertEquals("value 1", "V1", ev.getTextValue());
+        ev.setValue(2);
+        Assert.assertEquals("value 2", "V2", ev.getTextValue());
+        ev.setValue(3);
+        Assert.assertEquals("value 3", "V3", ev.getTextValue());
+        ev.setValue(4);
+        Assert.assertEquals("value 4", "V4", ev.getTextValue());
+
+    }
 
     // Check creating bogus XML (unknown variable type)
     public void testVarTableLoadBogus() {
