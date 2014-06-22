@@ -855,6 +855,20 @@
         </junit>
     </target>
 
+    <target name="decodercheck" depends="debug, tests, runtime-library-selection" description="run decoder XML checks">
+        <java classname="jmri.jmrit.decoderdefn.SchemaTest"
+          dir="."
+          fork="yes" >
+            <classpath refid="test.class.path"/>
+            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <sysproperty key="log4j.ignoreTCL" path="true/"/>
+            <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <arg value="${antargline}"/>
+        </java>
+    </target>
+
     <!-- Note if modifying the alltest target, please be sure to up date the -->
     <!-- NetBeans IDE alltest target in nbproject/ide-targets.xml -->
     <target name="alltest" depends="debug, tests, runtime-library-selection" description="build and run test suite">
