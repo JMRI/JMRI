@@ -88,98 +88,42 @@
     <tooltip xml:lang="it">Direzione loco nel Consist - Normale(default) o all'indietro(indirizzo+128)</tooltip>
   </variable>
   <variable CV="21" mask="XXXXXXXV" minOut="3" default="1" item="Consist Address Active For F1">
-    <enumVal>
-      <enumChoice choice="Locomotive Address Only">
-      <choice xml:lang="it">Solo Indirizzo Loco</choice>
-      </enumChoice>
-      <enumChoice choice="Respond to Consist Address">
-      <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For Green</label>
     <label xml:lang="it">Indirizzo Consist attivo per Verde</label>
   </variable>
   <variable CV="21" mask="XXXXXXVX" minOut="4" default="1" item="Consist Address Active For F2">
-    <enumVal>
-      <enumChoice choice="Locomotive Address Only">
-      <choice xml:lang="it">Solo Indirizzo Loco</choice>
-      </enumChoice>
-      <enumChoice choice="Respond to Consist Address">
-      <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For Purple</label>
     <label xml:lang="it">Indirizzo Consist attivo per Porpora</label>
   </variable>
   <variable CV="21" mask="XXXXXVXX" minOut="5" default="1" item="Consist Address Active For F3">
-    <enumVal>
-      <enumChoice choice="Locomotive Address Only">
-      <choice xml:lang="it">Solo Indirizzo Loco</choice>
-      </enumChoice>
-      <enumChoice choice="Respond to Consist Address">
-      <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For Brown</label>
     <label xml:lang="it">Indirizzo Consist attivo per Marrone</label>
   </variable>
   <variable CV="21" mask="XXXXVXXX" minOut="6" default="1" item="Consist Address Active For F4">
-    <enumVal>
-      <enumChoice choice="Locomotive Address Only">
-      <choice xml:lang="it">Solo Indirizzo Loco</choice>
-      </enumChoice>
-      <enumChoice choice="Respond to Consist Address">
-      <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For Pink</label>
     <label xml:lang="it">Indirizzo Consist attivo per Rosa</label>
   </variable>
   <variable CV="21" mask="XXXVXXXX" minOut="7" default="1" item="Consist Address Active For F5">
-    <enumVal>
-      <enumChoice choice="Locomotive Address Only">
-      <choice xml:lang="it">Solo Indirizzo Loco</choice>
-      </enumChoice>
-      <enumChoice choice="Respond to Consist Address">
-      <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For Pink/Purple</label>
     <label xml:lang="it">Indirizzo Consist attivo per Rosa/Porpora</label>
   </variable>
   <variable CV="21" mask="XXVXXXXX" minOut="8" default="1" item="Consist Address Active For F6">
-    <enumVal>
-      <enumChoice choice="Locomotive Address Only">
-      <choice xml:lang="it">Solo Indirizzo Loco</choice>
-      </enumChoice>
-      <enumChoice choice="Respond to Consist Address">
-      <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For Green/Brown</label>
     <label xml:lang="it">Indirizzo Consist attivo per Verde/Marrone</label>
   </variable>
   <variable CV="22" mask="XXXXXXXV" minOut="1" item="Consist Address Active For FL in Forward">
-    <enumVal>
-      <enumChoice choice="Locomotive Address Only">
-      <choice xml:lang="it">Solo Indirizzo Loco</choice>
-      </enumChoice>
-      <enumChoice choice="Respond to Consist Address">
-      <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For White</label>
     <label xml:lang="it">Indirizzo Consist attivo per Bianco</label>
   </variable>
   <variable CV="22" mask="XXXXXXVX" minOut="2" item="Consist Address Active For FL in Reverse">
-    <enumVal>
-      <enumChoice choice="Locomotive Address Only">
-      <choice xml:lang="it">Solo Indirizzo Loco</choice>
-      </enumChoice>
-      <enumChoice choice="Respond to Consist Address">
-      <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For Yellow</label>
     <label xml:lang="it">Indirizzo Consist attivo per Giallo</label>
   </variable>
