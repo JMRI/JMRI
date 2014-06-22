@@ -18,12 +18,19 @@ import junit.framework.TestSuite;
 public class ActiveSystemFlagTest extends TestCase {
 
     public void testInactive() throws Exception {
-        Assert.assertTrue(!ActiveSystemFlag.isActive("jmri.jmrix.loconet"));
+        Assert.assertTrue(!ActiveSystemFlag.isActive("jmri.jmrix.direct"));
     }
 
     public void testActive() throws Exception {
         jmri.jmrix.loconet.ActiveFlag.setActive();
         Assert.assertTrue(ActiveSystemFlag.isActive("jmri.jmrix.loconet"));
+    }
+
+    public void testNoSystem() throws Exception {
+        try {
+            Assert.assertTrue(ActiveSystemFlag.isActive("jmri.foo"));
+            Assert.fail("Didn't throw exception");
+        } catch (Exception e) {}
     }
 
     // from here down is testing infrastructure
