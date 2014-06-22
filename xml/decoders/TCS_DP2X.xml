@@ -80,7 +80,15 @@
       </variable>
       <variable CV="49" mask="VVVVXXXX" item="Function F0F behavior" default="0">
         <enumVal>
-          <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
+          <enumChoice choice="Function on running forward">
+             <choice xml:lang="it">Funzione in marcia avanti</choice>
+          </enumChoice>
+          <enumChoice choice="Function on running reverse">
+             <choice xml:lang="it">Funzione in marcia indietro</choice>
+          </enumChoice>
+          <enumChoice choice="Function on both directions">
+             <choice xml:lang="it">Funzione in entrambe le direzioni</choice>
+          </enumChoice>
           <enumChoice choice="Normal on/off control">
               <choice xml:lang="it">Controllo On/Off normale</choice>
           </enumChoice>
@@ -107,7 +115,15 @@
       </variable>
       <variable CV="50" mask="VVVVXXXX" item="Function F0R behavior" default="0">
         <enumVal>
-          <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
+          <enumChoice choice="Function on running forward">
+             <choice xml:lang="it">Funzione in marcia avanti</choice>
+          </enumChoice>
+          <enumChoice choice="Function on running reverse">
+             <choice xml:lang="it">Funzione in marcia indietro</choice>
+          </enumChoice>
+          <enumChoice choice="Function on both directions">
+             <choice xml:lang="it">Funzione in entrambe le direzioni</choice>
+          </enumChoice>
           <enumChoice choice="Normal on/off control">
               <choice xml:lang="it">Controllo On/Off normale</choice>
           </enumChoice>
@@ -134,7 +150,15 @@
       </variable>
       <variable item="Function 1 behavior" CV="51" mask="VVVVXXXX" minFn="1">
         <enumVal>
-          <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
+          <enumChoice choice="Function on running forward">
+             <choice xml:lang="it">Funzione in marcia avanti</choice>
+          </enumChoice>
+          <enumChoice choice="Function on running reverse">
+             <choice xml:lang="it">Funzione in marcia indietro</choice>
+          </enumChoice>
+          <enumChoice choice="Function on both directions">
+             <choice xml:lang="it">Funzione in entrambe le direzioni</choice>
+          </enumChoice>
           <enumChoice choice="Normal on/off control">
               <choice xml:lang="it">Controllo On/Off normale</choice>
           </enumChoice>
@@ -161,7 +185,15 @@
       </variable>
       <variable item="Function 2 behavior" CV="52" mask="VVVVXXXX" minFn="2">
         <enumVal>
-          <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
+          <enumChoice choice="Function on running forward">
+             <choice xml:lang="it">Funzione in marcia avanti</choice>
+          </enumChoice>
+          <enumChoice choice="Function on running reverse">
+             <choice xml:lang="it">Funzione in marcia indietro</choice>
+          </enumChoice>
+          <enumChoice choice="Function on both directions">
+             <choice xml:lang="it">Funzione in entrambe le direzioni</choice>
+          </enumChoice>
           <enumChoice choice="Normal on/off control">
               <choice xml:lang="it">Controllo On/Off normale</choice>
           </enumChoice>
@@ -188,7 +220,15 @@
       </variable>
       <variable item="Function 3 behavior" CV="53" mask="VVVVXXXX" minFn="3">
         <enumVal>
-          <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
+          <enumChoice choice="Function on running forward">
+             <choice xml:lang="it">Funzione in marcia avanti</choice>
+          </enumChoice>
+          <enumChoice choice="Function on running reverse">
+             <choice xml:lang="it">Funzione in marcia indietro</choice>
+          </enumChoice>
+          <enumChoice choice="Function on both directions">
+             <choice xml:lang="it">Funzione in entrambe le direzioni</choice>
+          </enumChoice>
           <enumChoice choice="Normal on/off control">
               <choice xml:lang="it">Controllo On/Off normale</choice>
           </enumChoice>

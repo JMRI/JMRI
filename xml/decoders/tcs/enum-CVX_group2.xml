@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
          <enumChoice choice="Function on when loco going forward">
             <choice>Function on when loco going forward</choice>
             <choice xml:lang="it">Funz.On in marcia avanti</choice>
@@ -13,7 +13,7 @@
           <enumChoice choice="Normal on/off control">
             <choice>Normal on/off control</choice>
             <choice xml:lang="it">Normale controllo On/Off</choice>
-          </enumChoice>&gt;
+          </enumChoice>
           <enumChoice choice="Normal on/off control">
             <choice>Normal on/off control</choice>
             <choice xml:lang="it">Normale controllo On/Off</choice>
@@ -66,4 +66,4 @@
             <choice>Reserved (0x0F)</choice>
             <choice xml:lang="it">Riservato (0x0F)</choice>
           </enumChoice>
- </enumChoiceGroup>
+ </enumVal>

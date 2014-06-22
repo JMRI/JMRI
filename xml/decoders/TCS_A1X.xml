@@ -1137,10 +1137,10 @@
       </variable>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="8" default="2"/>
-      <decVal/>
+      <factReset label="Reset All CVs" CV="8" default="2">
         <label>Reset All CVs</label>
         <label xml:lang="it">Reset di tutte le CV</label>
+      </factReset>
     </resets>
   </decoder>
   <pane>

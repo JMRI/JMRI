@@ -493,7 +493,7 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV1-6.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/tcs/CV7_CV15_FW01.xml"/>
+      <!-- <xi:include href="http://jmri.org/xml/decoders/tcs/CV7_CV15_FW01.xml"/> -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/CV19_CV58_FW01.xml"/>
       <variable CV="61" mask="XXXXXXXV" default="1" item="EMF Enable" tooltip="Turn off/on(default) BEMF, enabling BEMF disables Dither">
@@ -912,10 +912,10 @@
       </variable>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="8" default="2"/>
-      <decVal/>
+      <factReset label="Reset All CVs" CV="8" default="2">
         <label>Reset All CVs</label>
         <label xml:lang="it">Reset di tutte le CV</label>
+      </factReset>
     </resets>
   </decoder>
   <pane>
@@ -1050,8 +1050,10 @@
         <text/>
       </label>
       <display item="Decoder Lock control number" label="Decoder Lock control, CV15">
-        <label>Decoder Lock control, CV15</label>
+      <label>
+        <text>Decoder Lock control, CV15</text>
         <text xml:lang="it">Controllo blocco decoder CV15</text>
+      </label>
       </display>
       <label>
         <text/>
