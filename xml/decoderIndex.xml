@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20140611-1919-jake on Wed Jun 11 12:20:03 PDT 2014 $Id$-->
-  <decoderIndex version="410">
+  <!--Written by JMRI version 20140622-2014-jake on Sun Jun 22 13:14:16 PDT 2014 $Id$-->
+  <decoderIndex version="414">
     <mfgList nmraListDate="2012-12-05" updated="2013-04-11" lastadd="106">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -1216,6 +1216,60 @@
           <output name="4" label="Pad (Violet)" connection="solder" />
           <size length="1.158" width="0.386" height="0.115" units="inches" />
         </model>
+        <model model="DN166I0" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale SD40T-2/SD45T-2 Tunnel Motor">
+          <output name="1" label="LED" connection="LED" />
+          <output name="2" label="LED" connection="LED" />
+          <output name="3" label="Pad" connection="solder" />
+          <output name="4" label="Pad" connection="solder" />
+          <output name="5" label="Pad" connection="solder" />
+          <output name="6" label="Pad" connection="solder" />
+          <size length="3.5" width=".367" height="0.135" units="inches" />
+        </model>
+        <model model="DN166I1A" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale FT-A Units">
+          <output name="1" label="Pad/LED" connection="solder" />
+          <output name="2" label="Pad/LED" connection="solder" />
+          <output name="3" label="Pad" connection="solder" />
+          <output name="4" label="Pad" connection="solder" />
+          <output name="5" label="Pad" connection="solder" />
+          <output name="6" label="Pad" connection="solder" />
+          <size length="2.165" width="0.472" height="0.098" units="inches" />
+        </model>
+        <model model="DN166I1B" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale FT-B Units">
+          <output name="1" label="Pad/LED" connection="solder" />
+          <output name="2" label="Pad/LED" connection="solder" />
+          <output name="3" label="Pad" connection="solder" />
+          <output name="4" label="Pad" connection="solder" />
+          <output name="5" label="Pad" connection="solder" />
+          <output name="6" label="Pad" connection="solder" />
+          <size length="2.165" width="0.472" height="0.098" units="inches" />
+        </model>
+        <model model="DN166I1C" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale F3 &amp; F7 Units">
+          <output name="1" label="Pad/LED" connection="solder" />
+          <output name="2" label="Pad/LED" connection="solder" />
+          <output name="3" label="Pad" connection="solder" />
+          <output name="4" label="Pad" connection="solder" />
+          <output name="5" label="Pad" connection="solder" />
+          <output name="6" label="Pad" connection="solder" />
+          <size length="2.165" width="0.472" height="0.098" units="inches" />
+        </model>
+        <model model="DN166I1D" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for New InterMountain N-Scale F7A/B, FP7 &amp; FP9 Units">
+          <output name="1" label="Pad/LED" connection="solder" />
+          <output name="2" label="Pad/LED" connection="solder" />
+          <output name="3" label="Pad" connection="solder" />
+          <output name="4" label="Pad" connection="solder" />
+          <output name="5" label="Pad" connection="solder" />
+          <output name="6" label="Pad" connection="solder" />
+          <size length="2.165" width="0.472" height="0.098" units="inches" />
+        </model>
+        <model model="DN166I2" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale FP7 &amp; FP9 Units">
+          <output name="1" label="Pad/LED" connection="solder" />
+          <output name="2" label="Pad/LED" connection="solder" />
+          <output name="3" label="Pad" connection="solder" />
+          <output name="4" label="Pad" connection="solder" />
+          <output name="5" label="Pad" connection="solder" />
+          <output name="6" label="Pad" connection="solder" />
+          <size length="2.165" width="0.472" height="0.098" units="inches" />
+        </model>
         <model model="DN166PS" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="N" connector="NMRAmedium" comment="N/HO-Scale, with Medium Plug">
           <output name="1" label="White" connection="plug" />
           <output name="2" label="Yellow" connection="plug" />
@@ -1493,6 +1547,25 @@
           <output name="5" label="F3-Brown" connection="wire" />
           <output name="6" label="F4-Yellow" connection="wire" />
           <size length="1.28" width="0.67" height="0.25" units="inches" />
+          <functionlabels>
+            <functionlabel num="11" lockable="false">Uncoupling</functionlabel>
+            <functionlabel num="12" lockable="false">Wheel Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Emerg. Stop Shutdown</functionlabel>
+            <functionlabel num="15" lockable="false">Sander</functionlabel>
+            <functionlabel num="16" lockable="false">Misc. User Chatter</functionlabel>
+            <functionlabel num="17" lockable="false">Boxcar Boom</functionlabel>
+            <functionlabel num="18" lockable="false">Misc. User Sound</functionlabel>
+            <functionlabel num="19" lockable="true">Enables HEP mode</functionlabel>
+            <functionlabel num="20" lockable="false">Misc. User Sound</functionlabel>
+            <functionlabel num="21" lockable="false">Select Notch 1</functionlabel>
+            <functionlabel num="22" lockable="false">Select Notch 2</functionlabel>
+            <functionlabel num="23" lockable="false">Select Notch 3</functionlabel>
+            <functionlabel num="24" lockable="false">Select Notch 4</functionlabel>
+            <functionlabel num="25" lockable="false">Select Notch 5</functionlabel>
+            <functionlabel num="26" lockable="false">Select Notch 6</functionlabel>
+            <functionlabel num="27" lockable="false">Select Notch 7</functionlabel>
+            <functionlabel num="28" lockable="false">Select Notch 8</functionlabel>
+          </functionlabels>
         </model>
         <functionlabels>
           <functionlabel num="0" lockable="true">Lights</functionlabel>
@@ -6175,6 +6248,9 @@
       <family name="Control Point" mfg="RR-CirKits" type="stationary" comment="The Control Point is normally programmed in OPs mode" file="RR-CirKits-LNCP-basic.xml">
         <model model="LNCP" comment="LocoNet Control Point" lowVersionID="01" />
       </family>
+      <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The MotorMan is normally programmed in OPs mode" file="RR-CirKits-MotorMan.xml">
+        <model model="MotorMan" comment="8 Line Output Driver" lowVersionID="10" />
+      </family>
       <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The SignalMan is normally programmed in OPs mode" file="RR-CirKits-SignalMan-basic.xml">
         <model model="SignalMan" comment="Signal Mast Driver" lowVersionID="10" />
       </family>
@@ -6194,35 +6270,159 @@
         <model model="Servo6" lowVersionID="10" highVersionID="10" />
       </family>
       <family name="Bachmann Sound Value" mfg="Throttle-Up (SoundTraxx)" comment="Bachmann Standard line HO locomotives with SoundTraxx DSD that Bachmann refers to as Sound Value" file="SoundTraxx_Bachmann_SndVal_Dsl.xml">
-        <model model="Alco S4" numOuts="2" numFns="14" connector="other" productID="Alco S4" comment="Model Diesel">
+        <model model="Alco FA2" numOuts="2" numFns="14" connector="other" productID="Alco_FA2" comment="Diesel Prime Mover Alco 244">
           <versionCV lowVersionID="82" />
-          <output name="Bell" />
-          <output name="Air Horn" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
-          <output name="Short Horn" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="#1 Not" label="Used" />
+          <output name="Short" label="Horn" />
+          <output name="#2 Not" label="Used" />
+          <output name="#3 Not" label="Used" />
           <output name="Dimming" />
           <output name="Mute" />
         </model>
-        <model model="Alco FA2" numOuts="2" numFns="14" connector="other" productID="Alco FA2" comment="Model Diesel">
+        <model model="Alco FB2" numOuts="2" numFns="14" connector="other" productID="Alco_FB2" comment="Diesel Prime Mover Alco 244">
           <versionCV lowVersionID="82" />
-          <output name="Bell" />
-          <output name="Air Horn" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
-          <output name="Short Horn" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="#1 Not" label="Used" />
+          <output name="Short" label="Horn" />
+          <output name="#2 Not" label="Used" />
+          <output name="#3 Not" label="Used" />
           <output name="Dimming" />
           <output name="Mute" />
         </model>
-        <model model="Alco FB2" numOuts="2" numFns="14" connector="other" productID="Alco FB2" comment="Model Diesel">
+        <model model="Alco RS3" numOuts="2" numFns="14" connector="other" productID="Alco_RS3" comment="Diesel Prime Mover Alco 244">
           <versionCV lowVersionID="82" />
-          <output name="Bell" />
-          <output name="Air Horn" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
-          <output name="Short Horn" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="#1 Not" label="Used" />
+          <output name="Short" label="Horn" />
+          <output name="#2 Not" label="Used" />
+          <output name="#3 Not" label="Used" />
           <output name="Dimming" />
           <output name="Mute" />
+        </model>
+        <model model="Alco S2" numOuts="2" numFns="14" connector="other" productID="Alco_S2" comment="Diesel Prime Mover Alco 539 Turbo">
+          <versionCV lowVersionID="82" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="#1 Not" label="Used" />
+          <output name="Short" label="Horn" />
+          <output name="#2 Not" label="Used" />
+          <output name="#3 Not" label="Used" />
+          <output name="Dimming" />
+          <output name="Mute" />
+        </model>
+        <model model="Alco S4" numOuts="2" numFns="14" connector="other" productID="Alco_S4" comment="Diesel Prime Mover Alco 539 Turbo">
+          <versionCV lowVersionID="82" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="#1 Not" label="Used" />
+          <output name="Short" label="Horn" />
+          <output name="#2 Not" label="Used" />
+          <output name="#3 Not" label="Used" />
+          <output name="Dimming" />
+          <output name="Mute" />
+        </model>
+        <model model="EMD DD40AX" numOuts="4" numFns="14" connector="other" productID="EMD_DD40AX" comment="Diesel Prime Mover 2 × EMD 645E3A">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="Flashing" />
+          <output name="4" label="# Board" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="Dynamic" label="Brakes" />
+          <output name="Short" label="Horn" />
+          <output name="#2 Not" label="Used" />
+          <output name="#3 Not" label="Used" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <functionlabels>
+            <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Flashing Light</functionlabel>
+            <functionlabel num="6" lockable="true">Lighted # Boards</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="EMD F7A" numOuts="2" numFns="14" connector="other" productID="EMD_F7A" comment="Diesel Prime Mover EMD567 Non-Turbo">
+          <versionCV lowVersionID="82" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="#1 Not" label="Used" />
+          <output name="Short" label="Horn" />
+          <output name="#2 Not" label="Used" />
+          <output name="#3 Not" label="Used" />
+          <output name="Dimming" />
+          <output name="Mute" />
+        </model>
+        <model model="EMD F7B" numOuts="2" numFns="14" connector="other" productID="EMD_F7B" comment="Diesel Prime Mover EMD567 Non-Turbo">
+          <versionCV lowVersionID="82" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="#1 Not" label="Used" />
+          <output name="Short" label="Horn" />
+          <output name="#2 Not" label="Used" />
+          <output name="#3 Not" label="Used" />
+          <output name="Dimming" />
+          <output name="Mute" />
+        </model>
+        <model model="EMD GP7" numOuts="2" numFns="14" connector="other" productID="EMD_GP7" comment="Diesel Prime Mover EMD567 Non-Turbo">
+          <versionCV lowVersionID="82" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="#1 Not" label="Used" />
+          <output name="Short" label="Horn" />
+          <output name="#2 Not" label="Used" />
+          <output name="#3 Not" label="Used" />
+          <output name="Dimming" />
+          <output name="Mute" />
+        </model>
+        <model model="EMD SD70ACe" numOuts="2" numFns="14" connector="other" productID="EMD_SD70ACe" comment="Diesel Prime Mover EMD 16-710G3C-T2">
+          <versionCV lowVersionID="82" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="Dynamic" label="Brakes" />
+          <output name="Short" label="Horn" />
+          <output name="#2 Not" label="Used" />
+          <output name="#3 Not" label="Used" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <functionlabels>
+            <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="GE ES44AC" numOuts="2" numFns="14" connector="other" productID="GE_ES44AC" comment="Diesel Prime Mover GEVO V12">
+          <versionCV lowVersionID="82" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="Dynamic" label="Brakes" />
+          <output name="Short" label="Horn" />
+          <output name="#2 Not" label="Used" />
+          <output name="#3 Not" label="Used" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <functionlabels>
+            <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
+          </functionlabels>
         </model>
         <functionlabels>
           <functionlabel num="0" lockable="true">Headlight</functionlabel>
@@ -6236,12 +6436,14 @@
       <family name="Bachmann Sound Value" mfg="Throttle-Up (SoundTraxx)" comment="Bachmann Standard line HO locomotives with SoundTraxx DSD that Bachmann refers to as Sound Value" file="SoundTraxx_Bachmann_SndVal_Stm.xml">
         <model model="Alco 2-6-0" numOuts="2" numFns="14" connector="other" productID="Alco 2-6-0" comment="Model 2-6-0">
           <versionCV lowVersionID="82" />
-          <output name="Bell" />
-          <output name="Whistle" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
-          <output name="Short Whistle" />
-          <output name="Steam-Release" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="#1 Not" label="Used" />
+          <output name="Short" label="Whistle" />
+          <output name="Steam" label="Release" />
+          <output name="#2 Not" label="Used" />
           <output name="Dimming" />
           <output name="Mute" />
         </model>
@@ -8548,23 +8750,38 @@
         </functionlabels>
       </family>
       <family name="Tsunami Diesel Walthers OEM" mfg="Throttle-Up (SoundTraxx)" comment="These are OEM for Walthers Proto2000 Tsunami diesel decoders" file="SoundTraxx_Tsu_Diesel_Walthers.xml">
-        <model model="E8" numOuts="4" numFns="14" connector="other" productID="E8">
+        <model model="Budd Metroliner" numOuts="4" numFns="14" connector="other" productID="Metro" comment="Prototype not equipped with a Bell)">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
-          <output name="Bell" />
-          <output name="3" label="  FX5  " />
-          <output name="4" label="  FX6  " />
+          <output name="Bell" label="N/A" />
+          <output name="3" label="# boards" />
+          <output name="4" label="Gyralite" />
           <output name="Dynamic" label="Brakes" />
           <output name="Short" label="Horn" />
-          <output name="Reserved" />
+          <output name="Interior" label="Light" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Compressor" label="RPM -" />
           <output name="Brakes" />
           <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Headlight</functionlabel>
+            <functionlabel num="1" lockable="false" />
+            <functionlabel num="2" lockable="false">Horn</functionlabel>
+            <functionlabel num="3" lockable="true">Short Horn</functionlabel>
+            <functionlabel num="4" lockable="true">Fans/RPM+</functionlabel>
+            <functionlabel num="5" lockable="true">Gyralite</functionlabel>
+            <functionlabel num="6" lockable="true"># Boards</functionlabel>
+            <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+            <functionlabel num="8" lockable="true">Mute</functionlabel>
+            <functionlabel num="9" lockable="true">Brake Squeal</functionlabel>
+            <functionlabel num="10" lockable="true">Coupler</functionlabel>
+            <functionlabel num="11" lockable="true">Interior Lights</functionlabel>
+            <functionlabel num="12" lockable="true">Compressor/RPM-</functionlabel>
+          </functionlabels>
         </model>
-        <model model="F7 El Capitan" numOuts="4" numFns="14" connector="other" productID="F7">
+        <model model="E7A" numOuts="4" numFns="14" connector="other" productID="E7A" comment="Diesel Prime Mover Dual EMD567">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
@@ -8579,8 +8796,12 @@
           <output name="Compressor" label="RPM -" />
           <output name="Brakes" />
           <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="5" lockable="true">Mars Light</functionlabel>
+            <functionlabel num="6" lockable="true"># Boards</functionlabel>
+          </functionlabels>
         </model>
-        <model model="GP60" numOuts="4" numFns="14" connector="other" productID="GP60">
+        <model model="E8" numOuts="4" numFns="14" connector="other" productID="E8" comment="Diesel Prime Mover Dual EMD567">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
@@ -8595,8 +8816,12 @@
           <output name="Compressor" label="RPM -" />
           <output name="Brakes" />
           <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="5" lockable="true">Mars Light</functionlabel>
+            <functionlabel num="6" lockable="true"># Boards</functionlabel>
+          </functionlabels>
         </model>
-        <model model="SD9 BNSF" numOuts="4" numFns="14" connector="other" productID="SD9BNSF">
+        <model model="F7 El Capitan" numOuts="4" numFns="14" connector="other" productID="F7" comment="Diesel Prime Mover EMD567 Non-Turbo">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
@@ -8611,8 +8836,12 @@
           <output name="Compressor" label="RPM -" />
           <output name="Brakes" />
           <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="5" lockable="true">Mars Light</functionlabel>
+            <functionlabel num="6" lockable="true"># Boards</functionlabel>
+          </functionlabels>
         </model>
-        <model model="SD9 SOU" numOuts="4" numFns="14" connector="other" productID="SD9SOU">
+        <model model="GP20" numOuts="4" numFns="14" connector="other" productID="GP20" comment="Diesel Prime Mover EMD567 Turbo">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
@@ -8627,8 +8856,12 @@
           <output name="Compressor" label="RPM -" />
           <output name="Brakes" />
           <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="5" lockable="true">Gyralite</functionlabel>
+            <functionlabel num="6" lockable="true"># Boards</functionlabel>
+          </functionlabels>
         </model>
-        <model model="SD9 SP" numOuts="4" numFns="14" connector="other" productID="SD9SP">
+        <model model="GP30 Chessie" numOuts="4" numFns="14" connector="other" productID="GP30CO" comment="C&amp;O - Diesel Prime Mover EMD567 Turbo">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
@@ -8643,8 +8876,11 @@
           <output name="Compressor" label="RPM -" />
           <output name="Brakes" />
           <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="6" lockable="true"># Boards</functionlabel>
+          </functionlabels>
         </model>
-        <model model="SD9 CR" numOuts="4" numFns="14" connector="other" productID="SD9SP">
+        <model model="GP30 ATSF" numOuts="4" numFns="14" connector="other" productID="GP30SF" comment="Santa Fe, Reading - Diesel Prime Mover EMD567 Turbo">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
@@ -8659,8 +8895,12 @@
           <output name="Compressor" label="RPM -" />
           <output name="Brakes" />
           <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="5" lockable="true">Strobe</functionlabel>
+            <functionlabel num="6" lockable="true"># Boards</functionlabel>
+          </functionlabels>
         </model>
-        <model model="U28B/U30B" numOuts="4" numFns="14" connector="other" productID="UB">
+        <model model="GP30 MILW" numOuts="4" numFns="14" connector="other" productID="GP30MIL" comment="Milwaukee Road - Diesel Prime Mover EMD567 Turbo">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
@@ -8675,8 +8915,12 @@
           <output name="Compressor" label="RPM -" />
           <output name="Brakes" />
           <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="5" lockable="true">Strobe</functionlabel>
+            <functionlabel num="6" lockable="true"># Boards</functionlabel>
+          </functionlabels>
         </model>
-        <model model="U28B/U30B WP" numOuts="4" numFns="14" connector="other" productID="UBWP">
+        <model model="GP60" numOuts="4" numFns="14" connector="other" productID="GP60" comment="Diesel Prime Mover EMD710 Turbo">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
@@ -8691,6 +8935,203 @@
           <output name="Compressor" label="RPM -" />
           <output name="Brakes" />
           <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="6" lockable="true"># Boards</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="SD7 BLE" numOuts="4" numFns="14" connector="other" productID="SD7BLE" comment="B&amp;LE - Diesel Prime Move EMD 567 Non-Turbo">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes" />
+          <output name="Short" label="Horn" />
+          <output name="FX5B" />
+          <output name="Fans" label="RPM +" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Compressor" label="RPM -" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="6" lockable="true"># Boards</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="SD7 CNW" numOuts="4" numFns="14" connector="other" productID="SD7CNW" comment="C&amp;NW - Diesel Prime Move EMD 567 Non-Turbo">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes" />
+          <output name="Short" label="Horn" />
+          <output name="FX5B" />
+          <output name="Fans" label="RPM +" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Compressor" label="RPM -" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="6" lockable="true"># Boards</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="SD9 BNSF" numOuts="4" numFns="14" connector="other" productID="SD9BNSF" comment="BNSF - Diesel Prime Move EMD 567 Non-Turbo">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes" />
+          <output name="Short" label="Horn" />
+          <output name="Reserved" />
+          <output name="Fans" label="RPM +" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Compressor" label="RPM -" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="6" lockable="true"># Boards</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="SD9 SOU" numOuts="4" numFns="14" connector="other" productID="SD9SOU" comment="Southern - Diesel Prime Mover EMD567 Non-Turbo">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes" />
+          <output name="Short" label="Horn" />
+          <output name="FX5B" />
+          <output name="Fans" label="RPM +" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Compressor" label="RPM -" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="6" lockable="true"># Boards</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="SD9 SP" numOuts="4" numFns="14" connector="other" productID="SD9SP" comment="Southern Pacific - Diesel Prime Mover EMD567 Non-Turbo">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes" />
+          <output name="Short" label="Horn" />
+          <output name="Reserved" />
+          <output name="Fans" label="RPM +" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Compressor" label="RPM -" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="6" lockable="true"># Boards</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="SD9 CR" numOuts="4" numFns="14" connector="other" productID="SD9SP" comment="Conrail - Diesel Prime Mover EMD567 Non-Turbo">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes" />
+          <output name="Short" label="Horn" />
+          <output name="Reserved" />
+          <output name="Fans" label="RPM +" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Compressor" label="RPM -" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="6" lockable="true"># Boards</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="SD45" numOuts="4" numFns="14" connector="other" productID="SD45" comment="D&amp;RGW, EL - Diesel Prime Mover EMD645 Turbo">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes" />
+          <output name="Short" label="Horn" />
+          <output name="Reserved" />
+          <output name="Fans" label="RPM +" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Compressor" label="RPM -" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="5" lockable="true">Mars Light</functionlabel>
+            <functionlabel num="6" lockable="true"># Boards</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="U28B/U30B" numOuts="4" numFns="14" connector="other" productID="U28B" comment="CB&amp;Q, Conrail, L&amp;N - Diesel Prime Mover GE FDL-16">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes" />
+          <output name="Short" label="Horn" />
+          <output name="Reserved" />
+          <output name="Fans" label="RPM +" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Compressor" label="RPM -" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="5" lockable="true">Gyralite</functionlabel>
+            <functionlabel num="6" lockable="true"># Boards</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="U28B/U30B GN" numOuts="4" numFns="14" connector="other" productID="U28BGN" comment="GN, MILW, NYC - Diesel Prime Mover GE FDL-16">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes" />
+          <output name="Short" label="Horn" />
+          <output name="FX5B" />
+          <output name="Fans" label="RPM +" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Compressor" label="RPM -" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="5" lockable="true">Rotary beacon</functionlabel>
+            <functionlabel num="6" lockable="true"># Boards</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="U28B/U30B WP" numOuts="4" numFns="14" connector="other" productID="U28BWP" comment="Western Pacific - Diesel Prime Mover GE FDL-16">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes" />
+          <output name="Short" label="Horn" />
+          <output name="Reserved" />
+          <output name="Fans" label="RPM +" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Compressor" label="RPM -" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="5" lockable="true">Gyralite</functionlabel>
+            <functionlabel num="6" lockable="true"># Boards</functionlabel>
+          </functionlabels>
         </model>
         <functionlabels>
           <functionlabel num="0" lockable="true">Headlight</functionlabel>
@@ -9511,6 +9952,39 @@
           <functionlabel num="10" lockable="true">Effect Lighting</functionlabel>
           <functionlabel num="11" lockable="true">Water Stop</functionlabel>
           <functionlabel num="12" lockable="true">Injector</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="Tsunami Steam Walthers OEM" mfg="Throttle-Up (SoundTraxx)" comment="These are OEM for Walthers Proto2000 Tsunami steam decoders" file="SoundTraxx_Tsu_Steam_Walthers.xml">
+        <model model="USRA 0-8-0" numOuts="2" numFns="14" connector="other" productID="USRA080" comment="USRA 0-8-0">
+          <versionCV lowVersionID="64" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="Dynamo" />
+          <output name="Short" label="Whistle" />
+          <output name="Steam" label="Release" />
+          <output name="Water" label="Stop" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Injector" />
+          <output name="Brake" label="Squeal" />
+          <output name="Coupler" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Whistle</functionlabel>
+          <functionlabel num="3" lockable="true">Short Whistle</functionlabel>
+          <functionlabel num="4" lockable="true">Steam Release</functionlabel>
+          <functionlabel num="5" lockable="true">FX5 Light</functionlabel>
+          <functionlabel num="6" lockable="true">FX6 Light</functionlabel>
+          <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Water Stop</functionlabel>
+          <functionlabel num="10" lockable="true">Injectors</functionlabel>
+          <functionlabel num="11" lockable="true">Brake Squeal</functionlabel>
+          <functionlabel num="12" lockable="true">Coupler</functionlabel>
         </functionlabels>
       </family>
       <family name="AC1" mfg="Spectrum Engineering" comment="AC1 is an animation accessory decoder with secondary OPS access as a LOCO" file="Spectrum_AC8824.xml">
