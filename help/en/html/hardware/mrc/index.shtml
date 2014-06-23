@@ -71,8 +71,8 @@ For system route 15, you would add a turnout with an address of 1015.
 <p>
 There is no support for editing/adding/removal of system routes in the MRC.
 <p>
-Support for MRC Prodigy was first available in <br>
-<a href="http://jmri.sf.net/releasenotes/t.b.c">JMRI 3.9.x</a>.<br>
+Support for MRC Prodigy is available starting with<br>
+<a href="http://jmri.sf.net/releasenotes/jmri3.9.1.shtml">JMRI 3.9.1</a>.<br>
 
 <!--#include virtual="/Footer" -->
 </body>
