@@ -3980,7 +3980,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                 case TURNOUT_B: 
                 case TURNOUT_C: 
                 case TURNOUT_D: LayoutTurnout lt = (LayoutTurnout)foundObject;
-                                try {
+                                 try {
                                     if(lt.getConnection(foundPointType)==null){
                                         lt.setConnection(foundPointType, t, TRACK);
                                         if(t.getConnect1()==p)
@@ -4098,22 +4098,21 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                                 if((p2.getConnect1()==null && p2.getConnect2()!=null) ||
                                          (p2.getConnect1()!=null && p2.getConnect2()==null) ){
                                     TrackSegment t = p2.getConnect1();
-                                    if(t==null)
+                                    if(t==null){
                                         t = p2.getConnect2();
+                                    }
                                     if(t==null) return;
                                     LayoutTurnout lt = (LayoutTurnout) beginObject;
                                     try {
                                         if(lt.getConnection(beginPointType)==null){
                                             lt.setConnection(beginPointType, t, TRACK);
                                             p2.removeTrackConnection(t);
-                                            if(t.getConnect1()==null)
+                                            if(t.getConnect1()==p2)
                                                 t.setNewConnect1(lt, beginPointType);
                                             else
                                                 t.setNewConnect2(lt, beginPointType);
                                             
                                             removePositionablePoint(p2);
-                                            
-                                            
                                         }
                                         if(t.getLayoutBlock()!=null)
                                             auxTools.setBlockConnectivityChanged();
