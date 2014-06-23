@@ -213,7 +213,7 @@
 	    </dd>
 
 	    <dt class="im"><a href="http://www.merg.org.uk/">
-	    <img src="http://www.merg.org.uk/images/logo1m.gif" alt="MERG logo" height="45" width="100"></a></dt>
+	    <img src="http://www.merg.org.uk/merg_images/merg_logo.png" alt="MERG logo" height="45" width="100"></a></dt>
 	    <dt>MERG CBUS</dt>
 	    <dd><p class="dl">Configure: <a href="can/cbus/index.shtml">MERG CBUS networks</a></p></dd>
 
@@ -222,7 +222,8 @@
 	    <dt>Model Rectifier Corp (MRC)</dt>
 	    <dd><p class="dl">MRC decoders can be configured via DecoderPro using any supported DCC system.</p>
 	    <p>JMRI will be able to connect to the MRC DCC system starting with
-	    JMRI <a href="http://jmri.org/releasenotes/jmri3.9.1.shtml">test release 3.9.1</a>, expected out in early July 2014.</dd>
+	    JMRI <a href="http://jmri.org/releasenotes/jmri3.9.1.shtml">test release 3.9.1</a>, expected out in early July 2014.
+	    Fore more information, see the <a href="mrc/index.shtml">MRC system page</a>.</dd>
 
 	    <dt class=im><a href="http://www.proto87.com/RPS-MR-position-detection-system.html">
 	    <IMG src="images/RPS.gif"
