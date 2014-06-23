@@ -221,9 +221,8 @@
 	    <img src="http://www.modelrec.com/images/interface/MRCLogo.gif" alt="MRC logo" height="48" width="96"></a></dt>
 	    <dt>Model Rectifier Corp (MRC)</dt>
 	    <dd><p class="dl">MRC decoders can be configured via DecoderPro using any supported DCC system.</p>
-	    <p>JMRI cannot connect to the MRC DCC system because MRC hasn't given permission for us
-	    to use the information needed to do that.  For more information on this, 
-	    please <a href="http://www.modelrec.com">contact MRC directly</a>.</dd>
+	    <p>JMRI will be able to connect to the MRC DCC system starting with
+	    JMRI <a href="http://jmri.org/releasenotes/jmri3.9.1.shtml">test release 3.9.1</a>, expected out in early July 2014.</dd>
 
 	    <dt class=im><a href="http://www.proto87.com/RPS-MR-position-detection-system.html">
 	    <IMG src="images/RPS.gif"
