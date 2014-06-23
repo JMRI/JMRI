@@ -123,6 +123,7 @@
 	    and provided updates for NCE decoders
     <LI>Bob Bucklew, who as an early CTC-builder showed the way to better functionality,
         provided images, and keeps use moving toward better CTC models.
+        See in particular his <a href="http://www.quaker-valley.com/CTC/JMRI_Panel_Tutorial.html">online panel tutorial</a>.
     <LI>Bob Byck, who did extensive testing of test release 1.7.3
 	<LI>Allen Byrne, who has systematically made improvements in the syntax and structure of the JMRI code
 <a name="C"></A>
