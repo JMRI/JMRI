@@ -31,7 +31,7 @@ public class MrcThrottleManager extends AbstractThrottleManager {
     public void requestThrottleSetup(LocoAddress a, boolean control) {
         //We do interact
         DccLocoAddress address = (DccLocoAddress) a;
-        log.debug("new MrcThrottle for "+address);
+        log.debug("new MrcThrottle for "+address); //IN18N
         notifyThrottleKnown(new MrcThrottle((MrcSystemConnectionMemo)adapterMemo, address), address);
     }
 

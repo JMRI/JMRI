@@ -33,7 +33,7 @@ public class SerialDriverAdapter extends MrcPortController  implements jmri.jmri
     
     public SerialDriverAdapter() {
         setManufacturer(jmri.jmrix.DCCManufacturerList.MRC);
-        options.put("CabAddress", new Option("Cab Address:", validOption1, false));
+        options.put("CabAddress", new Option("Cab Address:", validOption1, false)); //IN18N
         adaptermemo = new MrcSystemConnectionMemo();
     }
 
@@ -54,8 +54,8 @@ public class SerialDriverAdapter extends MrcPortController  implements jmri.jmri
             try {
                 activeSerialPort.setSerialPortParams(currentBaudNumber(getCurrentBaudRate()), SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_ODD);
             } catch (gnu.io.UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port "+portName+": "+e.getMessage());
-                return "Cannot set serial parameters on port "+portName+": "+e.getMessage();
+                log.error("Cannot set serial parameters on port "+portName+": "+e.getMessage());//IN18N
+                return "Cannot set serial parameters on port "+portName+": "+e.getMessage();//IN18N
             }
 
             // set RTS high, DTR high
@@ -68,14 +68,14 @@ public class SerialDriverAdapter extends MrcPortController  implements jmri.jmri
             // set timeout
             // activeSerialPort.enableReceiveTimeout(1000);
             log.info("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
-                      +" "+activeSerialPort.isReceiveTimeoutEnabled());
-            log.info("input buffer " + activeSerialPort.getInputBufferSize());
+                      +" "+activeSerialPort.isReceiveTimeoutEnabled());//IN18N
+            log.info("input buffer " + activeSerialPort.getInputBufferSize());//IN18N
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
             int count = serialStream.available();
-            log.debug("input stream shows "+count+" bytes available");
+            log.debug("input stream shows "+count+" bytes available");//IN18N
             while ( count > 0) {
                 serialStream.skip(count);
                 count = serialStream.available();
@@ -90,7 +90,7 @@ public class SerialDriverAdapter extends MrcPortController  implements jmri.jmri
                          +" DSR: "+activeSerialPort.isDSR()
                          +" CTS: "+activeSerialPort.isCTS()
                          +"  CD: "+activeSerialPort.isCD()
-                         );
+                         );//IN18N
             }
 
             opened = true;
@@ -98,9 +98,9 @@ public class SerialDriverAdapter extends MrcPortController  implements jmri.jmri
         } catch (gnu.io.NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (Exception ex) {
-            log.error("Unexpected exception while opening port "+portName+" trace follows: "+ex);
+            log.error("Unexpected exception while opening port "+portName+" trace follows: "+ex);//IN18N
             ex.printStackTrace();
-            return "Unexpected error while opening port "+portName+": "+ex;
+            return "Unexpected error while opening port "+portName+": "+ex;//IN18N
         }
 
         return null; // indicates OK return
@@ -118,7 +118,7 @@ public class SerialDriverAdapter extends MrcPortController  implements jmri.jmri
         adaptermemo.setMrcTrafficController(packets);
         
         packets.setAdapterMemo(adaptermemo);
-        packets.setCabNumber(Integer.parseInt(getOptionState("CabAddress")));        
+        packets.setCabNumber(Integer.parseInt(getOptionState("CabAddress")));//IN18N
         
         adaptermemo.configureManagers();
         
@@ -130,7 +130,7 @@ public class SerialDriverAdapter extends MrcPortController  implements jmri.jmri
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {
-            log.error("getInputStream called before load(), stream not available");
+            log.error("getInputStream called before load(), stream not available");//IN18N
             return null;
         }
         
@@ -139,13 +139,12 @@ public class SerialDriverAdapter extends MrcPortController  implements jmri.jmri
 
     @Override
     public DataOutputStream getOutputStream() {
-        log.info("Outputstream opened");
-        if (!opened) log.error("getOutputStream called before load(), stream not available");
+        if (!opened) log.error("getOutputStream called before load(), stream not available");//IN18N
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         }
      	catch (java.io.IOException e) {
-            log.error("getOutputStream exception: "+e);
+            log.error("getOutputStream exception: "+e);//IN18N
      	}
      	return null;
     }
@@ -158,7 +157,7 @@ public class SerialDriverAdapter extends MrcPortController  implements jmri.jmri
      */
     @Override
     public String[] validBaudRates() {
-        return new String[]{"38,400 bps"};
+        return new String[]{"38,400 bps"};//IN18N
     }
 
     /**
@@ -172,7 +171,7 @@ public class SerialDriverAdapter extends MrcPortController  implements jmri.jmri
     private boolean opened = false;
     InputStream serialStream = null;
     
-    protected String [] validOption1 = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
+    protected String [] validOption1 = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};//IN18N
     
     
     

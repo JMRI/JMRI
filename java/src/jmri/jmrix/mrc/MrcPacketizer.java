@@ -105,13 +105,13 @@ public class MrcPacketizer extends MrcTrafficController {
         //is picked out
         m.setByteStream();
         
-        if (debug){ log.debug("queue Mrc packet: "+m.toString()); }
+        if (debug){ log.debug("queue Mrc packet: "+m.toString()); } //IN18N
         // in an atomic operation, queue the request and wake the xmit thread
         try {
             synchronized(xmtHandler) {
                 xmtList.addLast(m);
                 if(debug){
-                    log.debug("xmt list size " + xmtList.size());
+                    log.debug("xmt list size " + xmtList.size()); //IN18N
                     Iterator iterator = xmtList.iterator();
                     while (iterator.hasNext()){
                         log.debug(iterator.next().toString());  
@@ -121,7 +121,7 @@ public class MrcPacketizer extends MrcTrafficController {
             } 
         }
         catch (Exception e) {
-            log.warn(rb.getString("LogMrcPacketizerPassXmitError"), e);
+            log.warn(MrcPacketizerBundle.getMessage("LogMrcPacketizerPassXmitError"), e); //IN18N
         }
     }
 
@@ -149,7 +149,7 @@ public class MrcPacketizer extends MrcTrafficController {
         istream = p.getInputStream();
         ostream = p.getOutputStream();
         if (controller != null)
-            log.warn(rb.getString("LogMrcPacketizerConnectWarn"));
+            log.warn(MrcPacketizerBundle.getMessage("LogMrcPacketizerConnectWarn")); //IN18N
         controller = p;
     }
 
@@ -162,7 +162,7 @@ public class MrcPacketizer extends MrcTrafficController {
         istream = null;
         ostream = null;
         if (controller != p)
-            log.warn(rb.getString("LogMrcPacketizerDisconnectWarn"));
+            log.warn(MrcPacketizerBundle.getMessage("LogMrcPacketizerDisconnectWarn")); //IN18N
         controller = null;
     }
 
@@ -243,13 +243,13 @@ public class MrcPacketizer extends MrcTrafficController {
                             //Only a clock message has the first & thirdbyte different
                             break;
                        }
-                       if (debug) log.debug("Skipping: "+Integer.toHexString(firstByte) + " " + Integer.toHexString(secondByte) + " " + Integer.toHexString(thirdByte));
+                       if (debug) log.debug("Skipping: "+Integer.toHexString(firstByte) + " " + Integer.toHexString(secondByte) + " " + Integer.toHexString(thirdByte)); //IN18N
                         firstByte = secondByte;
                         secondByte = thirdByte;
                         thirdByte = readByteProtected(istream)&0xFF;
                     }
                     final Date time = new Date();
-                    if (fulldebug) log.debug(" (RcvHandler) Start message with message: "+ Integer.toHexString(firstByte) + " " + Integer.toHexString(secondByte));
+                    if (fulldebug) log.debug(" (RcvHandler) Start message with message: "+ Integer.toHexString(firstByte) + " " + Integer.toHexString(secondByte)); //IN18N
                     MrcMessage msg = null;
                     boolean pollForUs = false;
                         
@@ -261,7 +261,7 @@ public class MrcPacketizer extends MrcTrafficController {
                         if(firstByte==cabAddress){
                             pollForUs = true;
                         } else if (mCurrentState == WAITFORCMDRECEIVED) {
-                            if (debug) log.debug("Missed our poll slot");
+                            if (debug) log.debug("Missed our poll slot"); //IN18N
                             synchronized(transmitLock) {
                               mCurrentState = MISSEDPOLL;
                               transmitLock.notify();
@@ -290,7 +290,7 @@ public class MrcPacketizer extends MrcTrafficController {
                                                                       break;
                             case MrcPackets.READCVCMD :               msg = new MrcMessage(READCVLENGTH);
                                                                       msg.setMessageClass(MrcInterface.PROGRAMMING);
-                                                                      if (debug) log.debug("Read CV Cmd");
+                                                                      if (debug) log.debug("Read CV Cmd"); //IN18N
                                                                       break;
                             case MrcPackets.READDECODERADDRESSCMD :   msg = new MrcMessage(readDecoderAddressLength);
                                                                       msg.setMessageClass(MrcInterface.PROGRAMMING);
@@ -316,9 +316,9 @@ public class MrcPacketizer extends MrcTrafficController {
                                                                         mCurrentState = IDLESTATE;
                                                                         transmitLock.notify();
                                                                       }
-                                                                      if (debug) log.debug("CV read reply");
+                                                                      if (debug) log.debug("CV read reply"); //IN18N
                                                                       break;
-                            case MrcPackets.PROGCMDSENTCODE  :         if (debug) log.debug("Gd Prog Cmd Sent");
+                            case MrcPackets.PROGCMDSENTCODE  :         if (debug) log.debug("Gd Prog Cmd Sent"); //IN18N
                                                                       synchronized(transmitLock) {
                                                                         mCurrentState = IDLESTATE;
                                                                         transmitLock.notify();
@@ -386,7 +386,7 @@ public class MrcPacketizer extends MrcTrafficController {
                                                                       msg = new MrcMessage(4);
                                                                       break;
                             default : msg = new MrcMessage(4); //Unknown
-                                     log.debug("UNKNOWN " + Integer.toHexString(firstByte));
+                                     log.debug("UNKNOWN " + Integer.toHexString(firstByte)); //IN18N
                         }     
                     }
                     
@@ -395,12 +395,12 @@ public class MrcPacketizer extends MrcTrafficController {
                     msg.setElement(2, thirdByte);
                     // message exists, now fill it
                     int len = msg.getNumDataElements();
-                    if (fulldebug) log.debug("len: "+len);
+                    if (fulldebug) log.debug("len: "+len); //IN18N
                     for (int i = 3; i < len; i++)  {
                         // check for message-blocking error
                         int b = readByteProtected(istream)&0xFF;
                         msg.setElement(i, b);
-                        if (fulldebug) log.debug("char "+i+" is: "+Integer.toHexString(b));
+                        if (fulldebug) log.debug("char "+i+" is: "+Integer.toHexString(b)); //IN18N
 
                     }
                     /*Slight trade off with this we may see any transmitted message go out prior to the 
@@ -413,12 +413,12 @@ public class MrcPacketizer extends MrcTrafficController {
                     
                     if((msg.getMessageClass() & MrcInterface.POLL) != MrcInterface.POLL && msg.getNumDataElements()>6){
                         if (!msg.validCheckSum()) {
-                            log.warn(rb.getString("LogMrcPacketizerIgnorBadCkSumWarn"), msg.toString());
+                            log.warn(MrcPacketizerBundle.getMessage("LogMrcPacketizerIgnorBadCkSumWarn"), msg.toString()); //IN18N
                             throw new MrcMessageException();
                         } else {
                             for(int i=1;i<msg.getNumDataElements();i+=2){
                                 if(msg.getElement(i)!=0x00){
-                                    log.warn(rb.getString("LogMrcPacketizerIgnoreBadBitWarn"), msg.toString());
+                                    log.warn(MrcPacketizerBundle.getMessage("LogMrcPacketizerIgnoreBadBitWarn"), msg.toString()); //IN18N
                                     throw new MrcMessageException();
                                 }
                             }
@@ -426,7 +426,7 @@ public class MrcPacketizer extends MrcTrafficController {
                     }
                     // message is complete, dispatch it !!
                     {
-                        if (fulldebug) log.debug("queue message for notification: "+msg.toString());
+                        if (fulldebug) log.debug("queue message for notification: "+msg.toString()); //IN18N
                         final MrcMessage thisMsg = msg;
                         final MrcPacketizer thisTC = trafficController;
                         // return a notification via the queue to ensure end
@@ -443,22 +443,22 @@ public class MrcPacketizer extends MrcTrafficController {
             	}
                 catch (MrcMessageException e) {
                     // just let it ride for now
-                    log.warn(rb.getString("LogMrcPacketizerMsgExceptionWarn"), e);
+                    log.warn(MrcPacketizerBundle.getMessage("LogMrcPacketizerMsgExceptionWarn"), e); //IN18N
                 }
                 catch (java.io.EOFException e) {
                     // posted from idle port when enableReceiveTimeout used
-                    if (fulldebug) log.debug("EOFException, is Mrc serial I/O using timeouts?");
+                    if (fulldebug) log.debug("EOFException, is Mrc serial I/O using timeouts?"); //IN18N
                 }
                 catch (java.io.IOException e) {
                     // fired when write-end of HexFile reaches end
-                    if (debug) log.debug("IOException, should only happen with HexFIle: "+e);
+                    if (debug) log.debug("IOException, should only happen with HexFIle: "+e); //IN18N
                     disconnectPort(controller);
                     return;
                 }
                 // normally, we don't catch the unnamed Exception, but in this
                 // permanently running loop it seems wise.
                 catch (Exception e) {
-                    log.warn(rb.getString("LogMrcPacketizerUnkExceptionWarn"), e); //Simulator produceds these.
+                    log.warn(MrcPacketizerBundle.getMessage("LogMrcPacketizerUnkExceptionWarn"), e);  //IN18N
                     e.printStackTrace();
                 }
             } // end of permanent loop
@@ -493,9 +493,9 @@ public class MrcPacketizer extends MrcTrafficController {
             while (true) {   // loop permanently
                 m = noData;
                 msg = noDataMsg;
-                if (fulldebug) log.debug("check for input");
+                if (fulldebug) log.debug("check for input"); //IN18N
                 synchronized (this) {
-                    if (fulldebug) log.debug("start wait");
+                    if (fulldebug) log.debug("start wait"); //IN18N
                     //log.info("wait until we have been polled");
                     new jmri.util.WaitHandler(this);  // handle synchronization, spurious wake, interruption
                     if (fulldebug) log.debug("end wait");
@@ -504,8 +504,8 @@ public class MrcPacketizer extends MrcTrafficController {
                         m = xmtList.removeFirst();
                         msg = m.getByteStream();
                         if (debug) {
-                            log.debug("xmt list size after get " + xmtList.size());
-                            log.debug("Message to send on" + m);
+                            log.debug("xmt list size after get " + xmtList.size()); //IN18N
+                            log.debug("Message to send on" + m); //IN18N
                         }
                     }
                 }
@@ -526,16 +526,16 @@ public class MrcPacketizer extends MrcTrafficController {
                     if(m.getMessageClass()!=MrcInterface.POLL){
                         if (fulldebug){ 
                             log.debug("end write to stream: "+jmri.util.StringUtil.hexStringFromBytes(msg));
-                            log.info(rb.getString("LogMrcPacketizerWaitInfo"), m.getTimeout(), x);
+                            log.info(MrcPacketizerBundle.getMessage("LogMrcPacketizerWaitInfo"), m.getTimeout(), x); //IN18N
                         }
-                        transmitWait(m.getTimeout(), state, rb.getString("LogMrcPacketizerXmitLoopError"), x);
+                        transmitWait(m.getTimeout(), state, MrcPacketizerBundle.getMessage("LogMrcPacketizerXmitLoopError"), x); //IN18N
                         x++;
                     } else {
                         mCurrentState = IDLESTATE;
                    }
                     
                     if(mCurrentState == WAITFORCMDRECEIVED || mCurrentState == CONFIRMATIONONLY){
-                        if(debug) log.debug("Timed out");
+                        if(debug) log.debug("Timed out"); //IN18N
                         if(m.getRetries()>=0){
                             m.setRetries(m.getRetries() - 1);
                             synchronized (this) {
@@ -548,7 +548,7 @@ public class MrcPacketizer extends MrcTrafficController {
                         consecutiveMissedPolls=0;
                     } else if (mCurrentState == MISSEDPOLL && m.getRetries()>=0) {
                         consecutiveMissedPolls++;
-                        if(debug) log.debug("Missed add to front");
+                        if(debug) log.debug("Missed add to front"); //IN18N
                         if(consecutiveMissedPolls<5){
                             synchronized (this) {
                                 xmtList.addFirst(m);
@@ -562,11 +562,11 @@ public class MrcPacketizer extends MrcTrafficController {
                                 }
                             }
                         } else {
-                            log.warn(rb.getString("LogMrcPacketizerMsgMissedPollsWarn"), consecutiveMissedPolls, m.toString());
+                            log.warn(MrcPacketizerBundle.getMessage("LogMrcPacketizerMsgMissedPollsWarn"), consecutiveMissedPolls, m.toString()); //IN18N
                             consecutiveMissedPolls = 0;
                         }
                     } else if (mCurrentState == DOUBLELOCOCONTROL && m.getRetries()>=0) {
-                        if (debug) log.debug("Auto Retry send message added back to queue: " + Arrays.toString(msg));
+                        if (debug) log.debug("Auto Retry send message added back to queue: " + Arrays.toString(msg)); //IN18N
                         m.setRetries(m.getRetries() - 1);
                         synchronized (this) {
                             xmtList.addFirst(m);
@@ -574,14 +574,14 @@ public class MrcPacketizer extends MrcTrafficController {
                         }
                         consecutiveMissedPolls=0;
                     } else if(mCurrentState == BADCOMMAND){
-                        if (debug) log.debug("Bad command sent");
+                        if (debug) log.debug("Bad command sent"); //IN18N
                         messageFailed(m);
                         mCurrentState = IDLESTATE;
                         consecutiveMissedPolls=0;
                     }
                 }
                 catch (java.io.IOException e) {
-                    log.warn(rb.getString("LogMrcPacketizerSendMsgExWarn"), e.toString());
+                    log.warn(MrcPacketizerBundle.getMessage("LogMrcPacketizerSendMsgExWarn"), e.toString()); //IN18N
                 }
             }
         }
@@ -610,11 +610,11 @@ public class MrcPacketizer extends MrcTrafficController {
 				log.error(InterruptMessage); 
 			}
 		}
-		log.debug("Timeout in transmitWait " + x + ", mCurrentState:" + mCurrentState + " after " + waitTime);
+		log.debug("Timeout in transmitWait " + x + ", mCurrentState:" + mCurrentState + " after " + waitTime); //IN18N
     }
 
     protected void messageFailed(MrcMessage m) {
-        if (debug) log.debug("message transmitted");
+        if (debug) log.debug("message transmitted"); //IN18N
         if(m.getSource()==null)
             return;
         // message is queued for transmit, echo it when needed
@@ -672,15 +672,15 @@ public class MrcPacketizer extends MrcTrafficController {
         log.debug("startThreads current priority = "+priority+
                   " max available = "+Thread.MAX_PRIORITY+
                   " default = "+Thread.NORM_PRIORITY+
-                  " min available = "+Thread.MIN_PRIORITY);
+                  " min available = "+Thread.MIN_PRIORITY); //IN18N
 
         // make sure that the xmt priority is no lower than the current priority
         int xmtpriority = (Thread.MAX_PRIORITY-1>priority ? Thread.MAX_PRIORITY : Thread.MAX_PRIORITY-1);
         // start the XmtHandler in a thread of its own
         if( xmtHandler == null )
           xmtHandler = new XmtHandler();
-        Thread xmtThread = new Thread(xmtHandler, "Mrc transmit handler");
-        log.debug("Xmt thread starts at priority "+xmtpriority);
+        Thread xmtThread = new Thread(xmtHandler, "Mrc transmit handler"); //IN18N
+        log.debug("Xmt thread starts at priority "+xmtpriority); //IN18N
         xmtThread.setDaemon(true);
         xmtThread.setPriority(Thread.MAX_PRIORITY-1);
         xmtThread.start();
@@ -688,7 +688,7 @@ public class MrcPacketizer extends MrcTrafficController {
         // start the RcvHandler in a thread of its own
         if( rcvHandler == null )
           rcvHandler = new RcvHandler(this) ;
-        Thread rcvThread = new Thread(rcvHandler, "Mrc receive handler " + Thread.MAX_PRIORITY);
+        Thread rcvThread = new Thread(rcvHandler, "Mrc receive handler " + Thread.MAX_PRIORITY); //IN18N
         rcvThread.setDaemon(true);
         rcvThread.setPriority(Thread.MAX_PRIORITY);
         rcvThread.start();

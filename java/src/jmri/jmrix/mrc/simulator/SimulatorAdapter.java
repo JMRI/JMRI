@@ -63,7 +63,7 @@ public class SimulatorAdapter extends MrcPortController implements
 			outpipe = new DataOutputStream(tempPipeO);
 			pin = new DataInputStream(new PipedInputStream(tempPipeO));
 		} catch (java.io.IOException e) {
-			log.error("init (pipe): Exception: " + e.toString());
+			log.error("init (pipe): Exception: " + e.toString());//IN18N
 		}
 		opened = true;
 		return null; // indicates OK return
@@ -86,7 +86,7 @@ public class SimulatorAdapter extends MrcPortController implements
 
 		// start the simulator
 		sourceThread = new Thread(this);
-		sourceThread.setName("Mrc Simulator");
+		sourceThread.setName("Mrc Simulator");//IN18N
 		sourceThread.setPriority(Thread.MIN_PRIORITY);
 		sourceThread.start();
         tc.startThreads();
@@ -95,14 +95,14 @@ public class SimulatorAdapter extends MrcPortController implements
 	// base class methods for the MrcPortController interface
 	public DataInputStream getInputStream() {
 		if (!opened || pin == null) {
-			log.error("getInputStream called before load(), stream not available");
+			log.error("getInputStream called before load(), stream not available");//IN18N
 		}
 		return pin;
 	}
 
 	public DataOutputStream getOutputStream() {
 		if (!opened || pout == null) {
-			log.error("getOutputStream called before load(), stream not available");
+			log.error("getOutputStream called before load(), stream not available");//IN18N
 		}
 		return pout;
 	}
@@ -115,7 +115,7 @@ public class SimulatorAdapter extends MrcPortController implements
 	 * Get an array of valid baud rates.
 	 */
 	public String[] validBaudRates() {
-		log.debug("validBaudRates should not have been invoked");
+		log.debug("validBaudRates should not have been invoked");//IN18N
 		return null;
 	}
 
@@ -129,7 +129,7 @@ public class SimulatorAdapter extends MrcPortController implements
 		// of the MRC command station simulation.
         // report status?
         if (log.isInfoEnabled()) 
-            log.info("MRC Simulator Started");     
+            log.info("MRC Simulator Started");     //IN18N
         int cab = 1;
 		while (true) {
 			try{
@@ -142,12 +142,12 @@ public class SimulatorAdapter extends MrcPortController implements
             MrcMessage m = readMessage();
 			if (log.isDebugEnabled()) {
 				StringBuffer buf = new StringBuffer();
-				buf.append("Mrc Simulator Thread received message: ");
+				buf.append("Mrc Simulator Thread received message: ");//IN18N
 				if (m != null) {
 					for (int i = 0; i < m.getNumDataElements(); i++)
 						buf.append(Integer.toHexString(0xFF & m.getElement(i)) + " ");
 				} else {
-					buf.append("null message buffer");
+					buf.append("null message buffer");//IN18N
 				}
 				log.debug(buf.toString());
 			}
@@ -165,7 +165,7 @@ public class SimulatorAdapter extends MrcPortController implements
                 }
 				if (log.isDebugEnabled() && r != null) {
 					StringBuffer buf = new StringBuffer();
-					buf.append("Mrc Simulator Thread sent reply: ");
+					buf.append("Mrc Simulator Thread sent reply: ");//IN18N
 					for (int i = 0; i < r.getNumDataElements(); i++)
 						buf.append(Integer.toHexString(0xFF & r.getElement(i)) + " ");
 					log.debug(buf.toString());

@@ -25,11 +25,11 @@ public class MrcTurnoutManagerXml extends jmri.managers.configurexml.AbstractTur
     }
 
     public void setStoreElementClass(Element turnouts) {
-        turnouts.setAttribute("class","jmri.jmrix.mrc.configurexml.MrcTurnoutManagerXml");
+        turnouts.setAttribute("class","jmri.jmrix.mrc.configurexml.MrcTurnoutManagerXml");//IN18N
     }
 
     public void load(Element element, Object o) {
-        log.error("Invalid method called");
+        log.error("Invalid method called");//IN18N
     }
 
     public boolean load(Element turnouts) {

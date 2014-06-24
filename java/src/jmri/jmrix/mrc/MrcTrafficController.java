@@ -82,7 +82,7 @@ public abstract class MrcTrafficController implements MrcInterface{
         synchronized(this) {
             v = (Vector<MrcTrafficListenerFilter>) trafficListeners.clone();
         }
-        if (log.isDebugEnabled()) log.debug("notify of incoming Mrc packet: " + m.toString());
+        if (log.isDebugEnabled()) log.debug("notify of incoming Mrc packet: " + m.toString());//IN18N
         
         // forward to all listeners
         for (MrcTrafficListenerFilter adapter : v) {
@@ -98,7 +98,7 @@ public abstract class MrcTrafficController implements MrcInterface{
         synchronized(this) {
             v = (Vector<MrcTrafficListenerFilter>) trafficListeners.clone();
         }
-        if (log.isDebugEnabled()) log.debug("notify of send Mrc packet: " + m.toString());
+        if (log.isDebugEnabled()) log.debug("notify of send Mrc packet: " + m.toString());//IN18N
         
         // forward to all listeners
         for (MrcTrafficListenerFilter adapter : v) {
@@ -157,12 +157,12 @@ public abstract class MrcTrafficController implements MrcInterface{
     MrcSystemConnectionMemo adaptermemo;
     
     public String getUserName() { 
-        if(adaptermemo==null) return "MRC";
+        if(adaptermemo==null) return "MRC"; //IN18N
         return adaptermemo.getUserName();
     }
     
     public String getSystemPrefix() { 
-        if(adaptermemo==null) return "MR";
+        if(adaptermemo==null) return "MR"; //IN18N
         return adaptermemo.getSystemPrefix();
     }
 

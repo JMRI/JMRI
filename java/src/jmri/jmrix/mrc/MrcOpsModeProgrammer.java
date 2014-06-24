@@ -22,15 +22,13 @@ import jmri.*;
  * @version			$Revision: 24270 $
  */
 public class MrcOpsModeProgrammer extends MrcProgrammer  {
-	
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.mrc.MrcOpsModeProgrammerBundle");
 
     int mAddress;
     boolean mLongAddr;
     
     public MrcOpsModeProgrammer(MrcTrafficController tc, int pAddress, boolean pLongAddr) {
     	super(tc);
-        log.debug("MRC ops mode programmer "+pAddress+" "+pLongAddr);
+        log.debug("MRC ops mode programmer "+pAddress+" "+pLongAddr); //IN18N
         if(pLongAddr){
             addressLo = pAddress;
             addressHi = pAddress>>8;
@@ -47,7 +45,7 @@ public class MrcOpsModeProgrammer extends MrcProgrammer  {
      * Forward a write request to an ops-mode write operation
      */
     public synchronized void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
-        log.debug("write CV={} val={}", CV, val);
+        log.debug("write CV={} val={}", CV, val); //IN18N
         MrcMessage msg = MrcMessage.getPOM(addressLo, addressHi,CV, val);
         
         useProgrammer(p);
@@ -64,30 +62,30 @@ public class MrcOpsModeProgrammer extends MrcProgrammer  {
 
     public synchronized void readCV(int CV, ProgListener p) throws ProgrammerException {
         log.debug("read CV={}", CV);
-        log.error(rb.getString("LogMrcOpsModePgmReadCvModeError"));
+        log.error(MrcOpsModeBundle.getMessage("LogMrcOpsModePgmReadCvModeError")); //IN18N
         throw new ProgrammerException();
     }
 
     public synchronized void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
         log.debug("confirm CV={}", CV);
-        log.error(rb.getString("LogMrcOpsModeProgrammerConfirmCvModeError"));
+        log.error(MrcOpsModeBundle.getMessage("LogMrcOpsModeProgrammerConfirmCvModeError")); //IN18N
         throw new ProgrammerException();
     }
     
     // add 200mSec between commands, so MRC command station queue doesn't get overrun
     protected void notifyProgListenerEnd(int value, int status) {
-    	log.debug("MrcOpsModeProgrammer adds 200mSec delay to response");
+    	log.debug("MrcOpsModeProgrammer adds 200mSec delay to response"); //IN18N
 		try{
 			wait(200);
 		}catch (InterruptedException e){
-			log.debug("unexpected exception "+e);
+			log.debug("unexpected exception "+e); //IN18N
 		}
     	super.notifyProgListenerEnd(value, status);
     }
 
     public void setMode(int mode) {
         if (mode!=Programmer.OPSBYTEMODE)
-            log.error(rb.getString("LogMrcOpsModeProgrammerModeSwitchError"), mode);
+            log.error(MrcOpsModeBundle.getMessage("LogMrcOpsModeProgrammerModeSwitchError"), mode); //IN18N
     }
 
     public int  getMode() {

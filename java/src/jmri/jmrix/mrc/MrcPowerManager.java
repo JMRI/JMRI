@@ -27,13 +27,11 @@ public class MrcPowerManager
         extends jmri.managers.AbstractPowerManager
         implements PowerManager, MrcTrafficListener {
 	
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.mrc.MrcPowerManagerBundle");
-
     public MrcPowerManager(MrcSystemConnectionMemo memo) {
         super(memo);
         // standard Mrc - connect
         if(memo.getMrcTrafficController()==null){
-            log.error(rb.getString("LogMrcPowerManagerMissingTCError"));
+            log.error(Bundle.getMessage("LogMrcPowerManagerMissingTCError")); //IN18N
             return;
         }
         this.tc = memo.getMrcTrafficController();
@@ -56,7 +54,7 @@ public class MrcPowerManager
             tc.sendMrcMessage(l);
         }
         power = v;
-        firePropertyChange("Power", old, power);
+        firePropertyChange("Power", old, power); //IN18N
     }
 
 	public int getPower() { return power;}
@@ -76,7 +74,7 @@ public class MrcPowerManager
     MrcTrafficController tc = null;
 
     private void checkTC() throws JmriException {
-		if (tc == null) throw new JmriException("Use power manager after dispose");
+		if (tc == null) throw new JmriException("Use power manager after dispose"); //IN18N
         }
         
     public void notifyRcv(Date timestamp, MrcMessage m) { /*message(m);*/ }

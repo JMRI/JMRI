@@ -46,7 +46,7 @@ public class MrcTurnout extends AbstractTurnout implements MrcTrafficListener{
             // first look for the double case, which we can't handle
             if ( (s & Turnout.THROWN) > 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN "+s);
+                log.error("Cannot command both CLOSED and THROWN "+s); //IN18N
                 return;
             } else {
                 // send a CLOSED command

@@ -50,7 +50,7 @@ public class MrcNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
             ((MrcPanelInterface)p).initComponents(memo);
             return p;
         } catch (Exception ex) {
-            log.warn("could not init pane class: "+paneClass+" due to:"+ex);
+            log.warn("could not init pane class: "+paneClass+" due to:"+ex); //IN18N
             ex.printStackTrace();
         }      
         

@@ -2,10 +2,9 @@
 
 package jmri.jmrix.mrc.serialdriver;
 
-
 /**
- * Definition of objects to handle configuring an LocoBuffer layout connection
- * via an NCE SerialDriverAdapter object.
+ * Definition of objects to handle configuring an USB Interface layout connection
+ * via a MRC SerialDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
  * @version	$Revision$
@@ -26,7 +25,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         super();
     }
 
-    public String name() { return "Serial"; }
+    public String name() { return "Serial"; }//IN18N
 
     protected void setInstance() {         
         if (adapter == null)

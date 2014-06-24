@@ -9,7 +9,6 @@ import jmri.jmrix.mrc.MrcSystemConnectionMemo;
  * For use with JmriAbstractAction, etc
  *
  * @author Bob Jacobsen  Copyright 2010
- * @since 2.9.4
  * Copied from nce.swing
  * @author Ken Cameron 2014
  * @author Kevin Dickerson 2014
@@ -37,7 +36,6 @@ abstract public class MrcPanel extends jmri.util.swing.JmriPanel implements MrcP
             try {
 				initComponents((MrcSystemConnectionMemo) context);
 			} catch (Exception e) {
-				//log.error("MrcPanel initContext failed");
 				e.printStackTrace();
 			}
         }

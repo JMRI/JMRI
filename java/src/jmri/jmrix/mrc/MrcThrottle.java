@@ -70,12 +70,8 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener{
         this.isForward    = true;
         if(address.isLongAddress()){
             addressLo = address.getNumber();
-            log.info("Lo " + addressLo);
             addressHi = address.getNumber()>>8;
-            log.info("Hi before " + addressHi);
             addressHi = addressHi + 0xc0; //We add 0xc0 to the high byte.
-            log.info("Hi After " + addressHi);
-            log.info("" + addressLo);
         } else {
             addressLo = address.getNumber();
         }
@@ -207,7 +203,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener{
         MrcMessage m;
         int value;
         if(super.speedStepMode == SpeedStepMode128) {
-            log.debug("setSpeedSetting= {}", speed);
+            log.debug("setSpeedSetting= {}", speed); //IN18N
             //MRC use a value between 0-127 no matter what the controller is set to
             value = (int)((127-1)*speed);     // -1 for rescale to avoid estop
             if (value>0) value = value+1;  // skip estop
@@ -227,7 +223,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener{
         tc.sendMrcMessage(m);
 
         if (oldSpeed != this.speedSetting)
-            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
+            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting ); //IN18N
         record(speed);
     }
 
@@ -237,9 +233,9 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener{
         setSpeedSetting(speedSetting);  // send the command
         log.debug("setIsForward= {}", forward);
         if (old != isForward)
-            notifyPropertyChangeListener("IsForward", old, isForward );
+            notifyPropertyChangeListener("IsForward", old, isForward ); //IN18N
     }
-
+    
     protected void throttleDispose(){ finishRecord(); }
     
     //Might need to look at other packets from handsets to see if they also have control of our loco and adjust from that.
@@ -254,26 +250,26 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener{
             if(MrcPackets.startsWith(m, MrcPackets.THROTTLEPACKETHEADER)){
                 if(m.getElement(10) == 0x02){
                     //128
-                    log.info("speed Packet from another controller for our loco");
+                    log.debug("speed Packet from another controller for our loco"); //IN18N
                     int speed = m.getElement(8);
                     if((m.getElement(8) & 0x80) == 0x80){
                         //Forward
                         if(!this.isForward){
                             this.isForward = true;
-                            notifyPropertyChangeListener("IsForward", !isForward, isForward );
+                            notifyPropertyChangeListener("IsForward", !isForward, isForward ); //IN18N
                         }
                         //speed = m.getElement(8);
                     } else if(this.isForward){
                         //reverse
                         this.isForward = false;
-                        notifyPropertyChangeListener("IsForward", !isForward, isForward );
+                        notifyPropertyChangeListener("IsForward", !isForward, isForward ); //IN18N
                         //speed = m.getElement(8);
                     }
                     speed = (speed &0x7f) -1;
                     if(speed<0) speed = 0;
                     float val = speed/126.0f;
                     if (val != this.speedSetting){
-                        notifyPropertyChangeListener("SpeedSetting", this.speedSetting, val );
+                        notifyPropertyChangeListener("SpeedSetting", this.speedSetting, val ); //IN18N
                         this.speedSetting = val;
                         record(val);
                     }
@@ -300,7 +296,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener{
                     }
                         
                     if (val != this.speedSetting){
-                        notifyPropertyChangeListener("SpeedSetting", this.speedSetting, val );
+                        notifyPropertyChangeListener("SpeedSetting", this.speedSetting, val ); //IN18N
                         this.speedSetting = val;
                         record(val);
                     }
@@ -585,18 +581,11 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener{
         } else {
             return;
         }
-
-        //need to work out the resend function for if the loco is also controlled by another handset. - Might get done in the MrcTrafficController.
     }
     
-    //public void notifyRcv(Date timestamp, MrcMessage m) { message(m); }
     public void notifyXmit(Date timestamp, MrcMessage m) {/* message(m); */}
     public void notifyFailedXmit(Date timestamp, MrcMessage m) { /*message(m);*/ }
     
-    /*public void message(MrcMessage m) {
-        //System.out.println("Ecos message - "+ m);
-        // messages are ignored
-    }*/
     // initialize logging
     static Logger log = LoggerFactory.getLogger(MrcThrottle.class.getName());
 

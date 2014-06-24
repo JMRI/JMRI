@@ -31,4 +31,4 @@ public class MrcComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 }
 
 
-/* @(#)LnComponentFactory.java */
+/* @(#)MrcComponentFactory.java */

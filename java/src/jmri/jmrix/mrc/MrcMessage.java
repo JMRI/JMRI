@@ -23,12 +23,10 @@ import org.slf4j.LoggerFactory;
  */
 public class MrcMessage {
 
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.mrc.MrcMessageBundle");
-
     // create a new one
     public  MrcMessage(int len) {
         if (len<1)
-            log.error(rb.getString("LogMrcMessageLengthError"), len);
+            log.error(MrcMessageBundle.getMessage("LogMrcMessageLengthError"), len);  //IN18N
         _nDataChars = len;
         _dataChars = new int[len];
     }
@@ -171,7 +169,7 @@ public class MrcMessage {
                     break;
             case 6: i = m.putHeader(MrcPackets.FUNCTIONGROUP6PACKETHEADER);
                     break;
-            default: log.error(rb.getString("LogMrcMessageInvalidFunctionGroupError"), group);
+            default: log.error(MrcMessageBundle.getMessage("LogMrcMessageInvalidFunctionGroupError"), group);  //IN18N
                     return null;
         }
 
@@ -274,9 +272,9 @@ public class MrcMessage {
                 val = getElement(4)&0xff;
             }
             else
-                log.error(rb.getString("LogMrcMessageReturnedCvFormatError"));
+                log.error(MrcMessageBundle.getMessage("LogMrcMessageReturnedCvFormatError")); //IN18N
         } else {
-            log.error(rb.getString("LogMrcMessageNotCvReadFormatPacketError"));
+            log.error(MrcMessageBundle.getMessage("LogMrcMessageNotCvReadFormatPacketError")); //IN18N
         }
 		return val;
     }
@@ -324,7 +322,7 @@ public class MrcMessage {
      */
     static public MrcMessage setClockRatio(int ratio) {
         if (ratio < 0 || ratio > 60) {
-        	log.error(rb.getString("LogMrcMessageClockRatioRangeError"), ratio);
+        	log.error(MrcMessageBundle.getMessage("LogMrcMessageClockRatioRangeError"), ratio); //IN18N
         }
         MrcMessage m = new MrcMessage(MrcPackets.getSetClockRatioPacketLength());
         m.setMessageClass(MrcInterface.CLOCK);
@@ -345,10 +343,10 @@ public class MrcMessage {
      */
     static public MrcMessage setClockTime(int hour, int minute) {
         if (hour < 0 || hour > 23) {
-        	log.error(rb.getString("LogMrcMessageClockHourRangeError"), hour);
+        	log.error(MrcMessageBundle.getMessage("LogMrcMessageClockHourRangeError"), hour); //IN18N
         }
         if (minute < 0 || minute > 59) {
-        	log.error(rb.getString("LogMrcMessageClockMinuteRangeError"), minute);
+        	log.error(MrcMessageBundle.getMessage("LogMrcMessageClockMinuteRangeError"), minute); //IN18N
         }
         MrcMessage m = new MrcMessage(MrcPackets.getSetClockTimePacketLength());
         m.setMessageClass(MrcInterface.CLOCK);

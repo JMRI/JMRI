@@ -46,13 +46,13 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
     public void setMode(int mode) {
         int oldMode = _mode;  // preserve this in case we need to go back
         if (mode != _mode) {
-            notifyPropertyChange("Mode", _mode, mode);
+            notifyPropertyChange("Mode", _mode, mode); //IN18N
             _mode = mode;
         }
         if (!hasMode(_mode)) {
             // attempt to switch to unsupported mode, switch back to previous
             _mode = oldMode;
-            notifyPropertyChange("Mode", mode, _mode);
+            notifyPropertyChange("Mode", mode, _mode); //IN18N
         }
     }
 
@@ -106,7 +106,7 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
 
     // programming interface
     public synchronized void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
-        log.debug("writeCV {} listens {}", CV, p);
+        log.debug("writeCV {} listens {}", CV, p); //IN18N
         useProgrammer(p);
         _progRead = false;
         // set state
@@ -131,7 +131,7 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
     }
 
     public synchronized void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
-        log.debug("readCV {} listens {}", CV, p);
+        log.debug("readCV {} listens {}", CV, p); //IN18N
         useProgrammer(p);
         _progRead = true;
 
@@ -158,8 +158,8 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
     protected void useProgrammer(jmri.ProgListener p) throws jmri.ProgrammerException {
         // test for only one!
         if (_usingProgrammer != null && _usingProgrammer != p) {
-            if (log.isInfoEnabled()) log.info("programmer already in use by "+_usingProgrammer);
-            throw new jmri.ProgrammerException("programmer in use");
+            if (log.isInfoEnabled()) log.info("programmer already in use by "+_usingProgrammer); //IN18N
+            throw new jmri.ProgrammerException("programmer in use"); //IN18N
         }
         else {
             _usingProgrammer = p;
@@ -196,7 +196,7 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
     //public synchronized void message(MrcMessage m) {
         if (progState == NOTPROGRAMMING) {
             // we get the complete set of replies now, so ignore these
-            log.debug("reply in NOTPROGRAMMING state");
+            log.debug("reply in NOTPROGRAMMING state"); //IN18N
             return;
         }
         if(m.getMessageClass()!=MrcInterface.PROGRAMMING){
@@ -215,11 +215,11 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
             }
             // if this was a read, we retrieved the value above.  If its a
             // write, we're to return the original write value
-            log.debug("Has value " + _val);
+            log.debug("Has value " + _val); //IN18N
             notifyProgListenerEnd(_val, jmri.ProgListener.OK);
         
         } else {
-            log.debug("reply in un-decoded state cv:" + _cv + " " + m.toString());
+            log.debug("reply in un-decoded state cv:" + _cv + " " + m.toString()); //IN18N
         }
     }
 
@@ -243,7 +243,7 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
     }
     // internal method to notify of the final result
     protected void notifyProgListenerEnd(int value, int status) {
-        log.debug("notifyProgListenerEnd value {} status {}", value, status);
+        log.debug("notifyProgListenerEnd value {} status {}", value, status); //IN18N
         // the programmingOpReply handler might send an immediate reply, so
         // clear the current listener _first_
         tc.removeTrafficListener(MrcInterface.PROGRAMMING, this);
@@ -253,9 +253,6 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
     }
 
     static Logger log = LoggerFactory.getLogger(MrcProgrammer.class.getName());
-
 }
-
-
 /* @(#)MrcProgrammer.java */
 

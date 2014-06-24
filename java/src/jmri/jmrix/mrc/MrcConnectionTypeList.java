@@ -18,7 +18,7 @@ public class MrcConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
         return new String[] {
               "jmri.jmrix.mrc.serialdriver.ConnectionConfig",
               "jmri.jmrix.mrc.simulator.ConnectionConfig",
-        };
+        }; //IN18N
     }
 
 }

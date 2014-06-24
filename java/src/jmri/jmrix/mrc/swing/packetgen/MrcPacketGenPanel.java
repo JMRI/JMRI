@@ -44,17 +44,17 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel{
         }
     }
 
-    public String getHelpTarget() { return "package.jmri.jmrix.mrc.packetgen.MrcPacketGenFrame"; }
+    public String getHelpTarget() { return "package.jmri.jmrix.mrc.packetgen.MrcPacketGenFrame"; }//IN18N
     
     public String getTitle() { 
     	StringBuilder x = new StringBuilder();
     	if (memo != null) {
     		x.append(memo.getUserName());
     	} else {
-    		x.append("MRC_");
+    		x.append("MRC_");//IN18N
     	}
 		x.append(": ");
-    	x.append(Bundle.getMessage("Title"));
+    	x.append(Bundle.getMessage("Title"));//IN18N
         return x.toString(); 
     }
 
@@ -63,16 +63,15 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel{
     	this.tc = m.getMrcTrafficController();
     	
         // the following code sets the frame's initial state
-
-        jLabel1.setText("Command: ");
+        jLabel1.setText("Command: ");//IN18N
         jLabel1.setVisible(true);
         
-        sendButton.setText("Send");
+        sendButton.setText("Send");//IN18N
         sendButton.setVisible(true);
-        sendButton.setToolTipText("Send packet");
+        sendButton.setToolTipText("Send packet");//IN18N
 
         packetTextField.setText("");
-		packetTextField.setToolTipText("Enter command");
+		packetTextField.setToolTipText("Enter command"); //IN18N
 		packetTextField.setMaximumSize(new Dimension(packetTextField
 				.getMaximumSize().width, packetTextField.getPreferredSize().height));
         
@@ -125,7 +124,7 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel{
             super("Open MRC Send Binary Command", 
                 new jmri.util.swing.sdi.JmriJFrameInterface(), 
                 MrcPacketGenPanel.class.getName(), 
-                jmri.InstanceManager.getDefault(MrcSystemConnectionMemo.class));
+                jmri.InstanceManager.getDefault(MrcSystemConnectionMemo.class));//IN18N
         }
     }
 

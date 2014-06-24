@@ -37,10 +37,10 @@ public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTraffi
     	if (memo != null) {
     		x.append(memo.getUserName());
     	} else {
-    		x.append("MRC_");
+    		x.append("MRC_"); //IN18N
     	}
-		x.append(": ");
-    	x.append("Command Monitor");
+		x.append(": "); //IN18N
+    	x.append("Command Monitor"); //IN18N
         return x.toString(); 
     }
 
@@ -65,7 +65,7 @@ public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTraffi
         }
     }
     
-    JCheckBox includePoll = new JCheckBox("Include Poll Messages");
+    JCheckBox includePoll = new JCheckBox("Include Poll Messages"); //IN18N
     
     private int trafficFilter = MrcInterface.ALL;
     
@@ -75,7 +75,7 @@ public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTraffi
         add(includePoll);
         // connect to the LnTrafficController
         if(memo.getMrcTrafficController()==null){
-            log.error("No traffic controller is available");
+            log.error("No traffic controller is available"); //IN18N
             return;
         }
         memo.getMrcTrafficController().addTrafficListener(trafficFilter, this);
@@ -101,7 +101,7 @@ public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTraffi
     @Override
     public synchronized void notifyRcv(Date timestamp, MrcMessage m) {
         
-        String prefix = "Rx:";
+        String prefix = "Rx:"; //IN18N
         if(!includePoll.isSelected() && (m.getMessageClass() & MrcInterface.POLL) == MrcInterface.POLL && m.getElement(1)==0x01){
             //Do not show poll messages
             previousPollMessage = m;
@@ -111,7 +111,7 @@ public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTraffi
                 previousPollMessage = null;
                 return;
             }
-            prefix = "Rx: From Cab - " + Integer.toString(previousPollMessage.getElement(0));
+            prefix = "Rx: From Cab - " + Integer.toString(previousPollMessage.getElement(0)); //IN18N
             previousPollMessage = null;
         }
     	logMessage(timestamp, m, prefix);
@@ -140,7 +140,7 @@ public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTraffi
             super("Mrc Command Monitor", 
                 new jmri.util.swing.sdi.JmriJFrameInterface(), 
                 MrcMonPanel.class.getName(), 
-                jmri.InstanceManager.getDefault(MrcSystemConnectionMemo.class));
+                jmri.InstanceManager.getDefault(MrcSystemConnectionMemo.class)); //IN18N
         }
     }
 

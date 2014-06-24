@@ -39,9 +39,7 @@ import java.util.ResourceBundle;
  * @author		Bob Jacobsen, Alex Shepherd
  * @version     $Revision: 22887 $
  */
-public class MrcClockControl extends DefaultClockControl implements MrcTrafficListener
-{
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.mrc.MrcClockControlBundle");
+public class MrcClockControl extends DefaultClockControl implements MrcTrafficListener {
 
     /**
      * Create a ClockControl object for a Mrc clock
@@ -55,7 +53,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
         // Create a Timebase listener for the Minute change events
         internalClock = InstanceManager.timebaseInstance();
         if (internalClock == null){
-            log.error(rb.getString("LogMrcNoInternalTimebaseInstanceError"));
+            log.error(MrcClockBundle.getMessage("LogMrcNoInternalTimebaseInstanceError")); //IN18N
             return;
         }
         minuteChangeListener = new java.beans.PropertyChangeListener() {
@@ -126,7 +124,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
     		// not a clock packet
     		return;
     	}
-        log.debug("MrcReply(len {})", r.getNumDataElements());
+        log.debug("MrcReply(len {})", r.getNumDataElements()); //IN18N
 
         readClockPacket(r);
 
@@ -146,15 +144,15 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
     @Override
 	public String getHardwareClockName() {
 		if (DEBUG_SHOW_PUBLIC_CALLS){
-			log.debug("getHardwareClockName");
+			log.debug("getHardwareClockName"); //IN18N
 		}
-		return (rb.getString("MrcClockName"));
+		return (MrcClockBundle.getMessage("MrcClockName")); //IN18N
 	}
 	
 	/** Mrc clock runs stable enough */
 	public boolean canCorrectHardwareClock() {
 		if (DEBUG_SHOW_PUBLIC_CALLS){
-			log.debug("getHardwareClockName");
+			log.debug("getHardwareClockName"); //IN18N
 		}
 		return false;
 	}
@@ -162,7 +160,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
 	/** Mrc clock supports 12/24 operation */
 	public boolean canSet12Or24HourClock() {
 		if (DEBUG_SHOW_PUBLIC_CALLS){
-			log.debug("canSet12Or24HourClock");
+			log.debug("canSet12Or24HourClock"); //IN18N
 		}
 		return true;
 	}
@@ -170,11 +168,11 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
 	/** sets Mrc clock speed, must be 1 to 60 */
 	public void setRate(double newRate) {
 		if (DEBUG_SHOW_PUBLIC_CALLS){
-			log.debug("setRate: " + newRate);
+			log.debug("setRate: " + newRate); //IN18N
 		}
 		int newRatio = (int)newRate;
 		if (newRatio < 1 || newRatio > 60) {
-			log.error(rb.getString("LogMrcClockRatioRangeError"));
+			log.error(MrcClockBundle.getMessage("LogMrcClockRatioRangeError")); //IN18N
 		} else {
         	issueClockRatio(newRatio);
 		}
@@ -183,7 +181,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
 	/** Mrc only supports integer rates */
 	public boolean requiresIntegerRate() {
 		if (DEBUG_SHOW_PUBLIC_CALLS){
-			log.debug("requiresIntegerRate");
+			log.debug("requiresIntegerRate"); //IN18N
 		}
 		return true;
 	}
@@ -191,7 +189,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
 	/** last known ratio from Mrc clock */
 	public double getRate() {
 		if (DEBUG_SHOW_PUBLIC_CALLS){
-			log.debug("getRate: {}", mrcLastRatio);
+			log.debug("getRate: {}", mrcLastRatio); //IN18N
 		}
 		return(mrcLastRatio);
 	}
@@ -200,7 +198,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
     @SuppressWarnings("deprecation")
 	public void setTime(Date now) {
 		if (DEBUG_SHOW_PUBLIC_CALLS){
-			log.debug("setTime: {}", now);
+			log.debug("setTime: {}", now); //IN18N
 		}
 		issueClockTime(now.getHours(), now.getMinutes());
 	}
@@ -223,7 +221,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
             now.setSeconds(0);
         }
         if (DEBUG_SHOW_PUBLIC_CALLS){
-        	log.debug("getTime returning: {}", now);
+        	log.debug("getTime returning: {}", now); //IN18N
         }
         return(now);
 	}
@@ -232,7 +230,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
     @SuppressWarnings("deprecation")
 	public void startHardwareClock(Date now) {
 		if (DEBUG_SHOW_PUBLIC_CALLS){
-			log.debug("startHardwareClock: {}", now);
+			log.debug("startHardwareClock: {}", now); //IN18N
 		}
 		issueClockTime(now.getHours(), now.getMinutes());
 	}
@@ -272,7 +270,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
     {
         if (DEBUG_SHOW_SYNC_CALLS) {
         	log.debug("newInternalMinute clockMode: {} mrcInit: {} mrcRun: {}",
-        			clockMode, mrcSyncInitStateCounter, mrcSyncRunStateCounter);
+        			clockMode, mrcSyncInitStateCounter, mrcSyncRunStateCounter); //IN18N
         }
         // if sync and Internal is master
         // clockMode - SYNCMODE_OFF, SYNCMODE_INTERNAL_MASTER, SYNCMODE_MRC_MASTER
@@ -315,7 +313,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
     }
         
     private void issueClockRatio(int r) {
-    	log.debug("sending ratio " + r + " to mrc cmd station");
+    	log.debug("sending ratio " + r + " to mrc cmd station"); //IN18N
         MrcMessage cmdMrc = jmri.jmrix.mrc.MrcMessage.setClockRatio(r);
         tc.sendMrcMessage(cmdMrc);
     }
