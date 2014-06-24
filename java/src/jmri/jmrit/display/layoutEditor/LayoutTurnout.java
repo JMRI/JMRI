@@ -1321,6 +1321,21 @@ public class LayoutTurnout
 	 *    not disabled
 	 */
 	public void toggleTurnout() {
+        // toggle turnout
+        if (getTurnout().getKnownState()==jmri.Turnout.CLOSED){
+            setState(jmri.Turnout.THROWN);
+            /*if(getSecondTurnout()!=null)
+                getSecondTurnout().setState(jmri.Turnout.THROWN);*/
+        }
+        else {
+            setState(jmri.Turnout.CLOSED);
+            /*if(getSecondTurnout()!=null)
+                getSecondTurnout().setState(jmri.Turnout.CLOSED);*/
+            
+        }
+    }
+    
+    public void setState(int state){
         if ((getTurnout()!=null) && (!disabled)) {
             if (disableWhenOccupied){
                 if(disableOccupiedTurnout()){
@@ -1328,19 +1343,13 @@ public class LayoutTurnout
                     return;
                 }
             }
-			// toggle turnout
-			if (getTurnout().getKnownState()==jmri.Turnout.CLOSED){
-				getTurnout().setCommandedState(jmri.Turnout.THROWN);
-                if(getSecondTurnout()!=null)
-                    getSecondTurnout().setCommandedState(jmri.Turnout.THROWN);
-			}
-            else {
-				getTurnout().setCommandedState(jmri.Turnout.CLOSED);
-                if(getSecondTurnout()!=null)
-                    getSecondTurnout().setCommandedState(jmri.Turnout.CLOSED);
-                
+            getTurnout().setCommandedState(state);
+            if(getSecondTurnout()!=null){
+                getSecondTurnout().setCommandedState(state);
             }
-		}
+            
+            
+        }
     }
     
     private boolean disableOccupiedTurnout(){

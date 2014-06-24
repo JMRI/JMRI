@@ -223,6 +223,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 	private JCheckBoxMenuItem skipTurnoutItem = null;
 	private JCheckBoxMenuItem turnoutDrawUnselectedLegItem = null;
 	private JCheckBoxMenuItem hideTrackSegmentConstructionLines = null;
+	private JCheckBoxMenuItem useDirectTurnoutControlItem = null;
 	private ButtonGroup trackColorButtonGroup = null;
 	private ButtonGroup trackOccupiedColorButtonGroup = null;
 	private ButtonGroup trackAlternativeColorButtonGroup = null;
@@ -346,6 +347,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 	private double xOverLong = xOverLongDefault;   // DOUBLE_XOVER, RH_XOVER, LH_XOVER
 	private double xOverHWid = xOverHWidDefault;
 	private double xOverShort = xOverShortDefault;
+    private boolean useDirectTurnoutControl = false; //Uses Left click for closing points, Right click for throwing.
 	
 	// saved state of options when panel was loaded or created
 	private boolean savedEditMode = true;
@@ -1333,6 +1335,18 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                 }
             });                    
         hideTrackSegmentConstructionLines.setSelected(autoAssignBlocks);
+        
+        useDirectTurnoutControlItem = new JCheckBoxMenuItem(rb.getString("UseDirectTurnoutControl")); //IN18N
+        optionMenu.add(useDirectTurnoutControlItem);
+        useDirectTurnoutControlItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    useDirectTurnoutControl = false;
+                    if(useDirectTurnoutControlItem.isSelected()){
+                        useDirectTurnoutControl = true;
+                    }
+                }
+            });                    
+        useDirectTurnoutControlItem.setSelected(useDirectTurnoutControl);
         
         return optionMenu;
 	}
@@ -3609,8 +3623,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 				allControlling() && (!event.isMetaDown()) && (!event.isAltDown()) && (!event.isPopupTrigger()) && 
 					(!event.isShiftDown()) && (!delayedPopupTrigger) ) {
 			// controlling layout, not in edit mode
-			LayoutTurnout t = (LayoutTurnout)selectedObject;
-			t.toggleTurnout();
+            if(useDirectTurnoutControl){
+                LayoutTurnout t = (LayoutTurnout)selectedObject;
+                t.setState(jmri.Turnout.CLOSED);
+            } else {
+                LayoutTurnout t = (LayoutTurnout)selectedObject;
+                t.toggleTurnout();
+            }
 		}
         // check if controlling turnouts out of edit mode
         else if ( ( selectedObject!=null) && (selectedPointType==SLIP_CENTER) && 
@@ -3635,7 +3654,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                     // show popup menu
                     switch (foundPointType) {
                         case TURNOUT_CENTER:
-                            ((LayoutTurnout)foundObject).showPopUp(event, isEditable());
+                            if(useDirectTurnoutControl){
+                                LayoutTurnout t = (LayoutTurnout)foundObject;
+                                t.setState(jmri.Turnout.THROWN);
+                            } else {
+                                ((LayoutTurnout)foundObject).showPopUp(event, isEditable());
+                            }
                             break;
                         case LEVEL_XING_CENTER:
                             ((LevelXing)foundObject).showPopUp(event, isEditable());
@@ -7134,6 +7158,15 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		xOverShort = xOverShortDefault;
 		setDirty(true);
 	}
+    
+    public void setDirectTurnoutControl(boolean boo){
+        useDirectTurnoutControl = boo;
+        useDirectTurnoutControlItem.setSelected(useDirectTurnoutControl);
+    }
+    
+    public boolean getDirectTurnoutControl(){
+        return useDirectTurnoutControl;
+    }
 		
 	// final initialization routine for loading a LayoutEditor
 	public void setConnections() {

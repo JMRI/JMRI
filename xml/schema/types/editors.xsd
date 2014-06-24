@@ -908,6 +908,8 @@
       <xs:attribute name="turnout" type="beanNameType" />
       <xs:attribute name="rotate" type="xs:string" />
       <xs:attribute name="tristate" type="trueFalseType" />
+      
+      <xs:attribute name="directControl" type="trueFalseType" />
 
       <xs:attribute name="height" type="xs:integer" >
         <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>

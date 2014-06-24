@@ -251,8 +251,8 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
                     setDirectControl(directControlItem.isSelected());
                 }
             });
-
-
+        } else if (getDirectControl()){
+            getTurnout().setCommandedState(jmri.Turnout.THROWN);
         }
         return true;
 	}
@@ -468,15 +468,8 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
         if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) return;
         if (e.isMetaDown() || e.isAltDown() || !buttonLive() || getMomentary()) return;
 
-        if (getDirectControl()) {
-            // right click closed
-            if (SwingUtilities.isRightMouseButton(e) || e.isControlDown()) {
-                getTurnout().setCommandedState(jmri.Turnout.CLOSED);
-            }
-            // else thrown
-            else {
-                getTurnout().setCommandedState(jmri.Turnout.CLOSED);
-            }
+        if (getDirectControl() && !isEditable()) {
+            getTurnout().setCommandedState(jmri.Turnout.CLOSED);
         } else {
             alternateOnClick();
         }

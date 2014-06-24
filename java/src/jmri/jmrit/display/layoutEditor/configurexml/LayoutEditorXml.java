@@ -91,6 +91,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         }
 		p.resetDirty();
         panel.setAttribute("openDispatcher",p.getOpenDispatcherOnLoad()?"yes":"no");
+        panel.setAttribute("useDirectTurnoutControl",p.getDirectTurnoutControl()?"yes":"no");
 
         // include contents (Icons and Labels)
         List <Positionable> contents = p.getContents();
@@ -476,6 +477,11 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             log.warn("Could not parse color attributes!");
         } catch ( NullPointerException e) {  // considered normal if the attributes are not present
         }
+        if(element.getAttribute("useDirectTurnoutControl")!=null){
+            if (element.getAttribute("useDirectTurnoutControl").getValue().equals("yes")){
+                panel.setDirectTurnoutControl(true);
+            }
+        }
 		// Set editor's option flags, load content after 
         // this so that individual item flags are set as saved
         panel.initView();
@@ -524,7 +530,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 		panel.setLayoutDimensions(windowWidth, windowHeight, x, y, panelWidth, panelHeight);
         panel.setVisible(true);    // always show the panel
 		panel.resetDirty();
-
+        
         // register the resulting panel for later configuration
         InstanceManager.configureManagerInstance().registerUser(panel);
         if(jmri.InstanceManager.transitManagerInstance().getSystemNameList().size()>0){
