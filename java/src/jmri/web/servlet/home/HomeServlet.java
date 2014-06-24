@@ -16,6 +16,10 @@ import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
 public class HomeServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (!request.getRequestURI().equals("/")) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
         response.setContentType(UTF8_TEXT_HTML);
         response.getWriter().print(String.format(request.getLocale(),
