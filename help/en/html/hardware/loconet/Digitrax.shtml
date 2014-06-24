@@ -268,7 +268,7 @@ for more information.
 <p><b>Uhlenbrock Intellibox</b> - The Intellibox has two LocoNet connections,
 called LocoNet-T and LocoNet-B. The LocoNet-T connection can drive more
 devices, but does not provide the Rail-Synch signals that some LocoNet devices
-(particularly boosters and the BDL16, BDL162 and DL1B68) require. A LocoBuffer 
+(particularly boosters and the BDL16, BDL162 and BDL168) require. A LocoBuffer 
 should be connected to the LocoNet-T connection. </p>
 
 <p><b>Uhlenbrock Intellibox II and IB-Com</b> - These systems currently do not support 
@@ -276,7 +276,7 @@ programming, either via a programming track or on the main.<br>
 The Intellibox II and IB-Com has two 
 LocoNet connections, called LocoNet-T and LocoNet-B. The LocoNet-T 
 connection can drive more devices, but does not provide the Rail-Synch signals that 
-some LocoNet devices (particularly boosters and the BDL16, BDL162 and DL1B68) require. 
+some LocoNet devices (particularly boosters and the BDL16, BDL162 and BDL168) require. 
 A LocoBuffer should be connected to the LocoNet-T connection. </p>
 
 <p><strong>PR-1 not supported</strong> - Note that DecoderPro cannot directly
