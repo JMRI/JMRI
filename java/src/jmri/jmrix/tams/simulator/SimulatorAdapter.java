@@ -130,7 +130,6 @@ public class SimulatorAdapter extends TamsPortController implements
         // report status?
         if (log.isInfoEnabled()) 
             log.info("TAMS Simulator Started");     
-        int cab = 1;
 		while (true) {
 			try{
                 synchronized(this){

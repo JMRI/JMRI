@@ -189,8 +189,6 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager
         }*/
     }
     
-    private final int shortCycleInterval = 550;
-    
     class PollHandler implements Runnable{
         TamsSensorManager sm = null;
         PollHandler(TamsSensorManager m){
