@@ -119,7 +119,10 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
                       if(atResp.getValue().length >0 && 
                          atResp.getValue()[0] == 0x03) {
                          // create the sensor.
-    	                 XBeeNode node = (XBeeNode) tc.getNodeFromAddress(atResp.getRemoteAddress64().getAddress());
+    	                 XBeeNode node = null;
+                         if( (node = (XBeeNode) tc.getNodeFromAddress(atResp.getRemoteAddress64().getAddress()))==null)
+                             node = (XBeeNode) tc.getNodeFromAddress(atResp.getRemoteAddress16().getAddress());
+              
                          // Sensor name is prefix followed by NI/address
                          // followed by the bit number.
                          String sName = prefix + typeLetter() +
