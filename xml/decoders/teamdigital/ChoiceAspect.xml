@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2011 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new file includes for SIC26 file -->
+<!-- aspect choices for DCC signal message -->
+<enumVal>
+  <enumChoice choice=" 0-Red"/>
+  <enumChoice choice=" 1-Yellow"/>
+  <enumChoice choice=" 2-Green"/>
+  <enumChoice choice=" 3-Lunar"/>
+  <enumChoice choice=" 4-Flash Red"/>
+  <enumChoice choice=" 5-Flash Yellow"/>
+  <enumChoice choice=" 6-Flash Green"/>
+  <enumChoice choice=" 7-Flash Lunar"/>
+</enumVal>

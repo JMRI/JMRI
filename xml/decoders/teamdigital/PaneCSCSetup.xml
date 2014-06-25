@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2011 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new file includes for SIC28 files -->
+<!-- Panes to show Logic Cells -->
+<pane name="Setup">
+	<column>
+		<row>
+		<column>
+		<label label=" "/>
+		<label label="------ The CSC has several built-in signal arrangements called Setups ------"/>
+		<label label="------ that can be implemented without any custom programming. ------"/>
+		<label label="------ Once the Setup has been programmed, cycle the power to the CSC. ------"/>
+		<label label=" "/>
+		<label label="------ NOTE: Issue with JMRI, if some of the fields do not write, go to. ------"/>
+		<label label="------ the CV tab and write the individual CVs. ------"/>
+		<label label=" "/>
+		</column>
+		</row>
+
+	<separator/>	
+	<row>
+	<column>	
+			<display item="Setups"/>
+			<separator/>	
+			<display item="Address of first signal head (H1)" tooltip="Same address as SHD2-1"/>	
+			<display item="Address of first block (B1)"/>
+			<display item="Block detectors connected to inputs?" format="radiobuttons"/>
+			<display item="BwSetup1"/>
+			<display item="HwSetup1"/>
+			<display item="HeSetup1"/>
+			<display item="BwSetup4"/>
+			<display item="HwSetup4"/>
+			<display item="HeSetup4"/>
+			<display item="SwSetup2"/>
+			<display item="SwSetup3"/>
+			
+
+	
+	  </column>
+	  </row>
+	</column>
+</pane>
