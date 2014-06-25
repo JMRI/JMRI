@@ -791,8 +791,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 									.format(Bundle.getMessage("carPartKernel"), new Object[] { _car.getKernelName() }),
 									JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 								// go through the entire list and change the location for all cars
-								for (int i = 0; i < cars.size(); i++) {
-									Car car = cars.get(i);
+								for (Car car : cars) {
 									if (car != _car)
 										setLocation(car);
 								}
@@ -805,6 +804,10 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 	}
 
 	private void setLocation(Car car) {
+		if (locationBox.getSelectedItem() == null) {
+			log.debug("locationBox is null!");
+			return;
+		}
 		if (locationBox.getSelectedItem().equals("")) {
 			car.setLocation(null, null);
 		} else {
@@ -921,7 +924,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 				|| e.getPropertyName().equals(RollingStock.TRACK_CHANGED_PROPERTY)) {
 			LocationManager.instance().updateComboBox(locationBox);
 			updateTrackLocationBox();
-			if (_car != null)
+			if (_car != null && _car.getLocation() != null)
 				locationBox.setSelectedItem(_car.getLocation());
 		}
 		if (e.getPropertyName().equals(Car.LOAD_CHANGED_PROPERTY)) {
