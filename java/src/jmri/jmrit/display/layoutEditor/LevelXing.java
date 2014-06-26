@@ -126,6 +126,25 @@ public class LevelXing
 	public String getSignalDName() {return signalDName;}
 	public void setSignalDName(String signalName) {signalDName = signalName;}
     
+    public void removeSignalMast(SignalMast sm){
+        if(signalAMastNamed.getBean().equals(sm)){
+            setSignalAMast(null);
+            return;
+        }
+        if(signalBMastNamed.getBean().equals(sm)){
+            setSignalBMast(null);
+            return;
+        }
+        if(signalCMastNamed.getBean().equals(sm)){
+            setSignalCMast(null);
+            return;
+        }
+        if(signalDMastNamed.getBean().equals(sm)){
+            setSignalDMast(null);
+            return;
+        }
+    }
+    
     public String getSignalAMastName(){
         if(signalAMastNamed!=null)
             return signalAMastNamed.getName();

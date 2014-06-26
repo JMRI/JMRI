@@ -113,7 +113,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     public ArrayList<PositionableLabel> backgroundImage = new ArrayList<PositionableLabel>();  // background images
     public ArrayList<SensorIcon> sensorImage = new ArrayList<SensorIcon>();  // sensor images
     public ArrayList<SignalHeadIcon> signalHeadImage = new ArrayList<SignalHeadIcon>();  // signal head images
-    public ArrayList<SignalMastIcon> signalMastImage = new ArrayList<SignalMastIcon>();  // signal mast images
 	public ArrayList<LocoIcon> markerImage = new ArrayList<LocoIcon>(); // marker images
 	public ArrayList<PositionableLabel> labelImage = new ArrayList<PositionableLabel>(); // layout positionable label images
 	public ArrayList<AnalogClock2Display> clocks = new ArrayList<AnalogClock2Display>();  // fast clocks
@@ -3338,8 +3337,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     
     private SignalMastIcon checkSignalMastIcons(Point2D loc) {
 		// check signal head images, if any
-		for (int i=signalMastImage.size()-1; i>=0; i--) {
-			SignalMastIcon s = signalMastImage.get(i);
+		for (int i=signalMastList.size()-1; i>=0; i--) {
+			SignalMastIcon s = signalMastList.get(i);
 			double x = s.getX();
 			double y = s.getY();
 			double w = s.maxWidth();
@@ -6058,9 +6057,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		}
         for (int i = 0; i<signalMastList.size();i++) {
 			if (s == signalMastList.get(i)) {
-				signalMastList.remove(i);
-				found = true;
-				break;
+                if(removeSignalMast((SignalMastIcon)s)){
+                    signalMastList.remove(i);
+                    found = true;
+                    break;
+                } else {
+                    return false;
+                }
 			}
 		}
 		for (int i = 0; i<multiSensors.size();i++) {
@@ -6077,23 +6080,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 				break;
 			}
 		}
-        for (int i = 0; i<signalMastImage.size();i++) {
-			if (s == signalMastImage.get(i)) {
-				signalMastImage.remove(i);
-				found = true;
-				break;
-			}
-		}
 		for (int i = 0; i<signalHeadImage.size();i++) {
 			if (s == signalHeadImage.get(i)) {
 				signalHeadImage.remove(i);
-				found = true;
-				break;
-			}
-		}
-        for (int i = 0; i<signalMastImage.size();i++) {
-			if (s == signalMastImage.get(i)) {
-				signalMastImage.remove(i);
 				found = true;
 				break;
 			}
@@ -6115,6 +6104,77 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 
     public boolean removeFromContents(Positionable l) {
         return remove(l);
+    }
+    
+    private boolean removeSignalMast(SignalMastIcon si){
+        SignalMast sm = si.getSignalMast();
+        PositionablePoint pe;
+        PositionablePoint pw;
+        LayoutTurnout lt;
+        LevelXing lx;
+        LayoutSlip ls;
+        boolean found = false;
+        String usage = "This Signal Mast is linked to the following items\n do you want to remove those references?";
+        if((pw=findPositionablePointByWestBoundBean(sm))!=null){
+            usage = usage + "\n Point of ";
+            TrackSegment t = pw.getConnect1();
+            if(t!=null) {
+                usage = usage + t.getBlockName() + " and ";
+            }
+            t = pw.getConnect2();
+            if(t!=null) {
+                usage = usage + t.getBlockName();
+            }            
+            found = true;
+        }
+        if((pe=findPositionablePointByEastBoundBean(sm))!=null){
+            usage = usage + "\n Point of ";
+            TrackSegment t = pe.getConnect1();
+            if(t!=null) {
+                usage = usage + t.getBlockName() + " and ";
+            }
+            t = pe.getConnect2();
+            if(t!=null) {
+                usage = usage + t.getBlockName();
+            }            
+            found = true;
+        }
+        if((lt=findLayoutTurnoutByBean(sm))!=null){
+            usage = usage + "\n Turnout " + lt.getTurnoutName();
+            found = true;
+        }
+        if((lx=findLevelXingByBean(sm))!=null){
+            usage = usage + "\n Level Crossing " + lx.getID();
+            found = true;
+        }
+        if((ls=findLayoutSlipByBean(sm))!=null){
+            usage = usage + "\n Level Crossing " + ls.getTurnoutName();
+            found = true;
+        }
+        if(found){
+            int selectedValue = JOptionPane.showOptionDialog(this,
+                       usage,rb.getString("WarningTitle"),
+                        JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,
+                        new Object[]{rb.getString("ButtonYes"),rb.getString("ButtonNo"),rb.getString("ButtonCancel")},rb.getString("ButtonYes"));
+                if (selectedValue == 1) return(true); // return leaving the references in place but allow the icon to be deleted.
+                if (selectedValue == 2) return(false); // do not delete the item
+                if(pe!=null){
+                    pe.setEastBoundSignalMast(null);
+                }
+                if(pw!=null){
+                    pw.setWestBoundSignalMast(null);
+                }
+                if(lt!=null){
+                    lt.removeSignalMast(sm);
+                }
+                if(ls!=null){
+                    ls.removeSignalMast(sm);
+                }
+                if(lx!=null){
+                    lx.removeSignalMast(sm);
+                }
+        }
+        return true;
     }
 
 	boolean noWarnPositionablePoint = false;
@@ -6690,7 +6750,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
             signalHeadImage.add((SignalHeadIcon)l);
             signalList.add((SignalHeadIcon)l);
         }  else if (l instanceof SignalMastIcon) {
-            signalMastImage.add((SignalMastIcon)l);
             signalMastList.add((SignalMastIcon)l);
         } else if (l instanceof MemoryIcon){
             memoryLabelList.add((MemoryIcon)l);

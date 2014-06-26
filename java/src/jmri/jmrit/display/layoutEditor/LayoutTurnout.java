@@ -377,6 +377,25 @@ public class LayoutTurnout
 	public String getSignalD2Name() {return signalD2Name;}
 	public void setSignalD2Name(String signalName) {signalD2Name = signalName;}
     
+    public void removeSignalMast(SignalMast sm){
+        if(signalAMastNamed!=null && signalAMastNamed.getBean().equals(sm)){
+            setSignalAMast(null);
+            return;
+        }
+        if(signalBMastNamed!=null && signalBMastNamed.getBean().equals(sm)){
+            setSignalBMast(null);
+            return;
+        }
+        if(signalCMastNamed!=null && signalCMastNamed.getBean().equals(sm)){
+            setSignalCMast(null);
+            return;
+        }
+        if(signalDMastNamed!=null && signalDMastNamed.getBean().equals(sm)){
+            setSignalDMast(null);
+            return;
+        }
+    }
+    
     public String getSignalAMastName(){
         if(signalAMastNamed!=null)
             return signalAMastNamed.getName();
