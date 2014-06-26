@@ -2,10 +2,10 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-    <xi:include href="http://jmri.org/xml/decoders/tcs/0_enum-group0.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/tcs/0_enum-group2.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/tcs/0_enum-group6.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/tcs/0_enum-group4.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/tcs/0_enum-group3.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/tcs/0_enum-group5.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
 </enumVal>

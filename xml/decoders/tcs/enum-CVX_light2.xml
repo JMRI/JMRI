@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_SingleStrobe2.xml"/>
+</enumVal>

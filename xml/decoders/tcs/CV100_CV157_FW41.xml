@@ -66,7 +66,7 @@
       <enumChoice choice="11"/>
       <enumChoice choice="12 fastest">
         <choice xml:lang="it">12 più veloce</choice>
-      </enumChoice>
+     </enumChoice>
     </enumVal>
     <label>Ditch Light Blink Rate</label>
     <label xml:lang="it">Freq.lampeggio Luci Ditch</label>
@@ -251,7 +251,7 @@
   <variable item="F1 controls output Motor" CV="134" mask="XXXXXVXX" minOut="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1 controls output Motor</label>
-    <label xml:lang="it">F1 controlla uscita Motore</label>
+   <label xml:lang="it">F1 controlla uscita Motore</label>
   </variable>
   <variable item="F2 controls output Motor" CV="134" mask="XXXXVXXX" minOut="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
