@@ -33,20 +33,29 @@
   <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV35-60_Fn.xml"/>
   <variable CV="61" mask="XXXVXXXX" item="Directional Headlights">
     <enumVal>
-      <enumChoice choice="Not used">
-        <choice>Not used</choice>
-        <choice xml:lang="it">Non usato</choice>
-      </enumChoice>
-      <enumChoice choice="Enabled">
-        <choice>Enabled</choice>
-        <choice xml:lang="it">Abilitato</choice>
-      </enumChoice>
-    </enumVal>
+    <enumChoice choice="Not used">
+      <choice xml:lang="fr">Not used(fr)</choice>
+      <choice xml:lang="it">Non usato</choice>
+    </enumChoice>
+    <enumChoice choice="Enabled">
+      <choice xml:lang="fr">Enabled(fr)</choice>
+      <choice xml:lang="it">Abilitato</choice>
+    </enumChoice>
+     </enumVal>
     <label>Headlight Dim When Stopped</label>
     <label xml:lang="it">Luci frontali smorzate quando fermo</label>
   </variable>
   <variable CV="61" mask="XXVXXXXX" item="Global lighting option 1">
-     <xi:include href="http://jmri.org/xml/decoders/parts/ienum-NotusedEnabled.xml"/>
+   <enumVal>
+    <enumChoice choice="Not used">
+      <choice xml:lang="fr">Not used(fr)</choice>
+      <choice xml:lang="it">Non usato</choice>
+    </enumChoice>
+    <enumChoice choice="Enabled">
+      <choice xml:lang="fr">Enabled(fr)</choice>
+      <choice xml:lang="it">Abilitato</choice>
+    </enumChoice>
+     </enumVal>
     <label>Opposite Headlight Dim</label>
     <label xml:lang="it">Smorzamento Luci Opposte</label>
   </variable>
