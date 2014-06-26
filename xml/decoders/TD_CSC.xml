@@ -9694,7 +9694,8 @@
 </decoder>
 
  
-<pane name="CSC">
+<pane>
+<name>CSC</name>
 		<column>
 			<label label=" "/>
 			<label label="------  Configuration  ------ "/>
@@ -9730,7 +9731,8 @@
 		</column>
 </pane>
 
-<pane name="Mfg">
+<pane>
+<name>Mfg</name>
     <column>
       <label label="Initailize logic cells writes to the Vsersion ID but does not change it "/>
       <label label="To initiate, make a change by selecting None then select Initailize logic cells"/>
@@ -9761,7 +9763,8 @@
 <xi:include href="http://jmri.org/xml/decoders/teamdigital/PaneCSC57Delay.xml"/>
 
 
- <pane name="CVs">
+ <pane>
+ <name>CVs</name>
 		<column>
 			<cvtable/>
 		</column>

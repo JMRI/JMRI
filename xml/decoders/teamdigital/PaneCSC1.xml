@@ -13,7 +13,8 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new file includes for SIC28 files -->
 <!-- Panes to show Logic Cells -->
-<pane name="Logic Cells 1-8 w/Outputs ">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<name>Logic Cells 1-8 w/Outputs</name>
 	<column>
 		<row>
 		<column>

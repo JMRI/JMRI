@@ -4173,7 +4173,8 @@
       </variable>
     </variables>
   </decoder>
-  <pane name="Options">
+  <pane>
+  <name>Options</name>
     <column>
       <row>
         <column>

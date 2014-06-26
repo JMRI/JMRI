@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new file includes for SIC26 file -->
 <!-- messages choices for logic cells -->
-<enumVal>
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 <enumChoice choice="Switch Request" value="0"/>
 <enumChoice choice="Switch Feedback" value="1"/>
 <enumChoice choice="Sensor" value="2"/>

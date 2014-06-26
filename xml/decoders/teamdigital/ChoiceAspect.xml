@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new file includes for SIC26 file -->
 <!-- aspect choices for DCC signal message -->
-<enumVal>
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice=" 0-Red"/>
   <enumChoice choice=" 1-Yellow"/>
   <enumChoice choice=" 2-Green"/>
