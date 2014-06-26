@@ -185,7 +185,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
         for (Element so : logicList) {
             String source = so.getChild("sourceSignalMast").getText();
             SignalMast sourceMast = sm.getSignalMast(source);
-            if(source!=null) {
+            if(sourceMast!=null) {
                 SignalMastLogic logic = sml.newSignalMastLogic(sourceMast);
                 List<Element> destList = so.getChildren("destinationMast");
                 for (Element s : destList){
