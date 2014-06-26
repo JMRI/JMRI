@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="td@teamdigital1.com" version="1.0" lastUpdated="20130520"/>
-  <!-- Version 1 inital release 10/27/13-->
+  <!-- Version 1 initial release 10/27/13-->
   <decoder>
     <family name="CSC" mfg="Team Digital" type="stationary" comment="The CSC can be programmed in the usual way">
       <model model="CSC" lowVersionID="10"/>
@@ -41,11 +41,11 @@
       <variable item="Cell 3 Address" CV="3" mask="VVVVVVVV" infoOnly="yes" default="101" tooltip="Address derived from base address">
         <splitVal highCV="4" offset="2" upperMask="XXXXVVVV"/>
         <label>Cell 3 Address</label>
-      </variable>
+      </variable><!-- 
       <variable item="Switch Address" CV="5" mask="VVVVVVVV" default="1" tooltip="Range 1-2040">
         <splitVal highCV="6" upperMask="XXXXVVVV"/>
         <label>Switch Address</label>
-      </variable>
+      </variable> -->
       <variable item="Cell 4 Address" CV="3" mask="VVVVVVVV" infoOnly="yes" default="101" tooltip="Address derived from base address">
         <splitVal highCV="4" offset="3" upperMask="XXXXVVVV"/>
         <label>Cell 4 Address</label>
