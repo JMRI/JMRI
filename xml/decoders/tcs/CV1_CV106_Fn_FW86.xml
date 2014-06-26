@@ -31,16 +31,16 @@
     <label xml:lang="it">Modo Conversione Analogica</label>
   </variable>
   <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV35-60_Fn.xml"/>
-  <variable CV="61" mask="XXXVXXXX" item="Directional Headlights">
+  <ivariable CV="61" mask="XXXVXXXX" item="Directional Headlights">
     <xi:include href="http://jmri.org/xml/decoders/parts/ienum-NotusedEnabled.xml"/>
     <label>Headlight Dim When Stopped</label>
     <label xml:lang="it">Luci frontali smorzate quando fermo</label>
-  </variable>
-  <variable CV="61" mask="XXVXXXXX" item="Global lighting option 1">
+  </ivariable>
+  <ivariable CV="61" mask="XXVXXXXX" item="Global lighting option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/ienum-NotusedEnabled.xml"/>
     <label>Opposite Headlight Dim</label>
     <label xml:lang="it">Smorzamento Luci Opposte</label>
-  </variable>
+  </ivariable>
   <variable CV="62" default="60" item="Function 2 effect generated" tooltip="1 second = 60 to 4 seconds = 255">
     <decVal/>
     <label>Momentary Pulse</label>
