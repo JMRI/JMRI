@@ -626,7 +626,7 @@
         <label>Yellow Wire Effect</label>
       </variable>
       <variable CV="50" mask="XXVVXXXX" item="Output 2 behavior" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-frw_rev_both_reserv.xml"/>v
+        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-frw_rev_both_reserv.xml"/>
         <label>Yellow Wire Timing</label>
       </variable>
       <variable CV="51" mask="XXXXVVVV" minOut="3" item="Output 3 effect generated">
