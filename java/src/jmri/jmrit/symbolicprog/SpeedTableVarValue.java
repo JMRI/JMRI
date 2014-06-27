@@ -176,6 +176,12 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
     }
 
     void setModel(int i, int value) {  // value is _min to _max
+        if ( value < _min || (mfx && (i == 0)) ) {
+            value = _min;
+        }
+        if ( value > _max || (mfx && (i == nValues-1)) ) {
+            value = _max;
+        }
         if (i < nValues && models[i].getValue() != value)
             models[i].setValue(value);
         // update the CV
@@ -284,20 +290,20 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         return;
     }
     
-    /**
-     * Enforce mfx bounds conditions. 
-     *
-     */
-    void enforceEndPointsMfx() {
-        if (mfx) {
-            if (_cvMap.get(cvList[0]).getValue() != _min) {
-                _cvMap.get(cvList[0]).setValue(_min);
-            }
-            if (_cvMap.get(cvList[nValues-1]).getValue() != _max) {
-                _cvMap.get(cvList[nValues-1]).setValue(_max);
-            }
-        }
-    }
+//     /**
+//      * Enforce mfx bounds conditions. 
+//      *
+//      */
+//     void enforceEndPointsMfx() {
+//         if (mfx) {
+//             if (_cvMap.get(cvList[0]).getValue() != _min) {
+//                 _cvMap.get(cvList[0]).setValue(_min);
+//             }
+//             if (_cvMap.get(cvList[nValues-1]).getValue() != _max) {
+//                 _cvMap.get(cvList[nValues-1]).setValue(_max);
+//             }
+//         }
+//     }
 
     public int getState()  {
         int i;
@@ -411,7 +417,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             g.setConstraints(b, cs);
             j.add(b, cs);
             
-            enforceEndPointsMfx();
+//             enforceEndPointsMfx();
         }
 
         // add control buttons
@@ -599,7 +605,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             int value = first+i*(last-first)/(nValues-1);
             _cvMap.get(cvList[i]).setValue(value);
         }
-        enforceEndPointsMfx();
+//         enforceEndPointsMfx();
     }
 
     /**
@@ -620,7 +626,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             int value = (int)(Math.floor(first*Math.exp(step*i)));
             _cvMap.get(cvList[i]).setValue(value);
         }
-        enforceEndPointsMfx();
+//         enforceEndPointsMfx();
     }
 
     /**
@@ -643,7 +649,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             int value = (int)(Math.floor(previous));
             _cvMap.get(cvList[i]).setValue(value);
         }
-        enforceEndPointsMfx();
+//         enforceEndPointsMfx();
     }
 
     /**
@@ -654,7 +660,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             int value = _cvMap.get(cvList[i+1]).getValue();
             _cvMap.get(cvList[i]).setValue(value);
         }
-        enforceEndPointsMfx();
+//         enforceEndPointsMfx();
     }
 
     /**
@@ -665,7 +671,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             int value = _cvMap.get(cvList[i-1]).getValue();
             _cvMap.get(cvList[i]).setValue(value);
         }
-        enforceEndPointsMfx();
+//         enforceEndPointsMfx();
     }
 
     /**
@@ -856,7 +862,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
                     break;
                 }
             }
-        enforceEndPointsMfx();
+//         enforceEndPointsMfx();
        }
     }
 

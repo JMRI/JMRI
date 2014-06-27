@@ -123,9 +123,9 @@ public final class WebServer implements LifeCycle.Listener {
                     continue;
                 } else if (services.getProperty(path).equals("redirectHandler")) { // NOI18N
                     servletContext.addServlet("jmri.web.servlet.RedirectionServlet", ""); // NOI18N
-                } else if (services.getProperty(path).startsWith("jmri.web.servlet.config.ConfigServlet") && !this.preferences.allowRemoteConfig()) {
+                } else if (services.getProperty(path).startsWith("jmri.web.servlet.config.ConfigServlet") && !this.preferences.allowRemoteConfig()) { // NOI18N
                     // if not allowRemoteConfig, use DenialServlet for any path configured to use ConfigServlet
-                    servletContext.addServlet("jmri.web.servlet.DenialServlet", "/*");
+                    servletContext.addServlet("jmri.web.servlet.DenialServlet", "/*"); // NOI18N
                 } else {
                     servletContext.addServlet(services.getProperty(path), "/*"); // NOI18N
                 }
