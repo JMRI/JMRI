@@ -63,7 +63,7 @@
           <text> </text>
         </label>
         <display item="Total PWM Period" tooltip="read manual">
-          <tooltip xml:lang="it">read manual</tooltip>
+          <tooltip xml:lang="it">Riferirsi al manuale</tooltip>
         </display>
         <separator/>
         <label>
@@ -83,7 +83,7 @@
         <display item="K Adjustment"/>
         <display item="I Adjustment"/>
       </column>
-      <name xml:lang="it">Motor</name>
+      <name xml:lang="it">Motore</name>
     </pane>
     <pane>
       <name>Speed Control</name>
@@ -108,21 +108,21 @@
         <display item="Speed Table Definition" format="onradiobutton" layout="above" label=""/>
         <display item="Speed Table" layout="above" label="CV 67-94"/>
       </column>
-      <name xml:lang="it">Speed Control</name>
+      <name xml:lang="it">Controllo Velocità</name>
     </pane>
     <pane>
       <name>Function/Output Map</name>
       <column>
         <fnmapping/>
       </column>
-      <name xml:lang="it">Function/Output Map</name>
+      <name xml:lang="it">Mappa Funzioni/uscite</name>
     </pane>
     <pane>
       <name>Output Handling</name>
       <column>
         <label>
           <text>F-9(r) Key Output Control</text>
-          <text xml:lang="it">F-9(r) Key Output Control</text>
+          <text xml:lang="it">F-9(r) Controllo Uscita</text>
         </label>
         <separator/>
         <display item="F9(r) controls output 6" format="checkbox" label="Soundslot 1"/>
@@ -138,7 +138,7 @@
         </label>
         <label>
           <text>F-10(r) Key Output Control</text>
-          <text xml:lang="it">F-10(r) Key Output Control</text>
+          <text xml:lang="it">F-10(r) Controllo Uscita</text>
         </label>
         <separator/>
         <display item="F10(r) controls output 6" format="checkbox" label="Soundslot 1"/>
@@ -150,7 +150,7 @@
         <display item="F10(r) controls output 12" format="checkbox" label="Soundslot 7"/>
         <display item="F10(r) controls output 13" format="checkbox" label="Soundslot 8"/>
       </column>
-      <name xml:lang="it">Output Handling</name>
+      <name xml:lang="it">Gestione Uscite</name>
     </pane>
     <pane>
       <name>Lights</name>
@@ -167,7 +167,7 @@
         <display item="Brightness AUX"/>
         <display item="Output Configuration AUX"/>
       </column>
-      <name xml:lang="it">Lights</name>
+      <name xml:lang="it">Luci</name>
     </pane>
     <pane>
       <name>Consist</name>
@@ -176,7 +176,7 @@
         <separator/>
         <label>
           <text>Will decoder respond to function requests at consist address?</text>
-          <text xml:lang="it">Will decoder respond to function requests at consist address?</text>
+          <text xml:lang="it">Il decoder risponde alle Funzioni anche all'indirizzo del Consist ?</text>
         </label>
         <separator/>
         <display item="Consist Acceleration Adjustment"/>
@@ -197,7 +197,7 @@
       <column>
         <label>
           <text>Analog Mode Functions F1-F8</text>
-          <text xml:lang="it">Analog Mode Functions F1-F8</text>
+          <text xml:lang="it">Funzioni in Analogico F1-F8</text>
         </label>
         <separator/>
         <display item="Analog Mode Function Status - F1" format="checkbox" label="F-1"/>
@@ -213,7 +213,7 @@
         </label>
         <label>
           <text>Analog Mode Functions F0, F9-F12</text>
-          <text xml:lang="it">Analog Mode Functions F0, F9-F12</text>
+          <text xml:lang="it">Funzioni in Analogico F0, F9-F12</text>
         </label>
         <separator/>
         <display item="Analog Mode Function Status - F0(f)" format="checkbox" label="F-0(f)"/>
@@ -233,7 +233,7 @@
         </label>
         <display item="ZIMO Signal Dependence Active"/>
       </column>
-      <name xml:lang="it">Advanced</name>
+      <name xml:lang="it">Avanzato</name>
     </pane>
     <pane>
       <name>Sound</name>
@@ -255,21 +255,21 @@
         </label>
         <display item="Braking Noise Start"/>
       </column>
-      <name xml:lang="it">Sound</name>
+      <name xml:lang="it">Suono</name>
     </pane>
     <pane>
       <name>Sound Levels</name>
       <column>
         <display item="Sound Level"/>
       </column>
-      <name xml:lang="it">Sound Levels</name>
+      <name xml:lang="it">Livelli Suono</name>
     </pane>
     <pane>
       <name>CVs</name>
       <column>
         <cvtable/>
       </column>
-      <name xml:lang="it">CVs</name>
+      <name xml:lang="it">CV</name>
     </pane>
   </programmer>
 </programmer-config>
