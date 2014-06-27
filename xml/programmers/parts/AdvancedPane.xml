@@ -6,11 +6,11 @@
   <name xml:lang="de">Erweitert</name>
   <column>
     <display item="Advanced Ack" tooltip="Enable advanced acknowledgment">
-      <tooltip xml:lang="it">Enable advanced acknowledgment</tooltip>
+      <tooltip xml:lang="it">Abilita Riconoscimento Avanzato</tooltip>
       <tooltip xml:lang="de">Erweitertes Acknowledgment einschalten</tooltip>
     </display>
     <display item="Packet Time-out Value" tooltip="The maximum time period that the decoder will maintain its speed without receiving a valid packet addressed to it">
-      <tooltip xml:lang="it">The maximum time period that the decoder will maintain its speed without receiving a valid packet addressed to it</tooltip>
+      <tooltip xml:lang="it">Il tempo massimo che il Decoder mantiene la sua velocità senza ricevere un pacchetto dati valido indirizzato a lui</tooltip>
       <tooltip xml:lang="de">Längste Zeitspanne über die der Dekoder seine Geschwindigkeit beibehält, ohne ein an ihn adressiertes gültiges Paket zu empfangen</tooltip>
     </display>
   </column>
