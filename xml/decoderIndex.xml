@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20140611-1919-jake on Wed Jun 11 12:20:03 PDT 2014 $Id$-->
-  <decoderIndex version="410">
+  <!--Written by JMRI version 3.7.9ish-20140627-1829-jake on Fri Jun 27 11:29:30 PDT 2014 $Id$-->
+  <decoderIndex version="412">
     <mfgList nmraListDate="2012-12-05" updated="2013-04-11" lastadd="106">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -6174,6 +6174,9 @@
       </family>
       <family name="Control Point" mfg="RR-CirKits" type="stationary" comment="The Control Point is normally programmed in OPs mode" file="RR-CirKits-LNCP-basic.xml">
         <model model="LNCP" comment="LocoNet Control Point" lowVersionID="01" />
+      </family>
+      <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The MotorMan is normally programmed in OPs mode" file="RR-CirKits-MotorMan.xml">
+        <model model="MotorMan" comment="8 Line Output Driver" lowVersionID="10" />
       </family>
       <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The SignalMan is normally programmed in OPs mode" file="RR-CirKits-SignalMan-basic.xml">
         <model model="SignalMan" comment="Signal Mast Driver" lowVersionID="10" />
