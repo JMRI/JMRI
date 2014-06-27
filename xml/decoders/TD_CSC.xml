@@ -41,11 +41,7 @@
       <variable item="Cell 3 Address" CV="3" mask="VVVVVVVV" infoOnly="yes" default="101" tooltip="Address derived from base address">
         <splitVal highCV="4" offset="2" upperMask="XXXXVVVV"/>
         <label>Cell 3 Address</label>
-      </variable><!-- 
-      <variable item="Switch Address" CV="5" mask="VVVVVVVV" default="1" tooltip="Range 1-2040">
-        <splitVal highCV="6" upperMask="XXXXVVVV"/>
-        <label>Switch Address</label>
-      </variable> -->
+      </variable>
       <variable item="Cell 4 Address" CV="3" mask="VVVVVVVV" infoOnly="yes" default="101" tooltip="Address derived from base address">
         <splitVal highCV="4" offset="3" upperMask="XXXXVVVV"/>
         <label>Cell 4 Address</label>
