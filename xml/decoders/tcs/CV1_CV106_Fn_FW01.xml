@@ -30,8 +30,7 @@
     <label>Analog conversion mode</label>
     <label xml:lang="it">Modo Conversione Analogica</label>
   </variable>
-  <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV35-54_Fn.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV59-60_Fn.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV35-60_Fn.xml"/>
   <ivariable CV="61" mask="XXXVXXXX" item="Directional Headlights">
     <xi:include href="http://jmri.org/xml/decoders/parts/ienum-NotusedEnabled.xml"/>
     <label>Headlight Dim When Stopped</label>
