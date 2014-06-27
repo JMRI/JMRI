@@ -60,6 +60,7 @@
     <label>
       <text>Will decoder respond to function requests at consist address?</text>
       <text xml:lang="de">Wird der Dekoder auf Funktionen an die Adresse der Mehrfachtraktion (Consist) reagieren?</text>
+      <text xml:lang="it">Il decoder risponde alle Funzioni anche all'indirizzo del Consist ?</text>
     </label>
     <label>
       <text> </text>
