@@ -500,8 +500,8 @@ public class WarrantTableAction extends AbstractAction {
         JTextField _sysNameBox;
         JTextField _userNameBox;
 
-        Warrant _startW;
-        Warrant _endW;
+        private Warrant _startW;
+        private Warrant _endW;
 
         public CreateWarrantFrame() {
             setTitle(Bundle.getMessage("TitleCreateWarrant"));
@@ -600,7 +600,9 @@ public class WarrantTableAction extends AbstractAction {
             } else {
             	new WarrantFrame(w, true);
             }
-            dispose();      	
+            _startW = null;
+            _endW =null;
+            dispose();
         }
 
         private void makeWarrant() {
@@ -639,7 +641,6 @@ public class WarrantTableAction extends AbstractAction {
                 			JOptionPane.ERROR_MESSAGE);
             }
         }
-
     }
 
     static Logger log = LoggerFactory.getLogger(WarrantTableAction.class.getName());

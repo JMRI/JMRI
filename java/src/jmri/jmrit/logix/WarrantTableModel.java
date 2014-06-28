@@ -93,7 +93,10 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
         }
         // remove listeners from any deleted warrants
         for (int i=0; i<_warList.size(); i++) {
-        	_warList.get(i).removePropertyChangeListener(this);
+        	Warrant w = _warList.get(i);
+            if (!_warNX.contains(w)) {	// don't touch current running NXWarrant
+            	w.removePropertyChangeListener(this);            	
+            }
         }
         // add in current temporary NX warrants
         for (int i=0; i<_warNX.size(); i++) {

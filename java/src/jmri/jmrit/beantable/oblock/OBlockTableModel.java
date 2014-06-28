@@ -23,6 +23,11 @@ package jmri.jmrit.beantable.oblock;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.TreeSet;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -37,6 +42,7 @@ import jmri.Sensor;
 import jmri.jmrit.beantable.AbstractTableAction;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
+import jmri.util.NamedBeanComparator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +51,7 @@ import org.slf4j.LoggerFactory;
      * Duplicates the JTable model for BlockTableAction and adds a column
      * for the occupancy sensor.  Configured for use within an internal frame.
      */
-public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
+public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
 
     static public final int SYSNAMECOL  = 0;
     static public final int USERNAMECOL = 1;
@@ -109,20 +115,74 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
     public NamedBean getBySystemName(String name) {
         return _manager.getBySystemName(name);
     }
-    // Method name not appropriate (initial use was for Icon Editors)
-    @Override
-    public NamedBean addBean(String name) {
-        return _manager.getOBlock(name);
+    public NamedBean getByUserName(String name) {
+    	return _manager.getByUserName(name);
     }
-    @Override
-    public NamedBean addBean(String sysName, String userName) {
-        return _manager.createNewOBlock(sysName, userName);
+    protected String getBeanType(){
+        return "OBlock";
     }
-    @Override
-    public boolean canAddBean() {
-        return true;
+    public void clickOn(NamedBean t) {
     }
+    protected String getMasterClassName() { return OBlockTableModel.class.getName(); }
+    
+    protected List <NamedBean> getBeanList() {
+        TreeSet <NamedBean>ts = new TreeSet<NamedBean>(new NamedBeanComparator());
 
+        Iterator <String> iter = sysNameList.iterator();
+        while (iter.hasNext()) {
+            ts.add(getBySystemName(iter.next()));
+        }
+        ArrayList<NamedBean> list = new ArrayList <NamedBean> (sysNameList.size());
+
+        Iterator <NamedBean> it = ts.iterator();
+        while(it.hasNext()) {
+            NamedBean elt = it.next();
+            list.add(elt);
+        }
+        return list;
+    }
+    
+    public String getValue(String name) {
+        int state = _manager.getBySystemName(name).getState();
+        return getValue(state);
+    }
+    String getValue(int state) {
+        StringBuilder sb = new StringBuilder();
+        if ( (state & OBlock.DARK)!= 0 ) sb.append(Bundle.getMessage("Dark"));
+        if ( (state & OBlock.OCCUPIED)!= 0 ) {
+        	if (sb.length()>0) { sb.append('-'); }
+        	sb.append(Bundle.getMessage("Occupied"));
+        }
+        if ( (state & OBlock.UNOCCUPIED)!= 0 ) {
+        	if (sb.length()>0) { sb.append('-'); }
+        	sb.append(Bundle.getMessage("Unoccupied"));
+        }
+        if ( (state & OBlock.INCONSISTENT)!= 0 ) {
+        	if (sb.length()>0) { sb.append('-'); }
+        	sb.append(Bundle.getMessage("Inconsistent"));
+        }
+        if ( (state & OBlock.ALLOCATED)!= 0 ) {
+        	if (sb.length()>0) { sb.append('-'); }
+        	sb.append(Bundle.getMessage("Allocated"));
+        }
+        if ( (state & OBlock.RUNNING)!= 0 ) {
+        	if (sb.length()>0) { sb.append('-'); }
+        	sb.append(Bundle.getMessage("Running"));
+        }
+        if ( (state & OBlock.OUT_OF_SERVICE)!= 0 ) {
+        	if (sb.length()>0) { sb.append('-'); }
+        	sb.append(Bundle.getMessage("OutOfService"));
+        }
+        if ( (state & OBlock.TRACK_ERROR)!= 0 ) {
+        	if (sb.length()>0) { sb.append('-'); }
+        	sb.append(Bundle.getMessage("TrackError"));
+        }
+    	if (sb.length()==0) {
+    		sb.append(Bundle.getMessage("Unknown"));
+    	}
+        return sb.toString();    	
+    }
+    
     @Override
     public int getColumnCount () {
         return NUMCOLS;
@@ -134,9 +194,14 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
 
     static String ZEROS ="00000000";
     @Override
-     public Object getValueAt(int row, int col) 
+    public Object getValueAt(int row, int col) 
     {
-        OBlock b = (OBlock)getBeanAt(row);
+    	int size = sysNameList.size();
+    	if (row >= size) {
+    		return "";
+    	}
+        String name = sysNameList.get(row);
+        OBlock b = _manager.getBySystemName(name);
         switch (col) {
         	case SYSNAMECOL:
                 if (b != null) {
@@ -368,7 +433,8 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
             	return;
             }
         }
-        OBlock block = (OBlock)getBeanAt(row);
+        String name = sysNameList.get(row);
+        OBlock block = _manager.getBySystemName(name);
         switch (col) {
             case USERNAMECOL:
                 OBlock b = _manager.getOBlock((String)value);
@@ -508,14 +574,14 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
             case SENSORCOL: return AbstractTableAction.rbean.getString("BeanNameSensor");
             case CURVECOL: return AbstractTableAction.rb.getString("BlockCurveColName");
             case LENGTHCOL: return AbstractTableAction.rb.getString("BlockLengthColName");
-            case UNITSCOL: return "";
+            case UNITSCOL: return "  ";
             case ERR_SENSORCOL: return Bundle.getMessage("ErrorSensorCol");
             case REPORTERCOL: return Bundle.getMessage("ReporterCol");
             case REPORT_CURRENTCOL: return Bundle.getMessage("RepCurrentCol");
             case PERMISSIONCOL: return Bundle.getMessage("PermissionCol");
             case SPEEDCOL: return Bundle.getMessage("SpeedCol");
-            case EDIT_COL: return "";
-            case DELETE_COL: return "";
+            case EDIT_COL: return Bundle.getMessage("ButtonEditPath");
+            case DELETE_COL: return AbstractTableAction.rb.getString("ButtonDelete");
         }
         return super.getColumnName(col);
     }
