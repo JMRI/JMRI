@@ -144,6 +144,57 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="decoderIndex-config">
+    <xs:annotation><xs:documentation>
+        Defines the content of the JMRI decoderIndex.xml file.
+    </xs:documentation></xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="decoderIndex" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="mfgList" minOccurs="1" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="manufacturer" minOccurs="1" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:attribute name="mfg" type="xs:string"/>
+                        <xs:attribute name="mfgID" type="xs:int"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="nmraListDate" type="xs:string"/>                  
+                  <xs:attribute name="updated" type="xs:string"/>                  
+                  <xs:attribute name="lastadd" type="xs:int"/>                  
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="familyList" minOccurs="1" maxOccurs="1" >
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="family" minOccurs="1" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:complexContent>
+                          <xs:extension base="FamilyType">
+                            <xs:annotation><xs:documentation>
+                                This element is the same as in the decoder definition itself, 
+                                with the addition of a file name attribute.
+                            </xs:documentation></xs:annotation>
+                            <xs:attribute name="file" type="xs:string" />
+                          </xs:extension>
+                        </xs:complexContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="version" type="xs:int"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="variables" type="VariablesType">
     <xs:annotation>
       <xs:documentation>
