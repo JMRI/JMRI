@@ -186,6 +186,10 @@ public class TrainSwitchLists extends TrainCommon {
 						}
 					}
 					
+					// add route comment
+					if (!rl.getComment().trim().equals(""))
+						newLine(fileOut, rl.getComment());
+					
 					if (Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {
 						pickupEngines(fileOut, engineList, rl, isManifest);
 						dropEngines(fileOut, engineList, rl, isManifest);
