@@ -25,7 +25,7 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
  */
 public class MrcPacketizerBundle extends Bundle {
 
-    private final static String name = "jmri.jmrix.mrc.MrcPacketsBundle"; // NOI18N
+    private final static String name = "jmri.jmrix.mrc.MrcPacketizerBundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly
@@ -65,7 +65,7 @@ public class MrcPacketizerBundle extends Bundle {
         return b.handleGetMessage(key, subs);
     }
    
-    private final static Bundle b = new Bundle();
+    private final static Bundle b = new MrcPacketizerBundle();
     @Override @Nullable protected String bundleName() {return name; }
     @Override protected jmri.Bundle getBundle() { return b; }
     @Override protected String retry(String key) { return super.getBundle().handleGetMessage(key); }

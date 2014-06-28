@@ -1,4 +1,4 @@
-// MrcBundle.java
+// Bundle.java
 
 package jmri.jmrix.mrc;
 
@@ -23,9 +23,9 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
  * @version     $Revision: 17977 $
  * @since       3.3.1
  */
-public class MrcOpsModeBundle extends jmri.jmrix.mrc.Bundle {
+public class MrcPacketBundle extends jmri.jmrix.mrc.Bundle {
 
-    private final static String name = "jmri.jmrix.mrc.MrcOpsModeProgrammerBundle"; // NOI18N
+    private final static String name = "jmri.jmrix.mrc.MrcPacketsBundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly
@@ -65,7 +65,7 @@ public class MrcOpsModeBundle extends jmri.jmrix.mrc.Bundle {
         return b.handleGetMessage(key, subs);
     }
    
-    private final static Bundle b = new MrcOpsModeBundle();
+    private final static Bundle b = new MrcPacketBundle();
     @Override @Nullable protected String bundleName() {return name; }
     @Override protected jmri.Bundle getBundle() { return b; }
     @Override protected String retry(String key) { return super.getBundle().handleGetMessage(key); }

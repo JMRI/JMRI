@@ -23,7 +23,7 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
  * @version     $Revision: 17977 $
  * @since       3.3.1
  */
-public class MrcMessageBundle extends Bundle {
+public class MrcMessageBundle extends jmri.jmrix.mrc.Bundle {
 
     private final static String name = "jmri.jmrix.mrc.MrcMessageBundle"; // NOI18N
 
@@ -65,7 +65,7 @@ public class MrcMessageBundle extends Bundle {
         return b.handleGetMessage(key, subs);
     }
    
-    private final static Bundle b = new Bundle();
+    private final static Bundle b = new MrcMessageBundle();
     @Override @Nullable protected String bundleName() {return name; }
     @Override protected jmri.Bundle getBundle() { return b; }
     @Override protected String retry(String key) { return super.getBundle().handleGetMessage(key); }

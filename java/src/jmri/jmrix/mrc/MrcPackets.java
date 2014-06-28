@@ -1,7 +1,6 @@
 package jmri.jmrix.mrc;
 
 import java.text.DecimalFormat;
-import java.util.ResourceBundle;
 
 /**
  * Some of the message formats used in this class are Copyright MRC, Inc.
@@ -14,9 +13,7 @@ import java.util.ResourceBundle;
  * @author Ken Cameron 2014
  */
 public class MrcPackets {
-	
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.mrc.MrcPacketsBundle");
-    
+	    
     public static final int THROTTLEPACKETCMD = 37;
     static final int[] THROTTLEPACKETHEADER = new int[]{THROTTLEPACKETCMD, 0, THROTTLEPACKETCMD, 0};
     static final int THROTTLEPACKETLENGTH = 10; //length of packet less the header
@@ -210,9 +207,9 @@ public class MrcPackets {
         if((m.getNumDataElements() <4) || (m.getNumDataElements()>=4 && m.getElement(0)!=m.getElement(2) && m.getElement(1)!=0x01)){
             //byte 0 and byte 2 should always be the same except for a clock update packet.
         	if (m.getNumDataElements() < 4) {
-        		txt.append(Bundle.getMessage("MrcPacketsShort")); //IN18N
+        		txt.append(MrcPacketBundle.getMessage("MrcPacketsShort")); //IN18N
         	} else {
-        		txt.append(Bundle.getMessage("MrcPacketsError")); //IN18N
+        		txt.append(MrcPacketBundle.getMessage("MrcPacketsError")); //IN18N
         	}
             for (int i=0;i<m.getNumDataElements(); i++) {
                 txt.append(" ");
@@ -221,49 +218,49 @@ public class MrcPackets {
         } else {
 	        switch (m.getElement(0)&0xFF) {
 	        case SETCLOCKRATIOCMD:
-	        	txt.append(Bundle.getMessage("MrcPacketsSetClockRatio") + m.getElement(4)); //IN18N
+	        	txt.append(MrcPacketBundle.getMessage("MrcPacketsSetClockRatio") + m.getElement(4)); //IN18N
 	        	break;
 	        case SETCLOCKTIMECMD:
-	        	txt.append(Bundle.getMessage("MrcPacketsSetClockTime") + m.getElement(4)  //IN18N
-	        			+ Bundle.getMessage("MrcPacketsClockTimeSep") + m.getElement(6)); //IN18N
+	        	txt.append(MrcPacketBundle.getMessage("MrcPacketsSetClockTime") + m.getElement(4)  //IN18N
+	        			+ MrcPacketBundle.getMessage("MrcPacketsClockTimeSep") + m.getElement(6)); //IN18N
 	        	break;
 	        case SETCLOCKAMPMCMD:
-	        	txt.append(Bundle.getMessage("MrcPacketsSetClockMode")); //IN18N
+	        	txt.append(MrcPacketBundle.getMessage("MrcPacketsSetClockMode")); //IN18N
 	        	break;
 	        case MrcPackets.THROTTLEPACKETCMD:
 	        	if (m.getElement(4) != 0) {
-	            	txt.append(Bundle.getMessage("MrcPacketsLoco") + Bundle.getMessage("MrcPacketsLocoLong")); //IN18N
+	            	txt.append(MrcPacketBundle.getMessage("MrcPacketsLoco") + " " + MrcPacketBundle.getMessage("MrcPacketsLocoLong") + " "); //IN18N
 	        	} else {
-	            	txt.append(Bundle.getMessage("MrcPacketsLoco") + Bundle.getMessage("MrcPacketsLocoShort")); //IN18N
+	            	txt.append(MrcPacketBundle.getMessage("MrcPacketsLoco") + " " + MrcPacketBundle.getMessage("MrcPacketsLocoShort") + " "); //IN18N
 	        	}
 	        	txt.append(Integer.toString(m.getLocoAddress()));
                 if(m.getElement(10) == 0x02){
-                    txt.append(Bundle.getMessage("MrcPackets128ss")); //IN18N
+                    txt.append(" " + MrcPacketBundle.getMessage("MrcPackets128ss")); //IN18N
                     //128 speed step
                     if ((m.getElement(8) & 0x80) == 0x80) {
-                        txt.append(Bundle.getMessage("MrcPacketsForward")); //IN18N
+                        txt.append(" " + MrcPacketBundle.getMessage("MrcPacketsForward")); //IN18N
                     } else {
-                        txt.append(Bundle.getMessage("MrcPacketsReverse")); //IN18N
+                        txt.append(" " + MrcPacketBundle.getMessage("MrcPacketsReverse")); //IN18N
                     }
-                    txt.append(Bundle.getMessage("MrcPacketsSpeed")); //IN18N
+                    txt.append(" " + MrcPacketBundle.getMessage("MrcPacketsSpeed")); //IN18N
                     int speed = (m.getElement(8) & 0x7F)-1;
                     if(speed==0)
-                        txt.append(Bundle.getMessage("MrcPacketsEStop")); //IN18N
+                        txt.append(" " + MrcPacketBundle.getMessage("MrcPacketsEStop")); //IN18N
                     else if (speed ==-1)
-                        txt.append(Bundle.getMessage("MrcPacketsStop")); //IN18N
+                        txt.append(" " + MrcPacketBundle.getMessage("MrcPacketsStop")); //IN18N
                     else
-                        txt.append(Integer.toString(speed));
+                        txt.append(" " + Integer.toString(speed));
                 } else if (m.getElement(10) == 0x00){
                     int value = m.getElement(8);
-                    txt.append(Bundle.getMessage("MrcPackets28ss")); //IN18N
+                    txt.append(" " + MrcPacketBundle.getMessage("MrcPackets28ss")); //IN18N
                     //28 Speed Steps
                     if((m.getElement(8)& 0x60)==0x60){
                         //Forward
                         value = value - 0x60;
-                        txt.append(Bundle.getMessage("MrcPacketsForward")); //IN18N
+                        txt.append(" " + MrcPacketBundle.getMessage("MrcPacketsForward")); //IN18N
                     } else {
                         value = value - 0x40;
-                        txt.append(Bundle.getMessage("MrcPacketsReverse")); //IN18N
+                        txt.append(" " + MrcPacketBundle.getMessage("MrcPacketsReverse")); //IN18N
                     }
                     if(((value>>4)&0x01)==0x01){
                         value = value - 0x10;
@@ -273,17 +270,17 @@ public class MrcPackets {
                     }
                     value = value -3; //Turn into user expected 0-28
                     if(value==-1){
-                        txt.append(Bundle.getMessage("MrcPacketsEStop")); //IN18N
+                        txt.append(" " + MrcPacketBundle.getMessage("MrcPacketsEStop")); //IN18N
                     } else {
                         if(value<0) value = 0;
-                        txt.append(Bundle.getMessage("MrcPacketsSpeed") + Integer.toString(value)); //IN18N
+                        txt.append(" " + MrcPacketBundle.getMessage("MrcPacketsSpeed") + Integer.toString(value)); //IN18N
                     }
                 }
 
 	    		break;
 	        case FUNCTIONGROUP1PACKETCMD:
-	        	txt.append(Bundle.getMessage("MrcPacketsLoco") + Integer.toString(m.getLocoAddress()) 
-	        			+ Bundle.getMessage("MrcPacketsGroup1")); //IN18N
+	        	txt.append(MrcPacketBundle.getMessage("MrcPacketsLoco")  + " " +  Integer.toString(m.getLocoAddress()) 
+	        			 + " " +  MrcPacketBundle.getMessage("MrcPacketsGroup1")); //IN18N
 	        	txt.append(" F0 " + Integer.toString(m.getElement(8) & 0x10));
 	        	txt.append(" F1 " + Integer.toString(m.getElement(8) & 0x01));
 	        	txt.append(" F2 " + Integer.toString(m.getElement(8) & 0x02));
@@ -291,40 +288,40 @@ public class MrcPackets {
 	        	txt.append(" F4 " + Integer.toString(m.getElement(8) & 0x08));
 	    		break;
 	        case FUNCTIONGROUP2PACKETCMD:
-	        	txt.append(Bundle.getMessage("MrcPacketsLoco") + Integer.toString(m.getLocoAddress()) 
-	        			+ Bundle.getMessage("MrcPacketsGroup2")); //IN18N
+	        	txt.append(MrcPacketBundle.getMessage("MrcPacketsLoco") + Integer.toString(m.getLocoAddress()) 
+	        			+ MrcPacketBundle.getMessage("MrcPacketsGroup2")); //IN18N
 	        	txt.append(" F5 " + Integer.toString(m.getElement(8) & 0x01));
 	        	txt.append(" F6 " + Integer.toString(m.getElement(8) & 0x02));
 	        	txt.append(" F7 " + Integer.toString(m.getElement(8) & 0x04));
 	        	txt.append(" F8 " + Integer.toString(m.getElement(8) & 0x08));
 	    		break;
 	        case FUNCTIONGROUP3PACKETCMD:
-	        	txt.append(Bundle.getMessage("MrcPacketsLoco") + Integer.toString(m.getLocoAddress()) 
-	        			+ Bundle.getMessage("MrcPacketsGroup3")); //IN18N
+	        	txt.append(MrcPacketBundle.getMessage("MrcPacketsLoco") + Integer.toString(m.getLocoAddress()) 
+	        			+ MrcPacketBundle.getMessage("MrcPacketsGroup3")); //IN18N
 	        	txt.append(" F9 " + Integer.toString(m.getElement(8) & 0x01));
 	        	txt.append(" F10 " + Integer.toString(m.getElement(8) & 0x02));
 	        	txt.append(" F11 " + Integer.toString(m.getElement(8) & 0x04));
 	        	txt.append(" F12 " + Integer.toString(m.getElement(8) & 0x08));
 	    		break;
 	        case FUNCTIONGROUP4PACKETCMD:
-	        	txt.append(Bundle.getMessage("MrcPacketsLoco") + Integer.toString(m.getLocoAddress()) 
-	        			+ Bundle.getMessage("MrcPacketsGroup4")); //IN18N
+	        	txt.append(MrcPacketBundle.getMessage("MrcPacketsLoco") + " " + Integer.toString(m.getLocoAddress()) 
+	        			+ " " + MrcPacketBundle.getMessage("MrcPacketsGroup4")); //IN18N
 	        	txt.append(" F13 " + Integer.toString(m.getElement(8) & 0x01));
 	        	txt.append(" F14 " + Integer.toString(m.getElement(8) & 0x02));
 	        	txt.append(" F15 " + Integer.toString(m.getElement(8) & 0x04));
 	        	txt.append(" F16" + Integer.toString(m.getElement(8) & 0x08));
 	    		break;
 	        case FUNCTIONGROUP5PACKETCMD:
-	        	txt.append(Bundle.getMessage("MrcPacketsLoco") + Integer.toString(m.getLocoAddress()) 
-	        			+ Bundle.getMessage("MrcPacketsGroup5")); //IN18N
+	        	txt.append(MrcPacketBundle.getMessage("MrcPacketsLoco") + " " + Integer.toString(m.getLocoAddress()) 
+	        			+ " " + MrcPacketBundle.getMessage("MrcPacketsGroup5")); //IN18N
 	        	txt.append(" F17 " + Integer.toString(m.getElement(8) & 0x01));
 	        	txt.append(" F18 " + Integer.toString(m.getElement(8) & 0x02));
 	        	txt.append(" F19 " + Integer.toString(m.getElement(8) & 0x04));
 	        	txt.append(" F20 " + Integer.toString(m.getElement(8) & 0x08));
 	    		break;
 	        case FUNCTIONGROUP6PACKETCMD:
-	        	txt.append(Bundle.getMessage("MrcPacketsLoco") + Integer.toString(m.getLocoAddress()) 
-	        			+ Bundle.getMessage("MrcPacketsGroup6")); //IN18N
+	        	txt.append(MrcPacketBundle.getMessage("MrcPacketsLoco") + " " + Integer.toString(m.getLocoAddress()) 
+	        			+ " " + MrcPacketBundle.getMessage("MrcPacketsGroup6")); //IN18N
 	        	txt.append(" F21 " + Integer.toString(m.getElement(8) & 0x01));
 	        	txt.append(" F22 " + Integer.toString(m.getElement(8) & 0x02));
 	        	txt.append(" F23 " + Integer.toString(m.getElement(8) & 0x04));
@@ -336,108 +333,108 @@ public class MrcPackets {
 	    		break;
 	        case READCVCMD:
 	        	int cv = ((m.getElement(4)&0xff) << 8) + (m.getElement(6)&0xff);
-	        	txt.append(Bundle.getMessage("MrcPacketsReadCv") + Integer.toString(cv)); //IN18N
+	        	txt.append(MrcPacketBundle.getMessage("MrcPacketsReadCv") + Integer.toString(cv)); //IN18N
 	    		break;
 	        case READDECODERADDRESSCMD:
-	        	txt.append(Bundle.getMessage("MrcPacketsReadLocoAddr")); //IN18N
+	        	txt.append(MrcPacketBundle.getMessage("MrcPacketsReadLocoAddr")); //IN18N
 	    		break;
 	        case WRITECVPOMCMD:
-	        	txt.append(Bundle.getMessage("MrcPacketsWriteOpsCvLoco") + Integer.toString(m.getLocoAddress())); //IN18N
-	        	txt.append(Integer.toString(m.getElement(10)&0xff));
+	        	txt.append(MrcPacketBundle.getMessage("MrcPacketsWriteOpsCvLoco") + " " + Integer.toString(m.getLocoAddress())); //IN18N
+	        	txt.append(" " + Integer.toString((m.getElement(10)&0xff)+1));
 	        	txt.append("=");
-	        	txt.append(Integer.toString(m.getElement(8)&0xff));
+	        	txt.append(Integer.toString(m.getElement(12)&0xff));
 	    		break;
 	        case WRITECVPROGCMD:
-	        	txt.append(Bundle.getMessage("MrcPacketsWriteSvrCv")); //IN18N
-	        	txt.append(Integer.toString(m.getElement(4) << 8) + m.getElement(6));
+	        	txt.append(MrcPacketBundle.getMessage("MrcPacketsWriteSvrCv") ); //IN18N
+	        	txt.append(" " + Integer.toString(m.getElement(4) << 8) + m.getElement(6));
 	        	txt.append("=");
 	        	txt.append(Integer.toString(m.getElement(8)&0xff));
 	    		break;
             case READCVHEADERREPLYCODE:
-                txt.append(Bundle.getMessage("MrcPacketsReadCvValue")); //IN18N
+                txt.append(MrcPacketBundle.getMessage("MrcPacketsReadCvValue")); //IN18N
                 txt.append(Integer.toString(m.value()));
                 break;
             case BADCMDRECIEVEDCODE:
-                txt.append(Bundle.getMessage("MrcPacketBadCmdAck")); //IN18N
+                txt.append(MrcPacketBundle.getMessage("MrcPacketBadCmdAck")); //IN18N
                 break;
             case GOODCMDRECIEVEDCODE:
-                txt.append(Bundle.getMessage("MrcPacketGoodCmdAck")); //IN18N
+                txt.append(MrcPacketBundle.getMessage("MrcPacketGoodCmdAck")); //IN18N
                 break;
             case PROGCMDSENTCODE:
-                txt.append(Bundle.getMessage("MrcPacketsPgmCmdSent")); //IN18N
+                txt.append(MrcPacketBundle.getMessage("MrcPacketsPgmCmdSent")); //IN18N
                 break;
             case LOCOSOLECONTROLCODE:
-                txt.append(Bundle.getMessage("MrcPacketsSingleThrottle")); //IN18N
+                txt.append(MrcPacketBundle.getMessage("MrcPacketsSingleThrottle")); //IN18N
                 break;
             case LOCODBLCONTROLCODE:
-                txt.append(Bundle.getMessage("MrcPacketsMultipleThrottle")); //IN18N
+                txt.append(MrcPacketBundle.getMessage("MrcPacketsMultipleThrottle")); //IN18N
                 break;
             case POWERONCMD:
-                txt.append(Bundle.getMessage("MrcPacketsTrkPwrOn")); //IN18N
+                txt.append(MrcPacketBundle.getMessage("MrcPacketsTrkPwrOn")); //IN18N
                 break;
             case POWEROFFCMD:
-                txt.append(Bundle.getMessage("MrcPacketsTrkPwrOff")); //IN18N
+                txt.append(MrcPacketBundle.getMessage("MrcPacketsTrkPwrOff")); //IN18N
                 break;
             case ADDTOCONSISTPACKETCMD:
-                txt.append(Bundle.getMessage("MrcPacketsLocoAddConsist")); //IN18N
+                txt.append(MrcPacketBundle.getMessage("MrcPacketsLocoAddConsist")); //IN18N
                 break;
             case CLEARCONSISTPACKETCMD:
-                txt.append(Bundle.getMessage("MrcPacketsClearedConsist")); //IN18N
+                txt.append(MrcPacketBundle.getMessage("MrcPacketsClearedConsist")); //IN18N
                 break;
             case ROUTECONTROLPACKETCMD:
-                txt.append(Bundle.getMessage("MrcPacketsRoute")); //IN18N
-                txt.append(Integer.toString(m.getElement(4)));
-                txt.append(Bundle.getMessage("MrcPacketsRouteSet")); //IN18N
+                txt.append(MrcPacketBundle.getMessage("MrcPacketsRoute")); //IN18N
+                txt.append(" " + Integer.toString(m.getElement(4)));
+                txt.append(" " + MrcPacketBundle.getMessage("MrcPacketsRouteSet")); //IN18N
                 break;
             case CLEARROUTEPACKETCMD:
-                txt.append(Bundle.getMessage("MrcPacketsClearedRoute")); //IN18N
+                txt.append(MrcPacketBundle.getMessage("MrcPacketsClearedRoute")); //IN18N
                 break;
             case ADDTOROUTEPACKETCMD:
-                txt.append(Bundle.getMessage("MrcPacketsAddedRoute")); //IN18N
+                txt.append(MrcPacketBundle.getMessage("MrcPacketsAddedRoute")); //IN18N
                 break;
             case ACCESSORYPACKETCMD:
-                txt.append(Bundle.getMessage("MrcPacketsAccy")); //IN18N
-                txt.append(Integer.toString(m.getAccAddress()));
+                txt.append(MrcPacketBundle.getMessage("MrcPacketsAccy")); //IN18N
+                txt.append(" " + Integer.toString(m.getAccAddress()) + " ");
                 switch (m.getAccState()){
-                    case jmri.Turnout.CLOSED : txt.append(Bundle.getMessage("MrcPacketsAccyClosed")); //IN18N
+                    case jmri.Turnout.CLOSED : txt.append(MrcPacketBundle.getMessage("MrcPacketsAccyClosed")); //IN18N
                                      break;
-                    case jmri.Turnout.THROWN : txt.append(Bundle.getMessage("MrcPacketsAccyThrown")); //IN18N
+                    case jmri.Turnout.THROWN : txt.append(MrcPacketBundle.getMessage("MrcPacketsAccyThrown")); //IN18N
                                      break;
-                    default : txt.append(Bundle.getMessage("MrcPacketsAccyUnk")); //IN18N
+                    default : txt.append(MrcPacketBundle.getMessage("MrcPacketsAccyUnk")); //IN18N
                 }
                 break;
 	        default:
                 if(m.getNumDataElements()==6){
                     if(m.getElement(0)==m.getElement(2)&&m.getElement(0)==m.getElement(4)){
-                        txt.append(Bundle.getMessage("MrcPacketsPollToCab")); //IN18N
+                        txt.append(MrcPacketBundle.getMessage("MrcPacketsPollToCab") + " "); //IN18N
                         txt.append(m.getElement(0));
                     } else if (m.getElement(0)==0 && m.getElement(1)==0x01){
-                        txt.append(Bundle.getMessage("MrcPacketsClockUpdate")); //IN18N
+                        txt.append(MrcPacketBundle.getMessage("MrcPacketsClockUpdate") + " "); //IN18N
                         int clockModeBits = m.getElement(2) & 0xC0;
                         switch (clockModeBits) {
                         case 0x00:	// AM format
                         	txt.append((m.getElement(2) & 0x1F) 
-                        			+ Bundle.getMessage("MrcPacketsClockTimeSep") 
+                        			+ MrcPacketBundle.getMessage("MrcPacketsClockTimeSep") 
                         			+ twoDigits.format(m.getElement(4)) 
-                        			+ Bundle.getMessage("MrcPacketsClockModeAm")); //IN18N
+                        			+ MrcPacketBundle.getMessage("MrcPacketsClockModeAm")); //IN18N
                         	break;
                         case 0x40:	// PM format
                         	txt.append((m.getElement(2) & 0x1F) 
-                        			+ Bundle.getMessage("MrcPacketsClockTimeSep") 
+                        			+ MrcPacketBundle.getMessage("MrcPacketsClockTimeSep") 
                         			+ twoDigits.format(m.getElement(4)) 
-                        			+ Bundle.getMessage("MrcPacketsClockModePm")); //IN18N
+                        			+ MrcPacketBundle.getMessage("MrcPacketsClockModePm")); //IN18N
                         	break;
                         case 0x80:	// 24 hour format
                         	txt.append(twoDigits.format(m.getElement(2) & 0x1F) 
-                        			+ Bundle.getMessage("MrcPacketsClockTimeSep") 
+                        			+ MrcPacketBundle.getMessage("MrcPacketsClockTimeSep") 
                         			+ twoDigits.format(m.getElement(4)) 
-                        			+ Bundle.getMessage("MrcPacketsClockMode24"));//IN18N
+                        			+ MrcPacketBundle.getMessage("MrcPacketsClockMode24"));//IN18N
                         	break;
                         case 0xC0:	// Unk format
                         	txt.append(twoDigits.format(m.getElement(2) & 0x1F) 
-                        			+ Bundle.getMessage("MrcPacketsClockTimeSep")
+                        			+ MrcPacketBundle.getMessage("MrcPacketsClockTimeSep")
                         			+ twoDigits.format(m.getElement(4)) 
-                        			+ Bundle.getMessage("MrcPacketsClockModeUnk")); //IN18N
+                        			+ MrcPacketBundle.getMessage("MrcPacketsClockModeUnk")); //IN18N
                         	break;
                         }
                         txt.append(" ");
