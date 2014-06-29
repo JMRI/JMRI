@@ -47,6 +47,9 @@ public class JmriLocalEntityResolver implements EntityResolver {
 
             // figure out which form we have
             if (scheme.equals("http")) {
+                if (systemId.equals("http://www.w3.org/2001/XInclude.xsd")) {
+                    path = "/xml/schema/xinclude.xsd";
+                }
                 // type 3 - find local file if we can
                 String filename = path.substring(1);  // drop leading slash
                 log.debug("http finds filename: {}", filename);
