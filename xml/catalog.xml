@@ -122,4 +122,6 @@
     <system systemId="http://jmri.org/xml/schema/types/warrants.xsd"
             uri="schema/types/warrants.xsd"/>
  
+    <system systemId="http://www.w3.org/2001/XInclude.xsd"
+            uri="schema/xinclude.xsd"/>
 </catalog>
