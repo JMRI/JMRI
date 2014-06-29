@@ -24,7 +24,8 @@
     <!-- needs more attribute restrictions -->
     <!-- needs attribute defaults -->
     
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+<xs:schema xmlns:xi="http://www.w3.org/2001/XInclude"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
            xmlns:docbook="http://docbook.org/ns/docbook"
            xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
@@ -38,6 +39,7 @@
     <xs:include schemaLocation="http://jmri.org/xml/schema/types/panetype.xsd"/>
     <xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='http://jmri.org/xml/schema/docbook/DocBook.xsd'/>
     <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/03/xml.xsd" />
+    <xs:import namespace="http://www.w3.org/2001/XInclude" schemaLocation="http://www.w3.org/2001/XInclude.xsd"/>
 
     <xs:annotation>
       <xs:documentation>
@@ -640,6 +642,7 @@
                       <xs:attribute name="comment" type="xs:string"/>
                     </xs:complexType>
                   </xs:element>
+                  <xs:element ref="xi:include" minOccurs="0" maxOccurs="unbounded" />
                 </xs:choice>
                 <xs:sequence minOccurs="0" maxOccurs="unbounded">
                   <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
@@ -750,6 +753,7 @@
               <xs:attribute name="exclude" type="xs:string"/>
             </xs:complexType>
           </xs:element>
+          <xs:element ref="xi:include" minOccurs="0" maxOccurs="unbounded" />
         </xs:sequence>
     </xs:sequence>
     <xs:attribute ref="xml:base" />
@@ -803,6 +807,7 @@
       <xs:element ref="docbook:revhistory" minOccurs="0" maxOccurs="unbounded" />
       <xs:element type="EnumChoiceType" name="enumChoice" minOccurs="0" maxOccurs="unbounded" />
       <xs:element type="EnumChoiceGroupType" name="enumChoiceGroup" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element ref="xi:include" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
     <xs:attribute ref="xml:base" />
     <xs:attribute name="comment" type="xs:string"/>
