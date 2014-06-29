@@ -186,7 +186,7 @@ public class TrainSwitchLists extends TrainCommon {
 					}
 					
 					// add route comment
-					if (!rl.getComment().trim().equals(""))
+					if (Setup.isSwitchListRouteLocationCommentEnabled() && !rl.getComment().trim().equals(""))
 						newLine(fileOut, rl.getComment());
 					
 					if (Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {

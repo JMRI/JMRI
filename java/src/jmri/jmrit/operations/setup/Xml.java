@@ -96,6 +96,7 @@ public class Xml {
 	static final String REAL_TIME = "realTime"; // NOI18N
 	static final String ALL_TRAINS = "allTrains"; // NOI18N
 	static final String PAGE_MODE = "pageMode"; // NOI18N
+	static final String PRINT_ROUTE_LOCATION = "printRouteLocation"; // NOI18N
 	
 	static final String PREFIX = "prefix"; // NOI18N
 	static final String SETTING = "setting"; // NOI18N

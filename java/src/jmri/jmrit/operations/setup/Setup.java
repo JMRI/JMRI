@@ -247,6 +247,7 @@ public class Setup {
 	private static boolean switchListSameManifest = true; // when true switch list format is the same as the manifest
 	private static boolean manifestTruncated = false; // when true, manifest is truncated if switch list is available
 	private static boolean manifestDepartureTime = false; // when true, manifest shows train's departure time
+	private static boolean switchListRouteComment = true; // when true, switch list have route location comments
 	private static boolean switchListRealTime = true; // when true switch list only show work for built trains
 	private static boolean switchListAllTrains = true; // when true show all trains that visit the location
 	private static boolean switchListPage = false; // when true each train has its own page
@@ -698,6 +699,14 @@ public class Setup {
 
 	public static boolean isSwitchListFormatSameAsManifest() {
 		return switchListSameManifest;
+	}
+	
+	public static void setSwitchListRouteLocationCommentEnabled(boolean b) {
+		switchListRouteComment = b;
+	}
+
+	public static boolean isSwitchListRouteLocationCommentEnabled() {
+		return switchListRouteComment;
 	}
 
 	public static void setSwitchListRealTime(boolean b) {
@@ -1636,6 +1645,7 @@ public class Setup {
 		values.setAttribute(Xml.REAL_TIME, isSwitchListRealTime() ? Xml.TRUE : Xml.FALSE);
 		values.setAttribute(Xml.ALL_TRAINS, isSwitchListAllTrainsEnabled() ? Xml.TRUE : Xml.FALSE);
 		values.setAttribute(Xml.PAGE_MODE, isSwitchListPagePerTrainEnabled() ? Xml.TRUE : Xml.FALSE);
+		values.setAttribute(Xml.PRINT_ROUTE_LOCATION, isSwitchListRouteLocationCommentEnabled() ? Xml.TRUE : Xml.FALSE);
 
 		e.addContent(values = new Element(Xml.SWITCH_LIST_PICKUP_CAR_FORMAT));
 		storeXmlMessageFormat(values, getSwitchListPickupCarPrefix(), getSwitchListPickupCarMessageFormat());
@@ -2037,6 +2047,12 @@ public class Setup {
 				if (log.isDebugEnabled())
 					log.debug("pageMode: " + b);
 				setSwitchListPagePerTrainEnabled(b.equals(Xml.TRUE));
+			}
+			if ((a = operations.getChild(Xml.SWITCH_LIST).getAttribute(Xml.PRINT_ROUTE_LOCATION)) != null) {
+				String b = a.getValue();
+				if (log.isDebugEnabled())
+					log.debug("print route location comment: " + b);
+				setSwitchListRouteLocationCommentEnabled(b.equals(Xml.TRUE));
 			}
 		}
 		if (operations.getChild(Xml.SWITCH_LIST_PICKUP_CAR_FORMAT) != null) {
