@@ -4,10 +4,13 @@ package jmri.jmrit.operations.setup;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
@@ -241,6 +244,7 @@ public class PrintOptionFrame extends OperationsFrame {
 		pSwitchListOrientation.setLayout(new GridBagLayout());
 		pSwitchListOrientation.setBorder(BorderFactory.createTitledBorder(Bundle
 				.getMessage("BorderLayoutSwitchListOrientation")));
+		pSwitchListOrientation.setMaximumSize(new Dimension(8000, 100));
 		addItem(pSwitchListOrientation, switchListOrientationComboBox, 0, 0);
 		addItem(pSwitchListOrientation, new JLabel(" "), 1, 0); // pad
 		addItem(pSwitchListOrientation, new JLabel(" "), 2, 0); // pad

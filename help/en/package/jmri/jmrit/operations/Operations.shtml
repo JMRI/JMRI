@@ -1046,6 +1046,11 @@
    You can use the same format as your manifest for your switch lists, or you can customize your
    switch lists to your liking. Deselect the "Same as Manifest" if you want a different format for
    your switch lists.
+
+   <H3>Switch List Options</H3>
+
+   You can include in your switch lists the train's
+   <A HREF="#EditRoute">route</A> location comments by selecting the "Route Location" checkbox. 
    
    <A NAME="ManifestComments"></A>
    <H3>Manifests and Switch List Options</H3>
