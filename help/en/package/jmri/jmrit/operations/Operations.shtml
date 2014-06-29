@@ -2104,10 +2104,10 @@
     find a car by its road number, it could very well have been shipped out on an earlier train. So
     you have to decide, use road numbers or or not for a given type of car.</P>
 
-   <H3>Car Location</H3>
+   <H3>Car Location and Track</H3>
 
    Now set the car's location on the layout. If the car is off the layout, set the location to none
-   (blank space). 
+   (blank space).
    
    <A NAME="CarLoad"></A>
    <H3>Car Loads</H3>
@@ -2251,7 +2251,7 @@
     building new trains. Many operators have a RIP (Repair In Place) track and use this feature to
     hold the car there until repairs have been made.</P>
 
-   <P>Use the "Location" set of field to place the car on the layout. Use the "Auto" checkbox to
+   <P>Use the "Location and Track" set of fields to place the car on the layout. Use the "Auto" checkbox to
     show valid tracks for a given location. You can also optionally enter the location and track
     that you want the car to return to when the car's load status becomes empty. You can also
     replace the car's default empty load with one from the load combo box. Only custom loads that
