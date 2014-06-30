@@ -2666,7 +2666,7 @@ public class TrainBuilder extends TrainCommon {
 							new Object[] { track.getLocation().getName(), track.getName() }));
 					continue;
 				} else {
-					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildTrackHasAlternate"),
+					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildTrackFullHasAlternate"),
 							new Object[] { track.getLocation().getName(), track.getName(),
 									track.getAlternateTrack().getName() }));
 					// check to see if alternate and track are configured properly
@@ -3212,7 +3212,7 @@ public class TrainBuilder extends TrainCommon {
 								&& testTrack.checkSchedule(car).equals(Track.OKAY)
 								&& testTrack.getTrackType().equals(Track.SPUR) && testTrack.getAlternateTrack() != null) {
 							addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
-									.getMessage("buildTrackHasAlternate"), new Object[] {
+									.getMessage("buildTrackFullHasAlternate"), new Object[] {
 									testTrack.getLocation().getName(), testTrack.getName(),
 									testTrack.getAlternateTrack().getName() }));
 							String altStatus = car.testDestination(car.getDestination(), testTrack.getAlternateTrack());
