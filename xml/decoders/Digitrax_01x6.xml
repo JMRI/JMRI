@@ -14,12 +14,14 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Alain Le Marchand" version="0" lastUpdated="20140427"/>
-  <version author="Alain Le Marchand" version="1" lastUpdated="20140615"/>  
+  <version author="Alain Le Marchand" version="1" lastUpdated="20140615"/>
+  <version author="Alain Le Marchand" version="1.1" lastUpdated="20140630"/>    
   <!-- Created from version 36 of the Digitrax_01x3 file -->
   <!-- Version 0 - New Series 6 non-sound Digitrax decoders (Alain Le Marchand) -->
   <!--             DH166D, DH166P, DH166PD, DN136D, DN136PS, DN146IP, DN166PS, DZ126, DZ126PS, DS126IN, DZ126T, DZ146, DZ146PS 
                    New definition of CV61 bit0 as per Digitrax manual 2nd edition 01/14     -->
   <!-- Version 1 - Add N Scale Intermountain Board Replacement DN166I0, DN166I1A, DN166I1B, DN166I1C, DN166I1D, DN166I2 -->
+  <!-- Version 1.1-Add DN126M2, DZ146IN -->  
   <!-- WARNING :   Low and High Versions of decoders (CV07) unknown (by me) - to be adjusted after users feed back  -->
   <decoder>
     <family name="Series 6 with FX3, silent, improved BEMF" mfg="Digitrax" lowVersionID="52" highVersionID="64">
@@ -50,6 +52,11 @@
         <output name="6" label="Pad (White/Yellow)" connection="solder"/>
         <size length="1.074" width="0.672" height="0.259" units="inches"/>
       </model>
+      <model model="DN126M2" numOuts="2" numFns="5" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" connector="other" comment="for MicroTrains Line N-Scale SW1500 units">
+        <output name="1" label="F0(F)" connection="LED"/>
+        <output name="2" label="F0(R)" connection="solder"/>
+        <size length=".621" width="0.418" height="0.107" units="inches"/>
+      </model>      
       <model model="DN136D" numOuts="3" numFns="5" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="N" connector="unspecified" comment="N/HO-Scale, wired">
         <output name="1" label="White" connection="wire"/>
         <output name="2" label="Yellow" connection="wire"/>
@@ -159,6 +166,13 @@
         <output name="4" label="Violet" connection="wire"/>
         <size length="0.55" width="0.4" height="0.148" units="inches"/>
       </model>
+      <model model="DZ146IN" numOuts="4" numFns="10" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="Z" connector="NMRAsmall" comment="Z/N/HO-Scale, with NEM651 Integrated Plug">
+        <output name="1" label="White" connection="plug"/>
+        <output name="2" label="Yellow" connection="plug"/>
+        <output name="3" label="Green" connection="wire"/>
+        <output name="4" label="Violet" connection="wire"/>
+        <size length="0.559" width="0.386" height="0.137" units="inches"/>
+      </model>      
       <model model="DZ146PS" numOuts="4" numFns="10" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="Z" connector="NMRAmedium" comment="Z/N/HO-Scale, with Medium Plug with short harness">
         <output name="1" label="White" connection="plug"/>
         <output name="2" label="Yellow" connection="plug"/>
