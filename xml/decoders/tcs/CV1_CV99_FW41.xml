@@ -635,7 +635,14 @@
     <label xml:lang="it">F12 controlla uscita 8</label>
   </variable>
   <variable CV="49" mask="XXXXVVVV" item="Output 1 effect generated">
-    <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light.xml"/>
+        <enumVal>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
+       </enumVal>
     <label>White Wire Effect</label>
     <label xml:lang="it">Effetti filo Bianco</label>
   </variable>
@@ -645,7 +652,14 @@
     <label xml:lang="it">Temporizzazioni filo Bianco</label>
   </variable>
   <variable CV="50" mask="XXXXVVVV" item="Output 2 effect generated">
-    <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light.xml"/>
+        <enumVal>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
+       </enumVal>
     <label>Yellow Wire Effect</label>
     <label xml:lang="it">Effetti filo Giallo</label>
   </variable>
@@ -655,7 +669,14 @@
     <label xml:lang="it">Temporizzazioni filo Giallo</label>
   </variable>
   <variable CV="51" mask="XXXXVVVV" minOut="3" item="Output 3 effect generated">
-    <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light.xml"/>
+        <enumVal>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
+       </enumVal>
     <label>Green Wire Effect</label>
     <label xml:lang="it">Effetti filo verde</label>
   </variable>
@@ -665,7 +686,14 @@
     <label xml:lang="it">Temporizzazioni filo Verde</label>
   </variable>
   <variable CV="52" mask="XXXXVVVV" minOut="4" item="Output 4 effect generated">
-    <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light.xml"/>
+        <enumVal>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
+       </enumVal>
     <label>Purple Wire Effect</label>
     <label xml:lang="it">Effetti filo Porpora</label>
   </variable>
@@ -675,7 +703,14 @@
     <label xml:lang="it">Temporizzazioni filo Porpora</label>
   </variable>
   <variable CV="53" mask="XXXXVVVV" minOut="5" item="Output 5 effect generated">
-    <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light.xml"/>
+        <enumVal>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
+       </enumVal>
     <label>Brown Wire Effect</label>
     <label xml:lang="it">Effetti filo Marrone</label>
   </variable>
@@ -685,17 +720,38 @@
     <label xml:lang="it">Temporizzazioni filo Marrone</label>
   </variable>
   <variable CV="54" mask="XXXXVVVV" minOut="6" item="Output 6 effect generated">
-    <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light.xml"/>
+        <enumVal>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
+       </enumVal>
     <label>Pink Wire Effect</label>
     <label xml:lang="it">Effetti filo Rosa</label>
   </variable>
   <variable CV="54" mask="XXVVXXXX" minOut="6" item="Output 6 behavior" default="2">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
+        <enumVal>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
+       </enumVal>
     <label>Pink Wire Timing</label>
     <label xml:lang="it">Temporizzazioni filo Rosa</label>
   </variable>
   <variable CV="55" mask="XXXXVVVV" minOut="7" item="Output 7 effect generated">
-    <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light.xml"/>
+        <enumVal>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
+       </enumVal>
     <label>Pink/Purple Wire Effect</label>
     <label xml:lang="it">Effetti filo Rosa/Porpora</label>
   </variable>
@@ -717,7 +773,14 @@
     <tooltip xml:lang="it">Valori pratici da 5 (basso) a 50 (alto)</tooltip>
   </variable>
   <variable CV="58" mask="XXXXVVVV" minOut="8" item="Output 8 effect generated">
-    <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light.xml"/>
+        <enumVal>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
+       </enumVal>
     <label>Green/Brown Wire Effect</label>
     <label xml:lang="it">Effetti filo Verde/Marrone</label>
   </variable>
