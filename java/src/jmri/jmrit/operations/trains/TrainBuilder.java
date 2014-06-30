@@ -2688,12 +2688,17 @@ public class TrainBuilder extends TrainCommon {
 
 			// check the number of in bound cars to this track
 			if (!track.isSpaceAvailable(car)) {
+				// show if track has an alternate
+				if (track.getAlternateTrack() != null)
+					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildTrackHasAlternate"),
+							new Object[] { track.getLocation().getName(), track.getName(), track.getAlternateTrack().getName() }));
 				// Now determine if we should move the car or just leave it where it is
 				String id = track.getScheduleItemId(); // save the tracks schedule item id
 				// determine if this car can be routed to the spur
 				car.setFinalDestination(track.getLocation());
 				car.setFinalDestinationTrack(track);
-				if (Router.instance().setDestination(car, _train, _buildReport))
+				// hold car if able to route and track has an alternate
+				if (Router.instance().setDestination(car, _train, _buildReport) && track.getAlternateTrack() != null)
 					routeToSpurFound = true; // if we don't find another spur, keep the car here for now
 				car.setDestination(null, null);
 				car.setFinalDestination(null);
