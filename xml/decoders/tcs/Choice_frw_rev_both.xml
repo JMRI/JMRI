@@ -3,10 +3,10 @@
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
    <enumChoice choice="Function on running forward">
-     <choice xml:lang="it">Funzione in marcia avanti</choice>
+     <choice xml:lang="it">Funzione on in marcia avanti</choice>
    </enumChoice>
    <enumChoice choice="Function on running reverse">
-     <choice xml:lang="it">Funzione in marcia indietro</choice>
+     <choice xml:lang="it">Funzione on in marcia indietro</choice>
    </enumChoice>
    <enumChoice choice="Function on both directions">
      <choice xml:lang="it">Funzione in entrambe le direzioni</choice>
