@@ -58,6 +58,10 @@ public class FileUtil {
      */
     static public final String PROFILE = "profile:"; // NOI18N
     /**
+     * Portable reference to the current scripts directory.
+     */
+    static public final String SCRIPTS = "scripts:"; // NOI18N
+    /**
      * Replaced with {@link #PROGRAM}.
      *
      * @see #PROGRAM
@@ -131,6 +135,8 @@ public class FileUtil {
      * "preference:" above)</li>
      * <li>Starts with "profile:", treat the rest as a relative path below the
      * profile directory as specified in the active
+     * <li>Starts with "scripts:", treat the rest as a relative path below the
+     * scripts directory as specified in the active
      * {@link jmri.profile.Profile}</li>
      * <li>Otherwise, treat the name as a relative path below the program
      * directory</li>
@@ -138,7 +144,7 @@ public class FileUtil {
      * In any case, absolute pathnames will work.
      *
      * @param pName The name string, possibly starting with program:,
-     * preference:, home:, file: or resource:
+     * preference:, home:, file:, scripts: or resource:
      * @return Absolute or relative file name to use, or null.
      * @since 2.7.2
      */
@@ -191,6 +197,17 @@ public class FileUtil {
             // assume this is a relative path from the profile directory
             filename = FileUtil.getPreferencesPath() + filename;
             log.debug("load from settings file: {}", filename);
+            return filename.replace(SEPARATOR, File.separatorChar);
+        } else if (pName.startsWith(SCRIPTS)) {
+            String filename = pName.substring(SCRIPTS.length());
+            // Check for absolute path name
+            if ((new File(filename)).isAbsolute()) {
+                log.debug("Load from absolute path: {}", filename);
+                return filename.replace(SEPARATOR, File.separatorChar);
+            }
+            // assume this is a relative path from the scripts directory
+            filename = FileUtil.getScriptsPath() + filename;
+            log.debug("load from scripts file: {}", filename);
             return filename.replace(SEPARATOR, File.separatorChar);
         } else if (pName.startsWith(FILE)) {
             String filename = pName.substring(FILE.length());
@@ -253,6 +270,12 @@ public class FileUtil {
                 path = path.substring(PROFILE.length());
             } else {
                 path = path.replaceFirst(PROFILE, Matcher.quoteReplacement(FileUtil.getProfilePath()));
+            }
+        } else if (path.startsWith(SCRIPTS)) {
+            if (new File(path.substring(SCRIPTS.length())).isAbsolute()) {
+                path = path.substring(SCRIPTS.length());
+            } else {
+                path = path.replaceFirst(SCRIPTS, Matcher.quoteReplacement(FileUtil.getScriptsPath()));
             }
         } else if (path.startsWith(SETTINGS)) {
             if (new File(path.substring(SETTINGS.length())).isAbsolute()) {
@@ -343,11 +366,15 @@ public class FileUtil {
             return SETTINGS + filename.substring(getPreferencesPath().length(), filename.length()).replace(File.separatorChar, SEPARATOR);
         }
 
+        // check for relative to scripts dir, done before program dir due to default location
+        if (filename.startsWith(getScriptsPath())) {
+            return SCRIPTS + filename.substring(getScriptsPath().length(), filename.length()).replace(File.separatorChar, SEPARATOR);
+        }
+
         // now check for relative to program dir
         if (filename.startsWith(getProgramPath())) {
             return PROGRAM + filename.substring(getProgramPath().length(), filename.length()).replace(File.separatorChar, SEPARATOR);
         }
-
         // compare full path name to see if same as home directory
         // do this last, in case preferences or program dir are in home directory
         if (filename.startsWith(getHomePath())) {
@@ -399,6 +426,7 @@ public class FileUtil {
                 || filename.startsWith(HOME)
                 || filename.startsWith(PREFERENCES)
                 || filename.startsWith(PROFILE)
+                || filename.startsWith(SCRIPTS)
                 || filename.startsWith(SETTINGS)) {
             return getPortableFilename(getExternalFilename(filename), ignoreUserFilesPath, ignoreProfilePath);
         } else {
@@ -755,6 +783,7 @@ public class FileUtil {
         log.info("File path {} is {}", FileUtil.PROFILE, FileUtil.getProfilePath());
         log.info("File path {} is {}", FileUtil.SETTINGS, FileUtil.getPreferencesPath());
         log.info("File path {} is {}", FileUtil.HOME, FileUtil.getHomePath());
+        log.info("File path {} is {}", FileUtil.SCRIPTS, FileUtil.getScriptsPath());
     }
 
     /**
