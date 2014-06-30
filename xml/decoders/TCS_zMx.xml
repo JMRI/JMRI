@@ -31,52 +31,112 @@
      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
      <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV29.xml"/>
      <variable CV="49" mask="XXXXVVVV" item="Function F0F effect generated" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_group3.xml"/>
+       <enumVal>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Normonoffcntrl.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_resv_9AB.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_resv_DEF.xml"/>
+       </enumVal>
         <label>Forward light F0F effect generated</label>
         <label xml:lang="it">Luci anteriori con Luci in avanti effetti generati</label>
      </variable>
       <variable CV="49" mask="VVVVXXXX" item="Function F0F behavior" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_group3.xml"/>
+       <enumVal>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Normonoffcntrl.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_resv_9AB.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_resv_DEF.xml"/>
+       </enumVal>
         <label>Forward light F0F behavior</label>
         <label xml:lang="it">Comportamento Luci anteriori con Luci in avanti</label>
       </variable>
       <variable CV="50" mask="XXXXVVVV" item="Function F0R effect generated" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_group3.xml"/>
+       <enumVal>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Normonoffcntrl.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_resv_9AB.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_resv_DEF.xml"/>
+       </enumVal>
         <label>Reverse light F0R effect generated</label>
         <label xml:lang="it">Luci retro con Luci in retro effetti generati</label>
       </variable>
       <variable CV="50" mask="VVVVXXXX" item="Function F0R behavior" default="1" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_group3.xml"/>
+       <enumVal>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Normonoffcntrl.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_resv_9AB.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_resv_DEF.xml"/>
+       </enumVal>
         <label>Reverse light F0R behavior</label>
         <label xml:lang="it">Comportamento Luci retro con Luci in retro</label>
       </variable>
       <variable item="Function 1 effect generated" CV="51" mask="XXXXVVVV" minFn="1" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_group3.xml"/>
+       <enumVal>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Normonoffcntrl.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_resv_9AB.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_resv_DEF.xml"/>
+       </enumVal>
         <label>Function 1 effect generated</label>
         <label xml:lang="it">Funzione 1 effetti generati</label>
       </variable>
       <variable item="Function 1 behavior" CV="51" mask="VVVVXXXX" minFn="1" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_group3.xml"/>
+       <enumVal>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Normonoffcntrl.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_resv_9AB.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_resv_DEF.xml"/>
+       </enumVal>
         <label>Function 1 behavior</label>
         <label xml:lang="it">Comportamento Funzione1</label>
       </variable>
       <variable item="Function 2 effect generated" CV="52" mask="XXXXVVVV" minFn="2" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_group3.xml"/>
+       <enumVal>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Normonoffcntrl.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_resv_9AB.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_resv_DEF.xml"/>
+       </enumVal>
         <label>Function 2 effect generated</label>
         <label xml:lang="it">Funzione 2 effetti generati</label>
       </variable>
       <variable item="Function 2 behavior" CV="52" mask="VVVVXXXX" minFn="2" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_group3.xml"/>
+       <enumVal>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Normonoffcntrl.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_resv_9AB.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_resv_DEF.xml"/>
+       </enumVal>
         <label>Function 2 behavior</label>
         <label xml:lang="it">Comportamento Funzione 2</label>
       </variable>
       <variable item="Function 3 effect generated" CV="53" mask="XXXXVVVV" minFn="3" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_group3.xml"/>
+       <enumVal>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Normonoffcntrl.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_resv_9AB.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_resv_DEF.xml"/>
+       </enumVal>
         <label>Function 3 effect generated</label>
         <label xml:lang="it">Funzione 3 effetti generati</label>
       </variable>
       <variable item="Function 3 behavior" CV="53" mask="VVVVXXXX" minFn="3" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_group3.xml"/>
+       <enumVal>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Normonoffcntrl.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_resv_9AB.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_resv_DEF.xml"/>
+       </enumVal>
         <label>Function 3 behavior</label>
         <label xml:lang="it">Comportamento Funzione 3</label>
       </variable>
