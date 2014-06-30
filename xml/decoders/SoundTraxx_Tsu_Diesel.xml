@@ -1129,7 +1129,7 @@
         <decVal/>
         <label>Braking Rate (0-255)</label>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version" tooltip="This is the decoder software version identifier (read only)">
+      <variable CV="7" readOnly="yes" item="Decoder Version" tooltip="This is the decoder software version identifier">
         <decVal/>
         <label>Manufacturer Version ID</label>
       </variable>

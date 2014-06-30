@@ -2301,20 +2301,46 @@ public class PaneProgPane extends javax.swing.JPanel
         // need to update this with e.g. the specific CV numbers
         if (_cvModel.getProgrammer()!= null
             && !_cvModel.getProgrammer().getCanRead()) {
-            start = start+" (Hardware cannot read)";
+            start = addTextHTMLaware(start, " (Hardware cannot read)");
         }
         if (_cvModel.getProgrammer()!= null
             && !_cvModel.getProgrammer().getCanWrite()) {
-            start = start+" (Hardware cannot write)";
+            start = addTextHTMLaware(start, " (Hardware cannot write)");
         }
         
         // indicate other reasons for read/write constraints
-        if (variable.getReadOnly()) start = start+" (Defined to be read only)";
-        if (variable.getWriteOnly()) start = start+" (Defined to be read only)";
+        if (variable.getReadOnly()) start = addTextHTMLaware(start, " (Defined to be read only)");
+        if (variable.getWriteOnly()) start = addTextHTMLaware(start, " (Defined to be write only)");
         
         return start;
     }
     
+    public static final String CLOSE_TAG = "</html>";
+
+    /** 
+     * Appends text to a String possibly in HTML format (as used in many Swing components).
+     *
+     * Ensures any appended text is added prior to the closing </html> tag, if there is one.
+     *
+     * @param baseText  original text 
+     * @param extraText text to be appended to original text
+     * @return combined text
+     */
+    public static String addTextHTMLaware(String baseText, String extraText) {
+        String result;
+        
+        if (baseText == null || baseText.length() < 1) {
+            result = extraText;
+        } else {
+            if (baseText.endsWith(CLOSE_TAG)) {
+                result = baseText.substring(0,baseText.length()-CLOSE_TAG.length()) + extraText + CLOSE_TAG;
+            } else {
+                result = baseText + extraText;
+            }
+        }
+        return result;
+    }
+
     /** 
      * Optionally add CV numbers and bit numbers to tool tip text based on Roster Preferences setting.
      *
@@ -2364,11 +2390,12 @@ public class PaneProgPane extends javax.swing.JPanel
             if (toolTip == null) {
                 toolTip = descString;
             } else {
-                toolTip = toolTip+" ("+descString+")";
+                toolTip = addTextHTMLaware(toolTip, " ("+descString+")");
             }
         } else {
-            if (toolTip == null)
+            if (toolTip == null) {
                 toolTip = "";
+            }
         }
         
         return toolTip;

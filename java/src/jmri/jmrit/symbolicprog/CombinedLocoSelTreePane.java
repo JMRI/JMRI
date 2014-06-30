@@ -31,6 +31,7 @@ import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 
 import java.util.List;
+import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
 
 /**
  * Provide GUI controls to select a known loco and/or new decoder. <P> This is
@@ -281,17 +282,17 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
      * @param verString version string, typically from (decoder).getVersionsAsString()
      */
     String getHoverText(String verString, String comment) {
-        if (comment == "" || comment == null) {
-            if (verString != "") {
+        if ( comment == null || comment.equals("") ) {
+            if ( !verString.equals("") ) {
                 return "CV7=" + verString;
             } else {
                 return "";
             }
         } else {
-            if (verString == "") {
+            if (verString.equals("")) {
                 return comment;
             } else {
-                return comment + "  CV7=" + verString;
+                return PaneProgPane.addTextHTMLaware(comment, " (CV7=" + verString + ")");
             }
         }    
    }
