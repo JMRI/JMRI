@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="/xml/XSLT/DecoderID.xsl"?>
-<!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
-
-<decoderIndex-config>
-  <!--Written by JMRI version 20140622-2014-jake on Sun Jun 22 13:14:16 PDT 2014 $Id$-->
-  <decoderIndex version="414">
+<decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <!--Written by JMRI version 20140630-1909-jake on Mon Jun 30 13:09:24 MDT 2014 $Id$-->
+  <decoderIndex version="418">
     <mfgList nmraListDate="2012-12-05" updated="2013-04-11" lastadd="106">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -4894,41 +4892,52 @@
           <output name="4" label="Pad 4" connection="solder" maxcurrent="50 mA" />
           <size length="1.15" width="0.34" height="0.12" units="inches" />
         </model>
-        <model model="N12A0" numOuts="2" numFns="5" maxMotorCurrent="1.3A (peak=2A)" formFactor="N">
+        <model model="N12A0" numOuts="2" numFns="5" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Atlas N-Scale GP40-2, U25B, U23B, B23-7, 30-7, 36-7, GP38, SD25, Trainmaster &amp; many others">
           <output name="1" label="LED 1" connection="solder" />
           <output name="2" label="LED 2" connection="solder" />
           <size length="2.65" width="0.37" height="0.12" units="inches" />
         </model>
-        <model model="N12A0e" numOuts="2" numFns="5" maxMotorCurrent="1.3A (peak=2A)" formFactor="N">
+        <model model="N12A0e" numOuts="2" numFns="5" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Intermountain N-Scale Tunnel Motor">
           <output name="1" label="LED 1" connection="solder" />
           <output name="2" label="LED 2" connection="solder" />
           <size length="2.65" width="0.37" height="0.12" units="inches" />
         </model>
-        <model model="N12A1" numOuts="2" numFns="5" maxMotorCurrent="1.3A (peak=2A)" formFactor="N">
+        <model model="N12A1" numOuts="2" numFns="5" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Atlas N-Scale SD50, SD60M, SD60">
+          <output name="1" label="LED 1" connection="solder" />
+          <output name="2" label="LED 2" connection="solder" />
+          <size length="3.475" width="0.37" height="0.12" units="inches" />
+        </model>
+        <model model="N12A2" numOuts="2" numFns="5" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Atlas N-Scale GP30, GP35, GP7, GP9">
           <output name="1" label="LED 1" connection="solder" />
           <output name="2" label="LED 2" connection="solder" />
         </model>
-        <model model="N12A2" numOuts="2" numFns="5" maxMotorCurrent="1.3A (peak=2A)" formFactor="N">
+        <model model="N12K0a" numOuts="2" numFns="5" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Kato N-Scale PA1, E8, Genesis P42, etc.">
+          <output name="1" label="LED 1" connection="solder" />
+          <output name="2" label="LED 2" connection="solder" />
+          <size length="2.65" width="0.37" height="0.12" units="inches" />
+        </model>
+        <model model="N12K0b" numOuts="2" numFns="5" maxMotorCurrent="1.0A (peak=1.25A)" lowVersionID="36" formFactor="N" connector="DropIn" comment="for Kato N-Scale F3 A&amp;B, F7 A&amp;B and others">
+          <output name="1" label="LED 1" connection="solder" />
+          <output name="2" label="LED 2" connection="solder" />
+          <size length="2.65" width="0.37" height="0.12" units="inches" />
+        </model>
+        <model model="NAVO" numOuts="2" numFns="5" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Atlas N-Scale VO-1000">
           <output name="1" label="LED 1" connection="solder" />
           <output name="2" label="LED 2" connection="solder" />
         </model>
-        <model model="NAVO" numOuts="2" numFns="5" maxMotorCurrent="1.3A (peak=2A)" formFactor="N">
-          <output name="1" label="LED 1" connection="solder" />
-          <output name="2" label="LED 2" connection="solder" />
-        </model>
-        <model model="NIMF3" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=1.25A)" formFactor="N">
+        <model model="NIMF3" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Intermountain N-Scale F3">
           <output name="1" label="Pad 1" connection="solder" />
           <output name="2" label="Pad 2" connection="solder" />
         </model>
-        <model model="NIMFT-A" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=1.25A)" formFactor="N">
+        <model model="NIMFT-A" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Intermountain N-Scale FT-A">
           <output name="1" label="Pad 1" connection="solder" />
           <output name="2" label="Pad 2" connection="solder" />
         </model>
-        <model model="NIMFT-B" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=1.25A)" formFactor="N">
+        <model model="NIMFT-B" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Intermountain N-Scale FT-B">
           <output name="1" label="Pad 1" connection="solder" />
           <output name="2" label="Pad 2" connection="solder" />
         </model>
-        <model model="NMP" numOuts="2" numFns="5" maxMotorCurrent="1.3A (peak=2A)" formFactor="N">
+        <model model="NMP" numOuts="2" numFns="5" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Atlas N-Scale MP15DC">
           <output name="1" label="LED 1" connection="solder" />
           <output name="2" label="LED 2" connection="solder" />
         </model>
@@ -13140,6 +13149,9 @@
       </family>
       <family name="BlocD8" mfg="Team Digital" type="stationary" file="TD_BlocD8.xml">
         <model model="BlocD8" lowVersionID="1" comment="BlocD8 can be programmed in the usual way" />
+      </family>
+      <family name="CSC" mfg="Team Digital" type="stationary" comment="The CSC can be programmed in the usual way" file="TD_CSC.xml">
+        <model model="CSC" lowVersionID="10" />
       </family>
       <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SC8.xml">
         <model model="SC8" lowVersionID="1" comment="SC8 is a stationary decoder, but it can be programmed in the usual way" />
