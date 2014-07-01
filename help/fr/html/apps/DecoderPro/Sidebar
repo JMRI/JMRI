@@ -1,1 +1,34 @@
-<!-- Sidebar --><META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1"><!-- Translated  by Blorec Herv&#233; le 2013-09-25--> <hr class="hide"><div id="mBody"><div id="side"> <!-- Block of text on left side of page --><dl class=toc><h3>guide Utilisateur</h3></dt><DD><UL><LI><a href="./Tour.shtml">Aper&#231;u rapide</A><LI><a href="./MoreInfo.shtml">D&#233;tails</A><LI><a HREF="./Files.shtml">Fichiers de Configuration</a><LI><a HREF="./Roster.shtml">Travailler avec la Liste</a><LI><a HREF="./FAQ.shtml">FAQ</a><LI><a HREF="./Install.shtml">T&#233;l&#233;charger et installer DecoderPro</a></UL><dt><h3>MPlus d'Informations Avanc&#233;es</h3></dt><DD><UL><LI><a HREF="./IntroXML.shtml">Introduction aux fichiers XML </a><LI><a href="./CreateDecoder.shtml">Cr&#233;er votre propre d&#233;&finition de d&#233;codeur</a><LI><a href="./Programmer.shtml">Cr&#233;er un programmateur personnalis&#233; de d&#233;finition </a><LI><a HREF="./RosterFile.shtml">Comment la Liste est stock&#233;e; mise &#224; jour manuelle</a><LI><a HREF="./LocoFile.shtml">Fichiers Locomotive (Liste)</a><LI><a HREF="./Debug.shtml">Debogage</a><LI><a HREF="./NetworkFiles.shtml">Partage des fichiers avec l'Ordinateur</a><LI><a HREF="./FileUpdate.shtml">Mettre &#224; jour les d&#233;finitions D&#233;codeur</a></UL></dl></div> <!-- End of block of text on left side of page -->
+<!-- Sidebar -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<!-- Translated  by Blorec Herv&#233; le 2013-09-25--> 
+<hr class="hide">
+<div id="mBody">
+<div id="side"> <!-- Block of text on left side of page -->
+
+<dl class=toc>
+
+<h3>guide Utilisateur</h3></dt><DD><UL>
+<LI><a href="./Tour.shtml">Aper&#231;u rapide</A>
+<LI><a href="./MoreInfo.shtml">D&#233;tails</A>
+<LI><a HREF="./Files.shtml">Fichiers de Configuration</a>
+<LI><a HREF="./Roster.shtml">Travailler avec la Liste</a>
+<LI><a HREF="./FAQ.shtml">FAQ</a>
+<LI><a HREF="./Install.shtml">T&#233;l&#233;charger et installer DecoderPro</a>
+</UL>
+
+<dt><h3>MPlus d'Informations Avanc&#233;es</h3></dt><DD><UL>
+
+<LI><a HREF="./IntroXML.shtml">Introduction aux fichiers XML </a>
+<LI><a href="./CreateDecoder.shtml">Cr&#233;er votre propre d&#233;&finition de d&#233;codeur</a>
+<LI><a href="./Programmer.shtml">Cr&#233;er un programmateur personnalis&#233; de d&#233;finition </a>
+<LI><a HREF="./RosterFile.shtml">Comment la Liste est stock&#233;e; mise &#224; jour manuelle</a>
+<LI><a HREF="./LocoFile.shtml">Fichiers Locomotive (Liste)</a>
+<LI><a HREF="./Debug.shtml">Debogage</a>
+<LI><a HREF="./NetworkFiles.shtml">Partage des fichiers avec l'Ordinateur</a>
+<LI><a HREF="./FileUpdate.shtml">Mettre &#224; jour les d&#233;finitions D&#233;codeur</a>
+</UL>
+
+</dl>
+
+</div> <!-- End of block of text on left side of page -->
+
