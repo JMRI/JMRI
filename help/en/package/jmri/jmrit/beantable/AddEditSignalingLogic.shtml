@@ -6,7 +6,7 @@
 	<!-- copy from jmrit/beantable/ to  jmrit/signalling/ to keep identical-->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 
-<meta name="Date.Modified" content="20140515"/>
+<meta name="Date.Modified" content="20140615"/>
 <META NAME="Author" CONTENT="Kevin Dickerson, Egbert Broerse">
 <META NAME="keywords" CONTENT="JMRI help SignalMast Logic Add Edit">
 
@@ -26,7 +26,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1><A NAME="Adding/Editing Routes"></A>Adding/Editing Signal Mast Logic</H1>
+<H1><A NAME="Adding/Editing Routes"></A>Adding &amp; Editing Signal Mast Logic</H1>
 
 		<p>After clicking on the "Add..." button below the <a href="../beantable/SignalMastLogicTable.shtml">Signal Mast Logic Table</a>, the following window appears:</p>
 		

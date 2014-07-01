@@ -27,7 +27,7 @@ JMRI: Examples of LDT Signaling
 
 <P>This
 file contains a few configuration examples for the LDT LS-DEC signal
-head. There are examples of signals from several systems:
+head. There are examples of signals from several prototype signaling systems:
 <ul>
 <li><A HREF="output1.shtml">SBB (Swiss Federal Railways) type L signals</A>
 <li><A HREF="output2.shtml">DB (German Federal Railways ) signals</A>
@@ -44,12 +44,12 @@ manufacturer's website.
 <img src="Panel.png" align="right" height="708" width="331" alt="LDT add panel"></a>
 <p>
 You have to add each LDT signal using the 
-<a href="../../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml">Signal Add/Edit Window</a>
+<a href="../../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml">Signal Head Add/Edit panel</a>
 from the 
-<a href="../../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Head Table</a>.
-Select "LDT LS-DEC" for the signal type, and the window
+<a href="../../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Heads Table</a>.
+Select "LDT LS-DEC" for the Signal Connection type, and the window
 will show seven lines for configuring which turnout command
-JMRI sends to the decoder for each of the JMRI signal appearances.
+JMRI sends to the decoder for each of the JMRI Signal Appearances.
 <p>
 The LDT decoders present a particular set of output lights 
 depending on what turnout command is received, so this panel

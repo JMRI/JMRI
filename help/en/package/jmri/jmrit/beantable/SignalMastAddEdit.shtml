@@ -7,7 +7,7 @@
  </TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
 <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
-<meta name="Date.Modified" content="20140515"/>
+<meta name="Date.Modified" content="20140615"/>
     <META name="keywords" content="JMRI help Signal Mast Add">
 
 <!-- Style -->
@@ -24,7 +24,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>Adding Signal Masts</h1>
+<h1>Adding &amp; Editing Signal Masts</h1>
     
 <a href="SignalMastAdd.png"><img src="SignalMastAdd.png" ALIGN=RIGHT WIDTH="258" HEIGHT="232" HSPACE="0" VSPACE="0" ALT="Add Signal Mast panel figure"></a>
 <p>
