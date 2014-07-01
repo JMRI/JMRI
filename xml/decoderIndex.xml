@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="/xml/XSLT/DecoderID.xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 20140630-1909-jake on Mon Jun 30 13:09:24 MDT 2014 $Id$-->
-  <decoderIndex version="418">
+  <!--Written by JMRI version 20140701-1242-jake on Tue Jul 01 06:42:27 MDT 2014 $Id$-->
+  <decoderIndex version="420">
     <mfgList nmraListDate="2012-12-05" updated="2013-04-11" lastadd="106">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -1195,6 +1195,11 @@
           <output name="6" label="Pad (White/Yellow)" connection="solder" />
           <size length="1.074" width="0.672" height="0.259" units="inches" />
         </model>
+        <model model="DN126M2" numOuts="2" numFns="5" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" connector="other" comment="for MicroTrains Line N-Scale SW1500 units">
+          <output name="1" label="F0(F)" connection="LED" />
+          <output name="2" label="F0(R)" connection="solder" />
+          <size length=".621" width="0.418" height="0.107" units="inches" />
+        </model>
         <model model="DN136D" numOuts="3" numFns="5" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="N" connector="unspecified" comment="N/HO-Scale, wired">
           <output name="1" label="White" connection="wire" />
           <output name="2" label="Yellow" connection="wire" />
@@ -1303,6 +1308,13 @@
           <output name="3" label="Green" connection="wire" />
           <output name="4" label="Violet" connection="wire" />
           <size length="0.55" width="0.4" height="0.148" units="inches" />
+        </model>
+        <model model="DZ146IN" numOuts="4" numFns="10" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="Z" connector="NMRAsmall" comment="Z/N/HO-Scale, with NEM651 Integrated Plug">
+          <output name="1" label="White" connection="plug" />
+          <output name="2" label="Yellow" connection="plug" />
+          <output name="3" label="Green" connection="wire" />
+          <output name="4" label="Violet" connection="wire" />
+          <size length="0.559" width="0.386" height="0.137" units="inches" />
         </model>
         <model model="DZ146PS" numOuts="4" numFns="10" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="Z" connector="NMRAmedium" comment="Z/N/HO-Scale, with Medium Plug with short harness">
           <output name="1" label="White" connection="plug" />
