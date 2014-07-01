@@ -297,12 +297,30 @@ public class FnMapPanelESU extends JPanel {
 
         // warn if using OS X GUI
         if (SystemType.isMacOSX() && UIManager.getLookAndFeel().isNativeLookAndFeel()) {
+            String warnMsg = "<html><center>";
+            String osVersion = System.getProperty("os.version");
+            String javaVersion = System.getProperty("java.version");
+            if ( javaVersion.startsWith("1.6.") ) {
+                warnMsg = warnMsg + "<strong>WARNING: The version of Java installed on your system (" + javaVersion +") has a bug<br/>" +
+                     "that may cause JMRI to generate an error when using with this definition.<br/>" +
+                     "</strong>";
+                 if ( osVersion.startsWith("10.5.") || osVersion.startsWith("10.6.") ) {
+                    warnMsg = warnMsg + "<strong>To avoid this problem, change GUI as per the suggestion below.<br/>" +
+                         "</strong><br/>";
+                     } else {
+                    warnMsg = warnMsg + "<strong>To avoid this problem, change GUI as per the suggestion below<br/>" +
+                         "or update to Oracle Java from http://www.java.com/<br/>" +
+                         "</strong><br/>";
+                     }
+            }
+            warnMsg = warnMsg + "<strong>You are using the Mac OS X native GUI<br/>" +
+                "and may experience slow scrolling.</strong><br/>" +
+                "If affected, change GUI in "+Application.getApplicationName() +
+                "-&gt;Preferences-&gt;Display-&gt;GUI.<br/><br/>" +
+                "</center></html>";
             int numWarnings = numOut/GUIwarningInterval;
             for (int i=0; i<numWarnings; i++) {
-                JLabel l = new JLabel("<html><center><strong>You are using the Mac OS X native GUI<br/>"+
-                    "and may experience slow scrolling</strong><br/>"+
-                    "If affected, change GUI in "+Application.getApplicationName()+
-                    "-&gt;Preferences-&gt;Display-&gt;GUI<br/><br/></center></html>");
+                JLabel l = new JLabel(warnMsg);
                 cs.gridy = guiWarningRow;
                 cs.gridx = i*numOut/numWarnings;
                 cs.gridwidth = GUIwarningInterval;
