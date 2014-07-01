@@ -153,8 +153,7 @@
 		<variable CV="120" default="1" item="Function F0R option 3">
 			<decVal/>
 			<label>Beacon Total Cycle Time</label>
-			<label xml:lang="it">Beacon Total Cycle Time</label>
-			<label xml:lang="it">Tempo Ciclo Totale Faro</label>
+      <label xml:lang="it">Tempo Ciclo Totale Faro</label>
 		</variable>
 		<variable CV="121" default="15" item="Function F0R behavior">
 			<decVal min="2" max="26"/>
