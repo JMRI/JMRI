@@ -29,6 +29,7 @@ The two systems are exactly the same in operation and components.
 <p>
 JMRI can connect to an MRC Prodigy Advanced<sup>2</sup> command station 
 via the USB Computer interface (MRC:1516 or Gaugemaster:DCC55).
+This has been tested with the wired and wireless versions of the interface.
 <p>
 The JMRI should be able to support all of the MRC Prodigy range of systems
 however it has only been tested and developed with the Advanced<sup>2</sup>
