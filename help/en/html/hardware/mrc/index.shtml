@@ -24,6 +24,15 @@
 <h1> 
 JMRI: MRC/GaugeMaster Prodigy Advanced<sup>2</sup>
 </h1>
+
+Support for MRC Prodigy is available starting with
+<a href="http://jmri.sf.net/releasenotes/jmri3.9.1.shtml">JMRI version 3.9.1</a>.
+Please download the 
+<a href="http://jmri.sf.net/download/index.shtml">latest JMRI test release</a>
+to get the most recent version of JMRI's MRC/GaugeMaster support.
+The JMRI 3.8 production version did not include support for MRC/GaugeMaster hardware.
+
+<p>
 In the UK the MRC systems is rebranded, rebadged and sold by Gaugemaster.  
 The two systems are exactly the same in operation and components.
 <p>
