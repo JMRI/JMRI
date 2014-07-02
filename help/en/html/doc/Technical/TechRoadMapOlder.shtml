@@ -1,0 +1,179 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<html lang="en">
+<head>
+    <TITLE>
+ 	JMRI: Technology Road Map - Older Releases
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code road map">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+
+<H1>JMRI: Technology Road Map</H1>
+
+This page is the historical version of the road map for JMRI's future development.
+It contains notes on older releases.
+For more recent work, see the 
+<a href="TechRoadMap.shtml">main Technology Road Map page</a>. 
+
+<h2>JMRI Releases</h2>
+
+This section describes the (notional)
+plans for JMRI releases.
+<P>
+
+<table border="1">
+<tr><th>Release</th><th>Description</th><th>Date</th><td>JRE</td><td>JDK</td></tr>
+<tr><td>1.8</td><td>Production version, culmination of 1.7.* series </td><td>July 2007 <b>(done)</b></td>  <td></td><td></td></tr>
+<tr><td>1.9.*</td><td>Development series </td><td></td>                           <td>1.3</td><td>1.4</td></tr>
+<tr><td>2.0</td><td>Production version, culmination of 1.9.* series </td><td>December 2007 <b>(done)</b></td>     <td>1.3</td><td>1.4</td></tr>
+<tr><td>2.1.*</td><td>Development series </td><td></td>                           <td>1.4</td><td>1.5</td></tr>
+<tr><td>2.2</td><td>Production version, culmination of 2.1.* series </td><td>June 2008 <b>(done)</b></td><td>1.4</td><td>1.5</td></tr>
+<tr><td>2.3.*</td><td>Development series </td><td></td>                           <td>1.5</td><td>1.5</td></tr>
+<tr><td>2.4</td><td>Production version, culmination of 2.3.* series </td><td>December 2008 (done)</td>       <td>1.5</td><td>1.5</td></tr>
+<tr><td>2.5.*</td><td>Development series</td><td></td>                                              <td>1.5</td><td>1.5</td></tr>
+<tr><td>2.6</td><td>Production version, culmination of 2.5.* series </td><td>June 2009 (done)</td><td>1.5</td><td>1.5</td></tr>
+<tr><td>2.7.*</td><td>Development series</td><td></td>                                              <td>1.5</td><td>1.5</td></tr>
+<tr><td>2.8</td><td>Production version, culmination of 2.7.* series </td><td>December 2009 (tentative)</td><td>1.5</td><td>1.5</td></tr>
+<tr><td>2.9.*</td><td>Development series</td><td></td>                                              <td>1.5</td><td>1.5</td></tr>
+<tr><td>2.10/3.0</td><td>Production version, culmination of 2.9.* series </td><td>June 2010 (tentative)</td><td>1.5</td><td>1.5</td></tr>
+<tr><td>?.?.*</td><td>Development series</td><td></td>                                              <td>?</td><td>?</td></tr>
+<tr><td>?.?</td><td>Production version, culmination of ?.?.* series </td><td>December 2010 (tentative)</td><td>?</td><td>?</td></tr>
+
+</table>
+
+<h4>JMRI 1.9, 2.0</h4>
+
+The JMRI 1.9 development series moved forward to JRE 1.3, JDK 1.4.  This permitted use of:
+
+<ul>
+<LI>Collections in java.util instead of com.sun
+<LI>Java2D, along with the associated printing support
+<LI>Annotations (we need to develop conventions for their use)
+<LI>JDOM 1.0 - Simplifies XML code, allows use of XSLT for dynamic combination
+<LI>JUnit 3.8 - Minor improvements to test writing ease
+<LI>Fewer jar files included in distribution
+<LI>The Jakarta regexp regular expression library. (At some later
+point, we'll have to move that forward to java.util.regexp, but that
+won't be available until Java 1.4 in a later JMRI release)
+</UL>
+
+<P>
+JMRI 1.9 and 2.0 will run on Windows 95 and later, all versions of Mac OS X, and 
+all versions of Linux.
+<P>
+To build JMRI 1.9 and 2.0, you will need Windows 98 1st Ed or later, any version of
+Mac OS X, or (almost any?) version of Linux.
+
+<h4>JMRI 2.1, 2.2</h4>
+
+The JMRI 2.1 development series moves forward to JRE 1.4, JDK 1.5.  
+This permits use of
+(subject to verification):
+
+<ul>
+<LI>SwingWorker (and associated updates of threading)
+<LI>JUnit 4.0
+<LI>Java3D
+<LI>JavaHelp update
+<LI>Drag and Drop
+<LI>Annotations (we'll have to develop conventions for these)
+<LI>JavaMail
+<LI>Java regular expressions (java.util.regexp)
+</UL>
+
+<P>
+JMRI 2.1 and 2.2 will run on Windows 98 1st Ed or later, 
+any version of Mac OS X, 
+or version of Linux.
+<P>
+To build JMRI 2.1 and 2.2, you will need Windows 98 2nd Ed or later,
+Mac OS X 10.4 or later, 
+or (almost any?) version of Linux.
+
+
+<h4>JMRI 2.3, 2.4</h4>
+
+The JMRI 2.3 development series moves forward to JRE 1.5, JDK 1.5.
+This permits use of
+(subject to verification):
+
+<UL>
+<LI>JSpinner (and removal of our replacement in jmri.util)
+<LI>Enums (we'll need to make decisions about interface updates, e.g. Turnout.CLOSED)
+<LI>printf, Formatter
+<LI>generics (subject to decisions about conventions and interface updates)
+</UL>
+
+<P>
+JMRI 2.3 and 2.4 will run on Windows 98 2nd Ed or later, 
+Mac OS X 10.4 or later, 
+or (almost any?) version of Linux.
+<P>
+To build JMRI 2.1 and 2.2, you will need Windows 98 2nd Ed or later,
+Mac OS X 10.3 or later, 
+or (almost any?) version of Linux.
+
+<h4>JMRI 2.5, 2.6, 2.7, 2.8</h4>
+
+These versions will continue to use Java 1.5 for both building and running.
+<p>
+During the 2.7 build series, we moved from the Crimson XML parser to Xerces.
+
+<h4>JMRI 2.9, 2.10/3.0</h4>
+
+Plans for the JMRI 2.9 development series are not
+final. 
+<p>
+The JRE and JDK choice for JMRI 2.9 development 
+will depend on desired runtime features, and availability on 
+our popular user and development platforms. It is 
+<u>tentatively</u>
+Java 1.5 for both building and running, which is the same as JMRI 2.3.* and following ones.
+<p>
+During the 2.9.* series, we intend to move from the javax.comm serial classes to 
+the RXTX gnu.io classes, either via RXTX 2.2-pre2 or some later version.
+This will remove support for the MS100 from JMRI applications.
+
+
+<h4>JMRI after Summer 2010</h4>
+
+After JMRI 2.10/3.0 in early summer 2010, development will continue.
+It's likely that soon after that, if not before, we'll have to 
+move to using Java 1.6. 
+
+<h3>Java Release and Operating System Support</h3>
+
+More information on Java releases and the operating systems
+that support them is on a 
+<a href="JVMCapabilities.shtml">separate page</a>.
+
+
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+
