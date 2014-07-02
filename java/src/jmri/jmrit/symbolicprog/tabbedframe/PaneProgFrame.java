@@ -64,6 +64,8 @@ abstract public class PaneProgFrame extends JmriJFrame
     List<JPanel>        paneList        = new ArrayList<JPanel>();
     int                 paneListIndex;
 
+    List<Element>       decoderPaneList;
+
     BusyGlassPane       glassPane;
     List<JComponent>    activeComponents = new ArrayList<JComponent>();
 
@@ -401,15 +403,14 @@ abstract public class PaneProgFrame extends JmriJFrame
         if ( (a = programmerRoot.getChild("programmer").getAttribute("decoderFilePanes")) != null
              && a.getValue().equals("yes")) {
             if (decoderRoot != null) {
-                List<Element> paneList = decoderRoot.getChildren("pane");
-                if (log.isDebugEnabled()) log.debug("will process "+paneList.size()+" pane definitions from decoder file");
-                for (int i=0; i<paneList.size(); i++) {
+                if (log.isDebugEnabled()) log.debug("will process "+decoderPaneList.size()+" pane definitions from decoder file");
+                for (int i=0; i<decoderPaneList.size(); i++) {
                     // load each pane
-                    String pname = jmri.util.jdom.LocaleSelector.getAttribute(paneList.get(i), "name");
+                    String pname = jmri.util.jdom.LocaleSelector.getAttribute(decoderPaneList.get(i), "name");
 
                     // handle include/exclude
-                    if ( isIncludedFE(paneList.get(i), modelElem, _rosterEntry, "", "") ) {
-                        newPane( pname, paneList.get(i), modelElem, true);  // show even if empty??
+                    if ( isIncludedFE(decoderPaneList.get(i), modelElem, _rosterEntry, "", "") ) {
+                        newPane( pname, decoderPaneList.get(i), modelElem, true);  // show even if empty??
                     }
                 }
             }
@@ -634,6 +635,15 @@ abstract public class PaneProgFrame extends JmriJFrame
                 if (log.isDebugEnabled()) log.debug("result "+getShowEmptyPanes());
             }
 
+            // get extra any panes from the decoder file        
+            Attribute a;
+            if ( (a = programmerRoot.getChild("programmer").getAttribute("decoderFilePanes")) != null
+                 && a.getValue().equals("yes")) {
+                if (decoderRoot != null) {
+                    decoderPaneList = decoderRoot.getChildren("pane");
+                }
+            }
+
             // load programmer config from programmer tree
             readConfig(programmerRoot, r);
             
@@ -764,15 +774,33 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
 
         // for all "pane" elements in the programmer
-        List<Element> paneList = base.getChildren("pane");
-        if (log.isDebugEnabled()) log.debug("will process "+paneList.size()+" pane definitions");
-        for (int i=0; i<paneList.size(); i++) {
-            // load each pane
-            String name = jmri.util.jdom.LocaleSelector.getAttribute(paneList.get(i), "name");
+        List<Element> progPaneList = base.getChildren("pane");
+        if (log.isDebugEnabled()) log.debug("will process "+progPaneList.size()+" pane definitions");
+        for (int i=0; i<progPaneList.size(); i++) {
+            // load each programmer pane
+            Element temp = progPaneList.get(i);
+            List<Element> pnames = temp.getChildren("name");
+            if ( (pnames.size() > 0) && (decoderPaneList != null) && (decoderPaneList.size() > 0) ) {
+                String namePrimary = (pnames.get(0)).getValue(); // get non-localised name
+            
+                // check if there is a same-name pane in decoder file
+                for (int j=0; j<decoderPaneList.size(); j++) {
+                    List<Element> dnames = decoderPaneList.get(j).getChildren("name");
+                    if ( dnames.size() > 0 ) {
+                        String namePrimaryDecoder = (dnames.get(0)).getValue(); // get non-localised name
+                        if ( namePrimary.equals(namePrimaryDecoder) ) {
+                            // replace programmer pane with same-name decoder pane
+                            temp = decoderPaneList.get(j);
+                            decoderPaneList.remove(j);
+                        }
+                    }
+                }
+            }
+            String name = jmri.util.jdom.LocaleSelector.getAttribute(temp, "name");
 
             // handle include/exclude
-            if ( isIncludedFE(paneList.get(i), modelElem, _rosterEntry, "", "") ) {
-                newPane( name, paneList.get(i), modelElem, false);  // dont force showing if empty
+            if ( isIncludedFE(temp, modelElem, _rosterEntry, "", "") ) {
+                newPane( name, temp, modelElem, false);  // dont force showing if empty
             }
         }
     }
