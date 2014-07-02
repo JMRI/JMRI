@@ -274,7 +274,8 @@ public class ConditionalVariable {
     }
 
     public String getDataString() {
-        if(Conditional.TEST_TO_ITEM[_type]==Conditional.ITEM_TYPE_MEMORY){
+        if(Conditional.TEST_TO_ITEM[_type]==Conditional.ITEM_TYPE_MEMORY
+        		&& _namedBeanData!=null){
             return _namedBeanData.getName();
         }
         return _dataString;
@@ -498,7 +499,12 @@ public class ConditionalVariable {
                                             (_type == Conditional.TYPE_MEMORY_COMPARE_INSENSITIVE));
                 if ((_type == Conditional.TYPE_MEMORY_COMPARE) || 
                         (_type == Conditional.TYPE_MEMORY_COMPARE_INSENSITIVE)) {
-                    Memory m2 = (Memory) _namedBeanData.getBean();//InstanceManager.memoryManagerInstance().provideMemory(_dataString);
+                	Memory m2;
+                	if (_namedBeanData!=null) {
+                		m2 = (Memory)_namedBeanData.getBean();               		
+                	} else {
+                		m2 = InstanceManager.memoryManagerInstance().provideMemory(_dataString); 
+                	}                	
                     if (m2 == null) {
                         log.error("invalid data memory name= \""+_dataString+"\" in state variable");
                         return (false);
