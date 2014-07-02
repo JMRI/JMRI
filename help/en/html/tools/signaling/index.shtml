@@ -6,7 +6,7 @@
 <title>JMRI: Signaling introduction</title>
 <meta name="Author" content="Bob Jacobsen">
 <meta name="Author" content="Egbert Broerse">
-<meta name="Date.Modified" content="20140515"/>
+<meta name="Date.Modified" content="20140615"/>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -114,8 +114,8 @@ Signal Masts are configured through the
 	<a href="../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Masts Table</a>. From the Signal Masts Table, you can create and edit Signal Masts and set individual Signal Masts to any Aspect that they're able to display by clicking in the "Aspect" column.
 	<br/>
 	You can add a Signal Mast icon in the Panel Editor in the usual way. The Signal Mast icon will display the images from the Appearance definition for that particular Signal Mast type and Signal System. </p>
-	<p>3. <b><a href="../../../package/jmri/jmrit/beantable/SignalGroupAddEdit.shtml">Signal Groups</a></b> are used to define a number of signal heads, where only one signal head can be illuminated at any given time, depending upon the status of the associated signal mast and a set of conditions.<br>
-		Signal Groups would be used where additional indicators are used to support the main signal mast, such as Junction, Route or Speed displays. These indicators provide additional information to the driver (US: engineer) that is not given by the main signal mast. Such indicators are frequently seen in European and UK signalling.</p>
+	<p>3. <b><a href="SignalGroups.shtml">Signal Groups</a></b> are used to define a number of Signal Heads, where only one Signal Head can be illuminated at any given time, depending upon the Appearance (Status) of the associated Signal Mast and a set of conditions.<br>
+		Signal Groups would be used where additional indicators are installed to support the main Signal Mast, such as Junction, Route or Speed displays. These indicators provide additional information to the driver (US: engineer) that is not given by the main Signal Mast. Such indicators are frequently seen in European and UK signalling.</p>
 	
 	<p>4. The <b><a href="SignalMastLogic.shtml">Signal Mast Logic</a></b> tool allows the Signaling Logic to be built up as pairs of conditionals between Signal Masts on the layout.
 Each Signal Mast Logic will use the states of Blocks, Turnouts, Sensors and other

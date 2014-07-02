@@ -21,6 +21,12 @@
       <authorinitials>ST</authorinitials>
       <revremark>Initial Version</revremark>
     </revision>
+    <revision>
+      <revnumber>1.01</revnumber>
+      <date>2014-06-23</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Correct case error in image paths</revremark>
+    </revision>
   </revhistory>
   <aspecttable>Amtrak-2010</aspecttable>
   <name>Single head position light signal</name>
@@ -31,33 +37,33 @@
       <aspectname>Clear</aspectname>
       <show>green</show>
       <reference>281</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/Amtrak-2010/rule-281-b.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/Amtrak-2010/Rule-281-b.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Cab Speed</aspectname>
       <show>flashgreen</show>
       <reference>281a</reference>
-      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/Amtrak-2010/rule-281a-b.gif</imagelink>
-      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/Amtrak-2010/rule-281a-y.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/Amtrak-2010/Rule-281a-b.gif</imagelink>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/Amtrak-2010/Rule-281a-y.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Advance Approach</aspectname>
       <show>flashyellow</show>
       <reference>282a</reference>
-      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/Amtrak-2010/rule-282a-b.gif</imagelink>
-      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/Amtrak-2010/rule-282a-y.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/Amtrak-2010/Rule-282a-b.gif</imagelink>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/Amtrak-2010/Rule-282a-y.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
       <reference>285</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/Amtrak-2010/rule-285-b.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/Amtrak-2010/Rule-285-b.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
       <reference>292</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/Amtrak-2010/rule-292-b.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/Amtrak-2010/Rule-292-b.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Unlit</aspectname>

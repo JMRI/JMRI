@@ -27,7 +27,7 @@ JMRI: Amtrak-2010 Signalling Definition
 
 This system contains signalling definitions coresponding to the Amtrak signal aspects used on the North East Corridor and shown on the Railroad Signals of the US website. 
 <p>
-Signal aspects can be referenced here:-
+A non-JMRI web page covering the aspects can be referenced here:-
 <p>
 <a href="http://www.railroadsignals.us/rulebooks/amtraknec/index.htm">Amtrak signal aspects</a>.
 
@@ -39,6 +39,17 @@ An additional non-flashing icon set has been provided for where the flashing ico
 
 <p>
 Since this is a relatively simple speed signalling system there are no signal indications to go from one speed to another directly so at least two double head masts will be required between interlockings to allow the correct aspects to be displayed for both interlockings.
+
+<p>
+For the JMRI definitions, see the 
+<a href="aspects.xml">aspect page</a>.
+<p>
+Signal Mast definitions:
+<ul>
+<li><a href="appearance-Single.xml">Single</a>
+<li><a href="appearance-Double.xml">Double</a>
+<li><a href="appearance-Permissive.xml">Permissive</a>
+</ul>
 
 
 <!--#include virtual="/Footer" -->

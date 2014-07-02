@@ -25,7 +25,7 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
  */
 public class Bundle extends jmri.jmrix.mrc.swing.Bundle {
 
-    private final static String name = "jmri.jmrix.mrc.packetgen.MrcPacketGenBundle"; // NOI18N
+    private final static String name = "jmri.jmrix.mrc.swing.packetgen.MrcPacketGenBundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly
