@@ -126,7 +126,7 @@ public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTraffi
 
         // display the decoded data
         // we use Llnmon to format, expect it to provide consistent \n after each line
-        nextLineWithTime(timestamp, src + " " + m.toString()+"\"\n", raw );
+        nextLineWithTime(timestamp, src + " " + m.toString() + "\n", raw );
     }
     
     /**
