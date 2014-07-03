@@ -84,6 +84,9 @@ Java 1.7 for both building and running.
 It might also be 1.6 JRE, 1.7 SDK.
 
 <p>
+Planned removal of XmlIO web service.
+
+<p>
 New Java and library features
 (subject to verification):
 
