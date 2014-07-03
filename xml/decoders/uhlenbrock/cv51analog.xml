@@ -44,17 +44,21 @@
       <enumChoice choice="Digital operation only" value="1">
         <choice>Digital operation only</choice>
         <choice xml:lang="de">nur Digital Betrieb</choice>
+        <choice xml:lang="it">Solo DCC</choice>
       </enumChoice>
       <enumChoice choice="Analog operation only">
         <choice>Analog operation only</choice>
         <choice xml:lang="de">nur Analog Betrieb</choice>
+        <choice xml:lang="it">Solo Analogico</choice>
       </enumChoice>
       <enumChoice choice="Auto Detection">
         <choice>Auto Detection</choice>
-        <choice xml:lang="de">automatischer Erkennung</choice>			
+        <choice xml:lang="de">automatischer Erkennung</choice>
+        <choice xml:lang="it">Rilevazione Automatica</choice>			
       </enumChoice>
     </enumVal>
     <label>Analog/Digital operation</label>
-    <label xml:lang="de">Analogen/Digital Betriebsart</label>			
+    <label xml:lang="de">Analogen/Digital Betriebsart</label>	
+    <label xml:lang="it">Operatività in Analogico / DCC</label>		
   </variable>
 </variables>

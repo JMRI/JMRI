@@ -39,24 +39,30 @@
 	<enumVal>
 	  <enumChoice choice="DCC and Motorola">
             <choice>DCC and Motorola</choice>
-            <choice xml:lang="de">DCC und Motorola</choice>				
+            <choice xml:lang="de">DCC und Motorola</choice>
+            <choice xml:lang="it">DCC e Motorola</choice>				
 	  </enumChoice>
 	  <enumChoice choice="DCC only">
             <choice>DCC only</choice>
-            <choice xml:lang="de">nur DCC</choice>					
+            <choice xml:lang="de">nur DCC</choice>
+            <choice xml:lang="it">solo DCC</choice>					
 	  </enumChoice>
 	  <enumChoice choice="Motorola only">
             <choice>Motorola only</choice>              
-            <choice xml:lang="de">nur Motorola</choice>		
+            <choice xml:lang="de">nur Motorola</choice>	
+            <choice xml:lang="it">solo Motorola</choice>	
 	  </enumChoice>
 	  <enumChoice choice="Disabled">
             <choice>Disabled</choice>
-            <choice xml:lang="de">invalid</choice>					
+            <choice xml:lang="de">invalid</choice>
+            <choice xml:lang="it">Disabilitato</choice>					
 	  </enumChoice>		  
 	</enumVal>
 	<label>Digital format</label>
-	<label xml:lang="de">Datenformat</label>			
+	<label xml:lang="de">Datenformat</label>
+        <label xml:lang="it">Protocollo</label>			
 	<tooltip>If Disabled, the decoder will no longer accept commands and can only be programmed</tooltip>
-	<tooltip xml:lang="de">Wenn invalid, erhält der Decoder keine Fahrbefehle mehr und kann nur noch programmiert werden</tooltip>		
+	<tooltip xml:lang="de">Wenn invalid, erhält der Decoder keine Fahrbefehle mehr und kann nur noch programmiert werden</tooltip>
+        <tooltip xml:lang="it">Se disabilitato, non accetta comandi e può essere solo programmato</tooltip>
   </variable>
 </variables>

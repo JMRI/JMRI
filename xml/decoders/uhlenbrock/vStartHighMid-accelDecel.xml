@@ -41,6 +41,7 @@
     <label xml:lang="fr">V démarr.</label>
     <label xml:lang="de">Anfahrspannung</label>		
     <tooltip>Speed setting between 1 and 63</tooltip>
+    <tooltip xml:lang="it">Valori tra 1 e 63</tooltip>
     <tooltip xml:lang="fr">Valeur de vitesse entre 1 et 63</tooltip>		
   </variable>
   <variable item="Accel" CV="3" comment="A value of 1 will increase each 5 milliseconds by 1" default="2">
@@ -50,6 +51,7 @@
     <label xml:lang="fr">Accélération</label>
     <label xml:lang="de">Anfahrverzögerung</label>		
     <tooltip>A value of 1 means speed increase by 1 every 5 ms</tooltip>
+    <tooltip xml:lang="it">Un Valore di 1 significa che la velocità incrementa di 1 ogni 5 millisecondi</tooltip>
     <tooltip xml:lang="fr">Une valeur de 1 signifie augmentation vitesse de 1 toutes les 5 ms</tooltip>
   </variable>
   <variable item="Decel" CV="4" comment="A value of 1 will increase each 5 milliseconds by 1" default="2">
@@ -59,6 +61,7 @@
     <label xml:lang="fr">Décélération</label>
     <label xml:lang="de">Bremsverzögerung</label>		
     <tooltip>A value of 1 means speed decrease by 1 every 5 ms</tooltip>
+    <tooltip xml:lang="it">Un Valore di 1 significa che la velocità decrementa di 1 ogni 5 millisecondi</tooltip>
     <tooltip xml:lang="fr">Une valeur de 1 signifie décroissance vitesse de 1 toutes les 5 ms</tooltip>		
   </variable>
   <variable item="Vhigh" CV="5" comment="Speed setting between 1 and 63" default="48">
@@ -68,15 +71,18 @@
     <label xml:lang="fr">Vmax</label>
     <label xml:lang="de">Höchstgeschwindigkeit</label>		
     <tooltip>Speed setting between 1 and 63, must be greater than Vstart</tooltip>
-    <tooltip xml:lang="fr">Valeur de vitesse entre 1 et 63, plus grande que V démarr.</tooltip>					
+    <tooltip xml:lang="fr">Valeur de vitesse entre 1 et 63, plus grande que V démarr.</tooltip>
+    <tooltip xml:lang="it">Valori tra 1 e 63, deve essere più grande di Vstart(CV2)</tooltip>					
   </variable>
   <variable item="Vmid" CV="6" comment="Speed setting between 1 and 63" default="24">
     <decVal max="63"/>
     <label>Vmid</label>
     <label xml:lang="it">Volt Intermedi</label>
     <label xml:lang="fr">Vmoy</label>
+    <label xml:lang="it">Vmid</label>
     <label xml:lang="de">Mittengeschwindigkeit</label>		
     <tooltip>Speed setting between 1 and 63, must be smaller than Vhigh and greater than Vstart</tooltip>
     <tooltip xml:lang="fr">Valeur de vitesse entre 1 et 63, plus petite que Vmax et plus grande que V démarr.</tooltip>				
+    <tooltip xml:lang="it">Valori tra 1 e 63, deve essere più piccola di Vhigh(CV5) e più grande di Vstart(CV2)</tooltip>
   </variable>
 </variables>
