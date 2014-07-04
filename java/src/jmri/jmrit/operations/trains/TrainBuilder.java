@@ -2603,7 +2603,7 @@ public class TrainBuilder extends TrainCommon {
 	/**
 	 * Find the final destination and track for a car with a custom load. Car doesn't have a destination or final
 	 * destination. There's a check to see if there's a spur/ schedule for this car. Returns true if a schedule was
-	 * found.
+	 * found. Only hold cars at their current location if all of the spurs checked don't have an alternate track.
 	 * 
 	 * @param car
 	 *            the car with the load
@@ -2685,13 +2685,14 @@ public class TrainBuilder extends TrainCommon {
 
 			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildSetFinalDestination"),
 					new Object[] { car.toString(), car.getLoadName(), track.getLocation().getName(), track.getName() }));
+			
+			// show if track has an alternate
+			if (track.getAlternateTrack() != null)
+				addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildTrackHasAlternate"),
+						new Object[] { track.getLocation().getName(), track.getName(), track.getAlternateTrack().getName() }));
 
 			// check the number of in bound cars to this track
 			if (!track.isSpaceAvailable(car)) {
-				// show if track has an alternate
-				if (track.getAlternateTrack() != null)
-					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildTrackHasAlternate"),
-							new Object[] { track.getLocation().getName(), track.getName(), track.getAlternateTrack().getName() }));
 				// Now determine if we should move the car or just leave it where it is
 				String id = track.getScheduleItemId(); // save the tracks schedule item id
 				// determine if this car can be routed to the spur
@@ -2714,7 +2715,7 @@ public class TrainBuilder extends TrainCommon {
 			car.setFinalDestination(track.getLocation());
 			car.setFinalDestinationTrack(track);
 			// test to see if destination is reachable by this train
-			if (Router.instance().setDestination(car, _train, _buildReport))
+			if (Router.instance().setDestination(car, _train, _buildReport) && track.getAlternateTrack() != null)
 				routeToSpurFound = true; // found a route to the spur
 			if (car.getDestination() != null) {
 				// is car part of kernel?
@@ -2723,7 +2724,7 @@ public class TrainBuilder extends TrainCommon {
 					car.setScheduleId(track.getCurrentScheduleItem().getId());
 					track.bumpSchedule();
 				}
-				return routeToSpurFound; // done, car has a new destination
+				return true; // done, car has a new destination
 			}
 			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildNotAbleToSetDestination"),
 					new Object[] { car.toString(), Router.instance().getStatus() }));
