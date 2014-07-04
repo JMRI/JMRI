@@ -40,337 +40,421 @@
   <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" minFn="1" default="1">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>FL(f) controls output Headlight</label>
+	<label xml:lang="it">Luci (in avanti) - uscita Luci frontali</label>
   </variable>
   <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2" minFn="1">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>FL(f) controls output Backup Light</label>
+	<label xml:lang="it">Luci (in avanti) - uscita Luci retro</label>
   </variable>
   <variable item="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="3" minFn="1">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>FL(f) controls output A1</label>
+	<label xml:lang="it">Luci (in avanti) - uscita A1</label>
   </variable>
   <variable item="FL(f) controls output 4" CV="33" mask="XXXXVXXX" minOut="4" minFn="1">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>FL(f) controls output A2</label>
+	<label xml:lang="it">Luci (in avanti) - uscita A2</label>
   </variable>
   <variable item="FL(f) controls output Shunting" CV="33" mask="XXXVXXXX" minOut="2" minFn="1">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>FL(f) controls output Shunting</label>
+	<label xml:lang="it">Luci (in avanti) - uscita Manovra</label>
   </variable>
   <variable item="FL(f) controls output Start/brake" CV="33" mask="XXVXXXXX" minOut="2" minFn="1">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>FL(f) controls output Start/brake</label>
+	<label xml:lang="it">Luci (in avanti) - uscita Avvio/Freni</label>
   </variable>
   <variable item="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1" minFn="2">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>FL(r) controls output Headlight</label>
+	<label xml:lang="it">Luci (in Retro) - uscita Luci frontali</label>
   </variable>
   <variable item="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2" minFn="2" default="1">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>FL(r) controls output Backup Light</label>
+	<label xml:lang="it">Luci (in retro) - uscita Luci retro</label>
   </variable>
   <variable item="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3" minFn="2">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>FL(r) controls output A1</label>
+	<label xml:lang="it">Luci (in retro) - uscita A1</label>
   </variable>
   <variable item="FL(r) controls output 4" CV="34" mask="XXXXVXXX" minOut="4" minFn="2">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>FL(r) controls output A2</label>
+	<label xml:lang="it">Luci (in retro) - uscita A2</label>
   </variable>
   <variable item="FL(r) controls output Shunting" CV="34" mask="XXXVXXXX" minOut="2" minFn="2">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>FL(r) controls output Shunting</label>
+	<label xml:lang="it">Luci (in retro) - uscita manovra</label>
   </variable>
   <variable item="FL(r) controls output Start/brake" CV="34" mask="XXVXXXXX" minOut="2" minFn="2">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>FL(r) controls output Start/brake</label>
+	<label xml:lang="it">Luci (in retro) - uscita Avvio/Freni</label>
   </variable>
   <variable item="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="3">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F1 controls output Headlight</label>
+	<label xml:lang="it">F1 - uscita Luci frontali</label>
   </variable>
   <variable item="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" minFn="3">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F1 controls output Backup Light</label>
+	<label xml:lang="it">F1 - uscita Luci retro</label>
   </variable>
   <variable item="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" minFn="3" default="1">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F1 controls output A1</label>
+	<label xml:lang="it">F1 - uscita A1</label>
   </variable>
   <variable item="F1 controls output 4" CV="35" mask="XXXXVXXX" minOut="4" minFn="3">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F1 controls output A2</label>
+	<label xml:lang="it">F1 - uscita A2</label>
   </variable>
   <variable item="F1 controls output Shunting" CV="35" mask="XXXVXXXX" minOut="2" minFn="3">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F1 controls output Shunting</label>
+	<label xml:lang="it">F1 - uscita Manovra</label>
   </variable>
   <variable item="F1 controls output Start/brake" CV="35" mask="XXVXXXXX" minOut="2" minFn="3">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F1 controls output Start/brake</label>
+	<label xml:lang="it">F1 - uscita Avvio/Freni</label>
   </variable>
   <variable item="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="4">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F2 controls output Headlight</label>
+	<label xml:lang="it">F2 - uscita Luci frontali</label>
   </variable>
   <variable item="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="4">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F2 controls output Backup Light</label>
+	<label xml:lang="it">F2 - uscita Luci retro</label>
   </variable>
   <variable item="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="3" minFn="4">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F2 controls output A1</label>
+	<label xml:lang="it">F2 - uscita A1</label>
   </variable>
   <variable item="F2 controls output 4" CV="36" mask="XXXXVXXX" minOut="4" minFn="4" default="1">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F2 controls output A2</label>
+	<label xml:lang="it">F2 - uscita A1</label>
   </variable>
   <variable item="F2 controls output Shunting" CV="36" mask="XXXVXXXX" minOut="2" minFn="4">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F2 controls output Shunting</label>
+	<label xml:lang="it">F2 - uscita Manovra</label>
   </variable>
   <variable item="F2 controls output Start/brake" CV="36" mask="XXVXXXXX" minOut="2" minFn="4">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F2 controls output Start/brake</label>
+	<label xml:lang="it">F2 - uscita Avvio/Freni</label>
   </variable>
   <variable item="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" minFn="5">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F3 controls output Headlight</label>
+	<label xml:lang="it">F3 - uscita Luci frontali</label>
   </variable>
   <variable item="F3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" minFn="5">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F3 controls output Backup Light</label>
+	<label xml:lang="it">F3 - uscita Luci retro</label>
   </variable>
   <variable item="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="5">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F3 controls output A1</label>
+	<label xml:lang="it">F3 - uscita A1</label>
   </variable>
   <variable item="F3 controls output 4" CV="37" mask="XXXXVXXX" minOut="4" minFn="5">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F3 controls output A2</label>
+	<label xml:lang="it">F3 - uscita A2</label>
   </variable>
   <variable item="F3 controls output Shunting" CV="37" mask="XXXVXXXX" minOut="2" minFn="5" default="1">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F3 controls output Shunting</label>
+	<label xml:lang="it">F3 - uscita Manovra</label>
   </variable>
   <variable item="F3 controls output Start/brake" CV="37" mask="XXVXXXXX" minOut="2" minFn="5">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F3 controls output Start/brake</label>
+	<label xml:lang="it">F3 - uscita Avvio/Freni</label>
   </variable>
   <variable item="F4 controls output 1" CV="38" mask="XXXXXXXV" minOut="1" minFn="6">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F4 controls output Headlight</label>
+	<label xml:lang="it">F4 - uscita Luci frontali</label>
   </variable>
   <variable item="F4 controls output 2" CV="38" mask="XXXXXXVX" minOut="2" minFn="6">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F4 controls output Backup Light</label>
+	<label xml:lang="it">F4 - uscita Luci retro</label>
   </variable>
   <variable item="F4 controls output 3" CV="38" mask="XXXXXVXX" minOut="3" minFn="6">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F4 controls output A1</label>
+	<label xml:lang="it">F4 - uscita A1</label>
   </variable>
   <variable item="F4 controls output 4" CV="38" mask="XXXXVXXX" minOut="4" minFn="6">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F4 controls output A2</label>
+	<label xml:lang="it">F4 - uscita A2</label>
   </variable>
   <variable item="F4 controls output Shunting" CV="38" mask="XXXVXXXX" minOut="2" minFn="6">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F4 controls output Shunting</label>
+	<label xml:lang="it">F4 - uscita Manovra</label>
   </variable>
   <variable item="F4 controls output Start/brake" CV="38" mask="XXVXXXXX" minOut="2" minFn="6" default="1">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F4 controls output Start/brake</label>
+	<label xml:lang="it">F4 - uscita Avvio/Freni</label>
   </variable>
   <variable item="F5 controls output 1" CV="39" mask="XXXXXXXV" minOut="1" minFn="7">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F5 controls output Headlight</label>
+	<label xml:lang="it">F5 - uscita Luci frontali</label>
   </variable>
   <variable item="F5 controls output 2" CV="39" mask="XXXXXXVX" minOut="2" minFn="7">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F5 controls output Backup Light</label>
+	<label xml:lang="it">F5 - uscita Luci retro</label>
   </variable>
   <variable item="F5 controls output 3" CV="39" mask="XXXXXVXX" minOut="3" minFn="7">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F5 controls output A1</label>
+	<label xml:lang="it">F5 - uscita A1</label>
   </variable>
   <variable item="F5 controls output 4" CV="39" mask="XXXXVXXX" minOut="4" minFn="7">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F5 controls output A2</label>
+	<label xml:lang="it">F5 - uscita A2</label>
   </variable>
   <variable item="F5 controls output Shunting" CV="39" mask="XXXVXXXX" minOut="2" minFn="7">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F5 controls output Shunting</label>
+	<label xml:lang="it">F5 - uscita Manovra</label>
   </variable>
   <variable item="F5 controls output Start/brake" CV="39" mask="XXVXXXXX" minOut="2" minFn="7">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F5 controls output Start/brake</label>
+	<label xml:lang="it">F5 - uscita Avvio/Freni</label>
   </variable>
   <variable item="F6 controls output 1" CV="40" mask="XXXXXXXV" minOut="1" minFn="8">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F6 controls output Headlight</label>
+	<label xml:lang="it">F6 - uscita Luci frontali</label>
   </variable>
   <variable item="F6 controls output 2" CV="40" mask="XXXXXXVX" minOut="2" minFn="8">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F6 controls output Backup Light</label>
+	<label xml:lang="it">F6 - uscita Luci retro</label>
   </variable>
   <variable item="F6 controls output 3" CV="40" mask="XXXXXVXX" minOut="3" minFn="8">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F6 controls output A1</label>
+	<label xml:lang="it">F6 - uscita A1</label>
   </variable>
   <variable item="F6 controls output 4" CV="40" mask="XXXXVXXX" minOut="4" minFn="8">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F6 controls output A2</label>
+	<label xml:lang="it">F6 - uscita A2</label>
   </variable>
   <variable item="F6 controls output Shunting" CV="40" mask="XXXVXXXX" minOut="2" minFn="8">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F6 controls output Shunting</label>
+	<label xml:lang="it">F6 - uscita Manovra</label>
   </variable>
   <variable item="F6 controls output Start/brake" CV="40" mask="XXVXXXXX" minOut="2" minFn="8">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F6 controls output Start/brake</label>
+	<label xml:lang="it">F6 - uscita Avvio/Freni</label>
   </variable>
   <variable item="F7 controls output 1" CV="41" mask="XXXXXXXV" minOut="1" minFn="9">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F7 controls output Headlight</label>
+	<label xml:lang="it">F7 - uscita Luci frontali</label>
   </variable>
   <variable item="F7 controls output 2" CV="41" mask="XXXXXXVX" minOut="2" minFn="9">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F7 controls output Backup Light</label>
+	<label xml:lang="it">F7 - uscita Luci retro</label>
   </variable>
   <variable item="F7 controls output 3" CV="41" mask="XXXXXVXX" minOut="3" minFn="9">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F7 controls output A1</label>
+	<label xml:lang="it">F7 - uscita A1</label>
   </variable>
   <variable item="F7 controls output 4" CV="41" mask="XXXXVXXX" minOut="4" minFn="9">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F7 controls output A2</label>
+	<label xml:lang="it">F7 - uscita A2</label>
   </variable>
   <variable item="F7 controls output Shunting" CV="41" mask="XXXVXXXX" minOut="2" minFn="9">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F7 controls output Shunting</label>
+	<label xml:lang="it">F7 - uscita Manovra</label>
   </variable>
   <variable item="F7 controls output Start/brake" CV="41" mask="XXVXXXXX" minOut="2" minFn="9">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F7 controls output Start/brake</label>
+	<label xml:lang="it">F7 - uscita Avvio/Freni</label>
   </variable>
   <variable item="F8 controls output 1" CV="42" mask="XXXXXXXV" minOut="1" minFn="10">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F8 controls output Headlight</label>
+	<label xml:lang="it">F8 - uscita Luci frontali</label>
   </variable>
   <variable item="F8 controls output 2" CV="42" mask="XXXXXXVX" minOut="2" minFn="10">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F8 controls output Backup Light</label>
+	<label xml:lang="it">F8 - uscita Luci retro</label>
   </variable>
   <variable item="F8 controls output 3" CV="42" mask="XXXXXVXX" minOut="3" minFn="10">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F8 controls output A1</label>
+	<label xml:lang="it">F8 - uscita A1</label>
   </variable>
   <variable item="F8 controls output 4" CV="42" mask="XXXXVXXX" minOut="4" minFn="10">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F8 controls output A2</label>
+	<label xml:lang="it">F8 - uscita A2</label>
   </variable>
   <variable item="F8 controls output Shunting" CV="42" mask="XXXVXXXX" minOut="2" minFn="10">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F8 controls output Shunting</label>
+	<label xml:lang="it">F8 - uscita Manovra</label>
   </variable>
   <variable item="F8 controls output Start/brake" CV="42" mask="XXVXXXXX" minOut="2" minFn="10">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F8 controls output Start/brake</label>
+	<label xml:lang="it">F8 - uscita Avvio/Freni</label>
   </variable>
   <variable item="F9 controls output 1" CV="43" mask="XXXXXXXV" minOut="1" minFn="11">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F9 controls output Headlight</label>
+	<label xml:lang="it">F9 - uscita Luci frontali</label>
   </variable>
   <variable item="F9 controls output 2" CV="43" mask="XXXXXXVX" minOut="2" minFn="11">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F9 controls output Backup Light</label>
+	<label xml:lang="it">F9 - uscita Luci retro</label>
   </variable>
   <variable item="F9 controls output 3" CV="43" mask="XXXXXVXX" minOut="3" minFn="11">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F9 controls output A1</label>
+	<label xml:lang="it">F9 - uscita A1</label>
   </variable>
   <variable item="F9 controls output 4" CV="43" mask="XXXXVXXX" minOut="4" minFn="11">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F9 controls output A2</label>
+	<label xml:lang="it">F9 - uscita A2</label>
   </variable>
   <variable item="F9 controls output Shunting" CV="43" mask="XXXVXXXX" minOut="2" minFn="11">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F9 controls output Shunting</label>
+	<label xml:lang="it">F9 - uscita Manovra</label>
   </variable>
   <variable item="F9 controls output Start/brake" CV="43" mask="XXVXXXXX" minOut="2" minFn="11">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F9 controls output Start/brake</label>
+	<label xml:lang="it">F9 - uscita Avvio/Freni</label>
   </variable>
   <variable item="F10 controls output 1" CV="44" mask="XXXXXXXV" minOut="1" minFn="12">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F10 controls output Headlight</label>
+	<label xml:lang="it">F10 - uscita Luci frontali</label>
   </variable>
   <variable item="F10 controls output 2" CV="44" mask="XXXXXXVX" minOut="2" minFn="12">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F10 controls output Backup Light</label>
+	<label xml:lang="it">F10 - uscita Luci retro</label>
   </variable>
   <variable item="F10 controls output 3" CV="44" mask="XXXXXVXX" minOut="3" minFn="12">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F10 controls output A1</label>
+	<label xml:lang="it">F10 - uscita A1</label>
   </variable>
   <variable item="F10 controls output 4" CV="44" mask="XXXXVXXX" minOut="4" minFn="12">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F10 controls output A2</label>
+	<label xml:lang="it">F10 - uscita A2</label>
   </variable>
   <variable item="F10 controls output Shunting" CV="44" mask="XXXVXXXX" minOut="2" minFn="12">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F10 controls output Shunting</label>
+	<label xml:lang="it">F10 - uscita Manovra</label>
   </variable>
   <variable item="F10 controls output Start/brake" CV="44" mask="XXVXXXXX" minOut="2" minFn="12">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F10 controls output Start/brake</label>
+	<label xml:lang="it">F10 - uscita Avvio/Freni</label>
   </variable>
   <variable item="F11 controls output 1" CV="45" mask="XXXXXXXV" minOut="1" minFn="13">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F11 controls output Headlight</label>
+	<label xml:lang="it">F11 - uscita Luci frontali</label>
   </variable>
   <variable item="F11 controls output 2" CV="45" mask="XXXXXXVX" minOut="2" minFn="13">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F11 controls output Backup Light</label>
+	<label xml:lang="it">F11 - uscita Luci retro</label>
   </variable>
   <variable item="F11 controls output 3" CV="45" mask="XXXXXVXX" minOut="3" minFn="13">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F11 controls output A1</label>
+	<label xml:lang="it">F11 - uscita A1</label>
   </variable>
   <variable item="F11 controls output 4" CV="45" mask="XXXXVXXX" minOut="4" minFn="13">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F11 controls output A2</label>
+	<label xml:lang="it">F11 - uscita A2</label>
   </variable>
   <variable item="F11 controls output Shunting" CV="45" mask="XXXVXXXX" minOut="2" minFn="13">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F11 controls output Shunting</label>
+	<label xml:lang="it">F11 - uscita Manovra</label>
   </variable>
   <variable item="F11 controls output Start/brake" CV="45" mask="XXVXXXXX" minOut="2" minFn="13">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F11 controls output Start/brake</label>
+	<label xml:lang="it">F11 - uscita Avvio/Freni</label>
   </variable>
   <variable item="F12 controls output 1" CV="46" mask="XXXXXXXV" minOut="1" minFn="14">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F12 controls output Headlight</label>
+	<label xml:lang="it">F12 - uscita Luci frontali</label>
   </variable>
   <variable item="F12 controls output 2" CV="46" mask="XXXXXXVX" minOut="2" minFn="14">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F12 controls output Backup Light</label>
+	<label xml:lang="it">F12 - uscita Luci retro</label>
   </variable>
   <variable item="F12 controls output 3" CV="46" mask="XXXXXVXX" minOut="3" minFn="14">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F12 controls output A1</label>
+	<label xml:lang="it">F12 - uscita A1</label>
   </variable>
   <variable item="F12 controls output 4" CV="46" mask="XXXXVXXX" minOut="4" minFn="14">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F12 controls output A2</label>
+	<label xml:lang="it">F12 - uscita A2</label>
   </variable>
   <variable item="F12 controls output Shunting" CV="46" mask="XXXVXXXX" minOut="2" minFn="14">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F12 controls output Shunting</label>
+	<label xml:lang="it">F12 - uscita Manovra</label>
   </variable>
   <variable item="F12 controls output Start/brake" CV="46" mask="XXVXXXXX" minOut="2" minFn="14">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>F12 controls output Start/brake</label>
+	<label xml:lang="it">F12 - uscita Avvio/Freni</label>
   </variable> 
 </variables>
