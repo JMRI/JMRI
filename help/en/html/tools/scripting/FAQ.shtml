@@ -293,11 +293,11 @@ This is not very portable from computer to computer, however, and
 can become a pain to keep straight.
 
 <p>
-JMRI provides routines to convert "portable" names to names your 
+JMRI provides a routine to convert "portable" names to names your 
 computer will recognize:
 
 <div class="para"><code>
-<pre>fullname = jmri.util.FileUtil.getExternalFilename("preference:filename.xml")</pre>
+<pre>fullname = decodeJmriFilename("preference:filename.xml")</pre>
 </code></div>
 
 The "<code>preference:</code>" means to look for that file starting in the preferences
@@ -316,10 +316,10 @@ default scripts directory (which you can set in preferences), use the slightly
 more complex form:
 
 <div class="para">
-<pre>execfile(jmri.util.FileUtil.getExternalFilename("scripts:filename.py"))</pre>
+<pre>execfile(decodeJmriFilename("scripts:filename.py"))</pre>
 </div>
 
-The reference to getExternalFilename translates the string using JMRI's standard
+The call to decodeJmriFilename(..) translates the string using JMRI's standard
 prefixes. The "scripts:" tells JMRI to search in the default scripts directory.
 You can also use other prefixes, see the 
 <a href="http://jmri.org/JavaDoc/doc/jmri/util/FileUtil.html#getExternalFilename(java.lang.String)">documentation</a>.
