@@ -70,10 +70,8 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         tmodel.setSortingStatus(RosterTableModel.ADDRESSCOL, TableSorter.ASCENDING);
 
 
-        // some columns, e.g. date, will need custom sorters.  See e.g.
-        // jmri.jmrit.beantable.BeanTableFrame for an example of
-        // setting that up
-        //tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
+        // Use a "Numeric, if not, Alphanumeric" comparator
+        tmodel.setColumnComparator(String.class, new jmri.util.PreferNumericComparator());
 
         // allow reordering of the columns
         dataTable.getTableHeader().setReorderingAllowed(true);
