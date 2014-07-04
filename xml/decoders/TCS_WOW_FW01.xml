@@ -2230,13 +2230,13 @@
   </decoder>
   <pane>
     <name>Indexed CVs</name>
-    <name xml:lang="it">Indexed CVs</name>
+    <name xml:lang="it">CV Indicicizzate</name>
     <column>
       <row>
         <column>
           <label>
             <text>JMRI 3.5.4 or later is required to use this definition</text>
-            <text xml:lang="it">JMRI 3.5.4 or later is required to use this definition</text>
+            <text xml:lang="it">Per l'utilizzo di questo decoder è richiesto JMRI 3.5.4 o seguenti</text>
           </label>
           <label>
             <text>   </text>
@@ -2247,7 +2247,7 @@
           </label>
           <label>
             <text>* Programming order is critical, must write full sheet only, do NOT write changes, do NOT write individual CVs. *</text>
-            <text xml:lang="it">* Programming order is critical, must write full sheet only, do NOT write changes, do NOT write individual CVs. *</text>
+            <text xml:lang="it">* L'ordine di programmazione è critico, quindi eseguite solo la scrittura del foglio completo, NON singole modifiche o CV indivuduali *</text>
           </label>
           <label>
             <text>*****************************************************************************************</text>
