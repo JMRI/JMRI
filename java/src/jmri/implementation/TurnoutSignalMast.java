@@ -20,11 +20,13 @@ public class TurnoutSignalMast extends AbstractSignalMast {
 
     public TurnoutSignalMast(String systemName, String userName) {
         super(systemName, userName);
+        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
         configureFromName(systemName);
     }
 
     public TurnoutSignalMast(String systemName) {
         super(systemName);
+        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
         configureFromName(systemName);
     }
         
@@ -208,7 +210,12 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         int getTurnoutState(){
             return state;
         }
+    }
     
+    boolean isTurnoutUsed(Turnout t){
+        if(getHeadsUsed().contains(t)) return true;
+        if(getUnLitTurnout()!=null && getUnLitTurnout() == t) return true;
+        return false;
     }
     
     public List<NamedBeanHandle<Turnout>> getHeadsUsed(){
@@ -218,6 +225,22 @@ public class TurnoutSignalMast extends AbstractSignalMast {
     public static int getLastRef(){ return lastRef; }
     
     static int lastRef = 0;
+    
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+        if("CanDelete".equals(evt.getPropertyName())){ //IN18N
+            if(isTurnoutUsed((Turnout)evt.getOldValue())){
+                java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
+                throw new java.beans.PropertyVetoException("Turnout is in use by SignalMast " + getDisplayName(), e);
+            }
+        } else if ("DoDelete".equals(evt.getPropertyName())){ //IN18N
+            log.info("Call to do delete");
+        }
+    }
+    
+    public void dispose() {
+        jmri.InstanceManager.turnoutManagerInstance().removeVetoableChangeListener(this);
+        super.dispose();
+    }
     
     static final protected Logger log = LoggerFactory.getLogger(TurnoutSignalMast.class.getName());
 }

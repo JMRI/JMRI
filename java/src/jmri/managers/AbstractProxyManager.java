@@ -203,6 +203,15 @@ abstract public class AbstractProxyManager implements Manager {
         return index;
     }
     
+    public void deleteBean(NamedBean s, String property) throws java.beans.PropertyVetoException {
+        String systemName = s.getSystemName();
+        try {
+            getMgr(match(systemName)).deleteBean(s, property);
+        } catch (java.beans.PropertyVetoException e) {
+            throw e;
+        }
+    }
+    
     /**
      * Remember a NamedBean Object created outside the manager.
      * <P>
@@ -230,6 +239,15 @@ abstract public class AbstractProxyManager implements Manager {
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         for (int i = 0; i<nMgrs(); i++)
             getMgr(i).removePropertyChangeListener(l);
+    }
+    
+    public synchronized void addVetoableChangeListener(java.beans.VetoableChangeListener l) {
+        for (int i = 0; i<nMgrs(); i++)
+            getMgr(i).addVetoableChangeListener(l);
+    }
+    public synchronized void removeVetoableChangeListener(java.beans.VetoableChangeListener l) {
+        for (int i = 0; i<nMgrs(); i++)
+            getMgr(i).removeVetoableChangeListener(l);
     }
 
     /**

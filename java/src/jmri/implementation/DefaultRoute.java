@@ -20,14 +20,18 @@ import java.util.ArrayList;
 import jmri.*;
 
 public class DefaultRoute extends AbstractNamedBean
-    implements Route, java.io.Serializable {
+    implements Route, java.io.Serializable, java.beans.VetoableChangeListener {
 
     public DefaultRoute(String systemName, String userName) {
         super(systemName.toUpperCase(), userName);
+        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
     }
 
     public DefaultRoute(String systemName) {
         super(systemName.toUpperCase());
+        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
     }
 
     /**
@@ -263,6 +267,10 @@ public class DefaultRoute extends AbstractNamedBean
      */
     public boolean isOutputTurnoutIncluded(String turnoutName) {
         Turnout t1 = InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName);
+        return isOutputTurnoutIncluded(t1);
+    }
+    
+    boolean isOutputTurnoutIncluded(Turnout t1){
         for (int i=0; i<_outputTurnoutList.size(); i++) {
             if ( _outputTurnoutList.get(i).getTurnout() == t1 ) {
                 // Found turnout
@@ -270,6 +278,19 @@ public class DefaultRoute extends AbstractNamedBean
             }
         }
         return false;
+    }
+    
+    void deleteOutputTurnout(Turnout t){
+        int index = -1;
+        for (int i=0; i<_outputTurnoutList.size(); i++) {
+            if( _outputTurnoutList.get(i).getTurnout() == t){
+                index = i;
+                break;
+            }
+        }
+        if(index!=-1)
+            _outputTurnoutList.remove(index);
+    
     }
     
     /**
@@ -358,6 +379,10 @@ public class DefaultRoute extends AbstractNamedBean
      */
     public boolean isOutputSensorIncluded(String sensorName) {
         Sensor s1 = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
+        return isOutputSensorIncluded(s1);
+    }
+    
+    boolean isOutputSensorIncluded(Sensor s1){
         for (int i=0; i<_outputSensorList.size(); i++) {
             if ( _outputSensorList.get(i).getSensor() == s1 ) {
                 // Found turnout
@@ -408,7 +433,18 @@ public class DefaultRoute extends AbstractNamedBean
         }
 	}
 	
-	
+    void removeOutputSensor(Sensor s){
+        int index = -1;
+        for (int i=0; i<_outputSensorList.size(); i++) {
+            if( _outputSensorList.get(i).getSensor() == s){
+                index = i;
+                break;
+            }
+        }
+        if(index!=-1)
+            _outputSensorList.remove(index);
+    }
+    
     /** 
      * Set name of script file to be run when Route is fired
      */
@@ -553,7 +589,28 @@ public class DefaultRoute extends AbstractNamedBean
             return 0;
         }
     }
-
+    
+    boolean isRouteSensorIncluded(Sensor s){
+        for (int i=0; i< _controlSensorList.size(); i++) {
+            if ( _controlSensorList.get(i).getSensor() == s ) {
+                // Found turnout
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    void removeRouteSensor(Sensor s){
+        int index = -1;
+        for (int i=0; i<_controlSensorList.size(); i++) {
+            if( _controlSensorList.get(i).getSensor() == s){
+                index = i;
+                break;
+            }
+        }
+        if(index!=-1)
+            _controlSensorList.remove(index);
+    }
     /**
      * Method to set the Name of a control Turnout for this Route
      */
@@ -865,6 +922,7 @@ public class DefaultRoute extends AbstractNamedBean
      * Registers to receive known state changes for output turnouts
      */
     public void activateRoute() {
+        activatedRoute = true;
         
         //register output turnouts to return Known State if a turnouts aligned sensor is defined
         if (!getTurnoutsAlignedSensor().equals("")) {
@@ -943,6 +1001,11 @@ public class DefaultRoute extends AbstractNamedBean
      * Deactivates Route based on a list of Sensors and two control Turnouts
      */
     public void deActivateRoute() {
+        //Check that the route isn't already deactived.
+        if(!activatedRoute)
+            return;
+            
+        activatedRoute = false;
         // remove control turnout if there's one 
         for (int k=0; k<_controlSensorList.size(); k++) {
             _controlSensorList.get(k).removeListener();
@@ -963,7 +1026,9 @@ public class DefaultRoute extends AbstractNamedBean
             }
         }
     }
-
+    
+    boolean activatedRoute = false;
+    
     /**
      * Method to set Route busy when commands are being issued to 
      *   Route turnouts
@@ -1004,7 +1069,77 @@ public class DefaultRoute extends AbstractNamedBean
         log.warn("Unexpected call to setState in DefaultRoute.");
         return;
     }
+    
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+        NamedBean nb = (NamedBean) evt.getOldValue();
+        if("CanDelete".equals(evt.getPropertyName())){
+            StringBuilder message = new StringBuilder();
+            message.append("Is in use by route " + getDisplayName() + "<br>");
+            boolean found = false;
+            if(nb instanceof Turnout){
+                if(isOutputTurnoutIncluded((Turnout)nb)){
+                    message.append("As an Output Turnout<br>");
+                    found = true;
+                }
+                if(getCtlTurnout()!=null && getCtlTurnout().equals(nb)){
+                    message.append("As a Controlling Turnout<br>");
+                    found = true;
+                }
+                if(getLockCtlTurnout()!=null && getLockCtlTurnout().equals(nb)){
+                    message.append("As a Locking Turnout<br>");
+                    found = true;
+                }
+                message.append("It will be removed from the route");
+            }
+            else if(nb instanceof Sensor){
+                if(isOutputSensorIncluded((Sensor)nb)){
+                    message.append("As an Output Sensor<br>");
+                    found = true;
+                }
+                if(getTurnoutsAlgdSensor()!=null && getTurnoutsAlgdSensor().equals(nb)){
+                    message.append("As an Alignment Sensor<br>");
+                    found = true;
+                }
+                if(isRouteSensorIncluded((Sensor)nb)){
+                    message.append("As a Route Sensor<br>");
+                    found = true;
+                }
+            }
+            if(found)
+                throw new java.beans.PropertyVetoException(message.toString(), evt);
+            
+        } else if ("DoDelete".equals(evt.getPropertyName())){
+            if(nb instanceof Turnout){
+                if(isOutputTurnoutIncluded((Turnout)nb)){
+                    deActivateRoute();
+                    deleteOutputTurnout((Turnout)evt.getOldValue());
+                } if(getCtlTurnout()!=null && getCtlTurnout().equals(nb)){
+                    deActivateRoute();
+                    setControlTurnout(null);
+                }
+                if(getLockCtlTurnout()!=null && getLockCtlTurnout().equals(nb)){
+                    deActivateRoute();
+                    setLockControlTurnout(null);
+                }
+            } 
+            else if(nb instanceof Sensor){
+                if(isOutputSensorIncluded((Sensor)nb)){
+                    deActivateRoute();
 
+                }
+                if(getTurnoutsAlgdSensor()!=null && getTurnoutsAlgdSensor().equals(nb)){
+                    deActivateRoute();
+                    setTurnoutsAlignedSensor(null);
+                }
+                if(isRouteSensorIncluded((Sensor)nb)){
+                    deActivateRoute();
+
+                }
+            
+            }
+            activateRoute();
+        }
+    }
 
     static final Logger log = LoggerFactory.getLogger(DefaultRoute.class.getName());
     
@@ -1092,10 +1227,11 @@ class SetRouteThread extends Thread {
         //set route not busy
 		r.setRouteNotBusy();
         //check turnout alignment
-        r.checkTurnoutAlignment();       
+        r.checkTurnoutAlignment();
 	}
 	
 	private DefaultRoute r;
+    
     static final Logger log = LoggerFactory.getLogger(SetRouteThread.class.getName());
 }
 

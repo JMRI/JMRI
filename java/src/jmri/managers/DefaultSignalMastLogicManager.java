@@ -274,6 +274,18 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     }
     protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
 
+    java.beans.VetoableChangeSupport vcs = new java.beans.VetoableChangeSupport(this);
+    public synchronized void addVetoableChangeListener(java.beans.VetoableChangeListener l) {
+        vcs.addVetoableChangeListener(l);
+    }
+    public synchronized void removeVetoableChangeListener(java.beans.VetoableChangeListener l) {
+        vcs.removeVetoableChangeListener(l);
+    }
+    
+    public void deleteBean(NamedBean bean, String property) throws java.beans.PropertyVetoException {
+    
+    }
+    
     public void register(NamedBean n) {
         throw new UnsupportedOperationException("Not supported yet.");
     }

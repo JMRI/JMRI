@@ -13,7 +13,7 @@ import jmri.*;
  * @version     $Revision$
  */
 public abstract class AbstractSignalHead extends AbstractNamedBean
-    implements SignalHead, java.io.Serializable {
+    implements SignalHead, java.io.Serializable, java.beans.VetoableChangeListener  {
 
     public AbstractSignalHead(String systemName, String userName) {
         super(systemName, userName);
@@ -129,7 +129,22 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
     public String[] getValidStateNames() {
         return validStateNames;
     }
-
+    
+    boolean isTurnoutUsed(Turnout t){
+        return false;
+    }
+    
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+        if("CanDelete".equals(evt.getPropertyName())){ //IN18N
+            if(isTurnoutUsed((Turnout)evt.getOldValue())){
+                java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
+                throw new java.beans.PropertyVetoException("Turnout is in use by SignalHead " + getDisplayName(), e);
+            }
+        } else if ("DoDelete".equals(evt.getPropertyName())){
+            log.info("Call to do delete");
+        }
+    }
+    
 }
 
 /* @(#)AbstractSignalHead.java */

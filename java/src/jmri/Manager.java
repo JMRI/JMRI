@@ -118,6 +118,32 @@ public interface Manager {
     public void removePropertyChangeListener(java.beans.PropertyChangeListener l);
     
     /**
+	 * Add a VetoableChangeListener to the listener list.
+     */
+    public void addVetoableChangeListener(java.beans.VetoableChangeListener l);
+	/**
+	 * Remove a VetoableChangeListener to the listener list.
+     */
+    public void removeVetoableChangeListener(java.beans.VetoableChangeListener l);
+    
+    /**
+     * Method for a UI to delete a bean, the UI should first request a "CanDelete", this will return a 
+     * list of locations (and descriptions) where the bean is in use via throwing a VetoException, then
+     * if that comes back clear, or the user agrees with the actions, then a "DoDelete" can be called
+     * which inform the listeners to delete the bean, then it will be deregistered and disposed of.
+     *
+     * if a property name of "DoNotDelete" is thrown back in the VetoException then the delete process
+     * should be aborted.
+     *
+     * @param bean The NamedBean to be deleted
+     * @param property The programmatic name of the request
+     *                 "CanDelete" will enquire with all listerners if the item can be deleted
+     *                 "DoDelete" tells the listerner to delete the item
+     * @throws PropertyVetoException - if the recipients wishes the delete to be aborted (see above).
+     */
+    public void deleteBean(NamedBean n, String property) throws java.beans.PropertyVetoException;
+    
+    /**
      * Remember a NamedBean Object created outside the manager.
      * <P>
      * The non-system-specific SignalHeadManagers

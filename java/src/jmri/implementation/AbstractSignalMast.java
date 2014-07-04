@@ -14,7 +14,7 @@ import jmri.*;
  * @version     $Revision$
  */
 public abstract class AbstractSignalMast extends AbstractNamedBean
-    implements SignalMast, java.io.Serializable {
+    implements SignalMast, java.io.Serializable, java.beans.VetoableChangeListener  {
 
     public AbstractSignalMast(String systemName, String userName) {
         super(systemName, userName);
@@ -197,6 +197,10 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     
     public boolean allowUnLit(){
         return allowUnLit;
+    }
+    
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+        log.info("vetoable Change Called");
     }
 
 }
