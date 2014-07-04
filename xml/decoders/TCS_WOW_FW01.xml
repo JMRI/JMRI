@@ -2229,23 +2229,29 @@
     </resets>
   </decoder>
   <pane>
+    <name>Indexed CVs</name>
+    <name xml:lang="it">Indexed CVs</name>
     <column>
       <row>
         <column>
           <label>
             <text>JMRI 3.5.4 or later is required to use this definition</text>
+            <text xml:lang="it">JMRI 3.5.4 or later is required to use this definition</text>
           </label>
           <label>
             <text>   </text>
           </label>
           <label>
             <text>*****************************************************************************************</text>
+            <text xml:lang="it">*****************************************************************************************</text>
           </label>
           <label>
             <text>* Programming order is critical, must write full sheet only, do NOT write changes, do NOT write individual CVs. *</text>
+            <text xml:lang="it">* Programming order is critical, must write full sheet only, do NOT write changes, do NOT write individual CVs. *</text>
           </label>
           <label>
             <text>*****************************************************************************************</text>
+            <text xml:lang="it">*****************************************************************************************</text>
           </label>
           <label>
             <text>   </text>
@@ -2258,7 +2264,6 @@
         </column>
       </row>
     </column>
-    <name>Indexed CVs</name>
   </pane>
   <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Momentum.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_TCS.xml"/>
