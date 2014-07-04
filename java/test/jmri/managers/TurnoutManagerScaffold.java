@@ -59,10 +59,16 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     public String makeSystemName(String s)  { return null; }
 
     public void dispose() {}
+    
+    public void deleteBean(NamedBean bean, String s) {}
 
     public void addPropertyChangeListener(java.beans.PropertyChangeListener l) {}
 
     public void removePropertyChangeListener(java.beans.PropertyChangeListener l) {}
+    
+    public synchronized void addVetoableChangeListener(java.beans.VetoableChangeListener l) { }
+    
+    public synchronized void removeVetoableChangeListener(java.beans.VetoableChangeListener l) { }
     
     public void register(NamedBean n) {}
 
