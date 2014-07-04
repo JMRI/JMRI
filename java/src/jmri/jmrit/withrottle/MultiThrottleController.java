@@ -140,7 +140,7 @@ public class MultiThrottleController extends ThrottleController{
     protected void sendCurrentSpeed(DccThrottle t){
         StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
         message.append("V");
-        message.append((int)(Math.round(t.getSpeedSetting()/speedMultiplier)));
+        message.append(Math.round(t.getSpeedSetting()/speedMultiplier));
         for (ControllerInterface listener : controllerListeners) {
             listener.sendPacketToDevice(message.toString());
         }

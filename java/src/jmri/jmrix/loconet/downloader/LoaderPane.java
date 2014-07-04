@@ -487,8 +487,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
         int currentStringWidth = inputFileName.getMinimumSize().width;
         int allowedWidth;
         inputFileName.setToolTipText(newFileName);
-        allowedWidth = ((int)(.8 * 
-                ((float)inputFileNamePanel.getSize().width))) - inputFileLabelWidth;
+        allowedWidth = inputFileNamePanel.getSize().width*4/5 - inputFileLabelWidth;
         if (currentStringWidth > allowedWidth ) {
             // Filename won't fit on the display.
             // need to shorten the string.
