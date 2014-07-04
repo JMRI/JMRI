@@ -10,6 +10,7 @@
     </label>
     <label>
       <text>                               Description                    Operation</text>
+      <text xml:lang="it">                               Descrizione                    Operazione</text>
     </label>
     <label>
       <text> </text>
@@ -21,54 +22,70 @@
         </label>
         <label>
           <text>                                      Dimmed  </text>
+          <text xml:lang="it">                                       Luci Smorzate</text>
         </label>
         <label>
           <text>                                      Headlights  </text>
+          <text xml:lang="it">                                       Luci frontali</text>
         </label>
         <label>
           <text> </text>
         </label>
         <display item="FL(f) controls output 7" format="checkbox" label="Forward Headlight F0(f)" tooltip="CV 33">
           <label>Forward Headlight F0(f)</label>
+          <label xml:lang="it">F0 (in avanti) Luci frontali</label>
         </display>
         <display item="FL(r) controls output 7" format="checkbox" label="Reverse Headlight F0(r)" tooltip="CV 34">
           <label>Reverse Headlight F0(r)</label>
+          <label xml:lang="it">F0 (in retro) Luci retro</label>
         </display>
         <display item="F1 controls output 7" format="checkbox" label="Function 1         " tooltip="CV 35">
           <label>Function 1         </label>
+          <label xml:lang="it">Funzione 1         </label>
         </display>
         <display item="F2 controls output 7" format="checkbox" label="Function 2         " tooltip="CV 36">
           <label>Function 2         </label>
+          <label xml:lang="it">Funzione 2         </label>
         </display>
         <display item="F3 controls output 7" format="checkbox" label="Function 3         " tooltip="CV 37">
           <label>Function 3         </label>
+          <label xml:lang="it">Funzione 3         </label>
         </display>
         <display item="F4 controls output 7" format="checkbox" label="Function 4         " tooltip="CV 38">
           <label>Function 4         </label>
+          <label xml:lang="it">Funzione 4         </label>
         </display>
         <display item="F5 controls output 7" format="checkbox" label="Function 5         " tooltip="CV 39">
           <label>Function 5         </label>
+          <label xml:lang="it">Funzione 5         </label>
         </display>
         <display item="F6 controls output 7" format="checkbox" label="Function 6         " tooltip="CV 40">
           <label>Function 6         </label>
+          <label xml:lang="it">Funzione 6         </label>
         </display>
         <display item="F7 controls output 7" format="checkbox" label="Function 7         " tooltip="CV 41">
           <label>Function 7         </label>
+          <label xml:lang="it">Funzione 7         </label>
         </display>
         <display item="F8 controls output 7" format="checkbox" label="Function 8         " tooltip="CV 42">
           <label>Function 8         </label>
+          <label xml:lang="it">Funzione 8         </label>
         </display>
         <display item="F9 controls output 7" format="checkbox" label="Function 9         " tooltip="CV 43">
           <label>Function 9         </label>
+          <label xml:lang="it">Funzione 9         </label>
         </display>
         <display item="F10 controls output 7" format="checkbox" label="Function 10         " tooltip="CV 44">
           <label>Function 10         </label>
+          <label xml:lang="it">Funzione 10        </label>
         </display>
         <display item="F11 controls output 7" format="checkbox" label="Function 11         " tooltip="CV 45">
           <label>Function 11         </label>
+          <label xml:lang="it">Funzione 11        </label>
         </display>
         <display item="F12 controls output 7" format="checkbox" label="Function 12         " tooltip="CV 46">
           <label>Function 12         </label>
+          <label xml:lang="it">Funzione 12        </label>
         </display>
       </column>
       <column>
@@ -77,9 +94,11 @@
         </label>
         <label>
           <text> Shunting </text>
+          <text xml:lang="it"> In Manovra</text>
         </label>
         <label>
           <text> Headlights </text>
+          <text xml:lang="it"> Luci frontali</text>
         </label>
         <label>
           <text> </text>
@@ -140,12 +159,14 @@
       <text>These advanced mapping options are to be programmed AFTER respectively F1 and F2</text>
       <text xml:lang="fr">Options de mapping avancées à programmer APRES respectivement F1 et F2</text>
       <text xml:lang="de">Immer NACH der Programmierung von F1 bzw. F2</text>
+      <text xml:lang="it">Programmare SEMPRE dopo F1 ed F2</text>
     </label>
     <label>
       <text> </text>
     </label>
     <label>
       <text>    Description                      Output or Operation</text>
+      <text xml:lang="it">    Descrizione                      Uscita o Operazione</text>
     </label>
     <label>
       <text> </text>
@@ -157,9 +178,11 @@
         </label>
         <label>
           <text>                        Front  </text>
+          <text xml:lang="it">                        Front.</text>
         </label>
         <label>
           <text>                        Light  </text>
+          <text xml:lang="it">                        Luce  </text>
         </label>
         <label>
           <text> </text>
@@ -177,9 +200,11 @@
         </label>
         <label>
           <text> Rear </text>
+          <text xml:lang="it"> Retro </text>
         </label>
         <label>
           <text> Light </text>
+          <text xml:lang="it"> Luce </text>
         </label>
         <label>
           <text> </text>
@@ -257,9 +282,11 @@
         </label>
         <label>
           <text> Dimmed </text>
+          <text xml:lang="it"> Luci Smorzate</text>
         </label>
         <label>
           <text> Headlights </text>
+          <text xml:lang="it"> Luci di Testa </text>
         </label>
         <label>
           <text> </text>
@@ -273,9 +300,11 @@
         </label>
         <label>
           <text> Shunting </text>
+          <text xml:lang="it"> Manovra </text>
         </label>
         <label>
           <text> Headlights </text>
+          <text xml:lang="it"> Luci di Testa </text>
         </label>
         <label>
           <text> </text>
