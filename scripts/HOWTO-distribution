@@ -8,7 +8,7 @@ If you're building locally:
     file to the root of the nsis installation:
         nsis.home=/opt/nsis/nsis-2.46/
 
-    If you're making branches in sourceforge, put your sourceforge userid & password in the
+To simplify making branches in sourceforge, put your sourceforge userid & password in the
     local.properties file (this does not get checked in, so your ID remains safe).
 
     sourceforge.userid=zoo
@@ -151,7 +151,7 @@ Third, we do any necessary release-specific updates.
 ( ) run "ant decoderpro"; check for no startup errors, right version, help index present and working OK.
 
 ( ) Commit back; if using CI builds, this will trigger a rebuild, so wait for it.
-    If using manual builds, see section below.
+    If using manual builds instead of CI, skip to "For local builds" section below.
     
 ( ) Change the release note to point to the CI files, commit, wait (or force) update.
 
@@ -159,12 +159,12 @@ Third, we do any necessary release-specific updates.
 
     http://builds.jmri.org/jenkins/job/Test%20Release%203.7.6/ws/jmri/dist/release/
 
-    or from your local build files.
+( ) WAIT FOR SOME REPLIES, then skip to "Actual release steps" below.
 
 ====================================================================================
 For local builds, these are the build instructions; CI builds will already be running)
 
-( ) edit  release.properties to say release.official=true (last line)
+( ) edit release.properties to say release.official=true (last line)
 
 ( ) setenv SVN_REVISION 23699
     ant -Dnsis.home="" clean packages
@@ -175,18 +175,23 @@ For local builds, these are the build instructions; CI builds will already be ru
     directories, and finally construct the Linux, Mac OS X and Windows
     distribution files in dist/releases/
 
+
 ( ) Put the Linux, Mac OS X and Windows files where developers can
-    take a quick look, send an email, and WAIT FOR SOME REPLIES
+    take a quick look, send an email to the developer list, 
+    and WAIT FOR SOME REPLIES
     
-    The main JMRI web site gets completely overwritten by Jenkins, so another approach:
+    
+    The main JMRI web site gets completely overwritten by Jenkins, so one approach:
         ssh user,jmri@shell.sf.net create
         scp dist/release/JMRI.* user,jmri@shell.sf.net:htdocs/release/
     puts them at
         http://user.users.sf.net/release
     (The user has to have put the htdocs link in their SF.net account)
 
+
 ====================================================================================
-Final release steps:
+Actual release steps:
+
 
 ( ) Upload the Linux, Mac OS X and Windows files to sourceforge
 
@@ -198,7 +203,7 @@ Final release steps:
 
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net
-    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.7.7/ws/jmri/dist/release/*zip*/release.zip"
+    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.9.1/ws/jmri/dist/release/*zip*/release.zip"
     rm release/JMRI*
     unzip release.zip
     cd release
@@ -217,7 +222,8 @@ Final release steps:
 	cd xml/XSLT
 	ant xslt upload
 
-( ) Format the release note page: change date, comment out "draft release", make links work
+( ) Format the release note page: change date, comment out "draft release", 
+    make sure links work and proper sections are commented/not commented out
 
 ( ) Wait until the downloads have propagated to the mirrors; check
     by trying to download each file
@@ -231,9 +237,6 @@ Final release steps:
 ( ) Update the web site front page and downloads page:
      index.html download/Sidebar download/index.shtml releaselist
 
-( ) If the decoder definitions have changed, make a .zip file and send to:
-    Graham Plowman: gppsoftware@gppsoftware.com
-
 ( ) Commit site
 
 ( ) For production releases, file copyright registration
@@ -245,7 +248,7 @@ Final release steps:
 ( ) Wait for update on JMRI web server
 
 ( ) Mail announcement to jmriusers@yahoogroups.com
-    Subject is "Test version 3.7.6 of JMRI/DecoderPro is available for download"
+    Subject is "Test version 3.9.2 of JMRI/DecoderPro is available for download"
     or "JMRI 3.8 is available for download"
 
 ( ) If a production version, update the SF automatic download icon by selecting default in SF.net FRS (3 times)
