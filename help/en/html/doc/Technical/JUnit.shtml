@@ -200,7 +200,7 @@ to the log.  There are two aspects to making this work:
 <LI>All the test classes should include common code in their setup()
 and teardown() code to ensure that log4j is properly initiated, and that
 the custom appender is told when a test is beginning and ending.
-<PRE><CODE>
+<CODE><PRE>
     // The minimal setup for log4J
     protected void setUp() throws Exception { 
         apps.tests.Log4JFixture.setUp(); 
@@ -210,13 +210,13 @@ the custom appender is told when a test is beginning and ending.
         super.tearDown();
         apps.tests.Log4JFixture.tearDown(); 
     }
-</code></PRE>
+</PRE></code>
 <LI>When a test is deliberately invoking a message, it should then
 use the check to see that the message was created.  
 For example, if the class under test is expected to do
-<BR><PRE><CODE>
+<BR><CODE><PRE>
     log.warn("Provoked message");
-</CODE></PRE>
+</PRE></CODE>
 the invoking test case should follow that with the line:
 <BR><PRE><CODE>
     JUnitAppender.assertWarnMessage("Provoked message");
@@ -233,20 +233,20 @@ you should
 clear and reset it to ensure you get reproducible results.
 <p>
 Your <code>setUp()</code> implementation should start with:
-<pre><code>
+<CODE><PRE>
     super.setUp();
     jmri.util.JUnitUtil.resetInstanceManager();
     jmri.util.JUnitUtil.initInternalTurnoutManager();
     jmri.util.JUnitUtil.initInternalLightManager();
     jmri.util.JUnitUtil.initInternalSensorManager();
-</code></pre>
+</PRE></code>
 (You can omit the initialization managers you don't need)
 <p>
 Your <code>tearDown()</code> should end with:
-<pre><code>
+<CODE><PRE>
     jmri.util.JUnitUtil.resetInstanceManager();
     super.tearDown();
-</code></pre>
+</PRE></code>
 
 <h4><a name="RunningListeners">Running Listeners</a></h4>
 
