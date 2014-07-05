@@ -349,7 +349,10 @@ decoder is set for short or long addressing.
   &lt;/variable&gt;
 </pre>
 
-Other available operators include "gt", "ge", "ne", "lt" and "le".
+Other available operators include "gt", "ge", "ne", "lt", "le" and "exists".
+The "exists" operator checks for whether a variable is defined or not; a "1" value
+means that it is, and a "0" means that it doesn't.
+
 <p>
 If multiple qualifier elements are present, all must be true for the 
 variable to be active and displayed.

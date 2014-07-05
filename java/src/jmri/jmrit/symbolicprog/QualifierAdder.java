@@ -42,7 +42,7 @@ public abstract class QualifierAdder {
         List<Element> le = e.getChildren("qualifier"); // we assign to this to allow us to suppress unchecked error
         processList(le, lq, model);
         
-        // search for enclosing <variables> or <group> element
+        // search for enclosing element so we can find all relevant qualifiers
         Parent p = e;
         while ( (p = p.getParent()) != null && p instanceof Element) {
             Element el = (Element)p;
@@ -73,7 +73,7 @@ public abstract class QualifierAdder {
             // find the variable
             VariableValue var = model.findVar(variableRef);
             
-            if (var != null) {
+            if (var != null || relation.equals("exists")) {
                 // found, attach the qualifier object through creating it
                 log.debug("Attached {} variable", variableRef);
                 
@@ -82,7 +82,7 @@ public abstract class QualifierAdder {
                 qual.update(); 
                 lq.add(qual);   
             } else {
-                log.error("didn't find {} variable", variableRef, new Exception());
+                log.debug("didn't find {} variable", variableRef);
             }
     }
     

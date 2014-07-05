@@ -17,7 +17,8 @@ public abstract class ArithmeticQualifier extends AbstractQualifier {
         GT("gt"), 
         LT("lt"),
         EQ("eq"),
-        NE("ne");
+        NE("ne"),
+        EXISTS("exists");
         
         Test(String relation) {
             this.relation = relation;
@@ -42,6 +43,11 @@ public abstract class ArithmeticQualifier extends AbstractQualifier {
     }
 
     public boolean currentDesiredState() {
+        if (test == Test.EXISTS) {
+            if (value == 0 && watchedVal == null) return true;
+            if (value != 0 && watchedVal != null) return true;
+            return false;
+        }
         return availableStateFromObject(watchedVal.getValueObject());
     }
 
@@ -51,6 +57,12 @@ public abstract class ArithmeticQualifier extends AbstractQualifier {
     }
     
     protected boolean availableStateFromValue(int now) {
+        if (test == Test.EXISTS) {
+            if (value == 0 && watchedVal == null) return true;
+            if (value != 0 && watchedVal != null) return true;
+            return false;
+        }
+        
         switch (test) {
             case GE: 
                 return now >= value;
@@ -69,7 +81,9 @@ public abstract class ArithmeticQualifier extends AbstractQualifier {
     }
     
     public void update() {
-        setWatchedAvailable(availableStateFromValue(watchedVal.getIntValue()));
+        int now = 0;
+        if (watchedVal != null) now = watchedVal.getIntValue();
+        setWatchedAvailable(availableStateFromValue(now));
     }
     
     int value;
