@@ -79,6 +79,53 @@ public class ArithmeticQualifierTest extends TestCase {
         Assert.assertEquals(false, aq.currentDesiredState());
     }
 
+    public void testVariableEq() {
+        HashMap<String, CvValue> v = createCvMap();
+        CvValue cv = new CvValue("81", p);
+        cv.setValue(3);
+        v.put("81",cv);
+        // create a variable pointed at CV 81, check name
+        VariableValue variable = makeVar("label check", "comment", "", false, false, false, false, "81", "XXVVVVVV", 0, 255, v, null, "item check");
+
+        // test "eq"
+        
+        ArithmeticQualifier aq = new TestArithmeticQualifier(variable, 10, "eq");
+        Assert.assertEquals(false, aq.currentDesiredState());
+        cv.setValue(10);
+        Assert.assertEquals(true, aq.currentDesiredState());
+        cv.setValue(20);
+        Assert.assertEquals(false, aq.currentDesiredState());
+
+    }
+
+    public void testVariableGe() {
+        HashMap<String, CvValue> v = createCvMap();
+        CvValue cv = new CvValue("81", p);
+        cv.setValue(3);
+        v.put("81",cv);
+        // create a variable pointed at CV 81, check name
+        VariableValue variable = makeVar("label check", "comment", "", false, false, false, false, "81", "XXVVVVVV", 0, 255, v, null, "item check");
+
+        // test "ge"
+        
+        ArithmeticQualifier aq = new TestArithmeticQualifier(variable, 10, "ge");
+        Assert.assertEquals(false, aq.currentDesiredState());
+        cv.setValue(10);
+        Assert.assertEquals(true, aq.currentDesiredState());
+        cv.setValue(20);
+        Assert.assertEquals(true, aq.currentDesiredState());
+        cv.setValue(5);
+        Assert.assertEquals(false, aq.currentDesiredState());
+
+    }
+
+    public void testVariableRefEqNotExist() {
+        // test arithmetic operation when variable not found
+        ArithmeticQualifier aq = new TestArithmeticQualifier(null, 10, "eq");
+        Assert.assertEquals(false, aq.currentDesiredState());
+        jmri.util.JUnitAppender.assertErrorMessage("Arithmetic EQ operation when watched value doesn't exist");
+    }
+
 
 
     protected HashMap<String, CvValue> createCvMap() {

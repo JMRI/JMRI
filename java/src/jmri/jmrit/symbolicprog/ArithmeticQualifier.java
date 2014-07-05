@@ -2,8 +2,18 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
- * Mechanism to qualify on a variable on greater than or equal a number
+ * Mechanism to qualify on the value of a number.
+ *<p>
+ * The usual arithmetic operations are possible: ge, le, gt, lt, eq, ne.
+ * The sense of this is comparing "current value" to "constant", 
+ * for example "current value gt 3".
+ *<p>
+ * You can also check whether the value "exists" (value of 1) or not (value of 0).
+ * Comparisons with the value of a non-existant variable always fail.
  *
  * @author			Bob Jacobsen   Copyright (C) 2010, 2014
  * @version			$Revision$
@@ -43,25 +53,13 @@ public abstract class ArithmeticQualifier extends AbstractQualifier {
     }
 
     public boolean currentDesiredState() {
-        if (test == Test.EXISTS) {
-            if (value == 0 && watchedVal == null) return true;
-            if (value != 0 && watchedVal != null) return true;
-            return false;
-        }
-        return availableStateFromObject(watchedVal.getValueObject());
-    }
+        if (returnFromExistsLogic()) return valueOfExistsLogic();
 
-    protected boolean availableStateFromObject(Object o) {
-        int now = ((Integer) o ).intValue();
-        return availableStateFromValue(now);
+        return availableStateFromValue(watchedVal.getIntValue());
     }
     
     protected boolean availableStateFromValue(int now) {
-        if (test == Test.EXISTS) {
-            if (value == 0 && watchedVal == null) return true;
-            if (value != 0 && watchedVal != null) return true;
-            return false;
-        }
+        if (returnFromExistsLogic()) return valueOfExistsLogic();
         
         switch (test) {
             case GE: 
@@ -81,10 +79,34 @@ public abstract class ArithmeticQualifier extends AbstractQualifier {
     }
     
     public void update() {
-        int now = 0;
-        if (watchedVal != null) now = watchedVal.getIntValue();
-        setWatchedAvailable(availableStateFromValue(now));
+        setWatchedAvailable(currentDesiredState());
     }
     
     int value;
+    
+    private boolean returnFromExistsLogic() {
+        if (test == Test.EXISTS) return true;
+        if (watchedVal == null) return true;
+        return false;
+    }
+    
+    boolean warnedDoesntExist = false;
+    private boolean valueOfExistsLogic() {
+        if (test == Test.EXISTS) {
+            if (value == 0 && watchedVal == null) return true;
+            if (value != 0 && watchedVal != null) return true;
+            return false;
+        }     
+        // here it's an arithmetic op on a variable  
+        if (watchedVal == null) {
+            if (!warnedDoesntExist) {
+                warnedDoesntExist = true;
+                log.error("Arithmetic "+test+" operation when watched value doesn't exist");
+            }
+            return false;
+        }
+        return false;  // should never be reached, because should only be invoked after returnFromExistsLogic() == true
+    }
+
+    static Logger log = LoggerFactory.getLogger(VariableTableModel.class.getName());
 }

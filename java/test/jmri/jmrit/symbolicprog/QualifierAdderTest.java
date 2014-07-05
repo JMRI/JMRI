@@ -107,7 +107,7 @@ public class QualifierAdderTest extends TestCase {
             
         // test equal value qualifier
         
-        QualifierAdder qa = processModifierElements(e, v2);
+        processModifierElements(e, v2);
         
         v1.setIntValue(3);
         Assert.assertTrue("should be true for 3", v2.getAvailable());
@@ -144,7 +144,7 @@ public class QualifierAdderTest extends TestCase {
 
         // test Exists
         
-        QualifierAdder qa = processModifierElements(e, v2);
+        processModifierElements(e, v2);
         
         Assert.assertTrue(v2.getAvailable());        
     }
@@ -169,7 +169,7 @@ public class QualifierAdderTest extends TestCase {
             
         // test Exists
         
-        QualifierAdder qa = processModifierElements(e, v2);
+        processModifierElements(e, v2);
         
         Assert.assertTrue(v2.getAvailable());        
     }
@@ -194,7 +194,7 @@ public class QualifierAdderTest extends TestCase {
             
         // test Exists
         
-        QualifierAdder qa = processModifierElements(e, v2);
+        processModifierElements(e, v2);
         
         Assert.assertFalse(v2.getAvailable());        
     }
@@ -219,7 +219,7 @@ public class QualifierAdderTest extends TestCase {
             
         // test Exists
         
-        QualifierAdder qa = processModifierElements(e, v2);
+        processModifierElements(e, v2);
         
         Assert.assertFalse(v2.getAvailable());        
     }
@@ -249,7 +249,7 @@ public class QualifierAdderTest extends TestCase {
             
         // test Exists
         
-        QualifierAdder qa = processModifierElements(e, v2);
+        processModifierElements(e, v2);
         
         Assert.assertFalse(v2.getAvailable());        
     }
@@ -288,7 +288,6 @@ public class QualifierAdderTest extends TestCase {
                                     cvtable,
                                     new IndexedCvTableModel(new JLabel(""), p)
                                );
-        String[] args = {"CV", "Name"};
 
         // create a JDOM tree with just some elements
         Element root = new Element("decoder-config");
