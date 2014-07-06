@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2014 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new pane file for SoundTraxx Tsunami -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <column>
+    <row>
+      <label>
+        <text>AUTOMATIC SOUND CONTROL</text>
+        <text xml:lang="it">CONTROLLO AUTOMATICO SUONO</text>
+      </label>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <column>
+        <display item="Automatic Grade Crossing Horn Enable" format="checkbox"/>
+        <display item="Automatic Horn Signal Enable" format="checkbox"/>
+        <display item="Automatic Bell Enable" format="checkbox"/>
+        <display item="Automatic Brake Squeal Enable" format="checkbox"/>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text>          </text>
+        </label>
+      </column>
+      <column>
+        <display item="Automatic Grade Crossing Horn Enable (Analog Mode)" format="checkbox"/>
+        <display item="Automatic Horn Signal Enable (Analog Mode)" format="checkbox"/>
+        <display item="Automatic Bell Enable (Analog Mode)" format="checkbox"/>
+        <display item="Automatic Brake Squeal Enable (Analog Mode)" format="checkbox"/>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <row>
+          <column>
+            <label>
+              <text> </text>
+            </label>
+            <label>
+              <text>These CVs allow the user to set the parameters</text>
+              <text xml:lang="it">Queste CV permettono di impostare i parametri</text>
+            </label>
+            <label>
+              <text>for the Automatic Sound Control features.</text>
+              <text xml:lang="it">per il controllo automatico dei suoni</text>
+            </label>
+            <label>
+              <text> </text>
+            </label>
+          </column>
+        </row>
+        <row>
+          <display item="Bell-On Set Point" layout="above" label="">
+            <label/>
+          </display>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bell-On Set Point" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="Bell-Off Set Point" layout="above" label="">
+            <label/>
+          </display>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bell-Off Set Point" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="Grade Crossing Airhorn Sensitivity" layout="above" label="">
+            <label/>
+          </display>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Grade Crossing Airhorn Sensitivity" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="Brake Squeal Sensitivity" layout="above" label="">
+            <label/>
+          </display>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Brake Squeal Sensitivity" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text>          </text>
+        </label>
+      </column>
+      <separator/>
+      <column>
+        <label>
+          <text>          </text>
+        </label>
+      </column>
+      <column>
+        <row>
+          <column>
+            <label>
+              <text> </text>
+            </label>
+            <label>
+              <text>Set the probability that the various sound effects will occur.</text>
+              <text xml:lang="it">Imposta la probabilità che i vari effetti vengano eseguiti</text>
+            </label>
+            <label>
+              <text> </text>
+            </label>
+          </column>
+        </row>
+        <row>
+          <column>
+            <row>
+              <display item="Flange Squeal Probability" layout="above" label="">
+                <label/>
+              </display>
+              <label>
+                <text> </text>
+              </label>
+              <display item="Flange Squeal Probability" layout="above" format="hslider"/>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+            <row>
+              <display item="Generator Probability" layout="above" label="">
+                <label/>
+              </display>
+              <label>
+                <text> </text>
+              </label>
+              <display item="Generator Probability" layout="above" format="hslider"/>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+            <label>
+              <text> </text>
+            </label>
+          </column>
+          <column>
+            <label>
+              <text>          </text>
+            </label>
+          </column>
+        </row>
+      </column>
+    </row>
+  </column>
+  <name>ASC</name>
+</pane>
