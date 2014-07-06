@@ -212,15 +212,15 @@ Actual release steps:
     (clean up and logout)
 
 ( ) Create and upload the JavaDocs
-    and XSLT'd decoder pages
-    (as of late 2013, CloudBees was updating there from SVN weekly: 
+    (as of late 2013, CloudBees was updating these from SVN weekly: 
         https://jmri.ci.cloudbees.com/job/Development/job/Web%20Site/job/Generate%20Website%20Components/
     so please skip this step if that's working)
 
 	ant javadoc-uml uploadjavadoc
 	
-	cd xml/XSLT
-	ant xslt upload
+( ) Create and upload the XSLT'd decoder pages
+
+	(cd xml/XSLT; ant xslt upload)
 
 ( ) Format the release note page: change date, comment out "draft release", 
     make sure links work and proper sections are commented/not commented out
