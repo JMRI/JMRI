@@ -75,15 +75,15 @@ public abstract class QualifierAdder {
             
             if (var != null || relation.equals("exists")) {
                 // found, attach the qualifier object through creating it
-                log.debug("Attached {} variable", variableRef);
-                
-                Qualifier qual = createQualifier(var, relation, value);
-                
-                qual.update(); 
-                lq.add(qual);   
+                log.debug("Attached {} variable for {} {} qualifier", variableRef, relation, value);
             } else {
-                log.debug("didn't find {} variable", variableRef);
+                log.debug("Didn't find {} variable for {} {} qualifier", variableRef, relation, value);
             }
+
+            // create qualifier
+            Qualifier qual = createQualifier(var, relation, value);
+            qual.update(); 
+            lq.add(qual);          
     }
     
     static Logger log = LoggerFactory.getLogger(QualifierAdder.class.getName());
