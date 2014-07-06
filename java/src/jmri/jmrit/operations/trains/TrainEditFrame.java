@@ -51,7 +51,7 @@ import jmri.jmrit.operations.setup.Setup;
 /**
  * Frame for user edit of a train
  * 
- * @author Dan Boudreau Copyright (C) 2008, 2011, 2012, 2013
+ * @author Dan Boudreau Copyright (C) 2008, 2011, 2012, 2013, 2014
  * @version $Revision$
  */
 
@@ -60,7 +60,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	static final String NEW_LINE = "\n"; // NOI18N
 
 	TrainManager trainManager;
-	TrainManagerXml trainManagerXml;
 	RouteManager routeManager;
 
 	Train _train = null;
@@ -76,8 +75,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	JScrollPane locationsPane;
 
 	// labels
-	JLabel textName = new JLabel(Bundle.getMessage("Name"));
-	JLabel textDescription = new JLabel(Bundle.getMessage("Description"));
 	JLabel textRouteStatus = new JLabel();
 	JLabel loadOption = new JLabel();
 	JLabel roadOption = new JLabel();
@@ -85,13 +82,11 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	JLabel textRoad2 = new JLabel(Bundle.getMessage("Road"));
 	JLabel textRoad3 = new JLabel(Bundle.getMessage("Road"));
 	JLabel textEngine = new JLabel(Bundle.getMessage("Engines"));
-	JLabel textComment = new JLabel(Bundle.getMessage("Comment"));
 
 	// major buttons
 	JButton editButton = new JButton(Bundle.getMessage("Edit"));
 	JButton clearButton = new JButton(Bundle.getMessage("Clear"));
 	JButton setButton = new JButton(Bundle.getMessage("Select"));
-	JButton JLabel = new JButton();
 	JButton resetButton = new JButton(Bundle.getMessage("ResetTrain"));
 	JButton saveTrainButton = new JButton(Bundle.getMessage("SaveTrain"));
 	JButton deleteTrainButton = new JButton(Bundle.getMessage("DeleteTrain"));
@@ -104,7 +99,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	ButtonGroup group = new ButtonGroup();
 
 	// text field
-	JTextField trainNameTextField = new JTextField(Control.max_len_string_train_name - 5);	// make slightly smaller
+	JTextField trainNameTextField = new JTextField(Control.max_len_string_train_name - 5); // make slightly smaller
 	JTextField trainDescriptionTextField = new JTextField(30);
 
 	// text area
@@ -152,7 +147,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 		// load managers
 		trainManager = TrainManager.instance();
-		trainManagerXml = TrainManagerXml.instance();
 		routeManager = RouteManager.instance();
 
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -161,7 +155,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		JPanel p = new JPanel();
 		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
 		JScrollPane pPane = new JScrollPane(p);
-//		pPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
 		pPane.setMinimumSize(new Dimension(300, 5 * trainNameTextField.getPreferredSize().height));
 		pPane.setBorder(BorderFactory.createTitledBorder(""));
 
@@ -178,6 +171,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		JPanel pDesc = new JPanel();
 		pDesc.setLayout(new GridBagLayout());
 		pDesc.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Description")));
+		trainDescriptionTextField.setToolTipText(Bundle.getMessage("TipTrainDescription"));
 		addItem(pDesc, trainDescriptionTextField, 0, 0);
 
 		p1.add(pName);
@@ -223,7 +217,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 		p2.add(pdt);
 		p2.add(pr);
-		
+
 		p.add(p1);
 		p.add(p2);
 
@@ -235,7 +229,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 		// row 8
 		typeEnginePanelCheckBoxes.setLayout(new GridBagLayout());
-		
+
 		// status panel for roads and loads
 		roadAndLoadStatusPanel.setLayout(new BoxLayout(roadAndLoadStatusPanel, BoxLayout.X_AXIS));
 		JPanel pRoadOption = new JPanel();
@@ -244,7 +238,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		JPanel pLoadOption = new JPanel();
 		pLoadOption.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("LoadOption")));
 		pLoadOption.add(loadOption);
-		
+
 		roadAndLoadStatusPanel.add(pRoadOption);
 		roadAndLoadStatusPanel.add(pLoadOption);
 		roadAndLoadStatusPanel.setVisible(false); // don't show unless there's a restriction
@@ -332,7 +326,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 		if (_train != null) {
 			trainNameTextField.setText(_train.getName());
-			trainDescriptionTextField.setText(_train.getDescription());
+			trainDescriptionTextField.setText(_train.getRawDescription());
 			routeBox.setSelectedItem(_train.getRoute());
 			numEnginesBox.setSelectedItem(_train.getNumberEngines());
 			modelEngineBox.setSelectedItem(_train.getEngineModel());
@@ -373,10 +367,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		toolMenu.add(new PrintTrainAction(Bundle.getMessage("MenuItemPreview"), new Frame(), true, this));
 		toolMenu.add(new PrintTrainManifestAction(Bundle.getMessage("MenuItemPrintManifest"), false, this));
 		toolMenu.add(new PrintTrainManifestAction(Bundle.getMessage("MenuItemPreviewManifest"), true, this));
-		toolMenu.add(new PrintTrainBuildReportAction(Bundle.getMessage("MenuItemPrintBuildReport"), false,
-				this));
-		toolMenu.add(new PrintTrainBuildReportAction(Bundle.getMessage("MenuItemPreviewBuildReport"), true,
-				this));
+		toolMenu.add(new PrintTrainBuildReportAction(Bundle.getMessage("MenuItemPrintBuildReport"), false, this));
+		toolMenu.add(new PrintTrainBuildReportAction(Bundle.getMessage("MenuItemPreviewBuildReport"), true, this));
 
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
@@ -432,13 +424,12 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 				return;
 			if (!_train.reset()) {
 				JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrainIsInRoute"),
-						new Object[] { train.getTrainTerminatesName() }), Bundle
-						.getMessage("CanNotDeleteTrain"), JOptionPane.ERROR_MESSAGE);
+						new Object[] { train.getTrainTerminatesName() }), Bundle.getMessage("CanNotDeleteTrain"),
+						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("deleteMsg"),
-					new Object[] { train.getName() }), Bundle.getMessage("deleteTrain"),
-					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+					new Object[] { train.getName() }), Bundle.getMessage("deleteTrain"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 				return;
 			}
 			routeBox.setSelectedItem("");
@@ -474,9 +465,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		if (ae.getSource() == resetButton) {
 			if (_train != null)
 				if (!_train.reset())
-					JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
-							.getMessage("TrainIsInRoute"), new Object[] { _train.getTrainTerminatesName() }),
-							Bundle.getMessage("CanNotResetTrain"), JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrainIsInRoute"),
+							new Object[] { _train.getTrainTerminatesName() }), Bundle.getMessage("CanNotResetTrain"),
+							JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -510,8 +501,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			return;
 		if (!checkModel() || !checkEngineRoad())
 			return;
-		if (numEnginesBox.getSelectedItem().equals(Train.AUTO)
-				&& !_train.getNumberEngines().equals(Train.AUTO)) {
+		if (numEnginesBox.getSelectedItem().equals(Train.AUTO) && !_train.getNumberEngines().equals(Train.AUTO)) {
 			JOptionPane.showMessageDialog(this, Bundle.getMessage("AutoEngines"), Bundle
 					.getMessage("FeatureUnderDevelopment"), JOptionPane.INFORMATION_MESSAGE);
 		}
@@ -545,8 +535,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		String trainName = trainNameTextField.getText().trim();
 		if (trainName.equals("")) {
 			log.debug("Must enter a train name");
-			JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"), MessageFormat.format(
-					Bundle.getMessage("CanNot"), new Object[] { s }), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"), MessageFormat.format(Bundle
+					.getMessage("CanNot"), new Object[] { s }), JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		if (trainName.length() > Control.max_len_string_train_name) {
@@ -588,7 +578,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		return true;
 	}
-	
+
 	private boolean checkEngineRoad() {
 		String road = (String) roadEngineBox.getSelectedItem();
 		String model = (String) modelEngineBox.getSelectedItem();
@@ -600,16 +590,16 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			if (rs.getRoadName().equals(road))
 				return true;
 		}
-		JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("NoLocoRoad"),
-				new Object[] { road }), MessageFormat.format(Bundle.getMessage("TrainWillNotBuild"),
-				new Object[] { _train.getName() }), JOptionPane.WARNING_MESSAGE);
+		JOptionPane.showMessageDialog(this, MessageFormat
+				.format(Bundle.getMessage("NoLocoRoad"), new Object[] { road }), MessageFormat.format(Bundle
+				.getMessage("TrainWillNotBuild"), new Object[] { _train.getName() }), JOptionPane.WARNING_MESSAGE);
 		return false; // couldn't find a loco with the selected road
 	}
 
 	private boolean checkRoute() {
 		if (_train.getRoute() == null) {
-			JOptionPane.showMessageDialog(this, Bundle.getMessage("TrainNeedsRoute"), Bundle
-					.getMessage("TrainNoRoute"), JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("TrainNeedsRoute"),
+					Bundle.getMessage("TrainNoRoute"), JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
 		return true;
@@ -905,8 +895,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		log.debug("Edit/add route");
 		// warn user if train is built that they shouldn't edit the train's route
 		if (_train != null && _train.isBuilt()) {
-			JOptionPane.showMessageDialog(this, Bundle.getMessage("DoNotModifyRoute"), Bundle
-					.getMessage("BuiltTrain"), JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("DoNotModifyRoute"), Bundle.getMessage("BuiltTrain"),
+					JOptionPane.WARNING_MESSAGE);
 		}
 		if (ref != null)
 			ref.dispose();
@@ -933,7 +923,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			minuteBox.setEnabled(true);
 		}
 	}
-	
+
 	private void updateRoadAndLoadStatus() {
 		if (_train != null) {
 			// road options

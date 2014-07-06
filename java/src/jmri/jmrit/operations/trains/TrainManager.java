@@ -687,7 +687,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		// comment
 		newTrain.setComment(train.getComment());
 		// description
-		newTrain.setDescription(train.getDescription());
+		newTrain.setDescription(train.getRawDescription());
 		return newTrain;
 	}
 	

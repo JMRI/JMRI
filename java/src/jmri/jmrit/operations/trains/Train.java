@@ -564,6 +564,13 @@ public class Train implements java.beans.PropertyChangeListener {
 			return null;
 		return _route.getDepartsRouteLocation();
 	}
+	
+	public String getTrainDepartsDirection() {
+		String direction = "";
+		if (getTrainDepartsRouteLocation() != null)
+			direction = getTrainDepartsRouteLocation().getTrainDirectionString();
+		return direction;
+	}
 
 	/**
 	 * Get train's final location's name
@@ -1927,8 +1934,16 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
 	}
 
-	public String getDescription() {
+	public String getRawDescription() {
 		return _description;
+	}
+	
+	/**
+	 * Returns a formated string providing the train's description.  {0} = lead engine number, {1} = train's departure direction.
+	 */
+	public String getDescription() {
+		String description = MessageFormat.format(_description, new Object[] { getLeadEngineNumber(), getTrainDepartsDirection() });
+		return description;
 	}
 
 	public void setNumberEngines(String number) {
@@ -3005,6 +3020,13 @@ public class Train implements java.beans.PropertyChangeListener {
 			name += " " + getLeadEngine().getNumber();
 		return name;
 	}
+	
+	public String getLeadEngineNumber() {
+		String number = "";
+		if (getLeadEngine() != null)
+			number = getLeadEngine().getNumber();
+		return number;	
+	}
 
 	/**
 	 * Gets the lead engine, will create it if the program has been restarted
@@ -3530,7 +3552,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		Element e = new Element(Xml.TRAIN);
 		e.setAttribute(Xml.ID, getId());
 		e.setAttribute(Xml.NAME, getName());
-		e.setAttribute(Xml.DESCRIPTION, getDescription());
+		e.setAttribute(Xml.DESCRIPTION, getRawDescription());
 		e.setAttribute(Xml.DEPART_HOUR, getDepartureTimeHour());
 		e.setAttribute(Xml.DEPART_MINUTE, getDepartureTimeMinute());
 		Element eRoute = new Element(Xml.ROUTE);
