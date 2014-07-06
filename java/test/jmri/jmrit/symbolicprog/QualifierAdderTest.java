@@ -251,7 +251,8 @@ public class QualifierAdderTest extends TestCase {
         
         processModifierElements(e, v2);
         
-        Assert.assertFalse(v2.getAvailable());        
+        Assert.assertFalse(v2.getAvailable());  
+        jmri.util.JUnitAppender.assertErrorMessage("Arithmetic EQ operation when watched value doesn't exist");      
     }
 
 
