@@ -130,6 +130,7 @@
      </UL></LI>
     <LI><A HREF="#Trains">Trains</A>
      <UL>
+      <LI><A HREF="#TrainEdit">Add or Edit Train</A></LI>
       <LI><A HREF="#TrainReset">Reset Train</A></LI>
       <LI><A HREF="#TrainBuildOptions">Train Build Options</A></LI>
       <LI><A HREF="#TrainLoadOptions">Train Load Options</A></LI>
@@ -142,7 +143,7 @@
       <LI><A HREF="#SetupExcelProgram">Setup Excel Program (Manifest Creator)</A></LI>
       <LI><A HREF="#SwitcherService">Switcher Service</A></LI>
       <LI><A HREF="#BuildingTrains">Building Trains</A></LI>
-      <LI><A HREF="#TrainStatus">Train Status</A></LI>  
+      <LI><A HREF="#TrainStatus">Train Status</A></LI>
       <LI><A HREF="#TroubleShootingBuildingTrains">Problems Building Trains How to Fix</A></LI>
       <LI><A HREF="#ReadingBuildReport">Reading the Build Report</A></LI>
       <LI><A HREF="#PrintingManifests">Printing Manifests</A></LI>
@@ -451,7 +452,8 @@
 
    When selected, the program will create a set of operation backup files each time the program is
    started. See <A HREF="#BackupRestore">Backup and Restore</A> for more information.
-
+   
+   <A NAME="PanelOptionsTrainIcons"></A>
    <H3>Panel Options (Train Icons)</H3>
 
    If you want the operations program to place an icon representing the train on a panel, enter the
@@ -2677,18 +2679,30 @@
    <P>One of the most important buttons is the "Save Builds" button. When pressed, the program
     saves all the files that have been modified by building and moving your trains. Pressing this
     button allows you to shut down the program and resume exactly where you left the program.</P>
+    
+   <A NAME="TrainEdit"></A>
+   <H3>Add or Edit Train</H3>
 
-   <P>Press the "Add" button to create a train.</P>
+   <P>Press the "Add" button at the bottom left of the "Trains" window to create a new train. Use the "Edit" button
+   in the "Trains" window table to modify an existing train.</P>
 
    <P>
     <img src="images/EditTrain.png">
    </P>
-   <P>Enter the train's name and optional description, and then press the "Add Train" button.
-    Both will show up on the train's manifest. The train's name will also show up on the train icon,
-    so short names work best. Then select the route that this train will travel. There's an Edit
-    button to the right of the route that allows you to directly edit the selected route. Once a
-    route is selected a list of locations that the train will visit should appear. You can deselect
-    any location that you don't want the train to work.</P>
+   <P>
+    Enter the train's name and optional description, and then press the "Add Train" button. Both
+    will show up on the train's manifest. The train's name will also appear on the
+    <A HREF="#PanelOptionsTrainIcons">train icon</A>, so short names work best. If you want the
+    train's lead locomotive number and depart direction as part of the train's description when
+    printing, enter {0} and {1} respectively for the number and direction. This allows you to
+    create a train description like "Extra 1234 East" for your manifests and switch lists.
+   </p>
+
+   <P>Next select the route that this train will travel. There's an "Edit" button to the right
+    of the route that allows you to directly edit the selected route. If you haven't created a route
+    for your train, select a blank route and then press the "Edit" button to create a new route.
+    Once a route is selected a list of locations that the train will visit should appear. You can
+    deselect any location that you don't want the train to work.</P>
 
    <H3>Train Departure Time</H3>
 
@@ -2855,7 +2869,7 @@
     helps keep the train length in check as the HPT calculation is done at the end of the build
     process, and ignores the route's length restrictions. So it is best if the HPT adjustment adds
     only one or two locos to your train, thus keeping the train length close to the maximums you
-    specified in the route. You could of course reduce the train lengths in your route if you see
+    specified in the route. You could of course reduce the train lengths in your route if you find
     that the program is consistently adding one or two locos to the train, and also exceeding the
     maximum train lengths.</P>
 
