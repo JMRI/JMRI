@@ -219,7 +219,7 @@ For example, if the class under test is expected to do
 </PRE></CODE>
 the invoking test case should follow that with the line:
 <BR><PRE><CODE>
-    JUnitAppender.assertWarnMessage("Provoked message");
+    jmri.util.JUnitAppender.assertWarnMessage("Provoked message");
 </CODE></PRE>
 <P>
 It will be a JUnit error if a log.warn(...) or log.error(...) message is
@@ -233,16 +233,18 @@ you should
 clear and reset it to ensure you get reproducible results.
 <p>
 Your <code>setUp()</code> implementation should start with:
-<CODE><PRE>
+<p><CODE><PRE>
     super.setUp();
     jmri.util.JUnitUtil.resetInstanceManager();
     jmri.util.JUnitUtil.initInternalTurnoutManager();
     jmri.util.JUnitUtil.initInternalLightManager();
     jmri.util.JUnitUtil.initInternalSensorManager();
 </PRE></code>
+<p>
 (You can omit the initialization managers you don't need)
 <p>
 Your <code>tearDown()</code> should end with:
+<p>
 <CODE><PRE>
     jmri.util.JUnitUtil.resetInstanceManager();
     super.tearDown();
@@ -291,12 +293,12 @@ Because we run tests in "headless" mode during the
 <a href="ContinuousIntegration.shtml">continuous integration builds</a>,
 it's important that Swing (and AWT) access in tests
 be enclosed within a mode check:
-<pre><code>
+<p><CODE><PRE>
         if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
             suite.addTest(myTest.suite());
         }
-</code></pre>
-This will run the myTest suite of tests only when a display is available.
+</PRE></code>
+<p>This will run the myTest suite of tests only when a display is available.
 
 <p>
 For many tests, you'll both make testing reliable and improve the structure 
@@ -344,26 +346,26 @@ Here are some ideas which can help avoid these types of problems.
         created by a particular test.  Be sure that the directory exists before 
         creating files in the directory, and create the directory if necessary.
         An example is shown here:
-        <pre><code>
+<CODE><PRE>
     String tempDirectoryName = "temp";
     if ( <strong>! (new File(tempDirectoryName).isDirectory())</strong>) {
         // create the temp directory if it does not exist
         <strong>FileUtil.createDirectory(tempDirectoryName);</strong>
     }
-</code></pre>
+</PRE></code>
     </li>
     <li>Allow the JRE to define the directory hierarchy separator character 
         automatically:
-<pre><code>
+<CODE><PRE>
     String filename = tempDirectoryName + <strong>File.separator</strong> + "testcaseFile.txt";
-</code></pre>
+</PRE></code>
     </li>
     <li>Code the testcase in a way that will not break if the file already exists
         before the testcase is run.  One way to do this is to code the testcase to
         check for existence of the testcase temporary file(s), and delete if 
         necessary, before writing to the file(s).  The following example will 
         delete the previous file if it exists:
-<pre><code>
+<CODE><PRE>
     String filename = tempDirectoryName + File.separator + "testcaseFile.txt";
     File file = new File(filename);
     <strong>if (file.exists())</strong> {
@@ -377,26 +379,28 @@ Here are some ideas which can help avoid these types of problems.
             // perform some appropriate action in this case
         }</strong>
     }
-</code></pre></li>
+</PRE></code>
+    </li>
     <li>Make sure to "close" the temporary file after it has been written.</li>
     <li>Delete the temporary file(s) as part of the test once it is no longer 
         needed by the testcase(s).  To allow debugging of testcases, it may be 
         convenient to display the path and filename when logging debug messages 
         (without deleting the temporary file), and to perform the delete only 
         when debug logging is not enabled, such as:
-<pre><code>
+<CODE><PRE>
     <strong>if (log.isDebugEnabled()) {</strong>
         log.debug("Path to written hex file is: "+filename);
     <strong>}
     else {
         file.delete();
     }</strong>
-</code></pre></li>
+</PRE></code>
+    </li>
     <li>It is unclear whether native Java library routines which create temporary
         files in an operating-system-specific way such as: 
-<pre> <code>
+<CODE><PRE>
     java.io.File.createTempFile("testcasefile","txt")
-</code></pre>
+</PRE></code>
         will work reliably within the <a href="ContinuousIntegration.shtml">
             continuous integration build</a> environment.</li>
 </ul>
@@ -420,12 +424,12 @@ the test/junit/runner/excluded.properties file would fix it.
 <p>
 As a test you can try setting the "-noloading" option in the
 <code>main</code> of whichever test class you're having trouble with:
-<pre><code>
+<CODE><PRE>
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", LogixTableActionTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
-</code></pre>
+</PRE></code>
 
 <p>
 The right long-term fix is to have all classes with loader
