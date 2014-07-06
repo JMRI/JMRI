@@ -123,6 +123,7 @@
      </UL></LI>
     <LI><A HREF="#Routes">Routes</A>
      <UL>
+      <LI><A HREF="#AddRoute">Add Route</A></LI>
       <LI><A HREF="#EditRoute">Edit Route</A></LI>
       <LI><A HREF="#PassengerTrainRoute">Passenger Train Route</A></LI>
       <LI><A HREF="#RouteFeatures">Route Features</A></LI>
@@ -2474,7 +2475,10 @@
     <img src="images/Routes.png">
    </P>
 
-   <P>Then press the "Add" button located at the bottom of the window.</P>
+   <A NAME="AddRoute"></A>
+   <H3>Add Route</H3>
+
+   <P>Press the "Add" button located at the bottom of the "Routes" window to create a new route for your trains.</P>
 
    <P>
     <img src="images/EditRoute.png">
@@ -2491,38 +2495,48 @@
     location, and the track grade between this location and the next location in the train's route.
     The X and Y values are where to place the train icon on a panel. The
     <A HREF="#EditRoute">Edit Route</A> below provides additional details about a location in a route.</P>
-    
-    <P> Now select the correct departure direction
-    for your train when using this route, along with the number of moves you wish, and the train's
-    maximum length. Double click on the cell in the table to change the car moves or train length. The
-    program remembers the last train direction, car moves, and maximum train length when adding new
-    locations to your train's route. Now build your route by selecting the next location the train
-    will visit, select all locations that the train will pass through even if the train will not
-    work the location. This way your train's engineer will know when reading his manifest the towns
-    he will be traveling through. Each time you add a location to the route, the table shows the
-    order in which the train will visit. You can move a location up or down in the sequence if
-    needed.
+
+   <P>
+    Now select the correct departure direction for your train when using this route, along with the
+    number of moves you wish, and the train's maximum length. In the simple case, a move at the
+    departure location would equal a car in the train. So if you want 10 cars in your train when it
+    departs, enter 10 moves. Later if you create
+    <A HREF="#Kernel">kernels</A> or allow local moves at the departure location, the number of
+    moves could mean something slightly different. A local move is the act of moving a car from one
+    track to another at the same location, the car isn't added to the train, but moving the car is
+    part of the train's work at that location. Double click on the cell in the table to change the
+    car moves or train length. The program remembers the last train direction, car moves, and
+    maximum train length when adding new locations to your train's route. Now build your route by
+    selecting the next location the train will visit and again adjust the number of cars your train
+    will work by changing the move count for that location. Continue building the train's route by
+    entering all locations that the train will pass through even if the train will not work the
+    location. This way your train's engineer will know when reading his manifest the towns he will
+    be traveling through. Each time you add a location to the route, the table shows the order in
+    which the train will visit. You can move a location up or down in the sequence if needed.
    </P>
 
    <A NAME="EditRoute"></A>
    <H3>Edit Route</H3>
 
-   You can modify any location in a train's route by selecting an item in one of the menu boxes or by
-   doubling clicking one of the cells and entering a new value. Press "Save Route" to complete your
-   change.
+   You can modify any location in a train's route by selecting an item in one of the menu boxes or
+   by doubling clicking one of the cells and entering a new value. Press "Save Route" to complete
+   your change.
 
    <P>
     Each location has the train's departure direction, number of desired car moves, and whether car
     pick ups and or car set outs are allowed at that location. A car move can be a car pick up or
     car set out at that location. For example, 5 moves can be 5 pick ups, or 5 set outs, or any
     combination of 5 pick ups or set outs. Picking up or dropping off a group of cars or a <A
-     HREF="#Kernel">kernel</A> represents one move. To modify the number of moves for a location,
-    double click directly on the cell in the route table. When entering the desired number of car
-    moves, enter reasonable numbers that reflect what you want the program to do for you. For
-    example, if you want your train to depart with 15 cars, then 15 is the correct value for your
-    moves at the start of the route. At the end of the route, if you want 12 cars in the train when
-    it terminates, then 12 is the right value for the move count for the last location in your
-    train's route.  Entering "0" moves means no car pick ups or set outs at the location.
+     HREF="#Kernel">kernel</A> represents one move. Moving a car or kernel from one track to another
+    at the same location also represents one move. The program doesn't normally create local car
+    moves, you can use <A HREF="#Schedules">schedules</A> to change the program's behavior. To
+    modify the number of moves for a location, double click directly on the cell in the route table.
+    When entering the desired number of car moves, enter reasonable numbers that reflect what you
+    want the program to do for you. For example, if you want your train to depart with approximately
+    15 cars, then 15 is the correct value for your moves at the start of the route. At the end of
+    the route, if you want close to 12 cars in the train when it terminates, then 12 is the right
+    value for the move count for the last location in your train's route. Entering "0" moves means
+    no car pick ups or set outs at the location.
    </P>
 
    <P>If you want to delay the departure of the train from a location or increase the train's
@@ -2693,7 +2707,7 @@
     Enter the train's name and optional description, and then press the "Add Train" button. Both
     will show up on the train's manifest. The train's name will also appear on the
     <A HREF="#PanelOptionsTrainIcons">train icon</A>, so short names work best. If you want the
-    train's lead locomotive number and depart direction as part of the train's description when
+    train's lead locomotive number and departure direction as part of the train's description when
     printing, enter {0} and {1} respectively for the number and direction. This allows you to
     create a train description like "Extra 1234 East" for your manifests and switch lists.
    </p>
