@@ -201,6 +201,8 @@ public class MrcPackets {
 
 
     static private DecimalFormat twoDigits = new DecimalFormat("00");
+    static private String txtOn = MrcPacketBundle.getMessage("MrcPacketsFunctionOn");
+    static private String txtOff = MrcPacketBundle.getMessage("MrcPacketsFunctionOff");
         //Need to test toString() for POM
     static public String toString(MrcMessage m){
         StringBuilder txt = new StringBuilder();
@@ -281,55 +283,55 @@ public class MrcPackets {
 	        case FUNCTIONGROUP1PACKETCMD:
 	        	txt.append(MrcPacketBundle.getMessage("MrcPacketsLoco")  + " " +  Integer.toString(m.getLocoAddress()) 
 	        			 + " " +  MrcPacketBundle.getMessage("MrcPacketsGroup1")); //IN18N
-	        	txt.append(" F0 " + Integer.toString(m.getElement(8) & 0x10));
-	        	txt.append(" F1 " + Integer.toString(m.getElement(8) & 0x01));
-	        	txt.append(" F2 " + Integer.toString(m.getElement(8) & 0x02));
-	        	txt.append(" F3 " + Integer.toString(m.getElement(8) & 0x04));
-	        	txt.append(" F4 " + Integer.toString(m.getElement(8) & 0x08));
+	        	txt.append(" F0 " + ((m.getElement(8) & 0x10) != 0 ? txtOn : txtOff));
+	        	txt.append(" F1 " + ((m.getElement(8) & 0x01) != 0 ? txtOn : txtOff));
+	        	txt.append(" F2 " + ((m.getElement(8) & 0x02) != 0 ? txtOn : txtOff));
+	        	txt.append(" F3 " + ((m.getElement(8) & 0x04) != 0 ? txtOn : txtOff));
+	        	txt.append(" F4 " + ((m.getElement(8) & 0x08) != 0 ? txtOn : txtOff));
 	    		break;
 	        case FUNCTIONGROUP2PACKETCMD:
 	        	txt.append(MrcPacketBundle.getMessage("MrcPacketsLoco") + Integer.toString(m.getLocoAddress()) 
 	        			+ MrcPacketBundle.getMessage("MrcPacketsGroup2")); //IN18N
-	        	txt.append(" F5 " + Integer.toString(m.getElement(8) & 0x01));
-	        	txt.append(" F6 " + Integer.toString(m.getElement(8) & 0x02));
-	        	txt.append(" F7 " + Integer.toString(m.getElement(8) & 0x04));
-	        	txt.append(" F8 " + Integer.toString(m.getElement(8) & 0x08));
+	        	txt.append(" F5 " + ((m.getElement(8) & 0x01) != 0 ? txtOn : txtOff));
+	        	txt.append(" F6 " + ((m.getElement(8) & 0x02) != 0 ? txtOn : txtOff));
+	        	txt.append(" F7 " + ((m.getElement(8) & 0x04) != 0 ? txtOn : txtOff));
+	        	txt.append(" F8 " + ((m.getElement(8) & 0x08) != 0 ? txtOn : txtOff));
 	    		break;
 	        case FUNCTIONGROUP3PACKETCMD:
 	        	txt.append(MrcPacketBundle.getMessage("MrcPacketsLoco") + Integer.toString(m.getLocoAddress()) 
 	        			+ MrcPacketBundle.getMessage("MrcPacketsGroup3")); //IN18N
-	        	txt.append(" F9 " + Integer.toString(m.getElement(8) & 0x01));
-	        	txt.append(" F10 " + Integer.toString(m.getElement(8) & 0x02));
-	        	txt.append(" F11 " + Integer.toString(m.getElement(8) & 0x04));
-	        	txt.append(" F12 " + Integer.toString(m.getElement(8) & 0x08));
+	        	txt.append(" F9 " + ((m.getElement(8) & 0x01) != 0 ? txtOn : txtOff));
+	        	txt.append(" F10 " + ((m.getElement(8) & 0x02) != 0 ? txtOn : txtOff));
+	        	txt.append(" F11 " + ((m.getElement(8) & 0x04) != 0 ? txtOn : txtOff));
+	        	txt.append(" F12 " + ((m.getElement(8) & 0x08) != 0 ? txtOn : txtOff));
 	    		break;
 	        case FUNCTIONGROUP4PACKETCMD:
 	        	txt.append(MrcPacketBundle.getMessage("MrcPacketsLoco") + " " + Integer.toString(m.getLocoAddress()) 
 	        			+ " " + MrcPacketBundle.getMessage("MrcPacketsGroup4")); //IN18N
-	        	txt.append(" F13 " + Integer.toString(m.getElement(8) & 0x01));
-	        	txt.append(" F14 " + Integer.toString(m.getElement(8) & 0x02));
-	        	txt.append(" F15 " + Integer.toString(m.getElement(8) & 0x04));
-	        	txt.append(" F16" + Integer.toString(m.getElement(8) & 0x08));
+	        	txt.append(" F13 " + ((m.getElement(8) & 0x01) != 0 ? txtOn : txtOff));
+	        	txt.append(" F14 " + ((m.getElement(8) & 0x02) != 0 ? txtOn : txtOff));
+	        	txt.append(" F15 " + ((m.getElement(8) & 0x04) != 0 ? txtOn : txtOff));
+	        	txt.append(" F16" + ((m.getElement(8) & 0x08) != 0 ? txtOn : txtOff));
 	    		break;
 	        case FUNCTIONGROUP5PACKETCMD:
 	        	txt.append(MrcPacketBundle.getMessage("MrcPacketsLoco") + " " + Integer.toString(m.getLocoAddress()) 
 	        			+ " " + MrcPacketBundle.getMessage("MrcPacketsGroup5")); //IN18N
-	        	txt.append(" F17 " + Integer.toString(m.getElement(8) & 0x01));
-	        	txt.append(" F18 " + Integer.toString(m.getElement(8) & 0x02));
-	        	txt.append(" F19 " + Integer.toString(m.getElement(8) & 0x04));
-	        	txt.append(" F20 " + Integer.toString(m.getElement(8) & 0x08));
+	        	txt.append(" F17 " + ((m.getElement(8) & 0x01) != 0 ? txtOn : txtOff));
+	        	txt.append(" F18 " + ((m.getElement(8) & 0x02) != 0 ? txtOn : txtOff));
+	        	txt.append(" F19 " + ((m.getElement(8) & 0x04) != 0 ? txtOn : txtOff));
+	        	txt.append(" F20 " + ((m.getElement(8) & 0x08) != 0 ? txtOn : txtOff));
 	    		break;
 	        case FUNCTIONGROUP6PACKETCMD:
 	        	txt.append(MrcPacketBundle.getMessage("MrcPacketsLoco") + " " + Integer.toString(m.getLocoAddress()) 
 	        			+ " " + MrcPacketBundle.getMessage("MrcPacketsGroup6")); //IN18N
-	        	txt.append(" F21 " + Integer.toString(m.getElement(8) & 0x01));
-	        	txt.append(" F22 " + Integer.toString(m.getElement(8) & 0x02));
-	        	txt.append(" F23 " + Integer.toString(m.getElement(8) & 0x04));
-	        	txt.append(" F24 " + Integer.toString(m.getElement(8) & 0x08));
-	        	txt.append(" F25 " + Integer.toString(m.getElement(8) & 0x10));
-	        	txt.append(" F26 " + Integer.toString(m.getElement(8) & 0x20));
-	        	txt.append(" F27 " + Integer.toString(m.getElement(8) & 0x40));
-	        	txt.append(" F28 " + Integer.toString(m.getElement(8) & 0x80));
+	        	txt.append(" F21 " + ((m.getElement(8) & 0x01) != 0 ? txtOn : txtOff));
+	        	txt.append(" F22 " + ((m.getElement(8) & 0x02) != 0 ? txtOn : txtOff));
+	        	txt.append(" F23 " + ((m.getElement(8) & 0x04) != 0 ? txtOn : txtOff));
+	        	txt.append(" F24 " + ((m.getElement(8) & 0x08) != 0 ? txtOn : txtOff));
+	        	txt.append(" F25 " + ((m.getElement(8) & 0x10) != 0 ? txtOn : txtOff));
+	        	txt.append(" F26 " + ((m.getElement(8) & 0x20) != 0 ? txtOn : txtOff));
+	        	txt.append(" F27 " + ((m.getElement(8) & 0x40) != 0 ? txtOn : txtOff));
+	        	txt.append(" F28 " + ((m.getElement(8) & 0x80) != 0 ? txtOn : txtOff));
 	    		break;
 	        case READCVCMD:
 	        	int cv = ((m.getElement(4)&0xff) << 8) + (m.getElement(6)&0xff);
