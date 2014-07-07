@@ -4461,12 +4461,12 @@ public class LogixTableAction extends AbstractTableAction {
         if (name != null) {
             name = name.trim();
         	if (name.length()>0) {
-            	b = InstanceManager.oBlockManagerInstance().getByUserName(name);
+            	b = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getByUserName(name);
             	if (b != null) {
             		return name;
             	}
         	}
-            b = InstanceManager.oBlockManagerInstance().getBySystemName(name);
+            b = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getBySystemName(name);
         }
         if (b == null) {
             messageInvalidActionItemName(name, "OBlock");

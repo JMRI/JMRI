@@ -778,7 +778,7 @@ public class DefaultLogix extends AbstractNamedBean
 				tb.addMinuteChangeListener (listener);
 				return;
             case LISTENER_TYPE_OBLOCK:
-				OBlock b = InstanceManager.oBlockManagerInstance().
+				OBlock b = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).
 										getOBlock(listener.getDevName());
 				if (b==null) {
 					msg= "oblock";
@@ -891,7 +891,7 @@ public class DefaultLogix extends AbstractNamedBean
                     tb.removeMinuteChangeListener (listener);
                     return;
                 case LISTENER_TYPE_OBLOCK:
-                    OBlock b = InstanceManager.oBlockManagerInstance().
+                    OBlock b = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).
                                             getOBlock(listener.getDevName());
                     if (b==null) {
                         msg= "oblock";

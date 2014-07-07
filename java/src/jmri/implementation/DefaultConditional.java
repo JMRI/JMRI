@@ -1174,7 +1174,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
 					case Conditional.ACTION_SET_BLOCK_VALUE:
-                        OBlock b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
+                        OBlock b = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(devName);
 						if (b == null) {
 							errorList.add("invalid block name in action - "+action.getDeviceName());
 						}
@@ -1184,7 +1184,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
 					case Conditional.ACTION_SET_BLOCK_ERROR:
-                        b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
+                        b = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(devName);
 						if (b == null) {
 							errorList.add("invalid block name in action - "+action.getDeviceName());
 						}
@@ -1194,7 +1194,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
                     case Conditional.ACTION_CLEAR_BLOCK_ERROR:
-                    	b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
+                    	b = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(devName);
 						if (b == null) {
 							errorList.add("invalid block name in action - "+action.getDeviceName());
 						}
@@ -1203,7 +1203,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
                     case ACTION_DEALLOCATE_BLOCK:
-                    	b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
+                    	b = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(devName);
 						if (b == null) {
 							errorList.add("invalid block name in action - "+action.getDeviceName());
 						}
@@ -1213,7 +1213,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
                     case ACTION_SET_BLOCK_OUT_OF_SERVICE:
-                    	b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
+                    	b = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(devName);
 						if (b == null) {
 							errorList.add("invalid block name in action - "+action.getDeviceName());
 						}
@@ -1223,7 +1223,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
                     case ACTION_SET_BLOCK_IN_SERVICE:
-                        b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
+                        b = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(devName);
 						if (b == null) {
 							errorList.add("invalid block name in action - "+action.getDeviceName());
 						}

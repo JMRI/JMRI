@@ -621,7 +621,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             _name = rb.getString("TitleBlockTable");
         }
         public Manager getManager() {
-            manager = InstanceManager.oBlockManagerInstance();
+            manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
             return manager;
         }
         public NamedBean addBean(String name) {

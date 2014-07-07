@@ -1975,12 +1975,10 @@ class ADsection (PropertyChangeListener) :
             layoutBlock = None
             blockName = newBlock.getUserName()
             if blockName != None and blockName.strip() != "" :
-                layoutBlock = InstanceManager.layoutBlockManagerInstance(
-                  ).getLayoutBlock(blockName)
+                layoutBlock = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager).getLayoutBlock(blockName)
             if layoutBlock == None :
                 blockName = newBlock.getSystemName()
-                layoutBlock = InstanceManager.layoutBlockManagerInstance(
-                  ).getLayoutBlock(blockName)
+                layoutBlock = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager).getLayoutBlock(blockName)
             if layoutBlock == None :
                 AutoDispatcher.log("No LayoutBlock for Block " + blockName
                   + " found: block skipped!")

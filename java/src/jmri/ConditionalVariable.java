@@ -150,7 +150,7 @@ public class ConditionalVariable {
                     _namedBean = nbhm.getNamedBeanHandle(_name, w);
                     break;
                 case Conditional.ITEM_TYPE_OBLOCK:
-                    OBlock b = InstanceManager.oBlockManagerInstance().getOBlock(_name);
+                    OBlock b = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(_name);
                     if(b == null){
                         log.error("invalid block name= \""+_name+"\" in state variable");
                         return;
@@ -243,7 +243,7 @@ public class ConditionalVariable {
                 bean = InstanceManager.getDefault(WarrantManager.class).getWarrant(_name);
                 break;
             case Conditional.ITEM_TYPE_OBLOCK:
-                bean = InstanceManager.oBlockManagerInstance().getOBlock(_name);
+                bean = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(_name);
                 break;
             case Conditional.ITEM_TYPE_ENTRYEXIT:
                 bean = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class).getBySystemName(_name);
@@ -581,7 +581,7 @@ public class ConditionalVariable {
 				}
 				break;
             case Conditional.ITEM_TYPE_OBLOCK:
-                OBlock b = InstanceManager.oBlockManagerInstance().getOBlock(getName());
+                OBlock b = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(getName());
 				if (b == null) {
 					log.error("invalid OBlock name= \""+getName()+"\" in state variable");
 					return (false);
