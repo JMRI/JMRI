@@ -64,6 +64,16 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
             return getSystemName();
         }
     }
+    
+    public String getFullyFormattedDisplayName(){
+        String name = getUserName();
+        if (name != null && name.length() > 0) {
+            name = name + "(" + getSystemName() + ")";
+        } else {
+            name = getSystemName();
+        }
+        return name;
+    }
 
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call

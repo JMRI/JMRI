@@ -29,14 +29,12 @@ public class DoubleTurnoutSignalHead extends DefaultSignalHead implements java.b
 
     public DoubleTurnoutSignalHead(String sys, String user, NamedBeanHandle<Turnout> green, NamedBeanHandle<Turnout> red) {
         super(sys, user);
-        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
         mRed = red;
         mGreen = green;
     }
 
     public DoubleTurnoutSignalHead(String sys, NamedBeanHandle<Turnout> green, NamedBeanHandle<Turnout> red) {
         super(sys);
-        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
         mRed = red;
         mGreen = green;
     }
@@ -108,7 +106,7 @@ public class DoubleTurnoutSignalHead extends DefaultSignalHead implements java.b
     boolean isTurnoutUsed(Turnout t){
         if(getRed()!=null && t.equals(getRed().getBean()))
             return true;
-        if(getRed()!=null && t.equals(getGreen().getBean()))
+        if(getGreen()!=null && t.equals(getGreen().getBean()))
             return true;
         return false;
     }

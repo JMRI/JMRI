@@ -118,6 +118,14 @@ public class QuadOutputSignalHead extends TripleTurnoutSignalHead {
         return validStateNames;
     }
 
+    boolean isTurnoutUsed(Turnout t){
+        if(super.isTurnoutUsed(t))
+                return true;
+        if(getLunar()!=null && t.equals(getLunar().getBean()))
+            return true;
+        return false;
+    }
+
     static Logger log = LoggerFactory.getLogger(QuadOutputSignalHead.class.getName());
 }
 

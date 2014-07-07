@@ -230,7 +230,7 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         if("CanDelete".equals(evt.getPropertyName())){ //IN18N
             if(isTurnoutUsed((Turnout)evt.getOldValue())){
                 java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
-                throw new java.beans.PropertyVetoException("Turnout is in use by SignalMast " + getDisplayName(), e);
+                throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseTurnoutSignalMastVeto", getDisplayName()), e); //IN18N
             }
         } else if ("DoDelete".equals(evt.getPropertyName())){ //IN18N
             log.info("Call to do delete");

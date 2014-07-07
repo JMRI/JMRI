@@ -33,16 +33,18 @@ IF:basic:one-searchlight:(IH1)(IH2)
  * @author	Bob Jacobsen Copyright (C) 2009
  * @version     $Revision$
  */
-public class SignalHeadSignalMast extends AbstractSignalMast {
+public class SignalHeadSignalMast extends AbstractSignalMast implements java.beans.VetoableChangeListener {
 
     public SignalHeadSignalMast(String systemName, String userName) {
         super(systemName, userName);
         configureFromName(systemName);
+        jmri.InstanceManager.signalHeadManagerInstance().addVetoableChangeListener(this);
     }
 
     public SignalHeadSignalMast(String systemName) {
         super(systemName);
         configureFromName(systemName);
+        jmri.InstanceManager.signalHeadManagerInstance().addVetoableChangeListener(this);
     }
         
     void configureFromName(String systemName) {
@@ -271,6 +273,22 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
             }
         }
         return null;
+    }
+    
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+        NamedBean nb = (NamedBean) evt.getOldValue();
+        if("CanDelete".equals(evt.getPropertyName())){ //IN18N
+            if(nb instanceof SignalHead){
+                for(NamedBeanHandle<SignalHead> bean : getHeadsUsed()){
+                    if(bean.getBean().equals(nb)){
+                        java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
+                        throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseSignalHeadSignalMastVeto", getDisplayName()), e);
+                    }
+                }
+            }
+        } else if ("DoDelete".equals(evt.getPropertyName())){
+        
+        }
     }
     
     static final protected Logger log = LoggerFactory.getLogger(SignalHeadSignalMast.class.getName());

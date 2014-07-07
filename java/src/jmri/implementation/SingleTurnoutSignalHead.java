@@ -195,6 +195,12 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead {
                     return  Bundle.getMessage("SignalHeadStateDark");
         }
     }
+    
+    boolean isTurnoutUsed(Turnout t){
+        if(getOutput()!=null && t.equals(getOutput().getBean()))
+            return true;
+        return false;
+    }
 
 
     static Logger log = LoggerFactory.getLogger(SingleTurnoutSignalHead.class.getName());

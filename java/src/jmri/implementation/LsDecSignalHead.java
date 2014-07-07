@@ -191,6 +191,24 @@ public class LsDecSignalHead extends DefaultSignalHead {
     public void setFlashGreenState(int i) {mFlashGreenState = i;}
     public void setDarkState(int i) {mDarkState = i;}
     
+    boolean isTurnoutUsed(Turnout t){
+        if(getRed()!=null && t.equals(getRed().getBean()))
+            return true;
+        if(getYellow()!=null && t.equals(getYellow().getBean()))
+            return true;
+        if(getGreen()!=null && t.equals(getGreen().getBean()))
+            return true;
+        if(getFlashRed()!=null && t.equals(getFlashRed().getBean()))
+            return true;
+        if(getFlashYellow()!=null && t.equals(getFlashYellow().getBean()))
+            return true;
+        if(getFlashGreen()!=null && t.equals(getFlashGreen().getBean()))
+            return true;
+        if(getDark()!=null && t.equals(getDark().getBean()))
+            return true;
+        return false;
+    }
+    
     static Logger log = LoggerFactory.getLogger(LsDecSignalHead.class.getName());
     
 }

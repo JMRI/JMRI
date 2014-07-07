@@ -33,7 +33,7 @@ public class DefaultRoute extends AbstractNamedBean
         jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
         jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
     }
-
+    
     /**
      *  Persistant instance variables (saved between runs)
      */
@@ -1072,43 +1072,45 @@ public class DefaultRoute extends AbstractNamedBean
     
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         NamedBean nb = (NamedBean) evt.getOldValue();
-        if("CanDelete".equals(evt.getPropertyName())){
+        if("CanDelete".equals(evt.getPropertyName())){ //IN18N
             StringBuilder message = new StringBuilder();
-            message.append("Is in use by route " + getDisplayName() + "<br>");
+            message.append(Bundle.getMessage("InUseRouteHeader", getDisplayName())); //IN18N
             boolean found = false;
             if(nb instanceof Turnout){
                 if(isOutputTurnoutIncluded((Turnout)nb)){
-                    message.append("As an Output Turnout<br>");
+                    message.append(Bundle.getMessage("InUseRouteOutputTurnout")); //IN18N
                     found = true;
                 }
                 if(getCtlTurnout()!=null && getCtlTurnout().equals(nb)){
-                    message.append("As a Controlling Turnout<br>");
+                    message.append(Bundle.getMessage("InUseRouteControlTurnout")); //IN18N
                     found = true;
                 }
                 if(getLockCtlTurnout()!=null && getLockCtlTurnout().equals(nb)){
-                    message.append("As a Locking Turnout<br>");
+                    message.append(Bundle.getMessage("InUseRouteLockTurnout")); //IN18N
                     found = true;
                 }
-                message.append("It will be removed from the route");
             }
             else if(nb instanceof Sensor){
                 if(isOutputSensorIncluded((Sensor)nb)){
-                    message.append("As an Output Sensor<br>");
+                    message.append(Bundle.getMessage("InUseRouteOutputSensor")); //IN18N
                     found = true;
                 }
                 if(getTurnoutsAlgdSensor()!=null && getTurnoutsAlgdSensor().equals(nb)){
-                    message.append("As an Alignment Sensor<br>");
-                    found = true;
+                    message.append(Bundle.getMessage("InUseRouteAlignSensor")); //IN18N
+                    found = true; 
                 }
                 if(isRouteSensorIncluded((Sensor)nb)){
-                    message.append("As a Route Sensor<br>");
+                    message.append(Bundle.getMessage("InUseRouteSensor")); //IN18N
                     found = true;
                 }
+                
             }
-            if(found)
+            if(found){
+                message.append(Bundle.getMessage("InUseRouteFinish")); //IN18N
                 throw new java.beans.PropertyVetoException(message.toString(), evt);
+            }
             
-        } else if ("DoDelete".equals(evt.getPropertyName())){
+        } else if ("DoDelete".equals(evt.getPropertyName())){ //IN18N
             if(nb instanceof Turnout){
                 if(isOutputTurnoutIncluded((Turnout)nb)){
                     deActivateRoute();

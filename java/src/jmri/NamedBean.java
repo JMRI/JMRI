@@ -56,10 +56,17 @@ public interface NamedBean {
      */
     public String getSystemName();
 
-    /*
+    /**
     * return user name if it exists, otherwise return System name
     */
     public String getDisplayName();
+    
+    /**
+    * Returns a fully formatted display that includes the SystemName 
+    * and UserName if set.
+    * UserName (SystemName) or SystemName
+    */
+    public String getFullyFormattedDisplayName();
 
     /**
      * Request a call-back when a bound property changes.

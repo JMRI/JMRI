@@ -205,8 +205,11 @@ public class DccSignalHead extends AbstractSignalHead {
           case SignalHead.FLASHLUNAR:  return 7 ;
           default :                    return 8;
         }
-    
     }
     
     int dccSignalDecoderAddress ;
+    
+    boolean isTurnoutUsed(Turnout t){
+        return false;
+    }
 }

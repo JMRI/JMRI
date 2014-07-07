@@ -17,10 +17,12 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
 
     public AbstractSignalHead(String systemName, String userName) {
         super(systemName, userName);
+        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
     }
 
     public AbstractSignalHead(String systemName) {
         super(systemName);
+        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
     }
 
     public String getAppearanceName(int appearance) {
@@ -130,18 +132,16 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
         return validStateNames;
     }
     
-    boolean isTurnoutUsed(Turnout t){
-        return false;
-    }
+    abstract boolean isTurnoutUsed(Turnout t);
     
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if("CanDelete".equals(evt.getPropertyName())){ //IN18N
             if(isTurnoutUsed((Turnout)evt.getOldValue())){
                 java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
-                throw new java.beans.PropertyVetoException("Turnout is in use by SignalHead " + getDisplayName(), e);
+                throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseTurnoutSignalHeadVeto", getDisplayName()), e); //IN18N
             }
         } else if ("DoDelete".equals(evt.getPropertyName())){
-            log.info("Call to do delete");
+            log.info("Call to do delete"); //IN18N
         }
     }
     

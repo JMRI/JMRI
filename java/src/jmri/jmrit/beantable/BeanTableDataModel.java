@@ -280,23 +280,23 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         
         @Override
         public java.lang.Void doInBackground() throws Exception{
-            String message = "";
+            StringBuilder message = new StringBuilder();
             try {
                 getManager().deleteBean(t, "CanDelete");  //IN18N
             } catch (java.beans.PropertyVetoException e) {
                 if(e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")){ //IN18N
                     log.warn(e.getMessage());
-                    message = t.getDisplayName() + " Can not be deleted \n" + e.getMessage();
-                    JOptionPane.showMessageDialog(null, message,
+                    message.append(t.getFullyFormattedDisplayName() + " Can not be deleted \n" + e.getMessage());
+                    JOptionPane.showMessageDialog(null, message.toString(),
                         AbstractTableAction.rb.getString("WarningTitle"),
                         JOptionPane.ERROR_MESSAGE);
                     return null;
                 }
-                message = e.getMessage();
+                message.append(e.getMessage());
             }
-            int count = t.getNumPropertyChangeListeners()-1; // one is this table
+            int count = t.getNumPropertyChangeListeners();
             if (log.isDebugEnabled()) log.debug("Delete with "+count);
-            if (getDisplayDeleteMsg()==0x02 && message.equals("")) {
+            if (getDisplayDeleteMsg()==0x02 && message.toString().equals("")) {
                 doDelete(t);
             } else {
                 final JDialog dialog = new JDialog();
@@ -311,35 +311,35 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                 if (count>0) { // warn of listeners attached before delete
                     msg = java.text.MessageFormat.format(AbstractTableAction.rb.getString("DeletePrompt"), new Object[]{t.getSystemName()});
                     
-                    JLabel question = new JLabel(msg);
-                    question.setAlignmentX(Component.CENTER_ALIGNMENT);
-                    container.add(question);
-                    
-                    msg1 = java.text.MessageFormat.format(AbstractTableAction.rb.getString("ReminderInUse"),
-                            new Object[]{""+count});
-
-                    question = new JLabel(msg1);
+                    JLabel question = new JLabel(Bundle.getMessage("DeletePrompt", t.getFullyFormattedDisplayName()));
                     question.setAlignmentX(Component.CENTER_ALIGNMENT);
                     container.add(question);
                     
                     ArrayList<String> listenerRefs = t.getListenerRefs();
                     if(listenerRefs.size()>0){
-                        question = new JLabel("    ");
-                        container.add(question);
                         ArrayList<String> listeners = new ArrayList<String>();
                         for (int i = 0; i<listenerRefs.size(); i++){
                             if(!listeners.contains(listenerRefs.get(i)))
                                 listeners.add(listenerRefs.get(i));
                         }
                         
+                        message.append("<br>");
+                        message.append(Bundle.getMessage("ReminderInUse", count));
+                        message.append("<ul>");
                         for (int i = 0; i<listeners.size(); i++){
-                            question = new JLabel(listeners.get(i));
-                            question.setAlignmentX(Component.CENTER_ALIGNMENT);
-                            container.add(question);
+                            message.append("<li>");
+                            message.append(listeners.get(i));
+                            message.append("</li>");
                         }
-                        question = new JLabel("<html>"+message+"</html>");
-                        question.setAlignmentX(Component.CENTER_ALIGNMENT);
-                        container.add(question);
+                        message.append("</ul>");
+                        
+                        JTextArea textArea = new JTextArea(10, 20);
+                        JEditorPane pane = new JEditorPane();
+                        pane.setContentType("text/html");
+                        pane.setText("<html>"+message.toString()+"</html>");
+                        pane.setEditable(false);
+
+                        container.add(pane);
                     }
 
                 } else {

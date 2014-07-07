@@ -94,6 +94,16 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
             return getSystemName();
         }
     }
+    
+    public String getFullyFormattedDisplayName(){
+        String name = getUserName();
+        if (name != null && name.length() > 0) {
+            name = name + "(" + getSystemName() + ")";
+        } else {
+            name = getSystemName();
+        }
+        return name;
+    }
 
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call
@@ -175,8 +185,6 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
         firePropertyChange("UserName", old, s);
     }
     
-    
-
     protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
 
     public void dispose() { pcs = null; }
@@ -184,6 +192,12 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
     public int getState(){ return 0; }
 
     public void setState(int s) throws jmri.JmriException{}
+    
+    public void addDeleteLock(jmri.NamedBean lock) { }
+    
+    public void removeDeleteLock(jmri.NamedBean lock) { }
+    
+    public boolean isDeleteAllowed() { return true; }
 
     static Logger log = LoggerFactory.getLogger(AbstractCatalogTree.class.getName());
 

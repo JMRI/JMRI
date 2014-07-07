@@ -292,6 +292,17 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         }
     }
     
+    boolean isTurnoutUsed(Turnout t){
+        if(getInput1()!=null && t.equals(getInput1().getBean()))
+            return true;
+        if(getInput2()!=null && t.equals(getInput2().getBean()))
+            return true;
+        if(getInput3()!=null && t.equals(getInput3().getBean()))
+            return true;
+        return false;
+    }
+    
+    
     static Logger log = LoggerFactory.getLogger(MergSD2SignalHead.class.getName());
     
 }

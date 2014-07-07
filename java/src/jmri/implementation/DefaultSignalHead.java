@@ -168,6 +168,10 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
     public String[] getValidStateNames() {
         return validStateNames;
     }
+    
+    boolean isTurnoutUsed(jmri.Turnout t){
+        return false;
+    }
 
 }
 

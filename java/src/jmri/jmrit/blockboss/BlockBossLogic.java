@@ -126,7 +126,7 @@ import java.util.Collections;
  * to limit speed. Dick Bronosn (RJB) 2006
  */
 
-public class BlockBossLogic extends Siglet {
+public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeListener{
 
     static public final int SINGLEBLOCK = 1;
     static public final int TRAILINGMAIN = 2;
@@ -139,6 +139,9 @@ public class BlockBossLogic extends Siglet {
      * Create a default object, without contents.
      */
     public BlockBossLogic() {
+        jmri.InstanceManager.signalHeadManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
     }
 
     /**
@@ -149,6 +152,9 @@ public class BlockBossLogic extends Siglet {
         super(name+rb.getString("_BlockBossLogic"));
         this.name = name;
         if (log.isTraceEnabled()) log.trace("Create BBL "+name);
+        jmri.InstanceManager.signalHeadManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
         driveSignal = nbhm.getNamedBeanHandle (name, InstanceManager.signalHeadManagerInstance().getSignalHead(name));
         if (driveSignal.getBean() == null) log.warn(rb.getString("Signal_")+name+rb.getString("_was_not_found!"));
     }
@@ -963,6 +969,152 @@ public class BlockBossLogic extends Siglet {
         }
         
         return (new BlockBossLogic(sh.getDisplayName()));
+    }
+    
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+        NamedBean nb = (NamedBean) evt.getOldValue();
+        if("CanDelete".equals(evt.getPropertyName())){ //IN18N
+            StringBuilder message = new StringBuilder();
+            message.append(Bundle.getMessage("InUseBlockBossHeader", driveSignal.getBean().getDisplayName())); //IN18N
+            boolean found = false;
+            if(nb instanceof SignalHead){
+                if(getDrivenSignalNamedBean()!=null && getDrivenSignalNamedBean().getBean().equals(nb)){
+                    message.append("This SSL will be deleted");
+                    throw new java.beans.PropertyVetoException(message.toString(), evt);
+                }
+                if((watchedSignal1!=null && watchedSignal1.getBean().equals(nb)) ||
+                       (watchedSignal1Alt!=null && watchedSignal1Alt.getBean().equals(nb)) ||
+                           (watchedSignal2!=null && watchedSignal2.getBean().equals(nb)) ||
+                              (watchedSignal2Alt!=null && watchedSignal2Alt.getBean().equals(nb)) ){
+                              
+                    message.append(Bundle.getMessage("InUseWatchedSignal"));
+                    found = true;
+                }
+
+            }
+            else if(nb instanceof Turnout){
+                if(getTurnout()!=null && getTurnout().equals(nb)){
+                    found = true;
+                    message.append(Bundle.getMessage("InUseWatchedTurnout"));
+                }
+            } 
+            else if(nb instanceof Sensor){
+                message.append("<ul>");
+                if((watchSensor1!=null && watchSensor1.getBean().equals(nb)) || 
+                      (watchSensor2!=null && watchSensor2.getBean().equals(nb)) ||
+                        (watchSensor3!=null && watchSensor3.getBean().equals(nb)) ||
+                          (watchSensor4!=null && watchSensor4.getBean().equals(nb)) ||
+                            (watchSensor5!=null && watchSensor5.getBean().equals(nb))){
+                    message.append(Bundle.getMessage("InUseWatchedTurnout"));
+                    found = true;
+                }
+                if((watchedSensor1!=null && watchedSensor1.getBean().equals(nb)) ||
+                    (watchedSensor2!=null && watchedSensor2.getBean().equals(nb)) ||
+                      (watchedSensor1Alt!=null && watchedSensor1Alt.getBean().equals(nb)) ||
+                        (watchedSensor2Alt!=null && watchedSensor2Alt.getBean().equals(nb))){
+                    message.append(Bundle.getMessage("InUseWatchedSensor"));
+                    found = true;
+                
+                }
+                if (approachSensor1!=null && approachSensor1.getBean().equals(nb)){
+                    found = true;
+                    message.append(Bundle.getMessage("InUseApproachSensor"));
+                }
+                
+                message.append("</ul>");
+            }
+            if(found){
+                message.append(Bundle.getMessage("InUseBlockBossFooter")); //IN18N
+                throw new java.beans.PropertyVetoException(message.toString(), evt);
+            }
+            
+        } else if ("DoDelete".equals(evt.getPropertyName())){ //IN18N
+            if(nb instanceof SignalHead){
+                if(getDrivenSignalNamedBean()!=null && getDrivenSignalNamedBean().getBean().equals(nb)){
+                    stop();
+                    bblList.remove(this);
+                }
+                if (watchedSignal1!=null && watchedSignal1.getBean().equals(nb)){
+                    stop();
+                    setWatchedSignal1(null, false);
+                    start();
+                }
+                if (watchedSignal1Alt!=null && watchedSignal1Alt.getBean().equals(nb)){
+                    stop();
+                    setWatchedSignal1Alt(null);
+                    start();
+                }
+                if (watchedSignal2!=null && watchedSignal2.getBean().equals(nb)){
+                    stop();
+                    setWatchedSignal2(null);
+                    start();
+                }
+                if (watchedSignal2Alt!=null && watchedSignal2Alt.getBean().equals(nb)){
+                    stop();
+                    setWatchedSignal2Alt(null);
+                    start();
+                }
+            }
+            else if(nb instanceof Turnout){
+                if(getTurnout()!=null && getTurnout().equals(nb)){
+                    stop();
+                    setTurnout(null);
+                    start();
+                }
+            }
+            else if(nb instanceof Sensor){
+                if (watchSensor1!=null && watchSensor1.getBean().equals(nb)){
+                    stop();
+                    setSensor1(null);
+                    start();
+                }
+                if (watchSensor2!=null && watchSensor2.getBean().equals(nb)){
+                    stop();
+                    setSensor2(null);
+                    start();
+                }
+                if (watchSensor3!=null && watchSensor3.getBean().equals(nb)){
+                    stop();
+                    setSensor3(null);
+                    start();
+                }
+                if (watchSensor4!=null && watchSensor4.getBean().equals(nb)){
+                    stop();
+                    setSensor4(null);
+                    start();
+                }
+                if (watchSensor5!=null && watchSensor5.getBean().equals(nb)){
+                    stop();
+                    setSensor5(null);
+                    start();
+                }
+                if (watchedSensor1!=null && watchedSensor1.getBean().equals(nb)){
+                    stop();
+                    setWatchedSensor1(null);
+                    start();
+                }
+                if (watchedSensor2!=null && watchedSensor2.getBean().equals(nb)){
+                    stop();
+                    setWatchedSensor2(null);
+                    start();
+                }
+                if (watchedSensor1Alt!=null && watchedSensor1Alt.getBean().equals(nb)){
+                    stop();
+                    setWatchedSensor1Alt(null);
+                    start();
+                }
+                if (watchedSensor2Alt!=null && watchedSensor2Alt.getBean().equals(nb)){
+                    stop();
+                    setWatchedSensor2Alt(null);
+                    start();
+                }
+                if (approachSensor1!=null && approachSensor1.getBean().equals(nb)){
+                    stop();
+                    setApproachSensor1(null);
+                    start();
+                }
+            }
+        }
     }
     
     static Logger log = LoggerFactory.getLogger(BlockBossLogic.class.getName());
