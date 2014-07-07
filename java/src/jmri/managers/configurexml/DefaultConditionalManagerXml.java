@@ -366,9 +366,10 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 InstanceManager.conditionalManagerInstance() );
         // register new one with InstanceManager
         DefaultConditionalManager pManager = DefaultConditionalManager.instance();
-        InstanceManager.setConditionalManager(pManager);
+        InstanceManager.store(pManager, ConditionalManager.class);
+        InstanceManager.setDefault(ConditionalManager.class, pManager);
         // register new one for configuration
-        InstanceManager.configureManagerInstance().registerConfig(pManager, jmri.Manager.CONDITIONALS);
+        InstanceManager.getDefault(jmri.ConfigureManager.class).registerConfig(pManager, jmri.Manager.CONDITIONALS);
     }
     
     public int loadOrder(){

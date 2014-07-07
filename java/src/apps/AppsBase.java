@@ -222,7 +222,7 @@ public abstract class AppsBase {
         InstanceManager.store(new CreateButtonModel(), CreateButtonModel.class);
 
         // install preference manager
-        InstanceManager.setTabbedPreferences(new TabbedPreferences());
+        InstanceManager.store(new TabbedPreferences(), TabbedPreferences.class);
 
         // install the named bean handler
         InstanceManager.store(new NamedBeanHandleManager(), NamedBeanHandleManager.class);

@@ -233,7 +233,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         InstanceManager.store(new EntryExitPairs(), EntryExitPairs.class);
 
         // install preference manager
-        InstanceManager.setTabbedPreferences(new TabbedPreferences());
+        InstanceManager.store(new TabbedPreferences(), TabbedPreferences.class);
 
         // Install abstractActionModel
         InstanceManager.store(new apps.CreateButtonModel(), apps.CreateButtonModel.class);

@@ -183,7 +183,7 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
 
         // register new one with InstanceManager
         DefaultLogixManager pManager = DefaultLogixManager.instance();
-        InstanceManager.setLogixManager(pManager);
+        InstanceManager.store(pManager, LogixManager.class);
         // register new one for configuration
         InstanceManager.configureManagerInstance().registerConfig(pManager, jmri.Manager.LOGIXS);
     }

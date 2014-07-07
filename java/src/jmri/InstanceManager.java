@@ -319,15 +319,6 @@ public class InstanceManager {
     }
 
     /**
-     * @deprecated Since 3.7.4, use @{link #getDefault} directly.
-     */
-    @Deprecated
-    static public jmri.jmrit.display.layoutEditor.LayoutBlockManager layoutBlockManagerInstance()  {
-        return getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
-    }
-
-
-    /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
      */
     static public AudioManager audioManagerInstance() {
@@ -382,14 +373,6 @@ public class InstanceManager {
      */
     static public LogixManager logixManagerInstance() { 
         return getDefault(LogixManager.class); 
-    }
-
-    /**
-     * @deprecated Since 3.3.1, use @{link #getDefault} directly.
-     */
-    @Deprecated
-    static public jmri.jmrit.logix.OBlockManager oBlockManagerInstance()  {
-        return getDefault(jmri.jmrit.logix.OBlockManager.class);
     }
 
     /**
@@ -507,16 +490,34 @@ public class InstanceManager {
 
     /* ****************************************************************************
      *         Deprecated Accessors - removed from JMRI itself
+     *
+     *             Remove these in or after JMRI 3.9.1
+     *                 (Check scripts first)
      * ****************************************************************************/
 
+    ///**
+    // * @deprecated Since 3.3.1, use @{link #getDefault} directly.
+    // */
+    //@Deprecated
+    //static public jmri.jmrit.logix.OBlockManager oBlockManagerInstance()  {
+    //    return getDefault(jmri.jmrit.logix.OBlockManager.class);
+    //}
 
-    /**
-     * @deprecated Since 3.7.4, use @{link #getDefault} directly.
-     */
-    @Deprecated
-    static public VSDecoderManager vsdecoderManagerInstance() {
-	    return getDefault(VSDecoderManager.class);
-    }
+    ///**
+    // * @deprecated Since 3.7.4, use @{link #getDefault} directly.
+    // */
+    //@Deprecated
+    //static public jmri.jmrit.display.layoutEditor.LayoutBlockManager layoutBlockManagerInstance()  {
+    //    return getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
+    //}
+
+    ///**
+    // * @deprecated Since 3.7.4, use @{link #getDefault} directly.
+    // */
+    //@Deprecated
+    //static public VSDecoderManager vsdecoderManagerInstance() {
+	//    return getDefault(VSDecoderManager.class);
+    //}
 
     /* ****************************************************************************
      *                   Old Style Setters - To be migrated
@@ -530,15 +531,6 @@ public class InstanceManager {
     @Deprecated
     static public void setPowerManager(PowerManager p) {
         store(p, PowerManager.class);
-    }
-
-    /**
-     * @deprecated Since 3.7.1, use @{link #store} and @{link #setDefault} directly.
-     */
-    @Deprecated
-    static public void setConditionalManager(ConditionalManager p) {
-        store(p, ConditionalManager.class);
-        setDefault(ConditionalManager.class, p);
     }
 
     /**
@@ -631,14 +623,6 @@ public class InstanceManager {
         //store(p, LightManager.class);
     }
 
-    /**
-     * @deprecated Since 3.7.4, use @{link #store} directly.
-     */
-    @Deprecated
-    static public void setLogixManager(LogixManager p) {
-        store(p, LogixManager.class);
-    }
-
     //
     // Note: Also provides consist manager services on store operation.
     // Do we need a new mechanism for this? Or just move this code to
@@ -683,20 +667,37 @@ public class InstanceManager {
         //store(p, SensorManager.class);
     }
 
-    /**
-     * @deprecated Since 3.7.4, use @{link #store} directly.
-     */
-    @Deprecated
-    static public void setTabbedPreferences(TabbedPreferences p) {
-        store(p, TabbedPreferences.class);
-    }
-
     /* ****************************************************************************
      *                   Old Style Setters - Deprecated and migrated, 
      *                                       just here for other users
      *
      *                     Check Jython scripts before removing
      * ****************************************************************************/
+
+    ///**
+    // * @deprecated Since 3.7.1, use @{link #store} and @{link #setDefault} directly.
+    // */
+    //@Deprecated
+    //static public void setConditionalManager(ConditionalManager p) {
+    //    store(p, ConditionalManager.class);
+    //    setDefault(ConditionalManager.class, p);
+    //}
+
+    ///**
+    // * @deprecated Since 3.7.4, use @{link #store} directly.
+    // */
+    //@Deprecated
+    //static public void setLogixManager(LogixManager p) {
+    //    store(p, LogixManager.class);
+    //}
+
+    ///**
+    // * @deprecated Since 3.7.4, use @{link #store} directly.
+    // */
+    //@Deprecated
+    //static public void setTabbedPreferences(TabbedPreferences p) {
+    //    store(p, TabbedPreferences.class);
+    //}
 
 
     /* *************************************************************************** */
