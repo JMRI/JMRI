@@ -175,6 +175,12 @@ public class LayoutTurntable
         if (i>=rayList.size()) return null; 
 		RayTrack ray = rayList.get(i);
 		return ray.getTurnoutName();
+    }    
+    
+    public Turnout getRayTurnout(int i){
+        if (i>=rayList.size()) return null; 
+		RayTrack ray = rayList.get(i);
+		return ray.getTurnout();
     }
     
     public int getRayTurnoutState(int i){

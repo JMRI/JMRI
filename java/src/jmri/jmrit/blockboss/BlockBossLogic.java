@@ -997,7 +997,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
 
             }
             else if(nb instanceof Turnout){
-                if(getTurnout()!=null && getTurnout().equals(nb)){
+                if(watchTurnout!=null && watchTurnout.getBean().equals(nb)){
                     found = true;
                     message.append("<ul>");
                     message.append(Bundle.getMessage("InUseWatchedTurnout"));
@@ -1067,7 +1067,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
                 }
             }
             else if(nb instanceof Turnout){
-                if(getTurnout()!=null && getTurnout().equals(nb)){
+                if(watchTurnout!=null && watchTurnout.getBean().equals(nb)){
                     stop();
                     setTurnout(null);
                     start();

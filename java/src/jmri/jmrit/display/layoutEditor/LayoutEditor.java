@@ -364,6 +364,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public LayoutEditor(String name) {
         super(name);
         jmri.InstanceManager.signalHeadManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
         layoutName = name;
         // initialize frame
         Container contentPane = getContentPane();
@@ -7538,6 +7539,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         }
                 }
             }
+        } else if (bean instanceof Turnout){
+            for(LayoutTurnout t:turnoutList){
+                if(bean.equals(t.getTurnout())){
+                    return t;
+                }
+            }
         }
         return null;
     }
@@ -7648,6 +7655,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         }
                 }
             }
+        } else if (bean instanceof Turnout){
+            for(LayoutSlip l: slipList){
+                if(bean.equals(l.getTurnout()))
+                    return l;
+                if(bean.equals(l.getTurnoutB()))
+                    return l;
+            }
         }
         return null;
     }
@@ -7700,6 +7714,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 		}
 		return null;
 	}
+    
 	public LevelXing findLevelXingByName(String name) {
 		if (name.length()<=0) return null;
 		for (int i = 0; i<xingList.size(); i++) {
@@ -9279,43 +9294,91 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             message.append(Bundle.getMessage("VetoInUseLayoutEditorHeader", toString())); //IN18N
             message.append("<ul>");
             boolean found = false;
-            if(containsSignalHead((SignalHead)nb)){
-                found = true;
-                message.append("<li>");
-                message.append(Bundle.getMessage("VetoSignalHeadIconFound"));
-                message.append("</li>");
+            if(nb instanceof SignalHead){
+                if(containsSignalHead((SignalHead)nb)){
+                    found = true;
+                    message.append("<li>");
+                    message.append(Bundle.getMessage("VetoSignalHeadIconFound"));
+                    message.append("</li>");
+                    LayoutTurnout lt = findLayoutTurnoutByBean(nb);
+                    if(lt!=null){
+                        message.append("<li>");
+                        message.append(Bundle.getMessage("VetoSignalHeadAssignedToTurnout", lt.getTurnoutName()));
+                        message.append("</li>");
+                    }
+                    PositionablePoint p = findPositionablePointByBean(nb);
+                    if(p!=null){
+                        message.append("<li>");
+                        message.append(Bundle.getMessage("VetoSignalHeadAssignedToPoint")); //Need to expand to get the names of blocks
+                        message.append("</li>");
+                    }
+                    LevelXing lx = findLevelXingByBean(nb);
+                    if(lx!=null){
+                        message.append("<li>");
+                        message.append(Bundle.getMessage("VetoSignalHeadAssignedToLevelXing")); //Need to expand to get the names of blocks
+                        message.append("</li>");
+                    }
+                    LayoutSlip ls = findLayoutSlipByBean(nb);
+                    if(ls!=null){
+                        message.append("<li>");
+                        message.append(Bundle.getMessage("VetoSignalHeadAssignedToLayoutSlip", ls.getTurnoutName()));
+                        message.append("</li>");
+                    }
+                }
+            }
+            else if(nb instanceof Turnout){
                 LayoutTurnout lt = findLayoutTurnoutByBean(nb);
-                if(lt!=null){
+                if (lt!=null){
+                    found = true;
                     message.append("<li>");
-                    message.append(Bundle.getMessage("VetoSignalHeadAssignedToTurnout", lt.getTurnoutName()));
+                    message.append(Bundle.getMessage("VetoTurnoutIconFound"));
                     message.append("</li>");
                 }
-                PositionablePoint p = findPositionablePointByBean(nb);
-                if(p!=null){
-                    message.append("<li>");
-                    message.append(Bundle.getMessage("VetoSignalHeadAssignedToPoint")); //Need to expand to get the names of blocks
-                    message.append("</li>");
-                }
-                LevelXing lx = findLevelXingByBean(nb);
-                if(lx!=null){
-                    message.append("<li>");
-                    message.append(Bundle.getMessage("VetoSignalHeadAssignedToLevelXing")); //Need to expand to get the names of blocks
-                    message.append("</li>");
+                for(LayoutTurnout t:turnoutList){
+                    if(t.getLinkedTurnoutName()!=null){
+                        if(nb.getSystemName().equals(t.getLinkedTurnoutName()) || 
+                            (nb.getUserName()!=null && nb.getUserName().equals(t.getLinkedTurnoutName()))){
+                            found = true;
+                            message.append("<li>");
+                            message.append(Bundle.getMessage("VetoLinkedTurnout", t.getTurnoutName()));
+                            message.append("</li>");
+                        }
+                    }
+                    if(nb.equals(t.getSecondTurnout())){
+                        found = true;
+                        message.append("<li>");
+                        message.append(Bundle.getMessage("VetoSecondTurnout", t.getTurnoutName()));
+                        message.append("</li>");
+                    }
                 }
                 LayoutSlip ls = findLayoutSlipByBean(nb);
                 if(ls!=null){
+                    found = true;
                     message.append("<li>");
-                    message.append(Bundle.getMessage("VetoSignalHeadAssignedToLayoutSlip", ls.getTurnoutName()));
+                    message.append(Bundle.getMessage("VetoSlipIconFound", ls.getDisplayName()));
                     message.append("</li>");
                 }
-                message.append("</ul>");
+                for (LayoutTurntable lx : turntableList) {
+                    if(lx.isTurnoutControlled()){
+                        for(int i = 0; i<lx.getNumberRays(); i++){
+                            if(nb.equals(lx.getRayTurnout(i))){
+                                found = true;
+                                message.append("<li>");
+                                message.append(Bundle.getMessage("VetoRayTurntableControl", lx.getID()));
+                                message.append("</li>");
+                                break;
+                            }
+                        }
+                    }
+                }
             }
             if(found){
+                message.append("</ul>");
                 message.append(Bundle.getMessage("VetoReferencesWillBeRemoved")); //IN18N
                 throw new java.beans.PropertyVetoException(message.toString(), evt);
             }
         } else if ("DoDelete".equals(evt.getPropertyName())){ //IN18N
-            if(containsSignalHead((SignalHead)nb)){
+            if(nb instanceof SignalHead && containsSignalHead((SignalHead)nb)){
                 LayoutTurnout lt = findLayoutTurnoutByBean(nb);
                 if(lt!=null){
                     lt.removeSignalHead((SignalHead)nb);
@@ -9334,6 +9397,40 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     ls.removeSignalHead((SignalHead)nb);
                 }
                 removeSignalHead((SignalHead)nb);
+            }
+            
+            if(nb instanceof Turnout){
+                LayoutTurnout lt = findLayoutTurnoutByBean(nb);
+                if(lt!=null)
+                    lt.setTurnout(null);
+                for(LayoutTurnout t:turnoutList){
+                    if(t.getLinkedTurnoutName()!=null){
+                        if(t.getLinkedTurnoutName().equals(nb.getSystemName()) || 
+                            (nb.getUserName()!=null && t.getLinkedTurnoutName().equals(nb.getUserName()))){
+                            t.setLinkedTurnoutName(null);
+                        }
+                    }
+                    if(nb.equals(t.getSecondTurnout())){
+                        t.setSecondTurnout(null);
+                    }
+                }
+                for(LayoutSlip l: slipList){
+                    if(nb.equals(l.getTurnout())){
+                        l.setTurnout(null);
+                    }
+                    if(nb.equals(l.getTurnoutB())){
+                        l.setTurnoutB(null);
+                    }
+                }
+                for (LayoutTurntable lx : turntableList) {
+                    if(lx.isTurnoutControlled()){
+                        for(int i = 0; i<lx.getNumberRays(); i++){
+                            if(nb.equals(lx.getRayTurnout(i))){
+                                lx.setRayTurnout(i, null, jmri.NamedBean.UNKNOWN);
+                            }
+                        }
+                    }
+                }
             }
         }
     }

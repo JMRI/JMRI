@@ -648,7 +648,7 @@ public class LayoutTurnout
     }
     
 	public String getLinkedTurnoutName() {return linkedTurnoutName;}
-	public void setLinkedTurnoutName(String s) {linkedTurnoutName = s;}
+	public void setLinkedTurnoutName(String s) {linkedTurnoutName = s;}  //Could be done with changing over to a NamedBeanHandle
     
 	public int getLinkType() {return linkType;}
 	public void setLinkType(int type) {linkType = type;}
@@ -673,8 +673,11 @@ public class LayoutTurnout
     public void setTurnout(String tName) {
 		if (namedTurnout!=null) deactivateTurnout();
 		turnoutName = tName;
-		Turnout turnout =InstanceManager.turnoutManagerInstance().
+        Turnout turnout = null;
+        if(turnoutName!=null && !turnoutName.equals("")){
+            turnout =InstanceManager.turnoutManagerInstance().
                             getTurnout(turnoutName);
+        }
 		if (turnout!=null) {
             namedTurnout =InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutName, turnout);
 			activateTurnout();
