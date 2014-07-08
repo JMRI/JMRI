@@ -201,8 +201,8 @@ public class MrcPackets {
 
 
     static private DecimalFormat twoDigits = new DecimalFormat("00");
-    static private String txtOn = MrcPacketBundle.getMessage("MrcPacketsFunctionOn");
-    static private String txtOff = MrcPacketBundle.getMessage("MrcPacketsFunctionOff");
+    static private String txtOn = MrcPacketBundle.getMessage("MrcPacketsFunctionOn"); //IN18N
+    static private String txtOff = MrcPacketBundle.getMessage("MrcPacketsFunctionOff"); //IN18N
         //Need to test toString() for POM
     static public String toString(MrcMessage m){
         StringBuilder txt = new StringBuilder();
