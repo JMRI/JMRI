@@ -44,7 +44,8 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel{
         }
     }
 
-    public String getHelpTarget() { return "package.jmri.jmrix.mrc.packetgen.MrcPacketGenFrame"; }//IN18N
+//    public String getHelpTarget() { return "package.jmri.jmrix.mrc.swing.packetgen.MrcPacketGenPanel"; }//IN18N
+    public String getHelpTarget() { return null; }//IN18N
     
     public String getTitle() { 
     	StringBuilder x = new StringBuilder();
