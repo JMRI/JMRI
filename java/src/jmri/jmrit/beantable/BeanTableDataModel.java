@@ -301,7 +301,6 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             } else {
                 final JDialog dialog = new JDialog();
                 String msg;
-                String msg1;
                 dialog.setTitle(AbstractTableAction.rb.getString("WarningTitle"));
                 dialog.setLocationRelativeTo(null);
                 dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
@@ -333,7 +332,6 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                         }
                         message.append("</ul>");
                         
-                        JTextArea textArea = new JTextArea(10, 20);
                         JEditorPane pane = new JEditorPane();
                         pane.setContentType("text/html");
                         pane.setText("<html>"+message.toString()+"</html>");

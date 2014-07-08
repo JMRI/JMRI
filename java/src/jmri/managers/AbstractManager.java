@@ -261,7 +261,7 @@ abstract public class AbstractManager
      *                 "CanDelete" will enquire with all listerners if the item can be deleted.
      *                 "DoDelete" tells the listerner to delete the item.
      * @param old The old value of the property.
-     * @param new The new value of the property.
+     * @param n The new value of the property.
      * @throws PropertyVetoException - if the recipients wishes the delete to be aborted.
      */
     protected void fireVetoableChange(String p, Object old, Object n) throws java.beans.PropertyVetoException {

@@ -135,7 +135,7 @@ public interface Manager {
      * if a property name of "DoNotDelete" is thrown back in the VetoException then the delete process
      * should be aborted.
      *
-     * @param bean The NamedBean to be deleted
+     * @param n The NamedBean to be deleted
      * @param property The programmatic name of the request
      *                 "CanDelete" will enquire with all listerners if the item can be deleted
      *                 "DoDelete" tells the listerner to delete the item
