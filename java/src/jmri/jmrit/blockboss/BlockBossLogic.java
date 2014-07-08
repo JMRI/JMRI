@@ -165,7 +165,9 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
      * @return system name of the driven signal
      */
     public String getDrivenSignal() {
-        return driveSignal.getName();
+        if(driveSignal!=null)
+            return driveSignal.getName();
+        return "Unknown";
     }
     
     public NamedBeanHandle<SignalHead> getDrivenSignalNamedBean(){
@@ -975,8 +977,9 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         NamedBean nb = (NamedBean) evt.getOldValue();
         if("CanDelete".equals(evt.getPropertyName())){ //IN18N
             StringBuilder message = new StringBuilder();
-            message.append(Bundle.getMessage("InUseBlockBossHeader", driveSignal.getBean().getDisplayName())); //IN18N
+            message.append(Bundle.getMessage("InUseBlockBossHeader", getDrivenSignal())); //IN18N
             boolean found = false;
+            
             if(nb instanceof SignalHead){
                 if(getDrivenSignalNamedBean()!=null && getDrivenSignalNamedBean().getBean().equals(nb)){
                     message.append("This SSL will be deleted");
@@ -1005,7 +1008,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
                         (watchSensor3!=null && watchSensor3.getBean().equals(nb)) ||
                           (watchSensor4!=null && watchSensor4.getBean().equals(nb)) ||
                             (watchSensor5!=null && watchSensor5.getBean().equals(nb))){
-                    message.append(Bundle.getMessage("InUseWatchedTurnout"));
+                    message.append(Bundle.getMessage("InUseWatchedSensor"));
                     found = true;
                 }
                 if((watchedSensor1!=null && watchedSensor1.getBean().equals(nb)) ||
@@ -1027,7 +1030,6 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
                 message.append(Bundle.getMessage("InUseBlockBossFooter")); //IN18N
                 throw new java.beans.PropertyVetoException(message.toString(), evt);
             }
-            
         } else if ("DoDelete".equals(evt.getPropertyName())){ //IN18N
             if(nb instanceof SignalHead){
                 if(getDrivenSignalNamedBean()!=null && getDrivenSignalNamedBean().getBean().equals(nb)){
