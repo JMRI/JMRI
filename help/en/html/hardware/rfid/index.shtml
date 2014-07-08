@@ -35,6 +35,21 @@ and
 <a href="../../tools/Reporters.shtml">Reporters</a>
 in terms of RFID Reader "events". 
 
+<h2>Protocols</h2>
+JMRI supports several different reader protocols when directly connected:
+<ul>
+    <li>CORE-ID / ID-Innovations - since 2.11.4</li>
+    <li>Olimex - since 3.9.2</li>
+    <li>Parallax - since 3.9.2</li>
+</ul>
+
+<p>Choose the appropriate protocol in connection preferences.
+
+<p>
+JMRI also supports up to 8 individual readers connected via a concentrator.
+Right now, the only supported concentrator is that from MERG, and then only for
+readers using the CORE-ID protocol.
+
 <h2>Naming</h2>
 
 The <a href="../../doc/Technical/Names.shtml">system letter</a> 
