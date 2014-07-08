@@ -2,21 +2,23 @@
 
 package jmri.jmrix.rfid.serialdriver;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.rfid.RfidPortController;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
+import gnu.io.UnsupportedCommOperationException;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.TooManyListenersException;
+import jmri.jmrix.rfid.RfidPortController;
+import jmri.jmrix.rfid.RfidProtocol;
 import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 import jmri.jmrix.rfid.RfidTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provide access to RFID devices via a serial comm port.
@@ -34,8 +36,10 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         super();
         option1Name = "Adapter";
         option2Name = "Concentrator-Range";
+        option3Name = "Protocol";
         options.put(option1Name, new Option("Adapter:", new String[]{"Generic Stand-alone", "MERG Concentrator"}, false));
         options.put(option2Name, new Option("Concentrator range:", new String[]{"A-H","I-P"}, false));
+        options.put(option3Name, new Option("Protocol:", new String[]{"CORE-ID", "Olimex", "Parallax"}, false));
     }
 
     @Override
@@ -43,6 +47,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         return adapterMemo;
     }
 
+    @Override
     public String openPort(String portName, String appName)  {
         try {
             // get and open the primary port
@@ -75,7 +80,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
                 activeSerialPort.enableReceiveTimeout(10);
                 log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
                       +" "+activeSerialPort.isReceiveTimeoutEnabled());
-            } catch (Exception et) {
+            } catch (UnsupportedCommOperationException et) {
                 log.info("failed to set serial timeout: "+et);
             }
             
@@ -110,6 +115,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
             if (log.isDebugEnabled()) {
                 // arrange to notify later
                 activeSerialPort.addEventListener(new SerialPortEventListener(){
+                        @Override
                         public void serialEvent(SerialPortEvent e) {
                             int type = e.getEventType();
                             switch (type) {
@@ -145,7 +151,6 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
                                 return;
                             default:
                                 log.info("SerialEvent of unknown type: "+type+" value: "+e.getNewValue());
-                                return;
                             }
                         }
                     }
@@ -168,7 +173,11 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
 
         } catch (gnu.io.NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (Exception ex) {
+        } catch (IOException ex) {
+            log.error("Unexpected exception while opening port "+portName+" trace follows: "+ex);
+            ex.printStackTrace();
+            return "Unexpected error while opening port "+portName+": "+ex;
+        } catch (TooManyListenersException ex) {
             log.error("Unexpected exception while opening port "+portName+" trace follows: "+ex);
             ex.printStackTrace();
             return "Unexpected error while opening port "+portName+": "+ex;
@@ -179,6 +188,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
 
     /**
      * Can the port accept additional characters? Yes, always
+     * @return True if OK
      */
     public boolean okToSend() {
         return true;
@@ -188,8 +198,11 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
      * set up all of the other objects to operate
      * connected to this port
      */
+    @Override
     public void configure() {
-        RfidTrafficController control = null;
+        RfidTrafficController control;
+        RfidProtocol protocol;
+
         // set up the system connection first
         String opt1 = getOptionState(option1Name);
         if (opt1.equals("Generic Stand-alone")) {
@@ -204,23 +217,50 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
             control = new jmri.jmrix.rfid.merg.concentrator.SpecificTrafficController(adapterMemo, getOptionState(option2Name));
         } else {
             // no connection at all - warn
-            log.warn("protocol option "+opt1+" defaults to Generic Stand-alone");
+            log.warn("adapter option "+opt1+" defaults to Generic Stand-alone");
             // create a Generic Stand-alone port controller
             adapterMemo = new jmri.jmrix.rfid.generic.standalone.SpecificSystemConnectionMemo();
             control = new jmri.jmrix.rfid.generic.standalone.SpecificTrafficController(adapterMemo);
         }    
+
+        // Now do the protocol
+        String opt3 = getOptionState(option3Name);
+        if (!opt1.equals("MERG Concentrator")) {
+            if (opt3.equals("CORE-ID")) {
+                log.info("set protocol to CORE-ID");
+                protocol = new jmri.jmrix.rfid.protocol.coreid.CoreIdRfidProtocol();
+            } else if (opt3.equals("Olimex")) {
+                log.info("set protocol to Olimex");
+                protocol = new jmri.jmrix.rfid.protocol.olimex.OlimexRfidProtocol();
+            } else if (opt3.equals("Parallax")) {
+                log.info("set protocol to Parallax");
+                protocol = new jmri.jmrix.rfid.protocol.parallax.ParallaxRfidProtocol();
+            } else {
+            // no protocol at all - warn
+            log.warn("protocol option "+opt3+" defaults to CORE-ID");
+            // create a coreid protocol
+            protocol = new jmri.jmrix.rfid.protocol.coreid.CoreIdRfidProtocol();
+            }
+        } else {
+            // MERG Concentrator only supports CORE-ID
+            log.info("set protocol to CORE-ID");
+            protocol = new jmri.jmrix.rfid.protocol.coreid.CoreIdRfidProtocol();
+        }
+        adapterMemo.setProtocol(protocol);
 
         // connect to the traffic controller
         adapterMemo.setRfidTrafficController(control);
         control.setAdapterMemo(adapterMemo);
         adapterMemo.configureManagers();
         control.connectPort(this);
+        control.sendInitString();
 
         // declare up
         jmri.jmrix.rfid.ActiveFlag.setActive();
     }
 
     // base class methods for the RfidPortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
@@ -229,21 +269,24 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         return new DataInputStream(serialStream);
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) log.error("getOutputStream called before load(), stream not available");
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         }
-     	catch (java.io.IOException e) {
+        catch (java.io.IOException e) {
             log.error("getOutputStream exception: "+e.getMessage());
-     	}
-     	return null;
+        }
+        return null;
     }
 
+    @Override
     public boolean status() {return opened;}
 
     /**
      * Local method to do specific port configuration
+     * @throws gnu.io.UnsupportedCommOperationException
      */
     protected void setSerialPort() throws gnu.io.UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
@@ -254,8 +297,8 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
                                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
         // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+        activeSerialPort.setRTS(true);          // not connected in some serial ports and adapters
+        activeSerialPort.setDTR(true);          // pin 1 in DIN8; on main connector, this is DTR
 
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_NONE; // default
@@ -264,14 +307,17 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
 
     /**
      * Get an array of valid baud rates.
+     * @return list of rates
      */
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP")
+    @Override
     public String[] validBaudRates() {
         return validSpeeds;
     }
 
     /**
      * Set the baud rate.
+     * @param rate
      */
     @Override
     public void configureBaudRate(String rate) {

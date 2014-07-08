@@ -2,16 +2,17 @@
 
 package jmri.jmrix.rfid.generic.standalone;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.IdTag;
 import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.Reporter;
+import jmri.jmrix.rfid.RfidMessage;
 import jmri.jmrix.rfid.RfidReply;
 import jmri.jmrix.rfid.RfidReporterManager;
 import jmri.jmrix.rfid.RfidTrafficController;
-import jmri.jmrix.rfid.coreid.CoreIdRfidReporter;
+import jmri.jmrix.rfid.TimeoutRfidReporter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Rfid implementation of a ReporterManager.
@@ -26,8 +27,8 @@ import jmri.jmrix.rfid.coreid.CoreIdRfidReporter;
  */
 public class SpecificReporterManager extends RfidReporterManager {
 
-    private RfidTrafficController tc;
-    private String prefix;
+    private final RfidTrafficController tc;
+    private final String prefix;
 
     public SpecificReporterManager(RfidTrafficController tc, String prefix) {
         super(prefix);
@@ -40,30 +41,41 @@ public class SpecificReporterManager extends RfidReporterManager {
         tc.addRfidListener(this);
     }
 
+    @Override
     protected Reporter createNewReporter(String systemName, String userName) {
         log.debug("Create new Reporter: "+systemName);
         if (!systemName.matches(prefix+typeLetter()+"["+tc.getRange()+"]")) {
             log.warn("Invalid Reporter name: " + systemName + " - out of supported range " + tc.getRange());
             throw new IllegalArgumentException("Invalid Reporter name: " + systemName + " - out of supported range " + tc.getRange());
         }
-        CoreIdRfidReporter r;
-        r = new CoreIdRfidReporter(systemName, userName);
+        TimeoutRfidReporter r;
+        r = new TimeoutRfidReporter(systemName, userName);
         r.addPropertyChangeListener(this);
         return r;
     }
 
+    @Override
+    public void message(RfidMessage m) {
+        if (m.toString().equals(new SpecificMessage(tc.getAdapterMemo().getProtocol().initString(),0).toString())) {
+            log.info("Sent init string: "+m);
+        } else {
+            super.message(m);
+        }
+    }
+
+    @Override
     public synchronized void reply(RfidReply r) {
         if (r instanceof SpecificReply)
             processReply((SpecificReply) r);
     }
 
     private void processReply(SpecificReply r) {
-        if (!r.isCheckSumValid()) {
-            log.warn("Invalid checksum - skipping " + r);
+        if (!tc.getAdapterMemo().getProtocol().isValid(r)) {
+            log.warn("Invalid message - skipping " + r);
             return;
         }
-        IdTag idTag = InstanceManager.getDefault(IdTagManager.class).provideIdTag(r.getTag());
-        CoreIdRfidReporter report = (CoreIdRfidReporter) provideReporter(prefix+typeLetter()+"1");
+        IdTag idTag = InstanceManager.getDefault(IdTagManager.class).provideIdTag(tc.getAdapterMemo().getProtocol().getTag(r));
+        TimeoutRfidReporter report = (TimeoutRfidReporter) provideReporter(prefix+typeLetter()+"1");
         report.notify(idTag);
     }
 

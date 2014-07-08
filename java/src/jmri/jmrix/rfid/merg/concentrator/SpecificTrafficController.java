@@ -2,15 +2,14 @@
 
 package jmri.jmrix.rfid.merg.concentrator;
 
-//import java.io.DataInputStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.rfid.RfidMessage;
 import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 import jmri.jmrix.rfid.RfidTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Converts Stream-based I/O to/from messages.  The "SerialInterface"
@@ -31,10 +30,9 @@ import jmri.jmrix.rfid.RfidTrafficController;
  */
 public class SpecificTrafficController extends RfidTrafficController {
 
-    private String range;
+    private final String range;
+    private final RfidSystemConnectionMemo memo;
 
-    private RfidSystemConnectionMemo memo = null;
-    
     public SpecificTrafficController(RfidSystemConnectionMemo memo, String range) {
         super();
         this.memo = memo;
@@ -46,6 +44,14 @@ public class SpecificTrafficController extends RfidTrafficController {
         setAllowUnexpectedReply(true);
         mWaitBeforePoll = 1000;  // can take a long time to send
 
+    }
+
+    @Override
+    public void sendInitString() {
+        String init = memo.getProtocol().initString();
+        if (init.length() > 0) {
+            sendRfidMessage(new SpecificMessage(init, 0),null);
+        }
     }
 
     @Override
@@ -73,17 +79,7 @@ public class SpecificTrafficController extends RfidTrafficController {
 
     @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
-        SpecificReply sr = (SpecificReply) msg;
-        if (sr.getNumDataElements()==SpecificReply.SPECIFICMAXSIZE) {
-            if ((sr.getElement(SpecificReply.SPECIFICMAXSIZE-1)&0xFF)==0x3E &&
-                (sr.getElement(SpecificReply.SPECIFICMAXSIZE-2)&0xFF)==0x0A &&
-                (sr.getElement(SpecificReply.SPECIFICMAXSIZE-3)&0xFF)==0x0D) {
-                return true;
-            }
-            if (logDebug) log.debug("Not a correctly formed message");
-            return true;
-        }
-        return false;
+        return memo.getProtocol().endOfMessage(msg);
     }
 
     boolean sendInterlock = false; // send the 00 interlock when CRC received

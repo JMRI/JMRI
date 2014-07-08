@@ -2,14 +2,14 @@
 
 package jmri.jmrix.rfid.generic.standalone;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.rfid.RfidMessage;
 import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 import jmri.jmrix.rfid.RfidTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Converts Stream-based I/O to/from messages.  The "SerialInterface"
@@ -30,7 +30,15 @@ import jmri.jmrix.rfid.RfidTrafficController;
  */
 public class SpecificTrafficController extends RfidTrafficController {
 
-    private RfidSystemConnectionMemo memo = null;
+    private final RfidSystemConnectionMemo memo;
+
+    @Override
+    public void sendInitString() {
+        String init = memo.getProtocol().initString();
+        if (init.length() > 0) {
+            sendRfidMessage(new SpecificMessage(init, 0),null);
+        }
+    }
 
     public SpecificTrafficController(RfidSystemConnectionMemo memo) {
         super();
@@ -69,10 +77,7 @@ public class SpecificTrafficController extends RfidTrafficController {
 
     @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
-        if (((SpecificReply)msg).getNumDataElements()==SpecificReply.SPECIFICMAXSIZE) {
-            return true;
-        }
-        return false;
+        return memo.getProtocol().endOfMessage(msg);
     }
 
     boolean sendInterlock = false; // send the 00 interlock when CRC received
