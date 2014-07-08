@@ -982,15 +982,16 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             
             if(nb instanceof SignalHead){
                 if(getDrivenSignalNamedBean()!=null && getDrivenSignalNamedBean().getBean().equals(nb)){
-                    message.append("This SSL will be deleted");
+                    message.append("<br><b>This SSL will be deleted</b>");
                     throw new java.beans.PropertyVetoException(message.toString(), evt);
                 }
                 if((watchedSignal1!=null && watchedSignal1.getBean().equals(nb)) ||
                        (watchedSignal1Alt!=null && watchedSignal1Alt.getBean().equals(nb)) ||
                            (watchedSignal2!=null && watchedSignal2.getBean().equals(nb)) ||
                               (watchedSignal2Alt!=null && watchedSignal2Alt.getBean().equals(nb)) ){
-                              
+                    message.append("<ul>");
                     message.append(Bundle.getMessage("InUseWatchedSignal"));
+                    message.append("</ul>");
                     found = true;
                 }
 
@@ -998,7 +999,9 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             else if(nb instanceof Turnout){
                 if(getTurnout()!=null && getTurnout().equals(nb)){
                     found = true;
+                    message.append("<ul>");
                     message.append(Bundle.getMessage("InUseWatchedTurnout"));
+                    message.append("</ul>");
                 }
             } 
             else if(nb instanceof Sensor){
@@ -1008,20 +1011,26 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
                         (watchSensor3!=null && watchSensor3.getBean().equals(nb)) ||
                           (watchSensor4!=null && watchSensor4.getBean().equals(nb)) ||
                             (watchSensor5!=null && watchSensor5.getBean().equals(nb))){
+                    message.append("<li>");
                     message.append(Bundle.getMessage("InUseWatchedSensor"));
+                    message.append("</li>");
                     found = true;
                 }
                 if((watchedSensor1!=null && watchedSensor1.getBean().equals(nb)) ||
                     (watchedSensor2!=null && watchedSensor2.getBean().equals(nb)) ||
                       (watchedSensor1Alt!=null && watchedSensor1Alt.getBean().equals(nb)) ||
                         (watchedSensor2Alt!=null && watchedSensor2Alt.getBean().equals(nb))){
+                    message.append("<li>");
                     message.append(Bundle.getMessage("InUseWatchedSensor"));
+                    message.append("</li>");
                     found = true;
                 
                 }
                 if (approachSensor1!=null && approachSensor1.getBean().equals(nb)){
                     found = true;
+                    message.append("<li>");
                     message.append(Bundle.getMessage("InUseApproachSensor"));
+                    message.append("</li>");
                 }
                 
                 message.append("</ul>");

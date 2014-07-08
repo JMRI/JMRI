@@ -768,6 +768,8 @@ public class Section extends AbstractNamedBean
 	 *   Returns 'null' if not found.
 	 */
 	public EntryPoint getExitPointToSection(Section s, int dir) {
+        if(s==null)
+            return null;
 		EntryPoint ep = null;
 		if (dir == REVERSE) {
 			for (int i = 0; i<mForwardEntryPoints.size(); i++) {

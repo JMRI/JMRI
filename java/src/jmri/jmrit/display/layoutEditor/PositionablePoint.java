@@ -235,6 +235,15 @@ public class PositionablePoint
         }
     }
     
+    void removeSignalHead(jmri.SignalHead sh){
+        if(getWestBoundSignal().equals(sh.getSystemName()) || getWestBoundSignal().equals(sh.getUserName())){
+            setWestBoundSignal(null);
+        }
+        if(getEastBoundSignal().equals(sh.getSystemName()) || getEastBoundSignal().equals(sh.getUserName())){
+            setEastBoundSignal(null);
+        }
+    }
+    
     public String getEastBoundSensorName() {
         if(eastBoundSensorNamed!=null)
             return eastBoundSensorNamed.getName();

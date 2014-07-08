@@ -302,7 +302,6 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                 final JDialog dialog = new JDialog();
                 String msg;
                 dialog.setTitle(AbstractTableAction.rb.getString("WarningTitle"));
-                dialog.setLocationRelativeTo(null);
                 dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
                 JPanel container = new JPanel();
                 container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
@@ -336,10 +335,8 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                         pane.setContentType("text/html");
                         pane.setText("<html>"+message.toString()+"</html>");
                         pane.setEditable(false);
-
                         container.add(pane);
                     }
-
                 } else {
                     msg = java.text.MessageFormat.format(
                             AbstractTableAction.rb.getString("DeletePrompt"),
@@ -383,6 +380,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                 container.setAlignmentY(Component.CENTER_ALIGNMENT);
                 dialog.getContentPane().add(container);
                 dialog.pack();
+                dialog.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width)/2 - dialog.getWidth()/2, (Toolkit.getDefaultToolkit().getScreenSize().height)/2 -dialog.getHeight()/2);
                 dialog.setModal(true);
                 dialog.setVisible(true);
             }

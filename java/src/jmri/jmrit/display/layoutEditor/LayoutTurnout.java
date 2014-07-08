@@ -377,6 +377,45 @@ public class LayoutTurnout
 	public String getSignalD2Name() {return signalD2Name;}
 	public void setSignalD2Name(String signalName) {signalD2Name = signalName;}
     
+    protected void removeSignalHead(jmri.SignalHead sh){
+        if(getSignalA1Name().equals(sh.getSystemName()) || getSignalA1Name().equals(sh.getUserName())){
+            setSignalA1Name(null);
+            return;
+        }
+        if(getSignalA2Name().equals(sh.getSystemName()) || getSignalA2Name().equals(sh.getUserName())){
+            setSignalA2Name(null);
+            return;
+        }
+        if(getSignalA3Name().equals(sh.getSystemName()) || getSignalA3Name().equals(sh.getUserName())){
+            setSignalA3Name(null);
+            return;
+        }
+        if(getSignalB1Name().equals(sh.getSystemName()) || getSignalB1Name().equals(sh.getUserName())){
+            setSignalB1Name(null);
+            return;
+        }
+        if(getSignalB2Name().equals(sh.getSystemName()) || getSignalB2Name().equals(sh.getUserName())){
+            setSignalB2Name(null);
+            return;
+        }
+        if(getSignalC1Name().equals(sh.getSystemName()) || getSignalC1Name().equals(sh.getUserName())){
+            setSignalC1Name(null);
+            return;
+        }
+        if(getSignalC2Name().equals(sh.getSystemName()) || getSignalC2Name().equals(sh.getUserName())){
+            setSignalC2Name(null);
+            return;
+        }
+        if(getSignalD1Name().equals(sh.getSystemName()) || getSignalD1Name().equals(sh.getUserName())){
+            setSignalD1Name(null);
+            return;
+        }
+        if(getSignalD2Name().equals(sh.getSystemName()) || getSignalD2Name().equals(sh.getUserName())){
+            setSignalD2Name(null);
+            return;
+        }
+    }
+    
     public void removeSignalMast(SignalMast sm){
         if(signalAMastNamed!=null && signalAMastNamed.getBean().equals(sm)){
             setSignalAMast(null);

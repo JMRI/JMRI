@@ -126,6 +126,27 @@ public class LevelXing
 	public String getSignalDName() {return signalDName;}
 	public void setSignalDName(String signalName) {signalDName = signalName;}
     
+    protected void removeSignalHead(jmri.SignalHead sh){
+        if(getSignalAName().equals(sh.getSystemName()) || getSignalAName().equals(sh.getUserName())){
+            setSignalAName(null);
+            return;
+        }
+        if(getSignalBName().equals(sh.getSystemName()) || getSignalBName().equals(sh.getUserName())){
+            setSignalBName(null);
+            return;
+        }
+
+        if(getSignalCName().equals(sh.getSystemName()) || getSignalCName().equals(sh.getUserName())){
+            setSignalCName(null);
+            return;
+        }
+
+        if(getSignalDName().equals(sh.getSystemName()) || getSignalDName().equals(sh.getUserName())){
+            setSignalDName(null);
+            return;
+        }
+    }
+    
     public void removeSignalMast(SignalMast sm){
         if(signalAMastNamed.getBean().equals(sm)){
             setSignalAMast(null);
