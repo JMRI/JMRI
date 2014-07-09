@@ -69,13 +69,14 @@
     <LI><A HREF="#BuildReportDetails">Build Report Options</A></LI>
     <LI><A HREF="#Locations">Locations</A>
      <UL>
+      <LI><A HREF="#AddLocation">Add or Edit Location</A>
       <LI><A HREF="#LocationTools">Location Tools</A>
-      <UL>
-      <LI><A HREF="#CopyTrack">Copy Track</A></LI>
-      <LI><A HREF="#ModifyLocationByCarType">Modify Location by Car Type</A></LI>
-      <LI><A HREF="#ShowCars">Show Cars</A></LI>
-      <LI><A HREF="#ChangeTrackTypeLocation">Change Track Type</A></LI>
-      </UL></LI>
+       <UL>
+        <LI><A HREF="#CopyTrack">Copy Track</A></LI>
+        <LI><A HREF="#ModifyLocationByCarType">Modify Location by Car Type</A></LI>
+        <LI><A HREF="#ShowCars">Show Cars</A></LI>
+        <LI><A HREF="#ChangeTrackTypeLocation">Change Track Type</A></LI>
+       </UL></LI>
       <LI><A HREF="#Yards">Yards</A></LI>
       <LI><A HREF="#Sidings">Spurs</A>
        <UL>
@@ -1197,14 +1198,17 @@
     <A HREF="#SwitchList">(Switch List)</A> that allows you to see the scheduled pick ups and set
     outs by train. Only trains that have work for the location are available.
    </P>
+   
+   <A NAME="AddLocation"></A>
+   <H3>Add or Edit Location</H3>
 
    <P>To add a location, press the "Add" button located on the bottom of the "Locations" window.
-    A new window should appear.</P>
+    A new window should appear. To edit an existing location, press the "Edit" button for the location.</P>
    <P>
     <img src="images/EditLocation.png">
    </P>
 
-   <P>In the "Add Location" window, enter the name of the location in box across from "Name".
+   <P>In the "Add Location" window, enter the name of the location in the field labeled "Name".
     The location name must be unique; the program will not allow two locations with identical names.
     However, if you want more than one location to have the "same" name for your manifests and
     switch lists, add a hyphen and a number to the locations name, or a hyphen and a left
@@ -1212,7 +1216,7 @@
     The program will remove the hyphen and number, and hyphen and text when there's a left
     parenthesis when printing manifests and switch lists. Note that the "hyphen"
     feature also works for track names.</P>
-
+    
    <P>Now press the "Add Location" button at the bottom of the window. The various fields that
     were disabled should now appear.</P>
    <P>
@@ -1310,7 +1314,7 @@
 
    Now enter the name of the yard along with the length of the track in scale feet or in actual
    inches. Append a double quote (") to the length when entering actual inches and the program will
-   convert the length into scale feet. Append cm if you want to convert from centimeters to meters.
+   convert the length into scale feet. Append cm if you want to convert from centimeters to scale meters.
    Press the "Add Yard Track" button at the bottom of the window and the disabled fields should now
    appear.
 
