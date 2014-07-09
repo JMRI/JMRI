@@ -168,8 +168,18 @@ public class TrainBuilder extends TrainCommon {
 		} else {
 			if (Setup.isCarRoutingViaYardsEnabled())
 				addLine(_buildReport, FIVE, Bundle.getMessage("RoutingViaYardsEnabled"));
-			if (Setup.isOnlyActiveTrainsEnabled())
+			if (Setup.isOnlyActiveTrainsEnabled()) {
 				addLine(_buildReport, FIVE, Bundle.getMessage("OnlySelectedTrains"));
+				// list the selected trains
+				for (Train train : TrainManager.instance().getTrainsByNameList()) {
+					if (train.isBuildEnabled())
+						addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildTrainNameAndDesc"),
+								new Object[] { train.getName(), train.getDescription() }));
+				}
+				if (!_train.isBuildEnabled())
+					addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainNotSelected"),
+							new Object[] { _train.getName() }));
+			}
 			if (Setup.isCheckCarDestinationEnabled())
 				addLine(_buildReport, FIVE, Bundle.getMessage("CheckCarDestination"));
 		}
