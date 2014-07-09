@@ -239,6 +239,10 @@ Actual release steps:
 
 ( ) Commit site
 
+( ) Consider submitting an anti-virus white-list request at:
+        https://submit.symantec.com/whitelist/isv/
+    If you don't, a bunch of Windows users are likely to whine
+    
 ( ) For production releases, file copyright registration
 
     https://eco.copyright.gov/eService_enu/   (Firefox only!)
