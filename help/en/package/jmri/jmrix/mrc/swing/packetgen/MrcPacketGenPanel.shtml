@@ -26,7 +26,7 @@ JMRI: MRC Command Generator
 </h1>
 
 This is the 
-package/jmri/jmrix/mrc/swing/packetgen/MrcPacketGenFrame.shtml
+package/jmri/jmrix/mrc/swing/packetgen/MrcPacketGenPanel.shtml
 package help file.
 <p>
 Currently this does not function.

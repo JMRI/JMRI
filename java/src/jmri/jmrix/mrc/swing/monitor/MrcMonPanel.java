@@ -34,7 +34,6 @@ public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTraffi
     }
     
 public String getHelpTarget() { return "package.jmri.jmrix.mrc.swing.monitor.MrcMonPanel"; }//IN18N
-//    public String getHelpTarget() { return null; }
 
     public String getTitle() { 
     	StringBuilder x = new StringBuilder();

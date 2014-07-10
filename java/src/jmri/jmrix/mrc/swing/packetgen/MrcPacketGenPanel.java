@@ -4,10 +4,12 @@ package jmri.jmrix.mrc.swing.packetgen;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.util.*;
 import jmri.jmrix.mrc.*;
 
 import java.awt.*;
+
 import javax.swing.*;
 
 
@@ -45,7 +47,6 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel{
     }
 
     public String getHelpTarget() { return "package.jmri.jmrix.mrc.swing.packetgen.MrcPacketGenPanel"; }//IN18N
-//    public String getHelpTarget() { return null; }//IN18N
     
     public String getTitle() { 
     	StringBuilder x = new StringBuilder();
