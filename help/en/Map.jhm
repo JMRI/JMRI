@@ -600,8 +600,6 @@
 
 <mapID target="manual.DecoderPro.Main_XpressNet_LI101" url="manual/DecoderPro/Main_XpressNet.shtml#LI101"/>
 
-<mapID target="package.jmri.jmrix.mrc.swing.packetgen.MrcPacketGenFrame" url="package/jmri/jmrix/mrc/swing/packetgen/MrcPacketGenFrame.shtml"/>
-
 <mapID target="manual.DecoderPro3.RosterMedia_Top" url="manual/DecoderPro3/RosterMedia.shtml#Top"/>
 
 <mapID target="manual.DecoderPro.Main_Debug_pricom" url="manual/DecoderPro/Main_Debug.shtml#pricom"/>
@@ -1047,6 +1045,8 @@
 <mapID target="html.hardware.loconet.Digitrax_Support" url="html/hardware/loconet/Digitrax.shtml#Support"/>
 
 <mapID target="html.apps.LocoTools.index_pr3mode" url="html/apps/LocoTools/index.shtml#pr3mode"/>
+
+<mapID target="package.jmri.jmrix.mrc.swing.packetgen.MrcPacketGenPanel" url="package/jmri/jmrix/mrc/swing/packetgen/MrcPacketGenPanel.shtml"/>
 
 <mapID target="html.web.FrameServlet" url="html/web/FrameServlet.shtml"/>
 
