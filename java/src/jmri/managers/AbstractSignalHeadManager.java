@@ -26,6 +26,7 @@ public class AbstractSignalHeadManager extends AbstractManager
 
     public AbstractSignalHeadManager() {
         super();
+        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
     }
     
     public int getXMLOrder(){
@@ -49,6 +50,38 @@ public class AbstractSignalHeadManager extends AbstractManager
 
     public SignalHead getByUserName(String key) {
         return (SignalHead)_tuser.get(key);
+    }
+    
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+        if("CanDelete".equals(evt.getPropertyName())){ //IN18N
+            StringBuilder message = new StringBuilder();
+            boolean found = false;
+            message.append("Found in the following Signal Heads..");
+            message.append("<ul>");
+            for(NamedBean nb:_tsys.values()){
+                try {
+                    nb.vetoableChange(evt);
+                } catch (java.beans.PropertyVetoException e) {
+                    if(e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")){ //IN18N
+                        throw e;
+                    }
+                    found = true;
+                    message.append("<li>" + e.getMessage() + "</li>");
+                }
+            }
+            message.append("</ul>");
+            message.append("It will be removed from the route");
+            if(found)
+                throw new java.beans.PropertyVetoException(message.toString(), evt);
+        } else {
+            for(NamedBean nb:_tsys.values()){
+                try {
+                    nb.vetoableChange(evt);
+                } catch (java.beans.PropertyVetoException e) {
+                    throw e;
+                }
+            }
+        }
     }
 
 

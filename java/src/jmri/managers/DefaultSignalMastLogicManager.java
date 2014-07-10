@@ -486,6 +486,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
             StringBuilder message = new StringBuilder();
             boolean found = false;
             message.append("Found in the following Signal Mast Logic");
+            message.append("<ul>");
             for(int i = 0; i <signalMastLogic.size(); i++){
                 try {
                     signalMastLogic.get(i).vetoableChange(evt);
@@ -494,11 +495,12 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
                         throw e;
                     }
                     found = true;
-                    message.append("<ul>");
+
                     message.append(e.getMessage());
-                    message.append("</ul>");
+
                 }
             }
+            message.append("</ul>");
             if(found)
                 throw new java.beans.PropertyVetoException(message.toString(), evt);
         } else {

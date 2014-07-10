@@ -17,12 +17,10 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
 
     public AbstractSignalHead(String systemName, String userName) {
         super(systemName, userName);
-        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
     }
 
     public AbstractSignalHead(String systemName) {
         super(systemName);
-        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
     }
 
     public String getAppearanceName(int appearance) {
@@ -141,7 +139,7 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
                 throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseTurnoutSignalHeadVeto", getDisplayName()), e); //IN18N
             }
         } else if ("DoDelete".equals(evt.getPropertyName())){
-            log.info("Call to do delete"); //IN18N
+            //log.info("Call to do delete"); //IN18N
         }
     }
     

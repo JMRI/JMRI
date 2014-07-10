@@ -22,7 +22,7 @@ import jmri.*;
  * @version	$Revision$
  */
 abstract public class AbstractManager
-    implements Manager, java.beans.PropertyChangeListener {
+    implements Manager, java.beans.PropertyChangeListener, java.beans.VetoableChangeListener {
 
     public AbstractManager(){
         registerSelf();
@@ -290,6 +290,8 @@ abstract public class AbstractManager
             }
         }
     }
+    
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException { }
     
     static Logger log = LoggerFactory.getLogger(AbstractManager.class.getName());
 

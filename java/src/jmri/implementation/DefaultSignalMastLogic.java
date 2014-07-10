@@ -2787,7 +2787,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
             if(nb instanceof Turnout){
                 for(SignalMast sm:getDestinationList()){
                     if(isTurnoutIncluded((Turnout) nb, sm)){
-                        message.append("<li>Is in logic between " + source.getDisplayName() + " " + sm.getDisplayName()+ "</li>");
+                        message.append("<li>Is in logic between Signal Masts " + source.getDisplayName() + " " + sm.getDisplayName()+ "</li>");
                         found = true;
                     }
                 }
@@ -2796,7 +2796,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
                 for(SignalMast sm:getDestinationList()){
                     if(isSensorIncluded((Sensor) nb, sm)){
                         message.append("<li>");
-                        message.append("Is in logic between " + source.getDisplayName() + " " + sm.getDisplayName());
+                        message.append("Is in logic between Signal Masts " + source.getDisplayName() + " " + sm.getDisplayName());
                         message.append("</li>");
                         found = true;
                     }
