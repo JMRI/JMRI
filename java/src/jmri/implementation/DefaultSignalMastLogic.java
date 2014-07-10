@@ -48,7 +48,7 @@ import jmri.jmrit.display.layoutEditor.LayoutSlip;
  * @version			$Revision$
  */
 
-public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
+public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.VetoableChangeListener {
     SignalMast source;
     SignalMast destination;
     String stopAspect;
@@ -69,6 +69,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
      */
     public DefaultSignalMastLogic(SignalMast source){
         this.source = source;
+        jmri.InstanceManager.signalMastManagerInstance().addVetoableChangeListener(this);
         try {
             this.stopAspect = source.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER);
             this.source.addPropertyChangeListener(propertySourceMastListener);
@@ -2739,6 +2740,42 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
     }
     protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
 
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+        NamedBean nb = (NamedBean)evt.getOldValue();
+        if("CanDelete".equals(evt.getPropertyName())){ //IN18N
+            boolean found = false;
+            StringBuilder message = new StringBuilder();
+            if(nb instanceof SignalMast){
+                if(nb.equals(source) || isDestinationValid((SignalMast)nb)){
+                    throw new java.beans.PropertyVetoException("Has SignalMast Logic attached which will be <b>Deleted</b> ", evt);
+                }
+                for(SignalMast sm:getDestinationList()){
+                    if(isSignalMastIncluded((SignalMast)nb, sm)){
+                        message.append("<li>");
+                        message.append("Used in conflicting logic of " + source.getDisplayName() + " & " + sm.getDisplayName());
+                        message.append("</li>");
+                    }
+                }
+            }
+            if(found)
+                throw new java.beans.PropertyVetoException(message.toString(), evt);
+        } else if ("DoDelete".equals(evt.getPropertyName())){ //IN18N
+            if(nb instanceof SignalMast){
+                if(nb.equals(source)){
+                    dispose();
+                }
+                if(isDestinationValid((SignalMast)nb)){
+                    removeDestination((SignalMast)nb);
+                }
+                for(SignalMast sm:getDestinationList()){
+                    if(isSignalMastIncluded((SignalMast)nb, sm)){
+                        //@todo need to deal with this situation this one out.
+                    }
+                }
+            }
+        }
+    }
+    
     public void dispose(){
         if(thr!=null)
             thr.interrupt();
