@@ -16,9 +16,12 @@ package jmri.jmrix.mrc.swing.monitor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.jmrix.mrc.*;
 import jmri.jmrix.mrc.swing.*;
+
 import java.util.Date;
+
 import javax.swing.JCheckBox;
 
 
@@ -30,7 +33,8 @@ public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTraffi
         super();
     }
     
-    public String getHelpTarget() { return null; }
+public String getHelpTarget() { return "package.jmri.jmrix.mrc.swing.monitor.MrcMonPanel"; }//IN18N
+//    public String getHelpTarget() { return null; }
 
     public String getTitle() { 
     	StringBuilder x = new StringBuilder();

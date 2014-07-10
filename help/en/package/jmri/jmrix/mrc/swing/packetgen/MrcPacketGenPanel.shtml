@@ -27,14 +27,9 @@ JMRI: MRC Command Generator
 
 This is the 
 package/jmri/jmrix/mrc/swing/packetgen/MrcPacketGenFrame.shtml
-package help file.  It need more content.
+package help file.
 <p>
-This template file shows the top and bottom matter for a plain page, without
-a side menu (on the web)
-
-
-
-
+Currently this does not function.
     
 <!--#include virtual="/Footer" -->
 </body>
