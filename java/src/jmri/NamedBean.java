@@ -88,6 +88,9 @@ public interface NamedBean {
     public void removePropertyChangeListener(java.beans.PropertyChangeListener l);
     
     public void updateListenerRef(java.beans.PropertyChangeListener l, String newName);
+    
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException;
+    
     /**
     * Get the textual reference for the specific listener
     *

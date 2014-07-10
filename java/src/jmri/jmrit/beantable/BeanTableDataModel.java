@@ -335,7 +335,8 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                         pane.setContentType("text/html");
                         pane.setText("<html>"+message.toString()+"</html>");
                         pane.setEditable(false);
-                        container.add(pane);
+                        JScrollPane jScrollPane = new JScrollPane(pane);
+                        container.add(jScrollPane);
                     }
                 } else {
                     msg = java.text.MessageFormat.format(

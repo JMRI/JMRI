@@ -278,7 +278,7 @@ abstract public class AbstractManager
                         throw e;
                     }
                     message.append(e.getMessage());
-                    message.append("<br><br>"); //IN18N
+                    message.append("<br>"); //IN18N
                 }
             }
             throw new java.beans.PropertyVetoException(message.toString(), evt);

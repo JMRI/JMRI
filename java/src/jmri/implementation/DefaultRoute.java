@@ -24,14 +24,10 @@ public class DefaultRoute extends AbstractNamedBean
 
     public DefaultRoute(String systemName, String userName) {
         super(systemName.toUpperCase(), userName);
-        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
-        jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
     }
 
     public DefaultRoute(String systemName) {
         super(systemName.toUpperCase());
-        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
-        jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
     }
     
     /**
@@ -1074,7 +1070,7 @@ public class DefaultRoute extends AbstractNamedBean
         NamedBean nb = (NamedBean) evt.getOldValue();
         if("CanDelete".equals(evt.getPropertyName())){ //IN18N
             StringBuilder message = new StringBuilder();
-            message.append(Bundle.getMessage("InUseRouteHeader", getDisplayName())); //IN18N
+            message.append("<b>"+getDisplayName()+"</b><ul>"); //IN18N
             boolean found = false;
             if(nb instanceof Turnout){
                 if(isOutputTurnoutIncluded((Turnout)nb)){
@@ -1106,7 +1102,7 @@ public class DefaultRoute extends AbstractNamedBean
                 
             }
             if(found){
-                message.append(Bundle.getMessage("InUseRouteFinish")); //IN18N
+                message.append("</ul>");
                 throw new java.beans.PropertyVetoException(message.toString(), evt);
             }
             

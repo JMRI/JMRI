@@ -34,11 +34,13 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
  * @version			$Revision$
  */
 
-public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManager {
+public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManager, java.beans.VetoableChangeListener {
 
     public DefaultSignalMastLogicManager(){
         registerSelf();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).addPropertyChangeListener(propertyBlockManagerListener);
+        jmri.InstanceManager.signalMastManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
         //_speedMap = jmri.implementation.SignalSpeedMap.getMap();
     }
     
@@ -202,7 +204,6 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     protected void registerSelf() {
          if (InstanceManager.configureManagerInstance()!=null) {
             InstanceManager.configureManagerInstance().registerConfig(this, jmri.Manager.SIGNALMASTLOGICS);
-            log.debug("register for config");
         }
     }
 
@@ -476,6 +477,37 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
                 }
             } else {
                 log.info("No facing block found " + sml.getSourceMast().getDisplayName());
+            }
+        }
+    }
+    
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+        if("CanDelete".equals(evt.getPropertyName())){ //IN18N
+            StringBuilder message = new StringBuilder();
+            boolean found = false;
+            message.append("Found in the following Signal Mast Logic");
+            for(int i = 0; i <signalMastLogic.size(); i++){
+                try {
+                    signalMastLogic.get(i).vetoableChange(evt);
+                } catch (java.beans.PropertyVetoException e) {
+                    if(e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")){ //IN18N
+                        throw e;
+                    }
+                    found = true;
+                    message.append("<ul>");
+                    message.append(e.getMessage());
+                    message.append("</ul>");
+                }
+            }
+            if(found)
+                throw new java.beans.PropertyVetoException(message.toString(), evt);
+        } else {
+            for(SignalMastLogic sml:signalMastLogic){
+                try {
+                    sml.vetoableChange(evt);
+                } catch (java.beans.PropertyVetoException e) {
+                    throw e;
+                }
             }
         }
     }
