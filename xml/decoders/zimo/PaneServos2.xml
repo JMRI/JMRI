@@ -36,6 +36,7 @@
         </label>
         <display item="Servo 1 Function Allocation" label="Function Allocation">
           <label>Function Allocation</label>
+          <label xml:lang="it">Allocazione Funzioni</label>
         </display>
         <label>
           <text> </text>
@@ -44,11 +45,13 @@
           <column>
             <display item="Servo 1 Rotation Speed" label="Rotation Speed">
               <label>Rotation Speed</label>
+              <label xml:lang="it">Velocità di Rotazione</label>
             </display>
           </column>
           <column>
             <label>
               <text>Tenths of a second</text>
+              <text xml:lang="it">Decimi di secondo</text>
             </label>
           </column>
         </row>
@@ -57,12 +60,15 @@
         </label>
         <display item="Servo 1 Left Stop" label="Left Stop">
           <label>Left Stop</label>
+          <label xml:lang="it">Stop Sinistro</label>
         </display>
         <display item="Servo 1 Centre" label="Centre">
           <label>Centre</label>
+          <label xml:lang="it">Centro</label>
         </display>
         <display item="Servo 1 Right Stop" label="Right Stop">
           <label>Right Stop</label>
+          <label xml:lang="it">Stop destro</label>
         </display>
         <label>
           <text> </text>
@@ -85,6 +91,7 @@
         </label>
         <display item="Servo 2 Function Allocation" label="Function Allocation">
           <label>Function Allocation</label>
+          <label xml:lang="it">Allocazione Funzioni</label>
         </display>
         <label>
           <text> </text>
@@ -93,11 +100,13 @@
           <column>
             <display item="Servo 2 Rotation Speed" label="Rotation Speed">
               <label>Rotation Speed</label>
+              <label xml:lang="it">Velocità di Rotazione</label>
             </display>
           </column>
           <column>
             <label>
               <text>Tenths of a second</text>
+              <text xml:lang="it">Decimi di secondo</text>
             </label>
           </column>
         </row>
@@ -106,12 +115,15 @@
         </label>
         <display item="Servo 2 Left Stop" label="Left Stop">
           <label>Left Stop</label>
+          <label xml:lang="it">Stop Sinistro</label>
         </display>
         <display item="Servo 2 Centre" label="Centre">
           <label>Centre</label>
+          <label xml:lang="it">Centro</label>
         </display>
         <display item="Servo 2 Right Stop" label="Right Stop">
           <label>Right Stop</label>
+          <label xml:lang="it">Stop destro</label>
         </display>
         <label>
           <text> </text>
@@ -120,4 +132,5 @@
     </row>
   </column>
   <name>Servos</name>
+  <name xml:lang="it">Comandi Servo</name>
 </pane>

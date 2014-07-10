@@ -11,33 +11,41 @@
   <variable CV="745" item="Zimo Sound Setting 61">
     <decVal/>
     <label>Random sound Z1</label>
+    <label xml:lang="it">Suono Z1 casuale</label>
   </variable>
   <variable CV="748" item="Zimo Sound Setting 62">
     <decVal/>
     <label>Random sound Z2</label>
+    <label xml:lang="it">Suono Z2 casuale</label>
   </variable>
   <variable CV="751" item="Zimo Sound Setting 63">
     <decVal/>
     <label>Random sound Z3</label>
+    <label xml:lang="it">Suono Z3 casuale</label>
   </variable>
   <variable CV="754" item="Zimo Sound Setting 64">
     <decVal/>
     <label>Random sound Z4</label>
+    <label xml:lang="it">Suono Z4 casuale</label>
   </variable>
   <variable CV="757" item="Zimo Sound Setting 65">
     <decVal/>
     <label>Random sound Z5</label>
+    <label xml:lang="it">Suono Z5 casuale</label>
   </variable>
   <variable CV="760" item="Zimo Sound Setting 66">
     <decVal/>
     <label>Random sound Z6</label>
+    <label xml:lang="it">Suono Z6 casuale</label>
   </variable>
   <variable CV="763" item="Zimo Sound Setting 67">
     <decVal/>
     <label>Random sound Z7</label>
+    <label xml:lang="it">Suono Z7 casuale</label>
   </variable>
   <variable CV="766" item="Zimo Sound Setting 68">
     <decVal/>
     <label>Random sound Z8</label>
+    <label xml:lang="it">Suono Z8 casuale</label>
   </variable>
 </variables>

@@ -12,37 +12,46 @@
   <variable CV="674" item="Zimo Sound Setting 22">
     <decVal/>
     <label>Volume on Key F20</label>
+    <label xml:lang="it">Volume per Tasto F20</label>
   </variable>
   <variable CV="677" item="Zimo Sound Setting 23">
     <decVal/>
     <label>Volume on Key F21</label>
+    <label xml:lang="it">Volume per Tasto F21</label>
   </variable>
   <variable CV="680" item="Zimo Sound Setting 24">
     <decVal/>
     <label>Volume on Key F22</label>
+    <label xml:lang="it">Volume per Tasto F22</label>
   </variable>
   <variable CV="683" item="Zimo Sound Setting 25">
     <decVal/>
     <label>Volume on Key F23</label>
+    <label xml:lang="it">Volume per Tasto F23</label>
   </variable>
   <variable CV="686" item="Zimo Sound Setting 26">
     <decVal/>
     <label>Volume on Key F24</label>
+    <label xml:lang="it">Volume per Tasto F24</label>
   </variable>
   <variable CV="689" item="Zimo Sound Setting 27">
     <decVal/>
     <label>Volume on Key F25</label>
+    <label xml:lang="it">Volume per Tasto F25</label>
   </variable>
   <variable CV="692" item="Zimo Sound Setting 28">
     <decVal/>
     <label>Volume on Key F26</label>
+    <label xml:lang="it">Volume per Tasto F26</label>
   </variable>
   <variable CV="695" item="Zimo Sound Setting 29">
     <decVal/>
     <label>Volume on Key F27</label>
+    <label xml:lang="it">Volume per Tasto F27</label>
   </variable>
   <variable CV="698" item="Zimo Sound Setting 30">
     <decVal/>
     <label>Volume on Key F28</label>
+    <label xml:lang="it">Volume per Tasto F28</label>
   </variable>
 </variables>

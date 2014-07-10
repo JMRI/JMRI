@@ -106,4 +106,5 @@
     </label>
   </column>
   <name>Sound</name>
+  <name xml:lang="it">Suono</name>
 </pane>

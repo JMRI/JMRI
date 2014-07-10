@@ -12,4 +12,5 @@
     </label>
     <display item="RailCom speed reporting method"/>
   </column>
+  <name xml:lang="it">Railcom</name>
 </pane>

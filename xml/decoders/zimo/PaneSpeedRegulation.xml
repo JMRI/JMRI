@@ -6,27 +6,33 @@
   <column>
     <label>
       <text>To calibrate the speed regulation, mark a scale tenth of a unit (Mile or Kilometre), place loco</text>
+      <text xml:lang="it">Per calibrare la velocità, segnare un decimo di unità in scala (Milgio o Km)</text>
     </label>
     <label>
-      <text>on track with correct direction set, F0 turned off and enough distance from the Start marker</text>
+      <text>on track with correct direction set, F0 turned off and enough distance from the Start marker, posizionare la loco</text>
     </label>
     <label>
       <text>to allow for the acceleration (change momentum settings if neccessary). Write '1' to CV 135</text>
+      <text xml:lang="it">per permetterle di accellerare (azzerare l'inerzia se necessario). Scrivere un '1' in CV 135</text>
     </label>
     <label>
       <text>using a cab or the Single CV Programmer, then drive the loco through the marked section at</text>
+      <text xml:lang="it">usando un Cab o il Programmatore per le singole CV. Far avanzare a velocità media la loco</text>
     </label>
     <label>
       <text>a mid speed, turning F0 on at the Start marker and off at the End marker.</text>
+      <text xml:lang="it">lungo il tratto. Premere F0 all'inizio del tratto e alla fine</text>
     </label>
     <label>
       <text> </text>
     </label>
     <label>
       <text>If several calibration runs are performed at different speeds and the Calibration Result read</text>
+      <text xml:lang="it">Se si eseguono diverse calibrazioni a varie velocità, leggendo il risultato della calibrazione</text>
     </label>
     <label>
       <text>after each one, the Calibration Result should be approximately the same</text>
+      <text xml:lang="it">dopo ognuna, i risultati dovrebbero essere simili tra loro</text>
     </label>
     <label>
       <text> </text>
@@ -45,8 +51,10 @@
       <column>
         <label>
           <text> Miles or Kilometres per hour per (128) Speed Step</text>
+          <text xml:lang="it">Miglia o Kilometri all'ora per (128) Step di Velocità</text>
         </label>
       </column>
     </row>
   </column>
+  <name xml:lang="it">Regolazione velocità</name>
 </pane>

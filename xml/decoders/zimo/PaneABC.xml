@@ -93,6 +93,7 @@
           <column>
             <label>
               <text>Hundreds digit = sensitivity</text>
+              <text xml:lang="it">Centinaia = sensibilità</text>
             </label>
           </column>
           <column>
@@ -103,17 +104,21 @@
           <column>
             <label>
               <text>0 = Fast recognition</text>
+              <text xml:lang="it">0 = Alta</text>
             </label>
             <label>
               <text>1 = Normal recognition (0.5s)</text>
+              <text xml:lang="it">1 = Normale (0,5 sec)</text>
             </label>
             <label>
               <text>2 = Slow recognition (1s)</text>
+              <text xml:lang="it">2 = Bassa (1 sec)</text>
             </label>
           </column>
         </row>
         <label>
           <text>Tens and Ones digits = Assymmetrical threshold in tenths of a volt</text>
+          <text xml:lang="it">Decine e Unità = Soglia asimmetrica in decimi di Volt</text>
         </label>
       </column>
     </row>

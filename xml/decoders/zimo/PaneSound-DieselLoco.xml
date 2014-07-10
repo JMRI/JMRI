@@ -8,6 +8,7 @@
   <column>
     <label>
       <text>Diesel Mechanical</text>
+      <text xml:lang="it">Dettagli Meccanici Diesel</text>
     </label>
     <separator/>
     <label>
@@ -15,9 +16,11 @@
     </label>
     <display item="Engine Speed Fallback when changing gear">
       <label>Engine Speed Fallback when changing gear</label>
+      <label xml:lang="it">Decremento Velocità  prima del cambio di marcia</label>
     </display>
     <display item="Maximum speed before upshifting">
       <label>Maximum speed before upshifting</label>
+      <label xml:lang="it">Velocità Max. prima del passaggio alla marcia superiore</label>
     </display>
   </column>
   <column>
@@ -30,6 +33,7 @@
   <column>
     <label>
       <text>Turbocharger</text>
+      <text xml:lang="it">Turbocompressore</text>
     </label>
     <separator/>
     <label>
@@ -37,25 +41,33 @@
     </label>
     <display item="Maximum volume of Turbocharger">
       <label>Maximum volume of Turbocharger</label>
+      <label xml:lang="it">Volume Max. Turbocompressore</label>
     </display>
     <display item="Turbocharger dependence on speed">
       <label>Turbocharger dependence on speed</label>
+      <label xml:lang="it">Turbocompressore in funzione della Velocità</label>
     </display>
     <display item="Turbocharger dependence on acceleration">
       <label>Turbocharger dependence on acceleration</label>
+      <label xml:lang="it">Turbocompressore in funzione della accellerazione</label>
     </display>
     <display item="Minimum load on the Turbocharger">
       <label>Minimum load on the Turbocharger</label>
+      <label xml:lang="it">Carico Min. Turbocompressore</label>
     </display>
     <display item="Increase in frequency of the Turbocharger">
       <label>Increase in frequency of the Turbocharger</label>
+      <label xml:lang="it">Incremento frequenza Turbocompressore</label>
     </display>
     <display item="Decrease in frequency of the Turbocharger">
       <label>Decrease in frequency of the Turbocharger</label>
+      <label xml:lang="it">Decremento frequenza Turbocompressore</label>
     </display>
     <display item="Drop one speed step to lower turbocharger">
       <label>Drop one speed step to lower turbocharger</label>
+      <label xml:lang="it">Diminiusci di uno step di velocità per diminuire il Turbocompressore</label>
     </display>
   </column>
   <name>Sound - Diesel Loco</name>
+  <name xml:lang="it">Souni - Diesel</name>
 </pane>

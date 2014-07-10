@@ -94,6 +94,7 @@
       </enumChoice>
     </enumVal>
     <label>Function Key for Coasting</label>
+    <label xml:lang="it">Tasto Funzione per cambio in Folle</label>
   </variable>
   <variable item="Sound Slot during Coasting" CV="375" default="0">
     <enumVal>
@@ -132,5 +133,6 @@
       </enumChoice>
     </enumVal>
     <label>Sound Slot during Coasting</label>
+    <label xml:lang="it">Slot Suono per cambio in Folle</label>
   </variable>
 </variables>
