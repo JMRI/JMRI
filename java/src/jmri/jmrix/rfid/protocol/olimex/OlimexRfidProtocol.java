@@ -60,14 +60,15 @@ public class OlimexRfidProtocol extends RfidProtocol {
 
     @Override
     public boolean isValid(AbstractMRReply msg) {
-        return msg.getElement(0)==0x3E;
+        return msg.getElement(SPECIFICMAXSIZE-1)==0x3E;
     }
 
     @Override
     public boolean endOfMessage(AbstractMRReply msg) {
         if (msg.getNumDataElements()==SPECIFICMAXSIZE) {
-            if ((msg.getElement(SPECIFICMAXSIZE-1)&0xFF)==0x0A &&
-                (msg.getElement(SPECIFICMAXSIZE-2)&0xFF)==0x0D) {
+            if ((msg.getElement(SPECIFICMAXSIZE-1)&0xFF)==0x3E &&
+                (msg.getElement(SPECIFICMAXSIZE-2)&0xFF)==0x0A &&
+                (msg.getElement(SPECIFICMAXSIZE-3)&0xFF)==0x0D) {
                 return true;
             }
             if (log.isDebugEnabled()) log.debug("Not a correctly formed message");
