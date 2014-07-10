@@ -57,9 +57,13 @@ abstract public class AbstractProxyManager implements Manager {
         retval.add(getInternal());
         return retval;
     }
-
+    
     public void addManager(Manager m) {
         mgrs.add((AbstractManager)m);
+        for(java.beans.VetoableChangeListener l:propertyVetoListenerList)
+            m.addVetoableChangeListener(l);
+        for(java.beans.PropertyChangeListener l:propertyListenerList)
+            m.addPropertyChangeListener(l);
         if(log.isDebugEnabled()) log.debug("added manager " +m.getClass());
     }
 
@@ -242,13 +246,23 @@ abstract public class AbstractProxyManager implements Manager {
     }
     
     public synchronized void addVetoableChangeListener(java.beans.VetoableChangeListener l) {
-        for (int i = 0; i<nMgrs(); i++)
+        if(!propertyVetoListenerList.contains(l)){
+            propertyVetoListenerList.add(l);
+        }
+        for (int i = 0; i<nMgrs(); i++){
             getMgr(i).addVetoableChangeListener(l);
+        }
     }
     public synchronized void removeVetoableChangeListener(java.beans.VetoableChangeListener l) {
+        if(propertyVetoListenerList.contains(l)){
+            propertyVetoListenerList.remove(l);
+        }
         for (int i = 0; i<nMgrs(); i++)
             getMgr(i).removeVetoableChangeListener(l);
     }
+    
+    ArrayList<java.beans.PropertyChangeListener> propertyListenerList = new ArrayList<java.beans.PropertyChangeListener>(5);
+    ArrayList<java.beans.VetoableChangeListener> propertyVetoListenerList = new ArrayList<java.beans.VetoableChangeListener>(5);
 
     /**
      * @return The system-specific prefix letter for the primary implementation
