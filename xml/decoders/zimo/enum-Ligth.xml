@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <enumChoice choice="Standard on/off function output">
+        <choice>Standard on/off function output</choice>
+      </enumChoice>
+      <enumChoice choice="Mars light">
+        <choice>Mars light</choice>
+      </enumChoice>
+      <enumChoice choice="Random Flicker">
+        <choice>Random Flicker</choice>
+      </enumChoice>
+      <enumChoice choice="Flashing Headlight">
+        <choice>Flashing Headlight</choice>
+      </enumChoice>
+      <enumChoice choice="Single Pulse Strobe">
+        <choice>Single Pulse Strobe</choice>
+      </enumChoice>
+      <enumChoice choice="Double Pulse Strobe">
+        <choice>Double Pulse Strobe</choice>
+      </enumChoice>
+      <enumChoice choice="Rotary Beacon">
+        <choice>Rotary Beacon</choice>
+      </enumChoice>
+      <enumChoice choice="Gyralite">
+        <choice>Gyralite</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 1, right">
+        <choice>Ditch Light Type 1, right</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 1, left">
+        <choice>Ditch Light Type 1, left</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 2, right">
+        <choice>Ditch Light Type 2, right</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 2, left">
+        <choice>Ditch Light Type 2, left</choice>
+      </enumChoice>
+      <enumChoice choice="Uncoupling">
+        <choice>Uncoupling</choice>
+      </enumChoice>
+      <enumChoice choice="Soft Start">
+        <choice>Soft Start</choice>
+      </enumChoice>
+      <enumChoice choice="Automatic Stop Lights for Streetcars">
+        <choice>Automatic Stop Lights for Streetcars</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off when speed is greater than 0">
+        <choice>Turns off when speed is greater than 0</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off after 5 Min.">
+        <choice>Turns off after 5 Min.</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off after 10 Min.">
+        <choice>Turns off after 10 Min.</choice>
+      </enumChoice>
+      <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
+        <choice>Speed or Load dependent Smoke for Steam Engines</choice>
+      </enumChoice>
+      <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
+        <choice>Operation dependent Smoke for Diesels</choice>
+      </enumChoice>
+</enumVal>
