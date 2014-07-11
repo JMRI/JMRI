@@ -638,12 +638,12 @@
     <label xml:lang="it">Correzione velocità Distanza di Fermata (HLU)</label>
   </variable>
   <variable item="Service Mode Programming Locked" CV="144" mask="XVXXXXXX" default="0">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
     <label>Service Mode Programming Locked</label>
     <label xml:lang="it">Blocco programmazione in modo Servizio</label>
   </variable>
   <variable item="Software Update Locked" CV="144" mask="VXXXXXXX" default="0">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
     <label>Software Update Locked</label>
     <label xml:lang="it">Blocco aggiornamento Software</label>
   </variable>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!-- $Id: enum-NoYes.xml 22377 2013-01-12 06:28:11Z jacobsen $ -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice choice="No" value="0">
+    <choice>No</choice>
+    <choice xml:lang="it">No</choice>
+    <choice xml:lang="fr">Non</choice>
+    <choice xml:lang="de">Nein</choice>
+  </enumChoice>
+  <enumChoice choice="Yes" value="1">
+    <choice>Yes</choice>
+    <choice xml:lang="it">Si</choice>
+    <choice xml:lang="fr">Oui</choice>
+    <choice xml:lang="de">Ja</choice>
+  </enumChoice>
+</enumVal>
