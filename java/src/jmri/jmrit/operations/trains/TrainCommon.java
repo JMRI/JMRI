@@ -109,8 +109,8 @@ public class TrainCommon {
 	}
 
 	private void pickupEngine(PrintWriter file, Engine engine, boolean isManifest) {
-		StringBuffer buf = new StringBuffer(padAndTruncateString(Setup.getPickupEnginePrefix(), Setup
-				.getManifestPrefixLength()));
+		StringBuffer buf = new StringBuffer(padAndTruncateString(Setup.getPickupEnginePrefix(), isManifest ? Setup
+				.getManifestPrefixLength() : Setup.getSwitchListPrefixLength()));
 		String[] format = Setup.getPickupEngineMessageFormat();
 		for (String attribute : format) {
 			String s = getEngineAttribute(engine, attribute, PICKUP);
@@ -145,8 +145,8 @@ public class TrainCommon {
 	}
 
 	private void dropEngine(PrintWriter file, Engine engine, boolean isManifest) {
-		StringBuffer buf = new StringBuffer(padAndTruncateString(Setup.getDropEnginePrefix(), Setup
-				.getManifestPrefixLength()));
+		StringBuffer buf = new StringBuffer(padAndTruncateString(Setup.getDropEnginePrefix(), isManifest? Setup
+				.getManifestPrefixLength() : Setup.getSwitchListPrefixLength()));
 		String[] format = Setup.getDropEngineMessageFormat();
 		for (String attribute : format) {
 			String s = getEngineAttribute(engine, attribute, !PICKUP);
