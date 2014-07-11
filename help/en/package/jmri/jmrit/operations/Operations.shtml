@@ -1401,7 +1401,6 @@
    </P>
    <P>
     Enter a name for your schedule and press the "Add Schedule" button on the bottom of the window.
-    Multiple spurs can use the same schedule as long as the spurs use the same car types and roads.
     Now add your first delivery for this spur by selecting a car type in the menu box found in the
     lower left corner of the window and pressing the "Add car type" button. A new item should appear
     in your schedule containing the type of car, a pull down menu for road names, and a count of 1.
@@ -1493,10 +1492,12 @@
     the next car type when adding a car type. This makes it easy to quickly add car types to the
     table.</P>
 
-   <P>You can also access your schedules from the Locations "Tools" menu. The Schedules table
-    provides status for each schedule. Since you can assign a schedule to multiple spurs, the table
-    also provides additional status for each of the spurs that use that particular schedule. The
-    table also allows you the edit a schedule once its been assigned to a spur.</P>
+   <P>Multiple spurs can use the same schedule to perform the identical function, i.e. the spurs
+    request exactly the same car types, roads, loads, and shipments. You can also access your
+    schedules from the Locations "Tools" menu. The Schedules table provides status for each
+    schedule. Since you can assign a schedule to multiple spurs, the table also provides additional
+    status for each of the spurs that use that particular schedule. The table also allows you the
+    edit a schedule once its been assigned to a spur.</P>
 
    <P>
     A very useful tool is the <A HREF="#ShowSchedulesByCarTypeAndLoad">show schedules by car
