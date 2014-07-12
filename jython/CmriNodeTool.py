@@ -24,7 +24,7 @@ class CmriNodeTool(jmri.jmrit.automat.AbstractAutomaton) :
         i = 0
         while i < self.maxNodeAddr :
             x = (i * 1000) + 1
-            txt = "CT" + x.toString()
+            txt = "CT" + str(x)
             #print "looking for node " + i.toString() + " using name " + txt
             node = jmri.jmrix.cmri.serial.SerialAddress.getNodeFromSystemName(txt)
             if (node != None) :
@@ -70,13 +70,13 @@ class CmriNodeTool(jmri.jmrit.automat.AbstractAutomaton) :
         
         i = 0
         while i < len(self.nodeAddrList) :
-            pane2.add(javax.swing.JLabel(self.nodeAddrList[i].toString()), gConstraints)
+            pane2.add(javax.swing.JLabel(str(self.nodeAddrList[i])), gConstraints)
             gConstraints.gridx = gConstraints.gridx + 1
             box = javax.swing.JCheckBox()
-            box.setToolTipText("Enable/Disable Polling on node " + self.nodeAddrList[i].toString())
+            box.setToolTipText("Enable/Disable Polling on node " + str(self.nodeAddrList[i]))
             box.setSelected(self.nodeList[i].getSensorsActive())    
             box.actionPerformed = self.whenCheckbox
-            box.setLabel(i.toString())
+            box.setLabel(str(i))
             pane2.add(box, gConstraints)
             gConstraints.gridx = 0
             gConstraints.gridy = gConstraints.gridy + 1
