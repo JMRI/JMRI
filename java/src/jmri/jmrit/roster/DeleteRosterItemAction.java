@@ -68,11 +68,16 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
         // we test that the property exists before attempting to get its value
         if (Beans.hasProperty(wi, "selectedRosterGroup")) {
             rosterGroup = (String) Beans.getProperty(wi, "selectedRosterGroup");
+            log.debug("selectedRosterGroup was {}", rosterGroup);
         }
         if (Beans.hasProperty(wi, "selectedRosterEntries")) {
             entries = (RosterEntry[]) Beans.getProperty(wi, "selectedRosterEntries");
+            if (entries != null) log.debug("selectedRosterEntries found {} entries", entries.length);
+            else log.debug("selectedRosterEntries left entries null");
         } else {
             entries = selectRosterEntry(rosterGroup);
+            if (entries != null) log.debug("selectRosterEntry(rosterGroup) found {} entries", entries.length);
+            else log.debug("selectRosterEntry(rosterGroup) left entries null");
         }
         if (entries == null) {
             return;
@@ -85,11 +90,10 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
         for (RosterEntry re : entries) {
             String filename = roster.fileFromTitle(re.titleString());
             String fullFilename = LocoFile.getFileLocation() + filename;
-            if (log.isDebugEnabled()) {
-                log.debug("resolves to \"" + filename + "\", \"" + fullFilename + "\"");
-            }
+            log.debug("resolves to [{}], [{}]", filename, fullFilename);
 
             // prompt for one last chance
+            log.debug("rosterGroup now {}", rosterGroup);
             if (rosterGroup == null) {
                 if (!userOK(re.titleString(), filename, fullFilename)) {
                     return;
@@ -98,6 +102,7 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
                 roster.removeEntry(re);
             } else {
                 String group = Roster.getRosterGroupProperty(rosterGroup);
+                log.debug("removing {} group from entry", group);
                 re.deleteAttribute(group);
                 re.updateFile();
             }
@@ -109,15 +114,9 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
                     // ensure preferences will be found
                     FileUtil.createDirectory(LocoFile.getFileLocation());
 
-                    // do backup
+                    // move original file to backup
                     LocoFile df = new LocoFile();   // need a dummy object to do this operation in next line
                     df.makeBackupFile(LocoFile.getFileLocation() + filename);
-
-                    // locate the file and delete
-                    File f = new File(fullFilename);
-                    if (!f.delete()) { // delete file and check success
-                        log.error("failed to delete file");
-                    }
 
                 } catch (Exception ex) {
                     log.error("error during locomotive file output: " + ex);

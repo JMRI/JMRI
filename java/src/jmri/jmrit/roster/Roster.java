@@ -148,9 +148,6 @@ public class Roster extends XmlFile implements RosterGroupSelector {
             // create and load
             _instance = new Roster(defaultRosterFilename());
         }
-        if (log.isDebugEnabled()) {
-            log.debug("Roster returns instance " + _instance);
-        }
         return _instance;
     }
 
