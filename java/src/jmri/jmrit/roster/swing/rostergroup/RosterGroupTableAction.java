@@ -40,7 +40,7 @@ public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
         super(s);
         
     }
-    public RosterGroupTableAction() { this("Roster Group Table");}
+    public RosterGroupTableAction() { this(Bundle.getMessage("RosterGroupTable"));}
         
     RosterGroupTableModel m;
     RosterGroupTableFrame f;
@@ -49,21 +49,21 @@ public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
         m = new RosterGroupTableModel();
     }
 
-        public void actionPerformed() {
+    public void actionPerformed() {
         // create the JTable model, with changes for specific NamedBean
         createModel();
 
         // create the frame
         f = new RosterGroupTableFrame(m, helpTarget()){
             /**
-                    * Include an "add" button
-                    */
+             * Include an "add" button
+             */
             void extras() {
                 final JComboBox selectCombo = new RosterGroupComboBox();
                 selectCombo.insertItemAt("",0);
                 selectCombo.setSelectedIndex(-1);
                 JPanel p25 = new JPanel();
-                p25.add(new JLabel("Select Roster Group:"));
+                p25.add(new JLabel(Bundle.getMessage("SelectRosterGroup")));
                 p25.add(selectCombo);
                 addToTopBox(p25);
                 selectCombo.addActionListener(new ActionListener() {
@@ -119,11 +119,11 @@ public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
     }
     
     void setTitle() {
-        f.setTitle("Roster Group Table");
+        f.setTitle(Bundle.getMessage("RosterGroupTable"));
     }
     
     String helpTarget() {
-        return "package.jmri.jmrit.roster.swing";
+        return "package.jmri.jmrit.roster.swing"; // NOI18N
     }
     
     void comboSelected(ActionEvent e, String group){
