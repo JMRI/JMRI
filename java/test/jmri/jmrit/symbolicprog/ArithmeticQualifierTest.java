@@ -122,7 +122,7 @@ public class ArithmeticQualifierTest extends TestCase {
     public void testVariableRefEqNotExist() {
         // test arithmetic operation when variable not found
         ArithmeticQualifier aq = new TestArithmeticQualifier(null, 10, "eq");
-        Assert.assertEquals(false, aq.currentDesiredState());
+        Assert.assertEquals(true, aq.currentDesiredState()); // chosen default in this case
         jmri.util.JUnitAppender.assertErrorMessage("Arithmetic EQ operation when watched value doesn't exist");
     }
 

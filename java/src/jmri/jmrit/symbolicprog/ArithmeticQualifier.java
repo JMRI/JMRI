@@ -74,8 +74,11 @@ public abstract class ArithmeticQualifier extends AbstractQualifier {
                 return now == value;
             case NE: 
                 return now != value;
+            default:
+                log.error("Unexpected switch value: {}", test);
+                return false;
         }
-        return false;       // shouldn't happen?
+        
     }
     
     public void update() {
@@ -103,7 +106,7 @@ public abstract class ArithmeticQualifier extends AbstractQualifier {
                 warnedDoesntExist = true;
                 log.error("Arithmetic "+test+" operation when watched value doesn't exist");
             }
-            return false;
+            return true;  // this determines default for what happens when qualifier (watched) Variable isn't present
         }
         return false;  // should never be reached, because should only be invoked after returnFromExistsLogic() == true
     }
