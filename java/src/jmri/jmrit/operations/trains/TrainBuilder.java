@@ -1825,7 +1825,7 @@ public class TrainBuilder extends TrainCommon {
 					// build failure car departing staging with a restricted load
 					addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildErrorCarStageLoad"),
 							new Object[] { car.toString(), car.getLoadName(), _departStageTrack.getName() }));
-					addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+					addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
 					continue;
 				}
 			}
@@ -1903,7 +1903,7 @@ public class TrainBuilder extends TrainCommon {
 							_carList.remove(car);
 							_carIndex--;
 						}
-						addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+						addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
 						continue;
 					}
 				}
@@ -1919,12 +1919,14 @@ public class TrainBuilder extends TrainCommon {
 						// move this car, routing failed!
 						findDestinationAndTrack(car, rl, routeIndex, _routeList.size());
 					else
-						addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+						addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
 				} else {
 					// did the router assign a destination?
 					if (!checkCarForDestinationAndTrack(car, rl, routeIndex) && car.getTrack() != _departStageTrack) {
 						log.debug("Skipping car ({}) no car destination", car.toString()); // NOI18N
-						addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+						addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildNoDestForCar"), new Object[] { car
+							.toString() }));
+						addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
 						continue;
 					} else {
 						// if departing staging try and find a destination for this car
@@ -3164,7 +3166,7 @@ public class TrainBuilder extends TrainCommon {
 			log.debug("Car ({}) found a destination in train's route", car.toString());
 			// are drops allows at this location?
 			if (!rld.isDropAllowed()) {
-				addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildRouteNoDropsStop"),
+				addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildRouteNoDropsStop"),
 						new Object[] { _train.getRoute().getName(), rld.getName(), rld.getId(), locCount }));
 				continue;
 			}
