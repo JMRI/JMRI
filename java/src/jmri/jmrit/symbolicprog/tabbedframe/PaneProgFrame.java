@@ -618,6 +618,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     }
 
+    @SuppressWarnings("unchecked")
     protected void loadProgrammerFile(RosterEntry r) {
         // Open and parse programmer file
         XmlFile pf = new XmlFile(){};  // XmlFile is abstract
@@ -640,7 +641,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             if ( (a = programmerRoot.getChild("programmer").getAttribute("decoderFilePanes")) != null
                  && a.getValue().equals("yes")) {
                 if (decoderRoot != null) {
-                    decoderPaneList = decoderRoot.getChildren("pane");
+                    decoderPaneList = (List<Element>)decoderRoot.getChildren("pane");
                 }
             }
 
