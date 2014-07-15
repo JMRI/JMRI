@@ -634,7 +634,7 @@ abstract public class AbstractMRTrafficController {
 
     protected Thread xmtThread = null;
     protected Runnable xmtRunnable = null;
-    Thread rcvThread = null;
+    protected Thread rcvThread = null;
 
     /**
      * Make connection to existing PortController object.

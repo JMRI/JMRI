@@ -131,7 +131,7 @@ public class DCCManufacturerList {
         if(System.equals(PROTRAK)) { return new jmri.jmrix.grapevine.SerialConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(QSI)) { return new jmri.jmrix.qsi.QSIConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(RFID)) { return new jmri.jmrix.rfid.RfidConnectionTypeList().getAvailableProtocolClasses(); }
-        if(System.equals(ROCO)) { return new jmri.jmrix.lenz.LenzConnectionTypeList().getAvailableProtocolClasses(); }
+        if(System.equals(ROCO)) { return new jmri.jmrix.roco.RocoConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(SPROG)) { return new jmri.jmrix.sprog.SprogConnectionTypeList().getAvailableProtocolClasses();  }
         if(System.equals(SRCP)) { return new jmri.jmrix.srcp.SRCPConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(TAMS)) { return new jmri.jmrix.tams.TamsConnectionTypeList().getAvailableProtocolClasses(); }
