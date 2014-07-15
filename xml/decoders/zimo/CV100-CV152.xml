@@ -3,16 +3,7 @@
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 27 Jan 12 JES  - fixed bug in diesel steam effect enum value -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <variable CV="105" item="User Id #1">
-    <decVal/>
-    <label>User Data #1</label>
-    <label xml:lang="it">Dati Utente #1</label>
-  </variable>
-  <variable CV="106" item="User Id #2">
-    <decVal/>
-    <label>User Data #2</label>
-    <label xml:lang="it">Dati Utente #2</label>
-  </variable>
+  <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
   <variable item="Smoke Characteristic" CV="112" mask="XXXXXXXV">
     <enumVal>
       <enumChoice choice="Speed dependent">
@@ -91,98 +82,42 @@
     <label xml:lang="it">Intensità Taglio EMF</label>
   </variable>
   <variable item="Dim Front Light" CV="114" mask="XXXXXXXV" default="0">
-    <enumVal>
-      <enumChoice choice="Off" value="1">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On" value="0">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim Front Light</label>
     <label xml:lang="it">Smorzamento Luci frontali</label>
   </variable>
   <variable item="Dim Rear Light" CV="114" mask="XXXXXXVX" default="0">
-    <enumVal>
-      <enumChoice choice="0ff" value="1">
-        <choice>0ff</choice>
-      </enumChoice>
-      <enumChoice choice="On" value="0">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim Rear Light</label>
     <label xml:lang="it">Smorzamento Luci posteriori</label>
   </variable>
   <variable item="Dim function output 1" CV="114" mask="XXXXXVXX" default="0">
-    <enumVal>
-      <enumChoice choice="Off" value="1">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On" value="0">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 1</label>
     <label xml:lang="it">Smorzamento Uscita funzioni 1</label>
   </variable>
   <variable item="Dim function output 2" CV="114" mask="XXXXVXXX" default="0">
-    <enumVal>
-      <enumChoice choice="Off" value="1">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On" value="0">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 2</label>
     <label xml:lang="it">Smorzamento Uscita funzioni 2</label>
   </variable>
   <variable item="Dim function output 3" CV="114" mask="XXXVXXXX" default="0" minOut="5">
-    <enumVal>
-      <enumChoice choice="Off" value="1">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On" value="0">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 3</label>
     <label xml:lang="it">Smorzamento Uscita funzioni 3</label>
   </variable>
   <variable item="Dim function output 4" CV="114" mask="XXVXXXXX" default="0" minOut="5">
-    <enumVal>
-      <enumChoice choice="Off" value="1">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On" value="0">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 4</label>
     <label xml:lang="it">Smorzamento Uscita funzioni 4</label>
   </variable>
   <variable item="Dim function output 5" CV="114" mask="XVXXXXXX" default="0" minOut="7">
-    <enumVal>
-      <enumChoice choice="Off" value="1">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On" value="0">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 5</label>
     <label xml:lang="it">Smorzamento Uscita funzioni 5</label>
   </variable>
   <variable item="Dim function output 6" CV="114" mask="VXXXXXXX" default="0" minOut="7">
-    <enumVal>
-      <enumChoice choice="Off" value="1">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On" value="0">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 6</label>
     <label xml:lang="it">Smorzamento Uscita funzioni 6</label>
   </variable>

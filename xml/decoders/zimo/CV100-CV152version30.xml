@@ -8,289 +8,360 @@
 -->
 <!-- version 1.2 27 Jan 12 JES  - fixed bug in diesel steam effect enum value -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <variable CV="105" item="User Id #1">
-    <decVal/>
-    <label>User Data #1</label>
-  </variable>
-  <variable CV="106" item="User Id #2">
-    <decVal/>
-    <label>User Data #2</label>
-  </variable>
+ <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
   <!-- Used unrelated item names used to place CV107-108 on the Lights pane -->
   <variable CV="107" mask="XXXVVVVV" item="Function F0F option 1">
     <enumVal>
       <enumChoice choice="Not active">
         <choice>Not active</choice>
+        <choice xml:lang="it">Non Attivo</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F1 key">
         <choice>Controlled by F1 key</choice>
+        <choice xml:lang="it">Controllato da F1</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F2 key">
         <choice>Controlled by F2 key</choice>
+        <choice xml:lang="it">Controllato da F2</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F3 key">
         <choice>Controlled by F3 key</choice>
+        <choice xml:lang="it">Controllato da F3</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F4 key">
         <choice>Controlled by F4 key</choice>
+        <choice xml:lang="it">Controllato da F4</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F5 key">
         <choice>Controlled by F5 key</choice>
+        <choice xml:lang="it">Controllato da F5</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F6 key">
         <choice>Controlled by F6 key</choice>
+        <choice xml:lang="it">Controllato da F6</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F7 key">
         <choice>Controlled by F7 key</choice>
+        <choice xml:lang="it">Controllato da F7</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F8 key">
         <choice>Controlled by F8 key</choice>
+        <choice xml:lang="it">Controllato da F8</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F9 key">
         <choice>Controlled by F9 key</choice>
+        <choice xml:lang="it">Controllato da F9</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F10 key">
         <choice>Controlled by F10 key</choice>
+        <choice xml:lang="it">Controllato da F10</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F11 key">
         <choice>Controlled by F11 key</choice>
+        <choice xml:lang="it">Controllato da F11</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F12 key">
         <choice>Controlled by F12 key</choice>
+        <choice xml:lang="it">Controllato da F12</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F13 key">
         <choice>Controlled by F13 key</choice>
+        <choice xml:lang="it">Controllato da F13</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F14 key">
         <choice>Controlled by F14 key</choice>
+        <choice xml:lang="it">Controllato da F14</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F15 key">
         <choice>Controlled by F15 key</choice>
+        <choice xml:lang="it">Controllato da F15</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F16 key">
         <choice>Controlled by F16 key</choice>
+        <choice xml:lang="it">Controllato da F16</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F17 key">
         <choice>Controlled by F17 key</choice>
+        <choice xml:lang="it">Controllato da F17</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F18 key">
         <choice>Controlled by F18 key</choice>
+        <choice xml:lang="it">Controllato da F18</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F19 key">
         <choice>Controlled by F19 key</choice>
+        <choice xml:lang="it">Controllato da F19</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F20 key">
         <choice>Controlled by F20 key</choice>
+        <choice xml:lang="it">Controllato da F20</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F21 key">
         <choice>Controlled by F21 key</choice>
+        <choice xml:lang="it">Controllato da F21</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F22 key">
         <choice>Controlled by F22 key</choice>
+        <choice xml:lang="it">Controllato da F22</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F23 key">
         <choice>Controlled by F23 key</choice>
+        <choice xml:lang="it">Controllato da F23</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F24 key">
         <choice>Controlled by F24 key</choice>
+        <choice xml:lang="it">Controllato da F24</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F25 key">
         <choice>Controlled by F25 key</choice>
+        <choice xml:lang="it">Controllato da F25</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F26 key">
         <choice>Controlled by F26 key</choice>
+        <choice xml:lang="it">Controllato da F26</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F27 key">
         <choice>Controlled by F27 key</choice>
+        <choice xml:lang="it">Controllato da F27</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F28 key">
         <choice>Controlled by F28 key</choice>
+        <choice xml:lang="it">Controllato da F28</choice>
       </enumChoice>
     </enumVal>
     <label>Loco front lights off</label>
+    <label xml:lang="it">Luci Frontali Off</label>
   </variable>
   <variable CV="107" mask="VVVXXXXX" item="Function F0F option 2">
     <enumVal>
       <enumChoice choice="None">
         <choice>None</choice>
+        <choice xml:lang="it">Nessuna</choice>
       </enumChoice>
       <enumChoice choice="Function output 1">
         <choice>Function output 1</choice>
+        <choice xml:lang="it">Uscita Funzione 1</choice>
       </enumChoice>
       <enumChoice choice="Function output 2">
         <choice>Function output 2</choice>
+        <choice xml:lang="it">Uscita Funzione 2</choice>
       </enumChoice>
       <enumChoice choice="Function output 3">
         <choice>Function output 3</choice>
+        <choice xml:lang="it">Uscita Funzione 3</choice>
       </enumChoice>
       <enumChoice choice="Function output 4">
         <choice>Function output 4</choice>
+        <choice xml:lang="it">Uscita Funzione 4</choice>
       </enumChoice>
       <enumChoice choice="Function output 5">
         <choice>Function output 5</choice>
+        <choice xml:lang="it">Uscita Funzione 5</choice>
       </enumChoice>
       <enumChoice choice="Function output 6">
         <choice>Function output 6</choice>
+        <choice xml:lang="it">Uscita Funzione 6</choice>
       </enumChoice>
       <enumChoice choice="Function output 7">
         <choice>Function output 7</choice>
+        <choice xml:lang="it">Uscita Funzione 7</choice>
       </enumChoice>
     </enumVal>
     <label>Loco front additional function off</label>
+    <label xml:lang="it">Funzione addizionale Frontale Off</label>
   </variable>
   <variable CV="108" mask="XXXVVVVV" item="Function F0F option 3">
     <enumVal>
       <enumChoice choice="Not active">
         <choice>Not active</choice>
+        <choice xml:lang="it">Non Attivo</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F1 key">
         <choice>Controlled by F1 key</choice>
+        <choice xml:lang="it">Controllato da F1</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F2 key">
         <choice>Controlled by F2 key</choice>
+        <choice xml:lang="it">Controllato da F2</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F3 key">
         <choice>Controlled by F3 key</choice>
+        <choice xml:lang="it">Controllato da F3</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F4 key">
         <choice>Controlled by F4 key</choice>
+        <choice xml:lang="it">Controllato da F4</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F5 key">
         <choice>Controlled by F5 key</choice>
+        <choice xml:lang="it">Controllato da F5</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F6 key">
         <choice>Controlled by F6 key</choice>
+        <choice xml:lang="it">Controllato da F6</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F7 key">
         <choice>Controlled by F7 key</choice>
+        <choice xml:lang="it">Controllato da F7</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F8 key">
         <choice>Controlled by F8 key</choice>
+        <choice xml:lang="it">Controllato da F8</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F9 key">
         <choice>Controlled by F9 key</choice>
+        <choice xml:lang="it">Controllato da F9</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F10 key">
         <choice>Controlled by F10 key</choice>
+        <choice xml:lang="it">Controllato da F10</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F11 key">
         <choice>Controlled by F11 key</choice>
+        <choice xml:lang="it">Controllato da F11</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F12 key">
         <choice>Controlled by F12 key</choice>
+        <choice xml:lang="it">Controllato da F12</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F13 key">
         <choice>Controlled by F13 key</choice>
+        <choice xml:lang="it">Controllato da F13</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F14 key">
         <choice>Controlled by F14 key</choice>
+        <choice xml:lang="it">Controllato da F14</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F15 key">
         <choice>Controlled by F15 key</choice>
+        <choice xml:lang="it">Controllato da F15</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F16 key">
         <choice>Controlled by F16 key</choice>
+        <choice xml:lang="it">Controllato da F16</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F17 key">
         <choice>Controlled by F17 key</choice>
+        <choice xml:lang="it">Controllato da F17</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F18 key">
         <choice>Controlled by F18 key</choice>
+        <choice xml:lang="it">Controllato da F18</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F19 key">
         <choice>Controlled by F19 key</choice>
+        <choice xml:lang="it">Controllato da F19</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F20 key">
         <choice>Controlled by F20 key</choice>
+        <choice xml:lang="it">Controllato da F20</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F21 key">
         <choice>Controlled by F21 key</choice>
+        <choice xml:lang="it">Controllato da F21</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F22 key">
         <choice>Controlled by F22 key</choice>
+        <choice xml:lang="it">Controllato da F22</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F23 key">
         <choice>Controlled by F23 key</choice>
+        <choice xml:lang="it">Controllato da F23</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F24 key">
         <choice>Controlled by F24 key</choice>
+        <choice xml:lang="it">Controllato da F24</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F25 key">
         <choice>Controlled by F25 key</choice>
+        <choice xml:lang="it">Controllato da F25</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F26 key">
         <choice>Controlled by F26 key</choice>
+        <choice xml:lang="it">Controllato da F26</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F27 key">
         <choice>Controlled by F27 key</choice>
+        <choice xml:lang="it">Controllato da F27</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F28 key">
         <choice>Controlled by F28 key</choice>
+        <choice xml:lang="it">Controllato da F28</choice>
       </enumChoice>
     </enumVal>
     <label>Loco rear lights off</label>
+    <label xml:lang="it">Luci Posteriori Off</label>
   </variable>
   <variable CV="108" mask="VVVXXXXX" item="Function F0F option 4">
     <enumVal>
       <enumChoice choice="None">
         <choice>None</choice>
+        <choice xml:lang="it">Nessuna</choice>
       </enumChoice>
       <enumChoice choice="Function output 1">
         <choice>Function output 1</choice>
+        <choice xml:lang="it">Uscita Funzione 1</choice>
       </enumChoice>
       <enumChoice choice="Function output 2">
         <choice>Function output 2</choice>
+        <choice xml:lang="it">Uscita Funzione 2</choice>
       </enumChoice>
       <enumChoice choice="Function output 3">
         <choice>Function output 3</choice>
+        <choice xml:lang="it">Uscita Funzione 3</choice>
       </enumChoice>
       <enumChoice choice="Function output 4">
         <choice>Function output 4</choice>
+        <choice xml:lang="it">Uscita Funzione 4</choice>
       </enumChoice>
       <enumChoice choice="Function output 5">
         <choice>Function output 5</choice>
+        <choice xml:lang="it">Uscita Funzione 5</choice>
       </enumChoice>
       <enumChoice choice="Function output 6">
         <choice>Function output 6</choice>
+        <choice xml:lang="it">Uscita Funzione 6</choice>
       </enumChoice>
       <enumChoice choice="Function output 7">
         <choice>Function output 7</choice>
+        <choice xml:lang="it">Uscita Funzione 7</choice>
       </enumChoice>
     </enumVal>
     <label>Loco rear additional function off</label>
+    <label xml:lang="it">Funzione addizionale Posteriore Off</label>
   </variable>
   <variable item="Smoke Characteristic" CV="112" mask="XXXXXXXV">
     <enumVal>
       <enumChoice choice="Speed dependent">
         <choice>Speed dependent</choice>
+        <choice xml:lang="it">Dipende da velocità</choice>
       </enumChoice>
       <enumChoice choice="Load dependent">
         <choice>Load dependent</choice>
+        <choice xml:lang="it">Dipende dal carico</choice>
       </enumChoice>
     </enumVal>
     <label>Smoke Characteristic</label>
+    <label xml:lang="it">Specifiche Fumo</label>
   </variable>
   <variable item="Advanced Ack" CV="112" mask="XXXXXXVX">
     <enumVal>
       <enumChoice choice="Normal">
         <choice>Normal</choice>
+        <choice xml:lang="it">Normale</choice>
       </enumChoice>
       <enumChoice choice="High Frequency - High Power">
         <choice>High Frequency - High Power</choice>
+        <choice xml:lang="it">Frequenza Alta - Alto Carico</choice>
       </enumChoice>
     </enumVal>
     <label>ACKnowledgement</label>
+    <label xml:lang="it">Riconoscimento</label>
   </variable>
   <variable item="Loco Number Recognition" CV="112" mask="XXXXXVXX" default="1">
-    <enumVal>
-      <enumChoice choice="Off">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Loco Number Recognition</label>
+    <label xml:lang="it">Riconoscimento Numero Loco</label>
   </variable>
   <variable item="NMRA" CV="112" mask="XXXXVXXX" default="0">
     <enumVal>
@@ -302,17 +373,12 @@
       </enumChoice>
     </enumVal>
     <label>NMRA</label>
+    <label xml:lang="it">Compatibilità NMRA</label>
   </variable>
   <variable item="Pulse Chain Recognition (LGB)" CV="112" mask="XXXVXXXX" default="0">
-    <enumVal>
-      <enumChoice choice="Off">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Pulse Chain Recognition (LGB)</label>
+    <label xml:lang="it">Riconoscimento treno Impulsi (LGB)</label>
   </variable>
   <variable CV="112" item="DC Brake Momentum" tooltip="Active if CV9=0" mask="XXVXXXXX" default="0">
     <enumVal>
@@ -324,410 +390,234 @@
       </enumChoice>
     </enumVal>
     <label>PWM Frequency</label>
+    <label xml:lang="it">Frequenza PWM</label>
   </variable>
   <variable CV="112" mask="XVXXXXXX" default="0" item="Radio Power Conversion">
-    <enumVal>
-      <enumChoice choice="Off">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Non directional DC braking</label>
+    <label xml:lang="it">Frenatura non direzionale in DC</label>
   </variable>
   <variable item="Pulse Chain Generation" CV="112" mask="VXXXXXXX" default="0">
-    <enumVal>
-      <enumChoice choice="Off">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Pulse Chain Generation</label>
+    <label xml:lang="it">Generazione treno impulsi</label>
   </variable>
   <variable CV="113" default="0" item="EMF Feedback Cutout" tooltip="Controls how much Feedback Cutoff">
     <decVal min="0" max="255"/>
     <label>EMF Feedback Cutoff Intensity</label>
+    <label xml:lang="it">Intensità Taglio EMF</label>
   </variable>
   <variable item="Dim Front Light" CV="114" mask="XXXXXXXV" default="0">
-    <enumVal>
-      <enumChoice choice="Off" value="1">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On" value="0">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Dim Front Light</label>
+    <label xml:lang="it">Smorzamento Luci frontali</label>
   </variable>
   <variable item="Dim Rear Light" CV="114" mask="XXXXXXVX" default="0">
-    <enumVal>
-      <enumChoice choice="0ff" value="1">
-        <choice>0ff</choice>
-      </enumChoice>
-      <enumChoice choice="On" value="0">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Dim Rear Light</label>
+    <label xml:lang="it">Smorzamento Luci posteriori</label>
   </variable>
   <variable item="Dim function output 1" CV="114" mask="XXXXXVXX" default="0">
-    <enumVal>
-      <enumChoice choice="Off" value="1">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On" value="0">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Dim function output 1</label>
+     <label xml:lang="it">Smorzamento Uscita funzioni 1</label>
   </variable>
   <variable item="Dim function output 2" CV="114" mask="XXXXVXXX" default="0">
-    <enumVal>
-      <enumChoice choice="Off" value="1">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On" value="0">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 2</label>
+     <label xml:lang="it">Smorzamento Uscita funzioni 2</label>
   </variable>
   <variable item="Dim function output 3" CV="114" mask="XXXVXXXX" default="0" minOut="5">
-    <enumVal>
-      <enumChoice choice="Off" value="1">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On" value="0">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 3</label>
+     <label xml:lang="it">Smorzamento Uscita funzioni 3</label>
   </variable>
   <variable item="Dim function output 4" CV="114" mask="XXVXXXXX" default="0" minOut="6">
-    <enumVal>
-      <enumChoice choice="Off" value="1">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On" value="0">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 4</label>
+     <label xml:lang="it">Smorzamento Uscita funzioni 4</label>
   </variable>
   <variable item="Dim function output 5" CV="114" mask="XVXXXXXX" default="0" minOut="7">
-    <enumVal>
-      <enumChoice choice="Off" value="1">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On" value="0">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 5</label>
+     <label xml:lang="it">Smorzamento Uscita funzioni 5</label>
   </variable>
   <variable item="Dim function output 6" CV="114" mask="VXXXXXXX" default="0" minOut="8">
-    <enumVal>
-      <enumChoice choice="Off" value="1">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On" value="0">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Dim function output 6</label>
+     <label xml:lang="it">Smorzamento Uscita funzioni 6</label>
   </variable>
   <variable item="Uncoupler" CV="115" default="0">
     <decVal max="99"/>
     <label>Uncoupler</label>
+    <label xml:lang="it">Sganciatore</label>
   </variable>
   <variable item="Auto Uncouple" CV="116" default="0">
     <decVal max="199"/>
     <label>Auto Uncouple</label>
+    <label xml:lang="it">Sgancio Automatico</label>
   </variable>
   <variable item="Flash Rate" CV="117" default="0">
     <decVal max="99"/>
     <label>Flash Rate</label>
+    <label xml:lang="it">Frequenza Lampeggio</label>
   </variable>
   <variable item="Flash front light" CV="118" mask="XXXXXXXV" default="0">
-    <enumVal>
-      <enumChoice choice="Off">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Flash front light</label>
+    <label xml:lang="it">Lampeggio Luci Frontali</label>
   </variable>
   <variable item="Flash rear light" CV="118" mask="XXXXXXVX" default="0">
-    <enumVal>
-      <enumChoice choice="Off">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Flash rear light</label>
+     <label xml:lang="it">Lampeggio Luci posteriori</label>
   </variable>
   <variable item="Flash function output 1" CV="118" mask="XXXXXVXX" default="0">
-    <enumVal>
-      <enumChoice choice="Off">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Flash function output 1</label>
+    <label xml:lang="it">Lampeggio uscita funzione 1</label>
   </variable>
   <variable item="Flash function output 2" CV="118" mask="XXXXVXXX" default="0">
-    <enumVal>
-      <enumChoice choice="Off">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Flash function output 2</label>
+    <label xml:lang="it">Lampeggio uscita funzione 2</label>
   </variable>
   <variable item="Flash function output 3" CV="118" mask="XXXVXXXX" default="0" minOut="5">
-    <enumVal>
-      <enumChoice choice="Off">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Flash function output 3</label>
+    <label xml:lang="it">Lampeggio uscita funzione 3</label>
   </variable>
   <variable item="Flash function output 4" CV="118" mask="XXVXXXXX" default="0" minOut="6">
-    <enumVal>
-      <enumChoice choice="Off">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Flash function output 4</label>
+    <label xml:lang="it">Lampeggio uscita funzione 4</label>
   </variable>
   <variable item="Inverse Flash Output 2" CV="118" mask="XVXXXXXX" default="0">
-    <enumVal>
-      <enumChoice choice="Off">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Inverse Flash Output 2</label>
+    <label xml:lang="it">Lampeggio invertito uscita 2</label>
   </variable>
   <variable item="Inverse Flash Output 4" CV="118" mask="VXXXXXXX" default="0" minOut="6">
-    <enumVal>
-      <enumChoice choice="Off">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Inverse Flash Output 4</label>
+    <label xml:lang="it">Lampeggio invertito uscita 4</label>
   </variable>
   <variable item="F6 dims front light" CV="119" mask="XXXXXXXV" default="0">
-    <enumVal>
-      <enumChoice choice="Off">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F6 dims front light</label>
+    <label xml:lang="it">F6 smorza Luci frontali</label>
   </variable>
   <variable item="F6 dims rear light" CV="119" mask="XXXXXXVX" default="0">
-    <enumVal>
-      <enumChoice choice="Off">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F6 dims rear light</label>
+    <label xml:lang="it">F6 smorza Luci posteriori</label>
   </variable>
   <variable item="F6 dims function output 1" CV="119" mask="XXXXXVXX" default="0">
-    <enumVal>
-      <enumChoice choice="Off">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F6 dims function output 1</label>
+    <label xml:lang="it">F6 smorza Uscita funzione 1</label>
   </variable>
   <variable item="F6 dims function output 2" CV="119" mask="XXXXVXXX" default="0">
-    <enumVal>
-      <enumChoice choice="Off">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F6 dims function output 2</label>
+    <label xml:lang="it">F6 smorza Uscita funzione 2</label>
   </variable>
   <variable item="F6 dims function output 3" CV="119" mask="XXXVXXXX" default="0" minOut="5">
-    <enumVal>
-      <enumChoice choice="Off">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F6 dims function output 3</label>
+    <label xml:lang="it">F6 smorza Uscita funzione 3</label>
   </variable>
   <variable item="F6 dims function output 4" CV="119" mask="XXVXXXXX" default="0" minOut="6">
-    <enumVal>
-      <enumChoice choice="Off">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F6 dims function output 4</label>
+    <label xml:lang="it">F6 smorza Uscita funzione 4</label>
   </variable>
   <variable item="F6 inverted" CV="119" mask="VXXXXXXX" default="0">
-    <enumVal>
-      <enumChoice choice="Off">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F6 inverted</label>
+    <label xml:lang="it">F6 invertito</label>
   </variable>
   <variable item="F7 dims front light" CV="120" mask="XXXXXXXV" default="0">
-    <enumVal>
-      <enumChoice choice="Off">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F7 dims front light</label>
+    <label xml:lang="it">F7 smorza Luci frontali</label>
   </variable>
   <variable item="F7 dims rear light" CV="120" mask="XXXXXXVX" default="0">
-    <enumVal>
-      <enumChoice choice="Off">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F7 dims rear light</label>
+    <label xml:lang="it">F7 smorza Luci posteriori</label>
   </variable>
   <variable item="F7 dims function output 1" CV="120" mask="XXXXXVXX" default="0">
-    <enumVal>
-      <enumChoice choice="Off">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F7 dims function output 1</label>
+    <label xml:lang="it">F7 smorza Uscita funzione 1</label>
   </variable>
   <variable item="F7 dims function output 2" CV="120" mask="XXXXVXXX" default="0">
-    <enumVal>
-      <enumChoice choice="Off">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F7 dims function output 2</label>
+    <label xml:lang="it">F7 smorza Uscita funzione 2</label>
   </variable>
   <variable item="F7 dims function output 3" CV="120" mask="XXXVXXXX" default="0" minOut="5">
-    <enumVal>
-      <enumChoice choice="Off">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F7 dims function output 3</label>
+    <label xml:lang="it">F7 smorza Uscita funzione 3</label>
   </variable>
   <variable item="F7 dims function output 4" CV="120" mask="XXVXXXXX" default="0" minOut="6">
-    <enumVal>
-      <enumChoice choice="Off">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F7 dims function output 4</label>
+    <label xml:lang="it">F7 smorza Uscita funzione 4</label>
   </variable>
   <variable item="F7 inverted" CV="120" mask="VXXXXXXX" default="0">
-    <enumVal>
-      <enumChoice choice="Off">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F7 inverted</label>
+    <label xml:lang="it">F7 invertito</label>
   </variable>
   <variable item="Exponential Acceleration" CV="121" default="0" comment="Adds an exponential acceleration">
     <decVal max="99"/>
     <label>Exponential Acceleration</label>
+    <label xml:lang="it">Accellerazione Esponenziale</label>
     <comment>Adds an exponential acceleration</comment>
+    <comment xml:lang="it">Aggiunge una Accellerazione Esponenziale</comment>
   </variable>
   <variable item="Exponential Deceleration" CV="122" default="0" comment="Adds an exponential deceleration">
     <decVal max="99"/>
     <label>Exponential Deceleration</label>
+    <label xml:lang="it">Decellerazione Esponenziale</label>
     <comment>Adds an exponential deceleration</comment>
+    <comment xml:lang="it">Aggiunge una Decellerazione Esponenziale</comment>
   </variable>
   <variable item="Adaptive Acceleration/Deceleration" CV="123" default="0">
     <decVal max="99"/>
     <label>Adaptive Acceleration/Deceleration</label>
+     <label xml:lang="it">Accell./Decell.adattabile</label>
   </variable>
   <variable CV="124" default="0" mask="XXXXXXVV" item="Shunting Usage">
     <enumVal>
       <enumChoice choice="no shunting">
         <choice>no shunting</choice>
+        <choice xml:lang="it">nessuna manovra</choice>
       </enumChoice>
       <enumChoice choice="no exponential and adaptive influence">
         <choice>no exponential and adaptive influence</choice>
+        <choice xml:lang="it">nessuna influenza esponenziale / adattabile</choice>
       </enumChoice>
       <enumChoice choice="1/4 acceleration/deceleration">
         <choice>1/4 acceleration/deceleration</choice>
+        <choice xml:lang="it">1/4 Accell. / Decell.</choice>
       </enumChoice>
       <enumChoice choice="no acceleration/deceleration">
         <choice>no acceleration/deceleration</choice>
+        <choice xml:lang="it">nessuna Accell. / Decell.</choice>
       </enumChoice>
     </enumVal>
     <label>Shunting</label>
+    <label xml:lang="it">Manovra</label>
   </variable>
   <variable item="Half Speed Key" CV="124" mask="XXXVVXXX" default="0">
     <enumVal>
       <enumChoice choice="not set">
         <choice>not set</choice>
+        <choice xml:lang="it">nessuno</choice>
       </enumChoice>
       <enumChoice choice="F7">
         <choice>F7</choice>
@@ -737,6 +627,7 @@
       </enumChoice>
     </enumVal>
     <label>Half Speed Key</label>
+    <label xml:lang="it">Tasto mezza velocità</label>
   </variable>
   <variable item="Shunt Function Key" CV="124" mask="XVXXXVXX" default="0">
     <enumVal>
@@ -751,703 +642,159 @@
       </enumChoice>
     </enumVal>
     <label>Shunt Function Key</label>
+    <label xml:lang="it">Tasto funzione Manovra</label>
   </variable>
   <variable item="Analog Power Conversion" CV="124" mask="XXVXXXXX" default="0">
-    <enumVal>
-      <enumChoice choice="Off">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Polarity Dependent DC stopping method</label>
+    <label xml:lang="it">Metodo fermata in DC dipendente da polarità</label>
   </variable>
   <variable item="SUSI" CV="124" mask="VXXXXXXX" default="0" minOut="6">
     <!-- value 0 => Susi,  value 1 => normal function outputs -->
     <enumVal>
       <enumChoice choice="SUSI Serial interface for sound board">
         <choice>SUSI Serial interface for sound board</choice>
+        <choice xml:lang="it">Interf.seriale SUSI</choice>
       </enumChoice>
       <enumChoice choice="Output as additional Function Pads">
         <choice>Output as additional Function Pads</choice>
+        <choice xml:lang="it">uscita su Pad funzione addizionale</choice>
       </enumChoice>
     </enumVal>
     <label>SUSI</label>
   </variable>
   <variable CV="125" mask="VVVVVVXX" item="Output 1 effect generated">
-    <enumVal>
-      <enumChoice choice="Standard on/off function output">
-        <choice>Standard on/off function output</choice>
-      </enumChoice>
-      <enumChoice choice="Mars light">
-        <choice>Mars light</choice>
-      </enumChoice>
-      <enumChoice choice="Random Flicker">
-        <choice>Random Flicker</choice>
-      </enumChoice>
-      <enumChoice choice="Flashing Headlight">
-        <choice>Flashing Headlight</choice>
-      </enumChoice>
-      <enumChoice choice="Single Pulse Strobe">
-        <choice>Single Pulse Strobe</choice>
-      </enumChoice>
-      <enumChoice choice="Double Pulse Strobe">
-        <choice>Double Pulse Strobe</choice>
-      </enumChoice>
-      <enumChoice choice="Rotary Beacon">
-        <choice>Rotary Beacon</choice>
-      </enumChoice>
-      <enumChoice choice="Gyralite">
-        <choice>Gyralite</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 1, right">
-        <choice>Ditch Light Type 1, right</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 1, left">
-        <choice>Ditch Light Type 1, left</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 2, right">
-        <choice>Ditch Light Type 2, right</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 2, left">
-        <choice>Ditch Light Type 2, left</choice>
-      </enumChoice>
-      <enumChoice choice="Uncoupling">
-        <choice>Uncoupling</choice>
-      </enumChoice>
-      <enumChoice choice="Soft Start">
-        <choice>Soft Start</choice>
-      </enumChoice>
-      <enumChoice choice="Automatic Stop Lights for Streetcars">
-        <choice>Automatic Stop Lights for Streetcars</choice>
-      </enumChoice>
-      <enumChoice choice="Turns off when speed is greater than 0">
-        <choice>Turns off when speed is greater than 0</choice>
-      </enumChoice>
-      <enumChoice choice="Turns off after 5 Min.">
-        <choice>Turns off after 5 Min.</choice>
-      </enumChoice>
-      <enumChoice choice="Turns off after 10 Min.">
-        <choice>Turns off after 10 Min.</choice>
-      </enumChoice>
-      <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
-        <choice>Speed or Load dependent Smoke for Steam Engines</choice>
-      </enumChoice>
-      <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
-        <choice>Operation dependent Smoke for Diesels</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/zimo/enum-Ligth.xml"/>
     <label>Front light effect generated</label>
+    <label xml:lang="it">Effetti Luci frontali</label>
   </variable>
   <variable CV="125" mask="XXXXXXVV" item="Output 1 behavior">
-    <enumVal>
-      <enumChoice choice="Both directions">
-        <choice>Both directions</choice>
-      </enumChoice>
-      <enumChoice choice="Only in forward">
-        <choice>Only in forward</choice>
-      </enumChoice>
-      <enumChoice choice="Only in reverse">
-        <choice>Only in reverse</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Front light behavior</label>
+    <label xml:lang="it">Comportamento Luci frontali</label>
   </variable>
   <variable CV="126" mask="VVVVVVXX" item="Output 2 effect generated">
-    <enumVal>
-      <enumChoice choice="Standard on/off function output">
-        <choice>Standard on/off function output</choice>
-      </enumChoice>
-      <enumChoice choice="Mars light">
-        <choice>Mars light</choice>
-      </enumChoice>
-      <enumChoice choice="Random Flicker">
-        <choice>Random Flicker</choice>
-      </enumChoice>
-      <enumChoice choice="Flashing Headlight">
-        <choice>Flashing Headlight</choice>
-      </enumChoice>
-      <enumChoice choice="Single Pulse Strobe">
-        <choice>Single Pulse Strobe</choice>
-      </enumChoice>
-      <enumChoice choice="Double Pulse Strobe">
-        <choice>Double Pulse Strobe</choice>
-      </enumChoice>
-      <enumChoice choice="Rotary Beacon">
-        <choice>Rotary Beacon</choice>
-      </enumChoice>
-      <enumChoice choice="Gyralite">
-        <choice>Gyralite</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 1, right">
-        <choice>Ditch Light Type 1, right</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 1, left">
-        <choice>Ditch Light Type 1, left</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 2, right">
-        <choice>Ditch Light Type 2, right</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 2, left">
-        <choice>Ditch Light Type 2, left</choice>
-      </enumChoice>
-      <enumChoice choice="Uncoupling">
-        <choice>Uncoupling</choice>
-      </enumChoice>
-      <enumChoice choice="Soft Start">
-        <choice>Soft Start</choice>
-      </enumChoice>
-      <enumChoice choice="Automatic Stop Lights for Streetcars">
-        <choice>Automatic Stop Lights for Streetcars</choice>
-      </enumChoice>
-      <enumChoice choice="Turns off when speed is greater than 0">
-        <choice>Turns off when speed is greater than 0</choice>
-      </enumChoice>
-      <enumChoice choice="Turns off after 5 Min.">
-        <choice>Turns off after 5 Min.</choice>
-      </enumChoice>
-      <enumChoice choice="Turns off after 10 Min.">
-        <choice>Turns off after 10 Min.</choice>
-      </enumChoice>
-      <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
-        <choice>Speed or Load dependent Smoke for Steam Engines</choice>
-      </enumChoice>
-      <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
-        <choice>Operation dependent Smoke for Diesels</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/zimo/enum-Ligth.xml"/>
     <label>Rear light effect generated</label>
+    <label xml:lang="it">Effetti Luci posteriori</label>
   </variable>
   <variable CV="126" mask="XXXXXXVV" item="Output 2 behavior">
-    <enumVal>
-      <enumChoice choice="Both directions">
-        <choice>Both directions</choice>
-      </enumChoice>
-      <enumChoice choice="Only in forward">
-        <choice>Only in forward</choice>
-      </enumChoice>
-      <enumChoice choice="Only in reverse">
-        <choice>Only in reverse</choice>
-      </enumChoice>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Rear light behavior</label>
+    <label xml:lang="it">Comportamento Luci posteriori</label>
   </variable>
   <variable CV="127" mask="VVVVVVXX" item="Output 3 effect generated">
-    <enumVal>
-      <enumChoice choice="Standard on/off function output">
-        <choice>Standard on/off function output</choice>
-      </enumChoice>
-      <enumChoice choice="Mars light">
-        <choice>Mars light</choice>
-      </enumChoice>
-      <enumChoice choice="Random Flicker">
-        <choice>Random Flicker</choice>
-      </enumChoice>
-      <enumChoice choice="Flashing Headlight">
-        <choice>Flashing Headlight</choice>
-      </enumChoice>
-      <enumChoice choice="Single Pulse Strobe">
-        <choice>Single Pulse Strobe</choice>
-      </enumChoice>
-      <enumChoice choice="Double Pulse Strobe">
-        <choice>Double Pulse Strobe</choice>
-      </enumChoice>
-      <enumChoice choice="Rotary Beacon">
-        <choice>Rotary Beacon</choice>
-      </enumChoice>
-      <enumChoice choice="Gyralite">
-        <choice>Gyralite</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 1, right">
-        <choice>Ditch Light Type 1, right</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 1, left">
-        <choice>Ditch Light Type 1, left</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 2, right">
-        <choice>Ditch Light Type 2, right</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 2, left">
-        <choice>Ditch Light Type 2, left</choice>
-      </enumChoice>
-      <enumChoice choice="Uncoupling">
-        <choice>Uncoupling</choice>
-      </enumChoice>
-      <enumChoice choice="Soft Start">
-        <choice>Soft Start</choice>
-      </enumChoice>
-      <enumChoice choice="Automatic Stop Lights for Streetcars">
-        <choice>Automatic Stop Lights for Streetcars</choice>
-      </enumChoice>
-      <enumChoice choice="Turns off when speed is greater than 0">
-        <choice>Turns off when speed is greater than 0</choice>
-      </enumChoice>
-      <enumChoice choice="Turns off after 5 Min.">
-        <choice>Turns off after 5 Min.</choice>
-      </enumChoice>
-      <enumChoice choice="Turns off after 10 Min.">
-        <choice>Turns off after 10 Min.</choice>
-      </enumChoice>
-      <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
-        <choice>Speed or Load dependent Smoke for Steam Engines</choice>
-      </enumChoice>
-      <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
-        <choice>Operation dependent Smoke for Diesels</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/zimo/enum-Ligth.xml"/>
     <label>Function output 1 effect generated</label>
+    <label xml:lang="it">Effetti uscita Funzione 1</label>
   </variable>
   <variable CV="127" mask="XXXXXXVV" item="Output 3 behavior">
-    <enumVal>
-      <enumChoice choice="Both directions">
-        <choice>Both directions</choice>
-      </enumChoice>
-      <enumChoice choice="Only in forward">
-        <choice>Only in forward</choice>
-      </enumChoice>
-      <enumChoice choice="Only in reverse">
-        <choice>Only in reverse</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
     <label>Function output 1 behavior</label>
+    <label xml:lang="it">Comportamento uscita Funzione 1</label>
   </variable>
   <variable CV="128" mask="VVVVVVXX" item="Output 4 effect generated">
-    <enumVal>
-      <enumChoice choice="Standard on/off function output">
-        <choice>Standard on/off function output</choice>
-      </enumChoice>
-      <enumChoice choice="Mars light">
-        <choice>Mars light</choice>
-      </enumChoice>
-      <enumChoice choice="Random Flicker">
-        <choice>Random Flicker</choice>
-      </enumChoice>
-      <enumChoice choice="Flashing Headlight">
-        <choice>Flashing Headlight</choice>
-      </enumChoice>
-      <enumChoice choice="Single Pulse Strobe">
-        <choice>Single Pulse Strobe</choice>
-      </enumChoice>
-      <enumChoice choice="Double Pulse Strobe">
-        <choice>Double Pulse Strobe</choice>
-      </enumChoice>
-      <enumChoice choice="Rotary Beacon">
-        <choice>Rotary Beacon</choice>
-      </enumChoice>
-      <enumChoice choice="Gyralite">
-        <choice>Gyralite</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 1, right">
-        <choice>Ditch Light Type 1, right</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 1, left">
-        <choice>Ditch Light Type 1, left</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 2, right">
-        <choice>Ditch Light Type 2, right</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 2, left">
-        <choice>Ditch Light Type 2, left</choice>
-      </enumChoice>
-      <enumChoice choice="Uncoupling">
-        <choice>Uncoupling</choice>
-      </enumChoice>
-      <enumChoice choice="Soft Start">
-        <choice>Soft Start</choice>
-      </enumChoice>
-      <enumChoice choice="Automatic Stop Lights for Streetcars">
-        <choice>Automatic Stop Lights for Streetcars</choice>
-      </enumChoice>
-      <enumChoice choice="Turns off when speed is greater than 0">
-        <choice>Turns off when speed is greater than 0</choice>
-      </enumChoice>
-      <enumChoice choice="Turns off after 5 Min.">
-        <choice>Turns off after 5 Min.</choice>
-      </enumChoice>
-      <enumChoice choice="Turns off after 10 Min.">
-        <choice>Turns off after 10 Min.</choice>
-      </enumChoice>
-      <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
-        <choice>Speed or Load dependent Smoke for Steam Engines</choice>
-      </enumChoice>
-      <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
-        <choice>Operation dependent Smoke for Diesels</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/zimo/enum-Ligth.xml"/>
     <label>Function output 2 effect generated</label>
+    <label xml:lang="it">Effetti uscita Funzione 2</label>
   </variable>
   <variable CV="128" mask="XXXXXXVV" item="Output 4 behavior">
-    <enumVal>
-      <enumChoice choice="Both directions">
-        <choice>Both directions</choice>
-      </enumChoice>
-      <enumChoice choice="Only in forward">
-        <choice>Only in forward</choice>
-      </enumChoice>
-      <enumChoice choice="Only in reverse">
-        <choice>Only in reverse</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
     <label>Function output 2 behavior</label>
+    <label xml:lang="it">Comportamento uscita Funzione 2</label>
   </variable>
   <variable CV="129" mask="VVVVVVXX" item="Output 5 effect generated" minOut="5">
-    <enumVal>
-      <enumChoice choice="Standard on/off function output">
-        <choice>Standard on/off function output</choice>
-      </enumChoice>
-      <enumChoice choice="Mars light">
-        <choice>Mars light</choice>
-      </enumChoice>
-      <enumChoice choice="Random Flicker">
-        <choice>Random Flicker</choice>
-      </enumChoice>
-      <enumChoice choice="Flashing Headlight">
-        <choice>Flashing Headlight</choice>
-      </enumChoice>
-      <enumChoice choice="Single Pulse Strobe">
-        <choice>Single Pulse Strobe</choice>
-      </enumChoice>
-      <enumChoice choice="Double Pulse Strobe">
-        <choice>Double Pulse Strobe</choice>
-      </enumChoice>
-      <enumChoice choice="Rotary Beacon">
-        <choice>Rotary Beacon</choice>
-      </enumChoice>
-      <enumChoice choice="Gyralite">
-        <choice>Gyralite</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 1, right">
-        <choice>Ditch Light Type 1, right</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 1, left">
-        <choice>Ditch Light Type 1, left</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 2, right">
-        <choice>Ditch Light Type 2, right</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 2, left">
-        <choice>Ditch Light Type 2, left</choice>
-      </enumChoice>
-      <enumChoice choice="Uncoupling">
-        <choice>Uncoupling</choice>
-      </enumChoice>
-      <enumChoice choice="Soft Start">
-        <choice>Soft Start</choice>
-      </enumChoice>
-      <enumChoice choice="Automatic Stop Lights for Streetcars">
-        <choice>Automatic Stop Lights for Streetcars</choice>
-      </enumChoice>
-      <enumChoice choice="Turns off when speed is greater than 0">
-        <choice>Turns off when speed is greater than 0</choice>
-      </enumChoice>
-      <enumChoice choice="Turns off after 5 Min.">
-        <choice>Turns off after 5 Min.</choice>
-      </enumChoice>
-      <enumChoice choice="Turns off after 10 Min.">
-        <choice>Turns off after 10 Min.</choice>
-      </enumChoice>
-      <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
-        <choice>Speed or Load dependent Smoke for Steam Engines</choice>
-      </enumChoice>
-      <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
-        <choice>Operation dependent Smoke for Diesels</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/zimo/enum-Ligth.xml"/>
     <label>Function output 3 effect generated</label>
+    <label xml:lang="it">Effetti uscita Funzione 3</label>
   </variable>
   <variable CV="129" mask="XXXXXXVV" item="Output 5 behavior" minOut="5">
-    <enumVal>
-      <enumChoice choice="Both directions">
-        <choice>Both directions</choice>
-      </enumChoice>
-      <enumChoice choice="Only in forward">
-        <choice>Only in forward</choice>
-      </enumChoice>
-      <enumChoice choice="Only in reverse">
-        <choice>Only in reverse</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
     <label>Function output 3 behavior</label>
+    <label xml:lang="it">Comportamento uscita Funzione 3</label>
   </variable>
   <variable CV="130" mask="VVVVVVXX" item="Output 6 effect generated" minOut="6">
-    <enumVal>
-      <enumChoice choice="Standard on/off function output">
-        <choice>Standard on/off function output</choice>
-      </enumChoice>
-      <enumChoice choice="Mars light">
-        <choice>Mars light</choice>
-      </enumChoice>
-      <enumChoice choice="Random Flicker">
-        <choice>Random Flicker</choice>
-      </enumChoice>
-      <enumChoice choice="Flashing Headlight">
-        <choice>Flashing Headlight</choice>
-      </enumChoice>
-      <enumChoice choice="Single Pulse Strobe">
-        <choice>Single Pulse Strobe</choice>
-      </enumChoice>
-      <enumChoice choice="Double Pulse Strobe">
-        <choice>Double Pulse Strobe</choice>
-      </enumChoice>
-      <enumChoice choice="Rotary Beacon">
-        <choice>Rotary Beacon</choice>
-      </enumChoice>
-      <enumChoice choice="Gyralite">
-        <choice>Gyralite</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 1, right">
-        <choice>Ditch Light Type 1, right</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 1, left">
-        <choice>Ditch Light Type 1, left</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 2, right">
-        <choice>Ditch Light Type 2, right</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 2, left">
-        <choice>Ditch Light Type 2, left</choice>
-      </enumChoice>
-      <enumChoice choice="Uncoupling">
-        <choice>Uncoupling</choice>
-      </enumChoice>
-      <enumChoice choice="Soft Start">
-        <choice>Soft Start</choice>
-      </enumChoice>
-      <enumChoice choice="Automatic Stop Lights for Streetcars">
-        <choice>Automatic Stop Lights for Streetcars</choice>
-      </enumChoice>
-      <enumChoice choice="Turns off when speed is greater than 0">
-        <choice>Turns off when speed is greater than 0</choice>
-      </enumChoice>
-      <enumChoice choice="Turns off after 5 Min.">
-        <choice>Turns off after 5 Min.</choice>
-      </enumChoice>
-      <enumChoice choice="Turns off after 10 Min.">
-        <choice>Turns off after 10 Min.</choice>
-      </enumChoice>
-      <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
-        <choice>Speed or Load dependent Smoke for Steam Engines</choice>
-      </enumChoice>
-      <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
-        <choice>Operation dependent Smoke for Diesels</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/zimo/enum-Ligth.xml"/>
     <label>Function output 4 effect generated</label>
+    <label xml:lang="it">Effetti uscita Funzione 4</label>
   </variable>
   <variable CV="130" mask="XXXXXXVV" item="Output 6 behavior" minOut="6">
-    <enumVal>
-      <enumChoice choice="Both directions">
-        <choice>Both directions</choice>
-      </enumChoice>
-      <enumChoice choice="Only in forward">
-        <choice>Only in forward</choice>
-      </enumChoice>
-      <enumChoice choice="Only in reverse">
-        <choice>Only in reverse</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
     <label>Function output 4 behavior</label>
+    <label xml:lang="it">Comportamento uscita Funzione 4</label>
   </variable>
   <variable CV="131" mask="VVVVVVXX" minOut="7" item="Output 7 effect generated">
-    <enumVal>
-      <enumChoice choice="Standard on/off function output">
-        <choice>Standard on/off function output</choice>
-      </enumChoice>
-      <enumChoice choice="Mars light">
-        <choice>Mars light</choice>
-      </enumChoice>
-      <enumChoice choice="Random Flicker">
-        <choice>Random Flicker</choice>
-      </enumChoice>
-      <enumChoice choice="Flashing Headlight">
-        <choice>Flashing Headlight</choice>
-      </enumChoice>
-      <enumChoice choice="Single Pulse Strobe">
-        <choice>Single Pulse Strobe</choice>
-      </enumChoice>
-      <enumChoice choice="Double Pulse Strobe">
-        <choice>Double Pulse Strobe</choice>
-      </enumChoice>
-      <enumChoice choice="Rotary Beacon">
-        <choice>Rotary Beacon</choice>
-      </enumChoice>
-      <enumChoice choice="Gyralite">
-        <choice>Gyralite</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 1, right">
-        <choice>Ditch Light Type 1, right</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 1, left">
-        <choice>Ditch Light Type 1, left</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 2, right">
-        <choice>Ditch Light Type 2, right</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 2, left">
-        <choice>Ditch Light Type 2, left</choice>
-      </enumChoice>
-      <enumChoice choice="Uncoupling">
-        <choice>Uncoupling</choice>
-      </enumChoice>
-      <enumChoice choice="Soft Start">
-        <choice>Soft Start</choice>
-      </enumChoice>
-      <enumChoice choice="Automatic Stop Lights for Streetcars">
-        <choice>Automatic Stop Lights for Streetcars</choice>
-      </enumChoice>
-      <enumChoice choice="Turns off when speed is greater than 0">
-        <choice>Turns off when speed is greater than 0</choice>
-      </enumChoice>
-      <enumChoice choice="Turns off after 5 Min.">
-        <choice>Turns off after 5 Min.</choice>
-      </enumChoice>
-      <enumChoice choice="Turns off after 10 Min.">
-        <choice>Turns off after 10 Min.</choice>
-      </enumChoice>
-      <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
-        <choice>Speed or Load dependent Smoke for Steam Engines</choice>
-      </enumChoice>
-      <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
-        <choice>Operation dependent Smoke for Diesels</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/zimo/enum-Ligth.xml"/>
     <label>Function output 5 effect generated</label>
+    <label xml:lang="it">Effetti uscita Funzione 5</label>
   </variable>
   <variable CV="131" mask="XXXXXXVV" minOut="7" item="Output 7 behavior">
-    <enumVal>
-      <enumChoice choice="Both directions">
-        <choice>Both directions</choice>
-      </enumChoice>
-      <enumChoice choice="Only in forward">
-        <choice>Only in forward</choice>
-      </enumChoice>
-      <enumChoice choice="Only in reverse">
-        <choice>Only in reverse</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
     <label>Function output 5 behavior</label>
+    <label xml:lang="it">Comportamento uscita Funzione 5</label>
   </variable>
   <variable CV="132" mask="VVVVVVXX" minOut="8" item="Output 8 effect generated">
-    <enumVal>
-      <enumChoice choice="Standard on/off function output">
-        <choice>Standard on/off function output</choice>
-      </enumChoice>
-      <enumChoice choice="Mars light">
-        <choice>Mars light</choice>
-      </enumChoice>
-      <enumChoice choice="Random Flicker">
-        <choice>Random Flicker</choice>
-      </enumChoice>
-      <enumChoice choice="Flashing Headlight">
-        <choice>Flashing Headlight</choice>
-      </enumChoice>
-      <enumChoice choice="Single Pulse Strobe">
-        <choice>Single Pulse Strobe</choice>
-      </enumChoice>
-      <enumChoice choice="Double Pulse Strobe">
-        <choice>Double Pulse Strobe</choice>
-      </enumChoice>
-      <enumChoice choice="Rotary Beacon">
-        <choice>Rotary Beacon</choice>
-      </enumChoice>
-      <enumChoice choice="Gyralite">
-        <choice>Gyralite</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 1, right">
-        <choice>Ditch Light Type 1, right</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 1, left">
-        <choice>Ditch Light Type 1, left</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 2, right">
-        <choice>Ditch Light Type 2, right</choice>
-      </enumChoice>
-      <enumChoice choice="Ditch Light Type 2, left">
-        <choice>Ditch Light Type 2, left</choice>
-      </enumChoice>
-      <enumChoice choice="Uncoupling">
-        <choice>Uncoupling</choice>
-      </enumChoice>
-      <enumChoice choice="Soft Start">
-        <choice>Soft Start</choice>
-      </enumChoice>
-      <enumChoice choice="Automatic Stop Lights for Streetcars">
-        <choice>Automatic Stop Lights for Streetcars</choice>
-      </enumChoice>
-      <enumChoice choice="Turns off when speed is greater than 0">
-        <choice>Turns off when speed is greater than 0</choice>
-      </enumChoice>
-      <enumChoice choice="Turns off after 5 Min.">
-        <choice>Turns off after 5 Min.</choice>
-      </enumChoice>
-      <enumChoice choice="Turns off after 10 Min.">
-        <choice>Turns off after 10 Min.</choice>
-      </enumChoice>
-      <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
-        <choice>Speed or Load dependent Smoke for Steam Engines</choice>
-      </enumChoice>
-      <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
-        <choice>Operation dependent Smoke for Diesels</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/zimo/enum-Ligth.xml"/>
     <label>Functin output 6 effect generated</label>
+    <label xml:lang="it">Effetti uscita Funzione 6</label>
   </variable>
   <variable CV="132" mask="XXXXXXVV" minOut="8" item="Output 8 behavior">
-    <enumVal>
-      <enumChoice choice="Both directions">
-        <choice>Both directions</choice>
-      </enumChoice>
-      <enumChoice choice="Only in forward">
-        <choice>Only in forward</choice>
-      </enumChoice>
-      <enumChoice choice="Only in reverse">
-        <choice>Only in reverse</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
     <label>Function output 6 behavior</label>
+    <label xml:lang="it">Comportamento uscita Funzione 6</label>
   </variable>
   <variable CV="133" item="Function Output as virtual Cam or Smoke Fan" default="0" minOut="4" include="217">
     <enumVal>
       <enumChoice choice="Function Output 2 Normal Output">
         <choice>Function Ouptput 2 Normal Output</choice>
+        <choice xml:lang="it">Uscita Funzione 2 Uscita Normale</choice>
       </enumChoice>
       <enumChoice choice="Function Output 2 Cam Pulses or Smoke Fan">
         <choice>Function Ouptput 2 Cam Pulses or Smoke Fan</choice>
+        <choice xml:lang="it">Uscita Funzione 2 Impulso Cam  o Ventola Fumo</choice>
       </enumChoice>
     </enumVal>
     <label>Function Output 2 as virtual Cam or Smoke Fan</label>
+    <label xml:lang="it">Uscita 2 Cam virtuale  o Ventola Fumo</label>
   </variable>
   <variable CV="133" item="Function Output as virtual Cam or Smoke Fan" default="0" minOut="6" include="201,203,211,212,213">
     <enumVal>
       <enumChoice choice="Function Output 4 Normal Output">
         <choice>Function Ouptput 4 Normal Output</choice>
+        <choice xml:lang="it">Uscita Funzione 4 Uscita Normale</choice>
       </enumChoice>
       <enumChoice choice="Function Output 4 Cam Pulses or Smoke Fan">
         <choice>Function Ouptput 4 Cam Pulses or Smoke Fan</choice>
+        <choice xml:lang="it">Uscita Funzione 4 Impulso Cam  o Ventola Fumo</choice>
       </enumChoice>
     </enumVal>
     <label>Function Output 4 as virtual Cam or Smoke Fan</label>
+    <label xml:lang="it">Uscita 4 Cam virtuale  o Ventola Fumo</label>
   </variable>
   <variable CV="133" item="Function Output as virtual Cam or Smoke Fan" default="0" minOut="12" include="208,209">
     <enumVal>
       <enumChoice choice="Function Output 10 Normal Output">
         <choice>Function Ouptput 10 Normal Output</choice>
+        <choice xml:lang="it">Uscita Funzione 10 Uscita Normale</choice>
       </enumChoice>
       <enumChoice choice="Function Output 10 Cam Pulses or Smoke Fan">
         <choice>Function Ouptput 10 Cam Pulses or Smoke Fan</choice>
+        <choice xml:lang="it">Uscita Funzione 10 Impulso Cam  o Ventola Fumo</choice>
       </enumChoice>
     </enumVal>
     <label>Function Output 10 as virtual Cam or Smoke Fan</label>
+    <label xml:lang="it">Uscita 10 Cam virtuale  o Ventola Fumo</label>
   </variable>
   <variable item="Asymmetrical DCC Threshold" CV="134" default="106">
     <decVal max="214"/>
     <label>Asymmetrical DCC Threshold</label>
+    <label xml:lang="it">Soglia DCC asimmetrica</label>
   </variable>
   <variable item="km/h speed regulation control and range" CV="135" opsOnly="yes" default="0">
     <enumVal>
       <enumChoice choice="Not Active">
         <choice>Not Active</choice>
+        <choice xml:lang="it">Non attiva</choice>
       </enumChoice>
       <enumChoice choice="0.2" value="2">
         <choice>0.2</choice>
@@ -1508,243 +855,230 @@
       </enumChoice>
     </enumVal>
     <label>km/h speed regulation control and range</label>
+    <label xml:lang="it">Regolazione velocità e valori km/h</label>
   </variable>
   <variable item="km/h speed regulation control number readout" CV="136" readOnly="yes">
     <decVal/>
     <label>km/h speed regulation control number readout</label>
+    <label xml:lang="it">Lettura valori Regolazione velocità e km/h</label>
   </variable>
   <variable item="Smoke PWM at standstill" CV="137">
     <decVal/>
     <label>Smoke PWM at standstill</label>
+    <label xml:lang="it">Impulsi Fumo da fermo</label>
   </variable>
   <variable item="Smoke PWM at minimum speed" CV="138">
     <decVal/>
     <label>Smoke PWM at minimum speed</label>
+    <label xml:lang="it">Impulsi Fumo velocità minima</label>
   </variable>
   <variable item="Smoke PWM at max speed" CV="139">
     <decVal/>
     <label>Smoke PWM at max speed</label>
+    <label xml:lang="it">Impulsi Fumo velocità massima</label>
   </variable>
   <variable item="Distance controlled stopping" CV="140" default="0">
     <enumVal>
       <enumChoice choice="not active">
         <choice>not active</choice>
+        <choice xml:lang="it">non attivo</choice>
       </enumChoice>
       <enumChoice choice="Automatic stops, Signal controlled speed influence or Asymmetric DCC">
         <choice>Automatic stops, Signal controlled speed influence or Asymmetric DCC</choice>
+        <choice xml:lang="it">Stop Automatico, Controllato da segnale o DCC asimmetrica</choice>
       </enumChoice>
       <enumChoice choice="Manual stops using cab">
         <choice>Manual stops using cab</choice>
+        <choice xml:lang="it">Stop manuale con palmare</choice>
       </enumChoice>
       <enumChoice choice="Automatic and Manual stops">
         <choice>Automatic and Manual stops</choice>
+        <choice xml:lang="it">Stop manuale e Automatico</choice>
       </enumChoice>
       <enumChoice choice="Automatic stops with immediate braking" value="11">
         <choice>Automatic stops with immediate braking</choice>
+        <choice xml:lang="it">Stop automatico con freno di emergenza</choice>
       </enumChoice>
       <enumChoice choice="Manual stops with immediate braking">
         <choice>Manual stops with immediate braking</choice>
+        <choice xml:lang="it">Stop manuale con freno di emergenza</choice>
       </enumChoice>
       <enumChoice choice="Automatic and Manual stops with immediate braking">
         <choice>Automatic and Manual stops with immediate braking</choice>
+        <choice xml:lang="it">Stop automatico e manuale con freno di emergenza</choice>
       </enumChoice>
     </enumVal>
     <label>Distance controlled stopping</label>
+    <label xml:lang="it">Distanza di Fermata</label>
   </variable>
   <variable item="Distance controlled stopping Distance" CV="141" default="0">
     <decVal min="0" max="255"/>
     <label>Distance controlled stopping Distance</label>
+        <label xml:lang="it">Controllo Distanza di Fermata</label>
   </variable>
   <variable item="Distance controlled stopping speed correction (ABC)" CV="142" default="12">
     <decVal min="0" max="255"/>
     <label>Distance controlled stopping speed correction (ABC)</label>
+    <label xml:lang="it">Correzione velocità Distanza di Fermata (ABC)</label>
   </variable>
   <variable item="Distance controlled stopping speed correction (HLU)" CV="143" default="0">
     <decVal min="0" max="255"/>
     <label>Distance controlled stopping speed correction (HLU)</label>
+    <label xml:lang="it">Correzione velocità Distanza di Fermata (HLU)</label>
   </variable>
   <variable item="Service Mode Programming Locked" CV="144" mask="XVXXXXXX" default="0">
-    <enumVal>
-      <enumChoice choice="No" value="0">
-        <choice>No</choice>
-      </enumChoice>
-      <enumChoice choice="Yes" value="1">
-        <choice>Yes</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Service Mode Programming Locked</label>
+    <label xml:lang="it">Blocco programmazione in modo Servizio</label>
   </variable>
   <variable item="Software Update Locked" CV="144" mask="VXXXXXXX" default="0">
-    <enumVal>
-      <enumChoice choice="No" value="0">
-        <choice>No</choice>
-      </enumChoice>
-      <enumChoice choice="Yes" value="1">
-        <choice>Yes</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
     <label>Software Update Locked</label>
+    <label xml:lang="it">Blocco aggiornamento Software</label>
   </variable>
   <variable CV="145" item="Kick Start" default="0">
     <enumVal>
       <enumChoice choice="Normal (DC and Coreless)" value="0">
         <choice>Normal (DC and Coreless)</choice>
+        <choice xml:lang="it">Normale (DC e Coreless)</choice>
       </enumChoice>
       <enumChoice choice="Low Impedance DC (with added capacitor see manual)" value="1">
         <choice>Low Impedance DC (with added capacitor see manual)</choice>
+        <choice xml:lang="it">Bassa impedenza DC(con condensatoe: vedere manuale)</choice>
       </enumChoice>
       <enumChoice choice="C or Softdrive-Sinus (FO4 not useable)" value="10">
         <choice>C or Softdrive-Sinus (FO4 not useable)</choice>
+        <choice xml:lang="it">C o Softdrive-Sinusoidale (F4 non usabile)</choice>
       </enumChoice>
       <enumChoice choice="alternative C or Softdrive-Sinus (FO4 useable)" value="11">
         <choice>alternative C or Softdrive-Sinus (FO4 useable)</choice>
+        <choice xml:lang="it">C alternativo o Softdrive-Sinusoidale (F4 usabile)</choice>
       </enumChoice>
       <enumChoice choice="Special C or Softdrive-Sinus requiring normal output (FO4 not useable)" value="12">
         <choice>Special C or Softdrive-Sinus requiring normal output (FO4 not useable)</choice>
+        <choice xml:lang="it">C Speciale o Softdrive-Sinusoidale con uscita normale (F4 non usabile)</choice>
       </enumChoice>
       <enumChoice choice="Special C or Softdrive-Sinus for Marklin Gottardo (FO3 is directional selection of 3rd rail pickup)" value="13">
         <choice>Special C or Softdrive-Sinus for Marklin Gottardo (FO3 is directional selection of 3rd rail pickup)</choice>
+        <choice xml:lang="it">C Speciale o Softdrive-Sinusoidale per Marklin Gottardo (F3 selezione direzionale della terza rotaia)</choice>
       </enumChoice>
     </enumVal>
     <label>Motor Control Method</label>
+    <label xml:lang="it">Metodo controllo motore</label>
   </variable>
   <variable CV="146" default="0" item="Load Control" tooltip="Motor Backlash Control">
     <decVal min="0" max="255"/>
     <label>Motor Backlash Control</label>
+    <label xml:lang="it">Controllo rinculo motore</label>
   </variable>
   <variable CV="147" default="0" item="Total PWM Period">
     <decVal min="0" max="255"/>
     <label>EMK measure timeout</label>
+    <label xml:lang="it">Misura timeout EMK</label>
   </variable>
   <variable CV="148" default="0" item="EMF Control Reference">
     <decVal min="0" max="255"/>
     <label>Differential value</label>
+    <label xml:lang="it">Valore differenziale</label>
   </variable>
   <variable CV="149" mask="VVVVVVVX" default="0" item="EMF Enable">
-    <enumVal>
-      <enumChoice choice="On">
-        <choice>On</choice>
-      </enumChoice>
-      <enumChoice choice="Off">
-        <choice>Off</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
     <label>Adaptive proportional value</label>
+    <label xml:lang="it">Valore proprzionale adattabile</label>
   </variable>
   <variable CV="150" default="0" item="EMF Static Config">
     <decVal min="0" max="255"/>
     <label>Regulation at full speed</label>
+    <label xml:lang="it">Regolazione a velocità massima</label>
   </variable>
   <variable CV="151" item="Advanced Group 1 Option 1" default="0" tooltip="Motor braked by shorting output">
     <enumVal>
       <enumChoice choice="No Braking">
         <choice>No Braking</choice>
+        <choice xml:lang="it"> Nessuna Frenata</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 1sec from Stop" value="1">
         <choice>Gradual brake application over 1sec from Stop</choice>
+        <choice xml:lang="it">Frenata graduale oltre 1 sec. dallo stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 2sec from Stop" value="2">
         <choice>Gradual brake application over 2sec from Stop</choice>
+        <choice xml:lang="it">Frenata graduale oltre 2 sec. dallo stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 3sec from Stop" value="3">
         <choice>Gradual brake application over 3sec from Stop</choice>
+        <choice xml:lang="it">Frenata graduale oltre 3 sec. dallo stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 4sec from Stop" value="4">
         <choice>Gradual brake application over 4sec from Stop</choice>
+        <choice xml:lang="it">Frenata graduale oltre 4 sec. dallo stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 5sec from Stop" value="5">
         <choice>Gradual brake application over 5sec from Stop</choice>
+        <choice xml:lang="it">Frenata graduale oltre 5 sec. dallo stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 6sec from Stop" value="6">
         <choice>Gradual brake application over 6sec from Stop</choice>
+        <choice xml:lang="it">Frenata graduale oltre 6 sec. dallo stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 7sec from Stop" value="7">
         <choice>Gradual brake application over 7sec from Stop</choice>
+        <choice xml:lang="it">Frenata graduale oltre 7 sec. dallo stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 8sec from Stop" value="8">
         <choice>Gradual brake application over 8sec from Stop</choice>
+        <choice xml:lang="it">Frenata graduale oltre 8 sec. dallo stop</choice>
       </enumChoice>
       <enumChoice choice="Full brake application at Stop" value="2">
-        <choice>Gradual brake application over 2sec from Stop</choice>
+        <choice>Full brake application at Stop</choice>
+        <choice xml:lang="it">Frenata completa allo stop</choice>
       </enumChoice>
     </enumVal>
     <label>Motor brake</label>
+    <label xml:lang="it">Freno motore</label>
   </variable>
   <variable item="Dim function output 7" CV="152" mask="XXXXXXXV" default="0" minOut="9">
-    <enumVal>
-      <enumChoice choice="Off" value="1">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On" value="0">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Dim function output 7</label>
+    <label xml:lang="it">Funzione smorzamento uscita 7</label>
   </variable>
   <variable item="Dim function output 8" CV="152" mask="XXXXXXVX" default="0" minOut="10">
-    <enumVal>
-      <enumChoice choice="Off" value="1">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On" value="0">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 8</label>
+    <label xml:lang="it">Funzione smorzamento uscita 8</label>
   </variable>
   <variable item="Dim function output 9" CV="152" mask="XXXXXVXX" default="0" minOut="11">
-    <enumVal>
-      <enumChoice choice="Off" value="1">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On" value="0">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 9</label>
+    <label xml:lang="it">Funzione smorzamento uscita 9</label>
   </variable>
   <variable item="Dim function output 10" CV="152" mask="XXXXVXXX" default="0" minOut="12">
-    <enumVal>
-      <enumChoice choice="0ff" value="1">
-        <choice>0ff</choice>
-      </enumChoice>
-      <enumChoice choice="On" value="0">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 10</label>
+    <label xml:lang="it">Funzione smorzamento uscita 10</label>
   </variable>
   <variable item="Dim function output 11" CV="152" mask="XXXVXXXX" default="0" minOut="13">
-    <enumVal>
-      <enumChoice choice="Off" value="1">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On" value="0">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 11</label>
+    <label xml:lang="it">Funzione smorzamento uscita 11</label>
   </variable>
   <variable item="Dim function output 12" CV="152" mask="XXVXXXXX" default="0" minOut="14">
-    <enumVal>
-      <enumChoice choice="Off" value="1">
-        <choice>Off</choice>
-      </enumChoice>
-      <enumChoice choice="On" value="0">
-        <choice>On</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 12</label>
+    <label xml:lang="it">Funzione smorzamento uscita 12</label>
   </variable>
   <variable item="FO3 + FO4 directional setting" CV="152" mask="XVXXXXXX" default="0" minOut="6">
     <enumVal>
       <enumChoice choice="Non Directional, normal NMRA mapping" value="0">
         <choice>Non Directional, normal NMRA mapping</choice>
+        <choice xml:lang="it">non direzionale, Standard NMRA</choice>
       </enumChoice>
       <enumChoice choice="FO3 on in reverse, FO4 on in forward" value="1">
         <choice>FO3 on in reverse, FO4 on in forward</choice>
+        <choice xml:lang="it">F3 in retro ,F4 in avanti</choice>
       </enumChoice>
     </enumVal>
     <label>FO3 + FO4 directional setting</label>
+    <label xml:lang="it">F3+F4 settaggio direzionale</label>
   </variable>
 </variables>
