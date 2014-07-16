@@ -168,16 +168,18 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
             }
         }
 
-        java.util.ArrayList<JButton> readList = new java.util.ArrayList<JButton>();
         
         public void openCdiPane(final NodeID destNode) {
     
+            final java.util.ArrayList<JButton> readList = new java.util.ArrayList<JButton>();
+            
             CdiMemConfigReader cmcr = new CdiMemConfigReader(destNode, store, mcs);
     
             CdiMemConfigReader.ReaderAccess rdr = new CdiMemConfigReader.ReaderAccess() {
                 public void provideReader(java.io.Reader r) {
                     JmriJFrame f = new JmriJFrame();
                     f.setTitle("Configure "+destNode);
+                    f.setLayout(new javax.swing.BoxLayout(f.getContentPane(), javax.swing.BoxLayout.Y_AXIS));
                     
                     CdiPanel m = new CdiPanel();
                     JScrollPane scrollPane = new JScrollPane(m, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED );
@@ -283,7 +285,6 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
                     } catch (Exception e) { log.error("caught exception while parsing CDI", e);}
                     
                     JButton b = new JButton("Read All");
-                    m.add(b);
                     b.addActionListener(new java.awt.event.ActionListener() {
                         @Override
                         public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -299,12 +300,13 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
                                 Timer t = new Timer(delay, taskPerformer);
                                 t.setRepeats(false);
                                 t.start();
-                                delay = delay + 250;
+                                delay = delay + 150;
                             }
                         }
                     });
 
                     f.add( scrollPane );
+                    f.add(b);
             
                     f.pack();
                     f.setVisible(true);
