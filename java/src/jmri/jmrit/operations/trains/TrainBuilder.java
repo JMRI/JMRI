@@ -1535,7 +1535,7 @@ public class TrainBuilder extends TrainCommon {
 			return;
 		}
 		
-		addLine(_buildReport, THREE, BLANK_LINE); // add line when in very detailed report mode
+		addLine(_buildReport, THREE, BLANK_LINE);
 		addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("blockDepartureHasBlocks"), new Object[] {
 				_departStageTrack.getName(), _numOfBlocks.size() }));
 
@@ -1813,7 +1813,7 @@ public class TrainBuilder extends TrainCommon {
 			}
 			// can this car be picked up?
 			if (!checkPickUpTrainDirection(car, rl)) {
-				addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+				addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
 				continue; // no
 			}
 			// check for car order?
@@ -1834,7 +1834,7 @@ public class TrainBuilder extends TrainCommon {
 			if (findFinalDestinationForCarLoad(car) && car.getDestination() == null
 					&& car.getTrack() != _departStageTrack) {
 				// done with this car, it has a custom load, and there are spurs/schedules, but no destination found
-				addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+				addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
 				continue;
 			}
 			// does car have a final destination, but no destination
@@ -1845,7 +1845,7 @@ public class TrainBuilder extends TrainCommon {
 						&& car.getTrack() != _departStageTrack) {
 					addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCarHasFinalDestNoMove"),
 							new Object[] { car.toString(), car.getFinalDestinationName() }));
-					addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+					addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
 					log.debug("Removing car ({}) from list", car.toString());
 					_carList.remove(car);
 					_carIndex--;
@@ -1870,7 +1870,7 @@ public class TrainBuilder extends TrainCommon {
 						_carList.remove(car);
 						_carIndex--;
 					}
-					addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+					addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
 					continue;
 				}
 				addLine(_buildReport, FIVE, MessageFormat
