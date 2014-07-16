@@ -341,6 +341,7 @@
     <LI>Jason M'Sadoques, who created the 
         <a href="http://jmri.org/help/en/package/jmri/jmrit/withrottle/EngineDriverAndroidThrottle.shtml">Android phone throttle application</a>
         and improved the WiThrottle support.
+    <li>Matthew Macdonald-Wallace arranged support for Linux on ARM V7 processors
 	<LI>Jeffrey Machacek updated the WiThrottle server and updated Loconet SlotMonitor.
     <LI>Greg Madsen improved the operations backup and restore code
 	<LI>Jim Malone, who created a decoder file definition the Digitrax DN163K1a
