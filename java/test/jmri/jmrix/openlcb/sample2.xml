@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdi>
+  <identification>
+    <manufacturer>OpenLCB Prototype</manufacturer>
+    <model>Basic sketch</model>
+    <hardwareVersion>Arduino (any)</hardwareVersion>
+    <softwareVersion>0.4</softwareVersion>
+    <map>
+      <relation>
+        <property>size</property>
+        <value>8 cm by 12 cm</value>
+      </relation>
+      <relation>
+        <property>weight</property>
+        <value>220g</value>
+      </relation>
+      <relation>
+        <property>power</property>
+        <value>12V at 100mA</value>
+      </relation>
+    </map>
+  </identification>
+  <segment space="0" origin="0">
+    <name>Content</name>
+    <description>Variables for controlling general operation</description>
+    <group>
+      <name>Produced Events</name>
+      <description>The EventIDs for the producers</description>
+      <eventid />
+      <eventid />
+    </group>
+    <group>
+      <name>Consumed Events</name>
+      <description>The EventIDs for the consumers</description>
+      <eventid />
+      <eventid />
+    </group>
+    <bit>
+      <name>Regular bit variable</name>
+      <description>Demonstrate how a standard bit (boolean) variable can be shown</description>
+    </bit>
+    <bit>
+      <name>Bit variable with named states</name>
+      <description>Demonstrate how a map relabels the states of a bit (boolean) variable</description>
+      <map>
+        <relation>
+          <property>true</property>
+          <value>Lit</value>
+        </relation>
+        <relation>
+          <property>false</property>
+          <value>Not Lit</value>
+        </relation>
+      </map>
+    </bit>
+  </segment>
+  <segment space="1" origin="128">
+    <name>Resets</name>
+    <description>Memory locations controlling resets</description>
+    <int size="1">
+      <name>Reset</name>
+      <description>Controls reloading and clearing node memory. Board must be restarted for this to take effect.</description>
+      <map>
+        <relation>
+          <property>85</property>
+          <value>(No reset)</value>
+        </relation>
+        <relation>
+          <property>0</property>
+          <value>Reset all to defaults</value>
+        </relation>
+        <relation>
+          <property>170</property>
+          <value>Reset just EventIDs to defaults</value>
+        </relation>
+      </map>
+    </int>
+  </segment>
+  <segment space="3" origin="0">
+    <name>Demos</name>
+    <description>Demonstrations of various CDI capabilities</description>
+    <group replication="2">
+      <name>Outer Group</name>
+      <description>The contents of this group are replicated by 2</description>
+      <group replication="3">
+        <name>Inner Group</name>
+        <description>The contents of this group are replicated by 3</description>
+        <int size="1">
+          <name>Int inside groups</name>
+          <description>This is inside a 2x3 group</description>
+        </int>
+      </group>
+    </group>
+  </segment>
+</cdi>
+

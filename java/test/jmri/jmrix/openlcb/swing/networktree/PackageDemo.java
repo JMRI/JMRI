@@ -1,6 +1,6 @@
 // PackageDemo.java
 
-package jmri.jmrix.openlcb.swing;
+package jmri.jmrix.openlcb.swing.networktree;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
 
 /**
  * Demos for the jmri.jmrix.openlcb package.
- * @author      Bob Jacobsen  Copyright 2009, 2012
+ * @author      Bob Jacobsen  Copyright 2009, 2012, 2014
  * @version   $Revision$
  */
 public class PackageDemo extends TestCase {
@@ -31,11 +31,10 @@ public class PackageDemo extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrix.openlcb.swing.PackageDemo");
+        TestSuite suite = new TestSuite("jmri.jmrix.openlcb.swing.networktree.PackageDemo");
 
-        suite.addTest(jmri.jmrix.openlcb.swing.tie.PackageDemo.suite());
-        suite.addTest(jmri.jmrix.openlcb.swing.networktree.PackageDemo.suite());
-        suite.addTest(jmri.jmrix.openlcb.swing.monitor.PackageDemo.suite());
+        suite.addTest(CdiPanelDemo.suite());
+        suite.addTest(NetworkTreePaneDemo.suite());
         
         return suite;
     }
