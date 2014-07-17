@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
 <!-- $Id: Zimo_MX62_1.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
@@ -456,29 +456,37 @@
       <variable item="P/I adjustment" CV="56" default="55" comment="Range 0-99">
         <decVal max="99"/>
         <label>P/I adjustment</label>
+        <label xml:lang="it">Regolazione P/I</label>
         <comment>Range 0-99</comment>
+        <comment xml:lang="it">Valori 0-99</comment>
       </variable>
       <variable item="Adjust EMK Voltage" CV="57" default="140" comment="Range 0-255">
         <decVal max="255"/>
         <label>Adjust EMK Voltage</label>
+        <label xml:lang="it">Regolazione Tensione EMK</label>
         <comment>Range 0-255</comment>
+        <comment xml:lang="it">Valori 0-255</comment>
       </variable>
       <variable item="BEMF Pull" CV="58" default="255" comment="Controls how much BEMF (0-no BEMF to 255-max)">
         <decVal min="0" max="255"/>
         <label>BEMF Pull</label>
+        <label xml:lang="it">Regolazione BEMF</label>
         <comment>Controls how much BEMF (0-no BEMF to 255-max)</comment>
+        <comment xml:lang="it">Controlla quantitò BEMF (0=no BEMF, 255=max)</comment>
       </variable>
       <variable item="Signal Dependent Reaction Time" CV="59" default="0" comment="Range 0-255">
         <decVal max="255"/>
-    <label>Signal Dependent Reaction Time</label>
-    <label xml:lang="it">Tempo di reazione dipendente da Segnale</label>
-    <comment>Range 0-255</comment>
-    <comment xml:lang="it">Valori 0-255</comment>
+        <label>Signal Dependent Reaction Time</label>
+        <label xml:lang="it">Tempo di reazione dipendente da segnale</label>
+        <comment>Range 0-255</comment>
+        <comment xml:lang="it">Valori 0-255</comment>
       </variable>
       <variable item="Output Reduction" CV="60" default="0" comment="Controls function output voltage (0/255=high / 1 to 254)">
         <decVal min="0" max="255"/>
         <label>Output Reduction</label>
+        <label xml:lang="it">Riduzione dell'uscita</label>
         <comment>Controls function output voltage (0/255=high / 1 to 254)</comment>
+        <comment xml:lang="it">Controlla tensione uscite (0/255=alta, da 1 a 254)</comment>
       </variable>
       <variable item="Special Function Usage" CV="61" default="0" mask="XXXXXVVV">
         <enumVal>
@@ -505,19 +513,22 @@
           </enumChoice>
         </enumVal>
         <label>Special Function Usage</label>
+        <label xml:lang="it">Utilizzo funzioni Speciali</label>
       </variable>
       <variable item="Minimum Dim Value" CV="62" default="0">
         <decVal min="0" max="9"/>
         <label>Minimum Dim Value</label>
+        <label xml:lang="it">Valore minimo Smorzamento</label>
       </variable>
       <variable item="Cycle Time" CV="63" default="51">
         <decVal min="0" max="99"/>
         <label>Cycle Time</label>
+        <label xml:lang="it">Tempo di ciclo</label>
       </variable>
       <variable item="Ditch Light Off Time" CV="64" default="0">
         <decVal min="0" max="9"/>
         <label>Ditch Light Off Time</label>
-        <label xml:lang="it">Tempo di Off luci Ditch</label>
+       <label xml:lang="it">Tempo di Off luci Ditch</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
       <variable item="Speed Table" CV="67">
@@ -527,21 +538,16 @@
         <label xml:lang="it">Tabella Velocità</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
-      <variable CV="105" default="255" item="User Id #1">
-        <decVal/>
-        <label>User Private ID #1</label>
-      </variable>
-      <variable CV="106" default="255" item="User Id #2">
-        <decVal/>
-        <label>User Private ID #2</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <variable item="Address Pulse" CV="112" mask="XXXXXVXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Address Pulse</label>
+        <label xml:lang="it">Riconoscimento Numero Loco</label>
       </variable>
       <variable item="NMRA" CV="112" mask="XXXXVXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>NMRA</label>
+        <label xml:lang="it">Compatibilità NMRA</label>
       </variable>
       <variable item="PWM period 16/32kHz" CV="112" mask="XXVXXXXX" default="0">
         <enumVal>
@@ -553,59 +559,39 @@
           </enumChoice>
         </enumVal>
         <label>PWM period 16/32kHz</label>
+        <label xml:lang="it">Periodo PWM 16/32kHz</label>
       </variable>
       <variable item="Measurement 1/4" CV="112" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Measurement 1/4</label>
+        <label xml:lang="it">Misura 1/4</label>
       </variable>
       <variable item="Volume EMF Feedback Cutoff" CV="113" default="0" comment="Controls how much Feedback Cutoff">
         <decVal min="0" max="255"/>
         <label>Volume EMF Feedback Cutoff</label>
+        <label xml:lang="it">Volume taglio sensib.EMF</label>
         <comment>Controls how much Feedback Cutoff</comment>
+        <comment xml:lang="it">Controlla quantità del taglio EMF</comment>
       </variable>
       <variable item="Dim Output 1" CV="114" mask="XXXXXXXV" default="0">
-        <enumVal>
-          <enumChoice choice="Off" value="1">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On" value="0">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
         <label>Dim Output 1</label>
+        <label xml:lang="it">Smorzamento Uscita 1</label>
       </variable>
       <variable item="Dim Output 2" CV="114" mask="XXXXXXVX" default="0">
-        <enumVal>
-          <enumChoice choice="0ff" value="1">
-            <choice>0ff</choice>
-          </enumChoice>
-          <enumChoice choice="On" value="0">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
         <label>Dim Output 2</label>
+        <label xml:lang="it">Smorzamento Uscita 2</label>
       </variable>
       <variable item="Dim Output 3" CV="114" mask="XXXXXVXX" default="0">
-        <enumVal>
-          <enumChoice choice="Off" value="1">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On" value="0">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
         <label>Dim Output 3</label>
+        <label xml:lang="it">Smorzamento Uscita 3</label>
       </variable>
       <variable item="Dim Output 4" CV="114" mask="XXXXVXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Off" value="1">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On" value="0">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
         <label>Dim Output 4</label>
+        <label xml:lang="it">Smorzamento Uscita 4</label>
       </variable>
       <variable item="Coupler Control" CV="115" default="0" comment="Controls Time-interval and Voltage">
         <decVal min="0" max="99"/>
@@ -725,14 +711,7 @@
         <label>Shunt Function Key</label>
       </variable>
       <variable item="Half Speed (F-7)" CV="124" mask="XXXXVXXX" default="0">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Half Speed (F-7)</label>
       </variable>
       <variable item="Light Effects Output 1" CV="125" mask="VVVVVVXX">
@@ -783,17 +762,7 @@
         <label>Light Effects Output 1</label>
       </variable>
       <variable CV="125" mask="XXXXXXVV" item="Output 1 behavior">
-        <enumVal>
-          <enumChoice choice="Both directions">
-            <choice>Both directions</choice>
-          </enumChoice>
-          <enumChoice choice="Only in forward">
-            <choice>Only in forward</choice>
-          </enumChoice>
-          <enumChoice choice="Only in reverse">
-            <choice>Only in reverse</choice>
-          </enumChoice>
-        </enumVal>
+       <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
         <label>behavior</label>
       </variable>
       <variable item="Light Effects Output 2" CV="126" mask="VVVVVVXX">
@@ -844,17 +813,7 @@
         <label>Light Effects Output 2</label>
       </variable>
       <variable CV="126" mask="XXXXXXVV" item="Output 2 behavior">
-        <enumVal>
-          <enumChoice choice="Both directions">
-            <choice>Both directions</choice>
-          </enumChoice>
-          <enumChoice choice="Only in forward">
-            <choice>Only in forward</choice>
-          </enumChoice>
-          <enumChoice choice="Only in reverse">
-            <choice>Only in reverse</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
         <label>behavior</label>
       </variable>
       <variable item="Light Effects Output 3" CV="127" mask="VVVVVVXX">
@@ -905,17 +864,7 @@
         <label>Light Effects Output 3</label>
       </variable>
       <variable CV="127" mask="XXXXXXVV" item="Output 3 behavior">
-        <enumVal>
-          <enumChoice choice="Both directions">
-            <choice>Both directions</choice>
-          </enumChoice>
-          <enumChoice choice="Only in forward">
-            <choice>Only in forward</choice>
-          </enumChoice>
-          <enumChoice choice="Only in reverse">
-            <choice>Only in reverse</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
         <label>behavior</label>
       </variable>
       <variable item="Light Effects Output 4" CV="128" mask="VVVVVVXX">
@@ -966,17 +915,7 @@
         <label>Light Effects Output 4</label>
       </variable>
       <variable CV="128" mask="XXXXXXVV" item="Output 4 behavior">
-        <enumVal>
-          <enumChoice choice="Both directions">
-            <choice>Both directions</choice>
-          </enumChoice>
-          <enumChoice choice="Only in forward">
-            <choice>Only in forward</choice>
-          </enumChoice>
-          <enumChoice choice="Only in reverse">
-            <choice>Only in reverse</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
         <label>behavior</label>
       </variable>
     </variables>

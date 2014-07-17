@@ -521,17 +521,23 @@
       <variable item="P/I adjustment" CV="56" default="55" comment="Range 0-99">
         <decVal max="99"/>
         <label>P/I adjustment</label>
+        <label xml:lang="it">Regolazione P/I</label>
         <comment>Range 0-99</comment>
+        <comment xml:lang="it">Valori 0-99</comment>
       </variable>
       <variable item="Adjust EMK Voltage" CV="57" default="0" comment="Range 0-255">
         <decVal max="255"/>
         <label>Adjust EMK Voltage</label>
+        <label xml:lang="it">Regolazione Tensione EMK</label>
         <comment>Range 0-255</comment>
+        <comment xml:lang="it">Valori 0-255</comment>
       </variable>
       <variable item="BEMF Pull" CV="58" default="255" comment="Controls how much BEMF (0-no BEMF to 255-max)">
         <decVal min="0" max="255"/>
         <label>BEMF Pull</label>
+        <label xml:lang="it">Regolazione BEMF</label>
         <comment>Controls how much BEMF (0-no BEMF to 255-max)</comment>
+        <comment xml:lang="it">Controlla quantitò BEMF (0=no BEMF, 255=max)</comment>
       </variable>
       <variable item="Signal Dependent Reaction Time" CV="59" default="0" comment="Range 0-255">
         <decVal max="255"/>
@@ -543,7 +549,9 @@
       <variable item="Output Reduction" CV="60" default="0" comment="Controls function output voltage (0/255=high / 1 to 254)">
         <decVal min="0" max="255"/>
         <label>Output Reduction</label>
+        <label xml:lang="it">Riduzione dell'uscita</label>
         <comment>Controls function output voltage (0/255=high / 1 to 254)</comment>
+        <comment xml:lang="it">Controlla tensione uscite (0/255=alta, da 1 a 254)</comment>
       </variable>
       <variable item="Special Function Usage" CV="61" default="0" mask="XXXXXVVV">
         <enumVal>
@@ -570,6 +578,7 @@
           </enumChoice>
         </enumVal>
         <label>Special Function Usage</label>
+        <label xml:lang="it">Utilizzo funzioni Speciali</label>
       </variable>
       <variable item="Minimum Dim Value" CV="62" default="0">
         <decVal min="0" max="9"/>
