@@ -89,7 +89,11 @@
       <variable CV="19" default="0" item="Consist Address" comment="Allows permanent storage of consist address. Range 0-127">
         <decVal/>
         <label>Consist Address</label>
+        <label xml:lang="it">Indirizzo Consist</label>
+        <label xml:lang="fr">Addresse UM</label>
+        <label xml:lang="de">Verbundadresse</label>
         <comment>Allows permanent storage of consist address. Range 0-127</comment>
+        <comment xml:lang="it">Valori ammessi 0-127</comment>
       </variable>
       <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
         <enumVal>

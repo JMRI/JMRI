@@ -49,7 +49,6 @@
     <tooltip xml:lang="it">Valori oltre 128 incrementano correzzione, minori di 128 decrementano</tooltip>
   </variable>
   <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV29.xml"/>
- 
   <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(f) controls output 1</label>

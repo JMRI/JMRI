@@ -192,7 +192,7 @@
     <label xml:lang="it">Regolazione fine Decellarazione</label>
   </variable>
   <variable item="Deceleration Trim Sign" CV="24" mask="VXXXXXXX">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-AddSubtract.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-AddSubtract2.xml"/>
     <label>Deceleration Trim Sign</label>
     <label xml:lang="it">Segno Regolazione fine Decellarazione</label>
   </variable>
@@ -276,7 +276,7 @@
     <label>Use Speed Table</label>
     <label xml:lang="fr">Tableau de vitesse</label>
     <label xml:lang="de">Geschwindigkeitskennlinie nutzen</label>
-    <label xml:lang="it">Definizione Tabella Velocità</label>
+    <label xml:lang="it">Usa Tabella Velocità</label>
   </variable>
   <variable item="FL(f) controls output 1" CV="33" default="1" mask="XXXXXXXV" minOut="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -321,42 +321,42 @@
   <variable item="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(r) controls output 1</label>
-    <label xml:lang="it">Luci (in avanti) controlla uscita 1</label>
+    <label xml:lang="it">Luci (in retro) controlla uscita 1</label>
   </variable>
   <variable item="FL(r) controls output 2" CV="34" default="1" mask="XXXXXXVX" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(r) controls output 2</label>
-    <label xml:lang="it">Luci (in avanti) controlla uscita 2</label>
+    <label xml:lang="it">Luci (in retro) controlla uscita 2</label>
   </variable>
   <variable item="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(r) controls output 3</label>
-    <label xml:lang="it">Luci (in avanti) controlla uscita 3</label>
+    <label xml:lang="it">Luci (in retro) controlla uscita 3</label>
   </variable>
   <variable item="FL(r) controls output 4" CV="34" mask="XXXXVXXX" minOut="4">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(r) controls output 4</label>
-    <label xml:lang="it">Luci (in avanti) controlla uscita 4</label>
+    <label xml:lang="it">Luci (in retro) controlla uscita 4</label>
   </variable>
   <variable item="FL(r) controls output 5" CV="34" mask="XXXVXXXX" minOut="5">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(r) controls output 5</label>
-    <label xml:lang="it">Luci (in avanti) controlla uscita 5</label>
+    <label xml:lang="it">Luci (in retro) controlla uscita 5</label>
   </variable>
   <variable item="FL(r) controls output 6" CV="34" mask="XXVXXXXX" minOut="6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(r) controls output 6</label>
-    <label xml:lang="it">Luci (in avanti) controlla uscita 6</label>
+    <label xml:lang="it">Luci (in retro) controlla uscita 6</label>
   </variable>
   <variable item="FL(r) controls output 7" CV="34" mask="XVXXXXXX" minOut="7">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(r) controls output 7</label>
-    <label xml:lang="it">Luci (in avanti) controlla uscita 7</label>
+    <label xml:lang="it">Luci (in retro) controlla uscita 7</label>
   </variable>
   <variable item="FL(r) controls output 8" CV="34" mask="VXXXXXXX" minOut="8">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(r) controls output 8</label>
-    <label xml:lang="it">Luci (in avanti) controlla uscita 8</label>
+    <label xml:lang="it">Luci (in retro) controlla uscita 8</label>
   </variable>
   <variable item="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -1342,7 +1342,7 @@
   <variable CV="64" default="5" item="Global lighting option 4">
     <decVal min="0" max="9"/>
     <label>Ditch Light Off Time</label>
-    <label xml:lang="it">tempo di Off luci Ditch</label>
+    <label xml:lang="it">Tempo di Off luci Ditch</label>
   </variable>
   <variable CV="65" readOnly="yes" default="0" item="Product Number" tooltip="Sub-version Number (read only)">
     <decVal/>

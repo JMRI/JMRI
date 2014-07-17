@@ -3523,15 +3523,9 @@
         <label>Software Update Locked</label>
       </variable>
       <variable item="Servo Protocol" CV="161" mask="XXXXXXXV" default="0">
-        <enumVal>
-          <enumChoice choice="Negative Pulse">
-            <choice>Negative Pulse</choice>
-          </enumChoice>
-          <enumChoice choice="Positive Pulse">
-            <choice>Positive Pulse</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Servo Protocol</label>
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-NegPosPulse.xml"/>
+    <label>Servo Protocol</label>
+    <label xml:lang="it">Protocollo Servo</label>
       </variable>
       <variable item="Servo Control Wire Active" CV="161" mask="XXXXXXVX" default="0">
         <enumVal>
