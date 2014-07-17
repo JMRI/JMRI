@@ -2262,14 +2262,17 @@ public class Setup {
 				try {
 					int value = Integer.parseInt(a.getValue());
 					switch (value) {
-					case (STANDARD):
+					case STANDARD:
 						manifestFormat = STANDARD_FORMAT;
 						break;
-					case (TWO_COLUMN):
+					case TWO_COLUMN:
 						manifestFormat = TWO_COLUMN_FORMAT;
 						break;
-					case (TWO_COLUMN_TRACK):
+					case TWO_COLUMN_TRACK:
 						manifestFormat = TWO_COLUMN_TRACK_FORMAT;
+						break;
+					default:
+						log.debug("Unknown manifest format");
 					}
 				} catch (NumberFormatException ee) {
 					log.debug("Manifest format isn't an integer");
