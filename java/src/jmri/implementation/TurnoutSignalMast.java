@@ -20,13 +20,11 @@ public class TurnoutSignalMast extends AbstractSignalMast {
 
     public TurnoutSignalMast(String systemName, String userName) {
         super(systemName, userName);
-        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
         configureFromName(systemName);
     }
 
     public TurnoutSignalMast(String systemName) {
         super(systemName);
-        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
         configureFromName(systemName);
     }
         
@@ -213,8 +211,11 @@ public class TurnoutSignalMast extends AbstractSignalMast {
     }
     
     boolean isTurnoutUsed(Turnout t){
-        if(getHeadsUsed().contains(t)) return true;
-        if(getUnLitTurnout()!=null && getUnLitTurnout() == t) return true;
+        for(TurnoutAspect ta: turnouts.values()){
+            if(t.equals(ta.getTurnout()))
+                return true;
+        }
+        if(t.equals(getUnLitTurnout())) /*getUnLitTurnout()!=null && getUnLitTurnout() == t)*/ return true;
         return false;
     }
     
@@ -228,9 +229,11 @@ public class TurnoutSignalMast extends AbstractSignalMast {
     
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if("CanDelete".equals(evt.getPropertyName())){ //IN18N
-            if(isTurnoutUsed((Turnout)evt.getOldValue())){
-                java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
-                throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseTurnoutSignalMastVeto", getDisplayName()), e); //IN18N
+            if(evt.getOldValue() instanceof Turnout){
+                if(isTurnoutUsed((Turnout)evt.getOldValue())){
+                    java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
+                    throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseTurnoutSignalMastVeto", getDisplayName()), e); //IN18N
+                }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())){ //IN18N
             //Do nothing at this stage
@@ -238,7 +241,6 @@ public class TurnoutSignalMast extends AbstractSignalMast {
     }
     
     public void dispose() {
-        jmri.InstanceManager.turnoutManagerInstance().removeVetoableChangeListener(this);
         super.dispose();
     }
     

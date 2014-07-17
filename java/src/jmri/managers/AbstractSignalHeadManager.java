@@ -56,7 +56,7 @@ public class AbstractSignalHeadManager extends AbstractManager
         if("CanDelete".equals(evt.getPropertyName())){ //IN18N
             StringBuilder message = new StringBuilder();
             boolean found = false;
-            message.append("Found in the following Signal Heads..");
+            message.append(Bundle.getMessage("VetoFoundInSignalHeads"));
             message.append("<ul>");
             for(NamedBean nb:_tsys.values()){
                 try {
@@ -70,7 +70,7 @@ public class AbstractSignalHeadManager extends AbstractManager
                 }
             }
             message.append("</ul>");
-            message.append("It will be removed from the route");
+            message.append(Bundle.getMessage("VetoWillBeRemovedFromSignalHeads"));
             if(found)
                 throw new java.beans.PropertyVetoException(message.toString(), evt);
         } else {

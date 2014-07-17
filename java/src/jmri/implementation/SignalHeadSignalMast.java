@@ -38,13 +38,11 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
     public SignalHeadSignalMast(String systemName, String userName) {
         super(systemName, userName);
         configureFromName(systemName);
-        jmri.InstanceManager.signalHeadManagerInstance().addVetoableChangeListener(this);
     }
 
     public SignalHeadSignalMast(String systemName) {
         super(systemName);
         configureFromName(systemName);
-        jmri.InstanceManager.signalHeadManagerInstance().addVetoableChangeListener(this);
     }
         
     void configureFromName(String systemName) {

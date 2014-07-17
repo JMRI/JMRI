@@ -114,7 +114,7 @@ public class DefaultRouteManager extends AbstractManager
         if("CanDelete".equals(evt.getPropertyName())){ //IN18N
             StringBuilder message = new StringBuilder();
             boolean found = false;
-            message.append("Found in the following Routes..");
+            message.append(Bundle.getMessage("VetoFoundInRoute")); //IN18N
             message.append("<ul>");
             for(NamedBean nb:_tsys.values()){
                 try {
@@ -128,7 +128,7 @@ public class DefaultRouteManager extends AbstractManager
                 }
             }
             message.append("</ul>");
-            message.append("It will be removed from the route");
+            message.append(Bundle.getMessage("VetoWillBeRemovedFromRoute")); //IN18N
             if(found)
                 throw new java.beans.PropertyVetoException(message.toString(), evt);
         } else {

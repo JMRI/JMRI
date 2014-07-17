@@ -20,10 +20,12 @@ import java.util.List;
  * @version	$Revision$
  */
 public class DefaultSignalMastManager extends AbstractManager
-    implements SignalMastManager, java.beans.PropertyChangeListener {
+    implements SignalMastManager, java.beans.PropertyChangeListener, java.beans.VetoableChangeListener {
 
     public DefaultSignalMastManager() {
         super();
+        jmri.InstanceManager.signalHeadManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
     }
 
     public int getXMLOrder(){
@@ -107,6 +109,38 @@ public class DefaultSignalMastManager extends AbstractManager
     public void initialiseRepeaters(){
         for(SignalMastRepeater smr:repeaterList){
             smr.initialise();
+        }
+    }
+    
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+        if("CanDelete".equals(evt.getPropertyName())){ //IN18N
+            StringBuilder message = new StringBuilder();
+            boolean found = false;
+            message.append(Bundle.getMessage("VetoFoundInSignalMast"));
+            message.append("<ul>");
+            for(NamedBean nb:_tsys.values()){
+                try {
+                    nb.vetoableChange(evt);
+                } catch (java.beans.PropertyVetoException e) {
+                    if(e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")){ //IN18N
+                        throw e;
+                    }
+                    found = true;
+                    message.append("<li>" + e.getMessage() + "</li>");
+                }
+            }
+            message.append("</ul>");
+            message.append(Bundle.getMessage("VetoWillBeRemovedFromSignalMast")); //IN18N
+            if(found)
+                throw new java.beans.PropertyVetoException(message.toString(), evt);
+        } else {
+            for(NamedBean nb:_tsys.values()){
+                try {
+                    nb.vetoableChange(evt);
+                } catch (java.beans.PropertyVetoException e) {
+                    throw e;
+                }
+            }
         }
     }
 

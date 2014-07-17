@@ -485,7 +485,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         if("CanDelete".equals(evt.getPropertyName())){ //IN18N
             StringBuilder message = new StringBuilder();
             boolean found = false;
-            message.append("Found in the following Signal Mast Logic");
+            message.append(Bundle.getMessage("VetoFoundInSignalMastLogic"));
             message.append("<ul>");
             for(int i = 0; i <signalMastLogic.size(); i++){
                 try {

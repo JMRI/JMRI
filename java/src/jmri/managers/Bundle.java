@@ -25,7 +25,7 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
  */
 public class Bundle extends jmri.Bundle {
 
-    private final static String name = null; // no local resources
+    private final static String name = "jmri.managers.ManagersBundle"; // no local resources
 
     //
     // below here is boilerplate to be copied exactly
