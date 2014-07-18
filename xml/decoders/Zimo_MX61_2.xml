@@ -885,6 +885,7 @@
       <variable item="Half Speed (F-7)" CV="124" mask="XXXXVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Half Speed (F-7)</label>
+        <label xml:lang="it">Mezza velocità (F7)</label>
       </variable>
       <variable item="Light Effects Output 1" CV="125" mask="VVVVVVXX">
         <enumVal>
@@ -897,7 +898,7 @@
       <variable CV="125" mask="XXXXXXVV" item="Output 1 behavior">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
         <label>behavior</label>
-        <label xml:lang="it">Comportamento Luci</label>
+        <label xml:lang="it">Comportamento</label>
       </variable>
       <variable item="Light Effects Output 2" CV="126" mask="VVVVVVXX">
         <enumVal>
@@ -910,7 +911,7 @@
       <variable CV="126" mask="XXXXXXVV" item="Output 2 behavior">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
         <label>behavior</label>
-        <label xml:lang="it">Comportamento Luci</label>
+        <label xml:lang="it">Comportamento</label>
       </variable>
       <variable item="Light Effects Output 3" CV="127" mask="VVVVVVXX">
         <enumVal>
@@ -922,7 +923,7 @@
       <variable CV="127" mask="XXXXXXVV" item="Output 3 behavior">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
         <label>behavior</label>
-        <label xml:lang="it">Comportamento Luci</label>
+        <label xml:lang="it">Comportamento</label>
       </variable>
       <variable item="Light Effects Output 4" CV="128" mask="VVVVVVXX">
         <enumVal>
@@ -934,7 +935,7 @@
       <variable CV="128" mask="XXXXXXVV" item="Output 4 behavior">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
         <label>behavior</label>
-        <label xml:lang="it">Comportamento Luci</label>
+        <label xml:lang="it">Comportamento</label>
       </variable>
     </variables>
   </decoder>

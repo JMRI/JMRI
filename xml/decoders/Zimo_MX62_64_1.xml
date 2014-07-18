@@ -51,31 +51,55 @@
       <variable item="Vstart" CV="2" default="2" comment="Range 0-252">
         <decVal max="252"/>
         <label>Vstart</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Anfahrspannung</label>
         <comment>Range 0-252</comment>
+        <comment xml:lang="it">Valori 0-252</comment>
+        <comment xml:lang="de">Wert 0-255</comment>
       </variable>
       <variable item="Acceleration" CV="3" default="0" comment="Range 0-255">
         <decVal max="255"/>
         <label>Acceleration</label>
+        <label xml:lang="it">Accellerazione</label>
+        <label xml:lang="fr">Accélération</label>
+        <label xml:lang="de">Beschleunigungszeit</label>
         <comment>Range 0-255</comment>
+        <comment xml:lang="it">Valori 0-255</comment>
       </variable>
       <variable item="Deceleration" CV="4" default="0" comment="Range 0-255">
         <decVal max="255"/>
         <label>Deceleration</label>
+        <label xml:lang="it">Decellerazione</label>
+       <label xml:lang="fr">Décélération</label>
+       <label xml:lang="de">Bremszeit</label>
         <comment>Range 0-255</comment>
+        <comment xml:lang="it">Valori 0-255</comment>
       </variable>
       <variable item="Vhigh" CV="5" default="1" comment="Range 0-252">
         <decVal max="252"/>
         <label>Vhigh</label>
-        <comment>Range 0-252</comment>
+        <label xml:lang="it">Volt Massimi</label>
+       <label xml:lang="fr">Vmax</label>
+       <label xml:lang="de">Höchstgeschwindigkeit</label>
+       <comment>Range 0-252</comment>
+       <comment xml:lang="it">Valori 0-252</comment>
       </variable>
       <variable item="Vmid" CV="6" default="1" comment="Range 0-252">
         <decVal max="252"/>
         <label>Vmid</label>
+        <label xml:lang="it">Volt Intermedi</label>
+        <label xml:lang="fr">Vmoy</label>
+        <label xml:lang="de">Mittengeschwindigkeit</label>
         <comment>Range 0-252</comment>
+        <comment xml:lang="it">Valori 0-252</comment>
       </variable>
       <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Decoder Version   </label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
       <variable CV="8" readOnly="yes" item="Manufacturer" default="145">
         <decVal/>
@@ -84,49 +108,64 @@
       <variable item="Manufacturer ID - Reset" CV="8">
         <decVal/>
         <label>Manufacturer ID - Reset</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
       </variable>
       <variable item="Total PWM Period" CV="9" default="0" comment="Range 0/176-255">
         <decVal/>
         <label>Total PWM Period</label>
+        <label xml:lang="it">Periodo Totale PWM </label>
         <comment>Range 0/176-255</comment>
+        <comment xml:lang="it">Valori 0 / 176-255</comment>
       </variable>
       <variable item="EMF Feedback Cutoff" CV="10" default="0" comment="Range 0-252">
         <decVal max="252"/>
         <label>EMF Feedback Cutoff</label>
+        <label xml:lang="it">Soglia sensibilità EMF</label>
         <comment>Range 0-252</comment>
+        <comment xml:lang="it">Valori 0-252</comment>
       </variable>
       <!-- Deleted all CV 11 to 13 references-->
       <variable item="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F1</label>
+        <label xml:lang="it">Funzione di Stato in Analogico : F1</label>
       </variable>
       <variable item="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F2</label>
+        <label xml:lang="it">Funzione di Stato in Analogico : F2</label>
       </variable>
       <variable item="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F3</label>
+        <label xml:lang="it">Funzione di Stato in Analogico : F3</label>
       </variable>
       <variable item="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F4</label>
+        <label xml:lang="it">Funzione di Stato in Analogico : F4</label>
       </variable>
       <variable item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F5</label>
+        <label xml:lang="it">Funzione di Stato in Analogico : F5</label>
       </variable>
       <variable item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F6</label>
+        <label xml:lang="it">Funzione di Stato in Analogico : F6</label>
       </variable>
       <variable item="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F7</label>
+        <label xml:lang="it">Funzione di Stato in Analogico : F7</label>
       </variable>
       <variable item="Analog Mode Function Status - F8" CV="13" default="1" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F8</label>
+        <label xml:lang="it">Funzione di Stato in Analogico : F8</label>
       </variable>
       <variable CV="19" default="0" item="Consist Address" comment="Allows permanent storage of consist address. Range 0-127">
         <decVal/>
@@ -693,164 +732,208 @@
       <variable item="Dim Output 5" CV="114" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
         <label>Dim Output 5</label>
+        <label xml:lang="it">Smorzamento Uscita 5</label>
       </variable>
       <variable item="Dim Output 6" CV="114" mask="XXVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
         <label>Dim Output 6</label>
+        <label xml:lang="it">Smorzamento Uscita 6</label>
       </variable>
       <variable item="Coupler Control" CV="115" default="0" comment="Controls Time-interval and Voltage">
         <decVal min="0" max="99"/>
         <label>Coupler Control</label>
+        <label xml:lang="it">Controllo Gancio</label>
         <comment>Controls Time-interval and Voltage</comment>
+        <comment xml:lang="it">Controlla Tempo e Voltaggio</comment>
       </variable>
       <variable item="Coupler Output 1" CV="116" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Coupler Output 1</label>
+        <label xml:lang="it">Gancio uscita 1</label>
       </variable>
       <variable item="Coupler Output 2" CV="116" mask="XXXXXXVX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Coupler Output 2</label>
+        <label xml:lang="it">Gancio uscita 2</label>
       </variable>
       <variable item="Coupler Output 3" CV="116" mask="XXXXXVXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Coupler Output 3</label>
+        <label xml:lang="it">Gancio uscita 3</label>
       </variable>
       <variable item="Coupler Output 4" CV="116" mask="XXXXVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Coupler Output 4</label>
+        <label xml:lang="it">Gancio uscita 4</label>
       </variable>
       <variable item="Coupler Output 5" CV="116" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Coupler Output 5</label>
+        <label xml:lang="it">Gancio uscita 5</label>
       </variable>
       <variable item="Coupler Output 6" CV="116" mask="XXVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Coupler Output 6</label>
+        <label xml:lang="it">Gancio uscita 6</label>
       </variable>
       <variable item="Blink Rate" CV="117" default="0" comment="Controls Blink Interval">
         <decVal min="0" max="99"/>
         <label>Blink Rate</label>
+        <label xml:lang="it">Frequenza di Lampeggio</label>
         <comment>Controls Blink Interval</comment>
+        <comment xml:lang="it">Controlla intervallo di lampeggio</comment>
       </variable>
       <variable item="Flash Light Output 1" CV="118" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Flash Light Output 1</label>
+        <label xml:lang="it">Lampeggio luci uscita 1</label>
       </variable>
       <variable item="Flash Light Output 2" CV="118" mask="XXXXXXVX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Flash Light Output 2</label>
+        <label xml:lang="it">Lampeggio luci uscita 2</label>
       </variable>
       <variable item="Flash Light Output 3" CV="118" mask="XXXXXVXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Flash Light Output 3</label>
+        <label xml:lang="it">Lampeggio luci uscita 3</label>
       </variable>
       <variable item="Flash Light Output 4" CV="118" mask="XXXXVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Flash Light Output 4</label>
+        <label xml:lang="it">Lampeggio luci uscita 4</label>
       </variable>
       <variable item="Flash Light Output 5" CV="118" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Flash Light Output 5</label>
+        <label xml:lang="it">Lampeggio luci uscita 5</label>
       </variable>
       <variable item="Flash Light Output 6" CV="118" mask="XXVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Flash Light Output 6</label>
+        <label xml:lang="it">Lampeggio luci uscita 6</label>
       </variable>
       <variable item="Flash Light Inverted Output 4" CV="118" mask="XVXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Flash Light Inverted Output 4</label>
+        <label xml:lang="it">Lampeggio luci invertite uscita 4</label>
       </variable>
       <variable item="Flash Light Inverted Output 6" CV="118" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Flash Light Inverted Output 6</label>
+        <label xml:lang="it">Lampeggio luci invertite uscita 6</label>
       </variable>
       <variable item="F6 key dims Output 1" CV="119" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 key dims Output 1</label>
+        <label xml:lang="it">F6 smorza uscita 1</label>
       </variable>
       <variable item="F6 key dims Output 2" CV="119" mask="XXXXXXVX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 key dims Output 2</label>
+        <label xml:lang="it">F6 smorza uscita 2</label>
       </variable>
       <variable item="F6 key dims Output 3" CV="119" mask="XXXXXVXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 key dims Output 3</label>
+        <label xml:lang="it">F6 smorza uscita 3</label>
       </variable>
       <variable item="F6 key dims Output 4" CV="119" mask="XXXXVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 key dims Output 4</label>
+        <label xml:lang="it">F6 smorza uscita 4</label>
       </variable>
       <variable item="F6 key dims Output 5" CV="119" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 key dims Output 5</label>
+        <label xml:lang="it">F6 smorza uscita 5</label>
       </variable>
       <variable item="F6 key dims Output 6" CV="119" mask="XXVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 key dims Output 6</label>
+        <label xml:lang="it">F6 smorza uscita 6</label>
       </variable>
       <variable item="F6 key inverted" CV="119" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 key inverted</label>
+        <label xml:lang="it">Tasto F6 invertito</label>
       </variable>
       <variable item="F7 key dims Output 1" CV="120" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F7 key dims Output 1</label>
+        <label xml:lang="it">F7 smorza uscita 1</label>
       </variable>
       <variable item="F7 key dims Output 2" CV="120" mask="XXXXXXVX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F7 key dims Output 2</label>
+        <label xml:lang="it">F7 smorza uscita 2</label>
       </variable>
       <variable item="F7 key dims Output 3" CV="120" mask="XXXXXVXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F7 key dims Output 3</label>
+        <label xml:lang="it">F7 smorza uscita 3</label>
       </variable>
       <variable item="F7 key dims Output 4" CV="120" mask="XXXXVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F7 key dims Output 4</label>
+        <label xml:lang="it">F7 smorza uscita 4</label>
       </variable>
       <variable item="F7 key dims Output 5" CV="120" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F7 key dims Output 5</label>
+        <label xml:lang="it">F7 smorza uscita 5</label>
       </variable>
       <variable item="F7 key dims Output 6" CV="120" mask="XXVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F7 key dims Output 6</label>
+        <label xml:lang="it">F7 smorza uscita 6</label>
       </variable>
       <variable item="F7 key inverted" CV="120" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F7 key inverted</label>
+        <label xml:lang="it">Tasto F7 invertito</label>
       </variable>
       <variable item="Exponential Acceleration" CV="121" default="0" comment="Adds an exponential acceleration">
         <decVal min="0" max="99"/>
         <label>Exponential Acceleration</label>
+        <label xml:lang="it">Accellerazione Esponenziale</label>
         <comment>Adds an exponential acceleration</comment>
+        <label xml:lang="it">Aggiunge Accellerazione Esponenziale</label>
       </variable>
       <variable item="Exponential Deceleration" CV="122" default="0" comment="Adds an exponential deceleration">
         <decVal min="0" max="99"/>
         <label>Exponential Deceleration</label>
+        <label xml:lang="it">Decellerazione Esponenziale</label>
         <comment>Adds an exponential deceleration</comment>
+        <label xml:lang="it">Aggiunge Decellerazione Esponenziale</label>
       </variable>
       <variable item="Adaption Acceleration/Deceleration" CV="123" default="0" comment="Not understood">
         <decVal min="0" max="99"/>
         <label>Adaption Acceleration/Deceleration</label>
+        <label xml:lang="it">Accell./Decell. adattativa</label>
         <comment>Not understood</comment>
       </variable>
       <variable CV="124" default="0" mask="XXXXXXVV" item="Shunting Usage">
         <enumVal>
           <enumChoice choice="no shunting">
             <choice>no shunting</choice>
+            <choice xml:lang="it">Non in manovra</choice>
           </enumChoice>
-          <enumChoice choice="shunting,no exponential and adaptive influence">
-            <choice>shunting,no exponential and adaptive influence</choice>
+          <enumChoice choice="shunting, no exponential and adaptive influence">
+            <choice>shunting, no exponential and adaptive influence</choice>
+            <choice xml:lang="it">in manovra, non esponenziale e adattativa</choice>
           </enumChoice>
           <enumChoice choice="shunting, 1/4 de- and acceleration">
             <choice>shunting, 1/4 de- and acceleration</choice>
+            <choice xml:lang="it">in manovra, 1/4 di accell. e frenata</choice>
           </enumChoice>
-          <enumChoice choice="shunting, no de- and acceleration">
-            <choice>shunting, no de- and acceleration</choice>
+          <enumChoice choice="shunting, no de- and acceration">
+            <choice>shunting, no de- and acceration</choice>
+            <choice xml:lang="it">in manovra, nessuna accell. e frenata</choice>
           </enumChoice>
         </enumVal>
         <label>Shunting</label>
+        <label xml:lang="it">Manovra</label>
       </variable>
       <variable item="Shunt Function Key" CV="124" mask="XXXXXVXX" default="0">
         <enumVal>
@@ -859,221 +942,73 @@
           </enumChoice>
           <enumChoice choice="F-4 / Activate braking by DC">
             <choice>F-4 / Activate braking by DC</choice>
+            <choice xml:lang="it">F4 / Frenata attivata da DC</choice>
           </enumChoice>
         </enumVal>
         <label>Shunt Function Key</label>
+        <label xml:lang="it">Tasto Funzione per Manovre</label>
       </variable>
       <variable item="Half Speed (F-7)" CV="124" mask="XXXXVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Half Speed (F-7)</label>
+        <label xml:lang="it">Mezza velocità (F7)</label>
       </variable>
       <variable item="Half Speed (F-3)" CV="124" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Half Speed (F-3)</label>
+        <label xml:lang="it">Mezza velocità (F3)</label>
       </variable>
       <variable item="Light Effects Output 1" CV="125" mask="VVVVVVXX">
         <enumVal>
-          <enumChoice choice="Standard on/off function output">
-            <choice>Standard on/off function output</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Random Flicker">
-            <choice>Random Flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing Headlight">
-            <choice>Flashing Headlight</choice>
-          </enumChoice>
-          <enumChoice choice="Single Pulse Strobe">
-            <choice>Single Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double Pulse Strobe">
-            <choice>Double Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotery Beacon">
-            <choice>Rotery Beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, right">
-            <choice>Ditch Light Type 1, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, left">
-            <choice>Ditch Light Type 1, left</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, right">
-            <choice>Ditch Light Type 2, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, left">
-            <choice>Ditch Light Type 2, left</choice>
-          </enumChoice>
-          <enumChoice choice="Decoupling">
-            <choice>Decoupling</choice>
-          </enumChoice>
-          <enumChoice choice="Slow Dimming Up">
-            <choice>Slow Dimming Up</choice>
-          </enumChoice>
+          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
         </enumVal>
         <label>Light Effects Output 1</label>
+        <label xml:lang="it">Effetti luce uscita 1</label>
       </variable>
       <variable CV="125" mask="XXXXXXVV" item="Output 1 behavior">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
         <label>behavior</label>
+        <label xml:lang="it">comportamento</label>
       </variable>
       <variable item="Light Effects Output 2" CV="126" mask="VVVVVVXX">
         <enumVal>
-          <enumChoice choice="Standard on/off function output">
-            <choice>Standard on/off function output</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Random Flicker">
-            <choice>Random Flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing Headlight">
-            <choice>Flashing Headlight</choice>
-          </enumChoice>
-          <enumChoice choice="Single Pulse Strobe">
-            <choice>Single Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double Pulse Strobe">
-            <choice>Double Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotery Beacon">
-            <choice>Rotery Beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, right">
-            <choice>Ditch Light Type 1, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, left">
-            <choice>Ditch Light Type 1, left</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, right">
-            <choice>Ditch Light Type 2, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, left">
-            <choice>Ditch Light Type 2, left</choice>
-          </enumChoice>
-          <enumChoice choice="Decoupling">
-            <choice>Decoupling</choice>
-          </enumChoice>
-          <enumChoice choice="Slow Dimming Up">
-            <choice>Slow Dimming Up</choice>
-          </enumChoice>
+          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
         </enumVal>
         <label>Light Effects Output 2</label>
+        <label xml:lang="it">Effetti luce uscita 2</label>
       </variable>
       <variable CV="126" mask="XXXXXXVV" item="Output 2 behavior">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
         <label>behavior</label>
+        <label xml:lang="it">comportamento</label>
       </variable>
       <variable item="Light Effects Output 3" CV="127" mask="VVVVVVXX">
         <enumVal>
-          <enumChoice choice="Standard on/off function output">
-            <choice>Standard on/off function output</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Random Flicker">
-            <choice>Random Flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing Headlight">
-            <choice>Flashing Headlight</choice>
-          </enumChoice>
-          <enumChoice choice="Single Pulse Strobe">
-            <choice>Single Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double Pulse Strobe">
-            <choice>Double Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotery Beacon">
-            <choice>Rotery Beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, right">
-            <choice>Ditch Light Type 1, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, left">
-            <choice>Ditch Light Type 1, left</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, right">
-            <choice>Ditch Light Type 2, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, left">
-            <choice>Ditch Light Type 2, left</choice>
-          </enumChoice>
-          <enumChoice choice="Decoupling">
-            <choice>Decoupling</choice>
-          </enumChoice>
-          <enumChoice choice="Slow Dimming Up">
-            <choice>Slow Dimming Up</choice>
-          </enumChoice>
+          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
         </enumVal>
         <label>Light Effects Output 3</label>
+        <label xml:lang="it">Effetti luce uscita 3</label>
       </variable>
       <variable CV="127" mask="XXXXXXVV" item="Output 3 behavior">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
         <label>behavior</label>
+        <label xml:lang="it">comportamento</label>
       </variable>
       <variable item="Light Effects Output 4" CV="128" mask="VVVVVVXX">
         <enumVal>
-          <enumChoice choice="Standard on/off function output">
-            <choice>Standard on/off function output</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Random Flicker">
-            <choice>Random Flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing Headlight">
-            <choice>Flashing Headlight</choice>
-          </enumChoice>
-          <enumChoice choice="Single Pulse Strobe">
-            <choice>Single Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double Pulse Strobe">
-            <choice>Double Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotery Beacon">
-            <choice>Rotery Beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, right">
-            <choice>Ditch Light Type 1, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, left">
-            <choice>Ditch Light Type 1, left</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, right">
-            <choice>Ditch Light Type 2, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, left">
-            <choice>Ditch Light Type 2, left</choice>
-          </enumChoice>
-          <enumChoice choice="Decoupling">
-            <choice>Decoupling</choice>
-          </enumChoice>
-          <enumChoice choice="Slow Dimming Up">
-            <choice>Slow Dimming Up</choice>
-          </enumChoice>
+          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
         </enumVal>
         <label>Light Effects Output 4</label>
+        <label xml:lang="it">Effetti luce uscita 4</label>
       </variable>
       <variable CV="128" mask="XXXXXXVV" item="Output 4 behavior">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
         <label>behavior</label>
+        <label xml:lang="it">comportamento</label>
       </variable>
     </variables>
   </decoder>
