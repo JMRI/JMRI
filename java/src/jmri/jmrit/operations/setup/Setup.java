@@ -156,6 +156,7 @@ public class Setup {
 	public static final String NO_DESTINATION = "NO_DESTINATION"; // NOI18N
 	public static final String NO_DEST_TRACK = "NO_DEST_TRACK"; // NOI18N
 	public static final String NO_LOCATION = "NO_LOCATION"; // NOI18N
+	public static final String NO_TRACK = "NO_TRACK"; // NOI18N
 
 	// the supported colors for printed text
 	public static final String BLACK = Bundle.getMessage("Black");
@@ -1248,7 +1249,7 @@ public class Setup {
 			else if (format[i].equals(LOCATION))
 				format[i] = NO_LOCATION;
 			else if (format[i].equals(TRACK))
-				format[i] = NO_LOCATION;
+				format[i] = NO_TRACK;
 		}
 		return format;
 	}
