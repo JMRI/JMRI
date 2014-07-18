@@ -1317,7 +1317,7 @@
       <ivariable label="Multi Auto Lights 3, Firebox" CVname="55.138.2" CV="55" PI="138" SI="2" default="1" item="CV55.138.2 122" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Multi Auto Lights 3, Engine Room Lights" CVname="55.138.2" CV="55" PI="138" SI="2" default="1" item="CV55.138.2 120" mask="XXVXXXXXX">
+      <ivariable label="Multi Auto Lights 3, Engine Room Lights" CVname="55.138.2" CV="55" PI="138" SI="2" default="1" item="CV55.138.2 120" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 3, Engine Room2 Lights" CVname="55.138.2" CV="55" PI="138" SI="2" default="1" item="CV55.138.2 121" mask="XVXXXXXX">

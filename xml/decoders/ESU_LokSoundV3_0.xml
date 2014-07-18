@@ -4585,11 +4585,11 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Sensor 1 reverse</label>
       </variable>
-      <variable CV="223" mask="XXXXXXVXX" item="Sensor1 rev3">
+      <variable CV="223" mask="XXXXXVXX" item="Sensor1 rev3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Sensor 1 reverse</label>
       </variable>
-      <variable CV="223" mask="XXXXXVXXX" item="Sensor1 rev4">
+      <variable CV="223" mask="XXXXVXXX" item="Sensor1 rev4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Sensor 1 reverse</label>
       </variable>

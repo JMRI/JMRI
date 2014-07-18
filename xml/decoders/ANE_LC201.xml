@@ -417,7 +417,7 @@
         </enumVal>
         <label>F0F is Strobe</label>
       </variable>
-      <variable item="FOR is MARS Light" CV="50" mask="XXXXVXX">
+      <variable item="FOR is MARS Light" CV="50" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
