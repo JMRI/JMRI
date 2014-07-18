@@ -31,6 +31,11 @@ public class z21Test extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.roco.z21.z21Test");  // no tests in this class itself
         suite.addTest(new TestSuite(z21AdapterTest.class));
+        suite.addTest(new TestSuite(z21MessageTest.class));
+        suite.addTest(new TestSuite(z21ReplyTest.class));
+        suite.addTest(new TestSuite(z21TrafficControllerTest.class));
+        suite.addTest(new TestSuite(z21SystemConnectionMemoTest.class));
+        suite.addTest(new TestSuite(z21XPressNetTunnelTest.class));
         return suite;
     }
 

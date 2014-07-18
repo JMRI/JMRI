@@ -67,6 +67,24 @@ public class z21Reply extends AbstractMRReply {
 
     public String toMonitorString() { return toString(); }
 
+
+    // handle XPressNet replies tunneled in Z21 messages
+    boolean isXPressNetTunnelMessage(){
+        return (getOpCode() == 0x0040);
+    }
+
+    jmri.jmrix.lenz.XNetReply getXNetReply() {
+        jmri.jmrix.lenz.XNetReply xnr=null;
+        if(isXPressNetTunnelMessage()){
+           xnr = new jmri.jmrix.lenz.XNetReply();
+           for(int i=4;i<getLength();i++){
+              xnr.setElement(i-4,getElement(i));
+           }
+        }
+        return xnr;  
+    }
+
+
     static Logger log = LoggerFactory.getLogger(z21Reply.class.getName());
 
 }

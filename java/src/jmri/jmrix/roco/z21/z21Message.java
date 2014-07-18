@@ -45,8 +45,8 @@ public class z21Message extends AbstractMRMessage {
     public z21Message(jmri.jmrix.lenz.XNetMessage m) {
         this(m.getNumDataElements()+4);
         this.setOpCode(0x0040);
-        for (int i = 0; i < _nDataChars; i++) {
-            _dataChars[i+4] = m.getElement(i);
+        for (int i = 0; i < m.getNumDataElements(); i++) {
+            setElement(i+4,m.getElement(i));
         }
     }
 
@@ -55,7 +55,7 @@ public class z21Message extends AbstractMRMessage {
      * sequence to send, byte-for-byte.
      * @param m
      */
-    public z21Message(String m, int l) {
+    public z21Message(String m) {
         super(m);
         setBinary(true);
         // gather bytes in result

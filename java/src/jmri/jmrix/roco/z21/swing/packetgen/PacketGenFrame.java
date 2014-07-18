@@ -30,7 +30,7 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
     
     z21Message createPacket(String s) {
         if(s.equals("")) return null; // message cannot be empty
-        z21Message m = new z21Message(s,s.length()); 
+        z21Message m = new z21Message(s); 
         return m;
     }
     

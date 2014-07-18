@@ -62,6 +62,9 @@ public class z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
        // start operation
        ((z21SystemConnectionMemo)adaptermemo).setTrafficController(packets);
 
+       // add an XPressNet Tunnel.
+       new z21XPressNetTunnel(((z21SystemConnectionMemo)adaptermemo));
+
        jmri.jmrix.lenz.ActiveFlag.setActive();
     }
 

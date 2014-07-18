@@ -41,6 +41,7 @@ public class z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
       InstanceManager.store(componentFactory = new jmri.jmrix.roco.z21.swing.z21ComponentFactory(this), 
                                jmri.jmrix.swing.ComponentFactory.class);
     
+
     }
  
     jmri.jmrix.swing.ComponentFactory componentFactory = null;
