@@ -1070,7 +1070,7 @@
         <label>Uncoupler Fader Mask 1</label>
         <comment>F1 Output</comment>
       </variable>
-      <variable item="Uncoupler Fader Mask 2" CV="58" mask="XXXXXXvx" default="0" comment="F2 Output">
+      <variable item="Uncoupler Fader Mask 2" CV="58" mask="XXXXXXVX" default="0" comment="F2 Output">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1082,7 +1082,7 @@
         <label>Uncoupler Fader Mask 2</label>
         <comment>F2 Output</comment>
       </variable>
-      <variable item="Uncoupler Fader Mask 3" CV="58" mask="XXXXXvxx" default="0" comment="F3 Output">
+      <variable item="Uncoupler Fader Mask 3" CV="58" mask="XXXXXVXX" default="0" comment="F3 Output">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1094,7 +1094,7 @@
         <label>Uncoupler Fader Mask 3</label>
         <comment>F3 Output</comment>
       </variable>
-      <variable item="Uncoupler Fader Mask 4" CV="58" mask="XXXXvXXx" default="0" comment="F4 Output">
+      <variable item="Uncoupler Fader Mask 4" CV="58" mask="XXXXVXXX" default="0" comment="F4 Output">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1106,7 +1106,7 @@
         <label>Uncoupler Fader Mask 4</label>
         <comment>F4 Output</comment>
       </variable>
-      <variable item="Uncoupler Fader Mask 5" CV="58" mask="XXXvXXXx" default="0" comment="F5 Output">
+      <variable item="Uncoupler Fader Mask 5" CV="58" mask="XXXVXXXX" default="0" comment="F5 Output">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1118,7 +1118,7 @@
         <label>Uncoupler Fader Mask 5</label>
         <comment>F5 Output</comment>
       </variable>
-      <variable item="Uncoupler Fader Mask 6" CV="58" mask="XXvxXXXx" default="0" comment="F6 Output">
+      <variable item="Uncoupler Fader Mask 6" CV="58" mask="XXVXXXXX" default="0" comment="F6 Output">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1130,7 +1130,7 @@
         <label>Uncoupler Fader Mask 6</label>
         <comment>F6 Output</comment>
       </variable>
-      <variable item="Uncoupler Fader Mask 7" CV="58" mask="XvXxXXXx" default="0" comment="F7 Output">
+      <variable item="Uncoupler Fader Mask 7" CV="58" mask="XVXXXXXX" default="0" comment="F7 Output">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1142,7 +1142,7 @@
         <label>Uncoupler Fader Mask 7</label>
         <comment>F7 Output</comment>
       </variable>
-      <variable item="Uncoupler Fader Mask 8" CV="58" mask="vXXxXXXx" default="0" comment="F8 Output">
+      <variable item="Uncoupler Fader Mask 8" CV="58" mask="VXXXXXXX" default="0" comment="F8 Output">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>

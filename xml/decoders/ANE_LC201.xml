@@ -560,7 +560,7 @@
         </enumVal>
         <label>F0F is Forward Direction</label>
       </variable>
-      <variable item="F1 is 1/4 Sec Flashing Phase A" CV="51" mask="XXVXXxXX">
+      <variable item="F1 is 1/4 Sec Flashing Phase A" CV="51" mask="XXVXXXXX">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -670,7 +670,7 @@
         </enumVal>
         <label>F0F is Forward Direction</label>
       </variable>
-      <variable item="F2 is 1/4 Sec Flashing Phase A" CV="52" mask="XXVXxXXX">
+      <variable item="F2 is 1/4 Sec Flashing Phase A" CV="52" mask="XXVXXXXX">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
