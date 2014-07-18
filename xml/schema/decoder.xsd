@@ -615,7 +615,7 @@
                       <xs:attribute name="factor" type="xs:int" default="1"/>
                       <xs:attribute name="offset" type="xs:int" default="0"/>
                       <xs:attribute name="comment" type="xs:string"/>
-                      <xs:attribute name="upperMask" type="xs:string" default="VVVVVVVV" />
+                      <xs:attribute name="upperMask" type="maskType" default="VVVVVVVV" />
                     </xs:complexType>
                   </xs:element>
                   <xs:element name="compositeVal" >
@@ -664,7 +664,7 @@
               </xs:sequence>
               <xs:attribute name="label" type="xs:string"/>
               <xs:attribute name="CV" type="cvNameType"/>
-              <xs:attribute name="mask" type="xs:string" default="VVVVVVVV" />
+              <xs:attribute name="mask" type="maskType" default="VVVVVVVV" />
               <xs:attribute name="readOnly" type="yesNoType" default="no" />
               <xs:attribute name="infoOnly" type="yesNoType" default="no" />
               <xs:attribute name="opsOnly" type="yesNoType" default="no" />
@@ -703,7 +703,7 @@
                         <xs:attribute name="factor" type="xs:string"/>
                         <xs:attribute name="offset" type="xs:string"/>
                         <xs:attribute name="comment" type="xs:string"/>
-                        <xs:attribute name="upperMask" type="xs:string"/>
+                        <xs:attribute name="upperMask" type="maskType" default="VVVVVVVV" />
                         <xs:attribute name="order" default="lowFirst">
                           <xs:annotation><xs:documentation>Controls whether high CV or low CV written first</xs:documentation></xs:annotation>
                           <xs:simpleType>
@@ -737,7 +737,7 @@
               <xs:attribute name="CV" type="xs:int"/>
               <xs:attribute name="PI" type="xs:int"/>
               <xs:attribute name="SI" type="xs:int"/>
-              <xs:attribute name="mask" type="xs:string"/>
+              <xs:attribute name="mask" type="maskType" default="VVVVVVVV" />
               <xs:attribute name="readOnly" type="yesNoType"/>
               <xs:attribute name="infoOnly" type="yesNoType"/>
               <xs:attribute name="opsOnly" type="yesNoType"/>
@@ -860,5 +860,18 @@
     <xs:attribute ref="xml:base" />
     <xs:attribute name="comment" type="xs:string"/>
   </xs:complexType>
+
+  <xs:simpleType name="maskType">
+    <xs:annotation>
+        <xs:documentation>
+          Type for CV mask values: 8 characters of either X or V.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:normalizedString">
+      <xs:pattern value="(V|X)*"/>
+      <xs:minLength value="8"/>
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
 
 </xs:schema>
