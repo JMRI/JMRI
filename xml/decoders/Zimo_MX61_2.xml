@@ -557,24 +557,31 @@
         <enumVal>
           <enumChoice choice="No Special Functions">
             <choice>No Special Functions</choice>
+            <choice xml:lang="it">Nessuna funzione speciale</choice>
           </enumChoice>
           <enumChoice choice="Variant 1">
             <choice>Variant 1</choice>
+            <choice xml:lang="it">Variante 1</choice>
           </enumChoice>
           <enumChoice choice="Variant 2">
             <choice>Variant 2</choice>
+            <choice xml:lang="it">Variante 2</choice>
           </enumChoice>
           <enumChoice choice="Variant 3">
             <choice>Variant 3</choice>
+            <choice xml:lang="it">Variante 3</choice>
           </enumChoice>
           <enumChoice choice="Variant 4">
             <choice>Variant 4</choice>
+            <choice xml:lang="it">Variante 4</choice>
           </enumChoice>
           <enumChoice choice="Variant 5">
             <choice>Variant 5</choice>
+            <choice xml:lang="it">Variante 5</choice>
           </enumChoice>
           <enumChoice choice="Variant 6">
             <choice>Variant 6</choice>
+            <choice xml:lang="it">Variante 6</choice>
           </enumChoice>
         </enumVal>
         <label>Special Function Usage</label>
