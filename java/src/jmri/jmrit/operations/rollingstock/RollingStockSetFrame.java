@@ -86,6 +86,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 
 	// optional panels
 	protected JPanel pOptional = new JPanel();
+	protected JScrollPane paneOptional = new JScrollPane(pOptional);
 	protected JPanel pFinalDestination = new JPanel();
 
 	// Auto checkbox states
@@ -192,7 +193,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		// add panels
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		getContentPane().add(pPanel);
-		getContentPane().add(pOptional);
+		getContentPane().add(paneOptional);
 		getContentPane().add(paneOptional2);
 		getContentPane().add(pButtons);
 

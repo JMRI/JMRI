@@ -135,11 +135,8 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
 		addSpinnerChangeListerner(spinTrainIconX);
 		addSpinnerChangeListerner(spinTrainIconY);
 
-		pack();
-		setMinimumSize(new Dimension(Control.smallPanelWidth, Control.smallPanelHeight));
-		if (getHeight() < 250)
-			setSize(getWidth(), 250);
-		setVisible(true);
+    	initMinimumSize(new Dimension(Control.mediumPanelWidth, Control.mediumPanelHeight));
+
 	}
 
 	int value = JOptionPane.NO_OPTION;

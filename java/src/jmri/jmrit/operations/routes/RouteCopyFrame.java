@@ -70,8 +70,7 @@ public class RouteCopyFrame extends OperationsFrame {
 		// add help menu to window
 		addHelpMenu("package.jmri.jmrit.operations.Operations_CopyRoute", true); // NOI18N
 
-		pack();
-		setMinimumSize(new Dimension(Control.mediumPanelWidth, Control.smallPanelHeight));
+		initMinimumSize(new Dimension(Control.greaterPanelWidth, Control.smallPanelHeight));
 
 		// setup buttons
 		addButtonAction(copyButton);
