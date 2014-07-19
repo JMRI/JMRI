@@ -193,6 +193,9 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
 		else if(cs_type==jmri.jmrix.lenz.XNetConstants.CS_TYPE_MULTIMAUS) {
 			CSType.setText("multiMAUS");
 		     }
+		else if(cs_type==jmri.jmrix.lenz.XNetConstants.CS_TYPE_Z21) {
+			CSType.setText("Z21");
+		     }
         else CSType.setText("<unknown>");
 	}
 
