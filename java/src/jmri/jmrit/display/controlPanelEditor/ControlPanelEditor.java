@@ -610,7 +610,13 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     		}
     	}   	
         _targetPanel.repaint();
-    }	
+    }
+    
+    /************************* end Menus *************************/
+    
+    public CircuitBuilder getCircuitBuilder() {
+    	return  _circuitBuilder;
+    }
 
     private void pasteFromClipboard() {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();

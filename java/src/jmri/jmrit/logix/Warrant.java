@@ -130,14 +130,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     }
 
     /**
-    * Return copy of permanently saved BlockOrders
+    * Return permanently saved BlockOrders
     */
     public List <BlockOrder> getBlockOrders() {
-    	ArrayList <BlockOrder> list = new ArrayList <BlockOrder>();
-        for (int i=0; i<_savedOrders.size(); i++) {
-        	list.add(new BlockOrder(_savedOrders.get(i)));
-        }
-        return list;
+        return _savedOrders;
     }
     /**
     * Add permanently saved BlockOrder

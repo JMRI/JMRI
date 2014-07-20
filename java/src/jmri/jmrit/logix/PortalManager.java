@@ -40,14 +40,14 @@ public class PortalManager extends AbstractManager
     public PortalManager() {
         super();
     }
-    
+/*    
     public void setNextSysNum(int next) {
     	_nextSName = next;
     }
     public int getNextSysNum() {
     	return _nextSName;
     }
-    
+*/    
     public int getXMLOrder(){
         return jmri.Manager.OBLOCKS;
     }
@@ -121,7 +121,7 @@ public class PortalManager extends AbstractManager
         if (name==null || name.trim().length()==0) { return null; }
         Portal portal = getByUserName(name);
         if (portal==null) {
-        	portal = getBySystemName(name);
+        	portal = createNewPortal(null, name);
         }
         return portal;
     }

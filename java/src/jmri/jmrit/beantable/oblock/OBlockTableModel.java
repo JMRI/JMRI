@@ -196,12 +196,14 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
     @Override
     public Object getValueAt(int row, int col) 
     {
-    	int size = sysNameList.size();
-    	if (row >= size) {
+    	if (row > sysNameList.size()) {
     		return "";
     	}
-        String name = sysNameList.get(row);
-        OBlock b = _manager.getBySystemName(name);
+    	OBlock b = null;
+    	if (row < sysNameList.size()) {
+            String name = sysNameList.get(row);
+            b = _manager.getBySystemName(name);   		
+    	}
         switch (col) {
         	case SYSNAMECOL:
                 if (b != null) {

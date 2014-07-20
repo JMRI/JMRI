@@ -128,18 +128,20 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     * Check for duplicate name in either block
     * @return return error message, return null if name change is OK 
     */
-    public String setName(String name) {
-        if (name == null || name.length()==0) { return null; }
-        if (getUserName().equals(name)) { return null; }
+    public String setName(String newName) {
+        if (newName == null || newName.length()==0) { return null; }
+        String oldName = getUserName();
+        if (oldName.equals(newName)) { return null; }
 
-        String msg = checkName(name, _fromBlock);
+        String msg = checkName(newName, _fromBlock);
         if (msg==null) {
-            msg = checkName(name, _toBlock);
+            msg = checkName(newName, _toBlock);
         }
         if (msg==null) {
-        	setUserName(name);
+        	setUserName(newName);
+        	WarrantTableAction.portalNameChange(oldName, newName);
         } else {
-            msg = Bundle.getMessage("DuplicatePortalName", msg, name); 
+            msg = Bundle.getMessage("DuplicatePortalName", msg, newName); 
         }
         return msg;
     }

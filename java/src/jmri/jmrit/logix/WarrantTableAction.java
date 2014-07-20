@@ -241,6 +241,43 @@ public class WarrantTableAction extends AbstractAction {
             _openFrame.toFront();        	
         }
     }
+    
+    synchronized protected static void portalNameChange(String oldName, String newName) {
+        WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
+        List <String> systemNameList = manager.getSystemNameList();
+        Iterator <String> iter = systemNameList.iterator();
+        while (iter.hasNext()) {
+            Warrant w =manager.getBySystemName(iter.next());
+            List <BlockOrder> orders = w.getBlockOrders();
+            Iterator <BlockOrder> it = orders.iterator();
+            while (it.hasNext()) {
+            	BlockOrder bo = it.next();
+            	if (oldName.equals(bo.getEntryName())) {
+            		bo.setEntryName(newName);
+            	}
+            	if (oldName.equals(bo.getExitName())) {
+            		bo.setExitName(newName);
+            	}
+            }
+        }
+    }
+
+    synchronized protected static void pathNameChange(OBlock block, String oldName, String newName) {
+        WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
+        List <String> systemNameList = manager.getSystemNameList();
+        Iterator <String> iter = systemNameList.iterator();
+        while (iter.hasNext()) {
+            Warrant w =manager.getBySystemName(iter.next());
+            List <BlockOrder> orders = w.getBlockOrders();
+            Iterator <BlockOrder> it = orders.iterator();
+            while (it.hasNext()) {
+            	BlockOrder bo = it.next();
+            	if (bo.getBlock().equals(block) && bo.getPathName().equals(oldName)) {
+            		bo.setPathName(newName);
+            	}
+            }
+        }
+    }
 
 /*    synchronized public static WarrantFrame getWarrantFrame(String key) {
         return _frameMap.get(key);

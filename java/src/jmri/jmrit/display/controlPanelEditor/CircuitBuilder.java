@@ -996,9 +996,11 @@ public class CircuitBuilder  {
     
     protected void changePortalName(String oldName, String newName) {
     	PortalIcon icon = _portalIconMap.get(oldName);
-    	icon.setName(newName);
-       	_portalIconMap.remove(oldName);
-     	_portalIconMap.put(newName, icon);
+    	if (icon!=null) {
+        	icon.setName(newName);
+           	_portalIconMap.remove(oldName);
+         	_portalIconMap.put(newName, icon);    		
+    	}
     }
     
     protected void removePortalIcon(String name) {

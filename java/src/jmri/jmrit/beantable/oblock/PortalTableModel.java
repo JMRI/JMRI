@@ -109,12 +109,14 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
         if (getRowCount() == row) {
             return tempRow[col];
         }
-		if (row >= sysNameList.size()){
-			log.debug("row is greater than name list");
-			return "error";
-		}
-        String name = sysNameList.get(row);
-        Portal portal = _manager.getBySystemName(name);
+    	if (row > sysNameList.size()) {
+    		return "";
+    	}
+    	Portal portal = null;
+    	if (row < sysNameList.size()) {
+            String name = sysNameList.get(row);
+            portal = _manager.getBySystemName(name);
+    	}
     	if (portal==null) {
             if (col==DELETE_COL) {
             	return Bundle.getMessage("ButtonClear");
@@ -158,7 +160,7 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
             	 } else if (toBlock==null && tempRow[TO_BLOCK_COLUMN]!=null) {
                      msg = Bundle.getMessage("NoSuchBlock", tempRow[TO_BLOCK_COLUMN]);            		 
             	 } else {
-                     msg = Bundle.getMessage("PortalNeedsBlock", name);            		 
+ //                    msg = Bundle.getMessage("PortalNeedsBlock", name);            		 
             	 }
              } else if (fromBlock.equals(toBlock)) {
                  msg = Bundle.getMessage("SametoFromBlock", fromBlock.getDisplayName());
