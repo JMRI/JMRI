@@ -3,9 +3,9 @@
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
   <jmriversion>
     <major>3</major>
-    <minor>7</minor>
-    <test>3</test>
-    <modifier>.3</modifier>
+    <minor>9</minor>
+    <test>2</test>
+    <modifier>.2</modifier>
   </jmriversion>
   <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
@@ -14,7 +14,7 @@
     </sensor>
   </sensors>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory systemName="IMCURRENTTIME" value="11:34 AM">
+    <memory systemName="IMCURRENTTIME" value="7:51 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory systemName="IMRATEFACTOR" value="1.0">
@@ -23,8 +23,9 @@
   </memories>
   <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
   <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
-  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" nextSysNum="1" />
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Thu Nov 19 14:34:10 PST 2009" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
-  <!--Written by JMRI version 20140302-1913-jake on Sun Mar 02 11:34:35 PST 2014 $Id$-->
+  <!--Written by JMRI version 20140720-0246-Peter Cressman on Sat Jul 19 19:51:21 PDT 2014 $Id$-->
 </layout-config>
+
 
