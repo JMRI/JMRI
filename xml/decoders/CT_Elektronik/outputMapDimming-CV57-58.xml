@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010, 2014 All rights reserved -->
+<!-- $Id: outputMapDimming-CV57-58.xml 22377 2014-07-19 06:28:11Z jacobsen $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-07-19</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Initial release as separate file</revremark>
+    </revision>
+  </revhistory>
+ <variable CV="57" mask="XXXXXXXV" item="Dimming Output FL(f)" default="0" minOut="2">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	<label>Dimming Output FL(f)</label>
+	<label xml:lang="de">Dimmen Ausgang FL(f)</label>
+	<tooltip>Default Output for FL(f) = white</tooltip>
+	<tooltip xml:lang="de">Standardausgang für FL(f) = weiss</tooltip>
+  </variable>
+  <variable CV="57" mask="XXXXXXVX" item="Dimming Output FL(r)" default="0" minOut="2">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	<label>Dimming Output FL(r)</label>
+	<label xml:lang="de">Dimmen Ausgang FL(r)</label>
+	<tooltip>Default Output for FL(r) = yellow</tooltip>
+	<tooltip xml:lang="de">Standardausgang für FL(r) = gelb</tooltip>		
+  </variable>
+  <variable CV="57" mask="XXXXXVXX" item="Dimming Output F 1" default="0" minOut="3">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	<label>Dimming Output F1</label>
+	<label xml:lang="de">Dimmen Ausgang F1</label>
+	<tooltip>Default Output for F1</tooltip>
+	<tooltip xml:lang="de">Standardausgang für F1</tooltip>
+  </variable>
+  <variable CV="57" mask="XXXXVXXX" item="Dimming Output F 2" default="0" minOut="4">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	<label>Dimming Output F2</label>
+	<label xml:lang="de">Dimmen Ausgang F2</label>
+	<tooltip>Default Output for F2</tooltip>
+	<tooltip xml:lang="de">Standardausgang für F2</tooltip>
+  </variable>
+  <variable CV="57" mask="XXXVXXXX" item="Dimming Output F 3" default="0" minOut="5">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	<label>Dimming Output F3</label>
+	<label xml:lang="de">Dimmen Ausgang F3</label>
+	<tooltip>Default Output for F3</tooltip>
+	<tooltip xml:lang="de">Standardausgang für F3</tooltip>		
+  </variable>
+  <variable CV="57" mask="XXVXXXXX" item="Dimming Output F 4" default="0" minOut="6">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	<label>Dimming Output F4</label>
+	<label xml:lang="de">Dimmen Ausgang F4</label>
+	<tooltip>Default Output for F4</tooltip>
+	<tooltip xml:lang="de">Standardausgang für F4</tooltip>		
+  </variable>
+  <variable CV="57" mask="XVXXXXXX" item="Dimming Output F 5" default="0" minOut="7">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	<label>Dimming Output F5</label>
+	<label xml:lang="de">Dimmen Ausgang F5</label>
+	<tooltip>Default Output for F5</tooltip>
+	<tooltip xml:lang="de">Standardausgang für F5</tooltip>		
+  </variable>
+  <variable CV="57" mask="VXXXXXXX" item="Dimming Output F 6" default="0" minOut="8">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	<label>Dimming Output F6</label>
+	<label xml:lang="de">Dimmen Ausgang F6</label>
+	<tooltip>Default Output for F6</tooltip>
+	<tooltip xml:lang="de">Standardausgang für F6</tooltip>		
+  </variable>
+  <variable CV="58" mask="XXXXXXXV" item="Output Uncoupler FL(f)" default="0" minOut="2">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	<label>Output Uncoupler FL(f)</label>
+	<label xml:lang="de">Kupplungsausgang FL(f)</label>		
+	<tooltip>Default Output for FL(f) = white</tooltip>
+	<tooltip xml:lang="de">Standardausgang für FL(f) = weiss</tooltip>
+  </variable>
+  <variable CV="58" mask="XXXXXXVX" item="Output Uncoupler FL(r)" default="0" minOut="2">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	<label>Output Uncoupler FL(r)</label>
+	<label xml:lang="de">Kupplungsausgang FL(r)</label>			
+	<tooltip>Default Output for FL(r) = yellow</tooltip>
+	<tooltip xml:lang="de">Standardausgang für FL(r) = gelb</tooltip>
+  </variable>
+  <variable CV="58" mask="XXXXXVXX" item="Output Uncoupler F 1" default="0" minOut="3">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	<label>Output Uncoupler F1</label>
+	<label xml:lang="de">Kupplungsausgang F1</label>
+	<tooltip>Default Output for F1</tooltip>
+	<tooltip xml:lang="de">Standardausgang für F1</tooltip>
+  </variable>
+  <variable CV="58" mask="XXXXVXXX" item="Output Uncoupler F 2" default="0" minOut="4">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	<label>Output Uncoupler F2</label>
+	<label xml:lang="de">Kupplungsausgang F2</label>		
+	<tooltip>Default Output for F2</tooltip>
+	<tooltip xml:lang="de">Standardausgang für F2</tooltip>
+  </variable>
+  <variable CV="58" mask="XXXVXXXX" item="Output Uncoupler F 3" default="0" minOut="5">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	<label>Output Uncoupler F3</label>
+	<label xml:lang="de">Kupplungsausgang F3</label>		
+	<tooltip>Default Output for F3</tooltip>
+	<tooltip xml:lang="de">Standardausgang für F3</tooltip>	
+  </variable>
+  <variable CV="58" mask="XXVXXXXX" item="Output Uncoupler F 4" default="0" minOut="6">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	<label>Output Uncoupler F4</label>
+	<label xml:lang="de">Kupplungsausgang F4</label>		
+	<tooltip>Default Output for F4</tooltip>
+	<tooltip xml:lang="de">Standardausgang für F4</tooltip>
+  </variable>
+  <variable CV="58" mask="XVXXXXXX" item="Output Uncoupler F 5" default="0" minOut="7">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	<label>Output Uncoupler F5</label>
+	<label xml:lang="de">Kupplungsausgang F5</label>		
+	<tooltip>Default Output for F5</tooltip>
+	<tooltip xml:lang="de">Standardausgang für F5</tooltip>	
+  </variable>
+  <variable CV="58" mask="VXXXXXXX" item="Output Uncoupler F 6" default="0" minOut="8">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	<label>Output Uncoupler F6</label>
+	<label xml:lang="de">Kupplungsausgang F6</label>		
+	<tooltip>Default Output for F6</tooltip>
+	<tooltip xml:lang="de">Standardausgang für F6</tooltip>	
+  </variable>
+</variables>
