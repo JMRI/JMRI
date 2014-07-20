@@ -39,7 +39,7 @@
         <label xml:lang="de">Anfahrspannung</label>
         <comment>Range 0-252</comment>
         <comment xml:lang="it">Valori 0-252</comment>
-        <comment xml:lang="de">Wert 0-255</comment>
+        <comment xml:lang="de">Wert 0-252</comment>
       </variable>
       <variable item="Acceleration" CV="3" default="0" comment="Range 0-255">
         <decVal max="255"/>

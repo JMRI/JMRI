@@ -926,6 +926,7 @@
           <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
         </enumVal>
         <label>Light Effects Output 3</label>
+        <label xml:lang="it">Effetti Luci uscita 3</label>
       </variable>
       <variable CV="127" mask="XXXXXXVV" item="Output 3 behavior">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
@@ -938,6 +939,7 @@
           <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
         </enumVal>
         <label>Light Effects Output 4</label>
+        <label xml:lang="it">Effetti Luci uscita 4</label>
       </variable>
       <variable CV="128" mask="XXXXXXVV" item="Output 4 behavior">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
