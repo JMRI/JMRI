@@ -1090,7 +1090,6 @@
         <label>-3-</label>
         <comment>Range 0-252</comment>
         <comment xml:lang="it">Valori 0-252</comment>
-        v
       </variable>
       <variable item="BEMF config" CV="56" default="0" tooltip="Range 0-199">
         <decVal max="199"/>
