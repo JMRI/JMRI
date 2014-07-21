@@ -36,6 +36,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 
     public LayoutBlockManager() {
         super();
+        jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
     }
     
     public int getXMLOrder(){
@@ -2171,6 +2172,40 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
     */
     public long getLastRoutingChange(){
         return lastRoutingChange;
+    }
+    
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+        if("CanDelete".equals(evt.getPropertyName())){ //IN18N
+            StringBuilder message = new StringBuilder();
+            boolean found = false;
+            message.append(Bundle.getMessage("VetoFoundInBlocks"));
+            message.append("<ul>");
+            for(NamedBean nb:_tsys.values()){
+                try {
+                    nb.vetoableChange(evt);
+                } catch (java.beans.PropertyVetoException e) {
+                    if(e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")){ //IN18N
+                        throw e;
+                    }
+                    found = true;
+                    message.append("<li>" + e.getMessage() + "</li>");
+                }
+            }
+            message.append("</ul>");
+            message.append(Bundle.getMessage("VetoWillBeRemovedFromBlock"));
+            if(found)
+                throw new java.beans.PropertyVetoException(message.toString(), evt);
+        }  else {
+            for(NamedBean nb:_tsys.values()){
+                try {
+                    nb.vetoableChange(evt);
+                } catch (java.beans.PropertyVetoException e) {
+                    throw e;
+                }
+            }
+        
+        }
+    
     }
     
     static Logger log = LoggerFactory.getLogger(LayoutBlockManager.class.getName());

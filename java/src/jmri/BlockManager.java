@@ -33,10 +33,11 @@ import java.text.DecimalFormat;
  * @version	$Revision$
  */
 public class BlockManager extends AbstractManager
-    implements java.beans.PropertyChangeListener {
+    implements java.beans.PropertyChangeListener, java.beans.VetoableChangeListener {
 
     public BlockManager() {
         super();
+        jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
     }
     
     public int getXMLOrder(){
@@ -178,6 +179,40 @@ public class BlockManager extends AbstractManager
     
     public String getDefaultSpeed(){
         return defaultSpeed;
+    }
+    
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+        if("CanDelete".equals(evt.getPropertyName())){ //IN18N
+            StringBuilder message = new StringBuilder();
+            boolean found = false;
+            message.append(Bundle.getMessage("VetoFoundInBlocks"));
+            message.append("<ul>");
+            for(NamedBean nb:_tsys.values()){
+                try {
+                    nb.vetoableChange(evt);
+                } catch (java.beans.PropertyVetoException e) {
+                    if(e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")){ //IN18N
+                        throw e;
+                    }
+                    found = true;
+                    message.append("<li>" + e.getMessage() + "</li>");
+                }
+            }
+            message.append("</ul>");
+            message.append(Bundle.getMessage("VetoWillBeRemovedFromBlock"));
+            if(found)
+                throw new java.beans.PropertyVetoException(message.toString(), evt);
+        }  else {
+            for(NamedBean nb:_tsys.values()){
+                try {
+                    nb.vetoableChange(evt);
+                } catch (java.beans.PropertyVetoException e) {
+                    throw e;
+                }
+            }
+        
+        }
+    
     }
 
     static Logger log = LoggerFactory.getLogger(BlockManager.class.getName());

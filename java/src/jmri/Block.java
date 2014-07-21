@@ -724,6 +724,23 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
 	// Intentionally ignore the String s
 	return(PhysicalLocation.getBeanPhysicalLocation(this));
     }
+    
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+        if("CanDelete".equals(evt.getPropertyName())){ //IN18N
+            if(evt.getOldValue() instanceof Sensor){
+                if(evt.getOldValue().equals(getSensor())){
+                    throw new java.beans.PropertyVetoException(getDisplayName(), evt);
+                }
+            }
+        } else if ("DoDelete".equals(evt.getPropertyName())){ //IN18N
+            //Do nothing at this stage
+            if(evt.getOldValue() instanceof Sensor){
+                if(evt.getOldValue().equals(getSensor())){
+                    setSensor(null);
+                }
+            }
+        }
+    }
 
     static Logger log = LoggerFactory.getLogger(Block.class.getName());
 }

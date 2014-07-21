@@ -407,6 +407,13 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 	 * Add occupancy sensor by name
 	 */
 	public void setOccupancySensorName(String name) {
+        if(name==null || name.equals("")){
+            if(occupancyNamedSensor!=null){
+                occupancyNamedSensor.getBean().removePropertyChangeListener(mBlockListener);
+            }
+            occupancyNamedSensor=null;
+            return;
+        }
         occupancySensorName = name;
         Sensor sensor = jmri.InstanceManager.sensorManagerInstance().
                             getSensor(name);
@@ -4027,6 +4034,23 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         ArrayList<Routes> rtr = getRouteByNeighbour(nxtHopActive);
         for (int i = 0; i<rtr.size(); i++){
             rtr.get(i).setValidCurrentRoute(state);
+        }
+    }
+    
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+        if("CanDelete".equals(evt.getPropertyName())){ //IN18N
+            if(evt.getOldValue() instanceof Sensor){
+                if(evt.getOldValue().equals(getOccupancySensor())){
+                    throw new java.beans.PropertyVetoException(getDisplayName(), evt);
+                }
+            }
+        } else if ("DoDelete".equals(evt.getPropertyName())){ //IN18N
+            //Do nothing at this stage
+            if(evt.getOldValue() instanceof Sensor){
+                if(evt.getOldValue().equals(getOccupancySensor())){
+                    setOccupancySensorName(null);
+                }
+            }
         }
     }
     
