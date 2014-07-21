@@ -1118,7 +1118,7 @@
       </variable>
       <variable item="Output Level" CV="60" default="0" comment="Controls function output voltage (0/255=high / 1 to 254)">
         <decVal min="0" max="255"/>
-<label>Output Level</label>
+         <label>Output Level</label>
         <label xml:lang="it">Livello di uscita</label>
         <comment>Controls function output voltage (0/255=high / 1 to 254)</comment>
         <comment xml:lang="it">Controlla tensione uscite (0/255=alta, da 1 a 254)</comment>
