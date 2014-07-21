@@ -98,6 +98,10 @@ Dispatcher options<br>
 Operations<br>
 Rps<br></dl>
 
+<p>There's a 
+<a href="../../html/Dropbox.shtml">separate page</a>
+with information on sharing files between computers using Dropbox.
+
 <a name="Startup">
 <h2>Start Up</h2></a>
 This deals with all the preferences that are invoked at start up such as loading panel files and running scripts.

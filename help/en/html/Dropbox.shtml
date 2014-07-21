@@ -33,14 +33,26 @@ rosters, layout configuration files and other information between multiple compu
 To set this up:
 <ul>
 <li>Create a JMRI folder in Dropbox on the first computer.
-<li>(If you have already created items (roster entries, panels etc.) go to Help->Locations and 
-press Open User Files Location (and also Roster Location, only if it differs from User Files Location). 
-You will need to move your items from there later.)
-<li>Preferences->Roster->Roster->Roster Location->Reset. Do not enter a Roster Location. That way it will follow User Files Location.
-<li>Preferences->Locations->User Files Location and set it to the JMRI folder you created in Dropbox.
+<li>
+If you have already created items (roster entries, panels etc.) go to Help->Locations and 
+press Open User Files Location.<br>
+<a href="Help_Locations.png"><img src="Help_Locations.png" width="682" height="139"></a>
+<br>This will open a window on your desktop showing a directory.
+Remember where that is, because you'll move items from there later.
+<li>Still on the Help->Locations window, check to see if your Roster Location is different from the User Files Location.
+If so, click Open Roster Location to open a window on that location.  You'll copy files
+from there later.<br>
+<a href="Help_Locations_Roster.png"><img src="Help_Locations_Roster.png" width="682" height="139"></a>
+<li>Preferences->Roster->Roster->Roster Location->Reset. Do not enter a Roster Location. That way it will follow User Files Location.<br>
+<a href="Roster_Reset.png"><img src="Roster_Reset.png" width="416" height="159"></a>
+<li>Preferences->File Locations->User Files Location and set it to the JMRI folder you created in Dropbox.<br>
+<a href="Locations_Files.png"><img src="Locations_Files.png" width="418" height="157"></a>
 <li>Restart JMRI and use Help -> Locations to make sure everything is changed correctly.
-<li>(If you have already created any of the items listed at this link, move them from the old location to the new User Files Location:
-see <a href="http://jmri.org/help/en/package/apps/TabbedPreferences.shtml#FileLocations">this page</a>. )
+<li>If you have already created any files of the types listed at this link
+(see <a href="../package/apps/TabbedPreferences.shtml#FileLocations">this page</a> for help), 
+move them from the old location to your new location. For example, your files
+in the User Files window we opened at the first step should be moved to the
+new User Files location you just created. 
 </ul>
 <p>
 The only steps you need to do on subsequent machines are:
