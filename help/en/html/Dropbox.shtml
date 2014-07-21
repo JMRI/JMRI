@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: zoo $) 2008 -->
+<!-- $Id: Errors.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<title>JMRI: Sharing Files with DropBox</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1>JMRI: Sharing Files with Dropbox</h1>
+
+<p><a href="https://www.dropbox.com">Dropbox</a>
+<a href="https://www.dropbox.com"><img src="https://dt8kf6553cww8.cloudfront.net/static/images/icons/blue_dropbox_glyph-vflJ8-C5d.png" align="right"></a>
+is a free service that lets you share files between multiple computers across a network.
+Once you've signed up with Dropbox, you can configure JMRI to use it to share
+rosters, layout configuration files and other information between multiple computers.
+
+<p>
+To set this up:
+<ul>
+<li>Create a JMRI folder in Dropbox on the first computer.
+<li>(If you have already created items (roster entries, panels etc.) go to Help->Locations and 
+press Open User Files Location (and also Roster Location, only if it differs from User Files Location). 
+You will need to move your items from there later.)
+<li>Preferences->Roster->Roster->Roster Location->Reset. Do not enter a Roster Location. That way it will follow User Files Location.
+<li>Preferences->Locations->User Files Location and set it to the JMRI folder you created in Dropbox.
+<li>Restart JMRI and use Help -> Locations to make sure everything is changed correctly.
+<li>(If you have already created any of the items listed at this link, move them from the old location to the new User Files Location:
+see <a href="http://jmri.org/help/en/package/apps/TabbedPreferences.shtml#FileLocations">this page</a>. )
+</ul>
+<p>
+The only steps you need to do on subsequent machines are:
+<ul>
+<li>Preferences->Roster->Roster->Roster Location->Reset. Do not enter a Roster Location. That way it will follow User Files Location.
+<li>Preferences->Locations->User Files Location and set it to the JMRI folder you created in Dropbox.
+</ul>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

@@ -56,6 +56,10 @@ and is also where preferences changes will be saved.
 <p>To use or configure a different profile, select it, click "Activate", and restart
 the program.
 
+<p>For more information on how to configure JMRI to share its
+configuration files between multiple computers, see the
+<a href="Dropbox.shtml">page on using Dropbox with JMRI</a>.
+
 <h2>Upgrading from Earlier Versions of JMRI</h2>
 
 <p>When you first run a JMRI application after upgrading from an earlier version
