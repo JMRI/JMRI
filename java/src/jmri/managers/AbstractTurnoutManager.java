@@ -15,11 +15,12 @@ import jmri.managers.AbstractManager;
  * @version			$Revision$
  */
 public abstract class AbstractTurnoutManager extends AbstractManager
-    implements TurnoutManager {
+    implements TurnoutManager, java.beans.VetoableChangeListener {
 	
 	public AbstractTurnoutManager() {
         //super(Manager.TURNOUTS);
 		TurnoutOperationManager.getInstance();		// force creation of an instance
+        jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
 	}
     
     public int getXMLOrder(){
@@ -299,6 +300,38 @@ public abstract class AbstractTurnoutManager extends AbstractManager
     
     public String getDefaultClosedSpeed(){
         return defaultClosedSpeed;
+    }
+    
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+        if("CanDelete".equals(evt.getPropertyName())){ //IN18N
+            StringBuilder message = new StringBuilder();
+            boolean found = false;
+            message.append(Bundle.getMessage("VetoFoundInTurnout"));
+            message.append("<ul>");
+            for(NamedBean nb:_tsys.values()){
+                try {
+                    nb.vetoableChange(evt);
+                } catch (java.beans.PropertyVetoException e) {
+                    if(e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")){ //IN18N
+                        throw e;
+                    }
+                    found = true;
+                    message.append("<li>" + e.getMessage() + "</li>");
+                }
+            }
+            message.append("</ul>");
+            message.append(Bundle.getMessage("VetoWillBeRemovedFromTurnout")); //IN18N
+            if(found)
+                throw new java.beans.PropertyVetoException(message.toString(), evt);
+        } else {
+            for(NamedBean nb:_tsys.values()){
+                try {
+                    nb.vetoableChange(evt);
+                } catch (java.beans.PropertyVetoException e) {
+                    throw e;
+                }
+            }
+        }
     }
     
     static Logger log = LoggerFactory.getLogger(AbstractTurnoutManager.class.getName());
