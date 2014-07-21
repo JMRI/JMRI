@@ -15,6 +15,7 @@ import javax.swing.JSeparator;
 import jmri.NamedBeanHandle;
 import jmri.InstanceManager;
 import jmri.Sensor;
+import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.Path;
 import jmri.jmrit.signalling.SignallingGuiTools;
@@ -66,8 +67,8 @@ public class PositionablePoint
 	private TrackSegment connect2 = null;
 	private Point2D coords = new Point2D.Double(10.0,10.0);
     
-	private String eastBoundSignalName = ""; // signal head for east (south) bound trains
-	private String westBoundSignalName = ""; // signal head for west (north) bound trains
+    protected NamedBeanHandle<SignalHead> signalEastHeadNamed = null; // signal head for east (south) bound trains
+    protected NamedBeanHandle<SignalHead> signalWestHeadNamed = null; // signal head for west (north) bound trains
     
     private NamedBeanHandle<SignalMast> eastBoundSignalMastNamed = null;
     private NamedBeanHandle<SignalMast> westBoundSignalMastNamed = null;
@@ -166,83 +167,140 @@ public class PositionablePoint
         return layoutEditor;
     }
     
-	public String getEastBoundSignal() {
+    public String getEastBoundSignal(){
+        SignalHead h = getEastBoundSignalHead();
+        if(h!=null)
+            return h.getDisplayName();
+        return "";
+    }
+    
+    public SignalHead getEastBoundSignalHead(){
         if(getType()==EDGE_CONNECTOR){
             int dir = getConnect1Dir();
-            if(dir==Path.EAST || dir==Path.SOUTH || dir==Path.SOUTH + Path.EAST)
-                return eastBoundSignalName;
+            if(dir==Path.EAST || dir==Path.SOUTH || dir==Path.SOUTH + Path.EAST){
+                if(signalEastHeadNamed!=null)
+                    return signalEastHeadNamed.getBean();
+                return null;
+            }
             else if(getLinkedPoint()!=null){
                 // Do some checks to find where the connection is here.
                 int linkDir = getLinkedPoint().getConnect1Dir();
                 if(linkDir==Path.SOUTH || linkDir == Path.EAST || linkDir==Path.SOUTH+Path.EAST){
-                    return getLinkedPoint().getEastBoundSignal();
+                    return getLinkedPoint().getEastBoundSignalHead();
                 }
             }
         }
-        return eastBoundSignalName;
+        
+        if(signalEastHeadNamed!=null)
+            return signalEastHeadNamed.getBean();
+        return null;
     }
+    
 	public void setEastBoundSignal(String signalName) {
         if(getType()==EDGE_CONNECTOR){
             int dir = getConnect1Dir();
             if(dir==Path.EAST || dir==Path.SOUTH || dir==Path.SOUTH + Path.EAST)
-                eastBoundSignalName = signalName;
+                setEastBoundSignalName(signalName);
             else if(getLinkedPoint()!=null){
                 int linkDir = getLinkedPoint().getConnect1Dir();
                 if(linkDir==Path.SOUTH || linkDir == Path.EAST || linkDir==Path.SOUTH+Path.EAST){
                     getLinkedPoint().setEastBoundSignal(signalName);
                 } else {
-                    eastBoundSignalName = signalName;
+                    setEastBoundSignalName(signalName);
                 }
             } else {
-                eastBoundSignalName = signalName;
+                setEastBoundSignalName(signalName);
             }
         } else {
-            eastBoundSignalName = signalName;
+            setEastBoundSignalName(signalName);
         }
     }
-	public String getWestBoundSignal() {
+    
+    private void setEastBoundSignalName(String signalHead){
+        if(signalHead==null || signalHead.equals("")){
+            signalEastHeadNamed=null;
+            return;
+        }
+        
+        SignalHead head = InstanceManager.signalHeadManagerInstance().getSignalHead(signalHead);
+        if (head != null) {
+            signalEastHeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
+        } else {
+            signalEastHeadNamed=null;
+        }
+    }
+    
+    public String getWestBoundSignal(){
+        SignalHead h = getWestBoundSignalHead();
+        if(h!=null)
+            return h.getDisplayName();
+        return "";
+    }
+    
+    public SignalHead getWestBoundSignalHead(){
         if(getType()==EDGE_CONNECTOR){
             int dir = getConnect1Dir();
-            if(dir==Path.WEST || dir==Path.NORTH || dir==Path.NORTH + Path.WEST)
-                return westBoundSignalName;
+            if(dir==Path.WEST || dir==Path.NORTH || dir==Path.NORTH + Path.WEST){
+                if(signalWestHeadNamed!=null)
+                    return signalWestHeadNamed.getBean();
+                return null;
+            }
             else if(getLinkedPoint()!=null){
+                // Do some checks to find where the connection is here.
                 int linkDir = getLinkedPoint().getConnect1Dir();
                 if(linkDir==Path.WEST || linkDir==Path.NORTH || linkDir==Path.NORTH + Path.WEST){
-                    return getLinkedPoint().getWestBoundSignal();
+                    return getLinkedPoint().getWestBoundSignalHead();
                 }
             }
         }
-        return westBoundSignalName;
+        
+        if(signalWestHeadNamed!=null)
+            return signalWestHeadNamed.getBean();
+        return null;
     }
     
 	public void setWestBoundSignal(String signalName) {
         if(getType()==EDGE_CONNECTOR){
             int dir = getConnect1Dir();
             if(dir==Path.WEST || dir==Path.NORTH || dir==Path.NORTH + Path.WEST)
-                westBoundSignalName = signalName;
+                setWestBoundSignalName(signalName);
             else if(getLinkedPoint()!=null){
                 int linkDir = getLinkedPoint().getConnect1Dir();
                 if(linkDir==Path.WEST || linkDir==Path.NORTH || linkDir==Path.NORTH + Path.WEST){
                     getLinkedPoint().setWestBoundSignal(signalName);
                 } else {
-                    westBoundSignalName = signalName;
+                    setWestBoundSignalName(signalName);
                 }
             } else {
-                westBoundSignalName = signalName;
+                setWestBoundSignalName(signalName);
             }
         } else {
-            westBoundSignalName = signalName;
+            setWestBoundSignalName(signalName);
         }
     }
     
-    void removeSignalHead(jmri.SignalHead sh){
+    private void setWestBoundSignalName(String signalHead){
+        if(signalHead==null || signalHead.equals("")){
+            signalWestHeadNamed=null;
+            return;
+        }
+        
+        SignalHead head = InstanceManager.signalHeadManagerInstance().getSignalHead(signalHead);
+        if (head != null) {
+            signalWestHeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
+        } else {
+            signalWestHeadNamed=null;
+        }
+    }
+    
+    /*void removeSignalHead(jmri.SignalHead sh){
         if(getWestBoundSignal().equals(sh.getSystemName()) || getWestBoundSignal().equals(sh.getUserName())){
             setWestBoundSignal(null);
         }
         if(getEastBoundSignal().equals(sh.getSystemName()) || getEastBoundSignal().equals(sh.getUserName())){
             setEastBoundSignal(null);
         }
-    }
+    }*/
     
     public String getEastBoundSensorName() {
         if(eastBoundSensorNamed!=null)
@@ -404,6 +462,32 @@ public class PositionablePoint
             }
         } else {
             westBoundSignalMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
+        }
+    }
+    
+    public void removeBeanReference(jmri.NamedBean nb){
+        if(nb==null)
+            return;
+        if(nb instanceof SignalMast){
+            if(nb.equals(getWestBoundSignalMast())){
+                setWestBoundSignalMast(null);
+            } else if (nb.equals(getEastBoundSignalMast())){
+                setEastBoundSignalMast(null);
+            }
+        } else if (nb instanceof Sensor){
+            if(nb.equals(getWestBoundSensor())){
+                setWestBoundSignalMast(null);
+            } else if (nb.equals(getEastBoundSensor())){
+                setEastBoundSignalMast(null);
+            }
+        } else if (nb instanceof jmri.SignalHead){
+            if(nb.equals(getWestBoundSignalHead())){
+                setWestBoundSignal(null);
+            }
+            if(nb.equals(getEastBoundSignalHead())){
+                setEastBoundSignal(null);
+            }
+        
         }
     }
     
