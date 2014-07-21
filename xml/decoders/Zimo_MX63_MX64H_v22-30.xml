@@ -77,8 +77,8 @@
         <decVal max="255"/>
         <label>Deceleration</label>
         <label xml:lang="it">Decellerazione</label>
-       <label xml:lang="fr">Décélération</label>
-       <label xml:lang="de">Bremszeit</label>
+        <label xml:lang="fr">Décélération</label>
+        <label xml:lang="de">Bremszeit</label>
         <comment>Range 0-255</comment>
         <comment xml:lang="it">Valori 0-255</comment>
       </variable>
@@ -97,6 +97,7 @@
         <label xml:lang="it">Volt Intermedi</label>
         <label xml:lang="fr">Vmoy</label>
         <label xml:lang="de">Mittengeschwindigkeit</label>
+        <comment>Range 0-252</comment>
         <comment xml:lang="it">Valori 0-252</comment>
       </variable>
       <variable CV="7" readOnly="yes" item="Decoder Version">
@@ -116,7 +117,7 @@
       <variable item="Motor Frequency and EMF sample Rate" CV="9" default="0">
         <decVal/>
         <label>Motor Frequency and EMF sample Rate</label>
-        <label xml:lang="it">Frequenza Motore e campionamento EMF </label>
+        <label xml:lang="it">Frequenza Motore e campionamento EMF</label>
       </variable>
       <variable CV="10" default="0" item="EMF Droop Config" tooltip="Range 0-252">
         <decVal max="252"/>
@@ -179,8 +180,8 @@
       </variable>
       <variable item="Consist Address Active For F2" CV="21" mask="XXXXXXVX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
-        <label>Consist Address Active For F1</label>
-        <label xml:lang="it">Indirizzo Consist attivo per F1</label>
+        <label>Consist Address Active For F2</label>
+        <label xml:lang="it">Indirizzo Consist attivo per F2</label>
       </variable>
       <variable item="Consist Address Active For F3" CV="21" mask="XXXXXVXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
@@ -1052,7 +1053,9 @@
       <variable item="Signal Dependent Acceleration" CV="49" default="0" comment="Range 0-255">
         <decVal max="255"/>
         <label>Signal Dependent Acceleration</label>
+        <label xml:lang="it">Accellerazione dipendente da Segnale</label>
         <comment>Range 0-255</comment>
+        <comment xml:lang="it">Valori 0-255</comment>
       </variable>
       <variable item="Signal Dependent Deceleration" CV="50" default="0" comment="Range 0-255">
         <decVal max="255"/>
@@ -1156,7 +1159,7 @@
           </enumChoice>
         </enumVal>
         <label>Special Function Mapping</label>
-        <label xml:lang="it">Utilizzo funzioni Speciali</label>
+        <label xml:lang="it">Mappatura funzioni Speciali</label>
       </variable>
       <variable item="Alternative Function Mapping" CV="61">
         <enumVal>
@@ -1199,7 +1202,7 @@
       <variable item="Loco Number Recognition" CV="112" mask="VXXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Loco Number Recognition</label>
-        <label>Loco Number Recognition</label>
+         <label xml:lang="it">Riconoscimento Numero Loco</label>
       </variable>
       <variable item="NMRA" CV="112" mask="XXXXVXXX" default="1">
         <enumVal>
@@ -1216,6 +1219,7 @@
       <variable item="Pulse Chain Recognition (LGB)" CV="112" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Pulse Chain Recognition (LGB)</label>
+         <label xml:lang="it">Riconoscimento treno Impulsi LGB</label>
       </variable>
       <variable CV="112" item="DC Brake Momentum" tooltip="Active if CV9=0" mask="XXVXXXXX" default="0">
         <enumVal>
@@ -1227,18 +1231,22 @@
           </enumChoice>
         </enumVal>
         <label>PWM Frequency</label>
+        <label xml:lang="it">Frequenza PWM</label>
       </variable>
       <variable CV="112" mask="XVXXXXXX" default="0" item="Radio Power Conversion">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Non directional DC braking</label>
+        <label xml:lang="it">Frenata DC non direzionale</label>
       </variable>
       <variable item="Pulse Chain Generation" CV="112" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Pulse Chain Generation</label>
+        <label xml:lang="it">Generazione Treno Impulsi</label>
       </variable>
       <variable CV="113" default="0" item="EMF Feedback Cutout" tooltip="Controls how much Feedback Cutoff">
         <decVal min="0" max="255"/>
         <label>EMF Feedback Cutoff Intensity</label>
+        <label xml:lang="it">Intensità soglia taglio EMF</label>
       </variable>
       <variable item="Dim Output 1" CV="114" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -1271,133 +1279,168 @@
       <variable item="Uncoupler" CV="115" default="0">
         <decVal max="99"/>
         <label>Uncoupler</label>
+        <label xml:lang="it">Sganciatore</label>
       </variable>
       <variable item="Auto Uncouple" CV="116" default="0">
         <decVal max="199"/>
         <label>Auto Uncouple</label>
+        <label xml:lang="it">Sgancio Automatico</label>
       </variable>
       <variable item="Flash Rate" CV="117" default="0">
         <decVal max="99"/>
         <label>Flash Rate</label>
+        <label xml:lang="it">Temporizzazione Flash</label>
       </variable>
       <variable item="Flash Output 1" CV="118" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Flash Output 1</label>
+        <label xml:lang="it">Flash su uscita 1</label>
       </variable>
       <variable item="Flash Output 2" CV="118" mask="XXXXXXVX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Flash Output 2</label>
+        <label xml:lang="it">Flash su uscita 2</label>
       </variable>
       <variable item="Flash Output 3" CV="118" mask="XXXXXVXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Flash Output 3</label>
+        <label xml:lang="it">Flash su uscita 3</label>
       </variable>
       <variable item="Flash Output 4" CV="118" mask="XXXXVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Flash Output 4</label>
+        <label xml:lang="it">Flash su uscita 4</label>
       </variable>
       <variable item="Flash Output 5" CV="118" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Flash Output 5</label>
+        <label xml:lang="it">Flash su uscita 5</label>
       </variable>
       <variable item="Flash Output 6" CV="118" mask="XXVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Flash Output 6</label>
+        <label xml:lang="it">Flash su uscita 6</label>
       </variable>
       <variable item="Inverse Flash Output 4" CV="118" mask="XVXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Inverse Flash Output 4</label>
+        <label xml:lang="it">Flash invertito su uscita 4</label>
       </variable>
       <variable item="Inverse Flash Output 6" CV="118" mask="VXXXXXXX" default="0">
        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Inverse Flash Output 6</label>
+        <label xml:lang="it">Flash invertito su uscita 6</label>
       </variable>
       <variable item="F6 dims Output 1" CV="119" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 dims Output 1</label>
+        <label xml:lang="it">F6 smorza uscita 1</label>
       </variable>
       <variable item="F6 dims Output 2" CV="119" mask="XXXXXXVX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 dims Output 2</label>
+        <label xml:lang="it">F6 smorza uscita 2</label>
       </variable>
       <variable item="F6 dims Output 3" CV="119" mask="XXXXXVXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 dims Output 3</label>
+        <label xml:lang="it">F6 smorza uscita 3</label>
       </variable>
       <variable item="F6 dims Output 4" CV="119" mask="XXXXVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 dims Output 4</label>
+        <label xml:lang="it">F6 smorza uscita 4</label>
       </variable>
       <variable item="F6 dims Output 5" CV="119" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 dims Output 5</label>
+        <label xml:lang="it">F6 smorza uscita 5</label>
       </variable>
       <variable item="F6 dims Output 6" CV="119" mask="XXVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 dims Output 6</label>
+        <label xml:lang="it">F6 smorza uscita 6</label>
       </variable>
       <variable item="F6 inverted" CV="119" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 inverted</label>
+        <label xml:lang="it">F6 invertito</label>
       </variable>
       <variable item="F7 dims Output 1" CV="120" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F7 dims Output 1</label>
+        <label xml:lang="it">F7 smorza uscita 1</label>
       </variable>
       <variable item="F7 dims Output 2" CV="120" mask="XXXXXXVX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F7 dims Output 2</label>
+        <label xml:lang="it">F7 smorza uscita 2</label>
       </variable>
       <variable item="F7 dims Output 3" CV="120" mask="XXXXXVXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F7 dims Output 3</label>
+        <label xml:lang="it">F7 smorza uscita 3</label>
       </variable>
       <variable item="F7 dims Output 4" CV="120" mask="XXXXVXXX" default="0">
        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F7 dims Output 4</label>
+        <label xml:lang="it">F7 smorza uscita 4</label>
       </variable>
       <variable item="F7 dims Output 5" CV="120" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F7 dims Output 5</label>
+        <label xml:lang="it">F7 smorza uscita 5</label>
       </variable>
       <variable item="F7 dims Output 6" CV="120" mask="XXVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F7 dims Output 6</label>
+        <label xml:lang="it">F7 smorza uscita 6</label>
       </variable>
       <variable item="F7 inverted" CV="120" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F7 inverted</label>
+        <label xml:lang="it">F7 invertito</label>
       </variable>
       <variable item="Exponential Acceleration" CV="121" default="0" comment="Adds an exponential acceleration">
         <decVal max="99"/>
         <label>Exponential Acceleration</label>
-        <comment>Adds an exponential acceleration</comment>
+        <label xml:lang="it">Accellerazione Esponenziale</label>
+       <comment>Adds an exponential acceleration</comment>
+       <comment xml:lang="it">Aggiunge una Accellerazione Esponenziale</comment>
       </variable>
       <variable item="Exponential Deceleration" CV="122" default="0" comment="Adds an exponential deceleration">
         <decVal max="99"/>
         <label>Exponential Deceleration</label>
+        <label xml:lang="it">Decellerazione Esponenziale</label>
         <comment>Adds an exponential deceleration</comment>
+        <comment xml:lang="it">Aggiunge una Decellerazione Esponenziale</comment>
       </variable>
       <variable item="Adaptive Acceleration/Deceleration" CV="123" default="0">
         <decVal max="99"/>
         <label>Adaptive Acceleration/Deceleration</label>
+        <label xml:lang="it">Accell./Decell.adattabile</label>
       </variable>
       <variable CV="124" default="0" mask="XXXXXXVV" item="Shunting Usage">
         <enumVal>
           <enumChoice choice="no shunting">
             <choice>no shunting</choice>
+            <choice xml:lang="it">nessuna manovra</choice>
           </enumChoice>
           <enumChoice choice="no exponential and adaptive influence">
             <choice>no exponential and adaptive influence</choice>
+            <choice xml:lang="it">nessuna influenza esponenziale / adattabile</choice>
           </enumChoice>
           <enumChoice choice="1/4 acceleration/deceleration">
             <choice>1/4 acceleration/deceleration</choice>
+            <choice xml:lang="it">1/4 Accell. / Decell.</choice>
           </enumChoice>
           <enumChoice choice="no acceleration/deceleration">
             <choice>no acceleration/deceleration</choice>
+            <choice xml:lang="it">nessuna Accell. / Decell.</choice>
           </enumChoice>
         </enumVal>
         <label>Shunting</label>
+        <label xml:lang="it">Manovra</label>
       </variable>
       <variable item="Half Speed Key" CV="124" mask="XXXVVXXX" default="0">
         <enumVal>
@@ -1412,6 +1455,7 @@
           </enumChoice>
         </enumVal>
         <label>Half Speed Key</label>
+        <label xml:lang="it">Tasto funzione 1/2 Velocità</label>
       </variable>
       <variable item="Shunt Function Key" CV="124" mask="XVXXXVXX" default="0">
         <enumVal>
@@ -1426,541 +1470,271 @@
           </enumChoice>
         </enumVal>
         <label>Shunt Function Key</label>
+        <label xml:lang="it">Tasto funzione Manovra</label>
       </variable>
       <variable CV="124" mask="VXXXXXXX" default="0" item="Function 2 effect generated">
         <enumVal>
           <enumChoice choice="Activated">
             <choice>Activated</choice>
+            <choice xml:lang="it">Attivata</choice>
           </enumChoice>
           <enumChoice choice="Outputs 7 and 8">
             <choice>Outputs 7 and 8</choice>
+            <choice xml:lang="it">uscita 7 ed 8</choice>
           </enumChoice>
         </enumVal>
         <label>SUSI</label>
+        <label xml:lang="it">Interfaccia SUSI</label>
       </variable>
       <variable item="Analog Power Conversion" CV="124" mask="XXVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Polarity Dependent DC stopping method</label>
-      </variable>
-      <variable item="Output 1 effect generated" CV="125" mask="VVVVVVXX">
         <enumVal>
-          <enumChoice choice="Standard on/off function output">
-            <choice>Standard on/off function output</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Random Flicker">
-            <choice>Random Flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing Headlight">
-            <choice>Flashing Headlight</choice>
-          </enumChoice>
-          <enumChoice choice="Single Pulse Strobe">
-            <choice>Single Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double Pulse Strobe">
-            <choice>Double Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotary Beacon">
-            <choice>Rotary Beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, right">
-            <choice>Ditch Light Type 1, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, left">
-            <choice>Ditch Light Type 1, left</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, right">
-            <choice>Ditch Light Type 2, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, left">
-            <choice>Ditch Light Type 2, left</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling">
-            <choice>Uncoupling</choice>
-          </enumChoice>
-          <enumChoice choice="Soft Start">
-            <choice>Soft Start</choice>
-          </enumChoice>
+          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
         </enumVal>
-        <label>Output 1 effect generated</label>
+        <label>Light Effects Output 1</label>
+        <label xml:lang="it">Effetti Luci uscita 1</label>
       </variable>
       <variable item="Output 1 behavior" CV="125" mask="XXXXXXVV">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
         <label>Output 1 behavior</label>
+        <label xml:lang="it">Comportamento Uscita 1</label>
       </variable>
       <variable item="Output 2 effect generated" CV="126" mask="VVVVVVXX">
         <enumVal>
-          <enumChoice choice="Standard on/off function output">
-            <choice>Standard on/off function output</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Random Flicker">
-            <choice>Random Flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing Headlight">
-            <choice>Flashing Headlight</choice>
-          </enumChoice>
-          <enumChoice choice="Single Pulse Strobe">
-            <choice>Single Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double Pulse Strobe">
-            <choice>Double Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotary Beacon">
-            <choice>Rotary Beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, right">
-            <choice>Ditch Light Type 1, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, left">
-            <choice>Ditch Light Type 1, left</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, right">
-            <choice>Ditch Light Type 2, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, left">
-            <choice>Ditch Light Type 2, left</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling">
-            <choice>Uncoupling</choice>
-          </enumChoice>
-          <enumChoice choice="Soft Start">
-            <choice>Soft Start</choice>
-          </enumChoice>
+          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
         </enumVal>
-        <label>Output 2 effect generated</label>
+        <label>Light Effects Output 2</label>
+        <label xml:lang="it">Effetti Luci uscita 2</label>
       </variable>
       <variable item="Output 2 behavior" CV="126" mask="XXXXXXVV">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
         <label>Output 2 behavior</label>
+        <label xml:lang="it">Comportamento Uscita 2</label>
       </variable>
       <variable item="Output 3 effect generated" CV="127" mask="VVVVVVXX">
         <enumVal>
-          <enumChoice choice="Standard on/off function output">
-            <choice>Standard on/off function output</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Random Flicker">
-            <choice>Random Flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing Headlight">
-            <choice>Flashing Headlight</choice>
-          </enumChoice>
-          <enumChoice choice="Single Pulse Strobe">
-            <choice>Single Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double Pulse Strobe">
-            <choice>Double Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotary Beacon">
-            <choice>Rotary Beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, right">
-            <choice>Ditch Light Type 1, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, left">
-            <choice>Ditch Light Type 1, left</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, right">
-            <choice>Ditch Light Type 2, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, left">
-            <choice>Ditch Light Type 2, left</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling">
-            <choice>Uncoupling</choice>
-          </enumChoice>
-          <enumChoice choice="Soft Start">
-            <choice>Soft Start</choice>
-          </enumChoice>
+          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
         </enumVal>
-        <label>Output 3 effect generated</label>
+        <label>Light Effects Output 3</label>
+        <label xml:lang="it">Effetti Luci uscita 3</label>
       </variable>
       <variable item="Output 3 behavior" CV="127" mask="XXXXXXVV">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
         <label>Output 3 behavior</label>
+        <label xml:lang="it">Comportamento Uscita 3</label>
       </variable>
       <variable item="Output 4 effect generated" CV="128" mask="VVVVVVXX">
         <enumVal>
-          <enumChoice choice="Standard on/off function output">
-            <choice>Standard on/off function output</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Random Flicker">
-            <choice>Random Flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing Headlight">
-            <choice>Flashing Headlight</choice>
-          </enumChoice>
-          <enumChoice choice="Single Pulse Strobe">
-            <choice>Single Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double Pulse Strobe">
-            <choice>Double Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotary Beacon">
-            <choice>Rotary Beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, right">
-            <choice>Ditch Light Type 1, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, left">
-            <choice>Ditch Light Type 1, left</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, right">
-            <choice>Ditch Light Type 2, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, left">
-            <choice>Ditch Light Type 2, left</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling">
-            <choice>Uncoupling</choice>
-          </enumChoice>
-          <enumChoice choice="Soft Start">
-            <choice>Soft Start</choice>
-          </enumChoice>
+          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
         </enumVal>
-        <label>Output 4 effect generated</label>
+        <label>Light Effects Output 4</label>
+        <label xml:lang="it">Effetti Luci uscita 4</label>
       </variable>
       <variable item="Output 4 behavior" CV="128" mask="XXXXXXVV">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
         <label>Output 4 behavior</label>
+        <label xml:lang="it">Comportamento Uscita 4</label>
       </variable>
       <variable item="Output 5 effect generated" CV="129" mask="VVVVVVXX">
         <enumVal>
-          <enumChoice choice="Standard on/off function output">
-            <choice>Standard on/off function output</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Random Flicker">
-            <choice>Random Flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing Headlight">
-            <choice>Flashing Headlight</choice>
-          </enumChoice>
-          <enumChoice choice="Single Pulse Strobe">
-            <choice>Single Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double Pulse Strobe">
-            <choice>Double Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotary Beacon">
-            <choice>Rotary Beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, right">
-            <choice>Ditch Light Type 1, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, left">
-            <choice>Ditch Light Type 1, left</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, right">
-            <choice>Ditch Light Type 2, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, left">
-            <choice>Ditch Light Type 2, left</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling">
-            <choice>Uncoupling</choice>
-          </enumChoice>
-          <enumChoice choice="Soft Start">
-            <choice>Soft Start</choice>
-          </enumChoice>
+          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
         </enumVal>
         <label>Output 5 effect generated</label>
+        <label xml:lang="it">Effetti Luci uscita 5</label>
       </variable>
       <variable item="Output 5 behavior" CV="129" mask="XXXXXXVV">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
         <label>Output 5 behavior</label>
+        <label xml:lang="it">Comportamento Uscita 5</label>
       </variable>
       <variable item="Output 6 effect generated" CV="130" mask="VVVVVVXX">
         <enumVal>
-          <enumChoice choice="Standard on/off function output">
-            <choice>Standard on/off function output</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Random Flicker">
-            <choice>Random Flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing Headlight">
-            <choice>Flashing Headlight</choice>
-          </enumChoice>
-          <enumChoice choice="Single Pulse Strobe">
-            <choice>Single Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double Pulse Strobe">
-            <choice>Double Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotary Beacon">
-            <choice>Rotary Beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, right">
-            <choice>Ditch Light Type 1, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, left">
-            <choice>Ditch Light Type 1, left</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, right">
-            <choice>Ditch Light Type 2, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, left">
-            <choice>Ditch Light Type 2, left</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling">
-            <choice>Uncoupling</choice>
-          </enumChoice>
-          <enumChoice choice="Soft Start">
-            <choice>Soft Start</choice>
-          </enumChoice>
+          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
         </enumVal>
         <label>Output 6 effect generated</label>
+        <label xml:lang="it">Effetti Luci uscita 6</label>
       </variable>
       <variable item="Output 6 behavior" CV="130" mask="XXXXXXVV">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
         <label>Output 6 behavior</label>
+        <label xml:lang="it">Comportamento Uscita 6</label>
       </variable>
       <variable item="Output 7 effect generated" CV="131" mask="VVVVVVXX">
         <enumVal>
-          <enumChoice choice="Standard on/off function output">
-            <choice>Standard on/off function output</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Random Flicker">
-            <choice>Random Flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing Headlight">
-            <choice>Flashing Headlight</choice>
-          </enumChoice>
-          <enumChoice choice="Single Pulse Strobe">
-            <choice>Single Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double Pulse Strobe">
-            <choice>Double Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotary Beacon">
-            <choice>Rotary Beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, right">
-            <choice>Ditch Light Type 1, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, left">
-            <choice>Ditch Light Type 1, left</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, right">
-            <choice>Ditch Light Type 2, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, left">
-            <choice>Ditch Light Type 2, left</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling">
-            <choice>Uncoupling</choice>
-          </enumChoice>
-          <enumChoice choice="Soft Start">
-            <choice>Soft Start</choice>
-          </enumChoice>
+          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
         </enumVal>
         <label>Output 7 effect generated</label>
+        <label xml:lang="it">Effetti Luci uscita 7</label>
       </variable>
       <variable item="Output 7 behavior" CV="131" mask="XXXXXXVV">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
         <label>Output 7 behavior</label>
+        <label xml:lang="it">Comportamento Uscita 7</label>
       </variable>
       <variable item="Output 8 effect generated" CV="132" mask="VVVVVVXX">
         <enumVal>
-          <enumChoice choice="Standard on/off function output">
-            <choice>Standard on/off function output</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Random Flicker">
-            <choice>Random Flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing Headlight">
-            <choice>Flashing Headlight</choice>
-          </enumChoice>
-          <enumChoice choice="Single Pulse Strobe">
-            <choice>Single Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double Pulse Strobe">
-            <choice>Double Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotary Beacon">
-            <choice>Rotary Beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, right">
-            <choice>Ditch Light Type 1, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, left">
-            <choice>Ditch Light Type 1, left</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, right">
-            <choice>Ditch Light Type 2, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, left">
-            <choice>Ditch Light Type 2, left</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling">
-            <choice>Uncoupling</choice>
-          </enumChoice>
-          <enumChoice choice="Soft Start">
-            <choice>Soft Start</choice>
-          </enumChoice>
+          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
         </enumVal>
         <label>Output 8 effect generated</label>
+        <label xml:lang="it">Effetti Luci uscita 8</label>
       </variable>
       <variable item="Output 8 behavior" CV="132" mask="XXXXXXVV">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
         <label>Output 8 behavior</label>
+        <label xml:lang="it">Comportamento Uscita 8</label>
       </variable>
       <variable item="Function Output 2 as virtual Cam" CV="133" default="0">
         <decVal min="0" max="255"/>
         <label>Function Output 2 as virtual Cam</label>
+        <label xml:lang="it">Uscita 2 = Cam Virtuale</label>
       </variable>
       <variable item="Asymmetrical DCC Threshold" CV="134" default="106">
         <decVal max="214"/>
         <label>Asymmetrical DCC Threshold</label>
+        <label xml:lang="it">Soglia DCC asimmetrica</label>
       </variable>
       <variable item="Deactivating HLU direction bits" CV="137" default="0">
         <enumVal>
           <enumChoice choice="OFF">
             <choice>OFF</choice>
+            <choice xml:lang="it">Off</choice>
           </enumChoice>
           <enumChoice choice="Ignores first direction bit" value="1">
             <choice>Ignores first direction bit</choice>
+            <choice xml:lang="it">Ignora primo bit di direzione</choice>
           </enumChoice>
           <enumChoice choice="Ignores second direction bit" value="2">
             <choice>Ignores second direction bit</choice>
+            <choice xml:lang="it">Ignora secondo bit di direzione</choice>
           </enumChoice>
           <enumChoice choice="Accepts both direction bits" value="4">
             <choice>Accepts both direction bits</choice>
+            <choice xml:lang="it">Accetta entrambi bit di direzione</choice>
           </enumChoice>
         </enumVal>
         <label>Deactivating HLU direction bits</label>
+        <label xml:lang="it">Deattivazione bits direzione HLU</label>
       </variable>
       <variable item="Direction dependent conversion of a stop section to Go" CV="138" default="0">
         <enumVal>
           <enumChoice choice="OFF">
             <choice>OFF</choice>
+            <choice xml:lang="it">Off</choice>
           </enumChoice>
           <enumChoice choice="as 'U'Ultra low speed" value="4">
             <choice>as 'U'Ultra low speed</choice>
+            <choice xml:lang="it">come "U" velocità bassissima</choice>
           </enumChoice>
           <enumChoice choice="Intermediate step">
             <choice>Intermediate step</choice>
+            <choice xml:lang="it">Step intermedio</choice>
           </enumChoice>
           <enumChoice choice="as 'L' Low speed">
             <choice>as 'L' Low speed</choice>
+            <choice xml:lang="it">Come "L" bassa velocità</choice>
           </enumChoice>
           <enumChoice choice="Intermediate step">
             <choice>Intermediate step</choice>
+            <choice xml:lang="it">Step intermedio</choice>
           </enumChoice>
           <enumChoice choice="as 'F' Full speed">
             <choice>as 'F' Full speed</choice>
+            <choice xml:lang="it">Come "F" alta velocità</choice>
           </enumChoice>
         </enumVal>
         <label>Direction dependent conversion of a stop section to Go</label>
+        <label xml:lang="it">Conversione dipendente da direzione in una sezione di Stop</label>
       </variable>
       <variable item="Direction dependent conversion of a F,L,U" CV="139" default="0">
         <enumVal>
           <enumChoice choice="OFF">
             <choice>OFF</choice>
+            <choice xml:lang="it">Off</choice>
           </enumChoice>
           <enumChoice choice="as 'H' Halt" value="2">
             <choice>as 'H' Halt</choice>
+            <choice xml:lang="it">come "H" STOP</choice>
           </enumChoice>
           <enumChoice choice="as 'U'Ultra low speed" value="4">
             <choice>as 'U'Ultra low speed</choice>
+            <choice xml:lang="it">come "U" velocità bassissima</choice>
           </enumChoice>
           <enumChoice choice="Intermediate step">
             <choice>Intermediate step</choice>
+            <choice xml:lang="it">Step intermedio</choice>
           </enumChoice>
           <enumChoice choice="as 'L' Low speed">
             <choice>as 'L' Low speed</choice>
+            <choice xml:lang="it">Come "L" bassa velocità</choice>
           </enumChoice>
           <enumChoice choice="Intermediate step">
             <choice>Intermediate step</choice>
+            <choice xml:lang="it">Step intermedio</choice>
           </enumChoice>
           <enumChoice choice="as 'F' Full speed">
             <choice>as 'F' Full speed</choice>
+            <choice xml:lang="it">Come "F" alta velocità</choice>
           </enumChoice>
         </enumVal>
         <label>Direction dependent conversion of a F,L,U</label>
+        <label xml:lang="it">Conversione dipendente da direzione di F,L,U</label>
       </variable>
       <variable item="Distance controlled stopping" CV="140" default="0">
         <enumVal>
           <enumChoice choice="not active">
             <choice>not active</choice>
+            <choice xml:lang="it">non attivo</choice>
           </enumChoice>
           <enumChoice choice="Automatic stops, Signal controlled speed influence or Asymmetric DCC">
             <choice>Automatic stops, Signal controlled speed influence or Asymmetric DCC</choice>
           </enumChoice>
           <enumChoice choice="Manual stops using cab">
             <choice>Manual stops using cab</choice>
+            <choice xml:lang="it">Stop manuale da Palmare</choice>
           </enumChoice>
           <enumChoice choice="Automatic and Manual stops">
             <choice>Automatic and Manual stops</choice>
+            <choice xml:lang="it">Stop manuale e Automatico</choice>
           </enumChoice>
           <enumChoice choice="Automatic stops with immediate braking" value="11">
             <choice>Automatic stops with immediate braking</choice>
+            <choice xml:lang="it">Stop automatico immediato</choice>
           </enumChoice>
           <enumChoice choice="Manual stops with immediate braking">
             <choice>Manual stops with immediate braking</choice>
+            <choice xml:lang="it">Stop manuale immediato</choice>
           </enumChoice>
           <enumChoice choice="Automatic and Manual stops with immediate braking">
             <choice>Automatic and Manual stops with immediate braking</choice>
+            <choice xml:lang="it">Stop automatico e manuale immediato</choice>
           </enumChoice>
         </enumVal>
         <label>Distance controlled stopping</label>
+        <label xml:lang="it">Fermata controllata da distanza</label>
       </variable>
       <variable item="Distance controlled stopping Distance" CV="141" default="0">
         <decVal min="0" max="255"/>
         <label>Distance controlled stopping Distance</label>
+        <label xml:lang="it">Distanza di Fermata controllata da distanza</label>
       </variable>
       <variable item="Distance controlled stopping speed correction (ABC)" CV="142" default="12">
         <decVal min="0" max="255"/>
         <label>Distance controlled stopping speed correction (ABC)</label>
+        <label xml:lang="it">Distanza di Fermata controllata da velocità (ABC)</label>
       </variable>
       <variable item="Distance controlled stopping speed correction (HLU)" CV="143" default="0">
         <decVal min="0" max="255"/>
         <label>Distance controlled stopping speed correction (HLU)</label>
+        <label xml:lang="it">Distanza di Fermata controllata da velocità (HLU)</label>
       </variable>
     </variables>
     <resets>
@@ -2031,15 +1805,19 @@
           </label>
           <label>
             <text>A 'Hundreds' digit of 1 offsets the mid value for 'coreless' motors</text>
+            <text xml:lang="it">Numero Centinaia =1 è valore intermedio per motori 'coreless'</text>
           </label>
           <label>
             <text>Tens digit is the Proportional value, mid value = 5</text>
+            <text xml:lang="it">Numero decine è valore proporzionale, valore medio</text>
           </label>
           <label>
             <text>Ones digit is the integral value, mid value = 5</text>
+            <text xml:lang="it">Numero unità è valore integrale, valore medio =5</text>
           </label>
           <label>
             <text>With default setting of 0, proportional value auto adjusts and integral value is equivalent to 5</text>
+            <text xml:lang="it">Con i valori di default = 0 il valore proporzionale si regola automaticamente e il valore integrale è = 5</text>
           </label>
           <label>
             <text> </text>
@@ -2060,21 +1838,27 @@
           </label>
           <label>
             <text>0 = 20/40KHz (set with CV112) and sample rate auto adjusts between 200Hz (low speed) and 50Hz</text>
+            <text xml:lang="it">0 = 20/40KHz (con CV112) e campionamento si regola automaticamente tra 200Hz (bassa velocità) e 50Hz</text>
           </label>
           <label>
             <text>Tens digit = Sampling rate (1-9) mid value = 5</text>
+            <text xml:lang="it">Numero decine = campionamento (1-9) valore medio=5</text>
           </label>
           <label>
             <text>Ones digit = EMF sampling time (1-9) mid value = 5</text>
+            <text xml:lang="it">Numero unità = tempo campionamento EMF, valore medio =5</text>
           </label>
           <label>
             <text>100 = 'Spread Spectrum' sampling rate for reduced noise, with medium sampling time</text>
+            <text xml:lang="it">100 = Campionamento 'Ampio spettro' per rumore ridotto, con tempo campionamento medio</text>
           </label>
           <label>
             <text>255-176 = Low frequency according to formula;-</text>
+            <text xml:lang="it">255-176 = Bassa frequenza secondo la formula;-</text>
           </label>
           <label>
             <text>(131 + mantissa * 4) * 2 exp. Bits 0-4 = mantissa, Bits 5-7 = exp</text>
+            <text xml:lang="it">(131 + mantissa * 4) * 2 exp. Bits 0-4 = mantissa, Bits 5-7 = exp-</text>
           </label>
           <label>
             <text> </text>
@@ -2085,6 +1869,7 @@
       <row>
         <label>
           <text>Acceleration/Deceleration time (momentum) can be streched in the lower speed range</text>
+          <text xml:lang="it">Il tempo di Accell./Decell. (inerzia) può essere allargato a velocità bassa</text>
         </label>
       </row>
       <row>
@@ -2109,9 +1894,11 @@
           </label>
           <label>
             <text>Tens digit = percentage of speed range to be included (0-9)</text>
+            <text xml:lang="it">Numero decine = percentuale velocità da includere (0-9)</text>
           </label>
           <label>
             <text>Ones digit = Exponential curve (0-9)</text>
+            <text xml:lang="it">Numero unità = curva esponenziale (0-9)</text>
           </label>
           <label>
             <text> </text>
@@ -2123,9 +1910,11 @@
         <column>
           <label>
             <text>Raising or lowering the speed to the next internal step occurs only if the precedingstep is nearly reached.The tolerance</text>
+            <text xml:lang="it">L'incremento o il decremento allo step vicino avviene solo se è raggiunto lo step precedente. La tolleranza</text>
           </label>
           <label>
             <text>for reaching the preceding step is defined by this CV (the smaller this value the smoother the acceleration/deceleration)</text>
+            <text xml:lang="it">per raggiungere lo step precedente è definita da questa CV ( valori piccoli per accell./decell. più graduali)</text>
           </label>
         </column>
       </row>
@@ -2150,12 +1939,15 @@
           </label>
           <label>
             <text>Tens digit = acceleration (1-9)</text>
+            <text xml:lang="it">Numero decine = accellerazione (1-9)</text>
           </label>
           <label>
             <text>Ones digit = deceleration (1-9)</text>
+            <text xml:lang="it">Numero unità = decellerazione (1-9)</text>
           </label>
           <label>
             <text>Value 0 = no adaptive acceleration/deceleration</text>
+            <text xml:lang="it">Valore 0 = nessuna accell./decell. adattativa</text>
           </label>
           <label>
             <text> </text>
@@ -2201,26 +1993,32 @@
           </label>
           <label>
             <text>Tens digit = Pull In time (0-9)</text>
+            <text xml:lang="it">Numero decine = tempo aggancio (0-9)</text>
           </label>
           <label>
             <text>Ones digit = Hold power % x10 (0-9)</text>
+            <text xml:lang="it">Numero unità = tempo ritenuta %x10 (0-9)</text>
           </label>
           <label>
             <text> </text>
           </label>
           <label>
             <text>Tens digit = Move Away time (0-9)</text>
+            <text xml:lang="it">Numero decine = tempo sgancio (0-9)</text>
           </label>
           <label>
             <text>Ones digit = Internal Speed Step x4 (0-9)</text>
+            <text xml:lang="it">Numero unità = Step velocità interna x4 (0-9)</text>
           </label>
           <label>
             <text>Hundreds digit, 1 = Tension Relieve</text>
+            <text xml:lang="it">Numero centinaia,1 = tensione di rilascio</text>
           </label>
         </column>
       </row>
     </column>
     <name>Shunt/Uncouple</name>
+    <name xml:lang="it">Sgangio/Manovra</name>
   </pane>
   <pane>
     <column>
@@ -2234,12 +2032,14 @@
       </label>
       <display item="Alternative Function Mapping" format="checkbox" label="Use this Sheet to determine which functions will control which outputs" tooltip="= 97">
         <label>Use this Sheet to determine which functions will control which outputs</label>
+        <label xml:lang="it">Usa questo schermo per determinare quale funzione controlla le uscite</label>
       </display>
       <label>
         <text> </text>
       </label>
       <label>
         <text>           Description                                      Output wire or operation</text>
+        <text xml:lang="it">           Descrizione                                      Filo Uscita o operazione</text>
       </label>
       <label>
         <text> </text>
@@ -2251,48 +2051,63 @@
           </label>
           <label>
             <text>                                           White  </text>
+            <text xml:lang="it">                                           Bianco </text>
           </label>
           <display item="FL(f) controls output 1" format="checkbox" label="Forward Headlight F0(f)">
             <label>Forward Headlight F0(f)</label>
+            <label xml:lang="it">Luci frontali - Luci (in avanti) </label>
           </display>
           <display item="FL(r) controls output 1" format="checkbox" label="Reverse Headlight F0(r)">
             <label>Reverse Headlight F0(r)</label>
+            <label xml:lang="it">Luci retro - Luci (in retro) </label>
           </display>
           <display item="F1 controls output 1" format="checkbox" label="Function 1         ">
             <label>Function 1         </label>
+            <label xml:lang="it">Funzione 1         </label>
           </display>
           <display item="F2 controls output 1" format="checkbox" label="Function 2         ">
             <label>Function 2         </label>
+            <label xml:lang="it">Funzione 2         </label>
           </display>
           <display item="AltF3 controls output 1" format="checkbox" label="Function 3         ">
             <label>Function 3         </label>
+            <label xml:lang="it">Funzione 3         </label>
           </display>
           <display item="AltF4 controls output 1" format="checkbox" label="Function 4         ">
             <label>Function 4         </label>
+            <label xml:lang="it">Funzione 4         </label>
           </display>
           <display item="AltF5 controls output 1" format="checkbox" label="Function 5         ">
             <label>Function 5         </label>
+            <label xml:lang="it">Funzione 5         </label>
           </display>
           <display item="AltF6 controls output 1" format="checkbox" label="Function 6         ">
             <label>Function 6         </label>
+            <label xml:lang="it">Funzione 6         </label>
           </display>
           <display item="AltF7 controls output 1" format="checkbox" label="Function 7         ">
             <label>Function 7         </label>
+            <label xml:lang="it">Funzione 7         </label>
           </display>
           <display item="AltF8 controls output 1" format="checkbox" label="Function 8         ">
             <label>Function 8         </label>
+            <label xml:lang="it">Funzione 8         </label>
           </display>
           <display item="AltF9 controls output 1" format="checkbox" label="Function 9         ">
             <label>Function 9         </label>
+            <label xml:lang="it">Funzione 9         </label>
           </display>
           <display item="AltF10 controls output 1" format="checkbox" label="Function 10         ">
             <label>Function 10         </label>
+            <label xml:lang="it">Funzione 10         </label>
           </display>
           <display item="AltF11 controls output 1" format="checkbox" label="Function 11         ">
             <label>Function 11         </label>
+            <label xml:lang="it">Funzione 11         </label>
           </display>
           <display item="AltF12 controls output 1" format="checkbox" label="Function 12         ">
             <label>Function 12         </label>
+            <label xml:lang="it">Funzione 12         </label>
           </display>
         </column>
         <column>
@@ -2351,6 +2166,7 @@
           </label>
           <label>
             <text> Brown </text>
+            <text xml:lang="it">Marrone</text>
           </label>
           <display item="FL(f) controls output 3" format="checkbox" label="">
             <label/>
@@ -2401,6 +2217,7 @@
           </label>
           <label>
             <text> Green  </text>
+            <text xml:lang="it">Verde</text>
           </label>
           <display item="FL(f) controls output 4" format="checkbox" label="">
             <label/>
@@ -2451,6 +2268,7 @@
           </label>
           <label>
             <text>FO3 Pad  </text>
+            <text xml:lang="it">Pad Funz.3</text>
           </label>
           <display item="FL(f) controls output 5" format="checkbox" label="">
             <label/>
@@ -2501,6 +2319,7 @@
           </label>
           <label>
             <text>FO4 Pad  </text>
+            <text xml:lang="it">Pad Funz.4</text>
           </label>
           <display item="FL(f) controls output 6" format="checkbox" label="">
             <label/>
@@ -2551,6 +2370,7 @@
           </label>
           <label>
             <text>FO5 pad </text>
+            <text xml:lang="it">Pad Funz.5</text>
           </label>
           <display item="FL(f) controls output 7" format="checkbox" label="">
             <label/>
@@ -2601,6 +2421,7 @@
           </label>
           <label>
             <text> FO6 Pad </text>
+            <text xml:lang="it">Pad Funz.6</text>
           </label>
           <display item="FL(f) controls output 8" format="checkbox" label="">
             <label/>
@@ -2648,6 +2469,7 @@
       </row>
     </column>
     <name>Alt Function Map</name>
+    <name xml:lang="it">Mappa Funz.Alternative</name>
   </pane>
   <pane>
     <column>
@@ -2670,6 +2492,7 @@
         <column>
           <label>
             <text>Generates pulse chain commands for LGB sound modules on FO1</text>
+            <text xml:lang="it">Genera treno impulsi per moduli suono LGB con Funz.1</text>
           </label>
         </column>
       </row>
@@ -2691,12 +2514,15 @@
         <column>
           <label>
             <text> 0 = Normal Function Output</text>
+            <text xml:lang="it">0= Uscita funz.Normale</text>
           </label>
           <label>
             <text>40 = approx 2 pulses per revoloution</text>
+            <text xml:lang="it">40= Circa 2 impulsi per rotazione</text>
           </label>
           <label>
             <text>20 = approx 4 pulses per revoloution</text>
+            <text xml:lang="it">20= Circa 4 impulsi per rotazione</text>
           </label>
           <label>
             <text> </text>
@@ -2780,12 +2606,15 @@
             <column>
               <label>
                 <text>Tens digit = on time</text>
+               <text xml:lang="it">Numero decine= a tempo</text>
               </label>
               <label>
                 <text>Ones digit = Off time</text>
+                <text xml:lang="it">Numero unità= fuori tempo</text>
               </label>
               <label>
                 <text>(0 = 100ms, 9 = 1s)</text>
+                <text xml:lang="it">(0 = 100ms, 9 = 1s)</text>
               </label>
             </column>
           </row>
@@ -2810,6 +2639,7 @@
       <separator/>
       <label>
         <text>                                         Lighting Effects Adjustments (Mars, Gyralight etc)</text>
+        <text xml:lang="it">                                        Regolazioni Effetti luminosi  (Mars, Gyralight etc)</text>
       </label>
       <row>
         <column>
@@ -2840,9 +2670,11 @@
           </label>
           <label>
             <text>Tens digit sets cycle time(0-9), or start up time for soft start (0-0.9s)</text>
+            <text xml:lang="it">Decine= tempo di ciclo(0-9), o tempo per partenza graduale(0-0.9s)</text>
           </label>
           <label>
             <text>Ones digit extends Off time</text>
+            <text xml:lang="it">Unità= Estende tempo Off</text>
           </label>
           <label>
             <text> </text>
@@ -2851,6 +2683,7 @@
       </row>
     </column>
     <name>Function Output</name>
+    <name xml:lang="it">Funzione Uscita</name>
   </pane>
   <pane>
     <column>
@@ -2882,6 +2715,7 @@
         <column>
           <label>
             <text>Signal Dependent Speed Limits</text>
+            <text xml:lang="it">Limiti Velocità dipendente da segnale</text>
           </label>
           <separator/>
           <label>
@@ -2919,6 +2753,7 @@
       </row>
     </column>
     <name>Zimo Specific</name>
+    <name xml:lang="it">Specifici Zimo</name>
   </pane>
   <pane>
     <column>
@@ -2997,6 +2832,7 @@
             <column>
               <label>
                 <text>Hundreds digit = sensitivity</text>
+                <text xml:lang="it">Centinaia= sensibilità</text>
               </label>
             </column>
             <column>
@@ -3007,21 +2843,26 @@
             <column>
               <label>
                 <text>0 = Fast recognition</text>
+                <text xml:lang="it">0= sensibilità alta</text>
               </label>
               <label>
                 <text>1 = Normal recognition (0.5s)</text>
+                <text xml:lang="it">1= sensibilità normale (0.5s)</text>
               </label>
               <label>
                 <text>2 = Slow recognition (1s)</text>
+                <text xml:lang="it">2= sensibilità bassa (1s)</text>
               </label>
             </column>
           </row>
           <label>
             <text>Tens and Ones digits = Assymmetrical threshold in tenths of a volt</text>
+            <text xml:lang="it">Decine e Unità= soglia asimmetrica in decimi di Volt</text>
           </label>
         </column>
       </row>
     </column>
     <name>ABC</name>
+    <name xml:lang="it">DCC Asimmetrica</name>
   </pane>
 </decoder-config>
