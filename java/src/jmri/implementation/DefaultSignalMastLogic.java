@@ -2773,8 +2773,18 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
             boolean found = false;
             StringBuilder message = new StringBuilder();
             if(nb instanceof SignalMast){
-                if(nb.equals(source) || isDestinationValid((SignalMast)nb)){
-                    throw new java.beans.PropertyVetoException("Has SignalMast Logic attached which will be <b>Deleted</b> ", evt);
+                if(nb.equals(source)){
+                    message.append("Has SignalMast Logic attached which will be <b>Deleted</b> to <ul>");
+                    for(SignalMast sm: getDestinationList()){
+                        message.append("<li>");
+                        message.append(sm.getDisplayName());
+                        message.append("</li>");
+                    }
+                    message.append("</ul>");
+                    throw new java.beans.PropertyVetoException(message.toString(), evt);
+                    
+                } else if (isDestinationValid((SignalMast)nb)){
+                    throw new java.beans.PropertyVetoException("Is the end point mast for logic attached to signal mast " + source.getDisplayName() + " which will be <b>Deleted</b> ", evt);
                 }
                 for(SignalMast sm:getDestinationList()){
                     if(isSignalMastIncluded((SignalMast)nb, sm)){

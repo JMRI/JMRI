@@ -269,7 +269,6 @@ abstract public class AbstractManager
         if(p.equals("CanDelete")){ //IN18N
             StringBuilder message = new StringBuilder();
             for(java.beans.VetoableChangeListener vc : vcs.getVetoableChangeListeners()){
-                log.info(""+vc);
                 try {
                     vc.vetoableChange(evt);
                 } catch (java.beans.PropertyVetoException e) {

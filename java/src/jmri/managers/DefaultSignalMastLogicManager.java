@@ -497,6 +497,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
                     found = true;
 
                     message.append(e.getMessage());
+                    message.append("<br>");
 
                 }
             }
