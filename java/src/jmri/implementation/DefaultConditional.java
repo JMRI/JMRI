@@ -562,6 +562,9 @@ public class DefaultConditional extends AbstractNamedBean
 				Logix x = null;	
 				Light lgt = null;
                 Warrant w = null;
+                NamedBean nb = null;
+                if(action.getNamedBean()!=null)
+                    nb = (NamedBean)action.getNamedBean().getBean();
                 int value = 0;
                 Timer timer = null;
                 int type = action.getType();
@@ -575,8 +578,7 @@ public class DefaultConditional extends AbstractNamedBean
 					case Conditional.ACTION_NONE:
 						break;
 					case Conditional.ACTION_SET_TURNOUT:
-						Turnout t = InstanceManager.turnoutManagerInstance().
-									getTurnout(devName);
+						Turnout t = (Turnout) nb;
 						if (t == null) {
 							errorList.add("invalid turnout name in action - "+action.getDeviceName());
 						}
@@ -639,8 +641,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}						
 						break;
 					case Conditional.ACTION_LOCK_TURNOUT:
-						Turnout tl = InstanceManager.turnoutManagerInstance().
-									getTurnout(devName);
+						Turnout tl = (Turnout) nb;
 						if (tl == null) {
 							errorList.add("invalid turnout name in action - "+action.getDeviceName());
 						}
@@ -662,8 +663,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
 					case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
-						h = InstanceManager.signalHeadManagerInstance().
-									getSignalHead(devName);
+						h = (SignalHead) nb;
 						if (h == null) {
 							errorList.add("invalid signal head name in action - "+action.getDeviceName());
 						}
@@ -673,8 +673,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
 					case Conditional.ACTION_SET_SIGNAL_HELD:
-						h = InstanceManager.signalHeadManagerInstance().
-									getSignalHead(devName);
+						h = (SignalHead) nb;
 						if (h == null) {
 							errorList.add("invalid signal head name in action - "+action.getDeviceName());
 						}
@@ -684,8 +683,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
 					case Conditional.ACTION_CLEAR_SIGNAL_HELD:
-						h = InstanceManager.signalHeadManagerInstance().
-									getSignalHead(devName);
+						h = (SignalHead) nb;
 						if (h == null) {
 							errorList.add("invalid signal head name in action - "+action.getDeviceName());
 						}
@@ -695,8 +693,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
 					case Conditional.ACTION_SET_SIGNAL_DARK:
-						h = InstanceManager.signalHeadManagerInstance().
-									getSignalHead(devName);
+						h = (SignalHead) nb;
 						if (h == null) {
 							errorList.add("invalid signal head name in action - "+action.getDeviceName());
 						}
@@ -706,8 +703,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
 					case Conditional.ACTION_SET_SIGNAL_LIT:
-						h = InstanceManager.signalHeadManagerInstance().
-									getSignalHead(devName);
+						h = (SignalHead) nb;
 						if (h == null) {
 							errorList.add("invalid signal head name in action - "+action.getDeviceName());
 						}
@@ -717,8 +713,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
 					case Conditional.ACTION_TRIGGER_ROUTE:
-						Route r = InstanceManager.routeManagerInstance().
-									getRoute(devName);
+						Route r = (Route) nb;
 						if (r == null) {
 							errorList.add("invalid route name in action - "+action.getDeviceName());
 						}
@@ -728,8 +723,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
 					case Conditional.ACTION_SET_SENSOR:
-						Sensor sn = InstanceManager.sensorManagerInstance().
-									getSensor(devName);
+						Sensor sn = (Sensor) nb;
 						if (sn == null) {
 							errorList.add("invalid sensor name in action - "+action.getDeviceName());
 						}
@@ -797,8 +791,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}						
 						break;
 					case Conditional.ACTION_SET_LIGHT:
-						lgt = InstanceManager.lightManagerInstance().
-										getLight(devName);
+						lgt = (Light) nb;
 						if (lgt == null) {
 							errorList.add("invalid light name in action - "+action.getDeviceName());
 						}
@@ -816,8 +809,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
 					case Conditional.ACTION_SET_LIGHT_INTENSITY:
-						lgt = InstanceManager.lightManagerInstance().
-										getLight(devName);
+						lgt = (Light) nb;
 						if (lgt == null) {
 							errorList.add("invalid light name in action - "+action.getDeviceName());
 						}
@@ -836,8 +828,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
 					case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
-						lgt = InstanceManager.lightManagerInstance().
-										getLight(devName);
+						lgt = (Light) nb;
 						if (lgt == null) {
 							errorList.add("invalid light name in action - "+action.getDeviceName());
 						}
@@ -856,7 +847,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
 					case Conditional.ACTION_SET_MEMORY:
-						Memory m = getMemory(devName);
+						Memory m = (Memory) nb;
 						if (m == null) {
 							errorList.add("invalid memory name in action - "+action.getDeviceName());
 						}
@@ -866,7 +857,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
 					case Conditional.ACTION_COPY_MEMORY:
-						Memory mFrom = getMemory(devName);
+						Memory mFrom = (Memory) nb;
 						if (mFrom == null) {
 							errorList.add("invalid memory name in action - "+action.getDeviceName());
 						}
@@ -1015,7 +1006,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
                         break;
                     case Conditional.ACTION_DEALLOCATE_WARRANT_ROUTE:
-                        w = InstanceManager.getDefault(WarrantManager.class).getWarrant(devName);
+                        w = (Warrant) nb;
 						if (w == null) {
 							errorList.add("invalid Warrant name in action - "+action.getDeviceName());
 						}
@@ -1025,7 +1016,7 @@ public class DefaultConditional extends AbstractNamedBean
                         }
                         break;
                     case Conditional.ACTION_SET_ROUTE_TURNOUTS:
-                        w = InstanceManager.getDefault(WarrantManager.class).getWarrant(devName);
+                        w = (Warrant) nb;
 						if (w == null) {
 							errorList.add("invalid Warrant name in action - "+action.getDeviceName());
 						}
@@ -1038,7 +1029,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
                         break; 
                     case Conditional.ACTION_THROTTLE_FACTOR:
-                        w = InstanceManager.getDefault(WarrantManager.class).getWarrant(devName);
+                        w = (Warrant) nb;
 						if (w == null) {
 							errorList.add("invalid Warrant name in action - "+action.getDeviceName());
 						}
@@ -1051,7 +1042,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
                         break; 
                     case Conditional.ACTION_SET_TRAIN_ID:
-                        w = InstanceManager.getDefault(WarrantManager.class).getWarrant(devName);
+                        w = (Warrant) nb;
 						if (w == null) {
 							errorList.add("invalid Warrant name in action - "+action.getDeviceName());
 						}
@@ -1065,7 +1056,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
                         break;
                     case Conditional.ACTION_SET_TRAIN_NAME:
-                        w = InstanceManager.getDefault(WarrantManager.class).getWarrant(devName);
+                        w = (Warrant) nb;
 						if (w == null) {
 							errorList.add("invalid Warrant name in action - "+action.getDeviceName());
 						}
@@ -1075,7 +1066,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
                         break;
                     case Conditional.ACTION_AUTO_RUN_WARRANT:
-                        w = InstanceManager.getDefault(WarrantManager.class).getWarrant(devName);
+                        w = (Warrant) nb;
 						if (w == null) {
 							errorList.add("invalid Warrant name in action - "+action.getDeviceName());
 						}
@@ -1091,7 +1082,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
                         break;
                     case Conditional.ACTION_MANUAL_RUN_WARRANT:
-                        w = InstanceManager.getDefault(WarrantManager.class).getWarrant(devName);
+                        w = (Warrant) nb;
 						if (w == null) {
 							errorList.add("invalid Warrant name in action - "+action.getDeviceName());
 						}
@@ -1107,7 +1098,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
                         break;
                     case Conditional.ACTION_CONTROL_TRAIN:
-                        w = InstanceManager.getDefault(WarrantManager.class).getWarrant(devName);
+                        w = (Warrant) nb;
 						if (w == null) {
 							errorList.add("invalid Warrant name in action - "+action.getDeviceName());
 						}
@@ -1119,8 +1110,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
                         break;
 					case Conditional.ACTION_SET_SIGNALMAST_ASPECT:
-						f = InstanceManager.signalMastManagerInstance().
-									getSignalMast(devName);
+						f = (SignalMast) nb;
 						if (f == null) {
 							errorList.add("invalid signal mast name in action - "+action.getDeviceName());
 						}
@@ -1130,8 +1120,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
 					case Conditional.ACTION_SET_SIGNALMAST_HELD:
-						f = InstanceManager.signalMastManagerInstance().
-									getSignalMast(devName);
+						f = (SignalMast) nb;
 						if (f == null) {
 							errorList.add("invalid signal mast name in action - "+action.getDeviceName());
 						}
@@ -1141,8 +1130,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
 					case Conditional.ACTION_CLEAR_SIGNALMAST_HELD:
-						f = InstanceManager.signalMastManagerInstance().
-									getSignalMast(devName);
+						f = (SignalMast) nb;
 						if (f == null) {
 							errorList.add("invalid signal mast name in action - "+action.getDeviceName());
 						}
@@ -1152,8 +1140,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
 					case Conditional.ACTION_SET_SIGNALMAST_DARK:
-						f = InstanceManager.signalMastManagerInstance().
-									getSignalMast(devName);
+						f = (SignalMast) nb;
 						if (f == null) {
 							errorList.add("invalid signal head name in action - "+action.getDeviceName());
 						}
@@ -1163,8 +1150,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
 					case Conditional.ACTION_SET_SIGNALMAST_LIT:
-						f = InstanceManager.signalMastManagerInstance().
-									getSignalMast(devName);
+						f = (SignalMast) nb;
 						if (f == null) {
 							errorList.add("invalid signal head name in action - "+action.getDeviceName());
 						}
@@ -1174,7 +1160,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
 					case Conditional.ACTION_SET_BLOCK_VALUE:
-                        OBlock b = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(devName);
+                        OBlock b = (OBlock) nb;
 						if (b == null) {
 							errorList.add("invalid block name in action - "+action.getDeviceName());
 						}
@@ -1184,7 +1170,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
 					case Conditional.ACTION_SET_BLOCK_ERROR:
-                        b = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(devName);
+                        b = (OBlock) nb;
 						if (b == null) {
 							errorList.add("invalid block name in action - "+action.getDeviceName());
 						}
@@ -1194,7 +1180,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
                     case Conditional.ACTION_CLEAR_BLOCK_ERROR:
-                    	b = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(devName);
+                    	b = (OBlock) nb;
 						if (b == null) {
 							errorList.add("invalid block name in action - "+action.getDeviceName());
 						}
@@ -1203,7 +1189,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
                     case ACTION_DEALLOCATE_BLOCK:
-                    	b = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(devName);
+                    	b = (OBlock) nb;
 						if (b == null) {
 							errorList.add("invalid block name in action - "+action.getDeviceName());
 						}
@@ -1213,7 +1199,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
                     case ACTION_SET_BLOCK_OUT_OF_SERVICE:
-                    	b = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(devName);
+                    	b = (OBlock) nb;
 						if (b == null) {
 							errorList.add("invalid block name in action - "+action.getDeviceName());
 						}
@@ -1223,7 +1209,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
                     case ACTION_SET_BLOCK_IN_SERVICE:
-                        b = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(devName);
+                        b = (OBlock) nb;
 						if (b == null) {
 							errorList.add("invalid block name in action - "+action.getDeviceName());
 						}
@@ -1477,15 +1463,15 @@ public class DefaultConditional extends AbstractNamedBean
 		{
 			// set sensor state
             ConditionalAction action = _actionList.get(mIndex);
-            String devName = getDeviceName(action);
-			Sensor sn = InstanceManager.sensorManagerInstance().getSensor(devName);
-			if (sn==null) {
+            //String devName = getDeviceName(action);
+			//Sensor sn = InstanceManager.sensorManagerInstance().getSensor(devName);
+			if (action.getNamedBean()==null) {
 				log.error(getDisplayName()+" Invalid delayed sensor name - "+action.getDeviceName());
 			}
 			else {
 				// set the sensor
 				try {
-					sn.setKnownState(action.getActionData());
+					((Sensor)action.getNamedBean().getBean()).setKnownState(action.getActionData());
 				} 
 				catch (JmriException e) {
 					log.warn("Exception setting delayed sensor "+action.getDeviceName()+" in action");
@@ -1512,13 +1498,13 @@ public class DefaultConditional extends AbstractNamedBean
 			// set turnout state
             ConditionalAction action = _actionList.get(mIndex);
             String devName = getDeviceName(action);
-			Turnout t = InstanceManager.turnoutManagerInstance().getTurnout(devName);
-			if (t==null) {
+			//Turnout t = InstanceManager.turnoutManagerInstance().getTurnout(devName);
+			if (action.getNamedBean()==null) {
 				log.error(getDisplayName()+" Invalid delayed turnout name - "+action.getDeviceName());
 			}
 			else {
 				// set the turnout
-				t.setCommandedState(action.getActionData());
+				((Turnout)action.getNamedBean().getBean()).setCommandedState(action.getActionData());
 			}
 			// Turn Timer OFF
 			action.stopTimer();

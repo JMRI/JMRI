@@ -369,11 +369,11 @@ public class DefaultLogix extends AbstractNamedBean
                                 break;
                             case LISTENER_TYPE_CONDITIONAL:
                                 listener = new JmriTwoStatePropertyListener("KnownState", LISTENER_TYPE_CONDITIONAL, 
-                                                                    varName, varType, conditional);
+                                                                    namedBean, varType, conditional);
                                 break;
                             case LISTENER_TYPE_LIGHT:
                                 listener = new JmriTwoStatePropertyListener("KnownState", LISTENER_TYPE_LIGHT,
-                                                                    varName, varType, conditional);
+                                                                    namedBean, varType, conditional);
                                 break;
                             case LISTENER_TYPE_MEMORY:
                                 listener = new JmriTwoStatePropertyListener("value", LISTENER_TYPE_MEMORY, 
@@ -381,7 +381,7 @@ public class DefaultLogix extends AbstractNamedBean
                                 break;
                             case LISTENER_TYPE_WARRANT:
                                 listener = new JmriSimplePropertyListener(null, LISTENER_TYPE_WARRANT, 
-                                                                          varName, varType, conditional);
+                                                                          namedBean, varType, conditional);
                                 break;
                             case LISTENER_TYPE_FASTCLOCK:
                                 listener = new JmriClockPropertyListener("minutes", LISTENER_TYPE_FASTCLOCK, 
@@ -392,23 +392,23 @@ public class DefaultLogix extends AbstractNamedBean
                                 if (signalAspect <0) {
                                     if (varType == Conditional.TYPE_SIGNAL_HEAD_LIT) {
                                         listener = new JmriTwoStatePropertyListener("Lit", LISTENER_TYPE_SIGNALHEAD,
-                                                                            varName, varType, conditional);
+                                                                            namedBean, varType, conditional);
                                     } else { // varType == Conditional.TYPE_SIGNAL_HEAD_HELD
                                         listener = new JmriTwoStatePropertyListener("Held", LISTENER_TYPE_SIGNALHEAD,
-                                                                            varName, varType, conditional);
+                                                                            namedBean, varType, conditional);
                                     }
                                 } else {
                                     listener = new JmriMultiStatePropertyListener("Appearance", LISTENER_TYPE_SIGNALHEAD,
-                                                                        varName, varType, conditional, signalAspect);
+                                                                        namedBean, varType, conditional, signalAspect);
                                 }
                                 break;
                             case LISTENER_TYPE_SIGNALMAST:
                                 listener = new JmriTwoStatePropertyListener("Aspect", LISTENER_TYPE_SIGNALMAST,
-                                                                    varName, varType, conditional);
+                                                                    namedBean, varType, conditional);
                                 break;
                             case LISTENER_TYPE_OBLOCK:
                                 listener = new JmriTwoStatePropertyListener("state", LISTENER_TYPE_OBLOCK,
-                                                                    varName, varType, conditional);
+                                                                    namedBean, varType, conditional);
                                 break;
                             case LISTENER_TYPE_ENTRYEXIT:
                                 listener = new JmriTwoStatePropertyListener("active", LISTENER_TYPE_ENTRYEXIT, 
@@ -695,106 +695,36 @@ public class DefaultLogix extends AbstractNamedBean
 	 */
     private void startListener(JmriSimplePropertyListener listener) {
         String msg = "(unknown type number "+listener.getType()+")";
-        /* If all are converted to NamedBeanHandles, do we have to go through this switch, 
-        the only reason for doing so would be the error message */
         NamedBean nb;
         NamedBeanHandle<?> namedBeanHandle;
-		switch (listener.getType()) {
-			case LISTENER_TYPE_SENSOR:
-				namedBeanHandle = listener.getNamedBean();
-				if (namedBeanHandle==null) {
-					msg = "sensor";
-					break;
-  				}
-                nb = (NamedBean) namedBeanHandle.getBean();
-				nb.addPropertyChangeListener (listener, namedBeanHandle.getName(), "Logix " + getDisplayName());
-				return;
-			case LISTENER_TYPE_TURNOUT:
-                namedBeanHandle = listener.getNamedBean();
-				if (namedBeanHandle==null) {
-					msg = "turnout";
-					break;
-				}
-                nb = (NamedBean) namedBeanHandle.getBean();
-				nb.addPropertyChangeListener (listener, namedBeanHandle.getName(), "Logix " + getDisplayName());
-				return;
-			case LISTENER_TYPE_LIGHT:
-				Light lgt = InstanceManager.lightManagerInstance().
-										getLight(listener.getDevName());
-				if (lgt==null) {
-					msg = "light";
-					break;
-				}
-				lgt.addPropertyChangeListener (listener);
-				return;
-			case LISTENER_TYPE_CONDITIONAL:
-				Conditional c = InstanceManager.conditionalManagerInstance().
-										getConditional(listener.getDevName());
-				if (c==null) {
-					msg = "conditional";
-					break;
-				}
-				c.addPropertyChangeListener (listener);
-				return;
-			case LISTENER_TYPE_SIGNALHEAD:
-				SignalHead h = InstanceManager.signalHeadManagerInstance().
-										getSignalHead(listener.getDevName());
-				if (h==null) {
-					msg = "signal head";
-					break;
-				}
-				h.addPropertyChangeListener (listener);
-				return;
-			case LISTENER_TYPE_SIGNALMAST:
-				SignalMast f = InstanceManager.signalMastManagerInstance().
-										provideSignalMast(listener.getDevName());
-				if (f==null) {
-					msg = "signal mast";
-					break;
-				}
-				f.addPropertyChangeListener (listener);
-				return;
-			case LISTENER_TYPE_MEMORY:
-                namedBeanHandle = listener.getNamedBean();
-				if (namedBeanHandle==null) {
-					msg = "memory";
-					break;
-				}
-                nb = (NamedBean) namedBeanHandle.getBean();
-				nb.addPropertyChangeListener (listener, namedBeanHandle.getName(), "Logix " + getDisplayName());
-				return;
-                
-            case LISTENER_TYPE_WARRANT:
-				Warrant w = InstanceManager.getDefault(WarrantManager.class).
-										getWarrant(listener.getDevName());
-				if (w==null) {
-					msg= "warrant";
-					break;
-				}
-				w.addPropertyChangeListener (listener);
-                return;
+        
+        switch (listener.getType()) {
             case LISTENER_TYPE_FASTCLOCK:
-                Timebase tb = InstanceManager.timebaseInstance();
-				tb.addMinuteChangeListener (listener);
+                    Timebase tb = InstanceManager.timebaseInstance();
+                    tb.addMinuteChangeListener (listener);
+                    return;
+            default:
+                namedBeanHandle = listener.getNamedBean();
+				if (namedBeanHandle==null) {
+                    switch (listener.getType()) {
+                        case LISTENER_TYPE_SENSOR: msg = "sensor"; break;
+                        case LISTENER_TYPE_TURNOUT: msg = "turnout"; break;
+                        case LISTENER_TYPE_LIGHT: msg = "light"; break;
+                        case LISTENER_TYPE_CONDITIONAL: msg = "conditional"; break;
+                        case LISTENER_TYPE_SIGNALHEAD: msg = "signalhead"; break;
+                        case LISTENER_TYPE_SIGNALMAST: msg = "signalmast"; break;
+                        case LISTENER_TYPE_MEMORY: msg = "memory"; break;
+                        case LISTENER_TYPE_WARRANT: msg = "warrant"; break;
+                        case LISTENER_TYPE_OBLOCK: msg = "oblock"; break;
+                        case LISTENER_TYPE_ENTRYEXIT: msg = "entry exit"; break;
+                        default : msg = "unknown";
+                    }
+                    break;
+                }
+                nb = (NamedBean) namedBeanHandle.getBean();
+				nb.addPropertyChangeListener (listener, namedBeanHandle.getName(), "Logix " + getDisplayName());
 				return;
-            case LISTENER_TYPE_OBLOCK:
-				OBlock b = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).
-										getOBlock(listener.getDevName());
-				if (b==null) {
-					msg= "oblock";
-					break;
-				}
-				b.addPropertyChangeListener (listener);
-                return;
-            case LISTENER_TYPE_ENTRYEXIT:
-				NamedBean ex = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class).getBySystemName(listener.getDevName());
-				if (ex==null) {
-					msg= "entryexit";
-					break;
-				}
-				ex.addPropertyChangeListener (listener);
-                return;
-		}
+        }
         log.error("Bad name for " +msg+" \""+listener.getDevName()+
                         "\" when setting up Logix listener");
 	}
@@ -802,103 +732,15 @@ public class DefaultLogix extends AbstractNamedBean
 	/**
 	 * Removes a listener of the required type
 	 */
-	private void removeListener(JmriSimplePropertyListener listener) {
+    private void removeListener(JmriSimplePropertyListener listener) {
         String msg = null;
+        NamedBean nb;
+        NamedBeanHandle<?> namedBeanHandle;
         try {
             switch (listener.getType()) {
-                case LISTENER_TYPE_SENSOR:
-                    Sensor s = InstanceManager.sensorManagerInstance().
-                                            provideSensor(listener.getDevName());
-                    if (s==null) {
-                        msg = "sensor";
-                        break;
-                    }
-                    // remove listener for this Sensor
-                    s.removePropertyChangeListener(listener);
-                    return;
-                case LISTENER_TYPE_TURNOUT:
-                    Turnout t = InstanceManager.turnoutManagerInstance().
-                                            provideTurnout(listener.getDevName());
-                    if (t==null) {
-                        msg = "turnout";
-                        break;
-                    }
-                    // remove listener for this Turnout
-                    t.removePropertyChangeListener(listener);
-                    return;
-                case LISTENER_TYPE_LIGHT:
-                    Light lgt = InstanceManager.lightManagerInstance().
-                                            getLight(listener.getDevName());
-                    if (lgt==null) {
-                        msg = "light";
-                        break;
-                    }
-                    // remove listener for this Light
-                    lgt.removePropertyChangeListener(listener);
-                    return;
-                case LISTENER_TYPE_CONDITIONAL:
-                    Conditional c = InstanceManager.conditionalManagerInstance().
-                                            getConditional(listener.getDevName());
-                    if (c==null) {
-                        msg = "conditional";
-                        break;
-                    }
-                    // remove listener for this Conditional
-                    c.removePropertyChangeListener(listener);
-                    return;
-                case LISTENER_TYPE_SIGNALHEAD:
-                    SignalHead h = InstanceManager.signalHeadManagerInstance().
-                                            getSignalHead(listener.getDevName());
-                    if (h==null) {
-                        msg = "signal head";
-                        break;
-                    }
-                    // remove listener for this Signal Head
-                    h.removePropertyChangeListener(listener);
-                    return;
-                case LISTENER_TYPE_SIGNALMAST:
-                    SignalMast f = InstanceManager.signalMastManagerInstance().
-                                            provideSignalMast(listener.getDevName());
-                    if (f==null) {
-                        msg = "signal mast";
-                        break;
-                    }
-                    // remove listener for this Signal Head
-                    f.removePropertyChangeListener(listener);
-                    return;
-                case LISTENER_TYPE_MEMORY:
-                    Memory m = InstanceManager.memoryManagerInstance().
-                                            provideMemory(listener.getDevName());
-                    if (m==null) {
-                        msg= "memory";
-                        break;
-                    }
-                    // remove listener for this Memory
-                    m.removePropertyChangeListener(listener);
-                    return;
-                case LISTENER_TYPE_WARRANT:
-                    Warrant w = InstanceManager.getDefault(WarrantManager.class).
-                                            getWarrant(listener.getDevName());
-                    if (w==null) {
-                        msg= "warrant";
-                        break;
-                    }
-                    // remove listener for this Memory
-                    w.removePropertyChangeListener(listener);
-                    return;
                 case LISTENER_TYPE_FASTCLOCK:
                     Timebase tb = InstanceManager.timebaseInstance();
                     tb.removeMinuteChangeListener (listener);
-                    return;
-                case LISTENER_TYPE_OBLOCK:
-                    OBlock b = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).
-                                            getOBlock(listener.getDevName());
-                    if (b==null) {
-                        msg= "oblock";
-                        break;
-                    }
-                    // remove listener for this Memory
-                    b.removePropertyChangeListener(listener);
                     return;
                 case LISTENER_TYPE_ENTRYEXIT:
                     NamedBean ex = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class).getBySystemName(listener.getDevName());
@@ -906,7 +748,28 @@ public class DefaultLogix extends AbstractNamedBean
                         msg= "entryexit";
                         break;
                     }
-                    ex.removePropertyChangeListener (listener);
+                    ex.addPropertyChangeListener (listener);
+                    return;
+                default:
+                    namedBeanHandle = listener.getNamedBean();
+                    if (namedBeanHandle==null) {
+                        switch (listener.getType()) {
+                            case LISTENER_TYPE_SENSOR: msg = "sensor"; break;
+                            case LISTENER_TYPE_TURNOUT: msg = "turnout"; break;
+                            case LISTENER_TYPE_LIGHT: msg = "light"; break;
+                            case LISTENER_TYPE_CONDITIONAL: msg = "conditional"; break;
+                            case LISTENER_TYPE_SIGNALHEAD: msg = "signalhead"; break;
+                            case LISTENER_TYPE_SIGNALMAST: msg = "signalmast"; break;
+                            case LISTENER_TYPE_MEMORY: msg = "memory"; break;
+                            case LISTENER_TYPE_WARRANT: msg = "warrant"; break;
+                            case LISTENER_TYPE_OBLOCK: msg = "oblock"; break;
+                            case LISTENER_TYPE_ENTRYEXIT: msg = "entry exit"; break;
+                            default : msg = "unknown";
+                        }
+                        break;
+                    }
+                    nb = (NamedBean) namedBeanHandle.getBean();
+                    nb.removePropertyChangeListener(listener);
                     return;
             }
         } catch (Throwable t) {
