@@ -1013,6 +1013,7 @@
       <variable item="Output 2 behavior" CV="126" mask="XXXXXXVV">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
         <label>Output 2 behavior</label>
+        <label xml:lang="it">Comportamento Uscita 2</label>
       </variable>
       <variable item="Output 3 effect generated" CV="127" mask="VVVVVVXX">
         <enumVal>

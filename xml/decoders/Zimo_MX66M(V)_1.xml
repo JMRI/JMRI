@@ -1185,7 +1185,7 @@
       <variable CV="125" mask="XXXXXXVV" item="Output 3 behavior">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
         <label>behavior</label>
-        <label xml:lang="it">Comportamento</label>
+        <label xml:lang="it">Comportamento Uscita 3</label>
       </variable>
       <variable item="Light Effects Output 4" CV="126" mask="VVVVVVXX">
         <enumVal>
@@ -1198,7 +1198,7 @@
       <variable CV="126" mask="XXXXXXVV" item="Output 4 behavior">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
         <label>behavior</label>
-        <label xml:lang="it">Comportamento</label>
+        <label xml:lang="it">Comportamento Uscita 4</label>
       </variable>
       <variable item="Light Effects Output 5" CV="127" mask="VVVVVVXX">
         <enumVal>
@@ -1211,7 +1211,7 @@
       <variable CV="127" mask="XXXXXXVV" item="Output 5 behavior">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
         <label>behavior</label>
-        <label xml:lang="it">Comportamento</label>
+        <label xml:lang="it">Comportamento Uscita 5</label>
       </variable>
       <variable item="Light Effects Output 6" CV="128" mask="VVVVVVXX">
         <enumVal>
@@ -1224,7 +1224,7 @@
       <variable CV="128" mask="XXXXXXVV" item="Output 6 behavior">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
         <label>behavior</label>
-        <label xml:lang="it">Comportamento</label>
+        <label xml:lang="it">Comportamento Uscita 6</label>
       </variable>
     </variables>
   </decoder>
