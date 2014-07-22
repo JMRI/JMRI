@@ -110,154 +110,171 @@ public class PaneProgDp3Action 	extends jmri.util.swing.JmriAbstractAction imple
             // new Loco on programming track
             combinedLocoSelTree = new CombinedLocoSelTreePane(statusLabel){
                 @Override
-                    protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
-                                                    String filename) {
-                        String title = java.text.MessageFormat.format(SymbolicProgBundle.getMessage("FrameServiceProgrammerTitle"), // NOI18N
-                                                            new Object[]{Bundle.getMessage("NewDecoder")}); // NOI18N
-                        if (re!=null) title = java.text.MessageFormat.format(SymbolicProgBundle.getMessage("FrameServiceProgrammerTitle"), // NOI18N
-                                                            new Object[]{re.getId()});
-                        JFrame p = new PaneServiceProgFrame(decoderFile, re,
-                                                     title, "programmers"+File.separator+"Comprehensive.xml", // NOI18N
-                                                     modePane.getProgrammer());
-                        if(editModeProg.isSelected()){
-                            p = new PaneProgFrame(decoderFile, re,
-                                             title, "programmers"+File.separator+"Comprehensive.xml", // NOI18N
-                                             null, false){
-                                protected JPanel getModePane() { return null; }
-                            };
-                        }
-                        p.pack();
-                        p.setVisible(true);
+                protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
+                                                String filename) {
+                    log.debug("startProgrammer");
+                    String title = java.text.MessageFormat.format(SymbolicProgBundle.getMessage("FrameServiceProgrammerTitle"), // NOI18N
+                                                        new Object[]{Bundle.getMessage("NewDecoder")}); // NOI18N
+                    if (re!=null) title = java.text.MessageFormat.format(SymbolicProgBundle.getMessage("FrameServiceProgrammerTitle"), // NOI18N
+                                                        new Object[]{re.getId()});
+                    JFrame p = new PaneServiceProgFrame(decoderFile, re,
+                                                 title, "programmers"+File.separator+"Comprehensive.xml", // NOI18N
+                                                 modePane.getProgrammer());
+                    if(editModeProg.isSelected()){
+                        p = new PaneProgFrame(decoderFile, re,
+                                         title, "programmers"+File.separator+"Comprehensive.xml", // NOI18N
+                                         null, false){
+                            protected JPanel getModePane() { return null; }
+                        };
                     }
-                    
-                    protected void openNewLoco() {
+                    p.pack();
+                    p.setVisible(true);
+                }
+                
+                protected void openNewLoco() {
+                    log.debug("openNewLoco");
                     // find the decoderFile object
-                        DecoderFile decoderFile = DecoderIndexFile.instance().fileFromTitle(selectedDecoderType());
-                        if (log.isDebugEnabled()) log.debug("decoder file: "+decoderFile.getFilename()); // NOI18N
-                        if(rosterIdField.getText().equals(SymbolicProgBundle.getMessage("LabelNewDecoder"))){ // NOI18N
-                            re = new RosterEntry();
-                            re.setDecoderFamily(decoderFile.getFamily());
-                            re.setDecoderModel(decoderFile.getModel());
-                            re.setId(SymbolicProgBundle.getMessage("LabelNewDecoder")); // NOI18N
-                            //re.writeFile(cvModel, iCvModel, variableModel );
-                            // note that we're leaving the filename null
-                            // add the new roster entry to the in-memory roster
-                            Roster.instance().addEntry(re);
-                        } else {
-                            try{
-                                saveRosterEntry();
-                            } catch (jmri.JmriException ex){
-                                log.warn("Exception while saving roster entry", ex); // NOI18N
-                                return;
-                            }
+                    DecoderFile decoderFile = DecoderIndexFile.instance().fileFromTitle(selectedDecoderType());
+                    if (log.isDebugEnabled()) log.debug("decoder file: "+decoderFile.getFilename()); // NOI18N
+                    if(rosterIdField.getText().equals(SymbolicProgBundle.getMessage("LabelNewDecoder"))){ // NOI18N
+                        re = new RosterEntry();
+                        re.setDecoderFamily(decoderFile.getFamily());
+                        re.setDecoderModel(decoderFile.getModel());
+                        re.setId(SymbolicProgBundle.getMessage("LabelNewDecoder")); // NOI18N
+                        //re.writeFile(cvModel, iCvModel, variableModel );
+                        // note that we're leaving the filename null
+                        // add the new roster entry to the in-memory roster
+                        Roster.instance().addEntry(re);
+                    } else {
+                        try{
+                            saveRosterEntry();
+                        } catch (jmri.JmriException ex){
+                            log.warn("Exception while saving roster entry", ex); // NOI18N
+                            return;
                         }
-                        // create a dummy RosterEntry with the decoder info
-                        startProgrammer(decoderFile, re, null);
-                        //Set our roster entry back to null so that a fresh roster entry can be created if needed
-                        re=null;
                     }
+                    // create a dummy RosterEntry with the decoder info
+                    startProgrammer(decoderFile, re, null);
+                    //Set our roster entry back to null so that a fresh roster entry can be created if needed
+                    re=null;
+                }
 
                 @Override
-                    protected JPanel layoutRosterSelection() { return null; }
-                    
+                protected JPanel layoutRosterSelection() { 
+                    log.debug("layoutRosterSelection");
+                    return null; 
+                }
+                
                 @Override
-                    protected JPanel layoutDecoderSelection() {
-                        JPanel pan = super.layoutDecoderSelection();
-                        dTree.removeTreeSelectionListener(dListener);
-                        dTree.addTreeSelectionListener(dListener = new TreeSelectionListener() {
-                            public void valueChanged(TreeSelectionEvent e) {
-                                if (!dTree.isSelectionEmpty() && dTree.getSelectionPath()!=null &&
-                                  // check that this isn't just a model
-                                 ((TreeNode)dTree.getSelectionPath().getLastPathComponent()).isLeaf()  &&
-                                  // can't be just a mfg, has to be at least a family
-                                  dTree.getSelectionPath().getPathCount()>2 &&
-                                  // can't be a multiple decoder selection
-                                  dTree.getSelectionCount()<2) {
-                                    log.debug("Selection event with "+dTree.getSelectionPath().toString());
-                                    //if (locoBox != null) locoBox.setSelectedIndex(0);
-                                    go2.setEnabled(true);
-                                    go2.setRequestFocusEnabled(true);
-                                    go2.requestFocus();
-                                    go2.setToolTipText(SymbolicProgBundle.getMessage("TipClickToOpen")); // NOI18N
-                                    decoderFile = DecoderIndexFile.instance().fileFromTitle(selectedDecoderType());
-                                    setUpRosterPanel();
-                                } else {
-                                    decoderFile = null;
-                                    // decoder not selected - require one
-                                    go2.setEnabled(false);
-                                    go2.setToolTipText(SymbolicProgBundle.getMessage("TipSelectLoco")); // NOI18N
-                                    setUpRosterPanel();
-                                }
+                protected JPanel layoutDecoderSelection() {
+                    log.debug("layoutDecoderSelection");
+                    JPanel pan = super.layoutDecoderSelection();
+                    dTree.removeTreeSelectionListener(dListener);
+                    dTree.addTreeSelectionListener(dListener = new TreeSelectionListener() {
+                        public void valueChanged(TreeSelectionEvent e) {
+                            if (!dTree.isSelectionEmpty() && dTree.getSelectionPath()!=null &&
+                              // check that this isn't just a model
+                             ((TreeNode)dTree.getSelectionPath().getLastPathComponent()).isLeaf()  &&
+                              // can't be just a mfg, has to be at least a family
+                              dTree.getSelectionPath().getPathCount()>2 &&
+                              // can't be a multiple decoder selection
+                              dTree.getSelectionCount()<2) {
+                                log.debug("Selection event with "+dTree.getSelectionPath().toString());
+                                //if (locoBox != null) locoBox.setSelectedIndex(0);
+                                go2.setEnabled(true);
+                                go2.setRequestFocusEnabled(true);
+                                go2.requestFocus();
+                                go2.setToolTipText(SymbolicProgBundle.getMessage("TipClickToOpen")); // NOI18N
+                                decoderFile = DecoderIndexFile.instance().fileFromTitle(selectedDecoderType());
+                                setUpRosterPanel();
+                            } else {
+                                decoderFile = null;
+                                // decoder not selected - require one
+                                go2.setEnabled(false);
+                                go2.setToolTipText(SymbolicProgBundle.getMessage("TipSelectLoco")); // NOI18N
+                                setUpRosterPanel();
                             }
-                        });
-                        return pan;
-                    }
-                    
-                    protected void selectDecoder(int mfgID, int modelID, int productID) {
-                        //On selecting a new decoder start a fresh with a new roster entry
-                        super.selectDecoder(mfgID, modelID, productID);
-                        findDecoderAddress();
-                    }
-                    
-                    JRadioButton serviceModeProg;
-                    JRadioButton editModeProg;
-                    
-                @Override
-                    protected JPanel createProgrammerSelection(){
-                        //p=jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-                        serviceModeProg = new JRadioButton(Bundle.getMessage("ServiceMode")); // NOI18N
-                        editModeProg = new JRadioButton(Bundle.getMessage("EditOnly")); // NOI18N
-                        JPanel pane3a = new JPanel();
-                        pane3a.setLayout(new BoxLayout(pane3a, BoxLayout.Y_AXIS));
-                        // create the programmer box
-                        
-                        ButtonGroup modeGroup = new ButtonGroup();
-                        modeGroup.add(serviceModeProg);
-                        modeGroup.add(editModeProg);
-                        
-                        JPanel progModePane = new JPanel();
-                        progModePane.add(serviceModeProg);
-                        progModePane.add(editModeProg);
-                        serviceModeProg.setSelected(true);
-                        
-                        if (jmri.InstanceManager.programmerManagerInstance()==null ||
-                            !jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
-                            editModeProg.setSelected(true);
-                            serviceModeProg.setEnabled(false);
-                            iddecoder.setVisible(false);
-                            modePane.setVisible(false);
                         }
-                        
-                        serviceModeProg.addActionListener(new ActionListener() {
-                            public void actionPerformed(java.awt.event.ActionEvent e) {
-                                if(serviceModeProg.isSelected())
-                                    iddecoder.setVisible(true);
-                            }
-                        });
-                        
-                        editModeProg.addActionListener(new ActionListener() {
-                            public void actionPerformed(java.awt.event.ActionEvent e) {
-                                if(editModeProg.isSelected())
-                                    iddecoder.setVisible(false);
-                            }
-                        });
-                        
-                        go2 = new JButton(Bundle.getMessage("OpenProgrammer")); // NOI18N
-                        go2.addActionListener( new ActionListener() {
-                                public void actionPerformed(java.awt.event.ActionEvent e) {
-                                    if (log.isDebugEnabled()) log.debug("Open programmer pressed"); // NOI18N
-                                    openButton();
-                                    //p.addComboBoxLastSelection(lastSelectedProgrammer, (String) programmerBox.getSelectedItem());
-                                }
-                            });
-                        go2.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
-                        go2.setEnabled(false);
-                        go2.setToolTipText(SymbolicProgBundle.getMessage("SELECT A LOCOMOTIVE OR DECODER TO ENABLE")); // NOI18N
-                        bottomPanel.add(go2, BorderLayout.EAST);
-                        //pane3a.add(go2);
-                        return pane3a;
+                    });
+                    return pan;
+                }
+                
+                protected void selectDecoder(int mfgID, int modelID, int productID) {
+                    log.debug("selectDecoder");
+                    //On selecting a new decoder start a fresh with a new roster entry
+                    super.selectDecoder(mfgID, modelID, productID);
+                    findDecoderAddress();
+                }
+                
+                JRadioButton serviceModeProg;
+                JRadioButton editModeProg;
+                
+                @Override
+                protected JPanel createProgrammerSelection(){
+                    log.debug("createProgrammerSelection");
+                    //p=jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+                    serviceModeProg = new JRadioButton(Bundle.getMessage("ServiceMode")); // NOI18N
+                    editModeProg = new JRadioButton(Bundle.getMessage("EditOnly")); // NOI18N
+                    JPanel pane3a = new JPanel();
+                    pane3a.setLayout(new BoxLayout(pane3a, BoxLayout.Y_AXIS));
+                    // create the programmer box
+                    
+                    ButtonGroup modeGroup = new ButtonGroup();
+                    modeGroup.add(serviceModeProg);
+                    modeGroup.add(editModeProg);
+                    
+                    JPanel progModePane = new JPanel();
+                    progModePane.add(serviceModeProg);
+                    progModePane.add(editModeProg);
+                    serviceModeProg.setSelected(true);
+                    
+                    if (jmri.InstanceManager.programmerManagerInstance()==null ||
+                        !jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
+                        editModeProg.setSelected(true);
+                        serviceModeProg.setEnabled(false);
+                        iddecoder.setVisible(false);
+                        modePane.setVisible(false);
                     }
-                };
+                    
+                    serviceModeProg.addActionListener(new ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent e) {
+                            if(serviceModeProg.isSelected())
+                                iddecoder.setVisible(true);
+                        }
+                    });
+                    
+                    editModeProg.addActionListener(new ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent e) {
+                            if(editModeProg.isSelected())
+                                iddecoder.setVisible(false);
+                        }
+                    });
+                    
+                    go2 = new JButton(Bundle.getMessage("OpenProgrammer")); // NOI18N
+                    go2.addActionListener( new ActionListener() {
+                            public void actionPerformed(java.awt.event.ActionEvent e) {
+                                log.debug("Open programmer pressed"); // NOI18N
+                                openButton();
+                                // close this window to prevent having
+                                // two windows processing at the same time
+                                //
+                                // Alternately, could have just cleared out a 
+                                // bunch of stuff to force starting over, but 
+                                // that seems to be an even more confusing
+                                // user experience.
+                                log.debug("Closing f {}", f);
+                                WindowEvent wev = new WindowEvent(f, WindowEvent.WINDOW_CLOSING);
+                                java.awt.Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(wev);              
+                            }
+                        });
+                    go2.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
+                    go2.setEnabled(false);
+                    go2.setToolTipText(SymbolicProgBundle.getMessage("SELECT A LOCOMOTIVE OR DECODER TO ENABLE")); // NOI18N
+                    bottomPanel.add(go2, BorderLayout.EAST);
+                    //pane3a.add(go2);
+                    return pane3a;
+                }
+            };
 
             // load primary frame
             JPanel topPanel = new JPanel();
@@ -394,6 +411,7 @@ public class PaneProgDp3Action 	extends jmri.util.swing.JmriAbstractAction imple
             saveBasicRoster.addActionListener( new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     try{
+                        log.debug("saveBasicRoster button pressed, calls saveRosterEntry");
                         saveRosterEntry();
                     } catch (jmri.JmriException ex){
                         return;
@@ -539,6 +557,7 @@ public class PaneProgDp3Action 	extends jmri.util.swing.JmriAbstractAction imple
     }
     
     void saveRosterEntry() throws jmri.JmriException { 
+        log.debug("saveRosterEntry");
         if(rosterIdField.getText().equals(SymbolicProgBundle.getMessage("LabelNewDecoder"))){ // NOI18N
             synchronized(this){
                 JOptionPane.showMessageDialog(progPane, SymbolicProgBundle.getMessage("PromptFillInID")); // NOI18N
@@ -553,6 +572,7 @@ public class PaneProgDp3Action 	extends jmri.util.swing.JmriAbstractAction imple
         }
         
         if(re==null){
+            log.debug("re null, creating RosterEntry");
             re = new RosterEntry();
             re.setDecoderFamily(decoderFile.getFamily());
             re.setDecoderModel(decoderFile.getModel());
@@ -567,6 +587,7 @@ public class PaneProgDp3Action 	extends jmri.util.swing.JmriAbstractAction imple
         String filename = re.getFileName();
 
         // create the RosterEntry to its file
+        log.debug("setting DCC address {} {}", address, shortAddr);
         synchronized(this){
             re.setDccAddress(""+address);  // NOI18N
             re.setLongAddress(!shortAddr);
@@ -613,7 +634,7 @@ public class PaneProgDp3Action 	extends jmri.util.swing.JmriAbstractAction imple
                                            rosterPanel, f);
     }
     
-    class ThisProgPane extends PaneProgPane{
+    class ThisProgPane extends PaneProgPane {
         
         public ThisProgPane(PaneContainer parent, String name, Element pane, CvTableModel cvModel, IndexedCvTableModel icvModel, VariableTableModel varModel, Element modelElem){
             super(parent, name, pane, cvModel, icvModel, varModel, modelElem, re);
