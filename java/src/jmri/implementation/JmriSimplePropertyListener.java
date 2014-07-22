@@ -64,7 +64,14 @@ public class JmriSimplePropertyListener implements PropertyChangeListener
     NamedBeanHandle<?> getNamedBean(){
         return _namedBean;
     }
-
+    
+    public NamedBean getBean(){
+        if(_namedBean!=null){
+            return (NamedBean)_namedBean.getBean();
+        }
+        return null;
+    }
+    
     public int getType() {
         return _type;
     }

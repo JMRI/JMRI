@@ -997,6 +997,42 @@ public class DefaultLogix extends AbstractNamedBean
         log.warn("Unexpected call to setState in DefaultLogix.");
         return;
     }
+    
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+        if("CanDelete".equals(evt.getPropertyName())){ //IN18N
+            NamedBean nb = (NamedBean)evt.getOldValue();
+            for (JmriSimplePropertyListener listener: _listeners) {
+                if(nb.equals(listener.getBean())){
+                    java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
+                    throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseLogixListener", nb.getBeanType(), getDisplayName()), e); //IN18N
+                }
+            }
+            
+            String cName = "";
+            Conditional c = null;
+            for (int i=0; i<_conditionalSystemNames.size(); i++) {
+                cName = _conditionalSystemNames.get(i);
+                c = InstanceManager.conditionalManagerInstance().getBySystemName(cName);
+                if (c!=null){
+                    for(jmri.ConditionalAction ca: c.getCopyOfActions()){
+                        if(nb.equals(ca.getBean())){
+                            java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
+                            throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseLogixAction", nb.getBeanType(), getDisplayName()), e); //IN18N
+                        }
+                    }
+                    for(ConditionalVariable v: c.getCopyOfStateVariables()){
+                        if(nb.equals(v.getBean()) || nb.equals(v.getNamedBeanData())){
+                            java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
+                            throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseLogixAction", nb.getBeanType(), getDisplayName()), e); //IN18N
+                        }
+                    }
+                }
+            }
+        } else if ("DoDelete".equals(evt.getPropertyName())){ //IN18N
+            //Do nothing at this stage
+
+        }
+    }
 	
     static final Logger log = LoggerFactory.getLogger(DefaultLogix.class.getName());
 }

@@ -29,6 +29,17 @@ public class DefaultLogixManager extends AbstractManager
 
     public DefaultLogixManager() {
         super();
+        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.signalHeadManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.signalMastManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.blockManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.lightManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.conditionalManagerInstance().addVetoableChangeListener(this);
+        InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class).addVetoableChangeListener(this);
+        InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).addVetoableChangeListener(this);
+        InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class).addVetoableChangeListener(this);
     }
     
     public int getXMLOrder(){

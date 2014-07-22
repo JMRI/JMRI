@@ -106,4 +106,6 @@ public interface ConditionalAction {
     public Sound getSound();
     
     public NamedBeanHandle<?> getNamedBean();
+    
+    public NamedBean getBean();
 }

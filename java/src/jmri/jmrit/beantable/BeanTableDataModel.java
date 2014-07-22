@@ -286,7 +286,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             } catch (java.beans.PropertyVetoException e) {
                 if(e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")){ //IN18N
                     log.warn(e.getMessage());
-                    message.append(t.getFullyFormattedDisplayName() + " Can not be deleted \n" + e.getMessage());
+                    message.append(Bundle.getMessage("VetoDeleteBean", t.getBeanType(), t.getFullyFormattedDisplayName(), e.getMessage()));
                     JOptionPane.showMessageDialog(null, message.toString(),
                         AbstractTableAction.rb.getString("WarningTitle"),
                         JOptionPane.ERROR_MESSAGE);

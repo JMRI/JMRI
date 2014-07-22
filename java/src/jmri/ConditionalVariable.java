@@ -290,6 +290,13 @@ public class ConditionalVariable {
     }
     
     private NamedBeanHandle<?> _namedBeanData = null;
+    
+    public NamedBean getNamedBeanData(){
+        if(_namedBeanData!=null){
+            return (NamedBean)_namedBeanData.getBean();
+        }
+        return null;
+    }
 
     public int getNum1() {
         return _num1;
