@@ -203,6 +203,11 @@ public class TransitManager extends AbstractManager
         }
         return (_instance);
     }
+    
+    	
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameTransit");
+    }
 	
     static Logger log = LoggerFactory.getLogger(TransitManager.class.getName());
 }

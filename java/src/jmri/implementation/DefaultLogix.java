@@ -25,6 +25,10 @@ public class DefaultLogix extends AbstractNamedBean
     public DefaultLogix(String systemName) {
         super(systemName);
     }
+    
+    public String getBeanType(){
+        return Bundle.getMessage("BeanNameLogix");
+    }
 
     /**
      *  Persistant instance variables (saved between runs)

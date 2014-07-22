@@ -135,6 +135,10 @@ public abstract class AbstractAudioManager extends AbstractManager
      * @throws AudioException if error occurs during creation
      */
     abstract protected Audio createNewAudio(String systemName, String userName) throws AudioException;
+    
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameAudio");
+    }
 
     private static final Logger log = LoggerFactory.getLogger(AbstractAudioManager.class.getName());
 }

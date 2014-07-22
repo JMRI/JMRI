@@ -181,6 +181,10 @@ public class DefaultLogixManager extends AbstractManager
         }
         return (_instance);
     }
+    
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameLogix");
+    }
 
     static Logger log = LoggerFactory.getLogger(DefaultLogixManager.class.getName());
 }

@@ -2336,6 +2336,10 @@ public class Section extends AbstractNamedBean
     public int getSectionType(){
         return sectionType;
     }
+    
+    public String getBeanType(){
+        return Bundle.getMessage("BeanNameSection");
+    }
 		
 		
     static final Logger log = LoggerFactory.getLogger(Section.class.getName());

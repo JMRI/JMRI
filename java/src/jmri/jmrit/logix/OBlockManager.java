@@ -113,6 +113,10 @@ public class OBlockManager extends AbstractManager
         }
         return (_instance);
     }
+    
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameOBlock");
+    }
 
     static Logger log = LoggerFactory.getLogger(OBlockManager.class.getName());
 }

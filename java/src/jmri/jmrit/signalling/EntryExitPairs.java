@@ -878,6 +878,10 @@ public class EntryExitPairs implements jmri.Manager{
     
     }
     
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameTransit");
+    }
+    
     // initialize logging
     static Logger log = LoggerFactory.getLogger(EntryExitPairs.class.getName());
 }

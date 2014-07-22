@@ -63,6 +63,11 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag {
     public String toString() {
         return (mUserName==null || mUserName.length()==0)?getTagID():mUserName;
     }
+    
+    public String getBeanType(){
+        return Bundle.getMessage("BeanNameReporter");
+    }
+
 
 //    private static final Logger log = LoggerFactory.getLogger(AbstractIdTag.class.getName());
 

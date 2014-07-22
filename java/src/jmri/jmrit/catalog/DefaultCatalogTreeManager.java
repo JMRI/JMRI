@@ -163,6 +163,10 @@ public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
      return _instance;
     }
     private static DefaultCatalogTreeManager _instance;
+    
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameCatalog");
+    }
 
     static Logger log = LoggerFactory.getLogger(DefaultCatalogTreeManager.class.getName());
 }

@@ -515,5 +515,10 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         }
     }
     
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameSignalMastLogic");
+    }
+
+    
     static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManager.class.getName());
 }

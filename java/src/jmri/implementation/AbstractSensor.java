@@ -23,6 +23,10 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     public AbstractSensor(String systemName, String userName) {
         super(systemName.toUpperCase(), userName);
     }
+    
+    public String getBeanType(){
+        return Bundle.getMessage("BeanNameSensor");
+    }
 
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call

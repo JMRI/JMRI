@@ -59,6 +59,10 @@ public abstract class AbstractLight extends AbstractNamedBean
         super(systemName.toUpperCase());
     }
     
+    public String getBeanType(){
+        return Bundle.getMessage("BeanNameLight");
+    }
+    
     /**
      *  System independent instance variables (saved between runs)
      */

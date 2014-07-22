@@ -70,9 +70,12 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
                 factorMemory.setValue(userGetRate());
             }
         }
-
     }
-
+    
+    public String getBeanType(){
+        return Bundle.getMessage("BeanNameTime");
+    }
+    
     // methods for getting and setting the current Fast Clock time
     public Date getTime() {
         // is clock stopped?

@@ -42,6 +42,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 	protected AbstractTurnout(String systemName, String userName) {
 		super(systemName.toUpperCase(), userName);
 	}
+    
+    public String getBeanType(){
+        return Bundle.getMessage("BeanNameTurnout");
+    }
 
 	/**
 	 * Handle a request to change state, typically by sending a message to the

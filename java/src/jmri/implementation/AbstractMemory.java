@@ -26,6 +26,10 @@ public abstract class AbstractMemory extends AbstractNamedBean implements Memory
     public AbstractMemory(String systemName, String userName) {
         super(systemName.toUpperCase(), userName);
     }
+    
+    public String getBeanType(){
+        return Bundle.getMessage("BeanNameMemory");
+    }
 
     public Object getValue() {return _current;}
     

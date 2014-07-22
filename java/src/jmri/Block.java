@@ -741,6 +741,10 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
             }
         }
     }
+    
+    public String getBeanType(){
+        return Bundle.getMessage("BeanNameBlock");
+    }
 
     static Logger log = LoggerFactory.getLogger(Block.class.getName());
 }

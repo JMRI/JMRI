@@ -198,6 +198,10 @@ public class ProxyLightManager extends AbstractProxyManager
             return ( (LightManager)getMgr(i)).allowMultipleAdditions(systemName);
         return false;
     }
+    
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameLight");
+    }
 
     // initialize logging
     static Logger log = LoggerFactory.getLogger(ProxyLightManager.class.getName());

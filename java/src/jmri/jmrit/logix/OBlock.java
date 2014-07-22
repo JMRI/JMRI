@@ -827,5 +827,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     	return getDisplayName();
     }
     
+    public String getBeanType(){
+        return Bundle.getMessage("BeanNameOBlock");
+    }
+    
     static Logger log = LoggerFactory.getLogger(OBlock.class.getName());
 }

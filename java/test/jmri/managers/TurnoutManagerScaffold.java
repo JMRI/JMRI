@@ -99,6 +99,8 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     public NamedBean getNamedBean(String name) { return null; }
     
     public String createSystemName(String curAddress, String prefix) throws JmriException {return " "; }
+    
+    public String getBeanTypeHandled(){ return "Turnout"; }
 
 }
 

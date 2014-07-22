@@ -2859,5 +2859,9 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
         }
     }
     
+    public String getBeanType(){
+        return Bundle.getMessage("BeanNameSignalMastLogic");
+    }
+    
     static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogic.class.getName());
 }

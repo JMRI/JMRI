@@ -33,6 +33,7 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 	    NamedBean from = new AbstractNamedBean("sys", "usr"){
 	        public int getState() {return 0;}
 	        public void setState(int i) {}
+            public String getBeanType(){ return ""; }
 	    };
 
 	    from.setProperty("foo", "bar");
@@ -47,6 +48,7 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 	    NamedBean to = new AbstractNamedBean("sys", "usr"){
 	        public int getState() {return 0;}
 	        public void setState(int i) {}
+            public String getBeanType(){ return ""; }
 	    };
           
         x.loadProperties(to, p);
@@ -69,6 +71,7 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 	    NamedBean from = new AbstractNamedBean("sys", "usr"){
 	        public int getState() {return 0;}
 	        public void setState(int i) {}
+            public String getBeanType(){ return ""; }
 	    };
 	    
 	    // create element for properties
@@ -80,6 +83,7 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 	    NamedBean to = new AbstractNamedBean("sys", "usr"){
 	        public int getState() {return 0;}
 	        public void setState(int i) {}
+            public String getBeanType(){ return ""; }
 	    };
           
         x.loadProperties(to, p);
@@ -103,6 +107,7 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 	    NamedBean from = new AbstractNamedBean("sys", "usr"){
 	        public int getState() {return 0;}
 	        public void setState(int i) {}
+            public String getBeanType(){ return ""; }
 	    };
 
 	    from.setProperty("foo", null);
@@ -117,6 +122,7 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 	    NamedBean to = new AbstractNamedBean("sys", "usr"){
 	        public int getState() {return 0;}
 	        public void setState(int i) {}
+            public String getBeanType(){ return ""; }
 	    };
           
         x.loadProperties(to, p);

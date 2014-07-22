@@ -244,6 +244,9 @@ public class SectionManager extends AbstractManager
         return (_instance);
     }
 	
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameSection");
+    }
 
     static Logger log = LoggerFactory.getLogger(SectionManager.class.getName());
 }

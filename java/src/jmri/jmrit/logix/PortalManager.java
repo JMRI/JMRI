@@ -137,6 +137,10 @@ public class PortalManager extends AbstractManager
         }
         return (_instance);
     }
+    
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNamePortal");
+    }
 
     static Logger log = LoggerFactory.getLogger(PortalManager.class.getName());
 }

@@ -264,6 +264,10 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
     public int getXMLOrder(){
         return jmri.Manager.TURNOUTS;
     }
+    
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameTurnout");
+    }
 
     // initialize logging
     static Logger log = LoggerFactory.getLogger(ProxyTurnoutManager.class.getName());

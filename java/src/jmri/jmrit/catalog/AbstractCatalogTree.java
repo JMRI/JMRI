@@ -44,6 +44,10 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
     public AbstractCatalogTree(String sysname) {
         this(sysname, "root");
     }
+    
+    public String getBeanType(){
+        return Bundle.getMessage("BeanNameCatalog");
+    }
 
     /**
      * Recursively add nodes to the tree

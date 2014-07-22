@@ -143,6 +143,10 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
         }
     }
     
+    public String getBeanType(){
+        return Bundle.getMessage("BeanNameSignalHead");
+    }
+    
 }
 
 /* @(#)AbstractSignalHead.java */

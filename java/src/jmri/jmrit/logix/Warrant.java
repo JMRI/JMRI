@@ -1556,5 +1556,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     	super.dispose();
     }
     
+    public String getBeanType(){
+        return Bundle.getMessage("BeanNameWarrant");
+    }
+    
     static Logger log = LoggerFactory.getLogger(Warrant.class.getName());
 }

@@ -114,6 +114,10 @@ public class WarrantManager extends AbstractManager
         }
         return (_instance);
     }
+    
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameWarrant");
+    }
 
     static Logger log = LoggerFactory.getLogger(WarrantManager.class.getName());
 }

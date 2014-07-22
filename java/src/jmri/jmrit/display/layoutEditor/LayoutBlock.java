@@ -4054,6 +4054,10 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         }
     }
     
+    public String getBeanType(){
+        return Bundle.getMessage("BeanNameLayoutBlock");
+    }
+    
     static Logger log = LoggerFactory.getLogger(LayoutBlock.class.getName());
 
 }

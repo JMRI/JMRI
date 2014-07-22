@@ -20,7 +20,7 @@ import java.util.List;
  * @version	$Revision$
  */
 public class DefaultSignalMastManager extends AbstractManager
-    implements SignalMastManager, java.beans.PropertyChangeListener, java.beans.VetoableChangeListener {
+    implements SignalMastManager, java.beans.PropertyChangeListener{
 
     public DefaultSignalMastManager() {
         super();
@@ -77,6 +77,10 @@ public class DefaultSignalMastManager extends AbstractManager
         return (SignalMast)_tuser.get(key);
     }
     
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameSignalMast");
+    }
+    
     ArrayList<SignalMastRepeater> repeaterList = new ArrayList<SignalMastRepeater>();
     
     public void addRepeater(SignalMastRepeater rp) throws jmri.JmriException{
@@ -112,38 +116,6 @@ public class DefaultSignalMastManager extends AbstractManager
         }
     }
     
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if("CanDelete".equals(evt.getPropertyName())){ //IN18N
-            StringBuilder message = new StringBuilder();
-            boolean found = false;
-            message.append(Bundle.getMessage("VetoFoundInSignalMast"));
-            message.append("<ul>");
-            for(NamedBean nb:_tsys.values()){
-                try {
-                    nb.vetoableChange(evt);
-                } catch (java.beans.PropertyVetoException e) {
-                    if(e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")){ //IN18N
-                        throw e;
-                    }
-                    found = true;
-                    message.append("<li>" + e.getMessage() + "</li>");
-                }
-            }
-            message.append("</ul>");
-            message.append(Bundle.getMessage("VetoWillBeRemovedFromSignalMast")); //IN18N
-            if(found)
-                throw new java.beans.PropertyVetoException(message.toString(), evt);
-        } else {
-            for(NamedBean nb:_tsys.values()){
-                try {
-                    nb.vetoableChange(evt);
-                } catch (java.beans.PropertyVetoException e) {
-                    throw e;
-                }
-            }
-        }
-    }
-
     static Logger log = LoggerFactory.getLogger(DefaultSignalMastManager.class.getName());
 }
 

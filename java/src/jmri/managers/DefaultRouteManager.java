@@ -110,7 +110,7 @@ public class DefaultRouteManager extends AbstractManager
         return (_instance);
     }
     
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+    /*public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if("CanDelete".equals(evt.getPropertyName())){ //IN18N
             StringBuilder message = new StringBuilder();
             boolean found = false;
@@ -140,6 +140,10 @@ public class DefaultRouteManager extends AbstractManager
                 }
             }
         }
+    }*/
+    
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameRoute");
     }
 
     static Logger log = LoggerFactory.getLogger(DefaultRouteManager.class.getName());

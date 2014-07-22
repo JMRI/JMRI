@@ -190,7 +190,12 @@ public interface Manager {
     
     public int getXMLOrder();
     
-    
+    /**
+    * For instances in the code where we are dealing with just a bean and 
+    * a message needs to be passed to the user or in a log.
+    * @return a string of the bean type that the manager handles, eg Turnout, Sensor etc
+    */
+    public String getBeanTypeHandled();
 }
 
 

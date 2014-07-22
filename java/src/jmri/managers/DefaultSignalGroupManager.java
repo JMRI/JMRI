@@ -109,6 +109,10 @@ public class DefaultSignalGroupManager extends AbstractManager
     public void deleteSignalGroup(SignalGroup s) {
         deregister(s);
     }
+    
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameSignalGroup");
+    }
 
     static Logger log = LoggerFactory.getLogger(DefaultSignalGroupManager.class.getName());
 }

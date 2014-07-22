@@ -59,6 +59,10 @@ public class DefaultConditional extends AbstractNamedBean
     public DefaultConditional(String systemName) {
         super(systemName);
     }
+    
+    public String getBeanType(){
+        return Bundle.getMessage("BeanNameConditional");
+    }
 
     // boolean expression of state variables
     private String _antecedent = "";
@@ -1497,8 +1501,6 @@ public class DefaultConditional extends AbstractNamedBean
 		{
 			// set turnout state
             ConditionalAction action = _actionList.get(mIndex);
-            String devName = getDeviceName(action);
-			//Turnout t = InstanceManager.turnoutManagerInstance().getTurnout(devName);
 			if (action.getNamedBean()==null) {
 				log.error(getDisplayName()+" Invalid delayed turnout name - "+action.getDeviceName());
 			}

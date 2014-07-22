@@ -26,6 +26,10 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
     public AbstractReporter(String systemName, String userName) {
         super(systemName.toUpperCase(), userName);
     }
+    
+    public String getBeanType(){
+        return Bundle.getMessage("BeanNameReporter");
+    }
 
     public Object getCurrentReport() {return _currentReport;}
 

@@ -529,8 +529,10 @@ public class Transit extends AbstractNamedBean
         return true;
     
     }
-		
-	    
+    
+    public String getBeanType(){
+        return Bundle.getMessage("BeanNameTransit");
+    }
     static final Logger log = LoggerFactory.getLogger(Transit.class.getName());
 	
 }

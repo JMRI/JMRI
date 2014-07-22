@@ -30,6 +30,10 @@ public class DefaultRoute extends AbstractNamedBean
         super(systemName.toUpperCase());
     }
     
+    public String getBeanType(){
+        return Bundle.getMessage("BeanNameRoute");
+    }
+    
     /**
      *  Persistant instance variables (saved between runs)
      */

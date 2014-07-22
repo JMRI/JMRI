@@ -111,6 +111,10 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
 
         return s;
     }
+    
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameSensor");
+    }
 
     /**
      * Internal method to invoke the factory, after all the

@@ -21,7 +21,7 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
     public DefaultSignalHead(String systemName) {
         super(systemName);
     }
-
+    
     public void setAppearance(int newAppearance) {
         int oldAppearance = mAppearance;
         mAppearance = newAppearance;

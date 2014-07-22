@@ -819,5 +819,9 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         //monitorLocos(monitorState);
     }
     
+    public String getBeanTypeHandled(){
+        return "Ecos Loco Addresses";
+    }
+    
     static Logger log = LoggerFactory.getLogger(EcosLocoAddressManager.class.getName());
 }

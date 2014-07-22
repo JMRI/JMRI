@@ -195,6 +195,13 @@ public interface NamedBean {
      * Retrieve the complete current set of keys.
      */
     public java.util.Set<Object> getPropertyKeys();
+    
+    /**
+    * For instances in the code where we are dealing with just a bean and 
+    * a message needs to be passed to the user or in a log.
+    * @return a string of the bean type, eg Turnout, Sensor etc
+    */
+    public String getBeanType();
 }
 
 /* @(#)NamedBean.java */

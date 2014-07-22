@@ -52,39 +52,10 @@ public class AbstractSignalHeadManager extends AbstractManager
         return (SignalHead)_tuser.get(key);
     }
     
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if("CanDelete".equals(evt.getPropertyName())){ //IN18N
-            StringBuilder message = new StringBuilder();
-            boolean found = false;
-            message.append(Bundle.getMessage("VetoFoundInSignalHeads"));
-            message.append("<ul>");
-            for(NamedBean nb:_tsys.values()){
-                try {
-                    nb.vetoableChange(evt);
-                } catch (java.beans.PropertyVetoException e) {
-                    if(e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")){ //IN18N
-                        throw e;
-                    }
-                    found = true;
-                    message.append("<li>" + e.getMessage() + "</li>");
-                }
-            }
-            message.append("</ul>");
-            message.append(Bundle.getMessage("VetoWillBeRemovedFromSignalHeads"));
-            if(found)
-                throw new java.beans.PropertyVetoException(message.toString(), evt);
-        } else {
-            for(NamedBean nb:_tsys.values()){
-                try {
-                    nb.vetoableChange(evt);
-                } catch (java.beans.PropertyVetoException e) {
-                    throw e;
-                }
-            }
-        }
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameSignalHead");
     }
-
-
+    
     static Logger log = LoggerFactory.getLogger(AbstractSignalHeadManager.class.getName());
 }
 
