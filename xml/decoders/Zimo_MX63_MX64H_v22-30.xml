@@ -1219,7 +1219,7 @@
       <variable item="Pulse Chain Recognition (LGB)" CV="112" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Pulse Chain Recognition (LGB)</label>
-         <label xml:lang="it">Riconoscimento treno Impulsi LGB</label>
+        <label xml:lang="it">Riconoscimento treno Impulsi LGB</label>
       </variable>
       <variable CV="112" item="DC Brake Momentum" tooltip="Active if CV9=0" mask="XXVXXXXX" default="0">
         <enumVal>
@@ -1491,6 +1491,7 @@
       <variable item="Analog Power Conversion" CV="124" mask="XXVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Polarity Dependent DC stopping method</label>
+        <label xml:lang="it">Fermata in DC dipendente da polarità</label>
         <enumVal>
           <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
           <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
@@ -1694,10 +1695,11 @@
         <enumVal>
           <enumChoice choice="not active">
             <choice>not active</choice>
-            <choice xml:lang="it">non attivo</choice>
+            <choice xml:lang="it">Non Attiva</choice>
           </enumChoice>
           <enumChoice choice="Automatic stops, Signal controlled speed influence or Asymmetric DCC">
             <choice>Automatic stops, Signal controlled speed influence or Asymmetric DCC</choice>
+            <choice xml:lang="it">Stop automatico, Controllato da segnale o DCC asimmetrica</choice>
           </enumChoice>
           <enumChoice choice="Manual stops using cab">
             <choice>Manual stops using cab</choice>
@@ -1811,7 +1813,7 @@
           </label>
           <label>
             <text>Tens digit is the Proportional value, mid value = 5</text>
-            <text xml:lang="it">Numero decine è valore proporzionale, valore medio</text>
+            <text xml:lang="it">Numero decine è valore proporzionale, valore medio=5</text>
           </label>
           <label>
             <text>Ones digit is the integral value, mid value = 5</text>
@@ -1848,7 +1850,7 @@
           </label>
           <label>
             <text>Ones digit = EMF sampling time (1-9) mid value = 5</text>
-            <text xml:lang="it">Numero unità = tempo campionamento EMF, valore medio =5</text>
+            <text xml:lang="it">Numero unità = tempo campionamento EMF(1-9), valore medio =5</text>
           </label>
           <label>
             <text>100 = 'Spread Spectrum' sampling rate for reduced noise, with medium sampling time</text>

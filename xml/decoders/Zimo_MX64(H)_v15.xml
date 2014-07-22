@@ -62,11 +62,11 @@
       <variable item="Vhigh" CV="5" default="252" comment="Range 0-252">
         <decVal max="252"/>
         <label>Vhigh</label>
-        <label xml:lang="it">Decellerazione</label>
-       <label xml:lang="fr">Décélération</label>
-       <label xml:lang="de">Bremszeit</label>
-        <comment>Range 0-252</comment>
-        <comment xml:lang="it">Valori 0-252</comment>
+        <label xml:lang="it">Volt Massimi</label>
+       <label xml:lang="fr">Vmax</label>
+       <label xml:lang="de">Höchstgeschwindigkeit</label>
+       <comment>Range 0-252</comment>
+       <comment xml:lang="it">Valori 0-252</comment>
       </variable>
       <variable item="Vmid" CV="6" default="0" comment="Range 0-252">
         <decVal max="252"/>
