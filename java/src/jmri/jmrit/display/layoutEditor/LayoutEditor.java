@@ -5393,7 +5393,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             }
                             break;
                         case TRACK_CIRCLE_CENTRE: TrackSegment t = (TrackSegment)selectedObject;
-                                                    reCalculateTrackSegmentAngle(t, newPos.getX(), newPos.getY());
+                                                    t.reCalculateTrackSegmentAngle(newPos.getX(), newPos.getY());
                                                 break;
                         default:
                             if (selectedPointType>=TURNTABLE_RAY_OFFSET) {
@@ -8826,7 +8826,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 				else g2.setColor(defaultTrackColor);
 				setTrackStrokeWidth(g2,mainline);
                 if (t.getArc()){
-                    CalculateTrackSegmentAngle(t);
+                    t.calculateTrackSegmentAngle();
                     Stroke drawingStroke;
                     Stroke originalStroke = g2.getStroke();
                     if (mainline)
@@ -8873,7 +8873,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 				else g2.setColor(defaultTrackColor);
 				//setTrackStrokeWidth(g2,mainline);
                 if(t.getArc()){
-                    CalculateTrackSegmentAngle(t);
+                    t.calculateTrackSegmentAngle();
                     g2.draw(new Arc2D.Double(t.getCX(), t.getCY(), t.getCW(), t.getCH(), t.getStartadj(), t.getTmpAngle(), Arc2D.OPEN));
                 } else {
                     Point2D end1 = getCoords(t.getConnect1(),t.getType1());
@@ -8885,125 +8885,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 		}
 	}
     
-    /*
-     * Calculates the initally parameters for drawing a circular track segment.
-     */
-    private void CalculateTrackSegmentAngle(TrackSegment t){
-        Point2D pt1 = getCoords(t.getConnect1(),t.getType1());
-        Point2D pt2 = getCoords(t.getConnect2(),t.getType2());
-        if (t.getFlip()){
-            pt1 = getCoords(t.getConnect2(),t.getType2());
-            pt2 = getCoords(t.getConnect1(),t.getType1());
-        }
-        if((t.getTmpPt1()!=pt1) || (t.getTmpPt2()!=pt2) || t.trackNeedsRedraw()){
-            t.setTmpPt1(pt1);
-            t.setTmpPt2(pt2);
-            //setTrackStrokeWidth(g2,false);
-            double pt2x;
-            double pt2y;
-            double pt1x;
-            double pt1y;
-            pt2x = pt2.getX();
-            pt2y = pt2.getY();
-            pt1x = pt1.getX();
-            pt1y = pt1.getY();
-
-            if (t.getAngle() == 0.0D)
-                t.setTmpAngle(90.0D);
-            else
-                t.setTmpAngle(t.getAngle());
-            // Convert angle to radiants in order to speed up maths
-            double halfAngle = java.lang.Math.toRadians(t.getTmpAngle())/2.0D;
-            double chord;
-            double a;
-            double o;
-            double radius;
-            // Compute arc's chord
-            a = pt2x - pt1x;
-            o = pt2y - pt1y;
-            chord=java.lang.Math.sqrt(((a*a)+(o*o)));
-            t.setChordLength(chord);
-            // Make sure chord is not null 
-            // In such a case (pt1 == pt2), there is no arc to draw
-            if (chord > 0.0D) {
-                radius = (chord/2)/(java.lang.Math.sin(halfAngle));
-                // Circle
-                double startRad = java.lang.Math.atan2(a, o) - halfAngle;
-                t.setStartadj(java.lang.Math.toDegrees(startRad));
-                if(t.getCircle()){
-                    // Circle - Compute center
-                    t.setCentreX(pt2x - java.lang.Math.cos(startRad) * radius);
-                    t.setCentreY(pt2y + java.lang.Math.sin(startRad) * radius);
-                    
-                    // Circle - Compute rectangle required by Arc2D.Double
-                    t.setCW(radius * 2.0D);
-                    t.setCH(radius * 2.0D);
-                    t.setCX(t.getCentreX()-(radius));
-                    t.setCY(t.getCentreY()-(radius));
-                    
-                    //Compute the vlues for locating the circle
-                    
-                    t.setCentreSegX(t.getCentreX() + radius*java.lang.Math.cos(startRad+halfAngle));
-                    t.setCentreSegY(t.getCentreY() - java.lang.Math.sin(startRad+halfAngle) * radius);
-                    
-                } 
-                else {
-                    // Elipse - Round start angle to the closest multiple of 90
-                    t.setStartadj(java.lang.Math.round(t.getStartadj() / 90.0D) * 90.0D);
-                    // Elipse - Compute rectangle required by Arc2D.Double
-                    t.setCW(java.lang.Math.abs(a)*2.0D);
-                    t.setCH(java.lang.Math.abs(o)*2.0D);
-                    // Elipse - Adjust rectangle corner, depending on quadrant
-                    if (o * a < 0.0D)
-                        a = -a;
-                    else
-                        o = -o;
-                    t.setCX(java.lang.Math.min(pt1x, pt2x)-java.lang.Math.max(a, 0.0D));
-                    t.setCY(java.lang.Math.min(pt1y, pt2y)-java.lang.Math.max(o, 0.0D));
-                }
-            }
-        }
-    }
-    /*
-     * The recalculation method is used when the user changes the angle dynamically in edit mode
-     * by dragging the centre of the cirle
-     */
-    private void reCalculateTrackSegmentAngle(TrackSegment t, double x, double y){
-        
-        double pt2x;
-        double pt2y;
-        double pt1x;
-        double pt1y;
-
-        pt2x = t.getTmpPt2().getX();
-        pt2y = t.getTmpPt2().getY();
-        pt1x = t.getTmpPt1().getX();
-        pt1y = t.getTmpPt1().getY();
-        if (t.getFlip()){
-            pt1x = t.getTmpPt2().getX();
-            pt1y = t.getTmpPt2().getY();
-            pt2x = t.getTmpPt1().getX();
-            pt2y = t.getTmpPt1().getY();
-        }
-        //Point 1 to new point length
-        double a;
-        double o;
-        double la;
-        // Compute arc's chord
-        a = pt2x - x;
-        o = pt2y - y;
-        la=java.lang.Math.sqrt(((a*a)+(o*o)));
-        
-        double lb;
-        a = pt1x - x;
-        o = pt1y - y;
-        lb=java.lang.Math.sqrt(((a*a)+(o*o)));
-
-        double newangle=Math.toDegrees(Math.acos((-t.getChordLength()*t.getChordLength()+la*la+lb*lb)/(2*la*lb)));
-        t.setAngle(newangle);
-        
-    }
-	
     /*
      * Draws a square at the circles centre, that then allows the user to dynamically change
      * the angle by dragging the mouse.
