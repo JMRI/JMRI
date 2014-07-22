@@ -41,7 +41,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
  * @author Kevin Dickerson  Copyright (C) 2011
  * @version			$Revision: 19923 $
  */
-public class EntryExitPairs implements jmri.Manager{
+public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDefault{
 
 	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
     
