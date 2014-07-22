@@ -509,7 +509,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 					}
 				}
                 //Now try to determine if this block is across two panels due to a linked point
-                PositionablePoint point = panel.findPositionableLinkPoint(this);
+                PositionablePoint point = panel.getFinder().findPositionableLinkPoint(this);
                 if(point!=null && point.getLinkedEditor()!=null && panels.contains(point.getLinkedEditor())){
                     c = panel.auxTools.getConnectivityList(_instance);
                     c.addAll( point.getLinkedEditor().auxTools.getConnectivityList(_instance));
@@ -1338,7 +1338,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 log.info("From " + this.getDisplayName() + " unable to set metric as we are not connected to a panel yet");
             return;
         }
-        ArrayList<TrackSegment> ts = panel.findTrackSegmentByBlock(blockName);
+        ArrayList<TrackSegment> ts = panel.getFinder().findTrackSegmentByBlock(blockName);
         int mainline = 0;
         int side = 0;
         for (int i = 0; i< ts.size(); i++){

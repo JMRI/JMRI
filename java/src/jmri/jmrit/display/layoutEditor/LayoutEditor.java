@@ -312,7 +312,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 	public ArrayList<BlockContentsIcon> blockContentsLabelList = new ArrayList<BlockContentsIcon>(); // BlockContentsIcon Label List
     public ArrayList<SensorIcon> sensorList = new ArrayList<SensorIcon>();  // Sensor Icons
     public ArrayList<SignalMastIcon> signalMastList = new ArrayList<SignalMastIcon>();  // Signal Head Icons
-    
+    public LayoutEditorFindItems finder = new LayoutEditorFindItems(this);
+    public LayoutEditorFindItems getFinder() { return finder; }
     // persistent instance variables - saved to disk with Save Panel
 	private int windowWidth = 0;
 	private int windowHeight = 0;
@@ -2621,7 +2622,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 		boolean duplicate = true;
 		while (duplicate) {
 			name = "TUR"+numLayoutTurntables;
-			if (findLayoutTurntableByName(name)==null) duplicate = false;
+			if (finder.findLayoutTurntableByName(name)==null) duplicate = false;
 			if (duplicate) numLayoutTurntables ++;
 		}
 		LayoutTurntable x = new LayoutTurntable(name,pt,this);		
@@ -5502,7 +5503,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 		boolean duplicate = true;
 		while (duplicate) {
 			name = "A"+numAnchors;
-			if (findPositionablePointByName(name)==null) duplicate = false;
+			if (finder.findPositionablePointByName(name)==null) duplicate = false;
 			if (duplicate) numAnchors ++;
 		}
 		// create object
@@ -5525,7 +5526,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 		boolean duplicate = true;
 		while (duplicate) {
 			name = "EB"+numEndBumpers;
-			if (findPositionablePointByName(name)==null) duplicate = false;
+			if (finder.findPositionablePointByName(name)==null) duplicate = false;
 			if (duplicate) numEndBumpers ++;
 		}
 		// create object
@@ -5547,7 +5548,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 		boolean duplicate = true;
 		while (duplicate) {
 			name = "EC"+numEdgeConnectors;
-			if (findPositionablePointByName(name)==null) duplicate = false;
+			if (finder.findPositionablePointByName(name)==null) duplicate = false;
 			if (duplicate) numEdgeConnectors ++;
 		}
 		// create object
@@ -5569,7 +5570,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 		boolean duplicate = true;
 		while (duplicate) {
 			name = "T"+numTrackSegments;
-			if (findTrackSegmentByName(name)==null) duplicate = false;
+			if (finder.findTrackSegmentByName(name)==null) duplicate = false;
 			if (duplicate) numTrackSegments ++;
 		}
 		// create object
@@ -5616,7 +5617,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 		boolean duplicate = true;
 		while (duplicate) {
 			name = "X"+numLevelXings;
-			if (findLevelXingByName(name)==null) duplicate = false;
+			if (finder.findLevelXingByName(name)==null) duplicate = false;
 			if (duplicate) numLevelXings ++;
 		}
 		// create object
@@ -5668,7 +5669,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 		boolean duplicate = true;
 		while (duplicate) {
 			name = "SL"+numLayoutSlips;
-			if (findLayoutSlipByName(name)==null) duplicate = false;
+			if (finder.findLayoutSlipByName(name)==null) duplicate = false;
 			if (duplicate) numLayoutSlips ++;
 		}
 		// create object
@@ -5743,7 +5744,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 		boolean duplicate = true;
 		while (duplicate) {
 			name = "TO"+numLayoutTurnouts;
-			if (findLayoutTurnoutByName(name)==null) duplicate = false;
+			if (finder.findLayoutTurnoutByName(name)==null) duplicate = false;
 			if (duplicate) numLayoutTurnouts ++;
 		}
 		// create object
@@ -6139,7 +6140,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             sb.append(" is linked to the following items<br> do you want to remove those references");
         }
         
-        if((pw=findPositionablePointByWestBoundBean(sm))!=null){
+        if((pw=finder.findPositionablePointByWestBoundBean(sm))!=null){
             sb.append("<br>Point of ");
             TrackSegment t = pw.getConnect1();
             if(t!=null) {
@@ -6151,7 +6152,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }            
             found = true;
         }
-        if((pe=findPositionablePointByEastBoundBean(sm))!=null){
+        if((pe=finder.findPositionablePointByEastBoundBean(sm))!=null){
             sb.append("<br>Point of ");
             TrackSegment t = pe.getConnect1();
             if(t!=null) {
@@ -6163,15 +6164,15 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }            
             found = true;
         }
-        if((lt=findLayoutTurnoutByBean(sm))!=null){
+        if((lt=finder.findLayoutTurnoutByBean(sm))!=null){
             sb.append("<br>Turnout " + lt.getTurnoutName());
             found = true;
         }
-        if((lx=findLevelXingByBean(sm))!=null){
+        if((lx=finder.findLevelXingByBean(sm))!=null){
             sb.append("<br>Level Crossing " + lx.getID());
             found = true;
         }
-        if((ls=findLayoutSlipByBean(sm))!=null){
+        if((ls=finder.findLayoutSlipByBean(sm))!=null){
             sb.append("<br>Slip " + ls.getTurnoutName());
             found = true;
         }
@@ -6202,19 +6203,19 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         LevelXing lx;
         LayoutSlip ls;
         
-        if((pw=findPositionablePointByWestBoundBean(sm))!=null){
+        if((pw=finder.findPositionablePointByWestBoundBean(sm))!=null){
             pw.removeBeanReference(sm);
         }
-        if((pe=findPositionablePointByEastBoundBean(sm))!=null){
+        if((pe=finder.findPositionablePointByEastBoundBean(sm))!=null){
             pe.removeBeanReference(sm);
         }
-        if((lt=findLayoutTurnoutByBean(sm))!=null){
+        if((lt=finder.findLayoutTurnoutByBean(sm))!=null){
             lt.removeBeanReference(sm);
         }
-        if((lx=findLevelXingByBean(sm))!=null){
+        if((lx=finder.findLevelXingByBean(sm))!=null){
             lx.removeBeanReference(sm);
         }
-        if((ls=findLayoutSlipByBean(sm))!=null){
+        if((ls=finder.findLayoutSlipByBean(sm))!=null){
             ls.removeBeanReference(sm);
         }
     }
@@ -7358,466 +7359,206 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 		log.error("unknown color text '"+string+"' sent to stringToColor");
 		return Color.black;
 	}
+    
+    /**
+    * @deprecated As of 3.9.2, ... use getFinder().find...
+    */
+    @Deprecated
 	public TrackSegment findTrackSegmentByName(String name) {
-		if (name.length()<=0) return null;
-		for (int i = 0; i<trackList.size(); i++) {
-			TrackSegment t = trackList.get(i);
-			if (t.getID().equals(name)) {
-				return t;
-			}
-		}
-		return null;
+        return finder.findTrackSegmentByName(name);
 	}
+    
+    /**
+    * @deprecated As of 3.9.2, ... use getFinder().find...
+    */
+    @Deprecated
 	public PositionablePoint findPositionablePointByName(String name) {
-		if (name.length()<=0) return null;
-		for (int i = 0; i<pointList.size(); i++) {
-			PositionablePoint p = pointList.get(i);
-			if (p.getID().equals(name)) {
-				return p;
-			}
-		}
-		return null;
+		return finder.findPositionablePointByName(name);
 	}
     
+    /**
+    * @deprecated As of 3.9.2, ... use getFinder().find...
+    */
+    @Deprecated
 	public PositionablePoint findPositionablePointAtTrackSegments(TrackSegment tr1, TrackSegment tr2) {
-		for (int i = 0; i<pointList.size(); i++) {
-			PositionablePoint p = pointList.get(i);
-			if ( ( (p.getConnect1()==tr1) && (p.getConnect2()==tr2) ) ||
-					( (p.getConnect1()==tr2) && (p.getConnect2()==tr1) ) ) {
-				return p;
-			}
-		}
-		return null;
+		return finder.findPositionablePointAtTrackSegments(tr1, tr2);
 	}
     
+    /**
+    * @deprecated As of 3.9.2, ... use getFinder().find...
+    */
+    @Deprecated
     public PositionablePoint findPositionableLinkPoint(LayoutBlock blk1){
-        for (PositionablePoint p:pointList) {
-            if(p.getType()==PositionablePoint.EDGE_CONNECTOR){
-                if((p.getConnect1()!=null && p.getConnect1().getLayoutBlock()==blk1) ||
-                    (p.getConnect2()!=null && p.getConnect2().getLayoutBlock()==blk1)){
-                        return p;
-                 }
-            }
-        }
-        return null;
+        return finder.findPositionableLinkPoint(blk1);
     }
 
     /**
-    * Returns an array list of track segments matching the block name.
+    * @deprecated As of 3.9.2, ... use getFinder().find...
     */
+    @Deprecated
     public ArrayList<TrackSegment> findTrackSegmentByBlock(String name) {
-		if (name.length()<=0) return null;
-        ArrayList<TrackSegment> ts = new ArrayList<TrackSegment>();
-		for (int i = 0; i<trackList.size(); i++) {
-			TrackSegment t = trackList.get(i);
-			if (t.getBlockName().equals(name)) {
-				ts.add(t);
-			}
-		}
-		return ts;
+		return finder.findTrackSegmentByBlock(name);
 	}
-    
+    /**
+    * @deprecated As of 3.9.2, ... use getFinder().find...
+    */
+    @Deprecated
     public PositionablePoint findPositionablePointByEastBoundSignal(String signalName){
-        for (int i = 0; i<pointList.size(); i++) {
-            PositionablePoint p = pointList.get(i);
-            if (p.getEastBoundSignal().equals(signalName))
-                return p;
-        }
-        return null;
+        return finder.findPositionablePointByEastBoundSignal(signalName);
     }
-
+    /**
+    * @deprecated As of 3.9.2, ... use getFinder().find...
+    */
+    @Deprecated
     public PositionablePoint findPositionablePointByWestBoundSignal(String signalName){
-        for (int i = 0; i<pointList.size(); i++) {
-            PositionablePoint p = pointList.get(i);
-            if (p.getWestBoundSignal().equals(signalName))
-                return p;
-        }
-        return null;
+        return finder.findPositionablePointByWestBoundSignal(signalName);
     }
-    
+    /**
+    * @deprecated As of 3.9.2, ... use getFinder().find...
+    */
+    @Deprecated
     public PositionablePoint findPositionablePointByWestBoundBean(NamedBean bean){
-        if(bean instanceof SignalMast){
-            for(PositionablePoint p:pointList){
-                if(p.getWestBoundSignalMast()==bean)
-                    return p;
-            }
-        } else if (bean instanceof Sensor){
-            for(PositionablePoint p:pointList){
-                if(p.getWestBoundSensor()==bean)
-                    return p;
-            }
-        }  else if (bean instanceof SignalHead){
-            for(PositionablePoint p:pointList){
-                if(p.getWestBoundSignal().equals(bean.getSystemName()) ||
-                    p.getWestBoundSignal().equals(bean.getSystemName())){
-                  return p;
-                }
-            }
-        }
-        return null;
+        return finder.findPositionablePointByWestBoundBean(bean);
     }
-
+    /**
+    * @deprecated As of 3.9.2, ... use getFinder().find...
+    */
+    @Deprecated
     public PositionablePoint findPositionablePointByEastBoundBean(NamedBean bean){
-        if(bean instanceof SignalMast){
-            for(PositionablePoint p:pointList){
-                if(p.getEastBoundSignalMast()==bean)
-                    return p;
-            }
-        } else if (bean instanceof Sensor){
-            for(PositionablePoint p:pointList){
-                if(p.getEastBoundSensor()==bean)
-                    return p;
-            }
-        }  else if (bean instanceof SignalHead){
-            for(PositionablePoint p:pointList){
-                if(p.getEastBoundSignal().equals(bean.getSystemName()) ||
-                      p.getEastBoundSignal().equals(bean.getSystemName())){
-                    return p;
-                }
-            }
-        }
-        return null;
+        return finder.findPositionablePointByEastBoundBean(bean);
     }
-
+    /**
+    * @deprecated As of 3.9.2, ... use getFinder().find...
+    */
+    @Deprecated
     public PositionablePoint findPositionablePointByWestBoundSignalMast(String signalMastName){
-        for (int i = 0; i<pointList.size(); i++) {
-            PositionablePoint p = pointList.get(i);
-            if (p.getWestBoundSignalMastName().equals(signalMastName))
-                return p;
-        }
-        return null;
+        return finder.findPositionablePointByWestBoundSignalMast(signalMastName);
     }
-    
+    /**
+    * @deprecated As of 3.9.2, ... use getFinder().find...
+    */
+    @Deprecated
     public PositionablePoint findPositionablePointByBean(NamedBean bean){
-        if(bean instanceof SignalMast){
-            for(PositionablePoint p:pointList){
-                if(p.getWestBoundSignalMast()==bean ||
-                    p.getEastBoundSignalMast()==bean)
-                    return p;
-            }
-        } else if (bean instanceof Sensor){
-            for(PositionablePoint p:pointList){
-                if(p.getWestBoundSensor()==bean ||
-                    p.getEastBoundSensor()==bean)
-                    return p;
-            }
-        } else if (bean instanceof SignalHead){
-            for(PositionablePoint p:pointList){
-                if(p.getEastBoundSignal().equals(bean.getSystemName()) ||
-                    p.getWestBoundSignal().equals(bean.getSystemName())){
-                    
-                    return p;
-                }
-                if(bean.getUserName()!=null && (p.getEastBoundSignal().equals(bean.getSystemName()) ||
-                        p.getWestBoundSignal().equals(bean.getSystemName()))){
-                    return p;
-                }
-            }
-        }
-        return null;
-    
+        return finder.findPositionablePointByBean(bean);
     }
-    
+    /**
+    * @deprecated As of 3.9.2, ... use getFinder().find...
+    */
+    @Deprecated
     public LayoutTurnout findLayoutTurnoutBySignalMast(String signalMastName){
         return findLayoutTurnoutByBean(InstanceManager.signalMastManagerInstance().provideSignalMast(signalMastName));
     }
-    
+    /**
+    * @deprecated As of 3.9.2, ... use getFinder().find...
+    */
+    @Deprecated
     public LayoutTurnout findLayoutTurnoutByBean(NamedBean bean){
-        if(bean instanceof SignalMast){
-            for(LayoutTurnout t:turnoutList){
-                if(t.getSignalAMast()==bean ||
-                    t.getSignalBMast()==bean ||
-                    t.getSignalCMast()==bean ||
-                    t.getSignalDMast()==bean)
-                    return t;
-            }
-        } else if (bean instanceof Sensor){
-            for(LayoutTurnout t:turnoutList){
-                if(t.getSensorA()==bean ||
-                    t.getSensorB()==bean ||
-                    t.getSensorC()==bean ||
-                    t.getSensorD()==bean)
-                    return t;
-            }
-        } else if (bean instanceof SignalHead){
-            for(LayoutTurnout t:turnoutList){
-                if(t.getSignalA1Name().equals(bean.getSystemName()) ||
-                    t.getSignalA2Name().equals(bean.getSystemName()) ||
-                      t.getSignalA3Name().equals(bean.getSystemName())){
-                        return t;
-                    }
-                
-                if(t.getSignalB1Name().equals(bean.getSystemName()) ||
-                    t.getSignalB2Name().equals(bean.getSystemName()) ){
-                        return t;
-                    }
-                if(t.getSignalC1Name().equals(bean.getSystemName()) ||
-                    t.getSignalC2Name().equals(bean.getSystemName()) ){
-                        return t;
-                    }
-                if(t.getSignalD1Name().equals(bean.getSystemName()) ||
-                    t.getSignalD2Name().equals(bean.getSystemName()) ){
-                        return t;
-                    }
-                if(bean.getUserName()!=null){
-                    if(t.getSignalA1Name().equals(bean.getUserName()) ||
-                        t.getSignalA2Name().equals(bean.getUserName()) ||
-                          t.getSignalA3Name().equals(bean.getUserName())){
-                            return t;
-                        }
-                    
-                    if(t.getSignalB1Name().equals(bean.getUserName()) ||
-                        t.getSignalB2Name().equals(bean.getUserName()) ){
-                            return t;
-                        }
-                    if(t.getSignalC1Name().equals(bean.getUserName()) ||
-                        t.getSignalC2Name().equals(bean.getUserName()) ){
-                            return t;
-                        }
-                    if(t.getSignalD1Name().equals(bean.getUserName()) ||
-                        t.getSignalD2Name().equals(bean.getUserName()) ){
-                            return t;
-                        }
-                }
-            }
-        } else if (bean instanceof Turnout){
-            for(LayoutTurnout t:turnoutList){
-                if(bean.equals(t.getTurnout())){
-                    return t;
-                }
-            }
-        }
-        return null;
+        return finder.findLayoutTurnoutByBean(bean);
     }
-    
+    /**
+    * @deprecated As of 3.9.2, ... use getFinder().find...
+    */
+    @Deprecated
     public LayoutTurnout findLayoutTurnoutBySensor(String sensorName){
         return findLayoutTurnoutByBean(InstanceManager.sensorManagerInstance().provideSensor(sensorName));
     }
-    
+    /**
+    * @deprecated As of 3.9.2, ... use getFinder().find...
+    */
+    @Deprecated
     public LevelXing findLevelXingBySignalMast(String signalMastName){
         return findLevelXingByBean(InstanceManager.signalMastManagerInstance().provideSignalMast(signalMastName));
     }
-    
+    /**
+    * @deprecated As of 3.9.2, ... use getFinder().find...
+    */
+    @Deprecated
     public LevelXing findLevelXingBySensor(String sensorName){
         return findLevelXingByBean(InstanceManager.sensorManagerInstance().provideSensor(sensorName));
     }
-    
+    /**
+    * @deprecated As of 3.9.2, ... use getFinder().find...
+    */
+    @Deprecated
     public LevelXing findLevelXingByBean(NamedBean bean){
-        if(bean instanceof SignalMast){
-            for(LevelXing l: xingList){
-                if(l.getSignalAMast()==bean ||
-                    l.getSignalBMast()==bean ||
-                    l.getSignalCMast()==bean ||
-                    l.getSignalDMast()==bean)
-                    return l;
-            }
-        } else if (bean instanceof Sensor){
-            for(LevelXing l: xingList){
-                if(l.getSensorA()==bean ||
-                    l.getSensorB()==bean ||
-                    l.getSensorC()==bean ||
-                    l.getSensorD()==bean)
-                    return l;
-            }
-        
-        } else if (bean instanceof SignalHead){
-            for(LevelXing l: xingList){
-                if(l.getSignalAName().equals(bean.getSystemName()) ||
-                    l.getSignalBName().equals(bean.getSystemName()) ||
-                      l.getSignalCName().equals(bean.getSystemName()) || 
-                      l.getSignalDName().equals(bean.getSystemName())) {
-                        return l;
-                }
-                if(bean.getUserName()!=null && (l.getSignalAName().equals(bean.getUserName()) ||
-                    l.getSignalBName().equals(bean.getUserName()) ||
-                      l.getSignalCName().equals(bean.getUserName()) || 
-                      l.getSignalDName().equals(bean.getUserName()))) {
-                        return l;
-                }
-            }
-        }
-        return null;
+        return finder.findLevelXingByBean(bean);
     }
-    
+    /**
+    * @deprecated As of 3.9.2, ... use getFinder().find...
+    */
+    @Deprecated
     public LayoutSlip findLayoutSlipByBean(NamedBean bean){
-        if(bean instanceof SignalMast){
-            for(LayoutSlip l: slipList){
-                if(l.getSignalAMast()==bean ||
-                    l.getSignalBMast()==bean ||
-                    l.getSignalCMast()==bean ||
-                    l.getSignalDMast()==bean)
-                    return l;
-            }
-        } else if (bean instanceof Sensor){
-            for(LayoutSlip l: slipList){
-                if(l.getSensorA()==bean ||
-                    l.getSensorB()==bean ||
-                    l.getSensorC()==bean ||
-                    l.getSensorD()==bean)
-                    return l;
-            }
-        } else if (bean instanceof SignalHead){
-            for(LayoutSlip l: slipList){
-                if(l.getSignalA1Name().equals(bean.getSystemName()) ||
-                    l.getSignalA2Name().equals(bean.getSystemName()) ||
-                      l.getSignalA3Name().equals(bean.getSystemName())){
-                        return l;
-                    }
-                
-                if(l.getSignalB1Name().equals(bean.getSystemName()) ||
-                    l.getSignalB2Name().equals(bean.getSystemName()) ){
-                        return l;
-                    }
-                if(l.getSignalC1Name().equals(bean.getSystemName()) ||
-                    l.getSignalC2Name().equals(bean.getSystemName()) ){
-                        return l;
-                    }
-                if(l.getSignalD1Name().equals(bean.getSystemName()) ||
-                    l.getSignalD2Name().equals(bean.getSystemName()) ){
-                        return l;
-                    }
-                if(l.getSignalA1Name().equals(bean.getUserName()) ||
-                    l.getSignalA2Name().equals(bean.getUserName()) ||
-                      l.getSignalA3Name().equals(bean.getUserName())){
-                        return l;
-                    }
-                if(bean.getUserName()!=null){
-                    if(l.getSignalB1Name().equals(bean.getUserName()) ||
-                        l.getSignalB2Name().equals(bean.getUserName()) ){
-                            return l;
-                        }
-                    if(l.getSignalC1Name().equals(bean.getUserName()) ||
-                        l.getSignalC2Name().equals(bean.getUserName()) ){
-                            return l;
-                        }
-                    if(l.getSignalD1Name().equals(bean.getUserName()) ||
-                        l.getSignalD2Name().equals(bean.getUserName()) ){
-                            return l;
-                        }
-                }
-            }
-        } else if (bean instanceof Turnout){
-            for(LayoutSlip l: slipList){
-                if(bean.equals(l.getTurnout()))
-                    return l;
-                if(bean.equals(l.getTurnoutB()))
-                    return l;
-            }
-        }
-        return null;
+        return finder.findLayoutSlipByBean(bean);
     }
-
+    /**
+    * @deprecated As of 3.9.2, ... use getFinder().find...
+    */
+    @Deprecated
     public LayoutSlip findLayoutSlipBySignalMast(String signalMastName){
         return findLayoutSlipByBean(InstanceManager.signalMastManagerInstance().provideSignalMast(signalMastName));
     }
-    
+    /**
+    * @deprecated As of 3.9.2, ... use getFinder().find...
+    */
+    @Deprecated
     public LayoutSlip findLayoutSlipBySensor(String sensorName){
         return findLayoutSlipByBean(InstanceManager.sensorManagerInstance().provideSensor(sensorName));
     }
-    
+    /**
+    * @deprecated As of 3.9.2, ... use getFinder().find...
+    */
+    @Deprecated
     public PositionablePoint findPositionablePointByEastBoundSensor(String sensorName){
-        for (int i = 0; i<pointList.size(); i++) {
-            PositionablePoint p = pointList.get(i);
-            if (p.getEastBoundSensorName().equals(sensorName))
-                return p;
-        }
-        return null;
+        return finder.findPositionablePointByEastBoundSensor(sensorName);
     }
-
+    /**
+    * @deprecated As of 3.9.2, ... use getFinder().find...
+    */
+    @Deprecated
     public PositionablePoint findPositionablePointByWestBoundSensor(String sensorName){
-        for (int i = 0; i<pointList.size(); i++) {
-            PositionablePoint p = pointList.get(i);
-            if (p.getWestBoundSensorName().equals(sensorName))
-                return p;
-
-        }
-        return null;
+        return finder.findPositionablePointByWestBoundSensor(sensorName);
     }
-
+    /**
+    * @deprecated As of 3.9.2, ... use getFinder().find...
+    */
+    @Deprecated
 	public LayoutTurnout findLayoutTurnoutByName(String name) {
-		if (name.length()<=0) return null;
-		for (int i = 0; i<turnoutList.size(); i++) {
-			LayoutTurnout t = turnoutList.get(i);
-			if (t.getName().equals(name)) {
-				return t;
-			}
-		}
-		return null;
+		return finder.findLayoutTurnoutByName(name);
 	}
-    
+    /**
+    * @deprecated As of 3.9.2, ... use getFinder().find...
+    */
+    @Deprecated
     public LayoutTurnout findLayoutTurnoutByTurnoutName(String name) {
-		if (name.length()<=0) return null;
-		for (int i = 0; i<turnoutList.size(); i++) {
-			LayoutTurnout t = turnoutList.get(i);
-			if (t.getTurnoutName().equals(name)) {
-				return t;
-			}
-		}
-		return null;
+		return finder.findLayoutTurnoutByTurnoutName(name);
 	}
-    
+    /**
+    * @deprecated As of 3.9.2, ... use getFinder().find...
+    */
+    @Deprecated
 	public LevelXing findLevelXingByName(String name) {
-		if (name.length()<=0) return null;
-		for (int i = 0; i<xingList.size(); i++) {
-			LevelXing x = xingList.get(i);
-			if (x.getID().equals(name)) {
-				return x;
-			}
-		}
-		return null;
+		return finder.findLevelXingByName(name);
 	}
-    
+    /**
+    * @deprecated As of 3.9.2, ... use getFinder().find...
+    */
+    @Deprecated
     public LayoutSlip findLayoutSlipByName(String name) {
-		if (name.length()<=0) return null;
-		for (int i = 0; i<slipList.size(); i++) {
-			LayoutSlip x = slipList.get(i);
-			if (x.getName().equals(name)) {
-				return x;
-			}
-		}
-		return null;
+		return finder.findLayoutSlipByName(name);
 	}
-    
+    /**
+    * @deprecated As of 3.9.2, ... use getFinder().find...
+    */
+    @Deprecated
 	public LayoutTurntable findLayoutTurntableByName(String name) {
-		if (name.length()<=0) return null;
-		for (int i = 0; i<turntableList.size(); i++) {
-			LayoutTurntable x = turntableList.get(i);
-			if (x.getID().equals(name)) {
-				return x;
-			}
-		}
-		return null;
+		return finder.findLayoutTurntableByName(name);
 	}
+    /**
+    * @deprecated As of 3.9.2, ... use getFinder().find...
+    */
+    @Deprecated
 	public Object findObjectByTypeAndName(int type,String name) {
-		if (name.length()<=0) return null;
-		switch (type) {
-			case NONE:
-				return null;
-			case POS_POINT:
-				return findPositionablePointByName(name);
-			case TURNOUT_A:
-			case TURNOUT_B:
-			case TURNOUT_C:
-			case TURNOUT_D:
-				return findLayoutTurnoutByName(name);
-			case LEVEL_XING_A:
-			case LEVEL_XING_B:
-			case LEVEL_XING_C:
-			case LEVEL_XING_D:
-				return findLevelXingByName(name);
-			case SLIP_A:
-			case SLIP_B:
-			case SLIP_C:
-			case SLIP_D:
-				return findLayoutSlipByName(name);
-			case TRACK:
-				return findTrackSegmentByName(name);
-			default:
-				if (type>=TURNTABLE_RAY_OFFSET)
-					return findLayoutTurntableByName(name);
-		}
-		log.error("did not find Object '"+name+"' of type "+type);
-		return null;
+		return finder.findObjectByTypeAndName(type, name);
 	}
 
     /**
@@ -9223,25 +8964,25 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     message.append(Bundle.getMessage("VetoSignalHeadIconFound"));
                     message.append("</li>");
                 }
-                LayoutTurnout lt = findLayoutTurnoutByBean(nb);
+                LayoutTurnout lt = finder.findLayoutTurnoutByBean(nb);
                 if(lt!=null){
                     message.append("<li>");
                     message.append(Bundle.getMessage("VetoSignalHeadAssignedToTurnout", lt.getTurnoutName()));
                     message.append("</li>");
                 }
-                PositionablePoint p = findPositionablePointByBean(nb);
+                PositionablePoint p = finder.findPositionablePointByBean(nb);
                 if(p!=null){
                     message.append("<li>");
                     message.append(Bundle.getMessage("VetoSignalHeadAssignedToPoint")); //Need to expand to get the names of blocks
                     message.append("</li>");
                 }
-                LevelXing lx = findLevelXingByBean(nb);
+                LevelXing lx = finder.findLevelXingByBean(nb);
                 if(lx!=null){
                     message.append("<li>");
                     message.append(Bundle.getMessage("VetoSignalHeadAssignedToLevelXing")); //Need to expand to get the names of blocks
                     message.append("</li>");
                 }
-                LayoutSlip ls = findLayoutSlipByBean(nb);
+                LayoutSlip ls = finder.findLayoutSlipByBean(nb);
                 if(ls!=null){
                     message.append("<li>");
                     message.append(Bundle.getMessage("VetoSignalHeadAssignedToLayoutSlip", ls.getTurnoutName()));
@@ -9249,7 +8990,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             }
             else if(nb instanceof Turnout){
-                LayoutTurnout lt = findLayoutTurnoutByBean(nb);
+                LayoutTurnout lt = finder.findLayoutTurnoutByBean(nb);
                 if (lt!=null){
                     found = true;
                     message.append("<li>");
@@ -9273,7 +9014,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         message.append("</li>");
                     }
                 }
-                LayoutSlip ls = findLayoutSlipByBean(nb);
+                LayoutSlip ls = finder.findLayoutSlipByBean(nb);
                 if(ls!=null){
                     found = true;
                     message.append("<li>");
@@ -9339,7 +9080,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
             
             if(nb instanceof Turnout){
-                LayoutTurnout lt = findLayoutTurnoutByBean(nb);
+                LayoutTurnout lt = finder.findLayoutTurnoutByBean(nb);
                 if(lt!=null)
                     lt.setTurnout(null);
                 for(LayoutTurnout t:turnoutList){

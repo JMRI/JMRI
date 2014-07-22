@@ -502,7 +502,7 @@ public class PositionablePoint
 	 */
 	public void setObjects(LayoutEditor p) {
         if(type==EDGE_CONNECTOR){
-            connect1 = p.findTrackSegmentByName(trackSegment1Name);
+            connect1 = p.getFinder().findTrackSegmentByName(trackSegment1Name);
             if(getConnect2()!=null && getLinkedEditor()!=null){
                 //now that we have a connection we can fire off a change
                 TrackSegment ts = getConnect2();
@@ -510,8 +510,8 @@ public class PositionablePoint
                 ts.updateBlockInfo();
             }
         } else {
-            connect1 = p.findTrackSegmentByName(trackSegment1Name);
-            connect2 = p.findTrackSegmentByName(trackSegment2Name);
+            connect1 = p.getFinder().findTrackSegmentByName(trackSegment1Name);
+            connect2 = p.getFinder().findTrackSegmentByName(trackSegment2Name);
         }
 	}
 		

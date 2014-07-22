@@ -967,16 +967,16 @@ public class LayoutTurnout
             if(oldSecondTurnoutName!=null && !oldSecondTurnoutName.equals("")){
                 Turnout oldTurnout =InstanceManager.turnoutManagerInstance().
                             getTurnout(oldSecondTurnoutName);
-                LayoutTurnout oldLinked = layoutEditor.findLayoutTurnoutByTurnoutName(oldTurnout.getSystemName());
+                LayoutTurnout oldLinked = layoutEditor.getFinder().findLayoutTurnoutByTurnoutName(oldTurnout.getSystemName());
                 if(oldLinked==null)
-                    oldLinked = layoutEditor.findLayoutTurnoutByTurnoutName(oldTurnout.getUserName());
+                    oldLinked = layoutEditor.getFinder().findLayoutTurnoutByTurnoutName(oldTurnout.getUserName());
                 if((oldLinked!=null) && oldLinked.getSecondTurnout()==getTurnout())
                     oldLinked.setSecondTurnout(null);
             }
             if(turnout!=null){
-                LayoutTurnout newLinked = layoutEditor.findLayoutTurnoutByTurnoutName(turnout.getSystemName());
+                LayoutTurnout newLinked = layoutEditor.getFinder().findLayoutTurnoutByTurnoutName(turnout.getSystemName());
                 if(newLinked==null)
-                    newLinked = layoutEditor.findLayoutTurnoutByTurnoutName(turnout.getUserName());
+                    newLinked = layoutEditor.getFinder().findLayoutTurnoutByTurnoutName(turnout.getUserName());
                 if(newLinked!=null){
                     newLinked.setSecondTurnout(turnoutName);
                 }
@@ -1714,10 +1714,10 @@ public class LayoutTurnout
 	 *        TrackSegment objects.
 	 */
 	public void setObjects(LayoutEditor p) {
-		connectA = p.findTrackSegmentByName(connectAName);
-		connectB = p.findTrackSegmentByName(connectBName);
-		connectC = p.findTrackSegmentByName(connectCName);
-		connectD = p.findTrackSegmentByName(connectDName);
+		connectA = p.getFinder().findTrackSegmentByName(connectAName);
+		connectB = p.getFinder().findTrackSegmentByName(connectBName);
+		connectC = p.getFinder().findTrackSegmentByName(connectCName);
+		connectD = p.getFinder().findTrackSegmentByName(connectDName);
 		if (tBlockName.length()>0) {
 			block = p.getLayoutBlock(tBlockName);
 			if (block!=null) {

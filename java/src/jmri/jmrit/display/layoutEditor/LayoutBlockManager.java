@@ -369,7 +369,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 		if (cType==LayoutEditor.TRACK) {
 			// block boundary is at an Anchor Point
 			LayoutEditorTools tools = new LayoutEditorTools(panel);
-			PositionablePoint p = panel.findPositionablePointAtTrackSegments(tr,(TrackSegment)connected);
+			PositionablePoint p = panel.getFinder().findPositionablePointAtTrackSegments(tr,(TrackSegment)connected);
 			boolean block1IsWestEnd = tools.isAtWestEndOfAnchor(tr,p);
 			if ( (block1IsWestEnd && facingIsBlock1) || (!block1IsWestEnd && !facingIsBlock1) ) {
 				// block1 is on the west (north) end of the block boundary
@@ -1094,44 +1094,6 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 		}
 		return null;		
 	}
-    /**
-     * Method to return the LayoutBlock that a given signal is protecting.
-     */
-/*    public LayoutBlock getProtectedBlock(String signalName, LayoutEditor panel){
-        PositionablePoint pp = panel.findPositionablePointByEastBoundSignal(signalName);
-        TrackSegment tr;
-        if (pp==null) {
-            pp = panel.findPositionablePointByWestBoundSignal(signalName);
-            if (pp==null)
-                return null;
-            tr = pp.getConnect1();
-        } else {
-            tr = pp.getConnect2();
-        }
-        //tr = pp.getConnect2();
-        if (tr==null)
-            return null;
-        return tr.getLayoutBlock();
-    }*/
-    
-    /**
-     * Method to return the LayoutBlock that a given signal is facing.
-     */
-/*    public LayoutBlock getFacingBlock(String signalName, LayoutEditor panel){
-        PositionablePoint pp = panel.findPositionablePointByWestBoundSignal(signalName);
-        TrackSegment tr;
-        if (pp==null) {
-            pp = panel.findPositionablePointByWestBoundSignal(signalName);
-            if (pp==null)
-                return null;
-            tr = pp.getConnect1();
-        } else {
-            tr = pp.getConnect2();
-        }
-        if (tr==null)
-            return null;
-        return tr.getLayoutBlock();
-    }*/
     
 	private LayoutTurnout getLayoutTurnoutFromTurnoutName(String turnoutName, LayoutEditor panel) {
 		Turnout t = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
@@ -1336,9 +1298,9 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 			i ++;
 		}
         if (lc==null) {
-            PositionablePoint p = panel.findPositionableLinkPoint(fLayoutBlock);
+            PositionablePoint p = panel.getFinder().findPositionableLinkPoint(fLayoutBlock);
             if(p==null)
-                p = panel.findPositionableLinkPoint(pLayoutBlock);
+                p = panel.getFinder().findPositionableLinkPoint(pLayoutBlock);
             if(p!=null && p.getLinkedEditor()!=null){
                 return getFacingBean(facingBlock, protectedBlock, p.getLinkedEditor(), T);
             }
@@ -1394,7 +1356,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
         if (cType==LayoutEditor.TRACK) {
 			// block boundary is at an Anchor Point
 			LayoutEditorTools tools = new LayoutEditorTools(panel);
-			PositionablePoint p = panel.findPositionablePointAtTrackSegments(tr,(TrackSegment)connected);
+			PositionablePoint p = panel.getFinder().findPositionablePointAtTrackSegments(tr,(TrackSegment)connected);
 			boolean block1IsWestEnd = tools.isAtWestEndOfAnchor(tr,p);
 			if ( (block1IsWestEnd && facingIsBlock1) || (!block1IsWestEnd && !facingIsBlock1) ) {
 				// block1 is on the west (north) end of the block boundary
@@ -1627,12 +1589,12 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 			return protectingBlocks;
         }
     
-        PositionablePoint pp = panel.findPositionablePointByEastBoundBean(bean);
+        PositionablePoint pp = panel.getFinder().findPositionablePointByEastBoundBean(bean);
         TrackSegment tr = null;
         boolean east = true;
         
         if (pp==null) {
-            pp = panel.findPositionablePointByWestBoundBean(bean);
+            pp = panel.getFinder().findPositionablePointByWestBoundBean(bean);
             east = false;
         }
         if(pp!=null){
@@ -1659,7 +1621,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             }
         }
         
-        LevelXing l = panel.findLevelXingByBean(bean);
+        LevelXing l = panel.getFinder().findLevelXingByBean(bean);
         if(l!=null){
             if(bean instanceof SignalMast){
                 if(l.getSignalAMast()==bean){
@@ -1685,14 +1647,14 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             return protectingBlocks;
         }
         
-        LayoutSlip ls = panel.findLayoutSlipByBean(bean);
+        LayoutSlip ls = panel.getFinder().findLayoutSlipByBean(bean);
         if(ls!=null){
             protectingBlocks.add(ls.getLayoutBlock());
             return protectingBlocks;
         }
 
         
-        LayoutTurnout t = panel.findLayoutTurnoutByBean(bean);
+        LayoutTurnout t = panel.getFinder().findLayoutTurnoutByBean(bean);
         if(t!=null){
             return t.getProtectedBlocks(bean);
         }
@@ -1720,11 +1682,11 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
     
     public List<LayoutBlock> getProtectingBlocksBySensorOld(Sensor sensor, LayoutEditor panel){
         ArrayList<LayoutBlock> protectingBlocks = new ArrayList<LayoutBlock>();
-        PositionablePoint pp = panel.findPositionablePointByEastBoundBean(sensor);
+        PositionablePoint pp = panel.getFinder().findPositionablePointByEastBoundBean(sensor);
         TrackSegment tr;
         boolean east = true;
         if (pp==null) {
-            pp = panel.findPositionablePointByWestBoundBean(sensor);
+            pp = panel.getFinder().findPositionablePointByWestBoundBean(sensor);
             east=false;
         }
         if(pp!=null){
@@ -1750,7 +1712,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             }
         }
         
-        LevelXing l = panel.findLevelXingByBean(sensor);
+        LevelXing l = panel.getFinder().findLevelXingByBean(sensor);
         if(l!=null){
             if(l.getSensorA()==sensor){
                 protectingBlocks.add(l.getLayoutBlockAC());
@@ -1763,12 +1725,12 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             }
             return protectingBlocks;
         }
-        LayoutSlip ls = panel.findLayoutSlipByBean(sensor);
+        LayoutSlip ls = panel.getFinder().findLayoutSlipByBean(sensor);
         if(ls!=null){
             protectingBlocks.add(ls.getLayoutBlock());
             return protectingBlocks;
         }
-        LayoutTurnout t = panel.findLayoutTurnoutByBean(sensor);
+        LayoutTurnout t = panel.getFinder().findLayoutTurnoutByBean(sensor);
         if(t!=null){
             return t.getProtectedBlocks(sensor);
         }
@@ -1815,12 +1777,12 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
     }
 
     private LayoutBlock getFacingBlockByBean(NamedBean bean, LayoutEditor panel){
-        PositionablePoint pp = panel.findPositionablePointByEastBoundBean(bean);
+        PositionablePoint pp = panel.getFinder().findPositionablePointByEastBoundBean(bean);
         TrackSegment tr = null;
         boolean east = true;
         //Don't think that the logic for this is the right way round
         if (pp==null) {
-            pp = panel.findPositionablePointByWestBoundBean(bean);
+            pp = panel.getFinder().findPositionablePointByWestBoundBean(bean);
             east = false;
         }
         if(pp!=null){
@@ -1846,7 +1808,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                 return tr.getLayoutBlock();
             }
         }
-        LayoutTurnout t = panel.findLayoutTurnoutByBean(bean);
+        LayoutTurnout t = panel.getFinder().findLayoutTurnoutByBean(bean);
         if(t!=null){
             log.debug("found signalmast at turnout " + t.getTurnout().getDisplayName());
             Object connect = null;
@@ -1879,7 +1841,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             }
         }
         
-        LevelXing l = panel.findLevelXingByBean(bean);
+        LevelXing l = panel.getFinder().findLevelXingByBean(bean);
         if(l!=null){
             Object connect = null;
             if(bean instanceof SignalMast){
@@ -1913,7 +1875,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             
         }
         
-        LayoutSlip ls = panel.findLayoutSlipByBean(bean);
+        LayoutSlip ls = panel.getFinder().findLayoutSlipByBean(bean);
         if(ls!=null){
             Object connect = null;
             if(bean instanceof SignalMast){
@@ -1966,10 +1928,10 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
      */
      /* @TODO This needs to be expanded to cover turnouts and level crossings. */
     public LayoutBlock getProtectedBlock(String signalName, LayoutEditor panel){
-        PositionablePoint pp = panel.findPositionablePointByEastBoundSignal(signalName);
+        PositionablePoint pp = panel.getFinder().findPositionablePointByEastBoundSignal(signalName);
         TrackSegment tr;
         if (pp==null) {
-            pp = panel.findPositionablePointByWestBoundSignal(signalName);
+            pp = panel.getFinder().findPositionablePointByWestBoundSignal(signalName);
             if (pp==null)
                 return null;
             tr = pp.getConnect1();
@@ -1994,10 +1956,10 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
      */
      /* @TODO This needs to be expanded to cover turnouts and level crossings. */
     public LayoutBlock getFacingBlock(String signalName, LayoutEditor panel){
-        PositionablePoint pp = panel.findPositionablePointByWestBoundSignal(signalName);
+        PositionablePoint pp = panel.getFinder().findPositionablePointByWestBoundSignal(signalName);
         TrackSegment tr;
         if (pp==null) {
-            pp = panel.findPositionablePointByWestBoundSignal(signalName);
+            pp = panel.getFinder().findPositionablePointByWestBoundSignal(signalName);
             if (pp==null)
                 return null;
             tr = pp.getConnect1();

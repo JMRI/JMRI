@@ -291,7 +291,7 @@ public class LayoutTurntable
 	public void setObjects(LayoutEditor p) {
 		for (int i = 0; i<rayList.size(); i++) {
 			RayTrack ray = rayList.get(i);
-			ray.setConnect(p.findTrackSegmentByName(ray.connectName));
+			ray.setConnect(p.getFinder().findTrackSegmentByName(ray.connectName));
 		}
 	}
     

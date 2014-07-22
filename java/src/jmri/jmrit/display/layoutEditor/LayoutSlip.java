@@ -438,10 +438,10 @@ public class LayoutSlip extends LayoutTurnout
 	 *        TrackSegment objects.
 	 */
 	public void setObjects(LayoutEditor p) {
-		connectA = p.findTrackSegmentByName(connectAName);
-        connectB = p.findTrackSegmentByName(connectBName);
-		connectC = p.findTrackSegmentByName(connectCName);
-		connectD = p.findTrackSegmentByName(connectDName);
+		connectA = p.getFinder().findTrackSegmentByName(connectAName);
+        connectB = p.getFinder().findTrackSegmentByName(connectBName);
+		connectC = p.getFinder().findTrackSegmentByName(connectCName);
+		connectD = p.getFinder().findTrackSegmentByName(connectDName);
 		if (tBlockName.length()>0) {
 			block = p.getLayoutBlock(tBlockName);
 			if (block!=null) {

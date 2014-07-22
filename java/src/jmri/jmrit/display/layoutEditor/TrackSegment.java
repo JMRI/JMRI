@@ -226,8 +226,8 @@ public class TrackSegment
 				log.error("bad blockname '"+tBlockName+"' in tracksegment "+ident);
 			}
 		}
-		connect1 = p.findObjectByTypeAndName(type1,tConnect1Name);
-		connect2 = p.findObjectByTypeAndName(type2,tConnect2Name);
+		connect1 = p.getFinder().findObjectByTypeAndName(type1,tConnect1Name);
+		connect2 = p.getFinder().findObjectByTypeAndName(type2,tConnect2Name);
 	}
 
 	/**
