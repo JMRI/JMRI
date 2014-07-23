@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2008 All rights reserved -->
 <!-- $Id: Zimo_MX620_v5.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
@@ -2342,12 +2342,15 @@
             <column>
               <label>
                 <text>Tens digit = on time</text>
+                <text xml:lang="it">Numero decine= a tempo</text>
               </label>
               <label>
                 <text>Ones digit = Off time</text>
+                <text xml:lang="it">Numero unità= fuori tempo</text>
               </label>
               <label>
                 <text>(0 = 100ms, 9 = 1s)</text>
+                <text xml:lang="it">(0 = 100ms, 9 = 1s)</text>
               </label>
             </column>
           </row>
@@ -2372,6 +2375,7 @@
       <separator/>
       <label>
         <text>                                         Lighting Effects Adjustments (Mars, Gyralight etc)</text>
+        <text xml:lang="it">                                        Regolazioni Effetti luminosi  (Mars, Gyralight etc)</text>
       </label>
       <row>
         <column>
@@ -2402,9 +2406,11 @@
           </label>
           <label>
             <text>Tens digit sets cycle time(0-9), or start up time for soft start (0-0.9s)</text>
+            <text xml:lang="it">Decine= tempo di ciclo(0-9), o tempo per partenza graduale(0-0.9s)</text>
           </label>
           <label>
             <text>Ones digit extends Off time</text>
+            <text xml:lang="it">Unità= Estende tempo Off</text>
           </label>
           <label>
             <text> </text>
@@ -2413,6 +2419,7 @@
       </row>
     </column>
     <name>Function Output</name>
+    <name xml:lang="it">Funzione Uscita</name>
   </pane>
   <pane>
     <column>
@@ -2441,6 +2448,7 @@
         <column>
           <label>
             <text>Signal Dependent Speed Limits</text>
+            <text xml:lang="it">Temporizzazioni dipendenti da Segnale</text>
           </label>
           <separator/>
           <label>
@@ -2478,6 +2486,7 @@
       </row>
     </column>
     <name>Zimo Specific</name>
+    <name xml:lang="it">Specifiche Zimo</name>
   </pane>
   <pane>
     <column>
@@ -2556,6 +2565,7 @@
             <column>
               <label>
                 <text>Hundreds digit = sensitivity</text>
+                <text xml:lang="it">Centinaia= sensibilità</text>
               </label>
             </column>
             <column>
@@ -2566,22 +2576,27 @@
             <column>
               <label>
                 <text>0 = Fast recognition</text>
+                <text xml:lang="it">0= sensibilità alta</text>
               </label>
               <label>
                 <text>1 = Normal recognition (0.5s)</text>
+                <text xml:lang="it">1= sensibilità normale (0.5s)</text>
               </label>
               <label>
                 <text>2 = Slow recognition (1s)</text>
+                <text xml:lang="it">2= sensibilità bassa (1s)</text>
               </label>
-            </column>
+              </column>
           </row>
           <label>
             <text>Tens and Ones digits = Assymmetrical threshold in tenths of a volt</text>
+            <text xml:lang="it">Decine e Unità= soglia asimmetrica in decimi di Volt</text>
           </label>
         </column>
       </row>
     </column>
     <name>ABC</name>
+    <name xml:lang="it">ABC-DCC Asimmetrica</name>
   </pane>
   <pane>
     <column>
