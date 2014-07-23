@@ -2278,33 +2278,41 @@
     <column>
       <label>
         <text>To calibrate the speed regulation, mark a scale tenth of a unit (Mile or Kilometre), place loco</text>
+        <text xml:lang="it">Per calibrare la velocità, segna un tratto di un decomo di unità in scala (Km o Miglia), piazza la loco</text>
       </label>
       <label>
         <text>on track with correct direction set, F0 turned off and enough distance from the Start marker</text>
+        <text xml:lang="it">sulle rotaie,con F0 in Off e a distanza sufficente dal segno di inizio tratta</text>
       </label>
       <label>
         <text>to allow for the acceleration (change momentum settings if neccessary). Write '1' to CV 135</text>
+        <text xml:lang="it">per permettere l'accellerazione (eventualmente togli il parametro "inerzia"). Scrivere '1' in CV 135</text>
       </label>
       <label>
         <text>using a cab or the Single CV Programmer, then drive the loco through the marked section at</text>
+        <text xml:lang="it">usando il palmare o il programmatore di singole CV, quindi fai marciare la loco nella tratta a</text>
       </label>
       <label>
         <text>a mid speed, turning F0 on at the Start marker and off at the End marker.</text>
+        <text xml:lang="it">velocità intermedia, mettere F0 in On all'inizio tratta e in Off alla fine.</text>
       </label>
       <label>
         <text> </text>
       </label>
       <label>
         <text>If several calibration runs are performed at different speeds and the Calibration Result read</text>
+        <text xml:lang="it">Se si eseguono diverse misurazioni a velocità differenti e si leggono i valori</text>
       </label>
       <label>
         <text>after each one, the Calibration Result should be approximately the same</text>
+        <text xml:lang="it">Risultato Calibrazione dopo ogni volta, i risultati devono essere simili</text>
       </label>
       <label>
         <text> </text>
       </label>
       <display item="km/h speed regulation control number readout" label="Calibration Result" tooltip="Read Only">
         <label>Calibration Result</label>
+        <label xml:lang="it">Risultati Calibrazione</label>
       </display>
       <label>
         <text> </text>
@@ -2316,15 +2324,18 @@
         <column>
           <display item="km/h speed regulation control and range" label="Speed Regulation Control">
             <label>Speed Regulation Control</label>
+            <label xml:lang="it">Controllo regolazione Velocità</label>
           </display>
         </column>
         <column>
           <label>
             <text> Miles or Kilometres per hour per (128) Speed Step</text>
+            <text xml:lang="it">Miglia o Km/ora x 128 step velocità</text>
           </label>
         </column>
       </row>
     </column>
     <name>Speed Regulation</name>
+    <name xml:lang="it">Regolazione Velocità</name>
   </pane>
 </decoder-config>
