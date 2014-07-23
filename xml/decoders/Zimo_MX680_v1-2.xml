@@ -2629,12 +2629,15 @@
             <column>
               <label>
                 <text>Tens digit = on time</text>
+                <text xml:lang="it">Numero decine= a tempo</text>
               </label>
               <label>
                 <text>Ones digit = Off time</text>
+                <text xml:lang="it">Numero unità= fuori tempo</text>
               </label>
               <label>
                 <text>(0 = 100ms, 9 = 1s)</text>
+                <text xml:lang="it">(0 = 100ms, 9 = 1s)</text>
               </label>
             </column>
           </row>
@@ -2659,6 +2662,7 @@
       <separator/>
       <label>
         <text>                                         Lighting Effects Adjustments (Mars, Gyralight etc)</text>
+        <text xml:lang="it">                                        Regolazioni Effetti luminosi  (Mars, Gyralight etc)</text>
       </label>
       <row>
         <column>
@@ -2689,12 +2693,15 @@
           </label>
           <label>
             <text>Tens digit sets cycle time(0-9), or start up time for soft start (0-9 = 0 - 0.9s)</text>
+            <text xml:lang="it">Decine= tempo di ciclo(0-9), o tempo per partenza graduale(0-0.9s)</text>
           </label>
           <label>
             <text>Ones digit extends Off time(0-9)</text>
+            <text xml:lang="it">Unità= Estende tempo Off(0-9)</text>
           </label>
           <label>
             <text>Auto Turn Off delay time (0-255 = 0 - 25.5 sec)</text>
+            <text xml:lang="it">Ritardo Off-Automatico (0-255 = 0 - 25.5 sec)</text>
           </label>
           <label>
             <text> </text>
@@ -2703,6 +2710,7 @@
       </row>
     </column>
     <name>Function Output</name>
+    <name xml:lang="it">Funzione Uscita</name>
   </pane>
   <pane>
     <column>
@@ -2713,6 +2721,7 @@
       <display item="CV programming Acknowledgement"/>
     </column>
     <name>Zimo Specific</name>
+    <name xml:lang="it">Specifiche Zimo</name>
   </pane>
   <pane>
     <column>
@@ -2758,6 +2767,7 @@
           </label>
           <display item="Servo 1 Function Allocation" label="Function Allocation">
             <label>Function Allocation</label>
+            <label xml:lang="it">Allocazione Funzioni</label>
           </display>
           <label>
             <text> </text>
@@ -2766,11 +2776,13 @@
             <column>
               <display item="Servo 1 Rotation Speed" label="Rotation Speed">
                 <label>Rotation Speed</label>
+                <label xml:lang="it">Velocità di rotazione</label>
               </display>
             </column>
             <column>
               <label>
                 <text>Tenths of a second</text>
+                <text xml:lang="it">Decimi di secondo</text>
               </label>
             </column>
           </row>
@@ -2779,12 +2791,15 @@
           </label>
           <display item="Servo 1 Left Stop" label="Left Stop">
             <label>Left Stop</label>
+            <label xml:lang="it">Sinistro-Stop</label>
           </display>
           <display item="Servo 1 Centre" label="Centre">
             <label>Centre</label>
+            <label xml:lang="it">Centro</label>
           </display>
           <display item="Servo 1 Right Stop" label="Right Stop">
             <label>Right Stop</label>
+            <label xml:lang="it">Destro-Stop</label>
           </display>
           <label>
             <text> </text>
@@ -2810,6 +2825,7 @@
           </label>
           <display item="Servo 2 Function Allocation" label="Function Allocation">
             <label>Function Allocation</label>
+            <label xml:lang="it">Allocazione Funzioni</label>
           </display>
           <label>
             <text> </text>
@@ -2818,11 +2834,13 @@
             <column>
               <display item="Servo 2 Rotation Speed" label="Rotation Speed">
                 <label>Rotation Speed</label>
+                <label xml:lang="it">Velocità di rotazione</label>
               </display>
             </column>
             <column>
               <label>
                 <text>Tenths of a second</text>
+                <text xml:lang="it">Decimi di secondo</text>
               </label>
             </column>
           </row>
