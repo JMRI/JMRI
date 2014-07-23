@@ -124,6 +124,8 @@ public class MemoryContents {
     private int currentPage ;
     private int lineNum;
     private boolean hasData;
+    private int curExtLinAddr;
+    private int curExtSegAddr;
 
     /**
      * Storage for Key/Value comment information extracted from key/value comments
@@ -202,6 +204,12 @@ public class MemoryContents {
         pageArray = new int[PAGES][];
         currentPage = -1;
         hasData = false;
+        curExtLinAddr = 0;
+        curExtSegAddr = 0;
+    }
+    
+    private boolean isPageInitialized(int page) {
+        return (pageArray[page] != null);
     }
     
     /**
@@ -371,6 +379,7 @@ public class MemoryContents {
         } catch (IOException ex) {
             throw new FileNotFoundException(ex.toString());
         }
+        currentPage = 0;
         loadOffsetFieldType = LoadOffsetFieldType.UNDEFINED;
         boolean foundDataRecords = false;
         boolean foundEOFRecord = false;
@@ -441,7 +450,51 @@ public class MemoryContents {
                                 + Integer.toHexString(recordType));
                     }
                     
+                    // verify record character count
+                    int count = extractRecLen(line);
+                    if (len != CHARS_IN_RECORD_MARK+CHARS_IN_RECORD_LENGTH+
+                            charsInAddress() +
+                            CHARS_IN_RECORD_TYPE +
+                            (count * CHARS_IN_EACH_DATA_BYTE) + CHARS_IN_CHECKSUM ) {
+                        // line length error - invalid record or invalid data 
+                        // length byte or incorrect LOAD OFFSET field type
+                        String message = 
+                                "Data record line length is incorrect for " // NOI18N
+                                + "inferred addressing type and for data " // NOI18N
+                                +"count field in line " + lineNum;// NOI18N
+                        log.error(message);
+                        throw new MemoryFileRecordLengthException(message);
+                    }
+
+                        // verify the checksum now that we know the the RECTYP.
+                    // Do this by calculating the checksum of all characters on 
+                    //line (except the ':' record mark), which should result in 
+                    // a computed checksum value of 0
+                    int computedChecksum = calculate8BitChecksum(line.substring(CHARS_IN_RECORD_MARK));
+                    if (computedChecksum != 0x00) {
+                        // line's checksum is incorrect.  Find checksum of 
+                        // all but the checksum bytes
+                        computedChecksum = calculate8BitChecksum(
+                                line.substring(
+                                    CHARS_IN_RECORD_MARK, 
+                                    line.length()
+                                        - CHARS_IN_RECORD_MARK 
+                                        - CHARS_IN_CHECKSUM + 1)
+                                );
+                        int expectedChecksum = Integer.parseInt(line.substring(line.length()-2), 16);
+                        String message = "Record checksum error in line "  // NOI18N
+                                + lineNum
+                                + " - computed checksum = 0x" // NOI18N
+                                + Integer.toHexString(computedChecksum)
+                                + ", expected checksum = 0x" // NOI18N
+                                + Integer.toHexString(expectedChecksum)
+                                + "."; // NOI18N
+                        log.error(message);
+                        throw new MemoryFileChecksumException(message);
+                    }     
+                    
                     if (recordType == RECTYP_DATA_RECORD) {
+                        // Record Type 0x00
                         if (foundEOFRecord) {
                             // problem - data record happened after an EOF record was parsed
                             String message = "Found a Data record in line " // NOI18N
@@ -449,26 +502,18 @@ public class MemoryContents {
                             log.error(message);
                             throw new MemoryFileRecordFoundAfterEOFRecord(message);                            
                         }
-                        int count = extractRecLen(line);
-                        if (len != CHARS_IN_RECORD_MARK+CHARS_IN_RECORD_LENGTH+
-                                charsInAddress() +
-                                CHARS_IN_RECORD_TYPE +
-                                (count * CHARS_IN_EACH_DATA_BYTE) + CHARS_IN_CHECKSUM ) {
-                            // line length error - invalid record or invalid data 
-                            // length byte or incorrect LOAD OFFSET field type
-                            String message = 
-                                    "Data record line length is incorrect for " // NOI18N
-                                    + "inferred addressing type and for data " // NOI18N
-                                    +"count field in line " + lineNum;// NOI18N
-                            log.error(message);
-                            throw new MemoryFileRecordLengthException(message);
-                        }
+
                         int recordAddress = extractLoadOffset(line);
                         
                         recordAddress &= (isLoadOffsetType24Bits()) 
                                 ? 0x00FFFFFF : 0x0000FFFF;
                         
-                        if (addressAndCountIsOk(recordAddress, count) == false) {
+                        // compute effective address (assumes cannot have 
+                        // non-zero values in both curExtLinAddr and 
+                        // curExtSegAddr)
+                        int effectiveAddress = recordAddress + curExtLinAddr + curExtSegAddr;
+                        
+                        if (addressAndCountIsOk(effectiveAddress, count) == false) {
                             // data crosses memory boundary that can be mis-interpreted.
                             // So refuse the file.
                             String message = "Data crosses boundary which could lead to " // NOI18N
@@ -478,55 +523,24 @@ public class MemoryContents {
                             throw new MemoryFileAddressingRangeException(message);
                         }
                         
-                        int requestedSegment = recordAddress/PAGESIZE;
-                        
-                        if (requestedSegment != currentPage) {
-                            currentPage = requestedSegment;
-                            recordAddress -= (currentPage * PAGESIZE);
-                            if (log.isDebugEnabled()) {
-                                log.debug("record address 0x" // NOI18N
-                                        + Integer.toHexString(recordAddress)
-                                        + " is causing change to segment 0x" // NOI18N
-                                        + Integer.toHexString(requestedSegment)
-                                        +"."); // NOI18N
-                            }
-                            // Storage may not have been initialized for this page,
-                            // so try to initialize storage for the page.
-                            initPage(currentPage);
+                        int effectivePage = effectiveAddress/PAGESIZE;
+                        if ( !isPageInitialized(effectivePage)) {
+                            initPage(effectivePage);
+                            log.debug("effective address 0x{} is causing change to segment 0x{}", // NOI18N
+                                    Integer.toHexString(effectiveAddress),
+                                    Integer.toHexString(effectivePage));
                         }
+                        int effectiveOffset = effectiveAddress % PAGESIZE;
                         
-                        // calculate checksum of all characters on line (except 
-                        // the ':' record mark) should result in a value of 0
-                        int computedChecksum = calculate8BitChecksum(line.substring(CHARS_IN_RECORD_MARK));
-                        if (computedChecksum != 0x00) {
-                            // line's checksum is incorrect.  Find checksum of 
-                            // all but the checksum bytes
-                            computedChecksum = calculate8BitChecksum(
-                                    line.substring(
-                                        CHARS_IN_RECORD_MARK, 
-                                        line.length()
-                                            - CHARS_IN_RECORD_MARK 
-                                            - CHARS_IN_CHECKSUM + 1)
-                                    );
-                            int expectedChecksum = Integer.parseInt(line.substring(line.length()-2), 16);
-//                            computedChecksum -= expectedChecksum;
-//                            computedChecksum &= 0xFF;
-                            String message = "Data record checksum error in line "  // NOI18N
-                                    + lineNum
-                                    + " - computed checksum = 0x" // NOI18N
-                                    + Integer.toHexString(computedChecksum)
-                                    + ", expected checksum = 0x" // NOI18N
-                                    + Integer.toHexString(expectedChecksum)
-                                    + "."; // NOI18N
-                            log.error(message);
-                            throw new MemoryFileChecksumException(message);
-                        }
-
+                        log.debug("Effective address 0x{}, effective page 0x{}, effective offset 0x{}",
+                                Integer.toHexString(effectiveAddress), 
+                                Integer.toHexString(effectivePage), 
+                                Integer.toHexString(effectiveOffset));
                         for (int i=0; i < count; ++i) {
                             int startIndex = indexOfLastAddressCharacter + 3 + (i*2);
                             // parse as hex into integer, then convert to byte
                             ival = Integer.valueOf(line.substring(startIndex,startIndex+2),16).intValue();
-                            pageArray[currentPage][recordAddress++] = ival;
+                            pageArray[effectivePage][effectiveOffset++] = ival;
                             hasData = true;
                         } 
                         foundDataRecords = true;
@@ -565,12 +579,15 @@ public class MemoryContents {
                             log.error(message);
                             throw new MemoryFileAddressingRangeException(message);
                         }
+                        curExtLinAddr = 0;
+                        curExtSegAddr = newPage;
                         if (newPage != currentPage) {
                             currentPage = newPage;
                             initPage(currentPage);
                         }
                         
                     } else if (recordType == RECTYP_EXTENDED_LINEAR_ADDRESS_RECORD) {
+                        // Record Type 0x04
                         if (foundEOFRecord) {
                              String message = 
                                     "Found a Extended Linear Address record in line " // NOI18N
@@ -615,6 +632,8 @@ public class MemoryContents {
                             log.error(message); // NOI18N
                             throw new MemoryFileRecordContentException (message);
                         } else if (tempPage < PAGES) {
+                           curExtLinAddr = tempPage*65536;
+                           curExtSegAddr = 0;
                             currentPage = tempPage;
                             initPage(currentPage);
                             if (log.isDebugEnabled()) {
@@ -638,6 +657,7 @@ public class MemoryContents {
                             log.error(message);
                             throw new MemoryFileRecordContentException(message);
                         }
+
                         foundEOFRecord = true;
                         continue; // not record we need to handle
                     } else {
@@ -781,10 +801,10 @@ public class MemoryContents {
                             write = true;
                             if (startOffset < 0) {
                                 startOffset = j;
+                                if (log.isDebugEnabled()) {
+                                    log.debug("startOffset = 0x" +Integer.toHexString(startOffset)); // NOI18N
+                                }
                             }
-                        }
-                        if (log.isDebugEnabled()) {
-                            log.debug("startOffset = 0x" +Integer.toHexString(startOffset)); // NOI18N
                         }
                         if (((write == true) && (j == i + (blocksize -1))) 
                                 || ((write == true) && (pageArray[segment][j] <0))) {
@@ -1078,7 +1098,7 @@ public class MemoryContents {
     private boolean addressAndCountIsOk(int addr, int count) {
         int beginPage = addr / PAGESIZE;
         int endPage = ((addr + count-1) / PAGESIZE);
-        log.debug("addr = " + Integer.toHexString(addr) // NOI18N
+        log.debug("Effective Record Addr = 0x" + Integer.toHexString(addr) // NOI18N
                 + " count = " + count // NOI18N
                 + " BeginPage = " + beginPage // NOI18N
                 + " endpage = " + endPage); // NOI18N

@@ -24,6 +24,7 @@ public class MemoryContentsTest extends TestCase {
 
     public void testReadNormalFile() throws java.io.FileNotFoundException {
         MemoryContents m = new MemoryContents();
+        log.debug("Begin of testReadNormalFile");
         
         try {
             m.readHex(new java.io.File("java/test/jmri/jmrit/MemoryContentsTestFiles/TestFiles/MemoryContentsTestFile.hex"));
@@ -50,8 +51,67 @@ public class MemoryContentsTest extends TestCase {
         Assert.assertEquals("content restarts", 864, m.nextContent(500));
     }
 
+    public void testReadSegmentsTestFile() throws java.io.FileNotFoundException {
+        MemoryContents m = new MemoryContents();
+        log.debug("Begin of testReadSegmentsTestFile");
+        
+        try {
+            m.readHex(new java.io.File("java/test/jmri/jmrit/MemoryContentsTestFiles/TestFiles/MemoryContentsTestFile_extSegRecords.hex"));
+        } catch (jmri.jmrit.MemoryContents.MemoryFileRecordLengthException e) {
+            Assert.fail("Unexpected record length exception"); // got an unexpected exception so fail.
+        } catch (jmri.jmrit.MemoryContents.MemoryFileChecksumException e) {
+            Assert.fail("Unexpected Checksum Exception"); // got an unexpected exception so fail.
+        } catch (jmri.jmrit.MemoryContents.MemoryFileUnknownRecordType e) {
+            Assert.fail("Unexpected unknown record type exception"); // got an unexpected exception so fail.
+        } catch (jmri.jmrit.MemoryContents.MemoryFileRecordContentException e) {
+            Assert.fail("Unexpected Record Contents Exception"); // got an unexpected exception so fail.
+        } catch (MemoryContents.MemoryFileNoDataRecordsException e) {
+            Assert.fail("Unexpected 'no records found' exception");
+        } catch (MemoryContents.MemoryFileNoEOFRecordException e) {
+            Assert.fail("Unexpected 'no EOF record found' exception");
+        } catch (MemoryContents.MemoryFileRecordFoundAfterEOFRecord e) {
+            Assert.fail("Unexpected 'record after EOF record' exception");
+        } catch (MemoryContents.MemoryFileAddressingRangeException e) {
+            Assert.fail("unexpected 'addressing range' exception");
+        } catch (IOException e) {
+            Assert.fail("unexpected 'IOException' exception");
+        }
+        
+        verifyMemoryData(0x00000, 0x01, m);
+        verifyMemoryData(0x00001, 0x02, m);
+        verifyMemoryData(0x00002, -1, m);
+        verifyMemoryData(0x00003, -1, m);
+        
+        verifyMemoryData(0x0FFFF, -1, m);
+        verifyMemoryData(0x10000, 0x03, m);
+        verifyMemoryData(0x10001, 0x04, m);
+        verifyMemoryData(0x10002, -1, m);
+        verifyMemoryData(0x10003, -1, m);
+         
+        verifyMemoryData(0x1FFFF, -1, m);
+        verifyMemoryData(0x20000, 0x05, m);
+        verifyMemoryData(0x20001, 0x06, m);
+        verifyMemoryData(0x20002, -1, m);
+        verifyMemoryData(0x20003, -1, m);
+         
+        verifyMemoryData(0x2FFFF, -1, m);
+        verifyMemoryData(0x30000, 0x07, m);
+        verifyMemoryData(0x30001, 0x08, m);
+        verifyMemoryData(0x30002, -1, m);
+        verifyMemoryData(0x30003, -1, m);
+         
+        verifyMemoryData(0x3FFFF, -1, m);
+        verifyMemoryData(0x9FFFF, -1, m);
+        verifyMemoryData(0xA0000, 0xa0, m);
+        verifyMemoryData(0xA0001, 0xa1, m);
+        verifyMemoryData(0xA0002, -1, m);
+        verifyMemoryData(0xA0003, -1, m);
+   }
+
+
     public void testReadNormal24BitAddressFile() throws java.io.FileNotFoundException {
         MemoryContents m = new MemoryContents();
+        log.debug("Begin of testReadNormal24BitAddressFile");
         String filename = "java/test/jmri/jmrit/MemoryContentsTestFiles/TestFiles/MemoryContentsTestFile_24bit.hex";
         try {
             m.readHex(new java.io.File(filename));
@@ -206,6 +266,7 @@ public class MemoryContentsTest extends TestCase {
 
     public void testReadFileCksumError() throws java.io.FileNotFoundException {
         MemoryContents m = new MemoryContents();
+        log.debug("Begin of testReadFileCksumError");
 
         boolean expectedExceptionHappened = false;
         try {
@@ -230,13 +291,14 @@ public class MemoryContentsTest extends TestCase {
             Assert.fail("unexpected 'IOException' exception");
         }
         JUnitAppender.assertErrorMessage(
-                "Data record checksum error in line 29 - computed checksum = 0x1f, expected checksum = 0x1e.");
+                "Record checksum error in line 29 - computed checksum = 0x1f, expected checksum = 0x1e.");
         
         Assert.assertTrue("Checksum Exception was expected", expectedExceptionHappened);
     }
     
     public void testReadFileRecordTypeError() throws java.io.FileNotFoundException {
         MemoryContents m = new MemoryContents();
+        log.debug("Begin of testReadFileRecordTypeError");
         
         boolean expectedExceptionHappened = false;
         try {
@@ -269,6 +331,7 @@ public class MemoryContentsTest extends TestCase {
         
     public void testReadFileRecordLengthError() throws java.io.FileNotFoundException {
         MemoryContents m = new MemoryContents();
+        log.debug("Begin of testReadFileRecordLengthError");
         
         boolean expectedExceptionHappened = false;
         try {
@@ -311,6 +374,7 @@ public class MemoryContentsTest extends TestCase {
 
     public void testReadFileFileNotFound() {
         MemoryContents m = new MemoryContents();
+        log.debug("Begin of testReadFileFileNotFound");
         
         boolean expectedExceptionHappened = false;
         try {
@@ -346,6 +410,7 @@ public class MemoryContentsTest extends TestCase {
     
     public void testReadFileMalformedLine() {
         MemoryContents m = new MemoryContents();
+        log.debug("Begin of testReadFileMalformedLine");
         
         boolean expectedExceptionHappened = false;
         try {
@@ -371,7 +436,7 @@ public class MemoryContentsTest extends TestCase {
         } catch (IOException e) {
             Assert.fail("unexpected 'IOException' exception");
         }
-
+        
         JUnitAppender.assertErrorMessage(
                 "Data record line length is incorrect for inferred addressing type and for data count field in line 7");
         
@@ -380,6 +445,7 @@ public class MemoryContentsTest extends TestCase {
     
     public void testReadFileNoEOFRecordFile() {
         MemoryContents m = new MemoryContents();
+        log.debug("Begin of testReadFileNoEOFRecordFile");
         
         boolean expectedExceptionHappened = false;
         try {
@@ -414,6 +480,7 @@ public class MemoryContentsTest extends TestCase {
     
     public void testReadFileNoContentFile() {
         MemoryContents m = new MemoryContents();
+        log.debug("Begin of testReadFileNoContentFile");
         
         boolean expectedExceptionHappened = false;
         try {
@@ -448,6 +515,7 @@ public class MemoryContentsTest extends TestCase {
     
     public void testReadFile16bitContentFile() {
         MemoryContents m = new MemoryContents();
+        log.debug("Begin of testReadFile16bitContentFile");
         
         try {
             m.readHex(new java.io.File("java/test/jmri/jmrit/MemoryContentsTestFiles/TestFiles/MemoryContentsTestFile_16bit.hex"));
@@ -476,6 +544,7 @@ public class MemoryContentsTest extends TestCase {
     
     public void testReadFileRecordType02BadFile() {
         MemoryContents m = new MemoryContents();
+        log.debug("Begin of testReadFileRecordType02BadFile");
         
         boolean expectedExceptionHappened = false;
         try {
@@ -510,6 +579,7 @@ public class MemoryContentsTest extends TestCase {
     
     public void testReadFileRecordType02BadFile2() {
         MemoryContents m = new MemoryContents();
+        log.debug("Begin of testReadFileRecordType02BadFile2");
         
         boolean expectedExceptionHappened = false;
         try {
@@ -544,6 +614,7 @@ public class MemoryContentsTest extends TestCase {
     
     public void testReadFileHighSegments() {
         MemoryContents m = new MemoryContents();
+        log.debug("Begin of testReadFileHighSegments");
         
         try {
             m.readHex(new java.io.File("java/test/jmri/jmrit/MemoryContentsTestFiles/TestFiles/MemoryContentsTestFile_24bitHighSegs.hex"));
@@ -590,6 +661,7 @@ public class MemoryContentsTest extends TestCase {
     
     public void testReadFilePageCross() {
         MemoryContents m = new MemoryContents();
+        log.debug("Begin of testReadFilePageCross");
         
         boolean expectedExceptionHappened = false;
         
@@ -665,6 +737,7 @@ public class MemoryContentsTest extends TestCase {
 
     public void testReadFile24bitPageCross() {
         MemoryContents m = new MemoryContents();
+        log.debug("Begin of testReadFile24bitPageCross");
         
         boolean expectedExceptionHappened = false;
         

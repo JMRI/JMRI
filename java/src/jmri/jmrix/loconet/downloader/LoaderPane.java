@@ -103,12 +103,12 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
     
     // some constant string declarations
     private static final String MIN_VALUE_ZERO = "0";
-    private static final String MIN_VALUE_EIGHT = "8";
+    private static final String MIN_EESTART_VALUE = "8";
     private static final String MAX_VALUE_255 = "255";
     private static final String MAX_VALUE_65535 = "65535";
-    private static final String MAX_VALUE_FFFFF8 = "FFFFF8";
-    private static final String MIN_VALUE_10 = "10";
-    private static final String MAX_VALUE_500 = "500";
+    private static final String MAX_EESTART_VALUE = "FFFFF8";
+    private static final String MIN_DELAY_VALUE = "5";
+    private static final String MAX_DELAY_VALUE = "500";
 
     public LoaderPane() { }
     
@@ -182,7 +182,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
             p.add(new JLabel(Bundle.getMessage("LabelBootload")+" "));  
             p.add(bootload);
             bootload.setToolTipText(Bundle.getMessage("TipValueRange",
-                    MIN_VALUE_ZERO,MAX_VALUE_255)); //NOI18N
+                    MIN_VALUE_ZERO,MAX_VALUE_255)); 
             bootload.addFocusListener(new FocusListener() {
                 @Override public void focusGained(FocusEvent e) {
                 }
@@ -200,7 +200,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
             p.add(new JLabel(Bundle.getMessage("LabelMfg")+" "));  
             mfg.setToolTipText(Bundle.getMessage("TipValueRange",
-                    MIN_VALUE_ZERO,MAX_VALUE_255)); //NOI18N
+                    MIN_VALUE_ZERO,MAX_VALUE_255)); 
             p.add(mfg);
             mfg.addFocusListener(new FocusListener() {
                 @Override public void focusGained(FocusEvent e) {
@@ -219,7 +219,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
             p.add(new JLabel(Bundle.getMessage("LabelDev")+
                     " ")); //NOI18N
             developer.setToolTipText(Bundle.getMessage("TipValueRange",
-                    MIN_VALUE_ZERO,MAX_VALUE_255)); //NOI18N
+                    MIN_VALUE_ZERO,MAX_VALUE_255)); 
             p.add(developer);
             developer.addFocusListener(new FocusListener() {
                 @Override public void focusGained(FocusEvent e) {
@@ -238,7 +238,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
             p.add(new JLabel(Bundle.getMessage("LabelProduct")+" ")); 
             product.setToolTipText(Bundle.getMessage("TipValueRange",
-                    MIN_VALUE_ZERO,MAX_VALUE_65535)); //NOI18N
+                    MIN_VALUE_ZERO,MAX_VALUE_65535));
             p.add(product);
             product.addFocusListener(new FocusListener() {
                 @Override public void focusGained(FocusEvent e) {
@@ -257,7 +257,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
             hardware.setToolTipText(Bundle.getMessage("TipValueRange",
-                    MIN_VALUE_ZERO,MAX_VALUE_255)); //NOI18N
+                    MIN_VALUE_ZERO,MAX_VALUE_255));
             p.add(new JLabel(Bundle.getMessage("LabelHardware")+" ")); 
             p.add(hardware);
             hardware.addFocusListener(new FocusListener() {
@@ -317,7 +317,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
             p.add(new JLabel(Bundle.getMessage("LabelSoftware")+" ")); 
             software.setToolTipText(Bundle.getMessage("TipValueRange",
-                    MIN_VALUE_ZERO,MAX_VALUE_255)); //NOI18N
+                    MIN_VALUE_ZERO,MAX_VALUE_255));
             p.add(software);
             software.addFocusListener(new FocusListener() {
                 @Override public void focusGained(FocusEvent e) {
@@ -353,14 +353,16 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
             p.add(new JLabel(Bundle.getMessage("LabelDelay")+" ")); 
             delay.setToolTipText(Bundle.getMessage("TipValueRange",
-                    MIN_VALUE_10,MAX_VALUE_500)); //NOI18N
+                    MIN_DELAY_VALUE,MAX_DELAY_VALUE));
 
             p.add(delay);
             delay.addFocusListener(new FocusListener() {
                 @Override public void focusGained(FocusEvent e) {
                 }
                 @Override public void focusLost(FocusEvent e) {
-                    intParameterIsValid(hardware, 10, 500);
+                    intParameterIsValid(hardware, 
+                            Integer.parseInt(MIN_DELAY_VALUE), 
+                            Integer.parseInt(MAX_DELAY_VALUE));
                     updateDownloadVerifyButtons();
                 }
             });
@@ -374,7 +376,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
             p.add(new JLabel(Bundle.getMessage("LabelEEStart")+" ")); 
             eestart.setToolTipText(Bundle.getMessage("TipValueRange",
-                    MIN_VALUE_EIGHT,MAX_VALUE_FFFFF8)); //NOI18N
+                    MIN_EESTART_VALUE,MAX_EESTART_VALUE));
             p.add(eestart);
             eestart.addFocusListener(new FocusListener() {
                 @Override public void focusGained(FocusEvent e) {
@@ -484,18 +486,18 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
         String newFileName = chooser.getSelectedFile().getName();
         inputFileName.setText(newFileName);
         // check to see if it fits on the screen
-        int currentStringWidth = inputFileName.getMinimumSize().width;
-        int allowedWidth;
+        double currentStringWidth = inputFileName.getMinimumSize().width;
+        double allowedWidth;
         inputFileName.setToolTipText(newFileName);
         allowedWidth = inputFileNamePanel.getSize().width*4/5 - inputFileLabelWidth;
         if (currentStringWidth > allowedWidth ) {
             // Filename won't fit on the display.
             // need to shorten the string.
-            int startPoint = 
-                    (int)((double)inputFileName.getText().length() 
-                    * (1 - ((double)allowedWidth/(double)currentStringWidth)));
+            double startPoint = 
+                    (inputFileName.getText().length() 
+                    * (1.0 - (allowedWidth/currentStringWidth)));
             String displayableName = "..." // NOI18N
-                    +inputFileName.getText().substring(startPoint);
+                    +inputFileName.getText().substring((int)startPoint);
             log.info("Shortening display of filename "  // NOI18N
                     + inputFileName.getText()
                     + " to " +displayableName);   // NOI18N
@@ -918,7 +920,8 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
 
         try {
             delayval = Integer.parseInt(delay.getText());
-            if ((delayval < 10) || (delayval > 500)) {
+            if ((delayval < Integer.parseInt(MIN_DELAY_VALUE)) || 
+                    (delayval > Integer.parseInt(MAX_DELAY_VALUE))) {
                 throw new NumberFormatException("out of range");
             }
         } catch( NumberFormatException ex ) {
@@ -934,7 +937,8 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
 
         try {
             eestartval = Integer.parseInt(eestart.getText(),16);
-            if (eestartval < 8) {
+            if ((eestartval < Integer.parseInt(MIN_EESTART_VALUE,16)) ||
+                    (eestartval > Integer.parseInt(MAX_EESTART_VALUE,16))) {
                 throw new NumberFormatException("out of range");
             }
         } catch( NumberFormatException ex ) {
@@ -1014,14 +1018,14 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
             int location = inputContent.nextContent(startaddr);
             totalmsgs = 0;
             sentmsgs = 0;
-            location = location & 0xFFFFFFF8;  // mask off bits to be multiple of 8
+            location = location & 0x00FFFFF8;  // mask off bits to be multiple of 8
             do {
                 location = location + 8;
                 totalmsgs++;
                 // update to the next location for data
                 int next = inputContent.nextContent(location);
                 if (next<0) break;   // no data left
-                location = next & 0xFFFFFFF8;  // mask off bits to be multiple of 8
+                location = next & 0x00FFFFF8;  // mask off bits to be multiple of 8
 
             } while (location <= endaddr);
 
@@ -1031,7 +1035,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
                 log.info("No data, which seems odd");
                 return;  // ends load process
             }
-            location = location & 0xFFFFFFF8;  // mask off bits to be multiple of 8
+            location = location & 0x00FFFFF8;  // mask off bits to be multiple of 8
 
             setAddr(location);
 
@@ -1061,7 +1065,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
                 // update to the next location for data
                 int next = inputContent.nextContent(location);
                 if (next<0) break;   // no data left
-                next = next & 0xFFFFFFF8;  // mask off bits to be multiple of 8
+                next = next & 0x00FFFFF8;  // mask off bits to be multiple of 8
                 if (next != location) {
                     // wait for completion
                     doWait(next);
@@ -1215,7 +1219,9 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
         if (!temp) {
             log.info("Software Version Number is not valid: "+software.getText());
         }
-        temp = intParameterIsValid(delay, 10, 500);
+        temp = intParameterIsValid(delay, 
+                Integer.parseInt(MIN_DELAY_VALUE), 
+                Integer.parseInt(MAX_DELAY_VALUE));
         allIsOk &= temp;
         if (!temp) {
             log.info("Delay is not valid: "+delay.getText());
@@ -1243,7 +1249,9 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
             } catch (NumberFormatException ex) {
                 junk = -1;
             }
-            if ((junk < 8) || ((junk % 8) != 0)) {
+            if ((junk < Integer.parseInt(MIN_EESTART_VALUE,16)) || 
+                    ((junk % 8) != 0) ||
+                    (junk > Integer.parseInt(MAX_EESTART_VALUE,16))) {
                 eestart.setForeground(Color.red);
                 temp = false;
             } else {
