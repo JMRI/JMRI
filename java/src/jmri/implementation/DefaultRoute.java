@@ -1081,11 +1081,11 @@ public class DefaultRoute extends AbstractNamedBean
                     message.append(Bundle.getMessage("InUseRouteOutputTurnout")); //IN18N
                     found = true;
                 }
-                if(getCtlTurnout()!=null && getCtlTurnout().equals(nb)){
+                if(nb.equals(getCtlTurnout())){
                     message.append(Bundle.getMessage("InUseRouteControlTurnout")); //IN18N
                     found = true;
                 }
-                if(getLockCtlTurnout()!=null && getLockCtlTurnout().equals(nb)){
+                if(nb.equals(getLockCtlTurnout())){
                     message.append(Bundle.getMessage("InUseRouteLockTurnout")); //IN18N
                     found = true;
                 }
@@ -1095,7 +1095,7 @@ public class DefaultRoute extends AbstractNamedBean
                     message.append(Bundle.getMessage("InUseRouteOutputSensor")); //IN18N
                     found = true;
                 }
-                if(getTurnoutsAlgdSensor()!=null && getTurnoutsAlgdSensor().equals(nb)){
+                if(nb.equals(getTurnoutsAlgdSensor())){
                     message.append(Bundle.getMessage("InUseRouteAlignSensor")); //IN18N
                     found = true; 
                 }
@@ -1109,17 +1109,16 @@ public class DefaultRoute extends AbstractNamedBean
                 message.append("</ul>");
                 throw new java.beans.PropertyVetoException(message.toString(), evt);
             }
-            
         } else if ("DoDelete".equals(evt.getPropertyName())){ //IN18N
             if(nb instanceof Turnout){
                 if(isOutputTurnoutIncluded((Turnout)nb)){
                     deActivateRoute();
                     deleteOutputTurnout((Turnout)evt.getOldValue());
-                } if(getCtlTurnout()!=null && getCtlTurnout().equals(nb)){
+                } if(nb.equals(getCtlTurnout())){
                     deActivateRoute();
                     setControlTurnout(null);
                 }
-                if(getLockCtlTurnout()!=null && getLockCtlTurnout().equals(nb)){
+                if(nb.equals(getLockCtlTurnout())){
                     deActivateRoute();
                     setLockControlTurnout(null);
                 }
@@ -1127,24 +1126,22 @@ public class DefaultRoute extends AbstractNamedBean
             else if(nb instanceof Sensor){
                 if(isOutputSensorIncluded((Sensor)nb)){
                     deActivateRoute();
-
+                    removeOutputSensor((Sensor)nb);
                 }
-                if(getTurnoutsAlgdSensor()!=null && getTurnoutsAlgdSensor().equals(nb)){
+                if(nb.equals(getTurnoutsAlgdSensor())){
                     deActivateRoute();
                     setTurnoutsAlignedSensor(null);
                 }
                 if(isRouteSensorIncluded((Sensor)nb)){
                     deActivateRoute();
-
+                    removeRouteSensor((Sensor)nb);
                 }
-            
             }
             activateRoute();
         }
     }
 
     static final Logger log = LoggerFactory.getLogger(DefaultRoute.class.getName());
-    
     
 }
 
