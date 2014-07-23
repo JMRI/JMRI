@@ -370,6 +370,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         jmri.InstanceManager.signalMastManagerInstance().addVetoableChangeListener(this);
         jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
         jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
         layoutName = name;
         // initialize frame
         Container contentPane = getContentPane();
@@ -9051,7 +9052,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if(nb instanceof Sensor){
                 int count = 0;
                 for(SensorIcon si:sensorList){
-                    if(si.getNamedBean()==nb){
+                    if(nb.equals(si.getNamedBean())){
                         count++;
                         found = true;
                     }
@@ -9065,6 +9066,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if(foundelsewhere!=null){
                     message.append(foundelsewhere);
                     found = true;
+                }
+            }
+            if (nb instanceof Memory){
+                for(MemoryIcon si: memoryLabelList){
+                    if(nb.equals(si.getMemory())){
+                        found = true;
+                        message.append("<li>");
+                        message.append(Bundle.getMessage("VetoMemoryIconFound"));
+                        message.append("</li>");
+                    }
                 }
             }
             if(found){
@@ -9139,6 +9150,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
                 setDirty(true);
                 repaint();
+            }
+            if (nb instanceof Memory){
+                Iterator<MemoryIcon> icon = memoryLabelList.iterator();
+                while (icon.hasNext()){
+                    MemoryIcon i = icon.next();
+                    if(nb.equals(i.getMemory())){
+                        icon.remove();
+                        super.removeFromContents(i);
+                    }
+                }
             }
         }
     }

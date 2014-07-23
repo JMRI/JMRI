@@ -37,6 +37,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
     public LayoutBlockManager() {
         super();
         jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
     }
     
     public int getXMLOrder(){

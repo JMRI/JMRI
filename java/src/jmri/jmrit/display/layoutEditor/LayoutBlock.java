@@ -13,6 +13,7 @@ import jmri.NamedBeanHandle;
 import jmri.Path;
 import jmri.Sensor;
 import jmri.Turnout;
+import jmri.Memory;
 import jmri.implementation.AbstractNamedBean;
 import jmri.util.JmriJFrame;
 import jmri.jmrit.beantable.beanedit.BeanItemPanel;
@@ -89,7 +90,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 	// operational instance variables (not saved to disk)
 	private int useCount = 0;
     private NamedBeanHandle<Sensor> occupancyNamedSensor = null;
-	private jmri.Memory memory = null;
+    private NamedBeanHandle<Memory> namedMemory = null;
+	//private jmri.Memory memory = null;
 	private jmri.Block block = null;
 	//private int maxBlockNumber = 0;
 	private LayoutBlock _instance = null;
@@ -295,7 +297,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 	 */
 	public jmri.Memory validateMemory(String memName, Component openFrame) {
 		// check if anything entered	
-		if (memName.length()<1) {
+		if (memName==null || memName.length()<1) {
 			// no memory entered
 			return null;
 		}
@@ -309,9 +311,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 					rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
-		if ( !(memName.equals(m.getUserName())) ) {
-			memName = memName.toUpperCase();
-		}
+        
         memoryName = memName;
         
         //Go through the memory icons on the panel and see if any are linked to this layout block
@@ -368,21 +368,49 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 	/**
 	 * Returns Memory name
 	*/
-	public String getMemoryName() {return (memoryName);}
+	public String getMemoryName() {
+        if(namedMemory!=null)
+            return namedMemory.getName();
+        return memoryName;
+    }
 			
 	/**
 	 * Returns Memory
 	*/
-	public jmri.Memory getMemory() {return (memory);}
+	public jmri.Memory getMemory() {
+        if(namedMemory==null)
+            setMemoryName(memoryName);
+        if(namedMemory!=null)
+            return namedMemory.getBean();
+        return null;
+    }
 
 	/**
 	 * Add Memory by name
 	 */
 	public void setMemoryName(String name) {
+        if(name==null || name.equals("")){
+            namedMemory=null;
+            memoryName = name;
+            return;
+        }
 		memoryName = name;
-		memory = jmri.InstanceManager.memoryManagerInstance().
+		Memory memory = jmri.InstanceManager.memoryManagerInstance().
                             getMemory(name);
+        if (memory!=null){
+            namedMemory = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, memory);
+        }
 	}
+    
+    public void setMemory(Memory m, String name){
+        if(m==null){
+            namedMemory=null;
+            memoryName = name;
+            return;
+        }
+        namedMemory = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, m);
+    }
+    
 			
 	/**
 	 * Returns occupancy Sensor name
@@ -674,12 +702,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 	 */
 	void handleBlockChange(java.beans.PropertyChangeEvent e) {
 		// Update memory object if there is one
-		if ( (memory==null) && (!memoryName.equals("")) ) {
-			// initialize if needed 
-			memory = jmri.InstanceManager.memoryManagerInstance().
-                            getMemory(memoryName);
-		}
-		if ( (memory!=null) && (block!=null) && !suppressNameUpdate ) {
+		if ( (getMemory()!=null) && (block!=null) && !suppressNameUpdate ) {
 			// copy block value to memory if there is a value
 			Object val = block.getValue();
 			if (val!=null){
@@ -687,7 +710,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                     val = val.toString();
                 } 
             }
-			memory.setValue(val);
+			getMemory().setValue(val);
 		}				
 		// Redraw all Layout Editor panels using this Layout Block
 		redrawLayoutBlockPanels();
@@ -750,211 +773,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         beanEdit.actionPerformed(null);
     
     }
-    /**
-     * Edit a Layout Block 
-     */
-	protected void editLayoutBlockOld(Component callingPane) {
-		if (editOpen) {
-			editLayoutBlockFrame.setVisible(true);
-			return;
-		}
-		// Initialize if needed
-		if (editLayoutBlockFrame == null) {
-            editLayoutBlockFrame = new JmriJFrame( rb.getString("EditBlock"), false, false);
-            editLayoutBlockFrame.addHelpMenu("package.jmri.jmrit.display.EditLayoutBlock", true);
-            editLayoutBlockFrame.setLocation(80,40);
-            Container contentPane = editLayoutBlockFrame.getContentPane();        
-            contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-			// show block ID (not changeable)
-			JPanel panel1 = new JPanel(); 
-            panel1.setLayout(new FlowLayout());
-			JLabel blockNameLabel = new JLabel( rb.getString("Name")+": "+blockName );
-            panel1.add(blockNameLabel);
-            contentPane.add(panel1);
-			// show current use count (not editable)
-			JPanel panel2 = new JPanel(); 
-            panel2.setLayout(new FlowLayout());
-            panel2.add(blockUseLabel);
-            contentPane.add(panel2);
-			// set up occupancy sensor (changeable)
-			contentPane.add(new JSeparator(JSeparator.HORIZONTAL));
-			JPanel panel3 = new JPanel(); 
-            panel3.setLayout(new FlowLayout());
-			JLabel sensorLabel = new JLabel( rb.getString("OccupancySensor")+":");
-            panel3.add(sensorLabel);
-            panel3.add(sensorNameField);
-            sensorNameField.setToolTipText( rb.getString("OccupancySensorToolTip") );
-            contentPane.add(panel3);
-            
-			// set up occupied sense (changeable)
-			JPanel panel4 = new JPanel(); 
-            panel4.setLayout(new FlowLayout());
-			JLabel sensorSenseLabel = new JLabel( rb.getString("OccupiedSense")+":");
-            panel4.add(sensorSenseLabel);
-			senseBox.removeAllItems();
-			senseBox.addItem( rb.getString("SensorActive") );
-			senseActiveIndex = 0;
-			senseBox.addItem( rb.getString("SensorInactive") );
-			senseInactiveIndex = 1;
-			panel4.add(senseBox);
-            senseBox.setToolTipText( rb.getString("OccupiedSenseHint") );
-            contentPane.add(panel4);
-            
-            contentPane.add(sensorDebounceGlobalCheck);
-            sensorDebounceGlobalCheck.setToolTipText(rb.getString("OccupancySensorUseGlobal"));
-            JPanel panel4a = new JPanel();
-            panel4a.add(new JLabel(rb.getString("OccupancySensorDebounceInActive")));
-            sensorDebounceInactiveField.setToolTipText(rb.getString("OccupancySensorDebounceInActiveToolTip"));
-            panel4a.add(sensorDebounceInactiveField);
-            contentPane.add(panel4a);
-            JPanel panel4b = new JPanel();
-            panel4b.add(new JLabel(rb.getString("OccupancySensorDebounceActive")));
-            panel4b.add(sensorDebounceActiveField);
-            sensorDebounceActiveField.setToolTipText(rb.getString("OccupancySensorDebounceActiveToolTip"));
-            contentPane.add(panel4b);
-            
-			// set up track color (changeable)
-			contentPane.add(new JSeparator(JSeparator.HORIZONTAL));
-			JPanel panel6 = new JPanel(); 
-            panel6.setLayout(new FlowLayout());
-			JLabel trackColorLabel = new JLabel( rb.getString("TrackColor") );
-			panel6.add(trackColorLabel);
-			initializeColorCombo(trackColorBox);
-			panel6.add(trackColorBox);
-            trackColorBox.setToolTipText( rb.getString("TrackColorHint") );
-            contentPane.add(panel6);			
-			// set up occupied color (changeable)
-			JPanel panel7 = new JPanel(); 
-            panel7.setLayout(new FlowLayout());
-			JLabel occupiedColorLabel = new JLabel( rb.getString("OccupiedColor") );
-			panel7.add(occupiedColorLabel);
-			initializeColorCombo(occupiedColorBox);
-			panel7.add(occupiedColorBox);
-            occupiedColorBox.setToolTipText( rb.getString("OccupiedColorHint") );
-            contentPane.add(panel7);
-			// set up extra color (changeable)
-			JPanel panel7a = new JPanel(); 
-            panel7a.setLayout(new FlowLayout());
-			JLabel extraColorLabel = new JLabel( rb.getString("ExtraColor") );
-			panel7a.add(extraColorLabel);
-			initializeColorCombo(extraColorBox);
-			panel7a.add(extraColorBox);
-            extraColorBox.setToolTipText( rb.getString("ExtraColorHint") );
-            contentPane.add(panel7a);
-			// set up Memory entry (changeable)
-			contentPane.add(new JSeparator(JSeparator.HORIZONTAL));
-			JPanel panel8 = new JPanel(); 
-            panel8.setLayout(new FlowLayout());
-			JLabel memoryLabel = new JLabel( rb.getString("MemoryVariable")+":");
-            panel8.add(memoryLabel);
-            panel8.add(memoryNameField);
-            memoryNameField.setToolTipText( rb.getString("MemoryVariableTip") );
-            contentPane.add(panel8);
-            
-            if(InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).isAdvancedRoutingEnabled()){
-                contentPane.add(new JSeparator(JSeparator.HORIZONTAL));
-                JPanel panel19 = new JPanel();
-                panel19.setLayout(new FlowLayout());
-                JLabel metricLabel = new JLabel("Block Metric");
-                panel19.add(metricLabel);
-                panel19.add(metricField);
-                metricField.setToolTipText("set the cost for going over this block");
-                contentPane.add(panel19);
-                neighbourDir = new ArrayList<JComboBox>(getNumberOfNeighbours());
-                for(int i = 0; i<getNumberOfNeighbours(); i++){
-                    JPanel panel = new JPanel();
-                    panel.setLayout(new FlowLayout());
-                    panel.add(new JLabel("Attached Block: " + getNeighbourAtIndex(i).getDisplayName()));
-                    JComboBox dir = new JComboBox(working);
-                    Block blk = neighbours.get(i).getBlock();
-                    if(block.isBlockDenied(blk))
-                        dir.setSelectedIndex(2);
-                    else if (blk.isBlockDenied(block))
-                        dir.setSelectedIndex(1);
-                    else
-                        dir.setSelectedIndex(0);
-                    panel.add(dir);
-                    neighbourDir.add(dir);
-                    contentPane.add(panel);
-                }
-            }
-            contentPane.add(new JSeparator(JSeparator.HORIZONTAL));
-            JPanel panel20 = new JPanel();
-            panel20.setLayout(new FlowLayout());
-            panel20.add(permissiveCheck);
-            permissiveCheck.setToolTipText("Is another train allowed to enter the block when it is already occupied");
-            contentPane.add(panel20);
-            
-            
-			// set up Done and Cancel buttons
-			contentPane.add(new JSeparator(JSeparator.HORIZONTAL));
-            JPanel panel5 = new JPanel();
-            panel5.setLayout(new FlowLayout());
-			// Done
-            panel5.add(blockEditDone = new JButton(rb.getString("Done")));
-            blockEditDone.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    blockEditDonePressed(e);
-                }
-            });
-            blockEditDone.setToolTipText( rb.getString("DoneHint") );
-			// Cancel
-            panel5.add(blockEditCancel = new JButton(rb.getString("Cancel")));
-            blockEditCancel.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    blockEditCancelPressed(e);
-                }
-            });
-            blockEditCancel.setToolTipText( rb.getString("CancelHint") );
-            contentPane.add(panel5);
-
-            
-		}
-		// Set up for Edit
-		blockUseLabel.setText(rb.getString("UseCount")+": "+useCount );
-		sensorNameField.setText(getOccupancySensorName());
-		if (occupiedSense==Sensor.ACTIVE) {
-			senseBox.setSelectedIndex(senseActiveIndex);
-		}
-		else {
-			senseBox.setSelectedIndex(senseInactiveIndex);
-		}
-        if(getOccupancySensor()!=null){
-            sensorDebounceGlobalCheck.setSelected(getOccupancySensor().useDefaultTimerSettings());
-            sensorDebounceInactiveField.setText(String.valueOf(getOccupancySensor().getSensorDebounceGoingInActiveTimer()));
-            sensorDebounceActiveField.setText(String.valueOf(getOccupancySensor().getSensorDebounceGoingActiveTimer()));
-            sensorDebounceGlobalCheck.setSelected(getOccupancySensor().useDefaultTimerSettings());
-        }
-        sensorDebounceGlobalCheck.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e){
-                if(sensorDebounceGlobalCheck.isSelected()){
-                    sensorDebounceInactiveField.setEnabled(false);
-                    sensorDebounceActiveField.setEnabled(false);
-                    sensorDebounceActiveField.setText(String.valueOf(jmri.InstanceManager.sensorManagerInstance().getDefaultSensorDebounceGoingActive()));
-                    sensorDebounceInactiveField.setText(String.valueOf(jmri.InstanceManager.sensorManagerInstance().getDefaultSensorDebounceGoingInActive()));
-                } else {
-                    sensorDebounceInactiveField.setEnabled(true);
-                    sensorDebounceActiveField.setEnabled(true);
-                }
-            }
-        });
-		setColorCombo(trackColorBox,blockTrackColor);
-		setColorCombo(occupiedColorBox,blockOccupiedColor);
-		setColorCombo(extraColorBox,blockExtraColor);
-		memoryNameField.setText(memoryName);
-        metricField.setText(Integer.toString(metric));
-
-        if(block!=null)
-            permissiveCheck.setSelected(block.getPermissiveWorking());
-        editLayoutBlockFrame.addWindowListener(new java.awt.event.WindowAdapter() {
-				public void windowClosing(java.awt.event.WindowEvent e) {
-					blockEditCancelPressed(null);
-				}
-			});
-        editLayoutBlockFrame.pack();
-        editLayoutBlockFrame.setVisible(true);		
-		editOpen = true;
-	}
     
     String[] working = {"Bi-Directional", "Recieve Only", "Send Only"};
     
@@ -1019,7 +837,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 		if ( !memoryName.equals(memoryNameField.getText().trim()) ) {
 			// memory has changed
 			String newName = memoryNameField.getText().trim();
-			if ((memory = validateMemory(newName,editLayoutBlockFrame))==null) {
+            setMemory(validateMemory(newName,editLayoutBlockFrame), newName);
+			if (getMemory()==null) {
 				// invalid memory entered
 				memoryName = "";
 				memoryNameField.setText("");
@@ -1068,7 +887,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 		editLayoutBlockFrame.dispose();
 		editLayoutBlockFrame = null;
 	}
-    
     
     class LayoutBlockEditAction extends jmri.jmrit.beantable.beanedit.BlockEditAction{
         @Override
@@ -1132,7 +950,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                     if ( !memoryName.equals(memoryNameField.getText().trim()) ) {
                         // memory has changed
                         String newName = memoryNameField.getText().trim();
-                        if ((memory = validateMemory(newName,editLayoutBlockFrame))==null) {
+                        setMemory(validateMemory(newName,editLayoutBlockFrame), newName);
+                        if (getMemory()==null) {
                             // invalid memory entered
                             memoryName = "";
                             memoryNameField.setText("");
@@ -4044,11 +3863,21 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                     throw new java.beans.PropertyVetoException(getDisplayName(), evt);
                 }
             }
+            if (evt.getOldValue() instanceof Memory){
+                if(evt.getOldValue().equals(getMemory())){
+                    throw new java.beans.PropertyVetoException(getDisplayName(), evt);
+                }
+            }
         } else if ("DoDelete".equals(evt.getPropertyName())){ //IN18N
             //Do nothing at this stage
             if(evt.getOldValue() instanceof Sensor){
                 if(evt.getOldValue().equals(getOccupancySensor())){
                     setOccupancySensorName(null);
+                }
+            }
+            if(evt.getOldValue() instanceof Memory){
+                if(evt.getOldValue().equals(getMemory())){
+                    setMemoryName(null);
                 }
             }
         }

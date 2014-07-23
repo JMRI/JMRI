@@ -732,11 +732,20 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
                     throw new java.beans.PropertyVetoException(getDisplayName(), evt);
                 }
             }
+            if(evt.getOldValue() instanceof Reporter){
+                if(evt.getOldValue().equals(getReporter())){
+                    throw new java.beans.PropertyVetoException(getDisplayName(), evt);
+                }
+            }
         } else if ("DoDelete".equals(evt.getPropertyName())){ //IN18N
-            //Do nothing at this stage
             if(evt.getOldValue() instanceof Sensor){
                 if(evt.getOldValue().equals(getSensor())){
                     setSensor(null);
+                }
+            }
+            if(evt.getOldValue() instanceof Reporter){
+                if(evt.getOldValue().equals(getReporter())){
+                    setReporter(null);
                 }
             }
         }

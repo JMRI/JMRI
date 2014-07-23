@@ -38,6 +38,7 @@ public class BlockManager extends AbstractManager
     public BlockManager() {
         super();
         jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.reporterManagerInstance().addVetoableChangeListener(this);
     }
     
     public int getXMLOrder(){
