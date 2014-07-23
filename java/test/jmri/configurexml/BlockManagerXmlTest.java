@@ -357,6 +357,7 @@ public class BlockManagerXmlTest extends LoadFileTestBase {
                     new FileInputStream(outFile)));
         String inLine;
         String outLine;
+        int count = 0;
         while ( (inLine = inFileStream.readLine())!=null && (outLine = outFileStream.readLine())!=null) {
             if (!inLine.startsWith("  <!--Written by JMRI version")
                 && !inLine.startsWith("  <timebase")   // time changes from timezone to timezone
@@ -364,8 +365,14 @@ public class BlockManagerXmlTest extends LoadFileTestBase {
                 && !inLine.startsWith("    <modifier")   // version changes over time
                 && !inLine.startsWith("    <minor")   // version changes over time
                 && !inLine.startsWith("<?xml-stylesheet")   // Linux seems to put attributes in different order
-                && !inLine.startsWith("    <modifier>This line ignored</modifier>"))
+                && !inLine.startsWith("    <modifier>This line ignored</modifier>")) {
+                    if (!inLine.equals(outLine)) {
+                        System.out.println("match failed in testLoadStoreCurrent line "+count);
+                        System.out.println("   inLine = \""+inLine+"\"");
+                        System.out.println("  outLine = \""+outLine+"\"");
+                    }
                     Assert.assertEquals(inLine, outLine);
+            }
         }
         
         outFileStream.close();

@@ -113,15 +113,23 @@ public class LoadFileTest extends LoadFileTestBase {
                     new FileInputStream(outFile)));
         String inLine;
         String outLine;
+        int count = 0;
         while ( (inLine = inFileStream.readLine())!=null && (outLine = outFileStream.readLine())!=null) {
+            count++;
             if (!inLine.startsWith("  <!--Written by JMRI version")
                 && !inLine.startsWith("  <timebase")   // time changes from timezone to timezone
                 && !inLine.startsWith("    <test>")   // version changes over time
                 && !inLine.startsWith("    <modifier")   // version changes over time
                 && !inLine.startsWith("    <minor")   // version changes over time
                 && !inLine.startsWith("<?xml-stylesheet")   // Linux seems to put attributes in different order
-                && !inLine.startsWith("    <modifier>This line ignored</modifier>"))
+                && !inLine.startsWith("    <modifier>This line ignored</modifier>")) {
+                    if (!inLine.equals(outLine)) {
+                        log.error("match failed in testLoadStoreCurrent line "+count);
+                        log.error("   inLine = \""+inLine+"\"");
+                        log.error("  outLine = \""+outLine+"\"");
+                    }
                     Assert.assertEquals(inLine, outLine);
+            }
         }
         inFileStream.close();
         outFileStream.close();

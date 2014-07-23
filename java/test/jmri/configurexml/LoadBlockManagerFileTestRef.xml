@@ -3,9 +3,9 @@
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
   <jmriversion>
     <major>3</major>
-    <minor>1</minor>
-    <test>1</test>
-    <modifier>.3</modifier>
+    <minor>9</minor>
+    <test>2</test>
+    <modifier>.2</modifier>
   </jmriversion>
   <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
@@ -570,6 +570,12 @@
       </path>
     </block>
   </blocks>
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
   <layoutblocks class="jmri.jmrit.display.configurexml.LayoutBlockManagerXml" />
-  <!--Written by JMRI version 20120122-1945-Bob on Sun Jan 22 14:59:13 EST 2012 $Id$-->
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <!--Written by JMRI version 20140723-0911-jake on Wed Jul 23 10:11:48 BST 2014 $Id$-->
 </layout-config>
+
