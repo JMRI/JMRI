@@ -160,11 +160,16 @@ public class LayoutTurnout
     protected NamedBeanHandle<SignalHead> signalC2HeadNamed = null; // RH_Xover and double crossover only
     protected NamedBeanHandle<SignalHead> signalD1HeadNamed = null; // single or double crossover only
     protected NamedBeanHandle<SignalHead> signalD2HeadNamed = null; // LH_Xover and double crossover only
-    
-	/*public String signalAMast = ""; // Throat
-	public String signalBMast = ""; // Continuing 
-	public String signalCMast = ""; // diverging
-	public String signalDMast = ""; // single or double crossover only*/
+
+	final public static int POINTA = 0x01;
+	final public static int POINTA2 = 0x03;
+	final public static int POINTA3 = 0x05;
+	final public static int POINTB = 0x10;
+	final public static int POINTB2 = 0x12;
+	final public static int POINTC = 0x20;
+	final public static int POINTC2 = 0x22;
+	final public static int POINTD = 0x30;
+	final public static int POINTD2 = 0x32;
     
     protected NamedBeanHandle<SignalMast> signalAMastNamed = null; // Throat
     protected NamedBeanHandle<SignalMast> signalBMastNamed = null; // Continuing 
@@ -369,16 +374,38 @@ public class LayoutTurnout
 	public String getBlockCName() {return blockCName;}
 	public String getBlockDName() {return blockDName;}
     
+    public SignalHead getSignalHead(int loc){
+        NamedBeanHandle<SignalHead> signalHead = null;
+        switch(loc){
+            case POINTA : signalHead = signalA1HeadNamed;
+                          break;
+            case POINTA2 : signalHead = signalA2HeadNamed;
+                          break;
+            case POINTA3 : signalHead = signalA3HeadNamed;
+                          break;
+            case POINTB : signalHead = signalB1HeadNamed;
+                          break;
+            case POINTB2 : signalHead = signalB2HeadNamed;
+                          break;
+            case POINTC : signalHead = signalC1HeadNamed;
+                          break;
+            case POINTC2 : signalHead = signalC2HeadNamed;
+                          break;
+            case POINTD : signalHead = signalD1HeadNamed;
+                          break;
+            case POINTD2 : signalHead = signalD2HeadNamed;
+                          break;
+        }
+        if(signalHead!=null){
+            return signalHead.getBean();
+        }
+        return null;
+    }
+    
     public String getSignalA1Name(){
         if(signalA1HeadNamed!=null)
             return signalA1HeadNamed.getName();
         return "";
-    }
-    
-    public SignalHead getSignalA1(){
-        if(signalA1HeadNamed!=null)
-            return signalA1HeadNamed.getBean();
-        return null;
     }
     
     public void setSignalA1Name(String signalHead){
@@ -402,12 +429,6 @@ public class LayoutTurnout
         return "";
     }
     
-    public SignalHead getSignalA2(){
-        if(signalA2HeadNamed!=null)
-            return signalA2HeadNamed.getBean();
-        return null;
-    }
-    
     public void setSignalA2Name(String signalHead){
         if(signalHead==null || signalHead.equals("")){
             signalA2HeadNamed=null;
@@ -426,12 +447,6 @@ public class LayoutTurnout
         if(signalA3HeadNamed!=null)
             return signalA3HeadNamed.getName();
         return "";
-    }
-    
-    public SignalHead getSignalA3(){
-        if(signalA3HeadNamed!=null)
-            return signalA3HeadNamed.getBean();
-        return null;
     }
     
     public void setSignalA3Name(String signalHead){
@@ -455,12 +470,6 @@ public class LayoutTurnout
         return "";
     }
     
-    public SignalHead getSignalB1(){
-        if(signalB1HeadNamed!=null)
-            return signalB1HeadNamed.getBean();
-        return null;
-    }
-    
     public void setSignalB1Name(String signalHead){
         if(signalHead==null || signalHead.equals("")){
             signalB1HeadNamed=null;
@@ -479,12 +488,6 @@ public class LayoutTurnout
         if(signalB2HeadNamed!=null)
             return signalB2HeadNamed.getName();
         return "";
-    }
-    
-    public SignalHead getSignalB2(){
-        if(signalB1HeadNamed!=null)
-            return signalB2HeadNamed.getBean();
-        return null;
     }
     
     public void setSignalB2Name(String signalHead){
@@ -508,12 +511,6 @@ public class LayoutTurnout
         return "";
     }
     
-    public SignalHead getSignalC1(){
-        if(signalC1HeadNamed!=null)
-            return signalC1HeadNamed.getBean();
-        return null;
-    }
-    
     public void setSignalC1Name(String signalHead){
         if(signalHead==null || signalHead.equals("")){
             signalC1HeadNamed=null;
@@ -532,12 +529,6 @@ public class LayoutTurnout
         if(signalC2HeadNamed!=null)
             return signalC2HeadNamed.getName();
         return "";
-    }
-    
-    public SignalHead getSignalC2(){
-        if(signalC2HeadNamed!=null)
-            return signalC2HeadNamed.getBean();
-        return null;
     }
     
     public void setSignalC2Name(String signalHead){
@@ -561,12 +552,6 @@ public class LayoutTurnout
         return "";
     }
     
-    public SignalHead getSignalD1(){
-        if(signalD1HeadNamed!=null)
-            return signalD1HeadNamed.getBean();
-        return null;
-    }
-    
     public void setSignalD1Name(String signalHead){
         if(signalHead==null || signalHead.equals("")){
             signalD1HeadNamed=null;
@@ -585,12 +570,6 @@ public class LayoutTurnout
         if(signalD2HeadNamed!=null)
             return signalD2HeadNamed.getName();
         return "";
-    }
-    
-    public SignalHead getSignalD2(){
-        if(signalD2HeadNamed!=null)
-            return signalD2HeadNamed.getBean();
-        return null;
     }
     
     public void setSignalD2Name(String signalHead){
@@ -646,31 +625,31 @@ public class LayoutTurnout
                 return;
             }
         } else if(nb instanceof SignalHead) {
-            if(nb.equals(getSignalA1())){
+            if(nb.equals(getSignalHead(POINTA))){
                 setSignalA1Name(null);
             }
-            if(nb.equals(getSignalA2())){
+            if(nb.equals(getSignalHead(POINTA2))){
                 setSignalA2Name(null);
             }
-            if(nb.equals(getSignalA3())){
+            if(nb.equals(getSignalHead(POINTA3))){
                 setSignalA3Name(null);
             }
-            if(nb.equals(getSignalB1())){
+            if(nb.equals(getSignalHead(POINTB))){
                 setSignalB1Name(null);
             }
-            if(nb.equals(getSignalB2())){
+            if(nb.equals(getSignalHead(POINTB2))){
                 setSignalB2Name(null);
             }
-            if(nb.equals(getSignalC1())){
+            if(nb.equals(getSignalHead(POINTC))){
                 setSignalC1Name(null);
             }
-            if(nb.equals(getSignalC2())){
+            if(nb.equals(getSignalHead(POINTC2))){
                 setSignalC2Name(null);
             }
-            if(nb.equals(getSignalD1())){
+            if(nb.equals(getSignalHead(POINTD))){
                 setSignalD1Name(null);
             }
-            if(nb.equals(getSignalD2())){
+            if(nb.equals(getSignalHead(POINTD2))){
                 setSignalD2Name(null);
             }
         }

@@ -3,6 +3,7 @@ package jmri.jmrit.display.layoutEditor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.util.JmriJFrame;
+import jmri.NamedBean;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.SignalMastLogic;
@@ -92,6 +93,10 @@ public class LevelXing
 	private Point2D dispA = new Point2D.Double(-20.0,0.0);
 	private Point2D dispB = new Point2D.Double(-14.0,14.0);
 	
+    final public static int POINTA = 0x01;
+    final public static int POINTB = 0x10;
+    final public static int POINTC = 0x20;
+    final public static int POINTD = 0x30;
     
 	/** 
 	 * constructor method
@@ -110,16 +115,64 @@ public class LevelXing
 	public String getBlockNameAC() {return blockNameAC;}
 	public String getBlockNameBD() {return blockNameBD;}
     
+    public SignalHead getSignalHead(int loc){
+        NamedBeanHandle<SignalHead> namedBean = null;
+        switch(loc){
+            case POINTA : namedBean = signalAHeadNamed;
+                          break;
+            case POINTB : namedBean = signalBHeadNamed;
+                          break;
+            case POINTC : namedBean = signalCHeadNamed;
+                          break;
+            case POINTD : namedBean = signalDHeadNamed;
+                          break;
+        }
+        if(namedBean!=null){
+            return namedBean.getBean();
+        }
+        return null;
+    }
+        
+    public SignalMast getSignalMast(int loc){
+        NamedBeanHandle<SignalMast> namedBean = null;
+        switch(loc){
+            case POINTA : namedBean = signalAMastNamed;
+                          break;
+            case POINTB : namedBean = signalBMastNamed;
+                          break;
+            case POINTC : namedBean = signalCMastNamed;
+                          break;
+            case POINTD : namedBean = signalDMastNamed;
+                          break;
+        }
+        if(namedBean!=null){
+            return namedBean.getBean();
+        }
+        return null;
+    }
+    
+    public Sensor getSensor(int loc){
+        NamedBeanHandle<Sensor> namedBean = null;
+        switch(loc){
+            case POINTA : namedBean = sensorANamed;
+                          break;
+            case POINTB : namedBean = sensorBNamed;
+                          break;
+            case POINTC : namedBean = sensorCNamed;
+                          break;
+            case POINTD : namedBean = sensorDNamed;
+                          break;
+        }
+        if(namedBean!=null){
+            return namedBean.getBean();
+        }
+        return null;
+    }
+    
     public String getSignalAName(){
         if(signalAHeadNamed!=null)
             return signalAHeadNamed.getName();
         return "";
-    }
-    
-    public SignalHead getSignalHeadA(){
-        if(signalAHeadNamed!=null)
-            return signalAHeadNamed.getBean();
-        return null;
     }
     
 	public void setSignalAName(String signalHead){
@@ -142,12 +195,6 @@ public class LevelXing
         return "";
     }
     
-    public SignalHead getSignalHeadB(){
-        if(signalBHeadNamed!=null)
-            return signalBHeadNamed.getBean();
-        return null;
-    }
-    
 	public void setSignalBName(String signalHead){
         if(signalHead==null || signalHead.equals("")){
             signalBHeadNamed=null;
@@ -168,12 +215,6 @@ public class LevelXing
         return "";
     }
     
-    public SignalHead getSignalHeadC(){
-        if(signalCHeadNamed!=null)
-            return signalCHeadNamed.getBean();
-        return null;
-    }
-    
 	public void setSignalCName(String signalHead){
         if(signalHead==null || signalHead.equals("")){
             signalCHeadNamed=null;
@@ -192,12 +233,6 @@ public class LevelXing
         if(signalDHeadNamed!=null)
             return signalDHeadNamed.getName();
         return "";
-    }
-    
-    public SignalHead getSignalHeadD(){
-        if(signalDHeadNamed!=null)
-            return signalDHeadNamed.getBean();
-        return null;
     }
     
 	public void setSignalDName(String signalHead){
@@ -255,19 +290,19 @@ public class LevelXing
             }
         }
         if(nb instanceof SignalHead){
-            if(nb.equals(getSignalHeadA())){
+            if(nb.equals(getSignalHead(POINTA))){
                 setSignalAName(null);
                 return;
             }
-            if(nb.equals(getSignalHeadB())){
+            if(nb.equals(getSignalHead(POINTB))){
                 setSignalBName(null);
                 return;
             }
-            if(nb.equals(getSignalHeadC())){
+            if(nb.equals(getSignalHead(POINTC))){
                 setSignalCName(null);
                 return;
             }
-            if(nb.equals(getSignalHeadD())){
+            if(nb.equals(getSignalHead(POINTD))){
                 setSignalDName(null);
                 return;
             }

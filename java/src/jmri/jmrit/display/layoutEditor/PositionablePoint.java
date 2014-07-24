@@ -55,7 +55,7 @@ public class PositionablePoint
 	public static final int ANCHOR = 1;
 	public static final int END_BUMPER = 2;
 	public static final int EDGE_CONNECTOR = 3;
-	
+    
 	// operational instance variables (not saved between sessions)
 	private PositionablePoint instance = null;
 	private LayoutEditor layoutEditor = null;
@@ -292,15 +292,6 @@ public class PositionablePoint
             signalWestHeadNamed=null;
         }
     }
-    
-    /*void removeSignalHead(jmri.SignalHead sh){
-        if(getWestBoundSignal().equals(sh.getSystemName()) || getWestBoundSignal().equals(sh.getUserName())){
-            setWestBoundSignal(null);
-        }
-        if(getEastBoundSignal().equals(sh.getSystemName()) || getEastBoundSignal().equals(sh.getUserName())){
-            setEastBoundSignal(null);
-        }
-    }*/
     
     public String getEastBoundSensorName() {
         if(eastBoundSensorNamed!=null)
