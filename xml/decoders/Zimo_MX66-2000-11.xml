@@ -239,8 +239,8 @@
       </variable>
       <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-FwdRev.xml"/>
-    <label>Normal direction of motion</label>
-    <label xml:lang="it">Normale direzione di marcia</label>
+        <label>Normal direction of motion</label>
+        <label xml:lang="it">Normale direzione di marcia</label>
       </variable>
       <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
          <enumVal>
@@ -329,13 +329,13 @@
       </variable>
       <variable item="FL(r) controls output 4" CV="34" mask="XXXXVXXX" minOut="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-    <label>FL(r) controls output 4</label>
-    <label xml:lang="it">Luci (in retro) controlla uscita 4</label>
+        <label>FL(r) controls output 4</label>
+        <label xml:lang="it">Luci (in retro) controlla uscita 4</label>
       </variable>
       <variable item="FL(r) controls output 5" CV="34" mask="XXXVXXXX" minOut="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-    <label>FL(r) controls output 5</label>
-    <label xml:lang="it">Luci (in retro) controlla uscita 5</label>
+       <label>FL(r) controls output 5</label>
+       <label xml:lang="it">Luci (in retro) controlla uscita 5</label>
       </variable>
       <variable item="FL(r) controls output 6" CV="34" mask="XXVXXXXX" minOut="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
