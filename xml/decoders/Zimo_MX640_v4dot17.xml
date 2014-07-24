@@ -1049,14 +1049,17 @@
       <variable item="BEMF config" CV="56" default="0" tooltip="Range 0-199">
         <decVal max="199"/>
         <label>BEMF config</label>
+        <label xml:lang="it">Configura BEMF</label>
       </variable>
       <variable CV="57" default="0" item="Dither frequency" tooltip="Value divided by 10 is voltage applied to motor at full speed, 0 = automatic adjustment">
         <decVal max="255"/>
         <label>Voltage Reference</label>
+        <label xml:lang="it">Tensione di riferimento</label>
       </variable>
       <variable CV="58" default="255" item="Dither option" tooltip="Controls how much BEMF (0-no BEMF to 255-max)">
         <decVal/>
         <label>BEMF Intensity</label>
+        <label xml:lang="it">Intensità BEMF</label>
       </variable>
       <variable item="Signal Dependent Reaction Time" CV="59" default="5" comment="Range 0-255">
         <decVal max="255"/>
@@ -1068,7 +1071,9 @@
       <variable item="Output Level" CV="60" default="0" comment="Controls function output voltage (0/255=high / 1 to 254)">
         <decVal min="0" max="255"/>
         <label>Output Level</label>
+        <label xml:lang="it">Livello di uscita</label>
         <comment>Controls function output voltage (0/255=high / 1 to 254)</comment>
+        <comment xml:lang="it">Controlla tensione uscite (0/255=alta, da 1 a 254)</comment>
       </variable>
       <variable item="Special Function Mapping" CV="61" default="0">
         <enumVal>
@@ -1134,6 +1139,7 @@
       <variable item="Loco Number Recognition" CV="112" mask="XXXXXVXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Loco Number Recognition</label>
+        <label xml:lang="it">Riconoscimento Numero Loco</label>
       </variable>
       <variable item="NMRA" CV="112" mask="XXXXVXXX" default="0">
         <enumVal>
@@ -1406,109 +1412,31 @@
         <label xml:lang="it">Tasto funzione Manovra</label>
       </variable>
       <variable item="Analog Power Conversion" CV="124" mask="XXVXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Polarity Dependent DC stopping method</label>
         <label xml:lang="it">Fermata in DC dipendente da polarità</label>
       </variable>
       <variable CV="125" mask="VVVVVVXX" item="Output 1 effect generated">
         <enumVal>
-          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
         <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
         <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth3.xml"/>
-          <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
-            <choice>Speed or Load dependent Smoke for Steam Engines</choice>
-          </enumChoice>
-          <enumChoice choice="Smoke as above + Off after 10 Min.">
-            <choice>Smoke as above + Off after 10 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels">
-            <choice>Operation dependent Smoke for Diesels</choice>
-          </enumChoice>
-          <enumChoice choice="Smoke as above + Off after 10 Min.">
-            <choice>Smoke as above + Off after 10 Min.</choice>
-          </enumChoice>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth5.xml"/>
         </enumVal>
         <label>Front light effect generated</label>
+        <label xml:lang="it">Effetti Luci Frontali</label>
       </variable>
       <variable CV="125" mask="XXXXXXVV" item="Output 1 behavior">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
         <label>Front light behavior</label>
+        <label xml:lang="it">Comportamento Luci Frontali</label>
       </variable>
       <variable CV="126" mask="VVVVVVXX" item="Output 2 effect generated">
         <enumVal>
-          <enumChoice choice="Standard on/off function output">
-            <choice>Standard on/off function output</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Random Flicker">
-            <choice>Random Flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing Headlight">
-            <choice>Flashing Headlight</choice>
-          </enumChoice>
-          <enumChoice choice="Single Pulse Strobe">
-            <choice>Single Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double Pulse Strobe">
-            <choice>Double Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotary Beacon">
-            <choice>Rotary Beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, right">
-            <choice>Ditch Light Type 1, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, left">
-            <choice>Ditch Light Type 1, left</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, right">
-            <choice>Ditch Light Type 2, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, left">
-            <choice>Ditch Light Type 2, left</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling">
-            <choice>Uncoupling</choice>
-          </enumChoice>
-          <enumChoice choice="Soft Start">
-            <choice>Soft Start</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic Stop Lights for Streetcars">
-            <choice>Automatic Stop Lights for Streetcars</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off when speed is greater than 0">
-            <choice>Turns off when speed is greater than 0</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 5 Min.">
-            <choice>Turns off after 5 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 10 Min.">
-            <choice>Turns off after 10 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
-            <choice>Speed or Load dependent Smoke for Steam Engines</choice>
-          </enumChoice>
-          <enumChoice choice="Smoke as above + Off after 10 Min.">
-            <choice>Smoke as above + Off after 10 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels">
-            <choice>Operation dependent Smoke for Diesels</choice>
-          </enumChoice>
-          <enumChoice choice="Smoke as above + Off after 10 Min.">
-            <choice>Smoke as above + Off after 10 Min.</choice>
-          </enumChoice>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth3.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth5.xml"/>
         </enumVal>
         <label>Rear light effect generated</label>
       </variable>
@@ -1518,72 +1446,10 @@
       </variable>
       <variable CV="127" mask="VVVVVVXX" item="Output 3 effect generated">
         <enumVal>
-          <enumChoice choice="Standard on/off function output">
-            <choice>Standard on/off function output</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Random Flicker">
-            <choice>Random Flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing Headlight">
-            <choice>Flashing Headlight</choice>
-          </enumChoice>
-          <enumChoice choice="Single Pulse Strobe">
-            <choice>Single Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double Pulse Strobe">
-            <choice>Double Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotary Beacon">
-            <choice>Rotary Beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, right">
-            <choice>Ditch Light Type 1, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, left">
-            <choice>Ditch Light Type 1, left</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, right">
-            <choice>Ditch Light Type 2, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, left">
-            <choice>Ditch Light Type 2, left</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling">
-            <choice>Uncoupling</choice>
-          </enumChoice>
-          <enumChoice choice="Soft Start">
-            <choice>Soft Start</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic Stop Lights for Streetcars">
-            <choice>Automatic Stop Lights for Streetcars</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off when speed is greater than 0">
-            <choice>Turns off when speed is greater than 0</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 5 Min.">
-            <choice>Turns off after 5 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 10 Min.">
-            <choice>Turns off after 10 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
-            <choice>Speed or Load dependent Smoke for Steam Engines</choice>
-          </enumChoice>
-          <enumChoice choice="Smoke as above + Off after 10 Min.">
-            <choice>Smoke as above + Off after 10 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels">
-            <choice>Operation dependent Smoke for Diesels</choice>
-          </enumChoice>
-          <enumChoice choice="Smoke as above + Off after 10 Min.">
-            <choice>Smoke as above + Off after 10 Min.</choice>
-          </enumChoice>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth3.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth5.xml"/>
         </enumVal>
         <label>Function output 1 effect generated</label>
       </variable>
@@ -1593,72 +1459,10 @@
       </variable>
       <variable CV="128" mask="VVVVVVXX" item="Output 4 effect generated">
         <enumVal>
-          <enumChoice choice="Standard on/off function output">
-            <choice>Standard on/off function output</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Random Flicker">
-            <choice>Random Flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing Headlight">
-            <choice>Flashing Headlight</choice>
-          </enumChoice>
-          <enumChoice choice="Single Pulse Strobe">
-            <choice>Single Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double Pulse Strobe">
-            <choice>Double Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotary Beacon">
-            <choice>Rotary Beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, right">
-            <choice>Ditch Light Type 1, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, left">
-            <choice>Ditch Light Type 1, left</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, right">
-            <choice>Ditch Light Type 2, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, left">
-            <choice>Ditch Light Type 2, left</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling">
-            <choice>Uncoupling</choice>
-          </enumChoice>
-          <enumChoice choice="Soft Start">
-            <choice>Soft Start</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic Stop Lights for Streetcars">
-            <choice>Automatic Stop Lights for Streetcars</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off when speed is greater than 0">
-            <choice>Turns off when speed is greater than 0</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 5 Min.">
-            <choice>Turns off after 5 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 10 Min.">
-            <choice>Turns off after 10 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
-            <choice>Speed or Load dependent Smoke for Steam Engines</choice>
-          </enumChoice>
-          <enumChoice choice="Smoke as above + Off after 10 Min.">
-            <choice>Smoke as above + Off after 10 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels">
-            <choice>Operation dependent Smoke for Diesels</choice>
-          </enumChoice>
-          <enumChoice choice="Smoke as above + Off after 10 Min.">
-            <choice>Smoke as above + Off after 10 Min.</choice>
-          </enumChoice>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth3.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth5.xml"/>
         </enumVal>
         <label>Function output 2 effect generated</label>
       </variable>
@@ -1668,72 +1472,10 @@
       </variable>
       <variable CV="129" mask="VVVVVVXX" item="Output 5 effect generated">
         <enumVal>
-          <enumChoice choice="Standard on/off function output">
-            <choice>Standard on/off function output</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Random Flicker">
-            <choice>Random Flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing Headlight">
-            <choice>Flashing Headlight</choice>
-          </enumChoice>
-          <enumChoice choice="Single Pulse Strobe">
-            <choice>Single Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double Pulse Strobe">
-            <choice>Double Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotary Beacon">
-            <choice>Rotary Beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, right">
-            <choice>Ditch Light Type 1, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, left">
-            <choice>Ditch Light Type 1, left</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, right">
-            <choice>Ditch Light Type 2, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, left">
-            <choice>Ditch Light Type 2, left</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling">
-            <choice>Uncoupling</choice>
-          </enumChoice>
-          <enumChoice choice="Soft Start">
-            <choice>Soft Start</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic Stop Lights for Streetcars">
-            <choice>Automatic Stop Lights for Streetcars</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off when speed is greater than 0">
-            <choice>Turns off when speed is greater than 0</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 5 Min.">
-            <choice>Turns off after 5 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 10 Min.">
-            <choice>Turns off after 10 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
-            <choice>Speed or Load dependent Smoke for Steam Engines</choice>
-          </enumChoice>
-          <enumChoice choice="Smoke as above + Off after 10 Min.">
-            <choice>Smoke as above + Off after 10 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels">
-            <choice>Operation dependent Smoke for Diesels</choice>
-          </enumChoice>
-          <enumChoice choice="Smoke as above + Off after 10 Min.">
-            <choice>Smoke as above + Off after 10 Min.</choice>
-          </enumChoice>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth3.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth5.xml"/>
         </enumVal>
         <label>Function output 3 effect generated</label>
       </variable>
@@ -1743,72 +1485,10 @@
       </variable>
       <variable CV="130" mask="VVVVVVXX" item="Output 6 effect generated">
         <enumVal>
-          <enumChoice choice="Standard on/off function output">
-            <choice>Standard on/off function output</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Random Flicker">
-            <choice>Random Flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing Headlight">
-            <choice>Flashing Headlight</choice>
-          </enumChoice>
-          <enumChoice choice="Single Pulse Strobe">
-            <choice>Single Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double Pulse Strobe">
-            <choice>Double Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotary Beacon">
-            <choice>Rotary Beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, right">
-            <choice>Ditch Light Type 1, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, left">
-            <choice>Ditch Light Type 1, left</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, right">
-            <choice>Ditch Light Type 2, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, left">
-            <choice>Ditch Light Type 2, left</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling">
-            <choice>Uncoupling</choice>
-          </enumChoice>
-          <enumChoice choice="Soft Start">
-            <choice>Soft Start</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic Stop Lights for Streetcars">
-            <choice>Automatic Stop Lights for Streetcars</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off when speed is greater than 0">
-            <choice>Turns off when speed is greater than 0</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 5 Min.">
-            <choice>Turns off after 5 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 10 Min.">
-            <choice>Turns off after 10 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
-            <choice>Speed or Load dependent Smoke for Steam Engines</choice>
-          </enumChoice>
-          <enumChoice choice="Smoke as above + Off after 10 Min.">
-            <choice>Smoke as above + Off after 10 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels">
-            <choice>Operation dependent Smoke for Diesels</choice>
-          </enumChoice>
-          <enumChoice choice="Smoke as above + Off after 10 Min.">
-            <choice>Smoke as above + Off after 10 Min.</choice>
-          </enumChoice>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth3.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth5.xml"/>
         </enumVal>
         <label>Function output 4 effect generated</label>
       </variable>
@@ -1818,72 +1498,10 @@
       </variable>
       <variable item="Output 7 effect generated" CV="131" mask="VVVVVVXX">
         <enumVal>
-          <enumChoice choice="Standard on/off function output">
-            <choice>Standard on/off function output</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Random Flicker">
-            <choice>Random Flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing Headlight">
-            <choice>Flashing Headlight</choice>
-          </enumChoice>
-          <enumChoice choice="Single Pulse Strobe">
-            <choice>Single Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double Pulse Strobe">
-            <choice>Double Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotary Beacon">
-            <choice>Rotary Beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, right">
-            <choice>Ditch Light Type 1, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, left">
-            <choice>Ditch Light Type 1, left</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, right">
-            <choice>Ditch Light Type 2, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, left">
-            <choice>Ditch Light Type 2, left</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling">
-            <choice>Uncoupling</choice>
-          </enumChoice>
-          <enumChoice choice="Soft Start">
-            <choice>Soft Start</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic Stop Lights for Streetcars">
-            <choice>Automatic Stop Lights for Streetcars</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off when speed is greater than 0">
-            <choice>Turns off when speed is greater than 0</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 5 Min.">
-            <choice>Turns off after 5 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 10 Min.">
-            <choice>Turns off after 10 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
-            <choice>Speed or Load dependent Smoke for Steam Engines</choice>
-          </enumChoice>
-          <enumChoice choice="Smoke as above + Off after 10 Min.">
-            <choice>Smoke as above + Off after 10 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels">
-            <choice>Operation dependent Smoke for Diesels</choice>
-          </enumChoice>
-          <enumChoice choice="Smoke as above + Off after 10 Min.">
-            <choice>Smoke as above + Off after 10 Min.</choice>
-          </enumChoice>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth3.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth5.xml"/>
         </enumVal>
         <label>Output 7 effect generated</label>
       </variable>
@@ -1893,72 +1511,10 @@
       </variable>
       <variable item="Output 8 effect generated" CV="132" mask="VVVVVVXX">
         <enumVal>
-          <enumChoice choice="Standard on/off function output">
-            <choice>Standard on/off function output</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Random Flicker">
-            <choice>Random Flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing Headlight">
-            <choice>Flashing Headlight</choice>
-          </enumChoice>
-          <enumChoice choice="Single Pulse Strobe">
-            <choice>Single Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double Pulse Strobe">
-            <choice>Double Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotary Beacon">
-            <choice>Rotary Beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, right">
-            <choice>Ditch Light Type 1, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, left">
-            <choice>Ditch Light Type 1, left</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, right">
-            <choice>Ditch Light Type 2, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, left">
-            <choice>Ditch Light Type 2, left</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling">
-            <choice>Uncoupling</choice>
-          </enumChoice>
-          <enumChoice choice="Soft Start">
-            <choice>Soft Start</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic Stop Lights for Streetcars">
-            <choice>Automatic Stop Lights for Streetcars</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off when speed is greater than 0">
-            <choice>Turns off when speed is greater than 0</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 5 Min.">
-            <choice>Turns off after 5 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 10 Min.">
-            <choice>Turns off after 10 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
-            <choice>Speed or Load dependent Smoke for Steam Engines</choice>
-          </enumChoice>
-          <enumChoice choice="Smoke as above + Off after 10 Min.">
-            <choice>Smoke as above + Off after 10 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels">
-            <choice>Operation dependent Smoke for Diesels</choice>
-          </enumChoice>
-          <enumChoice choice="Smoke as above + Off after 10 Min.">
-            <choice>Smoke as above + Off after 10 Min.</choice>
-          </enumChoice>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth3.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth5.xml"/>
         </enumVal>
         <label>Output 8 effect generated</label>
       </variable>
@@ -2064,49 +1620,35 @@
       </variable>
       <variable item="Distance controlled stopping" CV="140" default="0">
         <enumVal>
-          <enumChoice choice="not active">
-            <choice>not active</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic stops, Signal controlled speed influence or Asymmetric DCC">
-            <choice>Automatic stops, Signal controlled speed influence or Asymmetric DCC</choice>
-          </enumChoice>
-          <enumChoice choice="Manual stops using cab">
-            <choice>Manual stops using cab</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic and Manual stops">
-            <choice>Automatic and Manual stops</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic stops with immediate braking" value="11">
-            <choice>Automatic stops with immediate braking</choice>
-          </enumChoice>
-          <enumChoice choice="Manual stops with immediate braking">
-            <choice>Manual stops with immediate braking</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic and Manual stops with immediate braking">
-            <choice>Automatic and Manual stops with immediate braking</choice>
-          </enumChoice>
+          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth6.xml"/>
         </enumVal>
         <label>Distance controlled stopping</label>
+        <label xml:lang="it">Fermata controllata da distanza</label>
       </variable>
       <variable item="Distance controlled stopping Distance" CV="141" default="0">
         <decVal min="0" max="255"/>
         <label>Distance controlled stopping Distance</label>
+        <label xml:lang="it">Distanza di Fermata controllata da distanza</label>
       </variable>
       <variable item="Distance controlled stopping speed correction (ABC)" CV="142" default="12">
         <decVal min="0" max="255"/>
         <label>Distance controlled stopping speed correction (ABC)</label>
+        <label xml:lang="it">Distanza di Fermata controllata da velocità (ABC)</label>
       </variable>
       <variable item="Distance controlled stopping speed correction (HLU)" CV="143" default="0">
         <decVal min="0" max="255"/>
         <label>Distance controlled stopping speed correction (HLU)</label>
+        <label xml:lang="it">Distanza di Fermata controllata da velocità (HLU)</label>
       </variable>
       <variable item="Service Mode Programming Locked" CV="144" mask="XVXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>Service Mode Programming Locked</label>
+        <label xml:lang="it">Blocco modalità programmazione</label>
       </variable>
       <variable item="Software Update Locked" CV="144" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>Software Update Locked</label>
+        <label xml:lang="it">Blocco Aggiornamenti Software</label>
       </variable>
       <variable CV="145" item="Kick Start" default="0">
         <enumVal>

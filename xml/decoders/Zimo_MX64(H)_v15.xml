@@ -561,7 +561,7 @@
        <label>Signal Dependent Deceleration</label>
        <label xml:lang="it">Decellarazione dipendente da Segnale</label>
        <comment>Range 0-255</comment>
-    <comment xml:lang="it">Valori 0-255</comment>
+       <comment xml:lang="it">Valori 0-255</comment>
       </variable>
       <variable item="-1-" CV="51" default="20" comment="Range 0-252">
         <decVal max="252"/>

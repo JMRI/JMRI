@@ -1202,7 +1202,7 @@
       <variable item="Loco Number Recognition" CV="112" mask="VXXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Loco Number Recognition</label>
-         <label xml:lang="it">Riconoscimento Numero Loco</label>
+        <label xml:lang="it">Riconoscimento Numero Loco</label>
       </variable>
       <variable item="NMRA" CV="112" mask="XXXXVXXX" default="1">
         <enumVal>
@@ -1693,34 +1693,7 @@
       </variable>
       <variable item="Distance controlled stopping" CV="140" default="0">
         <enumVal>
-          <enumChoice choice="not active">
-            <choice>not active</choice>
-            <choice xml:lang="it">Non Attiva</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic stops, Signal controlled speed influence or Asymmetric DCC">
-            <choice>Automatic stops, Signal controlled speed influence or Asymmetric DCC</choice>
-            <choice xml:lang="it">Stop automatico, Controllato da segnale o DCC asimmetrica</choice>
-          </enumChoice>
-          <enumChoice choice="Manual stops using cab">
-            <choice>Manual stops using cab</choice>
-            <choice xml:lang="it">Stop manuale da Palmare</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic and Manual stops">
-            <choice>Automatic and Manual stops</choice>
-            <choice xml:lang="it">Stop manuale e Automatico</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic stops with immediate braking" value="11">
-            <choice>Automatic stops with immediate braking</choice>
-            <choice xml:lang="it">Stop automatico immediato</choice>
-          </enumChoice>
-          <enumChoice choice="Manual stops with immediate braking">
-            <choice>Manual stops with immediate braking</choice>
-            <choice xml:lang="it">Stop manuale immediato</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic and Manual stops with immediate braking">
-            <choice>Automatic and Manual stops with immediate braking</choice>
-            <choice xml:lang="it">Stop automatico e manuale immediato</choice>
-          </enumChoice>
+          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth6.xml"/>
         </enumVal>
         <label>Distance controlled stopping</label>
         <label xml:lang="it">Fermata controllata da distanza</label>
