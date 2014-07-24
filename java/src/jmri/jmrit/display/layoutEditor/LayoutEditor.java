@@ -366,11 +366,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     
     public LayoutEditor(String name) {
         super(name);
-        jmri.InstanceManager.signalHeadManagerInstance().addVetoableChangeListener(this);
-        jmri.InstanceManager.signalMastManagerInstance().addVetoableChangeListener(this);
-        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
-        jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
-        jmri.InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
         layoutName = name;
         // initialize frame
         Container contentPane = getContentPane();

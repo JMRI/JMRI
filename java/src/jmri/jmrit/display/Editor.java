@@ -18,6 +18,7 @@ import javax.swing.event.ListSelectionEvent;
 
 import jmri.InstanceManager;
 import jmri.Light;
+import jmri.NamedBean;
 import jmri.Reporter;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -76,7 +77,7 @@ import jmri.util.JmriJFrame;
  */
 
 abstract public class Editor extends JmriJFrame implements MouseListener, MouseMotionListener,
-                                ActionListener, KeyListener {
+                                ActionListener, KeyListener, java.beans.VetoableChangeListener {
 
     final public static int BKG       = 1;
     final public static int TEMP      = 2;
@@ -175,6 +176,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         _debug = log.isDebugEnabled();
         _defaultToolTip = new ToolTip(null, 0, 0);
         setVisible(false);
+        jmri.InstanceManager.signalHeadManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.signalMastManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.blockManagerInstance().addVetoableChangeListener(this);
     }
     
     public Editor(String name) {
@@ -2751,6 +2758,41 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     public void keyReleased(KeyEvent e) {
+    }
+    
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+        NamedBean nb = (NamedBean) evt.getOldValue();
+        if("CanDelete".equals(evt.getPropertyName())){ //IN18N
+            StringBuilder message = new StringBuilder();
+            message.append(Bundle.getMessage("VetoInUseEditorHeader", getName())); //IN18N
+            message.append("<br>");
+            boolean found = false;
+            int count = 0;
+            for(Positionable p: _contents){
+                if(nb.equals(p.getNamedBean())){
+                    found = true;
+                    count++;
+                }
+            }
+            if(found){
+                message.append(Bundle.getMessage("VetoFoundInPanel", count));
+                message.append("<br>");
+                message.append(Bundle.getMessage("VetoReferencesWillBeRemoved")); //IN18N
+                message.append("<br>");
+                throw new java.beans.PropertyVetoException(message.toString(), evt);
+            }
+        } else if ("DoDelete".equals(evt.getPropertyName())){ //IN18N
+            ArrayList<Positionable> toDelete = new ArrayList<Positionable>();
+            for(Positionable p: _contents){
+                if(nb.equals(p.getNamedBean())){
+                    toDelete.add(p);
+                }
+            }
+            for(Positionable p: toDelete){
+                removeFromContents(p);
+                _targetPanel.repaint();
+            }
+        }
     }
     
     /*********************** Abstract Methods ************************/
