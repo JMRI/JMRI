@@ -533,6 +533,22 @@ public class Transit extends AbstractNamedBean
     public String getBeanType(){
         return Bundle.getMessage("BeanNameTransit");
     }
+    
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+        if("CanDelete".equals(evt.getPropertyName())){ //IN18N
+            NamedBean nb = (NamedBean)evt.getOldValue();
+            if(nb instanceof Section){
+                if(containsSection((Section)nb)){
+                    java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
+                    throw new java.beans.PropertyVetoException(Bundle.getMessage("VetoTransitSection", getDisplayName()), e); //IN18N
+                }
+
+            }
+
+        } else if ("DoDelete".equals(evt.getPropertyName())){ //IN18N
+        
+        }
+    }
     static final Logger log = LoggerFactory.getLogger(Transit.class.getName());
 	
 }

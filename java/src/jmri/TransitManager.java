@@ -42,6 +42,7 @@ public class TransitManager extends AbstractManager
 
     public TransitManager() {
         super();
+        InstanceManager.sectionManagerInstance().addVetoableChangeListener(this);
     }
 
     public int getXMLOrder(){

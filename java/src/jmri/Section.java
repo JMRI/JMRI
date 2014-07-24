@@ -2340,6 +2340,38 @@ public class Section extends AbstractNamedBean
     public String getBeanType(){
         return Bundle.getMessage("BeanNameSection");
     }
+    
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+        if("CanDelete".equals(evt.getPropertyName())){ //IN18N
+            NamedBean nb = (NamedBean)evt.getOldValue();
+            if(nb instanceof Sensor){
+                if(nb.equals(getForwardBlockingSensor())){
+                    java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
+                    throw new java.beans.PropertyVetoException(Bundle.getMessage("VetoBlockingSensor", nb.getBeanType(), Bundle.getMessage("Forward"), Bundle.getMessage("Blocking"), getDisplayName()), e); //IN18N
+                }
+                if(nb.equals(getForwardStoppingSensor())){
+                    java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
+                    throw new java.beans.PropertyVetoException(Bundle.getMessage("VetoBlockingSensor", nb.getBeanType(), Bundle.getMessage("Forward"), Bundle.getMessage("Stopping"), getDisplayName()), e);
+                }
+                if(nb.equals(getReverseBlockingSensor())){
+                    java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
+                    throw new java.beans.PropertyVetoException(Bundle.getMessage("VetoBlockingSensor", nb.getBeanType(), Bundle.getMessage("Reverse"), Bundle.getMessage("Blocking"), getDisplayName()), e);
+                }
+                if(nb.equals(getReverseStoppingSensor())){
+                    java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
+                    throw new java.beans.PropertyVetoException(Bundle.getMessage("VetoBlockingSensor", nb.getBeanType(), Bundle.getMessage("Reverse"), Bundle.getMessage("Stopping"), getDisplayName()), e);
+                }
+            }
+            if(nb instanceof Block){
+                if(getBlockList().contains(nb)){
+                    java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
+                    throw new java.beans.PropertyVetoException(Bundle.getMessage("VetoBlockInSection", getDisplayName()), e);
+                }
+            }
+        } else if ("DoDelete".equals(evt.getPropertyName())){ //IN18N
+        
+        }
+    }
 		
 		
     static final Logger log = LoggerFactory.getLogger(Section.class.getName());
