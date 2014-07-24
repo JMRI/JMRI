@@ -1559,11 +1559,11 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertEquals("Car BB 4 final destination track","Foxboro Siding 1", c4.getFinalDestinationTrackName());
 		
 		// check load
-		Assert.assertEquals("Car BA 3 load","Nails", c3.getLoadName());
+		Assert.assertEquals("Car BA 3 load","Screws", c3.getLoadName()); // wait of 1 delays load change
 		Assert.assertEquals("Car BB 4 load","Junk", c4.getLoadName());
 		
 		// check next loads
-		Assert.assertEquals("Car BA 3 load","", c3.getNextLoadName());
+		Assert.assertEquals("Car BA 3 load","Nails", c3.getNextLoadName()); // wait of 1 delays load change
 		Assert.assertEquals("Car BB 4 load","", c4.getNextLoadName());
 		
 		// check wait

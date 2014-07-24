@@ -1376,6 +1376,7 @@ public class TrainBuilder extends TrainCommon {
 							new Object[] { car.toString(), car.getTypeName(),
 									(car.getLocationName() + ", " + car.getTrackName()), car.getWait() }));
 					car.setWait(car.getWait() - 1); // decrement wait count
+					car.updateLoad(); // has the wait count reached 0?
 					_carList.remove(car);
 					_carIndex--;
 					continue;
