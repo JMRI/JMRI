@@ -279,7 +279,7 @@ abstract public class AbstractManager
                         throw e;
                     }
                     message.append(e.getMessage());
-                    message.append("<br>"); //IN18N
+                    message.append("<hr>"); //IN18N
                 }
             }
             throw new java.beans.PropertyVetoException(message.toString(), evt);
@@ -312,7 +312,6 @@ abstract public class AbstractManager
             }
             message.append("</ul>");
             message.append(Bundle.getMessage("VetoWillBeRemovedFrom", getBeanTypeHandled()));
-            message.append("<br>");
             if(found)
                 throw new java.beans.PropertyVetoException(message.toString(), evt);
         } else {

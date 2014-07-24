@@ -971,7 +971,7 @@ public class SectionTableAction extends AbstractTableAction {
 			for (int i=0; i<affectedTransits.size(); i++) {
 				Transit aTransit = affectedTransits.get(i);
 				String tFullName = aTransit.getSystemName();
-				if (aTransit.getUserName().length()>0) {
+				if (aTransit.getUserName()!=null && aTransit.getUserName().length()>0) {
 					tFullName = tFullName+"("+aTransit.getUserName()+")";
 				}
 				p1 = new JPanel();
