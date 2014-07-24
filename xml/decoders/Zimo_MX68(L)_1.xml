@@ -989,7 +989,7 @@
         <label xml:lang="it">F3 setta uscita 4</label>
       </variable>
       <variable item="F3 setting 5" CV="82" default="1" mask="XXXXXVXX" minOut="5" minFn="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>&gt;
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 setting 5</label>
         <label xml:lang="it">F3 setta uscita 5</label>
       </variable>
