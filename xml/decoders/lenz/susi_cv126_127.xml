@@ -33,6 +33,11 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+    	<revnumber>7</revnumber>
+    	<date>2014-07-25</date>
+    	<authorinitials>Ba</authorinitials>
+    	<revremark>There are Lenz-decoders, which have less then 4 outputs...</revremark>
+    </revision><revision>
       <revnumber>6</revnumber>
       <date>2014-05-18</date>
       <authorinitials>Ba</authorinitials>
@@ -44,9 +49,10 @@
       <authorinitials>BJ</authorinitials>
       <revremark>Revision in original Lenz_Gold.xml file</revremark>
     </revision>
+    
   </revhistory>
   <!-- Add Your the "includes" here -->
-  <variable CV="126" minOut="4" item="SUSI Indicator" default="102" comment="Range 0-255">
+  <variable CV="126" item="SUSI Indicator" default="102" comment="Range 0-255">
 	<decVal min="0" max="255"/>
 	<label>CV indicator for SUSI, offset 800</label>
 	<label xml:lang="it">Indicatore Cv per SUSI, offset 800</label>
@@ -55,7 +61,7 @@
 	<label xml:lang="de">Zeiger-CV für SUSI, offset 800</label>
 	<comment xml:lang="de">Wertebereich 0-255</comment>
   </variable>
-  <variable CV="127" minOut="4" item="SUSI transport" default="0" comment="Range 0-255">
+  <variable CV="127" item="SUSI transport" default="0" comment="Range 0-255">
 	<decVal min="0" max="255"/>
 	<label>CV transport device for SUSI</label>
 	<label xml:lang="it">Dispositivo trasferimento SUSI</label>
