@@ -997,7 +997,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
                     case Conditional.ACTION_ALLOCATE_WARRANT_ROUTE:
-                        w = InstanceManager.getDefault(WarrantManager.class).getWarrant(devName);
+                        w = (Warrant)nb;
 						if (w == null) {
 							errorList.add("invalid Warrant name in action - "+action.getDeviceName());
 						}

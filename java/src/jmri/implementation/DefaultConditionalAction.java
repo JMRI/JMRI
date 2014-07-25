@@ -3,10 +3,12 @@ package jmri.implementation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.*;
-import jmri.ConditionalAction;
 import jmri.jmrit.Sound;
 import jmri.jmrit.beantable.LogixTableAction;
 import jmri.jmrit.logix.Warrant;
+import jmri.jmrit.logix.WarrantManager;
+import jmri.jmrit.logix.OBlockManager;
+
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
 /**
@@ -57,44 +59,58 @@ public class DefaultConditionalAction implements ConditionalAction {
             int itemType = Conditional.ACTION_TO_ITEM[_type];
             switch (itemType) {
                 case Conditional.ITEM_TYPE_SENSOR:
-                    bean = InstanceManager.sensorManagerInstance().provideSensor(_deviceName);
+                    bean = InstanceManager.sensorManagerInstance().provideSensor(getDeviceName(_deviceName));
                     if (bean == null) {
                         log.error("invalid sensor name= \""+_deviceName+"\" in conditional action");
                         return;
                     }
                     break;
                 case Conditional.ITEM_TYPE_TURNOUT:
-                    bean = InstanceManager.turnoutManagerInstance().provideTurnout(_deviceName);
+                    bean = InstanceManager.turnoutManagerInstance().provideTurnout(getDeviceName(_deviceName));
                     if (bean == null) {
                         log.error("invalid turnout name= \""+_deviceName+"\" in conditional action");
                         return;
                     }
                     break;
                 case Conditional.ITEM_TYPE_MEMORY:
-                    bean = InstanceManager.memoryManagerInstance().provideMemory(_deviceName);
+                    bean = InstanceManager.memoryManagerInstance().provideMemory(getDeviceName(_deviceName));
                     if (bean == null) {
                         log.error("invalid memory name= \""+_deviceName+"\" in conditional action");
                         return;
                     }
                     break;
                 case Conditional.ITEM_TYPE_LIGHT:
-                    bean = InstanceManager.lightManagerInstance().getLight(_deviceName);
+                    bean = InstanceManager.lightManagerInstance().getLight(getDeviceName(_deviceName));
                     if (bean == null) {
                         log.error("invalid light name= \""+_deviceName+"\" in conditional action");
                         return;
                     }
                     break;
                 case Conditional.ITEM_TYPE_SIGNALMAST:
-                    bean = InstanceManager.signalMastManagerInstance().provideSignalMast(_deviceName);
+                    bean = InstanceManager.signalMastManagerInstance().provideSignalMast(getDeviceName(_deviceName));
                     if (bean == null) {
                         log.error("invalid signal mast name= \""+_deviceName+"\" in conditional action");
                         return;
                     }
                     break;
                 case Conditional.ITEM_TYPE_SIGNALHEAD:
-                    bean = InstanceManager.signalHeadManagerInstance().getSignalHead(_deviceName);
+                    bean = InstanceManager.signalHeadManagerInstance().getSignalHead(getDeviceName(_deviceName));
                     if (bean == null) {
                         log.error("invalid signal head name= \""+_deviceName+"\" in conditional action");
+                        return;
+                    }
+                    break;
+                case Conditional.ITEM_TYPE_WARRANT:
+                    bean = InstanceManager.getDefault(WarrantManager.class).getWarrant(getDeviceName(_deviceName));
+                    if (bean == null) {
+                        log.error("invalid Warrant name= \""+_deviceName+"\" in conditional action");
+                        return;
+                    }
+                    break;
+                case Conditional.ITEM_TYPE_OBLOCK:
+                    bean = InstanceManager.getDefault(OBlockManager.class).getOBlock(getDeviceName(_deviceName));
+                    if (bean == null) {
+                        log.error("invalid OBlock name= \""+_deviceName+"\" in conditional action");
                         return;
                     }
                     break;
@@ -107,6 +123,18 @@ public class DefaultConditionalAction implements ConditionalAction {
         } else {
             _namedBean = null;
         }
+    }
+    private String getDeviceName(String devName) {
+        if (devName!=null && devName.length()>0 && devName.charAt(0)== '@') {
+            String memName = devName.substring(1);
+            Memory m = InstanceManager.memoryManagerInstance().getMemory(memName);
+            if (m == null) {
+                log.error("\""+devName+"\" invalid indirect memory name in action - "+devName);
+                return null;
+            }
+            devName = (String)m.getValue();
+        }
+        return devName;
     }
 
 	/**
@@ -151,19 +179,25 @@ public class DefaultConditionalAction implements ConditionalAction {
                     bean = InstanceManager.sensorManagerInstance().provideSensor(_deviceName);
                     break;
                 case Conditional.ITEM_TYPE_TURNOUT:
-                    bean = InstanceManager.turnoutManagerInstance().provideTurnout(_deviceName);
+                    bean = InstanceManager.turnoutManagerInstance().provideTurnout(getDeviceName(_deviceName));
                     break;
                 case Conditional.ITEM_TYPE_MEMORY:
-                    bean = InstanceManager.memoryManagerInstance().provideMemory(_deviceName);
+                    bean = InstanceManager.memoryManagerInstance().provideMemory(getDeviceName(_deviceName));
                     break;
                 case Conditional.ITEM_TYPE_LIGHT:
-                    bean = InstanceManager.lightManagerInstance().getLight(_deviceName);
+                    bean = InstanceManager.lightManagerInstance().getLight(getDeviceName(_deviceName));
                     break;
                 case Conditional.ITEM_TYPE_SIGNALMAST:
-                    bean = InstanceManager.signalMastManagerInstance().provideSignalMast(_deviceName);
+                    bean = InstanceManager.signalMastManagerInstance().provideSignalMast(getDeviceName(_deviceName));
                     break;
                 case Conditional.ITEM_TYPE_SIGNALHEAD:
-                    bean = InstanceManager.signalHeadManagerInstance().getSignalHead(_deviceName);
+                    bean = InstanceManager.signalHeadManagerInstance().getSignalHead(getDeviceName(_deviceName));
+                    break;
+                case Conditional.ITEM_TYPE_WARRANT:
+                    bean = InstanceManager.getDefault(WarrantManager.class).getWarrant(getDeviceName(_deviceName));
+                    break;
+                case Conditional.ITEM_TYPE_OBLOCK:
+                    bean = InstanceManager.getDefault(OBlockManager.class).getOBlock(getDeviceName(_deviceName));
                     break;
             }
         } catch (java.lang.NumberFormatException ex){
