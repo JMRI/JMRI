@@ -2302,6 +2302,8 @@
 
 <mapID target="html.apps.PanelPro.Panels_editor" url="html/apps/PanelPro/Panels.shtml#editor"/>
 
+<mapID target="html.Dropbox" url="html/Dropbox.shtml"/>
+
 <mapID target="html.tools.signaling.SimpleSignalExample" url="html/tools/signaling/SimpleSignalExample.shtml"/>
 
 <mapID target="html.tools.throttle.ThrottleChapter2_ControlPanel" url="html/tools/throttle/ThrottleChapter2.shtml#ControlPanel"/>
