@@ -1839,34 +1839,42 @@
       <variable item="Servo 1 Left Stop" CV="162" default="49">
         <decVal/>
         <label>Servo 1 Left Stop</label>
+        <label xml:lang="it">Servo 1 Stop Sinistro</label>
       </variable>
       <variable item="Servo 1 Right Stop" CV="163" default="205">
         <decVal/>
         <label>Servo 1 Right Stop</label>
+        <label xml:lang="it">Servo 1 Stop Destro</label>
       </variable>
       <variable item="Servo 1 Centre" CV="164" default="127">
         <decVal/>
         <label>Servo 1 Centre</label>
+        <label xml:lang="it">Servo 1 Centro</label>
       </variable>
       <variable item="Servo 1 Rotation Speed" CV="165" default="30">
         <decVal/>
         <label>Servo 1 Rotation Speed</label>
+        <label xml:lang="it">Servo 1 Velocità rotazione</label>
       </variable>
       <variable item="Servo 2 Left Stop" CV="166" default="49">
         <decVal/>
         <label>Servo 2 Left Stop</label>
+        <label xml:lang="it">Servo 2 Stop Sinistro</label>
       </variable>
       <variable item="Servo 2 Right Stop" CV="167" default="205">
         <decVal/>
         <label>Servo 2 Right Stop</label>
+        <label xml:lang="it">Servo 2 Stop Destro</label>
       </variable>
       <variable item="Servo 2 Centre" CV="168" default="127">
         <decVal/>
         <label>Servo 2 Centre</label>
+        <label xml:lang="it">Servo 2 Centro</label>
       </variable>
       <variable item="Servo 2 Rotation Speed" CV="169" default="30">
         <decVal/>
         <label>Servo 2 Rotation Speed</label>
+        <label xml:lang="it">Servo 2 Velocità rotazione</label>
       </variable>
       <variable item="Servo 1 Function Allocation" CV="181" default="0">
         <xi:include href="http://jmri.org/xml/decoders/zimo/enum-Fx_servo.xml"/>
@@ -1875,6 +1883,7 @@
       <variable item="Servo 2 Function Allocation" CV="182" default="0">
         <xi:include href="http://jmri.org/xml/decoders/zimo/enum-Fx_servo.xml"/>
         <label>Servo 2 Function Allocation</label>
+        <label xml:lang="it">Servo 2 Allocazione Funzioni</label>
       </variable>
       <!-- Begin sound-only variables -->
       <variable item="Set sound program" CV="265" default="1" tooltip="See manual!">
@@ -2722,6 +2731,7 @@
       </label>
       <label>
         <text>           Description                                      Output wire or operation</text>
+        <text xml:lang="it">           Descrizione                                      Filo Uscita o operazione</text>
       </label>
       <label>
         <text> </text>
@@ -2733,51 +2743,67 @@
           </label>
           <label>
             <text>                                           Front  </text>
+            <text xml:lang="it">                                          Frontale </text>
           </label>
           <label>
             <text>                                           Light  </text>
+            <text xml:lang="it">                                           Luci   </text>
           </label>
           <display item="FL(f) controls output 1" format="checkbox" label="Forward Headlight F0(f)">
             <label>Forward Headlight F0(f)</label>
+            <label xml:lang="it">Luci frontali  F0(avanti)</label>
           </display>
           <display item="FL(r) controls output 1" format="checkbox" label="Reverse Headlight F0(r)">
             <label>Reverse Headlight F0(r)</label>
+            <label xml:lang="it">Luci Posteriori  F0(retro)</label>
           </display>
           <display item="F1 controls output 1" format="checkbox" label="Function 1         ">
             <label>Function 1         </label>
+            <label xml:lang="it">Funzione 1         </label>
           </display>
           <display item="F2 controls output 1" format="checkbox" label="Function 2         ">
             <label>Function 2         </label>
+            <label xml:lang="it">Funzione 2         </label>
           </display>
           <display item="AltF3 controls output 1" format="checkbox" label="Function 3         ">
             <label>Function 3         </label>
+            <label xml:lang="it">Funzione 3         </label>
           </display>
           <display item="AltF4 controls output 1" format="checkbox" label="Function 4         ">
             <label>Function 4         </label>
+            <label xml:lang="it">Funzione 4         </label>
           </display>
           <display item="AltF5 controls output 1" format="checkbox" label="Function 5         ">
             <label>Function 5         </label>
+            <label xml:lang="it">Funzione 5         </label>
           </display>
           <display item="AltF6 controls output 1" format="checkbox" label="Function 6         ">
             <label>Function 6         </label>
+            <label xml:lang="it">Funzione 6         </label>
           </display>
           <display item="AltF7 controls output 1" format="checkbox" label="Function 7         ">
             <label>Function 7         </label>
+            <label xml:lang="it">Funzione 7         </label>
           </display>
           <display item="AltF8 controls output 1" format="checkbox" label="Function 8         ">
             <label>Function 8         </label>
+            <label xml:lang="it">Funzione 8         </label>
           </display>
           <display item="AltF9 controls output 1" format="checkbox" label="Function 9         ">
             <label>Function 9         </label>
+            <label xml:lang="it">Funzione 9         </label>
           </display>
           <display item="AltF10 controls output 1" format="checkbox" label="Function 10         ">
             <label>Function 10         </label>
+            <label xml:lang="it">Funzione 10        </label>
           </display>
           <display item="AltF11 controls output 1" format="checkbox" label="Function 11         ">
             <label>Function 11         </label>
+            <label xml:lang="it">Funzione 11        </label>
           </display>
           <display item="AltF12 controls output 1" format="checkbox" label="Function 12         ">
             <label>Function 12         </label>
+            <label xml:lang="it">Funzione 12        </label>
           </display>
         </column>
         <column>
@@ -3165,6 +3191,7 @@
       </row>
     </column>
     <name>Alt Function Map</name>
+    <name xml:lang="it">Mappa Funzioni Speciali</name>
   </pane>
   <pane>
     <column>
@@ -3187,6 +3214,7 @@
         <column>
           <label>
             <text>Generates pulse chain commands for LGB sound modules on FO 1</text>
+            <text xml:lang="it">Genera comandi e treno impulsi per moduli sonori LBG con F1</text>
           </label>
         </column>
       </row>

@@ -1507,6 +1507,7 @@
       <variable CV="146" default="0" item="Load Control" tooltip="Motor Backlash Control">
         <decVal min="0" max="255"/>
         <label>Motor Backlash Control</label>
+        <label xml:lang="it">Controllo Rinculo Motore</label>
       </variable>
       <variable CV="147" default="0" item="Total PWM Period">
         <decVal min="0" max="255"/>
@@ -1540,268 +1541,101 @@
         <enumVal>
           <enumChoice choice="Only during movement">
             <choice>Only during movement</choice>
+            <choice xml:lang="it">Solo durante movimento</choice>
           </enumChoice>
           <enumChoice choice="Active all times">
             <choice>Active all times</choice>
+            <choice xml:lang="it">Attivo sempre</choice>
           </enumChoice>
         </enumVal>
         <label>Servo Control Wire Active</label>
+        <label xml:lang="it">Filo attivo controllo Servo</label>
       </variable>
       <variable item="Servo Centering" CV="161" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="Moves to centre in dual key if both Fn's off">
             <choice>Moves to centre in dual key if both Fn's off</choice>
+            <choice xml:lang="it">Muove al centro se entrambe le Funz. in Off</choice>
           </enumChoice>
           <enumChoice choice="Only moves if function key pressed">
             <choice>Only moves if function key pressed</choice>
+            <choice xml:lang="it">Muove solo se tasto Funz. premuto</choice>
           </enumChoice>
         </enumVal>
         <label>Servo Centering</label>
+        <label xml:lang="it">Centraggio Servo</label>
       </variable>
       <variable item="Servo 1 Left Stop" CV="162" default="49">
         <decVal/>
         <label>Servo 1 Left Stop</label>
+        <label xml:lang="it">Servo 1 Stop Sinistro</label>
       </variable>
       <variable item="Servo 1 Right Stop" CV="163" default="205">
         <decVal/>
         <label>Servo 1 Right Stop</label>
+        <label xml:lang="it">Servo 1 Stop Destro</label>
       </variable>
       <variable item="Servo 1 Centre" CV="164" default="127">
         <decVal/>
         <label>Servo 1 Centre</label>
+        <label xml:lang="it">Servo 1 Centro</label>
       </variable>
       <variable item="Servo 1 Rotation Speed" CV="165" default="10">
         <decVal/>
         <label>Servo 1 Rotation Speed</label>
+        <label xml:lang="it">Servo 1 Velocità rotazione</label>
       </variable>
       <variable item="Servo 2 Left Stop" CV="166" default="49">
         <decVal/>
         <label>Servo 2 Left Stop</label>
+        <label xml:lang="it">Servo 2 Stop Sinistro</label>
       </variable>
       <variable item="Servo 2 Right Stop" CV="167" default="205">
         <decVal/>
         <label>Servo 2 Right Stop</label>
+        <label xml:lang="it">Servo 2 Stop Destro</label>
       </variable>
       <variable item="Servo 2 Centre" CV="168" default="127">
         <decVal/>
         <label>Servo 2 Centre</label>
+        <label xml:lang="it">Servo 2 Centro</label>
       </variable>
       <variable item="Servo 2 Rotation Speed" CV="169" default="10">
         <decVal/>
         <label>Servo 2 Rotation Speed</label>
+        <label xml:lang="it">Servo 2 Velocità rotazione</label>
       </variable>
       <variable item="Servo 1 Function Allocation" CV="181" default="0">
-        <enumVal>
-          <enumChoice choice="Servo not in operation">
-            <choice>Servo not in operation</choice>
-          </enumChoice>
-          <enumChoice choice="F1">
-            <choice>F1</choice>
-          </enumChoice>
-          <enumChoice choice="F2">
-            <choice>F2</choice>
-          </enumChoice>
-          <enumChoice choice="F3">
-            <choice>F3</choice>
-          </enumChoice>
-          <enumChoice choice="F4">
-            <choice>F4</choice>
-          </enumChoice>
-          <enumChoice choice="F5">
-            <choice>F5</choice>
-          </enumChoice>
-          <enumChoice choice="F6">
-            <choice>F6</choice>
-          </enumChoice>
-          <enumChoice choice="F7">
-            <choice>F7</choice>
-          </enumChoice>
-          <enumChoice choice="F8">
-            <choice>F8</choice>
-          </enumChoice>
-          <enumChoice choice="F9">
-            <choice>F9</choice>
-          </enumChoice>
-          <enumChoice choice="F10">
-            <choice>F10</choice>
-          </enumChoice>
-          <enumChoice choice="F11">
-            <choice>F11</choice>
-          </enumChoice>
-          <enumChoice choice="F12">
-            <choice>F12</choice>
-          </enumChoice>
-          <enumChoice choice="forward = left, reverse = right" value="90">
-            <choice>forward = left, reverse = right</choice>
-          </enumChoice>
-          <enumChoice choice="stopped + forward = right, other = left">
-            <choice>stopped + forward = right, other = left</choice>
-          </enumChoice>
-          <enumChoice choice="stopped + reverse = right, other = left">
-            <choice>stopped + reverse = right, other = left</choice>
-          </enumChoice>
-          <enumChoice choice="stopped = right, moving = left">
-            <choice>stopped = right, moving = left</choice>
-          </enumChoice>
-          <enumChoice choice="F1 left, F2 right" value="101">
-            <choice>F1 left, F2 right</choice>
-          </enumChoice>
-          <enumChoice choice="F2 left, F3 right">
-            <choice>F2 left, F3 right</choice>
-          </enumChoice>
-          <enumChoice choice="F3 left, F4 right">
-            <choice>F3 left, F4 right</choice>
-          </enumChoice>
-          <enumChoice choice="F4 left, F5 right">
-            <choice>F4 left, F5 right</choice>
-          </enumChoice>
-          <enumChoice choice="F5 left, F6 right">
-            <choice>F5 left, F6 right</choice>
-          </enumChoice>
-          <enumChoice choice="F6 left, F7 right">
-            <choice>F6 left, F7 right</choice>
-          </enumChoice>
-          <enumChoice choice="F7 left, F8 right">
-            <choice>F7 left, F8 right</choice>
-          </enumChoice>
-          <enumChoice choice="F8 left, F9 right">
-            <choice>F8 left, F9 right</choice>
-          </enumChoice>
-          <enumChoice choice="F9 left, F10 right">
-            <choice>F9 left, F10 right</choice>
-          </enumChoice>
-          <enumChoice choice="F10 left, F11 right">
-            <choice>F10 left, F11 right</choice>
-          </enumChoice>
-          <enumChoice choice="F11 left, F12 right">
-            <choice>F11 left, F12 right</choice>
-          </enumChoice>
-          <enumChoice choice="F3 left, F6 right">
-            <choice>F3 left, F6 right</choice>
-          </enumChoice>
-          <enumChoice choice="F4 left, F7 right">
-            <choice>F4 left, F7 right</choice>
-          </enumChoice>
-          <enumChoice choice="F5 left, F8 right">
-            <choice>F5 left, F8 right</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/enum-Fx_servo.xml"/>
         <label>Servo 1 Function Allocation</label>
+        <label xml:lang="it">Servo 1 Allocazione Funzioni</label>
       </variable>
       <variable item="Servo 2 Function Allocation" CV="182" default="0">
-        <enumVal>
-          <enumChoice choice="Servo not in operation">
-            <choice>Servo not in operation</choice>
-          </enumChoice>
-          <enumChoice choice="F1">
-            <choice>F1</choice>
-          </enumChoice>
-          <enumChoice choice="F2">
-            <choice>F2</choice>
-          </enumChoice>
-          <enumChoice choice="F3">
-            <choice>F3</choice>
-          </enumChoice>
-          <enumChoice choice="F4">
-            <choice>F4</choice>
-          </enumChoice>
-          <enumChoice choice="F5">
-            <choice>F5</choice>
-          </enumChoice>
-          <enumChoice choice="F6">
-            <choice>F6</choice>
-          </enumChoice>
-          <enumChoice choice="F7">
-            <choice>F7</choice>
-          </enumChoice>
-          <enumChoice choice="F8">
-            <choice>F8</choice>
-          </enumChoice>
-          <enumChoice choice="F9">
-            <choice>F9</choice>
-          </enumChoice>
-          <enumChoice choice="F10">
-            <choice>F10</choice>
-          </enumChoice>
-          <enumChoice choice="F11">
-            <choice>F11</choice>
-          </enumChoice>
-          <enumChoice choice="F12">
-            <choice>F12</choice>
-          </enumChoice>
-          <enumChoice choice="forward = left, reverse = right" value="90">
-            <choice>forward = left, reverse = right</choice>
-          </enumChoice>
-          <enumChoice choice="stopped + forward = right, other = left">
-            <choice>stopped + forward = right, other = left</choice>
-          </enumChoice>
-          <enumChoice choice="stopped + reverse = right, other = left">
-            <choice>stopped + reverse = right, other = left</choice>
-          </enumChoice>
-          <enumChoice choice="stopped = right, moving = left">
-            <choice>stopped = right, moving = left</choice>
-          </enumChoice>
-          <enumChoice choice="F1 left, F2 right" value="101">
-            <choice>F1 left, F2 right</choice>
-          </enumChoice>
-          <enumChoice choice="F2 left, F3 right">
-            <choice>F2 left, F3 right</choice>
-          </enumChoice>
-          <enumChoice choice="F3 left, F4 right">
-            <choice>F3 left, F4 right</choice>
-          </enumChoice>
-          <enumChoice choice="F4 left, F5 right">
-            <choice>F4 left, F5 right</choice>
-          </enumChoice>
-          <enumChoice choice="F5 left, F6 right">
-            <choice>F5 left, F6 right</choice>
-          </enumChoice>
-          <enumChoice choice="F6 left, F7 right">
-            <choice>F6 left, F7 right</choice>
-          </enumChoice>
-          <enumChoice choice="F7 left, F8 right">
-            <choice>F7 left, F8 right</choice>
-          </enumChoice>
-          <enumChoice choice="F8 left, F9 right">
-            <choice>F8 left, F9 right</choice>
-          </enumChoice>
-          <enumChoice choice="F9 left, F10 right">
-            <choice>F9 left, F10 right</choice>
-          </enumChoice>
-          <enumChoice choice="F10 left, F11 right">
-            <choice>F10 left, F11 right</choice>
-          </enumChoice>
-          <enumChoice choice="F11 left, F12 right">
-            <choice>F11 left, F12 right</choice>
-          </enumChoice>
-          <enumChoice choice="F3 left, F6 right">
-            <choice>F3 left, F6 right</choice>
-          </enumChoice>
-          <enumChoice choice="F4 left, F7 right">
-            <choice>F4 left, F7 right</choice>
-          </enumChoice>
-          <enumChoice choice="F5 left, F8 right">
-            <choice>F5 left, F8 right</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/enum-Fx_servo.xml"/>
         <label>Servo 2 Function Allocation</label>
+        <label xml:lang="it">Servo 2 Allocazione Funzioni</label>
       </variable>
       <variable item="Special Assignment for Live Steam" CV="185" default="0">
         <enumVal>
           <enumChoice choice="Normal CV181 + CV182 settings">
             <choice>Normal CV181 + CV182 settings</choice>
+            <choice xml:lang="it">Normale CV181 + CV182</choice>
           </enumChoice>
           <enumChoice choice="Single Servo for Speed and direction (centre stop)">
             <choice>Single Servo for Speed and direction (centre stop)</choice>
+            <choice xml:lang="it">Servo singolo per Velocità e direzione(stop al centro)</choice>
           </enumChoice>
           <enumChoice choice="Servo 1 regulator, Servo 2 direction">
             <choice>Servo 1 regulator, Servo 2 direction</choice>
+            <choice xml:lang="it">Servo 1 velocità, Servo 2 direzione</choice>
           </enumChoice>
           <enumChoice choice="Servo 1 regulator, Servo 2 direction, Neutral if speed = 0 and F1 = on">
             <choice>Servo 1 regulator, Servo 2 direction, Neutral if speed = 0 and F1 = on</choice>
+            <choice xml:lang="it">Servo 1 velocità, Servo 2 direzione, Neutro se velocità=0 e F1=on</choice>
           </enumChoice>
         </enumVal>
         <label>Special Assignment for Live Steam</label>
+        <label xml:lang="it">Allocazione Speciali per Vapore Vivo</label>
       </variable>
     </variables>
     <resets>
@@ -1872,15 +1706,19 @@
           </label>
           <label>
             <text>A 'Hundreds' digit of 1 offsets the mid value for 'coreless' motors</text>
+            <text xml:lang="it">Numero Centinaia =1 è valore intermedio per motori 'coreless'</text>
           </label>
           <label>
             <text>Tens digit is the Proportional value, mid value = 5</text>
+            <text xml:lang="it">Numero decine è valore proporzionale, valore medio=5</text>
           </label>
           <label>
             <text>Ones digit is the integral value, mid value = 5</text>
+            <text xml:lang="it">Numero unità è valore integrale, valore medio =5</text>
           </label>
           <label>
             <text>With default setting of 0, proportional value auto adjusts and integral value is equivalent to 5</text>
+            <text xml:lang="it">Con i valori di default = 0 il valore proporzionale si regola automaticamente e il valore integrale è = 5</text>
           </label>
           <label>
             <text> </text>
@@ -1901,21 +1739,27 @@
           </label>
           <label>
             <text>0 = 20/40KHz (set with CV112) and sample rate auto adjusts between 200Hz (low speed) and 50Hz</text>
+            <text xml:lang="it">0 = 20/40KHz (con CV112) e campionamento si regola automaticamente tra 200Hz (bassa velocità) e 50Hz</text>
           </label>
           <label>
             <text>Tens digit = Sampling rate (1-9) mid value = 5</text>
+            <text xml:lang="it">Numero decine = campionamento (1-9) valore medio=5</text>
           </label>
           <label>
             <text>Ones digit = EMF sampling time (1-9) mid value = 5</text>
+            <text xml:lang="it">Numero unità = tempo campionamento EMF(1-9), valore medio =5</text>
           </label>
           <label>
             <text>100 = 'Spread Spectrum' sampling rate for reduced noise, with medium sampling time</text>
+            <text xml:lang="it">100 = Campionamento 'Ampio spettro' per rumore ridotto, con tempo campionamento medio</text>
           </label>
           <label>
             <text>255-176 = Low frequency according to formula;-</text>
+            <text xml:lang="it">255-176 = Bassa frequenza secondo la formula;-</text>
           </label>
           <label>
             <text>(131 + mantissa * 4) * 2 exp. Bits 0-4 = mantissa, Bits 5-7 = exp</text>
+            <text xml:lang="it">(131 + mantissa * 4) * 2 exp. Bits 0-4 = mantissa, Bits 5-7 = exp-</text>
           </label>
           <label>
             <text> </text>
@@ -1926,6 +1770,7 @@
       <row>
         <label>
           <text>Acceleration/Deceleration time (momentum) can be streched in the lower speed range</text>
+          <text xml:lang="it">Il tempo di Accell./Decell. (inerzia) può essere allargato a velocità bassa</text>
         </label>
       </row>
       <row>
@@ -1950,9 +1795,11 @@
           </label>
           <label>
             <text>Tens digit = percentage of speed range to be included (0-9)</text>
+            <text xml:lang="it">Numero decine = percentuale velocità da includere (0-9)</text>
           </label>
           <label>
             <text>Ones digit = Exponential curve (0-9)</text>
+            <text xml:lang="it">Numero unità = curva esponenziale (0-9)</text>
           </label>
           <label>
             <text> </text>
@@ -1964,9 +1811,11 @@
         <column>
           <label>
             <text>Raising or lowering the speed to the next internal step occurs only if the precedingstep is nearly reached.The tolerance</text>
+            <text xml:lang="it">L'incremento o il decremento allo step vicino avviene solo se è raggiunto lo step precedente. La tolleranza</text>
           </label>
           <label>
             <text>for reaching the preceding step is defined by this CV (the smaller this value the smoother the acceleration/deceleration)</text>
+            <text xml:lang="it">per raggiungere lo step precedente è definita da questa CV ( valori piccoli per accell./decell. più graduali)</text>
           </label>
         </column>
       </row>
@@ -1991,12 +1840,15 @@
           </label>
           <label>
             <text>Tens digit = acceleration (1-9)</text>
+            <text xml:lang="it">Numero decine = accellerazione (1-9)</text>
           </label>
           <label>
             <text>Ones digit = deceleration (1-9)</text>
+            <text xml:lang="it">Numero unità = decellerazione (1-9)</text>
           </label>
           <label>
             <text>Value 0 = no adaptive acceleration/deceleration</text>
+            <text xml:lang="it">Valore 0 = nessuna accell./decell. adattativa</text>
           </label>
           <label>
             <text> </text>
@@ -2042,26 +1894,32 @@
           </label>
           <label>
             <text>Tens digit = Pull In time (0-9)</text>
+            <text xml:lang="it">Numero decine = tempo aggancio (0-9)</text>
           </label>
           <label>
             <text>Ones digit = Hold power % x10 (0-9)</text>
+            <text xml:lang="it">Numero unità = tempo ritenuta %x10 (0-9)</text>
           </label>
           <label>
             <text> </text>
           </label>
           <label>
             <text>Tens digit = Move away time (0-9)</text>
+            <text xml:lang="it">Numero decine = tempo allontanamento (0-9)</text>
           </label>
           <label>
             <text>Ones digit = Speed Step (0-9)</text>
+            <text xml:lang="it">Numero unità = Step velocità (0-9)</text>
           </label>
           <label>
             <text>Hundreds digit = with/without tension relief (0-1)</text>
+            <text xml:lang="it">Numero centinaia = Con/Senza rilascio tensione (0-1)</text>
           </label>
         </column>
       </row>
     </column>
     <name>Shunt/Uncouple</name>
+    <name xml:lang="it">Sgangio/Manovra</name>
   </pane>
   <pane>
     <column>
@@ -2074,6 +1932,7 @@
       </label>
       <label>
         <text>           Description                       Output wire or operation</text>
+        <text xml:lang="it">           Descrizione                                      Filo Uscita o operazione</text>
       </label>
       <label>
         <text> </text>
@@ -2085,54 +1944,70 @@
           </label>
           <label>
             <text>                                           Front  </text>
+            <text xml:lang="it">                                          Frontale </text>
           </label>
           <label>
             <text>                                           Light  </text>
+            <text xml:lang="it">                                           Luci   </text>
           </label>
           <label>
             <text> </text>
           </label>
           <display item="FL(f) controls output 1" format="checkbox" label="Forward Headlight F0(f)">
             <label>Forward Headlight F0(f)</label>
+            <label xml:lang="it">Luci frontali  F0(avanti)</label>
           </display>
           <display item="FL(r) controls output 1" format="checkbox" label="Reverse Headlight F0(r)">
             <label>Reverse Headlight F0(r)</label>
+            <label xml:lang="it">Luci Posteriori  F0(retro)</label>
           </display>
           <display item="F1 controls output 1" format="checkbox" label="Function 1         ">
             <label>Function 1         </label>
+            <label xml:lang="it">Funzione 1         </label>
           </display>
           <display item="F2 controls output 1" format="checkbox" label="Function 2         ">
             <label>Function 2         </label>
+            <label xml:lang="it">Funzione 2         </label>
           </display>
           <display item="AltF3 controls output 1" format="checkbox" label="Function 3         ">
             <label>Function 3         </label>
+            <label xml:lang="it">Funzione 3         </label>
           </display>
           <display item="AltF4 controls output 1" format="checkbox" label="Function 4         ">
             <label>Function 4         </label>
+            <label xml:lang="it">Funzione 4         </label>
           </display>
           <display item="AltF5 controls output 1" format="checkbox" label="Function 5         ">
             <label>Function 5         </label>
+            <label xml:lang="it">Funzione 5         </label>
           </display>
           <display item="AltF6 controls output 1" format="checkbox" label="Function 6         ">
             <label>Function 6         </label>
+            <label xml:lang="it">Funzione 6         </label>
           </display>
           <display item="AltF7 controls output 1" format="checkbox" label="Function 7         ">
             <label>Function 7         </label>
+            <label xml:lang="it">Funzione 7         </label>
           </display>
           <display item="AltF8 controls output 1" format="checkbox" label="Function 8         ">
             <label>Function 8         </label>
+            <label xml:lang="it">Funzione 8         </label>
           </display>
           <display item="AltF9 controls output 1" format="checkbox" label="Function 9         ">
             <label>Function 9         </label>
+            <label xml:lang="it">Funzione 9         </label>
           </display>
           <display item="AltF10 controls output 1" format="checkbox" label="Function 10         ">
             <label>Function 10         </label>
+            <label xml:lang="it">Funzione 10        </label>
           </display>
           <display item="AltF11 controls output 1" format="checkbox" label="Function 11         ">
             <label>Function 11         </label>
+            <label xml:lang="it">Funzione 11        </label>
           </display>
           <display item="AltF12 controls output 1" format="checkbox" label="Function 12         ">
             <label>Function 12         </label>
+            <label xml:lang="it">Funzione 12        </label>
           </display>
         </column>
         <column>
@@ -2418,6 +2293,7 @@
       </row>
     </column>
     <name>Alt Function Map</name>
+    <name xml:lang="it">Mappa Funzioni Speciali</name>
   </pane>
   <pane>
     <column>
@@ -2440,6 +2316,7 @@
         <column>
           <label>
             <text>Generates pulse chain commands for LGB sound modules on FO 1</text>
+            <text xml:lang="it">Genera comandi e treno impulsi per moduli sonori LBG con F1</text>
           </label>
         </column>
       </row>
@@ -2461,12 +2338,15 @@
         <column>
           <label>
             <text> 0 = Normal Function Output</text>
+             <text xml:lang="it">0 = Uscita Normale Funzioni</text>
           </label>
           <label>
             <text>40 = approx 2 pulses per revoloution</text>
+            <text xml:lang="it">40 = circa 2 impulsi ogni rotazione</text>
           </label>
           <label>
             <text>20 = approx 4 pulses per revoloution</text>
+            <text xml:lang="it">20 = circa 4 impulsi ogni rotazione</text>
           </label>
           <label>
             <text> </text>
@@ -2802,28 +2682,42 @@
     <column>
       <label>
         <text>To calibrate the speed regulation, mark a scale tenth of a unit (Mile or Kilometre), place loco</text>
+        <text xml:lang="it">Per calibrare la velocità, segna un tratto di un decomo di unità in scala (Km o Miglia), piazza la loco</text>
       </label>
       <label>
         <text>on track with correct direction set, F0 turned off and enough distance from the Start marker</text>
+        <text xml:lang="it">sulle rotaie,con F0 in Off e a distanza sufficente dal segno di inizio tratta</text>
       </label>
       <label>
         <text>to allow for the acceleration (change momentum settings if neccessary). Write '1' to CV 135</text>
+        <text xml:lang="it">per permettere l'accellerazione (eventualmente togli il parametro "inerzia"). Scrivere '1' in CV 135</text>
       </label>
       <label>
         <text>using a cab or the Single CV Programmer, then drive the loco through the marked section at</text>
+        <text xml:lang="it">usando il palmare o il programmatore di singole CV, quindi fai marciare la loco nella tratta a</text>
       </label>
       <label>
         <text>a mid speed, turning F0 on at the Start marker and off at the End marker.</text>
+        <text xml:lang="it">velocità intermedia, mettere F0 in On all'inizio tratta e in Off alla fine.</text>
       </label>
       <label>
         <text> </text>
       </label>
       <label>
         <text>If several calibration runs are performed at different speeds and the Calibration Result read</text>
+        <text xml:lang="it">Se si eseguono diverse misurazioni a velocità differenti e si leggono i valori</text>
       </label>
       <label>
         <text>after each one, the Calibration Result should be approximately the same</text>
+        <text xml:lang="it">Risultato Calibrazione dopo ogni volta, i risultati devono essere simili</text>
       </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="km/h speed regulation control number readout" label="Calibration Result" tooltip="Read Only">
+        <label>Calibration Result</label>
+        <label xml:lang="it">Risultati Calibrazione</label>
+      </display>
       <label>
         <text> </text>
       </label>
@@ -2840,16 +2734,19 @@
         <column>
           <display item="km/h speed regulation control and range" label="Speed Regulation Control">
             <label>Speed Regulation Control</label>
+            <label xml:lang="it">Controllo regolazione Velocità</label>
           </display>
         </column>
         <column>
           <label>
             <text> Miles or Kilometres per hour per (128) Speed Step</text>
+            <text xml:lang="it">Miglia o Km/ora x 128 step velocità</text>
           </label>
         </column>
       </row>
     </column>
     <name>Speed Regulation</name>
+    <name xml:lang="it">Regolazione Velocità</name>
   </pane>
   <pane>
     <column>

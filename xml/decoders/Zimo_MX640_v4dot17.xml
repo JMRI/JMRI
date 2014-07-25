@@ -1676,6 +1676,7 @@
       <variable CV="146" default="0" item="Load Control" tooltip="Motor Backlash Control">
         <decVal min="0" max="255"/>
         <label>Motor Backlash Control</label>
+        <label xml:lang="it">Controllo Rinculo Motore</label>
       </variable>
       <variable CV="147" default="0" item="Total PWM Period">
         <decVal min="0" max="255"/>
@@ -1720,28 +1721,35 @@
         <enumVal>
           <enumChoice choice="Moves to centre in dual key if both Fn's off">
             <choice>Moves to centre in dual key if both Fn's off</choice>
+            <choice xml:lang="it">Muove al centro se entrambe le Funz. in Off</choice>
           </enumChoice>
           <enumChoice choice="Only moves if function key pressed">
             <choice>Only moves if function key pressed</choice>
+            <choice xml:lang="it">Muove solo se tasto Funz. premuto</choice>
           </enumChoice>
         </enumVal>
         <label>Servo Centering</label>
+        <label xml:lang="it">Centraggio Servo</label>
       </variable>
       <variable item="Servo 1 Left Stop" CV="162" default="49">
         <decVal/>
         <label>Servo 1 Left Stop</label>
+        <label xml:lang="it">Servo 1 Stop Sinistro</label>
       </variable>
       <variable item="Servo 1 Right Stop" CV="163" default="205">
         <decVal/>
         <label>Servo 1 Right Stop</label>
+        <label xml:lang="it">Servo 1 Stop Destro</label>
       </variable>
       <variable item="Servo 1 Centre" CV="164" default="127">
         <decVal/>
         <label>Servo 1 Centre</label>
+        <label xml:lang="it">Servo 1 Centro</label>
       </variable>
       <variable item="Servo 1 Rotation Speed" CV="165" default="30">
         <decVal/>
         <label>Servo 1 Rotation Speed</label>
+        <label xml:lang="it">Servo 1 Velocità rotazione</label>
       </variable>
       <variable item="Servo 2 Left Stop" CV="166" default="49">
         <decVal/>
@@ -1763,6 +1771,7 @@
         <enumVal>
           <enumChoice choice="Servo not in operation">
             <choice>Servo not in operation</choice>
+            <choice xml:lang="it">Servo non operativo</choice>
           </enumChoice>
           <enumChoice choice="F1">
             <choice>F1</choice>
@@ -1802,65 +1811,85 @@
           </enumChoice>
           <enumChoice choice="forward = left, reverse = right" value="90">
             <choice>forward = left, reverse = right</choice>
+            <choice xml:lang="it">Avanti = sinistra, Indietro = destra</choice>
           </enumChoice>
           <enumChoice choice="stopped + forward = right, other = left">
             <choice>stopped + forward = right, other = left</choice>
+            <choice xml:lang="it">Fermo+Avanti = destra, Altri = Sinistra</choice>
           </enumChoice>
           <enumChoice choice="stopped + reverse = right, other = left">
             <choice>stopped + reverse = right, other = left</choice>
+            <choice xml:lang="it">Fermo+Indietro = destra, Altri = Sinistra</choice>
           </enumChoice>
           <enumChoice choice="stopped = right, moving = left">
             <choice>stopped = right, moving = left</choice>
+            <choice xml:lang="it">Fermo = destra, In movimento = Sinistra</choice>
           </enumChoice>
           <enumChoice choice="F1 left, F2 right" value="101">
             <choice>F1 left, F2 right</choice>
+            <choice xml:lang="it">F1 = Sinistra, F2 = Destra</choice>
           </enumChoice>
           <enumChoice choice="F2 left, F3 right">
             <choice>F2 left, F3 right</choice>
+            <choice xml:lang="it">F2 = Sinistra, F3 = Destra</choice>
           </enumChoice>
           <enumChoice choice="F3 left, F4 right">
             <choice>F3 left, F4 right</choice>
+            <choice xml:lang="it">F3 = Sinistra, F4 = Destra</choice>
           </enumChoice>
           <enumChoice choice="F4 left, F5 right">
             <choice>F4 left, F5 right</choice>
+            <choice xml:lang="it">F4 = Sinistra, F5 = Destra</choice>
           </enumChoice>
           <enumChoice choice="F5 left, F6 right">
             <choice>F5 left, F6 right</choice>
+            <choice xml:lang="it">F5 = Sinistra, F6 = Destra</choice>
           </enumChoice>
           <enumChoice choice="F6 left, F7 right">
             <choice>F6 left, F7 right</choice>
+            <choice xml:lang="it">F6 = Sinistra, F7 = Destra</choice>
           </enumChoice>
           <enumChoice choice="F7 left, F8 right">
             <choice>F7 left, F8 right</choice>
+            <choice xml:lang="it">F7 = Sinistra, F8 = Destra</choice>
           </enumChoice>
           <enumChoice choice="F8 left, F9 right">
             <choice>F8 left, F9 right</choice>
+            <choice xml:lang="it">F8 = Sinistra, F9 = Destra</choice>
           </enumChoice>
           <enumChoice choice="F9 left, F10 right">
             <choice>F9 left, F10 right</choice>
+            <choice xml:lang="it">F9 = Sinistra, F10 = Destra</choice>
           </enumChoice>
           <enumChoice choice="F10 left, F11 right">
             <choice>F10 left, F11 right</choice>
+            <choice xml:lang="it">F10 = Sinistra, F11 = Destra</choice>
           </enumChoice>
           <enumChoice choice="F11 left, F12 right">
             <choice>F11 left, F12 right</choice>
+            <choice xml:lang="it">F11 = Sinistra, F12 = Destra</choice>
           </enumChoice>
           <enumChoice choice="F3 left, F6 right">
             <choice>F3 left, F6 right</choice>
+            <choice xml:lang="it">F3 = Sinistra, F6 = Destra</choice>
           </enumChoice>
           <enumChoice choice="F4 left, F7 right">
             <choice>F4 left, F7 right</choice>
+            <choice xml:lang="it">F4 = Sinistra, F7 = Destra</choice>
           </enumChoice>
           <enumChoice choice="F5 left, F8 right">
             <choice>F5 left, F8 right</choice>
+            <choice xml:lang="it">F5 = Sinistra, F8 = Destra</choice>
           </enumChoice>
         </enumVal>
         <label>Servo 1 Function Allocation</label>
+        <label xml:lang="it">Servo 1 Allocazione Funzioni</label>
       </variable>
       <variable item="Servo 2 Function Allocation" CV="182" default="0">
         <enumVal>
           <enumChoice choice="Servo not in operation">
             <choice>Servo not in operation</choice>
+            <choice xml:lang="it">Servo non operativo</choice>
           </enumChoice>
           <enumChoice choice="F1">
             <choice>F1</choice>
@@ -1900,60 +1929,79 @@
           </enumChoice>
           <enumChoice choice="forward = left, reverse = right" value="90">
             <choice>forward = left, reverse = right</choice>
+            <choice xml:lang="it">Avanti = sinistra, Indietro = destra</choice>
           </enumChoice>
           <enumChoice choice="stopped + forward = right, other = left">
             <choice>stopped + forward = right, other = left</choice>
+            <choice xml:lang="it">Fermo+Avanti = destra, Altri = Sinistra</choice>
           </enumChoice>
           <enumChoice choice="stopped + reverse = right, other = left">
             <choice>stopped + reverse = right, other = left</choice>
+            <choice xml:lang="it">Fermo+Indietro = destra, Altri = Sinistra</choice>
           </enumChoice>
           <enumChoice choice="stopped = right, moving = left">
             <choice>stopped = right, moving = left</choice>
+            <choice xml:lang="it">Fermo = destra, In movimento = Sinistra</choice>
           </enumChoice>
           <enumChoice choice="F1 left, F2 right" value="101">
             <choice>F1 left, F2 right</choice>
+            <choice xml:lang="it">F1 = Sinistra, F2 = Destra</choice>
           </enumChoice>
           <enumChoice choice="F2 left, F3 right">
             <choice>F2 left, F3 right</choice>
+            <choice xml:lang="it">F2 = Sinistra, F3 = Destra</choice>
           </enumChoice>
           <enumChoice choice="F3 left, F4 right">
             <choice>F3 left, F4 right</choice>
+            <choice xml:lang="it">F3 = Sinistra, F4 = Destra</choice>
           </enumChoice>
           <enumChoice choice="F4 left, F5 right">
             <choice>F4 left, F5 right</choice>
+            <choice xml:lang="it">F4 = Sinistra, F5 = Destra</choice>
           </enumChoice>
           <enumChoice choice="F5 left, F6 right">
             <choice>F5 left, F6 right</choice>
+            <choice xml:lang="it">F5 = Sinistra, F6 = Destra</choice>
           </enumChoice>
           <enumChoice choice="F6 left, F7 right">
             <choice>F6 left, F7 right</choice>
+            <choice xml:lang="it">F6 = Sinistra, F7 = Destra</choice>
           </enumChoice>
           <enumChoice choice="F7 left, F8 right">
             <choice>F7 left, F8 right</choice>
+            <choice xml:lang="it">F7 = Sinistra, F8 = Destra</choice>
           </enumChoice>
           <enumChoice choice="F8 left, F9 right">
             <choice>F8 left, F9 right</choice>
+            <choice xml:lang="it">F8 = Sinistra, F9 = Destra</choice>
           </enumChoice>
           <enumChoice choice="F9 left, F10 right">
             <choice>F9 left, F10 right</choice>
+            <choice xml:lang="it">F9 = Sinistra, F10 = Destra</choice>
           </enumChoice>
           <enumChoice choice="F10 left, F11 right">
             <choice>F10 left, F11 right</choice>
+            <choice xml:lang="it">F10 = Sinistra, F11 = Destra</choice>
           </enumChoice>
           <enumChoice choice="F11 left, F12 right">
             <choice>F11 left, F12 right</choice>
+            <choice xml:lang="it">F11 = Sinistra, F12 = Destra</choice>
           </enumChoice>
           <enumChoice choice="F3 left, F6 right">
             <choice>F3 left, F6 right</choice>
+            <choice xml:lang="it">F3 = Sinistra, F6 = Destra</choice>
           </enumChoice>
           <enumChoice choice="F4 left, F7 right">
             <choice>F4 left, F7 right</choice>
+            <choice xml:lang="it">F4 = Sinistra, F7 = Destra</choice>
           </enumChoice>
           <enumChoice choice="F5 left, F8 right">
             <choice>F5 left, F8 right</choice>
+            <choice xml:lang="it">F5 = Sinistra, F8 = Destra</choice>
           </enumChoice>
         </enumVal>
         <label>Servo 2 Function Allocation</label>
+        <label xml:lang="it">Servo 2 Allocazione Funzioni</label>
       </variable>
       <!-- Begin sound-only variables -->
       <variable item="Set sound program" CV="265" default="1" tooltip="See manual!">
@@ -2845,6 +2893,7 @@
       </label>
       <label>
         <text>           Description                                      Output wire or operation</text>
+        <text xml:lang="it">           Descrizione                                      Filo Uscita o operazione</text>
       </label>
       <label>
         <text> </text>
@@ -2856,9 +2905,11 @@
           </label>
           <label>
             <text>                                           Front  </text>
+            <text xml:lang="it">                                          Frontale </text>
           </label>
           <label>
             <text>                                           Light  </text>
+            <text xml:lang="it">                                           Luci   </text>
           </label>
           <display item="FL(f) controls output 1" format="checkbox" label="Forward Headlight F0(f)">
             <label>Forward Headlight F0(f)</label>
@@ -3288,6 +3339,7 @@
       </row>
     </column>
     <name>Alt Function Map</name>
+    <name xml:lang="it">Mappa Funzioni Speciali</name>
   </pane>
   <pane>
     <column>
