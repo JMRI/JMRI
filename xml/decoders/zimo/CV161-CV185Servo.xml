@@ -3,6 +3,7 @@
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 15 Aug 11 JES
                  - added 224 to includes for servo 3 and 4
+                 - Add "it" translation- Enzo Fortuna ( fortuna.enzo@gmail.com )
 -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <variable item="Servo Protocol" CV="161" mask="XXXXXXXV" default="0">
@@ -14,102 +15,128 @@
     <enumVal>
       <enumChoice choice="Only Active for movement" value="0">
         <choice>Only Active for movement</choice>
+        <choice xml:lang="it">Solo durante movimento</choice>
       </enumChoice>
       <enumChoice choice="Allways Active" value="1">
         <choice>Allways Active</choice>
+        <choice xml:lang="it">Attivo sempre</choice>
       </enumChoice>
     </enumVal>
     <label>Servo Control Signal</label>
+    <label xml:lang="it">Segnale controllo Servo</label>
   </variable>
   <variable item="Servo Centering" CV="161" mask="VVVVVXVV" default="0">
     <enumVal>
       <enumChoice choice="Moves to centre in dual key if both Fn's off">
         <choice>Moves to centre in dual key if both Fn's off</choice>
+        <choice xml:lang="it">Muove al centro se entrambe le Funz. in Off</choice>
       </enumChoice>
       <enumChoice choice="Only moves if function key pressed">
         <choice>Only moves if function key pressed</choice>
+        <choice xml:lang="it">Muove solo se tasto Funz. premuto</choice>
       </enumChoice>
     </enumVal>
     <label>Servo Centering</label>
+    <label xml:lang="it">Centraggio Servo</label>
   </variable>
   <variable item="Servo 1 Left Stop" CV="162" default="49">
     <decVal/>
     <label>Servo 1 Left Stop</label>
+    <label xml:lang="it">Servo 1 Stop Sinistro</label>
   </variable>
   <variable item="Servo 1 Right Stop" CV="163" default="205">
     <decVal/>
     <label>Servo 1 Right Stop</label>
+    <label xml:lang="it">Servo 1 Stop Destro</label>
   </variable>
   <variable item="Servo 1 Centre" CV="164" default="127">
     <decVal/>
     <label>Servo 1 Centre</label>
+    <label xml:lang="it">Servo 1 Centro</label>
   </variable>
   <variable item="Servo 1 Rotation Speed" CV="165" default="30">
     <decVal/>
     <label>Servo 1 Rotation Speed</label>
+    <label xml:lang="it">Servo 1 Velocità rotazione</label>
   </variable>
   <variable item="Servo 2 Left Stop" CV="166" default="49">
     <decVal/>
     <label>Servo 2 Left Stop</label>
+    <label xml:lang="it">Servo 2 Stop Sinistro</label>
   </variable>
   <variable item="Servo 2 Right Stop" CV="167" default="205">
     <decVal/>
     <label>Servo 2 Right Stop</label>
+    <label xml:lang="it">Servo 2 Stop Destro</label>
   </variable>
   <variable item="Servo 2 Centre" CV="168" default="127">
     <decVal/>
     <label>Servo 2 Centre</label>
+    <label xml:lang="it">Servo 2 Centro</label>
   </variable>
   <variable item="Servo 2 Rotation Speed" CV="169" default="30">
     <decVal/>
     <label>Servo 2 Rotation Speed</label>
+    <label xml:lang="it">Servo 2 Velocità rotazione</label>
   </variable>
   <variable item="Servo 3 Left Stop" CV="170" default="49" include="208,209,224">
     <decVal/>
     <label>Servo 3 Left Stop</label>
+    <label xml:lang="it">Servo 3 Stop Sinistro</label>
   </variable>
   <variable item="Servo 3 Right Stop" CV="171" default="205" include="208,209,224">
     <decVal/>
     <label>Servo 3 Right Stop</label>
+    <label xml:lang="it">Servo 3 Stop Destro</label>
   </variable>
   <variable item="Servo 3 Centre" CV="172" default="127" include="208,209,224">
     <decVal/>
     <label>Servo 3 Centre</label>
+    <label xml:lang="it">Servo 3 Centro</label>
   </variable>
   <variable item="Servo 3 Rotation Speed" CV="173" default="30" include="208,209,224">
     <decVal/>
     <label>Servo 3 Rotation Speed</label>
+    <label xml:lang="it">Servo 3 Velocità rotazione</label>
   </variable>
   <variable item="Servo 4 Left Stop" CV="174" default="49" include="208,209,224">
     <decVal/>
     <label>Servo 4 Left Stop</label>
+    <label xml:lang="it">Servo 4 Stop Sinistro</label>
   </variable>
   <variable item="Servo 4 Right Stop" CV="175" default="205" include="208,209,224">
     <decVal/>
     <label>Servo 4 Right Stop</label>
+    <label xml:lang="it">Servo 4 Stop Destro</label>
   </variable>
   <variable item="Servo 4 Centre" CV="176" default="127" include="208,209,224">
     <decVal/>
     <label>Servo 4 Centre</label>
+    <label xml:lang="it">Servo 4 Centro</label>
   </variable>
   <variable item="Servo 4 Rotation Speed" CV="177" default="30" include="208,209,224">
     <decVal/>
     <label>Servo 4 Rotation Speed</label>
+    <label xml:lang="it">Servo 4 Velocità rotazione</label>
   </variable>
   <variable item="Servo 1 Function Allocation" CV="181" default="0">
     <xi:include href="http://jmri.org/xml/decoders/zimo/enum-Fx_servo.xml"/>
     <label>Servo 1 Function Allocation</label>
+    <label xml:lang="it">Servo 1 allocaz.Funzioni</label>
   </variable>
   <variable item="Servo 2 Function Allocation" CV="182" default="0">
     <xi:include href="http://jmri.org/xml/decoders/zimo/enum-Fx_servo.xml"/>
     <label>Servo 2 Function Allocation</label>
+    <label xml:lang="it">Servo 2 allocaz.Funzioni</label>
   </variable>
   <variable item="Servo 3 Function Allocation" CV="183" default="0" include="208,209,224">
     <xi:include href="http://jmri.org/xml/decoders/zimo/enum-Fx_servo.xml"/>
-    <label>Servo 4 Function Allocation</label>
+    <label>Servo 3 Function Allocation</label>
+    <label xml:lang="it">Servo 3 allocaz.Funzioni</label>
   </variable>
   <variable item="Servo 4 Function Allocation" CV="184" default="0" include="208,209,224">
     <xi:include href="http://jmri.org/xml/decoders/zimo/enum-Fx_servo.xml"/>
     <label>Servo 4 Function Allocation</label>
+    <label xml:lang="it">Servo 4 allocaz.Funzioni</label>
   </variable>
 </variables>

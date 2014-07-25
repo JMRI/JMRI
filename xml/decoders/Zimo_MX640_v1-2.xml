@@ -1826,12 +1826,15 @@
         <enumVal>
           <enumChoice choice="Only Active for movement" value="0">
             <choice>Only Active for movement</choice>
+            <choice xml:lang="it">Solo durante movimento</choice>
           </enumChoice>
           <enumChoice choice="Allways Active" value="1">
             <choice>Allways Active</choice>
+            <choice xml:lang="it">Attivo sempre</choice>
           </enumChoice>
         </enumVal>
         <label>Servo Control Signal</label>
+        <label xml:lang="it">Segnale controllo Servo</label>
       </variable>
       <variable item="Servo 1 Left Stop" CV="162" default="49">
         <decVal/>
@@ -1856,18 +1859,22 @@
       <variable item="Servo 2 Left Stop" CV="166" default="49">
         <decVal/>
         <label>Servo 2 Left Stop</label>
+        <label xml:lang="it">Servo 2 Stop Sinistro</label>
       </variable>
       <variable item="Servo 2 Right Stop" CV="167" default="205">
         <decVal/>
         <label>Servo 2 Right Stop</label>
+        <label xml:lang="it">Servo 2 Stop Destro</label>
       </variable>
       <variable item="Servo 2 Centre" CV="168" default="127">
         <decVal/>
         <label>Servo 2 Centre</label>
+        <label xml:lang="it">Servo 2 Centro</label>
       </variable>
       <variable item="Servo 2 Rotation Speed" CV="169" default="30">
         <decVal/>
         <label>Servo 2 Rotation Speed</label>
+        <label xml:lang="it">Servo 2 Velocità rotazione</label>
       </variable>
       <variable item="Servo 1 Function Allocation" CV="181" default="0">
         <enumVal>

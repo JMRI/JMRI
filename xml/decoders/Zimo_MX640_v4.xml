@@ -1824,6 +1824,7 @@
       <variable item="Servo 2 Function Allocation" CV="182" default="0">
         <xi:include href="http://jmri.org/xml/decoders/zimo/enum-Fx_servo.xml"/>
         <label>Servo 2 Function Allocation</label>
+        <label xml:lang="it">Servo 2 allocaz.Funzioni</label>
       </variable>
       <!-- Begin sound-only variables -->
       <variable item="Set sound program" CV="265" default="1" tooltip="See manual!">
