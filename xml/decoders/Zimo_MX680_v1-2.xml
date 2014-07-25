@@ -1373,9 +1373,11 @@
           </label>
           <label>
             <text>Tens digit = Pull In time (0-9)</text>
+             <text xml:lang="it">Numero decine = tempo aggancio (0-9)</text>
           </label>
           <label>
             <text>Ones digit = Hold power % x10 (0-9)</text>
+            <text xml:lang="it">Numero unità = tempo ritenuta %x10 (0-9)</text>
           </label>
           <label>
             <text> </text>
@@ -1384,6 +1386,7 @@
       </row>
     </column>
     <name>Uncouple</name>
+    <name xml:lang="it">Sgangio</name>
   </pane>
   <pane>
     <column>

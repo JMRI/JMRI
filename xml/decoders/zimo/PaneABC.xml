@@ -61,9 +61,11 @@
       <column>
         <label>
           <text>Entered value multiplied by 0.4 seconds is the additional accel/decel</text>
+          <text xml:lang="it">Il valore x 0,4 è il valore sommato a CV3 e CV4</text>
         </label>
         <label>
           <text>added to the normal CV3 and CV4 setting, for speed changes due to ABC</text>
+          <text xml:lang="it">per cambio velocità per ABC</text>
         </label>
         <label>
           <text> </text>

@@ -2749,15 +2749,19 @@
           </label>
           <label>
             <text>A 'Hundreds' digit of 1 offsets the mid value for 'coreless' motors</text>
+            <text xml:lang="it">Numero Centinaia =1 è valore intermedio per motori 'coreless'</text>
           </label>
           <label>
             <text>Tens digit is the Proportional value, mid value = 5</text>
+            <text xml:lang="it">Numero decine è valore proporzionale, valore medio=5</text>
           </label>
           <label>
             <text>Ones digit is the integral value, mid value = 5</text>
+            <text xml:lang="it">Numero unità è valore integrale, valore medio =5</text>
           </label>
           <label>
             <text>With default setting of 0, proportional value auto adjusts and integral value is equivalent to 5</text>
+            <text xml:lang="it">Con i valori di default = 0 il valore proporzionale si regola automaticamente e il valore integrale è = 5</text>
           </label>
           <label>
             <text> </text>
@@ -2778,21 +2782,27 @@
           </label>
           <label>
             <text>0 = 20/40KHz (set with CV112) and sample rate auto adjusts between 200Hz (low speed) and 50Hz</text>
+            <text xml:lang="it">0 = 20/40KHz (con CV112) e campionamento si regola automaticamente tra 200Hz (bassa velocità) e 50Hz</text>
           </label>
           <label>
             <text>Tens digit = Sampling rate (1-9) mid value = 5</text>
+            <text xml:lang="it">Numero decine = campionamento (1-9) valore medio=5</text>
           </label>
           <label>
             <text>Ones digit = EMF sampling time (1-9) mid value = 5</text>
+            <text xml:lang="it">Numero unità = tempo campionamento EMF(1-9), valore medio =5</text>
           </label>
           <label>
             <text>100 = 'Spread Spectrum' sampling rate for reduced noise, with medium sampling time</text>
+            <text xml:lang="it">100 = Campionamento 'Ampio spettro' per rumore ridotto, con tempo campionamento medio</text>
           </label>
           <label>
             <text>255-176 = Low frequency according to formula;-</text>
+            <text xml:lang="it">255-176 = Bassa frequenza secondo la formula;-</text>
           </label>
           <label>
             <text>(131 + mantissa * 4) * 2 exp. Bits 0-4 = mantissa, Bits 5-7 = exp</text>
+            <text xml:lang="it">(131 + mantissa * 4) * 2 exp. Bits 0-4 = mantissa, Bits 5-7 = exp-</text>
           </label>
           <label>
             <text> </text>
@@ -2803,6 +2813,7 @@
       <row>
         <label>
           <text>Acceleration/Deceleration time (momentum) can be streched in the lower speed range</text>
+          <text xml:lang="it">Il tempo di Accell./Decell. (inerzia) può essere allargato a velocità bassa</text>
         </label>
       </row>
       <row>
@@ -2827,9 +2838,11 @@
           </label>
           <label>
             <text>Tens digit = percentage of speed range to be included (0-9)</text>
+            <text xml:lang="it">Numero decine = percentuale velocità da includere (0-9)</text>
           </label>
           <label>
             <text>Ones digit = Exponential curve (0-9)</text>
+            <text xml:lang="it">Numero unità = curva esponenziale (0-9)</text>
           </label>
           <label>
             <text> </text>
@@ -2841,9 +2854,11 @@
         <column>
           <label>
             <text>Raising or lowering the speed to the next internal step occurs only if the precedingstep is nearly reached.The tolerance</text>
+            <text xml:lang="it">L'incremento o il decremento allo step vicino avviene solo se è raggiunto lo step precedente. La tolleranza</text>
           </label>
           <label>
             <text>for reaching the preceding step is defined by this CV (the smaller this value the smoother the acceleration/deceleration)</text>
+            <text xml:lang="it">per raggiungere lo step precedente è definita da questa CV ( valori piccoli per accell./decell. più graduali)</text>
           </label>
         </column>
       </row>
@@ -2868,12 +2883,15 @@
           </label>
           <label>
             <text>Tens digit = acceleration (1-9)</text>
+            <text xml:lang="it">Numero decine = accellerazione (1-9)</text>
           </label>
           <label>
             <text>Ones digit = deceleration (1-9)</text>
+            <text xml:lang="it">Numero unità = decellerazione (1-9)</text>
           </label>
           <label>
             <text>Value 0 = no adaptive acceleration/deceleration</text>
+            <text xml:lang="it">Valore 0 = nessuna accell./decell. adattativa</text>
           </label>
           <label>
             <text> </text>
@@ -2919,26 +2937,32 @@
           </label>
           <label>
             <text>Tens digit = Pull In time (0-9)</text>
+             <text xml:lang="it">Numero decine = tempo aggancio (0-9)</text>
           </label>
           <label>
             <text>Ones digit = Hold power % x10 (0-9)</text>
+            <text xml:lang="it">Numero unità = tempo ritenuta %x10 (0-9)</text>
           </label>
           <label>
             <text> </text>
           </label>
           <label>
             <text>Tens digit = Move Away time (0-9)</text>
+            <text xml:lang="it">Numero decine = tempo allontanamento (0-9)</text>
           </label>
           <label>
             <text>Ones digit = Internal Speed Step x4 (0-9)</text>
+            <text xml:lang="it">Numero unità = Step velocità x4 (0-9)</text>
           </label>
           <label>
             <text>Hundreds digit, 1 = Tension Relieve</text>
+            <text xml:lang="it">Numero centinaia = 1= rilascio tensione</text>
           </label>
         </column>
       </row>
     </column>
     <name>Shunt/Uncouple</name>
+    <name xml:lang="it">Sgangio/Manovra</name>
   </pane>
   <pane>
     <column>

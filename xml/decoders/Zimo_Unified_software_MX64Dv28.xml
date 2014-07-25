@@ -54,6 +54,7 @@
       <variable item="Decoder ID 1" CV="250" default="206" readOnly="yes">
         <decVal/>
         <label>Decoder ID 1</label>
+        <label xml:lang="it">ID 1 Decoder: </label>
       </variable>
     </variables>
     <xi:include href="http://jmri.org/xml/decoders/zimo/factReset-v32.xml"/>
