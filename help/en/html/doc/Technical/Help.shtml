@@ -178,6 +178,8 @@ computer you have)</LI>
 <LI>Navigate to the "help" directory in your checked out copy of the code, 
 then the "en" directory within that, then select the "JHelpDev.xml" file 
 and click "Open".</LI>
+<p> You may get a message about "[Fatal Error] index.html:1:3: The markup declarations contained or pointed to by the document type declaration must be well-formed."
+Although it says it's fatal, it's really not a problem.  Just ignore it.
 
 <LI>Click the "Create All" button to recreate the maps, index, etc.</LI>
 
