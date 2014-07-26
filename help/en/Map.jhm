@@ -1224,6 +1224,8 @@
 
 <mapID target="html.hardware.loconet.LocoNetServer" url="html/hardware/loconet/LocoNetServer.shtml"/>
 
+<mapID target="package.jmri.jmrit.logix.NXWarrant" url="package/jmri/jmrit/logix/NXWarrant.shtml"/>
+
 <mapID target="Acknowledgements_D" url="Acknowledgements.shtml#D"/>
 
 <mapID target="manual.DecoderPro.Main_Help_Top" url="manual/DecoderPro/Main_Help.shtml#Top"/>
