@@ -4,8 +4,8 @@
 <HEAD>
 <TITLE>JMRI: Panel Help</TITLE>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Bob Jacobsen" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help Panel">
+<META CONTENT="Pete Cressman" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI Warrant Help">
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -37,41 +37,51 @@ move from point A to point B.
 <p>
 <b>Warrants</b> depend on having an accurate description of the layout in terms of
 <b>OBlocks</b>, <b>Portals</b> and <b>OPaths</b>.  These elememts are
-created using the <b>Occupancy Block Tables</b>.  They are a menu item under 
-the <b>Tools</b> menu in the PanelPro window under the <b>Add Items</b> menu of Control 
-Panel Editor.  Also they may be created using the menu items under the <b>Circuit Builder</b>
-menu of Control Panel Editor.  Their definitions listed found at
-<a href="OBlockTable.shtml">The Occupancy Block Tables</a>.  There, it is explained
-how to create them by filling out table entries. 
+created by entering data into the <b>Occupancy Block Tables</b> or by using the
+graphical interface of the <b>Circuit Builder</b>.  Intially neither of these
+subsystems are visible in Control Panel editor.
 <p>
-Alternatively,
-<b>OBlocks</b>, <b>Portals</b> and <b>OPaths</b> can be created using
-the <b>Circuit Builder</b> tool found in the Control Panel Editor.  Circuit Builder
-is an interactive tool that creates OBlocks, Portals and Paths graphically.  The Circuit 
-Builder will also convert the track segments and turnout icons of your layout to 
+<H2>How To Get Started</H2>
+<ul>
+	<li>Definitions of OBlocks, Portals and OPaths are found at
+	<a href="OBlockTable.shtml">The Occupancy Block Tables</a>.</li>
+	
+	<li>Opening the Occupancy Block Tables
+	is done by either the <b>Tablles -> Occupancy Blocks</b> menu item under 
+	the <b>Tools</b> menu in the main PanelPro window, or by the <b>Occupancy Blocks</b>
+	menu item under the <b>Add Items</b> menu of a Control 
+	Panel Editor.  How to create OBlock, Portals and OPaths is described in
+	<a href="OBlockEdit.shtml">Creating and Editing OBlocks, Portals and OPaths</a>.</li>
+	
+	<li>OBlocks, Portals and Paths can be created using
+	the <b>Circuit Builder</b> tool found in the Control Panel Editor.  Intially, the
+	Circuit Builder can be opened using the <b>Open Circuit Builder</b> menu item 
+	under the <b>Warrants</b> menu. Instructions for use are found in 
+	<a href="..\display\CircuitBuilder.shtml">The Circuit Builder</a>.</li>
+</ul>
+<p>
+<H3>More About Circuit Builder</h3>
+Circuit Builder is an interactive tool that creates OBlocks, Portals and Paths graphically.
+It is necessary to have a track diagram of your layout expressed with track icons 
+(track segments and turnout icons).  OBlocks are created by clicking on track icons.
+The Circuit Builder can convert the track segments and turnout icons of your layout to 
 Indicator Track and Indicator Turnout icons.  These icons display the
 status of the OBlock they represent by color - whether the track circuit of the OBlock is
 occupied or unoccupied, whether a warrant has allocated it or whether a train 
-under warrant currently is proceeding over the circuit.  The <b>Circuit Builder</b>
-is accessed under the <b>Circuit Builder</b> menu of the Control Panel Editor.
-Instructions for use are found in 
- <a href="..\display\CircuitBuilder.shtml">The Circuit Builder</a>.
-</p> 
-
-<H2>Creating a Warrant</H2>
-There are two types of warrants; 
-		<li>a recorded script Warrant, where 
-throttle commands are recorded from a throttle you use to drive a train over
-preselected route.  The warrant then replicates all the commands when played back.</li>
-	and
-		<li>an NXwarrant, that is, an eNtry/eXit warrant. These warrants are created by
-selecting a start position and an end position and having Control Panel Editor
-generate the commands to drive the train from start to end.</li>
-<p>		
-
+under warrant currently is proceeding over the circuit.  Deatails are found at
+<a href="..\display\CircuitBuilder.shtml">The Circuit Builder</a>, 
+<p> 
+<H3>Compatibility With Layout Editor</h3>
+OBlocks, Portals and Paths can be used with Layout Editor.  Compatibility is 
+achieved by using the same occupancy detection sensor(s) for LayoutBlocks as
+for OBlocks.  If there is no corresponding iconic layout diagram, the
+Occupancy Block Tables will have to be used to define the OBlocks, Portals and Paths.
+<p>
+<H3More About Getting Started</H3>
 In order to create a <b>Warrant</b> you must first have created two or more OBlocks.
 These blocks don't have to be fully defined, but their existence indicates that you 
-are interested in using Warrants.
+are interested in using Warrants, that is, you have a block to start a train and 
+a block to stop it.
 When two or more OBlocks exist    
 Control Panel Editor will display a <b>Warrants</b> menu with the following
 menu items.  The Warrant menu items are:
@@ -97,6 +107,26 @@ The editor also will display a <b>Circuit Builder</b> menu.   Otherwise, this me
 The circuit Builder menu contains menu items to create and edit OBlocks, Portals and OPaths
 and to position icons that represent them.
 <p>
+
+<H2>Creating a Warrant</H2>
+There are two types of warrants;
+<ul>		
+		<li>A recorded script Warrant, where 
+		throttle commands are recorded from a throttle you use to drive a train over
+		preselected route.  The warrant then replicates all the commands when played back.
+		To create a recorded script warrant, select the menu item <b>Create New Warrant</b>
+		from the <b>Warrants</b> menu.</li>
+	and
+		<li>An NXwarrant, that is, an eNtry/eXit warrant. These warrants are created by
+		selecting a start position and an end position and having Control Panel Editor
+		generate the commands to drive the train from start to end.  To create an
+		NXwarrant select the menu item <b>Create NXWarrant</b> from the <b>Warrants</b>
+		menu.</li>
+</ul>
+<p>
+In either case, first a route must be chosen on which to run the train. The <b>Creating Routes</b>
+section below describes how this is done.
+
 <H2>Elements of a Warrant</H2>
 A warrant consists of two parts; The route over which a train will run and the commands
 it will receive when running over the route.
@@ -104,30 +134,49 @@ it will receive when running over the route.
 <H3>Creating Routes</H3>
 A warrant route is a series of block paths linked together so a train
 may travel over it.  A warrant route is created by first choosing an <b>origin
-block</b>, a starting path and a portal to exit the orginating block.  Then,
-<b>destination block</b> is chosen and a path on which to end the route.  Blocks
+block</b>, a starting path and a portal to exit the orginating block.  Then, a
+<b>destination block</b> is chosen and a path on which to end the route.  Optionally,
+you may also chose a <b>Via</b> block, that is, a block that route <i>must</i> include
+and a <b>Avoid</b> block, that is, a block the the route <i>must not</i> include.  Blocks
 are chosen either by typing in the block name or dragging it from a displayed 
 OBlock table.  The origin and destination blocks can also be chosen by clicking on track
 icons that represent these OBlocks.  To use this feature your panel must have your layout
-depicted by Indicator Track Icons placed there by Circuit builder. A computer algorithm
-determines all the intermediate blocks and paths to make the route.  You have options to
-include or avoid specified blocks in the route.
-<A HREF="WarrantTable.shtml"> Creating and Editing Warrants</A>. has more
-information about creating routes.</p>
-
+depicted by Indicator Track Icons placed there by Circuit builder. 
+<p>
+A computer algorithm determines all the intermediate blocks, portals and paths to make the route.  If more
+than one route meets the criterion, you are presented with a list to review and select the 
+route you want.
+<p>
+<A HREF="WarrantTable.shtml"> Creating and Editing Warrants</A> has more
+information about creating routes.
+</p>
 <H3>Scripting the Train Action</H3>
 The second part of a Warrant are the throttle commands to control the train as it traverses the
-route.  This is done by putting a screen throttle into <i>Learn Mode</i> that records all the 
+route.  
+The script commands contain the elapsed time between commands and playback will duplicate this timing.
+However, when a warrant is run with a different engine or a different consist, or even the same train 
+depending whether the motor is hot or cold, this timing may not be replicated exactly.  Because of this
+the command script is synchronized upon entering each detection OBlock.  So, if the train is slow in 
+reaching the next block, the commands for the next block will be delayed until the train enters
+the block.  Conversely, if the train reaches the next block ahead of time, any remaing commands in the
+block just left will issued with no elasped time so that the train can <i>catch up</i> to the script.
+<p>
+<H4>Recorded Scripts</H4>
+This is done by putting a screen throttle into <i>Learn Mode</i> that records all the 
 throttle comands you make when driving the train over the route.  This script can then
 be replayed to drive the train automatically. All possible throttle functions can be recorded
 and played back.
 <p>
+With Loconet you may steal the address and use a manual walk around throttle.  For other command systems,
+a WiFi throttle may take the address and be used to record a walk around script.
+<p>
+<H4>Generated Scripts</H4>
 For NXWarrants the script is generated by Control Panel Editor.  It ramps the train up to speed
 and ramps it down at the destination.  It obeys all the traffic occupancy and signals as do the
-recorded warrants
-
+recorded warrants. See <A HREF="NXWarrant.shtml"> NXWarrants</A> for how to run them.
+<p>
 <H3>Customizing the Script</H3>
-The script can be edited to modify the recoreded commands.  Additional non-throttle events
+A warrant script can be edited to modify the recoreded commands.  Additional non-throttle events
 can be added to the script such as triggering or responding to external sensors.
 <A HREF="WarrantTable.shtml"> Creating and Editing Warrants</A>. has more
 information about creating and customizing scripts.</p>

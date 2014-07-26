@@ -5,7 +5,7 @@
 <TITLE>JMRI: Item Palette Help</TITLE>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <META CONTENT="Pete Cressman" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help Item Palette">
+<META NAME="keywords" CONTENT="JMRI Circuit builder Help">
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -34,9 +34,12 @@ prototype name for track having a device that can detect occupancy is
 The term <b>Block</b> in the prototype world is <i>a length of track defined
 by limits, whose use is governed by block signals, cab signals or block limit 
 markers and train orders.</i>  That is, a prototype block incorporates a 
-signalling system providing a way to manage safe usage of its trackage.  Combining
-JMRI track circuits into such blocks will be addressed later.  For now, the 
-Circuit Builder tool is concerned with the creation of track circuits.
+signalling system providing a way to manage safe usage of its trackage.  So
+to model a prototype block, several track circuits may be needed.
+The term JMRI track circuit is just an attempt to get a little closer to
+prototype usage..  For now, the 
+Circuit Builder tool is concerned with the creation of track circuits,
+that is, OBlocks and their elements.
 </p>
 <p>Circuit Builder is an alternative to using the Occupancy Block Tables.
 OBlocks, Portals and OPaths are created and linked by "point and click" on the
