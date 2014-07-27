@@ -28,6 +28,7 @@ public class PackageTest extends TestCase {
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite("jmri.jmrit.display.configurexml");   // no tests in this class itself
+		suite.addTest(SchemaTest.suite());
 		suite.addTest(LoadFileTest.suite());
 		return suite;
 	}

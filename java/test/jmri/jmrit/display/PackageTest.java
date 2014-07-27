@@ -29,10 +29,9 @@ public class PackageTest extends TestCase {
 	public static Test suite() {
 		TestSuite suite = new TestSuite("jmri.jmrit.display");   // no tests in this class itself
 
-		suite.addTest(jmri.jmrit.display.configurexml.PackageTest.suite());
+        suite.addTest(jmri.jmrit.display.SchemaTest.suite());
 
         if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
-            suite.addTest(jmri.jmrit.display.layoutEditor.PackageTest.suite());
             suite.addTest(jmri.jmrit.display.LinkingLabelTest.suite());
             suite.addTest(jmri.jmrit.display.MemoryIconTest.suite());
             suite.addTest(jmri.jmrit.display.MemorySpinnerIconTest.suite());
@@ -46,6 +45,9 @@ public class PackageTest extends TestCase {
             suite.addTest(jmri.jmrit.display.TurnoutIconTest.suite());
             suite.addTest(jmri.jmrit.display.IconEditorWindowTest.suite());
         }
+
+		suite.addTest(jmri.jmrit.display.configurexml.PackageTest.suite());
+        suite.addTest(jmri.jmrit.display.layoutEditor.PackageTest.suite());
 
 		return suite;
 	}
