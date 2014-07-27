@@ -19,24 +19,15 @@ import junit.framework.TestSuite;
  * @since 2.5.5
  * @version $Revision$
  */
-public class SchemaTest extends LoadFileTestBase {
+public class SchemaTest extends jmri.configurexml.SchemaTestBase {
 
     // the "pass" and "fail" directories contain
     // paired files to test small bits of schema.
     // All the "pass" files should validate;
     // all the "fail" files should not.
-    public void testPassFailFiles() {
-        // first, passes
-        java.io.File dir = new java.io.File("java/test/jmri/configurexml/pass/");
-        java.io.File[] files = dir.listFiles();
-        for (int i=0; i<files.length; i++) {
-            if (files[i].getName().endsWith("xml")) {
-                validate(files[i]);
-            }
-        }
-        // 2nd, fails
-        dir = new java.io.File("java/test/jmri/configurexml/fail/");
-        files = dir.listFiles();
+    public void testSchemaFailFiles() {
+        File dir = new java.io.File("java/test/jmri/configurexml/fail/");
+        File[] files = dir.listFiles();
         for (int i=0; i<files.length; i++) {
             if (files[i].getName().endsWith("xml")) {
                 validateFail(files[i]);
@@ -44,26 +35,6 @@ public class SchemaTest extends LoadFileTestBase {
         }
     }
     
-    public void testSampleFiles() {
-        java.io.File dir = new java.io.File("java/test/jmri/configurexml/files/");
-        java.io.File[] files = dir.listFiles();
-        for (int i=0; i<files.length; i++) {
-            if (files[i].getName().endsWith("xml")) {
-                validate(files[i]);
-            }
-        }
-    }
-
-    public void testSampleDisplayFiles() {
-        java.io.File dir = new java.io.File("java/test/jmri/jmrit/display/configurexml/");
-        java.io.File[] files = dir.listFiles();
-        for (int i=0; i<files.length; i++) {
-            if (files[i].getName().endsWith("xml")) {
-                validate(files[i]);
-            }
-        }
-    }
-
     void validateFail(File file) {
         boolean original = XmlFile.getVerify();
         try {
@@ -96,6 +67,10 @@ public class SchemaTest extends LoadFileTestBase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite(SchemaTest.class);
+
+        validateDirectory(suite, "java/test/jmri/configurexml/pass/");
+        validateDirectory(suite, "java/test/jmri/configurexml/files/");
+
         return suite;
     }
 
