@@ -24,7 +24,7 @@ public class LoadFileTestBase extends TestCase {
     }
 
     // testing services
-    public void validate(File file) {
+    static public void validate(File file) {
         boolean original = XmlFile.getVerify();
         try {
             XmlFile.setVerify(true);
