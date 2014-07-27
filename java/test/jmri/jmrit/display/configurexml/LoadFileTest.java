@@ -86,10 +86,6 @@ public class LoadFileTest extends jmri.configurexml.LoadFileTestBase {
         InstanceManager.configureManagerInstance().load(inFile);
     }
 
-    public void testValidateOne() {
-        validate(new java.io.File("java/test/jmri/jmrit/display/configurexml/ScaledIconTest.xml"));
-    }
-
     // from here down is testing infrastructure
 
     // Note setup() and teardown are provided from base class, and 
