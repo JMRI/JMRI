@@ -1,23 +1,27 @@
 // SchemaTest.java
 
-package jmri.jmrit.decoderdefn;
+package jmri.jmrit.display.layoutEditor;
 
 import org.apache.log4j.Logger;
-import junit.framework.*;
-import java.io.File;
+import jmri.jmrit.XmlFile;
+import java.io.*;
+
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 //import jmri.InstanceManager;
 
 /**
- * Checks of JMRI XML Schema for decoder definition files.
+ * Checks of JMRI XML Schema
  * 
- * @author Bob Jacobsen Copyright 2010
- * @since 2.9.3
+ * @author Bob Jacobsen Copyright 2009
+ * @since 2.5.5
  * @version $Revision$
  */
 public class SchemaTest extends jmri.configurexml.SchemaTestBase {
-        
     
+
     // from here down is testing infrastructure
 
     public SchemaTest(String s) {
@@ -32,13 +36,9 @@ public class SchemaTest extends jmri.configurexml.SchemaTestBase {
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrit.decoderdefn.SchemaTest"); // no tests in this class itself
+        TestSuite suite = new TestSuite("jmri.jmrit.display.layoutEditor.SchemaTest");
 
-        // Some specific files for early tests
-        validateDirectory(suite, "java/test/jmri/jmrit/decoderdefn/");
-
-        validateSubdirectories(suite, "xml/decoders/");
-        validateDirectory(suite, "xml/decoders/");
+        validateDirectory(suite, "java/test/jmri/jmrit/display/layoutEditor/");
         
         return suite;
     }
