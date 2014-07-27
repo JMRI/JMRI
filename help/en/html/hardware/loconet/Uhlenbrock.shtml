@@ -54,21 +54,12 @@ Then start the JMRI program and configure it to:
 <LI>Select hardware handshaking
 </UL>
 
-      <H1> 
-      JMRI Install Guide: Uhlenbrock Intellibox II and IB-COM via USB Interface
-      </H1>
-<P>JMRI can communicate with an Uhlenbrock Intellibox II and IB-COM
-via the built-in USB interface using the LocoNet protocol.
-
 <p>
-<UL>
-<LI>Start JMRI or other program and configure it for:
-<UL>
-<LI><b>Manufacturer:</b>Uhlenbrock,
-<li><b>System:</b> Uhlenbrock LocoNet Implementation
-<LI>Select your port
-</UL>
-</UL>
+Note that the hardware handshaking in the Intellibox serial port is not entire reliable, and messages
+can be lost if you have a lot of traffic. For running a complicated layout, we
+recommend you consider a LocoBuffer-USB, PR3 or other interface that will let you connect
+JMRI to the LocoNet port of the Intellibox instead of the serial port.
+
 <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
     </div>
   </div>
