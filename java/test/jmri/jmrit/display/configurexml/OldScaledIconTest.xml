@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="http://www.jmri.org/xml/XSLT/panelfile.xsl" type="text/xsl"?>
-<!DOCTYPE layout-config SYSTEM "layout-config-2-8.dtd">
-
-<layout-config>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout.xsd">
   <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
     <sensor systemName="ISCLOCKRUNNING" inverted="false" />
   </sensors>
