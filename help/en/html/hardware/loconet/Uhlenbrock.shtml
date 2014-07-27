@@ -60,6 +60,12 @@ can be lost if you have a lot of traffic. For running a complicated layout, we
 recommend you consider a LocoBuffer-USB, PR3 or other interface that will let you connect
 JMRI to the LocoNet port of the Intellibox instead of the serial port.
 
+<h2>System Capabilities</h2>
+<p><b>Uhlenbrock Intellibox</b> - None</p>
+
+<p><b>Uhlenbrock Intellibox II and IB-Com</b> - These systems currently do not support 
+programming, either via a programming track or on the main.</p>
+
 <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
     </div>
   </div>

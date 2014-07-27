@@ -30,7 +30,7 @@
   <li><a href="#Programmer">PR2 and PR3 Programmers</a></li>
   <li><a href="#Setup">Setup</a></li>
   <li><a href="#Using">Using JMRI with LocoNet&reg;</a></li>
-  <li><a href="#Limitation">LocoNet&reg; Conenction Limitations</a></li>
+  <li><a href="#Limitation">LocoNet&reg; Connection Limitations</a></li>
   <li><a href="#Network">Networked Computers and LocoNet&reg;</a></li>
   <li><a href="#Debugging">Debugging</a>
   <ul>
@@ -263,7 +263,7 @@ and can even work remotely. At least one of the networked computers must have a
 functioning LocoNet interface. See <a href="LocoNetworking.shtml">this page</a> 
 for more information.
 
-<h2><a name="Limitation">LocoNet&reg; Conenction Limitations</a></h2>
+<h2><a name="Limitation">LocoNet&reg; Connection Limitations</a></h2>
 
 <p><b>Uhlenbrock Intellibox</b> - The Intellibox has two LocoNet connections,
 called LocoNet-T and LocoNet-B. The LocoNet-T connection can drive more
