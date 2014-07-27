@@ -28,11 +28,14 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests, including others in the package
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.config.ConfigXmlTest");  // no tests in this class itself
+
+        suite.addTest(SchemaTest.suite());
         suite.addTest(LoadFileTest.suite());
+
         suite.addTest(ConfigXmlManagerTest.suite());
         suite.addTest(BlockManagerXmlTest.suite());
+        //suite.addTest(OBlockManagerXmlTest.suite());
         suite.addTest(SectionManagerXmlTest.suite());
-        suite.addTest(SchemaTest.suite());
         suite.addTest(DefaultJavaBeanConfigXMLTest.suite());
         return suite;
     }
