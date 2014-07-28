@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.awt.Component;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
+import java.awt.HeadlessException;
 
 /**
  * Managers the Ecos Loco entries within JMRI.
@@ -35,9 +36,9 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         rosterAttribute = p.getRosterAttribute();
         prefix = adaptermemo.getSystemPrefix();
         loadEcosData();
-        if (jmri.InstanceManager.getDefault(jmri.jmrit.beantable.ListedTableFrame.class)==null){
+        /*if (jmri.InstanceManager.getDefault(jmri.jmrit.beantable.ListedTableFrame.class)==null){
             new jmri.jmrit.beantable.ListedTableFrame();
-        }
+        }*/
         jmri.InstanceManager.getDefault(jmri.jmrit.beantable.ListedTableFrame.class).addTable("jmri.jmrix.ecos.swing.locodatabase.EcosLocoTableTabAction", "ECoS Loco Database", false);
     }
     
@@ -559,7 +560,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                 
                 if(replyType.equals("queryObjects")){
                     if(ecosObjectId==10){
-                        if(headerDetails.size()==0){
+                        if(headerDetails.size()==0 || (headerDetails.size()==1 && headerDetails.get(0).equals(""))){
                             checkLocoList(msgDetails);
                         } 
                         else {
@@ -644,6 +645,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
      * to the roster otherwise this causes a problem with the roster list.
      */
     void checkLocoList(String[] ecoslines){
+        log.info("Checking loco list");
         String loco;
         for(int i=0; i<ecoslines.length; i++){
             loco = ecoslines[i];
@@ -669,6 +671,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
             }
             if(nomatch){
                 //System.out.println("We do not have a match, therefore this should be deleted from the Ecos loco Manager " + jmrilist[i]);
+                log.debug("Loco not found so need to remove from register");
                 if(getByEcosObject(jmrilist[i]).getRosterId()!=null){
                     final String rosterid = getByEcosObject(jmrilist[i]).getRosterId();
                     final Roster _roster = Roster.instance();
@@ -680,60 +683,63 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                         _roster.removeEntry(re);
                         Roster.writeRosterFile();
                     } else if (p.getRemoveLocoFromJMRI()==EcosPreferences.ASK) {
-                        final JDialog dialog = new JDialog();
-                        dialog.setTitle("Remove Roster Entry From JMRI?");
-                        dialog.setLocation(300,200);
-                        dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
-                        JPanel container = new JPanel();
-                        container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-                        container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+                        try {
+                            final JDialog dialog = new JDialog();
+                            dialog.setTitle("Remove Roster Entry From JMRI?");
+                            dialog.setLocation(300,200);
+                            dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+                            JPanel container = new JPanel();
+                            container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+                            container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
-                        JLabel question = new JLabel(rosterid + " has been removed from the Ecos do you want to remove it from JMRI?");
-                        question.setAlignmentX(Component.CENTER_ALIGNMENT);
-                        container.add(question);
-                        final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
-                        remember.setFont(remember.getFont().deriveFont(10f));
-                        remember.setAlignmentX(Component.CENTER_ALIGNMENT);
-                        //user preferences do not have the save option, but once complete the following line can be removed
-                        //Need to get the method to save connection configuration.
-                        remember.setVisible(true);
-                        JButton yesButton = new JButton("Yes");
-                        JButton noButton = new JButton("No");
-                        JPanel button = new JPanel();
-                        button.setAlignmentX(Component.CENTER_ALIGNMENT);
-                        button.add(yesButton);
-                        button.add(noButton);
-                        container.add(button);
+                            JLabel question = new JLabel(rosterid + " has been removed from the Ecos do you want to remove it from JMRI?");
+                            question.setAlignmentX(Component.CENTER_ALIGNMENT);
+                            container.add(question);
+                            final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
+                            remember.setFont(remember.getFont().deriveFont(10f));
+                            remember.setAlignmentX(Component.CENTER_ALIGNMENT);
+                            //user preferences do not have the save option, but once complete the following line can be removed
+                            //Need to get the method to save connection configuration.
+                            remember.setVisible(true);
+                            JButton yesButton = new JButton("Yes");
+                            JButton noButton = new JButton("No");
+                            JPanel button = new JPanel();
+                            button.setAlignmentX(Component.CENTER_ALIGNMENT);
+                            button.add(yesButton);
+                            button.add(noButton);
+                            container.add(button);
 
-                        noButton.addActionListener(new ActionListener(){
-                            public void actionPerformed(ActionEvent e) {
-                                if(remember.isSelected()){
-                                    p.setRemoveLocoFromJMRI(EcosPreferences.ASK);
+                            noButton.addActionListener(new ActionListener(){
+                                public void actionPerformed(ActionEvent e) {
+                                    if(remember.isSelected()){
+                                        p.setRemoveLocoFromJMRI(EcosPreferences.ASK);
+                                    }
+                                    dialog.dispose();
                                 }
-                                dialog.dispose();
-                            }
-                        });
+                            });
 
-                        yesButton.addActionListener(new ActionListener(){
-                            public void actionPerformed(ActionEvent e) {
-                                if(remember.isSelected()) {
-                                    p.setRemoveLocoFromJMRI(EcosPreferences.YES);
+                            yesButton.addActionListener(new ActionListener(){
+                                public void actionPerformed(ActionEvent e) {
+                                    if(remember.isSelected()) {
+                                        p.setRemoveLocoFromJMRI(EcosPreferences.YES);
+                                    }
+                                    setLocoToRoster();
+                                    _roster.removeEntry(re);
+                                    Roster.writeRosterFile();
+                                    dialog.dispose();
                                 }
-                                setLocoToRoster();
-                                _roster.removeEntry(re);
-                                Roster.writeRosterFile();
-                                dialog.dispose();
-                            }
-                        });
-                        container.add(remember);
-                        container.setAlignmentX(Component.CENTER_ALIGNMENT);
-                        container.setAlignmentY(Component.CENTER_ALIGNMENT);
-                        dialog.getContentPane().add(container);
-                        dialog.pack();
-                        dialog.setModal(true);
-                        dialog.setVisible(true);
-                        
-                    
+                            });
+                            container.add(remember);
+                            container.setAlignmentX(Component.CENTER_ALIGNMENT);
+                            container.setAlignmentY(Component.CENTER_ALIGNMENT);
+                            dialog.getContentPane().add(container);
+                            dialog.pack();
+                            dialog.setModal(true);
+                            dialog.setVisible(true);
+
+                        } catch (HeadlessException he) {
+                            // silently ignore inability to display dialog
+                        }
                     }
                 }
                 //Even if we do not delete the loco from the roster, we need to remove it from the ecos list.
