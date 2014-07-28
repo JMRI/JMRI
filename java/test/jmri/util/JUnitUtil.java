@@ -6,6 +6,7 @@ import junit.framework.Assert;
 import jmri.*;
 import jmri.managers.*;
 import jmri.jmrix.debugthrottle.DebugThrottleManager;
+import jmri.jmrit.logix.OBlockManager;
 
 import java.beans.PropertyChangeListener;
 
@@ -117,6 +118,12 @@ public class JUnitUtil {
         MemoryManager m = new DefaultMemoryManager();
         if (InstanceManager.configureManagerInstance() != null)
             InstanceManager.configureManagerInstance().registerConfig(m, jmri.Manager.MEMORIES);
+    }
+
+    public static void initOBlockManager() {
+        OBlockManager b = new OBlockManager();
+        if (InstanceManager.configureManagerInstance() != null)
+            InstanceManager.configureManagerInstance().registerConfig(b, jmri.Manager.OBLOCKS);
     }
 
     public static void initInternalSignalHeadManager() {

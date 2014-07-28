@@ -1,0 +1,1154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/xml/XSLT/panelfile-2-9-6.xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>3</major>
+    <minor>9</minor>
+    <test>2</test>
+    <modifier>.2</modifier>
+  </jmriversion>
+  <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor systemName="IS1" inverted="false" userName="sensor1">
+      <systemName>IS1</systemName>
+      <userName>sensor1</userName>
+    </sensor>
+    <sensor systemName="IS10" inverted="false" userName="Occupancy OB1">
+      <systemName>IS10</systemName>
+      <userName>Occupancy OB1</userName>
+    </sensor>
+    <sensor systemName="IS11" inverted="false" userName="Occupancy OB2">
+      <systemName>IS11</systemName>
+      <userName>Occupancy OB2</userName>
+    </sensor>
+    <sensor systemName="IS12" inverted="false" userName="Occupancy OB3">
+      <systemName>IS12</systemName>
+      <userName>Occupancy OB3</userName>
+    </sensor>
+    <sensor systemName="IS13" inverted="false" userName="Occupancy OB4">
+      <systemName>IS13</systemName>
+      <userName>Occupancy OB4</userName>
+    </sensor>
+    <sensor systemName="IS14" inverted="false" userName="Warrant Test">
+      <systemName>IS14</systemName>
+      <userName>Warrant Test</userName>
+    </sensor>
+    <sensor systemName="IS15" inverted="false" userName="Indirect Warrant Test">
+      <systemName>IS15</systemName>
+      <userName>Indirect Warrant Test</userName>
+    </sensor>
+    <sensor systemName="IS2" inverted="false">
+      <systemName>IS2</systemName>
+    </sensor>
+    <sensor systemName="IS3" inverted="false" userName="Indirect sensor test">
+      <systemName>IS3</systemName>
+      <userName>Indirect sensor test</userName>
+    </sensor>
+    <sensor systemName="IS4" inverted="false" userName="Direct Sensor test">
+      <systemName>IS4</systemName>
+      <userName>Direct Sensor test</userName>
+    </sensor>
+    <sensor systemName="IS5" inverted="false" userName="enableButton">
+      <systemName>IS5</systemName>
+      <userName>enableButton</userName>
+    </sensor>
+    <sensor systemName="IS6" inverted="false" userName="direct Turnout test">
+      <systemName>IS6</systemName>
+      <userName>direct Turnout test</userName>
+    </sensor>
+    <sensor systemName="IS7" inverted="false" userName="Indirect Turnout Test">
+      <systemName>IS7</systemName>
+      <userName>Indirect Turnout Test</userName>
+    </sensor>
+    <sensor systemName="IS8" inverted="false" userName="Direct OBlock Test">
+      <systemName>IS8</systemName>
+      <userName>Direct OBlock Test</userName>
+    </sensor>
+    <sensor systemName="IS9" inverted="false" userName="Indirect OBlock test">
+      <systemName>IS9</systemName>
+      <userName>Indirect OBlock test</userName>
+    </sensor>
+    <sensor systemName="ISCLOCKRUNNING" inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+    <sensor systemName="ISINDIRECT" inverted="false">
+      <systemName>ISINDIRECT</systemName>
+    </sensor>
+    <sensor systemName="ISLITERAL" inverted="false">
+      <systemName>ISLITERAL</systemName>
+    </sensor>
+  </sensors>
+  <turnouts class="jmri.managers.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout systemName="IT0" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT0</systemName>
+    </turnout>
+    <turnout systemName="IT1" userName="turnout1" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT1</systemName>
+      <userName>turnout1</userName>
+    </turnout>
+    <turnout systemName="IT10" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT10</systemName>
+    </turnout>
+    <turnout systemName="IT11" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT11</systemName>
+    </turnout>
+    <turnout systemName="IT12" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT12</systemName>
+    </turnout>
+    <turnout systemName="IT2" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT2</systemName>
+    </turnout>
+    <turnout systemName="IT3" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT3</systemName>
+    </turnout>
+    <turnout systemName="IT4" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT4</systemName>
+    </turnout>
+    <turnout systemName="IT5" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT5</systemName>
+    </turnout>
+    <turnout systemName="IT6" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT6</systemName>
+    </turnout>
+    <turnout systemName="ITLT10" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>ITLT10</systemName>
+    </turnout>
+    <turnout systemName="ITLT11" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>ITLT11</systemName>
+    </turnout>
+  </turnouts>
+  <lights class="jmri.managers.configurexml.InternalLightManagerXml">
+    <light systemName="LL100" userName="light" minIntensity="0.0" maxIntensity="1.0" transitionTime="0.0">
+      <systemName>LL100</systemName>
+      <userName>light</userName>
+    </light>
+    <light systemName="LL101" userName="otherLight" minIntensity="0.0" maxIntensity="1.0" transitionTime="0.0">
+      <systemName>LL101</systemName>
+      <userName>otherLight</userName>
+    </light>
+  </lights>
+  <reporters class="jmri.managers.configurexml.InternalReporterManagerXml">
+    <reporter systemName="LR1" userName="Reporter">
+      <systemName>LR1</systemName>
+      <userName>Reporter</userName>
+    </reporter>
+  </reporters>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory systemName="IM!M1">
+      <systemName>IM!M1</systemName>
+    </memory>
+    <memory systemName="IM1" userName="mem" value="IS1">
+      <systemName>IM1</systemName>
+      <userName>mem</userName>
+    </memory>
+    <memory systemName="IM2" userName="empty" value="IS2">
+      <systemName>IM2</systemName>
+      <userName>empty</userName>
+    </memory>
+    <memory systemName="IM3" value="IH1">
+      <systemName>IM3</systemName>
+    </memory>
+    <memory systemName="IM4" userName="nothing" value="IT3">
+      <systemName>IM4</systemName>
+      <userName>nothing</userName>
+    </memory>
+    <memory systemName="IM5" value="OB2">
+      <systemName>IM5</systemName>
+    </memory>
+    <memory systemName="IM6" value="EastToWestOnSiding">
+      <systemName>IM6</systemName>
+    </memory>
+    <memory systemName="IM7" value="">
+      <systemName>IM7</systemName>
+    </memory>
+    <memory systemName="IM8" value="">
+      <systemName>IM8</systemName>
+    </memory>
+    <memory systemName="IM9">
+      <systemName>IM9</systemName>
+    </memory>
+    <memory systemName="IMCURRENTTIME" value="2:16 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory systemName="IMIM3">
+      <systemName>IMIM3</systemName>
+    </memory>
+    <memory systemName="IMRATEFACTOR" value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IH1">
+      <systemName>IH1</systemName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IH2">
+      <systemName>IH2</systemName>
+    </signalhead>
+  </signalheads>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
+  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml">
+    <oblock systemName="OB1" userName="Left" length="0.0" units="false" curve="0" permissive="false" speedNotch="">
+      <sensor systemName="IS10" />
+      <path pathName="Path" blockName="OB1" toPortal="Portal" fromDirection="0" toDirection="0" />
+      <portal systemName="IP1" portalName="Portal">
+        <fromBlock blockName="OB1">
+          <path pathName="Path" blockName="OB1" />
+        </fromBlock>
+        <toBlock blockName="OB2">
+          <path pathName="Path" blockName="OB2" />
+        </toBlock>
+      </portal>
+    </oblock>
+    <oblock systemName="OB2" userName="Right" length="0.0" units="false" curve="0" permissive="false" speedNotch="">
+      <sensor systemName="IS11" />
+      <path pathName="Path" blockName="OB2" toPortal="Portal" fromDirection="0" toDirection="0" />
+      <portal systemName="IP1" portalName="Portal">
+        <fromBlock blockName="OB1">
+          <path pathName="Path" blockName="OB1" />
+        </fromBlock>
+        <toBlock blockName="OB2">
+          <path pathName="Path" blockName="OB2" />
+        </toBlock>
+      </portal>
+    </oblock>
+    <oblock systemName="OB3" userName="West" length="0.0" units="false" curve="0" permissive="false" speedNotch="">
+      <sensor systemName="Occupancy OB3" />
+      <path pathName="Main" blockName="OB3" toPortal="Main" fromDirection="0" toDirection="0">
+        <setting turnout="IT5" set="2" />
+      </path>
+      <path pathName="Diverging" blockName="OB3" toPortal="Siding" fromDirection="0" toDirection="0">
+        <setting turnout="IT5" set="4" />
+      </path>
+      <portal systemName="IP2" portalName="Siding">
+        <fromBlock blockName="OB3">
+          <path pathName="Diverging" blockName="OB3" />
+        </fromBlock>
+        <toBlock blockName="OB4">
+          <path pathName="Diverging" blockName="OB4" />
+        </toBlock>
+      </portal>
+      <portal systemName="IP3" portalName="Main">
+        <fromBlock blockName="OB3">
+          <path pathName="Main" blockName="OB3" />
+        </fromBlock>
+        <toBlock blockName="OB4">
+          <path pathName="Main" blockName="OB4" />
+        </toBlock>
+      </portal>
+    </oblock>
+    <oblock systemName="OB4" userName="East" length="0.0" units="false" curve="0" permissive="false" speedNotch="">
+      <sensor systemName="Occupancy OB4" />
+      <path pathName="Diverging" blockName="OB4" toPortal="Siding" fromDirection="0" toDirection="0">
+        <setting turnout="IT6" set="4" />
+      </path>
+      <path pathName="Main" blockName="OB4" toPortal="Main" fromDirection="0" toDirection="0">
+        <setting turnout="IT6" set="2" />
+      </path>
+      <portal systemName="IP2" portalName="Siding">
+        <fromBlock blockName="OB3">
+          <path pathName="Diverging" blockName="OB3" />
+        </fromBlock>
+        <toBlock blockName="OB4">
+          <path pathName="Diverging" blockName="OB4" />
+        </toBlock>
+      </portal>
+      <portal systemName="IP3" portalName="Main">
+        <fromBlock blockName="OB3">
+          <path pathName="Main" blockName="OB3" />
+        </fromBlock>
+        <toBlock blockName="OB4">
+          <path pathName="Main" blockName="OB4" />
+        </toBlock>
+      </portal>
+    </oblock>
+  </oblocks>
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml">
+    <warrant systemName="IW!W3" userName="EastToWestOnSiding">
+      <blockOrder pathName="Diverging" entryName="" exitName="Siding">
+        <block systemName="OB4" userName="East" />
+      </blockOrder>
+      <blockOrder pathName="Diverging" entryName="Siding" exitName="">
+        <block systemName="OB3" userName="West" />
+      </blockOrder>
+      <train trainId="" runBlind="false" trainName="" />
+    </warrant>
+    <warrant systemName="IW1" userName="EastToWestOnMain">
+      <blockOrder pathName="Main" entryName="" exitName="Main">
+        <block systemName="OB4" userName="East" />
+      </blockOrder>
+      <blockOrder pathName="Main" entryName="Main" exitName="">
+        <block systemName="OB3" userName="West" />
+      </blockOrder>
+      <train trainId="" runBlind="false" trainName="" />
+    </warrant>
+    <warrant systemName="IW2" userName="WestToEastOnMain">
+      <blockOrder pathName="Main" entryName="" exitName="Main">
+        <block systemName="OB3" userName="West" />
+      </blockOrder>
+      <blockOrder pathName="Main" entryName="Main" exitName="">
+        <block systemName="OB4" userName="East" />
+      </blockOrder>
+      <train trainId="" runBlind="false" trainName="" />
+    </warrant>
+    <warrant systemName="IW4" userName="LeftToRightOnPath">
+      <blockOrder pathName="Path" entryName="" exitName="Portal">
+        <block systemName="OB1" userName="Left" />
+      </blockOrder>
+      <blockOrder pathName="Path" entryName="Portal" exitName="">
+        <block systemName="OB2" userName="Right" />
+      </blockOrder>
+      <train trainId="" runBlind="false" trainName="" />
+    </warrant>
+  </warrants>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <logixs class="jmri.managers.configurexml.DefaultLogixManagerXml">
+    <logix systemName="IXACTIONTESTS" userName="ActionTests" enabled="yes">
+      <systemName>IXACTIONTESTS</systemName>
+      <userName>ActionTests</userName>
+      <logixConditional systemName="IXACTIONTESTSC1" order="0" />
+      <logixConditional systemName="IXACTIONTESTSC2" order="1" />
+      <logixConditional systemName="IXACTIONTESTSC3" order="2" />
+      <logixConditional systemName="IXACTIONTESTSC4" order="3" />
+      <logixConditional systemName="IXACTIONTESTSC5" order="4" />
+      <logixConditional systemName="IXACTIONTESTSC6" order="5" />
+      <logixConditional systemName="IXACTIONTESTSC7" order="6" />
+      <logixConditional systemName="IXACTIONTESTSC8" order="7" />
+      <logixConditional systemName="IXACTIONTESTSC9" order="8" />
+      <logixConditional systemName="IXACTIONTESTSC10" order="9" />
+    </logix>
+    <logix systemName="IXEnableTest" userName="EnableTest" enabled="yes">
+      <systemName>IXEnableTest</systemName>
+      <userName>EnableTest</userName>
+      <logixConditional systemName="IXEnableTestC1" order="0" />
+    </logix>
+    <logix systemName="RTXINITIALIZER" enabled="yes">
+      <systemName>RTXINITIALIZER</systemName>
+      <logixConditional systemName="RTXINITIALIZER1T" order="0" />
+    </logix>
+  </logixs>
+  <conditionals class="jmri.managers.configurexml.DefaultConditionalManagerXml">
+    <conditional systemName="IXACTIONTESTSC1" userName="Literal Sensor Actions" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>IXACTIONTESTSC1</systemName>
+      <userName>Literal Sensor Actions</userName>
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="ISLITERAL" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="9" systemName="IS1" data="2" delay="0" string="0" />
+      <conditionalAction option="1" type="10" systemName="IS2" data="2" delay="2" string="2" />
+    </conditional>
+    <conditional systemName="IXACTIONTESTSC10" userName="Deallocate warrant" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>IXACTIONTESTSC10</systemName>
+      <userName>Deallocate warrant</userName>
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="IS15" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="32" systemName="@IM6" data="-1" delay="0" string="" />
+    </conditional>
+    <conditional systemName="IXACTIONTESTSC2" userName="Indirect SensorActions" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>IXACTIONTESTSC2</systemName>
+      <userName>Indirect SensorActions</userName>
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="ISINDIRECT" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="9" systemName="@IM1" data="4" delay="0" string="0" />
+      <conditionalAction option="1" type="10" systemName="@IM2" data="4" delay="2" string="2" />
+    </conditional>
+    <conditional systemName="IXACTIONTESTSC3" userName="SignalIndirect" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>IXACTIONTESTSC3</systemName>
+      <userName>SignalIndirect</userName>
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="Indirect sensor test" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="3" systemName="@IM3" data="16" delay="0" string="" />
+      <conditionalAction option="2" type="3" systemName="@IM3" data="1" delay="0" string="" />
+    </conditional>
+    <conditional systemName="IXACTIONTESTSC4" userName="Direct signal Head Action" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>IXACTIONTESTSC4</systemName>
+      <userName>Direct signal Head Action</userName>
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="Direct Sensor test" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="3" systemName="IH1" data="16" delay="0" string="Green" />
+      <conditionalAction option="2" type="3" systemName="IH1" data="1" delay="0" string="Red" />
+    </conditional>
+    <conditional systemName="IXACTIONTESTSC5" userName="Direct Turnout Test" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>IXACTIONTESTSC5</systemName>
+      <userName>Direct Turnout Test</userName>
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="IS6" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="2" systemName="IT2" data="2" delay="0" string="" />
+      <conditionalAction option="2" type="2" systemName="IT2" data="4" delay="0" string="" />
+    </conditional>
+    <conditional systemName="IXACTIONTESTSC6" userName="Indirect TurnoutTest" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>IXACTIONTESTSC6</systemName>
+      <userName>Indirect TurnoutTest</userName>
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="IS7" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="2" systemName="@IM4" data="2" delay="0" string="" />
+      <conditionalAction option="2" type="2" systemName="@IM4" data="4" delay="0" string="" />
+    </conditional>
+    <conditional systemName="IXACTIONTESTSC7" userName="Direct OBlock test" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>IXACTIONTESTSC7</systemName>
+      <userName>Direct OBlock test</userName>
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="IS8" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="47" systemName="OB1" data="-1" delay="0" string="" />
+      <conditionalAction option="2" type="46" systemName="OB1" data="-1" delay="0" string="" />
+    </conditional>
+    <conditional systemName="IXACTIONTESTSC8" userName="Indirect OBlock Test" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>IXACTIONTESTSC8</systemName>
+      <userName>Indirect OBlock Test</userName>
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="IS9" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="44" systemName="@IM5" data="-1" delay="0" string="" />
+      <conditionalAction option="2" type="43" systemName="@IM5" data="-1" delay="0" string="" />
+    </conditional>
+    <conditional systemName="IXACTIONTESTSC9" userName="Allocate Warrant" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>IXACTIONTESTSC9</systemName>
+      <userName>Allocate Warrant</userName>
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="IS14" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="33" systemName="@IM6" data="-1" delay="0" string="" />
+    </conditional>
+    <conditional systemName="IXEnableTestC1" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>IXEnableTestC1</systemName>
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="enableButton" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="13" systemName="ActionTests" data="-1" delay="0" string="" />
+      <conditionalAction option="2" type="14" systemName="ActionTests" data="-1" delay="0" string="" />
+    </conditional>
+    <conditional systemName="RTXINITIALIZER1T" userName="Route 1C " antecedent="R1" logicType="3" triggerOnChange="yes">
+      <systemName>RTXINITIALIZER1T</systemName>
+      <userName>Route 1C</userName>
+      <conditionalStateVariable operator="4" negated="no" type="0" systemName="RTXINITIALIZER" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="9" systemName="Occupancy OB1" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="9" systemName="Occupancy OB2" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="9" systemName="Occupancy OB3" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="9" systemName="Occupancy OB4" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="2" systemName="IT5" data="2" delay="0" string="" />
+      <conditionalAction option="1" type="2" systemName="IT6" data="2" delay="0" string="" />
+    </conditional>
+  </conditionals>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Tue Apr 21 13:15:07 PDT 2009" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
+  <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
+  <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
+  <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="Logix Action Test" x="811" y="331" height="565" width="730" editable="no" positionable="no" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="both" redBackground="238" greenBackground="238" blueBackground="238" state="0" shapeSelect="yes">
+    <icons>
+      <visible>
+        <url>program:resources/icons/throttles/RoundRedCircle20.png</url>
+      </visible>
+      <path_edit>
+        <url>program:resources/icons/greenSquare.gif</url>
+      </path_edit>
+      <hidden>
+        <url>program:resources/icons/Invisible.gif</url>
+      </hidden>
+      <to_arrow>
+        <url>program:resources/icons/track/toArrow.gif</url>
+      </to_arrow>
+      <from_arrow>
+        <url>program:resources/icons/track/fromArrow.gif</url>
+      </from_arrow>
+    </icons>
+    <sensoricon sensor="ISLITERAL" x="103" y="107" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>ISLITERAL</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/green-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/amber-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="ISINDIRECT" x="276" y="108" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>ISINDIRECT</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/green-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/amber-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Direct Sensor test" x="103" y="168" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS4</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/green-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/amber-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Indirect sensor test" x="276" y="169" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS3</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/green-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/amber-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="IS2" x="448" y="111" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS2</tooltip>
+      <active url="program:resources/icons/USS/sensor/blue-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/amber-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="LargeBlueYellow" />
+    </sensoricon>
+    <sensoricon sensor="IS1" x="447" y="87" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>sensor1</tooltip>
+      <active url="program:resources/icons/USS/sensor/blue-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/amber-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="LargeBlueYellow" />
+    </sensoricon>
+    <positionablelabel x="483" y="149" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="IH1" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="484" y="165" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="IH2" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="603" y="87" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="IM1" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="603" y="112" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="IM2" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="606" y="157" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="IM3" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="242" y="68" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Indirect Actions" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="481" y="88" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="IS1" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="480" y="113" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="IS2" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="72" y="67" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Literal Actions" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="241" y="1" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Logix Action Test" size="16" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="216" y="151" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Toggle SignalHead in IM3" size="12" style="0" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="63" y="92" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="sets IS1 IS2 Active" size="12" style="0" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="231" y="92" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="sets IS1 IS2 Inactive" size="12" style="0" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <memoryInputIcon colWidth="5" memory="mem" x="533" y="87" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" size="12" style="0" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.MemoryInputIconXml">
+      <tooltip>mem (IM1)</tooltip>
+    </memoryInputIcon>
+    <memoryInputIcon colWidth="5" memory="empty" x="533" y="112" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" size="12" style="0" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.MemoryInputIconXml">
+      <tooltip>empty (IM2)</tooltip>
+    </memoryInputIcon>
+    <memoryInputIcon colWidth="5" memory="IM3" x="535" y="156" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" size="12" style="0" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.MemoryInputIconXml">
+      <tooltip>IM3</tooltip>
+    </memoryInputIcon>
+    <signalheadicon signalhead="IH1" x="444" y="151" level="9" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <tooltip>IH1</tooltip>
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </green>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashred>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashyellow>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
+    <signalheadicon signalhead="IH2" x="445" y="168" level="9" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <tooltip>IH2</tooltip>
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </green>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashred>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashyellow>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
+    <sensoricon sensor="enableButton" x="40" y="18" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>enableButton</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/green-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/amber-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <positionablelabel x="69" y="20" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Enable/Disable Tests" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="478" y="63" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Action" size="12" style="1" red="51" green="51" blue="51" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="362" y="115" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="1 second delay" size="12" style="0" red="51" green="51" blue="51" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="49" y="150" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Toggle SignalHead IH1" size="12" style="0" red="51" green="51" blue="51" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <turnouticon turnout="IT2" x="433" y="200" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <tooltip>IT2</tooltip>
+      <icons>
+        <closed url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps family="LeftTurnout" />
+    </turnouticon>
+    <turnouticon turnout="IT3" x="471" y="200" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <tooltip>IT2</tooltip>
+      <icons>
+        <closed url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps family="RightTurnout" />
+    </turnouticon>
+    <indicatortrackicon x="434" y="260" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Left"</tooltip>
+      <occupancyblock>OB1</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="BlockSegment">
+        <PositionTrack url="program:resources/icons/track/line/TrackSeg/block-blue.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <AllocatedTrack url="program:resources/icons/track/line/TrackSeg/block-green.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <ClearTrack url="program:resources/icons/track/line/TrackSeg/block-black.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/line/TrackSeg/block-gray.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/line/TrackSeg/block-red.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>Path</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="472" y="260" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Right"</tooltip>
+      <occupancyblock>OB2</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="BlockSegment">
+        <PositionTrack url="program:resources/icons/track/line/TrackSeg/block-blue.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <AllocatedTrack url="program:resources/icons/track/line/TrackSeg/block-green.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <ClearTrack url="program:resources/icons/track/line/TrackSeg/block-black.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/line/TrackSeg/block-gray.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/line/TrackSeg/block-red.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>Path</path>
+      </paths>
+    </indicatortrackicon>
+    <positionablelabel x="62" y="203" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Toggle Turnout IT2" size="12" style="0" red="51" green="51" blue="51" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="227" y="204" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Toggle Turnout in IM4" size="12" style="0" red="51" green="51" blue="51" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <memoryInputIcon colWidth="5" memory="nothing" x="533" y="201" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" size="12" style="0" red="51" green="51" blue="51" redBack="255" greenBack="255" blueBack="255" justification="centre" class="jmri.jmrit.display.configurexml.MemoryInputIconXml">
+      <tooltip>nothing (IM4)</tooltip>
+    </memoryInputIcon>
+    <positionablelabel x="604" y="203" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="IM4" size="12" style="1" red="51" green="51" blue="51" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="603" y="256" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="IM5" size="12" style="1" red="51" green="51" blue="51" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="606" y="307" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" text="IM6" size="12" style="1" red="51" green="51" blue="51" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="610" y="397" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="IM7" size="12" style="1" red="51" green="51" blue="51" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="611" y="439" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="IM8" size="12" style="1" red="51" green="51" blue="51" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="25" y="255" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Toggle OBlock OB1OutOfService" size="12" style="0" red="51" green="51" blue="51" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="217" y="254" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Toggle Short of OBlock in IM5" size="12" style="0" red="51" green="51" blue="51" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <sensoricon sensor="direct Turnout test" x="103" y="220" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>direct Turnout test (IS6)</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="LargeRedGreen" />
+    </sensoricon>
+    <sensoricon sensor="Indirect Turnout Test" x="276" y="221" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Indirect Turnout Test (IS7)</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="LargeRedGreen" />
+    </sensoricon>
+    <sensoricon sensor="Direct OBlock Test" x="103" y="272" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Direct OBlock Test (IS8)</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="LargeRedGreen" />
+    </sensoricon>
+    <sensoricon sensor="Indirect OBlock test" x="276" y="269" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Indirect OBlock test (IS9)</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="LargeRedGreen" />
+    </sensoricon>
+    <memoryInputIcon colWidth="5" memory="IM5" x="536" y="254" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" size="12" style="0" red="51" green="51" blue="51" redBack="255" greenBack="255" blueBack="255" justification="centre" class="jmri.jmrit.display.configurexml.MemoryInputIconXml">
+      <tooltip>IM5</tooltip>
+    </memoryInputIcon>
+    <memoryInputIcon colWidth="5" memory="IM7" x="541" y="393" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" size="12" style="0" red="51" green="51" blue="51" redBack="255" greenBack="255" blueBack="255" justification="centre" class="jmri.jmrit.display.configurexml.MemoryInputIconXml">
+      <tooltip>IM7</tooltip>
+    </memoryInputIcon>
+    <memoryInputIcon colWidth="5" memory="IM8" x="541" y="426" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" size="12" style="0" red="51" green="51" blue="51" redBack="255" greenBack="255" blueBack="255" justification="centre" class="jmri.jmrit.display.configurexml.MemoryInputIconXml">
+      <tooltip>IM8</tooltip>
+    </memoryInputIcon>
+    <positionablelabel x="425" y="203" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="IT2" size="12" style="1" red="51" green="51" blue="51" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="503" y="206" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="IT3" size="12" style="1" red="51" green="51" blue="51" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="442" y="269" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="OB1" size="12" style="1" red="51" green="51" blue="51" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="483" y="269" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="OB2" size="12" style="1" red="51" green="51" blue="51" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <indicatorturnouticon x="440" y="314" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
+      <tooltip>OBlock "West"</tooltip>
+      <turnout>IT5</turnout>
+      <occupancyblock>OB3</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmaps family="LeftTurnout">
+        <AllocatedTrack>
+          <BeanStateUnknown url="program:resources/icons/track/line/LeftTO/os-lefthand-west-unknown-green.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/line/LeftTO/os-lefthand-west-closed-green.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/line/LeftTO/os-lefthand-west-thrown-green.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/line/LeftTO/os-lefthand-west-error-green.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </AllocatedTrack>
+        <PositionTrack>
+          <BeanStateUnknown url="program:resources/icons/track/line/LeftTO/os-lefthand-west-unknown-blue.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/line/LeftTO/os-lefthand-west-closed-blue.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/line/LeftTO/os-lefthand-west-thrown-blue.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/line/LeftTO/os-lefthand-west-error-blue.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </PositionTrack>
+        <ClearTrack>
+          <BeanStateUnknown url="program:resources/icons/track/line/LeftTO/os-lefthand-west-unknown-black.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/line/LeftTO/os-lefthand-west-closed-black.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/line/LeftTO/os-lefthand-west-thrown-black.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/line/LeftTO/os-lefthand-west-error-black.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </ClearTrack>
+        <DontUseTrack>
+          <BeanStateUnknown url="program:resources/icons/track/line/LeftTO/os-lefthand-west-unknown-gray.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/line/LeftTO/os-lefthand-west-closed-gray.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/line/LeftTO/os-lefthand-west-thrown-gray.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/line/LeftTO/os-lefthand-west-error-gray.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </DontUseTrack>
+        <ErrorTrack>
+          <BeanStateUnknown url="program:resources/icons/track/line/LeftTO/os-lefthand-west-unknown-red.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/line/LeftTO/os-lefthand-west-closed-red.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/line/LeftTO/os-lefthand-west-thrown-red.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/line/LeftTO/os-lefthand-west-error-red.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </ErrorTrack>
+        <OccupiedTrack>
+          <BeanStateUnknown url="program:resources/icons/track/line/LeftTO/os-lefthand-west-unknown-yellow.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/line/LeftTO/os-lefthand-west-closed-yellow.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/line/LeftTO/os-lefthand-west-thrown-yellow.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/line/LeftTO/os-lefthand-west-error-yellow.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </OccupiedTrack>
+      </iconmaps>
+      <paths>
+        <path>Main</path>
+        <path>Diverging</path>
+      </paths>
+    </indicatorturnouticon>
+    <indicatorturnouticon x="476" y="314" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
+      <tooltip>OBlock "East"</tooltip>
+      <turnout>IT6</turnout>
+      <occupancyblock>OB4</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmaps family="RightTurnout">
+        <AllocatedTrack>
+          <BeanStateUnknown url="program:resources/icons/track/line/RightTO/os-righthand-east-unknown-green.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/line/RightTO/os-righthand-east-closed-green.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/line/RightTO/os-righthand-east-thrown-green.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/line/RightTO/os-righthand-east-error-green.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </AllocatedTrack>
+        <PositionTrack>
+          <BeanStateUnknown url="program:resources/icons/track/line/RightTO/os-righthand-east-unknown-blue.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/line/RightTO/os-righthand-east-closed-blue.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/line/RightTO/os-righthand-east-thrown-blue.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/line/RightTO/os-righthand-east-error-blue.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </PositionTrack>
+        <ClearTrack>
+          <BeanStateUnknown url="program:resources/icons/track/line/RightTO/os-righthand-east-unknown-black.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/line/RightTO/os-righthand-east-closed-black.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/line/RightTO/os-righthand-east-thrown-black.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/line/RightTO/os-righthand-east-error-black.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </ClearTrack>
+        <DontUseTrack>
+          <BeanStateUnknown url="program:resources/icons/track/line/RightTO/os-righthand-east-unknown-gray.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/line/RightTO/os-righthand-east-closed-gray.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/line/RightTO/os-righthand-east-thrown-gray.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/line/RightTO/os-righthand-east-error-gray.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </DontUseTrack>
+        <ErrorTrack>
+          <BeanStateUnknown url="program:resources/icons/track/line/RightTO/os-righthand-east-unknown-red.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/line/RightTO/os-righthand-east-closed-red.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/line/RightTO/os-righthand-east-thrown-red.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/line/RightTO/os-righthand-east-error-red.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </ErrorTrack>
+        <OccupiedTrack>
+          <BeanStateUnknown url="program:resources/icons/track/line/RightTO/os-righthand-east-unknown-yellow.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/line/RightTO/os-righthand-east-closed-yellow.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/line/RightTO/os-righthand-east-thrown-yellow.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/line/RightTO/os-righthand-east-error-yellow.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </OccupiedTrack>
+      </iconmaps>
+      <paths>
+        <path>Diverging</path>
+        <path>Main</path>
+      </paths>
+    </indicatorturnouticon>
+    <PortalIcon x="465" y="304" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="Siding" toBlockName="East" fromBlockName="West" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>Portal "Siding" between OBlocks "OB3" and "null"</tooltip>
+    </PortalIcon>
+    <PortalIcon x="464" y="329" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="Main" toBlockName="East" fromBlockName="West" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>Portal "Main" between OBlocks "OB3" and "null"</tooltip>
+    </PortalIcon>
+    <positionablelabel x="435" y="315" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" text="IT5" size="12" style="1" red="51" green="51" blue="51" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="509" y="317" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" text="IT6" size="12" style="1" red="51" green="51" blue="51" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <sensoricon sensor="Warrant Test" x="104" y="328" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Warrant Test (IS14)</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="LargeRedGreen" />
+    </sensoricon>
+    <sensoricon sensor="Indirect Warrant Test" x="284" y="324" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Indirect Warrant Test (IS15)</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="LargeRedGreen" />
+    </sensoricon>
+    <positionablelabel x="444" y="344" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" text="OB3" size="12" style="1" red="51" green="51" blue="51" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="493" y="344" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" text="OB4" size="12" style="1" red="51" green="51" blue="51" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <PortalIcon x="462" y="252" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="Portal" toBlockName="Right" fromBlockName="Left" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>Portal "Portal" between OBlocks "Left" and "null"</tooltip>
+    </PortalIcon>
+    <positionablelabel x="56" y="310" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" text="Allocate Warrant in IM6" size="12" style="0" red="51" green="51" blue="51" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="226" y="308" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" text="Deallocate Warrant in IM6" size="12" style="0" red="51" green="51" blue="51" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <memoryComboIcon memory="IM6" x="544" y="329" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" size="12" style="1" red="51" green="51" blue="51" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.MemoryComboIconXml">
+      <itemList>
+        <item index="0">EastToWestOnMain</item>
+        <item index="1">EastToWestOnSiding</item>
+        <item index="2">WestToEastOnMain</item>
+        <item index="3">LeftToRightOnPath</item>
+      </itemList>
+      <tooltip>IM6</tooltip>
+    </memoryComboIcon>
+    <positionablelabel x="68" y="296" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" text="Indirect Actions" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+  </paneleditor>
+  <filehistory>
+  </filehistory>
+  <!--Written by JMRI version 20140728-2116-Peter Cressman on Mon Jul 28 14:17:50 PDT 2014 $Id: XmlFile.java 26366 2014-06-20 03:34:25Z ken_c $-->
+</layout-config>
+
