@@ -2940,45 +2940,58 @@
           </label>
           <display item="FL(f) controls output 1" format="checkbox" label="Forward Headlight F0(f)">
             <label>Forward Headlight F0(f)</label>
+            <label xml:lang="it">Luci frontali  F0(avanti)</label>
           </display>
           <display item="FL(r) controls output 1" format="checkbox" label="Reverse Headlight F0(r)">
             <label>Reverse Headlight F0(r)</label>
+            <label xml:lang="it">Luci Posteriori  F0(retro)</label>
           </display>
           <display item="F1 controls output 1" format="checkbox" label="Function 1         ">
             <label>Function 1         </label>
+            <label xml:lang="it">Funzione 1         </label>
           </display>
           <display item="F2 controls output 1" format="checkbox" label="Function 2         ">
             <label>Function 2         </label>
+            <label xml:lang="it">Funzione 2         </label>
           </display>
           <display item="AltF3 controls output 1" format="checkbox" label="Function 3         ">
             <label>Function 3         </label>
+            <label xml:lang="it">Funzione 3         </label>
           </display>
           <display item="AltF4 controls output 1" format="checkbox" label="Function 4         ">
             <label>Function 4         </label>
           </display>
           <display item="AltF5 controls output 1" format="checkbox" label="Function 5         ">
             <label>Function 5         </label>
+            <label xml:lang="it">Funzione 5         </label>
           </display>
           <display item="AltF6 controls output 1" format="checkbox" label="Function 6         ">
             <label>Function 6         </label>
+            <label xml:lang="it">Funzione 6         </label>
           </display>
           <display item="AltF7 controls output 1" format="checkbox" label="Function 7         ">
             <label>Function 7         </label>
+            <label xml:lang="it">Funzione 7         </label>
           </display>
           <display item="AltF8 controls output 1" format="checkbox" label="Function 8         ">
             <label>Function 8         </label>
+            <label xml:lang="it">Funzione 8         </label>
           </display>
           <display item="AltF9 controls output 1" format="checkbox" label="Function 9         ">
             <label>Function 9         </label>
+            <label xml:lang="it">Funzione 9         </label>
           </display>
           <display item="AltF10 controls output 1" format="checkbox" label="Function 10         ">
             <label>Function 10         </label>
+            <label xml:lang="it">Funzione 10        </label>
           </display>
           <display item="AltF11 controls output 1" format="checkbox" label="Function 11         ">
             <label>Function 11         </label>
+            <label xml:lang="it">Funzione 11        </label>
           </display>
           <display item="AltF12 controls output 1" format="checkbox" label="Function 12         ">
             <label>Function 12         </label>
+            <label xml:lang="it">Funzione 12        </label>
           </display>
         </column>
         <column>

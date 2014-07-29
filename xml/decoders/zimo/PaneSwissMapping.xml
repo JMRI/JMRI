@@ -8,21 +8,25 @@
       <column>
         <label>
           <text>The F-Key operates the selected outputs</text>
+         <text xml:lang="it">Tasto F opera l'uscita selezionata</text>
         </label>
         <label>
           <text> </text>
         </label>
         <label>
           <text>If the M-Key is enabled the selected outputs are on when both the M-Key and F-Key are operated</text>
+          <text xml:lang="it">Se il tasto M è abilitato le uscite selezionate sono in ON quando si premono entrambi i tasti M ed F</text>
         </label>
         <label>
           <text> </text>
         </label>
         <label>
           <text>                                                                                                         Function Output</text>
+          <text xml:lang="it">                                                                                                         Funzioni Uscita</text>
         </label>
         <label>
           <text>                                                     M-Key</text>
+          <text xml:lang="it">                                                     Tasto M</text>
         </label>
       </column>
     </row>
@@ -30,17 +34,21 @@
       <column>
         <label>
           <text>                      F-Key</text>
+          <text xml:lang="it">                      Tasto F</text>
         </label>
         <display item="Swiss Mapping Group 1 F-key" label="Group 1   ">
           <label>Swiss Mapping Group 1 F-key</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 1-Tasto F</label>
         </display>
       </column>
       <column>
         <label>
           <text>    M-Key</text>
+          <text xml:lang="it">    Tasto M</text>
         </label>
         <display item="Swiss Mapping Group 1 M-key" label="">
           <label>Swiss Mapping Group 1 M-key</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 1-Tasto M</label>
         </display>
       </column>
       <label>
@@ -49,41 +57,51 @@
       <column>
         <label>
           <text>enable</text>
+          <text xml:lang="it">abilita</text>
         </label>
         <display item="Swiss Mapping Group 1" label="" format="checkbox">
           <label>Swiss Mapping Group 1</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 1</label>
         </display>
       </column>
       <column>
         <label>
           <text>     A1 Forward</text>
+          <text xml:lang="it">     A1 Avanti</text>
         </label>
         <display item="Swiss Mapping Group 1 A1 Fw" label="">
           <label>Swiss Mapping Group 1 A1 Fw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 1 A1 Avanti</label>
         </display>
       </column>
       <column>
         <label>
           <text>     A2 Forward</text>
+          <text xml:lang="it">     A2 Avanti</text>
         </label>
         <display item="Swiss Mapping Group 1 A2 Fw" label="">
           <label>Swiss Mapping Group 1 A2 Fw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 1 A2 Avanti</label>
         </display>
       </column>
       <column>
         <label>
           <text>     A1 Reverse</text>
+          <text xml:lang="it">     A1 Retro</text>
         </label>
         <display item="Swiss Mapping Group 1 A1 Rw" label="">
           <label>Swiss Mapping Group 1 A1 Rw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 1 A1 Retro</label>
         </display>
       </column>
       <column>
         <label>
           <text>     A2 Reverse</text>
+          <text xml:lang="it">     A2 Retro</text>
         </label>
         <display item="Swiss Mapping Group 1 A2 Rw" label="">
           <label>Swiss Mapping Group 1 A2 Rw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 1 A2 Retro</label>
         </display>
       </column>
     </row>
@@ -91,11 +109,13 @@
       <column>
         <display item="Swiss Mapping Group 2 F-key" label="Group 2   ">
           <label>Swiss Mapping Group 2 F-key</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 2-Tasto F</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 2 M-key" label="">
           <label>Swiss Mapping Group 2 M-key</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 1-Tasto M</label>
         </display>
       </column>
       <label>
@@ -104,6 +124,7 @@
       <column>
         <display item="Swiss Mapping Group 2" label="" format="checkbox">
           <label>Swiss Mapping Group 2</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 2</label>
         </display>
       </column>
       <label>
@@ -112,21 +133,25 @@
       <column>
         <display item="Swiss Mapping Group 2 A1 Fw" label="">
           <label>Swiss Mapping Group 2 A1 Fw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 2 A1 Avanti</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 2 A2 Fw" label="">
           <label>Swiss Mapping Group 2 A2 Fw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 2 A2 Avanti</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 2 A1 Rw" label="">
           <label>Swiss Mapping Group 2 A1 Rw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 2 A1 Retro</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 2 A2 Rw" label="">
           <label>Swiss Mapping Group 2 A2 Rw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 2 A2 RRetro</label>
         </display>
       </column>
     </row>
@@ -134,11 +159,13 @@
       <column>
         <display item="Swiss Mapping Group 3 F-key" label="Group 3   ">
           <label>Swiss Mapping Group 3 F-key</label>
+         <label xml:lang="it">Mappatura Svizzera gruppo 3-Tasto F</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 3 M-key" label="">
           <label>Swiss Mapping Group 3 M-key</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 3-Tasto M</label>
         </display>
       </column>
       <label>
@@ -147,6 +174,7 @@
       <column>
         <display item="Swiss Mapping Group 3" label="" format="checkbox">
           <label>Swiss Mapping Group 3</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 3</label>
         </display>
       </column>
       <label>
@@ -155,21 +183,25 @@
       <column>
         <display item="Swiss Mapping Group 3 A1 Fw" label="">
           <label>Swiss Mapping Group 3 A1 Fw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 3-A1 Avanti</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 3 A2 Fw" label="">
           <label>Swiss Mapping Group 3 A2 Fw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 3-A2 Avanti</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 3 A1 Rw" label="">
           <label>Swiss Mapping Group 3 A1 Rw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 3-A1 Retro</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 3 A2 Rw" label="">
           <label>Swiss Mapping Group 3 A2 Rw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 3-A2 Retro</label>
         </display>
       </column>
     </row>
@@ -177,11 +209,13 @@
       <column>
         <display item="Swiss Mapping Group 4 F-key" label="Group 4   ">
           <label>Swiss Mapping Group 4 F-key</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 4-Tasto F</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 4 M-key" label="">
           <label>Swiss Mapping Group 4 M-key</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 4-Tasto M</label>
         </display>
       </column>
       <label>
@@ -190,6 +224,7 @@
       <column>
         <display item="Swiss Mapping Group 4" label="" format="checkbox">
           <label>Swiss Mapping Group 4</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 4</label>
         </display>
       </column>
       <label>
@@ -198,21 +233,25 @@
       <column>
         <display item="Swiss Mapping Group 4 A1 Fw" label="">
           <label>Swiss Mapping Group 4 A1 Fw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 4 A1 Avanti</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 4 A2 Fw" label="">
           <label>Swiss Mapping Group 4 A2 Fw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 4 A2 Avanti</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 4 A1 Rw" label="">
           <label>Swiss Mapping Group 4 A1 Rw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 4 A1 Retro</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 4 A2 Rw" label="">
           <label>Swiss Mapping Group 4 A2 Rw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 4 A2 Retro</label>
         </display>
       </column>
     </row>
@@ -220,11 +259,13 @@
       <column>
         <display item="Swiss Mapping Group 5 F-key" label="Group 5   ">
           <label>Swiss Mapping Group 5 F-key</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 5-Tasto F</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 5 M-key" label="">
           <label>Swiss Mapping Group 5 M-key</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 5-Tasto M</label>
         </display>
       </column>
       <label>
@@ -233,6 +274,7 @@
       <column>
         <display item="Swiss Mapping Group 5" label="" format="checkbox">
           <label>Swiss Mapping Group 5</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 5</label>
         </display>
       </column>
       <label>
@@ -241,21 +283,25 @@
       <column>
         <display item="Swiss Mapping Group 5 A1 Fw" label="">
           <label>Swiss Mapping Group 5 A1 Fw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 5 A1 Avanti</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 5 A2 Fw" label="">
           <label>Swiss Mapping Group 5 A2 Fw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 5 A2 Avanti</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 5 A1 Rw" label="">
           <label>Swiss Mapping Group 5 A1 Rw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 5 A1 Retro</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 5 A2 Rw" label="">
           <label>Swiss Mapping Group 5 A2 Rw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 5 A2 Retro</label>
         </display>
       </column>
     </row>
@@ -263,11 +309,13 @@
       <column>
         <display item="Swiss Mapping Group 6 F-key" label="Group 6   ">
           <label>Swiss Mapping Group 6 F-key</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 6-Tasto F</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 6 M-key" label="">
           <label>Swiss Mapping Group 6 M-key</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 6-Tasto M</label>
         </display>
       </column>
       <label>
@@ -276,6 +324,7 @@
       <column>
         <display item="Swiss Mapping Group 6" label="" format="checkbox">
           <label>Swiss Mapping Group 6</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 6</label>
         </display>
       </column>
       <label>
@@ -284,21 +333,25 @@
       <column>
         <display item="Swiss Mapping Group 6 A1 Fw" label="">
           <label>Swiss Mapping Group 6 A1 Fw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 6 A1 Avanti</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 6 A2 Fw" label="">
           <label>Swiss Mapping Group 6 A2 Fw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 6 A2 Avanti</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 6 A1 Rw" label="">
           <label>Swiss Mapping Group 6 A1 Rw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 6 A1 Retro</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 6 A2 Rw" label="">
           <label>Swiss Mapping Group 6 A2 Rw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 6 A2 Retro</label>
         </display>
       </column>
     </row>
@@ -306,11 +359,13 @@
       <column>
         <display item="Swiss Mapping Group 7 F-key" label="Group 7   ">
           <label>Swiss Mapping Group 7 F-key</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 7-Tasto F</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 7 M-key" label="">
           <label>Swiss Mapping Group 7 M-key</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 7-Tasto M</label>
         </display>
       </column>
       <label>
@@ -319,6 +374,7 @@
       <column>
         <display item="Swiss Mapping Group 7" label="" format="checkbox">
           <label>Swiss Mapping Group 7</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 7</label>
         </display>
       </column>
       <label>
@@ -327,21 +383,25 @@
       <column>
         <display item="Swiss Mapping Group 7 A1 Fw" label="">
           <label>Swiss Mapping Group 7 A1 Fw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 7 A1 Avanti</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 7 A2 Fw" label="">
           <label>Swiss Mapping Group 7 A2 Fw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 7 A2 Avanti</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 7 A1 Rw" label="">
           <label>Swiss Mapping Group 7 A1 Rw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 7 A1 Retro</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 7 A2 Rw" label="">
           <label>Swiss Mapping Group 7 A2 Rw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 7 A2 Retro</label>
         </display>
       </column>
     </row>
@@ -349,11 +409,13 @@
       <column>
         <display item="Swiss Mapping Group 8 F-key" label="Group 8   ">
           <label>Swiss Mapping Group 8 F-key</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 8-Tasto F</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 8 M-key" label="">
           <label>Swiss Mapping Group 8 M-key</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 8-Tasto M</label>
         </display>
       </column>
       <label>
@@ -362,6 +424,7 @@
       <column>
         <display item="Swiss Mapping Group 8" label="" format="checkbox">
           <label>Swiss Mapping Group 8</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 8</label>
         </display>
       </column>
       <label>
@@ -370,21 +433,25 @@
       <column>
         <display item="Swiss Mapping Group 8 A1 Fw" label="">
           <label>Swiss Mapping Group 8 A1 Fw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 8 A1 Avanti</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 8 A2 Fw" label="">
           <label>Swiss Mapping Group 8 A2 Fw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 8 A2 Avanti</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 8 A1 Rw" label="">
           <label>Swiss Mapping Group 8 A1 Rw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 8 A1 Retro</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 8 A2 Rw" label="">
           <label>Swiss Mapping Group 8 A2 Rw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 8 A2 Retro</label>
         </display>
       </column>
     </row>
@@ -392,11 +459,13 @@
       <column>
         <display item="Swiss Mapping Group 9 F-key" label="Group 9   ">
           <label>Swiss Mapping Group 9 F-key</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 9-Tasto F</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 9 M-key" label="">
           <label>Swiss Mapping Group 9 M-key</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 9-Tasto M</label>
         </display>
       </column>
       <label>
@@ -405,6 +474,7 @@
       <column>
         <display item="Swiss Mapping Group 9" label="" format="checkbox">
           <label>Swiss Mapping Group 9</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 9</label>
         </display>
       </column>
       <label>
@@ -413,21 +483,25 @@
       <column>
         <display item="Swiss Mapping Group 9 A1 Fw" label="">
           <label>Swiss Mapping Group 9 A1 Fw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 9 A1 Avanti</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 9 A2 Fw" label="">
           <label>Swiss Mapping Group 9 A2 Fw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 9 A2 Avanti</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 9 A1 Rw" label="">
           <label>Swiss Mapping Group 9 A1 Rw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 9 A1 Retro</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 9 A2 Rw" label="">
           <label>Swiss Mapping Group 9 A2 Rw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 9 A2 Retro</label>
         </display>
       </column>
     </row>
@@ -435,11 +509,13 @@
       <column>
         <display item="Swiss Mapping Group 10 F-key" label="Group 10">
           <label>Swiss Mapping Group 10 F-key</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 10-Tasto F</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 10 M-key" label="">
           <label>Swiss Mapping Group 10 M-key</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 10-Tasto M</label>
         </display>
       </column>
       <label>
@@ -448,6 +524,7 @@
       <column>
         <display item="Swiss Mapping Group 10" label="" format="checkbox">
           <label>Swiss Mapping Group 10</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 10</label>
         </display>
       </column>
       <label>
@@ -456,23 +533,28 @@
       <column>
         <display item="Swiss Mapping Group 10 A1 Fw" label="">
           <label>Swiss Mapping Group 10 A1 Fw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 10 A1 Avanti</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 10 A2 Fw" label="">
           <label>Swiss Mapping Group 10 A2 Fw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 10 A2 Avanti</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 10 A1 Rw" label="">
           <label>Swiss Mapping Group 10 A1 Rw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 10 A1 Retro</label>
         </display>
       </column>
       <column>
         <display item="Swiss Mapping Group 10 A2 Rw" label="">
           <label>Swiss Mapping Group 10 A2 Rw</label>
+          <label xml:lang="it">Mappatura Svizzera gruppo 10 A2 Retro</label>
         </display>
       </column>
     </row>
   </column>
+<name xml:lang="it">Mappatura Svizzera</name>
 </pane>
