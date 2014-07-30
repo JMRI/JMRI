@@ -38,7 +38,9 @@
     <label>
       <text> </text>
     </label>
-    <display item="km/h speed regulation control number readout" label="Calibration Result" tooltip="Read Only"/>
+    <display item="km/h speed regulation control number readout" label="Calibration Result" tooltip="Read Only">
+       <label xml:lang="it">Risultati Calibrazione</label>
+    </display>
     <label>
       <text> </text>
     </label>
@@ -47,7 +49,9 @@
     </label>
     <row>
       <column>
-        <display item="km/h speed regulation control and range" label="Speed Regulation Control"/>
+        <display item="km/h speed regulation control and range" label="Speed Regulation Control">
+          <label xml:lang="it">Controllo regolazione velocità</label>
+        </display>
       </column>
       <column>
         <label>
