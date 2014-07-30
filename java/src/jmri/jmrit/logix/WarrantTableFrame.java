@@ -87,7 +87,6 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener
     	if (_instance==null) {
     		_instance = new WarrantTableFrame();
     	}
-    	_instance.setVisible(false);
     	return _instance;
     }
 
@@ -264,7 +263,6 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener
 
         getContentPane().add(tablePanel);
         setLocation(50,0);
-        setVisible(true);
         pack();
     }
     protected void scrollTable() {

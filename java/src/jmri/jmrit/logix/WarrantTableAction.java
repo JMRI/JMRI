@@ -207,7 +207,8 @@ public class WarrantTableAction extends AbstractAction {
             try {
                 _tableFrame.initComponents();
             } catch (Exception ex ) {/*bogus*/ }
-        } else {
+        }
+        if (_tableFrame!=null){
             _tableFrame.setVisible(true);
             _tableFrame.pack();
         }    	
