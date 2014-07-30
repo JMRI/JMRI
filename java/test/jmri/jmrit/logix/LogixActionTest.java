@@ -32,10 +32,10 @@ public class LogixActionTest extends jmri.util.SwingTestCase {
 	    java.io.File f = new java.io.File("java/test/jmri/jmrit/logix/LogixActionTest.xml");
         cm.load(f);
         sleep(100); // time for internal listeners to calm down
-		
+/*		
         Editor window = (Editor) jmri.util.JmriJFrame.getFrame("Logix Action Test");
         Assert.assertNotNull("Window", window);
-        
+*/        
         Memory im6 = InstanceManager.memoryManagerInstance().getMemory("IM6");
         Assert.assertNotNull("Memory IM6", im6);
         Assert.assertEquals("Contents IM6", "EastToWestOnSiding", im6.getValue());
