@@ -20,6 +20,7 @@
       </label>
       <label>
         <text>Function Key Controlled Sounds </text>
+        <text xml:lang="it">Suoni controllati da Tasti Funzione</text>
       </label>
       <label>
         <text> </text>
@@ -322,6 +323,7 @@
     <column>
       <label>
         <text>Automatic Sound Levels </text>
+        <text xml:lang="it">Livello Automatico Suoni</text>
       </label>
       <label>
         <text> </text>
@@ -602,6 +604,7 @@
       </label>
       <label>
         <text>Switch triggered sounds </text>
+        <text xml:lang="it">Livello Suoni regolato da Ingresso</text>
       </label>
       <label>
         <text> </text>
@@ -638,6 +641,7 @@
       </label>
       <label>
         <text>Randomly generated sounds </text>
+        <text xml:lang="it">Suoni Casuali</text>
       </label>
       <label>
         <text> </text>
@@ -880,4 +884,5 @@
       </label>
     </column>
   </row>
+  <name xml:lang="it">Livelli Suono</name>
 </pane>

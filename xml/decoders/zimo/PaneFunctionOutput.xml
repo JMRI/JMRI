@@ -20,9 +20,11 @@
           <column>
             <label>
               <text>Generates Pulse chain commands   </text>
+              <text xml:lang="it">Genera comandi e treno impulsi</text>
             </label>
             <label>
               <text>for LGB sound modules on FO 1</text>
+              <text xml:lang="it">per moduli sonori LBG con F1</text>
             </label>
           </column>
         </row>
@@ -142,11 +144,11 @@
           <column>
             <label>
                 <text>Tens digit = on time</text>
-                <text xml:lang="it">Numero decine= a tempo</text>
+                <text xml:lang="it">Numero decine= tempo On</text>
               </label>
               <label>
                 <text>Ones digit = Off time</text>
-                <text xml:lang="it">Numero unità= fuori tempo</text>
+                <text xml:lang="it">Numero unità= tempo Off</text>
               </label>
               <label>
                 <text>(0 = 100ms, 9 = 1s)</text>

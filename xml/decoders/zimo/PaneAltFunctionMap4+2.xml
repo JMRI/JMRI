@@ -16,6 +16,7 @@
     </label>
     <label>
       <text>           Description                                      Output wire or operation</text>
+      <text xml:lang="it">           Descrizione                                      Filo Uscita o operazione</text>
     </label>
     <label>
       <text> </text>
@@ -27,9 +28,11 @@
         </label>
         <label>
           <text>                                           Front  </text>
+          <text xml:lang="it">                                          Frontale </text>
         </label>
         <label>
           <text>                                           Light  </text>
+          <text xml:lang="it">                                           Luci   </text>
         </label>
         <display item="FL(f) controls output 1" format="checkbox" label="Forward Headlight F0(f)">
           <label>Forward Headlight F0(f)</label>
@@ -94,9 +97,11 @@
         </label>
         <label>
           <text> Rear </text>
+          <text xml:lang="it"> Retro </text>
         </label>
         <label>
           <text> Light </text>
+          <text xml:lang="it"> Luci </text>
         </label>
         <display item="FL(f) controls output 2" format="checkbox" label="">
           <label/>

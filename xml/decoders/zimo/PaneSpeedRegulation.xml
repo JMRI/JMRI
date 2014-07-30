@@ -9,7 +9,8 @@
       <text xml:lang="it">Per calibrare la velocità, segnare un decimo di unità in scala (Milgio o Km)</text>
     </label>
     <label>
-      <text>on track with correct direction set, F0 turned off and enough distance from the Start marker, posizionare la loco</text>
+      <text>on track with correct direction set, F0 turned off and enough distance from the Start marker</text>
+      <text xml:lang="it">sulle rotaie,con F0 in Off e a distanza sufficente dal segno di inizio tratta</text>
     </label>
     <label>
       <text>to allow for the acceleration (change momentum settings if neccessary). Write '1' to CV 135</text>
