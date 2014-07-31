@@ -51,8 +51,7 @@
         		</xs:element>
         	  </xs:sequence>	
           	</xs:complexType>
-        </xs:element>
-        
+        </xs:element>       
         <xs:element name="warrant" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>

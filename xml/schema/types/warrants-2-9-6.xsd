@@ -34,7 +34,24 @@
         </xs:appinfo>
       </xs:annotation>
       <xs:sequence>
-        
+        <xs:element name="nxparams" minOccurs="0" maxOccurs="1">
+         	<xs:complexType>
+         	  <xs:sequence>
+        		<xs:element name="scale" minOccurs="0" maxOccurs="1" type="xs:decimal">
+        		</xs:element>
+        		<xs:element name="maxspeed" minOccurs="0" maxOccurs="1" type="xs:decimal">
+        		</xs:element>
+        		<xs:element name="minspeed" minOccurs="0" maxOccurs="1" type="xs:decimal">
+        		</xs:element>
+        		<xs:element name="timeinterval" minOccurs="0" maxOccurs="1" type="xs:decimal">
+        		</xs:element>
+        		<xs:element name="numsteps" minOccurs="0" maxOccurs="1" type="xs:nonNegativeInteger">
+        		</xs:element>
+        		<xs:element name="haltstart" minOccurs="0" maxOccurs="1" type="yesNoType" >
+        		</xs:element>
+        	  </xs:sequence>	
+          	</xs:complexType>
+        </xs:element>
         <xs:element name="warrant" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
