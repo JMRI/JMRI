@@ -141,17 +141,17 @@ simpler than those for DTDs, mostly because individual
 items have much clearer scope.  
 
 <ul>
+<li>
+You <em>do not</em> need
+to version the schema if you add or change things such that
+existing files will continue to validate.
+<p>
+In that case, just make your schema changes in the current
+schema document, and commit them back to SVN.
 <li>You <em>do</em> need to
 version a schema you make a change to 
 the schema such that previous files will no longer validate
 with the current schema.  
-<p>
-In that case, just make your schema changes in the current
-schema document, and commit them back to CVS.
-<li>
-You <em>do not</em> need
-to version the schema if you add or change things such that
-existing files continue to validate.
 <p>
 In this case, the steps to version the schema are:
     <ol>
@@ -162,14 +162,20 @@ In this case, the steps to version the schema are:
     <li>If this is a subfile, such as the types/turnouts-2-9-6.xsd,
         that is included in a main schema such as layout-2-9-6.xsd,
         that main file also needs to be copied, have the include
-        changed, and commited to CVS.
+        changed, and commited to SVN. 
+        Now you've got 
+        a new layout-2-9-8.xsd schema for output files to reference.
     <li>Then, change the Java code that writes the 
         schema reference to the top of output files 
         to use the new filename. For example, layout (panel)
         files are written by 
         <code>src/jmri/configurexml/ConfigXmlManager.java</code>.
-    <li>If the XML stylesheet(s) in xml/XSLT have to be changed,
-        they are versioned in a similar way, including the 
+        Look for the 
+        <br/><code>static final public String schemaVersion = "-2-9-6"</code><br/>
+        line and change it to your new version number suffix.
+    <li>If there's an associated
+        XML stylesheet(s), its name has to be changed in a coordinated way,
+        including the 
         code change where the stylesheet reference is included.
     </ol>
 </ul>
