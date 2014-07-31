@@ -36,8 +36,9 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
 
     /**
-     * Define the current DTD version string for the layout-config DTD.
-     * See the <A HREF="package-summary.html#DTD">DTD versioning discussion</a>
+     * Define the current schema version string for the layout-config schema.
+     * See the <A HREF="package-summary.html#schema">Schema versioning discussion</a>.
+     * Also controls the stylesheet file version.
      */
     static final public String schemaVersion = "-2-9-6";
     
