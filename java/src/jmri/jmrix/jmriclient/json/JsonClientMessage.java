@@ -30,6 +30,12 @@ public class JsonClientMessage extends AbstractMRMessage {
         this.message = node;
     }
 
+    /* The Json client should be asynchronous */
+    @Override
+    public boolean replyExpected() {
+        return false;
+    }
+
     /* if JsonClientTrafficController overrides AbstractMRTrafficController.transmitLoop(), this method is OBE */
     @Override
     public int getNumDataElements() {
