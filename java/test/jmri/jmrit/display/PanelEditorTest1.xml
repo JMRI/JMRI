@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE layout-config SYSTEM "layout-config.dtd">
-<layout-config>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
   <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Layer Name Test" x="20" y="22" height="226" width="204" editable="no" positionable="yes" controlling="yes" hide="yes" panelmenu="no">    
     <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="40" y="130" level="5" text="Checks should be" size="13" style="0" />
     <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="51" y="149" level="5" text="in front of Xs" size="13" style="0" />
