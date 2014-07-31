@@ -17,11 +17,13 @@ public class SimpleServerTest extends TestCase {
 
     public void testCtor() {
         SimpleServer a = new SimpleServer();
+        jmri.util.JUnitAppender.assertWarnMessage("Failed to connect to port 2048");
         Assert.assertNotNull(a);
     }
 
     public void testCtorwithParameter() {
         SimpleServer a = new SimpleServer(2048);
+        jmri.util.JUnitAppender.assertWarnMessage("Failed to connect to port 2048");
         Assert.assertNotNull(a);
     }
 
@@ -55,6 +57,16 @@ public class SimpleServerTest extends TestCase {
         return suite;
     }
 
+    // The minimal setup for log4J
+    protected void setUp() throws Exception { 
+        apps.tests.Log4JFixture.setUp(); 
+        super.setUp();
+    }
+    protected void tearDown() throws Exception { 
+        super.tearDown();
+        apps.tests.Log4JFixture.tearDown(); 
+    }
+    
     static Logger log = Logger.getLogger(SimpleServerTest.class.getName());
 
 }

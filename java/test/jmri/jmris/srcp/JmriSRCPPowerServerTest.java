@@ -23,7 +23,9 @@ public class JmriSRCPPowerServerTest extends TestCase {
             @Override
             public void write(int b) throws java.io.IOException {}
 	    });
+	    
         JmriSRCPPowerServer a = new JmriSRCPPowerServer(output);
+        jmri.util.JUnitAppender.assertErrorMessage("No power manager instance found");
         Assert.assertNotNull(a);
     }
 
@@ -46,6 +48,16 @@ public class JmriSRCPPowerServerTest extends TestCase {
         return suite;
     }
 
+    // The minimal setup for log4J
+    protected void setUp() throws Exception { 
+        apps.tests.Log4JFixture.setUp(); 
+        super.setUp();
+    }
+    protected void tearDown() throws Exception { 
+        super.tearDown();
+        apps.tests.Log4JFixture.tearDown(); 
+    }
+    
     static Logger log = Logger.getLogger(JmriSRCPPowerServerTest.class.getName());
 
 }
