@@ -63,13 +63,11 @@ public class JsonClientPowerManager extends Bean implements PowerManager, JsonCl
 
     @Override
     public void message(JsonClientMessage message) {
-        log.debug("Received {}", message.toString());
         // do nothing
     }
 
     @Override
     public void message(JsonNode message) {
-        log.debug("Received {}", message.toString());
         // do nothing
     }
 

@@ -17,6 +17,7 @@ import static jmri.jmris.json.JSON.DATA;
 import static jmri.jmris.json.JSON.GOODBYE;
 import static jmri.jmris.json.JSON.HELLO;
 import static jmri.jmris.json.JSON.LOCALE;
+import static jmri.jmris.json.JSON.PONG;
 import static jmri.jmris.json.JSON.TYPE;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
@@ -133,6 +134,8 @@ public class JsonClientTrafficController extends AbstractMRTrafficController imp
                     this.receiveHello(data);
                 } else if (type.equals(LOCALE)) {
                     this.receiveHello(data);
+                } else if (type.equals(PONG)) {
+                    // silently ignore
                 } else if (!data.isMissingNode()) {
                     JsonClientReply reply = new JsonClientReply(root);
                     Runnable r = new RcvNotifier(reply, mLastSender, this);
