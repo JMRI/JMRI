@@ -2,6 +2,7 @@ package jmri.jmrix.jmriclient.json;
 
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.jmriclient.json.swing.JsonClientComponentFactory;
@@ -53,9 +54,24 @@ public class JsonClientSystemConnectionMemo extends SystemConnectionMemo {
         return null;
     }
 
+    /*
+     * Register managers to listen to the trafficController here instead of
+     * in their constructors so the constructors do not leak their objects
+     * before returning. See http://stackoverflow.com/a/23069096/176160
+     */
     protected void configureManagers() {
         log.debug("Configuring managers");
-        InstanceManager.store(new JsonClientPowerManager(this), PowerManager.class);
+        JsonClientPowerManager powerManager = new JsonClientPowerManager(this);
+        this.getTrafficController().addJsonClientListener(powerManager);
+        InstanceManager.store(powerManager, PowerManager.class);
+        // trigger current state requests as appropriate
+        try {
+            // setting power to unknown will cause a JSON server to return current power state
+            powerManager.setPower(PowerManager.UNKNOWN);
+        } catch (JmriException ex) {
+            log.error("Unable to request system state: {}", ex.getMessage());
+            log.debug("Complete exception:\n", ex);
+        }
     }
 
     /**
