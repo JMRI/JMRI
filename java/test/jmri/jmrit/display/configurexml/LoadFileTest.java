@@ -42,7 +42,7 @@ public class LoadFileTest extends jmri.configurexml.LoadFileTestBase {
         BufferedReader inFileStream = new BufferedReader(
                 new InputStreamReader(
                     new FileInputStream(
-                        new java.io.File("java/test/jmri/jmrit/display/configurexml/ScaledIconTest.xml"))));
+                        new java.io.File("java/test/jmri/jmrit/display/configurexml/ScaledIconTestRef.xml"))));
         BufferedReader outFileStream = new BufferedReader(
                 new InputStreamReader(
                     new FileInputStream(outFile)));

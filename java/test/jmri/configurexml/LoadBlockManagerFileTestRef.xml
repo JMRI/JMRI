@@ -572,10 +572,9 @@
   </blocks>
   <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
   <layoutblocks class="jmri.jmrit.display.configurexml.LayoutBlockManagerXml" />
-  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
-  <!--Written by JMRI version 20140723-0911-jake on Wed Jul 23 10:11:48 BST 2014 $Id$-->
+  <!--Written by JMRI version 20140731-0546-jake on Wed Jul 30 22:47:10 PDT 2014 $Id$-->
 </layout-config>
 
