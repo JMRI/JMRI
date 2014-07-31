@@ -493,29 +493,29 @@ public class XNetProgrammerTest extends TestCase {
        XNetProgrammer p = new XNetProgrammer(t);
 
        Assert.assertTrue("Version 3.5 LZ100 Can Read CV3 in register mode",p.getCanRead(Programmer.REGISTERMODE,"3"));
-       jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
+       //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
        
        Assert.assertTrue("Version 3.5 LZ100 Can Read CV3 in paged mode",p.getCanRead(Programmer.PAGEMODE,"3"));
-       jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
+       //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
        
        Assert.assertTrue("Version 3.5 LZ100 Can Read CV3 in direct byte mode",p.getCanRead(Programmer.DIRECTBYTEMODE,"3"));
-       jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
+       //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
        
        Assert.assertTrue("Version 3.5 LZ100 Can Read CV3 in direct bit mode",p.getCanRead(Programmer.DIRECTBITMODE,"3"));
-       jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
+       //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
        
 
        Assert.assertFalse("Version 3.5 LZ100 Can not Read CV300 in register mode",p.getCanRead(Programmer.REGISTERMODE,"300"));
-       jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
+       //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
        
        Assert.assertFalse("Version 3.5 LZ100 Can not Read CV300 in paged mode",p.getCanRead(Programmer.PAGEMODE,"300"));
-       jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
+       //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
        
        Assert.assertFalse("Version 3.5 LZ100 Can not Read CV300 in direct byte mode",p.getCanRead(Programmer.DIRECTBYTEMODE,"300"));
-       jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
+       //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
        
        Assert.assertFalse("Version 3.5 LZ100 Can not Read CV300 in direct bit mode",p.getCanRead(Programmer.DIRECTBITMODE,"300"));
-       jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
+       //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
        
     }
 
