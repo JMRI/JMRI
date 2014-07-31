@@ -150,7 +150,16 @@
       <routeSensor systemName="IS101" mode="onInactive" />
     </route>
   </routes>
-  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml">
+    <nxparams>
+      <scale>87.1</scale>
+      <maxspeed>0.5</maxspeed>
+      <minspeed>0.075</minspeed>
+      <timeinterval>4000.0</timeinterval>
+      <numsteps>8</numsteps>
+      <haltstart>no</haltstart>
+    </nxparams>
+  </warrants>
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
@@ -169,7 +178,7 @@
       <conditionalAction option="1" type="17" systemName="User 1" data="2" delay="1" string="1" />
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sat Jun 06 07:42:04 BST 2009" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
-  <!--Written by JMRI version 20140723-0840-jake on Wed Jul 23 09:40:58 BST 2014 $Id$-->
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Jun 05 23:42:04 PDT 2009" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
+  <!--Written by JMRI version 20140730-2008-Peter Cressman on Wed Jul 30 13:08:48 PDT 2014 $Id$-->
 </layout-config>
 
