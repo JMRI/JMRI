@@ -7,7 +7,7 @@ package jmri.jmrix.jmriclient;
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
  * @author Paul Bender Copyright (C) 2010
- * @uthoer Randall Wood Copyright (C) 2014
+ * @author Randall Wood Copyright (C) 2014
  */
 public class JMRIClientConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
