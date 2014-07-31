@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 
 import java.util.List;
+import java.util.ResourceBundle;
 import org.jdom.Element;
 import org.jdom.Attribute;
 import jmri.util.jdom.LocaleSelector;
@@ -100,36 +101,36 @@ public class FnMapPanel extends JPanel {
         
         labelAt(0,fnName, "Description");
         
-        labelAt( firstFn   , fnName, "Forward Headlight F0(F)");
-        labelAt( firstFn+ 1, fnName, "Reverse Headlight F0(R)");
-        if (numFn>2) labelAt( firstFn+ 2, fnName, "Function 1");
-        if (numFn>3) labelAt( firstFn+ 3, fnName, "Function 2");
-        if (numFn>4) labelAt( firstFn+ 4, fnName, "Function 3");
-        if (numFn>5) labelAt( firstFn+ 5, fnName, "Function 4");
-        if (numFn>6) labelAt( firstFn+ 6, fnName, "Function 5");
-        if (numFn>7) labelAt( firstFn+ 7, fnName, "Function 6");
-        if (numFn>8) labelAt( firstFn+ 8, fnName, "Function 7");
-        if (numFn>9) labelAt( firstFn+ 9, fnName, "Function 8");
-        if (numFn>10) labelAt( firstFn+10, fnName, "Function 9");
-        if (numFn>11) labelAt( firstFn+11, fnName, "Function 10");
-        if (numFn>12) labelAt( firstFn+12, fnName, "Function 11");
-        if (numFn>13) labelAt( firstFn+13, fnName, "Function 12");
-        if (numFn>14) labelAt( firstFn+14, fnName, "Function 13");
-        if (numFn>15) labelAt( firstFn+15, fnName, "Function 14");
-        if (numFn>16) labelAt( firstFn+16, fnName, "Function 15");
-        if (numFn>17) labelAt( firstFn+17, fnName, "Function 16");
-        if (numFn>18) labelAt( firstFn+18, fnName, "Function 17");
-        if (numFn>19) labelAt( firstFn+19, fnName, "Function 18");
-        if (numFn>20) labelAt( firstFn+20, fnName, "Function 19");
-        if (numFn>21) labelAt( firstFn+21, fnName, "Function 20");
-        if (numFn>22) labelAt( firstFn+22, fnName, "Function 21");
-        if (numFn>23) labelAt( firstFn+23, fnName, "Function 22");
-        if (numFn>24) labelAt( firstFn+24, fnName, "Function 23");
-        if (numFn>25) labelAt( firstFn+25, fnName, "Function 24");
-        if (numFn>26) labelAt( firstFn+26, fnName, "Function 25");
-        if (numFn>27) labelAt( firstFn+27, fnName, "Function 26");
-        if (numFn>28) labelAt( firstFn+28, fnName, "Function 27");
-        if (numFn>29) labelAt( firstFn+29, fnName, "Function 28");
+        labelAt( firstFn   , fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function0F"));
+        labelAt( firstFn+ 1, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function0R"));
+        if (numFn>2) labelAt( firstFn+ 2, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function1"));
+        if (numFn>3) labelAt( firstFn+ 3, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function2"));
+        if (numFn>4) labelAt( firstFn+ 4, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function3"));
+        if (numFn>5) labelAt( firstFn+ 5, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function4"));
+        if (numFn>6) labelAt( firstFn+ 6, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function5"));
+        if (numFn>7) labelAt( firstFn+ 7, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function6"));
+        if (numFn>8) labelAt( firstFn+ 8, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function7"));
+        if (numFn>9) labelAt( firstFn+ 9, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function8"));
+        if (numFn>10) labelAt( firstFn+10, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function9"));
+        if (numFn>11) labelAt( firstFn+11, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function10"));
+        if (numFn>12) labelAt( firstFn+12, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function11"));
+        if (numFn>13) labelAt( firstFn+13, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function12"));
+        if (numFn>14) labelAt( firstFn+14, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function13"));
+        if (numFn>15) labelAt( firstFn+15, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function14"));
+        if (numFn>16) labelAt( firstFn+16, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function15"));
+        if (numFn>17) labelAt( firstFn+17, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function16"));
+        if (numFn>18) labelAt( firstFn+18, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function17"));
+        if (numFn>19) labelAt( firstFn+19, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function18"));
+        if (numFn>20) labelAt( firstFn+20, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function19"));
+        if (numFn>21) labelAt( firstFn+21, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function20"));
+        if (numFn>22) labelAt( firstFn+22, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function21"));
+        if (numFn>23) labelAt( firstFn+23, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function22"));
+        if (numFn>24) labelAt( firstFn+24, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function23"));
+        if (numFn>25) labelAt( firstFn+25, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function24"));
+        if (numFn>26) labelAt( firstFn+26, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function25"));
+        if (numFn>27) labelAt( firstFn+27, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function26"));
+        if (numFn>28) labelAt( firstFn+28, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function27"));
+        if (numFn>29) labelAt( firstFn+29, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function28"));
         
         // label outputs
         for (int iOut=0; iOut<numOut; iOut++) {
