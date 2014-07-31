@@ -2,13 +2,12 @@
 
 package jmri.jmrix;
 
+import java.util.ResourceBundle;
+import javax.swing.JMenu;
+import jmri.jmrix.jmriclient.json.swing.JsonClientMenu;
+import jmri.jmrix.swing.ComponentFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.ResourceBundle;
-
-import javax.swing.JMenu;
-
-import jmri.jmrix.swing.ComponentFactory;
 
 /**
  * Provide a "Systems" menu containing the Jmri system-specific tools in submenus.
@@ -95,6 +94,7 @@ public class SystemsMenu extends JMenu {
         addMenu("jmri.jmrix.maple.MapleMenu");
         // The JMRI Network ClientAllows Multiple Connections
         add( new jmri.jmrix.jmriclient.swing.JMRIClientMenu(null));
+        add(new JsonClientMenu(null));
         
         add(new jmri.jmrix.rfid.swing.RfidMenu(null));
 
