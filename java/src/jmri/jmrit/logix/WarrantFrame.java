@@ -1037,7 +1037,7 @@ public class WarrantFrame extends WarrantRoute {
         }
     	if (_warrant!=null) {
         	_warrant.deAllocate();
-            _warrant.stopWarrant();
+            _warrant.stopWarrant(false);
             _warrant.removePropertyChangeListener(this);    		
     	}
         _statusBox.setText(Bundle.getMessage("LearningStop"));

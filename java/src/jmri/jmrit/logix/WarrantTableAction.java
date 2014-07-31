@@ -145,6 +145,7 @@ public class WarrantTableAction extends AbstractAction {
         	public void actionPerformed(ActionEvent e) {
         		setupWarrantTable();
             	_nxFrame = NXFrame.getInstance();
+            	_nxFrame.setVisible(true);
             }        	
         });
         _warrantMenu.add(makeLogMenu());

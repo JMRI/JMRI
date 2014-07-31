@@ -158,7 +158,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             }
          }
         // shut down
-        _warrant.stopWarrant();
+        _warrant.stopWarrant(false);
     }
 
     private void setStep(int step) {
@@ -345,11 +345,11 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 _lock.unlock();
             }
         } else {
+            _throttle.setSpeedSetting(0.0f);
         	if (_ramp!=null) {
         		_ramp.stop();
         		_ramp = null;
         	}
-            _throttle.setSpeedSetting(0.0f);
         }
         if (log.isDebugEnabled()) log.debug("setHalt("+halt+"): throttle speed= "+_throttle.getSpeedSetting()+
                 					" _waitForClear= "+_waitForClear+" warrant "+_warrant.getDisplayName());
@@ -576,7 +576,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             _idxCurrentCommand = -1;
         	w.startupWarrant();
         } else {
-            w.stopWarrant();        	
+            w.stopWarrant(true);        	
         }
         if (log.isDebugEnabled())log.debug("Continuing warrant lanch from \""+_warrant.getDisplayName()+"\"");        	
     }
