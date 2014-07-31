@@ -16,14 +16,14 @@ import org.apache.log4j.Logger;
  */
 public class SerialTrafficControllerTest extends TestCase {
 
+    SerialTrafficController m;
+    
     public void testCtor() {
-        SerialTrafficController m = new SerialTrafficController();
         Assert.assertNotNull("exists",m);
     }
         
     public void testCreateNode() {
            // test the code to get a new IEEE802154 node
-           SerialTrafficController m = new SerialTrafficController();
            IEEE802154Node node = m.newNode();
 	   Assert.assertNotNull("node create failed", node);
        }
@@ -31,7 +31,6 @@ public class SerialTrafficControllerTest extends TestCase {
         public void testGetNodeFromAddressTest() {
            // test the code to get an IEEE802154 node from its address
            // specified as a string to make sure it returns null on failure.
-           SerialTrafficController m = new SerialTrafficController();
            IEEE802154Node node = m.newNode();
            node.setNodeAddress(28055);
            byte uad[]={(byte)0x6D,(byte)0x97};
@@ -47,7 +46,6 @@ public class SerialTrafficControllerTest extends TestCase {
         public void testGetNodeFromUserAddressIntTest() {
            // test the code to get an IEEE802154 node from its User address
            // specified as an integer array.
-           SerialTrafficController m = new SerialTrafficController();
            IEEE802154Node node = m.newNode();
            m.registerNode(node);
            node.setNodeAddress(28055);
@@ -63,7 +61,6 @@ public class SerialTrafficControllerTest extends TestCase {
         public void testGetNodeFromUserAddressByteTest() {
            // test the code to get an IEEE802154 node from its User address
            // specified as a byte array.
-           SerialTrafficController m = new SerialTrafficController();
            IEEE802154Node node = m.newNode();
            m.registerNode(node);
            node.setNodeAddress(28055);
@@ -78,7 +75,6 @@ public class SerialTrafficControllerTest extends TestCase {
         public void testGetNodeFromUserAddressTest() {
            // test the code to get an IEEE802154 node from its User address
            // specified as a string.
-           SerialTrafficController m = new SerialTrafficController();
            IEEE802154Node node = m.newNode();
            m.registerNode(node);
            node.setNodeAddress(28055);
@@ -95,7 +91,6 @@ public class SerialTrafficControllerTest extends TestCase {
         public void testGetNodeFromAddressGlobalByteTest() {
            // test the code to get an IEEE802154 node from its Global address
            // specified as a byte array.
-           SerialTrafficController m = new SerialTrafficController();
            IEEE802154Node node = m.newNode();
            m.registerNode(node);
            node.setNodeAddress(28055);
@@ -112,7 +107,6 @@ public class SerialTrafficControllerTest extends TestCase {
         public void testGetNodeFromAddressGlobalIntTest() {
            // test the code to get an IEEE802154 node from its Global address
            // specified as an integer array.
-           SerialTrafficController m = new SerialTrafficController();
            IEEE802154Node node = m.newNode();
            node.setNodeAddress(28055);
            byte uad[]={(byte)0x6D,(byte)0x97};
@@ -129,7 +123,6 @@ public class SerialTrafficControllerTest extends TestCase {
         public void testGetNodeFromAddressGlobalTest() {
            // test the code to get an IEEE802154 node from its Global address
            // specified as a string.
-           SerialTrafficController m = new SerialTrafficController();
            IEEE802154Node node = m.newNode();
            node.setNodeAddress(28055);
            byte uad[]={(byte)0x6D,(byte)0x97};
@@ -163,8 +156,16 @@ public class SerialTrafficControllerTest extends TestCase {
 	}
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() throws Exception { 
+        apps.tests.Log4JFixture.setUp(); 
+        super.setUp();
+        m = new SerialTrafficController();
+        jmri.util.JUnitAppender.assertErrorMessage("Deprecated Method setInstance called");
+    }
+    protected void tearDown() throws Exception { 
+        super.tearDown();
+        apps.tests.Log4JFixture.tearDown(); 
+    }
 
     static Logger log = Logger.getLogger(SerialTrafficControllerTest.class.getName());
 

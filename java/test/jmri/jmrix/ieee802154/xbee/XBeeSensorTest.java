@@ -15,9 +15,10 @@ import junit.framework.TestSuite;
  */
 public class XBeeSensorTest extends TestCase {
 
+    XBeeTrafficController tc;
+    XBeeConnectionMemo memo;
+
     public void testCtor() {
-        XBeeTrafficController tc = new XBeeTrafficController();
-        XBeeConnectionMemo memo = new XBeeConnectionMemo();
         memo.setSystemPrefix("ABC");
         memo.setSensorManager(new XBeeSensorManager(tc,"ABC"));
         tc.setAdapterMemo(memo);
@@ -29,8 +30,6 @@ public class XBeeSensorTest extends TestCase {
     }
 
     public void testCtorAddressPinName() {
-        XBeeTrafficController tc = new XBeeTrafficController();
-        XBeeConnectionMemo memo = new XBeeConnectionMemo();
         memo.setSystemPrefix("ABC");
         memo.setSensorManager(new XBeeSensorManager(tc,"ABC"));
         tc.setAdapterMemo(memo);
@@ -42,8 +41,6 @@ public class XBeeSensorTest extends TestCase {
     }
 
     public void testCtor16BitHexNodeAddress() {
-        XBeeTrafficController tc = new XBeeTrafficController();
-        XBeeConnectionMemo memo = new XBeeConnectionMemo();
         memo.setSystemPrefix("ABC");
         memo.setSensorManager(new XBeeSensorManager(tc,"ABC"));
         tc.setAdapterMemo(memo);
@@ -55,8 +52,6 @@ public class XBeeSensorTest extends TestCase {
     }
 
     public void testCtor16BitHexStringNodeAddress() {
-        XBeeTrafficController tc = new XBeeTrafficController();
-        XBeeConnectionMemo memo = new XBeeConnectionMemo();
         memo.setSystemPrefix("ABC");
         memo.setSensorManager(new XBeeSensorManager(tc,"ABC"));
         tc.setAdapterMemo(memo);
@@ -68,8 +63,6 @@ public class XBeeSensorTest extends TestCase {
     }
 
     public void testCtor64BitHexStringNodeAddress() {
-        XBeeTrafficController tc = new XBeeTrafficController();
-        XBeeConnectionMemo memo = new XBeeConnectionMemo();
         memo.setSystemPrefix("ABC");
         memo.setSensorManager(new XBeeSensorManager(tc,"ABC"));
         tc.setAdapterMemo(memo);
@@ -99,7 +92,13 @@ public class XBeeSensorTest extends TestCase {
 	}
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void setUp() { 
+        apps.tests.Log4JFixture.setUp();
+        tc = new XBeeTrafficController() {
+            public void setInstance(){}
+        };
+        memo = new XBeeConnectionMemo();
+    }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
     static Logger log = Logger.getLogger(XBeeSensorTest.class.getName());

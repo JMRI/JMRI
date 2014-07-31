@@ -15,14 +15,15 @@ import org.apache.log4j.Logger;
  */
 public class XBeeTrafficControllerTest extends TestCase {
 
+
+     XBeeTrafficController m;
+
     public void testCtor() {
-        XBeeTrafficController m = new XBeeTrafficController();
         Assert.assertNotNull("exists",m);
     }
 
     public void testCreateNode() {
            // test the code to get an new XBee 
-           XBeeTrafficController m = new XBeeTrafficController();
            XBeeNode node = (XBeeNode)m.newNode();
            Assert.assertNotNull("node create failed", node);
     }
@@ -30,7 +31,6 @@ public class XBeeTrafficControllerTest extends TestCase {
         public void testGetNodeFromAddressTest() {
            // test the code to get an XBee node from its address
            // specified as a string to make sure it returns null on failure.
-           XBeeTrafficController m = new XBeeTrafficController();
            XBeeNode node = (XBeeNode)m.newNode();
            node.setNodeAddress(28055);
            byte uad[]={(byte)0x6D,(byte)0x97};
@@ -46,7 +46,6 @@ public class XBeeTrafficControllerTest extends TestCase {
         public void testGetNodeFromUserAddressIntTest() {
            // test the code to get an XBee node from its User address
            // specified as an integer array.
-           XBeeTrafficController m = new XBeeTrafficController();
            XBeeNode node = (XBeeNode) m.newNode();
            m.registerNode(node);
            node.setNodeAddress(28055);
@@ -62,7 +61,6 @@ public class XBeeTrafficControllerTest extends TestCase {
         public void testGetNodeFromUserAddressByteTest() {
            // test the code to get an XBee node from its User address
            // specified as a byte array.
-           XBeeTrafficController m = new XBeeTrafficController();
            XBeeNode node = (XBeeNode) m.newNode();
            m.registerNode(node);
            node.setNodeAddress(28055);
@@ -77,7 +75,6 @@ public class XBeeTrafficControllerTest extends TestCase {
         public void testGetNodeFromUserAddressTest() {
            // test the code to get an XBee node from its User address
            // specified as a string.
-           XBeeTrafficController m = new XBeeTrafficController();
            XBeeNode node = (XBeeNode) m.newNode();
            node.setNodeAddress(28055);
            byte uad[]={(byte)0x6D,(byte)0x97};
@@ -93,7 +90,6 @@ public class XBeeTrafficControllerTest extends TestCase {
         public void testGetNodeFromAddressGlobalByteTest() {
            // test the code to get an IEEE802154 node from its Global address
            // specified as a byte array.
-           XBeeTrafficController m = new XBeeTrafficController();
            XBeeNode node = (XBeeNode) m.newNode();
            m.registerNode(node);
            node.setNodeAddress(28055);
@@ -110,7 +106,6 @@ public class XBeeTrafficControllerTest extends TestCase {
         public void testGetNodeFromAddressGlobalIntTest() {
            // test the code to get an IEEE802154 node from its Global address
            // specified as an intger array.
-           XBeeTrafficController m = new XBeeTrafficController();
            XBeeNode node = (XBeeNode) m.newNode();
            m.registerNode(node);
            node.setNodeAddress(28055);
@@ -128,7 +123,6 @@ public class XBeeTrafficControllerTest extends TestCase {
         public void testGetNodeFromAddressGlobalTest() {
            // test the code to get an IEEE802154 node from its Global address
            // specified as a string.
-           XBeeTrafficController m = new XBeeTrafficController();
            XBeeNode node = (XBeeNode) m.newNode();
            node.setNodeAddress(28055);
            byte uad[]={(byte)0x6D,(byte)0x97};
@@ -162,7 +156,12 @@ public class XBeeTrafficControllerTest extends TestCase {
 
     // The minimal setup for log4J
     @Override
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void setUp() { 
+        apps.tests.Log4JFixture.setUp(); 
+        m = new XBeeTrafficController() {
+                public void setInstance(){}
+        };
+    }
     @Override
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 

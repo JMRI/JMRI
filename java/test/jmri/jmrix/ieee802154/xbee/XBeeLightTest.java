@@ -15,9 +15,10 @@ import junit.framework.TestSuite;
  */
 public class XBeeLightTest extends TestCase {
 
+    XBeeTrafficController tc;
+    XBeeConnectionMemo memo;
+
     public void testCtor() {
-        XBeeTrafficController tc = new XBeeTrafficController();
-        XBeeConnectionMemo memo = new XBeeConnectionMemo();
         memo.setSystemPrefix("ABC");
         memo.setLightManager(new XBeeLightManager(tc,"ABC"));
         tc.setAdapterMemo(memo);
@@ -26,8 +27,6 @@ public class XBeeLightTest extends TestCase {
     }
 
     public void testCtorEncoderPinName() {
-        XBeeTrafficController tc = new XBeeTrafficController();
-        XBeeConnectionMemo memo = new XBeeConnectionMemo();
         memo.setSystemPrefix("ABC");
         memo.setLightManager(new XBeeLightManager(tc,"ABC"));
         tc.setAdapterMemo(memo);
@@ -36,8 +35,6 @@ public class XBeeLightTest extends TestCase {
     }
 
     public void testCtorHexNodeAddress() {
-        XBeeTrafficController tc = new XBeeTrafficController();
-        XBeeConnectionMemo memo = new XBeeConnectionMemo();
         memo.setSystemPrefix("ABC");
         memo.setLightManager(new XBeeLightManager(tc,"ABC"));
         tc.setAdapterMemo(memo);
@@ -64,7 +61,13 @@ public class XBeeLightTest extends TestCase {
 	}
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void setUp() { 
+        apps.tests.Log4JFixture.setUp();
+        tc = new XBeeTrafficController() {
+            public void setInstance(){}
+        };
+        memo = new XBeeConnectionMemo();
+    }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
     static Logger log = Logger.getLogger(XBeeLightTest.class.getName());
