@@ -402,7 +402,8 @@ public class OperationsBackupTest extends TestCase {
 		createDummyXmlFile(operationsRoot, regularBackupSetFileNames[0]);
 
 		backup.copyBackupSet(operationsRoot, setDir);
-
+        jmri.util.JUnitAppender.assertWarnMessage("Only 1 file(s) found in directory "+operationsRoot.getPath());
+        
 		// Should NOT throw an exception, and the destination dir should exist.
 		Boolean exists = existsFile(defaultBackupRoot, setName);
 		assertTrue(exists);
