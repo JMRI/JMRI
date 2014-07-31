@@ -17,7 +17,6 @@ public class SimpleServerTest extends TestCase {
 
     public void testCtor() {
         SimpleServer a = new SimpleServer();
-        jmri.util.JUnitAppender.assertErrorMessage("Failed to connect to port 2048");
         Assert.assertNotNull(a);
     }
 
