@@ -11,6 +11,7 @@ import org.jdom.Attribute;
 import jmri.InstanceManager;
 import jmri.DccLocoAddress;
 import jmri.jmrit.logix.NXFrame;
+import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.logix.OBlock;
@@ -42,7 +43,7 @@ public class WarrantManagerXml //extends XmlFile
     public Element store(Object o) {
         Element warrants = new Element("warrants");
         warrants.setAttribute("class","jmri.jmrit.logix.configurexml.WarrantManagerXml");
-        warrants.addContent(storeNXParams());
+        storeNXParams(warrants);
         WarrantManager manager = (WarrantManager) o;
         Iterator<String> iter = manager.getSystemNameList().iterator();
         while (iter.hasNext()) {
@@ -81,7 +82,6 @@ public class WarrantManagerXml //extends XmlFile
             // and put this element out
             warrants.addContent(elem);
         }
-
         return warrants;
     }
 
@@ -155,7 +155,10 @@ public class WarrantManagerXml //extends XmlFile
         return elem;
     }
     
-    Element storeNXParams () {
+    void storeNXParams (Element element) {
+        if (jmri.InstanceManager.getDefault(OBlockManager.class).getSystemNameList().size() < 1) {
+        	return;
+        }
         Element elem = new Element("nxparams");
         NXFrame nxFrame = NXFrame.getInstance();
         Element e = new Element("scale");
@@ -176,7 +179,8 @@ public class WarrantManagerXml //extends XmlFile
         e = new Element("haltstart");
         e.addContent(nxFrame.getStartHalt()?"yes":"no");
         elem.addContent(e);
-        return elem;
+        element.addContent(elem);
+        return;
     }
 
     /**
