@@ -78,8 +78,7 @@ public class DefaultConditionalAction implements ConditionalAction {
             	_indirectAction = true;
                 return m;
             }
-            log.error("\""+devName+"\" invalid indirect memory name in action - "+devName);
-            devName = (String)m.getValue();
+            log.error("\""+devName+"\" invalid indirect memory name in action "+_actionString+" of type "+_type);
         } else {
         	_indirectAction = false;        	
         }

@@ -36,7 +36,7 @@
       <xs:sequence>
         <xs:element name="nxparams" minOccurs="0" maxOccurs="1">
          	<xs:complexType>
-        		<xs:element name="scale" type="systemNameType" minOccurs="0" maxOccurs="1" type="xs:decimal">
+        		<xs:element name="scale" minOccurs="0" maxOccurs="1" type="xs:decimal">
         		</xs:element>
         		<xs:element name="maxspeed" minOccurs="0" maxOccurs="1" type="xs:decimal">
         		</xs:element>
