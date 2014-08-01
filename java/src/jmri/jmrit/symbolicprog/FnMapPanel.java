@@ -72,7 +72,7 @@ public class FnMapPanel extends JPanel {
         setLayout(gl);
         
         {
-            JLabel l = new JLabel("Output wire or operation");
+            JLabel l = new JLabel(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("OutputWireOr"));
             cs.gridy = outputName;
             cs.gridx = 3;
             cs.gridwidth = GridBagConstraints.REMAINDER;
@@ -99,7 +99,7 @@ public class FnMapPanel extends JPanel {
             labelAt( firstFn+13, cvNum, "46");
         }
         
-        labelAt(0,fnName, "Description");
+        labelAt(0,fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Description"));
         
         labelAt( firstFn   , fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function0F"));
         labelAt( firstFn+ 1, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function0R"));
