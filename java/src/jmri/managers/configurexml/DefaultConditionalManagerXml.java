@@ -36,6 +36,9 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
      * @return Element containing the complete info
      */
     public Element store(Object o) {
+    	long time = System.currentTimeMillis();
+//    	long numCond = 0;
+//    	long numStateVars = 0;
         Element conditionals = new Element("conditionals");
         setStoreElementClass(conditionals);
         ConditionalManager tm = (ConditionalManager) o;
@@ -47,6 +50,8 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
             
             // store the conditionals
             while (iter.hasNext()) {
+//            	numCond++;
+//            	long condTime = System.currentTimeMillis();
                 String sname = iter.next();
                 if (sname==null) log.error("System name null during store");
                 log.debug("conditional system name is "+sname);
@@ -58,7 +63,6 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 storeCommon(c, elem);
                 elem.setAttribute("antecedent", c.getAntecedentExpression());
                 elem.setAttribute("logicType", Integer.toString(c.getLogicType()));
-                
                 if (c.getTriggerOnChange()) {
                 	elem.setAttribute("triggerOnChange", "yes");                	
                 } else {
@@ -66,7 +70,17 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 }
                 
 				// save child state variables
-                ArrayList <ConditionalVariable> variableList = c.getCopyOfStateVariables();
+                long partTime = System.currentTimeMillis();
+                // Creating StateVariables gets very slow when more than c10,000 exist.
+                // creation time goes from less than 1ms to more than 5000ms.
+                // Don't need a clone for read-only use.
+//                List <ConditionalVariable> variableList = c.getCopyOfStateVariables();
+                List <ConditionalVariable> variableList = ((jmri.implementation.DefaultConditional)c).getStateVariableList();
+/*                numStateVars += variableList.size();                
+               	if (numCond>1190) {
+               		partTime = System.currentTimeMillis() - partTime;
+               		System.out.println("time to for getCopyOfStateVariables "+partTime+"ms. total stateVariable= "+numStateVars);
+               	}*/
                 for (int k=0; k < variableList.size(); k++) {
                     ConditionalVariable variable = variableList.get(k); 
                     Element vElem = new Element("conditionalStateVariable");
@@ -93,7 +107,12 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                     elem.addContent(vElem);
                 }
 				// save action information
+                partTime = System.currentTimeMillis();
                 ArrayList<ConditionalAction> actionList = c.getCopyOfActions();
+/*               	if (numCond>1190) {
+               		partTime = System.currentTimeMillis() - partTime;
+               		System.out.println("time to for getCopyOfActions "+partTime+"ms. numActions= "+actionList.size());
+               	}*/
 				for (int k=0; k < actionList.size(); k++) {
                     ConditionalAction action = actionList.get(k);
 					Element aElem = new Element("conditionalAction");
@@ -113,8 +132,13 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
 					elem.addContent(aElem);
 				}
 				conditionals.addContent(elem);
+/*				condTime = System.currentTimeMillis() - condTime;
+				if (condTime>1) {
+					System.out.println(numCond+"th Conditional \""+sname+"\" took "+condTime+"ms to store.");					
+				}*/
 			}			
 		}
+//        System.out.println("Elapsed time to store "+numCond+" Conditional "+(System.currentTimeMillis()-time)+"ms.");
 		return (conditionals);	
 	}
 	

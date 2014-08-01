@@ -154,6 +154,12 @@ public class DefaultConditional extends AbstractNamedBean
 		}
         return variableList;
 	}
+    /**
+     * Only used for store
+     */
+    public List<ConditionalVariable> getStateVariableList() {
+    	return _variableList;
+    }
 
 	/**
 	 * Set list of actions
