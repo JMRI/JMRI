@@ -7,6 +7,8 @@ import jmri.*;
 import jmri.managers.*;
 import jmri.jmrix.debugthrottle.DebugThrottleManager;
 import jmri.jmrit.logix.OBlockManager;
+import jmri.jmrit.logix.WarrantManager;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 
 import java.beans.PropertyChangeListener;
 
@@ -124,6 +126,24 @@ public class JUnitUtil {
         OBlockManager b = new OBlockManager();
         if (InstanceManager.configureManagerInstance() != null)
             InstanceManager.configureManagerInstance().registerConfig(b, jmri.Manager.OBLOCKS);
+    }
+
+    public static void initWarrantManager() {
+        WarrantManager w = new WarrantManager();
+        if (InstanceManager.configureManagerInstance() != null)
+            InstanceManager.configureManagerInstance().registerConfig(w, jmri.Manager.WARRANTS);
+    }
+
+    public static void initSignalMastLogicManager() {
+    	SignalMastLogicManager w = new DefaultSignalMastLogicManager();
+        if (InstanceManager.configureManagerInstance() != null)
+            InstanceManager.configureManagerInstance().registerConfig(w, jmri.Manager.SIGNALMASTLOGICS);
+    }
+
+    public static void initLayoutBlockManager() {
+    	LayoutBlockManager w = new LayoutBlockManager();
+        if (InstanceManager.configureManagerInstance() != null)
+            InstanceManager.configureManagerInstance().registerConfig(w, jmri.Manager.LAYOUTBLOCKS);
     }
 
     public static void initInternalSignalHeadManager() {

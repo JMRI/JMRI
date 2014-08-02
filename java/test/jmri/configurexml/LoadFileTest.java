@@ -107,7 +107,7 @@ public class LoadFileTest extends LoadFileTestBase {
         BufferedReader inFileStream = new BufferedReader(
                 new InputStreamReader(
                     new FileInputStream(
-                        new java.io.File("java/test/jmri/configurexml/LoadFileTestRef.xml"))));
+                        new java.io.File("java/test/jmri/configurexml/LoadFileTest.xml"))));
         BufferedReader outFileStream = new BufferedReader(
                 new InputStreamReader(
                     new FileInputStream(outFile)));
