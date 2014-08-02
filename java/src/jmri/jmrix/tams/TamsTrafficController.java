@@ -2,15 +2,14 @@
 
 package jmri.jmrix.tams;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.CommandStation;
 import java.util.concurrent.ConcurrentLinkedQueue;
-
+import jmri.CommandStation;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Converts Stream-based I/O to/from Tams messages.  The "TamsInterface"
@@ -280,7 +279,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
         if (ostream == null) return false;
         m.setTimeout(500);
         m.setRetries(10);
-        synchronized(getSelfLock()) {
+        synchronized(this) {
                 forwardToPort(m, reply);
                 // wait for reply
                 try {

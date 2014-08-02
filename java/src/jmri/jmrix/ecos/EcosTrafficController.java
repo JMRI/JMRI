@@ -2,15 +2,14 @@
 
 package jmri.jmrix.ecos;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.CommandStation;
 import java.util.List;
-
+import jmri.CommandStation;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Converts Stream-based I/O to/from ECOS messages.  The "EcosInterface"
@@ -166,7 +165,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         if (ostream == null) return false;
         m.setTimeout(500);
         m.setRetries(10);
-        synchronized(getSelfLock()) {
+        synchronized(this) {
                 forwardToPort(m, reply);
                 // wait for reply
                 try {
@@ -197,7 +196,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         modeMsg =  new EcosMessage("release(10, view)");
         modeMsg.setTimeout(50);
         modeMsg.setRetries(10);
-        synchronized(getSelfLock()) {
+        synchronized(this) {
             forwardToPort(modeMsg, null);
             // wait for reply
             try {
@@ -218,7 +217,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
             modeMsg = new EcosMessage("release("+ecosObject+", view)");
             modeMsg.setTimeout(50);
             modeMsg.setRetries(10);
-            synchronized(getSelfLock()) {
+            synchronized(this) {
                 forwardToPort(modeMsg, null);
                 // wait for reply
                 try {
@@ -253,7 +252,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
                     }
                     modeMsg.setTimeout(50);
                     modeMsg.setRetries(10);
-                    synchronized(getSelfLock()) {
+                    synchronized(this) {
                         forwardToPort(modeMsg, null);
                         // wait for reply
                         try {

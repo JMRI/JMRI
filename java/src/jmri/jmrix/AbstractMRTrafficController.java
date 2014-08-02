@@ -39,17 +39,7 @@ abstract public class AbstractMRTrafficController {
         mCurrentState = IDLESTATE;
         allowUnexpectedReply = false;
         setInstance();
-        selfLock = this;
         jmri.util.RuntimeUtil.addShutdownHook(new Thread(new CleanupHook(this)));
-    }
-
-        // this is a local variable, used here only;
-    // it's not the instance() variable, which is static
-    // and done in individual subclasses.
-    private AbstractMRTrafficController selfLock;  // this is needed for synchronization
-
-    public AbstractMRTrafficController getSelfLock() {
-        return selfLock;
     }
 
     // set the instance variable
@@ -249,7 +239,7 @@ abstract public class AbstractMRTrafficController {
             AbstractMRMessage m = null;
             AbstractMRListener l = null;
             // check for something to do
-            synchronized (selfLock) {
+            synchronized (this) {
                 if (msgQueue.size() != 0) {
                     // yes, something to do
                     m = msgQueue.getFirst();
@@ -346,7 +336,7 @@ abstract public class AbstractMRTrafficController {
                 }
                     // once we decide that mCurrentState is in the IDLESTATE and there's an xmt msg we must guarantee
                 // the change of mCurrentState to one of the waiting for reply states.  Therefore we need to synchronize.
-                synchronized (selfLock) {
+                synchronized (this) {
                     if (mCurrentState != NOTIFIEDSTATE && mCurrentState != IDLESTATE) {
                         log.error("left timeout in unexpected state: " + mCurrentState);
                     }
