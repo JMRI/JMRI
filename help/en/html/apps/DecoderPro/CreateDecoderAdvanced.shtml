@@ -206,17 +206,52 @@ The parameters must appear in the order shown. They mean:<ul>
     CVs.
 </ul>
 <p>
-For example, to write 10 to CV 604 with the values shown, DecoderPro will:
+For example, to write 21 to CV 614 with the values shown, DecoderPro will:
 <ul>
-<li>Write 6 =(604/100) to CV 96 for the high address part
-<li>Write 4 = 604 mod 100) to CV 97 for the low address part
-<li>Write 10 to CV 99 to do the actual CV write
+<li>Write 6 =(614/100) to CV 96 for the high address part
+<li>Write 14 = (614 mod 100) to CV 97 for the low address part
+<li>Write 21 to CV 99 to do the actual CV write
 </ul>
 <p>
 For an example of where to position this capability element in the file, etc., see the 
 <a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/xml/decoders/ESU_LokSoundV4_0.xml" target="_blank">
     xml/decoders/ESU_LokSoundV4_0.xml</a> file.
 
+<p>
+<a id="zimocapability"/>
+Another approach, used by e.g. Zimo, is to provide a way to page the access.
+For example, to write 21 to CV614 with one of these, you need to:
+<ul>
+<li>Write 60 =(614/100)*10 to CV 7 for the high address part
+<li>Write 21 to CV 14 (614 mod 100) to do the actual CV write
+</ul>
+This capability element will do that:
+<code><pre>
+        &lt;capability&gt;
+            &lt;name&gt;High Access via Partial Index&lt;/name&gt;
+            &lt;parameter name="Max Regular CV address"&gt;100&lt;/parameter&gt;
+            &lt;parameter name="High Address CV"&gt;7&lt;/parameter&gt;
+            &lt;parameter name="High Address Multiplier"&gt;10&lt;/parameter&gt;
+            &lt;parameter name="Modulo"&gt;100&lt;/parameter&gt;
+        &lt;/capability&gt;
+</pre></code>
+Note that it has a different "name" value. That's what selects the 
+different algorithm needed here.
+<p>
+The parameters must appear in the order shown. They mean:<ul>
+<li>"Max Regular CV address" - CV addresses equal or below this don't 
+    use this mechanism. (The mechanism won't be used if the command
+    station can directly read/write the CV being requested, but 
+    even if it can't, this mechanism won't be used below this value)
+<li>"High Address CV" - The high part (see Modulo) of the CV address
+    is written here at the start of the operation
+<li>"High Address Multiplier" - This multiplies the high part of the CV
+    address before it's stored to the High Address CV.  For example, 
+    putting a 10 here will store the high address part in the "10's digit" of
+    the High Address CV.
+<li>"Modulo" - value used to split the real CV address between the high and low address
+    CVs.
+</ul>
 
 <h4>Indexed CV Access</h4>
 
