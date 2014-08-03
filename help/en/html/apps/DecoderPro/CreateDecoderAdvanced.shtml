@@ -190,7 +190,30 @@ To tell DecoderPro that a decoder can do this, use an element like:
             &lt;parameter name="Modulo"&gt;100&lt;/parameter&gt;
         &lt;/capability&gt;
 </pre></code>
-For an example of where to position it etc., see the 
+<p>
+The parameters must appear in the order shown. They mean:<ul>
+<li>"Max Regular CV address" - CV addresses equal or below this don't 
+    use this mechanism. (The mechanism won't be used if the command
+    station can directly read/write the CV being requested, but 
+    even if it can't, this mechanism won't be used below this value)
+<li>"High Address CV" - The high part (see Modulo) of the CV address
+    is written here at the start of the operation
+<li>"Low Address CV" - The low part (see Modulo) of the CV address is
+    written here as the 2nd part of the operation.
+<li>"Access Register CV" - after the address values are set, this is the
+    CV that's read or written to read or set the desired real CV.
+<li>"Modulo" - value used to split the real CV address between the high and low address
+    CVs.
+</ul>
+<p>
+For example, to write 10 to CV 604 with the values shown, DecoderPro will:
+<ul>
+<li>Write 6 =(604/100) to CV 96 for the high address part
+<li>Write 4 = 604 mod 100) to CV 97 for the low address part
+<li>Write 10 to CV 99 to do the actual CV write
+</ul>
+<p>
+For an example of where to position this capability element in the file, etc., see the 
 <a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/xml/decoders/ESU_LokSoundV4_0.xml" target="_blank">
     xml/decoders/ESU_LokSoundV4_0.xml</a> file.
 
