@@ -218,7 +218,7 @@ For an example of where to position this capability element in the file, etc., s
     xml/decoders/ESU_LokSoundV4_0.xml</a> file.
 
 <p>
-<a id="zimocapability"/>
+<a name="zimocapability"/>
 Another approach, used by e.g. Zimo, is to provide a way to page the access.
 For example, to write 21 to CV614 with one of these, you need to:
 <ul>
