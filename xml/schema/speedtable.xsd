@@ -102,6 +102,8 @@
             <xs:sequence>
                 <xs:element name="Maximum" minOccurs="0" maxOccurs="1"></xs:element>
                 <xs:element name="Normal" minOccurs="1" maxOccurs="1"></xs:element>
+                <xs:element name="Sixty" minOccurs="1" maxOccurs="1"></xs:element>
+                <xs:element name="Fifty" minOccurs="1" maxOccurs="1"></xs:element>
                 <xs:element name="Limited" minOccurs="1" maxOccurs="1"></xs:element>
                 <xs:element name="Medium" minOccurs="1" maxOccurs="1"></xs:element>
                 <xs:element name="Slow" minOccurs="1" maxOccurs="1"></xs:element>
@@ -112,6 +114,7 @@
         </xs:element>
         
         <xs:element name="appearanceSpeeds" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
             <xs:annotation><xs:documentation>
                  ******** Required Speed Appearance Table  **********
                  Maps appearance to speed name.
@@ -134,6 +137,7 @@
                 <xs:element name="SignalHeadStateFlashingLunar" minOccurs="0" maxOccurs="1">
                 </xs:element>
             </xs:sequence>
+          </xs:complexType>
         </xs:element>
 
       <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
