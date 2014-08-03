@@ -201,6 +201,31 @@ svn checkout svn://svn.code.sf.net/p/jmri/code/trunk/jmri/xml
 which should get you a JMRI index page.
 </OL>
 
+<h3 id="catalog">Installing a local XML catalog</h3>
+
+Many JMRI XML files contain XIncludes that reference
+other XML files with URLs like "http://jmri.org/xml/schema/types/turnouts-2-9-6.xsd".
+When a JMRI program encounters those, it automatically converts those to
+a local file reference.  Other tools, like NetBeans and xmllint, don't know to do that.
+<p>
+Installing a local XML catalog, and then telling your tools to use it, can solve this.
+<p>
+For a system level solution, copy the following to a /etc/xml/catalog file (note that 
+you might have to sudo to do this, that there's no .xml suffix, and if there's already
+a file there you'll have to manually merge the contents):
+<pre>
+&lt;?xml version='1.0'?&gt;
+&lt;catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog"&gt;
+
+  &lt;rewriteURI uriStartString="http://jmri.org/xml/"
+ rewritePrefix="http://localhost/xml/" /&gt;
+
+&lt;/catalog&gt;
+</pre>
+
+This catalog redirects HTTP references to the "xml" directory at the JMRI website
+to the "xml" directory on your local web server.
+
 <!--#include virtual="/Footer" -->
 
 	  </div><!-- closes #mainContent-->

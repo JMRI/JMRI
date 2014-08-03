@@ -45,6 +45,7 @@
         <li><a href="#jar">Making a Jar File</a>
         <li><a href="#patch">Making a Patch File</a>
         <li><a href="#nsis">Making a release package for Windows using NSIS</a></li>
+        <li><a href="#xmltools">Using NetBeans XML tools</a></li>
         <li><a href="#findbugs">Running FindBugs</a></li>
         <li><a href="#compileIndividualFile">NetBeans and compiling individual files</a></li>            
     </ul>
@@ -298,6 +299,23 @@
     <p>With the NSIS package installed to your computer, and build.xml properly 
             modified, the Windows package may be created by running the 
             "package-windows" ant target in build.xml.</p>
+
+    <h2><a id="xmltools">Using NetBeans XML tools</a></h2>
+    
+    NetBeans has nice tools for working with XML files, including
+    editing and validating them.  JMRI uses XInclude to include
+    "fragment" XML files in other ones via URLs that point to
+    the main JMRI web site:  http://jmri.org/xml/decoders/types/foo.xml
+    JMRI programs convert these at run time to local file references,
+    but by default NetBeans doesn't know to do this.
+    <p>
+    You can tell NetBeans how handle this by adding the 
+    xml/catalog.xml file (from the JMRI distribution to 
+    NetBeans
+    at Tools -> DTDs and XML Schemas.
+    This will allow NetBeans to use your local schema when validating an XML document in the editor. 
+    Note that this is global setting in NetBeans, so if you are working on mutiple JMRI branches, 
+    whichever branch you add the catalog from, that branch's schema is what is used.
 
     <h2><a id="findbugs">Running FindBugs</a></h2>
 
