@@ -56,7 +56,7 @@ public class JsonClientSystemConnectionMemo extends SystemConnectionMemo {
 
     /*
      * Register managers to listen to the trafficController here instead of
-     * in their constructors so the constructors do not leak their objects
+     * in their constructors so the constructors cannot leak their objects
      * before returning. See http://stackoverflow.com/a/23069096/176160
      */
     protected void configureManagers() {
