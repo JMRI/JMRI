@@ -193,6 +193,10 @@ public class WarrantManagerXml //extends XmlFile
     public boolean load(Element warrants) {
 
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
+        
+        // don't continue on to build NXFrame if no content
+        if (warrants.getChildren().size() == 0) return true;
+        
         NXFrame nxFrame = NXFrame.getInstance();
         loadNXParams(nxFrame, warrants.getChild("nxparams"));
         nxFrame.init();
