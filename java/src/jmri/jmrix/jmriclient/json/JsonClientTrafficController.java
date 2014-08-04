@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -162,10 +163,15 @@ public class JsonClientTrafficController extends AbstractMRTrafficController imp
         this.recovery();
     }
 
-    protected void receiveHello(JsonNode data) {
+    protected void receiveHello(JsonNode helloData) {
         this.heartbeat = new Timer();
-        this.heartbeat.schedule(new Heartbeat(), 0, data.path(JSON.HEARTBEAT).asInt());
-        // TODO: request power status
+        this.heartbeat.schedule(new Heartbeat(), 0, helloData.path(JSON.HEARTBEAT).asInt());
+        // Send LOCALE message
+        ObjectNode root = this.mapper.createObjectNode();
+        ObjectNode data = root.putObject(JSON.DATA);
+        root.put(JSON.TYPE, JSON.LOCALE);
+        data.put(JSON.LOCALE, Locale.getDefault().toLanguageTag());
+        this.sendMessage(new JsonClientMessage(root), null);
     }
 
     @Override
