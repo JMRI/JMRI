@@ -49,10 +49,16 @@ public class JsonClientTrafficController extends AbstractMRTrafficController imp
 
     @Override
     protected void terminate() {
+        log.debug("Cleanup Starts");
+        if (ostream == null) {
+            return;    // no connection to terminate
+        }
         if (this.heartbeat != null) {
             this.heartbeat.cancel();
             this.heartbeat = null;
         }
+        this.forwardToPort(new JsonClientMessage(mapper.createObjectNode().put(JSON.TYPE, JSON.GOODBYE)), null);
+        this.disconnectPort(this.controller);
     }
 
     @Override
@@ -130,7 +136,7 @@ public class JsonClientTrafficController extends AbstractMRTrafficController imp
                 log.debug("Processing {} with {}", type, data);
                 if (type.equals(GOODBYE)) {
                     log.info("Connection closing from server.");
-                    // TODO: close port connection
+                    this.disconnectPort(this.controller);
                 } else if (type.equals(HELLO)) {
                     this.receiveHello(data);
                 } else if (type.equals(LOCALE)) {
