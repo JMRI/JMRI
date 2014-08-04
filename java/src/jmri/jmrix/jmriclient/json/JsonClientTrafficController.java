@@ -23,6 +23,7 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
+import jmri.jmrix.AbstractPortController;
 import jmri.jmrix.ConnectionStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,12 +54,17 @@ public class JsonClientTrafficController extends AbstractMRTrafficController imp
         if (ostream == null) {
             return;    // no connection to terminate
         }
+        this.forwardToPort(new JsonClientMessage(mapper.createObjectNode().put(JSON.TYPE, JSON.GOODBYE)), null);
+        this.disconnectPort(this.controller);
+    }
+
+    @Override
+    public void disconnectPort(AbstractPortController controller) {
         if (this.heartbeat != null) {
             this.heartbeat.cancel();
             this.heartbeat = null;
         }
-        this.forwardToPort(new JsonClientMessage(mapper.createObjectNode().put(JSON.TYPE, JSON.GOODBYE)), null);
-        this.disconnectPort(this.controller);
+        super.disconnectPort(controller);
     }
 
     @Override
@@ -136,7 +142,7 @@ public class JsonClientTrafficController extends AbstractMRTrafficController imp
                 log.debug("Processing {} with {}", type, data);
                 if (type.equals(GOODBYE)) {
                     log.info("Connection closing from server.");
-                    this.disconnectPort(this.controller);
+                    break;
                 } else if (type.equals(HELLO)) {
                     this.receiveHello(data);
                 } else if (type.equals(LOCALE)) {
