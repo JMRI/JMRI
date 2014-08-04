@@ -129,6 +129,7 @@ public class JsonClientTrafficController extends AbstractMRTrafficController imp
                 JsonNode data = root.path(DATA);
                 log.debug("Processing {} with {}", type, data);
                 if (type.equals(GOODBYE)) {
+                    log.info("Connection closing from server.");
                     // TODO: close port connection
                 } else if (type.equals(HELLO)) {
                     this.receiveHello(data);
