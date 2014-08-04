@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -219,10 +218,7 @@ public class JsonClientTrafficController extends AbstractMRTrafficController imp
 
         @Override
         public void run() {
-            ObjectNode root = mapper.createObjectNode();
-            root.put(JSON.TYPE, JSON.PING);
-            JsonClientMessage message = new JsonClientMessage(root);
-            sendMessage(message, null);
+            sendMessage(new JsonClientMessage(mapper.createObjectNode().put(JSON.TYPE, JSON.PING)), null);
         }
     }
 }
