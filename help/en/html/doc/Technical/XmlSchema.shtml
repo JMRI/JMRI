@@ -70,7 +70,7 @@ support for locating those files when the XML parser
 needs them.  
 <p/>
 
-<h2 name="modschema">Modifying JMRI Schema</h2>
+<h2 id="modschema">Modifying JMRI Schema</h2>
 
 This section talks about how to handle small changes to existing schema, 
 for example added or removing an attribute or element.  For more 
@@ -119,7 +119,7 @@ If you can make a change that's just an addition, then the process is:
 </ol>
 
 
-<h3 name="versioning">Schema Versioning</h3>
+<h3 id="versioning">Schema Versioning</h3>
 
 "Versioning" schema allows us to have different schema 
 for older and newer files.  This lets newer versions of JMRI to
@@ -229,7 +229,7 @@ It just shows basic structure.  If anybody knows of a better stylesheet, we
 can certainly switch to it.
 
 <a id="test">
-<a name="junitschematest">
+<a id="junitschematest">
 <h3>JUnit testing</h3>
 You should also add a 
 <a href="JUnit.shtml">JUnit test</a>
@@ -311,7 +311,7 @@ you need to either fix your code or
 formats to coexist.  
 
 
-<h2 name="devschema">Developing JMRI Schema</h2>
+<h2 id="devschema">Developing JMRI Schema</h2>
 
 Our preferred organization for XML schema
 is based on the structure of the underlying code:
