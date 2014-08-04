@@ -249,7 +249,7 @@ it fails XML files that you think are not valid.
 There are lots of ways to be not valid, and you don't need to
 check them all, but if there something specific 
 you want to be sure of, put an example of that
-in the "fail" subdirectory. Those files are expected to fail
+in the "invalid" subdirectory. Those files are expected to fail
 for some specific reason. You should document that reason via comments in the file
 itself so your colleagues can figure it out later.
 <p>If there's no "verify" subdirectory, create one and add it

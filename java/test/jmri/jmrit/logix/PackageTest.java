@@ -27,6 +27,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.logix.PackageTest");   // no tests in this class itself
 
+        suite.addTest(SchemaTest.suite());
         suite.addTest(OPathTest.suite());
         suite.addTest(LogixActionTest.suite());
 

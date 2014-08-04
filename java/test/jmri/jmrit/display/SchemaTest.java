@@ -38,7 +38,8 @@ public class SchemaTest extends jmri.configurexml.SchemaTestBase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.display.SchemaTest");
 
-        validateDirectory(suite, "java/test/jmri/jmrit/display/");
+        validateDirectory(suite, "java/test/jmri/jmrit/display/verify");
+        validateDirectory(suite, "java/test/jmri/jmrit/display/load");
         
         return suite;
     }

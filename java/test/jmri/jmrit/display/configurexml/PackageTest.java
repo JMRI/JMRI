@@ -1,17 +1,16 @@
-/**
- * PackageTest.java
- *
- * Description:	    tests for the jmrit.display.configurexml package
- * @author			Bob Jacobsen   Copyright 2009
- * @version         $Revision$
- */
-
 package jmri.jmrit.display.configurexml;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+/**
+ * PackageTest.java
+ *
+ * Description:	Tests for the jmrit.display.configurexml package
+ * @author	Bob Jacobsen   Copyright 2009, 2014
+ * @version     $Revision$
+ */
 public class PackageTest extends TestCase {
 
 	// from here down is testing infrastructure
@@ -29,7 +28,7 @@ public class PackageTest extends TestCase {
 	public static Test suite() {
 		TestSuite suite = new TestSuite("jmri.jmrit.display.configurexml");   // no tests in this class itself
 		suite.addTest(SchemaTest.suite());
-		suite.addTest(LoadFileTest.suite());
+		suite.addTest(LoadAndStoreTest.suite());
 		return suite;
 	}
 

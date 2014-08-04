@@ -24,7 +24,7 @@ public class LayoutEditorWindowTest extends jmri.util.SwingTestCase {
 	    };
 	    
 	    // load and display sample file
-	    java.io.File f = new java.io.File("java/test/jmri/jmrit/display/layoutEditor/SimpleLayoutEditorTest.xml");
+	    java.io.File f = new java.io.File("java/test/jmri/jmrit/display/layoutEditor/pass/SimpleLayoutEditorTest.xml");
         cm.load(f);
         sleep(100); // time for internal listeners to calm down
         

@@ -29,7 +29,7 @@ public class LEConnectivityTest extends jmri.util.SwingTestCase {
 	    };
 	    
 	    // load and display test panel file
-	    java.io.File f = new java.io.File("java/test/jmri/jmrit/display/layoutEditor/LEConnectTest.xml");
+	    java.io.File f = new java.io.File("java/test/jmri/jmrit/display/layoutEditor/pass/LEConnectTest.xml");
         cm.load(f);
         sleep(100); // time for internal listeners to calm down
         

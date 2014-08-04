@@ -16,6 +16,7 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 
 import junit.framework.Assert;
 import junit.framework.Test;
+import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
@@ -26,12 +27,12 @@ import junit.framework.TestSuite;
  * @author Bob Coleman Copyright 2012
  * @version $Revision$
  */
-public class SectionManagerXmlTest extends LoadFileTestBase {
+public class SectionManagerXmlTest extends TestCase {
 
     public void testLoadCurrent() throws Exception {
         // load file
         InstanceManager.configureManagerInstance()
-            .load(new java.io.File("java/test/jmri/configurexml/LoadSectionManagerFileTest.xml"));
+            .load(new java.io.File("java/test/jmri/configurexml/load/SectionManagerXmlTest.xml"));
     
         // Note: This test assumes that BlockManagerXMLTest passes and more importantly (weakly)
         //       that LoadSectionManagerFileText.xml and LoadBlockManagerFileText.xml refer to the
@@ -525,17 +526,6 @@ public class SectionManagerXmlTest extends LoadFileTestBase {
             Assert.assertTrue("Focus was: " + testsectionfocus + " ReverseStoppingSensor", expectedReverseStoppingSensor.getSystemName().equals(actualReverseStoppingSensor.getSystemName()));
         }
 
-    }
-
-
-    public void testValidateOne() {
-        validate(new java.io.File("java/test/jmri/configurexml/LoadSectionManagerFileTest.xml"));
-    }
-    
-
-
-    public void testValidateRef() {
-        validate(new java.io.File("java/test/jmri/configurexml/LoadBlockManagerFileTestRef.xml"));
     }
     
     // from here down is testing infrastructure

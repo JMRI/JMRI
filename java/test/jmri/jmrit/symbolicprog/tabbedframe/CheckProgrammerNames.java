@@ -66,52 +66,6 @@ public class CheckProgrammerNames extends jmri.util.swing.GuiUtilBaseTest {
         checkComplete(new File("xml/programmers/Advanced.xml"));
     }
     
-    
-    
-    
-    public void testAdvancedValidation() {
-        validate(new File("xml/programmers/Advanced.xml"));
-    }
-
-    public void testComprehensiveValidation() {
-        validate(new File("xml/programmers/Comprehensive.xml"));
-    }
-    
-    public void testBasicValidation() {
-        validate(new File("xml/programmers/Basic.xml"));
-    }
-    
-    public void testTrainShowBasicValidation() {
-        validate(new File("xml/programmers/TrainShowBasic.xml"));
-    }
-    
-    public void testSampleClubValidation() {
-        validate(new File("xml/programmers/Sample Club.xml"));
-    }
-    
-    public void testCustomValidation() {
-        validate(new File("xml/programmers/Custom.xml"));
-    }
-    
-    public void testTutorialValidation() {
-        validate(new File("xml/programmers/Tutorial.xml"));
-    }
-    
-    public void testRegistersValidation() {
-        validate(new File("xml/programmers/Registers.xml"));
-    }
-    
-    public void testESUValidation() {
-        validate(new File("xml/programmers/ESU.xml"));
-    }
-    
-    public void testZimoValidation() {
-        validate(new File("xml/programmers/Zimo.xml"));
-    }
-    
-    public void testValidateAllParts() {
-        doDirectory("xml/programmers");
-    }
 
     // utilities
     
@@ -142,6 +96,8 @@ public class CheckProgrammerNames extends jmri.util.swing.GuiUtilBaseTest {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite(CheckProgrammerNames.class);
+        validateDirectory(suite, "xml/programmers/");
+        validateSubdirectories(suite, "xml/programmers/");
         return suite;
     }
 

@@ -1,5 +1,4 @@
 // SchemaTestBase.java
-
 package jmri.configurexml;
 
 import jmri.jmrit.XmlFile;
@@ -11,7 +10,7 @@ import jmri.util.JUnitUtil;
 
 /**
  * Base for XML schema testing
- * 
+ *
  * @author Bob Jacobsen Copyright 2009, 2014
  * @since 3.9.2
  * @version $Revision$
@@ -29,11 +28,32 @@ public class SchemaTestBase extends TestCase {
         boolean original = XmlFile.getVerify();
         try {
             XmlFile.setVerify(true);
-            XmlFile xf = new XmlFile(){};   // odd syntax is due to XmlFile being abstract
+            XmlFile xf = new XmlFile() {
+            };   // odd syntax is due to XmlFile being abstract
             xf.rootFromFile(file);
         } catch (Exception ex) {
             XmlFile.setVerify(original);
-            Assert.fail("failed to validate \""+file.getPath()+"\" due to: "+ex);
+            Assert.fail("failed to validate \"" + file.getPath() + "\" due to: " + ex);
+            return;
+        } finally {
+            XmlFile.setVerify(original);
+        }
+    }
+
+    /**
+     * Does actual validation of a single file, insisting on failure.
+     */
+    static void validateFail(File file) {
+        boolean original = XmlFile.getVerify();
+        try {
+            XmlFile.setVerify(true);
+            XmlFile xf = new XmlFile() {
+            };   // odd syntax is due to XmlFile being abstract
+            xf.rootFromFile(file);
+            Assert.fail("Validation should have failed: " + file.getName());
+        } catch (Exception ex) {
+            // expect fail, this is normal
+            XmlFile.setVerify(original);
             return;
         } finally {
             XmlFile.setVerify(original);
@@ -44,63 +64,111 @@ public class SchemaTestBase extends TestCase {
      * Create the tests that validate an entire directory
      */
     static public void validateDirectory(TestSuite suite, String name) {
+        // adds subsuite even if empty
+        TestSuite subsuite = new TestSuite("Directory " + name + " validation");
+        suite.addTest(subsuite);
+
         java.io.File dir = new java.io.File(name);
         java.io.File[] files = dir.listFiles();
-        if (files == null) return;
-        for (int i=0; i<files.length; i++) {
+        if (files == null) {
+            return;
+        }
+
+        for (int i = 0; i < files.length; i++) {
             if (files[i].getName().endsWith(".xml")) {
-                suite.addTest(new CheckOneFile(files[i]));
+                subsuite.addTest(new CheckOneFilePasses(files[i]));
             }
         }
     }
 
     /**
-     * Create the tests that validate the
-     * subdirectories of a given directory
+     * Create the tests that validate the subdirectories of a given directory.
+     * Not recursive.
      */
     static public void validateSubdirectories(TestSuite suite, String name) {
+        // adds subsuite even if empty
+        TestSuite subsuite = new TestSuite("Subdirectories of " + name + " validation");
+        suite.addTest(subsuite);
+
         java.io.File dir = new java.io.File(name);
         java.io.File[] files = dir.listFiles();
-        if (files == null) return;
-        for (int i=0; i<files.length; i++) {
-            if (files[i].getName().endsWith(".xml")) {
-                suite.addTest(new CheckOneFile(files[i]));
+        if (files == null) {
+            return;
+        }
+
+        for (int i = 0; i < files.length; i++) {
+            if (files[i].isDirectory()) {
+                validateDirectory(subsuite, files[i].toString());
             }
         }
     }
 
-    
+    /**
+     * Create the tests that validate that an entire directory fails. This is
+     * used to check that the schema itself is working as a constraint.
+     */
+    static public void validateDirectoryFail(TestSuite suite, String name) {
+        // adds subsuite even if empty
+        TestSuite subsuite = new TestSuite("Directory " + name + " validation");
+        suite.addTest(subsuite);
+
+        java.io.File dir = new java.io.File(name);
+        java.io.File[] files = dir.listFiles();
+        if (files == null) {
+            return;
+        }
+
+        suite.addTest(subsuite);
+        for (int i = 0; i < files.length; i++) {
+            if (files[i].getName().endsWith(".xml")) {
+                subsuite.addTest(new CheckOneFileFails(files[i]));
+            }
+        }
+    }
 
     /**
-     * Internal TestCase class to allow 
-     * separate tests for every file
+     * Internal TestCase class to allow separate tests for every file
      */
-    static public class CheckOneFile extends TestCase {
+    static public class CheckOneFilePasses extends TestCase {
+
         File file;
-        public CheckOneFile(File file) {
-            super("Test schema: "+file);
+
+        public CheckOneFilePasses(File file) {
+            super("Test schema valid: " + file);
             this.file = file;
         }
+
         public void runTest() {
             validate(file);
         }
     }
 
-    // The minimal setup for log4J
-    protected void setUp() throws Exception { 
-        super.setUp();
-        apps.tests.Log4JFixture.setUp(); 
-        JUnitUtil.resetInstanceManager();
-        JUnitUtil.initConfigureManager();
-        JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initInternalLightManager();
-        JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initMemoryManager();
+    /**
+     * Internal TestCase class to allow separate tests for every file that
+     * ensure file fails validation
+     */
+    static public class CheckOneFileFails extends TestCase {
+
+        File file;
+
+        public CheckOneFileFails(File file) {
+            super("Test schema invalid: " + file);
+            this.file = file;
+        }
+
+        public void runTest() {
+            validateFail(file);
+        }
     }
-    
-    protected void tearDown() throws Exception { 
-        JUnitUtil.resetInstanceManager();
+
+    // The minimal setup for log4J
+    protected void setUp() throws Exception {
+        super.setUp();
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() throws Exception {
         super.tearDown();
-        apps.tests.Log4JFixture.tearDown(); 
+        apps.tests.Log4JFixture.tearDown();
     }
 }

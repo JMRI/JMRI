@@ -1,6 +1,6 @@
 // SchemaTest.java
 
-package jmri.configurexml;
+package jmri.jmrit.logix;
 
 import org.apache.log4j.Logger;
 import jmri.jmrit.XmlFile;
@@ -36,15 +36,10 @@ public class SchemaTest extends jmri.configurexml.SchemaTestBase {
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.configurexml.SchemaTest");
+        TestSuite suite = new TestSuite("jmri.jmrit.display.configurexml.SchemaTest");
 
-        // the following are just tested for schema pass/fail, not load/store
-        validateDirectory(suite, "java/test/jmri/configurexml/valid");
-        validateDirectoryFail(suite, "java/test/jmri/configurexml/invalid");
+        validateDirectory(suite, "java/test/jmri/jmrit/logix/valid");
         
-        // also tested for load/store
-        validateDirectory(suite, "java/test/jmri/configurexml/load/");
-
         return suite;
     }
 

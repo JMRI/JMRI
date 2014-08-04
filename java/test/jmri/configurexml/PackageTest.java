@@ -30,7 +30,8 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.config.ConfigXmlTest");  // no tests in this class itself
 
         suite.addTest(SchemaTest.suite());
-        suite.addTest(LoadFileTest.suite());
+        suite.addTest(LoadAndCheckTest.suite());
+        suite.addTest(LoadAndStoreTest.suite());
 
         suite.addTest(ConfigXmlManagerTest.suite());
         suite.addTest(BlockManagerXmlTest.suite());

@@ -15,56 +15,7 @@ import java.io.*;
  * @author	Bob Jacobsen  Copyright (C) 2009
  * @version $Revision$
  */
-public class SignalSystemFileCheckTest extends jmri.configurexml.LoadFileTestBase {
-
-    public void testSampleAspect() {
-        File sample = new File("xml"+File.separator+"signals"+File.separator+"sample-aspects.xml");
-        validate(sample);
-    }
-    
-    public void testSampleAppearance() {
-        File sample = new File("xml"+File.separator+"signals"+File.separator+"sample-appearance.xml");
-        validate(sample);
-    }
-    
-	public void testAllAspectFiles() {
-        File signalDir = new File("xml"+File.separator+"signals");
-        File[] files = signalDir.listFiles();
-        for (int i=0; i<files.length; i++) {
-            if (files[i].isDirectory()) {
-                // check that there's an aspects.xml file
-                File aspects = new File(files[i].getPath()+File.separator+"aspects.xml");
-                if (aspects.exists()) {
-                    log.info("found system: "+files[i].getName());
-                    validate(aspects);
-                }
-            }
-        }
-	}
-
-	public void testAllAppearanceFiles() {
-        File signalDir = new File("xml"+File.separator+"signals");
-        File[] files = signalDir.listFiles();
-        for (int i=0; i<files.length; i++) {
-            if (files[i].isDirectory()) {
-                // check that there's an aspects.xml file
-                File aspects = new File(files[i].getPath()+File.separator+"aspects.xml");
-                if (aspects.exists()) {
-                    log.info("found system: "+files[i].getName());
-                    // gather all the appearance files
-                    File[] apps = files[i].listFiles();
-                    for (int j=0; j<apps.length; j++) {
-                        if (apps[j].getName().startsWith("appearance")
-                            && apps[j].getName().endsWith(".xml")) {
-                                log.info("   found file: "+apps[j].getName());
-                                validate(apps[j]);
-                        }
-                    }
-                }
-            }
-        }
-	}
-
+public class SignalSystemFileCheckTest extends jmri.configurexml.SchemaTestBase {
     
 	// from here down is testing infrastructure
 
@@ -80,7 +31,9 @@ public class SignalSystemFileCheckTest extends jmri.configurexml.LoadFileTestBas
 
 	// test suite from all defined tests
 	public static Test suite() {
-		TestSuite suite = new TestSuite(SignalSystemFileCheckTest.class);
+		TestSuite suite = new TestSuite("jmri.implementation.SignalSystemFileCheckTest");
+        validateDirectory(suite, "xml/signals/");
+        validateSubdirectories(suite, "xml/signals/");
 		return suite;
 	}
 

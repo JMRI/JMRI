@@ -28,8 +28,11 @@ public class LogixActionTest extends jmri.util.SwingTestCase {
 	public void testLogixAction() throws Exception {
 	    jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager(){};
 	    
+	    // uses warrants, which require screen, so end if headless now
+	    if (System.getProperty("jmri.headlesstest","false").equals("true")) return;
+	    
 	    // load and display sample file
-	    java.io.File f = new java.io.File("java/test/jmri/jmrit/logix/LogixActionTest.xml");
+	    java.io.File f = new java.io.File("java/test/jmri/jmrit/logix/valid/LogixActionTest.xml");
         cm.load(f);
         sleep(100); // time for internal listeners to calm down
 /*		

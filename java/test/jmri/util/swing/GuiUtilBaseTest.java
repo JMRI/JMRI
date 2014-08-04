@@ -12,22 +12,19 @@ import junit.framework.*;
  * @since 2.9.3
  * @version $Revision$
  */
-public class GuiUtilBaseTest extends jmri.configurexml.LoadFileTestBase {
+public class GuiUtilBaseTest extends jmri.configurexml.SchemaTestBase {
 
     /**
      * Recursive
      */
-    protected void doDirectory(String pathName) {
+    static protected void doDirectory(TestSuite suite, String pathName) {
+        validateDirectory(suite, pathName);
         java.io.File dir = new java.io.File(pathName);
         java.io.File[] files = dir.listFiles();
         for (int i=0; i<files.length; i++) {
             if (files[i].getName().equals(".svn")) continue;
             if (files[i].isDirectory()) {
-                doDirectory(files[i].getPath());
-            } else {
-                if (files[i].getName().endsWith(".xml")) {
-                    validate(files[i]);
-                }
+                doDirectory(suite, files[i].getPath());
             }
         }
     }
