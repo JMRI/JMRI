@@ -271,7 +271,7 @@ public class JsonClientHandler {
     private void receiveHello(JsonNode data) {
         if (!data.path(LOCALE).isMissingNode()) {
             // the following would be a one liner in Java 1.7:
-            // this.connection.getLocale() = Locale.forLanguageTag(data.path(LOCALE).asText();
+            // this.connection.setLocale(Locale.forLanguageTag(data.path(LOCALE).asText()));
             String[] parts = data.path(LOCALE).asText().split("-", 3);
             switch (parts.length) {
                 case 3:
