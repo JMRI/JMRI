@@ -17,6 +17,10 @@
   <version author="Walter Thompson wsthompson@earthlink.net" version="2" lastUpdated="20080412"/>
   <version author="Matt Harris - matthew.john.harris@gmail.com" version="3" lastUpdated="20080724"/>
   <version author="Matt Harris - matthew.john.harris@gmail.com" version="3.1" lastUpdated="20080728"/>
+  <version author="Alain Le Marchand" version="3.2" lastUpdated="20140607"/>
+  <!-- Version 3.2                                                    -->
+  <!-- CV62 and CV63 - put a note on pane that values are opposite to -->
+  <!-- what Digitrax documentation writes. CV63 inoperative in fact   -->
   <!-- Version 3.1                                                    -->
   <!-- Modified CV29 by removing mask settings which had been causing -->
   <!-- problems. Initial tests using constant values did not work.    -->
@@ -292,6 +296,7 @@
               <text>CV64</text>
             </label>
           </row>
+          <separator/>          
           <row>
             <label>
               <text>0</text>
@@ -346,12 +351,17 @@
         <label>
           <text>   </text>
         </label>
+        <separator/>
+        <label>
+          <text>   </text>
+        </label>        
         <column>
           <row>
             <label>
               <text>CV61</text>
             </label>
           </row>
+          <separator/>              
           <row>
             <label>
               <text>0</text>
@@ -406,6 +416,10 @@
         <label>
           <text>   </text>
         </label>
+        <separator/> 
+        <label>
+          <text>   </text>
+        </label>               
         <column>
           <row>
             <label>
@@ -413,6 +427,7 @@
               <text xml:lang="it">Bianco</text>
             </label>
           </row>
+          <separator/>              
           <row>
             <label>
               <text>F1</text>
@@ -466,7 +481,7 @@
         </column>
         <label>
           <text>   </text>
-        </label>
+        </label>   
         <column>
           <row>
             <label>
@@ -474,6 +489,7 @@
               <text xml:lang="it">Giallo</text>
             </label>
           </row>
+          <separator/>              
           <row>
             <label>
               <text>F2</text>
@@ -527,14 +543,15 @@
         </column>
         <label>
           <text>   </text>
-        </label>
+        </label>    
         <column>
           <row>
             <label>
-              <text>Green (TF4)</text>
-              <text xml:lang="it">Verde(TF4)</text>
+              <text>Green</text>
+              <text xml:lang="it">Verde</text>
             </label>
           </row>
+          <separator/>              
           <row>
             <label>
               <text>F3</text>
@@ -588,14 +605,15 @@
         </column>
         <label>
           <text>   </text>
-        </label>
+        </label>      
         <column>
           <row>
             <label>
-              <text>Violet (TF4)</text>
-              <text xml:lang="it">Viola(TF4)</text>
+              <text>Violet</text>
+              <text xml:lang="it">Viola</text>
             </label>
           </row>
+          <separator/>              
           <row>
             <label>
               <text>F4</text>
@@ -650,13 +668,18 @@
         <label>
           <text>   </text>
         </label>
+        <separator/>  
+        <label>
+          <text>   </text>
+        </label>              
         <column>
           <row>
             <label>
               <text>Transponding</text>
-              <text xml:lang="it">Viola(TF4)</text>
+              <text xml:lang="it">Transponding</text>
             </label>
           </row>
+          <separator/>              
           <row>
             <label>
               <text>OFF</text>
@@ -730,11 +753,25 @@
       <label>
         <text> </text>
       </label>
+      <separator/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>Or use the following choices to select values for CV 61 and 64</text>
+        <text xml:lang="it">Or use the following choices to select values for CV 61 and 64</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>           
       <display item="Transponding" format="radiobuttons"/>
       <label>
         <text> </text>
       </label>
-      <display item="ControlFn"/>
+      <display item="ControlFn">
+        <tooltip>Refer to table above for full function mapping</tooltip>
+        <tooltip xml:lang="it">Refer to table above for full function mapping</tooltip>
+      </display>      
       <display item="F0 use" format="checkbox" tooltip="Do not check this box if 'F0 or F1' is not selected above">
         <tooltip>Do not check this box if 'F0 or F1' is not selected above</tooltip>
         <tooltip xml:lang="it">Non spuntare questo box se 'F0 o F1' non è stato selezionato</tooltip>
@@ -742,13 +779,26 @@
       <label>
         <text> </text>
       </label>
-      <display item="Effect Generated W"/>
-      <display item="Effect Rate W"/>
+      <separator/>
       <label>
         <text> </text>
       </label>
+      <display item="Effect Generated W"/>
       <display item="Effect Generated Y"/>
-      <display item="Effect Rate Y"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Effect Rate W">
+          <label>Effect Rate White and Yellow Leads</label>
+          <tooltip>0-fastest / 7-slowest is confirmed - Digitrax doc. not up-to-date</tooltip>
+      </display>
+      <label>
+        <text> </text>
+      </label>        
+      <display item="Effect Rate Y">
+          <label>Effect Rate Yellow Lead (deprecated)</label>
+          <tooltip>Ineffective in recent versions of this decoder - Digitrax doc. not up-to-date</tooltip>
+      </display>  
     </column>
     <name>Function Output</name>
     <name xml:lang="it">Uscita Funzione</name>

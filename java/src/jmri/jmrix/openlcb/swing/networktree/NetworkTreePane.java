@@ -168,19 +168,23 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
             }
         }
 
-        java.util.ArrayList<JButton> readList = new java.util.ArrayList<JButton>();
         
         public void openCdiPane(final NodeID destNode) {
     
+            final java.util.ArrayList<JButton> readList = new java.util.ArrayList<JButton>();
+            final java.util.ArrayList<JButton> sensorButtonList = new java.util.ArrayList<JButton>();
+            final java.util.ArrayList<JButton> turnoutButtonList = new java.util.ArrayList<JButton>();
+            
             CdiMemConfigReader cmcr = new CdiMemConfigReader(destNode, store, mcs);
     
             CdiMemConfigReader.ReaderAccess rdr = new CdiMemConfigReader.ReaderAccess() {
                 public void provideReader(java.io.Reader r) {
                     JmriJFrame f = new JmriJFrame();
                     f.setTitle("Configure "+destNode);
+                    f.setLayout(new javax.swing.BoxLayout(f.getContentPane(), javax.swing.BoxLayout.Y_AXIS));
                     
                     CdiPanel m = new CdiPanel();
-                    JScrollPane scrollPane = new JScrollPane(m, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER );
+                    JScrollPane scrollPane = new JScrollPane(m, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED );
                     Dimension minScrollerDim = new Dimension(800,12);
                     scrollPane.setMinimumSize(minScrollerDim);
                     
@@ -208,6 +212,7 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
                                 pane.add(p);
                                 JButton button = new JButton("Make Sensor");
                                 p.add(button);
+                                sensorButtonList.add(button);
                                 button.addActionListener(new java.awt.event.ActionListener() {
                                     @Override
                                     public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -222,6 +227,7 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
                                 });
                                 button = new JButton("Make Turnout");
                                 p.add(button);
+                                turnoutButtonList.add(button);
                                 button.addActionListener(new java.awt.event.ActionListener() {
                                     @Override
                                     public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -283,7 +289,6 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
                     } catch (Exception e) { log.error("caught exception while parsing CDI", e);}
                     
                     JButton b = new JButton("Read All");
-                    m.add(b);
                     b.addActionListener(new java.awt.event.ActionListener() {
                         @Override
                         public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -299,13 +304,25 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
                                 Timer t = new Timer(delay, taskPerformer);
                                 t.setRepeats(false);
                                 t.start();
-                                delay = delay + 250;
+                                delay = delay + 150;
                             }
                         }
                     });
 
                     f.add( scrollPane );
-            
+                    JPanel bottomPane = new JPanel();
+                    bottomPane.setLayout(new FlowLayout());
+                    f.add(bottomPane);
+                    bottomPane.add(b);
+
+                    if (sensorButtonList.size() > 0) {
+                        bottomPane.add(buttonForList(sensorButtonList, "Make All Sensors"));
+                    }
+                    
+                    if (turnoutButtonList.size() > 0) {
+                        bottomPane.add(buttonForList(turnoutButtonList, "Make All Turnouts"));
+                    }
+                                
                     f.pack();
                     f.setVisible(true);
                 }
@@ -314,4 +331,29 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
             cmcr.startLoadReader(rdr);
         }
     }
+    
+    JButton buttonForList(final java.util.ArrayList<JButton> list, String label) {
+        JButton b = new JButton(label);
+        b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                int delay = 0; //milliseconds
+                for (final JButton b : list) {
+            
+                    ActionListener taskPerformer = new ActionListener() {
+                        public void actionPerformed(ActionEvent evt) {
+                            target.doClick();
+                        }
+                        JButton target = b;
+                    };
+                    Timer t = new Timer(delay, taskPerformer);
+                    t.setRepeats(false);
+                    t.start();
+                    delay = delay + 150;
+                }
+            }
+        });
+        return b;
+    }
+    
 }

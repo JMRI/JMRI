@@ -20,13 +20,13 @@
       <column>
         <label>
           <text>Using a dccAddress element</text>
-          <text xml:lang="it">Using a dccAddress element</text>
+          <text xml:lang="it">Usa un Indirizzo DCC</text>
         </label>
         <dccaddress/>
         <separator/>
         <label>
           <text>As two numbers and mode selection</text>
-          <text xml:lang="it">As two numbers and mode selection</text>
+          <text xml:lang="it">Con due numeri e seleziona il Modo</text>
         </label>
         <display item="Short Address"/>
         <display item="Long Address"/>
@@ -34,7 +34,7 @@
         <separator/>
         <label>
           <text>As two numbers and checkbox</text>
-          <text xml:lang="it">As two numbers and checkbox</text>
+          <text xml:lang="it">Con due numeri e seleziona il checkbox</text>
         </label>
         <display item="Short Address"/>
         <display item="Long Address"/>
@@ -42,7 +42,7 @@
         <separator/>
         <label>
           <text>As two numbers and radiobuttons</text>
-          <text xml:lang="it">As two numbers and radiobuttons</text>
+          <text xml:lang="it">Con due numeri e seleziona il Pulsante</text>
         </label>
         <row>
           <column>
@@ -62,73 +62,73 @@
         </row>
         <separator/>
       </column>
-      <name xml:lang="it">Decoder Address</name>
+      <name xml:lang="it">Indirizzo Decoder</name>
     </pane>
     <pane nameFmt="item">
       <name>Enums</name>
       <column>
         <label>
           <text>Default form</text>
-          <text xml:lang="it">Default form</text>
+          <text xml:lang="it">Pannello di Defaul</text>
         </label>
         <display item="Speed Table Definition" layout="left"/>
         <separator/>
         <label>
           <text>As a checkbox, 1 if checked</text>
-          <text xml:lang="it">As a checkbox, 1 if checked</text>
+          <text xml:lang="it">Come checkbox, 1 se spuntato</text>
         </label>
         <display item="Speed Table Definition" format="checkbox" layout="left"/>
         <separator/>
         <label>
           <text>As a set of radiobuttons</text>
-          <text xml:lang="it">As a set of radiobuttons</text>
+          <text xml:lang="it">Come gruppo di Pulsanti</text>
         </label>
         <display item="Speed Table Definition" format="radiobuttons" layout="left"/>
         <separator/>
         <label>
           <text>As a radio button, 1 (on) if selected</text>
-          <text xml:lang="it">As a radio button, 1 (on) if selected</text>
+          <text xml:lang="it">Come Pulsante radio, 1 (on) se premuto</text>
         </label>
         <display item="Speed Table Definition" format="onradiobutton" layout="left"/>
         <separator/>
         <label>
           <text>As a radio button, 0 (off) if selected</text>
-          <text xml:lang="it">As a radio button, 0 (off) if selected</text>
+          <text xml:lang="it">Come Pulsante radio, 0 (off)se premuto</text>
         </label>
         <display item="Speed Table Definition" format="offradiobutton" layout="left"/>
         <separator/>
         <label>
           <text>As a radio button, using just the state label</text>
-          <text xml:lang="it">As a radio button, using just the state label</text>
+          <text xml:lang="it">Come Pulsante radio, usa scritta di stato</text>
         </label>
         <display item="Speed Table Definition" format="onradiobutton" label="" layout="left"/>
         <separator/>
       </column>
-      <name xml:lang="it">Enums</name>
+      <name xml:lang="it">Lista Valori</name>
     </pane>
     <pane nameFmt="item">
       <name>Values</name>
       <column>
         <label>
           <text>Default form</text>
-          <text xml:lang="it">Default form</text>
+          <text xml:lang="it">Pannello di Defaul</text>
         </label>
         <display item="Short Address" layout="left"/>
         <separator/>
         <label>
           <text>As a horizontal slider</text>
-          <text xml:lang="it">As a horizontal slider</text>
+          <text xml:lang="it">Come scorrimento orizzontale</text>
         </label>
         <display item="Short Address" layout="left" format="hslider"/>
       </column>
       <column>
         <label>
           <text>As a vertical slider</text>
-          <text xml:lang="it">As a vertical slider</text>
+          <text xml:lang="it">Come scorrimento verticale</text>
         </label>
         <display item="Short Address" layout="left" format="vslider"/>
       </column>
-      <name xml:lang="it">Values</name>
+      <name xml:lang="it">Valori</name>
     </pane>
   </programmer>
 </programmer-config>

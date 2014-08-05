@@ -33,6 +33,10 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     public DefaultSignalAppearanceMap(String systemName) {
         super(systemName);
     }
+    
+    public String getBeanType(){
+        return Bundle.getMessage("BeanNameSignalAppMap");
+    }
 
     static public DefaultSignalAppearanceMap getMap(String signalSystemName, String aspectMapName) {
         if (log.isDebugEnabled()) log.debug("getMap signalSystem= \""+signalSystemName+"\", aspectMap= \""+aspectMapName+"\"");

@@ -208,7 +208,15 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         int getTurnoutState(){
             return state;
         }
+    }
     
+    boolean isTurnoutUsed(Turnout t){
+        for(TurnoutAspect ta: turnouts.values()){
+            if(t.equals(ta.getTurnout()))
+                return true;
+        }
+        if(t.equals(getUnLitTurnout())) /*getUnLitTurnout()!=null && getUnLitTurnout() == t)*/ return true;
+        return false;
     }
     
     public List<NamedBeanHandle<Turnout>> getHeadsUsed(){
@@ -218,6 +226,23 @@ public class TurnoutSignalMast extends AbstractSignalMast {
     public static int getLastRef(){ return lastRef; }
     
     static int lastRef = 0;
+    
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+        if("CanDelete".equals(evt.getPropertyName())){ //IN18N
+            if(evt.getOldValue() instanceof Turnout){
+                if(isTurnoutUsed((Turnout)evt.getOldValue())){
+                    java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
+                    throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseTurnoutSignalMastVeto", getDisplayName()), e); //IN18N
+                }
+            }
+        } else if ("DoDelete".equals(evt.getPropertyName())){ //IN18N
+            //Do nothing at this stage
+        }
+    }
+    
+    public void dispose() {
+        super.dispose();
+    }
     
     static final protected Logger log = LoggerFactory.getLogger(TurnoutSignalMast.class.getName());
 }

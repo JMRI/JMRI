@@ -7,9 +7,6 @@ import org.slf4j.LoggerFactory;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
-import java.util.Hashtable;
-import java.util.Enumeration;
-
 /**
  * Provide an abstract implementation of a *StreamPortController for 
  * stream based ports.

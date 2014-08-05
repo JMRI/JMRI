@@ -71,18 +71,22 @@
       <variable item="Decoder ID 1" CV="250" default="213" readOnly="yes">
         <decVal/>
         <label>Decoder ID 1</label>
+        <label xml:lang="it">ID 1 Decoder: </label>
       </variable>
       <variable item="Decoder ID 2" CV="251" readOnly="yes">
         <decVal/>
         <label>Decoder ID 2</label>
+        <label xml:lang="it">ID 2 Decoder: </label>
       </variable>
       <variable item="Decoder ID 3" CV="252" readOnly="yes">
         <decVal/>
         <label>Decoder ID 3</label>
+        <label xml:lang="it">ID 3 Decoder: </label>
       </variable>
       <variable item="Decoder ID 4" CV="253" readOnly="yes">
         <decVal/>
         <label>Decoder ID 4</label>
+        <label xml:lang="it">ID 4 Decoder: </label>
       </variable>
     </variables>
     <xi:include href="http://jmri.org/xml/decoders/zimo/factReset-v32.xml"/>

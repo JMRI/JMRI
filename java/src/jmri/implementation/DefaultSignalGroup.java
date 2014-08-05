@@ -40,6 +40,10 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         super(systemName, null);
     }
     
+    public String getBeanType(){
+        return Bundle.getMessage("BeanNameSignalGroup");
+    }
+    
     ArrayList <String> _signalMastAppearances = new ArrayList<String>();
     
     private NamedBeanHandle<SignalMast> _signalMast;

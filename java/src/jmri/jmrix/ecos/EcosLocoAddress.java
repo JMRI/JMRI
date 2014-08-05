@@ -58,14 +58,21 @@ public class EcosLocoAddress {
         _dccAddress=dCCAddress;
     }
     
+    /**
+     * @return the loco address configured on the ECOS for this loco
+     */
     public int getEcosLocoAddress(){
         return _dccAddress;
     }
-
+    /**
+     * @return the loco object as a string on the ECOS for this loco
+     */
     public String getEcosObject(){
         return _ecosObject;
     }
-    
+    /**
+     * @return the loco object as a integer on the ECOS for this loco
+     */    
     public int getEcosObjectAsInt(){
         return Integer.parseInt(_ecosObject);
     }
@@ -115,6 +122,9 @@ public class EcosLocoAddress {
         _ecosObject = ecosObject;
     }
 
+    /**
+     * @return the loco object description held on the ECOS for this loco
+     */
     public String getEcosDescription(){
         return _ecosDescription;
     }
@@ -125,6 +135,9 @@ public class EcosLocoAddress {
         firePropertyChange("name", oldValue, _ecosDescription);
     }    
     
+    /**
+     * @return the JMRI Roster ID for this loco
+     */
     public String getRosterId(){
         return _rosterId;
     }
@@ -139,7 +152,7 @@ public class EcosLocoAddress {
     public String getProtocol(){
         return _protocol;
     }
-    
+    //@TODO Need to udate this to return the new Protocol option from LocoAddress
     public int getSpeedStepMode(){
         if(_protocol.equals("DCC128"))
             return DccThrottle.SpeedStepMode128;
@@ -190,6 +203,10 @@ public class EcosLocoAddress {
             }
             if (msg.contains("protocol")){
                 setProtocol(EcosReply.getContentDetails(msg, "protocol"));
+            }
+            if (msg.contains("name")){
+                String name = EcosReply.getContentDetails(msg, "name").trim();
+                setEcosDescription(name);
             }
         }
     }

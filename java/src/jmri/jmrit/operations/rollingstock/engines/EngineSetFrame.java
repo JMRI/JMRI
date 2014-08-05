@@ -42,7 +42,7 @@ public class EngineSetFrame extends RollingStockSetFrame implements
 
 		// disable location unknown, return when empty, final destination fields
 		locationUnknownCheckBox.setVisible(false);
-		pOptional.setVisible(false);
+		paneOptional.setVisible(false);
 		pFinalDestination.setVisible(false);
 		autoTrainCheckBox.setVisible(false);
 

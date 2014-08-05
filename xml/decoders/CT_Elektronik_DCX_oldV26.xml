@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2004, 2007, 2014 All rights reserved -->
+<!-- $Id: CT_Elektronik_DCX_V26.xml 22091 2014-07-12 02:38:59Z jacobsen $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="1" lastUpdated="20140712"/>
+  <!-- version 1 -	Derived/Downgraded from CT_Elektronik_DCX_new2.xml                  -->
+  <!--			with refactoring to the latest JMRI practices.                      -->
+  <!-- 			Based on CT Elektronik DCX74 documentation dated 2003-12-20         -->
+  <!--			with some add-ons from DCX_new2 files                               -->
+  <!--			and testing/experimentation of a set of DCX74 v26 decoders.         -->
+  <!--			It is unclear to which SW version of DCX74 existing documentation   -->
+  <!--			corresponds, but real experiment on v26 show differences with the   -->
+  <!--			documentation, therefore this version specific definition.          -->
+  <!--			CVs beyond CV147 are not valid	(always read 255)                   -->
+  <!--			Used standard panes where possible (lights)                         -->
+  <decoder>
+    <family name="DCX Series (old)" mfg="CT Elektronik" lowVersionID="26" highVersionID="26">
+      <model model="DCX74" numOuts="2" numFns="10" maxMotorCurrent="0.8 A" maxTotalCurrent="2.0 A" comment="DCX74 version 26">
+        <output name="1" label="White"/>
+        <output name="2" label="Yellow"/>        
+		<output name="Rangiergang" label="Yard Mode"/>
+	<size length="13" width="9" height="1.5" units="mm"/>
+      </model>
+      <functionlabels>
+        <functionlabel num="0" lockable="true">Lights</functionlabel>
+        <functionlabel num="3" lockable="true">Yard Mode</functionlabel>
+      </functionlabels>      
+    </family>
+    <programming direct="yes" paged="no" register="no" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="2" item="Vstart" default="1" comment="Range 0-255">
+        <decVal max="255"/>
+        <label>Vstart</label>
+		<label xml:lang="de">Anfahrspannung</label>			
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="3" default="1" item="Accel" comment="Range 0-255">
+        <decVal max="255"/>
+        <label>Acceleration</label>
+		<label xml:lang="de">Beschleunigungszeit</label>		
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="4" default="1" item="Decel" comment="Range 0-255">
+        <decVal max="255"/>
+        <label>Deceleration</label>
+		<label xml:lang="de">Bremszeit</label>		
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="5" item="Vhigh" default="255" comment="Range 0-255">
+        <decVal max="255"/>
+        <label>Vhigh</label>
+		<label xml:lang="de">Höchstgeschwindigkeit</label>		
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="6" item="Vmid" default="70" comment="Range 0-255">
+        <decVal max="255"/>
+        <label>Vmid</label>
+		<label xml:lang="de">Mittengeschwindigkeit</label>		
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="7" readOnly="yes" item="Decoder Version" default="26">
+        <decVal/>
+        <label>Decoder Version: </label>
+		<label xml:lang="de">Decoder Version: </label>	
+      </variable>
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="117">
+        <decVal/>
+        <label>Manufacturer ID: </label>
+		<label xml:lang="de">Hersteller ID: </label>
+      </variable>
+      <variable CV="9" mask="XVVVVVVV" item="Motor PWM Frequency" default="22" tooltip="13-63=30-150Hz, frequency=1953/CV value">
+        <decVal min="13" max="63"/>
+        <label>Motor PWM Frequency</label>
+		<label xml:lang="de">Motoransteuerungsperiode</label>			
+        <comment>Range 13-63</comment>
+      </variable>
+      <variable CV="9" mask="VXXXXXXX" item="Dither frequency" default="1" tooltip="Forces PWM Frequency to 16kHz irrespective of value in CV9 bits 0-6">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Motor PWM Frequency = 16kHz</label>
+		<label xml:lang="de">Motoransteuerungsperiode = 16kHz</label>			
+        <comment>Forces PWM Frequency to 16kHz irrespective of value in CV9 bits 0-6</comment>
+      </variable>
+	  <!-- CV13 not documented for this decoder. Not tested.-->
+      <xi:include href="http://jmri.org/xml/decoders/CT_Elektronik/analogModeFunction.xml"/>
+      <!-- End of CV13 -->	  
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>	  
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+      <variable CV="30" mask="XXXXXXXV" item="Motor short circuit" readOnly="yes" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>on Motor</label>
+		<label xml:lang="de">Motor</label>			
+      </variable>
+      <variable CV="30" mask="XXXXXXVX" item="Function Output short circuit" readOnly="yes" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>on Function Output</label>
+		<label xml:lang="de">Funktionsausgang</label>		
+      </variable>
+	  <!-- Function map -->	  
+      <xi:include href="http://jmri.org/xml/decoders/CT_Elektronik/functionMapNMRA.xml"/>
+	  <!-- End Function Map -->	  
+      <variable CV="50" default="240" item="EMF Feedback Cutout" comment="Controls how much BEMF (0-no BEMF to 255-max)">
+        <decVal min="0" max="255"/>
+        <label>BEMF Influence</label>
+		<label xml:lang="de">Regeeinfluss</label>		
+        <tooltip>Controls how much BEMF (0-no BEMF to 255-max)</tooltip>
+        <tooltip xml:lang="de">Ausmaß der EMK, Lastregelung (0-kein EMK bis 255-max)</tooltip>	
+      </variable>
+      <variable CV="51" default="80" item="EMF Static Config" tooltip="P adjustment, 0-255" comment="Range 0-255">
+        <decVal max="255"/>
+        <label>P adjustment</label>
+		<label xml:lang="de">P – Regler</label>			
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="52" default="35" item="EMF Dynamic Config" tooltip="I adjustment, 0-255" comment="Range 0-255">
+        <decVal max="255"/>
+        <label>I adjustment</label>
+		<label xml:lang="de">I – Regler</label>			
+        <comment>Range 0-255</comment>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/CT_Elektronik/lockDecoder-CV53.xml"/>
+      <variable CV="54" item="Global lighting option 1" default="50">
+        <decVal min="0" max="100"/>
+        <label>Dimming for Function Outputs (%)</label>
+        <label xml:lang="de">Dimmen der Funktionsausgängen (%)</label>
+		<tooltip>PWM for Dimming Function Outputs : 0 - 100%</tooltip>
+		<tooltip xml:lang="de">Funktionen dimmen, Reduktion der Helligkeit der Lampen: 0 - 100%</tooltip>		
+      </variable>
+      <variable CV="55" item="Function 1 option 1" default="32"  comment="Range 0-100">
+        <decVal min="0" max="100"/>
+        <label>Uncoupler Holding Current</label>
+        <label xml:lang="de">Dimmen der Kupplungsausgänge</label>		
+        <tooltip>Reduced current value during holding time after uncoupling pulse (0-100)</tooltip>
+        <tooltip xml:lang="de">Kupplungen dimmen, Reduktion der Ziehkraft der Kupplungen (0-100)</tooltip>
+      </variable>
+      <variable CV="56" item="Function 1 option 2" default="20">
+        <decVal/>
+        <label>Uncoupler Pulse Time</label>
+        <label xml:lang="de">Schaltzeit der Kupplungsausgänge</label>
+		<tooltip>Time during which the uncoupling impulse is applied with full power (in 1/10s sec)</tooltip>
+        <tooltip xml:lang="de">Einschaltzeit für digitale Kupplung E = 0.2sec</tooltip>		
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/CT_Elektronik/outputMapDimming-CV57-58.xml"/>
+      <variable CV="59" item="ZIMO Signal Controlled Speed L" default="168" comment="Zimo Only">
+        <decVal/>
+        <label>ZIMO Signal Controlled Speed L</label>
+        <label xml:lang="de">ZIMO Zugsbeeinflussung L</label>		
+        <tooltip>Zimo Only</tooltip>
+        <tooltip xml:lang="de">nur Zimo</tooltip>
+      </variable>
+      <variable CV="60" item="ZIMO Signal Controlled Speed U" default="84" comment="Zimo Only">
+        <decVal/>
+        <label>ZIMO Signal Controlled Speed U</label>
+        <label xml:lang="de">ZIMO Zugsbeeinflussung U</label>		
+        <tooltip>Zimo Only</tooltip>
+        <tooltip xml:lang="de">nur Zimo</tooltip>
+      </variable>
+      <variable CV="61" item="ZIMO Signal Controlled Acc Reaction" comment="Zimo Only">
+        <decVal/>
+        <label>ZIMO Signal Controlled Acc Reaction</label>
+        <label xml:lang="de">ZIMO Anfahrverzögerungszeit</label>		
+        <tooltip>Zimo Only. Time to wait after the stop information was cleared in HLU mode. Unit = 1/20 sec</tooltip>
+        <tooltip xml:lang="de">nur Zimo. Zeit zwischen Freigabe und Fahrteintritt im HLU Betrieb. Teil = 1/20 sec</tooltip>		
+      </variable>
+      <variable CV="64" item="EMF Droop Config" default="160" comment="160=16v track volts">
+        <decVal/>
+        <label>Track Voltage Reference</label>
+        <label xml:lang="de">Regelungsreferenz:</label>				
+        <tooltip>160=16v track volts</tooltip>
+        <tooltip xml:lang="de">Fahreigenschaft in Abhängigkeit der Schienenspannung (160=16v)</tooltip>		
+      </variable>
+      <variable CV="67" item="Speed Table">
+        <speedTableVal/>
+        <label>Speed Table</label>
+		<label xml:lang="de">Geschwindigkeitskennlinie</label>		
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+      <variable CV="109" mask="XXXXXXXV" item="Advanced Group 2 Option 1" default="0" tooltip="&lt;html&gt;Offers a second CV set to allow an alternative configuration stored in the decoder.&lt;br&gt; Reset does not modify this CV&lt;/html&gt;">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Select Alternative CV Set</label>
+		<label xml:lang="de">Auswahl der CVs Spezialgruppe</label>
+		<tooltip>&lt;html&gt;Offers a second CV set to allow an alternative configuration stored in the decoder.&lt;br&gt; Reset does not modify this CV&lt;/html&gt;</tooltip>
+		<tooltip xml:lang="de">&lt;html&gt;0=Standardgruppe, 1=Spezialgruppe für div. Anwendungen.&lt;br&gt; Hardreset wirkt nur auf die aktuelle CV-Gruppe, CV109 bleibt unverändert beim Hardreset&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="111" item="Advanced Group 1 Option 11" default="255">
+        <decVal/>
+        <label>ACK Pulse Intensity</label>
+		<label xml:lang="de">Intensität der ACK impulse</label>
+		<tooltip>might be modified if the loco draws too less or too much current on the programming track.</tooltip>
+		<tooltip xml:lang="de">verbessert die Programmierbarkeit, 128 = ca. 50% des max. Quittierungsstromes (Motor abhängig), 150 = allg. gut verträglich</tooltip>		
+      </variable>
+      <variable CV="116" mask="XXXXXXXV" item="Switching 1" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Shunting CV3 and CV4 disabled</label>
+		<label xml:lang="de">CV3 und CV4 wird ausgeschaltet</label>		
+      </variable>
+      <variable CV="116" mask="XXXXXXVX" item="Switching 2" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Shunting max.half speed forw+rev</label>
+		<label xml:lang="de">max. Geschwindigkeit wird vorwärts und rückwärts halbiert</label>
+      </variable>
+      <variable CV="116" mask="XXXXXVXX" item="Switching 3" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Rev.max.speed 65% indep. of Yard mode </label>
+		<label xml:lang="de">rückwärts 65% der max. Geschw.keit (unabhängig vom Rang.)</label>		
+      </variable>
+      <variable CV="137" mask="XXXXXXXV" item="Function selection 8 or 14/MAN Bit" default="0" tooltip="Zimo Only">
+        <enumVal>
+          <enumChoice choice="8/std">
+            <choice>8/std</choice>
+          </enumChoice>
+          <enumChoice choice="14/Man">
+            <choice>14/Man</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Function selection 8 or 14/MAN Bit</label>
+		<label xml:lang="de">Umschaltung 8 oder 14/MAN Funktionenmodus</label>
+		<tooltip>Zimo Only</tooltip>
+        <tooltip xml:lang="de">nur Zimo</tooltip>			
+      </variable>
+      <variable CV="137" mask="XXXXXXVX" item="Zimo confirmation pulses" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Zimo loco confirmation pulses</label>
+		<label xml:lang="de">Zimo Zugnummernimpulse</label>		
+		<tooltip>Zimo Only</tooltip>
+        <tooltip xml:lang="de">nur Zimo</tooltip>			
+      </variable>	  
+      <variable CV="137" mask="XXXVXXXX" item="Zimo speed control HLU" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Zimo speed control HLU</label>
+		<label xml:lang="de">Zimo HLU Bremsabschnitte</label>		
+		<tooltip>Zimo Only</tooltip>
+        <tooltip xml:lang="de">nur Zimo</tooltip>			
+      </variable>
+      <variable CV="137" mask="VXXXXXXX" item="DC Brake Momentum" default="0">
+        <enumVal>
+          <enumChoice choice="Std 150Hz/16kHz">
+            <choice>Std 150Hz/16kHz</choice>
+          </enumChoice>
+          <enumChoice choice="32Khz">
+            <choice>32Khz</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Motor frequency</label>
+		<label xml:lang="de">Motorfrequenz</label>			
+      </variable>
+      <variable CV="138" item="Deceleration reaction time" default="3">
+        <decVal/>
+        <label>Zimo Signal controlled decel. reaction</label>
+		<label xml:lang="de">Zimo Bremsverzögerugszeit</label>			
+        <tooltip>Zimo Only. Time to wait after the stop information was cleared in HLU mode. Unit = 1/20 sec</tooltip>
+        <tooltip xml:lang="de">nur Zimo. Zeit zwischen Freigabe und Fahrteintritt im HLU Betrieb. Einheit = 1/20 sec</tooltip>			
+      </variable>
+      <!-- CV139 to 141 not documented for DCX74, but default values in decoder. Not tested. -->	  
+      <variable CV="139" item="Direct Cut Off Function Outputs" default="15">
+        <decVal/>
+        <label>Direct Cut Off Function Outputs</label>
+		<label xml:lang="de">sofortige Abschaltung Funktionen</label>			
+		<tooltip>Immediate shutdown in case of overload of the function outputs</tooltip>
+        <tooltip xml:lang="de">sofortige Abschaltung bei Überlastung der Zusatzfunktionen</tooltip>	
+      </variable>
+      <variable CV="140" item="Fast Cut Off Function Outputs" default="12">
+        <decVal/>
+        <label>Fast Cut Off Function Outputs</label>
+		<label xml:lang="de">rasche Abschaltung Funktionen</label>		
+		<tooltip>Rapid shutdown in case of overload of the function outputs</tooltip>
+        <tooltip xml:lang="de">rasche Abschaltung bei Überlastung der Zusatzfunktionen</tooltip>			
+        <comment>Fast Cut off Functions</comment>
+      </variable>
+      <variable CV="141" item="Slow Cut Off Function Outputs" default="10">
+        <decVal/>
+        <label>Slow Cut Off Function Outputs</label>
+		<label xml:lang="de">langsame Abschaltung Funktionen</label>		
+		<tooltip>Slow shutdown in case of overload of the function outputs</tooltip>
+        <tooltip xml:lang="de">langsame Abschaltung bei Überlastung der Zusatzfunktionen</tooltip>		
+        <comment>Slow Cut off Functions</comment>
+      </variable>
+      <!-- End CV139 to 141 -->      
+      <variable CV="142" item="Direct Cut Off Motor" default="70">
+        <decVal/>
+        <label>Direct Cut Off Motor</label>
+		<label xml:lang="de">sofortige Abschaltung Motor</label>		
+		<tooltip>Immediate shutdown in case of overload of the motor</tooltip>
+        <tooltip xml:lang="de">sofortige Abschaltung bei Überlastung (Motor)</tooltip>		
+        <comment>Direct Cut off Motor</comment>
+      </variable>
+      <variable CV="143" item="Fast Cut Off Motor" default="60">
+        <decVal/>
+        <label>Fast Cut Off Motor</label>
+		<label xml:lang="de">rasche Abschaltung Motor</label>		
+		<tooltip>Rapid shutdown in case of overload of the motor</tooltip>
+        <tooltip xml:lang="de">rasche Abschaltung bei Überlastung (Motor)</tooltip>		
+        <comment>Fast Cut Off Motor</comment>
+      </variable>
+      <variable CV="144" item="Slow Cut Off Motor" default="50">
+        <decVal/>
+        <label>Slow Cut Off Motor</label>
+		<label xml:lang="de">langsame Abschaltung Motor</label>		
+		<tooltip>Slow shutdown in case of overload of the motor</tooltip>
+        <tooltip xml:lang="de">langsame Abschaltung bei Überlastung (Motor)</tooltip>		
+        <comment>Slow Cut off Motor</comment>
+      </variable>
+    </variables>
+    <resets>
+      <!-- CT DCX74 use CV1 (short address) set to zero as the reset -->
+      <factReset label="HARD RESET all CVs reset to default values" CV="1" default="0"/>
+    </resets>
+  </decoder>
+  <!-- Specific panes start here -->
+  <pane>
+    <column>
+      <label>
+        <text>Yard Mode (set function key with function map)</text>
+		<text xml:lang="de">Rangiergang</text>
+      </label>
+      <separator/>
+      <label><text>  </text></label>      
+      <display item="Switching 1" format="checkbox"/>
+      <display item="Switching 2" format="checkbox"/>
+      <display item="Switching 3" format="checkbox"/>
+    </column>
+    <name>Yard Mode</name>
+    <name xml:lang="de">Rangiergang</name>		
+  </pane>
+  <pane>	
+    <column>
+      <label>
+        <text>Short-Circuit Protection Thresholds</text>
+        <text xml:lang="de">Kurzschluss-Schwellen</text>		
+      </label>
+      <separator/>              
+      <label>
+        <text>  </text>
+      </label>
+      <display item="Direct Cut Off Function Outputs"/>
+      <display item="Fast Cut Off Function Outputs"/>
+      <display item="Slow Cut Off Function Outputs"/>
+      <label>
+        <text>  </text>
+      </label>
+      <display item="Direct Cut Off Motor"/>
+      <display item="Fast Cut Off Motor"/>
+      <display item="Slow Cut Off Motor"/>
+      <label>
+        <text>  </text>
+      </label>
+      <label>
+        <text>  </text>
+      </label>	  
+      <label>
+        <text>Short Circuit Detection :</text>
+        <text xml:lang="de">Kurzschlussanalyse :</text>		
+      </label>
+      <separator/>	  
+      <display item="Motor short circuit" format="checkbox"/>
+      <display item="Function Output short circuit" format="checkbox"/>      
+    </column>	
+    <name>Short-Circuit</name>
+    <name xml:lang="de">Kurzschluss</name>	
+  </pane>
+  <pane>
+    <column>
+      <label>
+        <text>Zimo features</text>
+      </label>
+      <separator/>	  
+      <display item="ZIMO Signal Controlled Speed L"/>
+      <display item="ZIMO Signal Controlled Speed U"/>
+      <display item="ZIMO Signal Controlled Acc Reaction"/>
+      <display item="Deceleration reaction time"/>	  
+      <label>
+        <text>  </text>
+      </label>
+      <display item="Function selection 8 or 14/MAN Bit"/>
+      <display item="Zimo confirmation pulses" format="checkbox"/>	  
+      <display item="Zimo speed control HLU" format="checkbox"/>
+
+    </column>
+    <name>Zimo</name>
+  </pane>
+</decoder-config>

@@ -265,115 +265,147 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
 
     protected void deleteBean(int row, int col) {
         final NamedBean t = getBySystemName(sysNameList.get(row));
-        int count = t.getNumPropertyChangeListeners()-1; // one is this table
-        if (log.isDebugEnabled()) log.debug("Delete with "+count);
-        if (getDisplayDeleteMsg()==0x02) {
-            doDelete(t);
-        } else {
-            final JDialog dialog = new JDialog();
-            String msg;
-            String msg1;
-            dialog.setTitle(AbstractTableAction.rb.getString("WarningTitle"));
-            dialog.setLocationRelativeTo(null);
-            dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
-            JPanel container = new JPanel();
-            container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-            container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-            if (count>0) { // warn of listeners attached before delete
-                msg = java.text.MessageFormat.format(AbstractTableAction.rb.getString("DeletePrompt"), new Object[]{t.getSystemName()});
-                
-                JLabel question = new JLabel(msg);
-                question.setAlignmentX(Component.CENTER_ALIGNMENT);
-                container.add(question);
-                
-                msg1 = java.text.MessageFormat.format(AbstractTableAction.rb.getString("ReminderInUse"),
-                        new Object[]{""+count});
-
-                question = new JLabel(msg1);
-                question.setAlignmentX(Component.CENTER_ALIGNMENT);
-                container.add(question);
-                
-                ArrayList<String> listenerRefs = t.getListenerRefs();
-                if(listenerRefs.size()>0){
-                    question = new JLabel("    ");
-                    container.add(question);
-                    ArrayList<String> listeners = new ArrayList<String>();
-                    for (int i = 0; i<listenerRefs.size(); i++){
-                        if(!listeners.contains(listenerRefs.get(i)))
-                            listeners.add(listenerRefs.get(i));
-                    }
-                    
-                    for (int i = 0; i<listeners.size(); i++){
-                        question = new JLabel(listeners.get(i));
-                        question.setAlignmentX(Component.CENTER_ALIGNMENT);
-                        container.add(question);
-                    }
-                }
-
-            } else {
-                msg = java.text.MessageFormat.format(
-                        AbstractTableAction.rb.getString("DeletePrompt"),
-                        new Object[]{t.getSystemName()});
-                JLabel question = new JLabel(msg);
-                question.setAlignmentX(Component.CENTER_ALIGNMENT);
-                container.add(question);
-            }
-
-            final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
-            remember.setFont(remember.getFont().deriveFont(10f));
-            remember.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-            JButton yesButton = new JButton("Yes");
-            JButton noButton = new JButton("No");
-            JPanel button = new JPanel();
-            button.setAlignmentX(Component.CENTER_ALIGNMENT);
-            button.add(yesButton);
-            button.add(noButton);
-            container.add(button);
-            
-            noButton.addActionListener(new ActionListener(){
-                public void actionPerformed(ActionEvent e) {
-                    //there is no point in remembering this the user will never be
-                    //able to delete a bean!
-                    /*if(remember.isSelected()){
-                        setDisplayDeleteMsg(0x01);
-                    }*/
-                    dialog.dispose();
-                }
-            });
-            
-            yesButton.addActionListener(new ActionListener(){
-                public void actionPerformed(ActionEvent e) {
-                    if(remember.isSelected()) {
-                       setDisplayDeleteMsg(0x02);
-                    }
-                    doDelete(t);
-                    dialog.dispose();
-                }
-            });
-            container.add(remember);
-            container.setAlignmentX(Component.CENTER_ALIGNMENT);
-            container.setAlignmentY(Component.CENTER_ALIGNMENT);
-            dialog.getContentPane().add(container);
-            dialog.pack();
-            dialog.setModal(true);
-            dialog.setVisible(true);
-        }
-
+        //int count = t.getNumPropertyChangeListeners()-1; // one is this table
+        DeleteBeanWorker worker = new DeleteBeanWorker(t);
+        worker.execute();
     }
-    	
-	boolean noWarnDelete = false;
+    
+    class DeleteBeanWorker extends SwingWorker<Void, Void> {
+    
+        NamedBean t;
+        
+        public DeleteBeanWorker(NamedBean bean){
+            t = bean;
+        }
+        
+        @Override
+        public java.lang.Void doInBackground() throws Exception{
+            StringBuilder message = new StringBuilder();
+            try {
+                getManager().deleteBean(t, "CanDelete");  //IN18N
+            } catch (java.beans.PropertyVetoException e) {
+                if(e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")){ //IN18N
+                    log.warn(e.getMessage());
+                    message.append(Bundle.getMessage("VetoDeleteBean", t.getBeanType(), t.getFullyFormattedDisplayName(), e.getMessage()));
+                    JOptionPane.showMessageDialog(null, message.toString(),
+                        AbstractTableAction.rb.getString("WarningTitle"),
+                        JOptionPane.ERROR_MESSAGE);
+                    return null;
+                }
+                message.append(e.getMessage());
+            }
+            int count = t.getNumPropertyChangeListeners();
+            if (log.isDebugEnabled()) log.debug("Delete with "+count);
+            if (getDisplayDeleteMsg()==0x02 && message.toString().equals("")) {
+                doDelete(t);
+            } else {
+                final JDialog dialog = new JDialog();
+                String msg;
+                dialog.setTitle(AbstractTableAction.rb.getString("WarningTitle"));
+                dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+                JPanel container = new JPanel();
+                container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+                container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+                if (count>0) { // warn of listeners attached before delete
+                    msg = java.text.MessageFormat.format(AbstractTableAction.rb.getString("DeletePrompt"), new Object[]{t.getSystemName()});
+                    
+                    JLabel question = new JLabel(Bundle.getMessage("DeletePrompt", t.getFullyFormattedDisplayName()));
+                    question.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    container.add(question);
+                    
+                    ArrayList<String> listenerRefs = t.getListenerRefs();
+                    if(listenerRefs.size()>0){
+                        ArrayList<String> listeners = new ArrayList<String>();
+                        for (int i = 0; i<listenerRefs.size(); i++){
+                            if(!listeners.contains(listenerRefs.get(i)))
+                                listeners.add(listenerRefs.get(i));
+                        }
+                        
+                        message.append("<br>");
+                        message.append(Bundle.getMessage("ReminderInUse", count));
+                        message.append("<ul>");
+                        for (int i = 0; i<listeners.size(); i++){
+                            message.append("<li>");
+                            message.append(listeners.get(i));
+                            message.append("</li>");
+                        }
+                        message.append("</ul>");
+                        
+                        JEditorPane pane = new JEditorPane();
+                        pane.setContentType("text/html");
+                        pane.setText("<html>"+message.toString()+"</html>");
+                        pane.setEditable(false);
+                        JScrollPane jScrollPane = new JScrollPane(pane);
+                        container.add(jScrollPane);
+                    }
+                } else {
+                    msg = java.text.MessageFormat.format(
+                            AbstractTableAction.rb.getString("DeletePrompt"),
+                            new Object[]{t.getSystemName()});
+                    JLabel question = new JLabel(msg);
+                    question.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    container.add(question);
+                }
 
+                final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
+                remember.setFont(remember.getFont().deriveFont(10f));
+                remember.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+                JButton yesButton = new JButton("Yes");
+                JButton noButton = new JButton("No");
+                JPanel button = new JPanel();
+                button.setAlignmentX(Component.CENTER_ALIGNMENT);
+                button.add(yesButton);
+                button.add(noButton);
+                container.add(button);
+                
+                noButton.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent e) {
+                        //there is no point in remembering this the user will never be
+                        //able to delete a bean!
+                        dialog.dispose();
+                    }
+                });
+                
+                yesButton.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent e) {
+                        if(remember.isSelected()) {
+                           setDisplayDeleteMsg(0x02);
+                        }
+                        doDelete(t);
+                        dialog.dispose();
+                    }
+                });
+                container.add(remember);
+                container.setAlignmentX(Component.CENTER_ALIGNMENT);
+                container.setAlignmentY(Component.CENTER_ALIGNMENT);
+                dialog.getContentPane().add(container);
+                dialog.pack();
+                dialog.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width)/2 - dialog.getWidth()/2, (Toolkit.getDefaultToolkit().getScreenSize().height)/2 -dialog.getHeight()/2);
+                dialog.setModal(true);
+                dialog.setVisible(true);
+            }
+            return null;
+        }
+        
+    }
+    
+	boolean noWarnDelete = false;
+    
     /**
      * Delete the bean after all the checking has been done.
      * <P>
      * Separate so that it can be easily subclassed if other functionality is needed.
      */
     void doDelete(NamedBean bean) {
-        getManager().deregister(bean);
-        bean.dispose();
+        try {
+            getManager().deleteBean(bean, "DoDelete");
+        } catch (java.beans.PropertyVetoException e) {
+            //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
+            log.error(e.getMessage());
+            return;
+        }
     }
-    
     /**
      * Configure a table to have our standard rows and columns.
      * This is optional, in that other table formats can use this table model.

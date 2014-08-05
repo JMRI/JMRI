@@ -16,7 +16,9 @@ import junit.framework.TestSuite;
 public class XBeeSensorManagerTest extends TestCase {
 
     public void testCtor() {
-        XBeeTrafficController tc = new XBeeTrafficController();
+        XBeeTrafficController tc = new XBeeTrafficController() {
+            public void setInstance(){}
+        };
         XBeeSensorManager m = new XBeeSensorManager(tc,"ABC"); 
         Assert.assertNotNull("exists",m);
     }

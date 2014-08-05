@@ -436,7 +436,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
                 f.setTitle("Configure "+destNodeID());
                 
                 CdiPanel m = new CdiPanel();
-                JScrollPane scrollPane = new JScrollPane(m, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER );
+                JScrollPane scrollPane = new JScrollPane(m, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED );
                 Dimension minScrollerDim = new Dimension(800,12);
                 scrollPane.setMinimumSize(minScrollerDim);
                 

@@ -20,6 +20,7 @@ public class NamedBeanTest extends TestCase {
 	    NamedBean n = new AbstractNamedBean("sys", "usr"){
 	        public int getState() {return 0;}
 	        public void setState(int i) {}
+            public String getBeanType(){ return ""; }
 	    };
 
 	    n.setProperty("foo", "bar");
@@ -29,6 +30,7 @@ public class NamedBeanTest extends TestCase {
 	    NamedBean n = new AbstractNamedBean("sys", "usr"){
 	        public int getState() {return 0;}
 	        public void setState(int i) {}
+            public String getBeanType(){ return ""; }
 	    };
 	    
 	    n.setProperty("foo", "bar");
@@ -39,6 +41,7 @@ public class NamedBeanTest extends TestCase {
 	    NamedBean n = new AbstractNamedBean("sys", "usr"){
 	        public int getState() {return 0;}
 	        public void setState(int i) {}
+            public String getBeanType(){ return ""; }
 	    };
 	    
 	    n.setProperty("foo", "bar");
@@ -51,6 +54,7 @@ public class NamedBeanTest extends TestCase {
 	    NamedBean n = new AbstractNamedBean("sys", "usr"){
 	        public int getState() {return 0;}
 	        public void setState(int i) {}
+            public String getBeanType(){ return ""; }
 	    };
 
 	    n.setProperty("foo", "bar");

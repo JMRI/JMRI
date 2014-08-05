@@ -6,11 +6,7 @@ import java.io.File;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Enumeration;
-import java.util.Properties;
-import jmri.JmriException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

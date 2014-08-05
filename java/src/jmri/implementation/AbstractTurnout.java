@@ -42,6 +42,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 	protected AbstractTurnout(String systemName, String userName) {
 		super(systemName.toUpperCase(), userName);
 	}
+    
+    public String getBeanType(){
+        return Bundle.getMessage("BeanNameTurnout");
+    }
 
 	/**
 	 * Handle a request to change state, typically by sending a message to the
@@ -832,6 +836,17 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         String oldSpeed = _straightSpeed;
         _straightSpeed=s;
         firePropertyChange("TurnoutStraightSpeedChange", oldSpeed, s);
+    }
+    
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+        if("CanDelete".equals(evt.getPropertyName())){ //IN18N
+            if(evt.getOldValue().equals(getFirstSensor()) || evt.getOldValue().equals(getSecondSensor())){
+                java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
+                throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseSensorTurnoutVeto", getDisplayName()), e); //IN18N
+            }
+        } else if ("DoDelete".equals(evt.getPropertyName())){
+            //log.info("Call to do delete"); //IN18N
+        }
     }
     
 	static Logger log = LoggerFactory.getLogger(AbstractTurnout.class.getName());

@@ -45,6 +45,10 @@ public abstract class AbstractReporterManager extends AbstractManager
     public Reporter getByUserName(String key) {
         return (Reporter)_tuser.get(key);
     }
+    
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameReporter");
+    }
 
     public Reporter getByDisplayName(String key) {
 	// First try to find it in the user list.

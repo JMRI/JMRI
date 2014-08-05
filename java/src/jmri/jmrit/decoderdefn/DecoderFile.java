@@ -7,15 +7,12 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Iterator;
-
 import jmri.LocoAddress;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.jmrit.symbolicprog.ResetTableModel;
 
 import org.jdom.Element;
-import org.jdom.filter.ElementFilter;
 
 /**
  * Represents and manipulates a decoder definition, both as a file and

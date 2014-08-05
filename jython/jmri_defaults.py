@@ -59,6 +59,10 @@ import jmri.SignalHead.FLASHLUNAR  as FLASHLUNAR
 True = 1
 False = 0
 
+# define a helper function
+def decodeJmriFilename(name) :
+    return jmri.util.FileUtil.getExternalFilename(name)
+    
 # define a convenient class for listening to changes
 import java
 class PropertyListener(java.beans.PropertyChangeListener):

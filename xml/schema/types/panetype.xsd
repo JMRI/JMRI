@@ -104,6 +104,8 @@
       come from the "item" or "label" of the underlying variable.
       </xs:documentation></xs:annotation>
     </xs:attribute>
+    <xs:attribute name="include" type="xs:string" default=""/>
+    <xs:attribute name="exclude" type="xs:string" default=""/>
   </xs:complexType>
   
   <xs:simpleType name="labelItemType">
@@ -210,6 +212,8 @@
       <xs:element name="cvtable" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="indxcvtable" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
+    <xs:attribute name="include" type="xs:string" default=""/>
+    <xs:attribute name="exclude" type="xs:string" default=""/>
   </xs:complexType>
   
   <xs:complexType name="PaneGenericGroupType">
@@ -239,6 +243,8 @@
       <xs:element name="cvtable" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="indxcvtable" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
+    <xs:attribute name="include" type="xs:string" default=""/>
+    <xs:attribute name="exclude" type="xs:string" default=""/>
   </xs:complexType>
   
   <xs:complexType name="PaneGridGroupType">
@@ -252,6 +258,8 @@
       <xs:element name="griditem" type="GridItemType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="group" type="PaneGridGroupType" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
+    <xs:attribute name="include" type="xs:string" default=""/>
+    <xs:attribute name="exclude" type="xs:string" default=""/>
   </xs:complexType>
   
   <xs:complexType name="GridType">

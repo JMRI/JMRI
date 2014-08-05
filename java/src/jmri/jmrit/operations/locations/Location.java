@@ -1277,8 +1277,7 @@ public class Location implements java.beans.PropertyChangeListener {
 				}
 				// adjust custom loads
 				String[] loadNames = track.getLoadNames();
-				for (int k = 0; k < loadNames.length; k++) {
-					String load = loadNames[k];
+				for (String load : loadNames) {
 					String[] splitLoad = load.split(CarLoad.SPLIT_CHAR);
 					if (splitLoad.length > 1) {
 						if (splitLoad[0].equals(oldType)) {
@@ -1286,6 +1285,19 @@ public class Location implements java.beans.PropertyChangeListener {
 							if (newType != null) {
 								load = newType + CarLoad.SPLIT_CHAR + splitLoad[1];
 								track.addLoadName(load);
+							}
+						}
+					}
+				}
+				loadNames = track.getShipLoadNames();
+				for (String load : loadNames) {
+					String[] splitLoad = load.split(CarLoad.SPLIT_CHAR);
+					if (splitLoad.length > 1) {
+						if (splitLoad[0].equals(oldType)) {
+							track.deleteShipLoadName(load);
+							if (newType != null) {
+								load = newType + CarLoad.SPLIT_CHAR + splitLoad[1];
+								track.addShipLoadName(load);
 							}
 						}
 					}

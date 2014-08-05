@@ -217,6 +217,11 @@ public abstract class AbstractLightManager extends AbstractManager
     * order eg 11 thru 18, primarily used to show/not show the add range box in the add Light window
     **/
     public boolean allowMultipleAdditions(String systemName) { return false;  }
+    
+    
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameLight");
+    }
 
     static Logger log = LoggerFactory.getLogger(AbstractLightManager.class.getName());
 }

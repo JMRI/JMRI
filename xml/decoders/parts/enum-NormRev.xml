@@ -11,7 +11,7 @@
   </enumChoice>
   <enumChoice choice="reversed">
     <choice>reversed</choice>
-    <choice xml:lang="it">invertito</choice>
+    <choice xml:lang="it">invertita</choice>
     <choice xml:lang="fr">inversé</choice>
     <choice xml:lang="de">Invertiert</choice>
   </enumChoice>

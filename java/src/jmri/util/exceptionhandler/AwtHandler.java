@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 public class AwtHandler {
 
     public void handle(Throwable t) {
-        log.error("Unhandled AWT Exception: "+t, t);
+        log.error("Unhandled Exception: "+t, t);
     }
     
     static Logger log = LoggerFactory.getLogger(AwtHandler.class.getName());

@@ -172,14 +172,8 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
 		addSpinnerChangeListerner(spinTrainIconSouthX);
 		addSpinnerChangeListerner(spinTrainIconSouthY);
 		
-    	pack();
-    	setMinimumSize(new Dimension(Control.smallPanelWidth, Control.smallPanelHeight));
-     	if (getWidth()<350) 
-    		setSize(350, getHeight());
-     	// height has to be tall enough for four train directions
-    	if (getHeight()<400)
-    		setSize(getWidth(), 400);
-       	setVisible(true);
+    	initMinimumSize(new Dimension(Control.panelWidth, Control.mediumPanelHeight));
+    	
     }
      
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {

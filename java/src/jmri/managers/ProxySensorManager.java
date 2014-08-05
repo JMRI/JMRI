@@ -157,6 +157,10 @@ public class ProxySensorManager extends AbstractProxyManager
     public int getXMLOrder(){
         return jmri.Manager.SENSORS;
     }
+    
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameSensor");
+    }
 
     // initialize logging
     static Logger log = LoggerFactory.getLogger(ProxySensorManager.class.getName());

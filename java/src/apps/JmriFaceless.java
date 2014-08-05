@@ -1,9 +1,6 @@
 // JmriFaceless.java
 package apps;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Application for running JMRI server functions without a graphical interface.
  * Goal is to run on very light hardware, such as a Raspberry Pi, without

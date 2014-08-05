@@ -69,13 +69,14 @@
     <LI><A HREF="#BuildReportDetails">Build Report Options</A></LI>
     <LI><A HREF="#Locations">Locations</A>
      <UL>
+      <LI><A HREF="#AddLocation">Add or Edit Location</A>
       <LI><A HREF="#LocationTools">Location Tools</A>
-      <UL>
-      <LI><A HREF="#CopyTrack">Copy Track</A></LI>
-      <LI><A HREF="#ModifyLocationByCarType">Modify Location by Car Type</A></LI>
-      <LI><A HREF="#ShowCars">Show Cars</A></LI>
-      <LI><A HREF="#ChangeTrackTypeLocation">Change Track Type</A></LI>
-      </UL></LI>
+       <UL>
+        <LI><A HREF="#CopyTrack">Copy Track</A></LI>
+        <LI><A HREF="#ModifyLocationByCarType">Modify Location by Car Type</A></LI>
+        <LI><A HREF="#ShowCars">Show Cars</A></LI>
+        <LI><A HREF="#ChangeTrackTypeLocation">Change Track Type</A></LI>
+       </UL></LI>
       <LI><A HREF="#Yards">Yards</A></LI>
       <LI><A HREF="#Sidings">Spurs</A>
        <UL>
@@ -123,6 +124,7 @@
      </UL></LI>
     <LI><A HREF="#Routes">Routes</A>
      <UL>
+      <LI><A HREF="#AddRoute">Add Route</A></LI>
       <LI><A HREF="#EditRoute">Edit Route</A></LI>
       <LI><A HREF="#PassengerTrainRoute">Passenger Train Route</A></LI>
       <LI><A HREF="#RouteFeatures">Route Features</A></LI>
@@ -130,6 +132,7 @@
      </UL></LI>
     <LI><A HREF="#Trains">Trains</A>
      <UL>
+      <LI><A HREF="#TrainEdit">Add or Edit Train</A></LI>
       <LI><A HREF="#TrainReset">Reset Train</A></LI>
       <LI><A HREF="#TrainBuildOptions">Train Build Options</A></LI>
       <LI><A HREF="#TrainLoadOptions">Train Load Options</A></LI>
@@ -142,7 +145,7 @@
       <LI><A HREF="#SetupExcelProgram">Setup Excel Program (Manifest Creator)</A></LI>
       <LI><A HREF="#SwitcherService">Switcher Service</A></LI>
       <LI><A HREF="#BuildingTrains">Building Trains</A></LI>
-      <LI><A HREF="#TrainStatus">Train Status</A></LI>  
+      <LI><A HREF="#TrainStatus">Train Status</A></LI>
       <LI><A HREF="#TroubleShootingBuildingTrains">Problems Building Trains How to Fix</A></LI>
       <LI><A HREF="#ReadingBuildReport">Reading the Build Report</A></LI>
       <LI><A HREF="#PrintingManifests">Printing Manifests</A></LI>
@@ -451,7 +454,8 @@
 
    When selected, the program will create a set of operation backup files each time the program is
    started. See <A HREF="#BackupRestore">Backup and Restore</A> for more information.
-
+   
+   <A NAME="PanelOptionsTrainIcons"></A>
    <H3>Panel Options (Train Icons)</H3>
 
    If you want the operations program to place an icon representing the train on a panel, enter the
@@ -611,7 +615,7 @@
    types of moves, select the appropriate checkbox.
    <P>
    You should note that schedules can override the switcher options.  So if you need certain car movements
-   for a switcher, it's best to use a schedule to define them.</P>
+   for a switcher, it's best to use a <A HREF="#Schedules">schedule</A> to define them.</P>
 
    <H3>Staging</H3>
    <A NAME="TypeRoadLoadRestrictionsStaging"></A>
@@ -988,15 +992,32 @@
    <H3>Message Format</H3>
 
    If you would like your manifest and switch lists printed in a tabular (columns) format select the
-   "Tabular" checkbox. The "Two Column" format creates manifests with two major columns, the left
-   column shows the car pick ups for a location, and the right column shows the set outs. The "Two
-   Column" only uses half the page for the car information, so you might have to limit the number of
-   car attributes (see
-   <A HREF="#MessageFormats">Message Formats</A> below) in order get the data to fit. The text color
-   options for set outs, pick ups, and local move are not available for the "Two Column" format.
+   "Tabular" checkbox. The program determines the maximum character length for each attribute (Road,
+   Number, Type, Length, Color, Load, etc.) when determining the width of each column. Location
+   names and track names can be up to 25 characters, so you might want to consider reasonable length
+   names when using the "Tabular" feature. FYI, the program reports the maximum track and location
+   names to the system console when creating manifests.
+
+   <P>There are three options with regards to how your manifests and switch lists
+   are formated. "Standard" provides one line for each car pick up or set out. The "Two Column"
+   format creates manifests with two major columns, the left column shows the car pick ups for a
+   location, and the right column shows the set outs. The "Two Column" only uses half the page for
+   the car information, so you might have to limit the number of car attributes (see
+   <A HREF="#MessageFormats">Message Formats</A> below) in order get the data to fit. The next
+   format available is "Two Column (Track)". This format prints the track name in both columns in a
+   header format. The text color options for set outs, pick ups, and local move are not available
+   for the "Two Column" formats.</P>
    <P>The "Tabular" and "Two Column" formats use equally spaced fonts like "Courier New" or
-    "Monospaced" so only equally spaced fonts are shown in the "Font" selection box when either
+    "Monospaced" so only equally spaced fonts are shown in the font selection box when either
     option is selected.</P>
+   <P>
+    After selecting "Tabular" and pressing the "Save" button, you will find three additional "Tab"
+    options at the end of the <A HREF="#MessageFormats">Message Format</A> drop down menus. Use
+    these three tabs to space out the manifest or switch list to your liking. You can change the
+    length of the tab characters if you wish, see <A HREF="#ManifestPrintOptionsTools">Tools</A>.
+    Go to <A HREF="#PrintingManifests">Printing Manifests</A> to see examples of manifests and switch
+    lists using the described options.
+   </P>
 
    <H3>Set Out Text Color</H3>
 
@@ -1014,12 +1035,6 @@
    to another at the same location. The car in this case is not added to the train. Select the
    desired color from the drop down box.
 
-   <H3>Switch List Format</H3>
-
-   You can use the same format as your manifest for your switch lists, or you can customize your
-   switch lists to your liking. Deselect the "Same as Manifest" if you want a different format for
-   your switch lists.
-
   <A NAME="MessageFormats"></A>
    <H3>Message Formats</H3>
 
@@ -1030,8 +1045,19 @@
    set outs and pick ups respectively. If you want to use the text color options, the set out, pick
    up, and move prefixes must be unique. 
    
+   <H3>Switch List Format</H3>
+
+   You can use the same format as your manifest for your switch lists, or you can customize your
+   switch lists to your liking. Deselect the "Same as Manifest" if you want a different format for
+   your switch lists.
+
+   <H3>Switch List Options</H3>
+
+   You can include in your switch lists the train's
+   <A HREF="#EditRoute">route</A> location comments by selecting the "Route Location" checkbox. 
+   
    <A NAME="ManifestComments"></A>
-   <H3>Manifests Options</H3>
+   <H3>Manifests and Switch List Options</H3>
 
    The program allows you to customize your train manifest to your liking. You can change the
    manifest or switch list text by using the "Edit Manifest Text" or "Edit Switch List Text" windows
@@ -1074,7 +1100,7 @@
     menu.
    </P>
 
-   <H3>Manifest Preview</H3>
+   <H3>Manifest and Switch List Preview</H3>
 
    If you want to use a text editor to preview your manifests and switch lists, select this option.
    This option also allows you to make manual changes to your manifests before you print them.
@@ -1103,10 +1129,10 @@
    <A NAME="ManifestPrintOptionsTools"></A>
    <H3>Manifest Print Options Tools</H3>
 
-   The menu bar of the "Manifest Print Options" provides several options listed under "Tools". The
-   first is the ability to control the length of the tab character when using the "Tabular" feature.
-   The other three options "Edit Manifest Header Text", "Edit Manifest Text" and "Edit Switch List
-   Text" allow you to modify any of the text found in a manifest or switch list. Each text line used
+   The menu bar of the "Manifest Print Options" provides additional features that can be found under "Tools". The
+   first "More Print Options" allows you to adjust the length of the tab character when using the "Tabular" feature.
+   The next three options "Edit Manifest Header Text", "Edit Manifest Text" and "Edit Switch List
+   Text" allows you to modify any of the text found in a manifest or switch list. Each text line used
    by the program is shown along with a text box with the same message. Edit the text box to change
    the default message to your liking and press "Save" to complete your change. You can always
    return the text to the original settings by pressing the "Reset" button followed by "Save". 
@@ -1172,14 +1198,17 @@
     <A HREF="#SwitchList">(Switch List)</A> that allows you to see the scheduled pick ups and set
     outs by train. Only trains that have work for the location are available.
    </P>
+   
+   <A NAME="AddLocation"></A>
+   <H3>Add or Edit Location</H3>
 
    <P>To add a location, press the "Add" button located on the bottom of the "Locations" window.
-    A new window should appear.</P>
+    A new window should appear. To edit an existing location, press the "Edit" button for the location.</P>
    <P>
     <img src="images/EditLocation.png">
    </P>
 
-   <P>In the "Add Location" window, enter the name of the location in box across from "Name".
+   <P>In the "Add Location" window, enter the name of the location in the field labeled "Name".
     The location name must be unique; the program will not allow two locations with identical names.
     However, if you want more than one location to have the "same" name for your manifests and
     switch lists, add a hyphen and a number to the locations name, or a hyphen and a left
@@ -1187,7 +1216,7 @@
     The program will remove the hyphen and number, and hyphen and text when there's a left
     parenthesis when printing manifests and switch lists. Note that the "hyphen"
     feature also works for track names.</P>
-
+    
    <P>Now press the "Add Location" button at the bottom of the window. The various fields that
     were disabled should now appear.</P>
    <P>
@@ -1285,7 +1314,7 @@
 
    Now enter the name of the yard along with the length of the track in scale feet or in actual
    inches. Append a double quote (") to the length when entering actual inches and the program will
-   convert the length into scale feet. Append cm if you want to convert from centimeters to meters.
+   convert the length into scale feet. Append cm if you want to convert from centimeters to scale meters.
    Press the "Add Yard Track" button at the bottom of the window and the disabled fields should now
    appear.
 
@@ -1317,9 +1346,10 @@
 
    There are three options for picking up cars from the yard. "Normal" uses the car's move count to
    determine the order cars are removed from the yard, "FIFO" (First In First Out), and "LIFO" (Last
-   In First Out). LIFO is useful if you have a single ended yard that you use to service cars. For
-   example storing empty coal cars, it would make more sense to pull an empty coal car from the
-   front of the line rather than digging one out from the middle of the yard.
+   In First Out). FIFO would be appropriate for a double ended track where cars are spotted at one end,
+   and pulled from the other. LIFO is useful if you have a single ended yard that you use to service
+   cars. For example storing empty coal cars, it would make more sense to pull an empty coal car
+   from the front of the line rather than digging one out from the middle of the yard.
 
    <H3>Comment</H3>
 
@@ -1371,7 +1401,6 @@
    </P>
    <P>
     Enter a name for your schedule and press the "Add Schedule" button on the bottom of the window.
-    Multiple spurs can use the same schedule as long as the spurs use the same car types and roads.
     Now add your first delivery for this spur by selecting a car type in the menu box found in the
     lower left corner of the window and pressing the "Add car type" button. A new item should appear
     in your schedule containing the type of car, a pull down menu for road names, and a count of 1.
@@ -1463,10 +1492,12 @@
     the next car type when adding a car type. This makes it easy to quickly add car types to the
     table.</P>
 
-   <P>You can also access your schedules from the Locations "Tools" menu. The Schedules table
-    provides status for each schedule. Since you can assign a schedule to multiple spurs, the table
-    also provides additional status for each of the spurs that use that particular schedule. The
-    table also allows you the edit a schedule once its been assigned to a spur.</P>
+   <P>Multiple spurs can use the same schedule to perform the identical function, i.e. the spurs
+    request exactly the same car types, roads, loads, and shipments. You can also access your
+    schedules from the Locations "Tools" menu. The Schedules table provides status for each
+    schedule. Since you can assign a schedule to multiple spurs, the table also provides additional
+    status for each of the spurs that use that particular schedule. The table also allows you the
+    edit a schedule once its been assigned to a spur.</P>
 
    <P>
     A very useful tool is the <A HREF="#ShowSchedulesByCarTypeAndLoad">show schedules by car
@@ -1932,6 +1963,15 @@
    <P>
     <img src="images/Cars.png">
    </P>
+   <H3>Table Sort</H3>
+
+   To sort cars by a particular attribute, select any of the radio buttons in the "Sort by" list.
+   One of the more useful sorts is by location. You can under "Tools-&gt;Car Roster" print a list of
+   cars by their location and track when the radio button "Location" is selected.  You can also
+   sort the table by clicking on any of the column headings.  To perform a double sort, select the
+   first sort by selecting one of the "Sort by" radio buttons, then click on the final sort by clicking
+   on one of the column headings.
+
    <H3>Add, Find, Save Buttons</H3>
 
    There are three buttons located at the bottom of the Cars window. The "Add" button allows you to
@@ -2077,10 +2117,10 @@
     find a car by its road number, it could very well have been shipped out on an earlier train. So
     you have to decide, use road numbers or or not for a given type of car.</P>
 
-   <H3>Car Location</H3>
+   <H3>Car Location and Track</H3>
 
    Now set the car's location on the layout. If the car is off the layout, set the location to none
-   (blank space). 
+   (blank space).
    
    <A NAME="CarLoad"></A>
    <H3>Car Loads</H3>
@@ -2224,7 +2264,7 @@
     building new trains. Many operators have a RIP (Repair In Place) track and use this feature to
     hold the car there until repairs have been made.</P>
 
-   <P>Use the "Location" set of field to place the car on the layout. Use the "Auto" checkbox to
+   <P>Use the "Location and Track" set of fields to place the car on the layout. Use the "Auto" checkbox to
     show valid tracks for a given location. You can also optionally enter the location and track
     that you want the car to return to when the car's load status becomes empty. You can also
     replace the car's default empty load with one from the load combo box. Only custom loads that
@@ -2430,54 +2470,78 @@
    <A NAME="Routes"></A>
    <H2>Routes</H2>
 
-   A route is a list of locations that a train will visit. Later you can decide if the train stops
-   at a location for work. Routes can be point to point or out and back. To build a route, select
-   "Tools-&gt;Operations-&gt;Routes". The Routes window also provides route status, for example,
-   "Orphan" means the route hasn't been assigned to a train.
+   A route is a list of locations (stations) that a train will visit. Later you can decide if the
+   train stops at a location for work. Routes can be point to point or out and back. To build a
+   route, select "Tools-&gt;Operations-&gt;Routes". The Routes window also provides route status,
+   for example, "Orphan" means the route hasn't been assigned to a train.
 
 
    <P>
     <img src="images/Routes.png">
    </P>
 
-   <P>Then press the "Add" button located at the bottom of the window.</P>
+   <A NAME="AddRoute"></A>
+   <H3>Add Route</H3>
+
+   <P>Press the "Add" button located at the bottom of the "Routes" window to create a new route for your trains.</P>
 
    <P>
     <img src="images/EditRoute.png">
    </P>
 
    <P>
-    Enter the route name and an optional comment. This comment is shown in the routes window, and <A
-     HREF="#ManifestComments">optionally</A> on your manifests. Each route must have unique name.
+    Enter the route name and an optional comment. This comment is shown in the routes window, and
+    <A HREF="#ManifestComments">optionally</A> on your manifests. Each route must have unique name.
     Then press the "Add Route" button located at the bottom of the window. Now select the location
     the train will depart by selecting the location in the menu box located at the left bottom side
-    of the window. Press "Add Location". Now build your route by selecting the next location the
-    train will visit, select all locations that the train will pass through even if the train will
-    not work the location. This way your train's engineer will know when reading his manifest the
-    towns he will be traveling through. Each time you add a location to the route, the table shows
-    the order in which the train will visit. You can move a location up or down in the sequence if
-    needed.
+    of the window. Press "Add Location". You should now see the train's departure location in the
+    table along with the train's departure direction, the requested number of car moves, whether car
+    set outs or pick ups are allowed, the train wait time, the maximum train length departing the
+    location, and the track grade between this location and the next location in the train's route.
+    The X and Y values are where to place the train icon on a panel. The
+    <A HREF="#EditRoute">Edit Route</A> below provides additional details about a location in a route.</P>
+
+   <P>
+    Now select the correct departure direction for your train when using this route, along with the
+    number of moves you wish, and the train's maximum length. In the simple case, a move at the
+    departure location would equal a car in the train. So if you want 10 cars in your train when it
+    departs, enter 10 moves. Later if you create
+    <A HREF="#Kernel">kernels</A> or allow local moves at the departure location, the number of
+    moves could mean something slightly different. A local move is the act of moving a car from one
+    track to another at the same location, the car isn't added to the train, but moving the car is
+    part of the train's work at that location. Double click on the cell in the table to change the
+    car moves or train length. The program remembers the last train direction, car moves, and
+    maximum train length when adding new locations to your train's route. Now build your route by
+    selecting the next location the train will visit and again adjust the number of cars your train
+    will work by changing the move count for that location. Continue building the train's route by
+    entering all locations that the train will pass through even if the train will not work the
+    location. This way your train's engineer will know when reading his manifest the towns he will
+    be traveling through. Each time you add a location to the route, the table shows the order in
+    which the train will visit. You can move a location up or down in the sequence if needed.
    </P>
 
    <A NAME="EditRoute"></A>
    <H3>Edit Route</H3>
 
-   You can modify any location in a train's route by selecting an item in one of the menu boxes or by
-   doubling clicking one of the cells and entering a new value. Press "Save Route" to complete your
-   change.
+   You can modify any location in a train's route by selecting an item in one of the menu boxes or
+   by doubling clicking one of the cells and entering a new value. Press "Save Route" to complete
+   your change.
 
    <P>
     Each location has the train's departure direction, number of desired car moves, and whether car
     pick ups and or car set outs are allowed at that location. A car move can be a car pick up or
     car set out at that location. For example, 5 moves can be 5 pick ups, or 5 set outs, or any
     combination of 5 pick ups or set outs. Picking up or dropping off a group of cars or a <A
-     HREF="#Kernel">kernel</A> represents one move. To modify the number of moves for a location,
-    double click directly on the cell in the route table. When entering the desired number of car
-    moves, enter reasonable numbers that reflect what you want the program to do for you. For
-    example, if you want your train to depart with 15 cars, then 15 is the correct value for your
-    moves at the start of the route. At the end of the route, if you want 12 cars in the train when
-    it terminates, then 12 is the right value for the move count for the last location in your
-    train's route.
+     HREF="#Kernel">kernel</A> represents one move. Moving a car or kernel from one track to another
+    at the same location also represents one move. The program doesn't normally create local car
+    moves, you can use <A HREF="#Schedules">schedules</A> to change the program's behavior. To
+    modify the number of moves for a location, double click directly on the cell in the route table.
+    When entering the desired number of car moves, enter reasonable numbers that reflect what you
+    want the program to do for you. For example, if you want your train to depart with approximately
+    15 cars, then 15 is the correct value for your moves at the start of the route. At the end of
+    the route, if you want close to 12 cars in the train when it terminates, then 12 is the right
+    value for the move count for the last location in your train's route. Entering "0" moves means
+    no car pick ups or set outs at the location.
    </P>
 
    <P>If you want to delay the departure of the train from a location or increase the train's
@@ -2634,18 +2698,30 @@
    <P>One of the most important buttons is the "Save Builds" button. When pressed, the program
     saves all the files that have been modified by building and moving your trains. Pressing this
     button allows you to shut down the program and resume exactly where you left the program.</P>
+    
+   <A NAME="TrainEdit"></A>
+   <H3>Add or Edit Train</H3>
 
-   <P>Press the "Add" button to create a train.</P>
+   <P>Press the "Add" button at the bottom left of the "Trains" window to create a new train. Use the "Edit" button
+   in the "Trains" window table to modify an existing train.</P>
 
    <P>
     <img src="images/EditTrain.png">
    </P>
-   <P>Enter the train's name and optional description, and then press the "Add Train" button.
-    Both will show up on the train's manifest. The train's name will also show up on the train icon,
-    so short names work best. Then select the route that this train will travel. There's an Edit
-    button to the right of the route that allows you to directly edit the selected route. Once a
-    route is selected a list of locations that the train will visit should appear. You can deselect
-    any location that you don't want the train to work.</P>
+   <P>
+    Enter the train's name and optional description, and then press the "Add Train" button. Both
+    will show up on the train's manifest. The train's name will also appear on the
+    <A HREF="#PanelOptionsTrainIcons">train icon</A>, so short names work best. If you want the
+    train's lead locomotive number and departure direction as part of the train's description when
+    printing, enter {0} and {1} respectively for the number and direction. This allows you to
+    create a train description like "Extra 1234 East" for your manifests and switch lists.
+   </p>
+
+   <P>Next select the route that this train will travel. There's an "Edit" button to the right
+    of the route that allows you to directly edit the selected route. If you haven't created a route
+    for your train, select a blank route and then press the "Edit" button to create a new route.
+    Once a route is selected a list of locations that the train will visit should appear. You can
+    deselect any location that you don't want the train to work.</P>
 
    <H3>Train Departure Time</H3>
 
@@ -2812,7 +2888,7 @@
     helps keep the train length in check as the HPT calculation is done at the end of the build
     process, and ignores the route's length restrictions. So it is best if the HPT adjustment adds
     only one or two locos to your train, thus keeping the train length close to the maximums you
-    specified in the route. You could of course reduce the train lengths in your route if you see
+    specified in the route. You could of course reduce the train lengths in your route if you find
     that the program is consistently adding one or two locos to the train, and also exceeding the
     maximum train lengths.</P>
 
@@ -3338,11 +3414,24 @@
    <p>You can also access a train's manifest and build report from the "Tools" menu in the edit
     train window. The "Tools" menu option allows you to recover the manifest and build report for a
     train that has been terminated. Useful if you've accidentally terminated a train before printing
-    out the train's manifest.</p>
+    out the train's manifest. Below is a train manifest using the "Standard" format, with blue text for
+    car pick ups, and red text for car set outs.</p>
 
    <P>
     <img src="images/Manifest.png">
    </P>
+
+   <P>Below is a train manifest using the "Two Column (Track)" format, "Tabular" and "Print
+    Headers" selected, along with changes to the manifest header and manifest text fields. We've
+    seen cases where the text and the column lines don't line up properly when using the "Two
+    Column" formats. To fix this issue, you might have to play with the manifest font type and size
+    to get the text to line up properly. The page below was created with "Courier New" and a font
+    size of 10.</p>
+
+   <P>
+    <img src="images/ManifestTwoColumnTrack.png">
+   </P>
+
 
    <A NAME="SwitchList"></A>
    <H3>Switch Lists</H3>
@@ -3350,7 +3439,9 @@
    A switch list shows the work required to service all of the trains visiting that location.
    Normally a switch list is given to the person in charge of a yard or a location with many spurs
    or industries. You can modify the look of your switch lists from the
-   <A HREF="#PrintOptions">Manifest Print Options</A> window.
+   <A HREF="#PrintOptions">Manifest Print Options</A> window.  Below is a switch list using the
+   "Standard" format and "Tabular" selected, along with "Print Headers", and changes to the header
+   text fields.
 
    <P>
     <img src="images/SwitchList.png">

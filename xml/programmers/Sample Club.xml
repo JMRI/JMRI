@@ -49,7 +49,7 @@
         <display item="Forward Trim"/>
         <display item="Reverse Trim"/>
       </column>
-      <name xml:lang="it">Controls</name>
+      <name xml:lang="it">Controlli</name>
     </pane>
     <pane>
       <name>Speed Table</name>
@@ -62,7 +62,7 @@
           <display item="Speed Table" layout="above"/>
         </row>
       </column>
-      <name xml:lang="it">Speed Table</name>
+      <name xml:lang="it">Tabella Velocità</name>
     </pane>
   </programmer>
 </programmer-config>

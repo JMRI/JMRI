@@ -26,6 +26,7 @@ public class AbstractSignalHeadManager extends AbstractManager
 
     public AbstractSignalHeadManager() {
         super();
+        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
     }
     
     public int getXMLOrder(){
@@ -50,8 +51,11 @@ public class AbstractSignalHeadManager extends AbstractManager
     public SignalHead getByUserName(String key) {
         return (SignalHead)_tuser.get(key);
     }
-
-
+    
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameSignalHead");
+    }
+    
     static Logger log = LoggerFactory.getLogger(AbstractSignalHeadManager.class.getName());
 }
 

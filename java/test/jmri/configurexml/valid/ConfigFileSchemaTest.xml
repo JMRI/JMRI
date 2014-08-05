@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="http://www.jmri.org/xml/XSLT/panelfile.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout.xsd">
+  <gui LAFclass="Mac OS X" class="jmri.configurexml.GuiLafConfigPaneXml" LocaleLanguage="en" LocaleCountry="US" LocaleVariant="" />
+  <connection class="jmri.jmrix.loconet.hexfile.configurexml.ConnectionConfigXml" />
+  <!--Written by JMRI version 2.7.9 on Sun Nov 29 22:22:17 PST 2009 $Id$-->
+</layout-config>

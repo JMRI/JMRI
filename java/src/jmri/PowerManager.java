@@ -38,6 +38,8 @@ public interface PowerManager {
 	static final int ON      = 0x02;
 	static final int OFF     = 0x04;
 
+        static final String POWER = "Power"; // NOI18N
+        
 	public void 	setPower(int v) 	throws JmriException;
 	public int	 	getPower()  	throws JmriException;
 

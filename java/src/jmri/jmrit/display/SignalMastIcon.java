@@ -118,7 +118,14 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         } else {
             if(!s.contains("preference:"))
                 s = s.substring(s.indexOf("resources"));
-            NamedIcon n = new NamedIcon(s,s);
+            NamedIcon n;
+            try {
+                n = new NamedIcon(s,s);
+            } catch (java.lang.NullPointerException e){
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("SignalMastIconLoadError2", new Object[] {aspect, s, getNameString()}) ,Bundle.getMessage("SignalMastIconLoadErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                log.error(Bundle.getMessage("SignalMastIconLoadError2", aspect, s, getNameString()));
+                return true;
+            }
             _iconMap.put(s, n);
             if(_rotate!=0){
                 n.rotate(_rotate, this);

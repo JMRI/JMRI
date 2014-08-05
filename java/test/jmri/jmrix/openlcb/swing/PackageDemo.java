@@ -34,6 +34,7 @@ public class PackageDemo extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.openlcb.swing.PackageDemo");
 
         suite.addTest(jmri.jmrix.openlcb.swing.tie.PackageDemo.suite());
+        suite.addTest(jmri.jmrix.openlcb.swing.networktree.PackageDemo.suite());
         suite.addTest(jmri.jmrix.openlcb.swing.monitor.PackageDemo.suite());
         
         return suite;

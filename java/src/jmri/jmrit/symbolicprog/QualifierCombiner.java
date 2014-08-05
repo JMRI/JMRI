@@ -5,7 +5,10 @@ package jmri.jmrit.symbolicprog;
 import java.util.List;
 
 /**
- * Force a set of Qualifiers to work in an AND relationship
+ * Force a set of Qualifiers to work in an AND relationship.
+ * <P>
+ * On transition, the qualifiers are evaluated in order, 
+ * stopping when the outcome is known.
  *
  * @author			Bob Jacobsen   Copyright (C) 2011
  * @version			$Revision: -1$

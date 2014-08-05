@@ -21,7 +21,7 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
     public DefaultSignalHead(String systemName) {
         super(systemName);
     }
-
+    
     public void setAppearance(int newAppearance) {
         int oldAppearance = mAppearance;
         mAppearance = newAppearance;
@@ -167,6 +167,10 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public String[] getValidStateNames() {
         return validStateNames;
+    }
+    
+    boolean isTurnoutUsed(jmri.Turnout t){
+        return false;
     }
 
 }

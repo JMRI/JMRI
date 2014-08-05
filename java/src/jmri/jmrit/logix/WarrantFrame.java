@@ -131,7 +131,12 @@ public class WarrantFrame extends WarrantRoute {
     	_destination.setOrder(warrant.getLastOrder());
     	_via.setOrder(warrant.getViaOrder());
     	_avoid.setOrder(warrant.getAvoidOrder());
-    	setOrders(warrant.getBlockOrders());		// makes copy
+    	List <BlockOrder> list = warrant.getBlockOrders();
+    	ArrayList <BlockOrder> orders = new ArrayList <BlockOrder>(list.size());
+        for (int i=0; i<list.size(); i++) {
+        	orders.add(new BlockOrder(list.get(i)));
+        }
+    	setOrders(orders);		// makes copy
 
         List <ThrottleSetting> tList = warrant.getThrottleCommands();
         for (int i=0; i<tList.size(); i++) {
@@ -1032,10 +1037,14 @@ public class WarrantFrame extends WarrantRoute {
         }
     	if (_warrant!=null) {
         	_warrant.deAllocate();
-            _warrant.stopWarrant();
+            _warrant.stopWarrant(false);
             _warrant.removePropertyChangeListener(this);    		
     	}
         _statusBox.setText(Bundle.getMessage("LearningStop"));
+    }
+    
+    protected Warrant getWarrant() {
+    	return _warrant;
     }
     
     /**

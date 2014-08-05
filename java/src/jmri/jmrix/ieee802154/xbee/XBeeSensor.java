@@ -8,13 +8,10 @@ import jmri.implementation.AbstractSensor;
 import jmri.Sensor;
 
 import com.rapplogic.xbee.api.ApiId;
-import com.rapplogic.xbee.api.XBeeAddress16;
-import com.rapplogic.xbee.api.XBeeAddress64;
 import com.rapplogic.xbee.api.RemoteAtResponse;
 import com.rapplogic.xbee.api.wpan.RxResponseIoSample;
 import com.rapplogic.xbee.api.wpan.IoSample;
 import com.rapplogic.xbee.api.zigbee.ZNetRxIoSampleResponse;
-import com.rapplogic.xbee.util.IntArrayInputStream;
 
 /**
  * Extend jmri.AbstractSensor for XBee connections.

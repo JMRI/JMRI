@@ -129,6 +129,10 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
         return null;
     }
     
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameReporter");
+    }
+    
     // initialize logging
     static Logger log = LoggerFactory.getLogger(ProxyReporterManager.class.getName());
 }

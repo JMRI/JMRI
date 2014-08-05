@@ -23,30 +23,30 @@
         </label>
         <label>
           <text>Must have JMRI 3.3.6 or later.</text>
-          <text xml:lang="it">Must have JMRI 3.3.6 or later.</text>
+          <text xml:lang="it">Dovete avere JMRI 3.3.6 o successivo.</text>
         </label>
         <label>
           <text>   </text>
         </label>
         <label>
           <text>To set individual sound volume to level 3</text>
-          <text xml:lang="it">To set individual sound volume to level 3</text>
+          <text xml:lang="it">Per impostare Volume individuale a livello 3</text>
         </label>
         <label>
           <text>Pick sound group (high byte) first then from list of sounds of just that group</text>
-          <text xml:lang="it">Pick sound group (high byte) first then from list of sounds of just that group</text>
+          <text xml:lang="it">prima seleziona Gruppo Suono (byte alto) poi scegli dalla lista dei suoni solo di quel gruppo</text>
         </label>
         <label>
           <text>Then press Write full sheet</text>
-          <text xml:lang="it">Then press Write full sheet</text>
+          <text xml:lang="it">Poi premi Scrivi tutto il foglio</text>
         </label>
         <label>
           <text>Repeat for other sounds</text>
-          <text xml:lang="it">Repeat for other sounds</text>
+          <text xml:lang="it">Ripeti per gli altri suoni</text>
         </label>
         <label>
           <text>To change to different volume level, choose different Volume Level tab</text>
-          <text xml:lang="it">To change to different volume level, choose different Volume Level tab</text>
+          <text xml:lang="it">Per cambiare livello del volume, Seleziona il Tab con altri Volumi</text>
         </label>
         <label>
           <text>   </text>
@@ -58,5 +58,5 @@
       </column>
     </row>
   </column>
-  <name xml:lang="it">Volume Level 3</name>
+  <name xml:lang="it">Volume Livello 3</name>
 </pane>

@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import jmri.Programmer;
 
-import org.jdom.Attribute;
 import org.jdom.Element;
 
 import java.util.List;

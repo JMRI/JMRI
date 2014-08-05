@@ -131,7 +131,7 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/digitrax/userId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <variable item="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>

@@ -232,6 +232,10 @@ public class DefaultSignalSystemManager extends AbstractManager
      */
     static class AspectFile extends XmlFile {
     }
+    
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameSignalSystem");
+    }
 
     static Logger log = LoggerFactory.getLogger(DefaultSignalSystemManager.class.getName());
 }

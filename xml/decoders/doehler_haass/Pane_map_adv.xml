@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- version 1 - 2014-02-20 - for common D&H software -->
+<!-- version 2 - 2014-06-03 - PB - improved XML -->
+<!-- version 1 - 2014-02-20 - PB - for common D&H software -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Adv. Map</name>
   <column>
     <label>
       <text> </text>
@@ -20,22 +22,22 @@
         </label>
         <label>
           <text>                                      Dimmed  </text>
-          <text xml:lang="it">                                     Smorzata </text>
+          <text xml:lang="it">                                       Luci Smorzate</text>
         </label>
         <label>
           <text>                                      Headlights  </text>
-          <text xml:lang="it">                                      Luci front. </text>
+          <text xml:lang="it">                                       Luci frontali</text>
         </label>
         <label>
           <text> </text>
         </label>
         <display item="FL(f) controls output 7" format="checkbox" label="Forward Headlight F0(f)" tooltip="CV 33">
           <label>Forward Headlight F0(f)</label>
-          <label xml:lang="it">Luci Frontali F0(avanti)</label>
+          <label xml:lang="it">F0 (in avanti) Luci frontali</label>
         </display>
         <display item="FL(r) controls output 7" format="checkbox" label="Reverse Headlight F0(r)" tooltip="CV 34">
           <label>Reverse Headlight F0(r)</label>
-          <label xml:lang="it">Luci Frontali inverse F0(indietro)</label>
+          <label xml:lang="it">F0 (in retro) Luci retro</label>
         </display>
         <display item="F1 controls output 7" format="checkbox" label="Function 1         " tooltip="CV 35">
           <label>Function 1         </label>
@@ -92,11 +94,11 @@
         </label>
         <label>
           <text> Shunting </text>
-          <text xml:lang="it"> Manovra </text>
+          <text xml:lang="it"> In Manovra</text>
         </label>
         <label>
           <text> Headlights </text>
-          <text xml:lang="it"> Luci Front. </text>
+          <text xml:lang="it"> Luci frontali</text>
         </label>
         <label>
           <text> </text>
@@ -155,9 +157,9 @@
     </label>
     <label>
       <text>These advanced mapping options are to be programmed AFTER respectively F1 and F2</text>
-      <text xml:lang="it">Queste funzioni avanzte sono da programmare DOPO F1 e F2</text>
       <text xml:lang="fr">Options de mapping avancées à programmer APRES respectivement F1 et F2</text>
       <text xml:lang="de">Immer NACH der Programmierung von F1 bzw. F2</text>
+      <text xml:lang="it">Programmare SEMPRE dopo F1 ed F2</text>
     </label>
     <label>
       <text> </text>
@@ -176,11 +178,11 @@
         </label>
         <label>
           <text>                        Front  </text>
-          <text xml:lang="it">                        Luci   </text>
+          <text xml:lang="it">                        Front.</text>
         </label>
         <label>
           <text>                        Light  </text>
-          <text xml:lang="it">                        Front. </text>
+          <text xml:lang="it">                        Luce  </text>
         </label>
         <label>
           <text> </text>
@@ -198,23 +200,21 @@
         </label>
         <label>
           <text> Rear </text>
-          <text xml:lang="it"> Luci</text>
+          <text xml:lang="it"> Retro </text>
         </label>
         <label>
           <text> Light </text>
-          <text xml:lang="it"> Retro</text>
+          <text xml:lang="it"> Luce </text>
         </label>
         <label>
           <text> </text>
         </label>
-        <display item="F1(r) controls output 2" format="checkbox" label="" tooltip="CV 47">
-			  </display>
-        <display item="F2(r) controls output 2" format="checkbox" label="" tooltip="CV 64">
-			  </display>
+        <display item="F1(r) controls output 2" format="checkbox" label="" tooltip="CV 47"/>
+        <display item="F2(r) controls output 2" format="checkbox" label="" tooltip="CV 64"/>
       </column>
       <column>
         <label>
-          <text>    3 </text>
+          <text>  3 </text>
         </label>
         <label>
           <text> AUX </text>
@@ -225,14 +225,12 @@
         <label>
           <text> </text>
         </label>
-        <display item="F1(r) controls output 3" format="checkbox" label="" tooltip="CV 47">
-			  </display>
-        <display item="F2(r) controls output 3" format="checkbox" label="" tooltip="CV 64">
-			  </display>
+        <display item="F1(r) controls output 3" format="checkbox" label="" tooltip="CV 47"/>
+        <display item="F2(r) controls output 3" format="checkbox" label="" tooltip="CV 64"/>
       </column>
       <column>
         <label>
-          <text>    4 </text>
+          <text>  4 </text>
         </label>
         <label>
           <text> AUX </text>
@@ -243,10 +241,8 @@
         <label>
           <text> </text>
         </label>
-        <display item="F1(r) controls output 4" format="checkbox" label="" tooltip="CV 47">
-			  </display>
-        <display item="F2(r) controls output 4" format="checkbox" label="" tooltip="CV 64">
-			  </display>
+        <display item="F1(r) controls output 4" format="checkbox" label="" tooltip="CV 47"/>
+        <display item="F2(r) controls output 4" format="checkbox" label="" tooltip="CV 64"/>
       </column>
       <column>
         <label>
@@ -261,10 +257,8 @@
         <label>
           <text> </text>
         </label>
-        <display item="F1(r) controls output 5" format="checkbox" label="" tooltip="CV 47">
-			  </display>
-        <display item="F2(r) controls output 5" format="checkbox" label="" tooltip="CV 64">
-			  </display>
+        <display item="F1(r) controls output 5" format="checkbox" label="" tooltip="CV 47"/>
+        <display item="F2(r) controls output 5" format="checkbox" label="" tooltip="CV 64"/>
       </column>
       <column>
         <label>
@@ -279,28 +273,26 @@
         <label>
           <text> </text>
         </label>
-        <display item="F1(r) controls output 6" format="checkbox" label="" tooltip="CV 47">
-			  </display>
-        <display item="F2(r) controls output 6" format="checkbox" label="" tooltip="CV 64">
-			  </display>
+        <display item="F1(r) controls output 6" format="checkbox" label="" tooltip="CV 47"/>
+        <display item="F2(r) controls output 6" format="checkbox" label="" tooltip="CV 64"/>
       </column>
       <column>
         <label>
           <text>      7 </text>
         </label>
         <label>
-          <text> Shunting </text>
+          <text> Dimmed </text>
+          <text xml:lang="it"> Luci Smorzate</text>
         </label>
         <label>
           <text> Headlights </text>
+          <text xml:lang="it"> Luci di Testa </text>
         </label>
         <label>
           <text> </text>
         </label>
-        <display item="F1(r) controls output 7" format="checkbox" label="" tooltip="CV 47">
-			  </display>
-        <display item="F2(r) controls output 7" format="checkbox" label="" tooltip="CV 64">
-			  </display>
+        <display item="F1(r) controls output 7" format="checkbox" label="" tooltip="CV 47"/>
+        <display item="F2(r) controls output 7" format="checkbox" label="" tooltip="CV 64"/>
       </column>
       <column>
         <label>
@@ -308,24 +300,21 @@
         </label>
         <label>
           <text> Shunting </text>
-          <text xml:lang="it"> Luci</text>
+          <text xml:lang="it"> Manovra </text>
         </label>
         <label>
           <text> Headlights </text>
-          <text xml:lang="it"> Manovra</text>
+          <text xml:lang="it"> Luci di Testa </text>
         </label>
         <label>
           <text> </text>
         </label>
-        <display item="F1(r) controls output 8" format="checkbox" label="" tooltip="CV 47">
-			  </display>
-        <display item="F2(r) controls output 8" format="checkbox" label="" tooltip="CV 64">
-			  </display>
+        <display item="F1(r) controls output 8" format="checkbox" label="" tooltip="CV 47"/>
+        <display item="F2(r) controls output 8" format="checkbox" label="" tooltip="CV 64"/>
         <label>
           <text> </text>
         </label>
       </column>
     </row>
   </column>
-  <name>Adv. Map</name>
 </pane>

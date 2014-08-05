@@ -33,10 +33,12 @@ import java.text.DecimalFormat;
  * @version	$Revision$
  */
 public class BlockManager extends AbstractManager
-    implements java.beans.PropertyChangeListener {
+    implements java.beans.PropertyChangeListener, java.beans.VetoableChangeListener {
 
     public BlockManager() {
         super();
+        jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.reporterManagerInstance().addVetoableChangeListener(this);
     }
     
     public int getXMLOrder(){
@@ -178,6 +180,10 @@ public class BlockManager extends AbstractManager
     
     public String getDefaultSpeed(){
         return defaultSpeed;
+    }
+    
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameBlock");
     }
 
     static Logger log = LoggerFactory.getLogger(BlockManager.class.getName());

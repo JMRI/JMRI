@@ -243,12 +243,12 @@ class BlockLister(jmri.jmrit.automat.AbstractAutomaton) :
                 self.msgText("Path traversable: "  + self.giveBlockName(self.currentBlock) + " to " + self.giveBlockName(blockTest) + " " + jmri.Path.decodeDirection(dirTest) + ":" + str(dirTest) + "\n")
             else :
                 self.msgText("Path not traversable: " + self.giveBlockName(self.currentBlock) + " to " + self.giveBlockName(blockTest) + " " + jmri.Path.decodeDirection(dirTest) + ":" + str(dirTest) + "\n")
-            sig = jmri.InstanceManager.layoutBlockManagerInstance().getFacingSignalHead(block, blockTest)
+            sig = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager).getFacingSignalHead(block, blockTest)
             if (sig != None) :
                 self.msgText("Path from " + self.giveBlockName(block) + " to " + self.giveBlockName(blockTest) + " signal: " + self.giveSignalName(sig) + " aspect: " + self.cvtSignalToText(sig) + "\n")
             else :
                 self.msgText("Path from " + self.giveBlockName(block) + " to " + self.giveBlockName(blockTest) + " has no signal headsl!\n")
-            mast = jmri.InstanceManager.layoutBlockManagerInstance().getFacingSignalMast(block, blockTest)
+            mast = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager).getFacingSignalMast(block, blockTest)
             if (mast != None) :
                 self.msgText("Path from " + self.giveBlockName(block) + " to " + self.giveBlockName(blockTest) + " mast: " + self.giveMastName(mast) + " aspect: " + self.cvtMastToText(mast) + "\n")
             else :

@@ -5,44 +5,56 @@
     <enumVal>
       <enumChoice choice="Zimo for MX31ZL" value="0">
         <choice>Present</choice>
+        <choice xml:lang="it">Presente</choice>
       </enumChoice>
       <enumChoice choice="Standard Reporting" value="1">
         <choice>Disappear</choice>
+        <choice xml:lang="it">Sparisce</choice>
       </enumChoice>
     </enumVal>
     <label>Standing Sound on premature shutdown</label>
+    <label xml:lang="it">Suono distinto per arresto prematuro</label>
   </variable>
   <variable item="Standing Sound on premature shutdown" CV="158" mask="XXXXVXXX" default="0">
     <enumVal>
       <enumChoice choice="Present" value="0">
         <choice>Present</choice>
+        <choice xml:lang="it">Presente</choice>
       </enumChoice>
       <enumChoice choice="Disappear" value="1">
         <choice>Disappear</choice>
+        <choice xml:lang="it">Sparisce</choice>
       </enumChoice>
     </enumVal>
     <label>Standing Sound on premature shutdown</label>
+    <label xml:lang="it">Suono distinto per arresto prematuro</label>
   </variable>
   <variable item="Chuff rate at higher speed steps" CV="158" mask="XXXVXXXX" default="0">
     <enumVal>
       <enumChoice choice="Normal" value="0">
         <choice>Normal</choice>
+        <choice xml:lang="it">Normale</choice>
       </enumChoice>
       <enumChoice choice="Reduced" value="1">
         <choice>Reduced</choice>
+        <choice xml:lang="it">Ridotta</choice>
       </enumChoice>
     </enumVal>
     <label>Chuff rate at higher speed steps</label>
+    <label xml:lang="it">Frequenza di Chuff a velocità massima</label>
   </variable>
   <variable item="Drop one speed step to lower turbocharger" CV="158" mask="XXVXXXXX" default="0">
     <enumVal>
       <enumChoice choice="Off (default)" value="0">
         <choice>Normal</choice>
+        <choice xml:lang="it">Normale</choice>
       </enumChoice>
       <enumChoice choice="On" value="1">
         <choice>Reduced</choice>
+        <choice xml:lang="it">Ridotta</choice>
       </enumChoice>
     </enumVal>
     <label>Drop one speed step to lower turbocharger</label>
+    <label xml:lang="it">Diminiusci di uno step di velocità per diminuire il Turbocompressore</label>
   </variable>
 </variables>

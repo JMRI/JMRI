@@ -1,5 +1,5 @@
 #
-# Find and enable/disable CMRI card polling
+# Sample to find and enable/disable CMRI card polling
 #
 # Author: Ken Cameron, copyright 2009
 # Part of the JMRI distribution
@@ -19,10 +19,10 @@ node2 = jmri.jmrix.cmri.serial.SerialAddress.getNodeFromSystemName("CS2001")
 node3 = jmri.jmrix.cmri.serial.SerialAddress.getNodeFromSystemName("CS3001")
 
 # display current status
-print "was node0: " + node0.getSensorsActive().toString()
-print "was node1: " + node1.getSensorsActive().toString()
-print "was node2: " + node2.getSensorsActive().toString()
-print "was node3: " + node3.getSensorsActive().toString()
+print "was node0: ", node0.getSensorsActive()
+print "was node1: ", node1.getSensorsActive()
+print "was node2: ", node2.getSensorsActive()
+print "was node3: ", node3.getSensorsActive()
 
 # enable/disable polling per card
 node0.setSensorsActive(False)
@@ -31,7 +31,7 @@ node2.setSensorsActive(False)
 node3.setSensorsActive(False)
 
 # display updated status
-print "now node0: " + node0.getSensorsActive().toString()
-print "now node1: " + node1.getSensorsActive().toString()
-print "now node2: " + node2.getSensorsActive().toString()
-print "now node3: " + node3.getSensorsActive().toString()
+print "now node0: ", node0.getSensorsActive()
+print "now node1: ", node1.getSensorsActive()
+print "now node2: ", node2.getSensorsActive()
+print "now node3: ", node3.getSensorsActive()

@@ -35,6 +35,7 @@ public class DCCManufacturerList {
     public static final String LIONEL = "Lionel TMCC";
     public static final String MAPLE = "Maple Systems";
     public static final String MERG = "MERG";
+    public static final String MRC = "MRC";
     public static final String MARKLIN = "Marklin";
     public static final String NAC = "NAC Services";
     public static final String OAK = "Oak Tree Systems";
@@ -77,6 +78,7 @@ public class DCCManufacturerList {
           MAPLE,
           MARKLIN,
           MERG,
+          MRC,
           NCE,
           NAC,
           OAK,
@@ -115,12 +117,12 @@ public class DCCManufacturerList {
         if(System.equals(ESU)) { return new jmri.jmrix.ecos.EcosConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(FLEISHMANN)) { return new jmri.jmrix.loconet.Intellibox.FleischmannConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(HORNBY)) { return new jmri.jmrix.lenz.hornbyelite.EliteConnectionTypeList().getAvailableProtocolClasses(); }
-        if(System.equals(IEEE802154)) { return new jmri.jmrix.ieee802154.SerialConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(LENZ)) { return new jmri.jmrix.lenz.LenzConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(LIONEL)) { return new jmri.jmrix.tmcc.SerialConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(MAPLE)) { return new jmri.jmrix.maple.SerialConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(MERG)) { return new jmri.jmrix.merg.MergConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(MARKLIN)) { return new jmri.jmrix.marklin.MarklinConnectionTypeList().getAvailableProtocolClasses(); }
+        if(System.equals(MRC)) { return new jmri.jmrix.mrc.MrcConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(NAC)) { return new jmri.jmrix.rps.RpsConnectionTypeList().getAvailableProtocolClasses();   }
         if(System.equals(NCE)) { return new jmri.jmrix.nce.NceConnectionTypeList().getAvailableProtocolClasses();   }
         if(System.equals(OAK)) { return new jmri.jmrix.oaktree.SerialConnectionTypeList().getAvailableProtocolClasses(); }
@@ -129,7 +131,7 @@ public class DCCManufacturerList {
         if(System.equals(PROTRAK)) { return new jmri.jmrix.grapevine.SerialConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(QSI)) { return new jmri.jmrix.qsi.QSIConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(RFID)) { return new jmri.jmrix.rfid.RfidConnectionTypeList().getAvailableProtocolClasses(); }
-        if(System.equals(ROCO)) { return new jmri.jmrix.lenz.LenzConnectionTypeList().getAvailableProtocolClasses(); }
+        if(System.equals(ROCO)) { return new jmri.jmrix.roco.RocoConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(SPROG)) { return new jmri.jmrix.sprog.SprogConnectionTypeList().getAvailableProtocolClasses();  }
         if(System.equals(SRCP)) { return new jmri.jmrix.srcp.SRCPConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(TAMS)) { return new jmri.jmrix.tams.TamsConnectionTypeList().getAvailableProtocolClasses(); }

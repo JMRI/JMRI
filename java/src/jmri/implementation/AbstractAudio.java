@@ -101,6 +101,10 @@ public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
     public static float roundDecimal(float value) {
             return roundDecimal(value, Math.log10(INT_PRECISION));
     }
+    
+    public String getBeanType(){
+        return Bundle.getMessage("BeanNameAudio");
+    }
 
 }
 

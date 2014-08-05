@@ -86,10 +86,9 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_CarsSet", true); // NOI18N
 
-		// optional panel return when empty
-		pOptional.setVisible(true);
+		// optional panel return when empty, load, and kernel
+		paneOptional.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutOptional")));
 		pOptional.setLayout(new BoxLayout(pOptional, BoxLayout.Y_AXIS));
-		pOptional.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutOptional")));
 
 		// row 5
 		JPanel pReturnWhenEmpty = new JPanel();

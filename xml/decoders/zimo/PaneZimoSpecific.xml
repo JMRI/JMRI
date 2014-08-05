@@ -45,7 +45,10 @@
     <label>
       <text> </text>
     </label>
-    <display item="MAN Key Extension (Disable HLU or ABC signal control)" label="Set Function Key to Disable HLU Signal Control"/>
+    <display item="MAN Key Extension (Disable HLU or ABC signal control)" label="Set Function Key to Disable HLU Signal Control">
+       <label>Set Function Key to Disable HLU Signal Control</label>
+       <label xml:lang="it">Tasto funzione per disabilitare controllo segnale HLU</label>
+    </display>
     <display item="Distance controlled stopping"/>
     <label>
       <text> </text>
@@ -66,4 +69,5 @@
     </row>
   </column>
   <name>Zimo Specific</name>
+  <name xml:lang="it">Specifiche Zimo</name>
 </pane>

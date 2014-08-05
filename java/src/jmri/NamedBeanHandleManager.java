@@ -240,5 +240,10 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
         throw new UnsupportedOperationException("Not supported yet.");
     }
     
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanName");
+    }
+    
+    
     static Logger log = LoggerFactory.getLogger(NamedBeanHandleManager.class.getName());
 }

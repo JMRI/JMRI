@@ -25,6 +25,10 @@ public class VirtualSignalHead extends DefaultSignalHead {
 	
 	protected void updateOutput() {
 	}
+    
+    boolean isTurnoutUsed(jmri.Turnout t){
+        return false;
+    }
 	
     /**
      * Remove references to and from this object, so that it can

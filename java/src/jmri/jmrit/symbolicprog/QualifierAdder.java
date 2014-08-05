@@ -4,7 +4,6 @@ package jmri.jmrit.symbolicprog;
 
 import java.util.*;
 import org.jdom.*;
-import javax.swing.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +42,7 @@ public abstract class QualifierAdder {
         List<Element> le = e.getChildren("qualifier"); // we assign to this to allow us to suppress unchecked error
         processList(le, lq, model);
         
-        // search for enclosing <variables> or <group> element
+        // search for enclosing element so we can find all relevant qualifiers
         Parent p = e;
         while ( (p = p.getParent()) != null && p instanceof Element) {
             Element el = (Element)p;
@@ -74,17 +73,17 @@ public abstract class QualifierAdder {
             // find the variable
             VariableValue var = model.findVar(variableRef);
             
-            if (var != null) {
+            if (var != null || relation.equals("exists")) {
                 // found, attach the qualifier object through creating it
-                log.debug("Attached {} variable", variableRef);
-                
-                Qualifier qual = createQualifier(var, relation, value);
-                
-                qual.update(); 
-                lq.add(qual);   
+                log.debug("Attached {} variable for {} {} qualifier", variableRef, relation, value);
             } else {
-                log.error("didn't find {} variable", variableRef, new Exception());
+                log.debug("Didn't find {} variable for {} {} qualifier", variableRef, relation, value);
             }
+
+            // create qualifier
+            Qualifier qual = createQualifier(var, relation, value);
+            qual.update(); 
+            lq.add(qual);          
     }
     
     static Logger log = LoggerFactory.getLogger(QualifierAdder.class.getName());

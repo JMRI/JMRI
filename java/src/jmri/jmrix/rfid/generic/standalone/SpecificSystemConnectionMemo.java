@@ -34,7 +34,7 @@ import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 public class SpecificSystemConnectionMemo extends RfidSystemConnectionMemo {
 
     public SpecificSystemConnectionMemo() {
-    	super();
+        super();
     }
 
     /**
@@ -43,8 +43,8 @@ public class SpecificSystemConnectionMemo extends RfidSystemConnectionMemo {
      */
     @Override
     public void configureManagers() {
-    	InstanceManager.setSensorManager(new SpecificSensorManager(getTrafficController(), getSystemPrefix()));
-    	InstanceManager.setReporterManager(new SpecificReporterManager(getTrafficController(), getSystemPrefix()));
+        InstanceManager.setSensorManager(new SpecificSensorManager(getTrafficController(), getSystemPrefix()));
+        InstanceManager.setReporterManager(new SpecificReporterManager(getTrafficController(), getSystemPrefix()));
     }
 
     @Override

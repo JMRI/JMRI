@@ -25,7 +25,7 @@ import jmri.NamedBeanHandle;
  * @author	Bob Jacobsen Copyright (C) 2003, 2008
  * @version	$Revision$
  */
-public class DoubleTurnoutSignalHead extends DefaultSignalHead {
+public class DoubleTurnoutSignalHead extends DefaultSignalHead implements java.beans.VetoableChangeListener {
 
     public DoubleTurnoutSignalHead(String sys, String user, NamedBeanHandle<Turnout> green, NamedBeanHandle<Turnout> red) {
         super(sys, user);
@@ -91,6 +91,7 @@ public class DoubleTurnoutSignalHead extends DefaultSignalHead {
     public void dispose() {
         mRed = null;
         mGreen = null;
+        jmri.InstanceManager.turnoutManagerInstance().removeVetoableChangeListener(this);
         super.dispose();
     }
 
@@ -101,7 +102,15 @@ public class DoubleTurnoutSignalHead extends DefaultSignalHead {
     public NamedBeanHandle<Turnout> getGreen() {return mGreen;}
 	public void setRed(NamedBeanHandle<Turnout> t) {mRed=t;}
 	public void setGreen(NamedBeanHandle<Turnout> t) {mGreen=t;}
-
+    
+    boolean isTurnoutUsed(Turnout t){
+        if(getRed()!=null && t.equals(getRed().getBean()))
+            return true;
+        if(getGreen()!=null && t.equals(getGreen().getBean()))
+            return true;
+        return false;
+    }
+    
     static Logger log = LoggerFactory.getLogger(DoubleTurnoutSignalHead.class.getName());
 }
 

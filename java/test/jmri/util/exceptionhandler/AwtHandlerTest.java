@@ -22,7 +22,7 @@ public class AwtHandlerTest extends SwingTestCase {
             void dref(Object o) { o.toString(); }
         });
         flushAWT();
-        JUnitAppender.assertErrorMessage("Unhandled AWT Exception: java.lang.NullPointerException");
+        JUnitAppender.assertErrorMessage("Unhandled Exception: java.lang.NullPointerException");
     }
         
 	// from here down is testing infrastructure

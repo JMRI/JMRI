@@ -146,6 +146,15 @@ public class TripleOutputSignalHead extends DoubleTurnoutSignalHead {
     public String[] getValidStateNames() {
         return validStateNames;
     }
+    
+    boolean isTurnoutUsed(Turnout t){
+        if(super.isTurnoutUsed(t))
+                return true;
+        if(getBlue()!=null && t.equals(getBlue().getBean()))
+            return true;
+        return false;
+    }
+    
 
     static Logger log = LoggerFactory.getLogger(TripleOutputSignalHead.class.getName());
 }

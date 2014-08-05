@@ -18,10 +18,12 @@ import java.text.DecimalFormat;
  * @version	$Revision$
  */
 public class DefaultRouteManager extends AbstractManager
-    implements RouteManager, java.beans.PropertyChangeListener {
+    implements RouteManager, java.beans.PropertyChangeListener, java.beans.VetoableChangeListener {
 
     public DefaultRouteManager() {
         super();
+        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
     }
     
     public int getXMLOrder(){
@@ -106,6 +108,10 @@ public class DefaultRouteManager extends AbstractManager
             _instance = new DefaultRouteManager();
         }
         return (_instance);
+    }
+    
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameRoute");
     }
 
     static Logger log = LoggerFactory.getLogger(DefaultRouteManager.class.getName());

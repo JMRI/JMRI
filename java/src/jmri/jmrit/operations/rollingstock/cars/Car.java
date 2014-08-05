@@ -538,7 +538,7 @@ public class Car extends RollingStock {
 		loadNext(destinationTrack);
 		return status;
 	}
-
+	
 	private void loadNext(Track destTrack) {
 		setLoadGeneratedFromStaging(false);
 		// update wait count
@@ -546,23 +546,10 @@ public class Car extends RollingStock {
 		setNextWait(0);
 		// arrived at spur?
 		if (destTrack != null && destTrack.getTrackType().equals(Track.SPUR)) {
-			// arriving at spur with a schedule?
-			if (!getNextLoadName().equals("")) {
-				setLoadName(getNextLoadName());
-				setNextLoadName("");
-				// RWE load and no destination?
-				if (getLoadName().equals(getReturnWhenEmptyLoadName()) && getFinalDestination() == null)
-					setReturnWhenEmpty();
-				return;
-			}
-			// if car doesn't have a custom load, flip load status
-			if (getLoadName().equals(carLoads.getDefaultEmptyName()))
-				setLoadName(carLoads.getDefaultLoadName());
-			else
-				setLoadEmpty();
+			updateLoad();
 		}
 		// update load optionally when car reaches staging
-		if (destTrack != null && destTrack.getTrackType().equals(Track.STAGING)) {
+		else if (destTrack != null && destTrack.getTrackType().equals(Track.STAGING)) {
 			if (destTrack.isLoadSwapEnabled()) {
 				if (getLoadName().equals(carLoads.getDefaultEmptyName())) {
 					setLoadName(carLoads.getDefaultLoadName());
@@ -587,6 +574,28 @@ public class Car extends RollingStock {
 					setLoadEmpty();
 			}
 		}
+	}
+	
+	/**
+	 * Updates a car's load when placed at a spur.  Load change delayed if wait count is greater than zero.
+	 */
+	public void updateLoad() {
+		if (getWait() > 0)
+			return;	// change load when wait count reaches 0
+		// arriving at spur with a schedule?
+		if (!getNextLoadName().equals("")) {
+			setLoadName(getNextLoadName());
+			setNextLoadName("");
+			// RWE load and no destination?
+			if (getLoadName().equals(getReturnWhenEmptyLoadName()) && getFinalDestination() == null)
+				setReturnWhenEmpty();
+			return;
+		}
+		// if car doesn't have a custom load, flip load status
+		if (getLoadName().equals(carLoads.getDefaultEmptyName()))
+			setLoadName(carLoads.getDefaultLoadName());
+		else
+			setLoadEmpty();
 	}
 
 	/**

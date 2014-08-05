@@ -46,16 +46,17 @@ Les r&#233;sultats sp&#233;cifiques int&#233;ressants:
 <ul><li><a href="http://builds.jmri.org/jenkins/job/Development/">Page D&#233;veloppement</a> page qui donne une ligne de statut
  montrant l'&#233;tat des constructions fait apr&#232;s chaque s&#233;rie de validations.
 Il y aussi les pages des 
-<a href="http://builds.jmri.org/jenkins/job/Development/changes">plus r&#233;cents changements</a>, 
-de <a href="http://builds.jmri.org/jenkins/job/Development/lastBuild/">la plupart des r&#233;sultats</a>
-<li> La page <a href="http://builds.jmri.org/jenkins/job/FindBugs/">FindBugs</a>, 
+<a href="http://builds.jmri.org/jenkins/view/All/job/Development/job/Packages/changes">plus r&#233;cents changements</a>, 
+de <a href="http://builds.jmri.org/jenkins/job/Development/job/Builds/lastBuild/">la plupart des r&#233;sultats</a>
+<li> La page <a href="https://jmri.ci.cloudbees.com/job/Development/job/FindBugs/">FindBugs</a>, 
 &#233;tat montrant les tests les plus extensifs faits p&#233;riodiquement.
 Il y a aussi les pages des 
-<a href="http://builds.jmri.org/jenkins/job/FindBugs/changes">plus r&#233;cents changements<a> et les
-<a href="http://builds.jmri.org/jenkins/job/FindBugs/lastBuild/">r&#233;sultats les plus r&#233;cents<a>.
+<a href="https://jmri.ci.cloudbees.com/job/Development/job/FindBugs/changes">plus r&#233;cents changements<a> et les
+<a href="https://jmri.ci.cloudbees.com/job/Development/job/FindBugs/lastBuild/">r&#233;sultats les plus r&#233;cents<a>.
 
 <p>
-Apparemment liens cass&#233;s au 2013-09-03, except&#233; la page d&#233;veloppement et Jenkings</p><p>
+<!-- Apparemment liens cass&#233;s au 2013-09-03, except&#233; la page d&#233;veloppement et Jenkings</p><p> -->
+<!-- Liens réparés le 30-Mai-2014 - Alain LM -->
 Pour plus d'information sur l'usage de FindBugs par JMRI, voir la <a href="FindBugs.shtml">page s&#233;par&#233;e FindBugs</a>.
 </ul>
 

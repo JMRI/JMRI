@@ -908,6 +908,8 @@
       <xs:attribute name="turnout" type="beanNameType" />
       <xs:attribute name="rotate" type="xs:string" />
       <xs:attribute name="tristate" type="trueFalseType" />
+      
+      <xs:attribute name="directControl" type="trueFalseType" />
 
       <xs:attribute name="height" type="xs:integer" >
         <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
@@ -955,12 +957,17 @@
       <xs:attribute name="type" type="xs:string" use="required" />
       <xs:attribute name="continuing" type="xs:string" use="required" />
 
+      <xs:attribute name="xa" type="xs:float" />
       <xs:attribute name="xb" type="xs:float" use="required" />
       <xs:attribute name="xc" type="xs:float" use="required" />
+      <xs:attribute name="xd" type="xs:float" />
       <xs:attribute name="xcen" type="xs:float" use="required" />
+      <xs:attribute name="ya" type="xs:float" />
       <xs:attribute name="yb" type="xs:float" use="required" />
       <xs:attribute name="yc" type="xs:float" use="required" />
+      <xs:attribute name="yd" type="xs:float" />
       <xs:attribute name="ycen" type="xs:float" use="required" />
+      <xs:attribute name="ver" type="xs:integer" />
 
       <xs:attribute name="disabled" type="yesNoType" />
       <xs:attribute name="disableWhenOccupied" type="yesNoType" />
@@ -1141,6 +1148,7 @@
       <xs:attribute name="flip" type="yesNoType" />
       <xs:attribute name="circle" type="yesNoType" />
       <xs:attribute name="angle" type="xs:float" />
+      <xs:attribute name="hideConLines" type="yesNoType" />
 
     </xs:complexType>
 
@@ -1210,6 +1218,8 @@
             <xs:attribute name="connectname" type="xs:string" />
             <xs:attribute name="angle" type="xs:string" />
             <xs:attribute name="index" type="xs:string" />
+            <xs:attribute name="turnout" type="beanNameType" />
+            <xs:attribute name="turnoutstate" type="xs:string" /><!-- THROWN/CLOSED -->
           </xs:complexType>
         </xs:element>
       </xs:sequence>

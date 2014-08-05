@@ -45,6 +45,8 @@ public class SectionManager extends AbstractManager
 
     public SectionManager() {
         super();
+        InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
+        InstanceManager.blockManagerInstance().addVetoableChangeListener(this);
     }
     
     public int getXMLOrder(){
@@ -244,6 +246,9 @@ public class SectionManager extends AbstractManager
         return (_instance);
     }
 	
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameSection");
+    }
 
     static Logger log = LoggerFactory.getLogger(SectionManager.class.getName());
 }

@@ -37,6 +37,7 @@ public class RfidSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private RfidTrafficController rt;
     private RfidSensorManager sensorManager;
     private RfidReporterManager reporterManager;
+    private RfidProtocol protocol;
 
     public RfidSystemConnectionMemo(RfidTrafficController rt) {
         this();
@@ -65,6 +66,14 @@ public class RfidSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public void configureManagers() {
 //        sensorManager = new RfidSensorManager(getTrafficController(), getSystemPrefix());
 //        reporterManager = new RfidReporterManager(getTrafficController(), getSystemPrefix());
+    }
+
+    public RfidProtocol getProtocol() {
+        return protocol;
+    }
+
+    public final void setProtocol(RfidProtocol protocol) {
+        this.protocol = protocol;
     }
 
     public RfidSensorManager getSensorManager() {
@@ -103,18 +112,20 @@ public class RfidSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return null;
     }
     
+    @Override
     protected ResourceBundle getActionModelResourceBundle(){
         return ResourceBundle.getBundle("jmri.jmrix.rfid.RfidActionListBundle");
     }
 
     @Override
     public void dispose() {
-    	rt = null;
+        rt = null;
         InstanceManager.deregister(this, RfidSystemConnectionMemo.class);
         if (reporterManager != null)
             InstanceManager.deregister(reporterManager, RfidReporterManager.class);
         if (sensorManager != null)
             InstanceManager.deregister(sensorManager, RfidSensorManager.class);
+        protocol = null;
         super.dispose();
     }
 

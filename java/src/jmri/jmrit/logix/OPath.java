@@ -97,8 +97,13 @@ public class OPath extends jmri.Path  {
     }
 
     public void setName(String name) { 
+        if (log.isDebugEnabled()) log.debug("OPath \""+_name+"\" setName to "+name);
         if (name == null || name.length()==0) { return; }
+        String oldName  = _name;
         _name = name;
+        OBlock block = (OBlock)getBlock();
+        block.pseudoPropertyChange("pathName", oldName, _name);
+    	WarrantTableAction.pathNameChange(block, oldName, _name);
         if (_fromPortal!=null) {
         	if (_fromPortal.addPath(this)) {
         		return;

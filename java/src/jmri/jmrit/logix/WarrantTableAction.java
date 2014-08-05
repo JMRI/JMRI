@@ -145,6 +145,7 @@ public class WarrantTableAction extends AbstractAction {
         	public void actionPerformed(ActionEvent e) {
         		setupWarrantTable();
             	_nxFrame = NXFrame.getInstance();
+            	_nxFrame.setVisible(true);
             }        	
         });
         _warrantMenu.add(makeLogMenu());
@@ -160,7 +161,10 @@ public class WarrantTableAction extends AbstractAction {
             	{
                     public void actionPerformed(ActionEvent e) {
                     	_log = OpSessionLog.getInstance();
-                    	_log.showFileChooser(_tableFrame);
+                    	if (!_log.showFileChooser(_tableFrame)) {
+                    		_log = null;
+                    		return;
+                    	}
                         if (_shutDownTask == null) {
                         	_shutDownTask = new SwingShutDownTask("PanelPro Save default icon check",
                         			null, null, null)
@@ -204,7 +208,8 @@ public class WarrantTableAction extends AbstractAction {
             try {
                 _tableFrame.initComponents();
             } catch (Exception ex ) {/*bogus*/ }
-        } else {
+        }
+        if (_tableFrame!=null){
             _tableFrame.setVisible(true);
             _tableFrame.pack();
         }    	
@@ -236,6 +241,43 @@ public class WarrantTableAction extends AbstractAction {
         if (_openFrame!=null) {
             _openFrame.setVisible(true);
             _openFrame.toFront();        	
+        }
+    }
+    
+    synchronized protected static void portalNameChange(String oldName, String newName) {
+        WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
+        List <String> systemNameList = manager.getSystemNameList();
+        Iterator <String> iter = systemNameList.iterator();
+        while (iter.hasNext()) {
+            Warrant w =manager.getBySystemName(iter.next());
+            List <BlockOrder> orders = w.getBlockOrders();
+            Iterator <BlockOrder> it = orders.iterator();
+            while (it.hasNext()) {
+            	BlockOrder bo = it.next();
+            	if (oldName.equals(bo.getEntryName())) {
+            		bo.setEntryName(newName);
+            	}
+            	if (oldName.equals(bo.getExitName())) {
+            		bo.setExitName(newName);
+            	}
+            }
+        }
+    }
+
+    synchronized protected static void pathNameChange(OBlock block, String oldName, String newName) {
+        WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
+        List <String> systemNameList = manager.getSystemNameList();
+        Iterator <String> iter = systemNameList.iterator();
+        while (iter.hasNext()) {
+            Warrant w =manager.getBySystemName(iter.next());
+            List <BlockOrder> orders = w.getBlockOrders();
+            Iterator <BlockOrder> it = orders.iterator();
+            while (it.hasNext()) {
+            	BlockOrder bo = it.next();
+            	if (bo.getBlock().equals(block) && bo.getPathName().equals(oldName)) {
+            		bo.setPathName(newName);
+            	}
+            }
         }
     }
 
@@ -497,8 +539,8 @@ public class WarrantTableAction extends AbstractAction {
         JTextField _sysNameBox;
         JTextField _userNameBox;
 
-        Warrant _startW;
-        Warrant _endW;
+        private Warrant _startW;
+        private Warrant _endW;
 
         public CreateWarrantFrame() {
             setTitle(Bundle.getMessage("TitleCreateWarrant"));
@@ -597,7 +639,9 @@ public class WarrantTableAction extends AbstractAction {
             } else {
             	new WarrantFrame(w, true);
             }
-            dispose();      	
+            _startW = null;
+            _endW =null;
+            dispose();
         }
 
         private void makeWarrant() {
@@ -636,7 +680,6 @@ public class WarrantTableAction extends AbstractAction {
                 			JOptionPane.ERROR_MESSAGE);
             }
         }
-
     }
 
     static Logger log = LoggerFactory.getLogger(WarrantTableAction.class.getName());

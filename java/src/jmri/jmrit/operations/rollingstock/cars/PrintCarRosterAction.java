@@ -148,7 +148,7 @@ public class PrintCarRosterAction extends AbstractAction {
 				// car road
 				road = padAttribute(car.getRoadName().trim(), CarRoads.instance().getCurMaxNameLength());
 				// car type
-				type = padAttribute(car.getTypeName().trim(), CarTypes.instance().getCurMaxNameLength());
+				type = padAttribute(car.getTypeName().trim(), CarTypes.instance().getMaxNameSubTypeLength());
 
 				if (printCarLength.isSelected())
 					length = padAttribute(car.getLength().trim(), Control.max_len_string_length_name);
@@ -215,7 +215,7 @@ public class PrintCarRosterAction extends AbstractAction {
 		String s = Bundle.getMessage("Number")
 				+ "  "
 				+ padAttribute(Bundle.getMessage("Road"), CarRoads.instance().getCurMaxNameLength())
-				+ padAttribute(Bundle.getMessage("Type"), CarTypes.instance().getCurMaxNameLength())
+				+ padAttribute(Bundle.getMessage("Type"), CarTypes.instance().getMaxNameSubTypeLength())
 				+ (printCarLength.isSelected() ? Bundle.getMessage("Len") + "  " : "")
 				+ (printCarWeight.isSelected() ? "     " : "")
 				+ (printCarColor.isSelected() ? padAttribute(Bundle.getMessage("Color"), CarColors.instance()

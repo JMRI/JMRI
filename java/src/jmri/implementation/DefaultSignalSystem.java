@@ -171,6 +171,10 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
         }
         return retval;
     }
+    
+    public String getBeanType(){
+        return Bundle.getMessage("BeanNameSignalSystem");
+    }
 
     static Logger log = LoggerFactory.getLogger(DefaultSignalSystem.class.getName());
 }

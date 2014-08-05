@@ -1394,7 +1394,7 @@ public class ConnectivityUtil
 					}
 					else {
 						// linked turnout - node type A
-						LayoutTurnout lto = layoutEditor.findLayoutTurnoutByName(((LayoutTurnout)cNode).getLinkedTurnoutName());
+						LayoutTurnout lto = layoutEditor.getFinder().findLayoutTurnoutByName(((LayoutTurnout)cNode).getLinkedTurnoutName());
 						if (((LayoutTurnout)cNode).getLinkType()==LayoutTurnout.THROAT_TO_THROAT) {
 							if (cNodeState==0) {
 								if (lto.getContinuingSense()==Turnout.CLOSED) {
@@ -1499,7 +1499,7 @@ public class ConnectivityUtil
 						pType = LayoutEditor.TURNOUT_A;
 					}
 					else {
-						LayoutTurnout lto = layoutEditor.findLayoutTurnoutByName(((LayoutTurnout)cNode).getLinkedTurnoutName());
+						LayoutTurnout lto = layoutEditor.getFinder().findLayoutTurnoutByName(((LayoutTurnout)cNode).getLinkedTurnoutName());
 						if (((LayoutTurnout)cNode).getLinkType()==LayoutTurnout.SECOND_3_WAY) {
 							tTrack = (TrackSegment)(lto.getConnectA());
 							pType = LayoutEditor.TURNOUT_A;

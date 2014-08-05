@@ -24,7 +24,7 @@
 <h1>DecoderPro User Guide - Advanced Decoder Definitions</h1>
 
 <p>This page provides information on advanced features in
-the decoder definiton
+the decoder definition
 files for the DecoderPro Symbolic Programmer.</p>
 
 <h3>Formatting on the page</h3>
@@ -190,10 +190,68 @@ To tell DecoderPro that a decoder can do this, use an element like:
             &lt;parameter name="Modulo"&gt;100&lt;/parameter&gt;
         &lt;/capability&gt;
 </pre></code>
-For an example of where to position it etc., see the 
+<p>
+The parameters must appear in the order shown. They mean:<ul>
+<li>"Max Regular CV address" - CV addresses equal or below this don't 
+    use this mechanism. (The mechanism won't be used if the command
+    station can directly read/write the CV being requested, but 
+    even if it can't, this mechanism won't be used below this value)
+<li>"High Address CV" - The high part (see Modulo) of the CV address
+    is written here at the start of the operation
+<li>"Low Address CV" - The low part (see Modulo) of the CV address is
+    written here as the 2nd part of the operation.
+<li>"Access Register CV" - after the address values are set, this is the
+    CV that's read or written to read or set the desired real CV.
+<li>"Modulo" - value used to split the real CV address between the high and low address
+    CVs.
+</ul>
+<p>
+For example, to write 21 to CV 614 with the values shown, DecoderPro will:
+<ul>
+<li>Write 6 =(614/100) to CV 96 for the high address part
+<li>Write 14 = (614 mod 100) to CV 97 for the low address part
+<li>Write 21 to CV 99 to do the actual CV write
+</ul>
+<p>
+For an example of where to position this capability element in the file, etc., see the 
 <a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/xml/decoders/ESU_LokSoundV4_0.xml" target="_blank">
     xml/decoders/ESU_LokSoundV4_0.xml</a> file.
 
+<p>
+<a name="zimocapability"/>
+Another approach, used by e.g. Zimo, is to provide a way to page the access.
+For example, to write 21 to CV614 with one of these, you need to:
+<ul>
+<li>Write 60 =(614/100)*10 to CV 7 for the high address part
+<li>Write 21 to CV 14 (614 mod 100) to do the actual CV write
+</ul>
+This capability element will do that:
+<code><pre>
+        &lt;capability&gt;
+            &lt;name&gt;High Access via Partial Index&lt;/name&gt;
+            &lt;parameter name="Max Regular CV address"&gt;100&lt;/parameter&gt;
+            &lt;parameter name="High Address CV"&gt;7&lt;/parameter&gt;
+            &lt;parameter name="High Address Multiplier"&gt;10&lt;/parameter&gt;
+            &lt;parameter name="Modulo"&gt;100&lt;/parameter&gt;
+        &lt;/capability&gt;
+</pre></code>
+Note that it has a different "name" value. That's what selects the 
+different algorithm needed here.
+<p>
+The parameters must appear in the order shown. They mean:<ul>
+<li>"Max Regular CV address" - CV addresses equal or below this don't 
+    use this mechanism. (The mechanism won't be used if the command
+    station can directly read/write the CV being requested, but 
+    even if it can't, this mechanism won't be used below this value)
+<li>"High Address CV" - The high part (see Modulo) of the CV address
+    is written here at the start of the operation
+<li>"High Address Multiplier" - This multiplies the high part of the CV
+    address before it's stored to the High Address CV.  For example, 
+    putting a 10 here will store the high address part in the "10's digit" of
+    the High Address CV.
+<li>"Modulo" - value used to split the real CV address between the high and low address
+    CVs.
+</ul>
 
 <h4>Indexed CV Access</h4>
 
@@ -227,7 +285,7 @@ These are particularly useful when using a common fragment file
 that might be included by multiple decoder definition files (defining
 different-but-similar families)
 
-<h4 name="include">Include/Exclude During Expansion</h4>
+<h4 name="include">Include/Exclude During Variable Expansion</h4>
 
 Whether a variable element is expanded and used can be made conditional on the 
 decoder type using "include" and "exclude" attributes on &lt;variables&gt; and &lt;variable&gt; elements.
@@ -252,15 +310,66 @@ Example:
 </pre>
 
 <p>
-The variable above will only appear when expanding the decode definition
+The variable above will only appear when expanding the decoder definition
 for ModelA or product ID 400.
 <p>
-You can also put include and exclue attributes on individual choices in an enumeration-type
+You can also put include and exclude attributes on individual choices in an enumeration-type
 variable.  This can be used to e.g. only include specific lighting options in certain
 decoder families.
 <p>
-Attributes on a &lt;variables&gt; element acts on all the &lt;variable&gt; elements within it,
+Attributes on a &lt;variables&gt; element act on all the &lt;variable&gt; elements within it,
 along with any include or exclude attributes on those individual variables. 
+
+<h4 name="pane_include">Include/Exclude During Pane Creation</h4>
+
+Whether a pane (or part of a pane) is created can be made conditional on the 
+decoder type using "include" and "exclude" attributes on &lt;pane&gt; and &lt;group&gt; elements.
+<p>
+A pane will not be created:
+<ul>
+<li>If an exclude attribute is present, neither the
+decoders product ID, model name, nor family name is found in the exclude list.
+<li>If an include attribute is present, at least one of the
+decoders product ID, model name, nor family name is found in the include list.
+</ul>
+Both of these conditions must be true, and it's possible to use 
+both include and exclude on the same element, but it's more usual to just 
+use one.
+<p>
+Example:
+
+<pre>
+      &lt;pane label="My Pane" include="ModelA,400"&gt;
+        ...
+      &lt;/pane&gt;
+</pre>
+
+<p>
+&quot;My Pane&quot; will be created only when expanding the decoder definition
+for ModelA or product ID 400.
+<p>
+You can also create a &lt;group&gt; element with include and exclude attributes.
+Elements within the &lt;group&gt; will be created only if the <group> conditions are met.
+This can be used to e.g. display specific text labels only for certain
+decoder models.
+<p>
+Example:
+
+<pre>
+      &lt;group include="ModelA,400"&gt;
+        &lt;label&gt;
+          &lt;text&gt;These decoders are very old.&lt;/text&gt;
+        &lt;/label&gt;
+        &lt;label&gt;
+          &lt;text&gt;Some features are unavailable.&lt;/text&gt;
+        &lt;/label&gt;
+      &lt;/group&gt;
+</pre>
+
+<p>
+The text will be created only when expanding the decoder definition
+for ModelA or product ID 400.
+
 
 <h4 name="qualify">Run-time Qualification of Variables</h4>
 <h5>Qualifying Variables</h5>
@@ -298,7 +407,10 @@ decoder is set for short or long addressing.
   &lt;/variable&gt;
 </pre>
 
-Other available operators include "gt", "ge", "ne", "lt" and "le".
+Other available operators include "gt", "ge", "ne", "lt", "le" and "exists".
+The "exists" operator checks for whether a variable is defined or not; a "1" value
+means that it is, and a "0" means that it doesn't.
+
 <p>
 If multiple qualifier elements are present, all must be true for the 
 variable to be active and displayed.

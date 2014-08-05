@@ -100,6 +100,14 @@ public class TripleTurnoutSignalHead extends DoubleTurnoutSignalHead {
 
     public NamedBeanHandle<Turnout> getYellow() {return mYellow;}
 	public void setYellow(NamedBeanHandle<Turnout> t) {mYellow=t;}
+    
+    boolean isTurnoutUsed(Turnout t){
+        if(super.isTurnoutUsed(t))
+                return true;
+        if(getYellow()!=null && t.equals(getYellow().getBean()))
+            return true;
+        return false;
+    }
 
     static Logger log = LoggerFactory.getLogger(TripleTurnoutSignalHead.class.getName());
 }

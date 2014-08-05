@@ -3,10 +3,12 @@ package jmri.implementation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.*;
-import jmri.ConditionalAction;
 import jmri.jmrit.Sound;
 import jmri.jmrit.beantable.LogixTableAction;
 import jmri.jmrit.logix.Warrant;
+import jmri.jmrit.logix.WarrantManager;
+import jmri.jmrit.logix.OBlockManager;
+
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
 /**
@@ -36,7 +38,8 @@ public class DefaultConditionalAction implements ConditionalAction {
 
     private Timer _timer = null;
     private ActionListener _listener = null;
-    private boolean _timerActive = false; 
+    private boolean _timerActive = false;
+    private boolean _indirectAction = false;
     private Sound _sound = null;
 
 	static final java.util.ResourceBundle rbx = java.util.ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
@@ -52,61 +55,96 @@ public class DefaultConditionalAction implements ConditionalAction {
         _actionData = actionData;
         _actionString = actionStr;
         
-        NamedBean bean = null;
-        try {
-            int itemType = Conditional.ACTION_TO_ITEM[_type];
-            switch (itemType) {
-                case Conditional.ITEM_TYPE_SENSOR:
-                    bean = InstanceManager.sensorManagerInstance().provideSensor(_deviceName);
-                    if (bean == null) {
-                        log.error("invalid sensor name= \""+_deviceName+"\" in conditional action");
-                        return;
-                    }
-                    break;
-                case Conditional.ITEM_TYPE_TURNOUT:
-                    bean = InstanceManager.turnoutManagerInstance().provideTurnout(_deviceName);
-                    if (bean == null) {
-                        log.error("invalid turnout name= \""+_deviceName+"\" in conditional action");
-                        return;
-                    }
-                    break;
-                case Conditional.ITEM_TYPE_MEMORY:
-                    bean = InstanceManager.memoryManagerInstance().provideMemory(_deviceName);
-                    if (bean == null) {
-                        log.error("invalid memory name= \""+_deviceName+"\" in conditional action");
-                        return;
-                    }
-                    break;
-                case Conditional.ITEM_TYPE_LIGHT:
-                    bean = InstanceManager.lightManagerInstance().getLight(_deviceName);
-                    if (bean == null) {
-                        log.error("invalid light name= \""+_deviceName+"\" in conditional action");
-                        return;
-                    }
-                    break;
-                case Conditional.ITEM_TYPE_SIGNALMAST:
-                    bean = InstanceManager.signalMastManagerInstance().provideSignalMast(_deviceName);
-                    if (bean == null) {
-                        log.error("invalid signal mast name= \""+_deviceName+"\" in conditional action");
-                        return;
-                    }
-                    break;
-                case Conditional.ITEM_TYPE_SIGNALHEAD:
-                    bean = InstanceManager.signalHeadManagerInstance().getSignalHead(_deviceName);
-                    if (bean == null) {
-                        log.error("invalid signal head name= \""+_deviceName+"\" in conditional action");
-                        return;
-                    }
-                    break;
-            }
-        } catch (java.lang.NumberFormatException ex){
-            //Can be considered normal if the logixs are loaded prior to any other beans
+        NamedBean bean = getIndirectBean(_deviceName);
+        if (bean==null) {
+            bean = getActionBean(_deviceName);
         }
         if (bean!=null){
             _namedBean = nbhm.getNamedBeanHandle(_deviceName, bean);
         } else {
             _namedBean = null;
         }
+    }
+    /**
+     * If this is an indirect reference return the Memory bean
+     * @param devName
+     * @return
+     */
+    private Memory getIndirectBean(String devName) {
+        if (devName!=null && devName.length()>0 && devName.charAt(0)== '@') {
+            String memName = devName.substring(1);
+            Memory m = InstanceManager.memoryManagerInstance().getMemory(memName);
+            if (m != null) {
+            	_indirectAction = true;
+                return m;
+            }
+            log.error("\""+devName+"\" invalid indirect memory name in action "+_actionString+" of type "+_type);
+        } else {
+        	_indirectAction = false;        	
+        }
+        return null;
+    }
+    /**
+     * Return the device bean that will do the action
+     * @param devName
+     * @return
+     */
+    private NamedBean getActionBean(String devName) {
+    	NamedBean bean = null;
+    	try {
+    		switch (Conditional.ACTION_TO_ITEM[_type]) {
+    	        case Conditional.ITEM_TYPE_SENSOR:
+    	            bean = InstanceManager.sensorManagerInstance().provideSensor(devName);
+    	            if (bean == null) {
+    	                log.error("invalid sensor name= \""+_deviceName+"\" in conditional action");
+    	             }
+    	            break;
+    	        case Conditional.ITEM_TYPE_TURNOUT:
+    	            bean = InstanceManager.turnoutManagerInstance().provideTurnout(devName);
+    	            if (bean == null) {
+    	                log.error("invalid turnout name= \""+_deviceName+"\" in conditional action");
+    	            }
+    	            break;
+    	        case Conditional.ITEM_TYPE_MEMORY:
+    	            bean = InstanceManager.memoryManagerInstance().provideMemory(devName);
+    	            if (bean == null) {
+    	                log.error("invalid memory name= \""+_deviceName+"\" in conditional action");
+    	            }
+    	            break;
+    	        case Conditional.ITEM_TYPE_LIGHT:
+    	            bean = InstanceManager.lightManagerInstance().getLight(devName);
+    	            if (bean == null) {
+    	                log.error("invalid light name= \""+_deviceName+"\" in conditional action");
+    	            }
+    	            break;
+    	        case Conditional.ITEM_TYPE_SIGNALMAST:
+    	            bean = InstanceManager.signalMastManagerInstance().provideSignalMast(devName);
+    	            if (bean == null) {
+    	                log.error("invalid signal mast name= \""+_deviceName+"\" in conditional action");
+    	            }
+    	            break;
+    	        case Conditional.ITEM_TYPE_SIGNALHEAD:
+    	            bean = InstanceManager.signalHeadManagerInstance().getSignalHead(devName);
+    	            if (bean == null) {
+    	                log.error("invalid signal head name= \""+_deviceName+"\" in conditional action");
+    	            }
+    	            break;
+    	        case Conditional.ITEM_TYPE_WARRANT:
+    	            bean = InstanceManager.getDefault(WarrantManager.class).getWarrant(devName);
+    	            if (bean == null) {
+    	                log.error("invalid Warrant name= \""+_deviceName+"\" in conditional action");
+    	            }
+    	            break;
+    	        case Conditional.ITEM_TYPE_OBLOCK:
+    	            bean = InstanceManager.getDefault(OBlockManager.class).getOBlock(devName);
+    	            if (bean == null) {
+    	                log.error("invalid OBlock name= \""+_deviceName+"\" in conditional action");
+    	             }
+    		}
+        } catch (java.lang.NumberFormatException ex){
+        	//Can be considered normal if the logixs are loaded prior to any other beans
+        }
+        return bean;	
     }
 
 	/**
@@ -143,31 +181,9 @@ public class DefaultConditionalAction implements ConditionalAction {
 
     public void setDeviceName(String deviceName) {
         _deviceName = deviceName;
-        NamedBean bean = null;
-        int itemType = Conditional.ACTION_TO_ITEM[_type];
-        try {
-            switch (itemType) {
-                case Conditional.ITEM_TYPE_SENSOR:
-                    bean = InstanceManager.sensorManagerInstance().provideSensor(_deviceName);
-                    break;
-                case Conditional.ITEM_TYPE_TURNOUT:
-                    bean = InstanceManager.turnoutManagerInstance().provideTurnout(_deviceName);
-                    break;
-                case Conditional.ITEM_TYPE_MEMORY:
-                    bean = InstanceManager.memoryManagerInstance().provideMemory(_deviceName);
-                    break;
-                case Conditional.ITEM_TYPE_LIGHT:
-                    bean = InstanceManager.lightManagerInstance().getLight(_deviceName);
-                    break;
-                case Conditional.ITEM_TYPE_SIGNALMAST:
-                    bean = InstanceManager.signalMastManagerInstance().provideSignalMast(_deviceName);
-                    break;
-                case Conditional.ITEM_TYPE_SIGNALHEAD:
-                    bean = InstanceManager.signalHeadManagerInstance().getSignalHead(_deviceName);
-                    break;
-            }
-        } catch (java.lang.NumberFormatException ex){
-            //Can be considered normal if the logixs are loaded prior to the sensors
+        NamedBean bean = getIndirectBean(_deviceName);
+        if (bean==null) {
+            bean = getActionBean(_deviceName);
         }
         if (bean!=null){
             _namedBean = nbhm.getNamedBeanHandle(_deviceName, bean);
@@ -177,16 +193,26 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
     
     public NamedBeanHandle<?> getNamedBean(){
+    	if (_indirectAction) {
+    		Memory m = (Memory)(_namedBean.getBean());
+    		String actionName = (String)m.getValue();
+    		NamedBean bean = getActionBean(actionName);
+            if (bean!=null){
+                return nbhm.getNamedBeanHandle(actionName, bean);
+            } else {
+                return null;
+            }
+    	}
         return _namedBean;
     }
     
     public NamedBean getBean(){
         if (_namedBean!=null){
-            return (NamedBean) _namedBean.getBean();
+            return (NamedBean) getNamedBean().getBean();
         } 
         setDeviceName(_deviceName); //ReApply name as that will create namedBean, save replicating it here
         if(_namedBean!=null)
-            return (NamedBean) _namedBean.getBean();
+            return (NamedBean) getNamedBean().getBean();
         return null;
     }
 

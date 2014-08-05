@@ -123,6 +123,15 @@ public class TrackSegment
 	public int getType2() {return type2;}
 	public Object getConnect1() {return connect1;}
 	public Object getConnect2() {return connect2;}
+    protected void setNewConnect1(Object o, int type){
+        connect1 = o;
+        type1 = type;
+		
+    }
+    protected void setNewConnect2(Object o, int type){
+        connect2 = o;
+        type2 = type;
+    }
 	public boolean getDashed() {return dashed;}
 	public void setDashed(boolean dash) {dashed = dash;} 
 	public boolean getHidden() {return hidden;}
@@ -217,8 +226,8 @@ public class TrackSegment
 				log.error("bad blockname '"+tBlockName+"' in tracksegment "+ident);
 			}
 		}
-		connect1 = p.findObjectByTypeAndName(type1,tConnect1Name);
-		connect2 = p.findObjectByTypeAndName(type2,tConnect2Name);
+		connect1 = p.getFinder().findObjectByTypeAndName(type1,tConnect1Name);
+		connect2 = p.getFinder().findObjectByTypeAndName(type2,tConnect2Name);
 	}
 
 	/**
@@ -309,29 +318,42 @@ public class TrackSegment
 					dispose();
 				}
 			});
-        JMenu lineType = new JMenu("Change To");
-        lineType.add(new AbstractAction("Line") {
+        JMenu lineType = new JMenu(rb.getString("ChangeTo"));
+        lineType.add(new AbstractAction(rb.getString("Line")) {
             public void actionPerformed(ActionEvent e) {
                 changeType(0);
 				}
         });
-        lineType.add(new AbstractAction("Circle") {
+        lineType.add(new AbstractAction(rb.getString("Circle")) {
             public void actionPerformed(ActionEvent e) {
                 changeType(1);
             }
         });
-        lineType.add(new AbstractAction("Elipse") {
+        lineType.add(new AbstractAction(rb.getString("Elipse")) {
             public void actionPerformed(ActionEvent e) {
                 changeType(2);
             }
         });
         popup.add(lineType);
         if (getArc()){
-            popup.add(new AbstractAction("Flip Angle") {
+            popup.add(new AbstractAction(rb.getString("FlipAngle")) {
                     public void actionPerformed(ActionEvent e) {
                         flipAngle();
                     }
                 });
+            if(hideConstructionLines()){
+                popup.add(new AbstractAction(rb.getString("ShowConstruct")) {
+                    public void actionPerformed(ActionEvent e) {
+                        hideConstructionLines(SHOWCON);
+                    }
+                });
+            } else {
+                popup.add(new AbstractAction(rb.getString("HideConstruct")) {
+                    public void actionPerformed(ActionEvent e) {
+                        hideConstructionLines(HIDECON);
+                    }
+                });
+            }
         }
         if ((!blockName.equals("")) && (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled())){
             popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
@@ -615,6 +637,41 @@ public class TrackSegment
         return active;
     }
     
+    public final static int SHOWCON = 0x01;
+    public final static int HIDECON = 0x02; //flag set on a segment basis.
+    public final static int HIDECONALL = 0x04;  //Used by layout editor for hiding all
+    
+    public int showConstructionLine = SHOWCON;
+    
+    //Method used by Layout Editor
+    protected boolean showConstructionLinesLE(){
+        if((showConstructionLine&HIDECON)==HIDECON || (showConstructionLine&HIDECONALL)==HIDECONALL)
+            return false;
+        return true;
+    }
+    
+    public void hideConstructionLines(int hide){
+        if(hide==HIDECONALL)
+            showConstructionLine =showConstructionLine+HIDECONALL;
+        else if (hide == SHOWCON){
+            if((showConstructionLine&HIDECONALL)==HIDECONALL){
+                showConstructionLine = (showConstructionLine&(~HIDECONALL));
+            }
+            else
+                showConstructionLine = hide;
+        } else
+            showConstructionLine = HIDECON;
+        layoutEditor.redrawPanel();
+		layoutEditor.setDirty();
+    }
+    
+    public boolean hideConstructionLines(){
+        if((showConstructionLine&SHOWCON)==SHOWCON){
+            return false;
+        }
+        else return true;
+    }
+    
     /** 
     * The following are used only as a temporary store after a circle or arc has been calculated. 
     * This prevents the need to recalculate the values each time a re-draw is required.
@@ -686,6 +743,24 @@ public class TrackSegment
         startadj = Startadj;
     }
     
+    private double centreSegX;
+    public double getCentreSegX(){
+        return centreSegX;
+    }
+    
+    public void setCentreSegX(double CentreX){
+        centreSegX = CentreX;
+    }
+    
+    private double centreSegY;
+    public double getCentreSegY(){
+        return centreSegY;
+    }
+    
+    public void setCentreSegY(double CentreY){
+        centreSegY = CentreY;
+    }
+    
     private double centreX;
     public double getCentreX(){
         return centreX;
@@ -718,6 +793,126 @@ public class TrackSegment
     private double chordLength;
     public double getChordLength() { return chordLength; }
     public void setChordLength(double chord) { chordLength=chord;}
+    
+        /*
+     * The recalculation method is used when the user changes the angle dynamically in edit mode
+     * by dragging the centre of the cirle
+     */
+    protected void reCalculateTrackSegmentAngle(double x, double y){
+        
+        double pt2x;
+        double pt2y;
+        double pt1x;
+        double pt1y;
+
+        pt2x = getTmpPt2().getX();
+        pt2y = getTmpPt2().getY();
+        pt1x = getTmpPt1().getX();
+        pt1y = getTmpPt1().getY();
+        if (getFlip()){
+            pt1x = getTmpPt2().getX();
+            pt1y = getTmpPt2().getY();
+            pt2x = getTmpPt1().getX();
+            pt2y = getTmpPt1().getY();
+        }
+        //Point 1 to new point length
+        double a;
+        double o;
+        double la;
+        // Compute arc's chord
+        a = pt2x - x;
+        o = pt2y - y;
+        la=java.lang.Math.sqrt(((a*a)+(o*o)));
+        
+        double lb;
+        a = pt1x - x;
+        o = pt1y - y;
+        lb=java.lang.Math.sqrt(((a*a)+(o*o)));
+
+        double newangle=Math.toDegrees(Math.acos((-getChordLength()*getChordLength()+la*la+lb*lb)/(2*la*lb)));
+        setAngle(newangle);
+        
+    }
+    
+        /*
+     * Calculates the initally parameters for drawing a circular track segment.
+     */
+    protected void calculateTrackSegmentAngle(/*Point2D pt1, Point2D pt2*/){
+        Point2D pt1 = layoutEditor.getCoords(getConnect1(),getType1());
+        Point2D pt2 = layoutEditor.getCoords(getConnect2(),getType2());
+        if (getFlip()){
+            pt1 = layoutEditor.getCoords(getConnect2(),getType2());
+            pt2 = layoutEditor.getCoords(getConnect1(),getType1());
+        }
+        if((getTmpPt1()!=pt1) || (getTmpPt2()!=pt2) || trackNeedsRedraw()){
+            setTmpPt1(pt1);
+            setTmpPt2(pt2);
+            //setTrackStrokeWidth(g2,false);
+            double pt2x;
+            double pt2y;
+            double pt1x;
+            double pt1y;
+            pt2x = pt2.getX();
+            pt2y = pt2.getY();
+            pt1x = pt1.getX();
+            pt1y = pt1.getY();
+
+            if (getAngle() == 0.0D)
+                setTmpAngle(90.0D);
+            else
+                setTmpAngle(getAngle());
+            // Convert angle to radiants in order to speed up maths
+            double halfAngle = java.lang.Math.toRadians(getTmpAngle())/2.0D;
+            double chord;
+            double a;
+            double o;
+            double radius;
+            // Compute arc's chord
+            a = pt2x - pt1x;
+            o = pt2y - pt1y;
+            chord=java.lang.Math.sqrt(((a*a)+(o*o)));
+            setChordLength(chord);
+            // Make sure chord is not null 
+            // In such a case (pt1 == pt2), there is no arc to draw
+            if (chord > 0.0D) {
+                radius = (chord/2)/(java.lang.Math.sin(halfAngle));
+                // Circle
+                double startRad = java.lang.Math.atan2(a, o) - halfAngle;
+                setStartadj(java.lang.Math.toDegrees(startRad));
+                if(getCircle()){
+                    // Circle - Compute center
+                    setCentreX(pt2x - java.lang.Math.cos(startRad) * radius);
+                    setCentreY(pt2y + java.lang.Math.sin(startRad) * radius);
+                    
+                    // Circle - Compute rectangle required by Arc2D.Double
+                    setCW(radius * 2.0D);
+                    setCH(radius * 2.0D);
+                    setCX(getCentreX()-(radius));
+                    setCY(getCentreY()-(radius));
+                    
+                    //Compute the vlues for locating the circle
+                    
+                    setCentreSegX(getCentreX() + radius*java.lang.Math.cos(startRad+halfAngle));
+                    setCentreSegY(getCentreY() - java.lang.Math.sin(startRad+halfAngle) * radius);
+                    
+                } 
+                else {
+                    // Elipse - Round start angle to the closest multiple of 90
+                    setStartadj(java.lang.Math.round(getStartadj() / 90.0D) * 90.0D);
+                    // Elipse - Compute rectangle required by Arc2D.Double
+                    setCW(java.lang.Math.abs(a)*2.0D);
+                    setCH(java.lang.Math.abs(o)*2.0D);
+                    // Elipse - Adjust rectangle corner, depending on quadrant
+                    if (o * a < 0.0D)
+                        a = -a;
+                    else
+                        o = -o;
+                    setCX(java.lang.Math.min(pt1x, pt2x)-java.lang.Math.max(a, 0.0D));
+                    setCY(java.lang.Math.min(pt1y, pt2y)-java.lang.Math.max(o, 0.0D));
+                }
+            }
+        }
+    }
     
     static Logger log = LoggerFactory.getLogger(TrackSegment.class.getName());
 

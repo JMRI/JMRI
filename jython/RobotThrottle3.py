@@ -456,19 +456,19 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                 self.priorBlocks = self.currentBlocks
             # find signals from currentBlock
             if (self.currentBlock != None and self.next1Block != None) :
-                nearSignal = jmri.InstanceManager.layoutBlockManagerInstance().getFacingSignalHead(self.currentBlock, self.next1Block)
+                nearSignal = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager).getFacingSignalHead(self.currentBlock, self.next1Block)
                 if (nearSignal != None) :
                     self.testAddSignalListener(nearSignal)
                 if (self.debugLevel >= MediumDebug) :
                     self.msgText("finding nearSignal between " + self.giveBlockName(self.currentBlock) + " and " + self.giveBlockName(self.next1Block) + " found " + self.giveSignalName(nearSignal))
             if (self.next1Block != None and self.next2Block != None) :
-                next1Signal = jmri.InstanceManager.layoutBlockManagerInstance().getFacingSignalHead(self.next1Block, self.next2Block)
+                next1Signal = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager).getFacingSignalHead(self.next1Block, self.next2Block)
                 if (next1Signal != None) :
                     self.testAddSignalListener(next1Signal)
                 if (self.debugLevel >= MediumDebug) :
                     self.msgText("finding next1Signal between " + self.giveBlockName(self.next1Block) + " and " + self.giveBlockName(self.next2Block) + " found " + self.giveSignalName(next1Signal))
             if (self.next2Block != None and self.next3Block != None) :
-                next2Signal = jmri.InstanceManager.layoutBlockManagerInstance().getFacingSignalHead(self.next2Block, self.next3Block)
+                next2Signal = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager).getFacingSignalHead(self.next2Block, self.next3Block)
                 if (next2Signal != None) :
                     self.testAddSignalListener(next2Signal)
                 if (self.debugLevel >= MediumDebug) :

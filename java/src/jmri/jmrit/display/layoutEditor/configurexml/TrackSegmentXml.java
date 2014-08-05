@@ -49,8 +49,10 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
         if(p.getArc()){
             element.setAttribute("flip", ""+(p.getFlip()?"yes":"no"));
             element.setAttribute("circle", ""+(p.getCircle()?"yes":"no"));
-            if((p.getCircle())&& (p.getAngle()!=0.0D))
+            if((p.getCircle())&& (p.getAngle()!=0.0D)){
                 element.setAttribute("angle", ""+(p.getAngle()));
+                element.setAttribute("hideConLines", ""+(p.hideConstructionLines()?"yes":"no"));
+            }
         }
         element.setAttribute("class", "jmri.jmrit.display.configurexml.TrackSegmentXml");
         return element;
@@ -120,6 +122,10 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                 } catch ( NullPointerException e) {  // considered normal if the attribute not present
                 }
             }
+            try {
+                if (element.getAttribute("hideConLines").getValue().equals("yes"))
+                    l.hideConstructionLines(TrackSegment.HIDECON);
+            } catch ( NullPointerException e) { }//considered normal if the attribute is not present }
         }
 		// get remaining attribute
 		Attribute a = element.getAttribute("blockname");

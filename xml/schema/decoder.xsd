@@ -24,7 +24,8 @@
     <!-- needs more attribute restrictions -->
     <!-- needs attribute defaults -->
     
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+<xs:schema xmlns:xi="http://www.w3.org/2001/XInclude"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
            xmlns:docbook="http://docbook.org/ns/docbook"
            xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
@@ -38,6 +39,7 @@
     <xs:include schemaLocation="http://jmri.org/xml/schema/types/panetype.xsd"/>
     <xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='http://jmri.org/xml/schema/docbook/DocBook.xsd'/>
     <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/03/xml.xsd" />
+    <xs:import namespace="http://www.w3.org/2001/XInclude" schemaLocation="http://www.w3.org/2001/XInclude.xsd"/>
 
     <xs:annotation>
       <xs:documentation>
@@ -144,6 +146,57 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="decoderIndex-config">
+    <xs:annotation><xs:documentation>
+        Defines the content of the JMRI decoderIndex.xml file.
+    </xs:documentation></xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="decoderIndex" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="mfgList" minOccurs="1" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="manufacturer" minOccurs="1" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:attribute name="mfg" type="xs:string"/>
+                        <xs:attribute name="mfgID" type="xs:int"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="nmraListDate" type="xs:string"/>                  
+                  <xs:attribute name="updated" type="xs:string"/>                  
+                  <xs:attribute name="lastadd" type="xs:int"/>                  
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="familyList" minOccurs="1" maxOccurs="1" >
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="family" minOccurs="1" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:complexContent>
+                          <xs:extension base="FamilyType">
+                            <xs:annotation><xs:documentation>
+                                This element is the same as in the decoder definition itself, 
+                                with the addition of a file name attribute.
+                            </xs:documentation></xs:annotation>
+                            <xs:attribute name="file" type="xs:string" />
+                          </xs:extension>
+                        </xs:complexContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="version" type="xs:int"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="variables" type="VariablesType">
     <xs:annotation>
       <xs:documentation>
@@ -170,6 +223,15 @@
   </xs:element>
 
   <xs:element name="enumVal" type="EnumValType">
+    <xs:annotation>
+      <xs:documentation>
+      Provides a base element that can be used in "enumVal" fragment files, those
+      little files that are XIncluded into primary decoder files.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:element name="enumChoiceGroup" type="EnumChoiceGroupType">
     <xs:annotation>
       <xs:documentation>
       Provides a base element that can be used in "enumVal" fragment files, those
@@ -211,6 +273,10 @@
             </xs:element>
             <xs:element name="output" minOccurs="0" maxOccurs="unbounded" >
               <xs:complexType>
+                <xs:sequence>
+                  <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
+                  <xs:element name="label" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
                 <xs:attribute name="name" type="xs:string" use="required"/>
                 <xs:attribute name="label" type="xs:string" />
                 <xs:attribute name="comment" type="xs:string" />
@@ -308,6 +374,7 @@
                 <xs:enumeration value="16pin"/>
                 <xs:enumeration value="21pin"/>
                 <xs:enumeration value="DropIn"/>
+                <xs:enumeration value="SUSI"/>
                 <xs:enumeration value="other"/>
               </xs:restriction>
             </xs:simpleType>
@@ -552,7 +619,7 @@
                       <xs:attribute name="factor" type="xs:int" default="1"/>
                       <xs:attribute name="offset" type="xs:int" default="0"/>
                       <xs:attribute name="comment" type="xs:string"/>
-                      <xs:attribute name="upperMask" type="xs:string" default="VVVVVVVV" />
+                      <xs:attribute name="upperMask" type="maskType" default="VVVVVVVV" />
                     </xs:complexType>
                   </xs:element>
                   <xs:element name="compositeVal" >
@@ -579,6 +646,7 @@
                       <xs:attribute name="comment" type="xs:string"/>
                     </xs:complexType>
                   </xs:element>
+                  <xs:element ref="xi:include" minOccurs="0" maxOccurs="unbounded" />
                 </xs:choice>
                 <xs:sequence minOccurs="0" maxOccurs="unbounded">
                   <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
@@ -600,7 +668,7 @@
               </xs:sequence>
               <xs:attribute name="label" type="xs:string"/>
               <xs:attribute name="CV" type="cvNameType"/>
-              <xs:attribute name="mask" type="xs:string" default="VVVVVVVV" />
+              <xs:attribute name="mask" type="maskType" default="VVVVVVVV" />
               <xs:attribute name="readOnly" type="yesNoType" default="no" />
               <xs:attribute name="infoOnly" type="yesNoType" default="no" />
               <xs:attribute name="opsOnly" type="yesNoType" default="no" />
@@ -639,7 +707,7 @@
                         <xs:attribute name="factor" type="xs:string"/>
                         <xs:attribute name="offset" type="xs:string"/>
                         <xs:attribute name="comment" type="xs:string"/>
-                        <xs:attribute name="upperMask" type="xs:string"/>
+                        <xs:attribute name="upperMask" type="maskType" default="VVVVVVVV" />
                         <xs:attribute name="order" default="lowFirst">
                           <xs:annotation><xs:documentation>Controls whether high CV or low CV written first</xs:documentation></xs:annotation>
                           <xs:simpleType>
@@ -652,6 +720,15 @@
                       </xs:complexType>
                     </xs:element>
                   </xs:choice>
+                  <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
+                  </xs:element>
+                  <xs:element name="comment" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation><xs:documentation>Provide internationalized comment text</xs:documentation></xs:annotation>
+                  </xs:element>
+                  <xs:element name="tooltip" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation><xs:documentation>Provide internationalized tooltip text</xs:documentation></xs:annotation>
+                  </xs:element>
                   <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
                     <xs:annotation><xs:documentation>
                     Qualifies whether this variable will appear in the interface, depending
@@ -664,7 +741,7 @@
               <xs:attribute name="CV" type="xs:int"/>
               <xs:attribute name="PI" type="xs:int"/>
               <xs:attribute name="SI" type="xs:int"/>
-              <xs:attribute name="mask" type="xs:string"/>
+              <xs:attribute name="mask" type="maskType" default="VVVVVVVV" />
               <xs:attribute name="readOnly" type="yesNoType"/>
               <xs:attribute name="infoOnly" type="yesNoType"/>
               <xs:attribute name="opsOnly" type="yesNoType"/>
@@ -680,6 +757,7 @@
               <xs:attribute name="exclude" type="xs:string"/>
             </xs:complexType>
           </xs:element>
+          <xs:element ref="xi:include" minOccurs="0" maxOccurs="unbounded" />
         </xs:sequence>
     </xs:sequence>
     <xs:attribute ref="xml:base" />
@@ -725,14 +803,25 @@
 
   <xs:complexType name="EnumValType">
     <xs:annotation><xs:documentation>
-    A fixed set of choices is defined, each corresponding to a specific value
+    A variable containing a fixed set of choices is defined, each choice corresponding to a specific value
     </xs:documentation></xs:annotation>
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:element ref="docbook:copyright" minOccurs="0" maxOccurs="1" />
       <xs:element ref="docbook:authorgroup" minOccurs="0" maxOccurs="unbounded" />
       <xs:element ref="docbook:revhistory" minOccurs="0" maxOccurs="unbounded" />
-      <xs:element name="enumChoice" >
-        <xs:complexType>
+      <xs:element type="EnumChoiceType" name="enumChoice" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element type="EnumChoiceGroupType" name="enumChoiceGroup" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element ref="xi:include" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute ref="xml:base" />
+    <xs:attribute name="comment" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="EnumChoiceType">
+    <xs:annotation><xs:documentation>
+    Defines one choice within an enumVal element (though may be grouped in one or more
+    intermediate enumChoiceGroup elements)
+    </xs:documentation></xs:annotation>
           <xs:sequence minOccurs="0" maxOccurs="unbounded">
             <xs:annotation><xs:documentation>Provide an internationalized choice text</xs:documentation></xs:annotation>
             <xs:element name="choice" minOccurs="1" maxOccurs="unbounded" />
@@ -741,8 +830,19 @@
           <xs:attribute name="choice" type="xs:string" use="required"/>
           <xs:attribute name="value" type="xs:int" />
           <xs:attribute name="comment" type="xs:string"/>
-        </xs:complexType>
-      </xs:element>
+  </xs:complexType>
+
+  <xs:complexType name="EnumChoiceGroupType">
+    <xs:annotation><xs:documentation>
+    Allows grouping of enumChoice elements within an enumVal element.
+    This can be used for e.g. defining individual XML documents to be included.
+    </xs:documentation></xs:annotation>
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="docbook:copyright" minOccurs="0" maxOccurs="1" />
+      <xs:element ref="docbook:authorgroup" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element ref="docbook:revhistory" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element type="EnumChoiceType" name="enumChoice" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element type="EnumChoiceGroupType" name="enumChoiceGroup" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
     <xs:attribute ref="xml:base" />
     <xs:attribute name="comment" type="xs:string"/>
@@ -764,5 +864,18 @@
     <xs:attribute ref="xml:base" />
     <xs:attribute name="comment" type="xs:string"/>
   </xs:complexType>
+
+  <xs:simpleType name="maskType">
+    <xs:annotation>
+        <xs:documentation>
+          Type for CV mask values: 8 characters of either X or V.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:normalizedString">
+      <xs:pattern value="(V|X)*"/>
+      <xs:minLength value="8"/>
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
 
 </xs:schema>

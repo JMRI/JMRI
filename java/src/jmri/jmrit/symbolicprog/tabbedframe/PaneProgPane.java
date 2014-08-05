@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.Vector;
-import java.util.logging.Level;
 import javax.swing.*;
 import javax.swing.table.*;
 import jmri.jmrit.roster.RosterEntry;
@@ -30,7 +29,6 @@ import jmri.jmrit.symbolicprog.*;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.jdom.LocaleSelector;
 import org.jdom.Attribute;
-import org.jdom.DataConversionException;
 import org.jdom.Element;
 
 /**
@@ -69,6 +67,9 @@ import org.jdom.Element;
  */
 public class PaneProgPane extends javax.swing.JPanel
     implements java.beans.PropertyChangeListener  {
+
+    static final String LAST_GRIDX = "last_gridx";
+    static final String LAST_GRIDY = "last_gridy";
 
     protected CvTableModel _cvModel;
     IndexedCvTableModel _indexedCvModel;
@@ -309,11 +310,11 @@ public class PaneProgPane extends javax.swing.JPanel
         bottom.add(readChangesButton);
         bottom.add(writeChangesButton);
         if (_cvTable)
-        	bottom.add(confirmChangesButton);
+            bottom.add(confirmChangesButton);
         bottom.add(readAllButton);
         bottom.add(writeAllButton);
         if (_cvTable)
-        	bottom.add(confirmAllButton);
+            bottom.add(confirmAllButton);
 
         // don't show buttons if no programmer at all
         if (_cvModel.getProgrammer()!= null) add(bottom);
@@ -1193,7 +1194,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * Create a new group from the JDOM group Element
      */
     @SuppressWarnings("unchecked")
-	protected JPanel newGroup(Element element, boolean showStdName, Element modelElem) {
+    protected JPanel newGroup(Element element, boolean showStdName, Element modelElem) {
 
         // create a panel to add as a new column or row
         final JPanel c = new JPanel();
@@ -1201,6 +1202,11 @@ public class PaneProgPane extends javax.swing.JPanel
         GridBagLayout g = new GridBagLayout();
         GridBagConstraints cs = new GridBagConstraints();
         c.setLayout(g);
+
+        // handle include/exclude
+        if ( !PaneProgFrame.isIncludedFE(element, modelElem, rosterEntry, "", "") ) {
+            return c;
+        }
 
         // handle the xml definition
         // for all elements in the column or row
@@ -1334,7 +1340,12 @@ public class PaneProgPane extends javax.swing.JPanel
      * Create a new grid group from the JDOM group Element
      */
     @SuppressWarnings("unchecked")
-	protected void newGridGroup(Element element, final JPanel c, GridBagLayout g, GridGlobals globs, boolean showStdName, Element modelElem) {
+    protected void newGridGroup(Element element, final JPanel c, GridBagLayout g, GridGlobals globs, boolean showStdName, Element modelElem) {
+
+        // handle include/exclude
+        if ( !PaneProgFrame.isIncludedFE(element, modelElem, rosterEntry, "", "") ) {
+            return;
+        }
 
         // handle the xml definition
         // for all elements in the column or row
@@ -1353,17 +1364,17 @@ public class PaneProgPane extends javax.swing.JPanel
                     g.setConstraints(l, globs.gridConstraints);
                     c.add(l);
 //                     globs.gridConstraints.gridwidth = 1;
-					// handle qualification if any
-					QualifierAdder qa = new QualifierAdder() {
-						protected Qualifier createQualifier(VariableValue var, String relation, String value) {
-							return new JComponentQualifier(l, var, Integer.parseInt(value), relation);
-						}
-						protected void addListener(java.beans.PropertyChangeListener qc) {
-							l.addPropertyChangeListener(qc);
-						}
-					};
-		
-					qa.processModifierElements(e, _varModel);
+                    // handle qualification if any
+                    QualifierAdder qa = new QualifierAdder() {
+                        protected Qualifier createQualifier(VariableValue var, String relation, String value) {
+                            return new JComponentQualifier(l, var, Integer.parseInt(value), relation);
+                        }
+                        protected void addListener(java.beans.PropertyChangeListener qc) {
+                            l.addPropertyChangeListener(qc);
+                        }
+                    };
+        
+                    qa.processModifierElements(e, _varModel);
                 }
             } else if (name.equals("group")) {
                                 // nested "group" elements ...
@@ -1384,7 +1395,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * Create a single column from the JDOM column Element
      */
     @SuppressWarnings("unchecked")
-	public JPanel newColumn(Element element, boolean showStdName, Element modelElem) {
+    public JPanel newColumn(Element element, boolean showStdName, Element modelElem) {
 
         // create a panel to add as a new column or row
         final JPanel c = new JPanel();
@@ -1529,7 +1540,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * Create a single row from the JDOM column Element
      */
     @SuppressWarnings("unchecked")
-	public JPanel newRow(Element element, boolean showStdName, Element modelElem) {
+    public JPanel newRow(Element element, boolean showStdName, Element modelElem) {
 
         // create a panel to add as a new column or row
         final JPanel c = new JPanel();
@@ -1573,7 +1584,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 makeCvTable(cs, g, c);
             } else if (name.equals("indxcvtable")) {
                 log.debug("starting to build IndexedCvTable pane");
-                JTable	indxcvTable	= new JTable(_indexedCvModel);
+                JTable indxcvTable = new JTable(_indexedCvModel);
                 JScrollPane cvScroll = new JScrollPane(indxcvTable);
                 indxcvTable.setDefaultRenderer(JTextField.class, new ValueRenderer());
                 indxcvTable.setDefaultRenderer(JButton.class, new ValueRenderer());
@@ -1741,12 +1752,19 @@ public class PaneProgPane extends javax.swing.JPanel
      * Create a griditem from the JDOM  Element
      */
     @SuppressWarnings("unchecked")
-	public JPanel newGridItem(Element element, boolean showStdName, Element modelElem, GridGlobals globs) {
+    public JPanel newGridItem(Element element, boolean showStdName, Element modelElem, GridGlobals globs) {
 
                 List<Attribute> itemAttList = element.getAttributes(); // get item-level attributes
                 List<Attribute> attList = new ArrayList<Attribute>(globs.gridAttList);
                 attList.addAll(itemAttList); // merge grid and item-level attributes
+//                log.info("New gridtiem -----------------------------------------------");
 //                log.info("Attribute list:"+attList);
+                attList.add(new Attribute(LAST_GRIDX,""));
+                attList.add(new Attribute(LAST_GRIDY,""));
+//                log.info("Updated Attribute list:"+attList);
+//                 Attribute ax = attList.get(attList.size()-2);
+//                 Attribute ay = attList.get(attList.size()-1);
+//                log.info("ax="+ax+";ay="+ay);
 //                log.info("Previous gridxCurrent="+globs.gridxCurrent+";gridyCurrent="+globs.gridyCurrent);
                 for (int j = 0; j < attList.size(); j++) {
                     Attribute attrib = attList.get(j);
@@ -1754,8 +1772,33 @@ public class PaneProgPane extends javax.swing.JPanel
                     String attribRawValue = attrib.getValue();
                     Field constraint = null;
                     String constraintType = null;
+                    // make sure we only process the last gridx or gridy attribute in the list
+                    if ( attribName.equals("gridx") ) {
+                        Attribute a =new Attribute(LAST_GRIDX,attribRawValue);
+                        attList.set(attList.size()-2,a);
+//                        log.info("Moved & Updated Attribute list:"+attList);
+                        continue; //. don't process now
+                    }
+                    if ( attribName.equals("gridy") ) {
+                        Attribute a =new Attribute(LAST_GRIDY,attribRawValue);
+                        attList.set(attList.size()-1,a);
+//                        log.info("Moved & Updated Attribute list:"+attList);
+                        continue; //. don't process now
+                    }
+                    if ( attribName.equals(LAST_GRIDX) ) { // we must be at end of original list, restore last gridx
+                        attribName = "gridx";
+                        if ( attribRawValue.equals("") ) { // don't process blank (unused)
+                            continue;
+                        }
+                    }
+                    if ( attribName.equals(LAST_GRIDY) ) { // we must be at end of original list, restore last gridy
+                        attribName = "gridy";
+                        if ( attribRawValue.equals("") ) { // don't process blank (unused)
+                            continue;
+                        }
+                    }
                     if ( ( attribName.equals("gridx") || attribName.equals("gridy") ) && attribRawValue.equals("RELATIVE") ) {
-                        attribRawValue = "NEXT"; // NEXT is a synonym for Relative
+                        attribRawValue = "NEXT"; // NEXT is a synonym for RELATIVE
                     }
                     if ( attribName.equals("gridx")  && attribRawValue.equals("CURRENT") ) {
                         attribRawValue = String.valueOf(Math.max(0,globs.gridxCurrent));
@@ -1769,6 +1812,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     if ( attribName.equals("gridy")  && attribRawValue.equals("NEXT") ) {
                         attribRawValue = String.valueOf(++globs.gridyCurrent);
                     }
+//                    log.info("attribName="+attribName+";attribRawValue="+attribRawValue);
                     try {
                         constraint = globs.gridConstraints.getClass().getDeclaredField(attribName);
                         constraintType = constraint.getType().toString();
@@ -1872,7 +1916,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 makeCvTable(cs, g, c);
             } else if (name.equals("indxcvtable")) {
                 log.debug("starting to build IndexedCvTable pane");
-                JTable	indxcvTable	= new JTable(_indexedCvModel);
+                JTable indxcvTable = new JTable(_indexedCvModel);
                 JScrollPane cvScroll = new JScrollPane(indxcvTable);
                 indxcvTable.setDefaultRenderer(JTextField.class, new ValueRenderer());
                 indxcvTable.setDefaultRenderer(JButton.class, new ValueRenderer());
@@ -1951,8 +1995,8 @@ public class PaneProgPane extends javax.swing.JPanel
             }
         }
 
-			globs.gridxCurrent = globs.gridConstraints.gridx;
-			globs.gridyCurrent = globs.gridConstraints.gridy;
+            globs.gridxCurrent = globs.gridConstraints.gridx;
+            globs.gridyCurrent = globs.gridConstraints.gridy;
 //                log.info("Updated gridxCurrent="+globs.gridxCurrent+";gridyCurrent="+globs.gridyCurrent);
 
         // add glue to the bottom to allow resize
@@ -2064,7 +2108,7 @@ public class PaneProgPane extends javax.swing.JPanel
         // instead of forcing the columns to fill the frame (and only fill)
         cvTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        JScrollPane 	cvScroll	= new JScrollPane(cvTable);
+        JScrollPane  cvScroll = new JScrollPane(cvTable);
         cvScroll.setColumnHeaderView(cvTable.getTableHeader());
 
         cs.gridheight = GridBagConstraints.REMAINDER;
@@ -2103,8 +2147,7 @@ public class PaneProgPane extends javax.swing.JPanel
         try { if (a!=null) extFnsESU = (a.getValue()).equalsIgnoreCase("yes");}
         catch (Exception ex) {log.error("error handling decoder's extFnsESU value");}        
         if (extFnsESU) {
-            FnMapPanelESU l = new FnMapPanelESU(_varModel, varList, modelElem, rosterEntry);
-//             FnMapPanelESU l = new FnMapPanelESU(_varModel, varList, modelElem, rosterEntry, _cvModel);
+            FnMapPanelESU l = new FnMapPanelESU(_varModel, varList, modelElem, rosterEntry, _cvModel);
             fnMapListESU.add(l); // remember for deletion
             cs.gridwidth = GridBagConstraints.REMAINDER;
             g.setConstraints(l, cs);
@@ -2258,20 +2301,46 @@ public class PaneProgPane extends javax.swing.JPanel
         // need to update this with e.g. the specific CV numbers
         if (_cvModel.getProgrammer()!= null
             && !_cvModel.getProgrammer().getCanRead()) {
-            start = start+" (Hardware cannot read)";
+            start = addTextHTMLaware(start, " (Hardware cannot read)");
         }
         if (_cvModel.getProgrammer()!= null
             && !_cvModel.getProgrammer().getCanWrite()) {
-            start = start+" (Hardware cannot write)";
+            start = addTextHTMLaware(start, " (Hardware cannot write)");
         }
         
         // indicate other reasons for read/write constraints
-        if (variable.getReadOnly()) start = start+" (Defined to be read only)";
-        if (variable.getWriteOnly()) start = start+" (Defined to be read only)";
+        if (variable.getReadOnly()) start = addTextHTMLaware(start, " (Defined to be read only)");
+        if (variable.getWriteOnly()) start = addTextHTMLaware(start, " (Defined to be write only)");
         
         return start;
     }
     
+    public static final String CLOSE_TAG = "</html>";
+
+    /** 
+     * Appends text to a String possibly in HTML format (as used in many Swing components).
+     *
+     * Ensures any appended text is added prior to the closing </html> tag, if there is one.
+     *
+     * @param baseText  original text 
+     * @param extraText text to be appended to original text
+     * @return combined text
+     */
+    public static String addTextHTMLaware(String baseText, String extraText) {
+        String result;
+        
+        if (baseText == null || baseText.length() < 1) {
+            result = extraText;
+        } else {
+            if (baseText.endsWith(CLOSE_TAG)) {
+                result = baseText.substring(0,baseText.length()-CLOSE_TAG.length()) + extraText + CLOSE_TAG;
+            } else {
+                result = baseText + extraText;
+            }
+        }
+        return result;
+    }
+
     /** 
      * Optionally add CV numbers and bit numbers to tool tip text based on Roster Preferences setting.
      *
@@ -2321,11 +2390,12 @@ public class PaneProgPane extends javax.swing.JPanel
             if (toolTip == null) {
                 toolTip = descString;
             } else {
-                toolTip = toolTip+" ("+descString+")";
+                toolTip = addTextHTMLaware(toolTip, " ("+descString+")");
             }
         } else {
-            if (toolTip == null)
+            if (toolTip == null) {
                 toolTip = "";
+            }
         }
         
         return toolTip;
@@ -2384,6 +2454,13 @@ public class PaneProgPane extends javax.swing.JPanel
         }
         fnMapList.clear();
         fnMapList = null;
+
+        // dispose of any fnMaps
+        for (int i=0; i<fnMapListESU.size(); i++) {
+            fnMapListESU.get(i).dispose();
+        }
+        fnMapListESU.clear();
+        fnMapListESU = null;
 
         readChangesButton = null;
         writeChangesButton = null;

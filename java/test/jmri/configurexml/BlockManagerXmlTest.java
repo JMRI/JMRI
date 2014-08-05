@@ -28,6 +28,7 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import junit.framework.TestCase;
 
 /**
  * Tests for BlockManagerXml.
@@ -38,12 +39,12 @@ import junit.framework.TestSuite;
  * @author Bob Coleman Copyright 2012
  * @version $Revision$
  */
-public class BlockManagerXmlTest extends LoadFileTestBase {
+public class BlockManagerXmlTest extends TestCase {
 
     public void testLoadCurrent() throws Exception {
         // load file
         InstanceManager.configureManagerInstance()
-            .load(new java.io.File("java/test/jmri/configurexml/LoadBlockManagerFileTest.xml"));
+            .load(new java.io.File("java/test/jmri/configurexml/load/BlockManagerXmlTest.xml"));
     
         // check existance of blocks
         Assert.assertNotNull(InstanceManager.blockManagerInstance().getBlock("IB1"));
@@ -332,60 +333,7 @@ public class BlockManagerXmlTest extends LoadFileTestBase {
 
         }
     }
-    
-    public void testLoadStoreCurrent() throws Exception {
-        // load manager
-        java.io.File inFile = new java.io.File("java/test/jmri/configurexml/LoadBlockManagerFileTest.xml");
-        
-        // load file
-        InstanceManager.configureManagerInstance()
-            .load(inFile);
-    
-        // store file
-        FileUtil.createDirectory(FileUtil.getUserFilesPath()+"temp");
-        File outFile = new File(FileUtil.getUserFilesPath()+"temp/LoadBlockManagerFileTest.xml");
-        InstanceManager.configureManagerInstance()
-            .storeConfig(outFile);
-        
-        // compare files, except for certain special lines
-        BufferedReader inFileStream = new BufferedReader(
-                new InputStreamReader(
-                    new FileInputStream(
-                        new java.io.File("java/test/jmri/configurexml/LoadBlockManagerFileTestRef.xml"))));
-        BufferedReader outFileStream = new BufferedReader(
-                new InputStreamReader(
-                    new FileInputStream(outFile)));
-        String inLine;
-        String outLine;
-        while ( (inLine = inFileStream.readLine())!=null && (outLine = outFileStream.readLine())!=null) {
-            if (!inLine.startsWith("  <!--Written by JMRI version")
-                && !inLine.startsWith("  <timebase")   // time changes from timezone to timezone
-                && !inLine.startsWith("    <test>")   // version changes over time
-                && !inLine.startsWith("    <modifier")   // version changes over time
-                && !inLine.startsWith("    <minor")   // version changes over time
-                && !inLine.startsWith("<?xml-stylesheet")   // Linux seems to put attributes in different order
-                && !inLine.startsWith("    <modifier>This line ignored</modifier>"))
-                    Assert.assertEquals(inLine, outLine);
-        }
-        
-        outFileStream.close();
-        inFileStream.close();
-    }
-        
-    public void testValidateOne() {
-        validate(new java.io.File("java/test/jmri/configurexml/LoadBlockManagerFileTest.xml"));
-    }
-
-    public void testValidateRef() {
-        validate(new java.io.File("java/test/jmri/configurexml/LoadBlockManagerFileTestRef.xml"));
-    }
-
-
-/**
- * The following was here and will be removed shortly:
- * <P>
- * This is the stub by Bob Jacobsen Copyright (C) 2008 
- */
+            
 
     /**
      * This test checks that the store operation runs,

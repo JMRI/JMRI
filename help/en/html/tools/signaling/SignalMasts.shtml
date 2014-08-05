@@ -3,8 +3,10 @@
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
 <!-- $Id$ -->
-<title>JMRI: Signal Masts</title>
+<title>JMRI: Signal Masts documentation</title>
 
+<META name="Author" content="Bob Jacobsen, Egbert Broerse">
+<META name="Date.Modified" content="20140515"/>
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -23,29 +25,34 @@
 
 <H1>JMRI: Signal Masts</H1>
 <p class=subtitle>
-    Background information on JMRI Signal Masts
+    Using Signal Masts
 </p>
 
 <div class=para>
-<a href="../../../package/jmri/jmrit/beantable/SignalMastTable.png">
-   <img src="../../../package/jmri/jmrit/beantable/SignalMastTable.png" 
-        height="86" width="338" align="right">
+<a href="../../../package/jmri/jmrit/beantable/SignalMasts.png">
+   <img src="../../../package/jmri/jmrit/beantable/SignalMasts.png" 
+        width="619" height="166" align="right">
 </a>
-The JMRI "SignalMast" objects allow you to display prototypical aspects on 
-signals.  For background information, see the 
-<a href="AspectSignaling.shtml">Aspect Signaling</a> page.
+<p>JMRI Signal Mast objects allow you to display prototypical Aspects on 
+	signals. For background information, see the <a href="AspectSignaling.shtml">Aspect Signaling</a> page.</p>
+<a name="add"><h3>The Signal Masts Table</h3></a>
+<p>Signal Masts are configured through the
+<a href="../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Masts Table</a>. You access this tool from the <b>Tools > Tables > Signal Masts</b> menu.
 <p>
-Signal Masts are configured through the
-<a href="../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Mast Table</a>
-You add new ones with the "Add..."  button
-on the table, which takes you to the
-<a href="../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml">"Add Signal Mast" window</a>.
+From the table, you can manually set individual Signal Masts to any Aspect that they're able to
+	display by clicking on one of the buttons in the "Aspect" column.<br/>
+	You can change the settings of a Signal Mast by clicking on the "Edit" button in the corresponding line.</p>
 
-<p>
-From the table, you can set individual signal masts to any aspect that they're able to
-display by clicking in the "Aspect" column.
+<a name="add"><h3>Creating a Signal Mast</h3></a>
+	<p>You add a new Signal Mast by clicking on the "Add..."  button
+at the bottom of the Signal Masts Table, which takes you to the
+	<a href="../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml">"Add Signal Mast" window</a>.</p>
+	
+	<h2>Saving and Reloading Configuration</h2>
 
-
+The Signal Mast information is saved as part of the JMRI configuration in an XML file, along with control panel setup and similar stuff. For more information on creating and displaying panels, including how to show signals on your panels, please see the <a href="../../apps/PanelPro/Panels.shtml">Panels pages</a>.
+	
+	<p>Back to the <a href="index.shtml#tools">Signaling main help page</a>.</p>
 <!--#include virtual="/Footer" -->
 </body>
 </html>

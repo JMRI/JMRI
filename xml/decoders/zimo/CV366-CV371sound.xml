@@ -5,25 +5,31 @@
   <variable item="Maximum volume of Turbocharger" CV="366" default="48">
     <decVal min="0" max="255"/>
     <label>Maximum volume of Turbocharger</label>
+   <label xml:lang="it">Volume Max. Turbocompressore</label>
   </variable>
   <variable item="Turbocharger dependence on speed" CV="367" default="150" tooltip="Frequency is dependant on speed">
     <decVal min="0" max="255"/>
     <label>Turbocharger dependence on speed</label>
+    <label xml:lang="it">Turbocompressore in funzione della Velocità</label>
   </variable>
   <variable item="Turbocharger dependence on acceleration" CV="368" default="100" tooltip="Frequency is dependant on the difference between selected speed step and the actual speed">
     <decVal min="0" max="255"/>
     <label>Turbocharger dependence on acceleration</label>
+    <label xml:lang="it">Turbocompressore in funzione della accellerazione</label>
   </variable>
   <variable item="Minimum load on the Turbocharger" CV="369" default="30" tooltip="Threshold of audible sound of the turbocharger, the load is determined by CV367 and 368">
     <decVal min="0" max="255"/>
     <label>Minimum load on the Turbocharger</label>
+    <label xml:lang="it">Carico Min. Turbocompressore</label>
   </variable>
   <variable item="Increase in frequency of the Turbocharger" CV="370" default="25" tooltip="The rate of change of an increase in the frequency of the turbocharger">
     <decVal min="0" max="255"/>
     <label>Increase in frequency of the Turbocharger</label>
+    <label xml:lang="it">Incremento frequenza Turbocompressore</label>
   </variable>
   <variable item="Decrease in frequency of the Turbocharger" CV="371" default="15" tooltip="The rate of change of a decrease in the frequency of the turbocharger">
     <decVal min="0" max="255"/>
     <label>Decrease in frequency of the Turbocharger</label>
+    <label xml:lang="it">Decremento frequenza Turbocompressore</label>
   </variable>
 </variables>

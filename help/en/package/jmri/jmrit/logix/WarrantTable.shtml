@@ -204,7 +204,14 @@ If a train has been assigned, that is, has a valid DCC address in the warrant,
 then a throttle can be acquired by pressing the <b>Start</b> button.  This
 throttle will operate the acquired train and all the throttle commands will be
 recorded until the <b>Stop</b> button is pressed.
-<p>
+<ul>
+	<b>NOTE:</b> It can be inconvienent to use the computer screen Learn Mode 
+	throttle.  Under LocoNet a handheld throttle may "steal" the screen throttle
+	address and its commands will be recorded.  For other systems a 
+	walkaround WiFi throttle
+	can be used to record commands.  Whatever thtottle is used, start 
+	and stop the recording with the screen buttons.
+</ul>
 The learn script should be done with a completely clear route - All turnouts 
 set should be set for the route, all blocks unoccupied (except origin), all 
 signals should be set for clear runing and no changes made during the recording

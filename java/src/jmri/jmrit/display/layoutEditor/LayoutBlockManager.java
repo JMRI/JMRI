@@ -36,6 +36,8 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 
     public LayoutBlockManager() {
         super();
+        InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
+        InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
     }
     
     public int getXMLOrder(){
@@ -314,43 +316,43 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 			switch (cType) {
 				case LayoutConnectivity.XOVER_BOUNDARY_AB:
 					if (facingIsBlock1) 
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
+						return lt.getSignalHead(LayoutTurnout.POINTA);
 					else 
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
+						return lt.getSignalHead(LayoutTurnout.POINTB);
 				case LayoutConnectivity.XOVER_BOUNDARY_CD:
 					if (facingIsBlock1) 
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
+						return lt.getSignalHead(LayoutTurnout.POINTC);
 					else 
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalD1Name()));
+						return lt.getSignalHead(LayoutTurnout.POINTD);
 				case LayoutConnectivity.XOVER_BOUNDARY_AC:
 					if (facingIsBlock1) {
-						if ( (lt.getSignalA2Name()==null) || (lt.getSignalA2Name().equals("")) )
+						if ( lt.getSignalHead(LayoutTurnout.POINTA2)==null )
 							//there is no signal head for diverging (crossed over)
-							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
+							return lt.getSignalHead(LayoutTurnout.POINTA);
 						else
 							// there is a diverging (crossed over) signal head, return it
-							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA2Name()));						
+							return lt.getSignalHead(LayoutTurnout.POINTA2);
 					}
 					else {
-						if ( (lt.getSignalC2Name()==null) || (lt.getSignalC2Name().equals("")) )
-							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
+						if ( lt.getSignalHead(LayoutTurnout.POINTC2)==null )
+							return lt.getSignalHead(LayoutTurnout.POINTC);
 						else
-							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC2Name()));						
+							return lt.getSignalHead(LayoutTurnout.POINTC2);
 					}
 				case LayoutConnectivity.XOVER_BOUNDARY_BD:
 					if (facingIsBlock1) {
-						if ( (lt.getSignalB2Name()==null) || (lt.getSignalB2Name().equals("")) )
+						if ( lt.getSignalHead(LayoutTurnout.POINTB2)==null )
 							//there is no signal head for diverging (crossed over)
-							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
+							return lt.getSignalHead(LayoutTurnout.POINTB);
 						else
 							// there is a diverging (crossed over) signal head, return it
-							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB2Name()));						
+							return lt.getSignalHead(LayoutTurnout.POINTB2);						
 					}
 					else {
-						if ( (lt.getSignalD2Name()==null) || (lt.getSignalD2Name().equals("")) )
-							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalD1Name()));
+						if ( lt.getSignalHead(LayoutTurnout.POINTD2)==null )
+							return lt.getSignalHead(LayoutTurnout.POINTD);
 						else
-							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalD2Name()));						
+							return lt.getSignalHead(LayoutTurnout.POINTD2);						
 					}
 			}
 			// should never reach here, but ...
@@ -368,14 +370,14 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 		if (cType==LayoutEditor.TRACK) {
 			// block boundary is at an Anchor Point
 			LayoutEditorTools tools = new LayoutEditorTools(panel);
-			PositionablePoint p = panel.findPositionablePointAtTrackSegments(tr,(TrackSegment)connected);
+			PositionablePoint p = panel.getFinder().findPositionablePointAtTrackSegments(tr,(TrackSegment)connected);
 			boolean block1IsWestEnd = tools.isAtWestEndOfAnchor(tr,p);
 			if ( (block1IsWestEnd && facingIsBlock1) || (!block1IsWestEnd && !facingIsBlock1) ) {
 				// block1 is on the west (north) end of the block boundary
-				return (InstanceManager.signalHeadManagerInstance().getSignalHead(p.getEastBoundSignal()));
+				return p.getEastBoundSignalHead();
 			}
 			else {
-				return (InstanceManager.signalHeadManagerInstance().getSignalHead(p.getWestBoundSignal()));
+				return p.getWestBoundSignalHead();
 			}
 		}
 		if (cType==LayoutEditor.TURNOUT_A) {
@@ -384,9 +386,9 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 			if (lt.getLinkType()==LayoutTurnout.NO_LINK) {
 				// standard turnout or A connection of a crossover turnout
 				if (facingIsBlock1) {
-					if ( (lt.getSignalA2Name()==null) || (lt.getSignalA2Name().equals("")) )
+					if ( lt.getSignalHead(LayoutTurnout.POINTA2)==null )
 						//there is no signal head for diverging 
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
+						return lt.getSignalHead(LayoutTurnout.POINTA);
 					else {
 						// check if track segments at B or C are in protected block (block 2)
 						if ( ((TrackSegment)(lt.getConnectB())).getBlockName().equals(protectedBlock.getUserName()) ) {
@@ -394,9 +396,9 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 							if ( !(((TrackSegment)lt.getConnectC()).getBlockName().equals(protectedBlock.getUserName())) ) {
 								// track segment connected at C is not in block2, return continuing signal head at A
 								if (lt.getContinuingSense()==Turnout.CLOSED) 
-									return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
+									return lt.getSignalHead(LayoutTurnout.POINTA);
 								else 
-									return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA2Name()));
+									return lt.getSignalHead(LayoutTurnout.POINTA2);
 							}
 							else {
 								// B and C both in block2, check turnout position to decide which signal head to return
@@ -404,11 +406,11 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 								if ( ( (state==Turnout.CLOSED) && (lt.getContinuingSense()==Turnout.CLOSED) ) ||
 										( (state==Turnout.THROWN) && (lt.getContinuingSense()==Turnout.THROWN) ) ) 
 									// continuing
-										return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
+										return lt.getSignalHead(LayoutTurnout.POINTA);
 								else if ( ( (state==Turnout.THROWN) && (lt.getContinuingSense()==Turnout.CLOSED) ) ||
 										( (state==Turnout.CLOSED) && (lt.getContinuingSense()==Turnout.THROWN) ) ) 
 									// diverging
-									return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA2Name()));
+									return lt.getSignalHead(LayoutTurnout.POINTA2);
 								else {
 									// turnout state is UNKNOWN or INCONSISTENT
 									log.error("Cannot choose signal head because turnout "+lt.getTurnout().getSystemName()+
@@ -421,9 +423,9 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 						if ( (((TrackSegment)lt.getConnectC()).getBlockName().equals(protectedBlock.getUserName())) ) {
 							// track segment connected at C is in block 2, return diverging signal head
 							if (lt.getContinuingSense()==Turnout.CLOSED)
-								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA2Name()));
+								return lt.getSignalHead(LayoutTurnout.POINTA2);
 							else 
-								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
+								return lt.getSignalHead(LayoutTurnout.POINTA);
 						}
 						else {
 							// neither track segment is in block 2 - should never get here unless layout turnout is 
@@ -441,21 +443,21 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 						// track segment connected at B matches block 1, check C
 						if ( !(((TrackSegment)lt.getConnectC()).getBlockName().equals(facingBlock.getUserName())) ) 
 							// track segment connected at C is not in block 2, return signal head at continuing end
-							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
+							return lt.getSignalHead(LayoutTurnout.POINTB);
 						else {
 							// B and C both in block 1, check turnout position to decide which signal head to return
 							int state = lt.getTurnout().getKnownState();
 							if ( ( (state==Turnout.CLOSED) && (lt.getContinuingSense()==Turnout.CLOSED) ) ||
 										( (state==Turnout.THROWN) && (lt.getContinuingSense()==Turnout.THROWN) ) )
 								// continuing  
-								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
+								return lt.getSignalHead(LayoutTurnout.POINTB);
 							else if ( ( (state==Turnout.THROWN) && (lt.getContinuingSense()==Turnout.CLOSED) ) ||
 										( (state==Turnout.CLOSED) && (lt.getContinuingSense()==Turnout.THROWN) ) ) {
 								// diverging, check for second head
-								if ( (lt.getSignalC2Name()==null) || (lt.getSignalC2Name().equals("")) )
-									return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
+								if ( lt.getSignalHead(LayoutTurnout.POINTC2)==null )
+									return lt.getSignalHead(LayoutTurnout.POINTC);
 								else 
-									return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC2Name()));							
+									return lt.getSignalHead(LayoutTurnout.POINTC2);
 							}
 							else {
 								// turnout state is UNKNOWN or INCONSISTENT
@@ -468,10 +470,10 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 					// track segment connected at B is not in block 1
 					if ( ((TrackSegment)lt.getConnectC()).getBlockName().equals(facingBlock.getUserName()) ) {
 						// track segment connected at C is in block 1, return diverging signal head, check for second head
-						if ( (lt.getSignalC2Name()==null) || (lt.getSignalC2Name().equals("")) )
-							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
+						if ( lt.getSignalHead(LayoutTurnout.POINTC2)==null )
+							return lt.getSignalHead(LayoutTurnout.POINTC);
 						else 
-							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC2Name()));
+							return lt.getSignalHead(LayoutTurnout.POINTC2);
 					}
 					else {
 						// neither track segment is in block 1 - should never get here unless layout turnout is 
@@ -498,29 +500,29 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 					// select throat signal according to state of the 3-way turnout
 					int state = lt.getTurnout().getKnownState();
 					if (state==Turnout.THROWN) {
-						if ( (lt.getSignalA2Name()==null) || (lt.getSignalA2Name().equals("")) ) 
-							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
+						if ( lt.getSignalHead(LayoutTurnout.POINTA2)==null ) 
+							return lt.getSignalHead(LayoutTurnout.POINTA);
 						else 
-							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA2Name()));
+							return lt.getSignalHead(LayoutTurnout.POINTA2);
 					}
 					else if (state==Turnout.CLOSED) {
 						LayoutTurnout tLinked = getLayoutTurnoutFromTurnoutName(lt.getLinkedTurnoutName(),panel);
 						state = tLinked.getTurnout().getKnownState();
 						if (state==Turnout.CLOSED) {						
 							if (tLinked.getContinuingSense()==Turnout.CLOSED) 
-								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));								
-							else if ( (lt.getSignalA3Name()==null) || (lt.getSignalA3Name().equals("")) ) 
-								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
+								return lt.getSignalHead(LayoutTurnout.POINTA);								
+							else if ( lt.getSignalHead(LayoutTurnout.POINTA3)==null ) 
+								return lt.getSignalHead(LayoutTurnout.POINTA);
 							else 
-								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA3Name()));
+								return lt.getSignalHead(LayoutTurnout.POINTA3);
 						}
 						else if (state==Turnout.THROWN) {						
 							if (tLinked.getContinuingSense()==Turnout.THROWN) 
-								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));								
-							else if ( (lt.getSignalA3Name()==null) || (lt.getSignalA3Name().equals("")) ) 
-								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
+								return lt.getSignalHead(LayoutTurnout.POINTA);								
+							else if ( lt.getSignalHead(LayoutTurnout.POINTA3)==null ) 
+								return lt.getSignalHead(LayoutTurnout.POINTA);
 							else 
-								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA3Name()));
+								return lt.getSignalHead(LayoutTurnout.POINTA3);
 						}
 						else {
 							// should never get here - linked turnout state is UNKNOWN or INCONSISTENT
@@ -550,15 +552,15 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 			if ( ((lt.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER) || 
 						(lt.getTurnoutType()==LayoutTurnout.LH_XOVER)) ) {
 				if (facingIsBlock1) {
-					if ( (lt.getSignalB2Name()==null) || (lt.getSignalB2Name().equals("")) ) 
+					if ( lt.getSignalHead(LayoutTurnout.POINTB2)==null ) 
 					// there is only one signal at B, return it
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
+						return lt.getSignalHead(LayoutTurnout.POINTB);
 					// check if track segments at A or D are in protected block (block 2)
 					if ( ((TrackSegment)(lt.getConnectA())).getBlockName().equals(protectedBlock.getUserName()) ) {
 						// track segment connected at A matches block 2, check D
 						if ( !(((TrackSegment)lt.getConnectD()).getBlockName().equals(protectedBlock.getUserName())) ) {
 							// track segment connected at D is not in block2, return continuing signal head at B
-							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
+							return lt.getSignalHead(LayoutTurnout.POINTB);
 						}
 						else {
 							// A and D both in block 2, check turnout position to decide which signal head to return
@@ -566,11 +568,11 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 							if ( ( (state==Turnout.CLOSED) && (lt.getContinuingSense()==Turnout.CLOSED) ) ||
 									( (state==Turnout.THROWN) && (lt.getContinuingSense()==Turnout.THROWN) ) )
 								// continuing  
-								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
+								return lt.getSignalHead(LayoutTurnout.POINTB);
 							else if ( ( (state==Turnout.THROWN) && (lt.getContinuingSense()==Turnout.CLOSED) ) ||
 									( (state==Turnout.CLOSED) && (lt.getContinuingSense()==Turnout.THROWN) ) ) 
 								// diverging (crossed over)
-								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB2Name()));
+								return lt.getSignalHead(LayoutTurnout.POINTB2);
 							else {
 								// turnout state is UNKNOWN or INCONSISTENT
 								log.error("Cannot choose signal head because turnout "+lt.getTurnout().getSystemName()+
@@ -582,7 +584,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 					// track segment connected at A is not in block 2
 					if ( (((TrackSegment)lt.getConnectD()).getBlockName().equals(protectedBlock.getUserName())) ) 
 						// track segment connected at D is in block 2, return diverging signal head
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB2Name()));
+						return lt.getSignalHead(LayoutTurnout.POINTB2);
 					else {
 						// neither track segment is in block 2 - should never get here unless layout turnout is 
 						//       only item in block 2
@@ -598,21 +600,21 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 						// track segment connected at A matches block 1, check D
 						if ( !(((TrackSegment)lt.getConnectD()).getBlockName().equals(facingBlock.getUserName())) ) 
 							// track segment connected at D is not in block 2, return signal head at continuing end
-							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
+							return lt.getSignalHead(LayoutTurnout.POINTA);
 						else {
 							// A and D both in block 1, check turnout position to decide which signal head to return
 							int state = lt.getTurnout().getKnownState();
 							if ( ( (state==Turnout.CLOSED) && (lt.getContinuingSense()==Turnout.CLOSED) ) ||
 									( (state==Turnout.THROWN) && (lt.getContinuingSense()==Turnout.THROWN) ) )
 								// continuing  
-								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
+								return lt.getSignalHead(LayoutTurnout.POINTA);
 							else if ( ( (state==Turnout.THROWN) && (lt.getContinuingSense()==Turnout.CLOSED) ) ||
 									( (state==Turnout.CLOSED) && (lt.getContinuingSense()==Turnout.THROWN) ) ) {
 								// diverging, check for second head
-								if ( (lt.getSignalD2Name()==null) || (lt.getSignalD2Name().equals("")) )
-									return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalD1Name()));
+								if ( lt.getSignalHead(LayoutTurnout.POINTD2)==null )
+									return lt.getSignalHead(LayoutTurnout.POINTD);
 								else 
-									return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalD2Name()));							
+									return lt.getSignalHead(LayoutTurnout.POINTD2);							
 							}
 							else {
 								// turnout state is UNKNOWN or INCONSISTENT
@@ -625,10 +627,10 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 					// track segment connected at A is not in block 1
 					if ( ((TrackSegment)lt.getConnectD()).getBlockName().equals(facingBlock.getUserName()) ) {
 						// track segment connected at D is in block 1, return diverging signal head, check for second head
-						if ( (lt.getSignalD2Name()==null) || (lt.getSignalD2Name().equals("")) )
-							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalD1Name()));
+						if ( lt.getSignalHead(LayoutTurnout.POINTD2)==null )
+							return lt.getSignalHead(LayoutTurnout.POINTD);
 						else 
-							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalD2Name()));
+							return lt.getSignalHead(LayoutTurnout.POINTD2);
 					}
 					else {
 						// neither track segment is in block 1 - should never get here unless layout turnout is 
@@ -643,18 +645,18 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 			// not double crossover or LH crossover
 			if (  (lt.getLinkType()==LayoutTurnout.NO_LINK) && (lt.getContinuingSense()==Turnout.CLOSED) ) {
 				if (facingIsBlock1)
-					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
+					return lt.getSignalHead(LayoutTurnout.POINTB);
 				else 
-					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
+					return lt.getSignalHead(LayoutTurnout.POINTA);
 			}
 			else if (lt.getLinkType()==LayoutTurnout.NO_LINK) {
 				if (facingIsBlock1)
-					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
+					return lt.getSignalHead(LayoutTurnout.POINTC);
 				else {
-					if ( (lt.getSignalA2Name()==null) || (lt.getSignalA2Name().equals("")) )
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
+					if ( lt.getSignalHead(LayoutTurnout.POINTA2)==null )
+						return lt.getSignalHead(LayoutTurnout.POINTA);
 					else 
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA2Name()));
+						return lt.getSignalHead(LayoutTurnout.POINTA2);
 				}
 			}
 			else if (lt.getLinkType()==LayoutTurnout.THROAT_TO_THROAT) {
@@ -663,28 +665,26 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 					return null;
 				}
 				// facing block is outside of the THROAT_TO_THROAT
-				if ( (lt.getContinuingSense()==Turnout.CLOSED) && ((lt.getSignalB2Name()==null) || 
-														(lt.getSignalB2Name().equals(""))) ) 
+				if ( lt.getContinuingSense()==Turnout.CLOSED && lt.getSignalHead(LayoutTurnout.POINTB2)==null ) 
 					// there is only one signal head here - return it
-					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
-				else if ( (lt.getContinuingSense()==Turnout.THROWN) && ((lt.getSignalC2Name()==null) || 
-														(lt.getSignalC2Name().equals(""))) ) 
+					return lt.getSignalHead(LayoutTurnout.POINTB);
+				else if ( lt.getContinuingSense()==Turnout.THROWN && lt.getSignalHead(LayoutTurnout.POINTC2)==null ) 
 					// there is only one signal head here - return it
-					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
+					return lt.getSignalHead(LayoutTurnout.POINTC);
 				// There are two signals here get linked turnout and decide which to return from linked turnout state
 				LayoutTurnout tLinked = getLayoutTurnoutFromTurnoutName(lt.getLinkedTurnoutName(),panel);
 				int state = tLinked.getTurnout().getKnownState();
 				if (state==Turnout.CLOSED) {
 					if (lt.getContinuingSense()==Turnout.CLOSED) 
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
+						return lt.getSignalHead(LayoutTurnout.POINTB);
 					else 
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));					
+						return lt.getSignalHead(LayoutTurnout.POINTC);					
 				}
 				else if (state==Turnout.THROWN) {
 					if (lt.getContinuingSense()==Turnout.CLOSED) 
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB2Name()));
+						return lt.getSignalHead(LayoutTurnout.POINTB2);
 					else 
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC2Name()));					
+						return lt.getSignalHead(LayoutTurnout.POINTC2);					
 				}
 				else 
 					// should never get here - linked turnout state is UNKNOWN or INCONSISTENT
@@ -700,23 +700,23 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 			else if (lt.getLinkType()==LayoutTurnout.SECOND_3_WAY) {
 				if (facingIsBlock1) {
 					if (lt.getContinuingSense()==Turnout.CLOSED) {				
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
+						return lt.getSignalHead(LayoutTurnout.POINTB);
 					}
 					else {
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
+						return lt.getSignalHead(LayoutTurnout.POINTC);
 					}
 				}
 				else {
 					// signal is at the linked turnout - the throat of the 3-way turnout
 					LayoutTurnout tLinked = getLayoutTurnoutFromTurnoutName(lt.getLinkedTurnoutName(),panel);
-					if (lt.getContinuingSense()==Turnout.CLOSED) {				
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(tLinked.getSignalA1Name()));
+					if (lt.getContinuingSense()==Turnout.CLOSED) {
+						return tLinked.getSignalHead(LayoutTurnout.POINTA);
 					}
 					else {
-						if ( (tLinked.getSignalA3Name()==null) || (lt.getSignalA3Name().equals("")) ) 
-							return (InstanceManager.signalHeadManagerInstance().getSignalHead(tLinked.getSignalA1Name()));
+						if ( tLinked.getSignalHead(LayoutTurnout.POINTA3)==null ) 
+							return tLinked.getSignalHead(LayoutTurnout.POINTA);
 						else 
-							return (InstanceManager.signalHeadManagerInstance().getSignalHead(tLinked.getSignalA3Name()));
+							return tLinked.getSignalHead(LayoutTurnout.POINTA3);
 					}					
 				}
 			}
@@ -728,15 +728,15 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 			if ( (lt.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER) || 
 						(lt.getTurnoutType()==LayoutTurnout.RH_XOVER) ) {
 				if (facingIsBlock1) {
-					if ( (lt.getSignalC2Name()==null) || (lt.getSignalC2Name().equals("")) )
+					if ( lt.getSignalHead(LayoutTurnout.POINTC2)==null )
 						// there is only one head at C, return it
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));						
+						return lt.getSignalHead(LayoutTurnout.POINTC);						
 					// check if track segments at A or D are in protected block (block 2)
 					if ( ((TrackSegment)(lt.getConnectA())).getBlockName().equals(protectedBlock.getUserName()) ) {
 						// track segment connected at A matches block 2, check D
 						if ( !(((TrackSegment)lt.getConnectD()).getBlockName().equals(protectedBlock.getUserName())) ) {
 							// track segment connected at D is not in block2, return diverging signal head at C
-							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC2Name()));
+							return lt.getSignalHead(LayoutTurnout.POINTC2);
 						}
 						else {
 							// A and D both in block 2, check turnout position to decide which signal head to return
@@ -744,11 +744,11 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 							if ( ( (state==Turnout.CLOSED) && (lt.getContinuingSense()==Turnout.CLOSED) ) ||
 									( (state==Turnout.THROWN) && (lt.getContinuingSense()==Turnout.THROWN) ) )
 								// continuing  
-								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
+								return lt.getSignalHead(LayoutTurnout.POINTC);
 							else if ( ( (state==Turnout.THROWN) && (lt.getContinuingSense()==Turnout.CLOSED) ) ||
 									( (state==Turnout.CLOSED) && (lt.getContinuingSense()==Turnout.THROWN) ) ) 
 								// diverging (crossed over)
-								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC2Name()));
+								return lt.getSignalHead(LayoutTurnout.POINTC2);
 							else {
 								// turnout state is UNKNOWN or INCONSISTENT
 								log.error("Cannot choose signal head because turnout "+lt.getTurnout().getSystemName()+
@@ -760,7 +760,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 					// track segment connected at A is not in block 2
 					if ( (((TrackSegment)lt.getConnectD()).getBlockName().equals(protectedBlock.getUserName())) ) 
 						// track segment connected at D is in block 2, return continuing signal head
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
+						return lt.getSignalHead(LayoutTurnout.POINTC);
 					else {
 						// neither track segment is in block 2 - should never get here unless layout turnout is 
 						//       only item in block 2
@@ -776,21 +776,21 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 						// track segment connected at D matches block 1, check A
 						if ( !(((TrackSegment)lt.getConnectA()).getBlockName().equals(facingBlock.getUserName())) ) 
 							// track segment connected at A is not in block 2, return signal head at continuing end
-							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalD1Name()));
+							return lt.getSignalHead(LayoutTurnout.POINTD);
 						else {
 							// A and D both in block 1, check turnout position to decide which signal head to return
 							int state = lt.getTurnout().getKnownState();
 							if ( ( (state==Turnout.CLOSED) && (lt.getContinuingSense()==Turnout.CLOSED) ) ||
 									( (state==Turnout.THROWN) && (lt.getContinuingSense()==Turnout.THROWN) ) )
 								// continuing  
-								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalD1Name()));
+								return lt.getSignalHead(LayoutTurnout.POINTD);
 							else if ( ( (state==Turnout.THROWN) && (lt.getContinuingSense()==Turnout.CLOSED) ) ||
 									( (state==Turnout.CLOSED) && (lt.getContinuingSense()==Turnout.THROWN) ) ) {
 								// diverging, check for second head
-								if ( (lt.getSignalA2Name()==null) || (lt.getSignalA2Name().equals("")) )
-									return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
+								if ( lt.getSignalHead(LayoutTurnout.POINTA2)==null )
+									return lt.getSignalHead(LayoutTurnout.POINTA);
 								else 
-									return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA2Name()));							
+									return lt.getSignalHead(LayoutTurnout.POINTA2);							
 							}
 							else {
 								// turnout state is UNKNOWN or INCONSISTENT
@@ -803,10 +803,10 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 					// track segment connected at D is not in block 1
 					if ( ((TrackSegment)lt.getConnectA()).getBlockName().equals(facingBlock.getUserName()) ) {
 						// track segment connected at A is in block 1, return diverging signal head, check for second head
-						if ( (lt.getSignalA2Name()==null) || (lt.getSignalA2Name().equals("")) )
-							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
+						if ( lt.getSignalHead(LayoutTurnout.POINTA2)==null )
+							return lt.getSignalHead(LayoutTurnout.POINTA);
 						else 
-							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA2Name()));
+							return lt.getSignalHead(LayoutTurnout.POINTA2);
 					}
 					else {
 						// neither track segment is in block 1 - should never get here unless layout turnout is 
@@ -821,25 +821,25 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 			// not double crossover or RH crossover
 			if ( (lt.getLinkType()==LayoutTurnout.NO_LINK) && (lt.getContinuingSense()==Turnout.CLOSED) ) {
 				if (facingIsBlock1)
-					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
+					return lt.getSignalHead(LayoutTurnout.POINTC);
 				else if (lt.getTurnoutType()==LayoutTurnout.LH_XOVER) 
 					// LH turnout - this is continuing track for D connection
-					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalD1Name()));
+					return lt.getSignalHead(LayoutTurnout.POINTD);
 				else {
 					// RH, LH or WYE turnout, this is diverging track for A connection
-					if ( (lt.getSignalA2Name()==null) || (lt.getSignalA2Name().equals("")) )
+					if ( lt.getSignalHead(LayoutTurnout.POINTA2)==null )
 						// there is no signal head at the throat for diverging 
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
+						return lt.getSignalHead(LayoutTurnout.POINTA);
 					else 
 						// there is a diverging head at the throat, return it
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA2Name()));
+						return lt.getSignalHead(LayoutTurnout.POINTA2);
 				}
 			}
 			else if (lt.getLinkType()==LayoutTurnout.NO_LINK) {
 				if (facingIsBlock1)
-					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
+					return lt.getSignalHead(LayoutTurnout.POINTB);
 				else 
-					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
+					return lt.getSignalHead(LayoutTurnout.POINTA);
 			}
 			else if (lt.getLinkType()==LayoutTurnout.THROAT_TO_THROAT) {
 				if (!facingIsBlock1) {
@@ -847,28 +847,26 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 					return null;
 				}
 				// facing block is outside of the THROAT_TO_THROAT
-				if ( (lt.getContinuingSense()==Turnout.CLOSED) && ((lt.getSignalC2Name()==null) || 
-														(lt.getSignalC2Name().equals(""))) ) 
+				if ( lt.getContinuingSense()==Turnout.CLOSED && lt.getSignalHead(LayoutTurnout.POINTC2)==null ) 
 					// there is only one signal head here - return it
-					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
-				else if ( (lt.getContinuingSense()==Turnout.THROWN) && ((lt.getSignalB2Name()==null) || 
-														(lt.getSignalB2Name().equals(""))) ) 
+					return lt.getSignalHead(LayoutTurnout.POINTC);
+				else if ( lt.getContinuingSense()==Turnout.THROWN &&  lt.getSignalHead(LayoutTurnout.POINTB2)==null ) 
 					// there is only one signal head here - return it
-					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
+					return lt.getSignalHead(LayoutTurnout.POINTB);
 				// There are two signals here get linked turnout and decide which to return from linked turnout state
 				LayoutTurnout tLinked = getLayoutTurnoutFromTurnoutName(lt.getLinkedTurnoutName(),panel);
 				int state = tLinked.getTurnout().getKnownState();
 				if (state==Turnout.CLOSED) {
 					if (lt.getContinuingSense()==Turnout.CLOSED) 
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
+						return lt.getSignalHead(LayoutTurnout.POINTC);
 					else 
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));					
+						return lt.getSignalHead(LayoutTurnout.POINTB);
 				}
 				else if (state==Turnout.THROWN) {
 					if (lt.getContinuingSense()==Turnout.CLOSED) 
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC2Name()));
+						return lt.getSignalHead(LayoutTurnout.POINTC2);
 					else 
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB2Name()));					
+						return lt.getSignalHead(LayoutTurnout.POINTB2);
 				}
 				else {
 					// should never get here - linked turnout state is UNKNOWN or INCONSISTENT
@@ -879,38 +877,38 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 			}
 			else if (lt.getLinkType()==LayoutTurnout.FIRST_3_WAY) {
 				if (facingIsBlock1) {
-					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
+					return lt.getSignalHead(LayoutTurnout.POINTC);
 				}
 				else {
-					if ( (lt.getSignalA2Name()==null) || (lt.getSignalA2Name().equals("")) ) 
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
+					if ( lt.getSignalHead(LayoutTurnout.POINTA2)==null ) 
+						return lt.getSignalHead(LayoutTurnout.POINTA);
 					else 
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA2Name()));
+						return lt.getSignalHead(LayoutTurnout.POINTA2);
 				}
 			}
 			else if (lt.getLinkType()==LayoutTurnout.SECOND_3_WAY) {
 				if  (facingIsBlock1) {
 					if (lt.getContinuingSense()==Turnout.CLOSED) {				
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
+						return lt.getSignalHead(LayoutTurnout.POINTC);
 					}
 					else {
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
+						return lt.getSignalHead(LayoutTurnout.POINTB);
 					}
 				}
 				else {
 					// signal is at the linked turnout - the throat of the 3-way turnout
 					LayoutTurnout tLinked = getLayoutTurnoutFromTurnoutName(lt.getLinkedTurnoutName(),panel);
 					if (lt.getContinuingSense()==Turnout.CLOSED) {				
-						if ( (tLinked.getSignalA3Name()==null) || (tLinked.getSignalA3Name().equals("")) ) 
-							return (InstanceManager.signalHeadManagerInstance().getSignalHead(tLinked.getSignalA1Name()));
+						if (tLinked.getSignalHead(LayoutTurnout.POINTA3)==null ) 
+							return tLinked.getSignalHead(LayoutTurnout.POINTA);
 						else 
-							return (InstanceManager.signalHeadManagerInstance().getSignalHead(tLinked.getSignalA3Name()));
+							return tLinked.getSignalHead(LayoutTurnout.POINTA3);
 					}
 					else {
-						if ( (tLinked.getSignalA2Name()==null) || (tLinked.getSignalA2Name().equals("")) ) 
-							return (InstanceManager.signalHeadManagerInstance().getSignalHead(tLinked.getSignalA1Name()));
+						if ( tLinked.getSignalHead(LayoutTurnout.POINTA2)==null ) 
+							return tLinked.getSignalHead(LayoutTurnout.POINTA);
 						else 
-							return (InstanceManager.signalHeadManagerInstance().getSignalHead(tLinked.getSignalA2Name()));
+							return tLinked.getSignalHead(LayoutTurnout.POINTA2);
 					}					
 				}
 			}
@@ -921,21 +919,21 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 			if (lt.getTurnoutType()==LayoutTurnout.RH_XOVER) {
 				// no diverging route possible, this is continuing track for C connection
 				if (facingIsBlock1)
-					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalD1Name()));
+					return lt.getSignalHead(LayoutTurnout.POINTD);
 				else
-					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
+					return lt.getSignalHead(LayoutTurnout.POINTC);
 			}
 			if (facingIsBlock1) {
-				if ( (lt.getSignalD2Name()==null) || (lt.getSignalD2Name().equals("")) )
+				if ( lt.getSignalHead(LayoutTurnout.POINTD2)==null )
 					//there is no signal head for diverging 
-					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalD1Name()));
+					return lt.getSignalHead(LayoutTurnout.POINTD);
 				else {
 					// check if track segments at C or B are in protected block (block 2)
 					if ( ((TrackSegment)(lt.getConnectC())).getBlockName().equals(protectedBlock.getUserName()) ) {
 						// track segment connected at C matches block 2, check B
 						if ( !(((TrackSegment)lt.getConnectB()).getBlockName().equals(protectedBlock.getUserName())) ) {
 							// track segment connected at B is not in block2, return continuing signal head at D
-							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalD1Name()));
+							return lt.getSignalHead(LayoutTurnout.POINTD);
 						}
 						else {
 							// C and B both in block2, check turnout position to decide which signal head to return
@@ -943,11 +941,11 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 							if ( ( (state==Turnout.CLOSED) && (lt.getContinuingSense()==Turnout.CLOSED) ) ||
 									( (state==Turnout.THROWN) && (lt.getContinuingSense()==Turnout.THROWN) ) )
 								// continuing  
-								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalD1Name()));
+								return lt.getSignalHead(LayoutTurnout.POINTD);
 							else if ( ( (state==Turnout.THROWN) && (lt.getContinuingSense()==Turnout.CLOSED) ) ||
 									( (state==Turnout.CLOSED) && (lt.getContinuingSense()==Turnout.THROWN) ) ) 
 								// diverging
-								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalD2Name()));
+								return lt.getSignalHead(LayoutTurnout.POINTD2);
 							else {
 								// turnout state is UNKNOWN or INCONSISTENT
 								log.error("Cannot choose signal head because turnout "+lt.getTurnout().getSystemName()+
@@ -959,7 +957,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 					// track segment connected at C is not in block 2
 					if ( (((TrackSegment)lt.getConnectB()).getBlockName().equals(protectedBlock.getUserName())) ) 
 						// track segment connected at B is in block 2, return diverging signal head
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalD2Name()));
+						return lt.getSignalHead(LayoutTurnout.POINTD2);
 					else {
 						// neither track segment is in block 2 - should never get here unless layout turnout is 
 						//      the only item in block 2
@@ -976,21 +974,21 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 					// track segment connected at C matches block 1, check B
 					if ( !(((TrackSegment)lt.getConnectB()).getBlockName().equals(facingBlock.getUserName())) ) 
 						// track segment connected at B is not in block 2, return signal head at continuing end
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
+						return lt.getSignalHead(LayoutTurnout.POINTC);
 					else {
 						// C and B both in block 1, check turnout position to decide which signal head to return
 						int state = lt.getTurnout().getKnownState();
 						if ( ( (state==Turnout.CLOSED) && (lt.getContinuingSense()==Turnout.CLOSED) ) ||
 									( (state==Turnout.THROWN) && (lt.getContinuingSense()==Turnout.THROWN) ) )
 							// continuing  
-							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
+							return lt.getSignalHead(LayoutTurnout.POINTC);
 						else if ( ( (state==Turnout.THROWN) && (lt.getContinuingSense()==Turnout.CLOSED) ) ||
 									( (state==Turnout.CLOSED) && (lt.getContinuingSense()==Turnout.THROWN) ) ) {
 							// diverging, check for second head
-							if ( (lt.getSignalB2Name()==null) || (lt.getSignalB2Name().equals("")) )
-								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
+							if ( lt.getSignalHead(LayoutTurnout.POINTB2)==null )
+								return lt.getSignalHead(LayoutTurnout.POINTB);
 							else 
-								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB2Name()));							
+								return lt.getSignalHead(LayoutTurnout.POINTB2);							
 						}
 						else {
 							// turnout state is UNKNOWN or INCONSISTENT
@@ -1003,10 +1001,10 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 				// track segment connected at C is not in block 1
 				if ( ((TrackSegment)lt.getConnectB()).getBlockName().equals(facingBlock.getUserName()) ) {
 					// track segment connected at B is in block 1, return diverging signal head, check for second head
-					if ( (lt.getSignalB2Name()==null) || (lt.getSignalB2Name().equals("")) )
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
+					if ( lt.getSignalHead(LayoutTurnout.POINTB2)==null )
+						return lt.getSignalHead(LayoutTurnout.POINTB);
 					else 
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB2Name()));
+						return lt.getSignalHead(LayoutTurnout.POINTB2);
 				}
 				else {
 					// neither track segment is in block 1 - should never get here unless layout turnout is 
@@ -1025,35 +1023,35 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             LayoutSlip ls = (LayoutSlip)connected;
             if(cType==LayoutEditor.SLIP_A){
                 if(ls.getSlipState()==LayoutSlip.STATE_AD)
-                    return (InstanceManager.signalHeadManagerInstance().getSignalHead(ls.getSignalA2Name()));
+                    return ls.getSignalHead(LayoutTurnout.POINTA2);
                 else
-                    return (InstanceManager.signalHeadManagerInstance().getSignalHead(ls.getSignalA1Name()));
+                    return ls.getSignalHead(LayoutTurnout.POINTA);
             }
             if(cType==LayoutEditor.SLIP_B){
                 if(ls.getTurnoutType()==LayoutSlip.DOUBLE_SLIP){
                     if(ls.getSlipState()==LayoutSlip.STATE_BC)
-                        return (InstanceManager.signalHeadManagerInstance().getSignalHead(ls.getSignalB2Name()));
+                        return ls.getSignalHead(LayoutTurnout.POINTB2);
                     else
-                        return (InstanceManager.signalHeadManagerInstance().getSignalHead(ls.getSignalB1Name()));
+                        return ls.getSignalHead(LayoutTurnout.POINTB);
                 }
                 else
-                    return (InstanceManager.signalHeadManagerInstance().getSignalHead(ls.getSignalB1Name()));
+                    return ls.getSignalHead(LayoutTurnout.POINTB);
             }
             if(cType==LayoutEditor.SLIP_C){
                 if(ls.getTurnoutType()==LayoutSlip.DOUBLE_SLIP){
                     if(ls.getSlipState()==LayoutSlip.STATE_BC)
-                        return (InstanceManager.signalHeadManagerInstance().getSignalHead(ls.getSignalC2Name()));
+                        return ls.getSignalHead(LayoutTurnout.POINTC2);
                     else
-                        return (InstanceManager.signalHeadManagerInstance().getSignalHead(ls.getSignalC1Name()));
+                        return ls.getSignalHead(LayoutTurnout.POINTC);
                 }
                 else
-                    return (InstanceManager.signalHeadManagerInstance().getSignalHead(ls.getSignalC1Name()));
+                    return ls.getSignalHead(LayoutTurnout.POINTC);
             }
             if(cType==LayoutEditor.SLIP_D){
                 if(ls.getSlipState()==LayoutSlip.STATE_AD)
-                    return (InstanceManager.signalHeadManagerInstance().getSignalHead(ls.getSignalD2Name()));
+                    return ls.getSignalHead(LayoutTurnout.POINTD2);
                 else
-                    return (InstanceManager.signalHeadManagerInstance().getSignalHead(ls.getSignalD1Name()));
+                    return ls.getSignalHead(LayoutTurnout.POINTD);
             }
         }
 		// block boundary must be at a level crossing
@@ -1066,71 +1064,33 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 		if (cType==LayoutEditor.LEVEL_XING_A) {
 			// block boundary is at the A connection of a level crossing
 			if (facingIsBlock1) 
-				return (InstanceManager.signalHeadManagerInstance().getSignalHead(xing.getSignalAName()));
+				return xing.getSignalHead(LevelXing.POINTA);
 			else 
-				return (InstanceManager.signalHeadManagerInstance().getSignalHead(xing.getSignalCName()));
+				return xing.getSignalHead(LevelXing.POINTC);
 		}
 		if (cType==LayoutEditor.LEVEL_XING_B) {
 			// block boundary is at the B connection of a level crossing
 			if (facingIsBlock1) 
-				return (InstanceManager.signalHeadManagerInstance().getSignalHead(xing.getSignalBName()));
+				return xing.getSignalHead(LevelXing.POINTB);
 			else 
-				return (InstanceManager.signalHeadManagerInstance().getSignalHead(xing.getSignalDName()));
+				return xing.getSignalHead(LevelXing.POINTD);
 		}
 		if (cType==LayoutEditor.LEVEL_XING_C) {
 			// block boundary is at the C connection of a level crossing
 			if (facingIsBlock1) 
-				return (InstanceManager.signalHeadManagerInstance().getSignalHead(xing.getSignalCName()));
+				return xing.getSignalHead(LevelXing.POINTC);
 			else 
-				return (InstanceManager.signalHeadManagerInstance().getSignalHead(xing.getSignalAName()));
+				return xing.getSignalHead(LevelXing.POINTA);
 		}
 		if (cType==LayoutEditor.LEVEL_XING_D) {
 			// block boundary is at the D connection of a level crossing
 			if (facingIsBlock1) 
-				return (InstanceManager.signalHeadManagerInstance().getSignalHead(xing.getSignalDName()));
+				return xing.getSignalHead(LevelXing.POINTD);
 			else 
-				return (InstanceManager.signalHeadManagerInstance().getSignalHead(xing.getSignalBName()));
+				return xing.getSignalHead(LevelXing.POINTB);
 		}
 		return null;		
 	}
-    /**
-     * Method to return the LayoutBlock that a given signal is protecting.
-     */
-/*    public LayoutBlock getProtectedBlock(String signalName, LayoutEditor panel){
-        PositionablePoint pp = panel.findPositionablePointByEastBoundSignal(signalName);
-        TrackSegment tr;
-        if (pp==null) {
-            pp = panel.findPositionablePointByWestBoundSignal(signalName);
-            if (pp==null)
-                return null;
-            tr = pp.getConnect1();
-        } else {
-            tr = pp.getConnect2();
-        }
-        //tr = pp.getConnect2();
-        if (tr==null)
-            return null;
-        return tr.getLayoutBlock();
-    }*/
-    
-    /**
-     * Method to return the LayoutBlock that a given signal is facing.
-     */
-/*    public LayoutBlock getFacingBlock(String signalName, LayoutEditor panel){
-        PositionablePoint pp = panel.findPositionablePointByWestBoundSignal(signalName);
-        TrackSegment tr;
-        if (pp==null) {
-            pp = panel.findPositionablePointByWestBoundSignal(signalName);
-            if (pp==null)
-                return null;
-            tr = pp.getConnect1();
-        } else {
-            tr = pp.getConnect2();
-        }
-        if (tr==null)
-            return null;
-        return tr.getLayoutBlock();
-    }*/
     
 	private LayoutTurnout getLayoutTurnoutFromTurnoutName(String turnoutName, LayoutEditor panel) {
 		Turnout t = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
@@ -1335,9 +1295,9 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 			i ++;
 		}
         if (lc==null) {
-            PositionablePoint p = panel.findPositionableLinkPoint(fLayoutBlock);
+            PositionablePoint p = panel.getFinder().findPositionableLinkPoint(fLayoutBlock);
             if(p==null)
-                p = panel.findPositionableLinkPoint(pLayoutBlock);
+                p = panel.getFinder().findPositionableLinkPoint(pLayoutBlock);
             if(p!=null && p.getLinkedEditor()!=null){
                 return getFacingBean(facingBlock, protectedBlock, p.getLinkedEditor(), T);
             }
@@ -1393,7 +1353,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
         if (cType==LayoutEditor.TRACK) {
 			// block boundary is at an Anchor Point
 			LayoutEditorTools tools = new LayoutEditorTools(panel);
-			PositionablePoint p = panel.findPositionablePointAtTrackSegments(tr,(TrackSegment)connected);
+			PositionablePoint p = panel.getFinder().findPositionablePointAtTrackSegments(tr,(TrackSegment)connected);
 			boolean block1IsWestEnd = tools.isAtWestEndOfAnchor(tr,p);
 			if ( (block1IsWestEnd && facingIsBlock1) || (!block1IsWestEnd && !facingIsBlock1) ) {
 				// block1 is on the west (north) end of the block boundary
@@ -1626,12 +1586,12 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 			return protectingBlocks;
         }
     
-        PositionablePoint pp = panel.findPositionablePointByEastBoundBean(bean);
+        PositionablePoint pp = panel.getFinder().findPositionablePointByEastBoundBean(bean);
         TrackSegment tr = null;
         boolean east = true;
         
         if (pp==null) {
-            pp = panel.findPositionablePointByWestBoundBean(bean);
+            pp = panel.getFinder().findPositionablePointByWestBoundBean(bean);
             east = false;
         }
         if(pp!=null){
@@ -1658,7 +1618,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             }
         }
         
-        LevelXing l = panel.findLevelXingByBean(bean);
+        LevelXing l = panel.getFinder().findLevelXingByBean(bean);
         if(l!=null){
             if(bean instanceof SignalMast){
                 if(l.getSignalAMast()==bean){
@@ -1684,14 +1644,14 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             return protectingBlocks;
         }
         
-        LayoutSlip ls = panel.findLayoutSlipByBean(bean);
+        LayoutSlip ls = panel.getFinder().findLayoutSlipByBean(bean);
         if(ls!=null){
             protectingBlocks.add(ls.getLayoutBlock());
             return protectingBlocks;
         }
 
         
-        LayoutTurnout t = panel.findLayoutTurnoutByBean(bean);
+        LayoutTurnout t = panel.getFinder().findLayoutTurnoutByBean(bean);
         if(t!=null){
             return t.getProtectedBlocks(bean);
         }
@@ -1719,11 +1679,11 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
     
     public List<LayoutBlock> getProtectingBlocksBySensorOld(Sensor sensor, LayoutEditor panel){
         ArrayList<LayoutBlock> protectingBlocks = new ArrayList<LayoutBlock>();
-        PositionablePoint pp = panel.findPositionablePointByEastBoundBean(sensor);
+        PositionablePoint pp = panel.getFinder().findPositionablePointByEastBoundBean(sensor);
         TrackSegment tr;
         boolean east = true;
         if (pp==null) {
-            pp = panel.findPositionablePointByWestBoundBean(sensor);
+            pp = panel.getFinder().findPositionablePointByWestBoundBean(sensor);
             east=false;
         }
         if(pp!=null){
@@ -1749,7 +1709,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             }
         }
         
-        LevelXing l = panel.findLevelXingByBean(sensor);
+        LevelXing l = panel.getFinder().findLevelXingByBean(sensor);
         if(l!=null){
             if(l.getSensorA()==sensor){
                 protectingBlocks.add(l.getLayoutBlockAC());
@@ -1762,12 +1722,12 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             }
             return protectingBlocks;
         }
-        LayoutSlip ls = panel.findLayoutSlipByBean(sensor);
+        LayoutSlip ls = panel.getFinder().findLayoutSlipByBean(sensor);
         if(ls!=null){
             protectingBlocks.add(ls.getLayoutBlock());
             return protectingBlocks;
         }
-        LayoutTurnout t = panel.findLayoutTurnoutByBean(sensor);
+        LayoutTurnout t = panel.getFinder().findLayoutTurnoutByBean(sensor);
         if(t!=null){
             return t.getProtectedBlocks(sensor);
         }
@@ -1814,12 +1774,12 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
     }
 
     private LayoutBlock getFacingBlockByBean(NamedBean bean, LayoutEditor panel){
-        PositionablePoint pp = panel.findPositionablePointByEastBoundBean(bean);
+        PositionablePoint pp = panel.getFinder().findPositionablePointByEastBoundBean(bean);
         TrackSegment tr = null;
         boolean east = true;
         //Don't think that the logic for this is the right way round
         if (pp==null) {
-            pp = panel.findPositionablePointByWestBoundBean(bean);
+            pp = panel.getFinder().findPositionablePointByWestBoundBean(bean);
             east = false;
         }
         if(pp!=null){
@@ -1845,7 +1805,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                 return tr.getLayoutBlock();
             }
         }
-        LayoutTurnout t = panel.findLayoutTurnoutByBean(bean);
+        LayoutTurnout t = panel.getFinder().findLayoutTurnoutByBean(bean);
         if(t!=null){
             log.debug("found signalmast at turnout " + t.getTurnout().getDisplayName());
             Object connect = null;
@@ -1878,7 +1838,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             }
         }
         
-        LevelXing l = panel.findLevelXingByBean(bean);
+        LevelXing l = panel.getFinder().findLevelXingByBean(bean);
         if(l!=null){
             Object connect = null;
             if(bean instanceof SignalMast){
@@ -1912,7 +1872,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             
         }
         
-        LayoutSlip ls = panel.findLayoutSlipByBean(bean);
+        LayoutSlip ls = panel.getFinder().findLayoutSlipByBean(bean);
         if(ls!=null){
             Object connect = null;
             if(bean instanceof SignalMast){
@@ -1965,10 +1925,10 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
      */
      /* @TODO This needs to be expanded to cover turnouts and level crossings. */
     public LayoutBlock getProtectedBlock(String signalName, LayoutEditor panel){
-        PositionablePoint pp = panel.findPositionablePointByEastBoundSignal(signalName);
+        PositionablePoint pp = panel.getFinder().findPositionablePointByEastBoundSignal(signalName);
         TrackSegment tr;
         if (pp==null) {
-            pp = panel.findPositionablePointByWestBoundSignal(signalName);
+            pp = panel.getFinder().findPositionablePointByWestBoundSignal(signalName);
             if (pp==null)
                 return null;
             tr = pp.getConnect1();
@@ -1993,10 +1953,10 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
      */
      /* @TODO This needs to be expanded to cover turnouts and level crossings. */
     public LayoutBlock getFacingBlock(String signalName, LayoutEditor panel){
-        PositionablePoint pp = panel.findPositionablePointByWestBoundSignal(signalName);
+        PositionablePoint pp = panel.getFinder().findPositionablePointByWestBoundSignal(signalName);
         TrackSegment tr;
         if (pp==null) {
-            pp = panel.findPositionablePointByWestBoundSignal(signalName);
+            pp = panel.getFinder().findPositionablePointByWestBoundSignal(signalName);
             if (pp==null)
                 return null;
             tr = pp.getConnect1();
@@ -2171,6 +2131,10 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
     */
     public long getLastRoutingChange(){
         return lastRoutingChange;
+    }
+    
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameLayoutBlock");
     }
     
     static Logger log = LoggerFactory.getLogger(LayoutBlockManager.class.getName());

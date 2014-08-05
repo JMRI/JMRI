@@ -39,10 +39,12 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         ((JComboBox)options.get(adapter.getOption1Name()).getComponent()).addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 enableOpt2(options.get(adapter.getOption1Name()).getItem());
+                enableOpt3(options.get(adapter.getOption1Name()).getItem());
             }
         });
         
         enableOpt2(options.get(adapter.getOption1Name()).getItem());
+        enableOpt3(options.get(adapter.getOption1Name()).getItem());
 
     }
 
@@ -53,6 +55,17 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         options.get(adapter.getOption2Name()).getComponent().setToolTipText(enable?
             "Choose RFID concentrator range setting":
             "Range setting not applicable for selected RFID reader type");
+    }
+
+    private void enableOpt3(Object o) {
+        boolean enable = !o.equals("MERG Concentrator");
+        options.get(adapter.getOption3Name()).getLabel().setEnabled(enable);
+        options.get(adapter.getOption3Name()).getComponent().setEnabled(enable);
+        options.get(adapter.getOption3Name()).getComponent().setEnabled(enable);
+        options.get(adapter.getOption3Name()).getComponent().setToolTipText(enable?
+            "Choose RFID protocol":
+            "Protocol setting not applicable for selected RFID reader type");
+        if (!enable) ((JComboBox)options.get(adapter.getOption3Name()).getComponent()).setSelectedIndex(0);
     }
 
     public String name() { return "RFID Device Connection"; }

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010, 2014 All rights reserved -->
+<!-- $Id: analogModeFunction.xml 22377 2014-07-19 06:28:11Z jacobsen $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-07-19</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Initial release as separate file</revremark>
+    </revision>
+  </revhistory>
+  <variable CV="13" default="0" mask="XXXXXXXV" item="Analog Mode Function Status - FL(f)">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	<label>Output FL(f) ON in analog mode</label>
+	<label xml:lang="de">Ausgang FL(f) AN im Analogbetrieb</label>		
+  </variable>
+  <variable CV="13" default="0" mask="XXXXXXVX" item="Analog Mode Function Status - FL(r)">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	<label>Output FL(r) ON in analog mode</label>
+	<label xml:lang="de">Ausgang FL(r) AN im Analogbetrieb</label>			
+  </variable>
+  <variable CV="13" default="0" mask="XXXXXVXX" item="Analog Mode Function Status - F1">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	<label>Output F1 ON in analog mode</label>
+	<label xml:lang="de">Ausgang F1 AN im Analogbetrieb</label>			
+  </variable>
+  <variable CV="13" default="0" mask="XXXXVXXX" item="Analog Mode Function Status - F2">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	<label>Output F2 ON in analog mode</label>
+	<label xml:lang="de">Ausgang F2 AN im Analogbetrieb</label>			
+  </variable>
+  <variable CV="13" default="0" mask="XXXVXXXX" item="Analog Mode Function Status - F3">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	<label>Output F3 ON in analog mode</label>
+	<label xml:lang="de">Ausgang F3 AN im Analogbetrieb</label>			
+  </variable>
+  <variable CV="13" default="0" mask="XXVXXXXX" item="Analog Mode Function Status - F4">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	<label>Output F4 ON in analog mode</label>
+	<label xml:lang="de">Ausgang F4 AN im Analogbetrieb</label>			
+  </variable>
+  <variable CV="13" default="0" mask="XVXXXXXX" item="Analog Mode Function Status - F5">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	<label>Output F5 ON in analog mode</label>
+	<label xml:lang="de">Ausgang F5 AN im Analogbetrieb</label>			
+  </variable>
+  <variable CV="13" default="0" mask="VXXXXXXX" item="Analog Mode Function Status - F6">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	<label>Output F6 ON in analog mode</label>
+	<label xml:lang="de">Ausgang F6 AN im Analogbetrieb</label>			
+  </variable>
+</variables>

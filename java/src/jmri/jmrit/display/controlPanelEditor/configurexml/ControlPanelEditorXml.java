@@ -64,6 +64,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
             panel.setAttribute("blueBackground", ""+p.getBackgroundColor().getBlue());
         }
         panel.setAttribute("state", ""+p.getExtendedState());
+        panel.setAttribute("shapeSelect", ""+(p.getShapeSelect()?"yes":"no"));
 
         Element elem = new Element("icons");
         HashMap <String, NamedIcon> map = p.getPortalIconMap();
@@ -182,6 +183,11 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         if ((a = element.getAttribute("panelmenu"))!=null && a.getValue().equals("no"))
             value = false;
         panel.setPanelMenu(value);
+        
+        value = true;
+        if ((a = element.getAttribute("shapeSelect"))!=null && a.getValue().equals("no"))
+            value = false;
+        panel.setShapeSelect(value);
         
         if ((a = element.getAttribute("state"))!=null) {
         	try {

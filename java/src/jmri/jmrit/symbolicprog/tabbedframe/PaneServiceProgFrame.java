@@ -9,11 +9,6 @@ import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
 import javax.swing.JPanel;
 
-import org.jdom.Attribute;
-import org.jdom.Element;
-
-import java.util.List;
-
 /**
  * Extend the PaneProgFrame to handle service mode operations.
  *<p>

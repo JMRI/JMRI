@@ -133,7 +133,7 @@ public class JsonClientHandler {
      * </li><li>a heartbeat in the form <code>{"type":"ping"}</code>. The
      * heartbeat gets a <code>{"type":"pong"}</code> response.</li> <li>a sign
      * off in the form: <code>{"type":"goodbye"}</code> to which an identical
-     * response is sent before the connection gets closed.</li>
+     * response is sent before the connection gets closed.</li></ul>
      *
      * @param string
      * @throws IOException
@@ -271,7 +271,7 @@ public class JsonClientHandler {
     private void receiveHello(JsonNode data) {
         if (!data.path(LOCALE).isMissingNode()) {
             // the following would be a one liner in Java 1.7:
-            // this.connection.getLocale() = Locale.forLanguageTag(data.path(LOCALE).asText();
+            // this.connection.setLocale(Locale.forLanguageTag(data.path(LOCALE).asText()));
             String[] parts = data.path(LOCALE).asText().split("-", 3);
             switch (parts.length) {
                 case 3:

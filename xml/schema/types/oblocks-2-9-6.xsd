@@ -43,6 +43,7 @@
         <xs:element name="oblock" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
+              <xs:element name="comment" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
               <xs:element name="systemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="sensor" minOccurs="0" maxOccurs="unbounded" >
@@ -50,10 +51,15 @@
                   <xs:attribute name="systemName" type="systemNameType" />
                 </xs:complexType>
               </xs:element>
+              <xs:element name="errorSensor" minOccurs="0" maxOccurs="1" >
+                <xs:complexType>
+                  <xs:attribute name="systemName" type="systemNameType" />
+                </xs:complexType>
+              </xs:element>
               <xs:element name="path" type="OBlockPathType" minOccurs="1" maxOccurs="unbounded" />
               <xs:element name="portal" minOccurs="1" maxOccurs="unbounded" >
                 <xs:complexType>
-                    <xs:sequence>
+                    <xs:sequence minOccurs="0" maxOccurs="unbounded" >
                         <xs:element name="fromBlock" minOccurs="0" maxOccurs="unbounded" >
                             <xs:complexType>
                               <xs:sequence>
@@ -73,14 +79,18 @@
                         <xs:element name="fromSignal" minOccurs="0" maxOccurs="unbounded" >
                             <xs:complexType>
                               <xs:attribute name="signalName" type="beanNameType" />
+                              <xs:attribute name="signalDelay" type="xs:integer" />
                             </xs:complexType>
                         </xs:element >
                         <xs:element name="toSignal" minOccurs="0" maxOccurs="unbounded" >
                             <xs:complexType>
                               <xs:attribute name="signalName" type="beanNameType" />
+                              <xs:attribute name="signalDelay" type="xs:integer" />
                             </xs:complexType>
                         </xs:element >
                     </xs:sequence>
+                  <xs:attribute name="systemName" type="xs:string" />
+                  <xs:attribute name="portalName" type="xs:string" />
                   <xs:attribute name="pathName" type="xs:string" />
                   <xs:attribute name="fromDirection" type="xs:string" />
                   <xs:attribute name="toDirection" type="xs:string" />
@@ -97,6 +107,9 @@
             </xs:attribute>
             <xs:attribute name="length" type="xs:float" />
             <xs:attribute name="curve" type="xs:integer" />
+            <xs:attribute name="units" type="trueFalseType" />
+            <xs:attribute name="permissive" type="trueFalseType" />
+            <xs:attribute name="speedNotch" type="xs:string" />
           </xs:complexType>
         </xs:element>
             

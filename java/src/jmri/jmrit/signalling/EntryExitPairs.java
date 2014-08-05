@@ -41,7 +41,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
  * @author Kevin Dickerson  Copyright (C) 2011
  * @version			$Revision: 19923 $
  */
-public class EntryExitPairs implements jmri.Manager{
+public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDefault{
 
 	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
     
@@ -861,6 +861,26 @@ public class EntryExitPairs implements jmri.Manager{
             }
         }
     };
+    
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+        
+    }
+    
+    java.beans.VetoableChangeSupport vcs = new java.beans.VetoableChangeSupport(this);
+    public synchronized void addVetoableChangeListener(java.beans.VetoableChangeListener l) {
+        vcs.addVetoableChangeListener(l);
+    }
+    public synchronized void removeVetoableChangeListener(java.beans.VetoableChangeListener l) {
+        vcs.removeVetoableChangeListener(l);
+    }
+    
+    public void deleteBean(NamedBean bean, String property) throws java.beans.PropertyVetoException {
+    
+    }
+    
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameTransit");
+    }
     
     // initialize logging
     static Logger log = LoggerFactory.getLogger(EntryExitPairs.class.getName());

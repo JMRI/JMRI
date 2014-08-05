@@ -6,7 +6,9 @@
       JMRI: Adding/Editing Signal Heads
  </TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
+<meta name="Author" content="Bob Jacobsen">
+<meta name="Author" content="Egbert Broerse">
+	<meta name="Date.Modified" content="20140515"/>
     <META name="keywords" content="JMRI help Signal Heads Add Edit">
 
 <!-- Style -->
@@ -23,194 +25,194 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Adding/Editing Signal Heads
-</H1>
+<h1>Adding &amp; Editing Signal Heads
+</h1>
     
-<A href="../../../../images/SigAdd.gif"><IMG SRC="../../../../images/SigAdd.gif" ALIGN=RIGHT WIDTH="231" HEIGHT="331" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
-
-<p>
-JMRI needs to know how a signal head on the layout
-is connected to the electrical hardware.  Once it knows that,
-it can send the right commands to control the appearance of the
-signal head.
-<p>
-The "Add Signal Head" dialog gives you a number of different 
-choices for how the signal head is connected:
+<p>JMRI needs to know how a Signal Head on the layout is connected to the electrical hardware. Once JMRI knows that, it can send the right DCC commands to control the Appearance of a Signal Head.</p>
+<p>The "Edit Signal Head" window provides for viewing and changing optional 
+information for existing Signal Heads. Use the "Edit" button in the 
+Signal Heads Table to open a dialog for that Signal Head. Only one Signal Head may be edited at a time. Signal type and Signal System may not be 
+changed once they have been created. After making changes in the dialog, click the "Update" button at the bottom of the window to change Signal 
+Head information.  Click "Cancel" to exit without making any changes. Closing the Edit Signal Head window is equivalent to clicking "Cancel".</p>
+<p>The "Add New Signal" dialog that is opened by clicking on the "Add..." button at the bottom of the Signal Heads Table lets you choose a Signal Head connection type from the following list.</p>
+	
+		<h2>Available Signal Head Connection Types</h2>
 <dl>
-<dt>Triple Output</dt>
-  <dd>
-  This type controls a signal head via three electrical connections.
-  One goes to a green lamp/LED, one to a yellow one, 
-  and the third to a red one.
-  <p>
-  These connections are controlled via the JMRI Turnout
-  logic, and therefore appear in the Turnout Table.
-  They're not really connected to switch motors, though,
-  they're just electrical outputs.
-  <p>
-  For each connection, enter the appropriate JMRI
-  turnout for the electrical connection on the layout,
-  either from the drop down list of already-defined turnouts
-  or by creating a new turnout for a particular connection.
-  They need not be consecutive or in any particular order.
-  <p>
-  If you need to debug one of these signal heads, start by
-  checking whether the Turnout connections work. You can
-  do this by going to the 
-  <a href="TurnoutTable.shtml">Turnout Table</a> and changing the output setting
-  there.
-  Setting e.g.
-  the turnout on the "green" connection Thrown should light the
-  green lamp.
-  </dd>
-
-<dt>Triple Output RGB</dt>
-  <dd>
-  This type controls a signal head via three electrical connections.
-  One goes to a green lamp/LED, one to a red one, 
-  and the third to a blue one.
-  <p>
-  These connections are controlled via the JMRI Turnout
-  logic, and therefore appear in the Turnout Table.
-  They're not really connected to switch motors, though,
-  they're just electrical outputs.
-  <p>
-  For each connection, enter the appropriate JMRI
-  turnout for the electrical connection on the layout,
-  either from the drop down list of already-defined turnouts
-  or by creating a new turnout for a particular connection.
-  They need not be consecutive or in any particular order.
-  <p>
-  If you need to debug one of these signal heads, start by
-  checking whether the Turnout connections work. You can
-  do this by going to the 
-  <a href="TurnoutTable.shtml">Turnout Table</a> and changing the output setting
-  there.
-  Setting e.g.
-  the turnout on the "green" connection Thrown should light the
-  green lamp.
-  </dd>
-
-<dt>Double Output</dt>
-  <dd>
-  This type controls a signal head via two electrical connections.
-  One goes to a green lamp/LED, and the other to a red one.
-  Yellow is created by turning them both on at the same time.
-  <p>
-  These connections are controlled via the JMRI Turnout
-  logic, and therefore appear in the Turnout Table.
-  They're not really connected to switch motors, though,
-  they're just electrical outputs.
-  <p>
-  For each connection, enter the appropriate JMRI
-  turnout for the electrical connection on the layout,
-  either from the drop down list of already-defined turnouts
-  or by creating a new turnout for a particular connection.
-  They need not be consecutive or in any particular order.
-  <p>
-  If you need to debug one of these signal heads, start by
-  checking whether the Turnout connections work. You can
-  do this by going to the 
-  <a href="TurnoutTable.shtml">Turnout Table</a> and changing the output setting
-  there.
-  Setting e.g.
-  the turnout on the "green" connection Thrown should light the
-  green lamp.
-  </dd>
-  
-<dt>Quadruple Output</dt>
-  <dd>
-  This type controls a signal head via four electrical connections.
-  One goes to a green lamp/LED, one to a yellow one, 
-  one to a red one, and the fourth to a "lunar" (white) one.
-  <p>
-  These connections are controlled via the JMRI Turnout
-  logic, and therefore appear in the Turnout Table.
-  They're not really connected to switch motors, though,
-  they're just electrical outputs.
-  <p>
-  For each connection, enter the appropriate JMRI
-  turnout for the electrical connection on the layout,
-  either from the drop down list of already-defined turnouts
-  or by creating a new turnout for a particular connection.
-  They need not be consecutive or in any particular order.
-  <p>
-  If you need to debug one of these signal heads, start by
-  checking whether the Turnout connections work. You can
-  do this by going to the 
-  <a href="TurnoutTable.shtml">Turnout Table</a> and changing the output setting
-  there.
-  Setting e.g.
-  the turnout on the "green" connection Thrown should light the
-  green lamp.
-  </dd>
-  
- <dt>Single Output</dt>
-  <dd>
-  This type controls a signal head with a single electrical connections.
-  The connection can be to a single lamp/LED to display a single appearance.
-  An alternative method is to connect a pair of LEDs to the single output
-  wired up suitable so that when the output of the decoder is on you get one
-  color and while the output is off you get the other.
-  
-  This type could also be used to control mechanically operated signals that only
-  have two appearances and therefore always have an appearance.
-  It is possible to gain a third "flashing" appearance.  
-  If you have Dark and a colour selected, then the end result is an additional flash colour option
-  If there are two colours selected, then you are given flash for both colours,  
-  however this will result in the colours flashing alternatively.
-  <p>
-  These connections are controlled via the JMRI Turnout
-  logic, and therefore appear in the Turnout Table.
-  They're not really connected to switch motors, though,
-  they're just electrical outputs.
-  <p>
-  For each connection, enter the appropriate JMRI
-  turnout for the electrical connection on the layout,
-  either from the drop down list of already-defined turnouts
-  or by creating a new turnout for a particular connection.
-  <p>
-  If you need to debug one of these signal heads, start by
-  checking whether the Turnout connections work. You can
-  do this by going to the 
-  <a href="TurnoutTable.shtml">Turnout Table</a> and changing the output setting
-  there.
-  <p>
-  Appearance Closed - The appearance given when the connection is in the Closed State.
-  <p>
-  Appearance Thrown - The appearance given when the connection is in the Thrown State.
-  </dd>
-<dt>Virtual</dt>
+	
+	<dt>Virtual</dt>
   <dd>
   This type doesn't connect to the layout at all.
   Use it when you want to e.g. display a signal on a panel,
   but don't have a real one on the layout.
   </dd>
+	
+<dt>Acela</dt>
+  <dd>
+  This type controls signal heads attached to a
+  <a href="http://www.cti-electronics.com">CTI Electronics</a>
+  <a href="http://www.cti-electronics.com/hardware.htm">Acela SignalMan</a> module.
+	  <p>
+  In the text field, enter a system name for a Acela signal head, e.g. AH01.
+  For more information on Acela hardware, see the <a href="../../../../html/hardware/acela/">Acela page</a>.
+  </dd>
 
+<dt>DCC Signal Decoder</dt>
+  <dd>
+  This type controls Signal Heads attached to a 
+  decoder that uses the 
+  <a href="http://www.nmra.org/standards/DCC/standards_rps/rp921.html#Extended%20Accessory%20Decoder%20Control%20Packet%20Format">DCC signal packets</a>
+  defined by the 
+  <a href="http://www.nmra.org/standards/DCC/DCCHome.html">NMRA DCC Working Group</a> for control.
+  This is a special protocol defined for driving Signal Heads, and is different from how
+  "accessory decoders" (e.g. Turnout outputs) are controlled. 
+	  <p>
+  Enter the DCC address as a number. The Offset check box uses an alternative interpretation of the addressing scheme that might be in use.
+	  <br/>
+		  <!-- from JMRI user group 5/4/2014 thanks to Suzie Tall and Ken Cameron-->
+		  Each possible Appearance of the Signal Head is assigned a different number; from here you can assign different numbers for each Aspect to suit the hardware being used.<br/>
+		  The <a href="http://www.teamdigital1.com/prod_catalogue/shd2_product/shd2.html">Team Digital SHD2</a> Signal Decoder is a Signal Head decoder having a different address for each Signal Head. A Signal Mast attached to the SHD2 must be configured as one or more Signal Head controlled masts. Note: The Signalist SC1 can also be configured as individual Signal Heads (searchlight with bicolour, tricoclour or RGB LEDs or multi-lamp with individual LEDs), but is much easier to use when configured as a complete Signal Mast with all Signal Heads on a single DCC address using the <a href="signalmasttable.shtml#dccsmd">DCC Signal Mast driver</a>. In that case you don't need to add Signal Heads for the signal. 
+Key difference between a Signal Head and a Signal Mast is the number of different states each might have. A Signal Head only has (up to ) 8 Appearance entries but a Signal Mast can have up to 32 (0-31) possible states, called Aspects in that case. The command going out is the same but the number of possible values will differ.
+  </dd>
+
+<a href="SignalHeadAdd1.png"><IMG SRC="SignalHeadAdd1.png" ALIGN=RIGHT WIDTH="137" HEIGHT="181" HSPACE="0" VSPACE="0" ALT="Add Signal Head panel figure 1"></a>
+	
+<dt>Single Output</dt>
+  <dd>
+  This connection type controls a Signal Head with one output.
+	  A Signal Head connection that uses just one output line to indicate up to 2 Appearances plus Flashing. You can select 2 Appearances from the following list: Dark, Red, Yellow, Green and Lunar.
+The output coding is such that a Turnout status Thrown (On) controls one Appearance and Turnout Closed (off) controls the other. 
+Flashing allows for a third appearance, which will flash between the two Appearances configured.
+  The connection can be to a single lamp/LED to display a single appearance.
+  An alternative method is to connect a pair of LEDs to the single output
+  wired up suitable so that when the output of the decoder is On you get one
+  color and while the output is Off you get the other.
+  
+  This type could also be used to control mechanically operated Signals that only
+  have two Appearances and therefore always have an Appearance.
+  It is possible to gain a third "Flashing" Appearance.  
+  If you have Dark and a color selected, then the end result is an additional Flash color option
+  If there are two colors selected, then you are given Flash for both colors,  
+  however this will result in the colors flashing alternatively.
+  
+  These connections are controlled via the JMRI Turnout
+  logic, and therefore appear in the Turnout Table.
+  They're not connected to switch motors, though,
+  they're just electrical outputs.
+  <p>
+  For each connection, enter the appropriate JMRI
+  Turnout for the electrical connection on the layout,
+  either from the drop down list of already-defined Turnouts
+  or by creating a new Turnout for a particular connection.
+	  <p>Select one of the listed Appearances for both:<br/>
+  Appearance when Thrown - The appearance displayed when the connection is in the Thrown State.
+  		  <br/>
+  Appearance when Closed - The appearance displayed when the connection is in the Closed State.
+</dd>
+
+<a href="SignalHeadAdd2.png"><IMG SRC="SignalHeadAdd2.png" ALIGN=RIGHT WIDTH="135" HEIGHT="173" HSPACE="0" VSPACE="0" ALT="Add Signal Head panel figure 2"></a>
+	
+<dt>Double Output</dt>
+  <dd>
+  This type controls a Signal Head via two electrical connections.
+  One goes to a green lamp/LED, and the other to a red one.
+  Yellow is created by turning them both on at the same time.
+  <p>
+  For each connection, enter the appropriate JMRI
+  turnout for the electrical connection on the layout,
+  either from the drop down list of already-defined turnouts
+  or by creating a new turnout for a particular connection.
+  They need not be consecutive or in any particular order.
+
+	  <b>Double Output Head</b> A Signal Head connection that uses just two output lines to indicate 4 signal Aspects.
+Usually these Aspects will be Clear, Approach, Stop, and Dark. 
+The output coding is such that 
+one turnout Thrown (On) controls the Stop and the other Thrown (On) controls the Clear. 
+Both outputs Thrown (On) controls the Approach, and both Closed (Off) is Dark. 
+Each aspect change requires that two turnout commands be sent.
+	
+	</dd>
+  	
+<dt>Triple Output</dt>
+  <dd>
+  This type controls a Signal Head via three electrical connections.
+  One goes to a green lamp/LED, one to a yellow lamp, 
+  and the third to a red one.
+	  <br/>
+  These connections are controlled via the JMRI Turnout
+  logic, and therefore appear in the Turnout Table.
+  They're not really connected to switch motors, though,
+  they're just electrical outputs.
+  <p>
+  For each connection, enter the appropriate JMRI
+  turnout for the electrical connection on the layout,
+  either from the drop down list of already-defined turnouts
+  or by creating a new turnout for a particular connection.
+  They need not be consecutive or in any particular order.
+	  <br/>
+  If you need to debug one of these Signal Heads, start by
+  checking whether the Turnout connections work.
+  </dd>
+
+<dt>Triple Output RGB</dt>
+  <dd>
+  This type controls a Signal Head via three outputs to indicate 5 signal Aspects. Usually these aspects will be Clear, Approach, Stop, Restricting and Dark. 
+The output coding is such that 
+one Turnout Thrown (On) controls the Stop and another Thrown (On) controls the Clear. Both of these outputs Thrown (On) controls the
+Approach, all three On controls the Restricting, and all three Closed (Off) makes for Dark. Each aspect change requires that three commands be sent.
+	  <br/>
+  The first connection drives a green lamp/LED, the second a red one, 
+  and the third to a blue one. They are controlled via the JMRI Turnout
+  logic, and therefore appear in the Turnout Table. They're not connected to switch motors, though,
+  they're just electrical outputs.
+  <p>
+  For each connection, enter the appropriate JMRI
+  Turnout for the electrical connection on the layout,
+  either from the drop down list of already-defined Turnouts
+  or by creating a new Turnout for a particular connection.
+  They need not be consecutive or in any particular order.
+  </dd>
+
+<dt>Quad (quadruple) Output</dt>
+  <dd>
+  This type controls a signal head via four electrical connections.
+  One goes to a green lamp/LED, one to a yellow lamp, 
+  one to a red lamp, and the fourth to a "lunar" (white) one.
+	  <br/>
+  These connections are controlled via the JMRI Turnout
+  logic, and therefore appear in the Turnout Table.
+  They're not really connected to switch motors, though,
+  they're just electrical outputs.
+  <p>
+  For each connection, enter the appropriate JMRI
+  turnout address for the electrical connection on the layout,
+  either from the drop down list of already-defined turnouts
+  or by creating a new turnout for a particular connection.
+  They need not be consecutive or in any particular order.
+  </dd>
+  
 <dt>SE8c 4 Aspect</dt>
   <dd>
-  This type controls signal heads attached to a 
+  The output is controlled by a single turnout command per Aspect change. One turnout command changes between 
+	  "Stop" and "Clear", and the second turnout command changes between "Approach" and "Dark".</p>
+		<p>This type controls signal heads attached to a 
   <a href="http://www.digitrax.com">Digitrax</a>
   <a href="http://www.digitrax.com/prd_statdec_se8c.php">SE8c signal driver card</a>.
-  <p>
-  Because each SE8c 4 Aspect signal head works with a specific DCC
-  address, its system name is determined automatically from that address.  You
-  don't have to enter it.  For example, the SE8c 4 Aspect signal head for 
+	  <br/>
+  Because each SE8c 4 Aspect Signal Head works with a specific DCC
+  address, its System Name is determined automatically from that address; you
+  don't have to enter it. For example, the SE8c 4 Aspect Signal Head for 
   hardware address 257 will be given a system name based on that.
-  <p>
-  You can optionally enter a user name if you'd like.
+  You can optionally enter a more readable User Name if you'd like.
   <p>
   In the "Turnout number" field, enter the appropriate DCC address 
   of the SE8c output as a number.  For example,
   the 1st signal head on the 1st SE8c, as configured from the Digitrax factory, 
-  is "257" by selecting "create turnout", then selecting "LocoNet" in the drop down box,
-  enter in "257" in the field next to it.
-  See e.g. page 5 and 7 of the Digitrax SE8c manual 
-  (<a href="http://www.digitrax.com/ftp/se8c.pdf">http://www.digitrax.com/ftp/se8c.pdf</a>).
-  Do the same in the second turnout field, but entering in "258".
-  <p>
+  is "257" by selecting "Create new", then selecting "LocoNet" in the drop down box,
+  enter "257" in the field next to it.
+  See page 5 and 7 of the Digitrax SE8c Manual <a href="http://www.digitrax.com/static/apps/products/detection-signaling/se8c/documents/SE8C.pdf">http://www.digitrax.com/static/apps/products/detection-signaling/se8c/documents/SE8C.pdf</a>.
+  Do the same in the second Turnout field, entering "258" as the second Signal Head address.
   Alternately, if you're using more than one hardware type, you can 
-  either select a turnout from the drop down list of already-defined turnouts
+  either select a Turnout from the drop down list of already-defined Turnouts
   or by creating a new turnout for a particular connection.
   They need not be consecutive or in any particular order.
   </dd>
@@ -218,82 +220,65 @@ choices for how the signal head is connected:
 <dt>LDT LS-DEC</dt>
   <dd>
   This type is particularly useful for European signaling.
-  It controls signal heads attached to a
+  It controls Signal Heads attached to a
   <a href="http://www.ldt-infocenter.com/english/home_frame_e.htm">Littfinski DatenTechnik (LDT)</a>
   <A href="http://www.ldt-infocenter.com/english/lsdec_sb_e.htm">LS-DEC signal decoder</a>,
   or a 
   <A HREF="http://www.marathonmodel.cz/">Marathon Model</a>
   DP2N decoder.
   <p>
-  These controllers use seven DCC turnout (accessory decoder) addresses to specify
-  the seven possible appearances of the signal.  Enter those, 
-  either from the drop down list of already-defined turnouts
+  These controllers use seven DCC Turnout (accessory decoder) addresses to specify
+  the seven possible Appearances of the Signal Head. Enter those, 
+  either from the drop down list of already-defined Turnouts
   or by creating a new turnout for a particular connection.
   They need not be consecutive or in any particular order.
-  <p>
+	  <br/>
   For more information on configuring these signals, see
   the 
-  <a href="../../../../html/tools/signaling/ldt/output.shtml">examples page</a>.
+  <a href="../../../../html/tools/signaling/ldt/output.shtml">LDT Examples</a> page.
   </dd>
-  
-<dt>DCC Signal Decoder</dt>
+
+<dt>MERG Signal Driver</dt>
   <dd>
-  This type controls signal heads attached to a 
-  decoder that uses the 
-  <a href="http://www.nmra.org/standards/DCC/standards_rps/rp921.html#Extended%20Accessory%20Decoder%20Control%20Packet%20Format">DCC signal packets</a>
-  defined by the 
-  <a href="http://www.nmra.org/standards/DCC/DCCHome.html">NMRA DCC Working Group</a> for control.
-  This is a special protocol defined for driving signal heads, and is different from how
-  "accessory decoders" (e.g. turnout outputs) are controlled. 
+  This driver type controls a signal that uses a MERG Signal Driver (SD2). An SD2 is connected to DCC using a steady state accessory decoder. The number of Aspects to be
+  displayed on the Signal Mast, will determine the number of Turnout outputs required, ie.<br>
+  2 Aspects require 1 turnout<br>
+  3 Aspects require 2 turnouts<br>
+  4 Aspects require 3 turnouts
   <p>
-  Enter the DCC address as a number.  The offset check box uses an alternative interpretation of the addressing scheme that might be in use.
-  <p>
-  Each aspect is assigned a different number; from here you can assign different numbers for each aspect to suit the hardware being used.
+  The MERG Signal driver in JMRI has been set up to control the SD2 Aspect output only. It does not control the other features of the SD2 such as "Steam Rules" or "Feather". However these can easily be configured using Logix or Routes.
+	  <br/>
+  <b>Notes</b> - The MERG SD2 driver does not support a Flashing yellow Aspect. For Flashing yellow Aspects an additional circuit is required as documented 
+  in the MERG Technical Bulletins.<br>
+  As the MERG SD2 driver goes beyond the Green/Yellow/Red Aspects supported in 
+  JMRI with a Double yellow (yellow over yellow) aspect, the Double yellow state is represented in the
+  status as a "Lunar".
+	  <br/>
+	  Further information on the Merg Signal Driver can be found at <a href="http://www.merg.info">MERG</a>
   </dd>
 
 <dt>Grapevine</dt>
   <dd>
   This type controls signal heads attached to a
   <a href="http://www.protrak.cc/">ProTrak</a>
-  <A href="http://www.protrak.cc/signals.htm">Grapevine node</a>.
-  <p>
-  In the text field, enter a system name for a Grapevine
-  signal head, e.g. GH1204 for the 4th connector on the 2nd bank connector of the 1st node.
+  <a href="http://www.protrak.cc/signals.htm">Grapevine</a> node.
+	  <br/>
+  In the text field, enter a System Name for a Grapevine
+  Signal Head, e.g. GH1204 for the 4th connector on the 2nd bank connector of the 1st node.
   For more information on how those names are generated, see the 
-  <a href="../../../../html/hardware/grapevine/Names.shtml">page on Grapevine names</a>.
-  </dd>
- <dt>MERG Signal Driver 2</dt>
-  <dd>
-  This type controls a signal that uses a MERG Signal Driver 2 to control its displayed aspects.
-  The SD2 is driven using a steady State accessory decoder. Depending upon the number of aspects
-  that are displayed on the signal, will determine the number of turnout outputs are required.
-  ie.<br>
-  2 Aspect requires 1 turnout<br>
-  3 Aspect requires 2 turnouts<br>
-  4 Aspect requires 3 turnouts
-  <p>
-  The Signal driver on JMRI has been setup to control the aspect output only for the SD2, 
-  it does not control the other features of the SD2 such as "Steam Rules" or "Feather".
-  However these can easily be configured using normal Logixs or routes.
-  <p>
-  <b>Notes</b> - The MERG SD2 driver does not support flashing yellow aspect, 
-  for flashing yellow aspects an additional circuit is required as documented 
-  in the MERG Technical Bulletins.<br>
-  As the MERG SD2 driver goes beyond the Green/Yellow/Red Aspects supported in 
-  JMRI with a double yellow aspect, the double yellow state is represented in the
-  status as a "Lunar".
-  <p>
-  Further information on the Signal Driver can be found at <a href="www.merg.info">MERG</a>
+	  <a href="../../../../html/hardware/grapevine/Names.shtml">page on Grapevine names</a>.
   </dd>
 
 </dl>
-The "Edit Signal Head" dialog (window) provides for viewing and changing optional 
-information for existing signal heads. Use the "Edit" buttons in the 
-Signal Head Table to select a signal head. Signal type and system name may not be 
-changed. After making changes in the dialog, click "Update" to change signal 
-head information.  Click "Cancel" to exit without
-making any changes. Closing the Edit Signal Head window is equivalent to clicking 
-"Cancel". Only one signal head may be edited at a time.
+
+		<h2>Notes</h3>
+<ul>
+	<li>If you need to debug one of these Signal Heads, start by checking whether the (Turnout) connections work. You can
+  do this by going to the <a href="TurnoutTable.shtml">Turnout Table</a> and changing the output setting there.
+  Setting e.g. the Turnout on the "Green" connection to Thrown should light the green lamp.</li>
+		</ul>
+		
+<p>Back to the <a href="SignalHeadTable.shtml">Signal Heads Table help page</a>.
 <!--#include virtual="/Footer" -->
 </body>
 </html>

@@ -33,12 +33,52 @@ JMRI: XBee Network
 
 <H2>Overview</H2>
 
-<p>The <a href="http://www.digi.com/xbee">Digi International XBee Modules</a> are family of wireless communication devices that have thier own microcontroller and IO pins that make them useful for many distributed control networks, including on model railroads.</p>
+<p>The <a href="http://www.digi.com/xbee">Digi International XBee Modules</a> are family of wireless communication devices that have their own microcontroller and IO pins that make them useful for many distributed control networks, including on model railroads.</p>
 
-<p>JMRI can communicate with XBee Series 1 and XBee Series 2 modules.  Underlying support for communication is provided by <a href="https://code.google.com/p/xbee-api/">Andrew Rapp's xbee-api library for Java</a>.  This library requries that the XBee module connected to the PC be configured for <a href=https://code.google.com/p/xbee-api/wiki/WhyApiMode>API mode</a>.<p>
+<p>JMRI can communicate with XBee Series 1 and XBee Series 2 modules.  Underlying support for communication is provided by <a href="https://code.google.com/p/xbee-api/">Andrew Rapp's xbee-api library for Java</a>.  This library requires that the XBee module connected to the PC be configured for <a href=https://code.google.com/p/xbee-api/wiki/WhyApiMode>API mode</a>.<p>
 
-<p>JMRI support for the Digi XBee Modules currently includes the ability to passivly read digital sensor inputs, as JMRI Sensors, and triggering digital outputs, through the JMRI Lights.</p>
+<p>JMRI support for the Digi XBee Modules currently includes the ability to passively read digital sensor inputs, as JMRI Sensors, and triggering digital outputs, through the JMRI Lights and Turnouts.</p>
 
+<H2>XBee Module Addressing</H2>
+
+<p>Each XBee module has 5 addresses we need to be aware of:
+<ul>
+<li>a Channel Number</li>
+<li>a 16 bit PAN address</li>
+<li>a 16 bit User address</li>
+<li>a 64 bit Globally Unique ID</li>
+<li>a free-form Node Identifier string</li>
+</ul></p>
+
+<p>The IEEE 802.15.4 Channel Number is set by configuring the XBee's CH parameter.  The value of the CH parameter can be any (hex) value from 0x0B to 0x1A.  This corresponds to decimal values 11 to 26.  All XBee modules in the network must be set to the same channel number.</p>
+
+<p>The 16 bit PAN (Personal Area Network) address is assigned by setting the XBee's ID parameter.  All XBee modules in the network must be set to use the same PAN.</p>
+
+<p>The 16 bit user address is defined by the XBee's MY parameter.  Some XBee firmware will automatically set the value of MY to be a unique address on the network, but others do not.  If the My parameter is user configurable, it should be a unique address.</p>
+
+<p>The 64 bit globally unique id (GUID) is defined by the factory.  This value is the hex string printed on the underside of each XBee module.  You can also read the value by reading the SH (Serial Number High) and SL (Serial Number Low) parameters of the XBee.  The user cannot change the values of SH and SL.</p>
+
+<p>The free-form Node Identifier is a 20 character text value stored in the XBee's NI parameter.  The Node Identifier should be unique, and may be human readable.</p>
+
+<p>NOTE: You need to be aware of other devices using IEEE 802.15.4 radio networks that may be operating in the same area.  Digitrax Duplex throttles and Roco MultiMaus Pro radio throttles both use IEEE 802.15.4 as the underlying network layer protocol.  If these devices share a PAN and channel with your XBee modules, the devices are all a part of the same network, and the 16 bit user address must be unique.</p>
+
+<H2>Input/Output pin addressing</H2>
+<p>
+When creating inputs (Sensors) and outputs (either lights or turnouts) in JMRI, the XBee's IO pins can be individually addressed.  To access a single bit, you can use the form:
+</p>
+<p>
+ModuleAddress:Pin
+</p>
+<p>Where ModuleAddress is one of the 16 bit node address, the 64 bit node address, or the Node Identifier string and Pin is an XBee IO pin number.
+</p>
+<p>
+Turnouts may be created using two bits.  To specify a turnout created with two bits, you use the following format: 
+</p>
+<p>
+ModuleAddress:Pin1:Pin2
+</p>
+<p>Where ModuleAddress is one of the 16 bit node address, the 64 bit node address, or the Node Identifier string and Pin1 and Pin2 are XBee IO pin numbers.  The Pin numbers do not need to be consecutive.
+</p>
 <!--#include virtual="/Footer" -->
 </body>
 </html>

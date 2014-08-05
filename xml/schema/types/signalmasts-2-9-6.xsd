@@ -138,6 +138,13 @@
         <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
         <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
         <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="1" />
+        <xs:element name="properties" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="property" type="SignalMastPropertyType" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
         <xs:element name="unlit" minOccurs="0" maxOccurs="1" >
           <xs:complexType>
             <xs:sequence>

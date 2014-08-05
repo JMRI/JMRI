@@ -7,8 +7,6 @@ import org.slf4j.LoggerFactory;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.*;
-import java.util.Vector;
-
 import javax.swing.*;
 
 import java.util.ArrayList;

@@ -10,6 +10,8 @@ import org.jdom.Attribute;
 
 import jmri.InstanceManager;
 import jmri.DccLocoAddress;
+import jmri.jmrit.logix.NXFrame;
+import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.logix.OBlock;
@@ -41,6 +43,7 @@ public class WarrantManagerXml //extends XmlFile
     public Element store(Object o) {
         Element warrants = new Element("warrants");
         warrants.setAttribute("class","jmri.jmrit.logix.configurexml.WarrantManagerXml");
+        storeNXParams(warrants);
         WarrantManager manager = (WarrantManager) o;
         Iterator<String> iter = manager.getSystemNameList().iterator();
         while (iter.hasNext()) {
@@ -79,7 +82,6 @@ public class WarrantManagerXml //extends XmlFile
             // and put this element out
             warrants.addContent(elem);
         }
-
         return warrants;
     }
 
@@ -152,6 +154,34 @@ public class WarrantManagerXml //extends XmlFile
 
         return elem;
     }
+    
+    void storeNXParams (Element element) {
+        if (jmri.InstanceManager.getDefault(OBlockManager.class).getSystemNameList().size() < 1) {
+        	return;
+        }
+        Element elem = new Element("nxparams");
+        NXFrame nxFrame = NXFrame.getInstance();
+        Element e = new Element("scale");
+        e.addContent(Float.toString(nxFrame.getScale()));
+        elem.addContent(e);
+        e = new Element("maxspeed");
+        e.addContent(Float.toString(nxFrame.getMaxSpeed()));
+        elem.addContent(e);
+        e = new Element("minspeed");
+        e.addContent(Float.toString(nxFrame.getMinSpeed()));
+        elem.addContent(e);
+        e = new Element("timeinterval");
+        e.addContent(Float.toString(nxFrame.getTimeInterval()));
+        elem.addContent(e);
+        e = new Element("numsteps");
+        e.addContent(Integer.toString(nxFrame.getNumSteps()));
+        elem.addContent(e);
+        e = new Element("haltstart");
+        e.addContent(nxFrame.getStartHalt()?"yes":"no");
+        elem.addContent(e);
+        element.addContent(elem);
+        return;
+    }
 
     /**
      * Create a Warrant object of the correct class, then
@@ -163,6 +193,13 @@ public class WarrantManagerXml //extends XmlFile
     public boolean load(Element warrants) {
 
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
+        
+        // don't continue on to build NXFrame if no content
+        if (warrants.getChildren().size() == 0) return true;
+        
+        NXFrame nxFrame = NXFrame.getInstance();
+        loadNXParams(nxFrame, warrants.getChild("nxparams"));
+        nxFrame.init();
 
         List<Element> warrantList = warrants.getChildren("warrant");
         if (log.isDebugEnabled()) log.debug("Found "+warrantList.size()+" Warrant objects");
@@ -305,6 +342,60 @@ public class WarrantManagerXml //extends XmlFile
             block =attr.getValue();
 
         return new ThrottleSetting(time, command, value, block);
+    }
+    void loadNXParams(NXFrame nxFrame, Element elem) {
+    	if (elem==null) {
+    		return;
+    	}
+        nxFrame.setVisible(false);
+    	Element e = elem.getChild("scale");
+    	if (e!=null) {
+        	try {
+        		nxFrame.setScale(Float.valueOf(e.getValue()));
+        	} catch (NumberFormatException nfe) {
+                log.error("Layout Scale; "+nfe);    		
+        	}    		
+    	}
+    	e = elem.getChild("maxspeed");
+    	if (e!=null) {
+        	try {
+        		nxFrame.setMaxSpeed(Float.valueOf(e.getValue()));
+        	} catch (NumberFormatException nfe) {
+                log.error("NXWarrant MaxSpeed; "+nfe);    		
+        	}    		
+    	}
+    	e = elem.getChild("minspeed");
+    	if (e!=null) {
+        	try {
+        		nxFrame.setMinSpeed(Float.valueOf(e.getValue()));
+        	} catch (NumberFormatException nfe) {
+                log.error("NXWarrant MinSpeed; "+nfe);    		
+        	}    		
+    	}
+    	e = elem.getChild("timeinterval");
+    	if (e!=null) {
+        	try {
+        		nxFrame.setTimeInterval(Float.valueOf(e.getValue()));
+        	} catch (NumberFormatException nfe) {
+                log.error("NXWarrant timeinterval; "+nfe);    		
+        	}    		
+    	}
+    	e = elem.getChild("numsteps");
+    	if (e!=null) {
+        	try {
+        		nxFrame.setNumSteps(Integer.valueOf(e.getValue()));
+        	} catch (NumberFormatException nfe) {
+                log.error("NXWarrant numSteps; "+nfe);    		
+        	}    		
+    	}
+    	e = elem.getChild("haltstart");
+    	if (e!=null) {
+    		if (e.getValue().equals("yes")) {
+    			nxFrame.setStartHalt(true);
+    		} else {
+    			nxFrame.setStartHalt(false);
+    		}
+    	}
     }
     
     public int loadOrder(){

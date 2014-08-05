@@ -34,25 +34,27 @@ it was designed for use by Logix so that users can define and control automated 
 running from panel editor panels of their own design.  
    
 <H3>What are Portals and Why Use Them?</H3>
-Occupancy blocks are portions of track having one or more sensors to detect occupancy
-of trains.  
-These blocks are usually separated by gaps cut in the track which isolate the detecting
+Occupancy blocks, or more properly named "track circuits", are portions of track having 
+one or more sensors to detect occupancy of trains.  
+These blocks, <b>OBlocks</b> are usually separated by gaps cut in the track which isolate the detecting
 sensors.  However this is not always the case, since optical sensors might also be 
 used to detect occupancy in a section of track.  Nevertheless whatever method is used
-to determine a block and the means of detecting its occupancy, there is is some point that
+to determine a block and the means of detecting its occupancy, there is some point that
 separates one block from another block.  This dividing line 
 between two blocks, whether a physical gap or an imaginary line, marks a transition
 from one block to another.  These transition points are 
 called <b>Portals</b>.
 </p>
 <p> Undoubtably you created the blocks because it was important for
-you to know when one block was exited and another was entered.  Blocks are used
-to provide interlocking and the signals governing that are logically placed at the portal 
+you to know when one section of track was exited and another was entered.  One or more 
+track circuits might be grouped together to make a prototypical block, i.e. a section of track
+whose use is governed by signals. This can
+provide interlocking. The signals governing a block are logically placed at the portal 
 points.  If you have signals on
 your layout, consider where they are located.  Most likely they are placed near dividing 
 points between blocks.  So regardless of the name, Portals are a significant concept.
 </p>
-
+<p>
 <H3>Paths Through Portals</H3>
 <p>There may be many ways to traverse a block.  A path within a block will enter at one portal 
 and exit through another portal. Or a path may terminate within the block, that is, the path
@@ -63,6 +65,7 @@ have at least one portal for an entry/exit point and cannot have more than two p
 A <b>Path</b> is unambiguously defined by specifying the turnouts and their settings for a
 train to proceed safely through the block.
 </p>
+<p>
 <H2>Definitions:</H2>
 The Occupancy Tables define the following elements:
 <UL>
@@ -92,16 +95,30 @@ The Occupancy Tables define the following elements:
                 <li>A path has at least one and no more than two portals.</li>
         </ul></LI>
 </ul>
+How OBlocks, Portals and Paths are used is described in the help file 
+ <a href="../logix/Warrant.shtml"> Warrants. </a>. You may want to browse that before
+ reading further.
+ <p>
+ OBlocks, Portals and OPaths can be created and edited by the using the methods described below,
+ or they can also be created and edited from a WYSIWYG graphical interface described in
+ <a href="..\display\Circuitbuilder.shtml">Circuit Builder</a>.</p>  Circuit Builder can be
+ used you if you have a track diagram using track icons showing your layout.
+ Otherwise you will need to use the tables below.  See 
+ <a href="../logix/OBlockEdit.shtml"> Creating and Editing OBlocks, Portals and OPaths.</a>
+for more details on using the tables.
+ 
+<p>
+<H2>Tables of the Occupancy Block, Portal, Path Frame</H2>
 The tables defining these elements are contained within a single frame that can be
 minimized or closed.  The individual table frames can be minimized within this parent
 frame.
-
-<H2>Tables of the Occupancy Block, Portal, Path Frame</H2>
+<p>
 Each of the tables in the Occupancy Block, Portal, Path Frame have the last row with blank entries.  
 Entering data into these entries and pressing the 'Enter' key will create a new item in the table.
 'Drag and Drop' and 'Copy and Paste' are implemented to provide easy ways to move text from table to
 table.
 </p>
+<p>
 <H3>Columns in the Occupancy Block Table:</H3>
 Each occupancy block on your layout should be entered as a row of this table.
 <ul>
@@ -111,8 +128,7 @@ Each occupancy block on your layout should be entered as a row of this table.
         <li><b>User Name</b>: The user name of the OBlock. </li>
         <li><b>Comment</b>: You may enter any text in this field you wish.</li>
         <li><b>Sensor</b>:The sensor that detects occupancy of the block.</li>
-        <li><b>Length</b>: The length of the Block.  This is included for compatibility
-        with JMRI Blocks.</li>
+        <li><b>Length</b>: The length of the Block.  This is an important parameter if you use NXWarrants.</li>
         <li><b>Units</b>: The unit used to determine the length. (inches or centimeters)
         <li><b>Curvature</b>: The curvature selected for the track  This is included for 
         compatibility with JMRI Blocks.</li>
@@ -140,7 +156,7 @@ entrance and exit points.</p>
 This table is sorted by the name of the Portal.  This means that when a new row is added
 the entry will jump to its postion in the sort.  After entering a new Portal you may find it at 
 the top of the window for further editing.</p>
-
+<p>
 <H3>Columns in Signal Table:</H3>
 For each signal on your layout, make an entry in the Signal Table.  This signal will control the
 actions of any warranted train - changing its speed according to the signal's indication when the
@@ -159,7 +175,7 @@ the portal. The signal may be either a <b>SignalMast</b> or a <b>SignalHead</b>.
         <li><b>Delay(ms)</b>: (Optional) Enter the time in milliseconds to delay any speed change
         that may be required by the signal's aspect.  (See note below)</li>
 </ul>
-        
+<p>        
 <H3>How Signal Aspects Or Occupancy Change Speed:</H3>
 The warrant detects the signal aspect when it enters the <i>approach</i> block and, if needed,
 prepares to change the speed before it reaches the <i>protected</i> block.  Any speed change is
@@ -168,7 +184,7 @@ warranted train will wait before beginning the speed change.</p>
 <p>
 Likewise, when the signal indicates a clear or improved speed from a stopped or reduced speed
 condition, the speed will be ramped up to the allowed or recorded speed. 
-
+<p>
 <H3>Columns in Block-Path Tables:</H3>
 Each block in the Occupancy Block Table will have one or more paths in it.  Pressing the <b>Paths</b> 
 button in a row of the Occupancy Block Table will open this table.  <i>Direction of the path
@@ -186,6 +202,7 @@ of the block.  They are just portal names for the path that traverses from
         <li><<b>Delete</b>: A button to delete the Path.  To make the deletion permanent, 
         save your configuration file to disk</li> 
 </ul>
+<p>
 <H3>Columns in Block-Path-Turnout Tables:</H3>
 If the path crosses a turnout, then it is necessary to have the turnout in the correct position
 in order to traverse the path.  This table is used to define these settings.  (If the path does
@@ -197,6 +214,7 @@ for each path in each block of the Occupancy Block Table.
         <li><<b>Delete</b>: A button to delete the Turnout settings.  To make the deletion permanent, 
         save your configuration file to disk</li> 
 </ul>
+<p>
 <H3>Columns in Block-Portal CrossReference Table:</H3>
 This is a read only table to assist in identifying all the portals to a block.  It lists all
 the portals that have been defined for each block, grouped under each block heading. It is opened
@@ -243,7 +261,8 @@ To read about how OBlocks, Portals and OPaths can be used to generate train rout
 automated train scripts, see <a href="../logix/Warrant.shtml"> Warrants. </a>
 <p>
 See <a href="../logix/OBlockEdit.shtml"> Creating and Editing OBlocks, Portals and OPaths.</a>
-for more details on using these tables.
+for more details on using these tables.  See <a href="..\display\Circuitbuilder.shtml">Circuit Builder</a>.</p>
+for creating and editing OBlocks, Portals and OPaths from a graphical representation of your track plan.
 <br>
 
 <!--#include virtual="/Footer" -->

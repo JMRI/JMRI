@@ -6,347 +6,449 @@
   <variable item="Load Code 1" CV="260">
     <decVal/>
     <label>Load Code 1</label>
+    <label xml:lang="it">Carica codice 1</label>
   </variable>
   <variable item="Load Code 2" CV="261">
     <decVal/>
     <label>Load Code 2</label>
+    <label xml:lang="it">Carica codice 2</label>
   </variable>
   <variable item="Load Code 3" CV="262">
     <decVal/>
     <label>Load Code 3</label>
+    <label xml:lang="it">Carica codice 3</label>
   </variable>
   <variable item="Load Code 4" CV="263">
     <decVal/>
     <label>Load Code 4</label>
+    <label xml:lang="it">Carica codice 4</label>
   </variable>
   <variable item="Set sound program" CV="265" default="1" tooltip="See manual!">
     <enumVal>
       <enumChoice choice="Steam Set 1" value="1">
         <choice>Steam Set 1</choice>
+        <choice xml:lang="it">Vapore Set 1</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 2">
         <choice>Steam Set 2</choice>
+        <choice xml:lang="it">Vapore Set 2</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 3">
         <choice>Steam Set 3</choice>
+        <choice xml:lang="it">Vapore Set 3</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 4">
         <choice>Steam Set 4</choice>
+        <choice xml:lang="it">Vapore Set 4</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 5">
         <choice>Steam Set 5</choice>
+        <choice xml:lang="it">Vapore Set 5</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 6">
         <choice>Steam Set 6</choice>
+        <choice xml:lang="it">Vapore Set 6</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 7">
         <choice>Steam Set 7</choice>
+        <choice xml:lang="it">Vapore Set 7</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 8">
         <choice>Steam Set 8</choice>
+        <choice xml:lang="it">Vapore Set 8</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 9">
         <choice>Steam Set 9</choice>
+        <choice xml:lang="it">Vapore Set 9</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 10">
         <choice>Steam Set 10</choice>
+        <choice xml:lang="it">Vapore Set 10</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 11">
         <choice>Steam Set 11</choice>
+        <choice xml:lang="it">Vapore Set 11</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 12">
         <choice>Steam Set 12</choice>
+        <choice xml:lang="it">Vapore Set 12</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 13">
         <choice>Steam Set 13</choice>
+        <choice xml:lang="it">Vapore Set 13</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 14">
         <choice>Steam Set 14</choice>
+        <choice xml:lang="it">Vapore Set 14</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 15">
         <choice>Steam Set 15</choice>
+        <choice xml:lang="it">Vapore Set 15</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 16">
         <choice>Steam Set 16</choice>
+        <choice xml:lang="it">Vapore Set 16</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 17">
         <choice>Steam Set 17</choice>
+        <choice xml:lang="it">Vapore Set 17</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 18">
         <choice>Steam Set 18</choice>
+        <choice xml:lang="it">Vapore Set 18</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 19">
         <choice>Steam Set 19</choice>
+        <choice xml:lang="it">Vapore Set 19</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 20">
         <choice>Steam Set 20</choice>
+        <choice xml:lang="it">Vapore Set 20</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 21">
         <choice>Steam Set 21</choice>
+        <choice xml:lang="it">Vapore Set 21</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 22">
         <choice>Steam Set 22</choice>
+        <choice xml:lang="it">Vapore Set 22</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 23">
         <choice>Steam Set 23</choice>
+        <choice xml:lang="it">Vapore Set 23</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 24">
         <choice>Steam Set 24</choice>
+        <choice xml:lang="it">Vapore Set 24</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 25">
         <choice>Steam Set 25</choice>
+        <choice xml:lang="it">Vapore Set 25</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 26">
         <choice>Steam Set 26</choice>
+        <choice xml:lang="it">Vapore Set 26</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 27">
         <choice>Steam Set 27</choice>
+        <choice xml:lang="it">Vapore Set 27</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 28">
         <choice>Steam Set 28</choice>
+        <choice xml:lang="it">Vapore Set 28</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 29">
         <choice>Steam Set 29</choice>
+        <choice xml:lang="it">Vapore Set 29</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 30">
         <choice>Steam Set 30</choice>
+        <choice xml:lang="it">Vapore Set 30</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 31">
         <choice>Steam Set 31</choice>
+        <choice xml:lang="it">Vapore Set 31</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 32">
         <choice>Steam Set 32</choice>
+        <choice xml:lang="it">Vapore Set 32</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 1" value="101">
         <choice>Diesel Set 1</choice>
+        <choice xml:lang="it">Diesel Set 1</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 2">
         <choice>Diesel Set 2</choice>
+        <choice xml:lang="it">Diesel Set 2</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 3">
         <choice>Diesel Set 3</choice>
+        <choice xml:lang="it">Diesel Set 3</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 4">
         <choice>Diesel Set 4</choice>
+        <choice xml:lang="it">Diesel Set 4</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 5">
         <choice>Diesel Set 5</choice>
+        <choice xml:lang="it">Diesel Set 5</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 6">
         <choice>Diesel Set 6</choice>
+        <choice xml:lang="it">Diesel Set 6</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 7">
         <choice>Diesel Set 7</choice>
+        <choice xml:lang="it">Diesel Set 7</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 8">
         <choice>Diesel Set 8</choice>
+        <choice xml:lang="it">Diesel Set 8</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 9">
         <choice>Diesel Set 9</choice>
+        <choice xml:lang="it">Diesel Set 9</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 10">
         <choice>Diesel Set 10</choice>
+        <choice xml:lang="it">Diesel Set 10</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 11">
         <choice>Diesel Set 11</choice>
+        <choice xml:lang="it">Diesel Set 11</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 12">
         <choice>Diesel Set 12</choice>
+        <choice xml:lang="it">Diesel Set 12</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 13">
         <choice>Diesel Set 13</choice>
+        <choice xml:lang="it">Diesel Set 13</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 14">
         <choice>Diesel Set 14</choice>
+        <choice xml:lang="it">Diesel Set 14</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 15">
         <choice>Diesel Set 15</choice>
+        <choice xml:lang="it">Diesel Set 15</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 16">
         <choice>Diesel Set 16</choice>
+        <choice xml:lang="it">Diesel Set 16</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 17">
         <choice>Diesel Set 17</choice>
+        <choice xml:lang="it">Diesel Set 17</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 18">
         <choice>Diesel Set 18</choice>
+        <choice xml:lang="it">Diesel Set 18</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 19">
         <choice>Diesel Set 19</choice>
+        <choice xml:lang="it">Diesel Set 19</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 20">
         <choice>Diesel Set 20</choice>
+        <choice xml:lang="it">Diesel Set 20</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 21">
         <choice>Diesel Set 21</choice>
+        <choice xml:lang="it">Diesel Set 21</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 22">
         <choice>Diesel Set 22</choice>
+        <choice xml:lang="it">Diesel Set 22</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 23">
         <choice>Diesel Set 23</choice>
+        <choice xml:lang="it">Diesel Set 23</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 24">
         <choice>Diesel Set 24</choice>
+        <choice xml:lang="it">Diesel Set 24</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 25">
         <choice>Diesel Set 25</choice>
+        <choice xml:lang="it">Diesel Set 25</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 26">
         <choice>Diesel Set 26</choice>
+        <choice xml:lang="it">Diesel Set 26</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 27">
         <choice>Diesel Set 27</choice>
+        <choice xml:lang="it">Diesel Set 27</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 28">
         <choice>Diesel Set 28</choice>
+        <choice xml:lang="it">Diesel Set 28</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 29">
         <choice>Diesel Set 29</choice>
+        <choice xml:lang="it">Diesel Set 29</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 30">
         <choice>Diesel Set 30</choice>
+        <choice xml:lang="it">Diesel Set 30</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 31">
         <choice>Diesel Set 31</choice>
+        <choice xml:lang="it">Diesel Set 31</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 32">
         <choice>Diesel Set 32</choice>
+        <choice xml:lang="it">Diesel Set 32</choice>
       </enumChoice>
     </enumVal>
     <label>Set sound program</label>
+    <label xml:lang="it">Programma serie suoni</label>
   </variable>
   <variable item="Total volume" CV="266" default="65" tooltip="65 is highest distortion-free play back, INC=5">
     <decVal min="0" max="255"/>
     <label>Total volume</label>
+    <label xml:lang="it">Volume generale</label>
   </variable>
   <variable item="Virtual cam chuff frequency" CV="267" default="70" tooltip="The lower the value the higher the chuff frequency and vice versa, INC=1">
     <decVal min="0" max="255"/>
     <label>Virtual cam chuff frequency</label>
+    <label xml:lang="it">Frequenza Chuff Camma Virtuale</label>
   </variable>
   <variable item="Real cam sensor chuff rate" CV="268" default="0" tooltip="0 = virtual sensor, triggers/chuff, INC=1">
     <decVal min="0" max="255"/>
     <label>Real cam sensor chuff rate</label>
+    <label xml:lang="it">Frequenza Chuff Camma reale</label>
   </variable>
   <variable item="Lead chuff accentuated" CV="269" default="0" tooltip="See manual, INC=10">
     <decVal min="0" max="255"/>
     <label>Lead chuff accentuated</label>
+    <label xml:lang="it">Chuff accentuato</label>
   </variable>
   <variable item="Overlapping effect at high speeds" CV="271" default="16" tooltip="Useful up to about 30, see manual, INC=1">
     <decVal min="0" max="255"/>
     <label>Overlapping effect at high speeds</label>
+    <label xml:lang="it">Sovrapposizione effetti ad alta velocità</label>
   </variable>
   <variable item="Blow-off time" CV="272" default="50" tooltip="How long after start-up blow-off occurs, INC=10">
     <decVal min="0" max="255"/>
     <label>Blow-off time</label>
+    <label xml:lang="it">Tempo Scarico Vapore</label>
   </variable>
   <variable item="Delayed start after blow-off time" CV="273" default="0" tooltip="0 = no delay, 1 = blow-off on speed step 1, 2+ = 10ths of seconds, INC=1">
     <decVal min="0" max="255"/>
     <label>Delayed start after blow-off time</label>
+    <label xml:lang="it">Ritardo partenza dopo Scarico Vapore</label>
   </variable>
   <variable item="Blow-off schedule" CV="274" default="30" tooltip="Blow-off suppressed by shunting, 10ths of seconds, INC=10">
     <decVal min="0" max="255"/>
     <label>Blow-off schedule</label>
+    <label xml:lang="it">Pianificazione Scarico Vapore</label>
   </variable>
   <variable item="Chuff volume at low speed and no load" CV="275" default="60" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Chuff volume at low speed and no load</label>
+    <label xml:lang="it">Volume Chuff a bassa velocità e senza carico</label>
   </variable>
   <variable item="Chuff volume at high speed and no load" CV="276" default="80" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Chuff volume at high speed and no load</label>
+    <label xml:lang="it">Volume Chuff a alta velocità e senza carico</label>
   </variable>
   <variable item="Degree of volume change under load" CV="277" default="0" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Degree of volume change under load</label>
+    <label xml:lang="it">Cambio Volume con carico</label>
   </variable>
   <variable item="Load change threshold" CV="278" default="0" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Load change threshold</label>
+    <label xml:lang="it">Soglia cambio per carico</label>
   </variable>
   <variable item="Reaction time to load change" CV="279" default="0" tooltip="See manual!, INC=1">
     <decVal min="0" max="255"/>
     <label>Reaction time to load change</label>
+    <label xml:lang="it">Tempo reazione cambio per carico</label>
   </variable>
   <variable item="Load influence for diesel engines" CV="280" default="0" tooltip="See manual! 0=no influence, reacts to motor speed only, 1-255, load influence increases with number">
     <decVal min="0" max="255"/>
     <label>Load influence for diesel engines</label>
+    <label xml:lang="it">Influenza carico per Diesel</label>
   </variable>
   <variable item="Acceleration threshold for full load sound" CV="281" default="1" tooltip="See manual!, INC=1">
     <decVal min="0" max="255"/>
     <label>Acceleration threshold for full load sound</label>
+    <label xml:lang="it">Soglia accellerazione per suono a pieno carico</label>
   </variable>
   <variable item="Duration of acceleration sound" CV="282" default="30" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Duration of acceleration sound</label>
+    <label xml:lang="it">Durata suono Accellerazione</label>
   </variable>
   <variable item="Engine volume at full acceleration" CV="283" default="255" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Engine volume at full acceleration</label>
+    <label xml:lang="it">Volume Motore a piena Accellerazione</label>
   </variable>
   <variable item="Threshold for deceleration sound" CV="284" default="1" tooltip="See manual!, INC=1">
     <decVal min="0" max="255"/>
     <label>Threshold for deceleration sound</label>
+    <label xml:lang="it">Soglia per suono Decellerazione</label>
   </variable>
   <variable item="Duration of reduced volume on deceleration" CV="285" default="30" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Duration of reduced volume on deceleration</label>
+    <label xml:lang="it">Durata volume ridotto per Decellerazione</label>
   </variable>
   <variable item="Volume level during deceleration" CV="286" default="20" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Volume level during deceleration</label>
+    <label xml:lang="it">Volume Motore durante Decellerazione</label>
   </variable>
   <variable item="Brake squeal threshold" CV="287" default="20" tooltip="Internal speed step below which brake squeal starts, INC=10">
     <decVal min="0" max="255"/>
     <label>Brake squeal threshold</label>
+    <label xml:lang="it">Soglia Stridio Freni</label>
   </variable>
   <variable item="Minimum driving time before brake squeal" CV="288" default="50" tooltip="Unless loco is driven for this time Brake squeal will be surpressed (0-25sec), INC=10">
     <decVal min="0" max="255"/>
     <label>Minimum driving time before brake squeal</label>
+    <label xml:lang="it">Distanza minima prima di Stridio Freni</label>
   </variable>
   <variable item="Thyristor control: Sound pitch for stepping effect" CV="289" default="1" tooltip="See manual!, INC=10">
     <decVal min="1" max="255"/>
     <label>Thyristor control: Sound pitch for stepping effect</label>
+    <label xml:lang="it">Controllo Tiristore: Step Increm. suono</label>
   </variable>
   <variable item="Thyristor control: Sound pitch at medium speed" CV="290" default="40" tooltip="See manual!, INC=10">
     <decVal min="0" max="100"/>
     <label>Thyristor control: Sound pitch at medium speed</label>
+    <label xml:lang="it">Controllo Tiristore: Increm. suono a velocità media</label>
   </variable>
   <variable item="Thyristor control: Sound pitch at maximum speed" CV="291" default="100" tooltip="See manual!, INC=10">
     <decVal min="0" max="100"/>
     <label>Thyristor control: Sound pitch at maximum speed</label>
+    <label xml:lang="it">Controllo Tiristore: Increm. suono a velocità massima</label>
   </variable>
   <variable item="Thyristor control: Speed step for medium speed" CV="292" default="100" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Thyristor control: Speed step for medium speed</label>
+    <label xml:lang="it">Controllo Tiristore: Step velocità per velocità media</label>
   </variable>
   <variable item="Thyristor control: Volume at steady speed" CV="293" default="30" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Thyristor control: Volume at steady speed</label>
+    <label xml:lang="it">Controllo Tiristore: Volume. suono a velocità costante</label>
   </variable>
   <variable item="Thyristor control: Volume during acceleration" CV="294" default="100" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Thyristor control: Volume during acceleration</label>
+    <label xml:lang="it">Controllo Tiristore: Volume. durante Accellerazione</label>
   </variable>
   <variable item="Thyristor control: Volume during deceleration" CV="295" default="50" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Thyristor control: Volume during deceleration</label>
+    <label xml:lang="it">Controllo Tiristore: Volume. durante Decellerazione</label>
   </variable>
   <variable item="Electric Engine Motor sound: highest volume" CV="296" default="100" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Electric Engine Motor sound: highest volume</label>
+    <label xml:lang="it">Motore Elettrico: Volume. massimo</label>
   </variable>
   <variable item="Electric Engine Motor sound: where sound becomes audible" CV="297" default="30" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Electric Engine Motor sound: where sound becomes audible</label>
+    <label xml:lang="it">Motore Elettrico: quando diventa udibile il suono</label>
   </variable>
   <variable item="Electric Engine Motor sound: starting point of full volume" CV="298" default="128" tooltip="Should be &gt; value in CV 297. See manual!, INC=10.">
     <decVal min="0" max="255"/>
     <label>Electric Engine Motor sound: starting point of full volume</label>
+    <label xml:lang="it">Motore Elettrico: Punto partenza Volume. massimo</label>
   </variable>
   <variable item="Electric Engine Motor sound: dependence of the pitch on speed" CV="299" default="100" tooltip="Should be &gt; value in CV 297. See manual!, INC=10.">
     <decVal min="0" max="255"/>
     <label>Electric Engine Motor sound: dependence of the pitch on speed</label>
+    <label xml:lang="it">Motore Elettrico: Dipendenza increm.volume da Velocità</label>
   </variable>
   <variable item="On/off key for engine and random sound" CV="310" default="8" tooltip="Defines the key that turns the engine and random sounds on or off">
     <enumVal>
@@ -412,14 +514,17 @@
       </enumChoice>
       <enumChoice choice="Always On" value="255">
         <choice>Always On</choice>
+        <choice xml:lang="it">Sempre On</choice>
       </enumChoice>
     </enumVal>
     <label>On/off key for engine and random sound</label>
+    <label xml:lang="it">Tasto On-Off per Motore e suoni casuali</label>
   </variable>
   <variable item="On/off key for function sound" CV="311" default="0" tooltip="Defines the key that turns the function sounds (e.g. F2 bell) on or off.">
     <enumVal>
       <enumChoice choice="Always On">
         <choice>F-key sounds always on</choice>
+        <choice xml:lang="it">Tasto F sempre On</choice>
       </enumChoice>
       <enumChoice choice="F1">
         <choice>F1</choice>
@@ -480,11 +585,13 @@
       </enumChoice>
     </enumVal>
     <label>On/off key for function sound</label>
+    <label xml:lang="it">Tasto On-Off per suoni Funzione</label>
   </variable>
   <variable item="Blow-off key" CV="312" default="4" tooltip="Defines the key to play-back the blow-off sound manually">
     <enumVal>
       <enumChoice choice="No key assigned">
         <choice>No key assigned</choice>
+        <choice xml:lang="it">Nessun Tasto</choice>
       </enumChoice>
       <enumChoice choice="F1">
         <choice>F1</choice>
@@ -545,11 +652,13 @@
       </enumChoice>
     </enumVal>
     <label>Blow-off key</label>
+    <label xml:lang="it">Tasto per Scarico vapore</label>
   </variable>
   <variable item="Mute key" CV="313" default="8" tooltip="Defines key to fade in and out driving sounds">
     <enumVal>
       <enumChoice choice="No key assigned">
         <choice>No key assigned</choice>
+        <choice xml:lang="it">Nessun Tasto</choice>
       </enumChoice>
       <enumChoice choice="F1 off=Fade">
         <choice>F1</choice>
@@ -667,127 +776,158 @@
       </enumChoice>
     </enumVal>
     <label>Mute key</label>
+    <label xml:lang="it">Tasto Tacitazione</label>
   </variable>
   <variable item="Fade in/out time" CV="314" default="0" tooltip="Time of fade in 10ths of second. 0 is same as 10 (1sec).">
     <decVal min="0" max="255"/>
     <label>Fade in/out time</label>
+    <label xml:lang="it">Tempo dissolvenza In-Out</label>
   </variable>
   <variable item="Minimum interval for random generator Z1" CV="315" default="1" tooltip="Seconds. By default, the compressor is assigned to Z1. See manual!.">
     <decVal min="0" max="255"/>
     <label>Minimum interval for random generator Z1</label>
+    <label xml:lang="it">Intervallo minimo per generatore casuale Z1</label>
   </variable>
   <variable item="Maximum interval for random generator Z1" CV="316" default="60" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z1. See manual!.">
     <decVal min="0" max="255"/>
     <label>Maximum interval for random generator Z1</label>
+    <label xml:lang="it">Intervallo massimo per generatore casuale Z1</label>
   </variable>
   <variable item="Playback length for random generator Z1" CV="317" default="5" tooltip="Seconds.  Play back time for associated sound. See manual!.">
     <decVal min="0" max="255"/>
     <label>Playback length for random generator Z1</label>
+    <label xml:lang="it">Tempo durata per generatore casuale Z1</label>
   </variable>
   <variable item="Minimum interval for random generator Z2" CV="318" default="20" tooltip="Seconds. By default, coal shoveling is assigned to Z2. See manual!.">
     <decVal min="0" max="255"/>
     <label>Minimum interval for random generator Z2</label>
+    <label xml:lang="it">Intervallo minimo per generatore casuale Z2</label>
   </variable>
   <variable item="Maximum interval for random generator Z2" CV="319" default="80" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z2. See manual!.">
     <decVal min="0" max="255"/>
     <label>Maximum interval for random generator Z2</label>
+    <label xml:lang="it">Intervallo massimo per generatore casuale Z2</label>
   </variable>
   <variable item="Playback length for random generator Z2" CV="320" default="5" tooltip="Seconds.  Play back time for associated sound. See manual!.">
     <decVal min="0" max="255"/>
     <label>Playback length for random generator Z2</label>
+    <label xml:lang="it">Tempo durata per generatore casuale Z2</label>
   </variable>
   <variable item="Minimum interval for random generator Z3" CV="321" default="30" tooltip="Seconds. By default, the injector is assigned to Z3. See manual!.">
     <decVal min="0" max="255"/>
     <label>Minimum interval for random generator Z3</label>
+    <label xml:lang="it">Intervallo minimo per generatore casuale Z3</label>
   </variable>
   <variable item="Maximum interval for random generator Z3" CV="322" default="90" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z3. See manual!.">
     <decVal min="0" max="255"/>
     <label>Maximum interval for random generator Z3</label>
+    <label xml:lang="it">Intervallo massimo per generatore casuale Z3</label>
   </variable>
   <variable item="Playback length for random generator Z3" CV="323" default="3" tooltip="Seconds.  Play back time for associated sound. See manual!.">
     <decVal min="0" max="255"/>
     <label>Playback length for random generator Z3</label>
+    <label xml:lang="it">Tempo durata per generatore casuale Z3</label>
   </variable>
   <variable item="Minimum interval for random generator Z4" CV="324" tooltip="Seconds. There is no default assignment for Z4. See manual!.">
     <decVal min="0" max="255"/>
     <label>Minimum interval for random generator Z4</label>
+    <label xml:lang="it">Intervallo minimo per generatore casuale Z4</label>
   </variable>
   <variable item="Maximum interval for random generator Z4" CV="325" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z4. See manual!.">
     <decVal min="0" max="255"/>
     <label>Maximum interval for random generator Z4</label>
+    <label xml:lang="it">Intervallo massimo per generatore casuale Z4</label>
   </variable>
   <variable item="Playback length for random generator Z4" CV="326" tooltip="Seconds.  Play back time for associated sound. See manual!.">
     <decVal min="0" max="255"/>
     <label>Playback length for random generator Z4</label>
+    <label xml:lang="it">Tempo durata per generatore casuale Z4</label>
   </variable>
   <variable item="Minimum interval for random generator Z5" CV="327" tooltip="Seconds. There is no default assignment for Z5. See manual!.">
     <decVal min="0" max="255"/>
     <label>Minimum interval for random generator Z5</label>
+    <label xml:lang="it">Intervallo minimo per generatore casuale Z5</label>
   </variable>
   <variable item="Maximum interval for random generator Z5" CV="328" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z5. See manual!.">
     <decVal min="0" max="255"/>
     <label>Maximum interval for random generator Z5</label>
+    <label xml:lang="it">Intervallo massimo per generatore casuale Z5</label>
   </variable>
   <variable item="Playback length for random generator Z5" CV="329" tooltip="Seconds.  Play back time for associated sound. See manual!.">
     <decVal min="0" max="255"/>
     <label>Playback length for random generator Z5</label>
+    <label xml:lang="it">Tempo durata per generatore casuale Z5</label>
   </variable>
   <variable item="Minimum interval for random generator Z6" CV="330" tooltip="Seconds. There is no default assignment for Z6. See manual!.">
     <decVal min="0" max="255"/>
     <label>Minimum interval for random generator Z6</label>
+    <label xml:lang="it">Intervallo minimo per generatore casuale Z6</label>
   </variable>
   <variable item="Maximum interval for random generator Z6" CV="331" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z6. See manual!.">
     <decVal min="0" max="255"/>
     <label>Maximum interval for random generator Z6</label>
+    <label xml:lang="it">Intervallo massimo per generatore casuale Z6</label>
   </variable>
   <variable item="Playback length for random generator Z6" CV="332" tooltip="Seconds.  Play back time for associated sound. See manual!.">
     <decVal min="0" max="255"/>
     <label>Playback length for random generator Z6</label>
+    <label xml:lang="it">Tempo durata per generatore casuale Z6</label>
   </variable>
   <variable item="Minimum interval for random generator Z7" CV="333" tooltip="Seconds. There is no default assignment for Z7. See manual!.">
     <decVal min="0" max="255"/>
     <label>Minimum interval for random generator Z7</label>
+    <label xml:lang="it">Intervallo minimo per generatore casuale Z7</label>
   </variable>
   <variable item="Maximum interval for random generator Z7" CV="334" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z7. See manual!.">
     <decVal min="0" max="255"/>
     <label>Maximum interval for random generator Z7</label>
+    <label xml:lang="it">Intervallo massimo per generatore casuale Z7</label>
   </variable>
   <variable item="Playback length for random generator Z7" CV="335" tooltip="Seconds.  Play back time for associated sound. See manual!.">
     <decVal min="0" max="255"/>
     <label>Playback length for random generator Z7</label>
+    <label xml:lang="it">Tempo durata per generatore casuale Z7</label>
   </variable>
   <variable item="Minimum interval for random generator Z8" CV="336" tooltip="Seconds. There is no default assignment for Z8. See manual!.">
     <decVal min="0" max="255"/>
     <label>Minimum interval for random generator Z8</label>
+    <label xml:lang="it">Intervallo minimo per generatore casuale Z8</label>
   </variable>
   <variable item="Maximum interval for random generator Z8" CV="337" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z8. See manual!.">
     <decVal min="0" max="255"/>
     <label>Maximum interval for random generator Z8</label>
+    <label xml:lang="it">Intervallo massimo per generatore casuale Z8</label>
   </variable>
   <variable item="Playback length for random generator Z8" CV="338" tooltip="Seconds.  Play back time for associated sound. See manual!.">
     <decVal min="0" max="255"/>
     <label>Playback length for random generator Z8</label>
+    <label xml:lang="it">Tempo durata per generatore casuale Z8</label>
   </variable>
   <variable item="Switch input 1 playback time" CV="341" default="0" tooltip="Seconds. 0 = Play sample back once (as recorded).">
     <decVal min="0" max="255"/>
     <label>Switch input 1 playback time</label>
+    <label xml:lang="it">Tempo durata suono per Ingresso 1</label>
   </variable>
   <variable item="Switch input 2 playback time" CV="342" default="0" tooltip="(If not used for the cam sensor) Seconds. 0 = Play sample back once (as recorded).">
     <decVal min="0" max="255"/>
     <label>Switch input 2 playback time</label>
+    <label xml:lang="it">Tempo durata suono per Ingresso 2</label>
   </variable>
   <variable item="Switch input 3 playback time" CV="343" default="0" tooltip="(If not used for the cam sensor) Seconds. 0 = Play sample back once (as recorded)." include="208,224">
     <decVal min="0" max="255"/>
     <label>Switch input 3 playback time</label>
+    <label xml:lang="it">Tempo durata suono per Ingresso 3</label>
   </variable>
   <variable item="Run-on time for Diesel and Electric Auxiliaries" CV="344" default="0" tooltip="0 = no run-on, 255 = 25sec">
     <decVal min="0" max="255"/>
     <label>Run-on time</label>
+    <label xml:lang="it">Durata esecuzione suono</label>
   </variable>
   <variable item="Multi-system engine Quick Select key" CV="345" default="0" tooltip="Function key to switch between two sound types">
     <enumVal>
       <enumChoice choice="No key assigned">
         <choice>No key assigned</choice>
+        <choice xml:lang="it">Nessun Tasto</choice>
       </enumChoice>
       <enumChoice choice="F1">
         <choice>F1</choice>
@@ -848,29 +988,36 @@
       </enumChoice>
     </enumVal>
     <label>Multi-system engine Quick Select key</label>
+    <label xml:lang="it">Tasto selezione veloce motore multiplo</label>
   </variable>
   <variable item="Delay of Switchgear sound at startup" CV="350" default="0" tooltip="0 = no delay, 255 = 25sec">
     <decVal min="0" max="255"/>
     <label>Delay of Switchgear sound at startup</label>
+    <label xml:lang="it">Ritardo suono Cambio in partenza</label>
   </variable>
   <variable item="Smoke Fan Speed at Steady Speed" CV="351" default="128" tooltip="0 to 255">
     <decVal min="0" max="255"/>
     <label>Smoke Fan Speed at Steady Speed</label>
+    <label xml:lang="it">Velocità ventole fumo a velocità costante</label>
   </variable>
   <variable item="Smoke Fan Speed at Startup and Acceleration" CV="352" default="255" tooltip="0 to 255">
     <decVal min="0" max="255"/>
     <label>Smoke Fan Speed at Startup and Acceleration</label>
+    <label xml:lang="it">Velocità ventole fumo in partenza e accellerazione</label>
   </variable>
   <variable item="Automatic Shut-down of Smoke Generator" CV="353" default="0" tooltip="0 to 252, 25sec per unit">
     <decVal min="0" max="252"/>
     <label>Automatic Shut-down of Smoke Generator</label>
+    <label xml:lang="it">Spegnimento automatico generatore Fumo</label>
   </variable>
   <variable item="Steam chuff frequency at speed step 1" CV="354" default="0" tooltip="0 = no effect, 1-127 = more chuffs, 255-128 = less chuffs relative to CV257">
     <decVal min="0" max="255"/>
     <label>Steam chuff frequency at speed step 1</label>
+    <label xml:lang="it">Frequenza Chuff a velocità step 1</label>
   </variable>
   <variable item="Fan Speed at Standstill" CV="355" default="0" tooltip="0 to 255, Supplements CV133">
     <decVal min="0" max="255"/>
     <label>Fan Speed at Standstill</label>
+    <label xml:lang="it">Velocità Ventole da fermo</label>
   </variable>
 </variables>

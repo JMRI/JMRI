@@ -52,11 +52,12 @@
     <label xml:lang="de">Verbundadresse</label>
     <label>Consist Address</label>
   </variable>
-  <variable item="Consist Direction" CV="19" mask="VXXXXXXX">
+  <variable item="Consist Direction" CV="19" mask="VXXXXXXX" tooltip="This loco runs Normal(default) or Reversed(address+128) when in the consist">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
     <label xml:lang="it">Direzione Consist</label>
     <label xml:lang="fr">Direction UM</label>
     <label xml:lang="de">Verbund-Richtung</label>
     <label>Consist Direction</label>
+    <tooltip xml:lang="it">Direzione loco nel Consist - Normale(default) o all'indietro(indirizzo+128)</tooltip>
   </variable>
 </variables>

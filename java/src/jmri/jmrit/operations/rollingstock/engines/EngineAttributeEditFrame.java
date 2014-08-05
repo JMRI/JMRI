@@ -101,9 +101,8 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 		// add help menu to window
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Locomotives", true); // NOI18N
 
-		pack();
-		setMinimumSize(new Dimension(Control.smallPanelWidth, Control.smallPanelHeight));
-		setVisible(true);
+		initMinimumSize(new Dimension(Control.mediumPanelWidth, Control.minPanelHeight));
+
 	}
 
 	// add, delete or replace button

@@ -12,44 +12,55 @@
     </label>
     <display item="Thyristor control: Sound pitch for stepping effect" label="Sound pitch for stepping effect">
       <label>Thyristor control: Sound pitch for stepping effect</label>
+      <label xml:lang="it">Controllo Tiristore: volume suono per effetto accellerazione</label>
     </display>
     <display item="Thyristor control: Sound pitch at medium speed" label="Sound pitch at medium speed">
       <label>Sound pitch at medium speed</label>
+      <label xml:lang="it">Volume suono a velocità Media</label>
     </display>
     <display item="Thyristor control: Sound pitch at maximum speed" label="Sound pitch at maximum speed">
       <label>Sound pitch at maximum speed</label>
+      <label xml:lang="it">Volume suono a velocità Massima</label>
     </display>
     <display item="Thyristor control: Speed step for medium speed" label="Speed step for medium speed">
       <label>Speed step for medium speed</label>
+      <label xml:lang="it">Step Velocità a velocità Media</label>
     </display>
     <label>
       <text> </text>
     </label>
     <display item="Thyristor control: Volume during acceleration" label="Volume during acceleration">
       <label>Volume during acceleration</label>
+      <label xml:lang="it">Volume durante accellerazione</label>
     </display>
     <display item="Thyristor control: Volume at steady speed" label="Volume at steady speed">
       <label>Volume at steady speed</label>
+      <label xml:lang="it">Volume a velocità costante</label>
     </display>
     <display item="Thyristor control: Volume during deceleration" label="Volume during deceleration">
       <label>Volume during deceleration</label>
+      <label xml:lang="it">Volume durante decellerazione</label>
     </display>
     <label>
       <text> </text>
     </label>
     <display item="Thyristor Volume at Higher Speed" label="Volume at Higher Speed">
       <label>Thyristor Volume at Higher Speed</label>
+      <label xml:lang="it">Volume Tiristore a velocità più alta</label>
     </display>
     <display item="Thyristor Volume Change Speed Step" label="Volume Change Speed Step">
       <label>Thyristor Volume Change Speed Step</label>
+      <label xml:lang="it">Cambio Volume Tiristore al cambio velocità</label>
     </display>
     <display item="Thyristor Second Switching Threshold" label="Second Switching Threshold">
       <label>Thyristor Second Switching Threshold</label>
+      <label xml:lang="it">Soglia Tiristore velocità manovra</label>
     </display>
   </column>
   <column>
     <label>
       <text>Motor sound</text>
+      <text xml:lang="it">Suoni Motore</text>
     </label>
     <separator/>
     <label>
@@ -57,20 +68,25 @@
     </label>
     <display item="Electric Engine Motor sound: highest volume" label="Highest volume">
       <label>Highest volume</label>
+      <label xml:lang="it">Volume più alto</label>
     </display>
     <display item="Electric Engine Motor sound: where sound becomes audible" label="Where sound becomes audible">
       <label>Where sound becomes audible</label>
+      <label xml:lang="it">Quando il suono diventa udibile</label>
     </display>
     <display item="Electric Engine Motor sound: starting point of full volume" label="Starting point of full volume">
       <label>Starting point of full volume</label>
+      <label xml:lang="it">Punto di partenza Volume Massimo</label>
     </display>
     <display item="Electric Engine Motor sound: dependence of the pitch on speed" label="Dependence of the pitch on speed">
       <label>Dependence of the pitch on speed</label>
+      <label xml:lang="it">Dipendenza del pitch da velocità</label>
     </display>
   </column>
   <column>
     <label>
       <text>Switchgear sound</text>
+      <text xml:lang="it">Suoni Cambio</text>
     </label>
     <separator/>
     <label>
@@ -78,19 +94,25 @@
     </label>
     <display item="Delay of Switchgear sound at startup" label="Delay of Switchgear sound at startup">
       <label>Delay of Switchgear sound at startup</label>
+      <label xml:lang="it">Ritardo suono Cambio in partenza</label>
     </display>
     <display item="Switchgear noise Duration at speed change" label="Duration at speed change">
       <label>Switchgear noise Duration after stop</label>
+      <label xml:lang="it">Durata suono Cambio dopo lo stop</label>
     </display>
     <display item="Switchgear noise Duration after stop" label="Duration after stop">
       <label>Switchgear noise Duration after stop</label>
+      <label xml:lang="it">Durata suono Cambio dopo lo stop</label>
     </display>
     <display item="Switchgear noise minimum Wait before the next play" label="Minimum Wait before the next play">
       <label>Switchgear noise minimum Wait before the next play</label>
+      <label xml:lang="it">Attesa minima marcia prima del prossimo cambio</label>
     </display>
     <display item="Switchgear noise Distribution of speed in Switching stages" label="Number of Switching stages">
       <label>Switchgear noise Distribution of speed in Switching stages</label>
+      <label xml:lang="it">Distribuzione Marce nelle velocità di manovra</label>
     </display>
   </column>
   <name>Sound - Electric Loco</name>
+  <name xml:lang="it">Suoni - Elettrico</name>
 </pane>

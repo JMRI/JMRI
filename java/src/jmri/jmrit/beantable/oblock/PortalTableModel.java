@@ -36,7 +36,7 @@ import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Portal;
 import jmri.jmrit.logix.PortalManager;
 
-public class PortalTableModel extends jmri.jmrit.picker.PickListModel {
+public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
 
     public static final int FROM_BLOCK_COLUMN = 0;
     public static final int NAME_COLUMN = 1;
@@ -74,19 +74,19 @@ public class PortalTableModel extends jmri.jmrit.picker.PickListModel {
     public NamedBean getBySystemName(String name) {
         return _manager.getBySystemName(name);
     }
-
-    @Override
-    public NamedBean addBean(String name) {
-        return _manager.providePortal(name);
+    public NamedBean getByUserName(String name) {
+    	return _manager.getByUserName(name);
     }
-    @Override
-    public NamedBean addBean(String sysName, String userName) {
-        return _manager.createNewPortal(sysName, userName);
+    protected String getBeanType(){
+        return "Portal";
     }
-    @Override
-    public boolean canAddBean() {
-        return true;
+    public String getValue(String name) {
+    	return name;
     }
+    public void clickOn(NamedBean t) {
+    }
+    protected String getMasterClassName() { return PortalTableModel.class.getName(); }
+    
 
     @Override
     public int getColumnCount () {
@@ -109,7 +109,14 @@ public class PortalTableModel extends jmri.jmrit.picker.PickListModel {
         if (getRowCount() == row) {
             return tempRow[col];
         }
-        Portal portal = (Portal)getBeanAt(row);
+    	if (row > sysNameList.size()) {
+    		return "";
+    	}
+    	Portal portal = null;
+    	if (row < sysNameList.size()) {
+            String name = sysNameList.get(row);
+            portal = _manager.getBySystemName(name);
+    	}
     	if (portal==null) {
             if (col==DELETE_COL) {
             	return Bundle.getMessage("ButtonClear");
@@ -153,7 +160,7 @@ public class PortalTableModel extends jmri.jmrit.picker.PickListModel {
             	 } else if (toBlock==null && tempRow[TO_BLOCK_COLUMN]!=null) {
                      msg = Bundle.getMessage("NoSuchBlock", tempRow[TO_BLOCK_COLUMN]);            		 
             	 } else {
-                     msg = Bundle.getMessage("PortalNeedsBlock", name);            		 
+ //                    msg = Bundle.getMessage("PortalNeedsBlock", name);            		 
             	 }
              } else if (fromBlock.equals(toBlock)) {
                  msg = Bundle.getMessage("SametoFromBlock", fromBlock.getDisplayName());
@@ -175,7 +182,8 @@ public class PortalTableModel extends jmri.jmrit.picker.PickListModel {
              return;
         }
 
-        Portal portal = (Portal)getBeanAt(row);
+        String name = sysNameList.get(row);
+        Portal portal = _manager.getBySystemName(name);
         if (portal==null) {
         	log.error("Portal null, getValueAt row= "+row+", col= "+col+", " +
         			"portalListSize= "+_manager.getSystemNameArray().length);

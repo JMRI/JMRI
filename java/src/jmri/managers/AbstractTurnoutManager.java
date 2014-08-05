@@ -15,11 +15,12 @@ import jmri.managers.AbstractManager;
  * @version			$Revision$
  */
 public abstract class AbstractTurnoutManager extends AbstractManager
-    implements TurnoutManager {
+    implements TurnoutManager, java.beans.VetoableChangeListener {
 	
 	public AbstractTurnoutManager() {
         //super(Manager.TURNOUTS);
 		TurnoutOperationManager.getInstance();		// force creation of an instance
+        jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
 	}
     
     public int getXMLOrder(){
@@ -107,6 +108,10 @@ public abstract class AbstractTurnoutManager extends AbstractManager
             log.error(ex.toString());
         }
         return s;
+    }
+    
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameTurnout");
     }
     	
 	/**

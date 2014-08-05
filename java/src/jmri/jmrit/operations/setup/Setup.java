@@ -100,6 +100,14 @@ public class Setup {
 	public static final String AAR = Bundle.getMessage("ArrCodes"); // Car types
 
 	public static final String MONOSPACED = Bundle.getMessage("Monospaced"); // default printer font
+	
+	public static final int STANDARD = 0;
+	public static final int TWO_COLUMN = 1;
+	public static final int TWO_COLUMN_TRACK = 2;
+	
+	public static final String STANDARD_FORMAT = Bundle.getMessage("StandardFormat");
+	public static final String TWO_COLUMN_FORMAT = Bundle.getMessage("TwoColumnFormat");
+	public static final String TWO_COLUMN_TRACK_FORMAT = Bundle.getMessage("TwoColumnTrackFormat");
 
 	public static final String PORTRAIT = Bundle.getMessage("Portrait");
 	public static final String LANDSCAPE = Bundle.getMessage("Landscape");
@@ -148,6 +156,7 @@ public class Setup {
 	public static final String NO_DESTINATION = "NO_DESTINATION"; // NOI18N
 	public static final String NO_DEST_TRACK = "NO_DEST_TRACK"; // NOI18N
 	public static final String NO_LOCATION = "NO_LOCATION"; // NOI18N
+	public static final String NO_TRACK = "NO_TRACK"; // NOI18N
 
 	// the supported colors for printed text
 	public static final String BLACK = Bundle.getMessage("Black");
@@ -234,10 +243,12 @@ public class Setup {
 	private static int tab2CharLength = 6; // arbitrary lengths
 	private static int tab3CharLength = 8;
 	private static boolean twoColumnFormat = false; // when true, use two columns for work at a location
+	private static String manifestFormat = STANDARD_FORMAT;
 	private static boolean manifestEditorEnabled = false; // when true use text editor to view build report
 	private static boolean switchListSameManifest = true; // when true switch list format is the same as the manifest
 	private static boolean manifestTruncated = false; // when true, manifest is truncated if switch list is available
 	private static boolean manifestDepartureTime = false; // when true, manifest shows train's departure time
+	private static boolean switchListRouteComment = true; // when true, switch list have route location comments
 	private static boolean switchListRealTime = true; // when true switch list only show work for built trains
 	private static boolean switchListAllTrains = true; // when true show all trains that visit the location
 	private static boolean switchListPage = false; // when true each train has its own page
@@ -690,6 +701,14 @@ public class Setup {
 	public static boolean isSwitchListFormatSameAsManifest() {
 		return switchListSameManifest;
 	}
+	
+	public static void setSwitchListRouteLocationCommentEnabled(boolean b) {
+		switchListRouteComment = b;
+	}
+
+	public static boolean isSwitchListRouteLocationCommentEnabled() {
+		return switchListRouteComment;
+	}
 
 	public static void setSwitchListRealTime(boolean b) {
 		switchListRealTime = b;
@@ -940,6 +959,14 @@ public class Setup {
 
 	public static void setTwoColumnFormatEnabled(boolean enable) {
 		twoColumnFormat = enable;
+	}
+	
+	public static String getManifestFormat() {
+		return manifestFormat;
+	}
+	
+	public static void setManifestFormat(String format) {
+		manifestFormat = format;
 	}
 
 	public static boolean isCarLoggerEnabled() {
@@ -1222,7 +1249,7 @@ public class Setup {
 			else if (format[i].equals(LOCATION))
 				format[i] = NO_LOCATION;
 			else if (format[i].equals(TRACK))
-				format[i] = NO_LOCATION;
+				format[i] = NO_TRACK;
 		}
 		return format;
 	}
@@ -1397,16 +1424,13 @@ public class Setup {
 		}
 	}
 
-	// public static JComboBox getFontComboBox(){
-	// return jmri.util.swing.FontComboUtil.getFontCombo(FontComboUtil.ALL, 14);
-	// JComboBox box = new JComboBox();
-	// box.addItem(COURIER);
-	// box.addItem(GARAMOND);
-	// box.addItem(MONOSPACED);
-	// box.addItem(SANSERIF);
-	// box.addItem(SERIF);
-	// return box;
-	// }
+	public static JComboBox getManifestFormatComboBox() {
+		JComboBox box = new JComboBox();
+		box.addItem(STANDARD_FORMAT);
+		box.addItem(TWO_COLUMN_FORMAT);
+		box.addItem(TWO_COLUMN_TRACK_FORMAT);
+		return box;
+	}
 
 	public static JComboBox getOrientationComboBox() {
 		JComboBox box = new JComboBox();
@@ -1622,6 +1646,7 @@ public class Setup {
 		values.setAttribute(Xml.REAL_TIME, isSwitchListRealTime() ? Xml.TRUE : Xml.FALSE);
 		values.setAttribute(Xml.ALL_TRAINS, isSwitchListAllTrainsEnabled() ? Xml.TRUE : Xml.FALSE);
 		values.setAttribute(Xml.PAGE_MODE, isSwitchListPagePerTrainEnabled() ? Xml.TRUE : Xml.FALSE);
+		values.setAttribute(Xml.PRINT_ROUTE_LOCATION, isSwitchListRouteLocationCommentEnabled() ? Xml.TRUE : Xml.FALSE);
 
 		e.addContent(values = new Element(Xml.SWITCH_LIST_PICKUP_CAR_FORMAT));
 		storeXmlMessageFormat(values, getSwitchListPickupCarPrefix(), getSwitchListPickupCarMessageFormat());
@@ -1671,8 +1696,17 @@ public class Setup {
 		values.setAttribute(Xml.USE_EDITOR, isManifestEditorEnabled() ? Xml.TRUE : Xml.FALSE);
 		values.setAttribute(Xml.HAZARDOUS_MSG, getHazardousMsg());
 
+		// backward compatible, remove in 2015
 		e.addContent(values = new Element(Xml.COLUMN_FORMAT));
-		values.setAttribute(Xml.TWO_COLUMNS, isTwoColumnFormatEnabled() ? Xml.TRUE : Xml.FALSE);
+		values.setAttribute(Xml.TWO_COLUMNS, getManifestFormat() == TWO_COLUMN_FORMAT  ? Xml.TRUE : Xml.FALSE);
+		// new format June 2014
+		e.addContent(values = new Element(Xml.MANIFEST_FORMAT));
+		int value = STANDARD;
+		if (getManifestFormat().equals(TWO_COLUMN_FORMAT))
+			value = TWO_COLUMN;
+		else if (getManifestFormat().equals(TWO_COLUMN_TRACK_FORMAT))
+			value = TWO_COLUMN_TRACK;
+		values.setAttribute(Xml.VALUE, Integer.toString(value));
 
 		if (!getManifestLogoURL().equals("")) {
 			values = new Element(Xml.MANIFEST_LOGO);
@@ -2015,6 +2049,12 @@ public class Setup {
 					log.debug("pageMode: " + b);
 				setSwitchListPagePerTrainEnabled(b.equals(Xml.TRUE));
 			}
+			if ((a = operations.getChild(Xml.SWITCH_LIST).getAttribute(Xml.PRINT_ROUTE_LOCATION)) != null) {
+				String b = a.getValue();
+				if (log.isDebugEnabled())
+					log.debug("print route location comment: " + b);
+				setSwitchListRouteLocationCommentEnabled(b.equals(Xml.TRUE));
+			}
 		}
 		if (operations.getChild(Xml.SWITCH_LIST_PICKUP_CAR_FORMAT) != null) {
 			if ((a = operations.getChild(Xml.SWITCH_LIST_PICKUP_CAR_FORMAT).getAttribute(Xml.PREFIX)) != null)
@@ -2218,12 +2258,34 @@ public class Setup {
 				setHazardousMsg(message);
 			}
 		}
-		if ((operations.getChild(Xml.COLUMN_FORMAT) != null)) {
+		if ((operations.getChild(Xml.MANIFEST_FORMAT) != null)) {
+			if ((a = operations.getChild(Xml.MANIFEST_FORMAT).getAttribute(Xml.VALUE)) != null) {
+				try {
+					int value = Integer.parseInt(a.getValue());
+					switch (value) {
+					case STANDARD:
+						manifestFormat = STANDARD_FORMAT;
+						break;
+					case TWO_COLUMN:
+						manifestFormat = TWO_COLUMN_FORMAT;
+						break;
+					case TWO_COLUMN_TRACK:
+						manifestFormat = TWO_COLUMN_TRACK_FORMAT;
+						break;
+					default:
+						log.debug("Unknown manifest format");
+					}
+				} catch (NumberFormatException ee) {
+					log.debug("Manifest format isn't an integer");
+				}
+			}
+		} else if ((operations.getChild(Xml.COLUMN_FORMAT) != null)) {
 			if ((a = operations.getChild(Xml.COLUMN_FORMAT).getAttribute(Xml.TWO_COLUMNS)) != null) {
 				String enable = a.getValue();
 				if (log.isDebugEnabled())
 					log.debug("two columns: " + enable);
-				setTwoColumnFormatEnabled(enable.equals(Xml.TRUE));
+				if (enable.equals(Xml.TRUE))
+					setManifestFormat(TWO_COLUMN_FORMAT);
 			}
 		}
 		// get manifest logo

@@ -49,7 +49,6 @@ public class OBlockManagerXml // extends XmlFile
     public Element store(Object o) {
         Element blocks = new Element("oblocks");
         blocks.setAttribute("class","jmri.jmrit.logix.configurexml.OBlockManagerXml");
-        blocks.setAttribute("nextSysNum", ""+InstanceManager.getDefault(PortalManager.class).getNextSysNum());
         OBlockManager manager = (OBlockManager) o;
         Iterator<String> iter = manager.getSystemNameList().iterator();
         while (iter.hasNext()) {
@@ -248,16 +247,8 @@ public class OBlockManagerXml // extends XmlFile
     public boolean load(Element blocks) {
         _blockMap = new HashMap <String, OBlock>();
         _pathMap = new HashMap <String, OPath>();
-         _manager = InstanceManager.getDefault(OBlockManager.class);
+        _manager = InstanceManager.getDefault(OBlockManager.class);
         _portalMgr = InstanceManager.getDefault(PortalManager.class);
-
-        Attribute attr = blocks.getAttribute("nextSysNum");
-        if (attr!=null) {
-        	try {
-                _portalMgr.setNextSysNum(attr.getIntValue());        	        		
-        	} catch (Exception e) {/*ignore*/}
-        }
-
         List<Element> blockList = blocks.getChildren("oblock");
         if (log.isDebugEnabled()) log.debug("Found "+blockList.size()+" OBlock objects");
         for (int i=0; i<blockList.size(); i++) {
@@ -378,32 +369,15 @@ public class OBlockManagerXml // extends XmlFile
         } else {
             sysName = elem.getAttribute("systemName").getValue();	
         }
-        // Portals must have user names.
-    	Portal portal = _portalMgr.providePortal(userName);
-    	if (portal==null) {
-            if (sysName!=null && sysName.trim().length()>2) {
-            	portal = _portalMgr.providePortal(sysName);
-            	if (portal!=null) {
-            		if (portal.getUserName()!=null) {
-            			portal.setUserName(userName);
-            		} else {
-        	            log.error("Portal \""+sysName+"\" has conflicting user names: "+userName+
-        	            		" or "+portal.getUserName()+ " ??");    				            			
-            		}
-            	}
-            } else {
-            	sysName = null;
-            }
-            if (portal==null) {
-            	portal = _portalMgr.createNewPortal(sysName, userName);    		            	
-            }
-    	} else { // userName found, check systemNames match
-    		if (sysName!=null && sysName.trim().length()>2) {
-    			if (!portal.getSystemName().equals(sysName)) {
-    	            log.error("Portal \""+userName+"\" has conflicting system names: "+sysName+
-    	            		" or "+portal.getSystemName()+ " ??");    				
-    			}
-    		}
+        String fromBlockName = null;
+        String toBlockName = null;
+       // Portals must have user names.
+    	Portal portal = _portalMgr.getByUserName(userName);
+    	if (portal!=null) {
+    		fromBlockName = portal.getFromBlock().getSystemName();
+    		toBlockName = portal.getToBlock().getSystemName();
+    	} else {
+        	portal = _portalMgr.providePortal(userName);    		
     	}
         if (portal == null) {
             log.error("unable to create Portal ("+sysName+", "+userName+") "+elem+" "+elem.getAttributes());
@@ -412,58 +386,64 @@ public class OBlockManagerXml // extends XmlFile
             if (log.isDebugEnabled()) log.debug("create Portal: ("+sysName+", "+userName+")");
         }
          
-        String fromBlockName = "";
         OBlock fromBlock = null;        
         Element eFromBlk = elem.getChild("fromBlock");
         if (eFromBlk!=null && eFromBlk.getAttribute("blockName")!=null) {
-        	fromBlockName = eFromBlk.getAttribute("blockName").getValue();
-            fromBlock = getBlock(fromBlockName);
-            if (fromBlock!=null) {
-            	portal.setFromBlock(fromBlock, false);
-                fromBlock.addPortal(portal);
-                @SuppressWarnings("unchecked")
-                List<Element> ePathsFromBlock = eFromBlk.getChildren("path");
-                for (int i=0; i<ePathsFromBlock.size(); i++) {
-                    Element e = ePathsFromBlock.get(i);
-                    String pathName = e.getAttribute("pathName").getValue();
-                    String blockName= e.getAttribute("blockName").getValue();
-                    if (log.isDebugEnabled()) log.debug("Load portal= "+userName+" fromBlock= "+fromBlock.getSystemName()
-                                                        +" pathName= "+pathName+" blockName= "+blockName);
-                    /*(if (fromBlock.getSystemName().equals(blockName))*/ {
-                        // path is in the fromBlock
-                        OPath path = getPath(fromBlock, pathName);
-                        portal.addPath(path);
+        	String name = eFromBlk.getAttribute("blockName").getValue();
+        	if (fromBlockName!=null && !fromBlockName.equals(name)) {
+                log.error("Portal has user name \""+userName+"\" conflicting with "+portal.toString());    				            			   		        		
+        	} else {
+                fromBlock = getBlock(name);
+                if (fromBlock!=null) {
+                	portal.setFromBlock(fromBlock, false);
+                    fromBlock.addPortal(portal);
+                    @SuppressWarnings("unchecked")
+                    List<Element> ePathsFromBlock = eFromBlk.getChildren("path");
+                    for (int i=0; i<ePathsFromBlock.size(); i++) {
+                        Element e = ePathsFromBlock.get(i);
+                        String pathName = e.getAttribute("pathName").getValue();
+                        String blockName= e.getAttribute("blockName").getValue();
+                        if (log.isDebugEnabled()) log.debug("Load portal= "+userName+" fromBlock= "+fromBlock.getSystemName()
+                                                            +" pathName= "+pathName+" blockName= "+blockName);
+                        /*(if (fromBlock.getSystemName().equals(blockName))*/ {
+                            // path is in the fromBlock
+                            OPath path = getPath(fromBlock, pathName);
+                            portal.addPath(path);
+                        }
                     }
-                }
-            }
+                }        		
+        	}
         } else {
             log.error("Portal \""+userName+"\" has no fromBlock!");
         }
 
-        String toBlockName = "";
         OBlock toBlock = null;
         Element eToBlk = elem.getChild("toBlock"); 
         if (eToBlk!=null && eToBlk.getAttribute("blockName")!=null) {
-        	toBlockName = eToBlk.getAttribute("blockName").getValue();
-            toBlock = getBlock(toBlockName);
-            if (toBlock!=null) {
-                portal.setToBlock(toBlock, false);
-                toBlock.addPortal(portal);
-                @SuppressWarnings("unchecked")
-                List<Element> ePathsToBlock = eToBlk.getChildren("path");
-                for (int i=0; i<ePathsToBlock.size(); i++) {
-                    Element e = ePathsToBlock.get(i);
-                    String pathName = e.getAttribute("pathName").getValue();
-                    String blockName= e.getAttribute("blockName").getValue();
-                    if (log.isDebugEnabled()) log.debug("Load portal= "+userName+" toBlock= "+toBlock.getSystemName()
-                                                        +" pathName= "+pathName+" blockName= "+blockName);
-                    /*if (toBlock.getSystemName().equals(blockName))*/ {
-                        // path is in the toBlock
-                        OPath path = getPath(toBlock, pathName);
-                        portal.addPath(path);
+        	String name = eToBlk.getAttribute("blockName").getValue();
+        	if (toBlockName!=null && !toBlockName.equals(name)) {
+                log.error("Portal has user name \""+userName+"\" conflicting with "+portal.toString());    				            			   		        		
+        	} else {
+                toBlock = getBlock(name);
+                if (toBlock!=null) {
+                    portal.setToBlock(toBlock, false);
+                    toBlock.addPortal(portal);
+                    @SuppressWarnings("unchecked")
+                    List<Element> ePathsToBlock = eToBlk.getChildren("path");
+                    for (int i=0; i<ePathsToBlock.size(); i++) {
+                        Element e = ePathsToBlock.get(i);
+                        String pathName = e.getAttribute("pathName").getValue();
+                        String blockName= e.getAttribute("blockName").getValue();
+                        if (log.isDebugEnabled()) log.debug("Load portal= "+userName+" toBlock= "+toBlock.getSystemName()
+                                                            +" pathName= "+pathName+" blockName= "+blockName);
+                        /*if (toBlock.getSystemName().equals(blockName))*/ {
+                            // path is in the toBlock
+                            OPath path = getPath(toBlock, pathName);
+                            portal.addPath(path);
+                        }
                     }
-                }
-            }
+                }        		
+        	}
         } else {
             log.error("Portal \""+userName+"\" has no toBlock!");
         }

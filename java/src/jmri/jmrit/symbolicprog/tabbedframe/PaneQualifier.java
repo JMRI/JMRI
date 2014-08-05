@@ -2,6 +2,8 @@
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import jmri.jmrit.symbolicprog.*;
 import javax.swing.JTabbedPane;
@@ -31,11 +33,14 @@ public class PaneQualifier extends ArithmeticQualifier {
     }
 
     public void setWatchedAvailable(boolean enable) {
+        log.info("setWatchedAvailable with "+enable+" on "+index);
         tabs.setEnabledAt(index, enable);
     }
 
     protected boolean currentAvailableState() {
         return tabs.isEnabledAt(index);
     }
+
+    static Logger log = LoggerFactory.getLogger(PaneQualifier.class.getName());
 
 }

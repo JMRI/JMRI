@@ -9,6 +9,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
+import java.util.concurrent.TimeUnit;
 import jmri.implementation.QuietShutDownTask;
 import jmri.jmris.JmriConnection;
 import jmri.jmris.JmriServer;
@@ -102,5 +103,14 @@ public class JsonServer extends JmriServer {
     @Override
     public void stopClient(DataInputStream inStream, DataOutputStream outStream) throws IOException {
         outStream.writeBytes(this.mapper.writeValueAsString(this.mapper.createObjectNode().put(TYPE, GOODBYE)));
+        try {
+            // without this delay, the output stream could be closed before the
+            // preparing to disconnect message is sent
+            TimeUnit.MILLISECONDS.sleep(100);
+        } catch (InterruptedException ex) {
+            // log for debugging only, since we are most likely shutting down the
+            // server or the program entirely at this point, so it doesn't matter
+            log.debug("Wait to send clean shutdown message interrupted.");
+        }
     }
 }

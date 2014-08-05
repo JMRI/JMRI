@@ -437,8 +437,12 @@ public class DecoderIndexFile extends XmlFile {
 
         // create root element and document
         Element root = new Element("decoderIndex-config");
-        // Replacement DTD location, temporary until this is changed to schema
-        Document doc = newDocument(root, "../xml/"+"decoderIndex-config.dtd");
+        root.setAttribute("noNamespaceSchemaLocation",
+                "http://jmri.org/xml/schema/decoder.xsd",
+                org.jdom.Namespace.getNamespace("xsi",
+                    "http://www.w3.org/2001/XMLSchema-instance"));
+
+        Document doc = newDocument(root);
 
         // add XSLT processing instruction
         // <?xml-stylesheet type="text/xsl" href="XSLT/DecoderID.xsl"?>

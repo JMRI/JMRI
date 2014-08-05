@@ -145,7 +145,7 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
         Assert.assertNotNull(InstanceManager.signalSystemManagerInstance() );
         Assert.assertNotNull(InstanceManager.signalGroupManagerInstance() );
         Assert.assertNotNull(InstanceManager.blockManagerInstance() );
-        Assert.assertNotNull(InstanceManager.oBlockManagerInstance() );
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class) );
         Assert.assertNotNull(InstanceManager.getDefault(WarrantManager.class) );
         Assert.assertNotNull(InstanceManager.sectionManagerInstance() );
         Assert.assertNotNull(InstanceManager.transitManagerInstance() );
@@ -182,11 +182,11 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
         Assert.assertEquals(obj, InstanceManager.getDefault(WarrantManager.class));
     }
     public void testOBlockManager() {
-        OBlockManager obj = InstanceManager.oBlockManagerInstance();
+        OBlockManager obj = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
         Assert.assertNotNull(obj);
-        Assert.assertEquals(obj, InstanceManager.oBlockManagerInstance());
+        Assert.assertEquals(obj, InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class));
         Assert.assertEquals(obj, InstanceManager.getDefault(OBlockManager.class));
-        Assert.assertEquals(obj, InstanceManager.oBlockManagerInstance());
+        Assert.assertEquals(obj, InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class));
     }
     
 	// from here down is testing infrastructure

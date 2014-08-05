@@ -8,7 +8,7 @@ If you're building locally:
     file to the root of the nsis installation:
         nsis.home=/opt/nsis/nsis-2.46/
 
-    If you're making branches in sourceforge, put your sourceforge userid & password in the
+To simplify making branches in sourceforge, put your sourceforge userid & password in the
     local.properties file (this does not get checked in, so your ID remains safe).
 
     sourceforge.userid=zoo
@@ -107,7 +107,7 @@ Second, we build the release branch:
     
     This will do (more or less) the following actions:
 
-    svn cp -m"start release" ${SVNREPO}/trunk/jmri ${SVNREPO}/branches/jmri/releases/3.7.3
+    svn cp -m"start release" ${SVNREPO}/trunk/jmri ${SVNREPO}/branches/jmri/releases/3.7.6
     <check in an update of the version number of trunk/HEAD>
     <check in an update of the version number of the new release>
 
@@ -126,17 +126,15 @@ Second, we build the release branch:
     and update to get the release copy:
 
     cd ../../branches/jmri/releases
-    svn update 3.7.3
+    svn update 3.7.6
 
-    ( if you don't have this, check out the specific section with "svn co ${SVNREPO}/branches/jmri/releases/3.7.3")
+    ( if you don't have this, check out the specific section with "svn co ${SVNREPO}/branches/jmri/releases/3.7.6")
 
     ( to merge everything to date: svn merge ^/trunk/jmri
-      If you do this, beware, you'll also merge in the new release.properties file, which you do NOT want to do.
+      If you do this, beware, the first time you'll also merge in the new release.properties file, 
+      which you do NOT want to do.
       You can undo that merge with 'svn revert release.properties'.
-
-      add --dry-run to the command to see what would be merged in without doing it
     )
-
 
     ( to merge a single later change: svn merge -c <changeset#> ^/trunk/jmri )
     
@@ -153,20 +151,20 @@ Third, we do any necessary release-specific updates.
 ( ) run "ant decoderpro"; check for no startup errors, right version, help index present and working OK.
 
 ( ) Commit back; if using CI builds, this will trigger a rebuild, so wait for it.
-    If using manual builds, see section below.
+    If using manual builds instead of CI, skip to "For local builds" section below.
     
 ( ) Change the release note to point to the CI files, commit, wait (or force) update.
 
 ( ) Announce the file set to jmri-developers with a download URL like:
 
-    http://builds.jmri.org/jenkins/job/Test%20Release%203.7.3/ws/jmri/dist/release/
+    http://builds.jmri.org/jenkins/job/Test%20Release%203.7.6/ws/jmri/dist/release/
 
-    or from your local build files.
+( ) WAIT FOR SOME REPLIES, then skip to "Actual release steps" below.
 
 ====================================================================================
 For local builds, these are the build instructions; CI builds will already be running)
 
-( ) edit  release.properties to say release.official=true (last line)
+( ) edit release.properties to say release.official=true (last line)
 
 ( ) setenv SVN_REVISION 23699
     ant -Dnsis.home="" clean packages
@@ -177,18 +175,23 @@ For local builds, these are the build instructions; CI builds will already be ru
     directories, and finally construct the Linux, Mac OS X and Windows
     distribution files in dist/releases/
 
+
 ( ) Put the Linux, Mac OS X and Windows files where developers can
-    take a quick look, send an email, and WAIT FOR SOME REPLIES
+    take a quick look, send an email to the developer list, 
+    and WAIT FOR SOME REPLIES
     
-    The main JMRI web site gets completely overwritten by Jenkins, so another approach:
+    
+    The main JMRI web site gets completely overwritten by Jenkins, so one approach:
         ssh user,jmri@shell.sf.net create
         scp dist/release/JMRI.* user,jmri@shell.sf.net:htdocs/release/
     puts them at
         http://user.users.sf.net/release
     (The user has to have put the htdocs link in their SF.net account)
 
+
 ====================================================================================
-Final release steps:
+Actual release steps:
+
 
 ( ) Upload the Linux, Mac OS X and Windows files to sourceforge
 
@@ -200,7 +203,7 @@ Final release steps:
 
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net
-    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.7.3/ws/jmri/dist/release/*zip*/release.zip"
+    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.9.1/ws/jmri/dist/release/*zip*/release.zip"
     rm release/JMRI*
     unzip release.zip
     cd release
@@ -209,17 +212,18 @@ Final release steps:
     (clean up and logout)
 
 ( ) Create and upload the JavaDocs
-    and XSLT'd decoder pages
-    (as of late 2013, CloudBees was updating there from SVN weekly: 
+    (as of late 2013, CloudBees was updating these from SVN weekly: 
         https://jmri.ci.cloudbees.com/job/Development/job/Web%20Site/job/Generate%20Website%20Components/
     so please skip this step if that's working)
 
 	ant javadoc-uml uploadjavadoc
 	
-	cd xml/XSLT
-	ant xslt upload
+( ) Create and upload the XSLT'd decoder pages
 
-( ) Format the release note page: change date, comment out "draft release", make links work
+	(cd xml/XSLT; ant xslt upload)
+
+( ) Format the release note page: change date, comment out "draft release", 
+    make sure links work and proper sections are commented/not commented out
 
 ( ) Wait until the downloads have propagated to the mirrors; check
     by trying to download each file
@@ -233,19 +237,22 @@ Final release steps:
 ( ) Update the web site front page and downloads page:
      index.html download/Sidebar download/index.shtml releaselist
 
-( ) If the decoder definitions have changed, make a .zip file and send to:
-    Graham Plowman: gppsoftware@gppsoftware.com
-
 ( ) Commit site
 
+( ) Consider submitting an anti-virus white-list request at:
+        https://submit.symantec.com/whitelist/isv/
+    If you don't, a bunch of Windows users are likely to whine
+    
 ( ) For production releases, file copyright registration
 
     https://eco.copyright.gov/eService_enu/   (Firefox only!)
 
+( ) For production releases, make a new version of the Manual files (procedure to be developed!)
+
 ( ) Wait for update on JMRI web server
 
 ( ) Mail announcement to jmriusers@yahoogroups.com
-    Subject is "Test version 3.7.3 of JMRI/DecoderPro is available for download"
+    Subject is "Test version 3.9.2 of JMRI/DecoderPro is available for download"
     or "JMRI 3.8 is available for download"
 
 ( ) If a production version, update the SF automatic download icon by selecting default in SF.net FRS (3 times)

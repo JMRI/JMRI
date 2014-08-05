@@ -47,7 +47,7 @@
 
   <indexitem text="Introduction " target="html.apps.DecoderPro.index"/>
 
-  <indexitem text="Manual " target="manual.Getting_Started"/>
+  <indexitem text="DecoderPro Manual " target="manual.DecoderPro.index"/>
 
   <indexitem text="Roster Pane " target="manual.Comp_Setup_Roster"/>
 
@@ -299,7 +299,7 @@
  <indexitem text="Preferences " target="package.apps.TabbedPreferences"/>
 
  <indexitem text="Programmers ">
-  <indexitem text="DecoderPro programmer " target="manual.Basic_Programming_Basic Programmer"/>
+  <indexitem text="DecoderPro programmer " target="manual.DecoderPro.Basic_Start"/>
 
   <indexitem text="Single CV Programmer " target="package.jmri.jmrit.simpleprog.SimpleProgFrame"/>
 
@@ -314,8 +314,8 @@
   <indexitem text="Reporter Table " target="package.jmri.jmrit.beantable.ReporterTable"/>
 
  </indexitem>
- <indexitem text="Roster " target="manual.Main_Roster">
-  <indexitem text="Groups " target="manual.Main_RosterGroup"/>
+ <indexitem text="Roster " target="manual.DecoderPro.Main_Roster">
+  <indexitem text="Groups " target="manual.DecoderPro.Main_RosterGroup"/>
 
  </indexitem>
  <indexitem text="Route ">

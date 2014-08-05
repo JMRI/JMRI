@@ -33,75 +33,11 @@
         <H1>
 		JMRI: Signal Head Documentation
         </H1>
-
-Signals (or more formally Signal Heads) are how JMRI represents and 
-controls signal heads on a layout.  They are a specific kind of
-output device that can be set to various colors:  Red, Yellow, Green, Flashing Yellow, etc.
-
 <p>
-Much more information about JMRI signaling is available
-from the 
-<a href="signaling/index.shtml">JMRI signaling help page</a>.
-
-<a name="table"><h3>The Signal Head Table</h3></a>
-
-<A href="./images/SigTable.gif"><IMG SRC="./images/SigTable.gif" ALIGN=RIGHT WIDTH="149" HEIGHT="179" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
-<!-- The following section is taken from, and should be kept consistent with -->
-<!-- help/en/package/jmri/jmrit/beantable/SignalHeadTable.html -->
-
-All the signal heads that JMRI knows about can be referenced
-using the "Signal Head Table" tool in the Tools menu of JMRI programs.
-<p>
-For more information on configuring and operating signals with the Signal Head
-Table, please see the 
-<a href="../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Head Table help page</a>.
-
-<a name="add"><h3>Creating a Signal Head</h3></a>
-<A href="./images/SigAdd.gif"><IMG SRC="./images/SigAdd.gif" ALIGN=RIGHT WIDTH="181" HEIGHT="218" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
-
-<!-- The following section is taken from, and should be kept consistent with -->
-<!-- help/en/package/jmri/jmrit/beantable/SignalAddEdit.html -->
-
-<P>To define a new signal head, click on the <b>Add New Signal Head</b> button in the Signal Head Table.  
-It will
-prompt you for the signal head type (controlled by turnout outputs; SE8c; etc), and
-whatever setup information is needed for your choice.
-There's more information on the
-<a href="../../package/jmri/jmrit/beantable/SignalAddEdit.shtml">help page on adding signal heads</a>.
-
-<a name="edit"><h3>Editing an Existing Signal Head</h3>
-
-<P>Once a signal head has been defined, you currently can't change
-it's type directly from the program.  
-This is a requested
-capability, and someday somebody will probably write it.
-In the meantime, you can just ignore signal heads that you've defined 
-and don't want to use; they don't hurt anything.
-Or you can edit your saved configuration files to remove the entire
-line containing the signal definition; look for the name of the signal
-to locate the right line.  Note that you need to remove the entire line, and
-not leave any part of it, especially the opening and closing brackets. Save
-a copy of the file as a backup first!
-
-<h3>Controlling a Signal Head</h3>
-
-Signal heads can be controlled various ways by JMRI, including
-<ul>
-<LI><a href="signaling/index.shtml">Simple Signal Logic</a>, for basic ABS signaling of the North American type
-<li><a href="Logix.shtml">Logix</a>, a graphical way of controlling signal heads with simple logic
-<li>JMRI <a href="scripting/index.shtml">scripts</a>, using a full programming language to do whatever you'd like
-</UL>
-
-<h2>Saving and Reloading Configuration</h2>
-
-The signal head information is saved with the configuration in an XML file, along
-with control panel setup and similar stuff.  For more information
-on creating and displaying panels, including how to show signal heads
-on your panels,
-please see the 
-<A HREF="../apps/PanelPro/Panels.shtml">Panels pages</a>.
-
-
+All information about JMRI Signaling is available from the 
+<a href="signaling/index.shtml">JMRI Signaling main help page</a>.
+	<!-- Keep file in place to receive old hyperlinks, but no content on this page, just a pointer to the 2014 starting point for JMRI Signaling, help/en/html/tools/signaling/index.shtml -->
+	
 <!--#include virtual="/Footer" -->
 
       </div><!-- closes #mainContent-->

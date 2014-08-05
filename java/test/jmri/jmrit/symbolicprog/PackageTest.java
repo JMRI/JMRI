@@ -1,4 +1,4 @@
-// SymbolicProgTest.java
+// PackageTest.java
 
 package jmri.jmrit.symbolicprog;
 
@@ -41,6 +41,8 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite(PackageTest.class);
         suite.addTest(jmri.jmrit.symbolicprog.BundleTest.suite());
+        suite.addTest(jmri.jmrit.symbolicprog.ArithmeticQualifierTest.suite());
+        suite.addTest(jmri.jmrit.symbolicprog.QualifierAdderTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.FnMapPanelTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.CompositeVariableValueTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.Pr1ImporterTest.suite());

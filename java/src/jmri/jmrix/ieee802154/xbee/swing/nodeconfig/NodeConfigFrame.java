@@ -19,7 +19,6 @@ import javax.swing.table.AbstractTableModel;
 import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
 import jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo;
 import jmri.jmrix.ieee802154.xbee.XBeeNode;
-import jmri.NamedBean;
 
 /**
  * Frame for user configuration of XBee nodes

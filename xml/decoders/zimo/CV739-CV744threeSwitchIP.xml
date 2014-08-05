@@ -11,13 +11,16 @@
   <variable CV="739" item="Zimo Sound Setting 51">
     <decVal/>
     <label>Switch triggered sound S1</label>
+    <label xml:lang="it">Suono S1 iniziato da Switch</label>
   </variable>
   <variable CV="741" item="Zimo Sound Setting 52">
     <decVal/>
     <label>Switch triggered sound S2</label>
+    <label xml:lang="it">Suono S2 iniziato da Switch</label>
   </variable>
   <variable CV="743" item="Zimo Sound Setting 53">
     <decVal/>
     <label>Switch triggered sound S3</label>
+    <label xml:lang="it">Suono S3 iniziato da Switch</label>
   </variable>
 </variables>

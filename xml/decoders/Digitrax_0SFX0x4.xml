@@ -157,7 +157,7 @@
         <comment>0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds</comment>
         <comment xml:lang="it">0=nessuno, 40 realistico (5sec), 255= circa 20 sec.</comment>
       </variable>
-      <xi:include href="http://jmri.org/xml/decoders/digitrax/userId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/functionmap.xml"/>
       <!-- Sound options -->
       <variable CV="11" tooltip="Sound stays on after loco is de-selected" item="Sound Option 4" default="6">

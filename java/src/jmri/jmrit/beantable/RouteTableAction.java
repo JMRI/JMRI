@@ -947,6 +947,8 @@ public class RouteTableAction extends AbstractTableAction {
         //turnouts aligned sensor
         if(turnoutsAlignedSensor.getSelectedBean()!=null){
             g.setTurnoutsAlignedSensor(turnoutsAlignedSensor.getSelectedDisplayName());
+        } else {
+            g.setTurnoutsAlignedSensor("");
         }
         
         // Set turnout information if there is any

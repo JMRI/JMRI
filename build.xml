@@ -263,7 +263,7 @@
 
     <target name="get-version-string"
             description="Gets the current version string"
-            depends="compile-generated-source">
+            depends="compile">
         <java classname="jmri.Version"
               dir="${basedir}"
               fork="yes"
@@ -855,6 +855,20 @@
         </junit>
     </target>
 
+    <target name="decodercheck" depends="debug, tests, runtime-library-selection" description="run decoder XML checks">
+        <java classname="jmri.jmrit.decoderdefn.SchemaTest"
+          dir="."
+          fork="yes" >
+            <classpath refid="test.class.path"/>
+            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <sysproperty key="log4j.ignoreTCL" path="true/"/>
+            <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <arg value="${antargline}"/>
+        </java>
+    </target>
+
     <!-- Note if modifying the alltest target, please be sure to up date the -->
     <!-- NetBeans IDE alltest target in nbproject/ide-targets.xml -->
     <target name="alltest" depends="debug, tests, runtime-library-selection" description="build and run test suite">
@@ -906,10 +920,10 @@
         </manifestclasspath>
         <jar jarfile="${jartarget}/jmri.jar"
              basedir="${target}"
-             index="true"
-             compress="true">
+             compress="true"
+             index="true">  <!--  java -jar jmri.jar doesn't start when apps.PanelPro.PanelPro is specified & index="true" -->
           <manifest>
-            <attribute name="Main-Class" value="jmri.Version"/>  <!-- java -jar jmri.jar doesn't seem to start when apps.PanelPro.PanelPro is specified here -->
+            <attribute name="Main-Class" value="jmri.Version"/>  
             <attribute name="Class-Path" value="${jar.classpath}"/>
             <section name="jmri">
               <attribute name="Specification-Title" value="Java Model Railroad Interface Classes"/>
@@ -936,13 +950,13 @@
             depends="debug, rmic">
         <jar jarfile="${jartarget}/jmri.jar"
              basedir="${target}"
-             index="true"
-             compress="true">
+             compress="true"
+             index="true">  <!--  java -jar jmri.jar doesn't start when apps.PanelPro.PanelPro is specified & index="true" -->
             <fileset dir="."
                      includes="xml/,resources/,help/,web/,jython/"
                      excludes="help/en/manual/**" />
           <manifest>
-            <attribute name="Main-Class" value="jmri.Version"/>  <!-- java -jar jmri.jar doesn't seem to start when apps.PanelPro.PanelPro is specified here -->
+            <attribute name="Main-Class" value="jmri.Version"/> 
             <attribute name="Class-Path" value="${jar.classpath}"/>
             <section name="jmri">
               <attribute name="Specification-Title" value="Java Model Railroad Interface Classes"/>

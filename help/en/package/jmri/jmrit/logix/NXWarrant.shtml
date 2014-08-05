@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: NXWarrant.shtml 26343 2014-07-24 22:14:04Z pete_cressman $ -->
+<HTML LANG="en">
+<HEAD>
+<TITLE>JMRI: NX Warrant Help</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META CONTENT="Pete Cressman" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI NX Warrant Help">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>NXWarrants</H1>
+
+An NXWarrant is a computer generated warrant.  Rather than recording speed changes and other locomotive commands from a
+throttle where the recording notes the elapsed time between commands, an algorithm generates the speed changes and 
+elapsed times for a 
+smooth start up and slow down to a stop.  In order to deterine correct elapsed times and the blocks where the speed changes 
+should occur, the block lengths must be known.  Additionally, the proper scale must be known.  Nevertheless, even
+if block lengths are not specified, the algorithm makes a best effort to gererate a usable warrant.
+<p>
+<H2>Launching an NXWarrant</H2>
+After selecting the the menu item <b>Create NX Warrant</b> from the <b>Warrants</b> menu of the Control Panel Editor,
+or clicking on the <b>Create NX Warrant</b> button in the <b>Warrant List</b> window, the <b>NCWarrant</b> window is 
+displayed.  
+<H3>Set the Route</H3>
+First establish the route for the train by enterinr OBlocks in the following fields.
+<ul>
+	<li>Choose an <b>originblock</b>, a starting Path and Portal to exit the orginating block.</li>
+	<li>Choose a <b>destination block</b> and a Path on which to end the route and Portal where is enters the block.</li>
+	<li>Optionally, chose a <b>Via</b> block, that is, a block that route <i>must</i> include.</li>
+	<li>Optionally, chose a n<b>Avoid</b> block, that is, a block the the route <i>must not</i> include.</li>
+</ul>
+Blocks are chosen either by typing in the block name or dragging it from a displayed 
+OBlock table.  The origin and destination blocks can also be chosen by clicking on track
+icons that represent these OBlocks.  To use this feature your panel must have your layout
+depicted by Indicator Track Icons placed there by Circuit builder. 
+<p>
+A computer algorithm determines all the intermediate blocks and paths to make the route.  If more
+than one route meets the criterion, you are presented with a list to review and select the 
+route you want.
+<p>
+<H3>The Script Algorithm</H3>
+The NX warrant script sets the direction, turns the light on, blows two horn/whisle blasts and starts to 
+ramp up speed.  It is highly desirable to have a reasonable estimate for block length entered for each OBlock,
+but not abcolutely necessary.  If the length of the route is known, the algorithm will ramp up to the last 
+speed that allows enough room to ramp down to a stop in the last block.  After stopping in the last block 
+the script blows one horn/whistle blast and turns off the light.
+<p>
+The algorithm calculates the speed changes assuming the train starts at the middle of the Origin block and 
+stops at the middle of the Destination block.  If the starting block or ending block has length 0, it will assume 
+literally that its length is zero and will only do one speed setting in the block, i.e. at the start set the minimum
+speed or at the end set the speed to 0.  If any of the intermediate blocks have length 0, the algorithm assumes
+the length is long enough to complete a full ramp up or ramp down.  So while not necessary, it is advisable to
+enter block lengths.
+<p>
+A further parameter the algorithm needs to know is the scale.  Choose the correct scale of your layout from the
+<b>Scale</b> menu of the NW Warrant window.
+<p>
+<H3>Set the Algorithm Parameters</H3>
+At the bottom of the NXWarrant window are the following fields.
+<ul>
+	<li><b>Max Speed</b> - Throttle setting for the top speed the warrant will reach.  The algorithm assumes this
+	setting will drive the train at 35 scale mph.</li>
+	<li><b>Min Speed</b> - Throttle setting for the first speed step when starting and last speed 
+	step when slowing down to a stop.
+	<li><b>Address</b> - The decoder address of the locomotive of the train.  This is a required field.</li>
+	<li><b>Train name</b> - Indicator Track icons set to display train names will show this name when the train
+	occupies the OBlock the icon represents.  If left blank, the loco address is displayed.</li>
+	<li><b>Time between ramp speed changes</b> Elapsed time in seconds between each throttle speed command.</li>
+	<li><b>Number of speed changes in ramp</b> Number of throttle speed commands issued to go from stop to full 
+	speed and from full speed down to a stop.</li>
+	<li><b>Max number of blocks in route</b> Maximun number of blocks the route algorithm should go before stopping.</li>
+</ul>
+Other buttons and Checkboxes.
+<ul>
+	<li><b>Forward / Reverse</b> Sets the direction of the locomotive.  <i>Important to set
+	this correctly.</i></li>
+	<li><b>EStop at Destination Block</b> Emergency stop the train upon entering the last block. 
+	<i>Rarely Needed.</i></li>
+	<li><b>Halt Start at Origin Block</b> Allocate and set the warrant, but don't start the train 
+	until the user issues a <b>Resume</b> command to the warrrant from the Warrant List Table or via a 
+	Logix Warrant Control action.</li>
+	<li><b>Run Auto / Run Manual</b> Run Auto drives the train with the NXWarrant script.  Run Manual
+	allocates the route only and expects a manual throttle operator to execute the warrant.
+	<i>Rarely used.</i></li>
+</ul>
+<H3>Some Tips for Smooth Start Up and Slow Down</H3>
+If the second block has length 0 any remaining speed steps not done in the starting block will be put in that block.  
+It would be a good idea to specify the lengths of both the first and second blocks, in case a third block is needed 
+to complete the ramp up.  You can check the script to see if 
+that is necessary.
+<p>
+If the next to last block has length 0 you should input 
+its length, so the algorithm can start the ramp down in the previous block (block before the next-to-last).  Although a 
+zero length last block will set speed to 0 immediately, momentum could cause the train to overrun if the next-to-last 
+block hasn't completed the ramp down.  Or in this case, use the E-stop option, but that could be rather abrupt.
+<p>
+For a series of short blocks with length specified the ramp up and ramp down is distributed over the blocks as needed.   
+Also, for short routes, the algorithm calculates only enough ramp up so the ramp down can finish without overrunning 
+the last block. 
+<p>
+The main assumption made by the algorithm is that the maximun speed setting of 0.50 is a scale 35 mph.  The script's
+block synchronization will adjust the the elapsed times.  <b>Note!</b> if the routeincludes a <i>Dark</i> block, i.e.
+no occupancy detection, it is very important it's block length is known since in this case, synchronization cannot
+be done.
+<p>
+The number of periods and the time allotted to each period can be set.  For locos with no momentum, more periods 
+of shorter time would make smoother ramps.  For locos with lots of momentum, fewer periods of longer length would be 
+better.  The defaults are set for a fair amount of momentum, i.e. somewhat less than prototype but visually OK.  Observe how 
+the train behaves and adjust accordingly.
+<p>
+
+<br>
+
+<!--#include virtual="/Footer" -->
+</BODY>
+</HTML>

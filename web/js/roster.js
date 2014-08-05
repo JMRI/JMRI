@@ -9,7 +9,7 @@ var jmri = null;
  */
 function getTrains(group) {
     $.ajax({
-        url: "/roster?format=html" + ((group) ? "&group=" + group : ""),
+        url: "/roster?format=html" + ((group) ? "&group=" + encodeURIComponent(group) : ""),
         data: {},
         success: function(data) {
             if (data.length === 0) {

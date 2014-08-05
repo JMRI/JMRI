@@ -375,7 +375,7 @@
         <label>Smoke generator operation - A2</label>
         <label xml:lang="de">Rauchgeneratorbetrieb - A2</label>
       </variable>
-      <variable item="Smoke generator option 3" CV="130" mask="XXVVVVVVV" default="0">
+      <variable item="Smoke generator option 3" CV="130" mask="XXVVVVVV" default="0">
         <decVal max="63"/>
         <label>Smoke gen. accel. time</label>
         <label xml:lang="de">Rauchgen. Anfahrzeit</label>

@@ -14,7 +14,6 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.JsonManifest;
 import jmri.jmrit.operations.trains.Train;
-import static jmri.jmrit.operations.trains.TrainCommon.getDate;
 import jmri.jmrit.operations.trains.TrainScheduleManager;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.Logger;
@@ -48,7 +47,7 @@ public class HtmlManifest extends HtmlTrainCommon {
             RouteLocation routeLocation = this.train.getRoute().getLocationById(location.path(JSON.ID).textValue());
             log.debug("Processing {} ({})", routeLocation.getName(), location.path(JSON.ID).textValue());
             String routeLocationName = location.path(JSON.NAME).textValue();
-            builder.append(strings.getProperty("LocationStart")); // NOI18N
+            builder.append(String.format(locale, strings.getProperty("LocationStart"), routeLocation.getId())); // NOI18N
             hasWork = (location.path(JSON.CARS).path(JSON.ADD).size() > 0
                     || location.path(JSON.CARS).path(JSON.REMOVE).size() > 0
                     || location.path(JSON.ENGINES).path(JSON.ADD).size() > 0

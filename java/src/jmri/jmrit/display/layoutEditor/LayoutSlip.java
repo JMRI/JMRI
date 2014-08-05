@@ -139,6 +139,36 @@ public class LayoutSlip extends LayoutTurnout
 		}
 	}
     
+    public Object getConnection(int location) throws jmri.JmriException {
+        switch (location) {
+            case LayoutEditor.SLIP_A: return connectA;
+            case LayoutEditor.SLIP_B: return connectB;
+            case LayoutEditor.SLIP_C: return connectC;
+            case LayoutEditor.SLIP_D: return connectD;
+        }
+        log.error("Invalid Point Type " + location); //I18IN
+        throw new jmri.JmriException("Invalid Point");
+    }
+    
+    public void setConnection(int location, Object o, int type) throws jmri.JmriException {
+        if ( (type!=LayoutEditor.TRACK) && (type!=LayoutEditor.NONE) ) {
+			log.error("unexpected type of connection to layoutturnout - "+type);
+            throw new jmri.JmriException("unexpected type of connection to layoutturnout - "+type);
+		}
+        switch (location) {
+            case LayoutEditor.SLIP_A: connectA = o;
+                                         break;
+            case LayoutEditor.SLIP_B: connectB = o;
+                                        break;
+            case LayoutEditor.SLIP_C: connectC=o;
+                                        break;
+            case LayoutEditor.SLIP_D: connectD=o;
+                                        break;
+            default : log.error("Invalid Point Type " + location); //I18IN
+                throw new jmri.JmriException("Invalid Point");
+        }
+    }
+    
     public String getDisplayName(){
         String name = "Slip :";
         if(getTurnoutName()!=null){
@@ -408,10 +438,10 @@ public class LayoutSlip extends LayoutTurnout
 	 *        TrackSegment objects.
 	 */
 	public void setObjects(LayoutEditor p) {
-		connectA = p.findTrackSegmentByName(connectAName);
-        connectB = p.findTrackSegmentByName(connectBName);
-		connectC = p.findTrackSegmentByName(connectCName);
-		connectD = p.findTrackSegmentByName(connectDName);
+		connectA = p.getFinder().findTrackSegmentByName(connectAName);
+        connectB = p.getFinder().findTrackSegmentByName(connectBName);
+		connectC = p.getFinder().findTrackSegmentByName(connectCName);
+		connectD = p.getFinder().findTrackSegmentByName(connectDName);
 		if (tBlockName.length()>0) {
 			block = p.getLayoutBlock(tBlockName);
 			if (block!=null) {

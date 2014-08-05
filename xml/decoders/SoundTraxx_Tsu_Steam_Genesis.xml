@@ -18,12 +18,19 @@
   <version author="Michael Mosher" version="3" lastUpdated="20130308"/>
   <version author="Michael Mosher" version="4" lastUpdated="20130703"/>
   <version author="Dave Heap" version="5" lastUpdated="20140401"/>
+  <version author="Alain Le Marchand" version="6" lastUpdated="20140530"/>  
   <!-- This file contains the Tsunami definitions for Genesis OEM steam locomotives	-->
   <!-- version 1	Based on the "SoundTraxx_Tsu_Steam.xml" Ver 5 file.						-->
   <!-- version 2	Add Rule 17 bit to CV51 & 52 -->
   <!-- version 3	Add FEF 4-8-4 and greater use of external includes -->
   <!-- version 4	Add HO Challenger -->
   <!-- version 5	Implement live function group exchange -->
+  <!-- version 6        Function labels according to Genesis mapping, Output names normalized with other TSU Steam -->
+  <!--                  Default values updated for N Challenger -->
+  <!-- Note:    Output number for "named" outputs (i.e. when name is not an integer) starts at numOuts+1.
+                Numbering is then incremental in the order of declaration of the named outputs.
+                For these decoders, convention is taken that FX5=output 3, FX6=output 4, Whistle=output 5, etc. 
+                FX5 or FX6 are either physical or logical outputs (for TSU-750) used for "Rule 17 mode"         -->    
   <!-- Decoder Model information follows -->
   <decoder>
     <family name="Tsunami Steam Genesis OEM" mfg="Throttle-Up (SoundTraxx)" comment="These are OEM for Athearn Genesis Tsunami steam decoders">
@@ -34,13 +41,13 @@
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
         <output name="Dynamo"/>
-        <output name="Short-Whistle"/>
-        <output name="Steam-Release"/>
-        <output name="Water-Stop"/>
+        <output name="Short" label="Whistle"/>
+        <output name="Steam" label="Release"/>
+        <output name="Water" label="Stop"/>
         <output name="Dimming"/>
         <output name="Mute"/>
         <output name="Injector"/>
-        <output name="Brake-Squeal"/>
+        <output name="Brake" label="Squeal"/>
         <output name="Coupler"/>
       </model>
       <model model="Challenger 4-6-6-4" numOuts="4" numFns="14" connector="other" productID="chal">
@@ -50,13 +57,13 @@
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
         <output name="Dynamo"/>
-        <output name="Short-Whistle"/>
-        <output name="Steam-Release"/>
-        <output name="Water-Stop"/>
+        <output name="Short" label="Whistle"/>
+        <output name="Steam" label="Release"/>
+        <output name="Water" label="Stop"/>
         <output name="Dimming"/>
         <output name="Mute"/>
         <output name="Injector"/>
-        <output name="Brake-Squeal"/>
+        <output name="Brake" label="Squeal"/>
         <output name="Coupler"/>
       </model>
       <model model="FEF-3 4-8-4" numOuts="4" numFns="14" connector="other" productID="FEF">
@@ -66,13 +73,13 @@
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
         <output name="Dynamo"/>
-        <output name="Short-Whistle"/>
-        <output name="Steam-Release"/>
-        <output name="Water-Stop"/>
+        <output name="Short" label="Whistle"/>
+        <output name="Steam" label="Release"/>
+        <output name="Water" label="Stop"/>
         <output name="Dimming"/>
         <output name="Mute"/>
         <output name="Injector"/>
-        <output name="Brake-Squeal"/>
+        <output name="Brake" label="Squeal"/>
         <output name="Coupler"/>
       </model>
       <model model="MT-4 4-8-2" numOuts="4" numFns="14" connector="other" productID="MT4">
@@ -82,13 +89,13 @@
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
         <output name="Dynamo"/>
-        <output name="Short-Whistle"/>
-        <output name="Steam-Release"/>
-        <output name="Water-Stop"/>
+        <output name="Short" label="Whistle"/>
+        <output name="Steam" label="Release"/>
+        <output name="Water" label="Stop"/>
         <output name="Dimming"/>
         <output name="Mute"/>
         <output name="Injector"/>
-        <output name="Brake-Squeal"/>
+        <output name="Brake" label="Squeal"/>
         <output name="Coupler"/>
       </model>
       <model model="N Challenger" numOuts="4" numFns="14" connector="other" productID="N_Chal">
@@ -98,13 +105,13 @@
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
         <output name="Dynamo"/>
-        <output name="Short-Whistle"/>
-        <output name="Steam-Release"/>
-        <output name="Water-Stop"/>
+        <output name="Short" label="Whistle"/>
+        <output name="Steam" label="Release"/>
+        <output name="Water" label="Stop"/>
         <output name="Dimming"/>
         <output name="Mute"/>
         <output name="Injector"/>
-        <output name="Brake-Squeal"/>
+        <output name="Brake" label="Squeal"/>
         <output name="Coupler"/>
       </model>
       <functionlabels>
@@ -114,13 +121,13 @@
         <functionlabel num="3" lockable="true">Short Whistle</functionlabel>
         <functionlabel num="4" lockable="true">Steam Release</functionlabel>
         <functionlabel num="5" lockable="true">FX5 Light</functionlabel>
-        <functionlabel num="6" lockable="true">FX6 Light</functionlabel>
+        <functionlabel num="6" lockable="true">FX6/# Board Light</functionlabel>
         <functionlabel num="7" lockable="true">Dimmer</functionlabel>
         <functionlabel num="8" lockable="true">Mute</functionlabel>
-        <functionlabel num="9" lockable="true">Water Stop</functionlabel>
-        <functionlabel num="10" lockable="true">Injectors</functionlabel>
-        <functionlabel num="11" lockable="true">Brake Squeal</functionlabel>
-        <functionlabel num="12" lockable="true">Coupler</functionlabel>
+        <functionlabel num="9" lockable="true">Brake Squeal</functionlabel>
+        <functionlabel num="10" lockable="true">Coupler</functionlabel>
+        <functionlabel num="11" lockable="true">Injectors</functionlabel>        
+        <functionlabel num="12" lockable="true">Water Stop</functionlabel>        
       </functionlabels>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
@@ -343,10 +350,14 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumReset.xml"/>
         <label>CV Clear (CVCLR)</label>
       </variable>
-      <variable CV="30" mask="XXXXXVXX" item="Function Map Option 1" default="0" tooltip="Function Group 2 (F5-F8) assignments are swapped with Function Group 3 (F9-F12)">
+      <variable CV="30" mask="XXXXXVXX" item="Function Map Option 1" default="0" tooltip="Function Group 2 (F5-F8) assignments are swapped with Function Group 3 (F9-F12)" exclude="N_Chal">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumSwap.xml"/>
         <label>Function Group 2 and 3 Exchange</label>
       </variable>
+      <variable CV="30" mask="XXXXXVXX" item="Function Map Option 1" default="1" tooltip="Function Group 2 (F5-F8) assignments are swapped with Function Group 3 (F9-F12)" include="N_Chal">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumSwap.xml"/>
+        <label>Function Group 2 and 3 Exchange</label>
+      </variable>      
       <!-- Function Mapping follows -->
       <variable CV="33" mask="XXXXXXXV" item="FL(f) controls output 1" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -895,18 +906,26 @@
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F11 controls output 10(alt)</label>
         </variable>
-        <variable item="F11 controls output 11(alt)" CV="41" mask="XXXVXXXX" default="1">
+        <variable item="F11 controls output 11(alt)" CV="41" mask="XXXVXXXX" default="1" exclude="N_Chal">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F11 controls output 11(alt)</label>
         </variable>
+        <variable item="F11 controls output 11(alt)" CV="41" mask="XXXVXXXX" default="0" include="N_Chal">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+          <label>F11 controls output 11(alt)</label>
+        </variable>        
         <variable item="F11 controls output 12(alt)" CV="41" mask="XXVXXXXX" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F11 controls output 12(alt)</label>
         </variable>
-        <variable item="F11 controls output 13(alt)" CV="41" mask="XVXXXXXX" default="0">
+        <variable item="F11 controls output 13(alt)" CV="41" mask="XVXXXXXX" default="0" exclude="N_Chal">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F11 controls output 13(alt)</label>
         </variable>
+        <variable item="F11 controls output 13(alt)" CV="41" mask="XVXXXXXX" default="1" include="N_Chal">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+          <label>F11 controls output 13(alt)</label>
+        </variable>        
         <variable item="F11 controls output 14(alt)" CV="41" mask="VXXXXXXX" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F11 controls output 14(alt)</label>
@@ -923,7 +942,11 @@
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F12 controls output 9(alt)</label>
         </variable>
-        <variable item="F12 controls output 10(alt)" CV="42" mask="XXXXVXXX" default="0">
+        <variable item="F12 controls output 10(alt)" CV="42" mask="XXXXVXXX" default="0" exclude="N_Chal">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+          <label>F12 controls output 10(alt)</label>
+        </variable>
+        <variable item="F12 controls output 10(alt)" CV="42" mask="XXXXVXXX" default="1" include="N_Chal">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F12 controls output 10(alt)</label>
         </variable>
@@ -931,10 +954,14 @@
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F12 controls output 11(alt)</label>
         </variable>
-        <variable item="F12 controls output 12(alt)" CV="42" mask="XXVXXXXX" default="1">
+        <variable item="F12 controls output 12(alt)" CV="42" mask="XXVXXXXX" default="1" exclude="N_Chal">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F12 controls output 12(alt)</label>
         </variable>
+        <variable item="F12 controls output 12(alt)" CV="42" mask="XXVXXXXX" default="0" include="N_Chal">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+          <label>F12 controls output 12(alt)</label>
+        </variable>        
         <variable item="F12 controls output 13(alt)" CV="42" mask="XVXXXXXX" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F12 controls output 13(alt)</label>
@@ -956,7 +983,7 @@
         <variable item="F5 controls output 9(alt)" CV="43" mask="XXXXXVXX" default="0" minFn="9">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F5 controls output 9(alt)</label>
-        </variable>
+        </variable>        
         <variable item="F5 controls output 10(alt)" CV="43" mask="XXXXVXXX" default="0" minFn="9">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F5 controls output 10(alt)</label>
@@ -1021,18 +1048,26 @@
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F7 controls output 10(alt)</label>
         </variable>
-        <variable item="F7 controls output 11(alt)" CV="45" mask="XXXXVXXX" default="0" minFn="11">
+        <variable item="F7 controls output 11(alt)" CV="45" mask="XXXXVXXX" default="0" minFn="11" exclude="N_Chal">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F7 controls output 11(alt)</label>
         </variable>
+        <variable item="F7 controls output 11(alt)" CV="45" mask="XXXXVXXX" default="1" minFn="11" include="N_Chal">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+          <label>F7 controls output 11(alt)</label>
+        </variable>        
         <variable item="F7 controls output 12(alt)" CV="45" mask="XXXVXXXX" default="0" minFn="11">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F7 controls output 12(alt)</label>
         </variable>
-        <variable item="F7 controls output 13(alt)" CV="45" mask="XXVXXXXX" default="1" minFn="11">
+        <variable item="F7 controls output 13(alt)" CV="45" mask="XXVXXXXX" default="1" minFn="11" exclude="N_Chal">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F7 controls output 13(alt)</label>
         </variable>
+        <variable item="F7 controls output 13(alt)" CV="45" mask="XXVXXXXX" default="0" minFn="11" include="N_Chal">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+          <label>F7 controls output 13(alt)</label>
+        </variable>        
         <variable item="F7 controls output 14(alt)" CV="45" mask="XVXXXXXX" default="0" minFn="11">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F7 controls output 14(alt)</label>
@@ -1049,18 +1084,26 @@
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F8 controls output 9(alt)</label>
         </variable>
-        <variable item="F8 controls output 10(alt)" CV="46" mask="XXXXXVXX" default="1" minFn="12">
+        <variable item="F8 controls output 10(alt)" CV="46" mask="XXXXXVXX" default="1" minFn="12" exclude="N_Chal">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F8 controls output 10(alt)</label>
         </variable>
+        <variable item="F8 controls output 10(alt)" CV="46" mask="XXXXXVXX" default="0" minFn="12" include="N_Chal">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+          <label>F8 controls output 10(alt)</label>
+        </variable>        
         <variable item="F8 controls output 11(alt)" CV="46" mask="XXXXVXXX" default="0" minFn="12">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F8 controls output 11(alt)</label>
         </variable>
-        <variable item="F8 controls output 12(alt)" CV="46" mask="XXXVXXXX" default="0" minFn="12">
+        <variable item="F8 controls output 12(alt)" CV="46" mask="XXXVXXXX" default="0" minFn="12" exclude="N_Chal">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F8 controls output 12(alt)</label>
         </variable>
+        <variable item="F8 controls output 12(alt)" CV="46" mask="XXXVXXXX" default="1" minFn="12" include="N_Chal">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+          <label>F8 controls output 12(alt)</label>
+        </variable>        
         <variable item="F8 controls output 13(alt)" CV="46" mask="XXVXXXXX" default="0" minFn="12">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F8 controls output 13(alt)</label>

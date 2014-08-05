@@ -39,23 +39,29 @@
 	  <enumChoice choice="No error" value="0">
             <choice>No error</choice>
             <choice xml:lang="de">kein Fehler</choice>
+            <choice xml:lang="it">Nessun Errore</choice>
 	  </enumChoice>
 	  <enumChoice choice="Motor short circuit">
             <choice>Motor short circuit</choice>
-            <choice xml:lang="de">Kurzschluss Motor</choice>			
+            <choice xml:lang="de">Kurzschluss Motor</choice>
+            <choice xml:lang="it">Corto-Circuito Motore</choice>			
 	  </enumChoice>
 	  <enumChoice choice="Light short circuit">
             <choice>Light short circuit</choice>
-            <choice xml:lang="de">Kurzschluss Licht</choice>			
+            <choice xml:lang="de">Kurzschluss Licht</choice>
+            <choice xml:lang="it">Corto-Circuito Luci</choice>			
 	  </enumChoice>
 	  <enumChoice choice="Motor+Light short circuit">
             <choice>Motor+Light short circuit</choice>
-            <choice xml:lang="de">Kurzschluss Motor+Licht</choice>			
+            <choice xml:lang="de">Kurzschluss Motor+Licht</choice>
+            <choice xml:lang="it">Corto-Circuito Motore e Luci</choice>			
 	  </enumChoice>	  
 	</enumVal>
 	<label>Error register</label>
 	<label xml:lang="de">Fehlerspeicher</label>
+        <label xml:lang="it">Errore registro</label>
 	<tooltip>0 = No error (reset error register)</tooltip>
-	<tooltip xml:lang="de">0 = kein Fehler (Fehlerspeicher zurücksetzen)</tooltip>		
+	<tooltip xml:lang="de">0 = kein Fehler (Fehlerspeicher zurücksetzen)</tooltip>
+        <tooltip xml:lang="it">0 = Nessun errore (reset registro errori)</tooltip>		
   </variable>
 </variables>

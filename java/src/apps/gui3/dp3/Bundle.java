@@ -23,9 +23,9 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
  * @version     $Revision: 17977 $
  * @since       3.3.1
  */
-public class Bundle extends apps.Bundle {
+public class Bundle extends apps.gui3.Bundle {
 
-    private final static String name = "DecoderPro3ActionListBundle";
+    private final static String name = "apps.gui3.dp3.Bundle";
 
     //
     // below here is boilerplate to be copied exactly

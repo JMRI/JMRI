@@ -39,16 +39,20 @@
     <enumVal>
       <enumChoice choice="Fixed repetition rate" value="32">
         <choice>Fixed</choice>
-        <choice xml:lang="de">konstante</choice>			
+        <choice xml:lang="de">konstante</choice>
+        <choice xml:lang="it">Costante</choice>	
       </enumChoice>
       <enumChoice choice="Speed dependent repetition rate" value="33">
         <choice>Speed dependent</choice>
-        <choice xml:lang="de">mit Fahrstufe ändern</choice>			
+        <choice xml:lang="de">mit Fahrstufe ändern</choice>
+        <choice xml:lang="it">Dipende da velocità</choice>				
       </enumChoice>
     </enumVal>
     <label>Fixed or variable repetition rate</label>
     <label xml:lang="de">konstante/veränderliche Wiederholrate</label>
-    <tooltip>128=fixed or 132=speed dependent"</tooltip>
-    <tooltip xml:lang="de">128=konstant oder 132=mit Fahrstufe ändern</tooltip>	
+    <label xml:lang="it">Costante o variabile</label>	
+    <tooltip>128=fixed or 132=speed dependent</tooltip>
+    <tooltip xml:lang="de">128=konstant oder 132=mit Fahrstufe ändern</tooltip>
+    <tooltip xml:lang="it">128=costante o 132=dipendente da Velocità</tooltip>	
   </variable>
 </variables>

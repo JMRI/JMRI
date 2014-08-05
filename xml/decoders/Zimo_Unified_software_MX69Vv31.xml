@@ -56,6 +56,7 @@
       <variable item="Decoder ID 1" CV="250" default="209" readOnly="yes">
         <decVal/>
         <label>Decoder ID 1</label>
+        <label xml:lang="it">ID 1 Decoder: </label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV400-CV428.xml"/>
     </variables>

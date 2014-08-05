@@ -36,13 +36,17 @@
   <variable label="Offset Register" CV="65" default="0" readOnly="yes">
     <decVal/>
     <label>Offset Register</label>
+    <label xml:lang="it">Registro Indice</label>
     <tooltip>For CV programming with a Motorola digital controller</tooltip>	
     <tooltip xml:lang="de">für die CV Progr. mit einer Motorolazentrale</tooltip>
+    <tooltip xml:lang="it">Per programmare le CV con una centrale Motorola</tooltip>
   </variable>
   <variable label="Page Register" CV="66" default="0" readOnly="yes">
     <decVal/>
     <label>Page Register</label>
+    <label xml:lang="it">Registro Pagine</label>
     <tooltip>For CV programming with a Motorola digital controller, used in DCC page mode</tooltip>
-    <tooltip xml:lang="de">für die CV Progr. mit einer Motorolazentrale (DCC page mode)</tooltip>	
+    <tooltip xml:lang="de">für die CV Progr. mit einer Motorolazentrale (DCC page mode)</tooltip>
+    <tooltip xml:lang="it">Per programmare le CV con una centrale Motorola in modalità DCC a Pagina</tooltip>	
   </variable>
 </variables>

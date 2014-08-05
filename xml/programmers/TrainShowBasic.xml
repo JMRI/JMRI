@@ -26,25 +26,25 @@
           <text> </text>
         </label>
         <display item="Short Address" tooltip="Sets the Primary (short) address">
-          <tooltip xml:lang="it">Sets the Primary (short) address</tooltip>
+          <tooltip xml:lang="it">Programma l'indirizzo primario (Corto)</tooltip>
         </display>
         <display item="Long Address" tooltip="Sets the Extended (long) address">
-          <tooltip xml:lang="it">Sets the Extended (long) address</tooltip>
+          <tooltip xml:lang="it">Programma l'indirizzo Esteso (Lungo)</tooltip>
         </display>
         <display item="Address Format" tooltip="Determines whether loco will use short or long     address">
-          <tooltip xml:lang="it">Determines whether loco will use short or long     address</tooltip>
+          <tooltip xml:lang="it">Determina se la loco usa l'ndirizzo Corto o Lungo</tooltip>
         </display>
         <label>
           <text> </text>
         </label>
         <display item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told                 to move forward">
-          <tooltip xml:lang="it">Sets the relative direction of the loco when told                 to move forward</tooltip>
+          <tooltip xml:lang="it">Programma la direzione relativa della loco quando                 muove in avanti</tooltip>
         </display>
         <display item="Speed Step Mode" tooltip="Sets the speed step mode for headlight control">
-          <tooltip xml:lang="it">Sets the speed step mode for headlight control</tooltip>
+          <tooltip xml:lang="it">Programma modalità Step velocità per il controllo Luci</tooltip>
         </display>
         <display item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional         DC current (enables Power Source Conversion)">
-          <tooltip xml:lang="it">Determines whether loco can operate on conventional         DC current (enables Power Source Conversion)</tooltip>
+          <tooltip xml:lang="it">Determina se la loco può operare in DC          (abilita Conversione Alimentazione)</tooltip>
         </display>
       </column>
       <name xml:lang="it">Basic</name>
@@ -53,16 +53,16 @@
       <name>Motor</name>
       <column>
         <display item="Kick Start" tooltip="Provides an initial higher voltage spike to loco      to overcome starting friction">
-          <tooltip xml:lang="it">Provides an initial higher voltage spike to loco      to overcome starting friction</tooltip>
+          <tooltip xml:lang="it">Provvede a dare un impulso iniziale a tensione alta alla loco      per superare la frizione in partenza</tooltip>
         </display>
         <display item="Accel" tooltip="Sets the acceleration rate (delay)">
-          <tooltip xml:lang="it">Sets the acceleration rate (delay)</tooltip>
+          <tooltip xml:lang="it">Programma Grado di Accellerazione (ritardo)</tooltip>
         </display>
         <display item="Decel" tooltip="Sets the deceleration rate (delay)">
-          <tooltip xml:lang="it">Sets the deceleration rate (delay)</tooltip>
+          <tooltip xml:lang="it">Programma Grado di Decellerazione (ritardo)</tooltip>
         </display>
       </column>
-      <name xml:lang="it">Motor</name>
+      <name xml:lang="it">Motore</name>
     </pane>
     <pane>
       <name>Speed Control</name>
@@ -81,24 +81,24 @@
         <row>
           <column>
             <display item="Vstart" tooltip="Sets the starting voltage at        throttle speed step 1">
-              <tooltip xml:lang="it">Sets the starting voltage at        throttle speed step 1</tooltip>
+              <tooltip xml:lang="it">Programma tensione di partenza a         Velocità 1 sul Palmare</tooltip>
             </display>
             <display item="Vmid" tooltip="Sets the voltage at mid throttle">
-              <tooltip xml:lang="it">Sets the voltage at mid throttle</tooltip>
+              <tooltip xml:lang="it">Programma tensione a Velocità intermedia sul Palmare</tooltip>
             </display>
             <display item="Vhigh" tooltip="Sets the maximum voltage at full       throttle">
-              <tooltip xml:lang="it">Sets the maximum voltage at full       throttle</tooltip>
+              <tooltip xml:lang="it">Programma tensione massima a       Velocità max sul Palmare</tooltip>
             </display>
           </column>
           <column>
             <display item="Vstart" format="hslider" label="" tooltip="Sets the starting voltage at        throttle speed step 1">
-              <tooltip xml:lang="it">Sets the starting voltage at        throttle speed step 1</tooltip>
+              <tooltip xml:lang="it">Programma tensione di partenza a        Velocità 1 sul Palmare</tooltip>
             </display>
             <display item="Vmid" format="hslider" label="" tooltip="Sets the voltage at mid throttle">
-              <tooltip xml:lang="it">Sets the voltage at mid throttle</tooltip>
+              <tooltip xml:lang="it">Programma tensione a Velocità intermedia sul Palmare</tooltip>
             </display>
             <display item="Vhigh" format="hslider" label="" tooltip="Sets the maximum voltage at full       throttle">
-              <tooltip xml:lang="it">Sets the maximum voltage at full       throttle</tooltip>
+              <tooltip xml:lang="it">Programma tensione massima a       Velocità max sul Palmare</tooltip>
             </display>
           </column>
         </row>
@@ -108,7 +108,7 @@
               <text> </text>
             </label>
             <display item="Forward Trim" tooltip="Fine tune the forward voltage levels">
-              <tooltip xml:lang="it">Fine tune the forward voltage levels</tooltip>
+              <tooltip xml:lang="it">Regolazione Fine tensione in marcia Avanti</tooltip>
             </display>
             <label>
               <text> </text>
@@ -124,7 +124,7 @@
               <text> </text>
             </label>
             <display item="Reverse Trim" tooltip="Fine tune the reverse voltage levels">
-              <tooltip xml:lang="it">Fine tune the reverse voltage levels</tooltip>
+              <tooltip xml:lang="it">Regolazione Fine tensione in marcia Indietro</tooltip>
             </display>
             <label>
               <text> </text>
@@ -142,7 +142,7 @@
           </column>
         </row>
       </column>
-      <name xml:lang="it">Speed Control</name>
+      <name xml:lang="it">Controllo Velocità</name>
     </pane>
     <pane>
       <name>Consist</name>
@@ -150,10 +150,10 @@
         <row>
           <column>
             <display item="Consist Address" tooltip="Sets the multiple unit (consist)        address">
-              <tooltip xml:lang="it">Sets the multiple unit (consist)        address</tooltip>
+              <tooltip xml:lang="it">Programma Indirizzo per Multi-Trazione        (Consist)</tooltip>
             </display>
             <display item="Consist Direction" tooltip="Sets the relative direction of the        loco when consist is told to move forward">
-              <tooltip xml:lang="it">Sets the relative direction of the        loco when consist is told to move forward</tooltip>
+              <tooltip xml:lang="it">Programma la direzione relativa della loco         quando il Consist muove in avanti</tooltip>
             </display>
           </column>
           <column>
@@ -171,55 +171,55 @@
         </label>
         <label>
           <text>Will decoder respond to function     requests at consist address?</text>
-          <text xml:lang="it">Will decoder respond to function     requests at consist address?</text>
+          <text xml:lang="it">Il decoder risponde alle Funzioni anche all'indirizzo del Consist ?</text>
         </label>
         <label>
           <text> </text>
         </label>
         <display item="Consist Address Active For FL in Forward" tooltip="Determines whether the function will respond      to the consist address">
-          <tooltip xml:lang="it">Determines whether the function will respond      to the consist address</tooltip>
+          <tooltip xml:lang="it">Determina se la funzione risponde      all'indirizzo del Consist</tooltip>
         </display>
         <display item="Consist Address Active For FL in Reverse" tooltip="Determines whether the function will respond      to the consist address">
-          <tooltip xml:lang="it">Determines whether the function will respond      to the consist address</tooltip>
+          <tooltip xml:lang="it">Determina se la funzione risponde      all'indirizzo del Consist</tooltip>
         </display>
         <display item="Consist Address Active For F0" tooltip="Determines whether the function will respond      to the consist address">
-          <tooltip xml:lang="it">Determines whether the function will respond      to the consist address</tooltip>
+          <tooltip xml:lang="it">Determina se la funzione risponde      all'indirizzo del Consist</tooltip>
         </display>
         <display item="Consist Address Active For F1" tooltip="Determines whether the function will respond      to the consist address">
-          <tooltip xml:lang="it">Determines whether the function will respond      to the consist address</tooltip>
+          <tooltip xml:lang="it">Determina se la funzione risponde      all'indirizzo del Consist</tooltip>
         </display>
         <display item="Consist Address Active For F2" tooltip="Determines whether the function will respond      to the consist address">
-          <tooltip xml:lang="it">Determines whether the function will respond      to the consist address</tooltip>
+          <tooltip xml:lang="it">Determina se la funzione risponde      all'indirizzo del Consist</tooltip>
         </display>
         <display item="Consist Address Active For F3" tooltip="Determines whether the function will respond      to the consist address">
-          <tooltip xml:lang="it">Determines whether the function will respond      to the consist address</tooltip>
+          <tooltip xml:lang="it">Determina se la funzione risponde      all'indirizzo del Consist</tooltip>
         </display>
         <display item="Consist Address Active For F4" tooltip="Determines whether the function will respond      to the consist address">
-          <tooltip xml:lang="it">Determines whether the function will respond      to the consist address</tooltip>
+          <tooltip xml:lang="it">Determina se la funzione risponde      all'indirizzo del Consist</tooltip>
         </display>
         <display item="Consist Address Active For F5" tooltip="Determines whether the function will respond      to the consist address">
-          <tooltip xml:lang="it">Determines whether the function will respond      to the consist address</tooltip>
+          <tooltip xml:lang="it">Determina se la funzione risponde      all'indirizzo del Consist</tooltip>
         </display>
         <display item="Consist Address Active For F6" tooltip="Determines whether the function will respond      to the consist address">
-          <tooltip xml:lang="it">Determines whether the function will respond      to the consist address</tooltip>
+          <tooltip xml:lang="it">Determina se la funzione risponde      all'indirizzo del Consist</tooltip>
         </display>
         <display item="Consist Address Active For F7" tooltip="Determines whether the function will respond      to the consist address">
-          <tooltip xml:lang="it">Determines whether the function will respond      to the consist address</tooltip>
+          <tooltip xml:lang="it">Determina se la funzione risponde      all'indirizzo del Consist</tooltip>
         </display>
         <display item="Consist Address Active For F8" tooltip="Determines whether the function will respond      to the consist address">
-          <tooltip xml:lang="it">Determines whether the function will respond      to the consist address</tooltip>
+          <tooltip xml:lang="it">Determina se la funzione risponde      all'indirizzo del Consist</tooltip>
         </display>
         <display item="Consist Address Active For F9" tooltip="Determines whether the function will respond      to the consist address">
-          <tooltip xml:lang="it">Determines whether the function will respond      to the consist address</tooltip>
+          <tooltip xml:lang="it">Determina se la funzione risponde      all'indirizzo del Consist</tooltip>
         </display>
         <display item="Consist Address Active For F10" tooltip="Determines whether the function will respond      to the consist address">
-          <tooltip xml:lang="it">Determines whether the function will respond      to the consist address</tooltip>
+          <tooltip xml:lang="it">Determina se la funzione risponde      all'indirizzo del Consist</tooltip>
         </display>
         <display item="Consist Address Active For F11" tooltip="Determines whether the function will respond      to the consist address">
-          <tooltip xml:lang="it">Determines whether the function will respond      to the consist address</tooltip>
+          <tooltip xml:lang="it">Determina se la funzione risponde      all'indirizzo del Consist</tooltip>
         </display>
         <display item="Consist Address Active For F12" tooltip="Determines whether the function will respond      to the consist address">
-          <tooltip xml:lang="it">Determines whether the function will respond      to the consist address</tooltip>
+          <tooltip xml:lang="it">Determina se la funzione risponde      all'indirizzo del Consist</tooltip>
         </display>
       </column>
       <name xml:lang="it">Consist</name>
@@ -229,7 +229,7 @@
       <column>
         <cvtable/>
       </column>
-      <name xml:lang="it">CVs</name>
+      <name xml:lang="it">CV</name>
     </pane>
   </programmer>
 </programmer-config>

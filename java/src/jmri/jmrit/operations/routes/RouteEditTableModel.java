@@ -390,6 +390,12 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 		// update train icon
 		rl.setTrainIconCoordinates();
 	}
+	
+	private int _maxTrainMoves = Setup.getCarMoves();
+	
+	public int getLastMaxTrainMoves() {
+		return _maxTrainMoves;
+	}
 
 	private void setMaxTrainMoves(Object value, int row) {
 		RouteLocation rl = routeList.get(row);
@@ -402,6 +408,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 		}
 		if (moves <= 500) {
 			rl.setMaxCarMoves(moves);
+			_maxTrainMoves = moves;
 		} else {
 			JOptionPane.showMessageDialog(null, Bundle.getMessage("MaximumLocationMoves"), Bundle
 					.getMessage("CanNotChangeMoves"), JOptionPane.ERROR_MESSAGE);

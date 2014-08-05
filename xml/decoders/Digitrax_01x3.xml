@@ -544,7 +544,7 @@
         <label xml:lang="it">Tabella Velocità</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/digitrax/userId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <!-- Warning message for DN143K2 for display on the Function map pane -->
       <!-- known manufacturing non systematic error for this decoder -->
       <!-- Using a dummy variable with a non used CV to display a message -->

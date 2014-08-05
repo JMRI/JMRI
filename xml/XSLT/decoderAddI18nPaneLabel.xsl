@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!DOCTYPE xslt [
-<!ENTITY target "de">
+<!ENTITY target "it">
 ]>
 <!-- $Id$ -->
 

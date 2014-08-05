@@ -516,7 +516,7 @@ public class Maintenance
         }
         log.warn(" No type found for "+userName+" ("+sysName+").");
 
-        jmri.jmrit.logix.OBlockManager oBlockManager = InstanceManager.oBlockManagerInstance();
+        jmri.jmrit.logix.OBlockManager oBlockManager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
         jmri.jmrit.logix.OBlock blk = oBlockManager.getBySystemName(sysName);
         if ( sec!=null ) {
             userName = blk.getUserName();
@@ -670,7 +670,7 @@ public class Maintenance
         tempText = new StringBuffer();
         found = false;
         empty = true;
-        jmri.jmrit.logix.OBlockManager oBlockManager = InstanceManager.oBlockManagerInstance();
+        jmri.jmrit.logix.OBlockManager oBlockManager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
         iter1 = oBlockManager.getSystemNameList().iterator();
         while (iter1.hasNext()) {
             // get the next Logix

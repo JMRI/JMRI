@@ -42,7 +42,7 @@ public class CsvExportAction  extends AbstractAction {
 
         if(retVal == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
-            if (log.isDebugEnabled())  log.debug("start to export to PR1 file "+file);
+            if (log.isDebugEnabled())  log.debug("start to export to CSV file "+file);
 
             try {
 

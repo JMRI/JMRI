@@ -93,6 +93,21 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     }
    
     /**
+     * Verify that no messages were emitted,
+     * logging any that were. 
+     * Does not stop the logging. 
+     * Clears the accumulated list.
+     * @return true if no messages logged
+     */
+    public static boolean verifyNoBacklog() {
+        if (list.isEmpty()) return true;
+        while (!list.isEmpty()){
+            instance().superappend(list.remove(0));
+        }
+        return false;
+    }
+   
+    /**
      * Check that the next queued message was of Error 
      * severity, and has a specific message.
      *<P>

@@ -188,7 +188,7 @@ public class DetectionPanel extends JPanel {
     public String getOccBlock() {
         String name = _occDetectorName.getText();
         if (name!=null && name.trim().length()>0) {
-            if (InstanceManager.oBlockManagerInstance().getOBlock(name)!=null) {
+            if (InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(name)!=null) {
                 return name;
             }
         }
@@ -235,7 +235,7 @@ public class DetectionPanel extends JPanel {
     private void checkDetection() { 
         String name = _occDetectorName.getText();
         if (name!=null && name.trim().length()>0) {
-            OBlock block = InstanceManager.oBlockManagerInstance().getOBlock(name);
+            OBlock block = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(name);
             if (block!=null) {
                 if (block.equals(_block)) {
                     return;

@@ -56,10 +56,17 @@ public interface NamedBean {
      */
     public String getSystemName();
 
-    /*
+    /**
     * return user name if it exists, otherwise return System name
     */
     public String getDisplayName();
+    
+    /**
+    * Returns a fully formatted display that includes the SystemName 
+    * and UserName if set.
+    * UserName (SystemName) or SystemName
+    */
+    public String getFullyFormattedDisplayName();
 
     /**
      * Request a call-back when a bound property changes.
@@ -81,6 +88,9 @@ public interface NamedBean {
     public void removePropertyChangeListener(java.beans.PropertyChangeListener l);
     
     public void updateListenerRef(java.beans.PropertyChangeListener l, String newName);
+    
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException;
+    
     /**
     * Get the textual reference for the specific listener
     *
@@ -185,6 +195,13 @@ public interface NamedBean {
      * Retrieve the complete current set of keys.
      */
     public java.util.Set<Object> getPropertyKeys();
+    
+    /**
+    * For instances in the code where we are dealing with just a bean and 
+    * a message needs to be passed to the user or in a log.
+    * @return a string of the bean type, eg Turnout, Sensor etc
+    */
+    public String getBeanType();
 }
 
 /* @(#)NamedBean.java */

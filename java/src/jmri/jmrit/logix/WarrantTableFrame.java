@@ -70,13 +70,6 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener
 	static final String retry = Bundle.getMessage("Retry");
 	static final String[] controls = {halt, resume, retry, abort};
 
-	// Session persistent defaults for NX warrants
-	static boolean _defaultEStop = false;
-	static boolean _defaultHaltStart = false;
-	static boolean _defaultAddTracker = false;
-	static String _defaultSearchdepth = "15";
-	static String _defaultSpeed = "0.5";
-	static String _defaultIntervalTime = "4.0";
     public static int _maxHistorySize = 30;
 
 	private JTextField  _startWarrant = new JTextField(30);
@@ -270,7 +263,6 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener
 
         getContentPane().add(tablePanel);
         setLocation(50,0);
-        setVisible(true);
         pack();
     }
     protected void scrollTable() {
@@ -289,6 +281,7 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener
        
     private void nxAction() {
     	_nxFrame = NXFrame.getInstance();
+    	_nxFrame.setVisible(true);
     }
     
     protected void closeNXFrame() {

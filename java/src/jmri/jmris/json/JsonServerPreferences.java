@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 public class JsonServerPreferences extends Bean {
 
+    public static final int DEFAULT_PORT = 2056;
     static final String XML_PREFS_ELEMENT = "JSONServerPreferences"; // NOI18N
     static final String HEARTBEAT_INTERVAL = "heartbeatInterval"; // NOI18N
     static final String PORT = "port"; // NOI18N
@@ -20,7 +21,7 @@ public class JsonServerPreferences extends Bean {
     private boolean isDirty = false;
     // initial defaults if prefs not found
     private int heartbeatInterval = 15000;
-    private int port = 2056;
+    private int port = DEFAULT_PORT;
     private static Logger log = LoggerFactory.getLogger(JsonServerPreferences.class);
 
     public JsonServerPreferences(String fileName) {

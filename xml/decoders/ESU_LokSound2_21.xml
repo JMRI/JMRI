@@ -1800,11 +1800,11 @@
         </enumVal>
         <label>Output Configuration Head Lights</label>
       </variable>
-      <variable CV="114" default="15" mask="XXXXVVVV " item="Function 2 effect generated">
+      <variable CV="114" default="15" mask="XXXXVVVV" item="Function 2 effect generated">
         <decVal/>
         <label>Brightness Back Lights</label>
       </variable>
-      <variable CV="114" default="1" mask="XXVVXXXX " item="Function 2 behavior">
+      <variable CV="114" default="1" mask="XXVVXXXX" item="Function 2 behavior">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>

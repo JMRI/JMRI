@@ -13,7 +13,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Bernd Wisotzki (Ba)" version="3" lastUpdated="20140524"/>
+  <version author="Bernd Wisotzki (Ba), wsb56" version="4" lastUpdated="20140730"/>
+  <version author="Bernd Wisotzki (Ba), wsb56" version="3" lastUpdated="20140524"/>
   <version author="Jeff Schmaltz escopetas@comcast.net" version="2" lastUpdated="20130825"/>
   <version author="John A. Stewart alex.stewart@crc.ca" version="1" lastUpdated="20100427"/>
   <!-- 
@@ -45,70 +46,121 @@ Silver direct+ Silent-Back EMF DCC Decoder
 	
 	Comments for version 3
 	
-	Complete refactoring and added German
+	1) Complete refactoring and added German
+
+	Comments for version 4
+	
+	1) Added mechanism to present to the user only the CV he can change with his concrete model. 
+	2) Updated decoder with the new silver+ Next16 and the new gold maxi
+	3) Used models list from http://www.digital-plus.de/e/digitalplus-decoder-uebersicht.php as of July 2014
+	4) Updated some information due to new revisions of the manuals/decoders
 	
 -->
   <!--
 nmraWarrant="yes" nmraWarrantStart="200604"
 -->
   <decoder>
-    <family name="Lenz Plus decoders released March 2010" mfg="Lenz" highVersionID="99" lowVersionID="90" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive">
-      <model model="Standard+ NEM652 10231-01" numOuts="3" numFns="30" maxMotorCurrent="1.0A)" formFactor="HO">
-        <output name="1" label="A"/>
-        <output name="2" label="B"/>
-        <output name="3" label="C"/>
-      </model>
-      <model model="Silver+ mini wired 10310-01" numOuts="2" numFns="30" maxMotorCurrent="0.5A" formFactor="N">
-        <output name="1" label="A - White"/>
-        <output name="2" label="B - Yellow"/>
-      </model>
-      <model model="Silver+ mini NEM651 10311-01" numOuts="2" numFns="30" maxMotorCurrent="0.5A" formFactor="N">
-        <output name="1" label="A"/>
-        <output name="2" label="B"/>
-      </model>
-      <model model="Silver+ NEM652 10331-01" numOuts="5" numFns="30" maxMotorCurrent="1.0A)" formFactor="HO">
-        <output name="1" label="A"/>
-        <output name="2" label="B"/>
-        <output name="3" label="C"/>
-        <output name="4" label="D"/>
-        <output name="5" label="E"/>
-      </model>
-      <model model="Silver+ PluX12 10312-01" numOuts="5" numFns="30" maxMotorCurrent="1.0A)" formFactor="HO">
-        <output name="1" label="A"/>
-        <output name="2" label="B"/>
-        <output name="3" label="C"/>
-        <output name="4" label="D"/>
-        <output name="5" label="E"/>
-      </model>
-      <model model="Silver+ 21 10321-01" numOuts="5" numFns="30" maxMotorCurrent="1.0A)" formFactor="HO">
-        <output name="1" label="A"/>
-        <output name="2" label="B"/>
-        <output name="3" label="C"/>
-        <output name="4" label="D"/>
-        <output name="5" label="E"/>
-      </model>
-      <model model="Silver+ direct 10330-01" numOuts="5" numFns="30" maxMotorCurrent="1.0A)" formFactor="HO">
-        <output name="1" label="A"/>
-        <output name="2" label="B"/>
-        <output name="3" label="C"/>
-        <output name="4" label="D"/>
-        <output name="5" label="E"/>
-      </model>
-      <model model="Gold+ mini wired 10410-01" numOuts="2" numFns="30" maxMotorCurrent="0.5A" formFactor="N">
-        <output name="1" label="A - White"/>
-        <output name="2" label="B - Yellow"/>
-      </model>
-      <model model="Gold+ mini NEM651 10411-01" numOuts="2" numFns="30" maxMotorCurrent="0.5A" formFactor="N">
-        <output name="1" label="A"/>
-        <output name="2" label="B"/>
-      </model>
-      <model model="Gold+ NEM652 10433-01" numOuts="5" numFns="30" maxMotorCurrent="1.0A)" formFactor="HO">
-        <output name="1" label="A"/>
-        <output name="2" label="B"/>
-        <output name="3" label="C"/>
-        <output name="4" label="D"/>
-        <output name="5" label="E"/>
-      </model>
+    <family name="Lenz Plus decoders released March 2010" mfg="Lenz"
+    	highVersionID="99" lowVersionID="90"
+    	comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive">
+    	<model model="Standard+ NEM652 10231-01" numOuts="3" numFns="30"
+    		maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
+    		<output name="1" label="A" maxcurrent="0.3A" />
+    		<output name="2" label="B" maxcurrent="0.3A" ></output>
+    		<output name="3" label="C" maxcurrent="0.3A" />
+    	</model>
+    	<model model="Silver+ mini wired 10310-01" numOuts="2"
+    		numFns="30" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
+    		<output name="1" label="A - White" maxcurrent="0.3A" />
+    		<output name="2" label="B - Yellow" maxcurrent="0.3A" />
+    	</model>
+    	<model model="Silver+ mini NEM651 10311-01" numOuts="2"
+    		numFns="30" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
+    		<output name="1" label="A" maxcurrent="0.3A" />
+    		<output name="2" label="B" maxcurrent="0.3A" />
+    	</model>
+    	<model model="Silver+ mini wired 10310-02" numOuts="2"
+    		numFns="30" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
+    		<output name="1" label="A - White" maxcurrent="0.3A" />
+    		<output name="2" label="B - Yellow" maxcurrent="0.3A" />
+    	</model>
+    	<model model="Silver+ mini NEM651 10311-02" numOuts="2"
+    		numFns="30" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
+    		<output name="1" label="A" maxcurrent="0.3A" />
+    		<output name="2" label="B" maxcurrent="0.3A" />
+    	</model>
+    	<model model="Silver+ NEM652 10331-01" numOuts="5" numFns="30"
+    		maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
+    		<output name="1" label="A" maxcurrent="0.5A" />
+    		<output name="2" label="B" maxcurrent="0.5A" />
+    		<output name="3" label="C" maxcurrent="0.5A" />
+    		<output name="4" label="D" maxcurrent="0.5A" />
+    		<output name="5" label="E" maxcurrent="0.5A" />
+    	</model>
+    	<model model="Silver+ PluX12 10312-01" numOuts="5" numFns="30"
+    		maxMotorCurrent="0.75A" formFactor="TT" maxTotalCurrent="0.75A">
+    		<output name="1" label="A" maxcurrent="0.5A" />
+    		<output name="2" label="B" maxcurrent="0.5A" />
+    		<output name="3" label="C" maxcurrent="0.5A" />
+    		<output name="4" label="D" maxcurrent="0.5A" />
+    		<output name="5" label="E" maxcurrent="0.5A" />
+    	</model>
+    	<model model="Silver+ Next18 10312-01" numOuts="5" numFns="30"
+    		maxMotorCurrent="0.75A" formFactor="TT" maxTotalCurrent="0.75A" comment="New in 2014">
+    		<output name="1" label="A" maxcurrent="0.5A" />
+    		<output name="2" label="B" maxcurrent="0.5A" />
+    		<output name="3" label="C" maxcurrent="0.5A" />
+    		<output name="4" label="D" maxcurrent="0.5A" />
+    		<output name="5" label="E" maxcurrent="0.5A" />
+    	</model>
+    	<model model="Silver+ 21 10321-01" numOuts="5" numFns="30"
+    		maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
+    		<output name="1" label="A" maxcurrent="0.5A" />
+    		<output name="2" label="B" maxcurrent="0.5A" />
+    		<output name="3" label="C" maxcurrent="0.5A" />
+    		<output name="4" label="D" maxcurrent="0.5A" />
+    		<output name="5" label="E" maxcurrent="0.5A" />
+    	</model>
+    	<model model="Silver+ direct 10330-01" numOuts="5" numFns="30"
+    		maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
+    		<output name="1" label="A" maxcurrent="0.5A" />
+    		<output name="2" label="B" maxcurrent="0.5A" />
+    		<output name="3" label="C" maxcurrent="0.5A" />
+    		<output name="4" label="D" maxcurrent="0.5A" />
+    		<output name="5" label="E" maxcurrent="0.5A" />
+    	</model>
+    	<model model="Gold+ mini wired 10410-01" numOuts="2" numFns="30"
+    		maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
+    		<output name="1" label="A - White" maxcurrent="0.3A" />
+    		<output name="2" label="B - Yellow" maxcurrent="0.3A" />
+    	</model>
+    	<model model="Gold+ mini NEM651 10411-01" numOuts="2"
+    		numFns="30" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
+    		<output name="1" label="A" maxcurrent="0.3A" />
+    		<output name="2" label="B" maxcurrent="0.3A" />
+    	</model>
+    	<model model="Gold+ NEM652 10433-01" numOuts="5" numFns="30"
+    		maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
+    		<output name="1" label="A" maxcurrent="0.5A" />
+    		<output name="2" label="B" maxcurrent="0.5A" />
+    		<output name="3" label="C" maxcurrent="0.5A" />
+    		<output name="4" label="D" maxcurrent="0.5A" />
+    		<output name="5" label="E" maxcurrent="0.5A" />
+    	</model>
+    	<model model="Gold maxi 10440" numOuts="8" numFns="30"
+    		maxMotorCurrent="3.0A" formFactor="0" maxTotalCurrent="3.0A"
+    		comment="New in 2014" connector="SUSI">
+    		<versionCV highVersionID="72" lowVersionID="72" />
+    		<output name="1" label="A" maxcurrent="1.0A"/>
+    		<output name="2" label="B" maxcurrent="1.0A" ></output>
+    		<output name="3" label="C" maxcurrent="1.0A" />
+    		<output name="4" label="D" maxcurrent="1.0A" />
+    		<output name="5" label="E" maxcurrent="1.0A" />
+    		<output name="6" label="F" maxcurrent="1.0A" />
+    		<output name="7" label="G" maxcurrent="1.0A" />
+    		<output name="8" label="H" maxcurrent="1.0A" />
+    	</model>
+
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
@@ -138,7 +190,10 @@ nmraWarrant="yes" nmraWarrantStart="200604"
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/motorControl2_cv112_114.xml"/>
       <!-- CV115 not listed in Plus manual -->
-      <xi:include href="http://jmri.org/xml/decoders/lenz/susi_cv126_127.xml"/>
+      <variables include="Gold maxi 10440,Gold+ NEM652 10433-01,Silver+ Next18 10312-01,Silver+ PluX12 10312-01,Silver+ mini wired 10310-02,Silver+ mini NEM651 10311-02,Silver+ mini wired 10310-01,Silver+ mini NEM651 10311-01">
+      	<xi:include href="http://jmri.org/xml/decoders/lenz/susi_cv126_127.xml" />
+      </variables>
+    	
       <xi:include href="http://jmri.org/xml/decoders/lenz/serviceNo_cv128.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/extendedCoupling_cv145_148.xml"/>
     </variables>

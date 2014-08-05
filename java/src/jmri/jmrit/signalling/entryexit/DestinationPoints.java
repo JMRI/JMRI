@@ -43,6 +43,10 @@ import jmri.jmrit.signalling.EntryExitPairs;
 
 public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
         
+    public String getBeanType(){
+        return Bundle.getMessage("BeanNameDestination");
+    }
+        
         transient PointDetails point = null;
         Boolean uniDirection = true;
         int entryExitType = EntryExitPairs.SETUPTURNOUTSONLY;//SETUPSIGNALMASTLOGIC;
@@ -1076,4 +1080,5 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
         }
         
         static Logger log = LoggerFactory.getLogger(DestinationPoints.class.getName());
+        
     }

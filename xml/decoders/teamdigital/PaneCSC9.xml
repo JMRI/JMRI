@@ -1,0 +1,632 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 1205, 1131 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new file includes for SIC28 files -->
+<!-- Panes to show Logic Cells -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<name>Logic Cells 9-16 w/Outputs</name>
+	<column>
+		<row>
+		<column>
+		<label label=" "/>
+		<label label="------ Logic combination reference table for conditions B and C ------"/>
+		<label label=" "/>
+		</column>
+		</row>
+		<row>
+		<separator/>
+		<column>
+			<separator/> <label label="Logic Combination"/> <separator/>
+			<label label="A OR B OR C "/> <separator/>
+			<label label="(A OR B) AND C "/> <separator/>
+			<label label="(A AND B) OR C "/> <separator/>
+			<label label="A AND B AND C "/> <separator/>
+				</column>
+				<separator/>
+		<column>
+			<separator/> <label label=" B Logic "/> <separator/>
+			<label label=" OR "/> <separator/>
+			<label label=" OR "/> <separator/>
+			<label label=" AND "/> <separator/>
+			<label label=" AND "/> <separator/>
+				</column>
+				<separator/>
+		<column>
+			<separator/> <label label=" C Logic"/> <separator/>
+			<label label=" OR "/> <separator/>
+			<label label=" AND "/> <separator/>
+			<label label=" OR "/> <separator/>
+			<label label=" AND "/> <separator/>
+				</column>
+				<separator/>
+		</row>
+		
+	<separator/>
+	<separator/>	
+	<row>
+	<column>	
+		<display item="Cell 9 Address" label="------ Logic Cell 9 ------"/>
+		<row>
+			<column> <display item="Address 9A" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 9A" format="checkbox"/> </column>	
+			<column> <display item="Message 9A" /> </column>
+			<column>
+				<display item="State 9A"/>
+				<display item="Aspect 9A"/>
+			</column>
+		</row>
+		<row>			
+			<column> <display item="Logic 9B" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 9B" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 9B" format="checkbox"/> </column>		
+			<column> <display item="Message 9B" /> </column>
+			<column>
+				<display item="State 9B"/>
+				<display item="Aspect 9B"/>
+			</column>
+		</row>	
+		<row>			
+			<column> <display item="Logic 9C" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 9C" /> </column>
+			<label label=" Type " />		
+			<column> <display item="DCC Message 9C" format="checkbox"/> </column>
+			<column> <display item="Message 9C" /> </column>
+			<column>
+				<display item="State 9C"/>
+				<display item="Aspect 9C"/>
+			</column>
+		</row>	
+	</column>
+	<separator/>
+	<column>
+		<label label="Output 9 Control ---"/>
+		<label label=" "/>
+		<row>
+		<column> <display item="Inv o9" format="checkbox" tooltip="Use for common cathode type LEDs" /> </column>
+		<column> <label label=" Do not use for Bi-Color LEDs"/> </column>
+		</row>
+		<display item="BiC9" tooltip="Use for two legged bi-color LEDs" />
+		<row>
+		<column> <display item="Recip9" format="checkbox" tooltip="Inverts the output state of the effect" /> </column>
+		<column> <label label=" Use for alternating flashing LEDs"/> </column>
+		</row>
+		<display item="Eff9" tooltip="Configures the output for specfic effect" />
+		<display item="EffDu9" tooltip="Time is based on the type of effect" />
+	</column>
+	<separator/>
+	<column>
+		<label label="Action when logic cell goes True"/>
+		<label label=" "/>
+		<display item="DCC Message 9D" format="checkbox"/>
+			<display item="Address 9D" />
+			<display item="Aspect 9D" />
+			<display item="Message 9D" />
+			<display item="State 9D" />
+	</column>
+	</row>
+
+	<separator/>
+	<separator/>
+	<row>
+	<column>	
+		<display item="Cell 10 Address" label="------ Logic Cell 10 ------"/>
+		<row>
+			<column> <display item="Address 10A" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 10A" format="checkbox"/> </column>	
+			<column> <display item="Message 10A" /> </column>
+			<column>
+				<display item="State 10A"/>
+				<display item="Aspect 10A"/>
+			</column>
+		</row>
+		<row>			
+			<column> <display item="Logic 10B" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 10B" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 10B" format="checkbox"/> </column>		
+			<column> <display item="Message 10B" /> </column>
+			<column>
+				<display item="State 10B"/>
+				<display item="Aspect 10B"/>
+			</column>
+		</row>	
+		<row>			
+			<column> <display item="Logic 10C" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 10C" /> </column>
+			<label label=" Type " />		
+			<column> <display item="DCC Message 10C" format="checkbox"/> </column>
+			<column> <display item="Message 10C" /> </column>
+			<column>
+				<display item="State 10C"/>
+				<display item="Aspect 10C"/>
+			</column>
+		</row>	
+	</column>
+	<separator/>
+	<column>
+		<label label="Output 10 Control ---"/>
+		<label label=" "/>
+		<row>
+		<column> <display item="Inv o10" format="checkbox" tooltip="Use for common cathode type LEDs" /> </column>
+		<column> <label label=" Do not use for Bi-Color LEDs"/> </column>
+		</row>
+		<display item="BiC10" tooltip="Use for two legged bi-color LEDs" />
+		<row>
+		<column> <display item="Recip10" format="checkbox" tooltip="Inverts the output state of the effect" /> </column>
+		<column> <label label=" Use for alternating flashing LEDs"/> </column>
+		</row>
+		<display item="Eff10" tooltip="Configures the output for specfic effect" />
+		<display item="EffDu10" tooltip="Time is based on the type of effect" />
+	</column>
+	<separator/>
+	<column>
+		<label label="Action when logic cell goes True"/>
+		<label label=" "/>
+		<display item="DCC Message 10D" format="checkbox"/>
+			<display item="Address 10D" />
+			<display item="Aspect 10D" />
+			<display item="Message 10D" />
+			<display item="State 10D" />
+	</column>
+	</row>
+		
+	<separator/>
+	<separator/>	
+	<row>
+	<column>	
+		<display item="Cell 11 Address" label="------ Logic Cell 11 ------"/>
+		<row>
+			<column> <display item="Address 11A" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 11A" format="checkbox"/> </column>	
+			<column> <display item="Message 11A" /> </column>
+			<column>
+				<display item="State 11A"/>
+				<display item="Aspect 11A"/>
+			</column>
+		</row>
+		<row>			
+			<column> <display item="Logic 11B" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 11B" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 11B" format="checkbox"/> </column>		
+			<column> <display item="Message 11B" /> </column>
+			<column>
+				<display item="State 11B"/>
+				<display item="Aspect 11B"/>
+			</column>
+		</row>	
+		<row>			
+			<column> <display item="Logic 11C" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 11C" /> </column>
+			<label label=" Type " />		
+			<column> <display item="DCC Message 11C" format="checkbox"/> </column>
+			<column> <display item="Message 11C" /> </column>
+			<column>
+				<display item="State 11C"/>
+				<display item="Aspect 11C"/>
+			</column>
+		</row>	
+	</column>
+	<separator/>
+	<column>
+		<label label="Output 11 Control ---"/>
+		<label label=" "/>
+		<row>
+		<column> <display item="Inv o11" format="checkbox" tooltip="Use for common cathode type LEDs" /> </column>
+		<column> <label label=" Do not use for Bi-Color LEDs"/> </column>
+		</row>
+		<display item="BiC11" tooltip="Use for two legged bi-color LEDs" />
+		<row>
+		<column> <display item="Recip11" format="checkbox" tooltip="Inverts the output state of the effect" /> </column>
+		<column> <label label=" Use for alternating flashing LEDs"/> </column>
+		</row>
+		<display item="Eff11" tooltip="Configures the output for specfic effect" />
+		<display item="EffDu11" tooltip="Time is based on the type of effect" />
+	</column>
+	<separator/>
+	<column>
+		<label label="Action when logic cell goes True"/>
+		<label label=" "/>
+		<display item="DCC Message 11D" format="checkbox"/>
+			<display item="Address 11D" />
+			<display item="Aspect 11D" />
+			<display item="Message 11D" />
+			<display item="State 11D" />
+	</column>
+	</row>
+		
+	<separator/>
+	<separator/>	
+	<row>
+	<column>	
+		<display item="Cell 12 Address" label="------ Logic Cell 12 ------"/>
+		<row>
+			<column> <display item="Address 12A" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 12A" format="checkbox"/> </column>	
+			<column> <display item="Message 12A" /> </column>
+			<column>
+				<display item="State 12A"/>
+				<display item="Aspect 12A"/>
+			</column>
+		</row>
+		<row>			
+			<column> <display item="Logic 12B" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 12B" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 12B" format="checkbox"/> </column>		
+			<column> <display item="Message 12B" /> </column>
+			<column>
+				<display item="State 12B"/>
+				<display item="Aspect 12B"/>
+			</column>
+		</row>	
+		<row>			
+			<column> <display item="Logic 12C" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 12C" /> </column>
+			<label label=" Type " />		
+			<column> <display item="DCC Message 12C" format="checkbox"/> </column>
+			<column> <display item="Message 12C" /> </column>
+			<column>
+				<display item="State 12C"/>
+				<display item="Aspect 12C"/>
+			</column>
+		</row>	
+	</column>
+	<separator/>
+	<column>
+		<label label="Output 12 Control ---"/>
+		<label label=" "/>
+		<row>
+		<column> <display item="Inv o12" format="checkbox" tooltip="Use for common cathode type LEDs" /> </column>
+		<column> <label label=" Do not use for Bi-Color LEDs"/> </column>
+		</row>
+		<display item="BiC12" tooltip="Use for two legged bi-color LEDs" />
+		<row>
+		<column> <display item="Recip12" format="checkbox" tooltip="Inverts the output state of the effect" /> </column>
+		<column> <label label=" Use for alternating flashing LEDs"/> </column>
+		</row>
+		<display item="Eff12" tooltip="Configures the output for specfic effect" />
+		<display item="EffDu12" tooltip="Time is based on the type of effect" />
+	</column>
+	<separator/>
+	<column>
+		<label label="Action when logic cell goes True"/>
+		<label label=" "/>
+		<display item="DCC Message 12D" format="checkbox"/>
+			<display item="Address 12D" />
+			<display item="Aspect 12D" />
+			<display item="Message 12D" />
+			<display item="State 12D" />
+	</column>
+	</row>
+	
+	<separator/>
+	<separator/>	
+	<row>
+	<column>	
+		<display item="Cell 13 Address" label="------ Logic Cell 13 ------"/>
+		<row>
+			<column> <display item="Address 13A" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 13A" format="checkbox"/> </column>	
+			<column> <display item="Message 13A" /> </column>
+			<column>
+				<display item="State 13A"/>
+				<display item="Aspect 13A"/>
+			</column>
+		</row>
+		<row>			
+			<column> <display item="Logic 13B" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 13B" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 13B" format="checkbox"/> </column>		
+			<column> <display item="Message 13B" /> </column>
+			<column>
+				<display item="State 13B"/>
+				<display item="Aspect 13B"/>
+			</column>
+		</row>	
+		<row>			
+			<column> <display item="Logic 13C" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 13C" /> </column>
+			<label label=" Type " />		
+			<column> <display item="DCC Message 13C" format="checkbox"/> </column>
+			<column> <display item="Message 13C" /> </column>
+			<column>
+				<display item="State 13C"/>
+				<display item="Aspect 13C"/>
+			</column>
+		</row>	
+	</column>
+	<separator/>
+	<column>
+		<label label="Output 13 Control ---"/>
+		<label label=" "/>
+		<row>
+		<column> <display item="Inv o13" format="checkbox" tooltip="Use for common cathode type LEDs" /> </column>
+		<column> <label label=" Do not use for Bi-Color LEDs"/> </column>
+		</row>
+		<display item="BiC13" tooltip="Use for two legged bi-color LEDs" />
+		<row>
+		<column> <display item="Recip13" format="checkbox" tooltip="Inverts the output state of the effect" /> </column>
+		<column> <label label=" Use for alternating flashing LEDs"/> </column>
+		</row>
+		<display item="Eff13" tooltip="Configures the output for specfic effect" />
+		<display item="EffDu13" tooltip="Time is based on the type of effect" />
+	</column>
+	<separator/>
+	<column>
+		<label label="Action when logic cell goes True"/>
+		<label label=" "/>
+		<display item="DCC Message 13D" format="checkbox"/>
+			<display item="Address 13D" />
+			<display item="Aspect 13D" />
+			<display item="Message 13D" />
+			<display item="State 13D" />
+	</column>
+	</row>
+
+	<separator/>
+	<separator/>	
+	<row>
+	<column>	
+		<display item="Cell 14 Address" label="------ Logic Cell 14 ------"/>
+		<row>
+			<column> <display item="Address 14A" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 14A" format="checkbox"/> </column>	
+			<column> <display item="Message 14A" /> </column>
+			<column>
+				<display item="State 14A"/>
+				<display item="Aspect 14A"/>
+			</column>
+		</row>
+		<row>			
+			<column> <display item="Logic 14B" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 14B" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 14B" format="checkbox"/> </column>		
+			<column> <display item="Message 14B" /> </column>
+			<column>
+				<display item="State 14B"/>
+				<display item="Aspect 14B"/>
+			</column>
+		</row>	
+		<row>			
+			<column> <display item="Logic 14C" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 14C" /> </column>
+			<label label=" Type " />		
+			<column> <display item="DCC Message 14C" format="checkbox"/> </column>
+			<column> <display item="Message 14C" /> </column>
+			<column>
+				<display item="State 14C"/>
+				<display item="Aspect 14C"/>
+			</column>
+		</row>	
+	</column>
+	<separator/>
+	<column>
+		<label label="Output 14 Control ---"/>
+		<label label=" "/>
+		<row>
+		<column> <display item="Inv o14" format="checkbox" tooltip="Use for common cathode type LEDs" /> </column>
+		<column> <label label=" Do not use for Bi-Color LEDs"/> </column>
+		</row>
+		<display item="BiC14" tooltip="Use for two legged bi-color LEDs" />
+		<row>
+		<column> <display item="Recip14" format="checkbox" tooltip="Inverts the output state of the effect" /> </column>
+		<column> <label label=" Use for alternating flashing LEDs"/> </column>
+		</row>
+		<display item="Eff14" tooltip="Configures the output for specfic effect" />
+		<display item="EffDu14" tooltip="Time is based on the type of effect" />
+	</column>
+	<separator/>
+	<column>
+		<label label="Action when logic cell goes True"/>
+		<label label=" "/>
+		<display item="DCC Message 14D" format="checkbox"/>
+			<display item="Address 14D" />
+			<display item="Aspect 14D" />
+			<display item="Message 14D" />
+			<display item="State 14D" />
+	</column>
+	</row>
+	
+	<separator/>
+	<separator/>	
+	<row>
+	<column>	
+		<display item="Cell 15 Address" label="------ Logic Cell 15 ------"/>
+		<row>
+			<column> <display item="Address 15A" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 15A" format="checkbox"/> </column>	
+			<column> <display item="Message 15A" /> </column>
+			<column>
+				<display item="State 15A"/>
+				<display item="Aspect 15A"/>
+			</column>
+		</row>
+		<row>			
+			<column> <display item="Logic 15B" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 15B" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 15B" format="checkbox"/> </column>		
+			<column> <display item="Message 15B" /> </column>
+			<column>
+				<display item="State 15B"/>
+				<display item="Aspect 15B"/>
+			</column>
+		</row>	
+		<row>			
+			<column> <display item="Logic 15C" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 15C" /> </column>
+			<label label=" Type " />		
+			<column> <display item="DCC Message 15C" format="checkbox"/> </column>
+			<column> <display item="Message 15C" /> </column>
+			<column>
+				<display item="State 15C"/>
+				<display item="Aspect 15C"/>
+			</column>
+		</row>	
+	</column>
+	<separator/>
+	<column>
+		<label label="Output 15 Control ---"/>
+		<label label=" "/>
+		<row>
+		<column> <display item="Inv o15" format="checkbox" tooltip="Use for common cathode type LEDs" /> </column>
+		<column> <label label=" Do not use for Bi-Color LEDs"/> </column>
+		</row>
+		<display item="BiC15" tooltip="Use for two legged bi-color LEDs" />
+		<row>
+		<column> <display item="Recip15" format="checkbox" tooltip="Inverts the output state of the effect" /> </column>
+		<column> <label label=" Use for alternating flashing LEDs"/> </column>
+		</row>
+		<display item="Eff15" tooltip="Configures the output for specfic effect" />
+		<display item="EffDu15" tooltip="Time is based on the type of effect" />
+	</column>
+	<separator/>
+	<column>
+		<label label="Action when logic cell goes True"/>
+		<label label=" "/>
+		<display item="DCC Message 15D" format="checkbox"/>
+			<display item="Address 15D" />
+			<display item="Aspect 15D" />
+			<display item="Message 15D" />
+			<display item="State 15D" />
+	</column>
+	</row>
+	
+	<separator/>
+	<separator/>
+	<row>
+	<column>	
+		<display item="Cell 16 Address" label="------ Logic Cell 16 ------"/>
+		<row>
+			<column> <display item="Address 16A" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 16A" format="checkbox"/> </column>	
+			<column> <display item="Message 16A" /> </column>
+			<column>
+				<display item="State 16A"/>
+				<display item="Aspect 16A"/>
+			</column>
+		</row>
+		<row>			
+			<column> <display item="Logic 16B" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 16B" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 16B" format="checkbox"/> </column>		
+			<column> <display item="Message 16B" /> </column>
+			<column>
+				<display item="State 16B"/>
+				<display item="Aspect 16B"/>
+			</column>
+		</row>	
+		<row>			
+			<column> <display item="Logic 16C" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 16C" /> </column>
+			<label label=" Type " />		
+			<column> <display item="DCC Message 16C" format="checkbox"/> </column>
+			<column> <display item="Message 16C" /> </column>
+			<column>
+				<display item="State 16C"/>
+				<display item="Aspect 16C"/>
+			</column>
+		</row>	
+	</column>
+	<separator/>	
+	<column>
+		<label label="Output 16 Control ---"/>
+		<label label=" "/>
+		<row>
+		<column> <display item="Inv o16" format="checkbox" tooltip="Use for common cathode type LEDs" /> </column>
+		<column> <label label=" Do not use for Bi-Color LEDs"/> </column>
+		</row>
+		<display item="BiC16" tooltip="Use for two legged bi-color LEDs" />
+		<row>
+		<column> <display item="Recip16" format="checkbox" tooltip="Inverts the output state of the effect" /> </column>
+		<column> <label label=" Use for alternating flashing LEDs"/> </column>
+		</row>
+		<display item="Eff16" tooltip="Configures the output for specfic effect" />
+		<display item="EffDu16" tooltip="Time is based on the type of effect" />
+	</column>
+		 <separator/>
+	<column>
+		<label label="Action when logic cell goes True"/>
+		<label label=" "/>
+		<display item="DCC Message 16D" format="checkbox"/>
+			<display item="Address 16D" />
+			<display item="Aspect 16D" />
+			<display item="Message 16D" />
+			<display item="State 16D" />
+	</column>
+	</row>
+	<separator/>
+	<separator/>
+	</column>
+</pane>

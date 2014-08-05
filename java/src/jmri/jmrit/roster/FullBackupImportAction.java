@@ -14,7 +14,6 @@ import org.jdom.*;
 
 import jmri.util.*;
 import jmri.util.swing.*;
-import jmri.jmrit.XmlFile;
 
 /**
  * Reload the JMRI Roster ({@link jmri.jmrit.roster.Roster})

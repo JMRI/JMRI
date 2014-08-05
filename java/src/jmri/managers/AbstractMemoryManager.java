@@ -117,6 +117,11 @@ public abstract class AbstractMemoryManager extends AbstractManager
      * @return never null
      */
     abstract protected Memory createNewMemory(String systemName, String userName);
+    
+    	
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameMemory");
+    }
 
     static Logger log = LoggerFactory.getLogger(AbstractMemoryManager.class.getName());
 }

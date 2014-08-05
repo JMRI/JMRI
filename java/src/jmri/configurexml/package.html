@@ -89,38 +89,37 @@ that prerequisites are present during a load:
 <LI>User
 </UL>
 
-<a id="DTD"></a>
-<h2>DTD management</h2>
+<a id="schema"></a>
+<h2>Schema management</h2>
 
-During the JMRI 2.9.* development series, we are moving to XML Schema
-for content definition, and away from DTDs.  This section
-remains while that migration takes place, and if you have to
-deal with a problem in an older file.
+Validation is via XML Schema. (Use of DTDs ended in the 2.9 development series.)
 
 <p>
-DTDs for these files are found in the
-<a href="http://jmri.org/xml/DTD/">xml/DTD</a>
+Schemas for these files are found in the
+<a href="http://jmri.org/xml/schema/">xml/schema</a>
 directory.
 <p>
-A rudimentary version control system is provided by DTD naming, i.e.
+A rudimentary version control system is provided by schema file naming, i.e.
 <ul>
-<li>layout-config.dtd - the original, not to be changed any more.
-<li>layout-config-2-7-5.dtd - manually created when the first XML content 
-change was made after the release of JMRI 2.7.4, this accumulates changes
-until 2.7.5 is released.
+<li>layout-config.xsd - the original, not to be changed any more.
+<li>layout-config-2-9-6.xsd - manually created when the first non-backward-compatible XML content 
+change was made after the release of JMRI 2.9.3, this accumulates changes
+until some later non-backward-compatible change is made.
 </ul>
 
-The first time a change is made to XML persistance after a release,
+When a non-backward compatible change is made to XML persistance,
 the following steps are needed:
 <ul>
-<li>Copy the existing DTD to one with the next version name (e.g.
+<li>Copy the existing schema to one with the next version name (e.g.
 while building the 2.7.4 release, 
-copy layout-config-2-7-4.dtd to layout-config-2-7-5.dtd)
-and commit to CVS.
+copy layout-config-2-7-4.xsd to layout-config-2-7-5.xsd)
+and commit to SVN.
 <li>Update the comment on the previous file.
 <li>Update the references in the 
 {@link jmri.configurexml.ConfigXmlManager} code.
 </ul>
+For more information, see the 
+<a href="http://jmri.org/help/en/html/doc/Technical/XmlSchema.shtml">schema management page</a>.
 
 <h2>Related Documentation</h2>
 

@@ -10,6 +10,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.Set;
+import java.util.Iterator;
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Sensor;
@@ -48,7 +49,7 @@ import jmri.jmrit.display.layoutEditor.LayoutSlip;
  * @version			$Revision$
  */
 
-public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
+public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.VetoableChangeListener {
     SignalMast source;
     SignalMast destination;
     String stopAspect;
@@ -538,13 +539,17 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
     }
     
     public void removeSensor(String sensorName, SignalMast destination){
+        Sensor sen = InstanceManager.sensorManagerInstance().getSensor(sensorName);
+        removeSensor(sen, destination);
+    }
+    
+    public void removeSensor(Sensor sen, SignalMast destination){
         if(!destList.containsKey(destination))
             return;
-        Sensor sen = InstanceManager.sensorManagerInstance().getSensor(sensorName);
         if(sen!=null){
-            NamedBeanHandle<Sensor> namedSensor = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sen);
-            destList.get(destination).removeSensor(namedSensor);
+            destList.get(destination).removeSensor(sen);
         }
+           
     }
 
     public ArrayList<Block> getBlocks(SignalMast destination){
@@ -580,6 +585,15 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             return new ArrayList<NamedBeanHandle<Turnout>>();
         }
         return destList.get(destination).getNamedTurnouts();
+    }
+    
+    public void removeTurnout(Turnout turn, SignalMast destination){
+        if(!destList.containsKey(destination))
+            return;
+        
+        if(turn!=null){
+            destList.get(destination).removeTurnout(turn);
+        }
     }
     
     public ArrayList<Turnout> getAutoTurnouts(SignalMast destination){
@@ -1527,12 +1541,25 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             
             return returnList;
         }
+        
         ArrayList<Turnout> getTurnouts(){
             ArrayList<Turnout> out = new ArrayList<Turnout>();
             for(NamedBeanSetting nbh:userSetTurnouts){
                 out.add((Turnout)nbh.getBean());
             }
             return out;
+        }
+        
+        void removeTurnout(Turnout turn){
+            Iterator<NamedBeanSetting> nbh = userSetTurnouts.iterator();
+            while (nbh.hasNext()){
+                NamedBeanSetting i = nbh.next();
+                if(i.getBean().equals(turn)){
+                    turn.removePropertyChangeListener(propertyTurnoutListener);
+                    nbh.remove();
+                    firePropertyChange("turnouts", null, this.destination);
+                }
+            }
         }
         
         @SuppressWarnings("unchecked")
@@ -2115,7 +2142,14 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             //details then there is no point in trying to gather them
             if((!useLayoutEditorTurnouts) && (!useLayoutEditorBlocks))
                 return;
-            
+            if(facingBlock==null){
+                log.error("No facing block found for source mast " + getSourceMast().getDisplayName());
+                throw new jmri.JmriException("No facing block found for source mast " + getSourceMast().getDisplayName());
+            }
+            if(destinationBlock==null){
+                log.error("No facing block found for destination mast " + destination.getDisplayName());
+                throw new jmri.JmriException("No facing block found for destination mast " + destination.getDisplayName());
+            }
             ArrayList<LayoutBlock> lblks = new ArrayList<LayoutBlock>();
             if(protectingBlock==null){
             	String pBlkNames = "";
@@ -2333,6 +2367,10 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             if(log.isDebugEnabled())
                 log.debug(destination.getDisplayName() + " add mast to auto list " + mast);
             String danger = mast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER);
+            if(danger==null){
+                log.error("Can not add SignalMast " + mast.getDisplayName() + " to logic for " + source.getDisplayName() + " to " + destination.getDisplayName() + " as it does not have a danger appearance configured");
+                return;
+            }
             this.autoMasts.put(mast, danger);
             if (destMastInit)
                 mast.addPropertyChangeListener(propertySignalMastListener);
@@ -2728,6 +2766,87 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
     }
     protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
 
+    //@todo need to think how we deal with auto generated lists based upon the layout editor.
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+        NamedBean nb = (NamedBean)evt.getOldValue();
+        if("CanDelete".equals(evt.getPropertyName())){ //IN18N
+            boolean found = false;
+            StringBuilder message = new StringBuilder();
+            if(nb instanceof SignalMast){
+                if(nb.equals(source)){
+                    message.append("Has SignalMast Logic attached which will be <b>Deleted</b> to <ul>");
+                    for(SignalMast sm: getDestinationList()){
+                        message.append("<li>");
+                        message.append(sm.getDisplayName());
+                        message.append("</li>");
+                    }
+                    message.append("</ul>");
+                    throw new java.beans.PropertyVetoException(message.toString(), evt);
+                    
+                } else if (isDestinationValid((SignalMast)nb)){
+                    throw new java.beans.PropertyVetoException("Is the end point mast for logic attached to signal mast " + source.getDisplayName() + " which will be <b>Deleted</b> ", evt);
+                }
+                for(SignalMast sm:getDestinationList()){
+                    if(isSignalMastIncluded((SignalMast)nb, sm)){
+                        message.append("<li>");
+                        message.append("Used in conflicting logic of " + source.getDisplayName() + " & " + sm.getDisplayName());
+                        message.append("</li>");
+                    }
+                }
+            }
+            if(nb instanceof Turnout){
+                for(SignalMast sm:getDestinationList()){
+                    if(isTurnoutIncluded((Turnout) nb, sm)){
+                        message.append("<li>Is in logic between Signal Masts " + source.getDisplayName() + " " + sm.getDisplayName()+ "</li>");
+                        found = true;
+                    }
+                }
+            }
+            if(nb instanceof Sensor){
+                for(SignalMast sm:getDestinationList()){
+                    if(isSensorIncluded((Sensor) nb, sm)){
+                        message.append("<li>");
+                        message.append("Is in logic between Signal Masts " + source.getDisplayName() + " " + sm.getDisplayName());
+                        message.append("</li>");
+                        found = true;
+                    }
+                }
+            }
+            if(found)
+                throw new java.beans.PropertyVetoException(message.toString(), evt);
+        } else if ("DoDelete".equals(evt.getPropertyName())){ //IN18N
+            if(nb instanceof SignalMast){
+                if(nb.equals(source)){
+                    dispose();
+                }
+                if(isDestinationValid((SignalMast)nb)){
+                    removeDestination((SignalMast)nb);
+                }
+                for(SignalMast sm:getDestinationList()){
+                    if(isSignalMastIncluded((SignalMast)nb, sm)){
+                        //@todo need to deal with this situation this one out.
+                    }
+                }
+            }
+            if(nb instanceof Turnout){
+                Turnout t = (Turnout)nb;
+                for(SignalMast sm:getDestinationList()){
+                    if(isTurnoutIncluded(t, sm)){
+                        removeTurnout(t, sm);
+                    }
+                }
+            }
+            if(nb instanceof Sensor){
+                Sensor s = (Sensor)nb;
+                for(SignalMast sm:getDestinationList()){
+                    if(isSensorIncluded(s, sm)){
+                        removeSensor(s, sm);
+                    }
+                }
+            }
+        }
+    }
+    
     public void dispose(){
         if(thr!=null)
             thr.interrupt();
@@ -2738,6 +2857,10 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             SignalMast dm = en.nextElement();
             destList.get(dm).dispose();
         }
+    }
+    
+    public String getBeanType(){
+        return Bundle.getMessage("BeanNameSignalMastLogic");
     }
     
     static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogic.class.getName());

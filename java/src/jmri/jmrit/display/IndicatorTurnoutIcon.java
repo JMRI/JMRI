@@ -360,9 +360,13 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         if (source instanceof Turnout) {
             super.propertyChange(evt);
         } else if (source instanceof OBlock) {
-            if ("state".equals(evt.getPropertyName()) || "path".equals(evt.getPropertyName())) {
+        	String property = evt.getPropertyName();
+            if ("state".equals(property) || "pathState".equals(property)) {
                 int now = ((Integer)evt.getNewValue()).intValue();
                 setStatus((OBlock)source, now);
+            } else if ("pathName".equals(property)) {
+            	_pathUtil.removePath((String)evt.getOldValue());
+            	_pathUtil.addPath((String)evt.getNewValue());
             }
         } else if (source instanceof Sensor) {
             if (evt.getPropertyName().equals("KnownState")) {

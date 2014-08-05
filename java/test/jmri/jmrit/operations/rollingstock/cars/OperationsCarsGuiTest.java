@@ -430,7 +430,7 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		f.addTextBox.setText("New Load");
         getHelper().enterClickAndLeave( new MouseEventData( this, f.addButton ) );
 		// new load should appear at start of list
-		Assert.assertEquals("new load","New Load",f.comboBox.getItemAt(0));
+		Assert.assertEquals("new load","New Load",f.loadComboBox.getItemAt(0));
 		
 		f.dispose();
 	}

@@ -5,7 +5,9 @@ package jmri.jmrit.operations.setup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -15,6 +17,7 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JPanel;
+
 import jmri.jmrit.operations.OperationsFrame;
 
 /**
@@ -141,7 +144,7 @@ public class BuildReportOptionFrame extends OperationsFrame {
 		// build menu
 		addHelpMenu("package.jmri.jmrit.operations.Operations_BuildReportDetails", true); // NOI18N
 
-		initMinimumSize();
+		initMinimumSize(new Dimension(Control.panelWidth, Control.panelHeight));
 	}
 
 	// Save button

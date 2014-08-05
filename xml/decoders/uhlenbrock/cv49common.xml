@@ -38,34 +38,41 @@
   <variable item="Load Control" CV="49" default="0" mask="XXXXXXXV">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
 	<label>Main Motor Control - load regulation</label>
-	<label xml:lang="de">Motorregelung - Lastregelung</label>		
+	<label xml:lang="de">Motorregelung - Lastregelung</label>
+        <label xml:lang="it">Controllo Motore - Regolazione Carico</label>		
   </variable>
   <variable item="Directional Headlights" CV="49" default="0" mask="XVXXXXXX">
 	<enumVal>
 	  <enumChoice choice="normal">
             <choice>normal</choice>
             <choice xml:lang="de">nicht</choice>					
+            <choice xml:lang="it">normali</choice>	
 	  </enumChoice>
 	  <enumChoice choice="reverse">
             <choice>reverse</choice>
-            <choice xml:lang="de">vertauschen</choice>				
+            <choice xml:lang="de">vertauschen</choice>
+            <choice xml:lang="it">invertite</choice>					
 	  </enumChoice>
 	</enumVal>
 	<label>Lights output swap</label>
-	<label xml:lang="de">Lichtanschlüsse tauschen</label>		
+	<label xml:lang="de">Lichtanschlüsse tauschen</label>	
+        <label xml:lang="it">Scambia uscite Luci</label>	
   </variable>
   <variable item="Braking condition" CV="49" default="0" mask="VXXXXXXX">
 	<enumVal>
 	  <enumChoice choice="Braking signal only">
             <choice>Braking signal only</choice>
-            <choice xml:lang="de">Bremssignal</choice>				
+            <choice xml:lang="de">Bremssignal</choice>	
+            <choice xml:lang="it">Solo in Frenata</choice>			
 	  </enumChoice>
 	  <enumChoice choice="with analog voltage">
             <choice>with analog voltage</choice>
-            <choice xml:lang="de">analoger Spannung</choice>				
+            <choice xml:lang="de">analoger Spannung</choice>
+            <choice xml:lang="it">con tensione Analogica</choice>				
 	  </enumChoice>
 	</enumVal>
 	<label>Braking condition</label>
-	<label xml:lang="de">Bremsen mit</label>			
+	<label xml:lang="de">Bremsen mit</label>
+        <label xml:lang="it">Frenata</label>			
   </variable>
 </variables>

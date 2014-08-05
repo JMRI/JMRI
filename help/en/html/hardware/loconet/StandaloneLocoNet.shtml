@@ -107,9 +107,11 @@
     on a separate JMRI "Connection" within the JMRI "Connections" settings under JMRI
     "Preferences".  Each connection should be configured following the general 
     instructions found at the <a href="Digitrax.shtml">JMRI Hardware Guide: Digitrax DCC</a> 
-    page.  Note that the "Command Station" setting is not critical for a standalone
-    LocoNet connection.</p>
-<p>A "standalone" LocoNet will typically not control the hardware resources associated
+    page.</p>
+<p>Except as noted below for the <a href="#PR3config">PR3</a>, the JMRI connection for the standalone 
+    LocoNet should specify the "<code>Command Station type</code>" of 
+    "<code><strong>Stand-alone LocoNet</strong></code>".</p>
+<p>A standalone LocoNet will typically not control the hardware resources associated
     with "throttle management", "track power management", "command station management", 
     and will typically not provide a programming track.  As such, a standalone LocoNet
     connection will typically not be associated with "Throttles", "Power Control", 
@@ -136,6 +138,11 @@ useful.</p>
     </tr>
     <tr align="center"><td>Digitrax DCS100/DB150/DCS50/DCS51 (as booster)</td><td></td><td>Requires DCC signal</td>
         <td></td><td></td>
+    </tr>
+    <tr align="center"><td>Uhlenbrock Intellibox</td><td>Provides</td><td>Can provide DCC signal ****</td><td>Provides</td><td>?</td>
+    </tr>
+    <tr align="center"><td>Uhlenbrock Daisy System (Daisy throttle plus Power2 booster)</td>
+        <td>Provides</td><td>Can provide a DCC signal *</td><td>Provides</td><td>?</td>
     </tr>
     <tr align="center"><td>Non-LocoNet command station</td><td></td><td>Can provide DCC signal *</td>
         <td>Provides?</td><td>Provides?</td>
@@ -202,7 +209,7 @@ useful.</p>
     <tr align="center"><td>Logic Rail Technologies LocoNet Fast Clock</td><td></td><td></td>
         <td>Required</td><td>Required, can provide</td>
     </tr>
-    <tr align="center"></tr><td colspan="5">
+    <tr align="center"><td colspan="5">
         <p>* Some circuitry may be required to generate the RailSync signals from 
             a non-LocoNet booster.  See 
             <A href="#rsfromnondtcs">RailSync from a non-Digitrax command station</A>,
@@ -223,6 +230,10 @@ useful.</p>
             board.  Other versions of the original LocoBuffer design do not have
             places for the additional components to be installed.  These comments
             do not apply to the LocoBuffer-II or LocoBuffer-USB designs.</p>
+        <p>**** Intellibox documentation notes that only opto-isolated boosters may
+            be connected to its LocoNet connection.  It is unclear whether any 
+            device using the signal on the RailSync lines from the Intellibox must
+            have opto-isolation circuitry.</p>
     </td></tr>
 </table>
     <H2><A name="dataterm">LocoNet Data Signal "Termination"</A></H2>
@@ -290,26 +301,47 @@ useful.</p>
                     </li>
                     
                 </ul>
-                <p>Once you have established a functioning Standalone LocoNet,
+                <p>Once you have established a functioning standalone LocoNet,
                     additional BDL16x boards can be added.  Each should have its 
                     own Board ID (Board Address) number so that BDL16x sensor 
                     numbers do not overlap sensor numbers for other boards or
-                    sensor numbers used by other devices on the Standalone LocoNet.</p>
+                    sensor numbers used by other devices on the standalone LocoNet.</p>
             </LI>
-            <LI><strong>PR3</strong>
-                <p>Follow the instructions in the PR3 manual for enabling MS100
-                    mode with LocoNet termination.
-                    Note that JMRI does not directly support this.  Every time JMRI 
-                    starts, it will force the PR3 into either "MS100 mode <strong>without
-                    </strong> LocoNet termination", or to "PR3 mode".  If you choose to use
-                    the PR3 as the source for LocoNet Data signal termination, it will
-                    be necessary to manually force the PR3 to "MS100 mode <strong>with</strong>
-                    LocoNet termination" each time JMRI is started, just after JMRI 
-                    starts up.</p>
-                <p>Because the PR3 would require manual intervention by the user 
-                    each time that JMRI is started when using PR3 to provide 
-                    LocoNet data signal termination, the PR3 is not recommended as 
-                    a source for LocoNet Data signal termination when used with JMRI.</p>
+            <LI><a id="PR3config"><strong>PR3</strong></a>
+                <p>The PR3 provides two different operating modes which may be 
+                    useful when the PR3 is used to interface to a standalone 
+                    LocoNet.  One useful mode provides <A href="#dataterm">
+                LocoNet Data Signal "Termination"</A> in it's MS100 mode, while
+                the other mode does not provide LocoNet Data Signal termination.
+                </p>
+                <ul>
+                    <li><p>For the case where the PR3 must provide <A href="#dataterm">
+                LocoNet Data Signal "Termination"</A>, and where the PR3 is 
+                connected to a suitable live power source via its "Power" jack, 
+                JMRI should be configured in a way which will automatically set 
+                the PR3 to its "MS100 mode with termination" mode at JMRI 
+                program start-up time.  This can be accomplished by configuring 
+                the JMRI connection settings for the PR3 so that the "<code>Command 
+                Station type</code>" is set to "<code><strong>Stand-alone LocoNet
+                </strong></code>".</p>
+                <p>Note that this PR3 operating mode is not 
+                recommended when there is some other source of "LocoNet Data 
+                Signal Termination" connected to LocoNet, and it is not suitable 
+                when the PR3 is not provided suitable power via its "Power" 
+                barrel jack.</p>
+                    </li>
+                <li> <p>If, instead, the PR3 will be connected to a LocoNet where
+                some other device provides <A href="#dataterm"> LocoNet Data 
+                Signal "Termination"</A>, then it is more appropriate to use the 
+                PR3 in its MS100 mode <em>without</em> enabling the PR3's Data 
+                signal termination feature.  In this case, it is appropriate to 
+                configure the PR3 connection for a "<code>Command Station 
+                type</code>" of "<code><strong>DCS100</strong></code>".  Because there is no command 
+                station connected to the LocoNet data path of the standalone 
+                LocoNet, the setting will only be used to determine how the PR3 
+                is initialized at JMRI start-up.
+                </p></li>
+                </ul>
                 </LI>
             <LI><strong>LocoBuffer-II, LocoBuffer-USB</strong>
                 <p>See the instructions for the appropriate hardware for the 
@@ -421,12 +453,12 @@ useful.</p>
             </ul>    
         <H3><A name="rsfromdtcs">RailSync from a Digitrax command station</A></H3>
             <p>If the Digitrax command station's LocoNet "Ground" wire can be safely
-                connected directly to the Standalone LocoNet "Ground" wire, it is 
+                connected directly to the standalone LocoNet "Ground" wire, it is 
                 sufficient to connect the Digitrax Command Station RailSync+, RailSync-, 
-                and "Ground" wires to the comparable wires on the Standalone LocoNet.</p>
-            <p> Do <strong>not</strong> make any connections between the Standalone LocoNet's
+                and "Ground" wires to the comparable wires on the standalone LocoNet.</p>
+            <p> Do <strong>not</strong> make any connections between the standalone LocoNet's
                 red or green wires and <strong>any</strong> wire on the command station's 
-                LocoNet.  Doing so would make the Standalone LocoNet just another
+                LocoNet.  Doing so would make the standalone LocoNet just another
                 part of the primary LocoNet.</p>
             <img src="images/RailSyncFromPrimaryLocoNet.jpg" 
                  alt="Image showing creation of Standalone LocoNet RailSync from 
@@ -435,7 +467,7 @@ useful.</p>
                 device or circuit which actively puts a signal on the standalone LocoNet 
                 RailSync wires.</p> 
             <p>If there is any concern about sneak paths between the power supply for the
-                Digitrax command station and the Standalone LocoNet, then some sort of 
+                Digitrax command station and the standalone LocoNet, then some sort of 
                 isolation <strong>must</strong> be provided.  Isolation of this nature is beyond 
                 the scope of this documentation; opto-isolators could be used for 
                 this purpose.</p>
@@ -562,7 +594,7 @@ useful.</p>
             appropriate LocoNet messages to the SE8Cs.  JMRI can also control 
             switches connected to the DS64.  This type of connectivity may be useful
             when JMRI is used to implement a CTC panel.</p>
-        <p>For the connectivity shown in this diagram, the Standalone LocoNet data
+        <p>For the connectivity shown in this diagram, the standalone LocoNet data
             wires are not connected to the primary LocoNet, so LocoNet Master 
             termination cannot be provided by the command station.  An alternative
             source of LocoNet Data Signal Termination must be used.  The LocoBuffer-USB
@@ -579,7 +611,7 @@ useful.</p>
         <p>This diagram assumes that there are no sneak current paths between any
             device associated with the standalone LocoNet and any device associated
             with the primary LocoNet.  This allows connection of the Digitrax 
-            command station's LocoNet "Ground" wire to the Standalone LocoNet "Ground" 
+            command station's LocoNet "Ground" wire to the standalone LocoNet "Ground" 
             wire.  It also shows the use of two LocoBuffer-USB devices as computer 
             interfaces.  These devices provide optical isolation of the signaling 
             between the "computer" side of the device and the "LocoNet" side of the
@@ -611,7 +643,7 @@ useful.</p>
             instead of from its DCC track inputs.  This should avoid some 
             reported instability of DS64s when connected to the DCC track signal.</p>
         <p>This diagram assumes that an isolated computer interface is used to
-            prevent "sneak current paths" between the Standalone LocoNet and the
+            prevent "sneak current paths" between the standalone LocoNet and the
             computer.  If one or more LocoNet interface device is used which 
             does <strong>not</strong> provide isolation, then there is a possibility that
             "sneak current paths" could be present.  See <A href="#sneakpaths">
@@ -630,7 +662,7 @@ useful.</p>
         <p>The RailSync power could be supplied by a do-it-yourself supply as 
             described in <a href="#rspowersupply">RailSync power from a DC power 
             supply</a> above, or via a commercial device which can supply DC power
-            to the Standalone LocoNet RailSync wires, such as the RR-CirKits 
+            to the standalone LocoNet RailSync wires, such as the RR-CirKits 
             LocoNet-Terminator or SSB-Gateway products.</p>
         <img src="images/StandaloneLocoNetSignallingNet.jpg" 
              alt="Image showing a Standalone Loconet for SE8C signalling only">

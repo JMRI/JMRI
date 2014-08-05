@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Michael Mosher" version="1.8" lastUpdated="20140513"/>
   <version author="Michael Mosher" version="1.7" lastUpdated="20111011"/>
   <version author="td@teamdigital1.com" version="1.6" lastUpdated="20100305"/>
   <version author="td@teamdigital1.com" version="1.4" lastUpdated="20080906"/>
@@ -25,6 +26,7 @@
   <!-- Version 1.5 corrected output 8 reciprocal-->
   <!-- Version 1.6 added input lockout and CV10 option 5-->
   <!-- Version 1.7 corrected "Rte Num S8" CV (was 64 should be 63) -->
+  <!-- Version 1.8 added power on state for 16 outputs -->
   <decoder>
     <family name="Stationary Decoder" mfg="Team Digital" type="stationary">
       <model model="SRC16" lowVersionID="1" comment="SRC16 is a stationary decoder with serial bus"/>
@@ -187,7 +189,7 @@
         <decVal min="0" max="127"/>
         <label>Route send delay</label>
       </variable>
-      <!-- Begin Power on Output State Table definition -->
+      <!-- Begin Power on Output State Table definition for groups -->
       <variable item="OS1" CV="12" mask="XXXXXXVV" default="0">
         <enumVal>
           <enumChoice choice="n" value="0">
@@ -295,6 +297,183 @@
             <choice>t</choice>
           </enumChoice>
           <enumChoice choice="c" value="2">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <!-- Begin Power on Output State Table definition for 16 outputs with MotoD -->
+      <variable item="OS1M" CV="12" mask="XXXXXXXV" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS2M" CV="12" mask="XXXXXXVX" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS3M" CV="12" mask="XXXXXVXX" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS4M" CV="12" mask="XXXXVXXX" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS5M" CV="12" mask="XXXVXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS6M" CV="12" mask="XXVXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS7M" CV="12" mask="XVXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS8M" CV="12" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS9M" CV="13" mask="XXXXXXXV" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS10M" CV="13" mask="XXXXXXVX" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS11M" CV="13" mask="XXXXXVXX" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS12M" CV="13" mask="XXXXVXXX" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS13M" CV="13" mask="XXXVXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS14M" CV="13" mask="XXVXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS15M" CV="13" mask="XVXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS16M" CV="13" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
             <choice>c</choice>
           </enumChoice>
         </enumVal>
@@ -3993,6 +4172,7 @@
     </variables>
   </decoder>
   <pane>
+    <name>Options</name>
     <column>
       <row>
         <column>
@@ -5759,6 +5939,9 @@
       <label>
         <text> </text>
       </label>
+      <label>
+        <text> Use for group outputs</text>
+      </label>
       <row>
         <column>
           <label>
@@ -5829,6 +6012,117 @@
       <label>
         <text>              Only applies if Option 2 is selected</text>
       </label>
+      <row>
+        <column>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text> Use for single outputs</text>
+          </label>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label>
+            <text>   1</text>
+          </label>
+          <display item="OS1M" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   2</text>
+          </label>
+          <display item="OS2M" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   3</text>
+          </label>
+          <display item="OS3M" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   4</text>
+          </label>
+          <display item="OS4M" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   5</text>
+          </label>
+          <display item="OS5M" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   6</text>
+          </label>
+          <display item="OS6M" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   7</text>
+          </label>
+          <display item="OS7M" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   8</text>
+          </label>
+          <display item="OS8M" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   9</text>
+          </label>
+          <display item="OS9M" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   10</text>
+          </label>
+          <display item="OS10M" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   11</text>
+          </label>
+          <display item="OS11M" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   12</text>
+          </label>
+          <display item="OS12M" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   13</text>
+          </label>
+          <display item="OS13M" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   14</text>
+          </label>
+          <display item="OS14M" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   15</text>
+          </label>
+          <display item="OS15M" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   16</text>
+          </label>
+          <display item="OS16M" format="radiobuttons"/>
+        </column>
+      </row>
     </column>
     <name>Power On Outputs</name>
   </pane>

@@ -17,33 +17,91 @@
 <!-- version 4 - add models 175,186,202,1048,1049,2048,2049,3048,3049,4048,4049,5048,5049-->
 <!-- function output choices for output 15 thru 30 when moving and in neutral -->
 <ienumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <ienumChoice choice="Ash Dump 1" value="141"/>
-  <ienumChoice choice="Idling Sounds 1" value="140"/>
-  <ienumChoice choice="Rotate Whistle Changed" value="115"/>
-  <ienumChoice choice="Rotate Whistle Alamo Michigan Plant" value="116"/>
-  <ienumChoice choice="Rotate Whistle PA 3 Chime" value="117"/>
-  <ienumChoice choice="Rotate Whistle Kingsly 4 Chime" value="118"/>
-  <ienumChoice choice="Rotate Whistle Reading 6 Chime 2" value="119"/>
-  <ienumChoice choice="Rotate Whistle NPR 765" value="120"/>
-  <ienumChoice choice="Rotate Whistle Reading 6 Chime" value="121"/>
-  <ienumChoice choice="Rotate Whistle Reading Pacific G2" value="122"/>
-  <ienumChoice choice="Rotate Whistle Reading Single Chime" value="123"/>
-  <ienumChoice choice="Rotate Whistle Wabash 3 Chime" value="124"/>
-  <ienumChoice choice="Rotate Whistle B &amp; O" value="125"/>
-  <ienumChoice choice="Rotate Whistle Pennsy K4" value="126"/>
-  <ienumChoice choice="Rotate Whistle NW Single Chime" value="127"/>
-  <ienumChoice choice="Rotate Whistle Lunkenheimer 3 chime" value="128"/>
-  <ienumChoice choice="Rotate Whistle 14" value="129"/>
-  <ienumChoice choice="Rotate Whistle Lunkenheimer Single Note" value="130"/>
-  <ienumChoice choice="Rotate Whistle 16" value="131"/>
-  <ienumChoice choice="Rotate Whistle 17" value="132"/>
-  <ienumChoice choice="Rotate Whistle Hancock 3 Chime" value="133"/>
-  <ienumChoice choice="Rotate Whistle Southern 6 Chime" value="134"/>
-  <ienumChoice choice="Rotate Whistle Wabash 6 Chime" value="135"/>
-  <ienumChoice choice="Rotate Whistle Santa Fe 6 Chime" value="136"/>
-  <ienumChoice choice="Rotate Whistle NW single chime short bell" value="137"/>
-  <ienumChoice choice="Rotate Whistle Great Northern 5 Chime" value="138"/>
-  <ienumChoice choice="Rotate Horn Nathan K5LA" value="139"/>
-  <ienumChoice choice="Silence" value="114"/>
-  <ienumChoice choice="Waterfill 1" value="142"/>
+  <ienumChoice choice="Ash Dump 1" value="141">
+     <choice xml:lang="it">Scarico Cenere 1</choice>
+  </ienumChoice>
+  <ienumChoice choice="Idling Sounds 1" value="140">
+     <choice xml:lang="it">Suoni da fermo</choice>
+  </ienumChoice>
+  <ienumChoice choice="Rotate Whistle Changed" value="115">
+     <choice xml:lang="it">Modificato Sel. Fischio</choice>
+  </ienumChoice>
+  <ienumChoice choice="Rotate Whistle Alamo Michigan Plant" value="116">
+     <choice xml:lang="it">Sel. Fischio Alamo Michigan Plant</choice>
+  </ienumChoice>
+  <ienumChoice choice="Rotate Whistle PA 3 Chime" value="117">
+     <choice xml:lang="it">Sel. Fischio PA 3 suoni</choice>
+  </ienumChoice>
+  <ienumChoice choice="Rotate Whistle Kingsly 4 Chime" value="118">
+     <choice xml:lang="it">Sel. Fischio Kingsly 4 suoni</choice>
+  </ienumChoice>
+  <ienumChoice choice="Rotate Whistle Reading 6 Chime 2" value="119">
+     <choice xml:lang="it">Sel. Fischio Reading 6 suoni 2</choice>
+  </ienumChoice>
+  <ienumChoice choice="Rotate Whistle NPR 765" value="120">
+     <choice xml:lang="it">Sel. Fischio NPR 765</choice>
+  </ienumChoice>
+  <ienumChoice choice="Rotate Whistle Reading 6 Chime" value="121">
+     <choice xml:lang="it">Sel. Fischio Reading 6 suoni</choice>
+  </ienumChoice>
+  <ienumChoice choice="Rotate Whistle Reading Pacific G2" value="122">
+     <choice xml:lang="it">Sel. Fischio Reading Pacific G2</choice>
+  </ienumChoice>
+  <ienumChoice choice="Rotate Whistle Reading Single Chime" value="123">
+     <choice xml:lang="it">Sel. Fischio Reading suono singolo</choice>
+  </ienumChoice>
+  <ienumChoice choice="Rotate Whistle Wabash 3 Chime" value="124">
+     <choice xml:lang="it">Sel. Fischio Wabash 3 suoni</choice>
+  </ienumChoice>
+  <ienumChoice choice="Rotate Whistle B &amp; O" value="125">
+     <choice xml:lang="it">Sel. Fischio B &amp; O</choice>
+  </ienumChoice>
+  <ienumChoice choice="Rotate Whistle Pennsy K4" value="126">
+     <choice xml:lang="it">Sel. Fischio Pennsy K4</choice>
+  </ienumChoice>
+  <ienumChoice choice="Rotate Whistle NW Single Chime" value="127">
+     <choice xml:lang="it">Sel. Fischio NW suono singolo</choice>
+  </ienumChoice>
+  <ienumChoice choice="Rotate Whistle Lunkenheimer 3 chime" value="128">
+     <choice xml:lang="it">Sel. Fischio Lunkenheimer 3 suoni</choice>
+  </ienumChoice>
+  <ienumChoice choice="Rotate Whistle 14" value="129">
+     <choice xml:lang="it">Sel. Fischio 14</choice>
+  </ienumChoice>
+  <ienumChoice choice="Rotate Whistle Lunkenheimer Single Note" value="130">
+     <choice xml:lang="it">Sel. Fischio Lunkenheimer Nota singola</choice>
+  </ienumChoice>
+  <ienumChoice choice="Rotate Whistle 16" value="131">
+     <choice xml:lang="it">Sel. Fischio 16</choice>
+  </ienumChoice>
+  <ienumChoice choice="Rotate Whistle 17" value="132">
+     <choice xml:lang="it">Sel. Fischio 17</choice>
+  </ienumChoice>
+  <ienumChoice choice="Rotate Whistle Hancock 3 Chime" value="133">
+     <choice xml:lang="it">Sel. Fischio Hancock 3 suoni</choice>
+  </ienumChoice>
+  <ienumChoice choice="Rotate Whistle Southern 6 Chime" value="134">
+     <choice xml:lang="it">Sel. Fischio Southern 6 suoni</choice>
+  </ienumChoice>
+  <ienumChoice choice="Rotate Whistle Wabash 6 Chime" value="135">
+     <choice xml:lang="it">Sel. Fischio Wabash 6 suoni</choice>
+  </ienumChoice>
+  <ienumChoice choice="Rotate Whistle Santa Fe 6 Chime" value="136">
+     <choice xml:lang="it">Sel. Fischio Santa Fe 6 suoni</choice>
+  </ienumChoice>
+  <ienumChoice choice="Rotate Whistle NW single chime short bell" value="137">
+     <choice xml:lang="it">Sel. Fischio NW singolo suono Campana veloce</choice>
+  </ienumChoice>
+  <ienumChoice choice="Rotate Whistle Great Northern 5 Chime" value="138">
+     <choice xml:lang="it">Sel. Fischio Great Northern 5 suoni</choice>
+  </ienumChoice>
+  <ienumChoice choice="Rotate Horn Nathan K5LA" value="139">
+     <choice xml:lang="it">Sel. Fischio Nathan K5LA</choice>
+  </ienumChoice>
+  <ienumChoice choice="Silence" value="114">
+     <choice xml:lang="it">Silenzio</choice>
+  </ienumChoice>
+  <ienumChoice choice="Waterfill 1" value="142">
+     <choice xml:lang="it">Carico Acqua 1</choice>
+  </ienumChoice>
 </ienumVal>

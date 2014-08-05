@@ -258,7 +258,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                 } else {
                     setState(oldState & ~TRACK_ERROR);
                 }
-                firePropertyChange("path", Integer.valueOf(oldState), Integer.valueOf(getState()));
+                firePropertyChange("pathState", Integer.valueOf(oldState), Integer.valueOf(getState()));
             }
         }
     }
@@ -758,7 +758,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             if (msg==null) {
                 int lockState = Turnout.CABLOCKOUT & Turnout.PUSHBUTTONLOCKOUT; 
                 path.setTurnouts(0, true, lockState, true);
-                firePropertyChange("path", Integer.valueOf(0), Integer.valueOf(getState()));            	
+                firePropertyChange("pathState", Integer.valueOf(0), Integer.valueOf(getState()));            	
             }
         }
         return msg;
@@ -825,6 +825,10 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     }
     public String toString() {
     	return getDisplayName();
+    }
+    
+    public String getBeanType(){
+        return Bundle.getMessage("BeanNameOBlock");
     }
     
     static Logger log = LoggerFactory.getLogger(OBlock.class.getName());

@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
-import jmri.beans.Beans;
 
 /**
  * Create a new PanelPro start window

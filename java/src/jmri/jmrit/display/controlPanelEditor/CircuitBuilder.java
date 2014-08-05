@@ -92,7 +92,7 @@ public class CircuitBuilder  {
 
     public final static Color _editGroupColor = new Color(100, 200, 255);
     public final static Color _pathColor = Color.green;
-    public final static Color _highlightColor = new Color(255, 100, 200);
+    public final static Color _highlightColor = new Color(255, 150, 220);
     
     /******************************************************************/
 
@@ -110,13 +110,15 @@ public class CircuitBuilder  {
      * Called by ControlPanelEditor at init before contents have been loaded
      */
     protected JMenu makeMenu() {
-        _circuitMenu = new JMenu(Bundle.getMessage("CircuitBuilder"));
-        _circuitMap = new HashMap<OBlock, ArrayList<Positionable>>();
-        OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
-        String[] sysNames = manager.getSystemNameArray();
-        for (int i = 0; i < sysNames.length; i++) {
-            OBlock block = manager.getBySystemName(sysNames[i]);
-            _circuitMap.put(block, new ArrayList<Positionable>());
+    	if (_circuitMenu==null) {
+            _circuitMenu = new JMenu(Bundle.getMessage("CircuitBuilder"));
+            _circuitMap = new HashMap<OBlock, ArrayList<Positionable>>();
+            OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
+            String[] sysNames = manager.getSystemNameArray();
+            for (int i = 0; i < sysNames.length; i++) {
+                OBlock block = manager.getBySystemName(sysNames[i]);
+                _circuitMap.put(block, new ArrayList<Positionable>());    		
+            }
         }
         makeCircuitMenu();
         return _circuitMenu;
@@ -994,9 +996,11 @@ public class CircuitBuilder  {
     
     protected void changePortalName(String oldName, String newName) {
     	PortalIcon icon = _portalIconMap.get(oldName);
-    	icon.setName(newName);
-       	_portalIconMap.remove(oldName);
-     	_portalIconMap.put(newName, icon);
+    	if (icon!=null) {
+        	icon.setName(newName);
+           	_portalIconMap.remove(oldName);
+         	_portalIconMap.put(newName, icon);    		
+    	}
     }
     
     protected void removePortalIcon(String name) {

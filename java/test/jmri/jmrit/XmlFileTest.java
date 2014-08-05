@@ -129,31 +129,35 @@ public class XmlFileTest extends TestCase {
     public void testProcessPI() throws org.jdom.JDOMException, java.io.IOException {
         // Document from test file
         Document doc;
+        Element e;
         FileInputStream fs = new FileInputStream(new File("java/test/jmri/jmrit/XmlFileTest_PI.xml"));
         try {
             SAXBuilder builder = XmlFile.getBuilder(false);  // argument controls validation
             doc = builder.build(new BufferedInputStream(fs));
+            Assert.assertNotNull("Original Document found", doc);
+            e = doc.getRootElement();
+            Assert.assertNotNull("Original root element found", e);
+
+            XmlFile x = new XmlFile() {};
+            Document d = x.processInstructions(doc);
+            Assert.assertNotNull(d);
+        
+            // test transform changes <contains> element to <content>
+            e = d.getRootElement();
+            Assert.assertNotNull("Transformed root element found", e);
+            Assert.assertTrue("Transformed root element is right type", e.getName().equals("top"));
+            Assert.assertTrue("Old element gone", e.getChild("contains")==null);
+            Assert.assertTrue("New element there", e.getChild("content")!=null);
+            Assert.assertTrue("New element has content", e.getChild("content").getChildren().size() == 2);
+
+        } catch (java.io.IOException ex) {
+            throw ex;
+        } catch (org.jdom.JDOMException ex) {
+            throw ex;
         } finally {
             fs.close();
         }
-        
-        XmlFile x = new XmlFile() {};
-
-        Assert.assertTrue("Original Document found", doc!=null);
-        Element e = doc.getRootElement();
-        Assert.assertTrue("Original root element found", e!=null);
-        
-        Document d = x.processInstructions(doc);
-        Assert.assertNotNull(d);
-        
-        // test transform changes <contains> element to <content>
-        e = d.getRootElement();
-        Assert.assertTrue("Transformed root element found", e!=null);
-        Assert.assertTrue("Transformed root element is right type", e.getName().equals("top"));
-        Assert.assertTrue("Old element gone", e.getChild("contains")==null);
-        Assert.assertTrue("New element there", e.getChild("content")!=null);
-        Assert.assertTrue("New element has content", e.getChild("content").getChildren().size() == 2);
-        
+                
     }
     
     

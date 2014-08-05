@@ -1447,7 +1447,7 @@
         </enumVal>
         <label>Flash Light Output 7</label>
       </variable>
-      <variable item="Flash Light Output 8" CV="62" mask="VXXXXXXXX" default="0">
+      <variable item="Flash Light Output 8" CV="62" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1458,7 +1458,7 @@
         </enumVal>
         <label>Flash Light Output 8</label>
       </variable>
-      <variable item="Flash Light Output 9" CV="63" mask="XXXXXXXXV" default="0">
+      <variable item="Flash Light Output 9" CV="63" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1469,7 +1469,7 @@
         </enumVal>
         <label>Flash Light Output 9</label>
       </variable>
-      <variable item="Flash Light Output 10" CV="63" mask="XXXXXXXVX" default="0">
+      <variable item="Flash Light Output 10" CV="63" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>

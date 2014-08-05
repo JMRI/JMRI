@@ -20,10 +20,12 @@ import java.util.List;
  * @version	$Revision$
  */
 public class DefaultSignalMastManager extends AbstractManager
-    implements SignalMastManager, java.beans.PropertyChangeListener {
+    implements SignalMastManager, java.beans.PropertyChangeListener{
 
     public DefaultSignalMastManager() {
         super();
+        jmri.InstanceManager.signalHeadManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
     }
 
     public int getXMLOrder(){
@@ -75,6 +77,10 @@ public class DefaultSignalMastManager extends AbstractManager
         return (SignalMast)_tuser.get(key);
     }
     
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameSignalMast");
+    }
+    
     ArrayList<SignalMastRepeater> repeaterList = new ArrayList<SignalMastRepeater>();
     
     public void addRepeater(SignalMastRepeater rp) throws jmri.JmriException{
@@ -109,7 +115,7 @@ public class DefaultSignalMastManager extends AbstractManager
             smr.initialise();
         }
     }
-
+    
     static Logger log = LoggerFactory.getLogger(DefaultSignalMastManager.class.getName());
 }
 

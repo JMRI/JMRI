@@ -16,11 +16,6 @@ import com.rapplogic.xbee.api.XBeeResponse;
 import com.rapplogic.xbee.api.wpan.RxResponse16;
 import com.rapplogic.xbee.api.wpan.RxResponse64;
 import com.rapplogic.xbee.api.zigbee.ZNetRxResponse;
-import com.rapplogic.xbee.api.wpan.TxRequest16;
-import com.rapplogic.xbee.api.wpan.TxRequest64;
-import com.rapplogic.xbee.api.zigbee.ZNetTxRequest;
-
-
 import jmri.jmrix.AbstractPortController;
 
 /*

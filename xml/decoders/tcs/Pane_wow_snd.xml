@@ -23,22 +23,20 @@
         </label>
         <label>
           <text>Must have JMRI 3.3.6 or later.</text>
-          <text xml:lang="it">Must have JMRI 3.3.6 or later.</text>
+          <text xml:lang="it">Dovete avere JMRI 3.3.6 o successivo.</text>
         </label>
         <label>
           <text>   </text>
         </label>
         <label>
           <text>******************************************************************</text>
-          <text xml:lang="it">******************************************************************</text>
         </label>
         <label>
           <text>* Programming order is critical, must write full sheet only, do NOT write changes. *</text>
-          <text xml:lang="it">* Programming order is critical, must write full sheet only, do NOT write changes. *</text>
+          <text xml:lang="it">* L'ordine di programmazione è critico, occorre Scrivere sempre tutto il foglio, NON scrivere solo le modifiche. *</text>
         </label>
         <label>
           <text>******************************************************************</text>
-          <text xml:lang="it">******************************************************************</text>
         </label>
         <label>
           <text>   </text>
@@ -49,7 +47,7 @@
       <column>
         <label>
           <text>Pick sound group (high byte) first then from list of sounds of just that group</text>
-          <text xml:lang="it">Pick sound group (high byte) first then from list of sounds of just that group</text>
+          <text xml:lang="it">Prima seleziona Gruppo Suono (byte alto) poi scegli dalla lista dei suoni solo di quel gruppo</text>
         </label>
         <label>
           <text>   </text>
@@ -416,5 +414,5 @@
       </column>
     </row>
   </column>
-  <name xml:lang="it">Sound Function</name>
+  <name xml:lang="it">Funzioni Suono</name>
 </pane>

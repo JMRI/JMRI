@@ -198,6 +198,10 @@ public class DefaultConditionalManager extends AbstractManager
         }
         return (_instance);
     }
+    
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameConditional");
+    }
 
     static Logger log = LoggerFactory.getLogger(DefaultConditionalManager.class.getName());
 }

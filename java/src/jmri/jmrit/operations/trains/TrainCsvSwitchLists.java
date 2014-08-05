@@ -25,7 +25,7 @@ import jmri.jmrit.operations.setup.Setup;
 /**
  * Builds a comma separated value (csv) switch list for a location on the railroad
  * 
- * @author Daniel Boudreau (C) Copyright 2011, 2013
+ * @author Daniel Boudreau (C) Copyright 2011, 2013, 2014
  * 
  */
 public class TrainCsvSwitchLists extends TrainCsvCommon {
@@ -71,12 +71,11 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 		List<Train> trains = trainManager.getTrainsByTimeList();
 		CarManager carManager = CarManager.instance();
 		EngineManager engineManager = EngineManager.instance();
-		for (int i = 0; i < trains.size(); i++) {
+		for (Train train : trains) {
 			int pickupCars = 0;
 			int dropCars = 0;
 			int stops = 1;
 			boolean trainDone = false;
-			Train train = trains.get(i);
 			if (!train.isBuilt())
 				continue; // train wasn't built so skip
 			if (newTrainsOnly && train.getSwitchListStatus().equals(Train.PRINTED))
@@ -88,6 +87,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 			if (route == null)
 				continue; // no route for this train
 			List<RouteLocation> routeList = route.getLocationsBySequenceList();
+			// need to know where in the route we are for the various comments
 			for (int r = 0; r < routeList.size(); r++) {
 				RouteLocation rl = routeList.get(r);
 				if (splitString(rl.getName()).equals(splitString(location.getName()))) {
@@ -151,6 +151,12 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 								addLine(fileOut, TDC + rl.getTrainDirectionString());
 						}
 					}
+					
+					// add route comment
+					if (!rl.getComment().equals("")) {
+						addLine(fileOut, RLC + ESC + rl.getComment() + ESC);
+					}
+
 					// go through the list of engines and determine if the engine departs here
 					for (Engine engine : enginesList) {
 						if (engine.getRouteLocation() == rl && !engine.getTrackName().equals(""))
@@ -159,10 +165,8 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 
 					// get a list of cars and determine if this location is serviced
 					// block cars by destination
-					for (int j = 0; j < routeList.size(); j++) {
-						RouteLocation rld = routeList.get(j);
-						for (int k = 0; k < carList.size(); k++) {
-							Car car = carList.get(k);
+					for (RouteLocation rld : routeList) {
+						for (Car car : carList) {
 							if (car.getRouteLocation() == rl && !car.getTrackName().equals("")
 									&& car.getRouteDestination() == rld) {
 								pickupCars++;
@@ -181,9 +185,8 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 						if (engine.getRouteDestination() == rl)
 							fileOutCsvEngine(fileOut, engine, SL);
 					}
-
-					for (int j = 0; j < carList.size(); j++) {
-						Car car = carList.get(j);
+					
+					for (Car car : carList) {
 						if (car.getRouteDestination() == rl) {
 							dropCars++;
 							int count = 0;

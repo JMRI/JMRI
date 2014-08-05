@@ -297,8 +297,8 @@ public class FileUtilTest extends TestCase {
         try {
             FileChannel fc = stream.getChannel();
             MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
-            // test appends newline because appendTextToFile() method uses println() to append to file
-            Assert.assertEquals(text + "\n", Charset.forName("UTF-8").decode(bb).toString());
+            // test appends line.separator because appendTextToFile() method uses println() to append to file
+            Assert.assertEquals(text + System.getProperty("line.separator"), Charset.forName("UTF-8").decode(bb).toString());
         } finally {
             stream.close();
         }

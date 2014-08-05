@@ -497,8 +497,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
     protected VariableValue processEnumVal(Element child, String name, String comment, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String CV, String mask, String item) throws NumberFormatException {
         VariableValue v;
-        @SuppressWarnings("unchecked")
-        List<Element> l = child.getChildren("enumChoice");
+        List<Element> l = findENumValChildren(child);
         EnumVariableValue v1 = new EnumVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, 0, l.size() - 1, _cvModel.allCvMap(), _status, item);
         v = v1; // v1 is of EnunVariableValue type, so doesn't need casts
         v1.nItems(l.size());
@@ -515,6 +514,32 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         }
         v1.lastItem();
         return v;
+    }
+    
+    /**
+     * Recursively creates a depth-first list of child enumChoice
+     * elements, working through the enumChoiceGroup elements as
+     * needed.
+     *
+     * These lists never get very long. If they do, a tail-iteration
+     * algorithm working on a single list would be better.
+     */
+    protected List<Element> findENumValChildren(Element e) {
+        List<Element> retval = new ArrayList<Element>();
+        @SuppressWarnings("unchecked")
+        List<Element> local = e.getChildren();
+        for (int k = 0; k < local.size(); k++) {
+            Element el = local.get(k);
+            if (el.getName().equals("enumChoice")) {
+                retval.add(el);
+            } else if (el.getName().equals("enumChoiceGroup")) {   
+                List<Element> inner = findENumValChildren(el);
+                for (int i = 0; i < inner.size(); i++)
+                    retval.add(inner.get(i));
+            }
+
+        }        
+        return retval;
     }
 
     protected VariableValue processHexVal(Element child, String name, String comment, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String CV, String mask, String item) throws NumberFormatException {

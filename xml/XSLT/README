@@ -86,13 +86,15 @@ Operations:
     
 
 Still needed:
-
-*) decoderAddI18nLabel.xsl needs to handle case of label element but no label attribute
     
 *) Transforms handle variable elements but not ivariable elements - consider ivariables obsolete?
 
-*) handle tooltip in pane elements - need to provide default english element to
-   eventually move away from attribute
+(Is normalize not creating a default choice element?  Will I18N 
+notice if there's a default choice _element_?)
+>       <enumChoice choice="No">
+>         <choice xml:lang="de">No</choice>
+>       </enumChoice>
+
 
 What does this attribute on <pane> really do?
     <xs:attribute name="nameFmt" type="labelItemType" default="label">
@@ -133,12 +135,15 @@ Eventual goal is to update schema to enforce regular structure:
     variable element:
         remove label, comment, tooltip attributes in favor of elements
         label contains text, not label
+        choice attribute on enumChoice element
         
     pane element:
-        remove pane name attribute in favor of elements
         label contains text, not label
         remove tooltip attribute from display element in favor of elements
        
+PaneType has too free a schema for the top element, as it allows multiple
+copyright, etc, in the process of allowing multiple name element.  In particular,
+it doesn't enforce a single row/column at top level, which the program requires.
        
 Eventually want a constraint that qualifier variablerefs are present, but how to get that?
 Pane files don't know about the primary decoder file.  (So need it programmatic? Even then,

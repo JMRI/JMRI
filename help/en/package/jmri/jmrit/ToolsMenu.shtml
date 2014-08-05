@@ -7,6 +7,9 @@
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+	<META name="Author" content="Bob Jacobsen, Egbert Broerse">
+<META name="Date.Modified" content="20140515"/>
+<META name="keywords" content="JMRI help Tools menu">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -20,9 +23,6 @@
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-
-
-
 
 <h2> 
 JMRI: Tools Menu
@@ -43,6 +43,8 @@ The Tools Menu gives access to the basic JMRI tools:
   <li><a href="beantable/LightTable.shtml">Lights</a>
   <li><a href="beantable/SignalHeadTable.shtml">Signal Heads</a>
   <li><a href="beantable/SignalMastTable.shtml">Signal Masts</a>
+  <li><a href="beantable/SignalGroupAddEdit.shtml">Signal Groups</a>
+  <li><a href="../../../html/tools/signaling/SignalMastLogic.shtml">Signal Mast Logic</a>
   <li><a href="beantable/ReporterTable.shtml">Reporters</a>
   <li><a href="beantable/MemoryTable.shtml">Memory Variables</a>
   <li><a href="beantable/RouteTable.shtml">Routes</a>

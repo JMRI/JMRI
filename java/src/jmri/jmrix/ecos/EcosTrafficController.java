@@ -2,16 +2,14 @@
 
 package jmri.jmrix.ecos;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.CommandStation;
 import java.util.List;
-
+import jmri.CommandStation;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
-//import jmri.jmrix.ecos.serialdriver.SerialDriverAdapter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Converts Stream-based I/O to/from ECOS messages.  The "EcosInterface"
@@ -62,12 +60,9 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
 
     /**
      * CommandStation implementation
+     * This is NOT Supported in the ECOS
      */
-    public void sendPacket(byte[] packet,int count) {
-        EcosMessage m = EcosMessage.sendPacketMessage(packet);
-	    //EcosTrafficController.instance().sendEcosMessage(m, null);
-            sendEcosMessage(m, null);
-    }
+    public void sendPacket(byte[] packet,int count) { }
     
     /**
      * Forward a EcosMessage to all registered EcosInterface listeners.
@@ -83,51 +78,16 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         ((EcosListener)client).reply((EcosReply)r);
     }
 
-    
-    /**
-	 * Check NCE EPROM and start NCE CS accessory memory poll
-	 */
 	protected AbstractMRMessage pollMessage() {
-				
-/* 		// Keep checking the state of the communication link by polling */
-/* 		// the command station using the EPROM checker */
-/* 		EcosMessage m = pollEprom.EcosEpromPoll(); */
-/* 		if (m != null){ */
-/* 			expectReplyEprom = true; */
-/* 			return m; */
-/* 		}else{ */
-/* 			expectReplyEprom = false; */
-/* 		} */
-		
-
-/* 		// Start Ecos memory poll for accessory states */
-/* 		if (pollHandler == null) */
-/* 			pollHandler = new EcosTurnoutMonitor(); */
-/*  */
-/* 		// minimize impact to NCE CS */
-/* 		mWaitBeforePoll = NceTurnoutMonitor.POLL_TIME; // default = 25 */
-
-/* 		return pollHandler.pollMessage(); */
-
         return null;
 	}
 
-	
-	boolean expectReplyEprom = false;
-    
- 
     protected AbstractMRListener pollReplyHandler() {
-/*         // First time through, handle reply by checking EPROM revision */
-/*     	// Second time through, handle AIU broadcast check */
-/*     	if (expectReplyEprom) return pollEprom; */
-/*     	else if (pollHandler == null) return pollAiuStatus; */
-/*     	else  return pollHandler; */
-
         return null;
     }
 
     /**
-     * Forward a preformatted message to the actual interface.
+     * Forward a pre-formatted message to the actual interface.
      */
     public void sendEcosMessage(EcosMessage m, EcosListener reply) {
         sendMessage(m, reply);
@@ -165,33 +125,6 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     // FindBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
     final static protected EcosTrafficController self = null;
-
-    /*static class EcosTrafficControllerHolder {
-        static EcosTrafficController
-            instance = new EcosTrafficController();
-    }
-
-    public static EcosTrafficController instance() {
-        return EcosTrafficControllerHolder.instance;
-    }*/
-    
-    ///**
-    // * static function returning the EcosTrafficController instance to use.
-    // */
-    /*static public EcosTrafficController instance() {
-        if (self == null) {
-            if (log.isDebugEnabled()) log.debug("creating a new EcosTrafficController object");
-            EcosTrafficController newinstance = new EcosTrafficController();
-            // set as command station too
-            jmri.InstanceManager.setCommandStation(newinstance);
-            newinstance.setAllowUnexpectedReply(true);
-            self = newinstance;
-        }
-        return self;
-    }*/
-
-    //static private EcosTrafficController self = null;
-    //protected void setInstance() { instance(); }
 
     protected AbstractMRReply newReply() { 
         EcosReply reply = new EcosReply();
@@ -232,7 +165,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         if (ostream == null) return false;
         m.setTimeout(500);
         m.setRetries(10);
-        synchronized(getSelfLock()) {
+        synchronized(this) {
                 forwardToPort(m, reply);
                 // wait for reply
                 try {
@@ -263,7 +196,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         modeMsg =  new EcosMessage("release(10, view)");
         modeMsg.setTimeout(50);
         modeMsg.setRetries(10);
-        synchronized(getSelfLock()) {
+        synchronized(this) {
             forwardToPort(modeMsg, null);
             // wait for reply
             try {
@@ -284,7 +217,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
             modeMsg = new EcosMessage("release("+ecosObject+", view)");
             modeMsg.setTimeout(50);
             modeMsg.setRetries(10);
-            synchronized(getSelfLock()) {
+            synchronized(this) {
                 forwardToPort(modeMsg, null);
                 // wait for reply
                 try {
@@ -299,7 +232,6 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
             }
         }
 
-        //EcosLocoAddressManager objEcosLocoManager = jmri.jmrix.ecos.EcosLocoAddressManager.instance();
         EcosLocoAddressManager objEcosLocoManager = adaptermemo.getLocoAddressManager();
         en = objEcosLocoManager.getEcosObjectList();
         for(int i = 0; i<en.size(); i++) {
@@ -320,7 +252,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
                     }
                     modeMsg.setTimeout(50);
                     modeMsg.setRetries(10);
-                    synchronized(getSelfLock()) {
+                    synchronized(this) {
                         forwardToPort(modeMsg, null);
                         // wait for reply
                         try {
@@ -351,11 +283,4 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     static Logger log = LoggerFactory.getLogger(EcosTrafficController.class.getName());
 }
 
-
 /* @(#)EcosTrafficController.java */
-
-
-
-
-
-

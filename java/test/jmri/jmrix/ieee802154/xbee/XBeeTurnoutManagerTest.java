@@ -15,8 +15,12 @@ import junit.framework.TestSuite;
  */
 public class XBeeTurnoutManagerTest extends TestCase {
 
+
+    XBeeTrafficController tc = new XBeeTrafficController() {
+        public void setInstance(){}
+    };
+
     public void testCtor() {
-        XBeeTrafficController tc = new XBeeTrafficController();
         XBeeTurnoutManager m = new XBeeTurnoutManager(tc,"ABC"); 
         Assert.assertNotNull("exists",m);
     }

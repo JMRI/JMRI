@@ -15,8 +15,12 @@ import junit.framework.TestSuite;
  */
 public class XBeeReplyTest extends TestCase {
 
+    XBeeTrafficController qt = new XBeeTrafficController() {
+        public void setInstance(){}
+    };
+    
     public void testCtor() {
-        XBeeReply m = new XBeeReply(new XBeeTrafficController());
+        XBeeReply m = new XBeeReply(qt);
         Assert.assertNotNull("exists",m);
     }
 

@@ -42,6 +42,7 @@ public class TransitManager extends AbstractManager
 
     public TransitManager() {
         super();
+        InstanceManager.sectionManagerInstance().addVetoableChangeListener(this);
     }
 
     public int getXMLOrder(){
@@ -202,6 +203,11 @@ public class TransitManager extends AbstractManager
             _instance = new TransitManager();
         }
         return (_instance);
+    }
+    
+    	
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameTransit");
     }
 	
     static Logger log = LoggerFactory.getLogger(TransitManager.class.getName());

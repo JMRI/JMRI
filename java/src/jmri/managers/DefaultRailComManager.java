@@ -170,6 +170,10 @@ public class DefaultRailComManager extends AbstractManager
     }
     
     public void init() {}
+    
+    public String getBeanTypeHandled(){
+        return Bundle.getMessage("BeanNameReporter");
+    }
 
     private static final Logger log = LoggerFactory.getLogger(DefaultRailComManager.class.getName());
 

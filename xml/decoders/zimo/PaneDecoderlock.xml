@@ -10,4 +10,5 @@
     <display item="Software Update Locked" format="checkbox"/>
   </column>
   <name>Decoder Lock</name>
+  <name xml:lang="it">Blocco decoder</name>
 </pane>

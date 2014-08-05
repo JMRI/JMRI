@@ -17,41 +17,43 @@
   <variable CV="105" item="User Id #1">
     <decVal/>
     <label>User Private ID #1</label>
-    <label xml:lang="it">User Private ID #1</label>
+    <label xml:lang="it">ID Utente privato #1</label>
   </variable>
   <variable CV="106" item="User Id #2">
     <decVal/>
     <label>User Private ID #2</label>
-    <label xml:lang="it">User Private ID #2</label>
+    <label xml:lang="it">ID Utente privato #2</label>
   </variable>
   <variable CV="112" default="1" item="Function F0F effect generated">
     <decVal min="1" max="5"/>
     <label>Mars/Gyra Min Brightness</label>
-    <label xml:lang="it">Mars/Gyra Min Brightness</label>
+    <label xml:lang="it">Luminosità Min.Mars/Gyra</label>
   </variable>
   <variable CV="113" default="9" item="Function F0F option 2">
     <decVal/>
     <label>Mars/Gyra Max Bright Time</label>
-    <label xml:lang="it">Mars/Gyra Max Bright Time</label>
+    <label xml:lang="it">Durata Max luce Mars/Gyra</label>
   </variable>
   <variable CV="114" default="1" item="Function F0F option 3">
     <decVal/>
     <label>Mars/Gyra Total Cycle Time</label>
-    <label xml:lang="it">Mars/Gyra Total Cycle Time</label>
+    <label xml:lang="it">Tempo ciclo Totale Mars/Gyra</label>
   </variable>
   <variable CV="115" default="6" item="Function F0F behavior">
     <decVal min="2" max="26"/>
     <label>Mars/Gyra Mid Brightness</label>
-    <label xml:lang="it">Mars/Gyra Mid Brightness</label>
+    <label xml:lang="it">Luminosità Media Mars/Gyra</label>
   </variable>
   <variable CV="116" default="22" item="Function F0F options">
     <decVal min="4" max="28"/>
     <label>Mars/Gyra Max Brightness</label>
-    <label xml:lang="it">Mars/Gyra Max Brightness</label>
+    <label xml:lang="it">Luminosità max.Mars/Gyra</label>
   </variable>
   <variable CV="117" default="3" mask="XXXXVVVV" item="Function 2 behavior">
     <enumVal>
-      <enumChoice choice="1 slowest" value="1"/>
+      <enumChoice choice="1 slowest" value="1">
+        <choice xml:lang="it">1 più lento</choice>
+      </enumChoice>
       <enumChoice choice="2"/>
       <enumChoice choice="3"/>
       <enumChoice choice="4"/>
@@ -62,523 +64,405 @@
       <enumChoice choice="9"/>
       <enumChoice choice="10"/>
       <enumChoice choice="11"/>
-      <enumChoice choice="12 fastest"/>
+      <enumChoice choice="12 fastest">
+        <choice xml:lang="it">12 più veloce</choice>
+     </enumChoice>
     </enumVal>
     <label>Ditch Light Blink Rate</label>
-    <label xml:lang="it">Ditch Light Blink Rate</label>
+    <label xml:lang="it">Freq.lampeggio Luci Ditch</label>
   </variable>
   <variable CV="118" default="1" item="Function F0R effect generated">
     <decVal min="1" max="5"/>
     <label>Beacon Min Brightness</label>
-    <label xml:lang="it">Beacon Min Brightness</label>
+    <label xml:lang="it">Luminosità Min Faro</label>
   </variable>
   <variable CV="119" default="5" item="Function F0R option 2">
     <decVal/>
     <label>Beacon Max Bright Time</label>
-    <label xml:lang="it">Beacon Max Bright Time</label>
+    <label xml:lang="it">Durata Max Luce Faro</label>
   </variable>
   <variable CV="120" default="1" item="Function F0R option 3">
     <decVal/>
     <label>Beacon Total Cycle Time</label>
-    <label xml:lang="it">Beacon Total Cycle Time</label>
+    <label xml:lang="it">Tempo Ciclo Totale Faro</label>
   </variable>
   <variable CV="121" default="15" item="Function F0R behavior">
     <decVal min="2" max="26"/>
     <label>Beacon Mid Brightness</label>
-    <label xml:lang="it">Beacon Mid Brightness</label>
+    <label xml:lang="it">Luminosità Media Faro</label>
   </variable>
   <variable CV="122" default="25" item="Function F0R options">
     <decVal min="4" max="28"/>
     <label>Beacon Max Brightness</label>
-    <label xml:lang="it">Beacon Max Brightness</label>
+    <label xml:lang="it">Luminosità Max.Faro</label>
   </variable>
   <variable item="FL(f) controls output Dim" CV="123" mask="XXXXXXXV" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(f) controls output Dim</label>
-    <label xml:lang="it">FL(f) controls output Dim</label>
+    <label xml:lang="it">Luci(in avanti) controlla Smorzam.Uscita</label>
   </variable>
   <variable item="FL(r) controls output Dim" CV="123" mask="XXXXXXVX" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(r) controls output Dim</label>
-    <label xml:lang="it">FL(r) controls output Dim</label>
+    <label xml:lang="it">Luci(in retro) controlla Smorzam.Uscita</label>
   </variable>
   <variable item="F1 controls output Dim" CV="123" mask="XXXXXVXX" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1 controls output Dim</label>
-    <label xml:lang="it">F1 controls output Dim</label>
+    <label xml:lang="it">F1 controlla Smorzam.Uscita</label>
   </variable>
   <variable item="F2 controls output Dim" CV="123" mask="XXXXVXXX" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2 controls output Dim</label>
-    <label xml:lang="it">F2 controls output Dim</label>
+    <label xml:lang="it">F2 controlla Smorzam.Uscita</label>
   </variable>
   <variable item="F3 controls output Dim" CV="123" mask="XXXVXXXX" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3 controls output Dim</label>
-    <label xml:lang="it">F3 controls output Dim</label>
+    <label xml:lang="it">F3 controlla Smorzam.Uscita</label>
   </variable>
   <variable item="F4 controls output Dim" CV="123" mask="XXVXXXXX" minOut="1" default="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F4 controls output Dim</label>
-    <label xml:lang="it">F4 controls output Dim</label>
+    <label xml:lang="it">F4 controlla Smorzam.Uscita</label>
   </variable>
   <variable item="F5 controls output Dim" CV="123" mask="XVXXXXXX" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5 controls output Dim</label>
-    <label xml:lang="it">F5 controls output Dim</label>
+    <label xml:lang="it">F5 controlla Smorzam.Uscita</label>
   </variable>
   <variable item="F6 controls output Dim" CV="123" mask="VXXXXXXX" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6 controls output Dim</label>
-    <label xml:lang="it">F6 controls output Dim</label>
+    <label xml:lang="it">F6 controlla Smorzam.Uscita</label>
   </variable>
   <variable item="FL(f) controls output Ditch" CV="124" mask="XXXXXXXV" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(f) controls output Ditch</label>
-    <label xml:lang="it">FL(f) controls output Ditch</label>
+    <label xml:lang="it">Luci(in avanti) controlla Uscita Ditch</label>
   </variable>
   <variable item="FL(r) controls output Ditch" CV="124" mask="XXXXXXVX" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(r) controls output Ditch</label>
-    <label xml:lang="it">FL(r) controls output Ditch</label>
+    <label xml:lang="it">Luci(in retro) controlla Uscita Ditch</label>
   </variable>
   <variable item="F1 controls output Ditch" CV="124" mask="XXXXXVXX" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1 controls output Ditch</label>
-    <label xml:lang="it">F1 controls output Ditch</label>
+    <label xml:lang="it">F1 controlla Uscita Ditch</label>
   </variable>
   <variable item="F2 controls output Ditch" CV="124" mask="XXXXVXXX" minOut="1" default="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2 controls output Ditch</label>
-    <label xml:lang="it">F2 controls output Ditch</label>
+    <label xml:lang="it">F2 controlla Uscita Ditch</label>
   </variable>
   <variable item="F3 controls output Ditch" CV="124" mask="XXXVXXXX" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3 controls output Ditch</label>
-    <label xml:lang="it">F3 controls output Ditch</label>
+    <label xml:lang="it">F3 controlla Uscita Ditch</label>
   </variable>
   <variable item="F4 controls output Ditch" CV="124" mask="XXVXXXXX" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F4 controls output Ditch</label>
-    <label xml:lang="it">F4 controls output Ditch</label>
+    <label xml:lang="it">F4 controlla Uscita Ditch</label>
   </variable>
   <variable item="F5 controls output Ditch" CV="124" mask="XVXXXXXX" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5 controls output Ditch</label>
-    <label xml:lang="it">F5 controls output Ditch</label>
+    <label xml:lang="it">F5 controlla Uscita Ditch</label>
   </variable>
   <variable item="F6 controls output Ditch" CV="124" mask="VXXXXXXX" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6 controls output Ditch</label>
-    <label xml:lang="it">F6 controls output Ditch</label>
+    <label xml:lang="it">F6 controlla Uscita Ditch</label>
   </variable>
   <variable item="Decel 2 Ending Point" CV="125" default="0" tooltip="Sets the Decel 3 end point, range 0(default)-255" comment="Range 0-255">
     <decVal max="255"/>
     <label>Decel 2 Ending Point</label>
-    <label xml:lang="it">Decel 2 Ending Point</label>
-    <comment xml:lang="it">Range 0-255</comment>
-    <tooltip xml:lang="it">Sets the Decel 3 end point, range 0(default)-255</tooltip>
+    <label xml:lang="it">Decell.2 Punto finale</label>
+    <comment xml:lang="it">Valori 0-255</comment>
+    <tooltip xml:lang="it">Imposta il punto finale di Decel 2, valori 0(default)-255</tooltip>
   </variable>
   <variable item="Decel 2 Rate" CV="126" default="0" tooltip="Sets the Decel 3 rate, range 0(default)-255" comment="Range 0-255">
     <decVal max="255"/>
     <label>Decel 2 Rate</label>
-    <label xml:lang="it">Decel 2 Rate</label>
-    <comment xml:lang="it">Range 0-255</comment>
-    <tooltip xml:lang="it">Sets the Decel 3 rate, range 0(default)-255</tooltip>
+    <label xml:lang="it">Tasso Decell.2</label>
+    <comment xml:lang="it">Valori 0-255</comment>
+    <tooltip xml:lang="it">Imposta il Tasso di Decel 2, valori 0(default)-255</tooltip>
   </variable>
   <variable item="Decel 3 Ending Point" CV="127" default="0" tooltip="Sets the Decel 2 End point, range 0(default)-255" comment="Range 0-255">
     <decVal max="255"/>
     <label>Decel 3 Ending Point</label>
-    <label xml:lang="it">Decel 3 Ending Point</label>
-    <comment xml:lang="it">Range 0-255</comment>
-    <tooltip xml:lang="it">Sets the Decel 2 End point, range 0(default)-255</tooltip>
+    <label xml:lang="it">Punto Finale Decell.3</label>
+    <comment xml:lang="it">Valori 0-255</comment>
+    <tooltip xml:lang="it">Imposta il Punto finale di Decell.2, valori 0(default)-255</tooltip>
   </variable>
   <variable item="Decel 3 Rate" CV="128" default="0" tooltip="Sets the Decel 2 rate, range 0(default)-255" comment="Range 0-255">
     <decVal max="255"/>
     <label>Decel 3 Rate</label>
-    <label xml:lang="it">Decel 3 Rate</label>
-    <comment xml:lang="it">Range 0-255</comment>
-    <tooltip xml:lang="it">Sets the Decel 2 rate, range 0(default)-255</tooltip>
+    <label xml:lang="it">Tasso Decel 3 Rate</label>
+    <comment xml:lang="it">Valori 0-255</comment>
+    <tooltip xml:lang="it">Imposta il Tasso di Decell.3, Valori 0(default)-255</tooltip>
   </variable>
   <variable item="Accel 2 Starting Point" CV="129" default="0" tooltip="Sets the Accel 2 start point, range 0(default)-255" comment="Range 0-255">
     <decVal max="255"/>
     <label>Accel 2 Starting Point</label>
-    <label xml:lang="it">Accel 2 Starting Point</label>
-    <comment xml:lang="it">Range 0-255</comment>
-    <tooltip xml:lang="it">Sets the Accel 2 start point, range 0(default)-255</tooltip>
+    <label xml:lang="it">Punto Iniziale Accell.2</label>
+    <comment xml:lang="it">Valori 0-255</comment>
+    <tooltip xml:lang="it">Imposta il punto di partenza di Accell.2, valori 0(default)-255</tooltip>
   </variable>
   <variable item="Accel 2 Rate" CV="130" default="0" tooltip="Sets the Accel 2 rate, range 0(default)-255" comment="Range 0-255">
     <decVal max="255"/>
     <label>Accel 2 Rate</label>
-    <label xml:lang="it">Accel 2 Rate</label>
-    <comment xml:lang="it">Range 0-255</comment>
-    <tooltip xml:lang="it">Sets the Accel 2 rate, range 0(default)-255</tooltip>
+    <label xml:lang="it">Grado Accell.2</label>
+    <comment xml:lang="it">Valori 0-255</comment>
+    <tooltip xml:lang="it">Imposta il Tasso di Accell.2, valori 0(default)-255</tooltip>
   </variable>
   <variable item="Accel 3 Starting Point" CV="131" default="0" tooltip="Sets the Accel 3 start point, range 0(default)-255" comment="Range 0-255">
     <decVal max="255"/>
     <label>Accel 3 Starting Point</label>
-    <label xml:lang="it">Accel 3 Starting Point</label>
-    <comment xml:lang="it">Range 0-255</comment>
-    <tooltip xml:lang="it">Sets the Accel 3 start point, range 0(default)-255</tooltip>
+    <label xml:lang="it">Punto Iniziale Accell.3</label>
+    <comment xml:lang="it">Valori 0-255</comment>
+    <tooltip xml:lang="it">Imposta il punto di partenza di Accell.3, valori 0(default)-255</tooltip>
   </variable>
   <variable item="Accel 3 Rate" CV="132" default="0" tooltip="Sets the Accel 3 rate, range 0(default)-255" comment="Range 0-255">
     <decVal max="255"/>
     <label>Accel 3 Rate</label>
-    <label xml:lang="it">Accel 3 Rate</label>
-    <comment xml:lang="it">Range 0-255</comment>
-    <tooltip xml:lang="it">Sets the Accel 3 rate, range 0(default)-255</tooltip>
+    <label xml:lang="it">Tasso Accell.3</label>
+    <comment xml:lang="it">Valori 0-255</comment>
+    <tooltip xml:lang="it">Imposta il Tasso di Accell.3, valori 0(default)-255</tooltip>
   </variable>
   <variable CV="133" default="255" item="EMF Droop Config" tooltip="If button control of motor is active, range 0-255">
     <decVal/>
     <label>Power to button controlled motor</label>
-    <label xml:lang="it">Power to button controlled motor</label>
-    <tooltip xml:lang="it">If button control of motor is active, range 0-255</tooltip>
+    <label xml:lang="it">Riduz.EMF per pulsante controllo Motore</label>
+    <tooltip xml:lang="it">Diminuzione EMF se attivo il pulsante controllo Motore, valori 0-255</tooltip>
   </variable>
   <variable item="FL(f) controls output Motor" CV="134" mask="XXXXXXXV" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(f) controls output Motor</label>
-    <label xml:lang="it">FL(f) controls output Motor</label>
+    <label xml:lang="it">Luci(in avanti) controlla uscita Motore</label>
   </variable>
   <variable item="FL(r) controls output Motor" CV="134" mask="XXXXXXVX" minOut="1" default="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(r) controls output Motor</label>
-    <label xml:lang="it">FL(r) controls output Motor</label>
+    <label xml:lang="it">Luci(in retro) controlla uscita Motore</label>
   </variable>
   <variable item="F1 controls output Motor" CV="134" mask="XXXXXVXX" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1 controls output Motor</label>
-    <label xml:lang="it">F1 controls output Motor</label>
+   <label xml:lang="it">F1 controlla uscita Motore</label>
   </variable>
   <variable item="F2 controls output Motor" CV="134" mask="XXXXVXXX" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2 controls output Motor</label>
-    <label xml:lang="it">F2 controls output Motor</label>
+    <label xml:lang="it">F2 controlla uscita Motore</label>
   </variable>
   <variable item="F3 controls output Motor" CV="134" mask="XXXVXXXX" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3 controls output Motor</label>
-    <label xml:lang="it">F3 controls output Motor</label>
+    <label xml:lang="it">F3 controlla uscita Motore</label>
   </variable>
   <variable item="F4 controls output Motor" CV="134" mask="XXVXXXXX" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F4 controls output Motor</label>
-    <label xml:lang="it">F4 controls output Motor</label>
+    <label xml:lang="it">F4 controlla uscita Motore</label>
   </variable>
   <variable item="F5 controls output Motor" CV="134" mask="XVXXXXXX" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5 controls output Motor</label>
-    <label xml:lang="it">F5 controls output Motor</label>
+    <label xml:lang="it">F5 controlla uscita Motore</label>
   </variable>
   <variable item="F6 controls output Motor" CV="134" mask="VXXXXXXX" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6 controls output Motor</label>
-    <label xml:lang="it">F6 controls output Motor</label>
+    <label xml:lang="it">F6 controlla uscita Motore</label>
   </variable>
   <variable CV="135" default="16" item="Function 7 effect generated" tooltip="Random Flicker for fireboxes">
     <decVal/>
     <label>Random Flicker 1 Speed</label>
-    <label xml:lang="it">Random Flicker 1 Speed</label>
-    <tooltip xml:lang="it">Random Flicker for fireboxes</tooltip>
+    <label xml:lang="it">Velocità Sfarfallio casuale 1</label>
+    <tooltip xml:lang="it">Sfarfallio casuale per caldaia</tooltip>
   </variable>
   <variable item="F5 controls output BEMF" CV="136" mask="XXXXXXXV" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5 controls output BEMF</label>
-    <label xml:lang="it">F5 controls output BEMF</label>
+    <label xml:lang="it">F5 controlla uscita BEMF</label>
   </variable>
   <variable item="F6 controls output BEMF" CV="136" mask="XXXXXXVX" minOut="1" default="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6 controls output BEMF</label>
-    <label xml:lang="it">F6 controls output BEMF</label>
+    <label xml:lang="it">F6 controlla uscita BEMF</label>
   </variable>
   <variable item="F7 controls output BEMF" CV="136" mask="XXXXXVXX" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F7 controls output BEMF</label>
-    <label xml:lang="it">F7 controls output BEMF</label>
+    <label xml:lang="it">F7 controlla uscita BEMF</label>
   </variable>
   <variable item="F8 controls output BEMF" CV="136" mask="XXXXVXXX" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F8 controls output BEMF</label>
-    <label xml:lang="it">F8 controls output BEMF</label>
+    <label xml:lang="it">F8 controlla uscita BEMF</label>
   </variable>
   <variable item="F9 controls output BEMF" CV="136" mask="XXXVXXXX" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F9 controls output BEMF</label>
-    <label xml:lang="it">F9 controls output BEMF</label>
+    <label xml:lang="it">F9 controlla uscita BEMF</label>
   </variable>
   <variable item="F10 controls output BEMF" CV="136" mask="XXVXXXXX" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F10 controls output BEMF</label>
-    <label xml:lang="it">F10 controls output BEMF</label>
+    <label xml:lang="it">F10 controlla uscita BEMF</label>
   </variable>
   <variable item="F11 controls output BEMF" CV="136" mask="XVXXXXXX" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F11 controls output BEMF</label>
-    <label xml:lang="it">F11 controls output BEMF</label>
+    <label xml:lang="it">F11 controlla uscita BEMF</label>
   </variable>
   <variable item="F12 controls output BEMF" CV="136" mask="VXXXXXXX" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F12 controls output BEMF</label>
-    <label xml:lang="it">F12 controls output BEMF</label>
+    <label xml:lang="it">F12 controlla uscita BEMF</label>
   </variable>
   <variable CV="137" default="4351" item="Function 5 behavior">
     <splitVal highCV="138"/>
     <label>Brake Light On Time</label>
-    <label xml:lang="it">Brake Light On Time</label>
+    <label xml:lang="it">Tempo di On Luci Freni</label>
   </variable>
   <variable item="FL(f) controls output Brake" CV="139" mask="XXXXXXXV" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(f) controls output Brake</label>
-    <label xml:lang="it">FL(f) controls output Brake</label>
+    <label xml:lang="it">Luci(in avanti) controlla uscita Freni</label>
   </variable>
   <variable item="FL(r) controls output Brake" CV="139" mask="XXXXXXVX" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(r) controls output Brake</label>
-    <label xml:lang="it">FL(r) controls output Brake</label>
+    <label xml:lang="it">Luci(in retro) controlla uscita Freni</label>
   </variable>
   <variable item="F1 controls output Brake" CV="139" mask="XXXXXVXX" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1 controls output Brake</label>
-    <label xml:lang="it">F1 controls output Brake</label>
+   <label xml:lang="it">F1 controlla uscita Freni</label>
   </variable>
   <variable item="F2 controls output Brake" CV="139" mask="XXXXVXXX" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2 controls output Brake</label>
-    <label xml:lang="it">F2 controls output Brake</label>
+    <label xml:lang="it">F2 controlla uscita Freni</label>
   </variable>
   <variable item="F3 controls output Brake" CV="139" mask="XXXVXXXX" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3 controls output Brake</label>
-    <label xml:lang="it">F3 controls output Brake</label>
+    <label xml:lang="it">F3 controlla uscita Freni</label>
   </variable>
   <variable item="F4 controls output Brake" CV="139" mask="XXVXXXXX" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F4 controls output Brake</label>
-    <label xml:lang="it">F4 controls output Brake</label>
+    <label xml:lang="it">F4 controlla uscita Freni</label>
   </variable>
   <variable item="F5 controls output Brake" CV="139" mask="XVXXXXXX" minOut="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5 controls output Brake</label>
-    <label xml:lang="it">F5 controls output Brake</label>
+    <label xml:lang="it">F5 controlla uscita Freni</label>
   </variable>
   <variable item="F6 controls output Brake" CV="139" mask="VXXXXXXX" minOut="1" default="1">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6 controls output Brake</label>
-    <label xml:lang="it">F6 controls output Brake</label>
+    <label xml:lang="it">F6 controlla uscita Freni</label>
   </variable>
   <variable CV="140" default="140" item="Function 3 effect generated">
     <decVal/>
     <label>Single Strobe 1 Off Duration</label>
-    <label xml:lang="it">Single Strobe 1 Off Duration</label>
+    <label xml:lang="it">Lampeggio singolo 1 Durata Off</label>
   </variable>
   <variable CV="141" default="5" item="Function 3 behavior">
     <decVal/>
     <label>Single Strobe 1 On Duration</label>
-    <label xml:lang="it">Single Strobe 1 On Duration</label>
+    <label xml:lang="it">Lampeggio singolo 1 Durata On</label>
   </variable>
   <variable CV="142" default="124" item="Function 3 options">
     <decVal/>
     <label>Single Strobe 2 Off Duration</label>
-    <label xml:lang="it">Single Strobe 2 Off Duration</label>
+    <label xml:lang="it">Lampeggio singolo 2 Durata Off</label>
   </variable>
   <variable CV="143" default="5" item="Function 3 option 1">
     <decVal/>
     <label>Single Strobe 2 On Duration</label>
-    <label xml:lang="it">Single Strobe 2 On Duration</label>
+    <label xml:lang="it">Lampeggio singolo 2 Durata On</label>
   </variable>
   <variable CV="144" default="144" item="Function 8 effect generated">
     <decVal/>
     <label>Flashing Light On Duration</label>
-    <label xml:lang="it">Flashing Light On Duration</label>
+    <label xml:lang="it">Luce lampeggiante Durata On</label>
   </variable>
   <variable CV="145" default="48" item="Function 8 behavior">
     <decVal/>
     <label>Flashing Light Off Duration</label>
-    <label xml:lang="it">Flashing Light Off Duration</label>
+    <label xml:lang="it">Luce lampeggiante Durata Off</label>
   </variable>
   <variable CV="146" default="112" item="Function 4 effect generated">
     <decVal/>
     <label>Double Strobe 1 Long Off Duration</label>
-    <label xml:lang="it">Double Strobe 1 Long Off Duration</label>
+    <label xml:lang="it">Lampeggio doppio 1 Durata Off lungo</label>
   </variable>
   <variable CV="147" default="5" item="Function 4 behavior">
     <decVal/>
     <label>Double Strobe 1 On Duration</label>
-    <label xml:lang="it">Double Strobe 1 On Duration</label>
+    <label xml:lang="it">Lampeggio doppio 1 Durata On</label>
   </variable>
   <variable CV="148" default="16" item="Function 4 options">
     <decVal/>
     <label>Double Strobe 1 Short Off Duration</label>
-    <label xml:lang="it">Double Strobe 1 Short Off Duration</label>
+    <label xml:lang="it">Lampeggio doppio 1 Durata Off corto</label>
   </variable>
   <variable CV="149" default="117" item="Function 4 option 1">
     <decVal/>
     <label>Double Strobe 2 Long Off Duration</label>
-    <label xml:lang="it">Double Strobe 2 Long Off Duration</label>
+    <label xml:lang="it">Lampeggio doppio 2 Durata Off lungo</label>
   </variable>
   <variable CV="150" default="16" item="Function 4 option 2">
     <decVal/>
     <label>Double Strobe 2 On Duration</label>
-    <label xml:lang="it">Double Strobe 2 On Duration</label>
+    <label xml:lang="it">Lampeggio doppio 2 Durata On</label>
   </variable>
   <variable CV="151" default="5" item="Function 4 option 3">
     <decVal/>
     <label>Double Strobe 2 Short Off Duration</label>
-    <label xml:lang="it">Double Strobe 2 Short Off Duration</label>
+    <label xml:lang="it">Lampeggio doppio 2 Durata Off corto</label>
   </variable>
   <variable CV="152" default="16" item="Function 7 behavior" tooltip="Random Flicker 2 for fireboxes">
     <decVal/>
     <label>Random Flicker 2 Speed</label>
-    <label xml:lang="it">Random Flicker 2 Speed</label>
-    <tooltip xml:lang="it">Random Flicker 2 for fireboxes</tooltip>
+    <label xml:lang="it">Velocità Sfarfallio casuale 2</label>
+    <tooltip xml:lang="it">Velocità Sfarfallio 2 per caldaia</tooltip>
   </variable>
   <variable CV="153" default="5" item="Global lighting option 3" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
     <decVal max="32"/>
     <label>Constant Dim 2 Brightness</label>
-    <label xml:lang="it">Constant Dim 2 Brightness</label>
-    <tooltip xml:lang="it">16 = 50% for incandescent bulbs, 2-6 for LEDs</tooltip>
+    <label xml:lang="it">Luminosità Costante Smorzam.2</label>
+    <tooltip xml:lang="it">16 = 50% per bulbi incandescenti, 2-6 per LEDs</tooltip>
   </variable>
   <variable CV="154" default="5" item="Global lighting option 4" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
     <decVal max="32"/>
     <label>Constant Dim 3 Brightness</label>
-    <label xml:lang="it">Constant Dim 3 Brightness</label>
-    <tooltip xml:lang="it">16 = 50% for incandescent bulbs, 2-6 for LEDs</tooltip>
+    <label xml:lang="it">Luminosità Costante Smorzam.3</label>
+    <tooltip xml:lang="it">16 = 50% per bulbi incandescenti, 2-6 per LEDs</tooltip>
   </variable>
   <variable CV="155" default="5" item="Global lighting option 5" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
     <decVal max="32"/>
     <label>Constant Dim 4 Brightness</label>
-    <label xml:lang="it">Constant Dim 4 Brightness</label>
-    <tooltip xml:lang="it">16 = 50% for incandescent bulbs, 2-6 for LEDs</tooltip>
+    <label xml:lang="it">Luminosità Costante Smorzam.4</label>
+    <tooltip xml:lang="it">16 = 50% per bulbi incandescenti, 2-6 per LEDs</tooltip>
   </variable>
   <variable CV="156" default="0" item="Global lighting option 6" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
     <decVal max="32"/>
     <label>Headlight Dim Brightness</label>
-    <label xml:lang="it">Headlight Dim Brightness</label>
-    <tooltip xml:lang="it">16 = 50% for incandescent bulbs, 2-6 for LEDs</tooltip>
+    <label xml:lang="it">Luminosità Smorzam.Luci frontali</label>
+    <tooltip xml:lang="it">16 = 50% per bulbi incandescenti, 2-6 per LEDs</tooltip>
   </variable>
   <variable CV="157" default="0" item="Global lighting option 7" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
     <decVal max="32"/>
     <label>Reverse Light Dim Brightness</label>
-    <label xml:lang="it">Reverse Light Dim Brightness</label>
-    <tooltip xml:lang="it">16 = 50% for incandescent bulbs, 2-6 for LEDs</tooltip>
+    <label xml:lang="it">Luminosità Smorzam.Luci Retro</label>
+    <tooltip xml:lang="it">16 = 50% per bulbi incandescenti, 2-6 per LEDs</tooltip>
   </variable>
 </variables>

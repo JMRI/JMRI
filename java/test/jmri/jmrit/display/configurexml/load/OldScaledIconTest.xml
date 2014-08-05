@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="http://www.jmri.org/xml/XSLT/panelfile.xsl" type="text/xsl"?>
+<!DOCTYPE layout-config SYSTEM "layout-config-2-8.dtd">
+
+<layout-config>
+  <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
+    <sensor systemName="ISCLOCKRUNNING" inverted="false" />
+  </sensors>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory systemName="IMCURRENTTIME" value="3:12 PM" />
+  </memories>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Thu Nov 19 17:34:10 EST 2009" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
+  <!--Written by JMRI version 2.8 on Fri Dec 18 15:12:01 EST 2009 $Id$-->
+</layout-config>
+

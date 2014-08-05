@@ -33,7 +33,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	JTable routeTable = new JTable(routeModel);
 	JScrollPane routePane;
 
-	RouteManager manager;
+	RouteManager routeManager;
 	RouteManagerXml managerXml;
 	LocationManager locationManager = LocationManager.instance();
 
@@ -84,8 +84,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		String routeName = null;
 
 		// load managers
-		manager = RouteManager.instance();
-		managerXml = RouteManagerXml.instance();
+		routeManager = RouteManager.instance();
 
 		// Set up the jtable in a Scroll Pane..
 		routePane = new JScrollPane(routeTable);
@@ -225,7 +224,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		if (ae.getSource() == saveRouteButton) {
 			log.debug("route save button activated");
-			Route route = manager.getRouteByName(routeNameTextField.getText());
+			Route route = routeManager.getRouteByName(routeNameTextField.getText());
 			if (_route == null && route == null) {
 				saveNewRoute();
 			} else {
@@ -245,11 +244,11 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 				return;
 			}
-			Route route = manager.getRouteByName(routeNameTextField.getText());
+			Route route = routeManager.getRouteByName(routeNameTextField.getText());
 			if (route == null)
 				return;
 
-			manager.deregister(route);
+			routeManager.deregister(route);
 			_route = null;
 
 			enableButtons(false);
@@ -258,7 +257,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 			OperationsXml.save();
 		}
 		if (ae.getSource() == addRouteButton) {
-			Route route = manager.getRouteByName(routeNameTextField.getText());
+			Route route = routeManager.getRouteByName(routeNameTextField.getText());
 			if (route != null) {
 				reportRouteExists(Bundle.getMessage("add"));
 				return;
@@ -285,6 +284,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 			rl = _route.addLocation(l);
 		rl.setTrainDirection(routeModel.getLastTrainDirection());
 		rl.setMaxTrainLength(routeModel.getLastMaxTrainLength());
+		rl.setMaxCarMoves(routeModel.getLastMaxTrainMoves());
 		// set train icon location
 		rl.setTrainIconCoordinates();
 	}
@@ -292,7 +292,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	private void saveNewRoute() {
 		if (!checkName(Bundle.getMessage("add")))
 			return;
-		Route route = manager.newRoute(routeNameTextField.getText());
+		Route route = routeManager.newRoute(routeNameTextField.getText());
 		routeModel.initTable(this, routeTable, route);
 		_route = route;
 		// enable checkboxes

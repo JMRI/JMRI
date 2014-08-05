@@ -19,7 +19,12 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.DefaultCellEditor;
 import java.awt.event.MouseEvent;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import jmri.jmrix.ecos.EcosLocoAddress;
 import jmri.jmrix.ecos.EcosLocoAddressManager;
@@ -31,6 +36,7 @@ import jmri.jmrix.ecos.utilities.EcosLocoToRoster;
 import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.beantable.AbstractTableAction;
 import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
+import jmri.jmrix.ecos.utilities.RemoveObjectFromEcos;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.swing.XTableColumnModel;
 
@@ -74,6 +80,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
 
     protected EcosSystemConnectionMemo adaptermemo;
     protected EcosLocoAddressManager locoManager;
+    @Override
     public void setManager(Manager man) { 
         locoManager = (EcosLocoAddressManager) man;
     }
@@ -89,21 +96,27 @@ public class EcosLocoTableAction extends AbstractTableAction {
     List<String> ecosObjectIdList = null;
     JTable table;
     
-    static public final int ADDTOROSTERCOL = 5;
-    static public final int SPEEDDIR = 6;
-    static public final int STOP = 7;
-    
+    static public final int PROTOCOL = 5;
+    static public final int ADDTOROSTERCOL = 6;
+    static public final int SPEEDDIR = 7;
+    static public final int STOP = 8;
+     
+    @Override
     protected void createModel() {
         m = new BeanTableDataModel() {
         
             //We have to set a manager first off, but this gets replaced.
+            @Override
             protected EcosLocoAddressManager getManager() { return locoManager;}
             protected String getRosterAttribute() { return rosterAttribute; }
             
+            @Override
             public String getValue(String s) {
                 return "Set";
             }
+            @Override
             protected String getMasterClassName() { return getClassName(); }
+            @Override
             public void clickOn(jmri.NamedBean t) { }
             
             @Override
@@ -145,7 +158,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
             @Override
             public void setValueAt(Object value, int row, int col) {
                 if (col==COMMENTCOL) {
-                    RosterEntry re = null;
+                    RosterEntry re;
                     String ecosObjectNo = ecosObjectIdList.get(row);
                     if (value==null){
                         return;
@@ -158,7 +171,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
                                 return;
                             }
                             String oldRoster = getByEcosObject(ecosObjectNo).getRosterId();
-                            RosterEntry oldre =null;
+                            RosterEntry oldre;
                             if(oldRoster!=null){
                                 oldre = Roster.instance().getEntryForId(oldRoster);
                                 if(oldre!=null)
@@ -169,7 +182,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
                             re.updateFile();
                         } else if (value instanceof String){
                             List<RosterEntry> r = Roster.instance().getEntriesWithAttributeKeyValue(getRosterAttribute(), ecosObjectNo);
-                            if(r.size()!=0){
+                            if(r.isEmpty()){
                                 r.get(0).deleteAttribute(getRosterAttribute());
                                 getByEcosObject(ecosObjectNo).setRosterId(null);
                                 r.get(0).updateFile();
@@ -182,18 +195,32 @@ public class EcosLocoTableAction extends AbstractTableAction {
                     addToRoster(row, col);
                 } else if (col==STOP){
                     stopLoco(row, col);
+                }  else if (col==DELETECOL) {
+                    // button fired, delete Bean
+                    deleteLoco(row, col);
+                } else if (col == USERNAMECOL) {
+                    jmri.jmrix.ecos.EcosLocoAddress b = getByEcosObject(ecosObjectIdList.get(row));
+                    EcosMessage m = new EcosMessage("request("+b.getEcosObject()+", control, force)");
+                    adaptermemo.getTrafficController().sendEcosMessage(m, null);
+                    m = new EcosMessage("set("+b.getEcosObject()+", name[\""+(String)value+"\"])");
+                    adaptermemo.getTrafficController().sendEcosMessage(m, null);
+                    m = new EcosMessage("release("+b.getEcosObject()+", control)");
+                    adaptermemo.getTrafficController().sendEcosMessage(m, null);
                 }
             }
             
+            @Override
             public JTable makeJTable(TableSorter srtr) {
                 JTable table = new JTable(srtr)  {
                     
+                    @Override
                     public TableCellRenderer getCellRenderer(int row, int column) {
                         if (column == COMMENTCOL) {
                             return getRenderer(row);
                         } else
                             return super.getCellRenderer(row, column);
                     }
+                    @Override
                     public TableCellEditor getCellEditor(int row, int column) {
                         if (column == COMMENTCOL) {
                             return getEditor(row);
@@ -251,6 +278,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
              * <P>
              * Note that events will come both from the jmri.jmrix.ecos.EcosLocoAddressManagers and also from the manager
              */
+            @Override
             protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
                 if(!showLocoMonitor && (e.getPropertyName().equals("Speed") || e.getPropertyName().equals("Direction"))){
                     return false;
@@ -265,7 +293,8 @@ public class EcosLocoTableAction extends AbstractTableAction {
                 case USERNAMECOL: return "ECoS Descritpion";
                 case VALUECOL: return "ECoS Address";
                 case COMMENTCOL: return "JMRI Roster Id";
-                case DELETECOL: return "ECOS Protocol";
+                case DELETECOL: return "Delete";
+                case PROTOCOL: return "ECOS Protocol";
                 case ADDTOROSTERCOL: return "Add to Roster";
                 case SPEEDDIR: return "Speed Direction";
                 case STOP: return "Stop";
@@ -279,10 +308,11 @@ public class EcosLocoTableAction extends AbstractTableAction {
                 case SYSNAMECOL:
                 case USERNAMECOL:
                 case VALUECOL:
-                case DELETECOL:
+                case PROTOCOL:
                 case SPEEDDIR:
                     return String.class;
                 case ADDTOROSTERCOL:
+                case DELETECOL:
                 case STOP:
                     return JButton.class;
                 case COMMENTCOL:
@@ -303,6 +333,8 @@ public class EcosLocoTableAction extends AbstractTableAction {
                         return true;
                     else
                         return false;
+                case USERNAMECOL:
+                case DELETECOL:
                 case STOP:
                     return true;
                 default:
@@ -327,12 +359,16 @@ public class EcosLocoTableAction extends AbstractTableAction {
                     return new JTextField(5).getPreferredSize().width;
                 case SPEEDDIR: 
                     return new JTextField(10).getPreferredSize().width;
+                case PROTOCOL:
+                    return new JTextField(5).getPreferredSize().width;
                 default:
                     //log.warn("Unexpected column in getPreferredWidth: "+col);
-                    return new JTextField(8).getPreferredSize().width;
+                    return super.getPreferredWidth(col);
+                    //return new JTextField(8).getPreferredSize().width;
                 }
             }
-    
+            
+            @Override
             public void configureTable(JTable tbl) {
                 table = tbl;
                 setColumnToHoldButton(table, ADDTOROSTERCOL, 
@@ -345,9 +381,11 @@ public class EcosLocoTableAction extends AbstractTableAction {
                 column  = columnModel.getColumnByModelIndex(STOP);
                 columnModel.setColumnVisible(column, false);
             }
+            @Override
             public NamedBean getBySystemName(String name) { return null;}
+            @Override
             public NamedBean getByUserName(String name) { return null;}
-            
+            @Override
             synchronized public void dispose() {
                 showLocoMonitor=false;
                 getManager().removePropertyChangeListener(this);
@@ -359,6 +397,55 @@ public class EcosLocoTableAction extends AbstractTableAction {
                 }
             }
             
+            protected void deleteLoco(final int row, int col) {
+                if (row >= ecosObjectIdList.size()){
+                    log.debug("row is greater than list size");
+                    return;
+                }
+                jmri.jmrix.ecos.EcosLocoAddress b = getByEcosObject(ecosObjectIdList.get(row));
+                final JDialog dialog = new JDialog();
+                dialog.setTitle("Remove Loco From ECOS");
+                dialog.setLocation(300,200);
+                dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+                JPanel container = new JPanel();
+                container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+                container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+
+                JLabel question = new JLabel("Are you sure that you want to remove loco " + b.getEcosDescription() + " from the ECOS ?");
+                question.setAlignmentX(Component.CENTER_ALIGNMENT);
+                container.add(question);
+                JButton yesButton = new JButton("Yes");
+                JButton noButton = new JButton("No");
+                JPanel button = new JPanel();
+                button.setAlignmentX(Component.CENTER_ALIGNMENT);
+                button.add(yesButton);
+                button.add(noButton);
+                container.add(button);
+
+                noButton.addActionListener(new ActionListener(){
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        dialog.dispose();
+                    }
+                });
+
+                yesButton.addActionListener(new ActionListener(){
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        RemoveObjectFromEcos removeObjectFromEcos = new RemoveObjectFromEcos();
+                        removeObjectFromEcos.removeObjectFromEcos(ecosObjectIdList.get(row), adaptermemo.getTrafficController());
+                        dialog.dispose();
+                    }
+                });
+                container.setAlignmentX(Component.CENTER_ALIGNMENT);
+                container.setAlignmentY(Component.CENTER_ALIGNMENT);
+                dialog.getContentPane().add(container);
+                dialog.pack();
+                dialog.setModal(true);
+                dialog.setVisible(true);
+            }
+            
+            @Override
             public int getRowCount() {
                 return ecosObjectIdList.size();
             }
@@ -394,7 +481,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
                         cb.setSelectedItem(re);
                     }
                     return re;
-                case DELETECOL:
+                case PROTOCOL:
                     b = getByEcosObject(ecosObjectIdList.get(row));
                     return (b!=null) ? b.getProtocol() : null;
                 case ADDTOROSTERCOL:  //
@@ -408,13 +495,14 @@ public class EcosLocoTableAction extends AbstractTableAction {
                 case SPEEDDIR:
                     b = getByEcosObject(ecosObjectIdList.get(row));
                     return (b!=null) ? (b.getDirectionAsString() + " : " + b.getSpeed()) : null;
-                    
+                case DELETECOL:  //
+                    return AbstractTableAction.rb.getString("ButtonDelete");
                 default:
                     //log.error("internal state inconsistent with table requst for "+row+" "+col);
                     return null;
                 }
             }
-            
+            @Override
             protected String getBeanType(){
                 return "Ecos Loco";
             }
@@ -450,15 +538,15 @@ public class EcosLocoTableAction extends AbstractTableAction {
     void stopLoco(int row, int col){
     
         String objectNumber = ecosObjectIdList.get(row);
-        EcosMessage m;
+        EcosMessage msg;
         //We will repeat this three times to make sure it gets through.
         for (int x = 0 ;x<3 ; x++){
-            m = new EcosMessage("request("+objectNumber+", control, force)");
-            adaptermemo.getTrafficController().sendEcosMessage(m, null);
-            m = new EcosMessage("set("+objectNumber+", stop)");
-            adaptermemo.getTrafficController().sendEcosMessage(m, null);
-            m = new EcosMessage("release("+objectNumber+", control)");
-            adaptermemo.getTrafficController().sendEcosMessage(m, null);
+            msg = new EcosMessage("request("+objectNumber+", control, force)");
+            adaptermemo.getTrafficController().sendEcosMessage(msg, null);
+            msg = new EcosMessage("set("+objectNumber+", stop)");
+            adaptermemo.getTrafficController().sendEcosMessage(msg, null);
+            msg = new EcosMessage("release("+objectNumber+", control)");
+            adaptermemo.getTrafficController().sendEcosMessage(msg, null);
         }
     }
     
@@ -466,10 +554,11 @@ public class EcosLocoTableAction extends AbstractTableAction {
         f.addToBottomBox(showMonitorLoco, adaptermemo.getUserName());
         showMonitorLoco.setToolTipText("Show extra columns for configuring turnout feedback?");
         showMonitorLoco.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    showMonitorChanged();
-                }
-            });
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showMonitorChanged();
+            }
+        });
     }    
     void addToRoster(int row, int col){
         if (getByEcosObject(ecosObjectIdList.get(row)).getRosterId()==null){
@@ -481,6 +570,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
         }
     }
 
+    @Override
     protected void setTitle() {
         if(adaptermemo!=null){
             f.setTitle(adaptermemo.getUserName() + " Loco Table");
@@ -504,6 +594,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
             }
         }
     
+        @Override
         public Component getTableCellRendererComponent(JTable table, Object value,
             boolean isSelected, boolean hasFocus, int row, int column) {
             if (isSelected) {
@@ -527,8 +618,10 @@ public class EcosLocoTableAction extends AbstractTableAction {
         }
     }
     
+    @Override
     protected void addPressed(ActionEvent e){ }
     
+    @Override
     protected String getClassName() { return EcosLocoTableAction.class.getName(); }
     
     static final Logger log = LoggerFactory.getLogger(EcosLocoTableAction.class.getName());

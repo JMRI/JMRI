@@ -32,7 +32,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * @version     $Revision$
  * @since       2.11.4
  */
-public class RfidTrafficController extends AbstractMRTrafficController implements RfidInterface {
+abstract public class RfidTrafficController extends AbstractMRTrafficController implements RfidInterface {
 
     public RfidTrafficController() {
         super();
@@ -50,7 +50,11 @@ public class RfidTrafficController extends AbstractMRTrafficController implement
     public void setAdapterMemo(RfidSystemConnectionMemo memo) {
         adapterMemo = memo;
     }
-    
+
+    public RfidSystemConnectionMemo getAdapterMemo() {
+        return adapterMemo;
+    }
+
     /**
      * Get a message of a specific length for filling in.
      * <p>
@@ -174,6 +178,8 @@ public class RfidTrafficController extends AbstractMRTrafficController implement
      * in an adapter-specific subclass.
      */
     protected AbstractMRReply newReply() { return null; }
+
+    abstract public void sendInitString();
 
     public String getRange() { return null; }
       

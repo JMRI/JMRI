@@ -18,19 +18,19 @@
   <column>
     <label>
       <text>TCS decoders support a decoder locking feature</text>
-      <text xml:lang="it">TCS decoders support a decoder locking feature</text>
+      <text xml:lang="it">I decoder TCS supportano la funzione di blocco decoder</text>
     </label>
     <label>
       <text>useful when several decoders are used in one loco</text>
-      <text xml:lang="it">useful when several decoders are used in one loco</text>
+      <text xml:lang="it">Utile quando nella stessa loco ci sono più decoder</text>
     </label>
     <label>
       <text>on the same address, e.g. for adding sound</text>
-      <text xml:lang="it">on the same address, e.g. for adding sound</text>
+      <text xml:lang="it">con lo stesso indirizzo, ad es. per aggiungere il sonoro</text>
     </label>
     <label>
       <text>TCS suggests values of 1=mobile, 2=sound, 3=light/function only</text>
-      <text xml:lang="it">TCS suggests values of 1=mobile, 2=sound, 3=light/function only</text>
+      <text xml:lang="it">TCS suggerisce i valori di 1=motore, 2=sonoro, 3=luci/solo funzioni</text>
     </label>
     <label>
       <text> </text>
@@ -38,7 +38,7 @@
     <display item="Decoder Lock ID number"/>
     <label>
       <text>Set CV15 equal to this number to unlock the decoder for programming</text>
-      <text xml:lang="it">Set CV15 equal to this number to unlock the decoder for programming</text>
+      <text xml:lang="it">Imposta CV15 con questo numero per sbloccare il decoder per la programmazione</text>
     </label>
     <label>
       <text> </text>

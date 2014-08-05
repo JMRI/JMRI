@@ -14,6 +14,8 @@ import javax.swing.JPopupMenu;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.NamedBeanHandle;
+import jmri.Sensor;
 import jmri.jmrit.display.CoordinateEdit;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
@@ -35,7 +37,7 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
     public static final String TO_ARROW = "toArrow";
     public static final String FROM_ARROW = "fromArrow";
 
-    private Portal _portal;
+    private NamedBeanHandle<Portal> _portalHdl;
     private String _status;
     private boolean _regular = true;	// true when TO_ARROW shows entry into ToBlock
     private boolean _hide = false;	// true when arrow should NOT show entry into ToBlock
@@ -68,7 +70,7 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
     }
     
     public Positionable deepClone() {
-    	PortalIcon pos = new PortalIcon(_editor, _portal);
+    	PortalIcon pos = new PortalIcon(_editor, getPortal());
         return finishClone(pos);
     }
 
@@ -85,7 +87,7 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
      * Called from EditPortalDirection frame in CircuitBuilder
      */
     protected void setIcon(String name, NamedIcon ic) {
-        if (log.isDebugEnabled()) log.debug(_portal.getName()+"/ put icon key= \""+name+"\" icon= "+ic);
+        if (log.isDebugEnabled()) log.debug("Icon "+getPortal().getName()+" put icon key= \""+name+"\" icon= "+ic);
         NamedIcon icon = cloneIcon(ic, this);
         icon.scale(getScale(), this);
         icon.rotate(getDegrees(), this);
@@ -95,14 +97,14 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
      * Called from EditPortalDirection frame in CircuitBuilder
      */
     public void setArrowOrientatuon(boolean set) {
-        if (log.isDebugEnabled()) log.debug(_portal.getName()+"/ setArrowOrientatuon regular="+set+" from "+_regular);
+        if (log.isDebugEnabled()) log.debug("Icon "+getPortal().getName()+" setArrowOrientatuon regular="+set+" from "+_regular);
     	_regular = set;
     }
     /**
      * Called from EditPortalDirection frame in CircuitBuilder
      */
     public void setHideArrows(boolean set) {
-        if (log.isDebugEnabled()) log.debug(_portal.getName()+"/ setHideArrows hide="+set+" from "+_hide);
+        if (log.isDebugEnabled()) log.debug("Icon "+getPortal().getName()+" setHideArrows hide="+set+" from "+_hide);
     	_hide = set;
     }
     
@@ -114,29 +116,32 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
     }
 
     public Portal getPortal() {
-        return _portal;
+    	if (_portalHdl==null) {
+    		return null;
+    	}
+        return _portalHdl.getBean();
     }
     public void setPortal(Portal portal) {
-    	if (_portal!=null) {
-    		if (_portal.equals(portal)) {
+    	if (portal==null) {
+    		return;
+    	} 
+    	if (_portalHdl!=null) {
+			Portal port = getPortal();
+    		if (port.equals(portal)) {
     			return;
     		} else {
-    			_portal.removePropertyChangeListener(this);
-    	        _portal = portal;
-    	        _portal.addPropertyChangeListener(this); 		
+    			port.removePropertyChangeListener(this);
     		}   			
-    	} else if (portal==null) {
-    		return;
-    	} else {
-    		_portal = portal;
-	        _portal.addPropertyChangeListener(this); 		
     	}
-        setName(_portal.getName());
-        setTooltip(new ToolTip(_portal.getDescription(), 0, 0));
+		_portalHdl = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class)
+				.getNamedBeanHandle(portal.getUserName(), portal);
+        portal.addPropertyChangeListener(this); 		
+        setName(portal.getName());
+        setTooltip(new ToolTip(portal.getDescription(), 0, 0));
    }
 
     public void setStatus(String status) {
-        if (log.isDebugEnabled()) log.debug(_portal.getName()+"/ setStatus("+status+") regular="+_regular+" icon= "+_iconMap.get(status));
+//        if (log.isDebugEnabled()) log.debug("Icon "+getPortal().getName()+" setStatus("+status+") regular="+_regular+" icon= "+_iconMap.get(status));
         setIcon(_iconMap.get(status));
         _status = status;
         updateSize();
@@ -149,7 +154,7 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
     
     /* currently Portals do not have an instance manager - !!!todo? */
     public jmri.NamedBean getNamedBean(){
-        return _portal;
+        return getPortal();
     }
     
     public void displayState(int state) {
@@ -182,27 +187,35 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         Object source = e.getSource();
-        if (source instanceof Portal && "Direction".equals(e.getPropertyName())) {
-            if (_hide) {
-        		setStatus(HIDDEN);
-        		return;
-            }
-        	switch (((Integer)e.getNewValue()).intValue()) {
-        		case Portal.UNKNOWN:
-        			setStatus(HIDDEN);
-        			break;
-        		case Portal.ENTER_TO_BLOCK:
-        			setStatus(TO_ARROW);
-        			break;
-        		case Portal.ENTER_FROM_BLOCK:
-        			setStatus(FROM_ARROW);
-        			break;
-    		}      	
+//        if (log.isDebugEnabled()) log.debug("Icon "+getPortal().getName()+" PropertyChange= "+e.getPropertyName()+
+//        		" oldValue= "+e.getOldValue().toString()+" newValue= "+e.getNewValue().toString());
+        if (source instanceof Portal) {
+        	if ("Direction".equals(e.getPropertyName())) {
+                if (_hide) {
+            		setStatus(HIDDEN);
+            		return;
+                }
+            	switch (((Integer)e.getNewValue()).intValue()) {
+            		case Portal.UNKNOWN:
+            			setStatus(HIDDEN);
+            			break;
+            		case Portal.ENTER_TO_BLOCK:
+            			setStatus(TO_ARROW);
+            			break;
+            		case Portal.ENTER_FROM_BLOCK:
+            			setStatus(FROM_ARROW);
+            			break;
+        		}      	        		
+        	} else if ("UserName".equals(e.getPropertyName())) {
+                setName((String)e.getNewValue());
+                ((ControlPanelEditor)getEditor()).getCircuitBuilder().changePortalName(
+                		(String)e.getOldValue(), (String)e.getNewValue());
+        	}
         }
     }
-    
+
     public String getNameString() {
-        return _portal.getDescription();
+        return getPortal().getDescription();
     }
     
     /*
