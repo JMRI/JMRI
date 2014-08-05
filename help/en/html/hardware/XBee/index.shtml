@@ -79,6 +79,12 @@ ModuleAddress:Pin1:Pin2
 </p>
 <p>Where ModuleAddress is one of the 16 bit node address, the 64 bit node address, or the Node Identifier string and Pin1 and Pin2 are XBee IO pin numbers.  The Pin numbers do not need to be consecutive.
 </p>
+<h3>Automatic Creation of Sensors</h3>
+<p>
+When an XBee input status message is received indicating one ( or more ) of the XBee IO Pins is used as an input, JMRI will automatically create a sensor for each input pin if it does not already exist.
+</p>
+<p>When sensors are created automatically, the Node Identifier will be used for the ModuleAddress if it is not blank.  If the Node Identifier is blank, the 16 bit MY address field will be used for the ModuleAddress unless the MY address field contains a broadcast address.  If neither the Node Identifier or the 16 bit MY Address are used for the ModuleAddress, the 64 bit GUID will be used for the ModuleAddress.
+</p>
 <!--#include virtual="/Footer" -->
 </body>
 </html>
