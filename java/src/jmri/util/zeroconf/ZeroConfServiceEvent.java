@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ZeroConfServiceEvent extends EventObject {
 
-    private ZeroConfService service;
+    private final ZeroConfService service;
     private final JmDNS dns;
     private static final Logger log = LoggerFactory.getLogger(ZeroConfServiceEvent.class);
 
