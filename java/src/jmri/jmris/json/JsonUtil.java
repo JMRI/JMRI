@@ -110,6 +110,7 @@ import static jmri.jmris.json.JSON.PANEL_PANEL;
 import static jmri.jmris.json.JSON.PORT;
 import static jmri.jmris.json.JSON.POSITION;
 import static jmri.jmris.json.JSON.POWER;
+import static jmri.jmris.json.JSON.PREFIX;
 import static jmri.jmris.json.JSON.RAILROAD;
 import static jmri.jmris.json.JSON.RATE;
 import static jmri.jmris.json.JSON.REMOVE_COMMENT;
@@ -128,6 +129,7 @@ import static jmri.jmris.json.JSON.SIZE_LIMIT;
 import static jmri.jmris.json.JSON.STATE;
 import static jmri.jmris.json.JSON.STATUS;
 import static jmri.jmris.json.JSON.STATUS_CODE;
+import static jmri.jmris.json.JSON.SYSTEM_CONNECTION;
 import static jmri.jmris.json.JSON.TERMINATES_LOCATION;
 import static jmri.jmris.json.JSON.THROWN;
 import static jmri.jmris.json.JSON.TIME;
@@ -162,6 +164,7 @@ import static jmri.jmrit.operations.trains.TrainCommon.splitString;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrix.ConnectionConfig;
 import jmri.util.JmriJFrame;
 import jmri.util.node.NodeIdentity;
 import jmri.util.zeroconf.ZeroConfService;
@@ -1089,6 +1092,22 @@ public class JsonUtil {
             log.error("Unable to get signal mast [{}].", name);
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", SIGNAL_MAST, name));
         }
+    }
+
+    static public JsonNode getSystemConnections() {
+        ArrayNode root = mapper.createArrayNode();
+        for (Object instance : InstanceManager.configureManagerInstance().getInstanceList(ConnectionConfig.class)) {
+            ConnectionConfig config = (ConnectionConfig) instance;
+            if (!config.getDisabled()) {
+                ObjectNode connection = mapper.createObjectNode().put(TYPE, SYSTEM_CONNECTION);
+                ObjectNode data = connection.putObject(DATA);
+                data.put(NAME, config.getConnectionName());
+                data.put(MFG, config.getManufacturer());
+                data.put(PREFIX, config.getAdapter().getSystemConnectionMemo().getSystemPrefix());
+                root.add(connection);
+            }
+        }
+        return root;
     }
 
     static public JsonNode getTime(Locale locale) throws JsonException {

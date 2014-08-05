@@ -25,7 +25,7 @@ public final class JSON {
      * <p>
      * {@value #JSON_PROTOCOL_VERSION}
      */
-    public static final String JSON_PROTOCOL_VERSION = "1.1"; // NOI18N
+    public static final String JSON_PROTOCOL_VERSION = "2.0"; // NOI18N
 
     /* JSON structure */
     /**
@@ -854,6 +854,23 @@ public final class JSON {
      * @since 1.1
      */
     public static final String UNIT = "unit";
+
+    /* JMRI JSON Client Autoconfiguration support */
+    /**
+     * {@value #PREFIX}
+     * @since 2.0
+     */
+    public static final String PREFIX = "prefix";
+    /**
+     * {@value #SYSTEM_CONNECTION}
+     * @since 2.0
+     */
+    public static final String SYSTEM_CONNECTION = "systemConnection";
+    /**
+     * {@value #SYSTEM_CONNECTIONS}
+     * @since 2.0
+     */
+    public static final String SYSTEM_CONNECTIONS = "systemConnections";
 
     /* prevent the constructor from being documented */
     private JSON() {
