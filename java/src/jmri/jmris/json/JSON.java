@@ -853,24 +853,32 @@ public final class JSON {
      * {@value #UNIT}
      * @since 1.1
      */
-    public static final String UNIT = "unit";
+    public static final String UNIT = "unit"; // NOI18N
 
     /* JMRI JSON Client Autoconfiguration support */
     /**
      * {@value #PREFIX}
      * @since 2.0
      */
-    public static final String PREFIX = "prefix";
+    public static final String PREFIX = "prefix"; // NOI18N
     /**
      * {@value #SYSTEM_CONNECTION}
      * @since 2.0
      */
-    public static final String SYSTEM_CONNECTION = "systemConnection";
+    public static final String SYSTEM_CONNECTION = "systemConnection"; // NOI18N
     /**
      * {@value #SYSTEM_CONNECTIONS}
      * @since 2.0
      */
-    public static final String SYSTEM_CONNECTIONS = "systemConnections";
+    public static final String SYSTEM_CONNECTIONS = "systemConnections"; // NOI18N
+
+    /* ZeroConf support */
+    /**
+     * {@value #ZEROCONF_SERVICE_TYPE}
+     * Not used within the protocol, but used to support discovery of servers
+     * supporting the protocol.
+     */
+    public static final String ZEROCONF_SERVICE_TYPE = "_jmri-json._tcp.local."; // NOI18N
 
     /* prevent the constructor from being documented */
     private JSON() {

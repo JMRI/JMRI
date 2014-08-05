@@ -17,6 +17,7 @@ import static jmri.jmris.json.JSON.GOODBYE;
 import static jmri.jmris.json.JSON.JSON;
 import static jmri.jmris.json.JSON.JSON_PROTOCOL_VERSION;
 import static jmri.jmris.json.JSON.TYPE;
+import static jmri.jmris.json.JSON.ZEROCONF_SERVICE_TYPE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,7 +72,7 @@ public class JsonServer extends JmriServer {
     protected void advertise() {
         HashMap<String, String> properties = new HashMap<String, String>();
         properties.put(JSON, JSON_PROTOCOL_VERSION);
-        this.advertise("_jmri-json._tcp.local.", properties); // NOI18N
+        this.advertise(ZEROCONF_SERVICE_TYPE, properties);
     }
 
     // Handle communication to a client through inStream and outStream
