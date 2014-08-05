@@ -1,6 +1,8 @@
 package jmri.util.zeroconf;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javax.jmdns.JmDNS;
 import javax.jmdns.NetworkTopologyEvent;
 import javax.jmdns.NetworkTopologyListener;
@@ -32,21 +34,12 @@ public class ZeroConfClient {
         }
     }
 
-    public void listService(String service) {
-        for (JmDNS server : ZeroConfService.netServices().values()) {
-            ServiceInfo[] infos = server.list(service);
-            log.info("List " + service);
-            for (ServiceInfo info : infos) {
-                log.info(info.toString());
-            }
-            log.info("");
-        }
-    }
-
-    /*
-     * request the first service of a particular type.
+    /**
+     * Request the first service of a particular service.
+     *
      * @param service string service name
-     * @return JmDNS service entry for the first service of a particular type.
+     * @return JmDNS service entry for the first service of a particular
+     * service.
      */
     public ServiceInfo getService(String service) {
         for (JmDNS server : ZeroConfService.netServices().values()) {
@@ -58,13 +51,29 @@ public class ZeroConfClient {
         return null;
     }
 
-    /*
-     * request the first service of a particular type on
-     * a specified host.
-     * @param service string service type
+    /**
+     * Get all servers providing the specified service.
+     *
+     * @param service
+     * @return A list of servers or an empty list.
+     */
+    public List<ServiceInfo> getServices(String service) {
+        ArrayList<ServiceInfo> services = new ArrayList();
+        for (JmDNS server : ZeroConfService.netServices().values()) {
+            if (server.list(service) != null) {
+                services.addAll(Arrays.asList(server.list(service)));
+            }
+        }
+        return services;
+    }
+
+    /**
+     * Request the first service of a particular service on a specified host.
+     *
+     * @param service string service service
      * @param hostname string host name
-     * @return JmDNS service entry for the first service of a particular type on
-     * the specified host..
+     * @return JmDNS service entry for the first service of a particular service
+     * on the specified host..
      */
     public ServiceInfo getServiceOnHost(String service, String hostname) {
         for (JmDNS server : ZeroConfService.netServices().values()) {
@@ -78,13 +87,14 @@ public class ZeroConfClient {
         return null;
     }
 
-    /*
-     * request the first service of a particular type
-     * with a particular service name.
-     * @param service string service type
+    /**
+     * Request the first service of a particular service with a particular
+     * service name.
+     *
+     * @param service string service service
      * @param adName string qualified service advertisement name
-     * @return JmDNS service entry for the first service of a particular type on
-     * the specified host..
+     * @return JmDNS service entry for the first service of a particular service
+     * on the specified host..
      */
     public ServiceInfo getServicebyAdName(String service, String adName) {
         for (JmDNS server : ZeroConfService.netServices().values()) {
