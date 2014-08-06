@@ -167,8 +167,12 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
        }
     } else if( group instanceof ASTga ) {
        if(busMemo.provides(jmri.TurnoutManager.class) ) {
-          int address = Integer.parseInt((String)(((SimpleNode)group.jjtGetChild(0)).jjtGetValue()));
-          boolean thrown = ((String)((SimpleNode)group.jjtGetChild(1)).jjtGetValue()).equals("1");
+          if(group.jjtGetNumChildren()>=2){
+             int address = Integer.parseInt((String)(((SimpleNode)group.jjtGetChild(0)).jjtGetValue()));
+             boolean thrown = ((String)((SimpleNode)group.jjtGetChild(1)).jjtGetValue()).equals("1");
+          } else {
+            // just returning the protocol.
+          }
        }
     } else if( group instanceof ASTgl ) {
        if(busMemo.provides(jmri.ThrottleManager.class) ) {

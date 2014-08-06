@@ -346,7 +346,7 @@ SimpleNode sm():{Token t;}
 
 SimpleNode ga():{Token t;}
 {
-  t=<GA> address() ( <PROTOCOL> | port() zeroone() )?
+  t=<GA> address() ( ( <PROTOCOL> ) | (port() zeroone()) )?
   { 
     jjtThis.jjtSetValue(t.image);
     return jjtThis;

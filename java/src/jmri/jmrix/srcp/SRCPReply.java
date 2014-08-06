@@ -39,10 +39,9 @@ public class SRCPReply extends jmri.jmrix.AbstractMRReply {
     private String inOrderTraversal(SimpleNode n) {
         StringBuilder b;
         if(n.jjtGetNumChildren()>1) {
-           b = new StringBuilder(n.jjtGetFirstToken().toString());
+           b = new StringBuilder((String)n.jjtGetValue() );
 	   for(int i=0;i<n.jjtGetNumChildren();i++) {
-              b.append(" ");
-              //b.append(((SimpleNode)n.jjtGetChild(i)).jjtGetFirstToken().toString());
+              if(i!=0) b.append(" ");
               b.append(inOrderTraversal((SimpleNode)n.jjtGetChild(i)));
            }
         } else {
