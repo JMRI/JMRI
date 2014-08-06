@@ -21,6 +21,29 @@ public class SRCPSystemConnectionMemoTest extends TestCase {
         Assert.assertNotNull(m);
     }
 
+    public void testTCCtor() {
+        SRCPTrafficController et = new SRCPTrafficController(){
+            @Override
+            public void sendSRCPMessage(SRCPMessage m,SRCPListener l){
+                // we aren't actually sending anything to a layout.
+            }
+        };
+        SRCPSystemConnectionMemo m = new SRCPSystemConnectionMemo(et);
+        Assert.assertNotNull(m);
+    }
+
+    // Full Constructor specifies prefix,name, and traffic controller.
+    public void testFullCtor() {
+        SRCPTrafficController et = new SRCPTrafficController(){
+            @Override
+            public void sendSRCPMessage(SRCPMessage m,SRCPListener l){
+                // we aren't actually sending anything to a layout.
+            }
+        };
+        SRCPSystemConnectionMemo m = new SRCPSystemConnectionMemo("D","SRCP",et);
+        Assert.assertNotNull(m);
+    }
+
     // from here down is testing infrastructure
     public SRCPSystemConnectionMemoTest(String s) {
         super(s);

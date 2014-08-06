@@ -32,8 +32,15 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
         super();
     }
 
+    @Override
     protected void getInstance() {
-        adapter = NetworkDriverAdapter.instance();
+        if(adapter == null)
+        adapter = adapter = new NetworkDriverAdapter();
+    }
+
+    @Override
+    protected void getInstance(Object object){
+        adapter = ((ConnectionConfig)object).getAdapter();
     }
 
 
@@ -44,5 +51,4 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
     // initialize logging
     static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
-
 }

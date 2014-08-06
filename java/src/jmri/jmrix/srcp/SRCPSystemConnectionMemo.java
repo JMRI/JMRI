@@ -19,6 +19,15 @@ import java.util.ResourceBundle;
  */
 public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
+    public SRCPSystemConnectionMemo(String prefix, String name, SRCPTrafficController et) {
+        super(prefix,name);
+        this.et = et;
+        this.et.setSystemConnectionMemo(this);
+        register();
+        /*InstanceManager.store(cf = new jmri.jmrix.srcp.swing.ComponentFactory(this), 
+                jmri.jmrix.swing.ComponentFactory.class);*/
+    }
+
     public SRCPSystemConnectionMemo(SRCPTrafficController et) {
         super("D", "SRCP");
         this.et = et;
