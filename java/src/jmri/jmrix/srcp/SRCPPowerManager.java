@@ -31,7 +31,7 @@ public class SRCPPowerManager implements PowerManager, SRCPListener {
         _bus = bus;
     }
 
-    public String getUserName() { return "SRCP"; }
+    public String getUserName() { return _memo.getUserName(); }
 
 	int power = UNKNOWN;
 

@@ -232,10 +232,12 @@ public class SRCPTrafficController extends AbstractMRTrafficController
     }
 
     protected AbstractMRMessage enterProgMode() {
-        return SRCPMessage.getProgMode();
+        // we need to find the right bus number!
+        return SRCPMessage.getProgMode(1);
     }
     protected AbstractMRMessage enterNormalMode() {
-        return SRCPMessage.getExitProgMode();
+        // we need to find the right bus number!
+        return SRCPMessage.getExitProgMode(1);
     }
 
     /**

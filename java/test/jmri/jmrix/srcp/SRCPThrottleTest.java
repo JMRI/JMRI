@@ -17,11 +17,11 @@ import junit.framework.TestSuite;
 public class SRCPThrottleTest extends TestCase {
 
     public void testCtor() {
-        SRCPSystemConnectionMemo sm=new SRCPSystemConnectionMemo(new SRCPTrafficController(){
+        SRCPBusConnectionMemo sm=new SRCPBusConnectionMemo(new SRCPTrafficController(){
           @Override
           public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
            }
-        });
+        },"TEST",1);
         SRCPThrottle s = new SRCPThrottle(sm,new jmri.DccLocoAddress(1,true));
         Assert.assertNotNull(s);
     }

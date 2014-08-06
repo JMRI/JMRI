@@ -113,9 +113,9 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
 
             // write
             if (getMode() == Programmer.DIRECTBYTEMODE)
-                m = SRCPMessage.getWriteDirectCV(_cv, _val);
+                m = SRCPMessage.getWriteDirectCV(_bus,_cv, _val);
             else
-                m = SRCPMessage.getWriteRegister(registerFromCV(_cv), _val);
+                m = SRCPMessage.getWriteRegister(_bus,registerFromCV(_cv), _val);
             // format and send the write message
             controller().sendSRCPMessage(m, this);
         } catch (jmri.ProgrammerException e) {
@@ -140,9 +140,9 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
             startLongTimer();
 	    
             if (getMode() == Programmer.DIRECTBYTEMODE)
-                m = SRCPMessage.getConfirmDirectCV(_cv, _confirmVal);
+                m = SRCPMessage.getConfirmDirectCV(_bus,_cv, _confirmVal);
             else
-                m = SRCPMessage.getConfirmRegister(registerFromCV(_cv), _confirmVal);
+                m = SRCPMessage.getConfirmRegister(_bus,registerFromCV(_cv), _confirmVal);
 
             // format and send the confirm message
             controller().sendSRCPMessage(m, this);
@@ -171,9 +171,9 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
             // format and send the write message
 
             if (getMode() == Programmer.DIRECTBYTEMODE)
-                m = SRCPMessage.getReadDirectCV(_cv);
+                m = SRCPMessage.getReadDirectCV(_bus,_cv);
             else
-                m = SRCPMessage.getReadRegister(registerFromCV(_cv));
+                m = SRCPMessage.getReadRegister(_bus,registerFromCV(_cv));
 
             controller().sendSRCPMessage(m, this);
         } catch (jmri.ProgrammerException e) {
@@ -267,7 +267,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
      * subclasses, e.g. ops mode, may redefine that.
      */
     void cleanup() {
-        controller().sendSRCPMessage(SRCPMessage.getExitProgMode(), this);
+        controller().sendSRCPMessage(SRCPMessage.getExitProgMode(_bus), this);
     }
 
     // internal method to notify of the final result
