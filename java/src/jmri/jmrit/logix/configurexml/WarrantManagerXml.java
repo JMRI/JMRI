@@ -67,9 +67,14 @@ public class WarrantManagerXml //extends XmlFile
             for (int j=0; j<orders.size(); j++) {
                 elem.addContent(storeOrder(orders.get(j), "blockOrder"));
             }
+            
             BlockOrder viaOrder = warrant.getViaOrder();
             if (viaOrder!=null) {
                 elem.addContent(storeOrder(viaOrder, "viaOrder"));
+            }
+            BlockOrder avoidOrder = warrant.getAvoidOrder();
+            if (avoidOrder!=null) {
+                elem.addContent(storeOrder(avoidOrder, "avoidOrder"));
             }
 
             List <ThrottleSetting> throttleCmds = warrant.getThrottleCommands();
@@ -234,21 +239,23 @@ public class WarrantManagerXml //extends XmlFile
             if (c != null) {
                 warrant.setComment(c);
             }
-            orders = elem.getChildren("viaOrder");
-            for (int k=0; k<orders.size(); k++) {
-                BlockOrder bo = loadBlockOrder(orders.get(k));
-                if (bo==null) {
-                    continue;
-                }
-                warrant.setViaOrder(bo);
+            
+            Element order = elem.getChild("viaOrder");
+            if (order!=null) {
+                warrant.setViaOrder(loadBlockOrder(order));            	
             }
+            order = elem.getChild("avoidOrder");
+            if (order!=null) {
+                warrant.setAvoidOrder(loadBlockOrder(order));            	
+            }
+            
             List<Element> throttleCmds = elem.getChildren("throttleCommand");
             for (int k=0; k<throttleCmds.size(); k++) {
                 warrant.addThrottleCommand(loadThrottleCommand(throttleCmds.get(k)));
             }
-            List<Element> trains = elem.getChildren("train");
-            for (int k=0; k<trains.size(); k++) {
-                loadTrain(trains.get(k), warrant);
+            Element train = elem.getChild("train");
+            if (train!=null) {
+            	loadTrain(train, warrant);
             }
         }
         return true;

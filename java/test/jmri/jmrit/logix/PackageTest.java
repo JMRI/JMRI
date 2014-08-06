@@ -28,7 +28,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrit.logix.PackageTest");   // no tests in this class itself
         
 //		Something wrong in the xsd files?  maybe using -2-9-6 version?
-//        suite.addTest(SchemaTest.suite());
+        suite.addTest(SchemaTest.suite());
         suite.addTest(OPathTest.suite());
         suite.addTest(LogixActionTest.suite());
 

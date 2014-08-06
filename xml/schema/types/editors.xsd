@@ -510,12 +510,6 @@
         <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
             <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
         </xs:element>
-        <xs:element name="memorystate" minOccurs="0" maxOccurs="unbounded">
-          <xs:complexType>
-            <xs:attribute name="value" type="xs:string" use="required" />
-            <xs:attribute name="icon" type="xs:string" use="required" />
-          </xs:complexType>
-        </xs:element>
       </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup" />
@@ -579,6 +573,19 @@
           jmri.jmrit.display.configurexml.MemoryInputIconXml
         </xs:appinfo>
       </xs:annotation>
+
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
+            <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element name="memorystate" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:attribute name="value" type="xs:string" use="required" />
+            <xs:attribute name="icon" type="xs:string" use="required" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup" />
 
@@ -715,7 +722,11 @@
             </xs:all>
            </xs:complexType>
         </xs:element>
-        <xs:element name="iconmaps" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="iconmaps" minOccurs="0" maxOccurs="1">
+        <xs:complexType>
+       		<xs:attribute name="family" type="xs:string" />
+        </xs:complexType>
+        </xs:element>
         <xs:element name="held" type="EditorIconType" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation><xs:documentation>Deprecated</xs:documentation></xs:annotation>
         </xs:element>
@@ -1121,6 +1132,8 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
+      <xs:attribute name="rosterentry" type="xs:string" />
+      <xs:attribute name="degrees" type="xs:string" />
 
     </xs:complexType>
 
@@ -1230,6 +1243,188 @@
       <xs:attribute name="xcen" type="xs:float" use="required" />
       <xs:attribute name="ycen" type="xs:float" use="required" />
       <xs:attribute name="turnoutControlled" type="yesNoType" />
+
+    </xs:complexType>
+    
+    <xs:complexType name="EditorIndicatorTrackIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing a MultiSensorIcon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.IndicatorTrackIconXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
+            <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element name="occupancyblock" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="showTrainName" type="yesNoType" minOccurs="0" maxOccurs="1" />
+               
+        <xs:element name="iconmap" minOccurs="0" maxOccurs="1" >
+          <xs:complexType>
+            <xs:all>
+ 			<xs:element name="AllocatedTrack" type="EditorIconType" minOccurs="0" maxOccurs="1" />
+        	<xs:element name="PositionTrack" type="EditorIconType" minOccurs="0" maxOccurs="1" />
+        	<xs:element name="ClearTrack" type="EditorIconType" minOccurs="0" maxOccurs="1" />
+			<xs:element name="DontUseTrack" type="EditorIconType" minOccurs="0" maxOccurs="1" />
+        	<xs:element name="ErrorTrack" type="EditorIconType" minOccurs="0" maxOccurs="1" />
+        	<xs:element name="OccupiedTrack" type="EditorIconType" minOccurs="0" maxOccurs="1" />
+            </xs:all>
+         	
+      		<xs:attribute name="family" type="xs:string" />
+          </xs:complexType>
+        </xs:element>
+        
+        <xs:element name="paths" minOccurs="0" maxOccurs="1" >
+          <xs:complexType>
+          	<xs:sequence>
+        	<xs:element name="path" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+        	</xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      
+      <xs:attribute name="degrees" type="xs:integer" />
+      <xs:attribute name="class" type="classType" use="required" />
+      
+       <xs:attributeGroup ref="EditorCommonAttributesGroup" />
+    </xs:complexType>
+
+    <xs:complexType name="EditorIndicatorTurnoutIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing a MultiSensorIcon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
+            <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element name="turnout" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="occupancyblock" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="showTrainName" type="yesNoType" minOccurs="0" maxOccurs="1" />
+               
+        <xs:element name="iconmaps" minOccurs="0" maxOccurs="1" >
+          <xs:complexType>
+            <xs:all>
+ 			<xs:element name="AllocatedTrack">
+          	  <xs:complexType>
+              <xs:all>
+        		<xs:element name="BeanStateUnknown" type="EditorIconType" minOccurs="0" maxOccurs="1" />
+        		<xs:element name="TurnoutStateClosed" type="EditorIconType" minOccurs="0" maxOccurs="1" />
+        		<xs:element name="TurnoutStateThrown" type="EditorIconType" minOccurs="0" maxOccurs="1" />
+        		<xs:element name="BeanStateInconsistent" type="EditorIconType" minOccurs="0" maxOccurs="1" />
+          	  </xs:all>
+          	  </xs:complexType>
+ 			</xs:element>
+        	<xs:element name="PositionTrack">
+          	  <xs:complexType>
+              <xs:all>
+        		<xs:element name="BeanStateUnknown" type="EditorIconType" minOccurs="0" maxOccurs="1" />
+        		<xs:element name="TurnoutStateClosed" type="EditorIconType" minOccurs="0" maxOccurs="1" />
+        		<xs:element name="TurnoutStateThrown" type="EditorIconType" minOccurs="0" maxOccurs="1" />
+        		<xs:element name="BeanStateInconsistent" type="EditorIconType" minOccurs="0" maxOccurs="1" />
+          	  </xs:all>
+          	  </xs:complexType>
+ 			</xs:element>
+        	<xs:element name="ClearTrack">
+          	  <xs:complexType>
+              <xs:all>
+        		<xs:element name="BeanStateUnknown" type="EditorIconType" minOccurs="0" maxOccurs="1" />
+        		<xs:element name="TurnoutStateClosed" type="EditorIconType" minOccurs="0" maxOccurs="1" />
+        		<xs:element name="TurnoutStateThrown" type="EditorIconType" minOccurs="0" maxOccurs="1" />
+        		<xs:element name="BeanStateInconsistent" type="EditorIconType" minOccurs="0" maxOccurs="1" />
+          	  </xs:all>
+          	  </xs:complexType>
+ 			</xs:element>
+			<xs:element name="DontUseTrack">
+          	  <xs:complexType>
+              <xs:all>
+        		<xs:element name="BeanStateUnknown" type="EditorIconType" minOccurs="0" maxOccurs="1" />
+        		<xs:element name="TurnoutStateClosed" type="EditorIconType" minOccurs="0" maxOccurs="1" />
+        		<xs:element name="TurnoutStateThrown" type="EditorIconType" minOccurs="0" maxOccurs="1" />
+        		<xs:element name="BeanStateInconsistent" type="EditorIconType" minOccurs="0" maxOccurs="1" />
+          	  </xs:all>
+          	  </xs:complexType>
+ 			</xs:element>
+        	<xs:element name="ErrorTrack">
+          	  <xs:complexType>
+              <xs:all>
+        		<xs:element name="BeanStateUnknown" type="EditorIconType" minOccurs="0" maxOccurs="1" />
+        		<xs:element name="TurnoutStateClosed" type="EditorIconType" minOccurs="0" maxOccurs="1" />
+        		<xs:element name="TurnoutStateThrown" type="EditorIconType" minOccurs="0" maxOccurs="1" />
+        		<xs:element name="BeanStateInconsistent" type="EditorIconType" minOccurs="0" maxOccurs="1" />
+          	  </xs:all>
+          	  </xs:complexType>
+ 			</xs:element>
+        	<xs:element name="OccupiedTrack">
+          	  <xs:complexType>
+              <xs:all>
+        		<xs:element name="BeanStateUnknown" type="EditorIconType" minOccurs="0" maxOccurs="1" />
+        		<xs:element name="TurnoutStateClosed" type="EditorIconType" minOccurs="0" maxOccurs="1" />
+        		<xs:element name="TurnoutStateThrown" type="EditorIconType" minOccurs="0" maxOccurs="1" />
+        		<xs:element name="BeanStateInconsistent" type="EditorIconType" minOccurs="0" maxOccurs="1" />
+          	  </xs:all>
+          	  </xs:complexType>
+ 			</xs:element>
+            </xs:all>
+         	
+      		<xs:attribute name="family" type="xs:string" />
+          </xs:complexType>
+        </xs:element>
+        
+        <xs:element name="paths" minOccurs="0" maxOccurs="1" >
+          <xs:complexType>
+          	<xs:sequence>
+        	<xs:element name="path" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+        	</xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      
+      <xs:attribute name="degrees" type="xs:integer" />
+      <xs:attribute name="class" type="classType" use="required" />
+      
+       <xs:attributeGroup ref="EditorCommonAttributesGroup" />
+    </xs:complexType>
+
+    <xs:complexType name="EditorPortalIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing a PortalIcon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
+            <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
+        </xs:element>
+      </xs:sequence>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup" />
+
+      <xs:attribute name="class" type="classType" use="required" />
+      <xs:attribute name="portalName" type="xs:string" />
+      <xs:attribute name="toBlockName" type="xs:string" />
+      <xs:attribute name="fromBlockName" type="xs:string" />
+      <xs:attribute name="degrees" type="xs:string" />
+      <xs:attribute name="scale" type="xs:string" />
+      <xs:attribute name="arrowSwitch" type="yesNoType" />
+      <xs:attribute name="arrowHide" type="yesNoType" />
+      <xs:attribute name="rotate" type="xs:integer" />
 
     </xs:complexType>
 

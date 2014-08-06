@@ -286,6 +286,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
                 _portalList.dataChange();
             }
         }
+        _portalName.setText(null);
         PortalIcon icon = _parent.getPortalIconMap().get(name);
         if (icon!=null) {
         	deletePortalIcon(icon);

@@ -69,7 +69,10 @@ public class PortalList extends JList {
             return _homeBlock.getPortals().size();
         }
         public Object getElementAt(int index) {
-            return _homeBlock.getPortals().get(index);
+        	if (index<getSize()) {
+                return _homeBlock.getPortals().get(index);        		
+        	}
+        	return null;
         }
         public void dataChange() {
             fireContentsChanged(this, 0, 0);
