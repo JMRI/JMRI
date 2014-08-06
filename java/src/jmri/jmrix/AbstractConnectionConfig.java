@@ -2,21 +2,20 @@
 
 package jmri.jmrix;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import javax.swing.JComboBox;
-import javax.swing.JCheckBox;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JComponent;
-import java.util.Hashtable;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
-
-import jmri.UserPreferencesManager;
+import java.util.Hashtable;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import jmri.InstanceManager;
+import jmri.UserPreferencesManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base class for common implementation of the ConnectionConfig
@@ -61,7 +60,7 @@ abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionC
         Boolean advanced = true;
         JLabel label = null;
         
-        Option(String name, JComponent optionSelection, Boolean advanced){
+        public Option(String name, JComponent optionSelection, Boolean advanced){
             this.optionDisplayName = name;
             this.optionSelection = optionSelection;
             this.advanced = advanced;
