@@ -64,6 +64,20 @@ public class ProgrammerFacadeSelector  {
                 log.debug("new programmer "+pf);
                 programmer = pf; // to go around and see if there are more
             
+            } else if (fname.equals("High Access via Partial Index with Reset")) {
+                // going to create a specific one
+                String top          = parameters.get(0).getText();
+                String addrCV       = parameters.get(1).getText();
+                String factor       = parameters.get(2).getText();
+                String modulo       = parameters.get(3).getText();
+                String indicator    = parameters.get(4).getText();
+
+                jmri.implementation.ResettingOffsetHighCvProgrammerFacade pf =
+                    new jmri.implementation.ResettingOffsetHighCvProgrammerFacade(programmer, top, addrCV, factor, modulo, indicator);
+            
+                log.debug("new programmer "+pf);
+                programmer = pf; // to go around and see if there are more
+            
             } else if (fname.equals("Indexed CV access")) {
                 // going to create a specific one
                 String PI           = parameters.get(0).getText();

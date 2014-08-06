@@ -1,4 +1,4 @@
-// OffsetHighCvProgrammerFacade.java
+// ResettingOffsetHighCvProgrammerFacade.java
 
 package jmri.implementation;
 
@@ -22,12 +22,15 @@ import jmri.jmrix.AbstractProgrammerFacade;
  * Above the top CV, the upper part of the address is written to 
  * a specific CV, followed by an operation
  * to just the lower part of the address. 
- * The upper and lower parts are calculated using a supplied modulus, e.g. 100.
+ * The upper and lower parts are calculated using a supplied modulus, e.g. 100,
+ * and an indicator value that's added in.
+ * Finally, the specific CV is reset to zero to end the offset operation.
  *<p>
- * For example, to write the value N to CV xyy, this will do (modulo = 100):
+ * For example, to write the value N to CV xyy, this will do (modulo = 100, indicator = 200):
  *<ul>
- *<li>Write x*10 to CV7 where 10 is cvFactor and 7 is addrCV
+ *<li>Write 200+x*10 to CV7 where 10 is cvFactor, 200 is indicator and 7 is addrCV
  *<li>Write N to CVyy
+ *<li>Write 0 to CV7
  *</ul>
  *<p>
  * This method is used by some Zimo decoders
@@ -35,7 +38,7 @@ import jmri.jmrix.AbstractProgrammerFacade;
  * @author      Bob Jacobsen  Copyright (C) 2013
  * @version	$Revision: 24246 $
  */
-public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
+public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
     /**
      * @param top CVs above this use the indirect method
@@ -43,13 +46,14 @@ public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade imple
      * @param cvFactor  CV to which the low part of address is to be written
      * @param modulo Modulus for determining high/low address parts
      */
-    public OffsetHighCvProgrammerFacade(Programmer prog, String top, String addrCV, String cvFactor, String modulo) {
+    public ResettingOffsetHighCvProgrammerFacade(Programmer prog, String top, String addrCV, String cvFactor, String modulo, String indicator) {
         super(prog);
         this.prog = prog;
         this.top = Integer.parseInt(top);
         this.addrCV = Integer.parseInt(addrCV);
         this.cvFactor = Integer.parseInt(cvFactor);
         this.modulo = Integer.parseInt(modulo);
+        this.indicator = Integer.parseInt(indicator);
     }
 
     Programmer prog;
@@ -58,6 +62,7 @@ public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade imple
     int addrCV;
     int cvFactor;
     int modulo;
+    int indicator;
 
 
     // members for handling the programmer interface
@@ -82,7 +87,7 @@ public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade imple
         } else {
             // write index first
             state = ProgState.FINISHWRITE;
-            prog.writeCV(addrCV, (_cv/modulo)*cvFactor, this);
+            prog.writeCV(addrCV, (_cv/modulo)*cvFactor+indicator, this);
         }
     }
 
@@ -110,7 +115,7 @@ public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade imple
         } else {
             // write index first
             state = ProgState.FINISHREAD;
-            prog.writeCV(addrCV, (_cv/modulo)*cvFactor, this);
+            prog.writeCV(addrCV, (_cv/modulo)*cvFactor+indicator, this);
         }
     }
 
@@ -129,7 +134,7 @@ public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade imple
         }
     }
 
-    enum ProgState { PROGRAMMING, FINISHREAD, FINISHWRITE, NOTPROGRAMMING }
+    enum ProgState { PROGRAMMING, FINISHREAD, FINISHWRITE, RESET, NOTPROGRAMMING }
     ProgState state = ProgState.NOTPROGRAMMING;
     
     // get notified of the final result
@@ -140,17 +145,9 @@ public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade imple
         if (_usingProgrammer == null) log.error("No listener to notify");
 
         switch (state) {
-            case PROGRAMMING:
-                // the programmingOpReply handler might send an immediate reply, so
-                // clear the current listener _first_
-                jmri.ProgListener temp = _usingProgrammer;
-                _usingProgrammer = null; // done
-                state = ProgState.NOTPROGRAMMING;
-                temp.programmingOpReply(value, status);
-                break;
             case FINISHREAD:
                 try {
-                    state = ProgState.PROGRAMMING;
+                    state = ProgState.RESET;
                     prog.readCV(_cv%modulo, this);
                 } catch (jmri.ProgrammerException e) {
                     log.error("Exception doing final read", e);
@@ -158,11 +155,27 @@ public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade imple
                 break;
             case FINISHWRITE:
                 try {
-                    state = ProgState.PROGRAMMING;
+                    state = ProgState.RESET;
                     prog.writeCV(_cv%modulo, _val, this);
                 } catch (jmri.ProgrammerException e) {
                     log.error("Exception doing final write", e);
                 }
+                break;
+            case RESET:
+                try {
+                    state = ProgState.PROGRAMMING;
+                    prog.writeCV(addrCV, 0, this);
+                } catch (jmri.ProgrammerException e) {
+                    log.error("Exception doing reset write", e);
+                }
+                break;
+            case PROGRAMMING:
+                // the programmingOpReply handler might send an immediate reply, so
+                // clear the current listener _first_
+                jmri.ProgListener temp = _usingProgrammer;
+                _usingProgrammer = null; // done
+                state = ProgState.NOTPROGRAMMING;
+                temp.programmingOpReply(value, status);
                 break;
             default:
                 log.error("Unexpected state on reply: "+state);
@@ -183,7 +196,7 @@ public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade imple
     public boolean getCanWrite(String addr) { return Integer.parseInt(addr)<=1024; }
     public boolean getCanWrite(int mode, String addr)  { return getCanWrite(addr); }
 
-    static Logger log = LoggerFactory.getLogger(OffsetHighCvProgrammerFacade.class.getName());
+    static Logger log = LoggerFactory.getLogger(ResettingOffsetHighCvProgrammerFacade.class.getName());
 
 }
 
