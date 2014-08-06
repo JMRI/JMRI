@@ -3223,6 +3223,10 @@
     "Report" will print or preview the build report for this train. Whenever a train fails to build,
     a build failure message will appear. If you want to disable this feature deselect the checkbox
     "Build Messages".</P>
+    
+    <P>You can manually remove or add cars to a built train, see <A HREF="#CarsSet">set car</A>.
+    
+    
    <P>You can also control which trains are shown in the Trains window. When the "Show All"
     checkbox is unselected, only trains that have the "Build" checkbox selected are shown.</P>
 
