@@ -17,7 +17,15 @@ import junit.framework.TestSuite;
 public class SRCPTurnoutTest extends TestCase {
 
     public void testCtor() {
-        SRCPTurnout m = new SRCPTurnout(1);
+        SRCPTrafficController et = new SRCPTrafficController(){
+            @Override
+            public void sendSRCPMessage(SRCPMessage m,SRCPListener l){
+                // we aren't actually sending anything to a layout.
+            }
+        };
+        SRCPBusConnectionMemo memo = new SRCPBusConnectionMemo(et,"TEST",1);
+        memo.setTurnoutManager(new SRCPTurnoutManager(memo,memo.getBus()));
+        SRCPTurnout m = new SRCPTurnout(1,memo);
         Assert.assertNotNull(m);
     }
 

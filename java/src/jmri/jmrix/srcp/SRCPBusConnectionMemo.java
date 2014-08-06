@@ -24,6 +24,8 @@ import jmri.jmrix.srcp.parser.*;
 public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo implements SRCPListener {
 
     private int _bus = 0;
+    private boolean configured = false;
+
 
     public SRCPBusConnectionMemo(SRCPTrafficController et,String Prefix,int bus) {
         super(Prefix + bus, "SRCP:" + bus);
@@ -34,6 +36,7 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
         log.debug("Created SRCPBusConnectionMemo for bus " + bus);
         et.addSRCPListener(this);
         et.sendSRCPMessage(new SRCPMessage("GET " + bus +" DESCRIPTION\n"),null);
+        configured=false;
     }
     
     jmri.jmrix.swing.ComponentFactory cf = null;
@@ -56,8 +59,7 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
      * place.  
      */
     public void configureManagers() {
-    
-
+       while(!configured);
     }
 
     /**
@@ -229,6 +231,7 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
                     }
                  }
              }
+             configured=true;
           }
        }      
     }

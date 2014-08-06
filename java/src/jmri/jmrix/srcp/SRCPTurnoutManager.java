@@ -30,12 +30,12 @@ public class SRCPTurnoutManager extends jmri.managers.AbstractTurnoutManager {
       _memo=memo;
     }
 
-    public String getSystemPrefix() { return "D"; }
+    public String getSystemPrefix() { return _memo.getSystemPrefix(); }
 
     public Turnout createNewTurnout(String systemName, String userName) {
         Turnout t;
-        int addr = Integer.valueOf(systemName.substring(2)).intValue();
-        t = new SRCPTurnout(addr);
+        int addr = Integer.valueOf(systemName.substring(_memo.getSystemPrefix().length()+1)).intValue();
+        t = new SRCPTurnout(addr,_memo);
         t.setUserName(userName);
 
         return t;

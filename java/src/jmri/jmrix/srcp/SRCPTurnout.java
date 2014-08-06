@@ -16,22 +16,30 @@ import jmri.Turnout;
  *
  * Description:		extend jmri.AbstractTurnout for SRCP layouts
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
+ * @author			Paul Bender Copyright (C) 2014 
  * @version			$Revision$
  */
 public class SRCPTurnout extends AbstractTurnout {
 
+        
+
 	/**
 	 * SRCP turnouts use the NMRA number (0-511) as their numerical identification.
 	 */
-	public SRCPTurnout(int number) {
-            super("DT"+number);
+	public SRCPTurnout(int number,SRCPBusConnectionMemo memo) {
+            super(memo.getSystemPrefix()+memo.getTurnoutManager().typeLetter()+number);
             _number = number;
+            _bus = memo.getBus();
+            
+            // set the traffic controller
+            tc=memo.getTrafficController(); 
 
             // send message requesting initilization
-            String text = "INIT 1 GA "+_number+" N\n";
-            
-        // create and send the message itself
-		SRCPTrafficController.instance().sendSRCPMessage(new SRCPMessage(text), null);
+            String text = "INIT "+ _bus +" GA "+_number+" N\n";
+           
+
+            // create and send the message itself
+            tc.sendSRCPMessage(new SRCPMessage(text), null);
 
             // At construction, register for messages
 	}
@@ -62,17 +70,19 @@ public class SRCPTurnout extends AbstractTurnout {
 
 	// data members
 	int _number;   // turnout number
+	int _bus;   // bus number
+	SRCPTrafficController tc=null;   // traffic controller 
 
 	protected void sendMessage(boolean closed) {
 		// get the message text
         String text;
         if (closed) 
-            text = "SET 1 GA "+_number+" 0 0 -1\n";
+            text = "SET "+ _bus +" GA "+_number+" 0 0 -1\n";
         else // thrown
-            text = "SET 1 GA "+_number+" 0 1 -1\n";
+            text = "SET "+ _bus +" GA "+_number+" 0 1 -1\n";
             
         // create and send the message itself
-		SRCPTrafficController.instance().sendSRCPMessage(new SRCPMessage(text), null);
+        tc.sendSRCPMessage(new SRCPMessage(text), null);
 
 	}
 

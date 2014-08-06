@@ -21,6 +21,18 @@ public class SRCPTurnoutManagerTest extends TestCase {
         Assert.assertNotNull(m);
     }
 
+    public void testBusCtor() {
+        SRCPTrafficController et = new SRCPTrafficController(){
+            @Override
+            public void sendSRCPMessage(SRCPMessage m,SRCPListener l){
+                // we aren't actually sending anything to a layout.
+            }
+        };
+        SRCPBusConnectionMemo memo = new SRCPBusConnectionMemo(et,"TEST",1);
+        SRCPTurnoutManager m = new SRCPTurnoutManager(memo,memo.getBus());
+        Assert.assertNotNull(m);
+    }
+
     // from here down is testing infrastructure
     public SRCPTurnoutManagerTest(String s) {
         super(s);
