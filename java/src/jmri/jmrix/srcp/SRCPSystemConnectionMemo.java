@@ -70,7 +70,9 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         et.sendSRCPMessage(new SRCPMessage("SET PROTOCOL SRCP 0.8.3\n"), null);
         et.sendSRCPMessage(new SRCPMessage("SET CONNECTIONMODE SRCP COMMAND\n"), null);
         et.sendSRCPMessage(new SRCPMessage("GO\n"), null);
-        et.sendSRCPMessage(new SRCPMessage("GET 1 DESCRIPTION\n"),null);
+        // for now, limit to 10 busses.
+        for(int i=1;i<11;i++)
+        et.sendSRCPMessage(new SRCPMessage("GET " +i+ " DESCRIPTION\n"),null);
     }
 
     // keep track of the current mode.
