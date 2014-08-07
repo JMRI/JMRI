@@ -125,9 +125,10 @@ When an XBee input status message is received indicating one ( or more ) of the 
           access to the Baud rate for the connection.  Make sure the 
           selected Baud rate matches the port speed setting of your XBee. 
 
-          <li>The "Configure XBee Nodes" button opens the XBee Node 
-          Configuration tool.  If you save preferences after nodes are
-          created, node address information will be stored with the preferences.
+          <li>The "Configure XBee Nodes" button opens the 
+          <a href="XBeeNodeConfigurationTool.shtml">XBee Node Configuration tool</a>.  
+          If you save preferences after nodes are created, node address 
+          information will be stored with the preferences.
 
           <li> Click "Save".  You'll be asked if it's OK for the program to
           quit, click "Yes".</li>
