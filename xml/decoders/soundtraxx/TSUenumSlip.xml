@@ -15,14 +15,18 @@
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Zero Slip Rate">
     <choice>Zero Slip Rate</choice>
+    <choice xml:lang="it">Slittamento Zero</choice>
   </enumChoice>
   <enumChoice choice="Slow Slip Rate">
     <choice>Slow Slip Rate</choice>
+    <choice xml:lang="it">Slittamento Basso</choice>
   </enumChoice>
   <enumChoice choice="Medium Slip Rate">
     <choice>Medium Slip Rate</choice>
+    <choice xml:lang="it">Slittamento Medio</choice>
   </enumChoice>
   <enumChoice choice="Fast Slip Rate">
     <choice>Fast Slip Rate</choice>
+    <choice xml:lang="it">Slittamento Alto</choice>
   </enumChoice>
 </enumVal>

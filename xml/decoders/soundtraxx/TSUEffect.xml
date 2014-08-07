@@ -15,6 +15,7 @@
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="On/Off">
     <choice>On/Off</choice>
+    <choice xml:lang="it">On-Off</choice>
   </enumChoice>
   <enumChoice choice="Dimmable light">
     <choice>Dimmable headlight</choice>
