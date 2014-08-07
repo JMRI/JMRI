@@ -7,7 +7,7 @@
 <xsl:output method="xml" encoding="utf-8"/>
 
 <!-- for QUAD-LN_S -->
-<!-- v1.0  -->
+<!-- v1.01  -->
 
 <!--  Variables ............................................................................. -->
 <!--                  ............................................................................ -->
@@ -625,6 +625,7 @@
 
 <xsl:template name="MainIOColumn">
     <xsl:param name="index"/>
+    <xsl:param name="servo"/>
     <xsl:param name="numGroup"/>
     <xsl:param name="io" select="($index * 2)"/>
     <column>
@@ -662,7 +663,7 @@
         </display>
         <label label=" "/>	
         <display item="Non-TVD Det GPIO{$io} Qual" format="onradiobutton" layout="right">
-            <label>SERVO 1 INDICATION</label>
+            <label>SERVO <xsl:value-of select="$servo"/> INDICATION</label>
         </display>
         <label label=" ">
             <qualifier>
@@ -740,6 +741,7 @@
 
 <xsl:template name="AuxIOColumn">
     <xsl:param name="index"/>
+    <xsl:param name="servo"/>
     <xsl:param name="numGroup"/>
     <xsl:param name="io" select="($index * 2) - 1"/>
     <column>
@@ -776,7 +778,7 @@
         </label>
         <label label=" "/>	
         <display item="One Choice Enum" format="onradiobutton" layout="right">
-            <label>SERVO 1 INDICATION</label>
+            <label>SERVO <xsl:value-of select="$servo"/> INDICATION</label>
         </display>
         <display item="GPIO{$io} LED Mode">
             <tooltip>Enables LED drive and blinking options</tooltip>
@@ -886,13 +888,17 @@
                 <label label="            "/>	
             </column>
             <xsl:call-template name="MainIOColumn">
+                <xsl:with-param name="servo" select="$index"/>
                 <xsl:with-param name="index" select="$index"/>
+                <xsl:with-param name="numGroup" select="$numGroup"/>
             </xsl:call-template>
             <column>
                 <label label="            "/>	
             </column>
             <xsl:call-template name="AuxIOColumn">
+                <xsl:with-param name="servo" select="$index"/>
                 <xsl:with-param name="index" select="$index"/>
+                <xsl:with-param name="numGroup" select="$numGroup"/>
             </xsl:call-template>
             <column>
                 <label label="            "/>	
@@ -916,12 +922,16 @@
             <xsl:choose>
             <xsl:when test="4 >= $index">
                 <xsl:call-template name="AuxIOColumn">
+                    <xsl:with-param name="servo" select="$index"/>
                     <xsl:with-param name="index" select="$index"/>
+                    <xsl:with-param name="numGroup" select="$numGroup"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:call-template name="MainIOColumn">
+                    <xsl:with-param name="servo" select="$index"/>
                     <xsl:with-param name="index" select="$index -4"/>
+                    <xsl:with-param name="numGroup" select="$numGroup"/>
                 </xsl:call-template>
             </xsl:otherwise>
             </xsl:choose>
@@ -1223,7 +1233,7 @@
  <!--install panes -->
  <xsl:template match="label[text='Decoder Transform File Version: x.xx']">
     <label>
-        <text>Decoder Transform File Version: 1.00</text>
+        <text>Decoder Transform File Version: 1.01</text>
     </label>
  </xsl:template>
 
