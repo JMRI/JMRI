@@ -35,7 +35,7 @@ public class PackageTest extends TestCase {
 
         suite.addTest(ConfigXmlManagerTest.suite());
         
-        //suite.addTest(BlockManagerXmlTest.suite());
+        suite.addTest(BlockManagerXmlTest.suite());
         //suite.addTest(OBlockManagerXmlTest.suite());
         //suite.addTest(SectionManagerXmlTest.suite());
         
