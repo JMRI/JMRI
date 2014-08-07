@@ -99,7 +99,7 @@ abstract public class AbstractPowerServer implements PropertyChangeListener {
         }
     }
 
-    PowerManager p = null;
+    protected PowerManager p = null;
 
     /*
      * Protocol Specific Abstract Functions
