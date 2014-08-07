@@ -92,7 +92,7 @@
     <aspectMapping>
      <advancedAspect>Stop</advancedAspect>
      <ourAspect>Approach</ourAspect>
-     <ourAspect>Diverge Approach</ourAspect>
+     <ourAspect>Diverging Approach</ourAspect>
     </aspectMapping>
     
     <aspectMapping>

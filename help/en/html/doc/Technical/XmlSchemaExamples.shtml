@@ -85,6 +85,7 @@ used elsewhere:
 
 <h2>Element with text content and attributes</h2>
 
+Restricting the content of the element to just an integer:
 <code><pre>
 &lt;xs:element name="someIntThing" &gt;
   &lt;xs:complexType&gt;

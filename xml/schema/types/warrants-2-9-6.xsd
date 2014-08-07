@@ -55,13 +55,13 @@
         <xs:element name="warrant" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="blockOrder" minOccurs="0" maxOccurs="1" >
+              <xs:element name="blockOrder" minOccurs="2" maxOccurs="unbounded" >
                 <xs:complexType>
                   <xs:sequence>
-                    <xs:element name="block" minOccurs="0" maxOccurs="1" >
+                    <xs:element name="block" minOccurs="1" maxOccurs="1" >
                       <xs:complexType>  <!-- DTD had full block type here, but we start with min required -->
                         <xs:sequence>
-                          <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
+                          <xs:element name="systemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
                           <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
                         </xs:sequence>
                         <xs:attribute name="systemName" type="systemNameType">
@@ -93,7 +93,22 @@
                   <xs:attribute name="exitName" type="xs:string"/>
                 </xs:complexType>
               </xs:element>
-              <xs:element name="throttleCommand" minOccurs="0" maxOccurs="1" >
+              <xs:element name="avoidOrder" minOccurs="0" maxOccurs="1" >
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="block" minOccurs="0" maxOccurs="1" >
+                      <xs:complexType>  <!-- DTD had full block type here, but we start with min required -->
+                        <xs:attribute name="systemName" type="systemNameType" use="required"/>
+                        <xs:attribute name="userName" type="userNameType"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="pathName" type="xs:string" use="required"/>
+                  <xs:attribute name="entryName" type="xs:string"/>
+                  <xs:attribute name="exitName" type="xs:string"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="throttleCommand" minOccurs="0" maxOccurs="unbounded" >
                 <xs:complexType>
                   <xs:attribute name="time" type="xs:string" use="required"/>
                   <xs:attribute name="command" type="xs:string" use="required"/>
@@ -103,6 +118,7 @@
               </xs:element>
               <xs:element name="train" minOccurs="0" maxOccurs="1" >
                 <xs:complexType>
+                  <xs:attribute name="trainName" type="xs:string"/>
                   <xs:attribute name="trainId" type="xs:string"/>
                   <xs:attribute name="dccAddress" type="xs:string"/>
                   <xs:attribute name="dccType" type="xs:string"/>

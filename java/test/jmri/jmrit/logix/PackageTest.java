@@ -26,12 +26,11 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.logix.PackageTest");   // no tests in this class itself
-
+        
+//		Something wrong in the xsd files?  maybe using -2-9-6 version?
         suite.addTest(SchemaTest.suite());
         suite.addTest(OPathTest.suite());
-        
-        System.err.println("jmri.jmrit.logix.LogixActionTest is still commented out pending java/test/jmri/jmrit/logix/valid/LogixActionTest.xml");
-        //suite.addTest(LogixActionTest.suite());
+        suite.addTest(LogixActionTest.suite());
 
         return suite;
     }

@@ -31,9 +31,9 @@
 
 <H1>JMRI: XML DTD Usage</H1>
 
-This page describes the usage of XML DTDs in JMRI
+<b>This page describes the usage of XML DTDs in JMRI
 before version 2.9.4.  These DTDs were replaced
-with XML schema in JMRI 2.9.4.
+with XML schema in JMRI 2.9.4.</b>
 <P>
 In the JMRI distributions, the DTDs are stored in the 
 <a href="/xml/DTD">xml/DTD</a> 
@@ -89,10 +89,10 @@ reference in the DOCTYPE and handles it in several ways:
     an Internet connection, it allows us to eventually move forward.
 </ul>
 
-Starting with JMRI 2.9.4, JMRI uses 
+<b>Starting with JMRI 2.9.4, JMRI uses 
 <a href="XmlSchema.shtml">XML schema</a>
 instead of DTDs, 
-and this process is different.
+and this process is different.</b>
 
 <!--#include virtual="/Footer" -->
 

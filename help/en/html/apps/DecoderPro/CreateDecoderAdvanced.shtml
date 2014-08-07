@@ -253,6 +253,46 @@ The parameters must appear in the order shown. They mean:<ul>
     CVs.
 </ul>
 
+<p>
+<a name="zimobis"/>
+Another approach used by e.g. Zimo uses a page register that
+has to be reset afterwards. 
+For example, to write 21 to CV614 with one of these, you need to:
+<ul>
+<li>Write 260 =(614/100)*10+200 to CV 7 for the high address part.
+    The "200" is an indicator to use this mode.
+<li>Write 21 to CV 14 (614 mod 100) to do the actual CV write
+<li>Write 0 back to CV7 to reset the indexing.
+</ul>
+This capability element will do that:
+<code><pre>
+        &lt;capability&gt;
+            &lt;name&gt;High Access via Partial Index with Reset&lt;/name&gt;
+            &lt;parameter name="Max Regular CV address"&gt;100&lt;/parameter&gt;
+            &lt;parameter name="High Address CV"&gt;7&lt;/parameter&gt;
+            &lt;parameter name="High Address Multiplier"&gt;10&lt;/parameter&gt;
+            &lt;parameter name="Modulo"&gt;100&lt;/parameter&gt;
+            &lt;parameter name="Indicator"&gt;200&lt;/parameter&gt;
+        &lt;/capability&gt;
+</pre></code>
+<p>
+The parameters must appear in the order shown. They mean:<ul>
+<li>"Max Regular CV address" - CV addresses equal or below this don't 
+    use this mechanism. (The mechanism won't be used if the command
+    station can directly read/write the CV being requested, but 
+    even if it can't, this mechanism won't be used below this value)
+<li>"High Address CV" - The high part (see Modulo) of the CV address
+    is written here at the start of the operation
+<li>"High Address Multiplier" - This multiplies the high part of the CV
+    address before it's stored to the High Address CV.  For example, 
+    putting a 10 here will store the high address part in the "10's digit" of
+    the High Address CV.
+<li>"Modulo" - value used to split the real CV address between the high and low address
+    CVs.
+<li>"Indicator" - value added to the value being stored to High Address CV 
+    to tell the decoder to use this mode.
+</ul>
+
 <h4>Indexed CV Access</h4>
 
 To access indexed CVs via regular variables (not iVariables), include this capability element:

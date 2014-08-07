@@ -313,6 +313,10 @@ formats to coexist.
 
 <h2 id="devschema">Developing JMRI Schema</h2>
 
+For some examples of the XML schema structures 
+described here, see the separate
+<a href="XmlSchemaExamples.shtml">XML Schema Examples page</a>/
+<p>
 Our preferred organization for XML schema
 is based on the structure of the underlying code:
 A particular *Xml class is the unit of reuse.
@@ -335,9 +339,10 @@ the class name that reads/writes the element:
     &lt;/xs:annotation&gt;
 </code></pre>
 
-<h3>The Venetian Blind Pattern</h3>
+<h3>The Venetian Blinds Pattern</h3>
 
-We are moving toward structuring our XML using the "Venetian Blind pattern".
+We are moving toward structuring our XML using the 
+"<a href="http://www.xfront.com/GlobalVersusLocal.html#ThirdDesignCharacteristics">Venetian Blinds pattern</a>".
 In this style, the top level elements that are written by classes have types defined for them.
 Any elements that are within those are defined anonymously, within those elements.
 For an example of this, see the 
@@ -358,12 +363,34 @@ They are defined in the
 
 <p>
 More information on XML schema design patterns is available at
-<a href="http://www.ibm.com/developerworks/xml/library/ws-soa-xmlwsdl.html#N1012B">DeveloperWorks</a>.
-<a href="http://developers.sun.com/jsenterprise/archive/nb_enterprise_pack/reference/techart/design_patterns.html">developers.sun</a>, and
-<a href="http://www.javapassion.com/webservices/XMLSchemaDesignPatterns.pdf">javapassion</a>.
+<a href="http://www.ibm.com/developerworks/xml/library/ws-soa-xmlwsdl.html#N1012B">DeveloperWorks</a> and the 
+<a href="http://www.oracle.com/technetwork/java/design-patterns-142138.html">Oracle Java site</a>.
+
+<h3>On Elements vs Attributes</h3>
+When defining how to store new classes or updates to classes, the basic 
+questions are:
+<ul>
+<li>Are we storing data? In that case, it should be stored in an element of its
+    own.  Comments, speed values, user and system names are all examples of data
+    that should be separately stored.
+<li>Is this a modifier that provides information about the data in the element?
+    In that case, it's OK to store the modifier information in an attribute.
+    Color of a label, whether a turnout is inverted, which icon of the following list 
+    to load are examples of modifiers.
+</ul>
+
+JMRI XML originally leaned heavily to attributes due to limitations in the 
+JDOM library.  These limitations are long gone, and we're now moving toward
+using elements in the proper way.
 
 <h3>Available Defined Types</h3>
 
+The JMRI schema provides a large number of pre-defined data types.  These
+(generally) check their content, and will be maintained in the future as valid 
+content changes, so it's best to use these where possible instead of 
+defining your own.
+<p>
+A partial list of the pre-defined types:
 <dl>
 <dt>systemNameType<dd>System names, to eventually be tightened up to a real test of validity
 <dt>userNameType<dd>User names, not including the empty name
@@ -371,10 +398,13 @@ More information on XML schema design patterns is available at
 <dt>beanNameType<dd>Either user or system name
 <dt>turnoutStateType<dd>closed, thrown
 <dt>signalColorType<dd>red, yellow, etc
-<dt>yesNoType<dd>yes, no
 <dt>trueFalseType<dd>true, false
+<dt>yesNoType<dd>yes, no
+<dt>yesNoMaybeType<dd>yes, no, maybe
 </dl>
 
+For others, browse the 
+<a href="http://jmri.org/xml/schema/types/general.xsd">general types schema</a>.
 
 <h2>External Standards and Future Work</h2>
 

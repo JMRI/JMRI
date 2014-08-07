@@ -48,16 +48,24 @@ public class PrintLocationsAction extends AbstractAction {
 	static final int MAX_NAME_LENGTH = Control.max_len_string_location_name;
 
 	LocationManager manager = LocationManager.instance();
+	
 
-	public PrintLocationsAction(String actionName, boolean preview) {
+	public PrintLocationsAction(String actionName, boolean isPreview) {
 		super(actionName);
-		isPreview = preview;
+		_isPreview = isPreview;
+	}
+	
+	public PrintLocationsAction(String actionName, boolean isPreview, Location location) {
+		super(actionName);
+		_isPreview = isPreview;
+		_location = location;
 	}
 
 	/**
 	 * Variable to set whether this is to be printed or previewed
 	 */
-	boolean isPreview;
+	boolean _isPreview;
+	Location _location = null;
 	HardcopyWriter writer;
 	LocationPrintOptionFrame lpof = null;
 
@@ -73,7 +81,7 @@ public class PrintLocationsAction extends AbstractAction {
 		// obtain a HardcopyWriter
 		try {
 			writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleLocationsTable"), 10, .5, .5, .5, .5,
-					isPreview);
+					_isPreview);
 		} catch (HardcopyWriter.PrintCanceledException ex) {
 			log.debug("Print cancelled");
 			return;
@@ -112,8 +120,9 @@ public class PrintLocationsAction extends AbstractAction {
 				+ TAB + Bundle.getMessage("Engines") + TAB + Bundle.getMessage("Pickup") + " "
 				+ Bundle.getMessage("Drop") + NEW_LINE;
 		writer.write(s);
-		for (int i = 0; i < locations.size(); i++) {
-			Location location = locations.get(i);
+		for (Location location : locations) {
+			if (_location != null && location != _location)
+				continue;
 			// location name, track length, used, number of RS, scheduled pick ups and drops
 			s = padOutString(location.getName(), Control.max_len_string_location_name) + TAB + "  "
 					+ Integer.toString(location.getLength()) + TAB
@@ -205,8 +214,9 @@ public class PrintLocationsAction extends AbstractAction {
 		List<Schedule> schedules = sm.getSchedulesByNameList();
 		for (int i = 0; i < schedules.size(); i++) {
 			Schedule schedule = schedules.get(i);
-			for (int j = 0; j < locations.size(); j++) {
-				Location location = locations.get(j);
+			for (Location location : locations) {
+				if (_location != null && location != _location)
+					continue;
 				List<Track> spurs = location.getTrackByNameList(Track.SPUR);
 				for (Track spur : spurs) {
 					if (spur.getScheduleId().equals(schedule.getId())) {
@@ -258,8 +268,9 @@ public class PrintLocationsAction extends AbstractAction {
 		List<Location> locations = manager.getLocationsByNameList();
 		String s = Bundle.getMessage("DetailedReport") + NEW_LINE;
 		writer.write(s);
-		for (int i = 0; i < locations.size(); i++) {
-			Location location = locations.get(i);
+		for (Location location : locations) {
+			if (_location != null && location != _location)
+				continue;
 			String name = location.getName();
 			// services train direction
 			int dir = location.getTrainDirections();
@@ -383,8 +394,9 @@ public class PrintLocationsAction extends AbstractAction {
 	private int getTrackLengthAcceptType(List<Location> locations, String carType, String trackType)
 			throws IOException {
 		int trackLength = 0;
-		for (int j = 0; j < locations.size(); j++) {
-			Location location = locations.get(j);
+		for (Location location : locations) {
+			if (_location != null && location != _location)
+				continue;
 			// get a list of spur tracks at this location
 			List<Track> tracks = location.getTrackByNameList(trackType);
 			for (Track track : tracks) {

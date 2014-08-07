@@ -36,7 +36,7 @@ public class SchemaTest extends jmri.configurexml.SchemaTestBase {
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrit.display.configurexml.SchemaTest");
+        TestSuite suite = new TestSuite("jmri.jmrit.logix.SchemaTest");
 
         validateDirectory(suite, "java/test/jmri/jmrit/logix/valid");
         

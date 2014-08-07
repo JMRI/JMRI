@@ -31,6 +31,8 @@ public class ProgDebugger implements Programmer  {
     public int lastWrite() { return _lastWriteVal; }
     public int lastWriteCv() { return _lastWriteCv; }
 
+    public int nOperations = 0;
+    
     /**
      * Reset the CV to a value so one
      * can detect if it's been written.
@@ -84,6 +86,7 @@ public class ProgDebugger implements Programmer  {
     
     public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException
     {
+        nOperations++;
         final ProgListener m = p;
         // log out the request
         log.info("write CV: "+CV+" to: "+val+" mode: "+getMode());
@@ -119,6 +122,7 @@ public class ProgDebugger implements Programmer  {
     public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
         final ProgListener m = p;
         
+        nOperations++;
         // guess by comparing current value in val to has table
         Integer saw = mValues.get(Integer.valueOf(CV));
         int result = -1; // what was read
@@ -154,6 +158,7 @@ public class ProgDebugger implements Programmer  {
     public void readCV(int CV, ProgListener p) throws ProgrammerException {
         final ProgListener m = p;
         _lastReadCv = CV;
+        nOperations++;
 
         int readValue = _nextRead; 
         // try to get something from hash table

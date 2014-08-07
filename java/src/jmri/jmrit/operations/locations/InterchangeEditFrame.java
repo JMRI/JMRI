@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 import javax.swing.BorderFactory;
 
 /**
- * Frame for user edit of a classification/interchange track. Adds two panels to TrackEditFram for train/route car drops
- * and pick ups.
+ * Frame for user edit of a classification/interchange track. Adds two panels to TrackEditFrame for train/route car drops
+ * and pulls.
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2011, 2012
  * @version $Revision$

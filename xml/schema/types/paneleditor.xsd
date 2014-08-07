@@ -56,6 +56,9 @@
         <xs:element name="multisensoricon"   type="EditorMultiSensorIconType"   minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="fastclock"         type="EditorFastClockIconType"     minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="locoicon"          type="EditorLocoIconType"          minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="indicatortrackicon" type="EditorIndicatorTrackIconType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="indicatorturnouticon" type="EditorIndicatorTurnoutIconType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="PortalIcon"    	 type="EditorPortalIconType"    	minOccurs="0" maxOccurs="unbounded" />
             
       </xs:sequence>
       <xs:attribute name="class" type="classType" use="required" />
@@ -76,6 +79,7 @@
       <xs:attribute name="greenBackground" type="xs:int" />
       <xs:attribute name="blueBackground" type="xs:int" />
       <xs:attribute name="state" type="xs:int" />
+      <xs:attribute name="shapeSelect" type="yesNoType" default="no"  />
 
     </xs:complexType>
 

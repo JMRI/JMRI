@@ -39,7 +39,8 @@ Those XML Schema are described on a
 <a href="XmlSchema.shtml">separate page</a>.
 
 <p>
-Prior to that, DTDs were used.
+Prior to that, DTDs were used. Reading those older files is 
+still supported.
 
 <P>
 Those schema and DTDs need to be available to the program when it
