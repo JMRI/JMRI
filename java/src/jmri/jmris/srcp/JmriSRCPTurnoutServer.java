@@ -58,9 +58,9 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
         while(InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName).getKnownState()!=InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName).getCommandedState()) {}
         int Status = InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName).getKnownState();
         if (Status == Turnout.THROWN) {
-            TimeStampedOutput.writeTimestamp(output,"100 INFO " + bus + " GA " + address + " 0 0\n\r");
-        } else if (Status == Turnout.CLOSED) {
             TimeStampedOutput.writeTimestamp(output,"100 INFO " + bus + " GA " + address + " 1 0\n\r");
+        } else if (Status == Turnout.CLOSED) {
+            TimeStampedOutput.writeTimestamp(output,"100 INFO " + bus + " GA " + address + " 0 0\n\r");
         } else {
             //  unknown state
             TimeStampedOutput.writeTimestamp(output,"411 ERROR unknown value\n\r");
@@ -116,10 +116,10 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
                 + "T" + address;
         // create turnout if it does not exist since closeTurnout() and throwTurnout() no longer do so
         //this.initTurnout(turnoutName);
-        if (value == 0) {
+        if (value == 1) {
             log.debug("Setting Turnout THROWN");
             throwTurnout(turnoutName);
-        } else if (value == 1) {
+        } else if (value == 0) {
             log.debug("Setting Turnout CLOSED");
             closeTurnout(turnoutName);
         }

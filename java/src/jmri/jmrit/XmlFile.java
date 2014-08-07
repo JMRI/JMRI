@@ -199,7 +199,7 @@ public abstract class XmlFile {
         FileOutputStream o = new FileOutputStream(file);
         try {
             XMLOutputter fmt = new XMLOutputter();
-            fmt.setFormat(Format.getPrettyFormat());
+            fmt.setFormat(Format.getPrettyFormat().setLineSeparator(System.getProperty("line.separator")));
             fmt.output(doc, o);
         } finally {
             o.close();

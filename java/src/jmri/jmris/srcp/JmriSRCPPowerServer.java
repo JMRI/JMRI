@@ -59,7 +59,20 @@ public class JmriSRCPPowerServer extends AbstractPowerServer {
             }
      }
 
-
-    static Logger log = LoggerFactory.getLogger(JmriSRCPPowerServer.class.getName());
+    @Override
+    public void propertyChange(java.beans.PropertyChangeEvent ev) {
+        try {
+            // send updates, but only if the status is ON or OFF.
+            if(p.getPower()==PowerManager.ON || p.getPower()==PowerManager.OFF)
+               sendStatus(p.getPower());
+        } catch (jmri.JmriException ex) {
+            try {
+                sendErrorStatus();
+            } catch (IOException ie) {
+            }
+        } catch (IOException ie2) {
+        }
+    }
+   static Logger log = LoggerFactory.getLogger(JmriSRCPPowerServer.class.getName());
 
 }
