@@ -15,8 +15,10 @@
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Interlock is disabled">
     <choice>Interlock is disabled</choice>
+    <choice xml:lang="it">Interblocco Disabilitato</choice>
   </enumChoice>
   <enumChoice choice="Under manual control, no movement until engine starts">
     <choice>Under manual control, no movement until engine starts</choice>
+    <choice xml:lang="it">Sotto controllo manuale, nessun movimento fino a quando non parte il motore</choice>
   </enumChoice>
 </enumVal>

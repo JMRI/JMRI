@@ -15,14 +15,18 @@
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Dynamic Brakes operate independently of engine RPMs">
     <choice>Dynamic Brakes operate independently of engine RPMs</choice>
+    <choice xml:lang="it">Freni Dinamici operano in maniera indipendente dai Giri Motore</choice>
   </enumChoice>
   <enumChoice choice="Turning on Dynamic Brakes forces engine RPMs to drop to idle">
     <choice>Turning on Dynamic Brakes forces engine RPMs to drop to idle</choice>
+    <choice xml:lang="it">Attivando i Freni Dinamici forza i Giri Motore in folle</choice>
   </enumChoice>
   <enumChoice choice="Turning on Dynamic Brakes forces engine RPMs to drop to notch 4">
     <choice>Turning on Dynamic Brakes forces engine RPMs to drop to notch 4</choice>
+    <choice xml:lang="it">Attivando i Freni Dinamici forza una diminuzione dei Giri Motore a Notch 4</choice>
   </enumChoice>
   <enumChoice choice="Turning on Dynamic Brakes forces engine RPMs to full speed">
     <choice>Turning on Dynamic Brakes forces engine RPMs to full speed</choice>
+    <choice xml:lang="it">Attivando i Freni Dinamici forza i Giri Motore a velocità massima</choice>
   </enumChoice>
 </enumVal>

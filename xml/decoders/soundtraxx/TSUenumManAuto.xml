@@ -15,8 +15,10 @@
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Turns on and off manually with a mapped function">
     <choice>Turns on and off manually with a mapped function</choice>
+    <choice xml:lang="it">Aziona in On e off con fmappa Funzioni</choice>
   </enumChoice>
   <enumChoice choice="Turns on and off automatically with engine sound">
     <choice>Turns on and off automatically with engine sound</choice>
+    <choice xml:lang="it">Aziona in On e off automaticamente con suono Motore</choice>
   </enumChoice>
 </enumVal>

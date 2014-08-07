@@ -15,8 +15,10 @@
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Disabled (Headlight mapping)">
     <choice>Disabled (Headlight mapping)</choice>
+    <choice xml:lang="it">Disabilitata (Mappa Luci frontali))</choice>
   </enumChoice>
   <enumChoice choice="Enabled (FX5 mapping)">
     <choice>Enabled (FX5 mapping)</choice>
+    <choice xml:lang="it">Abilitate (Mappa FX5)</choice>
   </enumChoice>
 </enumVal>

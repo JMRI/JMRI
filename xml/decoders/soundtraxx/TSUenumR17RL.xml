@@ -15,8 +15,10 @@
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Disabled (Backup Light mapping)">
     <choice>Disabled (Backup Light mapping)</choice>
+    <choice xml:lang="it">Disabilitata (Mamma luci Retro)</choice>
   </enumChoice>
   <enumChoice choice="Enabled (FX6 mapping)">
     <choice>Enabled (FX6 mapping)</choice>
+    <choice xml:lang="it">Abilitata (Mamma FX6)</choice>
   </enumChoice>
 </enumVal>

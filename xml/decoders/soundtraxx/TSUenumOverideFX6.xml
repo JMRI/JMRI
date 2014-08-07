@@ -15,8 +15,10 @@
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Normal FX6 operation">
     <choice>Normal FX6 operation</choice>
+    <choice xml:lang="it">Operazioni Normali FX6</choice>
   </enumChoice>
   <enumChoice choice="When FX6 is on, headlight, backup light and FX5 turn off">
     <choice>When FX6 is on, headlight, backup light and FX5 turn off</choice>
+    <choice xml:lang="it">Quando FX6 in On, Luci frontali, Luci retro e FX5 Spenta (Off)</choice>
   </enumChoice>
 </enumVal>

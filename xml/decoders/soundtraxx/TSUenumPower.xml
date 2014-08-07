@@ -15,8 +15,10 @@
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="No alternate power source available">
     <choice>No alternate power source available</choice>
+    <choice xml:lang="it">Nessuna fonte alim.Alternativa</choice>
   </enumChoice>
   <enumChoice choice="Analog power supply">
     <choice>Analog power supply</choice>
+    <choice xml:lang="it">Fonte alim.Analogica</choice>
   </enumChoice>
 </enumVal>

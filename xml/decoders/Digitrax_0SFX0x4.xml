@@ -26,6 +26,8 @@
       </model>
       <model model="SFX0416" numOuts="6" numFns="8" lowVersionID="16" highVersionID="16" formFactor="HO">
         <output name="1" label="wht" connection="solder"/>
+        <!-- <label xml:lang="it">"Bia"</label> -->
+        <!-- </output> -->
         <output name="2" label="yel" connection="solder"/>
         <output name="3" label="grn" connection="solder"/>
         <output name="4" label="vlt" connection="solder"/>
