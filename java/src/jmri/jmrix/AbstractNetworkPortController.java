@@ -28,6 +28,12 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     // keep the socket provides our connection.
     protected Socket socketConn = null;
 
+    public AbstractNetworkPortController(){
+       super();
+       setHostName(""); // give the host name a default value of 
+                        // the empty string.
+    }
+
     @Override
     public void connect(String host, int port) throws Exception {
         setHostName(host);
@@ -150,7 +156,12 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
      */
     @Override
     public String getCurrentPortName() {
-        String t = getHostName();
+        String t;
+        if(getMdnsConfigure()){
+           t=getHostAddress();
+        } else {
+           t = getHostName();
+        }
         int p = getPort();
         if (t != null && !t.equals("")) {
             if (p != 0) {
