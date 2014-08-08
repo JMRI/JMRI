@@ -3380,6 +3380,7 @@ public class TrainBuilder extends TrainCommon {
 		RouteLocation rld = null; // the route location destination being checked for the car
 		RouteLocation rldSave = null; // holds the best route location destination for the car
 		Track trackSave = null; // holds the best track at destination for the car
+		Track finalDestinationTrackSave = null; // used when a spur has an alternate track and no schedule
 		boolean multiplePickup = false; // true when car can be picked up from two or more locations in the route
 
 		// more than one location in this route?
@@ -3425,8 +3426,9 @@ public class TrainBuilder extends TrainCommon {
 						new Object[] { _train.getRoute().getName(), rld.getId(), rld.getName() }));
 				continue;
 			}
-			Location destinationTemp = null;
+			
 			Track trackTemp = null;
+			Track finalDestinationTrackTemp = null;
 
 			// don't move car to same location unless the route only has one location (local moves) or is passenger,
 			// caboose or car with FRED
@@ -3478,7 +3480,6 @@ public class TrainBuilder extends TrainCommon {
 				String status = car.testDestination(testDestination, _terminateStageTrack);
 				if (status.equals(Track.OKAY)) {
 					trackTemp = _terminateStageTrack;
-					destinationTemp = testDestination;
 				// only generate a new load if there aren't any other tracks available for this car
 				} else if (status.startsWith(Track.LOAD)
 						&& car.getTrack() == _departStageTrack
@@ -3490,7 +3491,6 @@ public class TrainBuilder extends TrainCommon {
 					// try and generate a load for this car into staging
 					if (generateLoadCarDepartingAndTerminatingIntoStaging(car, _terminateStageTrack)) {
 						trackTemp = _terminateStageTrack;
-						destinationTemp = testDestination;
 					} else {
 						addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
 								.getMessage("buildCanNotDropCarBecause"), new Object[] { car.toString(),
@@ -3531,7 +3531,8 @@ public class TrainBuilder extends TrainCommon {
 						return true;
 					}
 					// is the destination a spur with a Schedule?
-					// And is car departing a staging track that can generate schedule loads?
+					// and is car departing a staging track that can generate schedule loads?
+					// alternate track isn't checked
 					if (!status.equals(Track.OKAY)
 							&& (!status.startsWith(Track.TYPE)) // can't generate load for spur that doesn't accept this
 																// car type
@@ -3557,8 +3558,7 @@ public class TrainBuilder extends TrainCommon {
 						ScheduleItem si = getScheduleItem(car, testTrack);
 						if (si != null) {
 							car.setLoadName(si.getReceiveLoadName());
-							status = car.testDestination(testDestination, testTrack);
-							if (status.equals(Track.OKAY)) {
+							if (car.testDestination(testDestination, testTrack).equals(Track.OKAY)) {
 								addLine(_buildReport, FIVE, MessageFormat.format(Bundle
 										.getMessage("buildAddingScheduleLoad"), new Object[] { si.getReceiveLoadName(),
 										car.toString() }));
@@ -3567,13 +3567,25 @@ public class TrainBuilder extends TrainCommon {
 								return true;
 							}
 						}
-						car.setLoadName(carLoad); // restore car's load
+						car.setLoadName(carLoad); // restore car's load (default empty)
+					}
+					// check to see if alternate track is available if track full and no schedule
+					if (status.startsWith(Track.LENGTH) && testTrack.getAlternateTrack() != null
+							&& car.getFinalDestination() == null
+							&& testTrack.getScheduleId().equals("") && car.getTrack() != testTrack.getAlternateTrack()
+							&& car.testDestination(testDestination, testTrack.getAlternateTrack()).equals(Track.OKAY)) {
+						addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
+								.getMessage("buildTrackFullHasAlternate"), new Object[] { testDestination.getName(),
+								testTrack.getName(), testTrack.getAlternateTrack().getName() }));
+						finalDestinationTrackTemp = testTrack;
+						trackTemp = testTrack.getAlternateTrack(); // send car to alternate track
+						break;
 					}
 					// okay to drop car?
 					if (!status.equals(Track.OKAY)) {
-						addLine(_buildReport, SEVEN, MessageFormat.format(
-								Bundle.getMessage("buildCanNotDropCarBecause"), new Object[] { car.toString(),
-										testTrack.getName(), status, testTrack.getTrackTypeName() }));
+						addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
+								.getMessage("buildCanNotDropCarBecause"), new Object[] { car.toString(),
+								testTrack.getName(), status, testTrack.getTrackTypeName() }));
 						continue;
 					}
 					// No local moves from spur to spur
@@ -3605,20 +3617,14 @@ public class TrainBuilder extends TrainCommon {
 					// not staging, then use
 					if (!testTrack.getTrackType().equals(Track.STAGING)) {
 						trackTemp = testTrack;
-						destinationTemp = testDestination;
 						break;
 					}
 				}
 			}
 			// did we find a new destination?
-			if (destinationTemp != null) {
-				// check for programming error
-				if (trackTemp == null) {
-					// The following code should never execute
-					throw new BuildFailedException("Build Failure, trackTemp is null!"); // NOI18N
-				}
+			if (trackTemp != null) {
 				addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildCarCanDropMoves"),
-						new Object[] { car.toString(), (destinationTemp.getName() + ", " + trackTemp.getName()),
+						new Object[] { car.toString(), (trackTemp.getLocation().getName() + ", " + trackTemp.getName()),
 								+rld.getCarMoves(), rld.getMaxCarMoves() }));
 				if (rldSave == null && multiplePickup) {
 					addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildCarHasSecond"),
@@ -3662,6 +3668,7 @@ public class TrainBuilder extends TrainCommon {
 					if (saveRatio < nextRatio) {
 						rld = rldSave; // the saved is better than the last found
 						trackTemp = trackSave;
+						finalDestinationTrackTemp = finalDestinationTrackSave;
 					} else if (multiplePickup) {
 						addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildCarHasSecond"),
 								new Object[] { car.toString(), car.getLocationName() }));
@@ -3672,6 +3679,7 @@ public class TrainBuilder extends TrainCommon {
 				// every time through, save the best route destination, and track
 				rldSave = rld;
 				trackSave = trackTemp;
+				finalDestinationTrackSave = finalDestinationTrackTemp;
 			} else {
 				addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCouldNotFindDestForCar"),
 						new Object[] { car.toString(), rld.getName() }));
@@ -3679,6 +3687,9 @@ public class TrainBuilder extends TrainCommon {
 		}
 		// did we find a destination?
 		if (trackSave != null) {
+			if (finalDestinationTrackSave != null)
+				car.setFinalDestination(finalDestinationTrackSave.getLocation());
+			car.setFinalDestinationTrack(finalDestinationTrackSave);
 			addCarToTrain(car, rl, rldSave, trackSave);
 			return true;
 		}
