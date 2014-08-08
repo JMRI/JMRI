@@ -14,13 +14,24 @@ import jmri.PowerManager;
  */
 public class SRCPPowerManager implements PowerManager, SRCPListener {
 
-	public SRCPPowerManager() {
-		// connect to the TrafficManager
-		tc = SRCPTrafficController.instance();
-		tc.addSRCPListener(this);
-	}
+    int _bus = 0;    
+    SRCPBusConnectionMemo _memo;
 
-    public String getUserName() { return "SRCP"; }
+    @Deprecated
+    public SRCPPowerManager() {
+	// connect to the TrafficManager
+	tc = SRCPTrafficController.instance();
+	tc.addSRCPListener(this);
+    }
+
+    public SRCPPowerManager(SRCPBusConnectionMemo memo, int bus) {
+	// connect to the TrafficManager
+	tc = memo.getTrafficController();
+	tc.addSRCPListener(this);
+        _bus = bus;
+    }
+
+    public String getUserName() { return _memo.getUserName(); }
 
 	int power = UNKNOWN;
 

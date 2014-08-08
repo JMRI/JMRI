@@ -16,9 +16,9 @@ public class SRCPProgrammerManager  extends DefaultProgrammerManager {
 
     //private Programmer localProgrammer;
 
-    private SRCPSystemConnectionMemo _memo=null;
+    private SRCPBusConnectionMemo _memo=null;
 
-    public SRCPProgrammerManager(Programmer serviceModeProgrammer, SRCPSystemConnectionMemo memo) {
+    public SRCPProgrammerManager(Programmer serviceModeProgrammer, SRCPBusConnectionMemo memo) {
         super(serviceModeProgrammer, memo);
         //localProgrammer = serviceModeProgrammer;
         _memo=memo;
@@ -29,11 +29,11 @@ public class SRCPProgrammerManager  extends DefaultProgrammerManager {
      * Works with command station to provide Ops Mode, so say it works
      * @return true
      */
-    public boolean isAddressedModePossible() {return true;}
+    //public boolean isAddressedModePossible() {return true;}
 
-    public Programmer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
-        return new SRCPOpsModeProgrammer(pAddress, pLongAddress,_memo);
-    }
+    //public Programmer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    //    return new SRCPOpsModeProgrammer(pAddress, pLongAddress,_memo);
+    //}
 
     public Programmer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;

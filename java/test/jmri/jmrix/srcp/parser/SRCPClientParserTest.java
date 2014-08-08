@@ -140,7 +140,7 @@ public class SRCPClientParserTest extends TestCase {
 
        public void testGAThrownResponse(){
            boolean exceptionOccured = false;
-           String code = "12345678910 100 INFO 1 GA 1234 1 0\n\r";
+           String code = "12345678910 100 INFO 1 GA 1234 0 0\n\r";
            SRCPClientParser p = new SRCPClientParser(new StringReader(code));
            try {
              p.commandresponse();

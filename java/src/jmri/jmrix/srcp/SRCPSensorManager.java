@@ -17,17 +17,19 @@ import jmri.Sensor;
 
 public class SRCPSensorManager extends jmri.managers.AbstractSensorManager {
 
-    SRCPSystemConnectionMemo _memo = null;
+    SRCPBusConnectionMemo _memo = null;
+    int _bus;
 
-    public SRCPSensorManager(SRCPSystemConnectionMemo memo) {
+    public SRCPSensorManager(SRCPBusConnectionMemo memo, int bus) {
     	_memo=memo;
+        _bus=bus;
     }
 
-    public String getSystemPrefix() { return "D"; }
+    public String getSystemPrefix() { return _memo.getSystemPrefix(); }
 
     public Sensor createNewSensor(String systemName, String userName) {
         Sensor t;
-        int addr = Integer.valueOf(systemName.substring(2)).intValue();
+        int addr = Integer.valueOf(systemName.substring(getSystemPrefix().length()+1)).intValue();
         t = new SRCPSensor(addr,_memo);
         t.setUserName(userName);
 

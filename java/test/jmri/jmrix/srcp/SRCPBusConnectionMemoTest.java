@@ -7,39 +7,38 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * SRCPCommandStationTest.java
+ * SRCPBusConnectionMemoTest.java
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPCommandStation class
+ * Description:	tests for the jmri.jmrix.srcp.SRCPBusConnectionMemo class
  *
  * @author	Bob Jacobsen
  * @version $Revision$
  */
-public class SRCPCommandStationTest extends TestCase {
+public class SRCPBusConnectionMemoTest extends TestCase {
 
     public void testCtor() {
-        SRCPSystemConnectionMemo sm=new SRCPSystemConnectionMemo(new SRCPTrafficController(){
+        SRCPBusConnectionMemo m = new SRCPBusConnectionMemo(new SRCPTrafficController(){
           @Override
           public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
            }
-        });
-        SRCPCommandStation s = new SRCPCommandStation(sm);
-        Assert.assertNotNull(s);
+        },"A",1);
+        Assert.assertNotNull(m);
     }
 
     // from here down is testing infrastructure
-    public SRCPCommandStationTest(String s) {
+    public SRCPBusConnectionMemoTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SRCPCommandStationTest.class.getName()};
+        String[] testCaseName = {"-noloading", SRCPBusConnectionMemoTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(SRCPCommandStationTest.class);
+        TestSuite suite = new TestSuite(SRCPBusConnectionMemoTest.class);
         return suite;
     }
 
@@ -53,5 +52,5 @@ public class SRCPCommandStationTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-    static Logger log = Logger.getLogger(SRCPCommandStationTest.class.getName());
+    static Logger log = Logger.getLogger(SRCPBusConnectionMemoTest.class.getName());
 }

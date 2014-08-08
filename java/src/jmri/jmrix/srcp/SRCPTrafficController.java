@@ -72,8 +72,8 @@ public class SRCPTrafficController extends AbstractMRTrafficController
     SRCPSystemConnectionMemo  getSystemConnectionMemo(){ return _memo;}
 
 
-    static int HANDSHAKEMODE=0;
-    static int RUNMODE=1;
+    public static int HANDSHAKEMODE=0;
+    public static int RUNMODE=1;
     private int mode = HANDSHAKEMODE;
 
     /*
@@ -87,7 +87,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
         while(true){
            try {
                SimpleNode e;
-               if(mode==HANDSHAKEMODE)
+               if(_memo.getMode()==HANDSHAKEMODE)
                   e=parser.handshakeresponse();
                else
                   e=parser.commandresponse();
@@ -106,7 +106,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
 	
                log.debug("Mode " + mode + " child contains " + 
                           ((SimpleNode)e.jjtGetChild(1)).jjtGetValue());	  
-               if (mode==HANDSHAKEMODE && ((String)((SimpleNode)e.jjtGetChild(1)).jjtGetValue()).contains("GO")) mode=RUNMODE;
+               //if (mode==HANDSHAKEMODE && ((String)((SimpleNode)e.jjtGetChild(1)).jjtGetValue()).contains("GO")) mode=RUNMODE;
 
                SRCPClientVisitor v = new SRCPClientVisitor();
                e.jjtAccept(v,_memo);
@@ -232,10 +232,12 @@ public class SRCPTrafficController extends AbstractMRTrafficController
     }
 
     protected AbstractMRMessage enterProgMode() {
-        return SRCPMessage.getProgMode();
+        // we need to find the right bus number!
+        return SRCPMessage.getProgMode(1);
     }
     protected AbstractMRMessage enterNormalMode() {
-        return SRCPMessage.getExitProgMode();
+        // we need to find the right bus number!
+        return SRCPMessage.getExitProgMode(1);
     }
 
     /**

@@ -17,16 +17,25 @@ import jmri.Turnout;
 
 public class SRCPTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
+    int _bus = 0;
+    SRCPBusConnectionMemo _memo = null;
+
+    @Deprecated
     public SRCPTurnoutManager() {
     	
     }
 
-    public String getSystemPrefix() { return "D"; }
+    public SRCPTurnoutManager(SRCPBusConnectionMemo memo, int bus){
+      _bus = bus;
+      _memo=memo;
+    }
+
+    public String getSystemPrefix() { return _memo.getSystemPrefix(); }
 
     public Turnout createNewTurnout(String systemName, String userName) {
         Turnout t;
-        int addr = Integer.valueOf(systemName.substring(2)).intValue();
-        t = new SRCPTurnout(addr);
+        int addr = Integer.valueOf(systemName.substring(_memo.getSystemPrefix().length()+1)).intValue();
+        t = new SRCPTurnout(addr,_memo);
         t.setUserName(userName);
 
         return t;

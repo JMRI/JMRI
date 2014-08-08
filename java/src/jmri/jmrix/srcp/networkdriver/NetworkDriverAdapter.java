@@ -38,7 +38,7 @@ public class NetworkDriverAdapter extends SRCPPortController implements jmri.jmr
      */
     public void configure() {
         // connect to the traffic controller
-        SRCPTrafficController control = SRCPTrafficController.instance();
+        SRCPTrafficController control = new SRCPTrafficController();
         control.connectPort(this);
         adaptermemo.setTrafficController(control);
         adaptermemo.configureManagers();
@@ -85,6 +85,12 @@ public class NetworkDriverAdapter extends SRCPPortController implements jmri.jmr
     public void dispose(){
         adaptermemo.dispose();
         adaptermemo = null;
+    }
+
+
+    @Override
+    public jmri.jmrix.SystemConnectionMemo getSystemConnectionMemo() {
+        return adaptermemo;
     }
 
     static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());

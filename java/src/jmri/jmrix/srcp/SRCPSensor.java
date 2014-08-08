@@ -26,10 +26,10 @@ public class SRCPSensor extends AbstractSensor implements SRCPListener {
 	/**
 	 * SRCP sensors use the sensor number on the remote host.
 	 */
-	public SRCPSensor(int number,SRCPSystemConnectionMemo memo)        {
+	public SRCPSensor(int number,SRCPBusConnectionMemo memo)        {
             super(memo.getSystemPrefix()+"s"+number);
             _number = number;
-            _bus = 1; // for now
+            _bus = memo.getBus();
             tc = memo.getTrafficController();
             // At construction, register for messages
             tc.addSRCPListener(this);
@@ -102,7 +102,8 @@ public class SRCPSensor extends AbstractSensor implements SRCPListener {
         public void reply(jmri.jmrix.srcp.parser.SimpleNode n) {	
            if(log.isDebugEnabled())
               log.debug("reply called with simpleNode " + n.jjtGetValue());
-           reply(new SRCPReply(n));
+           //if( n.jjtGetChild(3) instanceof jmri.jmrix.srcp.parser.ASTfb )
+               reply(new SRCPReply(n));
         }
 
         public void message(SRCPMessage m) {

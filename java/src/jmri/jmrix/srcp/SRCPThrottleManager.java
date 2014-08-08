@@ -19,17 +19,20 @@ import jmri.jmrix.AbstractThrottleManager;
  */
 public class SRCPThrottleManager extends AbstractThrottleManager {
 
+    private int bus;
+
     /**
      * Constructor.
      */
-    public SRCPThrottleManager(SRCPSystemConnectionMemo memo) {
+    public SRCPThrottleManager(SRCPBusConnectionMemo memo) {
         super(memo);
+        bus = memo.getBus();
     }
 
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         log.debug("new SRCPThrottle for "+address);
         // Notify ready to go (without waiting for OK?)
-        notifyThrottleKnown(new SRCPThrottle((SRCPSystemConnectionMemo)adapterMemo, (DccLocoAddress)address), address);
+        notifyThrottleKnown(new SRCPThrottle((SRCPBusConnectionMemo)adapterMemo, (DccLocoAddress)address), address);
     }
     
     // KSL 20040409 - SRCP does not have a 'dispatch' function.
@@ -69,7 +72,7 @@ public class SRCPThrottleManager extends AbstractThrottleManager {
         if (super.disposeThrottle(t, l)){
         // Form a message to release the loco
             DccLocoAddress la = (DccLocoAddress) t.getLocoAddress();
-            String msg = "TERM 1 GL "
+            String msg = "TERM "+bus+" GL "
                 +(la.getNumber())
                 +"\n";
 

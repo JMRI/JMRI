@@ -22,10 +22,12 @@ public class SRCPThrottle extends AbstractThrottle
     /**
      * Constructor.
      */
-    public SRCPThrottle(SRCPSystemConnectionMemo memo, DccLocoAddress address)
+    public SRCPThrottle(SRCPBusConnectionMemo memo, DccLocoAddress address)
     {
         super(memo);
         super.speedStepMode = SpeedStepMode128;
+
+        bus = memo.getBus();
 
         // cache settings. It would be better to read the
         // actual state, but I don't know how to do this
@@ -47,7 +49,7 @@ public class SRCPThrottle extends AbstractThrottle
         this.isForward    = true;
 
         // send allocation message
-        String msg = "INIT 1 GL "
+        String msg = "INIT " + bus +" GL "
             +(address.getNumber())
             +" N 1 128 5\n";
         memo.getTrafficController()
@@ -102,12 +104,13 @@ public class SRCPThrottle extends AbstractThrottle
     }
 
     private DccLocoAddress address;
+    private int bus;
     
     /**
      * Send the complete status
      */
     void sendUpdate() {
-        String msg = "SET 1 GL ";
+        String msg = "SET "+bus+" GL ";
         
         // address
         msg+=(address.getNumber());
@@ -151,7 +154,7 @@ public class SRCPThrottle extends AbstractThrottle
         // send the result
         SRCPMessage m = new SRCPMessage(msg+"\n");
 
-        ((SRCPSystemConnectionMemo)adapterMemo).getTrafficController().sendSRCPMessage(m, null);
+        ((SRCPBusConnectionMemo)adapterMemo).getTrafficController().sendSRCPMessage(m, null);
     }
 
     public LocoAddress getLocoAddress() {

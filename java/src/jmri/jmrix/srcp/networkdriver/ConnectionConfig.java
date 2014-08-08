@@ -25,11 +25,13 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
         super();
     }
 
-    public String name() { return "Network Connection"; }
+    public String name() { return "SRCP Network Connection"; }
 
     protected void setInstance() {
-        adapter = NetworkDriverAdapter.instance();
-        adapter.setPort(4303); // 4303 is assigned to SRCP by IANA
+        if(adapter==null) {
+           adapter = new NetworkDriverAdapter();
+           adapter.setPort(4303); // 4303 is assigned to SRCP by IANA
+        }
     }
 
     public boolean isPortAdvanced() {return false;}

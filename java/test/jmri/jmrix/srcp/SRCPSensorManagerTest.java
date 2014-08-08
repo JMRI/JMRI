@@ -17,13 +17,13 @@ import junit.framework.TestSuite;
 public class SRCPSensorManagerTest extends TestCase {
 
     public void testCtor() {
-        SRCPSystemConnectionMemo sm=new SRCPSystemConnectionMemo(new SRCPTrafficController(){
+        SRCPBusConnectionMemo sm=new SRCPBusConnectionMemo(new SRCPTrafficController(){
           @Override
           public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
            }
-        });
+        },"A",1);
 
-        SRCPSensorManager m = new SRCPSensorManager(sm);
+        SRCPSensorManager m = new SRCPSensorManager(sm,1);
         Assert.assertNotNull(m);
     }
 
