@@ -27,16 +27,24 @@
       <variable CV="3" item="Accel" default="6" comment="Range 0-255">
         <decVal min="0" max="255"/>
         <label>Acceleration Momentum (0-255)</label>
+        <label xml:lang="it">Accellerazione (0-255)</label>
+        <label xml:lang="fr">Accelération (0-255)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-255)</label>
         <comment>Range 0-255</comment>
       </variable>
       <variable CV="4" item="Decel" default="5" comment="Range 0-255">
         <decVal min="0" max="255"/>
         <label>Deceleration (Brake) Momentum (0-255)</label>
+        <label xml:lang="it">Decellerazione (0-255)</label>
+        <label xml:lang="fr">Décélération (0-255)</label>
+        <label xml:lang="de">Bremszeit (0-255)</label>
         <comment>Range 0-255</comment>
       </variable>
       <variable CV="5" item="Vhigh" default="255" comment="Sets the maximum voltage at full throttle">
         <decVal min="0" max="255"/>
         <label>Max Volts (0-255)</label>
+        <label xml:lang="it">Volt Massimi (0-255):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
         <comment>Sets the maximum voltage at full throttle</comment>
       </variable>
       <variable CV="7" readOnly="yes" item="Decoder Version" default="65">

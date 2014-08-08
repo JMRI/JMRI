@@ -28,8 +28,12 @@
   <decoder>
     <family name="Zimo MX640" mfg="Zimo">
       <model model="MX640 version 4.17" lowVersionID="4" maxInputVolts="12-24V" maxMotorCurrent="1.2A, peak=2A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="11" numFns="14">
-        <output name="1" label="Front Light"/>
-        <output name="2" label="Rear Light"/>
+        <output name="1" label="Front Light">
+           <label xml:lang="it">"Luci front"</label>
+        </output>
+        <output name="2" label="Rear Light">
+           <label xml:lang="it">"Luci retr"</label>
+        </output>
         <output name="3" label="FO 1"/>
         <output name="4" label="FO 2"/>
         <output name="5" label="FO 3"/>
@@ -48,35 +52,66 @@
       <variable item="Vstart" CV="2" default="2" comment="Range 0-252">
         <decVal max="252"/>
         <label>Vstart</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Anfahrspannung</label>
         <comment>Range 0-252</comment>
+        <comment xml:lang="it">Valori 0-252</comment>
+        <comment xml:lang="de">Wert 0-252</comment>
       </variable>
       <variable CV="3" default="12" item="Accel" comment="Range 0-255">
         <decVal max="255"/>
         <label>Acceleration</label>
+        <label xml:lang="it">Accellerazione (0-255)</label>
+        <label xml:lang="fr">Accelération (0-255)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-255)</label>
         <comment>Range 0-255</comment>
+        <comment xml:lang="it">Valori 0-255</comment>
+        <comment xml:lang="de">Wert 0-255</comment>
       </variable>
       <variable CV="4" default="12" item="Decel" comment="Range 0-255">
         <decVal max="255"/>
         <label>Deceleration</label>
         <comment>Range 0-255</comment>
+        <label xml:lang="it">Decellerazione (0-255)</label>
+        <label xml:lang="fr">Décélération (0-255)</label>
+        <label xml:lang="de">Bremszeit (0-255)</label>
+        <comment xml:lang="it">Valori 0-255</comment>
+        <comment xml:lang="de">Wert 0-255</comment>
       </variable>
       <variable item="Vhigh" CV="5" default="1" comment="Range 0-252(0 or 1 = no effect)">
         <decVal max="252"/>
         <label>Vhigh</label>
+        <label xml:lang="it">Volt Massimi</label>
+        <label xml:lang="fr">Vmax</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
         <comment>Range 0-252(0 or 1 = no effect)</comment>
+        <comment xml:lang="it">Valori 0-252 (0 o 1 = nessun effetto)</comment>
+        <comment xml:lang="de">Wert 0-255 (0 oder 1= no effect)</comment>
       </variable>
       <variable item="Vmid" CV="6" default="1" comment="Range 0-252">
         <decVal max="252"/>
         <label>Vmid</label>
+        <label xml:lang="it">Volt Intermedi</label>
+        <label xml:lang="fr">Vmoy</label>
+        <label xml:lang="de">Mittengeschwindigkeit</label>
         <comment>Range 0-252</comment>
+        <comment xml:lang="it">Valori 0-252</comment>
+        <comment xml:lang="de">Wert 0-252</comment>
       </variable>
       <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Decoder Version   </label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
       <variable CV="8" readOnly="yes" item="Manufacturer" default="145">
         <decVal/>
         <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
       </variable>
       <variable item="Motor Frequency and EMF sample Rate" CV="9" default="0">
         <decVal/>
@@ -1650,29 +1685,7 @@
         <label>Software Update Locked</label>
         <label xml:lang="it">Blocco Aggiornamenti Software</label>
       </variable>
-      <variable CV="145" item="Kick Start" default="0">
-        <enumVal>
-          <enumChoice choice="Normal (DC and Coreless)" value="0">
-            <choice>Normal (DC and Coreless)</choice>
-          </enumChoice>
-          <enumChoice choice="Low Impedance DC (with added capacitor see manual)" value="1">
-            <choice>Low Impedance DC (with added capacitor see manual)</choice>
-          </enumChoice>
-          <enumChoice choice="C or Softdrive-Sinus (FO4 not useable)" value="10">
-            <choice>C or Softdrive-Sinus (FO4 not useable)</choice>
-          </enumChoice>
-          <enumChoice choice="alternative C or Softdrive-Sinus (FO4 useable)" value="11">
-            <choice>alternative C or Softdrive-Sinus (FO4 useable)</choice>
-          </enumChoice>
-          <enumChoice choice="Special C or Softdrive-Sinus requiring normal output (FO4 not useable)" value="12">
-            <choice>Special C or Softdrive-Sinus requiring normal output (FO4 not useable)</choice>
-          </enumChoice>
-          <enumChoice choice="Special C or Softdrive-Sinus for Marklin Gottardo (FO3 is directional selection of 3rd rail pickup)" value="13">
-            <choice>Special C or Softdrive-Sinus for Marklin Gottardo (FO3 is directional selection of 3rd rail pickup)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Motor Control Method</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV145_kickStart.xml"/>
       <variable CV="146" default="0" item="Load Control" tooltip="Motor Backlash Control">
         <decVal min="0" max="255"/>
         <label>Motor Backlash Control</label>
@@ -1687,14 +1700,7 @@
         <label>Differential value</label>
       </variable>
       <variable CV="149" mask="VVVVVVVX" default="0" item="EMF Enable">
-        <enumVal>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
         <label>Adaptive proportional value</label>
       </variable>
       <variable CV="150" default="0" item="EMF Static Config">

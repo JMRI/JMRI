@@ -622,36 +622,7 @@
     <label>Software Update Locked</label>
     <label xml:lang="it">Blocco aggiornamento Software</label>
   </variable>
-  <variable CV="145" item="Kick Start" default="0">
-    <enumVal>
-      <enumChoice choice="Normal (DC and Coreless)" value="0">
-        <choice>Normal (DC and Coreless)</choice>
-        <choice xml:lang="it">Normale (DC e Coreless)</choice>
-      </enumChoice>
-      <enumChoice choice="Low Impedance DC (with added capacitor see manual)" value="1">
-        <choice>Low Impedance DC (with added capacitor see manual)</choice>
-        <choice xml:lang="it">Bassa impedenza DC(con condensatoe: vedere manuale)</choice>
-      </enumChoice>
-      <enumChoice choice="C or Softdrive-Sinus (FO4 not useable)" value="10">
-        <choice>C or Softdrive-Sinus (FO4 not useable)</choice>
-        <choice xml:lang="it">C o Softdrive-Sinusoidale (F4 non usabile)</choice>
-      </enumChoice>
-      <enumChoice choice="alternative C or Softdrive-Sinus (FO4 useable)" value="11">
-        <choice>alternative C or Softdrive-Sinus (FO4 useable)</choice>
-        <choice xml:lang="it">C alternativo o Softdrive-Sinusoidale (F4 usabile)</choice>
-      </enumChoice>
-      <enumChoice choice="Special C or Softdrive-Sinus requiring normal output (FO4 not useable)" value="12">
-        <choice>Special C or Softdrive-Sinus requiring normal output (FO4 not useable)</choice>
-        <choice xml:lang="it">C Speciale o Softdrive-Sinusoidale con uscita normale (F4 non usabile)</choice>
-      </enumChoice>
-      <enumChoice choice="Special C or Softdrive-Sinus for Marklin Gottardo (FO3 is directional selection of 3rd rail pickup)" value="13">
-        <choice>Special C or Softdrive-Sinus for Marklin Gottardo (FO3 is directional selection of 3rd rail pickup)</choice>
-        <choice xml:lang="it">C Speciale o Softdrive-Sinusoidale per Marklin Gottardo (F3 selezione direzionale della terza rotaia)</choice>
-      </enumChoice>
-    </enumVal>
-    <label>Motor Control Method</label>
-    <label xml:lang="it">Metodo controllo motore</label>
-  </variable>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/CV145_kickStart.xml"/>
   <variable CV="146" default="0" item="Load Control" tooltip="Motor Backlash Control">
     <decVal min="0" max="255"/>
     <label>Motor Backlash Control</label>

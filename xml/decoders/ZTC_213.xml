@@ -35,6 +35,9 @@
       <variable CV="2" item="Vstart" comment="Range 0-255">
         <decVal/>
         <label>Start Volts</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Anfahrspannung</label>
         <comment>Range 0-255</comment>
       </variable>
       <variable item="Accel" CV="3" comment="Range 0-15">
@@ -121,11 +124,7 @@
         </enumVal>
         <label>Directional Headlights</label>
       </variable>
-      <variable item=" Kick Start " CV="65" comment="Range 0-63">
-        <decVal max="63"/>
-        <label> Kick Start </label>
-        <comment>Range 0-63</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart_63.xml"/>
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="8"/>
