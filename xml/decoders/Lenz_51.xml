@@ -61,10 +61,11 @@
       <variable CV="2" item="Vstart" comment="Range 1-15" default="4">
         <decVal max="15"/>
         <label>Start Volts</label>
-        <label xml:lang="it">Tensione di Partenza</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Startspannung</label>
         <comment>Range 1-15</comment>
         <comment xml:lang="it">Valori 1-15</comment>
-        <label xml:lang="de">Vstart</label>
         <comment xml:lang="de">Range 1-15</comment>
       </variable>
       <variable item="Accel" CV="3" comment="Range 1-31" default="4">

@@ -47,16 +47,16 @@
   </revhistory>
   <variable CV="3" item="Accel">
     <decVal max="31"/>
-    <label xml:lang="it">Accellerazione</label>
-    <label xml:lang="fr">Accélération</label>
-    <label xml:lang="de">Beschleunigungszeit</label>
+    <label xml:lang="it">Accellerazione (0-31)</label>
+    <label xml:lang="fr">Accelération (0-31)</label>
+    <label xml:lang="de">Anfahrverzögerung (0-31)</label>
     <label>Acceleration Rate</label>
   </variable>
   <variable CV="4" item="Decel">
     <decVal max="31"/>
-    <label xml:lang="it">Decellerazione</label>
-    <label xml:lang="fr">Décélération</label>
-    <label xml:lang="de">Bremszeit</label>
     <label>Deceleration Rate</label>
+    <label xml:lang="it">Decellerazione (0-31)</label>
+        <label xml:lang="fr">Décélération (0-31)</label>
+        <label xml:lang="de">Bremszeit (0-31)</label>
   </variable>
 </variables>

@@ -43,31 +43,39 @@
       <variable CV="2" item="Vstart" default="1" comment="Range 0-255">
         <decVal max="255"/>
         <label>Vstart</label>
-		<label xml:lang="de">Anfahrspannung</label>			
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Anfahrspannung</label>
         <comment>Range 0-255</comment>
       </variable>
       <variable CV="3" default="1" item="Accel" comment="Range 0-255">
         <decVal max="255"/>
         <label>Acceleration</label>
-		<label xml:lang="de">Beschleunigungszeit</label>		
+        <label xml:lang="it">Accellerazione (0-255)</label>
+        <label xml:lang="fr">Accelération (0-255)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-255)</label>
         <comment>Range 0-255</comment>
       </variable>
       <variable CV="4" default="1" item="Decel" comment="Range 0-255">
         <decVal max="255"/>
         <label>Deceleration</label>
-		<label xml:lang="de">Bremszeit</label>		
+        <label xml:lang="it">Decellerazione (0-255)</label>
+        <label xml:lang="fr">Décélération (0-255)</label>
+        <label xml:lang="de">Bremszeit (0-255)</label>
         <comment>Range 0-255</comment>
       </variable>
       <variable CV="5" item="Vhigh" default="255" comment="Range 0-255">
         <decVal max="255"/>
         <label>Vhigh</label>
-		<label xml:lang="de">Höchstgeschwindigkeit</label>		
+        <label xml:lang="it">Volt Massimi (0-255):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
         <comment>Range 0-255</comment>
       </variable>
       <variable CV="6" item="Vmid" default="70" comment="Range 0-255">
         <decVal max="255"/>
         <label>Vmid</label>
-		<label xml:lang="de">Mittengeschwindigkeit</label>		
+		    <label xml:lang="it">Volts intermedi (0-255)</label>
+        <label xml:lang="de">Vmittel (0-255)</label>
         <comment>Range 0-255</comment>
       </variable>
       <variable CV="7" readOnly="yes" item="Decoder Version" default="26">
@@ -140,7 +148,7 @@
 		<tooltip>PWM for Dimming Function Outputs : 0 - 100%</tooltip>
 		<tooltip xml:lang="de">Funktionen dimmen, Reduktion der Helligkeit der Lampen: 0 - 100%</tooltip>		
       </variable>
-      <variable CV="55" item="Function 1 option 1" default="32"  comment="Range 0-100">
+      <variable CV="55" item="Function 1 option 1" default="32" comment="Range 0-100">
         <decVal min="0" max="100"/>
         <label>Uncoupler Holding Current</label>
         <label xml:lang="de">Dimmen der Kupplungsausgänge</label>		

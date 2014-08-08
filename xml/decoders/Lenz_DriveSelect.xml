@@ -34,7 +34,9 @@
         <decVal/>
         <label>Start Volts</label>
         <comment>Range 0-31</comment>
-        <label xml:lang="de">Vstart</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Startspannung</label>
         <comment xml:lang="de">Range 0-31</comment>
       </variable>
       <variable item="Accel" CV="3" default="1" comment="Range 0-31">

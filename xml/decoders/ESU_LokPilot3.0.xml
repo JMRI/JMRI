@@ -45,8 +45,12 @@
   <decoder>
     <family name="ESU LokPilot 3.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="0" highVersionID="255">
       <model model="LokPilot micro 3.0" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall">
-        <output name="1" label="Front light" maxcurrent="140 mA" connection="wire"/>
-        <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire"/>
+        <output name="1" label="Front light" maxcurrent="140 mA" connection="wire">
+          <label xml:lang="it">Luci Front</label>
+        </output>
+        <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire">
+        <label xml:lang="it">Luci Retro</label>
+        </output>
         <size length="13.5" width="9" height="3.0" units="mm"/>
         <protocols>
           <protocol>dcc</protocol>
@@ -55,13 +59,21 @@
         </protocols>
       </model>
       <model model="LokPilot micro DCC 3.0" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall">
-        <output name="1" label="Front light" maxcurrent="140 mA" connection="wire"/>
-        <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire"/>
+        <output name="1" label="Front light" maxcurrent="140 mA" connection="wire">
+          <label xml:lang="it">Luci Front</label>
+        </output>
+        <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire">
+          <label xml:lang="it">Luci Retro</label>
+        </output>
         <size length="13.5" width="9" height="3.0" units="mm"/>
       </model>
       <model model="LokPilot 3.0" maxInputVolts="40 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium">
-        <output name="1" label="Front light" maxcurrent="250 mA" connection="wire"/>
-        <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire"/>
+        <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
+          <label xml:lang="it">Luci Front</label>
+        </output>
+        <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
+          <label xml:lang="it">Luci Retro</label>
+        </output>
         <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire"/>
         <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire"/>
         <size length="23.5" width="15.5" height="5.5" units="mm"/>
@@ -72,15 +84,23 @@
         </protocols>
       </model>
       <model model="LokPilot DCC 3.0" maxInputVolts="27 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium">
-        <output name="1" label="Front light" maxcurrent="250 mA" connection="wire"/>
-        <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire"/>
+        <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
+          <label xml:lang="it">Luci Front</label>
+        </output>
+        <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
+          <label xml:lang="it">Luci Retro</label>
+        </output>
         <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire"/>
         <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire"/>
         <size length="23.5" width="15.5" height="5.5" units="mm"/>
       </model>
       <model model="LokPilot mfx 3.0" maxInputVolts="40 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium">
-        <output name="1" label="Front light" maxcurrent="250 mA" connection="wire"/>
-        <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire"/>
+        <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
+          <label xml:lang="it">Luci Front</label>
+        </output>
+        <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
+          <label xml:lang="it">Luci Retro</label>
+        </output>
         <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire"/>
         <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire"/>
         <size length="23.5" width="15.5" height="5.5" units="mm"/>
@@ -90,8 +110,12 @@
         </protocols>
       </model>
       <model model="LokPilot XL 3.0" maxInputVolts="40 V" maxMotorCurrent="3.0 A" maxTotalCurrent="5.0 A" numOuts="8" numFns="17" formFactor="G" connector="other">
-        <output name="1" label="Front light" maxcurrent="600 mA" connection="other"/>
-        <output name="2" label="Rear light " maxcurrent="600 mA" connection="other"/>
+        <output name="1" label="Front light" maxcurrent="600 mA" connection="other">
+          <label xml:lang="it">Luci Front</label>
+        </output>
+        <output name="2" label="Rear light " maxcurrent="600 mA" connection="other">
+          <label xml:lang="it">Luci Retro</label>
+        </output>
         <output name="3" label="   AUX1    " maxcurrent="600 mA" connection="other"/>
         <output name="4" label="   AUX2    " maxcurrent="600 mA" connection="other"/>
         <output name="5" label="   AUX3    " maxcurrent="600 mA" connection="other"/>
@@ -105,8 +129,12 @@
         </protocols>
       </model>
       <model model="LokPilot Fx 3.0" maxInputVolts="40 V" maxMotorCurrent="N/A" maxTotalCurrent="0.5 A" numOuts="6" numFns="14" formFactor="HO" connector="NMRAmedium">
-        <output name="1" label="Front light" maxcurrent="250 mA" connection="wire"/>
-        <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire"/>
+        <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
+           <label xml:lang="it">Luci Front</label>
+        </output>
+        <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
+          <label xml:lang="it">Luci Retro</label>
+        </output>
         <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire"/>
         <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire"/>
         <output name="5" label="   AUX3    " maxcurrent="250 mA" connection="wire"/>
@@ -124,22 +152,35 @@
       <variable CV="2" default="3" item="Vstart" tooltip="Determines the starting speed (1-75)">
         <decVal min="1" max="75"/>
         <label>Starting Voltage</label>
+        <label xml:lang="it">Volt Partenza (1-75)</label>
+        <label xml:lang="fr">V démarr. (1-75)</label>
+        <label xml:lang="de">Anfahrspannung (1-75)</label>
       </variable>
       <variable CV="3" default="8" item="Accel" tooltip="This value multiplied by 0.869 gives the time from stop to maximum speed (0-64)">
         <decVal min="0" max="64"/>
         <label>Acceleration</label>
+        <label xml:lang="it">Accellerazione (0-64)</label>
+        <label xml:lang="fr">Accelération (0-64)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-64)</label>
       </variable>
       <variable CV="4" default="6" item="Decel" tooltip="This value multiplied by 0.869 gives the time from maximum speed to stop (0-64)">
         <decVal min="1" max="64"/>
         <label>Deceleration</label>
+        <label xml:lang="it">Decellerazione (1-64)</label>
+        <label xml:lang="fr">Décélération (1-64)</label>
+        <label xml:lang="de">Bremszeit (1-64)</label>
       </variable>
       <variable CV="5" default="64" item="Vhigh" tooltip="Maximum speed of locomotive (0-64)">
         <decVal min="0" max="64"/>
         <label>Maximum Speed</label>
+        <label xml:lang="it">Volt Massimi (0-64):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
       </variable>
       <variable CV="6" default="22" item="Vmid" tooltip="Speed of locomotive at medium speed step (0-64)">
         <decVal min="0" max="64"/>
         <label>Medium speed</label>
+        <label xml:lang="it">Volts intermedi (0-64)</label>
+        <label xml:lang="de">Vmittel (0-64)</label>
       </variable>
       <variable CV="7" item="Decoder Version" tooltip="The decoder version number (read only)">
         <decVal/>
@@ -1143,47 +1184,22 @@
         <label>Saves the current speed setting</label>
       </variable>
       <variable CV="124" mask="XXXXVXXX" default="0" item="Kick Start">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Acceleration based on acceleration time</label>
+        <label xml:lang="it">Forza Avviamento</label>
+        <label xml:lang="fr">Impuls. de démarrage (kick start)</label>
+        <label xml:lang="de">Kick Start</label>
       </variable>
       <variable item="Emergency stop when changing direction in Motorola mode" CV="124" mask="XXXVXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Emergency stop when changing direction in Motorola mode</label>
       </variable>
       <variable item="Motor PWM when running in analog mode" CV="124" mask="XVXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Motor PWM when running in analog mode</label>
       </variable>
       <variable item="PWM for function outputs in analog mode" CV="124" mask="VXXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>PWM for function outputs in analog mode</label>
       </variable>
       <variable CV="125" default="15" item="Radio Power Conversion" tooltip="Range 0-127">
@@ -1203,839 +1219,307 @@
         <label>Analogue AC maximum speed</label>
       </variable>
       <variable item="Stand Forward A Headlight" CV="129" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Stand Forward A Headlight</label>
       </variable>
       <variable item="Stand Forward A Rear light" CV="129" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Stand Forward A Rear light</label>
       </variable>
       <variable item="Stand Forward A AUX1" CV="129" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Stand Forward A AUX1</label>
       </variable>
       <variable item="Stand Forward A AUX2" CV="129" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Stand Forward A AUX2</label>
       </variable>
       <variable item="Stand Forward A AUX3" CV="129" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Stand Forward A AUX3</label>
       </variable>
       <variable item="Stand Forward A AUX4" CV="129" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Stand Forward A AUX4</label>
       </variable>
       <variable item="Stand Forward A AUX5" CV="129" mask="XVXXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Stand Forward A AUX5</label>
       </variable>
       <variable item="Stand Forward A AUX6" CV="129" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Stand Forward A AUX6</label>
       </variable>
       <variable item="Stand Forward B Acceleration on/off" CV="130" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Stand Forward B Acceleration on/off</label>
       </variable>
       <variable item="Stand Forward B Shunting mode on/off" CV="130" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Stand Forward B Shunting mode on/off</label>
       </variable>
       <variable item="Stand Forward B Sound on/off" CV="130" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Stand Forward B Sound on/off</label>
       </variable>
       <variable item="Stand Forward B Dynamic Brake" CV="130" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Stand Forward B Dynamic Brake</label>
       </variable>
       <variable item="Stand Back up A Headlight" CV="132" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Stand Back up A Headlight</label>
       </variable>
       <variable item="Stand Back up A Rear light" CV="132" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Stand Back up A Rear light</label>
       </variable>
       <variable item="Stand Back up A AUX1" CV="132" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Stand Back up A AUX1</label>
       </variable>
       <variable item="Stand Back up A AUX2" CV="132" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Stand Back up A AUX2</label>
       </variable>
       <variable item="Stand Back up A AUX3" CV="132" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Stand Back up A AUX3</label>
       </variable>
       <variable item="Stand Back up A AUX4" CV="132" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Stand Back up A AUX4</label>
       </variable>
       <variable item="Stand Back up A AUX5" CV="132" mask="XVXXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Stand Back up A AUX5</label>
       </variable>
       <variable item="Stand Back up A AUX6" CV="132" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Stand Back up A AUX6</label>
       </variable>
       <variable item="Stand Back up B Acceleration on/off" CV="133" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Stand Back up B Acceleration on/off</label>
       </variable>
       <variable item="Stand Back up B Shunting mode on/off" CV="133" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Stand Back up B Shunting mode on/off</label>
       </variable>
       <variable item="Stand Back up B Sound on/off" CV="133" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Stand Back up B Sound on/off</label>
       </variable>
       <variable item="Stand Back up B Dynamic Brake" CV="133" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Stand Back up B Dynamic Brake</label>
       </variable>
       <variable item="Drive Forward A Headlight" CV="135" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Drive Forward A Headlight</label>
       </variable>
       <variable item="Drive Forward A Rear light" CV="135" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Drive Forward A Rear light</label>
       </variable>
       <variable item="Drive Forward A AUX1" CV="135" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Drive Forward A AUX1</label>
       </variable>
       <variable item="Drive Forward A AUX2" CV="135" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Drive Forward A AUX2</label>
       </variable>
       <variable item="Drive Forward A AUX3" CV="135" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Drive Forward A AUX3</label>
       </variable>
       <variable item="Drive Forward A AUX4" CV="135" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Drive Forward A AUX4</label>
       </variable>
       <variable item="Drive Forward A AUX5" CV="135" mask="XVXXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Drive Forward A AUX5</label>
       </variable>
       <variable item="Drive Forward A AUX6" CV="135" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Drive Forward A AUX6</label>
       </variable>
       <variable item="Drive Forward B Acceleration on/off" CV="136" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Drive Forward B Acceleration on/off</label>
       </variable>
       <variable item="Drive Forward B Shunting mode on/off" CV="136" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Drive Forward B Shunting mode on/off</label>
       </variable>
       <variable item="Drive Forward B Sound on/off" CV="136" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Drive Forward B Sound on/off</label>
       </variable>
       <variable item="Drive Forward B Dynamic Brake" CV="136" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Drive Forward B Dynamic Brake</label>
       </variable>
       <variable item="Drive Back up A Headlight" CV="138" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Drive Back up A Headlight</label>
       </variable>
       <variable item="Drive Back up A Rear light" CV="138" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Drive Back up A Rear light</label>
       </variable>
       <variable item="Drive Back up A AUX1" CV="138" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Drive Back up A AUX1</label>
       </variable>
       <variable item="Drive Back up A AUX2" CV="138" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Drive Back up A AUX2</label>
       </variable>
       <variable item="Drive Back up A AUX3" CV="138" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Drive Back up A AUX3</label>
       </variable>
       <variable item="Drive Back up A AUX4" CV="138" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Drive Back up A AUX4</label>
       </variable>
       <variable item="Drive Back up A AUX5" CV="138" mask="XVXXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Drive Back up A AUX5</label>
       </variable>
       <variable item="Drive Back up A AUX6" CV="138" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Drive Back up A AUX6</label>
       </variable>
       <variable item="Drive Back up B Acceleration on/off" CV="139" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Drive Back up B Acceleration on/off</label>
       </variable>
       <variable item="Drive Back up B Shunting mode on/off" CV="139" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Drive Back up B Shunting mode on/off</label>
       </variable>
       <variable item="Drive Back up B Sound on/off" CV="139" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Drive Back up B Sound on/off</label>
       </variable>
       <variable item="Drive Back up B Dynamic Brake" CV="139" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Drive Back up B Dynamic Brake</label>
       </variable>
       <variable item="Light Forward A Headlight" CV="141" mask="XXXXXXXV" default="1">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Light Forward A Headlight</label>
       </variable>
       <variable item="Light Forward A Rear light" CV="141" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Light Forward A Rear light</label>
       </variable>
       <variable item="Light Forward A AUX1" CV="141" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Light Forward A AUX1</label>
       </variable>
       <variable item="Light Forward A AUX2" CV="141" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Light Forward A AUX2</label>
       </variable>
       <variable item="Light Forward A AUX3" CV="141" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Light Forward A AUX3</label>
       </variable>
       <variable item="Light Forward A AUX4" CV="141" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Light Forward A AUX4</label>
       </variable>
       <variable item="Light Forward A AUX5" CV="141" mask="XVXXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Light Forward A AUX5</label>
       </variable>
       <variable item="Light Forward A AUX6" CV="141" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Light Forward A AUX6</label>
       </variable>
       <variable item="Light Forward B Acceleration on/off" CV="142" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Light Forward B Acceleration on/off</label>
       </variable>
       <variable item="Light Forward B Shunting mode on/off" CV="142" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Light Forward B Shunting mode on/off</label>
       </variable>
       <variable item="Light Forward B Sound on/off" CV="142" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Light Forward B Sound on/off</label>
       </variable>
       <variable item="Light Forward B Dynamic Brake" CV="142" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Light Forward B Dynamic Brake</label>
       </variable>
       <variable item="Light Back up A Headlight" CV="144" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Light Back up A Headlight</label>
       </variable>
       <variable item="Light Back up A Rear light" CV="144" mask="XXXXXXVX" default="1">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Light Back up A Rear light</label>
       </variable>
       <variable item="Light Back up A AUX1" CV="144" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Light Back up A AUX1</label>
       </variable>
       <variable item="Light Back up A AUX2" CV="144" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Light Back up A AUX2</label>
       </variable>
       <variable item="Light Back up A AUX3" CV="144" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Light Back up A AUX3</label>
       </variable>
       <variable item="Light Back up A AUX4" CV="144" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Light Back up A AUX4</label>
       </variable>
       <variable item="Light Back up A AUX5" CV="144" mask="XVXXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Light Back up A AUX5</label>
       </variable>
       <variable item="Light Back up A AUX6" CV="144" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Light Back up A AUX6</label>
       </variable>
       <variable item="Light Back up B Acceleration on/off" CV="145" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Light Back up B Acceleration on/off</label>
       </variable>
       <variable item="Light Back up B Shunting mode on/off" CV="145" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Light Back up B Shunting mode on/off</label>
       </variable>
       <variable item="Light Back up B Sound on/off" CV="145" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Light Back up B Sound on/off</label>
       </variable>
       <variable item="Light Back up B Dynamic Brake" CV="145" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Light Back up B Dynamic Brake</label>
       </variable>
       <variable item="F1 Forward A Headlight" CV="147" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F1 Forward A Headlight</label>
       </variable>
       <variable item="F1 Forward A Rear light" CV="147" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F1 Forward A Rear light</label>
       </variable>
       <variable item="F1 Forward A AUX1" CV="147" mask="XXXXXVXX" default="1">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F1 Forward A AUX1</label>
       </variable>
       <variable item="F1 Forward A AUX2" CV="147" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F1 Forward A AUX2</label>
       </variable>
       <variable item="F1 Forward A AUX3" CV="147" mask="XXXVXXXX">

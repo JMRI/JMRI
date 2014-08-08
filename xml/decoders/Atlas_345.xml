@@ -31,16 +31,25 @@
       <variable CV="2" item="Vstart" default="8" comment="Range 0-31">
         <decVal max="31"/>
         <label>Start Volts</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Anfahrspannung</label>
         <comment>Range 0-31</comment>
       </variable>
       <variable CV="3" item="Accel" default="1" comment="Range 1-255">
         <decVal max="255"/>
         <label>Acceleration momentum</label>
+        <label xml:lang="it">Accellerazione (0-255)</label>
+        <label xml:lang="fr">Accelération (0-255)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-255)</label>
         <comment>Range 1-255</comment>
       </variable>
       <variable CV="4" item="Decel" default="1" comment="Range 1-255">
         <decVal max="255"/>
         <label>Brake momentum</label>
+        <label xml:lang="it">Decellerazione (0-255)</label>
+        <label xml:lang="fr">Décélération (0-255)</label>
+        <label xml:lang="de">Bremszeit (0-255)</label>
         <comment>Range 1-255</comment>
       </variable>
       <variable CV="7" readOnly="yes" item="Decoder Version">

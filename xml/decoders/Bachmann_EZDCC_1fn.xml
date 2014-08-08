@@ -28,6 +28,9 @@
       <variable CV="2" item="Vstart" default="10" comment="Range 0-31">
         <decVal min="0" max="31"/>
         <label>Start Volts</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Anfahrspannung</label>
         <comment>Range 0-31</comment>
       </variable>
       <variable item="Acceleration momentum" CV="3" default="1" comment="Range 1-255">

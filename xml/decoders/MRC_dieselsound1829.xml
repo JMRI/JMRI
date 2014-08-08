@@ -31,28 +31,35 @@
       <variable CV="3" item="Accel" default="0" tooltip="Acceleration" comment="Range 0-32">
         <decVal max="32"/>
         <label>Acceleration</label>
+        <label xml:lang="it">Accellerazione (0-32)</label>
+        <label xml:lang="fr">Accelération (0-32)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-32)</label>
         <comment>Range 0-32</comment>
       </variable>
       <variable CV="4" item="Decel" default="0" tooltip="Deceleration" comment="Range 0-32">
         <decVal max="32"/>
         <label>Deceleration</label>
+        <label xml:lang="it">Decellerazione (1-32)</label>
+        <label xml:lang="fr">Décélération (1-32)</label>
+        <label xml:lang="de">Bremszeit (1-32)</label>
         <comment>Range 0-32</comment>
       </variable>
       <variable CV="2" item="Vstart" default="12" tooltip="Start Voltage" comment="Range 0-32">
         <decVal max="32"/>
         <label>Start Voltage</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Anfahrspannung</label>
         <comment>Range 0-32</comment>
       </variable>
       <variable CV="5" item="Vhigh" default="32" tooltip="Maximum Voltage" comment="Range 0-32">
         <decVal max="32"/>
         <label>Top Voltage</label>
+        <label xml:lang="it">Volt Massimi (0-32):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
         <comment>Range 0-32</comment>
       </variable>
-      <variable CV="65" item="Kick Start" default="63" tooltip="Kick Start Voltage" comment="Range 0-63">
-        <decVal max="63"/>
-        <label>Kick Start</label>
-        <comment>Range 0-63</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart_63.xml"/>
       <variable CV="124" item="EMF Option 1" default="0" tooltip="Back EMF Load Control, on/off, 1=on">
         <enumVal>
           <enumChoice choice="Off">

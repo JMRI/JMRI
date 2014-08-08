@@ -88,22 +88,35 @@
       <variable CV="2" default="2" item="Vstart" tooltip="x (1/255 Track Voltage)">
         <decVal min="1" max="255"/>
         <label>Starting Voltage</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.v</label>
+        <label xml:lang="de">Startspannung</label>
       </variable>
       <variable CV="3" default="3" item="Accel" tooltip="x 2ms x (1/255 Track Voltage)">
         <decVal min="1" max="255"/>
         <label>Acceleration time</label>
+        <label xml:lang="it">Accellerazione (0-255)</label>
+        <label xml:lang="fr">Accelération (0-255)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-255)</label>
       </variable>
       <variable CV="4" default="3" item="Decel" tooltip="x 2ms x (1/255 Track Voltage)">
         <decVal min="1" max="255"/>
         <label>Braking time</label>
+        <label xml:lang="it">Decellerazione (1-255)</label>
+        <label xml:lang="fr">Décélération (1-255)</label>
+        <label xml:lang="de">Bremszeit (1-255)</label>
       </variable>
       <variable CV="5" default="200" item="Vhigh" tooltip="x (1/255 Track Voltage)">
         <decVal min="1" max="255"/>
         <label>Top Speed</label>
+        <label xml:lang="it">Volt Massimi (0-255):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
       </variable>
       <variable CV="6" default="50" item="Vmid" tooltip="x (1/255 Track Voltage)">
         <decVal min="1" max="255"/>
         <label>Med-Speed</label>
+        <label xml:lang="it">Volts intermedi (0-255)</label>
+        <label xml:lang="de">Vmittel (0-255)</label>
       </variable>
       <variable CV="7" item="Decoder Version" tooltip="The decoder version number (read only)">
         <decVal/>

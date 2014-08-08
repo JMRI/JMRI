@@ -32,6 +32,9 @@
       <variable CV="2" item="Vstart" default="1" comment="Range 1-255">
         <decVal/>
         <label>Start Volts</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Anfahrspannung</label>
         <comment>Range 1-255</comment>
       </variable>
       <variable item="Accel" CV="3" default="5" comment="Range 1-255">
@@ -47,10 +50,14 @@
       <variable CV="5" item="Vhigh">
         <decVal/>
         <label>Maximum Voltage</label>
+        <label xml:lang="it">Volt Massimi (0-255):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
       </variable>
       <variable CV="6" item="Vmid">
         <decVal/>
         <label>Midpoint Voltage</label>
+        <label xml:lang="it">Volts intermedi (0-255)</label>
+        <label xml:lang="de">Vmittel (0-255)</label>
       </variable>
       <variable CV="7" default="201" readOnly="yes" item="Decoder Version">
         <decVal/>

@@ -29,22 +29,35 @@
       <variable CV="2" default="3" item="Vstart" tooltip="Determines the starting speed, range 1-63">
         <decVal min="1" max="63"/>
         <label>Starting Voltage</label>
+        <label xml:lang="it">Volt Partenza (1-63)</label>
+        <label xml:lang="fr">V démarr. (1-63)</label>
+        <label xml:lang="de">Startspannung (1-63)</label>
       </variable>
       <variable CV="3" default="8" item="Accel" tooltip="This value multiplied by 0.5 gives the time from stop to maximum speed, range 1-63">
         <decVal min="1" max="63"/>
         <label>Acceleration</label>
+        <label xml:lang="it">Accellerazione (1-63)</label>
+        <label xml:lang="fr">Accelération (1-63)</label>
+        <label xml:lang="de">Anfahrverzögerung (1-63)</label>
       </variable>
       <variable CV="4" default="6" item="Decel" tooltip="This value multiplied by 0.5 gives the time from maximum speed to stop, range 1-63">
         <decVal min="1" max="64"/>
         <label>Deceleration</label>
+        <label xml:lang="it">Decellerazione (1-64)</label>
+        <label xml:lang="fr">Décélération (1-64)</label>
+        <label xml:lang="de">Bremszeit (1-64)</label>
       </variable>
       <variable CV="5" default="63" item="Vhigh" tooltip="Maximum speed of locomotive, range 1-63">
         <decVal min="1" max="63"/>
         <label>Maximum Speed</label>
+        <label xml:lang="it">Volt Massimi (0-63):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
       </variable>
       <variable CV="6" default="22" item="Vmid" tooltip="Speed of locomotive at medium speed step (0-64)">
         <decVal min="0" max="64"/>
         <label>Medium speed</label>
+        <label xml:lang="it">Volts intermedi (0-64)</label>
+        <label xml:lang="de">Vmittel (0-64)</label>
       </variable>
       <variable CV="7" default="170" item="Decoder Version" tooltip="The decoder version number (read only)">
         <decVal/>

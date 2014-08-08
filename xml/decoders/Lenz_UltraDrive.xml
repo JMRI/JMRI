@@ -40,8 +40,10 @@
       <variable CV="3" item="Accel" default="4" comment="Range 1-255">
         <decVal min="1" max="255"/>
         <label>Acceleration Momentum (1-255)</label>
+        <label xml:lang="it">Accellerazione (0-255)</label>
+        <label xml:lang="fr">Accelération (0-255)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-255)</label>
         <comment>Range 1-255</comment>
-        <label xml:lang="de">Accel</label>
         <comment xml:lang="de">Range 1-255</comment>
       </variable>
       <variable CV="4" item="Decel" default="4" comment="Range 1-255">
@@ -54,8 +56,9 @@
       <variable CV="5" item="Vhigh" default="10" comment="Sets the maximum voltage at full throttle (only active if Back EMF enabled)">
         <decVal min="2" max="10"/>
         <label>Max Volts (2-10)</label>
+        <label xml:lang="it">Volt Massimi (0-255):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
         <comment>Sets the maximum voltage at full throttle (only active if Back EMF enabled)</comment>
-        <label xml:lang="de">Vhigh</label>
         <comment xml:lang="de">Sets the maximum voltage at full throttle (only active if Back EMF enabled)</comment>
       </variable>
       <variable CV="7" readOnly="yes" item="Decoder Version" default="1">

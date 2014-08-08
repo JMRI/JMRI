@@ -31,6 +31,9 @@
       <variable CV="2" item="Vstart" default="5">
         <decVal/>
         <label>Start Volts</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Startspannung</label>
       </variable>
       <variable item="Accel" CV="3" default="5">
         <decVal/>

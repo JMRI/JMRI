@@ -61,35 +61,43 @@
       <variable CV="2" item="Vstart" default="3">
         <decVal/>
         <label>Start Volts</label>
-        <label xml:lang="it">Tensione di Partenza</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Anfahrspannung</label>
         <comment>Range 0-255</comment>
         <comment xml:lang="it">Valori 0-255</comment>
       </variable>
       <variable CV="3" item="Accel" default="2">
         <decVal max="63"/>
         <label>Acceleration</label>
-        <label xml:lang="it">Accellerazione</label>
+        <label xml:lang="it">Accellerazione (0-63)</label>
+        <label xml:lang="fr">Accelération (0-63)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-63)</label>
         <comment>Range 0-63</comment>
         <comment xml:lang="it">Valori 0-63</comment>
       </variable>
       <variable CV="4" item="Decel" default="2">
         <decVal max="63"/>
         <label>Deceleration</label>
-        <label xml:lang="it">Decellerazione</label>
+        <label xml:lang="it">Decellerazione (1-63)</label>
+        <label xml:lang="fr">Décélération (1-63)</label>
+        <label xml:lang="de">Bremszeit (1-63)</label>
         <comment>Range 0-63</comment>
         <comment xml:lang="it">Valori 0-63</comment>
       </variable>
       <variable CV="5" item="Vhigh" default="0">
         <decVal/>
         <label>Vhigh</label>
-        <label xml:lang="it">Volt Massimi</label>
+        <label xml:lang="it">Volt Massimi (0-255):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
         <comment>Range 0-255</comment>
         <comment xml:lang="it">Valori 0-255</comment>
       </variable>
       <variable CV="6" item="Vmid" default="0">
         <decVal/>
         <label>Vmid</label>
-        <label xml:lang="it">Volt Intermedi</label>
+        <label xml:lang="it">Volts intermedi (0-255)</label>
+        <label xml:lang="de">Vmittel (0-255)</label>
         <comment>Range 0-255</comment>
         <comment xml:lang="it">Valori 0-255</comment>
       </variable>

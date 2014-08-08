@@ -36,15 +36,24 @@
       <variable CV="2" item="Vstart" comment="A value of 255 corresponds to 100%">
         <decVal/>
         <label>Start Voltage</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Anfahrspannung</label>
         <comment>A value of 255 corresponds to 100%</comment>
       </variable>
       <variable CV="3" item="Accel">
         <decVal/>
         <label>Acceleration Rate</label>
+        <label xml:lang="it">Accellerazione (0-255)</label>
+        <label xml:lang="fr">Accelération (0-255)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-255)</label>
       </variable>
       <variable CV="4" item="Decel">
         <decVal/>
         <label>Braking Rate</label>
+        <label xml:lang="it">Decellerazione (0-255)</label>
+        <label xml:lang="fr">Décélération (0-255)</label>
+        <label xml:lang="de">Bremszeit (0-255)</label>
       </variable>
       <variable item="Vhigh" CV="5" default="0" comment="Maximum Speed">
         <decVal/>

@@ -40,7 +40,9 @@
       <variable CV="2" item="Vstart" comment="Range 0-31">
         <decVal/>
         <label>Start Volts</label>
-         <label xml:lang="it">Volt di Partenza</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Startspannung</label>
         <comment>Range 0-31</comment>
         <comment xml:lang="it">Valori 0-31</comment>
       </variable>

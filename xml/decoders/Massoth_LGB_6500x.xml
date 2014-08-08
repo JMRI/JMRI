@@ -76,18 +76,29 @@
       <variable CV="2" default="0" item="Vstart" tooltip="Sets the starting voltage at throttle speed step 1 - 0: slow, 255: maximum speed">
         <decVal min="0" max="255"/>
         <label>Starting voltage</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Anfahrspannung</label>
       </variable>
       <variable CV="3" default="3" item="Accel" tooltip="Sets the acceleration rate - 1: rapid acceleration, 255: gradual acceleration">
         <decVal min="1" max="255"/>
         <label>Acceleration</label>
+        <label xml:lang="it">Accellerazione (0-255)</label>
+        <label xml:lang="fr">Accelération (0-255)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-255)</label>
       </variable>
       <variable CV="4" default="3" item="Decel" tooltip="Sets the deceleration rate - 1: rapid braking, 255: gradual braking)">
         <decVal min="1" max="255"/>
         <label>Braking</label>
+        <label xml:lang="it">Decellerazione (1-255)</label>
+        <label xml:lang="fr">Décélération (1-255)</label>
+        <label xml:lang="de">Bremszeit (1-255)</label>
       </variable>
       <variable CV="5" default="255" item="Vhigh" tooltip="Sets the maximum voltage at full throttle - 1: slow, 255: maximum speed">
         <decVal min="1" max="255"/>
         <label>Maximum Motor Voltage</label>
+        <label xml:lang="it">Volt Massimi (0-255):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
       </variable>
       <variable CV="7" readOnly="yes" item="Decoder Version" tooltip="The decoder version number (read only)">
         <decVal/>

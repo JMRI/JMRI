@@ -40,26 +40,39 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
       <variable CV="2" default="0" item="Vstart" tooltip="(0 -255) default=0">
         <decVal min="0" max="255"/>
         <label>Vstart</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Startspannung</label>
       </variable>
       <!-- CV 3 -->
       <variable CV="3" default="5" item="Accel" tooltip="(0 -255) default=5">
         <decVal min="0" max="255"/>
         <label>Acceleration Rate</label>
+        <label xml:lang="it">Accellerazione (0-255)</label>
+        <label xml:lang="fr">Accelération (0-255)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-255)</label>
       </variable>
       <!-- CV 4 -->
       <variable CV="4" default="5" item="Decel" tooltip="(0 -255) default=5">
         <decVal min="0" max="255"/>
         <label>Deceleration Rate</label>
+        <label xml:lang="it">Decellerazione (1-255)</label>
+        <label xml:lang="fr">Décélération (1-255)</label>
+        <label xml:lang="de">Bremszeit (1-255)</label>
       </variable>
       <!-- CV 5 -->
       <variable CV="5" default="255" item="Vhigh" tooltip="(0 -255) default=255">
         <decVal min="0" max="255"/>
         <label>Vhigh</label>
+        <label xml:lang="it">Volt Massimi (0-255):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
       </variable>
       <!-- CV 6 -->
       <variable CV="6" default="48" item="Vmid" tooltip="(0 -255) default=48">
         <decVal min="0" max="255"/>
         <label>Vmid</label>
+        <label xml:lang="it">Volts intermedi (0-255)</label>
+        <label xml:lang="de">Vmittel (0-255)</label>
       </variable>
       <!-- CV 7 -->
       <variable CV="7" default="10" item="Decoder Version" readOnly="yes" tooltip="Readonly default=10">

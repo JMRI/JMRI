@@ -25,21 +25,39 @@
         <size length=".71" width="0.75" height="0.25" units="inches"/>
       </model>
       <model model="SFX0416" numOuts="6" numFns="8" lowVersionID="16" highVersionID="16" formFactor="HO">
-        <output name="1" label="wht" connection="solder"/>
-        <!-- <label xml:lang="it">"Bia"</label> -->
-        <!-- </output> -->
-        <output name="2" label="yel" connection="solder"/>
-        <output name="3" label="grn" connection="solder"/>
-        <output name="4" label="vlt" connection="solder"/>
+        <output name="1" label="wht" connection="solder">
+           <label xml:lang="it">"Bian"</label>
+        </output>
+        <output name="2" label="yel" connection="solder">
+           <label xml:lang="it">"Gial"</label>
+        </output>
+        <output name="3" label="grn" connection="solder">
+           <label xml:lang="it">"Verd"</label>
+        </output>
+        <output name="4" label="vlt" connection="solder">
+           <label xml:lang="it">"Viol"</label>
+        </output>
         <size length="1.2" width="0.41" height="0.18" units="inches"/>
       </model>
       <model model="SFX064" numOuts="6" numFns="8" lowVersionID="16" highVersionID="16" formFactor="HO">
-        <output name="1" label="wht" connection="solder"/>
-        <output name="2" label="yel" connection="solder"/>
-        <output name="3" label="grn" connection="solder"/>
-        <output name="4" label="vlt" connection="solder"/>
-        <output name="5" label="org" connection="solder"/>
-        <output name="6" label="gry" connection="solder"/>
+        <output name="1" label="wht" connection="solder">
+           <label xml:lang="it">"Gial"</label>
+        </output>
+        <output name="2" label="yel" connection="solder">
+           <label xml:lang="it">"Gial"</label>
+        </output>
+        <output name="3" label="grn" connection="solder">
+            <label xml:lang="it">"Verd"</label>
+        </output>
+        <output name="4" label="vlt" connection="solder">
+           <label xml:lang="it">"Viol"</label>
+        </output>
+        <output name="5" label="org" connection="solder">
+           <label xml:lang="it">"Aran"</label>
+        </output>
+        <output name="6" label="gry" connection="solder">
+           <label xml:lang="it">"Grig"</label>
+        </output>
         <size length="1.22" width="0.66" height="0.25" units="inches"/>
       </model>
     </family>

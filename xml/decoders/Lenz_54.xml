@@ -75,15 +75,17 @@
       <variable CV="2" item="Vstart" default="0" tooltip="Sets the starting voltage at throttle speed step 1.  Note: some decoders only accept a max value of 15">
         <decVal max="31"/>
         <label>Start Voltage (0-31)</label>
-        <label xml:lang="it">tensione di partenza (1-31)</label>
-        <label xml:lang="de">Vstart</label>
+        <label xml:lang="it">Volt Partenza (0-31)</label>
+        <label xml:lang="fr">V démarr.v (0-31)</label>
+        <label xml:lang="de">Startspannung (0-31)</label>
         <tooltip xml:lang="de">Sets the starting voltage at throttle speed step 1.  Note: some decoders only accept a max value of 15</tooltip>
       </variable>
       <variable CV="3" item="Accel" default="1" tooltip="Sets the acceleration rate (delay)">
         <decVal min="1" max="31"/>
         <label>Acceleration Momentum (1-31)</label>
-        <label xml:lang="it">Inerzia accellerazione (1-31)</label>
-        <label xml:lang="de">Accel</label>
+        <label xml:lang="it">Accellerazione (0-31)</label>
+        <label xml:lang="fr">Accelération (0-31)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-31)</label>
         <tooltip xml:lang="de">Sets the acceleration rate (delay)</tooltip>
       </variable>
       <variable CV="4" item="Decel" default="1" tooltip="Sets the deceleration rate (delay)">
@@ -96,7 +98,7 @@
       <variable CV="5" item="Vhigh" default="10" tooltip="Sets the maximum voltage at full throttle (only active if Back EMF enabled)">
         <decVal min="1" max="10"/>
         <label>Maximum Speed (1-10)</label>
-        <label xml:lang="it">velocità massima (1-10)</label>
+        <label xml:lang="it">Velocità massima (1-10)</label>
         <label xml:lang="de">Vhigh</label>
         <tooltip xml:lang="de">Sets the maximum voltage at full throttle (only active if Back EMF enabled)</tooltip>
       </variable>
