@@ -9,10 +9,6 @@ import java.util.logging.Logger;
 import jmri.JmriException;
 */
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.util.List;
 import jmri.implementation.AbstractSensor;
 import jmri.BeanSetting;
@@ -22,7 +18,6 @@ import jmri.Memory;
 import jmri.Path;
 import jmri.Sensor;
 
-import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 

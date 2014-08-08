@@ -18,6 +18,7 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import jmri.util.JUnitUtil;
 
 /**
  * Tests for SectionManagerXml.
@@ -31,6 +32,14 @@ public class SectionManagerXmlTest extends TestCase {
 
     public void testLoadCurrent() throws Exception {
         // load file
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initMemoryManager();
+        JUnitUtil.initLayoutBlockManager();
+    	JUnitUtil.initSectionManager();
         InstanceManager.configureManagerInstance()
             .load(new java.io.File("java/test/jmri/configurexml/load/SectionManagerXmlTest.xml"));
     

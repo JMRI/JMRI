@@ -146,6 +146,12 @@ public class JUnitUtil {
             InstanceManager.configureManagerInstance().registerConfig(w, jmri.Manager.LAYOUTBLOCKS);
     }
 
+    public static void initSectionManager() {
+    	jmri.SectionManager w = new jmri.SectionManager();
+        if (InstanceManager.configureManagerInstance() != null)
+            InstanceManager.configureManagerInstance().registerConfig(w, jmri.Manager.SECTIONS);
+    }
+
     public static void initInternalSignalHeadManager() {
         SignalHeadManager m = new AbstractSignalHeadManager();
         InstanceManager.setSignalHeadManager(m);
