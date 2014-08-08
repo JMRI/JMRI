@@ -17,6 +17,7 @@
     <row>
       <label>
         <text>REVERB CONTROLS AND MIXER</text>
+        <text xml:lang="it">CONTROLLO RIVERBERO E MIXER</text>
       </label>
     </row>
     <label>
@@ -130,4 +131,5 @@
     </row>
   </column>
   <name>Reverb</name>
+  <name xml:lang="it">Riverbero</name>
 </pane>

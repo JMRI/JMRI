@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2010 All rights reserved -->
 <!--                                                                        -->
@@ -261,4 +261,5 @@
     </row>
   </column>
   <name>ASC</name>
+  <name xml:lang="it">Suoni casuali</name>
 </pane>

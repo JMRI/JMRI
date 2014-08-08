@@ -100,6 +100,13 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
           ((JMRIClientSystemConnectionMemo)adapter.getSystemConnectionMemo()).setTransmitPrefix(transmitPrefixField.getText());
        }
     } 
+
+    @Override
+    public boolean isHostNameAdvanced() { return showAutoConfig.isSelected(); }
+
+    @Override
+    public boolean isAutoConfigPossible() { return true; }
+
     
 }
 

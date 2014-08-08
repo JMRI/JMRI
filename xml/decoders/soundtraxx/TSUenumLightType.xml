@@ -15,8 +15,10 @@
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Incandescent lamp">
     <choice>Incandescent lamp</choice>
+    <choice xml:lang="it">Lampada a incandescenza</choice>
   </enumChoice>
   <enumChoice choice="LED">
     <choice>LED</choice>
+    <choice xml:lang="it">LED</choice>
   </enumChoice>
 </enumVal>

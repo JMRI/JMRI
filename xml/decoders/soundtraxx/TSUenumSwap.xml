@@ -15,8 +15,10 @@
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Normal">
     <choice>Normal</choice>
+    <choice xml:lang="it">Normale</choice>
   </enumChoice>
   <enumChoice choice="Exchange Group 2 (F5-F8) and Group 3 (F9-F12)">
     <choice>Exchange Group 2 (F5-F8) and Group 3 (F9-F12)</choice>
+    <choice xml:lang="it">Scambia Gruppo 2 (F5-F8) con gruppo 3 (F9-F12)</choice>
   </enumChoice>
 </enumVal>

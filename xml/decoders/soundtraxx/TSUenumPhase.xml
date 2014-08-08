@@ -15,8 +15,10 @@
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Use phase A (normal)">
     <choice>Use phase A (normal)</choice>
+    <choice xml:lang="it">Usa fase A (normale)</choice>
   </enumChoice>
   <enumChoice choice="Use phase B (opposite)">
     <choice>Use phase B (opposite)</choice>
+    <choice xml:lang="it">Usa fase B (opposte)</choice>
   </enumChoice>
 </enumVal>

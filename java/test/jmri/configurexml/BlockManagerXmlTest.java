@@ -23,6 +23,7 @@ import jmri.Path;
 import jmri.Sensor;
 
 import jmri.util.FileUtil;
+import jmri.util.JUnitUtil;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 
 import junit.framework.Assert;
@@ -42,8 +43,15 @@ import junit.framework.TestCase;
 public class BlockManagerXmlTest extends TestCase {
 
     public void testLoadCurrent() throws Exception {
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initMemoryManager();
+        JUnitUtil.initLayoutBlockManager();
         // load file
-        InstanceManager.configureManagerInstance()
+    	InstanceManager.configureManagerInstance()
             .load(new java.io.File("java/test/jmri/configurexml/load/BlockManagerXmlTest.xml"));
     
         // check existance of blocks

@@ -7,6 +7,9 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrix.jmriclient.JMRIClientPortController;
 import jmri.jmrix.jmriclient.JMRIClientTrafficController;
 
+import java.util.ResourceBundle;
+import jmri.util.zeroconf.ZeroConfClient;
+
 /**
  * Implements NetworkPortAdapter for the jmriclient system network connection.
  * <P>This connects
@@ -16,6 +19,8 @@ import jmri.jmrix.jmriclient.JMRIClientTrafficController;
  * @version	$Revision$
  */
 public class NetworkDriverAdapter extends JMRIClientPortController {
+
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.jmriclient.JMRIClientConfigurationBundle");
 
     public NetworkDriverAdapter() {
         super();
@@ -33,7 +38,6 @@ public class NetworkDriverAdapter extends JMRIClientPortController {
         control.connectPort(this);
         adaptermemo.setJMRIClientTrafficController(control);
         adaptermemo.configureManagers();
-        //adaptermemo.configureCommandStation();
 
         // mark OK for menus
         jmri.jmrix.jmriclient.ActiveFlag.setActive();
@@ -51,8 +55,9 @@ public class NetworkDriverAdapter extends JMRIClientPortController {
         adaptermemo = null;
     }
 
+    @Deprecated
     static public NetworkDriverAdapter instance() {
-        log.error("Instance Called");
+        log.error("Deprecated method instance Called");
         new java.lang.Exception().printStackTrace(); 
         if (mInstance == null){
             // create a new one and initialize
@@ -65,6 +70,80 @@ public class NetworkDriverAdapter extends JMRIClientPortController {
         return mInstance;
     }
     static NetworkDriverAdapter mInstance = null;
+
+    private boolean mDNSConfigure = false;
+
+    /*
+     * Set whether or not this adapter should be
+     * configured automatically via MDNS.
+     * @param autoconfig boolean value.
+     */
+     @Override
+    public void setMdnsConfigure(boolean autoconfig){
+       log.debug("Setting LIUSB Ethernet adapter autoconfiguration to: " +
+                autoconfig);
+       mDNSConfigure = autoconfig;
+    }
+
+    /*
+     * Get whether or not this adapter is configured
+     * to use autoconfiguration via MDNS
+     * @return true if configured using MDNS.
+     */
+     @Override
+    public boolean getMdnsConfigure() { return mDNSConfigure; }
+
+    /*
+     * set the server's host name and port
+     * using mdns autoconfiguration.
+     */
+     @Override
+    public void autoConfigure() {
+       log.info("Configuring JMRIClient interface via JmDNS");
+       if(getHostName().equals(rb.getString("defaultMDNSServerName")))
+          setHostName(""); // reset the hostname to none.
+       String serviceType = rb.getString("defaultMDNSServiceType");
+       log.debug("Listening for service: " +serviceType );
+
+       if( mdnsClient == null )
+       {
+             mdnsClient = new ZeroConfClient();
+             mdnsClient.startServiceListener(serviceType);
+       }
+       try {
+         // if there is a hostname set, use the host name (which can
+         // be changed) to find the service.
+         String qualifiedHostName = m_HostName +
+               "." + rb.getString("defaultMDNSDomainName");
+         setHostAddress(mdnsClient.getServiceOnHost(serviceType,
+                            qualifiedHostName).getHostAddresses()[0]);
+       } catch(java.lang.NullPointerException npe) {
+         // if there is no hostname set, use the service name (which can't
+         // be changed) to find the service.
+         String qualifiedServiceName = rb.getString("defaultMDNSServiceName") +
+              "." + serviceType;
+         setHostAddress(mdnsClient.getServicebyAdName(serviceType,
+                            qualifiedServiceName).getHostAddresses()[0]);
+       }
+    }
+    ZeroConfClient mdnsClient = null;
+
+   /*
+    * Get the ZeroConf/mDNS advertisement name.
+    * this value is fixed on the LIUSB-Ethernet, so return the default
+    * value.
+    */
+   @Override
+   public String getAdvertisementName() { return rb.getString("defaultMDNSServiceName"); }
+
+   /*
+    * Get the ZeroConf/mDNS service type.
+    * this value is fixed on the LIUSB-Ethernet, so return the default
+    * value.
+    */
+   @Override
+   public String getServiceType(){ return rb.getString("defaultMDNSServiceType"); }
+
 
     static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
 

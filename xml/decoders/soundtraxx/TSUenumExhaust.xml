@@ -15,8 +15,10 @@
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="(Normal) Rod Engine Chuff">
     <choice>(Normal) Rod Engine Chuff</choice>
+    <choice xml:lang="it">Chuff Loco Normale</choice>
   </enumChoice>
   <enumChoice choice="Articulated Exhaust Chuff">
     <choice>Articulated Exhaust Chuff</choice>
+    <choice xml:lang="it">Chuff Loco Articolata</choice>
   </enumChoice>
 </enumVal>

@@ -23,20 +23,36 @@
     <family name="NMRA-DCC/Motorola" mfg="Kuehn Ing.">
       <model model="N025" numOuts="2" numFns="10" maxMotorCurrent="0.7 A" maxTotalCurrent="1 A">
         <versionCV lowVersionID="34"/>
-        <output name="1" label="White"/>
-        <output name="2" label="Yellow"/>
+        <output name="1" label="White">
+        <label xml:lang="it">Bianco</label>
+        </output>
+        <output name="2" label="Yellow">
+        <label xml:lang="it">Giallo</label>
+        </output>
       </model>
       <model model="T125" numOuts="2" numFns="10" maxMotorCurrent="1.1 A" maxTotalCurrent="1.4 A">
         <versionCV lowVersionID="34"/>
-        <output name="1" label="White"/>
-        <output name="2" label="Yellow"/>
+        <output name="1" label="White">
+          <label xml:lang="it">Bianco</label>
+        </output>
+        <output name="2" label="Yellow">
+        <label xml:lang="it">Giallo</label>
+        </output>
       </model>
       <model model="T145" numOuts="4" numFns="10" maxMotorCurrent="1.1 A" maxTotalCurrent="2.0 A">
         <versionCV lowVersionID="34"/>
-        <output name="1" label="White"/>
-        <output name="2" label="Yellow"/>
-        <output name="3" label="Green"/>
-        <output name="4" label="Violet"/>
+        <output name="1" label="White">
+          <label xml:lang="it">Bianco</label>
+        </output>
+        <output name="2" label="Yellow">
+        <label xml:lang="it">Giallo</label>
+        </output>
+        <output name="3" label="Green">
+        <label xml:lang="it">Verde</label>
+        </output>
+        <output name="4" label="Violet">
+        <label xml:lang="it">Viola</label>
+        </output>
       </model>
     </family>
     <programming ops="yes" register="yes" paged="yes" direct="yes"/>
@@ -75,6 +91,7 @@
         <label>Vmid</label>
         <label xml:lang="it">Volt Intermedi</label>
         <comment>Range 0-255</comment>
+        <comment xml:lang="it">Valori 0-255</comment>
       </variable>
       <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
@@ -104,10 +121,10 @@
         <comment>Range 0 / 1</comment>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>	  
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>	  
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
 	  <!-- Light effects -->
       <variable CV="49" mask="XXXXVVVV" default="0" item="Function F0F effect generated">
 		<enumVal>

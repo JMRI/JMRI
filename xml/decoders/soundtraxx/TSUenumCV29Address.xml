@@ -15,8 +15,10 @@
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Use Short address (primary address)">
     <choice>Use Short address (primary address)</choice>
+    <choice xml:lang="it">Usa Indirizzo Corto (Primario)</choice>
   </enumChoice>
   <enumChoice choice="Use Long address (extended address)">
     <choice>Use Long address (extended address)</choice>
+    <choice xml:lang="it">Usa Indirizzo Lungo (Esteso)</choice>
   </enumChoice>
 </enumVal>
