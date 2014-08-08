@@ -4,11 +4,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.ArrayList;
+import javax.jmdns.ServiceInfo;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JViewport;
+import jmri.jmris.json.JSON;
 import jmri.jmrix.AbstractNetworkConnectionConfig;
 import jmri.jmrix.NetworkPortAdapter;
+import jmri.util.zeroconf.ZeroConfClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -16,8 +22,13 @@ import jmri.jmrix.NetworkPortAdapter;
  */
 public class JsonNetworkConnectionConfig extends AbstractNetworkConnectionConfig {
 
-    protected JTextField transmitPrefixField = new JTextField(10);
+    protected ZeroConfClient zeroConfClient = new ZeroConfClient();
+    protected JTextField transmitPrefixField = new JTextField(15);
     protected JLabel transmitPrefixLabel = new JLabel(Bundle.getMessage("ServerConnectionPrefix")); // NOI18N
+    protected JLabel nodeIdentityField = new JLabel();
+    protected JLabel nodeIdentityLabel = new JLabel(Bundle.getMessage("NodeIdentityLabel")); // NOI18N
+
+    private final static Logger log = LoggerFactory.getLogger(JsonNetworkConnectionConfig.class);
 
     /**
      * Constructor for an object being created while loading existing
@@ -27,6 +38,8 @@ public class JsonNetworkConnectionConfig extends AbstractNetworkConnectionConfig
      */
     public JsonNetworkConnectionConfig(NetworkPortAdapter portAdapter) {
         super(portAdapter);
+        this.zeroConfClient.startServiceListener(JSON.ZEROCONF_SERVICE_TYPE);
+        this.systemPrefixField.setColumns(15);
     }
 
     /**
@@ -34,6 +47,8 @@ public class JsonNetworkConnectionConfig extends AbstractNetworkConnectionConfig
      */
     public JsonNetworkConnectionConfig() {
         super();
+        this.zeroConfClient.startServiceListener(JSON.ZEROCONF_SERVICE_TYPE);
+        this.systemPrefixField.setColumns(15);
     }
 
     @Override
@@ -54,8 +69,16 @@ public class JsonNetworkConnectionConfig extends AbstractNetworkConnectionConfig
     }
 
     @Override
+    public boolean isAutoConfigPossible() {
+        return false; // temporarilly disable
+    }
+
+    @Override
     protected void checkInitDone() {
         super.checkInitDone();
+        // temporarilly disable -- the lookup triggered by getServices causes an unacceptable delay in openning the preferences window
+        //JComboBox services = new JComboBox(this.getServices());
+        //options.put(Bundle.getMessage("DiscoveredServices"), new Option(Bundle.getMessage("DiscoveredServices"), services, false));
         if (this.adapter.getSystemConnectionMemo() != null) {
             final JsonClientSystemConnectionMemo memo = (JsonClientSystemConnectionMemo) this.adapter.getSystemConnectionMemo();
             this.transmitPrefixField.setText(memo.getTransmitPrefix());
@@ -78,26 +101,34 @@ public class JsonNetworkConnectionConfig extends AbstractNetworkConnectionConfig
                     // nothing to do
                 }
             });
+            this.nodeIdentityField.setText(memo.getNodeIdentity());
+            this.nodeIdentityField.setToolTipText(Bundle.getMessage("NodeIdentityToolTip"));
         }
     }
 
     @Override
     protected void showAdvancedItems() {
         super.showAdvancedItems(); // we're adding to the normal advanced items.
-        if (this.adapter.getSystemConnectionMemo() != null) {
+        if (this.adapter.getSystemConnectionMemo() != null
+                && showAdvanced.isSelected()) {
             this.cR.gridy += 2;
             this.cL.gridy += 2;
             this.gbLayout.setConstraints(transmitPrefixLabel, cL);
             this.gbLayout.setConstraints(transmitPrefixField, cR);
             this._details.add(transmitPrefixLabel);
             this._details.add(transmitPrefixField);
+            this.cR.gridy += 2;
+            this.cL.gridy += 2;
+            this.gbLayout.setConstraints(nodeIdentityLabel, cL);
+            this.gbLayout.setConstraints(nodeIdentityField, cR);
+            this._details.add(nodeIdentityLabel);
+            this._details.add(nodeIdentityField);
         }
         if (this._details.getParent() != null && this._details.getParent() instanceof JViewport) {
             JViewport vp = (JViewport) _details.getParent();
             vp.validate();
             vp.repaint();
         }
-
     }
 
     @Override
@@ -109,4 +140,11 @@ public class JsonNetworkConnectionConfig extends AbstractNetworkConnectionConfig
         }
     }
 
+    public Object[] getServices() {
+        ArrayList<String> services = new ArrayList();
+        for (ServiceInfo service : this.zeroConfClient.getServices(JSON.ZEROCONF_SERVICE_TYPE)) {
+            services.add(String.format(Bundle.getMessage("ZeroConfServiceDescription"), service.getQualifiedName(), service.getPropertyString(JSON.NODE)));
+        }
+        return services.toArray();
+    }
 }

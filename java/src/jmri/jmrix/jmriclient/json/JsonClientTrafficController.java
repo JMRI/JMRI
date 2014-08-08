@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -16,6 +17,7 @@ import static jmri.jmris.json.JSON.DATA;
 import static jmri.jmris.json.JSON.GOODBYE;
 import static jmri.jmris.json.JSON.HELLO;
 import static jmri.jmris.json.JSON.LOCALE;
+import static jmri.jmris.json.JSON.PING;
 import static jmri.jmris.json.JSON.PONG;
 import static jmri.jmris.json.JSON.TYPE;
 import jmri.jmrix.AbstractMRListener;
@@ -117,6 +119,15 @@ public class JsonClientTrafficController extends AbstractMRTrafficController imp
     }
 
     @Override
+    protected void notifyMessage(AbstractMRMessage m, AbstractMRListener notMe) {
+        // Don't notify listeners of a heartbeat message
+        if (((JsonClientMessage) m).getMessage().path(TYPE).asText().equals(PING)) {
+            return;
+        }
+        super.notifyMessage(m, notMe);
+    }
+
+    @Override
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
         log.debug("Forwarding message {}", m.toString());
         ((JsonClientListener) client).message((JsonClientMessage) m);
@@ -148,7 +159,9 @@ public class JsonClientTrafficController extends AbstractMRTrafficController imp
                     this.receiveHello(data);
                 } else if (type.equals(PONG)) {
                     // silently ignore
-                } else if (!data.isMissingNode()) {
+                } else if (!data.isMissingNode()
+                        || (root.isArray() && ((ArrayNode) root).size() > 0)) {
+                    // process replies with a data node or non-empty arrays
                     JsonClientReply reply = new JsonClientReply(root);
                     Runnable r = new RcvNotifier(reply, mLastSender, this);
                     try {
@@ -175,8 +188,13 @@ public class JsonClientTrafficController extends AbstractMRTrafficController imp
     }
 
     protected void receiveHello(JsonNode helloData) {
-        this.heartbeat = new Timer();
-        this.heartbeat.schedule(new Heartbeat(), 0, helloData.path(JSON.HEARTBEAT).asInt());
+        if (!helloData.path(JSON.HEARTBEAT).isMissingNode()) {
+            this.heartbeat = new Timer();
+            this.heartbeat.schedule(new Heartbeat(), 0, helloData.path(JSON.HEARTBEAT).asInt());
+        }
+        if (!helloData.path(JSON.NODE).isMissingNode()) {
+            ((JsonClientSystemConnectionMemo) this.controller.getSystemConnectionMemo()).setNodeIdentity(helloData.path(JSON.NODE).asText());
+        }
         // Send LOCALE message
         /* Comment out following until Java 7 can be used.
          ObjectNode root = this.mapper.createObjectNode();

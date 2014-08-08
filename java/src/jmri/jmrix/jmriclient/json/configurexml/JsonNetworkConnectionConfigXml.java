@@ -5,6 +5,7 @@ import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.jmriclient.json.JsonClientSystemConnectionMemo;
 import jmri.jmrix.jmriclient.json.JsonNetworkConnectionConfig;
 import jmri.jmrix.jmriclient.json.JsonNetworkPortController;
+import jmri.util.node.NodeIdentity;
 import org.jdom.Element;
 
 /**
@@ -12,6 +13,9 @@ import org.jdom.Element;
  * @author Randall Wood 2014
  */
 public class JsonNetworkConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
+
+    public final static String TRANSMIT_PREFIX = "transmitPrefix"; // NOI18N
+    public final static String NODE_IDENTITY = "nodeIdentity"; // NOI18N
 
     public JsonNetworkConnectionConfigXml() {
         super();
@@ -37,7 +41,11 @@ public class JsonNetworkConnectionConfigXml extends AbstractNetworkConnectionCon
     @Override
     protected void extendElement(Element e) {
         if (this.adapter.getSystemConnectionMemo() != null) {
-            e.setAttribute("transmitPrefix", ((JsonClientSystemConnectionMemo) this.adapter.getSystemConnectionMemo()).getTransmitPrefix()); // NOI18N
+            e.setAttribute(TRANSMIT_PREFIX, ((JsonClientSystemConnectionMemo) this.adapter.getSystemConnectionMemo()).getTransmitPrefix());
+            if (!((JsonClientSystemConnectionMemo) this.adapter.getSystemConnectionMemo()).getNodeIdentity().equals(NodeIdentity.identity())) {
+                // Don't store our own identity
+                e.setAttribute(NODE_IDENTITY, ((JsonClientSystemConnectionMemo) this.adapter.getSystemConnectionMemo()).getNodeIdentity());
+            }
         }
     }
 
@@ -48,8 +56,11 @@ public class JsonNetworkConnectionConfigXml extends AbstractNetworkConnectionCon
      */
     @Override
     protected void unpackElement(Element e) {
-        if (e.getAttribute("transmitPrefix") != null) { // NOI18N
-            ((JsonClientSystemConnectionMemo) this.adapter.getSystemConnectionMemo()).setTransmitPrefix(e.getAttribute("transmitPrefix").getValue()); // NOI18N
+        if (e.getAttribute(TRANSMIT_PREFIX) != null) {
+            ((JsonClientSystemConnectionMemo) this.adapter.getSystemConnectionMemo()).setTransmitPrefix(e.getAttribute(TRANSMIT_PREFIX).getValue());
+        }
+        if (e.getAttribute(NODE_IDENTITY) != null) {
+            ((JsonClientSystemConnectionMemo) this.adapter.getSystemConnectionMemo()).setNodeIdentity(e.getAttribute(NODE_IDENTITY).getValue());
         }
     }
 }
