@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007 All rights reserved -->
 <!-- $Id: Zimo_MX63_MX64H_v22-30.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
@@ -7,7 +7,7 @@
 <!-- the terms of version 2 of the GNU General Public License as published  -->
 <!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
 <!-- of this license.                                                       -->
-<!--                                                                        -->
+<!--                                                                         -->
 <!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
@@ -67,18 +67,18 @@
       <variable CV="3" default="0" item="Accel" comment="Range 0-255">
         <decVal max="255"/>
         <label>Acceleration</label>
-        <label xml:lang="it">Accellerazione</label>
-        <label xml:lang="fr">Accélération</label>
-        <label xml:lang="de">Beschleunigungszeit</label>
+        <label xml:lang="it">Accellerazione (0-255)</label>
+        <label xml:lang="fr">Accelération (0-255)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-255)</label>
         <comment>Range 0-255</comment>
         <comment xml:lang="it">Valori 0-255</comment>
       </variable>
       <variable CV="4" default="0" item="Decel" comment="Range 0-255">
         <decVal max="255"/>
         <label>Deceleration</label>
-        <label xml:lang="it">Decellerazione</label>
-        <label xml:lang="fr">Décélération</label>
-        <label xml:lang="de">Bremszeit</label>
+        <label xml:lang="it">Decellerazione (0-255)</label>
+        <label xml:lang="fr">Décélération (0-255)</label>
+        <label xml:lang="de">Bremszeit (0-255)</label>
         <comment>Range 0-255</comment>
         <comment xml:lang="it">Valori 0-255</comment>
       </variable>
