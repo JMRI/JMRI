@@ -29,22 +29,13 @@
 				</enumVal>
 			</variable>
 			<variable item="Servo State Memory" CV="11" mask="XXXXXVXX" default="1">
-				<enumVal>
-					<enumChoice choice="Disable"/>
-					<enumChoice choice="Enable"/>
-				</enumVal>
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
 			</variable>
 			<variable item="Signal State Memory" CV="11" mask="XXXXVXXX" default="0">
-				<enumVal>
-					<enumChoice choice="Disable"/>
-					<enumChoice choice="Enable"/>
-				</enumVal>
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
 			</variable>
 			<variable item="Send Output Off" CV="11" mask="XXXVXXXX" default="1">
-				<enumVal>
-					<enumChoice choice="Disable"/>
-					<enumChoice choice="Enable"/>
-				</enumVal>
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
 			</variable>
 			<variable item="Local Actions" CV="11" mask="XXVXXXXX" default="1">
 				<enumVal>
@@ -59,17 +50,11 @@
 				</enumVal>
 			</variable>
 			<variable item="DCC Busy Retry" CV="11" mask="VXXXXXXX" default="1">
-				<enumVal>
-					<enumChoice choice="Disable"/>
-					<enumChoice choice="Enable"/>
-				</enumVal>
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
 			</variable>
 
 			<variable item="Sensor Input Polarity" CV="12" mask="XXXXXXXV" default="0">
-				<enumVal>
-					<enumChoice choice="Normal"/>
-					<enumChoice choice="Inverted"/>
-				</enumVal>
+				<xi:include href="http://jmri.org/xml/decoders/parts/ienum-NormRev.xml"/>
 			</variable>
 			<variable item="Servo Drive" CV="12" mask="XXXXXXVX" default="0">
 				<enumVal>
@@ -78,10 +63,7 @@
 				</enumVal>
 			</variable>
 			<variable item="No CS" CV="12" mask="XXXXXVXX" default="0">
-				<enumVal>
-					<enumChoice choice="Disable"/>
-					<enumChoice choice="Enable"/>
-				</enumVal>
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
 			</variable>
 			<variable item="Route Delay" CV="12" mask="XXVVXXXX" default="0">
 				<enumVal>
@@ -97,11 +79,11 @@
 			</variable>
 
 			<variable item="Lock Start Address" CV="13" mask="VVVVVVVV" default="100">
-				<splitVal highCV="14" upperMask="XXXXXVVV" offset="1" /> 
+				<splitVal highCV="14" upperMask="XXXXXVVV" offset="1"/> 
 			</variable>
 
 			<variable item="Servo Start Address" CV="2" mask="VVVVVVVV" default="0">
-				<splitVal highCV="3" upperMask="XXXXXVVV" offset="1" />
+				<splitVal highCV="3" upperMask="XXXXXVVV" offset="1"/>
 			</variable>
 
 			<variable item="Major Version" CV="4" mask="VVVVXXXX" readOnly="yes" default="1">
@@ -124,16 +106,16 @@
 			</variable>
 
 			<variable item="Main IO Start Address" CV="9" mask="VVVVVVVV" default="0">
-				<splitVal highCV="10" upperMask="XXXXVVVV" offset="1" /> 
+				<splitVal highCV="10" upperMask="XXXXVVVV" offset="1"/> 
 			</variable>
 
 			<variable item="Aux IO Start Address" CV="15" mask="VVVVVVVV" default="4">
-				<splitVal highCV="16" upperMask="XXXXVVVV" offset="1" /> 
+				<splitVal highCV="16" upperMask="XXXXVVVV" offset="1"/> 
 			</variable>
             
 			<variable item="One Choice Enum" CV="1" mask="XXXXXXXX">
                 <enumVal>
-                    <enumChoice choice="" />
+                    <enumChoice choice=""/>
                 </enumVal>
             </variable>
             
