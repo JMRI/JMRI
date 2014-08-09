@@ -58,35 +58,27 @@
       <variable CV="7" readOnly="yes" item="Decoder Version" default="32">
         <decVal/>
         <label>Manufacturer version number</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
       <variable CV="8" readOnly="yes" item="Manufacturer" default="143">
         <decVal/>
         <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
       </variable>
       <variable CV="19" mask="XVVVVVVV" item="Consist Address">
         <decVal/>
         <label>Advanced consist address</label>
       </variable>
       <variable item="Consist Direction" CV="19" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>Consist Direction</label>
       </variable>
       <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
-        <enumVal>
-          <enumChoice choice="Forward">
-            <choice>Forward</choice>
-          </enumChoice>
-          <enumChoice choice="Reverse">
-            <choice>Reverse</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-FwdRev.xml"/>
         <label>Normal direction of motion</label>
       </variable>
       <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
@@ -101,14 +93,7 @@
         <label>Speed Steps</label>
       </variable>
       <variable CV="29" mask="XXXXXVXX" default="0" item="Analog (DC) Operation">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog conversion mode</label>
       </variable>
       <variable CV="52" item="Sound Option 1" default="0" comment="Range 0 or 1">
@@ -131,11 +116,17 @@
       <variable CV="105" item="User Id #1" default="0" comment="Range 0-255">
         <decVal max="255"/>
         <label>User ID #1</label>
+        <label xml:lang="it">Id Utente #1</label>
+        <label xml:lang="fr">CV Utilisateur #1</label>
+        <label xml:lang="de">Benutzer-CV #1</label>
         <comment>Range 0-255</comment>
       </variable>
       <variable CV="106" item="User Id #2" default="0" comment="Range 0-255">
         <decVal max="255"/>
         <label>User ID #2</label>
+        <label xml:lang="it">Id Utente #2</label>
+        <label xml:lang="fr">CV Utilisateur #2</label>
+        <label xml:lang="de">Benutzer-CV #2</label>
         <comment>Range 0-255</comment>
       </variable>
     </variables>

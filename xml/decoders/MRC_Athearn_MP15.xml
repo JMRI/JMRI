@@ -74,35 +74,27 @@
       <variable CV="7" readOnly="yes" tooltip="=32 for all MRC Brilliance models, Read Only" item="Decoder Version" default="32">
         <decVal/>
         <label>Manufacturer version number</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
       <variable CV="8" readOnly="yes" tooltip="=143 for MRC, Read Only" item="Manufacturer" default="143">
         <decVal/>
         <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
       </variable>
       <variable CV="19" mask="XVVVVVVV" item="Consist Address" tooltip="range 1-127">
         <decVal/>
         <label>Advanced consist address</label>
       </variable>
       <variable CV="21" mask="XXXXXXXV" default="0" item="Consist Function" tooltip="Set function to follow base address or consist address">
-        <enumVal>
-          <enumChoice choice="Functions follow locomotive address">
-            <choice>Functions follow locomotive address</choice>
-          </enumChoice>
-          <enumChoice choice="Functions follow consist address">
-            <choice>Functions follow consist address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Functions Respond to Address</label>
       </variable>
       <variable CV="29" tooltip="'1' (least significant) bit, Forward(0)(default) or Reverse(1)" mask="XXXXXXXV" item="Locomotive Direction">
-        <enumVal>
-          <enumChoice choice="Forward">
-            <choice>Forward</choice>
-          </enumChoice>
-          <enumChoice choice="Reverse">
-            <choice>Reverse</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-FwdRev.xml"/>
         <label>Normal direction of motion</label>
       </variable>
       <variable CV="29" mask="XXXXXXVX" tooltip="'2' bit. Sets the Speed Step for motor, also affects some light settings" item="Speed Step Mode" default="1">
@@ -117,25 +109,11 @@
         <label>Speed Steps</label>
       </variable>
       <variable CV="29" tooltip="'4' bit. Allows the loco to run on DC, default is Off" mask="XXXXXVXX" default="0" item="Analog (DC) Operation">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog conversion mode</label>
       </variable>
       <variable CV="49" item="Sound Option 1" default="0" tooltip="On or Off">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Sound Control</label>
       </variable>
       <variable CV="50" item="Sound Option 2" default="4" tooltip="range 0-16" comment="Range 0-16">
@@ -229,14 +207,7 @@
         <comment>Range 0-3</comment>
       </variable>
       <variable item="Sound Option 5" CV="115" default="1" tooltip="Off(0) or On(1)(default)">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Auto Brake Squeal</label>
       </variable>
       <variable item="Sound Option 6" CV="116" default="1" tooltip="Off(0) or Type1(1)(default) or Type2(2)">

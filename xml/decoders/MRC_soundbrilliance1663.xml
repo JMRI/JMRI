@@ -68,46 +68,31 @@
       <variable CV="7" item="Decoder Version" readOnly="yes" tooltip="is the decoder software version, Read Only">
         <decVal/>
         <label>Manufacturer version number</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
       <variable CV="8" item="Manufacturer" readOnly="yes" tooltip="=143 for MRC, Read Only">
         <decVal/>
         <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
       </variable>
       <variable CV="19" item="Consist Address" mask="XVVVVVVV" default="0" tooltip="sets the Advanced Consist address, [range 0-127]">
         <decVal max="127"/>
         <label>Advanced Consist Address</label>
       </variable>
       <variable CV="19" item="Consist Direction" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>Locomotive Direction In Consist</label>
       </variable>
       <variable CV="21" item="Functions Respond To" mask="XXXXXXXV" default="0" tooltip="selects the address accessory functions will respond to">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Consist Address Only">
-            <choice>Consist Address Only</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Function</label>
       </variable>
       <variable CV="29" item="Locomotive Direction" mask="XXXXXXXV" tooltip="'1' (least significant) bit, Forward(0)(default) or Reverse(1)">
-        <enumVal>
-          <enumChoice choice="Forward">
-            <choice>Forward</choice>
-          </enumChoice>
-          <enumChoice choice="Reverse">
-            <choice>Reverse</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-FwdRev.xml"/>
         <label>Normal direction of motion</label>
       </variable>
       <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1" tooltip="'2' bit. Sets the Speed Step for motor, also affects some light settings">
@@ -122,14 +107,7 @@
         <label>Speed Steps</label>
       </variable>
       <variable CV="29" item="Analog (DC) Operation" mask="XXXXXVXX" default="0" tooltip="'4' bit. Allows the loco to run on DC, default is Off">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog conversion mode</label>
       </variable>
       <variable CV="50" item="Sound Option 1" default="4" tooltip="range 0-16">
@@ -210,14 +188,7 @@
         <label>Brake Release volume</label>
       </variable>
       <variable item="Sound Option 3" CV="115" default="1" tooltip="Off(0) or On(1)(default)">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Auto Brake squeal</label>
       </variable>
       <variable item="Sound Option 4" CV="116" default="1" tooltip="Off(0) or Type1(1)(default) or Type2(2)">

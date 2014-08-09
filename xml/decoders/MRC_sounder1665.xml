@@ -39,36 +39,15 @@
         <label>Advanced consist address</label>
       </variable>
       <variable item="Consist Direction" CV="19" mask="VXXXXXXX" tooltip="sets the locomotive direction in the consist">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>Consist Direction</label>
       </variable>
       <variable CV="21" mask="XXXXXXXV" tooltip="selects the address that accessory functions will respond to" item="Functions Respond To" default="0">
-        <enumVal>
-          <enumChoice choice="Locomotive address only">
-            <choice>Locomotive address only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to consist address">
-            <choice>Respond to consist address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Function</label>
       </variable>
       <variable CV="29" tooltip="'1' (least significant) bit, Forward(0)(default) or Reverse(1)" mask="XXXXXXXV" item="Locomotive Direction">
-        <enumVal>
-          <enumChoice choice="Forward">
-            <choice>Forward</choice>
-          </enumChoice>
-          <enumChoice choice="Reverse">
-            <choice>Reverse</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-FwdRev.xml"/>
         <label>Normal direction of motion</label>
       </variable>
       <variable CV="29" mask="XXXXXXVX" tooltip="'2' bit. Sets the Speed Step for motor, also affects some light settings" item="Speed Step Mode" default="1">
@@ -83,14 +62,7 @@
         <label>Speed Steps</label>
       </variable>
       <variable CV="29" mask="XXXXXVXX" default="0" item="Analog (DC) Operation" tooltip="['4' bit] determines if loco motor will respond to DCC only (OFF) or DC and DCC (ON)">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog conversion mode</label>
       </variable>
       <variable CV="50" item="Sound Option 1" default="4" comment="Range 0-33">
@@ -333,11 +305,17 @@
       <variable CV="105" item="User Id #1" default="0" tooltip="range 0-255" comment="Range 0-255">
         <decVal max="255"/>
         <label>User ID #1</label>
+        <label xml:lang="it">Id Utente #1</label>
+        <label xml:lang="fr">CV Utilisateur #1</label>
+        <label xml:lang="de">Benutzer-CV #1</label>
         <comment>Range 0-255</comment>
       </variable>
       <variable CV="106" item="User Id #2" default="0" tooltip="range 0-255" comment="Range 0-255">
         <decVal max="255"/>
         <label>User ID #2</label>
+        <label xml:lang="it">Id Utente #2</label>
+        <label xml:lang="fr">CV Utilisateur #2</label>
+        <label xml:lang="de">Benutzer-CV #2</label>
         <comment>Range 0-255</comment>
       </variable>
       <variable CV="112" item="Sound Setting 22" default="3" tooltip="range 0-3" comment="Range 0-3">
@@ -346,14 +324,7 @@
         <comment>Range 0-3</comment>
       </variable>
       <variable CV="113" item="Sound Option 8" default="1" tooltip="Off(0) or On(1)(default)">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Random sound enable</label>
       </variable>
       <variable CV="114" item="Sound Setting 23" default="2" tooltip="range 0-3" comment="Range 0-3">

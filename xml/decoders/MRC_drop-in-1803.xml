@@ -68,46 +68,31 @@
       <variable CV="7" item="Decoder Version" default="32" tooltip="is the Decoder ID,  Read Only" readOnly="yes">
         <decVal/>
         <label>Manufacturer Version Number</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
       <variable CV="8" item="Manufacturer" default="143" tooltip="is the Manufacturer ID, MRC-143, Read Only" readOnly="yes">
         <decVal/>
         <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
       </variable>
       <variable CV="19" item="Consist Address" tooltip="set the Advanced Consist address, range 0-127" default="0" mask="XVVVVVVV">
         <decVal max="127"/>
         <label>Advanced Consist address</label>
       </variable>
       <variable CV="19" item="Consist Direction" default="0" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>Locomotive Direction In Consist</label>
       </variable>
       <variable CV="21" item="Functions Respond To" tooltip="selects the address that functions will respond to" default="1" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="Functions respond to Locomotive Address Only">
-            <choice>Functions respond to Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Functions respond to Consist Address Only">
-            <choice>Functions respond to Consist Address Only</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Function</label>
       </variable>
       <variable CV="29" item="Locomotive Direction" tooltip="[ '1' bit (LSB)] sets the direction of motion" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="Forward">
-            <choice>Forward</choice>
-          </enumChoice>
-          <enumChoice choice="Reverse">
-            <choice>Reverse</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-FwdRev.xml"/>
         <label>Normal direction of motion</label>
       </variable>
       <variable CV="29" item="Speed Step Mode" tooltip="['2' bit] sets the Speed Step resolution" default="1" mask="XXXXXXVX">
@@ -122,14 +107,7 @@
         <label>Speed Steps</label>
       </variable>
       <variable CV="29" item="Analog (DC) Operation" tooltip="['4' bit] determines if loco motor will respond to DCC only (OFF) or DC and DCC (ON)" default="0" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog conversion mode</label>
       </variable>
       <variable CV="29" item="Speed Table Definition" tooltip="['8' bit] determines if loco will use Speed Table or not" default="1" mask="XXXVXXXX">
@@ -144,14 +122,7 @@
         <label>Use Speed Table</label>
       </variable>
       <variable CV="49" item="Sound Option 1" tooltip="can turn off all sound except the Horn" default="1" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Sound on/off</label>
       </variable>
       <variable CV="50" item="Sound Option 2" tooltip="selects the Horn Type [range 0-22 22 is silent]" default="13">
