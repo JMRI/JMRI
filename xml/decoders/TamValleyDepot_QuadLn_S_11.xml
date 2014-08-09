@@ -54,7 +54,7 @@
 			</variable>
 
 			<variable item="Sensor Input Polarity" CV="12" mask="XXXXXXXV" default="0">
-				<xi:include href="http://jmri.org/xml/decoders/parts/ienum-NormRev.xml"/>
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
 			</variable>
 			<variable item="Servo Drive" CV="12" mask="XXXXXXVX" default="0">
 				<enumVal>
