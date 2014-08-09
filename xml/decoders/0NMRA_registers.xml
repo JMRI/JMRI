@@ -86,7 +86,7 @@
         <label xml:lang="it">Riconoscimento Avanzato Decoder</label>
       </variable>
       <!-- Register 7 -->
-      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
     </variables>
   </decoder>
 </decoder-config>
