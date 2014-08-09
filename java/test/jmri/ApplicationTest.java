@@ -27,6 +27,7 @@ public class ApplicationTest extends TestCase {
     public void testSubsequentNameChange() {
         setApplication("JMRI Testing 2");
         Assert.assertEquals("Changed Application name to 'JMRI Testing 2' prevented", "JMRI Testing", Application.getApplicationName());
+        jmri.util.JUnitAppender.assertWarnMessage("Unable to set application name java.lang.IllegalAccessException: Application name cannot be modified once set.");
     }
     private static void setApplication(String name) {
         try {

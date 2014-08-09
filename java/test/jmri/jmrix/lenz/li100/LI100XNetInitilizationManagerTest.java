@@ -32,6 +32,7 @@ public class LI100XNetInitilizationManagerTest extends TestCase {
                 return 50;   // shorten, because this will fail & delay test
             }  
         };
+                
         Assert.assertNotNull("exists", t );
         Assert.assertNotNull("exists", l );
         Assert.assertNotNull("exists", m );

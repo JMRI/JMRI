@@ -45,33 +45,33 @@ public class XNetThrottleTest extends TestCase {
 	XNetReply m = new XNetReply();
 	m.setElement(0,0xE4);
 	m.setElement(1,0x04);
-        m.setElement(2,0x00);
-        m.setElement(3,0x00);
-        m.setElement(4,0x00);
-        m.setElement(5,0xE0);
-        
-        n = tc.outbound.size();
-        t.message(m);
-
+    m.setElement(2,0x00);
+    m.setElement(3,0x00);
+    m.setElement(4,0x00);
+    m.setElement(5,0xE0);
+    
+    n = tc.outbound.size();
+    t.message(m);
 
 	// which we're going to get a request for function momentary status in response to.
 	// We're just going to make sure this is there and respond with not supported.
 	while(n==tc.outbound.size()) {} // busy loop.  Wait for
                                         // outbound size to change.
-        //The first thing on the outbound queue should be a request for status.
-        Assert.assertEquals("Throttle Information Request Message","E3 07 00 03 E7",tc.outbound.elementAt(n).toString());
+    //The first thing on the outbound queue should be a request for status.
+    Assert.assertEquals("Throttle Information Request Message","E3 07 00 03 E7",tc.outbound.elementAt(n).toString());
 
-        m = new XNetReply();
-        m.setElement(0,0x61);
-        m.setElement(1,0x82);
-        m.setElement(2,0xE3);
-  
-        t.message(m);
+    m = new XNetReply();
+    m.setElement(0,0x61);
+    m.setElement(1,0x82);
+    m.setElement(2,0xE3);
+
+    t.message(m);
 	// Sending the not supported message should make the throttle change
         // to the idle state.
 
 	// now we're going to wait and verify the throttle eventually has 
         // its status set to idle.
+    jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
         jmri.util.JUnitUtil.releaseThread(this, 1000);  // give the messages
                                                         // some time to process;
         
@@ -101,8 +101,14 @@ public class XNetThrottleTest extends TestCase {
 	}
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    @Override protected void setUp() throws Exception { 
+        apps.tests.Log4JFixture.setUp(); 
+        super.setUp();
+    }
+    @Override protected void tearDown() throws Exception { 
+        super.tearDown();
+        apps.tests.Log4JFixture.tearDown(); 
+    }
 
     static Logger log = Logger.getLogger(XNetThrottleTest.class.getName());
 

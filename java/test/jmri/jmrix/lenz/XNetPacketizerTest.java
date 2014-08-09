@@ -4,6 +4,8 @@ import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
+import jmri.jmrix.AbstractPortController;
+
 /**
  * <p>Title: XNetPacketizerTest </p>
  * <p>Description: </p>
@@ -13,17 +15,24 @@ import junit.framework.TestCase;
  */
 public class XNetPacketizerTest extends TestCase {
 
-    public XNetPacketizerTest(String s) {
-        super(s);
+    /**
+     * Local test class to make XNetPacketizer more felicitous to test
+     */
+    class StoppingXNetPacketizer extends XNetPacketizer {
+        public StoppingXNetPacketizer(jmri.jmrix.lenz.LenzCommandStation p) { super(p); }
+        public void stop() {
+            xmtThread.stop();
+            rcvThread.stop();
+        }
+        // methods removed for testing
+        protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg,jmri.jmrix.AbstractMRListener l) {} // don't care about timeout
+        protected void reportReceiveLoopException(Exception e) {}           
+        protected void portWarn(Exception e) {}
     }
 
     public void testOutbound() throws Exception {
         LenzCommandStation lcs = new LenzCommandStation();
-        XNetPacketizer c = new XNetPacketizer(lcs){
-            protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg,jmri.jmrix.AbstractMRListener l) {} // don't care about timeout
-            public void receiveLoop() {}
-            protected void portWarn(Exception e) {}
-        };
+        StoppingXNetPacketizer c = new StoppingXNetPacketizer(lcs);
         // connect to iostream via port controller scaffold
         XNetPortControllerScaffold p = new XNetPortControllerScaffold();
         c.connectPort(p);
@@ -42,11 +51,7 @@ public class XNetPacketizerTest extends TestCase {
 
     public void testInbound() throws Exception {
         LenzCommandStation lcs = new LenzCommandStation();
-        XNetPacketizer c = new XNetPacketizer(lcs){
-            protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg,jmri.jmrix.AbstractMRListener l) {} // don't care about timeout
-            protected void reportReceiveLoopException(Exception e) {}           
-            protected void portWarn(Exception e) {}
-        };
+        StoppingXNetPacketizer c = new StoppingXNetPacketizer(lcs);
 
         // connect to iostream via port controller
         XNetPortControllerScaffold p = new XNetPortControllerScaffold();
@@ -72,11 +77,7 @@ public class XNetPacketizerTest extends TestCase {
         // at the same time, the first listener is still the active listener until
         // it receives a message.
         LenzCommandStation lcs = new LenzCommandStation();
-        XNetPacketizer c = new XNetPacketizer(lcs){
-            protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg,jmri.jmrix.AbstractMRListener l) {} // don't care about timeout
-            protected void reportReceiveLoopException(Exception e) {}           
-            protected void portWarn(Exception e) {}
-        };
+        StoppingXNetPacketizer c = new StoppingXNetPacketizer(lcs);
 
         // connect to iostream via port controller
         XNetPortControllerScaffold p = new XNetPortControllerScaffold();
@@ -151,8 +152,7 @@ public class XNetPacketizerTest extends TestCase {
 
 
     }
-
-
+    
     private boolean waitForReply(XNetListenerScaffold l) {
         // wait for reply (normally, done by callback; will check that later)
         int i = 0;
@@ -164,6 +164,11 @@ public class XNetPacketizerTest extends TestCase {
         if (i==0) log.warn("waitForReply saw an immediate return; is threading right?");
         return i<100;
     }
+
+    public XNetPacketizerTest(String s) {
+        super(s);
+    }
+
 
 	// Main entry point
 	static public void main(String[] args) {
