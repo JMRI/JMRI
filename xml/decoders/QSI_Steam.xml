@@ -110,7 +110,7 @@
         <label>Consist Address</label>
       </variable>
       <variable item="Consist Direction" CV="19" mask="VXXXXXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-NormRev.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>Consist Direction</label>
       </variable>
       <variable item="Consist Address Active For F1" CV="21" mask="XXXXXXXV" default="0" tooltip="F1 = Bell; Recommendation: Lead = ON, Mid = OFF, End = OFF">
