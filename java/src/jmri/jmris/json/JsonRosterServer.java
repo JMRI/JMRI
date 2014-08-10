@@ -24,25 +24,30 @@ import org.slf4j.LoggerFactory;
 public class JsonRosterServer {
 
     private final JmriConnection connection;
-    private final ObjectMapper mapper;
+    private final ObjectMapper mapper = new ObjectMapper();
     private final static Logger log = LoggerFactory.getLogger(JsonRosterServer.class);
     private final JsonRosterListener rosterListener = new JsonRosterListener();
+    private boolean listening = false;
 
     public JsonRosterServer(JmriConnection connection) {
         this.connection = connection;
-        this.mapper = new ObjectMapper();
     }
 
     public void listen() {
-        Roster.instance().addPropertyChangeListener(this.rosterListener);
+        if (!this.listening) {
+            Roster.instance().addPropertyChangeListener(this.rosterListener);
+            this.listening = true;
+        }
     }
 
     public void parseRosterEntryRequest(Locale locale, JsonNode data) throws IOException, JsonException {
         this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getRosterEntry(locale, data.path(NAME).asText())));
+        this.listen();
     }
 
     public void dispose() {
         Roster.instance().removePropertyChangeListener(this.rosterListener);
+        this.listening = false;
     }
 
     private class JsonRosterListener implements PropertyChangeListener {
@@ -64,7 +69,7 @@ public class JsonRosterServer {
                     connection.sendMessage(mapper.writeValueAsString(JsonUtil.getRoster(connection.getLocale(), root)));
                 }
             } catch (IOException ex) {
-                Roster.instance().removePropertyChangeListener(this);
+                dispose();
             }
         }
     }
