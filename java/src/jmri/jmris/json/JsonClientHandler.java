@@ -3,6 +3,7 @@ package jmri.jmris.json;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.util.Locale;
 import jmri.JmriException;
@@ -23,6 +24,7 @@ import static jmri.jmris.json.JSON.LOCATIONS;
 import static jmri.jmris.json.JSON.MEMORIES;
 import static jmri.jmris.json.JSON.MEMORY;
 import static jmri.jmris.json.JSON.METADATA;
+import static jmri.jmris.json.JSON.METHOD;
 import static jmri.jmris.json.JSON.NAME;
 import static jmri.jmris.json.JSON.NETWORK_SERVICES;
 import static jmri.jmris.json.JSON.OPERATIONS;
@@ -65,6 +67,7 @@ public class JsonClientHandler {
     private final JsonPowerServer powerServer;
     private final JsonProgrammerServer programmerServer;
     private final JsonReporterServer reporterServer;
+    private final JsonRosterServer rosterServer;
     private final JsonRouteServer routeServer;
     private final JsonSensorServer sensorServer;
     private final JsonSignalHeadServer signalHeadServer;
@@ -86,6 +89,7 @@ public class JsonClientHandler {
         this.powerServer = new JsonPowerServer(this.connection);
         this.programmerServer = new JsonProgrammerServer(this.connection);
         this.reporterServer = new JsonReporterServer(this.connection);
+        this.rosterServer = new JsonRosterServer(this.connection);
         this.routeServer = new JsonRouteServer(this.connection);
         this.sensorServer = new JsonSensorServer(this.connection);
         this.signalHeadServer = new JsonSignalHeadServer(this.connection);
@@ -104,6 +108,7 @@ public class JsonClientHandler {
         this.powerServer.dispose();
         this.programmerServer.dispose();
         this.reporterServer.dispose();
+        this.rosterServer.dispose();
         this.routeServer.dispose();
         this.sensorServer.dispose();
         this.signalHeadServer.dispose();
@@ -128,7 +133,9 @@ public class JsonClientHandler {
      * the <em>data</em> node:
      * <code>{"type":"turnout","data":{"name":"LT14","state":4}}</code>
      * <li>individual types can be created if a <strong>method</strong> node
-     * with the value <em>post</em> is included in the <em>data</em> node:
+     * with the value <em>put</em> is included in message:
+     * <code>{"type":"turnout","method":"put","data":{"name":"LT14"}}</code>.
+     * The <em>method</em> node may be included in the <em>data</em> node:
      * <code>{"type":"turnout","data":{"name":"LT14","method":"put"}}</code>
      * Note that not all types support this.</li></ul>
      * </li><li>a heartbeat in the form <code>{"type":"ping"}</code>. The
@@ -165,6 +172,9 @@ public class JsonClientHandler {
                 type = LIST;
             }
             JsonNode data = root.path(DATA);
+            if (data.path(METHOD).isMissingNode() && root.path(METHOD).isValueNode()) {
+                ((ObjectNode) data).put(METHOD, root.path(METHOD).asText());
+            }
             log.debug("Processing {} with {}", type, data);
             if (type.equals(PING)) {
                 this.connection.sendMessage(this.mapper.writeValueAsString(this.mapper.createObjectNode().put(TYPE, PONG)));
@@ -199,8 +209,10 @@ public class JsonClientHandler {
                     reply = JsonUtil.getReporters(this.connection.getLocale());
                 } else if (list.equals(ROSTER)) {
                     reply = JsonUtil.getRoster(this.connection.getLocale(), data);
+                    this.rosterServer.listen();
                 } else if (list.equals(ROSTER_GROUPS)) {
                     reply = JsonUtil.getRosterGroups(this.connection.getLocale());
+                    this.rosterServer.listen();
                 } else if (list.equals(ROUTES)) {
                     reply = JsonUtil.getRoutes(this.connection.getLocale());
                 } else if (list.equals(SENSORS)) {
@@ -247,7 +259,7 @@ public class JsonClientHandler {
                 } else if (type.equals(REPORTER)) {
                     this.reporterServer.parseRequest(this.connection.getLocale(), data);
                 } else if (type.equals(ROSTER_ENTRY)) {
-                    this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getRosterEntry(this.connection.getLocale(), data.path(NAME).asText())));
+                    this.rosterServer.parseRosterEntryRequest(this.connection.getLocale(), data);
                 } else if (type.equals(ROUTE)) {
                     this.routeServer.parseRequest(this.connection.getLocale(), data);
                 } else if (type.equals(THROTTLE)) {
