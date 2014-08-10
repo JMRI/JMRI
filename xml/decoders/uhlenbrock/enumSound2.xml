@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2014 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- 																		-->
+<!-- version 1 - include file for Uhlenbrock Sound Decoder 3230x            -->
+<!-- 																		-->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice choice="None">
+	<choice>No Sound</choice>
+	<choice xml:lang="de">kein Sound</choice>
+  </enumChoice>
+  <enumChoice choice="Bell or Horn 1">
+	<choice>Bell or Horn 1</choice>
+	<choice xml:lang="de">Glocke oder Horn 1</choice>
+  </enumChoice>
+  <enumChoice choice="Whistle or Horn 2">
+	<choice>Whistle or Horn 2</choice>
+	<choice xml:lang="de">Pfeife oder Horn 2</choice>
+  </enumChoice>
+  <enumChoice choice="Operating sounds of the loco">
+	<choice>Operating sounds of the loco</choice>
+	<choice xml:lang="de">Fahrgeräusch der Lok</choice>
+  </enumChoice>
+  <enumChoice choice="Uncoupling or door alarm">
+	<choice>Uncoupling or door alarm</choice>
+	<choice xml:lang="de">Entkuppler oder Türwarnton</choice>
+  </enumChoice>
+  <enumChoice choice="Conductor whistle short">
+	<choice>Conductor whistle short</choice>
+	<choice xml:lang="de">Schaffnerpfiff kurz</choice>
+  </enumChoice>
+  <enumChoice choice="Station announcement">
+	<choice>Station announcement</choice>
+	<choice xml:lang="de">Stationsansage</choice>
+  </enumChoice>
+  <!-- value 7 unused -->
+  <enumChoice choice="All sounds on/off" value="8">
+	<choice>All sounds on/off</choice>
+	<choice xml:lang="de">Ein/Aus-blenden gesamten Sounds</choice>
+  </enumChoice>
+  <enumChoice choice="Pantograph (with E-Locs)" value="9">
+	<choice>Pantograph (with E-Locs)</choice>
+	<choice xml:lang="de">Pantograph (bei Elloks)</choice>
+  </enumChoice>
+  <!-- value 10 unused -->
+  <enumChoice choice="Departure announcements" value="11">
+	<choice>Departure announcements</choice>
+	<choice xml:lang="de">Ansage Abfahren</choice>
+  </enumChoice>
+  <enumChoice choice="Conductor whistle long" value="12">
+	<choice>Conductor whistle long</choice>
+	<choice xml:lang="de">Schaffnerpfiff lang</choice>
+  </enumChoice>
+  <!-- value 13 unused -->
+  <enumChoice choice="Coal shovelling/Door closing tone" value="14">
+	<choice>Coal shovelling/Door closing tone</choice>
+	<choice xml:lang="de">Kohlen schaufeln/Türschließton</choice>
+  </enumChoice>
+  <enumChoice choice="Pump/Air compressor" value="15">
+	<choice>Pump/Air compressor</choice>
+	<choice xml:lang="de">Pumpe/Luftpresser</choice>
+  </enumChoice>
+  <enumChoice choice="Attention whistle" value="16">
+	<choice>Attention whistle</choice>
+	<choice xml:lang="de">Achtungspfiff</choice>
+  </enumChoice>
+  <enumChoice choice="Blowdown/Vacant" value="17">
+	<choice>Blowdown/Vacant</choice>
+	<choice xml:lang="de">Abblasen/nicht belegt</choice>
+  </enumChoice>
+  <enumChoice choice="Vibrating stoker/Vacant" value="18">
+	<choice>Vibrating stoker/Vacant</choice>
+	<choice xml:lang="de">Schüttelrost/nicht belegt</choice>
+  </enumChoice>
+  <!-- values 19 to 94 unused -->
+  <enumChoice choice="Smoke generator always max." value="95">
+	<choice>Smoke generator always max.</choice>
+	<choice xml:lang="de">Rauchgenerator immer auf Max.</choice>
+  </enumChoice>
+  <enumChoice choice="Smoke generator always off" value="96">
+	<choice>Smoke generator always off</choice>
+	<choice xml:lang="de">Rauchgenerator immer aus</choice>
+  </enumChoice>
+  <enumChoice choice="Switch brake sounds off by Func." value="97">
+	<choice>Switch brake sounds off by Function</choice>
+	<choice xml:lang="de">Bremsgeräusch abschalten per Funktion</choice>
+  </enumChoice>
+  <enumChoice choice="Blower manual (on E-loc) by Function" value="98">
+	<choice>Blower manual (on E-loc) by Function</choice>
+	<choice xml:lang="de">Lüfter manuell (bei Ellok) per Funktion</choice>
+  </enumChoice>
+  <enumChoice choice="Startup steam hiss manual (steam)" value="99">
+	<choice>Startup steam hiss manual (steam)</choice>
+	<choice xml:lang="de">Anfahrzischen manuell (Dampflok)</choice>
+  </enumChoice>
+  <!-- values 100 to 199 unused -->
+  <enumChoice choice="Custom Sound 1" value="200">
+	<choice>Custom Sound 1</choice>
+	<choice xml:lang="de">eigener Sound 1</choice>
+  </enumChoice>
+  <enumChoice choice="Custom Sound 2" value="201">
+	<choice>Custom Sound 2</choice>
+	<choice xml:lang="de">eigener Sound 2</choice>
+  </enumChoice>
+  <enumChoice choice="Custom Sound 3" value="202">
+	<choice>Custom Sound 3</choice>
+	<choice xml:lang="de">eigener Sound 3</choice>
+  </enumChoice>
+  <enumChoice choice="Custom Sound 4" value="203">
+	<choice>Custom Sound 4</choice>
+	<choice xml:lang="de">eigener Sound 4</choice>
+  </enumChoice>
+</enumVal>
+
+

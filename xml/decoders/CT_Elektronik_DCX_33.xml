@@ -61,9 +61,9 @@
         <label xml:lang="it">Funzioni di Uscita</label>
       </variable>
 	  <!-- Function map -->
-	   <xi:include href="http://jmri.org/xml/decoders/CT_Elektronik/functionMapNMRA.xml"/>
+	   <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/functionMapNMRA.xml"/>
 	  <!-- End Function Map -->
-      <xi:include href="http://jmri.org/xml/decoders/CT_Elektronik/lockDecoder-CV53.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/lockDecoder-CV53.xml"/>
       <variable CV="54" item="PWM Function Outputs" default="50">
         <decVal min="0" max="100"/>
         <label>Dimming for Function Outputs (%)</label>
@@ -91,7 +91,7 @@
         <tooltip xml:lang="de">Einschaltzeit für digitale Kupplung E = 0.1sec</tooltip>
         <tooltip xml:lang="it">tempo di applicazione impulso di sgancio a corrente massima (in 1/10 sec)</tooltip>
       </variable>
-      <xi:include href="http://jmri.org/xml/decoders/CT_Elektronik/outputMapDimming-CV57-58.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/outputMapDimming-CV57-58.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <variable CV="109" mask="XXXXXXXV" item="Advanced Group 2 Option 1" default="0">
 		    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -129,7 +129,7 @@
 		    <tooltip xml:lang="de">definiert die Zeit (Dauer) zwischen 2 Effekten</tooltip>
 		    <tooltip xml:lang="it">Definisce il tempo di pausa tra due effetti</tooltip>
       </variable>
-      <xi:include href="http://jmri.org/xml/decoders/CT_Elektronik/dimmingFunction-CV117-118.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/dimmingFunction-CV117-118.xml"/>
       <variable CV="119" item="PWM Dimming" default="0" exclude="DCX32">
         <decVal min="0" max="100"/>
         <label>PWM Dimming</label>
@@ -284,97 +284,97 @@
       </variable>
       <!-- Tran Light Effects  -->
       <variable CV="154" mask="XXXVVVVV" item="Light Effects F0F" default="0" tooltip="Effects on F0F" exclude="DCX32">
-        <xi:include href="http://jmri.org/xml/decoders/CT_Elektronik/enumLightType.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightType.xml"/>
         <label>Light Effects F0F</label>
         <label xml:lang="it">Luci (F0) in avanti</label>
 		    <label xml:lang="de">Effekt für Licht FL(f)</label>
       </variable>
       <variable CV="154" mask="VVXXXXXX" item="Light Effects Direction F0F" exclude="DCX32">
-        <xi:include href="http://jmri.org/xml/decoders/CT_Elektronik/enumLightDirection.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightDirection.xml"/>
         <label>Light Effects Direction F0F</label>
         <label xml:lang="it">Luci(F0) direzionali in avanti</label>
 		    <label xml:lang="de">Effekt für Licht FL(f) - Richtung</label>
       </variable>
       <variable CV="155" mask="XXXVVVVV" item="Light Effects F0R" default="0" tooltip="Effects on F0R" exclude="DCX32">
-        <xi:include href="http://jmri.org/xml/decoders/CT_Elektronik/enumLightType.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightType.xml"/>
         <label>Light Effects FL(r)</label>
         <label xml:lang="it">Luci (FL) in retro</label>
 		    <label xml:lang="de">Effekt für Licht FL(r)</label>
       </variable>
       <variable CV="155" mask="VVXXXXXX" item="Light Effects Direction F0R" exclude="DCX32">
-        <xi:include href="http://jmri.org/xml/decoders/CT_Elektronik/enumLightDirection.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightDirection.xml"/>
         <label>Light Effects Direction FL(r)</label>
         <label xml:lang="it">Luci(FL) direzionali in retro</label>
 		    <label xml:lang="de">Effekt für Licht FL(r) - Richtung</label>
       </variable>
       <variable CV="156" mask="XXXVVVVV" item="Light Effects F1" default="0" minOut="3" tooltip="Effects on F1" exclude="DCX32">
-        <xi:include href="http://jmri.org/xml/decoders/CT_Elektronik/enumLightType.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightType.xml"/>
         <label>Light Effects F1</label>
         <label xml:lang="it">Luci con F1</label>
 		    <label xml:lang="de">Effekt für Licht F1</label>
       </variable>
       <variable CV="156" mask="VVXXXXXX" item="Light Effects Direction F1" minOut="3" exclude="DCX32">
-        <xi:include href="http://jmri.org/xml/decoders/CT_Elektronik/enumLightDirection.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightDirection.xml"/>
         <label>Light Effects Direction F1</label>
         <label xml:lang="it">Luci direzionali con F1</label>
 		<label xml:lang="de">Effekt für Licht F1 - Richtung</label>
       </variable>
       <variable CV="157" mask="XXXVVVVV" item="Light Effects F2" default="0" minOut="4" tooltip="Effects on F2" exclude="DCX32">
-        <xi:include href="http://jmri.org/xml/decoders/CT_Elektronik/enumLightType.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightType.xml"/>
         <label>Light Effects F2</label>
         <label xml:lang="it">Luci con F2</label>
 		    <label xml:lang="de">Effekt für Licht F2</label>
       </variable>
       <variable CV="157" mask="VVXXXXXX" item="Light Effects Direction F2" minOut="4" exclude="DCX32">
-        <xi:include href="http://jmri.org/xml/decoders/CT_Elektronik/enumLightDirection.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightDirection.xml"/>
         <label>Light Effects Direction F2</label>
         <label xml:lang="it">Luci direzionali con F2</label>
 		    <label xml:lang="de">Effekt für Licht F2 - Richtung</label>
       </variable>
       <variable CV="158" mask="XXXVVVVV" item="Light Effects F3" default="0" minOut="5" tooltip="Effects on F3" exclude="DCX32">
-        <xi:include href="http://jmri.org/xml/decoders/CT_Elektronik/enumLightType.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightType.xml"/>
         <label>Light Effects F3</label>
         <label xml:lang="it">Luci con F3</label>
 		    <label xml:lang="de">Effekt für Licht F3</label>
       </variable>
       <variable CV="158" mask="VVXXXXXX" item="Light Effects Direction F3" minOut="5" exclude="DCX32">
-        <xi:include href="http://jmri.org/xml/decoders/CT_Elektronik/enumLightDirection.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightDirection.xml"/>
         <label>Light Effects Direction F3</label>
         <label xml:lang="it">Luci direzionali con F3</label>
 		    <label xml:lang="de">Effekt für Licht F3 - Richtung</label>
       </variable>
       <variable CV="159" mask="XXXVVVVV" item="Light Effects F4" default="0" minOut="6" tooltip="Effects on F4" exclude="DCX32">
-        <xi:include href="http://jmri.org/xml/decoders/CT_Elektronik/enumLightType.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightType.xml"/>
         <label>Light Effects F4</label>
         <label xml:lang="it">Luci con F4</label>
 		    <label xml:lang="de">Effekt für Licht F4</label>
       </variable>
       <variable CV="159" mask="VVXXXXXX" item="Light Effects Direction F4" minOut="6" exclude="DCX32">
-        <xi:include href="http://jmri.org/xml/decoders/CT_Elektronik/enumLightDirection.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightDirection.xml"/>
         <label>Light Effects Direction F4</label>
         <label xml:lang="it">Luci direzionali con F4</label>
 		    <label xml:lang="de">Effekt für Licht F4 - Richtung</label>
       </variable>
       <variable CV="160" mask="XXXVVVVV" item="Light Effects F5" default="0" minOut="7" tooltip="Effects on F5" exclude="DCX32">
-        <xi:include href="http://jmri.org/xml/decoders/CT_Elektronik/enumLightType.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightType.xml"/>
         <label>Light Effects F5</label>
         <label xml:lang="it">Luci con F5</label>
 		    <label xml:lang="de">Effekt für Licht F5</label>
       </variable>
       <variable CV="160" mask="VVXXXXXX" item="Light Effects Direction F5" minOut="7" exclude="DCX32">
-        <xi:include href="http://jmri.org/xml/decoders/CT_Elektronik/enumLightDirection.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightDirection.xml"/>
         <label>Light Effects Direction F5</label>
         <label xml:lang="it">Luci direzionali con F5</label>
 		    <label xml:lang="de">Effekt für Licht F5 - Richtung</label>
       </variable>
 	  <variable CV="161" mask="XXXVVVVV" item="Light Effects F6" default="0" minOut="8" tooltip="Effects on F6" exclude="DCX32">
-        <xi:include href="http://jmri.org/xml/decoders/CT_Elektronik/enumLightType.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightType.xml"/>
         <label>Light Effects F6</label>
         <label xml:lang="it">Luci con F6</label>
 		    <label xml:lang="de">Effekt für Licht F6</label>
       </variable>
       <variable CV="161" mask="VVXXXXXX" item="Light Effects Direction F6" minOut="8" exclude="DCX32">
-        <xi:include href="http://jmri.org/xml/decoders/CT_Elektronik/enumLightDirection.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightDirection.xml"/>
         <label>Light Effects Direction F6</label>
         <label xml:lang="it">Luci direzionali con F6</label>
 		    <label xml:lang="de">Effekt für Licht F6 - Richtung</label>
