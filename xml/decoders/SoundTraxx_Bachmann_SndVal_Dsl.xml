@@ -41,79 +41,151 @@
     <family name="Bachmann Sound Value" mfg="Throttle-Up (SoundTraxx)" comment="Bachmann Standard line HO locomotives with SoundTraxx DSD that Bachmann refers to as Sound Value">
       <model model="Alco FA2" numOuts="2" numFns="14" connector="other" productID="Alco_FA2" comment="Diesel Prime Mover Alco 244">
         <versionCV lowVersionID="82"/>
-        <output name="FX5" label=" Rule 17"/>
-        <output name="FX6" label="Mode"/>
+        <output name="FX5" label=" Rule 17">
+          <label xml:lang="it">Regola 17</label>
+        </output>
+        <output name="FX6" label="Mode">
+          <label xml:lang="it">Modo</label>
+        </output>
         <output name="Air Horn"/>
         <output name="Bell"/>
-        <output name="#1 Not" label="Used"/>
-        <output name="Short" label="Horn"/>
-	<output name="#2 Not" label="Used"/>
-        <output name="#3 Not" label="Used"/>
+        <output name="#1 Not" label="Used">
+          <label xml:lang="it">Usato</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+	      <output name="#2 Not" label="Used">
+	       <label xml:lang="it">Usato</label>
+        </output>
+        <output name="#3 Not" label="Used">
+         <label xml:lang="it">Usato</label>
+        </output>
         <output name="Dimming"/>
         <output name="Mute"/>
       </model>
       <model model="Alco FB2" numOuts="2" numFns="14" connector="other" productID="Alco_FB2" comment="Diesel Prime Mover Alco 244">
         <versionCV lowVersionID="82"/>
-        <output name="FX5" label=" Rule 17"/>
-        <output name="FX6" label="Mode"/>
+        <output name="FX5" label=" Rule 17">
+          <label xml:lang="it">Regola 17</label>
+        </output>
+        <output name="FX6" label="Mode">
+          <label xml:lang="it">Modo</label>
+        </output>
         <output name="Air Horn"/>
         <output name="Bell"/>
-        <output name="#1 Not" label="Used"/>
-        <output name="Short" label="Horn"/>
-	<output name="#2 Not" label="Used"/>
-        <output name="#3 Not" label="Used"/>
+        <output name="#1 Not" label="Used">
+         <label xml:lang="it">Usato</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+	      <output name="#2 Not" label="Used">
+	       <label xml:lang="it">Usato</label>
+        </output>
+        <output name="#3 Not" label="Used">
+         <label xml:lang="it">Usato</label>
+        </output>
         <output name="Dimming"/>
         <output name="Mute"/>
       </model>
       <model model="Alco RS3" numOuts="2" numFns="14" connector="other" productID="Alco_RS3" comment="Diesel Prime Mover Alco 244">
         <versionCV lowVersionID="82"/>
-        <output name="FX5" label=" Rule 17"/>
-        <output name="FX6" label="Mode"/>
+        <output name="FX5" label=" Rule 17">
+          <label xml:lang="it">Regola 17</label>
+        </output>
+        <output name="FX6" label="Mode">
+          <label xml:lang="it">Modo</label>
+        </output>
         <output name="Air Horn"/>
         <output name="Bell"/>
-        <output name="#1 Not" label="Used"/>
-        <output name="Short" label="Horn"/>
-	<output name="#2 Not" label="Used"/>
-        <output name="#3 Not" label="Used"/>
+        <output name="#1 Not" label="Used">
+         <label xml:lang="it">Usato</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+	      <output name="#2 Not" label="Used">
+	       <label xml:lang="it">Usato</label>
+        </output>
+        <output name="#3 Not" label="Used">
+         <label xml:lang="it">Usato</label>
+        </output>
         <output name="Dimming"/>
         <output name="Mute"/>
       </model>
       <model model="Alco S2" numOuts="2" numFns="14" connector="other" productID="Alco_S2" comment="Diesel Prime Mover Alco 539 Turbo">
         <versionCV lowVersionID="82"/>
-        <output name="FX5" label=" Rule 17"/>
-        <output name="FX6" label="Mode"/>
+        <output name="FX5" label=" Rule 17">
+          <label xml:lang="it">Regola 17</label>
+        </output>
+        <output name="FX6" label="Mode">
+          <label xml:lang="it">Modo</label>
+        </output>
         <output name="Air Horn"/>
         <output name="Bell"/>
-        <output name="#1 Not" label="Used"/>
-        <output name="Short" label="Horn"/>
-	<output name="#2 Not" label="Used"/>
-        <output name="#3 Not" label="Used"/>
+        <output name="#1 Not" label="Used">
+         <label xml:lang="it">Usato</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+	      <output name="#2 Not" label="Used">
+	       <label xml:lang="it">Usato</label>
+        </output>
+        <output name="#3 Not" label="Used">
+         <label xml:lang="it">Usato</label>
+        </output>
         <output name="Dimming"/>
         <output name="Mute"/>
       </model>
       <model model="Alco S4" numOuts="2" numFns="14" connector="other" productID="Alco_S4" comment="Diesel Prime Mover Alco 539 Turbo">
         <versionCV lowVersionID="82"/>
-        <output name="FX5" label=" Rule 17"/>
-        <output name="FX6" label="Mode"/>
+        <output name="FX5" label=" Rule 17">
+          <label xml:lang="it">Regola 17</label>
+        </output>
+        <output name="FX6" label="Mode">
+          <label xml:lang="it">Modo</label>
+        </output>
         <output name="Air Horn"/>
         <output name="Bell"/>
-        <output name="#1 Not" label="Used"/>
-        <output name="Short" label="Horn"/>
-	<output name="#2 Not" label="Used"/>
-        <output name="#3 Not" label="Used"/>
+         <output name="#1 Not" label="Used">
+         <label xml:lang="it">Usato</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+	      <output name="#2 Not" label="Used">
+	       <label xml:lang="it">Usato</label>
+        </output>
+        <output name="#3 Not" label="Used">
+         <label xml:lang="it">Usato</label>
+        </output>
         <output name="Dimming"/>
         <output name="Mute"/>
       </model>
       <model model="EMD DD40AX" numOuts="4" numFns="14" connector="other" productID="EMD_DD40AX" comment="(N or HO scale) Diesel Prime Mover 2 × EMD 645E3A">
         <versionCV lowVersionID="82"/>
-        <output name="3" label="Flashing"/>
-        <output name="4" label="# Board"/>
+        <output name="3" label="Flashing">
+         <label xml:lang="it">Flash</label>
+        </output>
+        <output name="4" label="# Board">
+         <label xml:lang="it"># Board</label>
+        </output>
         <output name="Air Horn"/>
         <output name="Bell"/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="#2 Not" label="Used"/>
-        <output name="#3 Not" label="Used"/>
+        <output name="Dynamic" label="Brakes">
+         <label xml:lang="it">Freni dinam</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+	      <output name="#2 Not" label="Used">
+	       <label xml:lang="it">Usato</label>
+        </output>
+        <output name="#3 Not" label="Used">
+        <label xml:lang="it">Usato</label>
+        </output>
         <output name="Dimming"/>
         <output name="Mute"/>
         <functionlabels>
@@ -124,53 +196,99 @@
       </model>
       <model model="EMD F7A" numOuts="2" numFns="14" connector="other" productID="EMD_F7A" comment="Diesel Prime Mover EMD567 Non-Turbo">
         <versionCV lowVersionID="82"/>
-        <output name="FX5" label=" Rule 17"/>
-        <output name="FX6" label="Mode"/>
+        <output name="FX5" label=" Rule 17">
+          <label xml:lang="it">Regola 17</label>
+        </output>
+        <output name="FX6" label="Mode">
+          <label xml:lang="it">Modo</label>
+        </output>
         <output name="Air Horn"/>
         <output name="Bell"/>
-        <output name="#1 Not" label="Used"/>
+       <output name="#1 Not" label="Used">
+        <label xml:lang="it">Usato</label>
+        </output>
         <output name="Short" label="Horn"/>
-	<output name="#2 Not" label="Used"/>
-        <output name="#3 Not" label="Used"/>
+	      <output name="#2 Not" label="Used">
+	       <label xml:lang="it">Usato</label>
+        </output>
+        <output name="#3 Not" label="Used">
+         <label xml:lang="it">Usato</label>
+        </output>
         <output name="Dimming"/>
         <output name="Mute"/>
       </model>
       <model model="EMD F7B" numOuts="2" numFns="14" connector="other" productID="EMD_F7B" comment="Diesel Prime Mover EMD567 Non-Turbo">
         <versionCV lowVersionID="82"/>
-        <output name="FX5" label=" Rule 17"/>
-        <output name="FX6" label="Mode"/>
+        <output name="FX5" label=" Rule 17">
+          <label xml:lang="it">Regola 17</label>
+        </output>
+        <output name="FX6" label="Mode">
+          <label xml:lang="it">Modo</label>
+        </output>
         <output name="Air Horn"/>
         <output name="Bell"/>
-        <output name="#1 Not" label="Used"/>
-        <output name="Short" label="Horn"/>
-		<output name="#2 Not" label="Used"/>
-        <output name="#3 Not" label="Used"/>
+        <output name="#1 Not" label="Used">
+         <label xml:lang="it">Usato</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+	     <output name="#2 Not" label="Used">
+	      <label xml:lang="it">Usato</label>
+        </output>
+        <output name="#3 Not" label="Used">
+         <label xml:lang="it">Usato</label>
+        </output>
         <output name="Dimming"/>
         <output name="Mute"/>
       </model>
       <model model="EMD GP7" numOuts="2" numFns="14" connector="other" productID="EMD_GP7" comment="Diesel Prime Mover EMD567 Non-Turbo">
         <versionCV lowVersionID="82"/>
-        <output name="FX5" label=" Rule 17"/>
-        <output name="FX6" label="Mode"/>
+        <output name="FX5" label=" Rule 17">
+          <label xml:lang="it">Regola 17</label>
+        </output>
+        <output name="FX6" label="Mode">
+          <label xml:lang="it">Modo</label>
+        </output>
         <output name="Air Horn"/>
         <output name="Bell"/>
-        <output name="#1 Not" label="Used"/>
-        <output name="Short" label="Horn"/>
-	<output name="#2 Not" label="Used"/>
-        <output name="#3 Not" label="Used"/>
+        <output name="#1 Not" label="Used">
+         <label xml:lang="it">Usato</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+	      <output name="#2 Not" label="Used">
+	       <label xml:lang="it">Usato</label>
+        </output>
+        <output name="#3 Not" label="Used">
+         <label xml:lang="it">Usato</label>
+        </output>
         <output name="Dimming"/>
         <output name="Mute"/>
       </model>
       <model model="EMD SD70ACe" numOuts="2" numFns="14" connector="other" productID="EMD_SD70ACe" comment="Diesel Prime Mover EMD 16-710 G3C-T2">
         <versionCV lowVersionID="82"/>
-        <output name="FX5" label=" Rule 17"/>
-        <output name="FX6" label="Mode"/>
+        <output name="FX5" label=" Rule 17">
+          <label xml:lang="it">Regola 17</label>
+        </output>
+        <output name="FX6" label="Mode">
+          <label xml:lang="it">Modo</label>
+        </output>
         <output name="Air Horn"/>
         <output name="Bell"/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="#1 Not" label="Used"/>
-        <output name="#2 Not" label="Used"/>
+        <output name="Dynamic" label="Brakes">
+         <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+	      <output name="#2 Not" label="Used">
+	       <label xml:lang="it">Usato</label>
+        </output>
+        <output name="#3 Not" label="Used">
+         <label xml:lang="it">Usato</label>
+        </output>
         <output name="Dimming"/>
         <output name="Mute"/>
         <functionlabels>
@@ -179,14 +297,26 @@
       </model>
       <model model="GE ES44AC" numOuts="2" numFns="14" connector="other" productID="GE_ES44AC" comment="Diesel Prime Mover GE GEVO V12">
         <versionCV lowVersionID="82"/>
-        <output name="FX5" label=" Rule 17"/>
-        <output name="FX6" label="Mode"/>
+        <output name="FX5" label=" Rule 17">
+          <label xml:lang="it">Regola 17</label>
+        </output>
+        <output name="FX6" label="Mode">
+          <label xml:lang="it">Modo</label>
+        </output>
         <output name="Air Horn"/>
         <output name="Bell"/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="#1 Not" label="Used"/>
-        <output name="#2 Not" label="Used"/>
+        <output name="Dynamic" label="Brakes">
+         <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+	      <output name="#2 Not" label="Used">
+	       <label xml:lang="it">Usato</label>
+        </output>
+        <output name="#3 Not" label="Used">
+         <label xml:lang="it">Usato</label>
+        </output>
         <output name="Dimming"/>
         <output name="Mute"/>
         <functionlabels>
@@ -195,13 +325,21 @@
       </model>
       <model model="GG1" numOuts="2" numFns="14" connector="other" productID="GG1" comment="GE-Altoona Electric">
         <versionCV lowVersionID="82"/>
-        <output name="FX5" label=" Rule 17"/>
-        <output name="FX6" label="Mode"/>
+        <output name="FX5" label=" Rule 17">
+          <label xml:lang="it">Regola 17</label>
+        </output>
+        <output name="FX6" label="Mode">
+          <label xml:lang="it">Modo</label>
+        </output>
         <output name="Air Horn"/>
         <output name="Bell"/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+         <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -271,23 +409,20 @@
       <variable item="Vhigh" CV="5" default="0">
         <decVal max="255"/>
         <label>Max Voltage</label>
+        <label xml:lang="it">Volt Massimi (0-255):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
       </variable>
       <variable item="Vmid" CV="6" default="0" exclude="Alco_S2,Alco_S4">
         <decVal max="255"/>
         <label>Mid Voltage</label>
+        <label xml:lang="it">Volts intermedi (0-255)</label>
+        <label xml:lang="de">Vmittel (0-255)</label>
       </variable>
       <variable item="Vmid" CV="6" default="96" include="Alco_S2,Alco_S4">
         <decVal max="255"/>
         <label>Mid Voltage</label>
-      </variable>      
-      <variable CV="7" readOnly="yes" item="Decoder Version" default="82" tooltip="This is the decoder software version identifier (read only)">
-        <decVal/>
-        <label>Manufacturer Version ID</label>
       </variable>
-      <variable CV="8" readOnly="yes" item="Manufacturer" default="141">
-        <decVal/>
-        <label>Manufacturer ID</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <variable CV="10" item="EMF Feedback Cutout" default="0" tooltip="&lt;html&gt;Up to 127, this sets the speed step above which the intensity of BEMF control will be reduced&lt;br&gt;      to zero.  Values over 127 cause the BEMF to decrease as a percentage (up to 50%).&lt;/html&gt;">
         <decVal/>
         <label>BEMF Cutout (0-127 or 128-255)</label>
@@ -372,16 +507,7 @@
         <label>CV Lock ID Code (0-7)</label>
       </variable>
       <!-- Consisting Information follows -->
-      <variable CV="19" mask="XVVVVVVV" item="Consist Address" default="0" comment="Stores consist address. Range 0-127 (direction set in bit 7)">
-        <decVal max="127"/>
-        <label>Consist Address (0-127)</label>
-        <comment>Stores consist address. Range 0-127 (direction set in bit 7)</comment>
-      </variable>
-      <variable CV="19" mask="VXXXXXXX" item="Consist Direction" default="0" comment="A consist address over 127 will also set this bit">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
-        <label>Loco Direction In Consist</label>
-        <comment>A consist address over 127 will also set this bit</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <variable CV="21" mask="XXXXXXXV" item="Consist Address Active For F1" default="0" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Activation for F1</label>
@@ -1313,14 +1439,7 @@
         <decVal/>
         <label>Reverse Trim (0-255)</label>
       </variable>
-      <variable CV="105" item="User Id #1" tooltip="&lt;html&gt;Use to set a custom user ID or number.  Note: when&lt;br&gt;      the decoder is reset to default values, this CV is&lt;br&gt;      preset to the softwares minor revision code.&lt;/html&gt;">
-        <decVal/>
-        <label>User Identifier #1 (0-255)</label>
-      </variable>
-      <variable CV="106" item="User Id #2" tooltip="&lt;html&gt;Use to set a custom user ID or number.  Note: when&lt;br&gt;      the decoder is reset to default values, this CV is&lt;br&gt;      preset to the softwares default CV value configuration.&lt;/html&gt;">
-        <decVal/>
-        <label>User Identifier #2 (0-255)</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <variable CV="112" mask="XXXXXXXV" item="Sound Option 6" default="0" tooltip="If using manual engine notching, set to Automatic as [RPM-] will be using this function">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumManAuto.xml"/>
         <label>Auto Air Compressor Enable</label>
