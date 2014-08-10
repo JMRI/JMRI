@@ -31,16 +31,32 @@
     <family name="Bachmann Sound Value" mfg="Throttle-Up (SoundTraxx)" comment="Bachmann Standard line HO locomotives with SoundTraxx DSD that Bachmann refers to as Sound Value">
       <model model="Alco 2-6-0" numOuts="2" numFns="14" connector="other" productID="Alco 2-6-0" comment="Model 2-6-0">
         <versionCV lowVersionID="82"/>
-        <output name="FX5" label=" Rule 17"/>
-        <output name="FX6" label="Mode"/>
-        <output name="Whistle"/>           
+        <output name="FX5" label=" Rule 17">
+         <label xml:lang="it">Regola 17</label>
+        </output>
+        <output name="FX6" label="Mode">
+         <label xml:lang="it">Modo</label>
+        </output>
+        <output name="Whistle"/>
         <output name="Bell"/>
-        <output name="#1 Not" label="Used"/>
-        <output name="Short" label="Whistle"/>
-        <output name="Steam" label="Release"/>
-	<output name="#2 Not" label="Used"/>
-        <output name="Dimming"/>
-        <output name="Mute"/>        
+        <output name="#1 Not" label="Used">
+         <label xml:lang="it">Usato</label>
+        </output>
+        <output name="Short" label="Whistle">
+         <label xml:lang="it">Fischio</label>
+        </output>
+        <output name="Steam" label="Release">
+         <label xml:lang="it">Rilascio</label>
+        </output>
+        <output name="#2 Not" label="Used">
+         <label xml:lang="it">Usato</label>
+        </output>
+        <output name="Dimming">
+         <label xml:lang="it">Smorzam</label>
+        </output>
+        <output name="Mute">
+         <label xml:lang="it">Silenzio</label>
+        </output>
       </model>
       <functionlabels>
         <functionlabel num="0" lockable="true">Headlight</functionlabel>
@@ -60,8 +76,8 @@
         <decVal/>
         <label>Start Voltage (0-255)</label>
         <label xml:lang="it">Volt Partenza</label>
-    <label xml:lang="fr">V démarr.</label>
-    <label xml:lang="de">Anfahrspannung</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Anfahrspannung</label>
         <comment>A value of 255 corresponds to full voltage available</comment>
       </variable>
       <variable CV="3" item="Accel" default="0" tooltip="Sets the acceleration rate (delay).  Higher number = slower rate">
@@ -81,10 +97,16 @@
       <variable CV="7" readOnly="yes" item="Decoder Version" default="82" tooltip="This is the decoder software version identifier (read only)">
         <decVal/>
         <label>Manufacturer Version ID</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
       <variable CV="8" readOnly="yes" item="Manufacturer" default="141">
         <decVal/>
         <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
       </variable>
       <variable CV="10" item="EMF Feedback Cutout" default="0" tooltip="&lt;html&gt;Up to 127, this sets the speed step above which the intensity of BEMF control will be reduced&lt;br&gt;      to zero.  Values over 127 cause the BEMF to decrease as a percentage (up to 50%).&lt;/html&gt;">
         <decVal/>
@@ -1108,10 +1130,16 @@
       <variable CV="105" item="User Id #1" tooltip="&lt;html&gt;Use to set a custom user ID or number.  Note: when&lt;br&gt;      the decoder is reset to default values, this CV is&lt;br&gt;      preset to the softwares minor revision code.&lt;/html&gt;">
         <decVal/>
         <label>User Identifier #1 (0-255)</label>
+        <label xml:lang="it">Id Utente #1 (0-255)</label>
+        <label xml:lang="fr">CV Utilisateur #1 (0-255)</label>
+        <label xml:lang="de">Benutzer-CV #1 (0-255)</label>
       </variable>
       <variable CV="106" item="User Id #2" tooltip="&lt;html&gt;Use to set a custom user ID or number.  Note: when&lt;br&gt;      the decoder is reset to default values, this CV is&lt;br&gt;      preset to the softwares default CV value configuration.&lt;/html&gt;">
         <decVal/>
         <label>User Identifier #2 (0-255)</label>
+        <label xml:lang="it">Id Utente #2 (0-255)</label>
+        <label xml:lang="fr">CV Utilisateur #2 (0-255)</label>
+        <label xml:lang="de">Benutzer-CV #2 (0-255)</label>
       </variable>
       <variable CV="112" mask="XXXXXXXV" item="Sound Option 1" default="0" tooltip="Choose whether the locomotive has one or two air pumps">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumAirPump.xml"/>

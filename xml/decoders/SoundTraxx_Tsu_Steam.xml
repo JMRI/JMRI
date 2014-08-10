@@ -41,114 +41,184 @@
     <family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)" comment="These are the -retail- version Tsunami steam decoders">
       <model model="TSU-750 Light Steam" numOuts="2" numFns="14" connector="other" productID="826001" comment="Model 826001">
         <versionCV lowVersionID="64"/>
-        <output name="FX5" label=" Rule 17"/>
-        <output name="FX6" label="Mode"/>        
+        <output name="FX5" label=" Rule 17">
+          <label xml:lang="it">Regola 17</label>
+        </output>
+        <output name="FX6" label="Mode">
+          <label xml:lang="it">Modo</label>
+        </output>
         <output name="Whistle"/>
         <output name="Bell"/>
         <output name="Dynamo"/>
-        <output name="Short" label="Whistle"/>
-        <output name="Steam" label="Release"/>
+        <output name="Short" label="Whistle">
+           <label xml:lang="it">Fischio corto</label>
+        </output>
+        <output name="Steam" label="Release">
+           <label xml:lang="it">Rilascio Vap</label>
+        </output>
         <output name="Water" label="Stop"/>
         <output name="Dimming"/>
         <output name="Mute"/>
         <output name="Injector"/>
-        <output name="Brake" label="Squeal"/>
+        <output name="Brake" label="Squeal">
+           <label xml:lang="it">Stridio Freni</label>
+        </output>
         <output name="Coupler"/>
       </model>
       <model model="TSU-750 Medium Steam" numOuts="2" numFns="14" connector="other" productID="826002" comment="Model 826002">
         <versionCV lowVersionID="64"/>
-        <output name="FX5" label=" Rule 17"/>
-        <output name="FX6" label="Mode"/>        
+        <output name="FX5" label=" Rule 17">
+          <label xml:lang="it">Regola 17</label>
+        </output>
+        <output name="FX6" label="Mode">
+          <label xml:lang="it">Modo</label>
+        </output>
         <output name="Whistle"/>
         <output name="Bell"/>
         <output name="Dynamo"/>
-        <output name="Short" label="Whistle"/>
-        <output name="Steam" label="Release"/>
+        <output name="Short" label="Whistle">
+           <label xml:lang="it">Fischio corto</label>
+        </output>
+        <output name="Steam" label="Release">
+           <label xml:lang="it">Rilascio Vap</label>
+        </output>
         <output name="Water" label="Stop"/>
         <output name="Dimming"/>
         <output name="Mute"/>
         <output name="Injector"/>
-        <output name="Brake" label="Squeal"/>
+        <output name="Brake" label="Squeal">
+           <label xml:lang="it">Stridio Freni</label>
+        </output>
         <output name="Coupler"/>
       </model>
       <model model="TSU-750 Heavy Steam" numOuts="2" numFns="14" connector="other" productID="826003" comment="Model 826003">
         <versionCV lowVersionID="64"/>
-        <output name="FX5" label=" Rule 17"/>
-        <output name="FX6" label="Mode"/>        
+        <output name="FX5" label=" Rule 17">
+          <label xml:lang="it">Regola 17</label>
+        </output>
+        <output name="FX6" label="Mode">
+          <label xml:lang="it">Modo</label>
+        </output>
         <output name="Whistle"/>
         <output name="Bell"/>
         <output name="Dynamo"/>
-        <output name="Short" label="Whistle"/>
-        <output name="Steam" label="Release"/>
+        <output name="Short" label="Whistle">
+           <label xml:lang="it">Fischio corto</label>
+        </output>
+        <output name="Steam" label="Release">
+           <label xml:lang="it">Rilascio Vap</label>
+        </output>
         <output name="Water" label="Stop"/>
         <output name="Dimming"/>
         <output name="Mute"/>
         <output name="Injector"/>
-        <output name="Brake" label="Squeal"/>
+        <output name="Brake" label="Squeal">
+           <label xml:lang="it">Stridio Freni</label>
+        </output>
         <output name="Coupler"/>
       </model>
       <model model="TSU-750 Lt Logging Steam" numOuts="2" numFns="14" connector="other" productID="826020" comment="Model 826020">
         <versionCV lowVersionID="64"/>
-        <output name="FX5" label=" Rule 17"/>
-        <output name="FX6" label="Mode"/>        
+        <output name="FX5" label=" Rule 17">
+          <label xml:lang="it">Regola 17</label>
+        </output>
+        <output name="FX6" label="Mode">
+          <label xml:lang="it">Modo</label>
+        </output>
         <output name="Whistle"/>
         <output name="Bell"/>
         <output name="Dynamo"/>
-        <output name="Short" label="Whistle"/>
-        <output name="Steam" label="Release"/>
+        <output name="Short" label="Whistle">
+           <label xml:lang="it">Fischio corto</label>
+        </output>
+        <output name="Steam" label="Release">
+           <label xml:lang="it">Rilascio Vap</label>
+        </output>
         <output name="Water" label="Stop"/>
         <output name="Dimming"/>
         <output name="Mute"/>
         <output name="Injector"/>
-        <output name="Brake" label="Squeal"/>
+        <output name="Brake" label="Squeal">
+           <label xml:lang="it">Stridio Freni</label>
+        </output>
         <output name="Coupler"/>
       </model>
       <model model="TSU-750 DRGW C-Class Steam" numOuts="2" numFns="14" connector="other" productID="826016" comment="Model 826016">
         <versionCV lowVersionID="64"/>
-        <output name="FX5" label=" Rule 17"/>
-        <output name="FX6" label="Mode"/>        
+        <output name="FX5" label=" Rule 17">
+          <label xml:lang="it">Regola 17</label>
+        </output>
+        <output name="FX6" label="Mode">
+          <label xml:lang="it">Modo</label>
+        </output>
         <output name="Whistle"/>
         <output name="Bell"/>
         <output name="Dynamo"/>
-        <output name="Short" label="Whistle"/>
-        <output name="Steam" label="Release"/>
+        <output name="Short" label="Whistle">
+           <label xml:lang="it">Fischio corto</label>
+        </output>
+        <output name="Steam" label="Release">
+           <label xml:lang="it">Rilascio Vap</label>
+        </output>
         <output name="Water" label="Stop"/>
         <output name="Dimming"/>
         <output name="Mute"/>
         <output name="Injector"/>
-        <output name="Brake" label="Squeal"/>
+        <output name="Brake" label="Squeal">
+           <label xml:lang="it">Stridio Freni</label>
+        </output>
         <output name="Coupler"/>
       </model>
       <model model="TSU-750 DRGW K-Class Steam" numOuts="2" numFns="14" connector="other" productID="826004" comment="Model 826004">
         <versionCV lowVersionID="64"/>
-        <output name="FX5" label=" Rule 17"/>
-        <output name="FX6" label="Mode"/>        
+        <output name="FX5" label=" Rule 17">
+          <label xml:lang="it">Regola 17</label>
+        </output>
+        <output name="FX6" label="Mode">
+          <label xml:lang="it">Modo</label>
+        </output>
         <output name="Whistle"/>
         <output name="Bell"/>
         <output name="Dynamo"/>
-        <output name="Short" label="Whistle"/>
-        <output name="Steam" label="Release"/>
+        <output name="Short" label="Whistle">
+           <label xml:lang="it">Fischio corto</label>
+        </output>
+        <output name="Steam" label="Release">
+           <label xml:lang="it">Rilascio Vap</label>
+        </output>
         <output name="Water" label="Stop"/>
         <output name="Dimming"/>
         <output name="Mute"/>
         <output name="Injector"/>
-        <output name="Brake" label="Squeal"/>
+        <output name="Brake" label="Squeal">
+           <label xml:lang="it">Stridio Freni</label>
+        </output>
         <output name="Coupler"/>
       </model>
       <model model="TSU-750 SP Cab Forward Steam" numOuts="2" numFns="14" connector="other" productID="826005" comment="Model 826005">
         <versionCV lowVersionID="64"/>
-        <output name="FX5" label=" Rule 17"/>
-        <output name="FX6" label="Mode"/>        
+        <output name="FX5" label=" Rule 17">
+          <label xml:lang="it">Regola 17</label>
+        </output>
+        <output name="FX6" label="Mode">
+          <label xml:lang="it">Modo</label>
+        </output>
         <output name="Whistle"/>
         <output name="Bell"/>
         <output name="Dynamo"/>
-        <output name="Short" label="Whistle"/>
-        <output name="Steam" label="Release"/>
+        <output name="Short" label="Whistle">
+           <label xml:lang="it">Fischio corto</label>
+        </output>
+        <output name="Steam" label="Release">
+           <label xml:lang="it">Rilascio Vap</label>
+        </output>
         <output name="Water" label="Stop"/>
         <output name="Dimming"/>
         <output name="Mute"/>
         <output name="Injector"/>
-        <output name="Brake" label="Squeal"/>
+        <output name="Brake" label="Squeal">
+           <label xml:lang="it">Stridio Freni</label>
+        </output>
         <output name="Coupler"/>
       </model>
       <model model="TSU-1000 Light Steam" numOuts="4" numFns="14" connector="other" productID="826101" comment="Model 826101">
@@ -158,13 +228,19 @@
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
         <output name="Dynamo"/>
-        <output name="Short" label="Whistle"/>
-        <output name="Steam" label="Release"/>
+        <output name="Short" label="Whistle">
+           <label xml:lang="it">Fischio corto</label>
+        </output>
+        <output name="Steam" label="Release">
+           <label xml:lang="it">Rilascio Vap</label>
+        </output>
         <output name="Water" label="Stop"/>
         <output name="Dimming"/>
         <output name="Mute"/>
         <output name="Injector"/>
-        <output name="Brake" label="Squeal"/>
+        <output name="Brake" label="Squeal">
+           <label xml:lang="it">Stridio Freni</label>
+        </output>
         <output name="Coupler"/>
       </model>
       <model model="TSU-1000 Medium Steam" numOuts="4" numFns="14" connector="other" productID="826102" comment="Model 826102">
@@ -174,13 +250,19 @@
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
         <output name="Dynamo"/>
-        <output name="Short" label="Whistle"/>
-        <output name="Steam" label="Release"/>
+        <output name="Short" label="Whistle">
+           <label xml:lang="it">Fischio corto</label>
+        </output>
+       <output name="Steam" label="Release">
+           <label xml:lang="it">Rilascio Vap</label>
+        </output>
         <output name="Water" label="Stop"/>
         <output name="Dimming"/>
         <output name="Mute"/>
         <output name="Injector"/>
-        <output name="Brake" label="Squeal"/>
+        <output name="Brake" label="Squeal">
+           <label xml:lang="it">Stridio Freni</label>
+        </output>
         <output name="Coupler"/>
       </model>
       <model model="TSU-1000 Heavy Steam" numOuts="4" numFns="14" connector="other" productID="826103" comment="Model 826103">
@@ -190,13 +272,19 @@
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
         <output name="Dynamo"/>
-        <output name="Short" label="Whistle"/>
-        <output name="Steam" label="Release"/>
+        <output name="Short" label="Whistle">
+           <label xml:lang="it">Fischio corto</label>
+        </output>
+        <output name="Steam" label="Release">
+           <label xml:lang="it">Rilascio Vap</label>
+        </output>
         <output name="Water" label="Stop"/>
         <output name="Dimming"/>
         <output name="Mute"/>
         <output name="Injector"/>
-        <output name="Brake" label="Squeal"/>
+        <output name="Brake" label="Squeal">
+           <label xml:lang="it">Stridio Freni</label>
+        </output>
         <output name="Coupler"/>
       </model>
       <model model="TSU-1000 Lt Logging Steam" numOuts="4" numFns="14" connector="other" productID="826120" comment="Model 826120">
@@ -206,13 +294,19 @@
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
         <output name="Dynamo"/>
-        <output name="Short" label="Whistle"/>
-        <output name="Steam" label="Release"/>
+        <output name="Short" label="Whistle">
+           <label xml:lang="it">Fischio corto</label>
+        </output>
+       <output name="Steam" label="Release">
+           <label xml:lang="it">Rilascio Vap</label>
+        </output>
         <output name="Water" label="Stop"/>
         <output name="Dimming"/>
         <output name="Mute"/>
         <output name="Injector"/>
-        <output name="Brake" label="Squeal"/>
+        <output name="Brake" label="Squeal">
+           <label xml:lang="it">Stridio Freni</label>
+        </output>
         <output name="Coupler"/>
       </model>
       <model model="TSU-1000 DRGW C-Class Steam" numOuts="4" numFns="14" connector="other" productID="826116" comment="Model 826116">
@@ -222,13 +316,19 @@
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
         <output name="Dynamo"/>
-        <output name="Short" label="Whistle"/>
-        <output name="Steam" label="Release"/>
+        <output name="Short" label="Whistle">
+           <label xml:lang="it">Fischio corto</label>
+        </output>
+        <output name="Steam" label="Release">
+           <label xml:lang="it">Rilascio Vap</label>
+        </output>
         <output name="Water" label="Stop"/>
         <output name="Dimming"/>
         <output name="Mute"/>
         <output name="Injector"/>
-        <output name="Brake" label="Squeal"/>
+        <output name="Brake" label="Squeal">
+           <label xml:lang="it">Stridio Freni</label>
+        </output>
         <output name="Coupler"/>
       </model>
       <model model="TSU-1000 DRGW K-Class Steam" numOuts="4" numFns="14" connector="other" productID="826104" comment="Model 826104">
@@ -238,13 +338,19 @@
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
         <output name="Dynamo"/>
-        <output name="Short" label="Whistle"/>
-        <output name="Steam" label="Release"/>
+        <output name="Short" label="Whistle">
+           <label xml:lang="it">Fischio corto</label>
+        </output>
+       <output name="Steam" label="Release">
+           <label xml:lang="it">Rilascio Vap</label>
+        </output>
         <output name="Water" label="Stop"/>
         <output name="Dimming"/>
         <output name="Mute"/>
         <output name="Injector"/>
-        <output name="Brake" label="Squeal"/>
+        <output name="Brake" label="Squeal">
+           <label xml:lang="it">Stridio Freni</label>
+        </output>
         <output name="Coupler"/>
       </model>
       <model model="TSU-1000 SP Cab Forward Steam" numOuts="4" numFns="14" connector="other" productID="826105" comment="Model 826105">
@@ -254,13 +360,19 @@
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
         <output name="Dynamo"/>
-        <output name="Short" label="Whistle"/>
-        <output name="Steam" label="Release"/>
+        <output name="Short" label="Whistle">
+           <label xml:lang="it">Fischio corto</label>
+        </output>
+        <output name="Steam" label="Release">
+           <label xml:lang="it">Rilascio Vap</label>
+        </output>
         <output name="Water" label="Stop"/>
         <output name="Dimming"/>
         <output name="Mute"/>
         <output name="Injector"/>
-        <output name="Brake" label="Squeal"/>
+       <output name="Brake" label="Squeal">
+           <label xml:lang="it">Stridio Freni</label>
+        </output>
         <output name="Coupler"/>
       </model>
       <model model="TSU-1000 Southern Steam" numOuts="4" numFns="14" connector="other" productID="826121" comment="Model 826121">
@@ -270,13 +382,19 @@
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
         <output name="Dynamo"/>
-        <output name="Short" label="Whistle"/>
-        <output name="Steam" label="Release"/>
+        <output name="Short" label="Whistle">
+           <label xml:lang="it">Fischio corto</label>
+        </output>
+        <output name="Steam" label="Release">
+           <label xml:lang="it">Rilascio Vap</label>
+        </output>
         <output name="Water" label="Stop"/>
         <output name="Dimming"/>
         <output name="Mute"/>
         <output name="Injector"/>
-        <output name="Brake" label="Squeal"/>
+        <output name="Brake" label="Squeal">
+           <label xml:lang="it">Stridio Freni</label>
+        </output>
         <output name="Coupler"/>
       </model>
       <model model="TSU-4664N Challenger" numOuts="4" numFns="14" connector="other" productID="826601" comment="Model 826601">
@@ -286,13 +404,19 @@
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
         <output name="Dynamo"/>
-        <output name="Short" label="Whistle"/>
-        <output name="Steam" label="Release"/>
+        <output name="Short" label="Whistle">
+           <label xml:lang="it">Fischio corto</label>
+        </output>
+        <output name="Steam" label="Release">
+           <label xml:lang="it">Rilascio Vap</label>
+        </output>
         <output name="Water" label="Stop"/>
         <output name="Dimming"/>
         <output name="Mute"/>
         <output name="Injector"/>
-        <output name="Brake" label="Squeal"/>
+        <output name="Brake" label="Squeal">
+           <label xml:lang="it">Stridio Freni</label>
+        </output>
         <output name="Coupler"/>
       </model>
       <functionlabels>
@@ -337,14 +461,7 @@
         <label xml:lang="fr">Décélération (1-255)</label>
         <label xml:lang="de">Bremszeit (1-255)</label>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version" tooltip="This is the decoder software version identifier (read only)">
-        <decVal/>
-        <label>Manufacturer Version ID</label>
-      </variable>
-      <variable CV="8" readOnly="yes" item="Manufacturer">
-        <decVal/>
-        <label>Manufacturer ID</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <variable CV="10" item="EMF Feedback Cutout" default="0" tooltip="&lt;html&gt;Up to 127, this sets the speed step above which the intensity of BEMF control will be reduced&lt;br&gt;      to zero.  Values over 127 cause the BEMF to decrease as a percentage (up to 50%).&lt;/html&gt;">
         <decVal/>
         <label>BEMF Cutout (0-127 or 128-255)</label>
@@ -422,16 +539,7 @@
         <label>CV Lock ID Code (0-7)</label>
       </variable>
       <!-- Consisting Information follows -->
-      <variable CV="19" mask="XVVVVVVV" item="Consist Address" default="0" comment="Stores consist address. Range 0-127 (direction set in bit 7)">
-        <decVal max="127"/>
-        <label>Consist Address (0-127)</label>
-        <comment>Stores consist address. Range 0-127 (direction set in bit 7)</comment>
-      </variable>
-      <variable CV="19" mask="VXXXXXXX" item="Consist Direction" default="0" comment="A consist address over 127 will also set this bit">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
-        <label>Loco Direction In Consist</label>
-        <comment>A consist address over 127 will also set this bit</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <variable CV="21" mask="XXXXXXXV" item="Consist Address Active For F1" default="0" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Activation for F1</label>
@@ -1399,14 +1507,7 @@
         <decVal/>
         <label>Reverse Trim (0-255)</label>
       </variable>
-      <variable CV="105" item="User Id #1" tooltip="&lt;html&gt;Use to set a custom user ID or number.  Note: when&lt;br&gt;      the decoder is reset to default values, this CV is&lt;br&gt;      preset to the softwares minor revision code.&lt;/html&gt;">
-        <decVal/>
-        <label>User Identifier #1 (0-255)</label>
-      </variable>
-      <variable CV="106" item="User Id #2" tooltip="&lt;html&gt;Use to set a custom user ID or number.  Note: when&lt;br&gt;      the decoder is reset to default values, this CV is&lt;br&gt;      preset to the softwares default CV value configuration.&lt;/html&gt;">
-        <decVal/>
-        <label>User Identifier #2 (0-255)</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <variable CV="112" mask="XXXXXXXV" item="Sound Option 1" default="0" tooltip="Choose whether the locomotive has one or two air pumps">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumAirPump.xml"/>
         <label>Air Pump 2 Enable</label>

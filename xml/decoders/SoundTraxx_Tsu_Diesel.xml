@@ -75,13 +75,21 @@
     <family name="Tsunami Diesel" mfg="Throttle-Up (SoundTraxx)" comment="These are the -retail- version Tsunami diesel decoders">
       <model model="TSU-750 Alco 244" numOuts="2" numFns="14" connector="other" productID="827004" comment="Model 827004">
         <versionCV lowVersionID="64"/>
-        <output name="FX5" label=" Rule 17"/>
-        <output name="FX6" label="Mode"/>		
+        <output name="FX5" label=" Rule 17">
+          <label xml:lang="it">Regola 17</label>
+        </output>
+        <output name="FX6" label="Mode">
+          <label xml:lang="it">Modo</label>
+        </output>
         <output name="Air Horn"/>
         <output name="Bell"/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+          <label xml:lang="it">Tromba</label>
+        </output>
+	      <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -91,13 +99,21 @@
       </model>
       <model model="TSU-750 Alco 539 (Non-Turbo)" numOuts="2" numFns="14" connector="other" productID="827011" comment="Model 827011">
         <versionCV lowVersionID="64"/>
-        <output name="FX5" label=" Rule 17"/>
-        <output name="FX6" label="Mode"/>		
+        <output name="FX5" label=" Rule 17">
+          <label xml:lang="it">Regola 17</label>
+        </output>
+        <output name="FX6" label="Mode">
+          <label xml:lang="it">Modo</label>
+        </output>
         <output name="Air Horn"/>
         <output name="Bell"/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+           <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+          <label xml:lang="it">Tromba</label>
+        </output>
+	      <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -107,13 +123,21 @@
       </model>
       <model model="TSU-750 Alco 539 (Turbo)" numOuts="2" numFns="14" connector="other" productID="827012" comment="Model 827012">
         <versionCV lowVersionID="64"/>
-        <output name="FX5" label=" Rule 17"/>
-        <output name="FX6" label="Mode"/>		
+        <output name="FX5" label=" Rule 17">
+          <label xml:lang="it">Regola 17</label>
+        </output>
+        <output name="FX6" label="Mode">
+          <label xml:lang="it">Modo</label>
+        </output>
         <output name="Air Horn"/>
         <output name="Bell"/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+           <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+          <label xml:lang="it">Tromba</label>
+        </output>
+	      <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -123,13 +147,21 @@
       </model>
       <model model="TSU-750 EMD 567" numOuts="2" numFns="14" connector="other" productID="827001" comment="Model 827001">
         <versionCV lowVersionID="64"/>
-        <output name="FX5" label=" Rule 17"/>
-        <output name="FX6" label="Mode"/>		
+        <output name="FX5" label=" Rule 17">
+          <label xml:lang="it">Regola 17</label>
+        </output>
+        <output name="FX6" label="Mode">
+          <label xml:lang="it">Modo</label>
+        </output>
         <output name="Air Horn"/>
         <output name="Bell"/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+           <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+          <label xml:lang="it">Tromba</label>
+        </output>
+	      <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -139,13 +171,21 @@
       </model>
       <model model="TSU-750 EMD 567 (Dual Motors)" numOuts="2" numFns="14" connector="other" productID="827018" comment="Model 827018">
         <versionCV lowVersionID="64"/>
-        <output name="FX5" label=" Rule 17"/>
-        <output name="FX6" label="Mode"/>		
+        <output name="FX5" label=" Rule 17">
+          <label xml:lang="it">Regola 17</label>
+        </output>
+        <output name="FX6" label="Mode">
+          <label xml:lang="it">Modo</label>
+        </output>
         <output name="Air Horn"/>
         <output name="Bell"/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+           <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+          <label xml:lang="it">Tromba</label>
+        </output>
+	      <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -155,13 +195,21 @@
       </model>
       <model model="TSU-750 EMD 645 (Turbo)" numOuts="2" numFns="14" connector="other" productID="827002" comment="Model 827002">
         <versionCV lowVersionID="64"/>
-        <output name="FX5" label=" Rule 17"/>
-        <output name="FX6" label="Mode"/>		
+        <output name="FX5" label=" Rule 17">
+          <label xml:lang="it">Regola 17</label>
+        </output>
+        <output name="FX6" label="Mode">
+          <label xml:lang="it">Modo</label>
+        </output>
         <output name="Air Horn"/>
         <output name="Bell"/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+	      <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -171,13 +219,21 @@
       </model>
       <model model="TSU-750 EMD 710" numOuts="2" numFns="14" connector="other" productID="827003" comment="Model 827003">
         <versionCV lowVersionID="64"/>
-        <output name="FX5" label=" Rule 17"/>
-        <output name="FX6" label="Mode"/>		
+        <output name="FX5" label=" Rule 17">
+          <label xml:lang="it">Regola 17</label>
+        </output>
+        <output name="FX6" label="Mode">
+          <label xml:lang="it">Modo</label>
+        </output>
         <output name="Air Horn"/>
         <output name="Bell"/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+	      <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -187,13 +243,21 @@
       </model>
       <model model="TSU-750 Fairbanks-Morse H-12" numOuts="2" numFns="14" connector="other" productID="827008" comment="Model 827008">
         <versionCV lowVersionID="64"/>
-        <output name="FX5" label=" Rule 17"/>
-        <output name="FX6" label="Mode"/>		
+        <output name="FX5" label=" Rule 17">
+          <label xml:lang="it">Regola 17</label>
+        </output>
+        <output name="FX6" label="Mode">
+          <label xml:lang="it">Modo</label>
+        </output>
         <output name="Air Horn"/>
         <output name="Bell"/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+         <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -203,13 +267,21 @@
       </model>
       <model model="TSU-750 Galloping Goose" numOuts="2" numFns="14" connector="other" productID="827010" comment="Model 827010">
         <versionCV lowVersionID="64"/>
-        <output name="FX5" label=" Rule 17"/>
-        <output name="FX6" label="Mode"/>		
+        <output name="FX5" label=" Rule 17">
+          <label xml:lang="it">Regola 17</label>
+        </output>
+        <output name="FX6" label="Mode">
+          <label xml:lang="it">Modo</label>
+        </output>
         <output name="Air Horn"/>
         <output name="Bell"/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+         <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -219,13 +291,21 @@
       </model>
       <model model="TSU-750 GE Cummins" numOuts="2" numFns="14" connector="other" productID="827014" comment="Model 827014">
         <versionCV lowVersionID="64"/>
-        <output name="FX5" label=" Rule 17"/>
-        <output name="FX6" label="Mode"/>		
+        <output name="FX5" label=" Rule 17">
+          <label xml:lang="it">Regola 17</label>
+        </output>
+        <output name="FX6" label="Mode">
+          <label xml:lang="it">Modo</label>
+        </output>
         <output name="Air Horn"/>
         <output name="Bell"/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+         <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -235,17 +315,29 @@
       </model>
       <model model="TSU-750 UP Gas Turbine" numOuts="2" numFns="14" connector="other" productID="827015" comment="Model 827015">
         <versionCV lowVersionID="64"/>
-        <output name="FX5" label=" Rule 17"/>
-        <output name="FX6" label="Mode"/>		
+        <output name="FX5" label=" Rule 17">
+           <label xml:lang="it">Regola 17</label>
+        </output>
+        <output name="FX6" label="Mode">
+          <label xml:lang="it">Modo</label>
+        </output>
         <output name="Air Horn"/>
         <output name="Bell"/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
-        <output name="Fans" label="Turbine On"/>
+        <output name="Dynamic" label="Brakes">
+         <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
+        <output name="Fans" label="Turbine On">
+         <label xml:lang="it">Turbine On</label>
+        </output>
         <output name="Dimming"/>
         <output name="Mute"/>
-        <output name="Compressor" label="Turbine Off"/>
+        <output name="Compressor" label="Turbine Off">
+         <label xml:lang="it">Turbine Off</label>
+        </output>
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
@@ -255,9 +347,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+         <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -271,9 +367,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+         <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -287,9 +387,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+         <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -303,9 +407,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+         <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+	      <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -319,9 +427,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+         <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -335,9 +447,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+         <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -351,9 +467,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+         <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -367,9 +487,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+         <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -383,9 +507,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+         <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -399,9 +527,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+         <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -415,9 +547,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+         <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -431,9 +567,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+         <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -447,9 +587,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+         <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -463,9 +607,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+         <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -479,9 +627,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -495,9 +647,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -511,9 +667,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -527,9 +687,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -543,9 +707,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -559,9 +727,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>		
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>		
         <output name="Fans" label="Turbine On"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -575,9 +747,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -591,9 +767,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -607,9 +787,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -623,9 +807,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -639,9 +827,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -655,9 +847,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -671,9 +867,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -687,9 +887,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -703,9 +907,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -719,9 +927,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -735,9 +947,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -751,9 +967,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -767,9 +987,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -783,9 +1007,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -799,9 +1027,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -815,9 +1047,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -831,9 +1067,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -847,9 +1087,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+       <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -863,9 +1107,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -879,9 +1127,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -895,9 +1147,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -911,9 +1167,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -927,9 +1187,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -943,9 +1207,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -959,9 +1227,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+         <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -975,9 +1247,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+         <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -990,8 +1266,10 @@
         <output name="Air Horn"/>
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
-        <output name="4" label="  FX6  "/>        
-        <output name="Dynamic" label="Brakes"/>
+        <output name="4" label="  FX6  "/>
+         <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
         <output name="Short" label="Horn"/>
 	<output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
@@ -1007,9 +1285,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+         <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -1023,9 +1305,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+         <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -1039,9 +1325,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+         <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -1055,9 +1345,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+         <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -1071,9 +1365,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+         <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -1087,9 +1385,13 @@
         <output name="Bell"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
-        <output name="Dynamic" label="Brakes"/>
-        <output name="Short" label="Horn"/>
-	<output name="Reserved"/>
+         <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
         <output name="Fans" label="RPM +"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -1138,14 +1440,7 @@
         <label xml:lang="fr">Décélération (1-255)</label>
         <label xml:lang="de">Bremszeit (1-255)</label>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version" tooltip="This is the decoder software version identifier">
-        <decVal/>
-        <label>Manufacturer Version ID</label>
-      </variable>
-      <variable CV="8" readOnly="yes" item="Manufacturer">
-        <decVal/>
-        <label>Manufacturer ID</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <variable CV="10" item="EMF Feedback Cutout" default="0" tooltip="&lt;html&gt;Up to 127, this sets the speed step above which the intensity of BEMF control will be reduced&lt;br&gt;      to zero.  Values over 127 cause the BEMF to decrease as a percentage (up to 50%).&lt;/html&gt;">
         <decVal/>
         <label>BEMF Cutout (0-127 or 128-255)</label>
@@ -1223,16 +1518,7 @@
         <label>CV Lock ID Code (0-7)</label>
       </variable>
       <!-- Consisting Information follows -->
-      <variable CV="19" mask="XVVVVVVV" item="Consist Address" default="0" comment="Stores consist address. Range 0-127 (direction set in bit 7)">
-        <decVal max="127"/>
-        <label>Consist Address (0-127)</label>
-        <comment>Stores consist address. Range 0-127 (direction set in bit 7)</comment>
-      </variable>
-      <variable CV="19" mask="VXXXXXXX" item="Consist Direction" default="0" comment="A consist address over 127 will also set this bit">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
-        <label>Loco Direction In Consist</label>
-        <comment>A consist address over 127 will also set this bit</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <variable CV="21" mask="XXXXXXXV" item="Consist Address Active For F1" default="0" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Activation for F1</label>
@@ -2229,14 +2515,7 @@
         <decVal/>
         <label>Reverse Trim (0-255)</label>
       </variable>
-      <variable CV="105" item="User Id #1" tooltip="&lt;html&gt;Use to set a custom user ID or number.  Note: when&lt;br&gt;      the decoder is reset to default values, this CV is&lt;br&gt;      preset to the softwares minor revision code.&lt;/html&gt;">
-        <decVal/>
-        <label>User Identifier #1 (0-255)</label>
-      </variable>
-      <variable CV="106" item="User Id #2" tooltip="&lt;html&gt;Use to set a custom user ID or number.  Note: when&lt;br&gt;      the decoder is reset to default values, this CV is&lt;br&gt;      preset to the softwares default CV value configuration.&lt;/html&gt;">
-        <decVal/>
-        <label>User Identifier #2 (0-255)</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <variable CV="112" mask="XXXXXXXV" item="Sound Option 6" default="0" tooltip="If using manual engine notching, set to Automatic as [RPM-] will be using this function">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumManAuto.xml"/>
         <label>Auto Air Compressor Enable</label>

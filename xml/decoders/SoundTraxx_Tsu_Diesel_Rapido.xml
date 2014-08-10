@@ -34,33 +34,49 @@
         <versionCV lowVersionID="64"/>
         <output name="3" label="STR8-2-8"/>  <!-- FX5 -->
         <output name="4" label="Ditch Lites"/>  <!-- FX6 -->
-        <output name="Air Horn"/>            
+        <output name="Air Horn"/>
         <output name="Bell"/>
         <output name="Dynamics"/>
         <output name="N/A"/>
-        <output name="Number" label="Boards"/>              
-        <output name="Roof" label="Light"/>
+        <output name="Number" label="Boards">
+          <label xml:lang="it"># Boards</label>
+        </output>
+        <output name="Roof" label="Light">
+          <label xml:lang="it">Luci tetto</label>
+        </output> 
         <output name="Dimming"/>
         <output name="Mute"/>
-        <output name="Class" label="Light"/>
+        <output name="Class" label="Light">
+          <label xml:lang="it">Luci Classe</label>
+        </output> 
         <output name="Brakes"/>
-        <output name="Grade" label="Xing"/>
+        <output name="Grade" label="Xing">
+          <label xml:lang="it">Incrocio</label>
+        </output> 
       </model>
       <model model="FP9A - CP/VIA-The Canadian" numOuts="4" numFns="14" connector="9pin" productID="102" comment="CP-Canadian configuration">
         <versionCV lowVersionID="64"/>
         <output name="3" label="STR8-2-8"/>  <!-- FX5 -->
         <output name="4" label="Ditch Lites"/>  <!-- FX6 -->
-        <output name="Air Horn"/>            
+        <output name="Air Horn"/>
         <output name="Bell"/>
         <output name="Dynamics"/>
         <output name="N/A"/>
-        <output name="Number" label="Boards"/>              
-        <output name="Roof" label="Light"/>
+        <output name="Number" label="Boards">
+          <label xml:lang="it"># Boards</label>
+        </output>
+        <output name="Roof" label="Light">
+          <label xml:lang="it">Luci tetto</label>
+        </output> 
         <output name="Dimming"/>
         <output name="Mute"/>
-        <output name="Class" label="Light"/>
+        <output name="Class" label="Light">
+          <label xml:lang="it">Luci Classe</label>
+        </output> 
         <output name="Brakes"/>
-        <output name="Grade" label="Xing"/>
+        <output name="Grade" label="Xing">
+          <label xml:lang="it">Incrocio</label>
+        </output> 
       </model>
       <functionlabels>
         <functionlabel num="0" lockable="true">Headlight</functionlabel>
@@ -103,14 +119,7 @@
         <label xml:lang="fr">Décélération (1-255)</label>
         <label xml:lang="de">Bremszeit (1-255)</label>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version" tooltip="This is the decoder software version identifier (read only)">
-        <decVal/>
-        <label>Manufacturer Version ID</label>
-      </variable>
-      <variable CV="8" readOnly="yes" item="Manufacturer">
-        <decVal/>
-        <label>Manufacturer ID</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <variable CV="10" item="EMF Feedback Cutout" default="0" tooltip="&lt;html&gt;Up to 127, this sets the speed step above which the intensity of BEMF control will be reduced&lt;br&gt;      to zero.  Values over 127 cause the BEMF to decrease as a percentage (up to 50%).&lt;/html&gt;">
         <decVal/>
         <label>BEMF Cutout (0-127 or 128-255)</label>
@@ -157,16 +166,7 @@
         <label>CV Lock ID Code (0-7)</label>
       </variable>
       <!-- Consisting Information follows -->
-      <variable CV="19" mask="XVVVVVVV" item="Consist Address" default="0" comment="Stores consist address. Range 0-127 (direction set in bit 7)">
-        <decVal max="127"/>
-        <label>Consist Address (0-127)</label>
-        <comment>Stores consist address. Range 0-127 (direction set in bit 7)</comment>
-      </variable>
-      <variable CV="19" mask="VXXXXXXX" item="Consist Direction" default="0" comment="A consist address over 127 will also set this bit">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
-        <label>Loco Direction In Consist</label>
-        <comment>A consist address over 127 will also set this bit</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <variable CV="21" mask="XXXXXXXV" item="Consist Address Active For F1" default="0" minFn="1" include="101">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Activation for F1</label>
@@ -1077,14 +1077,7 @@
         <decVal/>
         <label>Reverse Trim (0-255)</label>
       </variable>
-      <variable CV="105" item="User Id #1" default="15" tooltip="&lt;html&gt;Use to set a custom user ID or number.  Note: when&lt;br&gt;      the decoder is reset to default values, this CV is&lt;br&gt;      preset to the softwares minor revision code.&lt;/html&gt;">
-        <decVal/>
-        <label>User Identifier #1 (0-255)</label>
-      </variable>
-      <variable CV="106" item="User Id #2" default="21" tooltip="&lt;html&gt;Use to set a custom user ID or number.  Note: when&lt;br&gt;      the decoder is reset to default values, this CV is&lt;br&gt;      preset to the softwares default CV value configuration.&lt;/html&gt;">
-        <decVal/>
-        <label>User Identifier #2 (0-255)</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <!--  The following CV has been disabled in this OEM decoder
 
       <variable label="Auto Air Compressor Enable" CV="112" mask="XXXXXXXV"
