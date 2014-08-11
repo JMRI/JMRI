@@ -12,7 +12,6 @@ import static jmri.jmris.json.JSON.NAME;
 import static jmri.jmris.json.JSON.ROSTER;
 import static jmri.jmris.json.JSON.TYPE;
 import jmri.jmrit.roster.Roster;
-import jmri.jmrit.roster.RosterEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,11 +55,7 @@ public class JsonRosterServer {
         public void propertyChange(PropertyChangeEvent evt) {
             ObjectNode root = mapper.createObjectNode().put(TYPE, ROSTER);
             try {
-                // two events not explicitly handled: REMOVE (remove entry), CHANGE (entry id changed)
-                if (evt.getPropertyName().equals(Roster.ADD)) {
-                    connection.sendMessage(mapper.writeValueAsString(JsonUtil.getRosterEntry(connection.getLocale(),
-                            ((RosterEntry) evt.getNewValue()).getId())));
-                } else if (evt.getPropertyName().equals(Roster.ROSTER_GROUP_ADDED)
+                if (evt.getPropertyName().equals(Roster.ROSTER_GROUP_ADDED)
                         || evt.getPropertyName().equals(Roster.ROSTER_GROUP_REMOVED)
                         || evt.getPropertyName().equals(Roster.ROSTER_GROUP_RENAMED)) {
                     connection.sendMessage(mapper.writeValueAsString(JsonUtil.getRosterGroups(connection.getLocale())));
