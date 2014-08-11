@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="/xml/XSLT/DecoderID.xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 20140803-1110-Ba on Sun Aug 03 13:10:46 CEST 2014 $Id$-->
-  <decoderIndex version="424">
-    <mfgList nmraListDate="2012-12-05" updated="2013-04-11" lastadd="106">
+  <!--Written by JMRI version 20140811-1529-jake on Mon Aug 11 08:29:05 PDT 2014 $Id$-->
+  <decoderIndex version="429">
+    <mfgList nmraListDate="2014-06-04" updated="2014-08-11" lastadd="107">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
       <manufacturer mfg="AMW" mfgID="19" />
@@ -23,7 +23,7 @@
       <manufacturer mfg="CT Elektronik" mfgID="117" />
       <manufacturer mfg="CVP Products" mfgID="135" />
       <manufacturer mfg="Capecom" mfgID="47" />
-      <manufacturer mfg="Computer Dialysis France" mfgID="123" />
+      <manufacturer mfg="Computer Dialysis France" mfgID="105" />
       <manufacturer mfg="Con-Com GmbH" mfgID="204" />
       <manufacturer mfg="DCC Supplies, Ltd" mfgID="51" />
       <manufacturer mfg="DCCconcepts" mfgID="36" />
@@ -89,9 +89,11 @@
       <manufacturer mfg="Ngineering" mfgID="43" />
       <manufacturer mfg="Noarail" mfgID="63" />
       <manufacturer mfg="North Coast Engineering" mfgID="11" />
+      <manufacturer mfg="Opherline1" mfgID="106" />
       <manufacturer mfg="PRICOM Design" mfgID="96" />
       <manufacturer mfg="PSI-Dynatrol" mfgID="14" />
       <manufacturer mfg="Passmann" mfgID="41" />
+      <manufacturer mfg="Phoenix Sound Systems, Inc." mfgID="107" />
       <manufacturer mfg="Pojezdy.EU" mfgID="89" />
       <manufacturer mfg="PpP Digital" mfgID="74" />
       <manufacturer mfg="ProfiLok Modellbahntechnik GmbH" mfgID="125" />
@@ -1530,19 +1532,39 @@
           <size length=".71" width="0.75" height="0.25" units="inches" />
         </model>
         <model model="SFX0416" numOuts="6" numFns="8" lowVersionID="16" highVersionID="16" formFactor="HO">
-          <output name="1" label="wht" connection="solder" />
-          <output name="2" label="yel" connection="solder" />
-          <output name="3" label="grn" connection="solder" />
-          <output name="4" label="vlt" connection="solder" />
+          <output name="1" label="wht" connection="solder">
+            <label xml:lang="it">"Bian"</label>
+          </output>
+          <output name="2" label="yel" connection="solder">
+            <label xml:lang="it">"Gial"</label>
+          </output>
+          <output name="3" label="grn" connection="solder">
+            <label xml:lang="it">"Verd"</label>
+          </output>
+          <output name="4" label="vlt" connection="solder">
+            <label xml:lang="it">"Viol"</label>
+          </output>
           <size length="1.2" width="0.41" height="0.18" units="inches" />
         </model>
         <model model="SFX064" numOuts="6" numFns="8" lowVersionID="16" highVersionID="16" formFactor="HO">
-          <output name="1" label="wht" connection="solder" />
-          <output name="2" label="yel" connection="solder" />
-          <output name="3" label="grn" connection="solder" />
-          <output name="4" label="vlt" connection="solder" />
-          <output name="5" label="org" connection="solder" />
-          <output name="6" label="gry" connection="solder" />
+          <output name="1" label="wht" connection="solder">
+            <label xml:lang="it">"Gial"</label>
+          </output>
+          <output name="2" label="yel" connection="solder">
+            <label xml:lang="it">"Gial"</label>
+          </output>
+          <output name="3" label="grn" connection="solder">
+            <label xml:lang="it">"Verd"</label>
+          </output>
+          <output name="4" label="vlt" connection="solder">
+            <label xml:lang="it">"Viol"</label>
+          </output>
+          <output name="5" label="org" connection="solder">
+            <label xml:lang="it">"Aran"</label>
+          </output>
+          <output name="6" label="gry" connection="solder">
+            <label xml:lang="it">"Grig"</label>
+          </output>
           <size length="1.22" width="0.66" height="0.25" units="inches" />
         </model>
       </family>
@@ -2575,8 +2597,12 @@
       </family>
       <family name="ESU LokPilot 3.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="0" highVersionID="255" file="ESU_LokPilot3.0.xml">
         <model model="LokPilot micro 3.0" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall">
-          <output name="1" label="Front light" maxcurrent="140 mA" connection="wire" />
-          <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire" />
+          <output name="1" label="Front light" maxcurrent="140 mA" connection="wire">
+            <label xml:lang="it">Luci Front</label>
+          </output>
+          <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire">
+            <label xml:lang="it">Luci Retro</label>
+          </output>
           <size length="13.5" width="9" height="3.0" units="mm" />
           <protocols>
             <protocol>dcc</protocol>
@@ -2585,13 +2611,21 @@
           </protocols>
         </model>
         <model model="LokPilot micro DCC 3.0" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall">
-          <output name="1" label="Front light" maxcurrent="140 mA" connection="wire" />
-          <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire" />
+          <output name="1" label="Front light" maxcurrent="140 mA" connection="wire">
+            <label xml:lang="it">Luci Front</label>
+          </output>
+          <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire">
+            <label xml:lang="it">Luci Retro</label>
+          </output>
           <size length="13.5" width="9" height="3.0" units="mm" />
         </model>
         <model model="LokPilot 3.0" maxInputVolts="40 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium">
-          <output name="1" label="Front light" maxcurrent="250 mA" connection="wire" />
-          <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire" />
+          <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
+            <label xml:lang="it">Luci Front</label>
+          </output>
+          <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
+            <label xml:lang="it">Luci Retro</label>
+          </output>
           <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
           <size length="23.5" width="15.5" height="5.5" units="mm" />
@@ -2602,15 +2636,23 @@
           </protocols>
         </model>
         <model model="LokPilot DCC 3.0" maxInputVolts="27 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium">
-          <output name="1" label="Front light" maxcurrent="250 mA" connection="wire" />
-          <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire" />
+          <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
+            <label xml:lang="it">Luci Front</label>
+          </output>
+          <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
+            <label xml:lang="it">Luci Retro</label>
+          </output>
           <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
           <size length="23.5" width="15.5" height="5.5" units="mm" />
         </model>
         <model model="LokPilot mfx 3.0" maxInputVolts="40 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium">
-          <output name="1" label="Front light" maxcurrent="250 mA" connection="wire" />
-          <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire" />
+          <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
+            <label xml:lang="it">Luci Front</label>
+          </output>
+          <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
+            <label xml:lang="it">Luci Retro</label>
+          </output>
           <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
           <size length="23.5" width="15.5" height="5.5" units="mm" />
@@ -2620,8 +2662,12 @@
           </protocols>
         </model>
         <model model="LokPilot XL 3.0" maxInputVolts="40 V" maxMotorCurrent="3.0 A" maxTotalCurrent="5.0 A" numOuts="8" numFns="17" formFactor="G" connector="other">
-          <output name="1" label="Front light" maxcurrent="600 mA" connection="other" />
-          <output name="2" label="Rear light " maxcurrent="600 mA" connection="other" />
+          <output name="1" label="Front light" maxcurrent="600 mA" connection="other">
+            <label xml:lang="it">Luci Front</label>
+          </output>
+          <output name="2" label="Rear light " maxcurrent="600 mA" connection="other">
+            <label xml:lang="it">Luci Retro</label>
+          </output>
           <output name="3" label="   AUX1    " maxcurrent="600 mA" connection="other" />
           <output name="4" label="   AUX2    " maxcurrent="600 mA" connection="other" />
           <output name="5" label="   AUX3    " maxcurrent="600 mA" connection="other" />
@@ -2635,8 +2681,12 @@
           </protocols>
         </model>
         <model model="LokPilot Fx 3.0" maxInputVolts="40 V" maxMotorCurrent="N/A" maxTotalCurrent="0.5 A" numOuts="6" numFns="14" formFactor="HO" connector="NMRAmedium">
-          <output name="1" label="Front light" maxcurrent="250 mA" connection="wire" />
-          <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire" />
+          <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
+            <label xml:lang="it">Luci Front</label>
+          </output>
+          <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
+            <label xml:lang="it">Luci Retro</label>
+          </output>
           <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
           <output name="5" label="   AUX3    " maxcurrent="250 mA" connection="wire" />
@@ -3310,26 +3360,46 @@
       <family name="NMRA-DCC/Motorola" mfg="Kuehn Ing." file="Kuehn_5Moto.xml">
         <model model="N025" numOuts="2" numFns="10" maxMotorCurrent="0.7 A" maxTotalCurrent="1 A">
           <versionCV lowVersionID="34" />
-          <output name="1" label="White" />
-          <output name="2" label="Yellow" />
+          <output name="1" label="White">
+            <label xml:lang="it">Bianco</label>
+          </output>
+          <output name="2" label="Yellow">
+            <label xml:lang="it">Giallo</label>
+          </output>
         </model>
         <model model="T125" numOuts="2" numFns="10" maxMotorCurrent="1.1 A" maxTotalCurrent="1.4 A">
           <versionCV lowVersionID="34" />
-          <output name="1" label="White" />
-          <output name="2" label="Yellow" />
+          <output name="1" label="White">
+            <label xml:lang="it">Bianco</label>
+          </output>
+          <output name="2" label="Yellow">
+            <label xml:lang="it">Giallo</label>
+          </output>
         </model>
         <model model="T145" numOuts="4" numFns="10" maxMotorCurrent="1.1 A" maxTotalCurrent="2.0 A">
           <versionCV lowVersionID="34" />
-          <output name="1" label="White" />
-          <output name="2" label="Yellow" />
-          <output name="3" label="Green" />
-          <output name="4" label="Violet" />
+          <output name="1" label="White">
+            <label xml:lang="it">Bianco</label>
+          </output>
+          <output name="2" label="Yellow">
+            <label xml:lang="it">Giallo</label>
+          </output>
+          <output name="3" label="Green">
+            <label xml:lang="it">Verde</label>
+          </output>
+          <output name="4" label="Violet">
+            <label xml:lang="it">Viola</label>
+          </output>
         </model>
       </family>
       <family name="ZTC WhisperDrive" mfg="Kuehn Ing." lowVersionID="0" highVersionID="255" file="Kuehn_ZTC217.xml">
         <model model="ZTC217" numOuts="2">
-          <output name="1" label="White" />
-          <output name="2" label="Yellow" />
+          <output name="1" label="White">
+            <label xml:lang="it">Bianco</label>
+          </output>
+          <output name="2" label="Yellow">
+            <label xml:lang="it">Giallo</label>
+          </output>
         </model>
       </family>
       <family name="Lenz 4th gen BEMF decoders" mfg="Lenz" lowVersionID="51" file="Lenz_51.xml">
@@ -6376,79 +6446,151 @@
       <family name="Bachmann Sound Value" mfg="Throttle-Up (SoundTraxx)" comment="Bachmann Standard line HO locomotives with SoundTraxx DSD that Bachmann refers to as Sound Value" file="SoundTraxx_Bachmann_SndVal_Dsl.xml">
         <model model="Alco FA2" numOuts="2" numFns="14" connector="other" productID="Alco_FA2" comment="Diesel Prime Mover Alco 244">
           <versionCV lowVersionID="82" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Air Horn" />
           <output name="Bell" />
-          <output name="#1 Not" label="Used" />
-          <output name="Short" label="Horn" />
-          <output name="#2 Not" label="Used" />
-          <output name="#3 Not" label="Used" />
+          <output name="#1 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="#2 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
+          <output name="#3 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
           <output name="Dimming" />
           <output name="Mute" />
         </model>
         <model model="Alco FB2" numOuts="2" numFns="14" connector="other" productID="Alco_FB2" comment="Diesel Prime Mover Alco 244">
           <versionCV lowVersionID="82" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Air Horn" />
           <output name="Bell" />
-          <output name="#1 Not" label="Used" />
-          <output name="Short" label="Horn" />
-          <output name="#2 Not" label="Used" />
-          <output name="#3 Not" label="Used" />
+          <output name="#1 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="#2 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
+          <output name="#3 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
           <output name="Dimming" />
           <output name="Mute" />
         </model>
         <model model="Alco RS3" numOuts="2" numFns="14" connector="other" productID="Alco_RS3" comment="Diesel Prime Mover Alco 244">
           <versionCV lowVersionID="82" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Air Horn" />
           <output name="Bell" />
-          <output name="#1 Not" label="Used" />
-          <output name="Short" label="Horn" />
-          <output name="#2 Not" label="Used" />
-          <output name="#3 Not" label="Used" />
+          <output name="#1 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="#2 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
+          <output name="#3 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
           <output name="Dimming" />
           <output name="Mute" />
         </model>
         <model model="Alco S2" numOuts="2" numFns="14" connector="other" productID="Alco_S2" comment="Diesel Prime Mover Alco 539 Turbo">
           <versionCV lowVersionID="82" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Air Horn" />
           <output name="Bell" />
-          <output name="#1 Not" label="Used" />
-          <output name="Short" label="Horn" />
-          <output name="#2 Not" label="Used" />
-          <output name="#3 Not" label="Used" />
+          <output name="#1 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="#2 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
+          <output name="#3 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
           <output name="Dimming" />
           <output name="Mute" />
         </model>
         <model model="Alco S4" numOuts="2" numFns="14" connector="other" productID="Alco_S4" comment="Diesel Prime Mover Alco 539 Turbo">
           <versionCV lowVersionID="82" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Air Horn" />
           <output name="Bell" />
-          <output name="#1 Not" label="Used" />
-          <output name="Short" label="Horn" />
-          <output name="#2 Not" label="Used" />
-          <output name="#3 Not" label="Used" />
+          <output name="#1 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="#2 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
+          <output name="#3 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
           <output name="Dimming" />
           <output name="Mute" />
         </model>
-        <model model="EMD DD40AX" numOuts="4" numFns="14" connector="other" productID="EMD_DD40AX" comment="Diesel Prime Mover 2 × EMD 645E3A">
+        <model model="EMD DD40AX" numOuts="4" numFns="14" connector="other" productID="EMD_DD40AX" comment="(N or HO scale) Diesel Prime Mover 2 × EMD 645E3A">
           <versionCV lowVersionID="82" />
-          <output name="3" label="Flashing" />
-          <output name="4" label="# Board" />
+          <output name="3" label="Flashing">
+            <label xml:lang="it">Flash</label>
+          </output>
+          <output name="4" label="# Board">
+            <label xml:lang="it"># Board</label>
+          </output>
           <output name="Air Horn" />
           <output name="Bell" />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
-          <output name="#2 Not" label="Used" />
-          <output name="#3 Not" label="Used" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni dinam</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="#2 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
+          <output name="#3 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
           <output name="Dimming" />
           <output name="Mute" />
           <functionlabels>
@@ -6459,73 +6601,158 @@
         </model>
         <model model="EMD F7A" numOuts="2" numFns="14" connector="other" productID="EMD_F7A" comment="Diesel Prime Mover EMD567 Non-Turbo">
           <versionCV lowVersionID="82" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Air Horn" />
           <output name="Bell" />
-          <output name="#1 Not" label="Used" />
+          <output name="#1 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
           <output name="Short" label="Horn" />
-          <output name="#2 Not" label="Used" />
-          <output name="#3 Not" label="Used" />
+          <output name="#2 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
+          <output name="#3 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
           <output name="Dimming" />
           <output name="Mute" />
         </model>
         <model model="EMD F7B" numOuts="2" numFns="14" connector="other" productID="EMD_F7B" comment="Diesel Prime Mover EMD567 Non-Turbo">
           <versionCV lowVersionID="82" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Air Horn" />
           <output name="Bell" />
-          <output name="#1 Not" label="Used" />
-          <output name="Short" label="Horn" />
-          <output name="#2 Not" label="Used" />
-          <output name="#3 Not" label="Used" />
+          <output name="#1 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="#2 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
+          <output name="#3 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
           <output name="Dimming" />
           <output name="Mute" />
         </model>
         <model model="EMD GP7" numOuts="2" numFns="14" connector="other" productID="EMD_GP7" comment="Diesel Prime Mover EMD567 Non-Turbo">
           <versionCV lowVersionID="82" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Air Horn" />
           <output name="Bell" />
-          <output name="#1 Not" label="Used" />
-          <output name="Short" label="Horn" />
-          <output name="#2 Not" label="Used" />
-          <output name="#3 Not" label="Used" />
+          <output name="#1 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="#2 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
+          <output name="#3 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
           <output name="Dimming" />
           <output name="Mute" />
         </model>
-        <model model="EMD SD70ACe" numOuts="2" numFns="14" connector="other" productID="EMD_SD70ACe" comment="Diesel Prime Mover EMD 16-710G3C-T2">
+        <model model="EMD SD70ACe" numOuts="2" numFns="14" connector="other" productID="EMD_SD70ACe" comment="Diesel Prime Mover EMD 16-710 G3C-T2">
           <versionCV lowVersionID="82" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Air Horn" />
           <output name="Bell" />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
-          <output name="#2 Not" label="Used" />
-          <output name="#3 Not" label="Used" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="#2 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
+          <output name="#3 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
           <output name="Dimming" />
           <output name="Mute" />
           <functionlabels>
             <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
           </functionlabels>
         </model>
-        <model model="GE ES44AC" numOuts="2" numFns="14" connector="other" productID="GE_ES44AC" comment="Diesel Prime Mover GEVO V12">
+        <model model="GE ES44AC" numOuts="2" numFns="14" connector="other" productID="GE_ES44AC" comment="Diesel Prime Mover GE GEVO V12">
           <versionCV lowVersionID="82" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Air Horn" />
           <output name="Bell" />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
-          <output name="#2 Not" label="Used" />
-          <output name="#3 Not" label="Used" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="#2 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
+          <output name="#3 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
           <output name="Dimming" />
           <output name="Mute" />
           <functionlabels>
             <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="GG1" numOuts="2" numFns="14" connector="other" productID="GG1" comment="GE-Altoona Electric">
+          <versionCV lowVersionID="82" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="Reserved" />
+          <output name="Fans" label="RPM +" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Compressor" label="RPM -" />
+          <functionlabels>
+            <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Fans</functionlabel>
+            <functionlabel num="6" lockable="true">Air Compressor</functionlabel>
           </functionlabels>
         </model>
         <functionlabels>
@@ -6540,16 +6767,32 @@
       <family name="Bachmann Sound Value" mfg="Throttle-Up (SoundTraxx)" comment="Bachmann Standard line HO locomotives with SoundTraxx DSD that Bachmann refers to as Sound Value" file="SoundTraxx_Bachmann_SndVal_Stm.xml">
         <model model="Alco 2-6-0" numOuts="2" numFns="14" connector="other" productID="Alco 2-6-0" comment="Model 2-6-0">
           <versionCV lowVersionID="82" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
-          <output name="#1 Not" label="Used" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
-          <output name="#2 Not" label="Used" />
-          <output name="Dimming" />
-          <output name="Mute" />
+          <output name="#1 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio</label>
+          </output>
+          <output name="#2 Not" label="Used">
+            <label xml:lang="it">Usato</label>
+          </output>
+          <output name="Dimming">
+            <label xml:lang="it">Smorzam</label>
+          </output>
+          <output name="Mute">
+            <label xml:lang="it">Silenzio</label>
+          </output>
         </model>
         <functionlabels>
           <functionlabel num="0" lockable="true">Headlight</functionlabel>
@@ -6569,8 +6812,12 @@
           <output name="Horn" />
           <output name="RPM+" />
           <output name="RPM-" />
-          <output name="3" label="F5/grn" />
-          <output name="4" label="F6/brwn" />
+          <output name="3" label="F5/grn">
+            <label xml:lang="it">F5-Verde</label>
+          </output>
+          <output name="4" label="F6/brwn">
+            <label xml:lang="it">F6-Marr</label>
+          </output>
           <output name="Coupler" />
           <output name="DynBrake" />
           <output name="Dim" />
@@ -6584,11 +6831,15 @@
           <versionCV lowVersionID="6" highVersionID="7" />
           <versionCV lowVersionID="15" highVersionID="16" />
           <versionCV lowVersionID="20" />
-          <output name="3" label="F1/grn" />
+          <output name="3" label="F1/grn">
+            <label xml:lang="it">F1-Verde</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Hiss" />
-          <output name="4" label="F5/brwn" />
+          <output name="4" label="F5/brwn">
+            <label xml:lang="it">F1-F5-Marr</label>
+          </output>
           <output name="Dynamo" />
           <output name="Coupler" />
           <output name="Mute" />
@@ -6706,8 +6957,12 @@
           <versionCV lowVersionID="37" />
           <output name="Horn" />
           <output name="Bell" />
-          <output name="3" label="FX1/grn" />
-          <output name="4" label="FX2/brwn" />
+          <output name="3" label="FX1/grn">
+            <label xml:lang="it">FX1-Verde</label>
+          </output>
+          <output name="4" label="FX2/brwn">
+            <label xml:lang="it">FX1-Marr</label>
+          </output>
           <output name="DynBrake" />
           <output name="RPM+" />
           <output name="RPM-" />
@@ -6791,24 +7046,36 @@
         <model model="MC1Z102P6" numOuts="2" numFns="14" connector="other" productID="851001">
           <versionCV lowVersionID="80" />
           <output name="Xing Logic" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Dimmer" />
           <output name="Brakes" />
         </model>
         <model model="MC1Z102SQ" numOuts="2" numFns="14" connector="other" productID="851002">
           <versionCV lowVersionID="80" />
           <output name="Xing Logic" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Dimmer" />
           <output name="Brakes" />
         </model>
         <model model="MC1H102P8" numOuts="2" numFns="14" connector="other" productID="852001">
           <versionCV lowVersionID="80" />
           <output name="Xing Logic" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Dimmer" />
           <output name="Brakes" />
         </model>
@@ -6933,8 +7200,12 @@
           <versionCV lowVersionID="38" />
           <output name="Bell" />
           <output name="Horn" />
-          <output name="3" label="NumberBd" />
-          <output name="4" label="Mars" />
+          <output name="3" label="#Board">
+            <label xml:lang="it">#Board</label>
+          </output>
+          <output name="4" label="Mars">
+            <label xml:lang="it">Mars</label>
+          </output>
           <output name="DynBrake" />
           <output name="RPM+" />
           <output name="RPM-" />
@@ -6947,10 +7218,18 @@
           <versionCV lowVersionID="40" />
           <output name="Bell" />
           <output name="Horn" />
-          <output name="3" label="NumberBd" />
-          <output name="4" label="Mars" />
-          <output name="5" label="RedClass" />
-          <output name="6" label="GreenClass" />
+          <output name="3" label="#Board">
+            <label xml:lang="it">#Board</label>
+          </output>
+          <output name="4" label="Mars">
+            <label xml:lang="it">Mars</label>
+          </output>
+          <output name="5" label="RedClass">
+            <label xml:lang="it">RedClass</label>
+          </output>
+          <output name="6" label="GreenClass">
+            <label xml:lang="it">GreenClass</label>
+          </output>
           <output name="DynBrake" />
           <output name="RPM+" />
           <output name="RPM-" />
@@ -6961,12 +7240,20 @@
       <family name="Tsunami Diesel" mfg="Throttle-Up (SoundTraxx)" comment="These are the -retail- version Tsunami diesel decoders" file="SoundTraxx_Tsu_Diesel.xml">
         <model model="TSU-750 Alco 244" numOuts="2" numFns="14" connector="other" productID="827004" comment="Model 827004">
           <versionCV lowVersionID="64" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Air Horn" />
           <output name="Bell" />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -6977,12 +7264,20 @@
         </model>
         <model model="TSU-750 Alco 539 (Non-Turbo)" numOuts="2" numFns="14" connector="other" productID="827011" comment="Model 827011">
           <versionCV lowVersionID="64" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Air Horn" />
           <output name="Bell" />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -6993,12 +7288,20 @@
         </model>
         <model model="TSU-750 Alco 539 (Turbo)" numOuts="2" numFns="14" connector="other" productID="827012" comment="Model 827012">
           <versionCV lowVersionID="64" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Air Horn" />
           <output name="Bell" />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7009,12 +7312,20 @@
         </model>
         <model model="TSU-750 EMD 567" numOuts="2" numFns="14" connector="other" productID="827001" comment="Model 827001">
           <versionCV lowVersionID="64" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Air Horn" />
           <output name="Bell" />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7025,12 +7336,20 @@
         </model>
         <model model="TSU-750 EMD 567 (Dual Motors)" numOuts="2" numFns="14" connector="other" productID="827018" comment="Model 827018">
           <versionCV lowVersionID="64" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Air Horn" />
           <output name="Bell" />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7041,12 +7360,20 @@
         </model>
         <model model="TSU-750 EMD 645 (Turbo)" numOuts="2" numFns="14" connector="other" productID="827002" comment="Model 827002">
           <versionCV lowVersionID="64" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Air Horn" />
           <output name="Bell" />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7057,12 +7384,20 @@
         </model>
         <model model="TSU-750 EMD 710" numOuts="2" numFns="14" connector="other" productID="827003" comment="Model 827003">
           <versionCV lowVersionID="64" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Air Horn" />
           <output name="Bell" />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7073,12 +7408,20 @@
         </model>
         <model model="TSU-750 Fairbanks-Morse H-12" numOuts="2" numFns="14" connector="other" productID="827008" comment="Model 827008">
           <versionCV lowVersionID="64" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Air Horn" />
           <output name="Bell" />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7089,12 +7432,20 @@
         </model>
         <model model="TSU-750 Galloping Goose" numOuts="2" numFns="14" connector="other" productID="827010" comment="Model 827010">
           <versionCV lowVersionID="64" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Air Horn" />
           <output name="Bell" />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7105,12 +7456,20 @@
         </model>
         <model model="TSU-750 GE Cummins" numOuts="2" numFns="14" connector="other" productID="827014" comment="Model 827014">
           <versionCV lowVersionID="64" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Air Horn" />
           <output name="Bell" />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7121,17 +7480,29 @@
         </model>
         <model model="TSU-750 UP Gas Turbine" numOuts="2" numFns="14" connector="other" productID="827015" comment="Model 827015">
           <versionCV lowVersionID="64" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Air Horn" />
           <output name="Bell" />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
-          <output name="Fans" label="Turbine On" />
+          <output name="Fans" label="Turbine On">
+            <label xml:lang="it">Turbine On</label>
+          </output>
           <output name="Dimming" />
           <output name="Mute" />
-          <output name="Compressor" label="Turbine Off" />
+          <output name="Compressor" label="Turbine Off">
+            <label xml:lang="it">Turbine Off</label>
+          </output>
           <output name="Brakes" />
           <output name="Coupler" />
         </model>
@@ -7141,8 +7512,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7157,8 +7532,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7173,8 +7552,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7189,8 +7572,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7205,8 +7592,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7221,8 +7612,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7237,8 +7632,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7253,8 +7652,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7269,8 +7672,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7285,8 +7692,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7301,8 +7712,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7317,8 +7732,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7333,8 +7752,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7349,8 +7772,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7365,8 +7792,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7381,8 +7812,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7397,8 +7832,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7413,8 +7852,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7429,8 +7872,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7445,8 +7892,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="Turbine On" />
           <output name="Dimming" />
@@ -7461,8 +7912,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7477,8 +7932,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7493,8 +7952,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7509,8 +7972,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7525,8 +7992,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7541,8 +8012,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7557,8 +8032,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7573,8 +8052,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7589,8 +8072,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7605,8 +8092,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7621,8 +8112,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7637,8 +8132,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7653,8 +8152,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7669,8 +8172,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7685,8 +8192,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7701,8 +8212,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7717,8 +8232,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7733,8 +8252,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7749,8 +8272,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7765,8 +8292,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7781,8 +8312,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7797,8 +8332,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7813,8 +8352,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7829,8 +8372,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7845,8 +8392,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7861,8 +8412,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7877,7 +8432,9 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
           <output name="Short" label="Horn" />
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
@@ -7893,8 +8450,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7909,8 +8470,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7925,8 +8490,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7941,8 +8510,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7957,8 +8530,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -7973,8 +8550,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8006,8 +8587,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8022,8 +8607,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8038,8 +8627,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8054,8 +8647,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8070,8 +8667,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8086,8 +8687,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8102,8 +8707,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8118,8 +8727,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8134,8 +8747,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8150,8 +8767,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8166,8 +8787,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8182,8 +8807,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8198,8 +8827,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8214,8 +8847,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8247,8 +8884,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8263,8 +8904,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8279,8 +8924,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8295,8 +8944,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8311,8 +8964,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8327,8 +8984,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8343,8 +9004,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8359,8 +9024,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8375,8 +9044,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8391,8 +9064,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8407,8 +9084,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8423,8 +9104,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8439,8 +9124,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8455,8 +9144,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8471,8 +9164,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8487,8 +9184,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8503,8 +9204,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8519,8 +9224,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8535,8 +9244,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8551,8 +9264,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8567,8 +9284,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8583,8 +9304,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8599,8 +9324,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8615,8 +9344,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8631,8 +9364,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8662,8 +9399,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8678,8 +9419,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8694,8 +9439,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8710,8 +9459,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8726,8 +9479,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8742,8 +9499,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8774,8 +9535,12 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8811,13 +9576,21 @@
           <output name="Bell" />
           <output name="Dynamics" />
           <output name="N/A" />
-          <output name="Number" label="Boards" />
-          <output name="Roof" label="Light" />
+          <output name="Number" label="Boards">
+            <label xml:lang="it"># Boards</label>
+          </output>
+          <output name="Roof" label="Light">
+            <label xml:lang="it">Luci tetto</label>
+          </output>
           <output name="Dimming" />
           <output name="Mute" />
-          <output name="Class" label="Light" />
+          <output name="Class" label="Light">
+            <label xml:lang="it">Luci Classe</label>
+          </output>
           <output name="Brakes" />
-          <output name="Grade" label="Xing" />
+          <output name="Grade" label="Xing">
+            <label xml:lang="it">Incrocio</label>
+          </output>
         </model>
         <model model="FP9A - CP/VIA-The Canadian" numOuts="4" numFns="14" connector="9pin" productID="102" comment="CP-Canadian configuration">
           <versionCV lowVersionID="64" />
@@ -8829,13 +9602,21 @@
           <output name="Bell" />
           <output name="Dynamics" />
           <output name="N/A" />
-          <output name="Number" label="Boards" />
-          <output name="Roof" label="Light" />
+          <output name="Number" label="Boards">
+            <label xml:lang="it"># Boards</label>
+          </output>
+          <output name="Roof" label="Light">
+            <label xml:lang="it">Luci tetto</label>
+          </output>
           <output name="Dimming" />
           <output name="Mute" />
-          <output name="Class" label="Light" />
+          <output name="Class" label="Light">
+            <label xml:lang="it">Luci Classe</label>
+          </output>
           <output name="Brakes" />
-          <output name="Grade" label="Xing" />
+          <output name="Grade" label="Xing">
+            <label xml:lang="it">Incrocio</label>
+          </output>
         </model>
         <functionlabels>
           <functionlabel num="0" lockable="true">Headlight</functionlabel>
@@ -8858,11 +9639,22 @@
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" label="N/A" />
-          <output name="3" label="# boards" />
-          <output name="4" label="Gyralite" />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
-          <output name="Interior" label="Light" />
+          <output name="3" label="# Boards">
+            <label xml:lang="it"># Boards</label>
+          </output>
+          <output name="4" label="Gyralite">
+            <label xml:lang="it">Gyralite</label>
+          </output>
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="Interior" label="Light">
+            <label xml:lang="it">Luci Interno</label>
+          </output>
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
           <output name="Mute" />
@@ -8891,8 +9683,13 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8911,8 +9708,13 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8931,8 +9733,13 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8951,8 +9758,13 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8971,8 +9783,13 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -8990,8 +9807,13 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -9010,8 +9832,13 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -9030,8 +9857,13 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -9049,8 +9881,13 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="FX5B" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -9068,8 +9905,13 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="FX5B" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -9087,8 +9929,13 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -9106,8 +9953,13 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="FX5B" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -9125,8 +9977,13 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -9144,8 +10001,13 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -9163,8 +10025,13 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -9183,8 +10050,13 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -9203,8 +10075,13 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="FX5B" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -9223,8 +10100,13 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Dynamic" label="Brakes" />
-          <output name="Short" label="Horn" />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Reserved" />
           <output name="Fans" label="RPM +" />
           <output name="Dimming" />
@@ -9254,12 +10136,16 @@
       <family name="Tsunami SoundCar" mfg="Throttle-Up (SoundTraxx)" comment="These are the -retail- version Tsunami SoundCar decoders" file="SoundTraxx_Tsu_SoundCar.xml">
         <model model="Tsunami SoundCar" numOuts="4" numFns="14" connector="9pin" productID="SoundCar" comment="Tsunami SoundCar Digital Sound Decoder">
           <versionCV lowVersionID="69" highVersionID="69" />
-          <output name="Airhorn" label="Whistle" />
+          <output name="Airhorn" label="Whistle">
+            <label xml:lang="it">Fischio</label>
+          </output>
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
           <output name="Res." />
-          <output name="Short" label="Horn" />
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
           <output name="Generator" />
           <output name="Res." />
           <output name="Dimming" />
@@ -9287,114 +10173,184 @@
       <family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)" comment="These are the -retail- version Tsunami steam decoders" file="SoundTraxx_Tsu_Steam.xml">
         <model model="TSU-750 Light Steam" numOuts="2" numFns="14" connector="other" productID="826001" comment="Model 826001">
           <versionCV lowVersionID="64" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="TSU-750 Medium Steam" numOuts="2" numFns="14" connector="other" productID="826002" comment="Model 826002">
           <versionCV lowVersionID="64" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="TSU-750 Heavy Steam" numOuts="2" numFns="14" connector="other" productID="826003" comment="Model 826003">
           <versionCV lowVersionID="64" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="TSU-750 Lt Logging Steam" numOuts="2" numFns="14" connector="other" productID="826020" comment="Model 826020">
           <versionCV lowVersionID="64" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="TSU-750 DRGW C-Class Steam" numOuts="2" numFns="14" connector="other" productID="826016" comment="Model 826016">
           <versionCV lowVersionID="64" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="TSU-750 DRGW K-Class Steam" numOuts="2" numFns="14" connector="other" productID="826004" comment="Model 826004">
           <versionCV lowVersionID="64" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="TSU-750 SP Cab Forward Steam" numOuts="2" numFns="14" connector="other" productID="826005" comment="Model 826005">
           <versionCV lowVersionID="64" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 Light Steam" numOuts="4" numFns="14" connector="other" productID="826101" comment="Model 826101">
@@ -9404,13 +10360,19 @@
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 Medium Steam" numOuts="4" numFns="14" connector="other" productID="826102" comment="Model 826102">
@@ -9420,13 +10382,19 @@
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 Heavy Steam" numOuts="4" numFns="14" connector="other" productID="826103" comment="Model 826103">
@@ -9436,13 +10404,19 @@
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 Lt Logging Steam" numOuts="4" numFns="14" connector="other" productID="826120" comment="Model 826120">
@@ -9452,13 +10426,19 @@
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 DRGW C-Class Steam" numOuts="4" numFns="14" connector="other" productID="826116" comment="Model 826116">
@@ -9468,13 +10448,19 @@
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 DRGW K-Class Steam" numOuts="4" numFns="14" connector="other" productID="826104" comment="Model 826104">
@@ -9484,13 +10470,19 @@
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 SP Cab Forward Steam" numOuts="4" numFns="14" connector="other" productID="826105" comment="Model 826105">
@@ -9500,13 +10492,19 @@
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 Southern Steam" numOuts="4" numFns="14" connector="other" productID="826121" comment="Model 826121">
@@ -9516,13 +10514,19 @@
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="TSU-4664N Challenger" numOuts="4" numFns="14" connector="other" productID="826601" comment="Model 826601">
@@ -9532,13 +10536,19 @@
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <functionlabels>
@@ -9560,386 +10570,626 @@
       <family name="Tsunami Steam Bachmann OEM" mfg="Throttle-Up (SoundTraxx)" file="SoundTraxx_Tsu_Steam_Bachmann.xml">
         <model model="HO 2-6-6-2" numOuts="2" numFns="14" connector="other" productID="2662">
           <versionCV lowVersionID="80" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="HO 2-8-8-4 EM-1" numOuts="2" numFns="14" connector="other" productID="2884">
           <versionCV lowVersionID="80" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="HO 2-8-0" numOuts="2" numFns="14" connector="other" productID="280">
           <versionCV lowVersionID="80" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="HO 2-10-0 Russian Decapod" numOuts="2" numFns="14" connector="other" productID="2100">
           <versionCV lowVersionID="80" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="HO 2-10-2 USRA Light" numOuts="2" numFns="14" connector="other" productID="2102">
           <versionCV lowVersionID="80" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="HO 4-4-0 Low Boiler" numOuts="2" numFns="14" connector="other" productID="440l">
           <versionCV lowVersionID="80" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="HO 4-4-0 High Boiler" numOuts="2" numFns="14" connector="other" productID="440h">
           <versionCV lowVersionID="80" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="HO 4-6-0" numOuts="2" numFns="14" connector="other" productID="460">
           <versionCV lowVersionID="80" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="HO 4-6-2 K4" numOuts="2" numFns="14" connector="other" productID="462">
           <versionCV lowVersionID="80" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="HO 4-8-2 USRA Heavy" numOuts="2" numFns="14" connector="other" productID="482">
           <versionCV lowVersionID="80" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="HO 4-8-4 J Class" numOuts="2" numFns="14" connector="other" productID="484">
           <versionCV lowVersionID="80" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="HO 3 Truck Climax" numOuts="2" numFns="14" connector="other" productID="3climax">
           <versionCV lowVersionID="80" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="HO 3 Truck Shay" numOuts="2" numFns="14" connector="other" productID="3shay">
           <versionCV lowVersionID="80" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="On30 0-4-0 Porter" numOuts="2" numFns="14" connector="other" productID="o040">
           <versionCV lowVersionID="80" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="On30 0-4-2 Porter" numOuts="2" numFns="14" connector="other" productID="o042">
           <versionCV lowVersionID="80" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="On30 2-4-4 Forney" numOuts="2" numFns="14" connector="other" productID="o244">
           <versionCV lowVersionID="80" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="On30 2-4-4-2" numOuts="2" numFns="14" connector="other" productID="o2442">
           <versionCV lowVersionID="80" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="On30 2-6-6-2" numOuts="2" numFns="14" connector="other" productID="2662">
           <versionCV lowVersionID="80" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="On30 4-6-0" numOuts="2" numFns="14" connector="other" productID="o460">
           <versionCV lowVersionID="80" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="On30 Climax" numOuts="2" numFns="14" connector="other" productID="o2climax">
           <versionCV lowVersionID="80" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="On30 Heisler" numOuts="2" numFns="14" connector="other" productID="oheisler">
           <versionCV lowVersionID="80" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="On30 2 Truck T Boiler Shay" numOuts="2" numFns="14" connector="other" productID="o2shay">
           <versionCV lowVersionID="80" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="Fn3 2 Truck Climax" numOuts="2" numFns="14" connector="other" productID="f2climax">
           <versionCV lowVersionID="80" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="Fn3 3 Truck Shay" numOuts="2" numFns="14" connector="other" productID="f3shay">
           <versionCV lowVersionID="80" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <functionlabels>
@@ -9969,13 +11219,19 @@
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="Challenger 4-6-6-4" numOuts="4" numFns="14" connector="other" productID="chal">
@@ -9985,13 +11241,19 @@
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="FEF-3 4-8-4" numOuts="4" numFns="14" connector="other" productID="FEF">
@@ -10001,13 +11263,19 @@
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="MT-4 4-8-2" numOuts="4" numFns="14" connector="other" productID="MT4">
@@ -10017,13 +11285,19 @@
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <model model="N Challenger" numOuts="4" numFns="14" connector="other" productID="N_Chal">
@@ -10033,13 +11307,19 @@
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <functionlabels>
@@ -10066,13 +11346,19 @@
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <functionlabels>
@@ -10094,18 +11380,28 @@
       <family name="Tsunami Steam Walthers OEM" mfg="Throttle-Up (SoundTraxx)" comment="These are OEM for Walthers Proto2000 Tsunami steam decoders" file="SoundTraxx_Tsu_Steam_Walthers.xml">
         <model model="USRA 0-8-0" numOuts="2" numFns="14" connector="other" productID="USRA080" comment="USRA 0-8-0">
           <versionCV lowVersionID="64" />
-          <output name="FX5" label=" Rule 17" />
-          <output name="FX6" label="Mode" />
+          <output name="FX5" label=" Rule 17">
+            <label xml:lang="it">Regola 17</label>
+          </output>
+          <output name="FX6" label="Mode">
+            <label xml:lang="it">Modo</label>
+          </output>
           <output name="Whistle" />
           <output name="Bell" />
           <output name="Dynamo" />
-          <output name="Short" label="Whistle" />
-          <output name="Steam" label="Release" />
+          <output name="Short" label="Whistle">
+            <label xml:lang="it">Fischio corto</label>
+          </output>
+          <output name="Steam" label="Release">
+            <label xml:lang="it">Rilascio Vap</label>
+          </output>
           <output name="Water" label="Stop" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Injector" />
-          <output name="Brake" label="Squeal" />
+          <output name="Brake" label="Squeal">
+            <label xml:lang="it">Stridio Freni</label>
+          </output>
           <output name="Coupler" />
         </model>
         <functionlabels>
@@ -13346,7 +14642,7 @@
           <functionlabel num="5" lockable="true">Dimming lights</functionlabel>
         </functionlabels>
       </family>
-      <family name="IntelliSound Module" mfg="Uhlenbrock Elektronik" file="Uhlenbrock_32100.xml">
+      <family name="IntelliSound Module" mfg="Uhlenbrock Elektronik" comment="Auxiliary Sound module for all locomotive decoders with SUSI connector" file="Uhlenbrock_32100.xml">
         <model model="32100">
           <size length="20.8" width="10.8" height="5" units="mm" />
         </model>
@@ -13355,6 +14651,14 @@
         </model>
         <model model="PIKO 3619x Series">
           <size length="25" width="15" height="5" units="mm" />
+        </model>
+      </family>
+      <family name="IntelliSound 3 Module" mfg="Uhlenbrock Elektronik" comment="Auxiliary Sound module for all locomotive decoders with SUSI connector" file="Uhlenbrock_32300.xml">
+        <model model="32300" comment="IntelliSound 3-Module">
+          <size length="17.8" width="11.0" height="4.7" units="mm" />
+        </model>
+        <model model="32304" comment="IntelliSound 3-Module with Sound">
+          <size length="17.8" width="11.0" height="4.7" units="mm" />
         </model>
       </family>
       <family name="Servo Decoder" mfg="Uhlenbrock Elektronik" file="Uhlenbrock_67800.xml">
@@ -14031,8 +15335,12 @@
       </family>
       <family name="Zimo MX640" mfg="Zimo" file="Zimo_MX640_v4dot17.xml">
         <model model="MX640 version 4.17" lowVersionID="4" maxInputVolts="12-24V" maxMotorCurrent="1.2A, peak=2A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="11" numFns="14">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+            <label xml:lang="it">"Luci front"</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="it">"Luci retr"</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
