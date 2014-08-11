@@ -24,37 +24,31 @@
       <variable CV="7" readOnly="yes" item="Decoder Version" default="1">
         <decVal/>
         <label>Manufacturer Version No: </label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
       <variable CV="8" readOnly="yes" item="Manufacturer" default="85">
         <decVal/>
         <label>Manufacturer ID: </label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
       </variable>
       <variable item="Output A1" CV="13" default="1" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="off"/>
-          <enumChoice choice="on"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Output A1</label>
       </variable>
       <variable item="Output A2" CV="13" default="1" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="off"/>
-          <enumChoice choice="on"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Output A2</label>
       </variable>
       <variable item="Output A3" CV="13" default="0" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="off"/>
-          <enumChoice choice="on"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Output A3</label>
       </variable>
       <variable item="Output A4" CV="13" default="0" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="off"/>
-          <enumChoice choice="on"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Output A4</label>
       </variable>
       <variable CV="19" default="0" mask="XVVVVVVV" item="Consist Address">
@@ -62,10 +56,7 @@
         <label>Consist Address</label>
       </variable>
       <variable item="Consist Direction" CV="19" default="0" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="Normal"/>
-          <enumChoice choice="Reversed"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>Consist Direction</label>
       </variable>
       <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
@@ -124,10 +115,7 @@
         <label>Protocol select 2</label>
       </variable>
       <variable CV="49" default="0" mask="XVXXXXXX" item="Advanced Group 1 Option 4">
-        <enumVal>
-          <enumChoice choice="normal"/>
-          <enumChoice choice="reverse"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>Light connections</label>
       </variable>
       <variable item="Dimming outputs A1 and A2" CV="50" default="32">
@@ -139,87 +127,51 @@
         <label>Dimming outputs A3 and A4</label>
       </variable>
       <variable item="Output A1 Direction forward" CV="52" default="0" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="on"/>
-          <enumChoice choice="off"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
         <label>Output A1 Direction forward</label>
       </variable>
       <variable item="Output A2 Direction forward" CV="52" default="1" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="on"/>
-          <enumChoice choice="off"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
         <label>Output A2 Direction forward</label>
       </variable>
       <variable item="Output A3 Direction forward" CV="52" default="0" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="on"/>
-          <enumChoice choice="off"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
         <label>Output A3 Direction forward</label>
       </variable>
       <variable item="Output A4 Direction forward" CV="52" default="0" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="on"/>
-          <enumChoice choice="off"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
         <label>Output A4 Direction forward</label>
       </variable>
       <variable item="Output A1 Direction rearward" CV="53" default="1" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="on"/>
-          <enumChoice choice="off"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
         <label>Output A1 Direction rearward</label>
       </variable>
       <variable item="Output A2 Direction rearward" CV="53" default="0" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="on"/>
-          <enumChoice choice="off"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
         <label>Output A2 Direction rearward</label>
       </variable>
       <variable item="Output A3 Direction rearward" CV="53" default="0" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="on"/>
-          <enumChoice choice="off"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
         <label>Output A3 Direction rearward</label>
       </variable>
       <variable item="Output A4 Direction rearward" CV="53" default="0" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="on"/>
-          <enumChoice choice="off"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
         <label>Output A4 Direction rearward</label>
       </variable>
       <variable item="Output A1 pulse mode" CV="54" default="0" mask="XXXXXXXV" tooltip="off=constant on mode">
-        <enumVal>
-          <enumChoice choice="off"/>
-          <enumChoice choice="on"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
         <label>Output A1 pulse mode</label>
       </variable>
       <variable item="Output A2 pulse mode" CV="54" default="0" mask="XXXXXXVX" tooltip="off=constant on mode">
-        <enumVal>
-          <enumChoice choice="off"/>
-          <enumChoice choice="on"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
         <label>Output A2 pulse mode</label>
       </variable>
       <variable item="Output A3 pulse mode" CV="54" default="0" mask="XXXXXVXX" tooltip="off=constant on mode">
-        <enumVal>
-          <enumChoice choice="off"/>
-          <enumChoice choice="on"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
         <label>Output A3 pulse mode</label>
       </variable>
       <variable item="Output A4 pulse mode" CV="54" default="0" mask="XXXXVXXX" tooltip="off=constant on mode">
-        <enumVal>
-          <enumChoice choice="off"/>
-          <enumChoice choice="on"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
         <label>Output A4 pulse mode</label>
       </variable>
       <variable item="Pulse duration" CV="55" default="2" tooltip="Multiples of 0.5 sec">
@@ -227,31 +179,19 @@
         <label>Pulse duration</label>
       </variable>
       <variable item="Output A1 blinking" CV="56" default="0" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="off"/>
-          <enumChoice choice="on"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
         <label>Output A1 blinking</label>
       </variable>
       <variable item="Output A2 blinking" CV="56" default="0" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="off"/>
-          <enumChoice choice="on"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
         <label>Output A2 blinking</label>
       </variable>
       <variable item="Output A3 blinking" CV="56" default="0" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="off"/>
-          <enumChoice choice="on"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
         <label>Output A3 blinking</label>
       </variable>
       <variable item="Output A4 blinking" CV="56" default="0" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="off"/>
-          <enumChoice choice="on"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
         <label>Output A4 blinking</label>
       </variable>
       <variable item="Blinking time_constant" CV="57" default="10" tooltip="Steps of 100msec, 10 = 1Hz">

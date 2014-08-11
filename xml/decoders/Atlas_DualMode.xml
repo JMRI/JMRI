@@ -189,25 +189,11 @@
         <label>Functional Headlight Dimming</label>
       </variable>
       <variable CV="51" mask="XXXXXVXX" item="Global lighting option 2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>If Lights Independent, F4 dims F0</label>
       </variable>
       <variable CV="51" mask="XXXXVXXX" item="Global lighting option 3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>If Lights Independent, F4 dims F1</label>
       </variable>
       <variable CV="52" item="Global lighting option 4" default="64">
@@ -217,6 +203,9 @@
       <variable item="Decoder Software Version" CV="128" readOnly="yes">
         <decVal/>
         <label>Decoder Software Version</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
       <!-- Define the fixed Function-Output mapping -->
       <constant item="FL(f) controls output 1" minOut="1" default="1"/>

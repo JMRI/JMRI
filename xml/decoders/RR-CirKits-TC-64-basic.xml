@@ -420,6 +420,9 @@
       <variable CV="21" readOnly="yes" item="Firmware Version">
         <decVal/>
         <label>Firmware Version</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
       <variable CV="21" item="Reset" comment="Writing a value of 170 will reset decoder to factory defaults">
         <decVal/>
@@ -429,16 +432,12 @@
       <variable CV="22" readOnly="yes" item="Manufacturer ID" default="87">
         <decVal/>
         <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
       </variable>
       <variable item="P1A Input Direction" CV="23" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P1A Input Direction</label>
       </variable>
       <variable item="1A Mode" CV="23" mask="XXVVXXXX" default="2">
@@ -493,14 +492,7 @@
         <label>1A Transition</label>
       </variable>
       <variable item="P1A Output Direction" CV="24" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P1A Output Direction</label>
       </variable>
       <variable item="1A I Type" CV="24" mask="XVVVXXXX">
@@ -706,14 +698,7 @@
         <label>1A Secondary Type</label>
       </variable>
       <variable item="P1B Input Direction" CV="27" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P1B Input Direction</label>
       </variable>
       <variable item="1B Mode" CV="27" mask="XXVVXXXX" default="2">
@@ -768,14 +753,7 @@
         <label>1B Transition</label>
       </variable>
       <variable item="P1B Output Direction" CV="28" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P1B Output Direction</label>
       </variable>
       <variable item="1B I Type" CV="28" mask="XVVVXXXX">
@@ -981,14 +959,7 @@
         <label>1B Secondary Type</label>
       </variable>
       <variable item="P1C Input Direction" CV="31" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P1C Input Direction</label>
       </variable>
       <variable item="1C Mode" CV="31" mask="XXVVXXXX" default="2">
@@ -1043,14 +1014,7 @@
         <label>1C Transition</label>
       </variable>
       <variable item="P1C Output Direction" CV="32" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P1C Output Direction</label>
       </variable>
       <variable item="1C I Type" CV="32" mask="XVVVXXXX">
@@ -1256,14 +1220,7 @@
         <label>1C Secondary Type</label>
       </variable>
       <variable item="P1D Input Direction" CV="35" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P1D Input Direction</label>
       </variable>
       <variable item="1D Mode" CV="35" mask="XXVVXXXX" default="2">
@@ -1318,14 +1275,7 @@
         <label>1D Transition</label>
       </variable>
       <variable item="P1D Output Direction" CV="36" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P1D Output Direction</label>
       </variable>
       <variable item="1D I Type" CV="36" mask="XVVVXXXX">
@@ -1531,14 +1481,7 @@
         <label>1D Secondary Type</label>
       </variable>
       <variable item="P1E Input Direction" CV="39" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P1E Input Direction</label>
       </variable>
       <variable item="1E Mode" CV="39" mask="XXVVXXXX" default="2">
@@ -1593,14 +1536,7 @@
         <label>1E Transition</label>
       </variable>
       <variable item="P1E Output Direction" CV="40" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P1E Output Direction</label>
       </variable>
       <variable item="1E I Type" CV="40" mask="XVVVXXXX">
@@ -1806,14 +1742,7 @@
         <label>1E Secondary Type</label>
       </variable>
       <variable item="P1F Input Direction" CV="43" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P1F Input Direction</label>
       </variable>
       <variable item="1F Mode" CV="43" mask="XXVVXXXX" default="2">
@@ -2081,14 +2010,7 @@
         <label>1F Secondary Type</label>
       </variable>
       <variable item="P1G Input Direction" CV="47" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P1G Input Direction</label>
       </variable>
       <variable item="1G Mode" CV="47" mask="XXVVXXXX" default="2">
@@ -2356,14 +2278,7 @@
         <label>1G Secondary Type</label>
       </variable>
       <variable item="P1H Input Direction" CV="51" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P1H Input Direction</label>
       </variable>
       <variable item="1H Mode" CV="51" mask="XXVVXXXX" default="2">
@@ -2418,14 +2333,7 @@
         <label>1H Transition</label>
       </variable>
       <variable item="P1H Output Direction" CV="52" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P1H Output Direction</label>
       </variable>
       <variable item="1H I Type" CV="52" mask="XVVVXXXX">
@@ -2693,14 +2601,7 @@
         <label>2A Transition</label>
       </variable>
       <variable item="P2A Output Direction" CV="56" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P2A Output Direction</label>
       </variable>
       <variable item="2A I Type" CV="56" mask="XVVVXXXX">
@@ -2906,14 +2807,7 @@
         <label>2A Secondary Type</label>
       </variable>
       <variable item="P2B Input Direction" CV="59" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P2B Input Direction</label>
       </variable>
       <variable item="2B Mode" CV="59" mask="XXVVXXXX" default="2">
@@ -2968,14 +2862,7 @@
         <label>2B Transition</label>
       </variable>
       <variable item="P2B Output Direction" CV="60" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P2B Output Direction</label>
       </variable>
       <variable item="2B I Type" CV="60" mask="XVVVXXXX">
@@ -3181,14 +3068,7 @@
         <label>2B Secondary Type</label>
       </variable>
       <variable item="P2C Input Direction" CV="63" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P2C Input Direction</label>
       </variable>
       <variable item="2C Mode" CV="63" mask="XXVVXXXX" default="2">
@@ -3243,14 +3123,7 @@
         <label>2C Transition</label>
       </variable>
       <variable item="P2C Output Direction" CV="64" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P2C Output Direction</label>
       </variable>
       <variable item="2C I Type" CV="64" mask="XVVVXXXX">
@@ -3456,14 +3329,7 @@
         <label>2C Secondary Type</label>
       </variable>
       <variable item="P2D Input Direction" CV="67" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P2D Input Direction</label>
       </variable>
       <variable item="2D Mode" CV="67" mask="XXVVXXXX" default="2">
@@ -3518,14 +3384,7 @@
         <label>2D Transition</label>
       </variable>
       <variable item="P2D Output Direction" CV="68" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P2D Output Direction</label>
       </variable>
       <variable item="2D I Type" CV="68" mask="XVVVXXXX">
@@ -3731,14 +3590,7 @@
         <label>2D Secondary Type</label>
       </variable>
       <variable item="P2E Input Direction" CV="71" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P2E Input Direction</label>
       </variable>
       <variable item="2E Mode" CV="71" mask="XXVVXXXX" default="2">
@@ -3793,14 +3645,7 @@
         <label>2E Transition</label>
       </variable>
       <variable item="P2E Output Direction" CV="72" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P2E Output Direction</label>
       </variable>
       <variable item="2E I Type" CV="72" mask="XVVVXXXX">
@@ -4006,14 +3851,7 @@
         <label>2E Secondary Type</label>
       </variable>
       <variable item="P2F Input Direction" CV="75" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P2F Input Direction</label>
       </variable>
       <variable item="2F Mode" CV="75" mask="XXVVXXXX" default="2">
@@ -4068,14 +3906,7 @@
         <label>2F Transition</label>
       </variable>
       <variable item="P2F Output Direction" CV="76" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P2F Output Direction</label>
       </variable>
       <variable item="2F I Type" CV="76" mask="XVVVXXXX">
@@ -4281,14 +4112,7 @@
         <label>2F Secondary Type</label>
       </variable>
       <variable item="P2G Input Direction" CV="79" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P2G Input Direction</label>
       </variable>
       <variable item="2G Mode" CV="79" mask="XXVVXXXX" default="2">
@@ -4343,14 +4167,7 @@
         <label>2G Transition</label>
       </variable>
       <variable item="P2G Output Direction" CV="80" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P2G Output Direction</label>
       </variable>
       <variable item="2G I Type" CV="80" mask="XVVVXXXX">
@@ -4556,14 +4373,7 @@
         <label>2G Secondary Type</label>
       </variable>
       <variable item="P2H Input Direction" CV="83" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P2H Input Direction</label>
       </variable>
       <variable item="2H Mode" CV="83" mask="XXVVXXXX" default="2">
@@ -4618,14 +4428,7 @@
         <label>2H Transition</label>
       </variable>
       <variable item="P2H Output Direction" CV="84" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P2H Output Direction</label>
       </variable>
       <variable item="2H I Type" CV="84" mask="XVVVXXXX">
@@ -4831,14 +4634,7 @@
         <label>2H Secondary Type</label>
       </variable>
       <variable item="P3A Input Direction" CV="87" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P3A Input Direction</label>
       </variable>
       <variable item="3A Mode" CV="87" mask="XXVVXXXX" default="2">
@@ -4893,14 +4689,7 @@
         <label>3A Transition</label>
       </variable>
       <variable item="P3A Output Direction" CV="88" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P3A Output Direction</label>
       </variable>
       <variable item="3A I Type" CV="88" mask="XVVVXXXX">
@@ -5106,14 +4895,7 @@
         <label>3A Secondary Type</label>
       </variable>
       <variable item="P3B Input Direction" CV="91" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P3B Input Direction</label>
       </variable>
       <variable item="3B Mode" CV="91" mask="XXVVXXXX" default="2">
@@ -5168,14 +4950,7 @@
         <label>3B Transition</label>
       </variable>
       <variable item="P3B Output Direction" CV="92" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P3B Output Direction</label>
       </variable>
       <variable item="3B I Type" CV="92" mask="XVVVXXXX">
@@ -5381,14 +5156,7 @@
         <label>3B Secondary Type</label>
       </variable>
       <variable item="P3C Input Direction" CV="95" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P3C Input Direction</label>
       </variable>
       <variable item="3C Mode" CV="95" mask="XXVVXXXX" default="2">
@@ -5443,14 +5211,7 @@
         <label>3C Transition</label>
       </variable>
       <variable item="P3C Output Direction" CV="96" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P3C Output Direction</label>
       </variable>
       <variable item="3C I Type" CV="96" mask="XVVVXXXX">
@@ -5656,14 +5417,7 @@
         <label>3C Secondary Type</label>
       </variable>
       <variable item="P3D Input Direction" CV="99" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P3D Input Direction</label>
       </variable>
       <variable item="3D Mode" CV="99" mask="XXVVXXXX" default="2">
@@ -5718,14 +5472,7 @@
         <label>3D Transition</label>
       </variable>
       <variable item="P3D Output Direction" CV="100" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P3D Output Direction</label>
       </variable>
       <variable item="3D I Type" CV="100" mask="XVVVXXXX">
@@ -5931,14 +5678,7 @@
         <label>3D Secondary Type</label>
       </variable>
       <variable item="P3E Input Direction" CV="103" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P3E Input Direction</label>
       </variable>
       <variable item="3E Mode" CV="103" mask="XXVVXXXX" default="2">
@@ -5993,14 +5733,7 @@
         <label>3E Transition</label>
       </variable>
       <variable item="P3E Output Direction" CV="104" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P3E Output Direction</label>
       </variable>
       <variable item="3E I Type" CV="104" mask="XVVVXXXX">
@@ -6206,14 +5939,7 @@
         <label>3E Secondary Type</label>
       </variable>
       <variable item="P3F Input Direction" CV="107" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P3F Input Direction</label>
       </variable>
       <variable item="3F Mode" CV="107" mask="XXVVXXXX" default="2">
@@ -6268,14 +5994,7 @@
         <label>3F Transition</label>
       </variable>
       <variable item="P3F Output Direction" CV="108" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P3F Output Direction</label>
       </variable>
       <variable item="3F I Type" CV="108" mask="XVVVXXXX">
@@ -6481,14 +6200,7 @@
         <label>3F Secondary Type</label>
       </variable>
       <variable item="P3G Input Direction" CV="111" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P3G Input Direction</label>
       </variable>
       <variable item="3G Mode" CV="111" mask="XXVVXXXX" default="2">
@@ -6543,14 +6255,7 @@
         <label>3G Transition</label>
       </variable>
       <variable item="P3G Output Direction" CV="112" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P3G Output Direction</label>
       </variable>
       <variable item="3G I Type" CV="112" mask="XVVVXXXX">
@@ -6756,14 +6461,7 @@
         <label>3G Secondary Type</label>
       </variable>
       <variable item="P3H Input Direction" CV="115" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P3H Input Direction</label>
       </variable>
       <variable item="3H Mode" CV="115" mask="XXVVXXXX" default="2">
@@ -6818,14 +6516,7 @@
         <label>3H Transition</label>
       </variable>
       <variable item="P3H Output Direction" CV="116" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P3H Output Direction</label>
       </variable>
       <variable item="3H I Type" CV="116" mask="XVVVXXXX">
@@ -7031,14 +6722,7 @@
         <label>3H Secondary Type</label>
       </variable>
       <variable item="P4A Input Direction" CV="119" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P4A Input Direction</label>
       </variable>
       <variable item="4A Mode" CV="119" mask="XXVVXXXX" default="2">
@@ -7093,14 +6777,7 @@
         <label>4A Transition</label>
       </variable>
       <variable item="P4A Output Direction" CV="120" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P4A Output Direction</label>
       </variable>
       <variable item="4A I Type" CV="120" mask="XVVVXXXX">
@@ -7306,14 +6983,7 @@
         <label>4A Secondary Type</label>
       </variable>
       <variable item="P4B Input Direction" CV="123" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P4B Input Direction</label>
       </variable>
       <variable item="4B Mode" CV="123" mask="XXVVXXXX" default="2">
@@ -7368,14 +7038,7 @@
         <label>4B Transition</label>
       </variable>
       <variable item="P4B Output Direction" CV="124" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P4B Output Direction</label>
       </variable>
       <variable item="4B I Type" CV="124" mask="XVVVXXXX">
@@ -7581,14 +7244,7 @@
         <label>4B Secondary Type</label>
       </variable>
       <variable item="P4C Input Direction" CV="127" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P4C Input Direction</label>
       </variable>
       <variable item="4C Mode" CV="127" mask="XXVVXXXX" default="2">
@@ -7643,14 +7299,7 @@
         <label>4C Transition</label>
       </variable>
       <variable item="P4C Output Direction" CV="128" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P4C Output Direction</label>
       </variable>
       <variable item="4C I Type" CV="128" mask="XVVVXXXX">
@@ -7856,14 +7505,7 @@
         <label>4C Secondary Type</label>
       </variable>
       <variable item="P4D Input Direction" CV="131" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P4D Input Direction</label>
       </variable>
       <variable item="4D Mode" CV="131" mask="XXVVXXXX" default="2">
@@ -7918,14 +7560,7 @@
         <label>4D Transition</label>
       </variable>
       <variable item="P4D Output Direction" CV="132" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P4D Output Direction</label>
       </variable>
       <variable item="4D I Type" CV="132" mask="XVVVXXXX">
@@ -8131,14 +7766,7 @@
         <label>4D Secondary Type</label>
       </variable>
       <variable item="P4E Input Direction" CV="135" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P4E Input Direction</label>
       </variable>
       <variable item="4E Mode" CV="135" mask="XXVVXXXX" default="2">
@@ -8193,14 +7821,7 @@
         <label>4E Transition</label>
       </variable>
       <variable item="P4E Output Direction" CV="136" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P4E Output Direction</label>
       </variable>
       <variable item="4E I Type" CV="136" mask="XVVVXXXX">
@@ -8406,14 +8027,7 @@
         <label>4E Secondary Type</label>
       </variable>
       <variable item="P4F Input Direction" CV="139" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P4F Input Direction</label>
       </variable>
       <variable item="4F Mode" CV="139" mask="XXVVXXXX" default="2">
@@ -8468,14 +8082,7 @@
         <label>4F Transition</label>
       </variable>
       <variable item="P4F Output Direction" CV="140" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P4F Output Direction</label>
       </variable>
       <variable item="4F I Type" CV="140" mask="XVVVXXXX">
@@ -8681,14 +8288,7 @@
         <label>4F Secondary Type</label>
       </variable>
       <variable item="P4G Input Direction" CV="143" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P4G Input Direction</label>
       </variable>
       <variable item="4G Mode" CV="143" mask="XXVVXXXX" default="2">
@@ -8743,14 +8343,7 @@
         <label>4G Transition</label>
       </variable>
       <variable item="P4G Output Direction" CV="144" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P4G Output Direction</label>
       </variable>
       <variable item="4G I Type" CV="144" mask="XVVVXXXX">
@@ -8956,14 +8549,7 @@
         <label>4G Secondary Type</label>
       </variable>
       <variable item="P4H Input Direction" CV="147" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P4H Input Direction</label>
       </variable>
       <variable item="4H Mode" CV="147" mask="XXVVXXXX" default="2">
@@ -9018,14 +8604,7 @@
         <label>4H Transition</label>
       </variable>
       <variable item="P4H Output Direction" CV="148" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P4H Output Direction</label>
       </variable>
       <variable item="4H I Type" CV="148" mask="XVVVXXXX">
@@ -9231,14 +8810,7 @@
         <label>4H Secondary Type</label>
       </variable>
       <variable item="P5A Input Direction" CV="151" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P5A Input Direction</label>
       </variable>
       <variable item="5A Mode" CV="151" mask="XXVVXXXX" default="2">
@@ -9293,14 +8865,7 @@
         <label>5A Transition</label>
       </variable>
       <variable item="P5A Output Direction" CV="152" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P5A Output Direction</label>
       </variable>
       <variable item="5A I Type" CV="152" mask="XVVVXXXX">
@@ -9506,14 +9071,7 @@
         <label>5A Secondary Type</label>
       </variable>
       <variable item="P5B Input Direction" CV="155" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P5B Input Direction</label>
       </variable>
       <variable item="5B Mode" CV="155" mask="XXVVXXXX" default="2">
@@ -9568,14 +9126,7 @@
         <label>5B Transition</label>
       </variable>
       <variable item="P5B Output Direction" CV="156" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P5B Output Direction</label>
       </variable>
       <variable item="5B I Type" CV="156" mask="XVVVXXXX">
@@ -9781,14 +9332,7 @@
         <label>5B Secondary Type</label>
       </variable>
       <variable item="P5C Input Direction" CV="159" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P5C Input Direction</label>
       </variable>
       <variable item="5C Mode" CV="159" mask="XXVVXXXX" default="2">
@@ -9843,14 +9387,7 @@
         <label>5C Transition</label>
       </variable>
       <variable item="P5C Output Direction" CV="160" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P5C Output Direction</label>
       </variable>
       <variable item="5C I Type" CV="160" mask="XVVVXXXX">
@@ -10056,14 +9593,7 @@
         <label>5C Secondary Type</label>
       </variable>
       <variable item="P5D Input Direction" CV="163" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P5D Input Direction</label>
       </variable>
       <variable item="5D Mode" CV="163" mask="XXVVXXXX" default="2">
@@ -10118,14 +9648,7 @@
         <label>5D Transition</label>
       </variable>
       <variable item="P5D Output Direction" CV="164" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P5D Output Direction</label>
       </variable>
       <variable item="5D I Type" CV="164" mask="XVVVXXXX">
@@ -10331,14 +9854,7 @@
         <label>5D Secondary Type</label>
       </variable>
       <variable item="P5E Input Direction" CV="167" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P5E Input Direction</label>
       </variable>
       <variable item="5E Mode" CV="167" mask="XXVVXXXX" default="2">
@@ -10393,14 +9909,7 @@
         <label>5E Transition</label>
       </variable>
       <variable item="P5E Output Direction" CV="168" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P5E Output Direction</label>
       </variable>
       <variable item="5E I Type" CV="168" mask="XVVVXXXX">
@@ -10606,14 +10115,7 @@
         <label>5E Secondary Type</label>
       </variable>
       <variable item="P5F Input Direction" CV="171" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P5F Input Direction</label>
       </variable>
       <variable item="5F Mode" CV="171" mask="XXVVXXXX" default="2">
@@ -10668,14 +10170,7 @@
         <label>5F Transition</label>
       </variable>
       <variable item="P5F Output Direction" CV="172" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P5F Output Direction</label>
       </variable>
       <variable item="5F I Type" CV="172" mask="XVVVXXXX">
@@ -10881,14 +10376,7 @@
         <label>5F Secondary Type</label>
       </variable>
       <variable item="P5G Input Direction" CV="175" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P5G Input Direction</label>
       </variable>
       <variable item="5G Mode" CV="175" mask="XXVVXXXX" default="2">
@@ -10943,14 +10431,7 @@
         <label>5G Transition</label>
       </variable>
       <variable item="P5G Output Direction" CV="176" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P5G Output Direction</label>
       </variable>
       <variable item="5G I Type" CV="176" mask="XVVVXXXX">
@@ -11156,14 +10637,7 @@
         <label>5G Secondary Type</label>
       </variable>
       <variable item="P5H Input Direction" CV="179" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P5H Input Direction</label>
       </variable>
       <variable item="5H Mode" CV="179" mask="XXVVXXXX" default="2">
@@ -11218,14 +10692,7 @@
         <label>5H Transition</label>
       </variable>
       <variable item="P5H Output Direction" CV="180" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P5H Output Direction</label>
       </variable>
       <variable item="5H I Type" CV="180" mask="XVVVXXXX">
@@ -11431,14 +10898,7 @@
         <label>5H Secondary Type</label>
       </variable>
       <variable item="P6A Input Direction" CV="183" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P6A Input Direction</label>
       </variable>
       <variable item="6A Mode" CV="183" mask="XXVVXXXX" default="2">
@@ -11493,14 +10953,7 @@
         <label>6A Transition</label>
       </variable>
       <variable item="P6A Output Direction" CV="184" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P6A Output Direction</label>
       </variable>
       <variable item="6A I Type" CV="184" mask="XVVVXXXX">
@@ -11706,14 +11159,7 @@
         <label>6A Secondary Type</label>
       </variable>
       <variable item="P6B Input Direction" CV="187" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P6B Input Direction</label>
       </variable>
       <variable item="6B Mode" CV="187" mask="XXVVXXXX" default="2">
@@ -11768,14 +11214,7 @@
         <label>6B Transition</label>
       </variable>
       <variable item="P6B Output Direction" CV="188" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P6B Output Direction</label>
       </variable>
       <variable item="6B I Type" CV="188" mask="XVVVXXXX">
@@ -11981,14 +11420,7 @@
         <label>6B Secondary Type</label>
       </variable>
       <variable item="P6C Input Direction" CV="191" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P6C Input Direction</label>
       </variable>
       <variable item="6C Mode" CV="191" mask="XXVVXXXX" default="2">
@@ -12043,14 +11475,7 @@
         <label>6C Transition</label>
       </variable>
       <variable item="P6C Output Direction" CV="192" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P6C Output Direction</label>
       </variable>
       <variable item="6C I Type" CV="192" mask="XVVVXXXX">
@@ -12256,14 +11681,7 @@
         <label>6C Secondary Type</label>
       </variable>
       <variable item="P6D Input Direction" CV="195" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P6D Input Direction</label>
       </variable>
       <variable item="6D Mode" CV="195" mask="XXVVXXXX" default="2">
@@ -12318,14 +11736,7 @@
         <label>6D Transition</label>
       </variable>
       <variable item="P6D Output Direction" CV="196" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P6D Output Direction</label>
       </variable>
       <variable item="6D I Type" CV="196" mask="XVVVXXXX">
@@ -12531,14 +11942,7 @@
         <label>6D Secondary Type</label>
       </variable>
       <variable item="P6E Input Direction" CV="199" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P6E Input Direction</label>
       </variable>
       <variable item="6E Mode" CV="199" mask="XXVVXXXX" default="2">
@@ -12593,14 +11997,7 @@
         <label>6E Transition</label>
       </variable>
       <variable item="P6E Output Direction" CV="200" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P6E Output Direction</label>
       </variable>
       <variable item="6E I Type" CV="200" mask="XVVVXXXX">
@@ -12806,14 +12203,7 @@
         <label>6E Secondary Type</label>
       </variable>
       <variable item="P6F Input Direction" CV="203" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P6F Input Direction</label>
       </variable>
       <variable item="6F Mode" CV="203" mask="XXVVXXXX" default="2">
@@ -12868,14 +12258,7 @@
         <label>6F Transition</label>
       </variable>
       <variable item="P6F Output Direction" CV="204" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P6F Output Direction</label>
       </variable>
       <variable item="6F I Type" CV="204" mask="XVVVXXXX">
@@ -13081,14 +12464,7 @@
         <label>6F Secondary Type</label>
       </variable>
       <variable item="P6G Input Direction" CV="207" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P6G Input Direction</label>
       </variable>
       <variable item="6G Mode" CV="207" mask="XXVVXXXX" default="2">
@@ -13143,14 +12519,7 @@
         <label>6G Transition</label>
       </variable>
       <variable item="P6G Output Direction" CV="208" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P6G Output Direction</label>
       </variable>
       <variable item="6G I Type" CV="208" mask="XVVVXXXX">
@@ -13356,14 +12725,7 @@
         <label>6G Secondary Type</label>
       </variable>
       <variable item="P6H Input Direction" CV="211" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P6H Input Direction</label>
       </variable>
       <variable item="6H Mode" CV="211" mask="XXVVXXXX" default="2">
@@ -13418,14 +12780,7 @@
         <label>6H Transition</label>
       </variable>
       <variable item="P6H Output Direction" CV="212" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P6H Output Direction</label>
       </variable>
       <variable item="6H I Type" CV="212" mask="XVVVXXXX">
@@ -13631,14 +12986,7 @@
         <label>6H Secondary Type</label>
       </variable>
       <variable item="P7A Input Direction" CV="215" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P7A Input Direction</label>
       </variable>
       <variable item="7A Mode" CV="215" mask="XXVVXXXX" default="2">
@@ -13693,14 +13041,7 @@
         <label>7A Transition</label>
       </variable>
       <variable item="P7A Output Direction" CV="216" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P7A Output Direction</label>
       </variable>
       <variable item="7A I Type" CV="216" mask="XVVVXXXX">
@@ -13906,14 +13247,7 @@
         <label>7A Secondary Type</label>
       </variable>
       <variable item="P7B Input Direction" CV="219" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P7B Input Direction</label>
       </variable>
       <variable item="7B Mode" CV="219" mask="XXVVXXXX" default="2">
@@ -13968,14 +13302,7 @@
         <label>7B Transition</label>
       </variable>
       <variable item="P7B Output Direction" CV="220" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P7B Output Direction</label>
       </variable>
       <variable item="7B I Type" CV="220" mask="XVVVXXXX">
@@ -14181,14 +13508,7 @@
         <label>7B Secondary Type</label>
       </variable>
       <variable item="P7C Input Direction" CV="223" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P7C Input Direction</label>
       </variable>
       <variable item="7C Mode" CV="223" mask="XXVVXXXX" default="2">
@@ -14243,14 +13563,7 @@
         <label>7C Transition</label>
       </variable>
       <variable item="P7C Output Direction" CV="224" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P7C Output Direction</label>
       </variable>
       <variable item="7C I Type" CV="224" mask="XVVVXXXX">
@@ -14456,14 +13769,7 @@
         <label>7C Secondary Type</label>
       </variable>
       <variable item="P7D Input Direction" CV="227" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P7D Input Direction</label>
       </variable>
       <variable item="7D Mode" CV="227" mask="XXVVXXXX" default="2">
@@ -14518,14 +13824,7 @@
         <label>7D Transition</label>
       </variable>
       <variable item="P7D Output Direction" CV="228" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P7D Output Direction</label>
       </variable>
       <variable item="7D I Type" CV="228" mask="XVVVXXXX">
@@ -14731,14 +14030,7 @@
         <label>7D Secondary Type</label>
       </variable>
       <variable item="P7E Input Direction" CV="231" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P7E Input Direction</label>
       </variable>
       <variable item="7E Mode" CV="231" mask="XXVVXXXX" default="2">
@@ -14793,14 +14085,7 @@
         <label>7E Transition</label>
       </variable>
       <variable item="P7E Output Direction" CV="232" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P7E Output Direction</label>
       </variable>
       <variable item="7E I Type" CV="232" mask="XVVVXXXX">
@@ -15006,14 +14291,7 @@
         <label>7E Secondary Type</label>
       </variable>
       <variable item="P7F Input Direction" CV="235" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P7F Input Direction</label>
       </variable>
       <variable item="7F Mode" CV="235" mask="XXVVXXXX" default="2">
@@ -15068,14 +14346,7 @@
         <label>7F Transition</label>
       </variable>
       <variable item="P7F Output Direction" CV="236" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P7F Output Direction</label>
       </variable>
       <variable item="7F I Type" CV="236" mask="XVVVXXXX">
@@ -15281,14 +14552,7 @@
         <label>7F Secondary Type</label>
       </variable>
       <variable item="P7G Input Direction" CV="239" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P7G Input Direction</label>
       </variable>
       <variable item="7G Mode" CV="239" mask="XXVVXXXX" default="2">
@@ -15343,14 +14607,7 @@
         <label>7G Transition</label>
       </variable>
       <variable item="P7G Output Direction" CV="240" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P7G Output Direction</label>
       </variable>
       <variable item="7G I Type" CV="240" mask="XVVVXXXX">
@@ -15556,14 +14813,7 @@
         <label>7G Secondary Type</label>
       </variable>
       <variable item="P7H Input Direction" CV="243" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P7H Input Direction</label>
       </variable>
       <variable item="7H Mode" CV="243" mask="XXVVXXXX" default="2">
@@ -15618,14 +14868,7 @@
         <label>7H Transition</label>
       </variable>
       <variable item="P7H Output Direction" CV="244" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P7H Output Direction</label>
       </variable>
       <variable item="7H I Type" CV="244" mask="XVVVXXXX">
@@ -15831,14 +15074,7 @@
         <label>7H Secondary Type</label>
       </variable>
       <variable item="P8A Input Direction" CV="247" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+<xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P8A Input Direction</label>
       </variable>
       <variable item="8A Mode" CV="247" mask="XXVVXXXX" default="2">
@@ -15893,14 +15129,7 @@
         <label>8A Transition</label>
       </variable>
       <variable item="P8A Output Direction" CV="248" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P8A Output Direction</label>
       </variable>
       <variable item="8A I Type" CV="248" mask="XVVVXXXX">
@@ -16106,14 +15335,7 @@
         <label>8A Secondary Type</label>
       </variable>
       <variable item="P8B Input Direction" CV="251" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P8B Input Direction</label>
       </variable>
       <variable item="8B Mode" CV="251" mask="XXVVXXXX" default="2">
@@ -16168,14 +15390,7 @@
         <label>8B Transition</label>
       </variable>
       <variable item="P8B Output Direction" CV="252" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P8B Output Direction</label>
       </variable>
       <variable item="8B I Type" CV="252" mask="XVVVXXXX">
@@ -16381,14 +15596,7 @@
         <label>8B Secondary Type</label>
       </variable>
       <variable item="P8C Input Direction" CV="255" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P8C Input Direction</label>
       </variable>
       <variable item="8C Mode" CV="255" mask="XXVVXXXX" default="2">
@@ -16443,14 +15651,7 @@
         <label>8C Transition</label>
       </variable>
       <variable item="P8C Output Direction" CV="256" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P8C Output Direction</label>
       </variable>
       <variable item="8C I Type" CV="256" mask="XVVVXXXX">
@@ -16656,14 +15857,7 @@
         <label>8C Secondary Type</label>
       </variable>
       <variable item="P8D Input Direction" CV="259" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P8D Input Direction</label>
       </variable>
       <variable item="8D Mode" CV="259" mask="XXVVXXXX" default="2">
@@ -16718,14 +15912,7 @@
         <label>8D Transition</label>
       </variable>
       <variable item="P8D Output Direction" CV="260" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P8D Output Direction</label>
       </variable>
       <variable item="8D I Type" CV="260" mask="XVVVXXXX">
@@ -16931,14 +16118,7 @@
         <label>8D Secondary Type</label>
       </variable>
       <variable item="P8E Input Direction" CV="263" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P8E Input Direction</label>
       </variable>
       <variable item="8E Mode" CV="263" mask="XXVVXXXX" default="2">
@@ -16993,14 +16173,7 @@
         <label>8E Transition</label>
       </variable>
       <variable item="P8E Output Direction" CV="264" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P8E Output Direction</label>
       </variable>
       <variable item="8E I Type" CV="264" mask="XVVVXXXX">
@@ -17206,14 +16379,7 @@
         <label>8E Secondary Type</label>
       </variable>
       <variable item="P8F Input Direction" CV="267" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P8F Input Direction</label>
       </variable>
       <variable item="8F Mode" CV="267" mask="XXVVXXXX" default="2">
@@ -17268,14 +16434,7 @@
         <label>8F Transition</label>
       </variable>
       <variable item="P8F Output Direction" CV="268" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P8F Output Direction</label>
       </variable>
       <variable item="8F I Type" CV="268" mask="XVVVXXXX">
@@ -17481,14 +16640,7 @@
         <label>8F Secondary Type</label>
       </variable>
       <variable item="P8G Input Direction" CV="271" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P8G Input Direction</label>
       </variable>
       <variable item="8G Mode" CV="271" mask="XXVVXXXX" default="2">
@@ -17543,14 +16695,7 @@
         <label>8G Transition</label>
       </variable>
       <variable item="P8G Output Direction" CV="272" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P8G Output Direction</label>
       </variable>
       <variable item="8G I Type" CV="272" mask="XVVVXXXX">
@@ -17756,14 +16901,7 @@
         <label>8G Secondary Type</label>
       </variable>
       <variable item="P8H Input Direction" CV="275" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P8H Input Direction</label>
       </variable>
       <variable item="8H Mode" CV="275" mask="XXVVXXXX" default="2">
@@ -17818,14 +16956,7 @@
         <label>8H Transition</label>
       </variable>
       <variable item="P8H Output Direction" CV="276" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="inverted">
-            <choice>inverted</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>P8H Output Direction</label>
       </variable>
       <variable item="8H I Type" CV="276" mask="XVVVXXXX">

@@ -39,12 +39,16 @@
       <variable item="Decoder Version" CV="7" default="4" readOnly="yes">
         <decVal/>
         <label>Manufacturer Version No: </label>
-        <label xml:lang="de">Hersteller Version No: </label>	
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
       <variable item="Manufacturer" CV="8" readOnly="yes" default="85">
         <decVal/>
         <label>Manufacturer ID: </label>
-        <label xml:lang="de">Herstellerkennung: </label>			
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
       </variable>
       <variable item="Analog Mode Function Status - FL" CV="13" default="1" mask="XXXXXXXV">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -136,7 +140,7 @@
         <label>A1/A6 outputs dimming</label>
         <label xml:lang="de">Dimmung Funktionsausgänge A1/A6</label>
 	<tooltip>min=0 (off), max=32</tooltip>
-	<tooltip xml:lang="de">min=0 (aus), max=32</tooltip> 		
+	<tooltip xml:lang="de">min=0 (aus), max=32</tooltip>
       </variable>
       <variable item="EMF Option 1" CV="53" default="40">
         <decVal max="255" min="1"/>
@@ -149,19 +153,19 @@
         <enumVal>
           <enumChoice choice="12 V" value="0">
             <choice>12 V</choice>
-            <choice xml:lang="de">12 V</choice>			
+            <choice xml:lang="de">12 V</choice>
           </enumChoice>
           <enumChoice choice="14 V" value="1">
             <choice>14 V</choice>
-            <choice xml:lang="de">14 V</choice>			
+            <choice xml:lang="de">14 V</choice>
           </enumChoice>
           <enumChoice choice="16 V" value="3">
             <choice>16 V</choice>
-            <choice xml:lang="de">16 V</choice>			
+            <choice xml:lang="de">16 V</choice>
           </enumChoice>
         </enumVal>
         <label>Adaptation for motor</label>
-        <label xml:lang="de">Anpassung an Motor</label>		
+        <label xml:lang="de">Anpassung an Motor</label>
       </variable>	  
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv54motorReg.xml"/>
       <variable item="EMF Option 2" CV="58" default="8">
@@ -175,7 +179,7 @@
         <decVal max="28"/>
         <label>Short circuit supervision</label>
         <label xml:lang="de">Kurzschlussüberwachung</label>
-        <tooltip>Do not change! 0=deactivated - 28=activated</tooltip>        
+        <tooltip>Do not change! 0=deactivated - 28=activated</tooltip>
       </variable>
       <variable item="Shutdown Temperature" CV="61" default="40" readOnly="yes">
         <decVal/>
@@ -187,7 +191,7 @@
         <decVal max="20"/>
         <label>Lights Short circuit supervision</label>
         <label xml:lang="de">Kurzschlussüberwachung Licht</label>
-        <tooltip>Do not change! 0=deactivated - 20=activated</tooltip>            
+        <tooltip>Do not change! 0=deactivated - 20=activated</tooltip>
       </variable>	  
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv65.66registers.xml"/>
       <!-- No Speed Table for this decoder -->
@@ -201,7 +205,7 @@
         <decVal max="4"/>
         <label>LISSY Train Category</label>
         <label xml:lang="de">LISSY Zugkategorie</label>
-        <tooltip>Value 1 - 4</tooltip>             
+        <tooltip>Value 1 - 4</tooltip>
       </variable>
     </variables>
     <resets>
