@@ -33,10 +33,16 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
-        <label>Decoder Version No: </label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+        <label>Manufacturer Version No: </label>
       </variable>
       <variable CV="8" default="86" item="Manufacturer" readOnly="yes" comment="8 to reset" tooltip="Readonly default=86">
         <decVal/>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
         <label>Manufacturer ID: </label>
       </variable>
       <!-- CV 19 Consist address  (can also use CV27-28 for Long Secondary address-->
@@ -51,10 +57,7 @@
       </variable>
       <!-- CV 29 -->
       <variable CV="29" mask="XXXXXXXV" default="0" item="Locomotive Direction" tooltip="XXXXXXXV  default=0">
-        <enumVal>
-          <enumChoice choice="Normal"/>
-          <enumChoice choice="Reverse"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>Locomotive Direction</label>
       </variable>
       <variable CV="29" mask="XXXXXXVX" default="1" item="Speed Step Mode" tooltip="XXXXXXVX  default=1">
@@ -65,17 +68,11 @@
         <label>Speed Step Mode</label>
       </variable>
       <variable CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation" tooltip="XXXXXVXX  default=1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Analog (DC) Operation</label>
       </variable>
       <variable CV="29" mask="XXXXVXXX" default="0" item="Enable RailCom" tooltip="XXXXVXXX  default=0">
-        <enumVal>
-          <enumChoice choice="Disabled"/>
-          <enumChoice choice="Enabled"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Enable RailCom</label>
       </variable>
       <variable CV="29" mask="VXXXXXXX" default="0" item="Decoder Type" tooltip="VXXXXXXX  default=0">

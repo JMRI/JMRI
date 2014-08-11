@@ -15,6 +15,14 @@
 <!-- include for QUAD-LN_S -->
 <!-- directional speed choice  v1.0  -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-    <enumChoice choice="Disable"/>
-    <enumChoice choice="Enable"/>
+    <enumChoice choice="Disabled">
+    <choice xml:lang="fr">Désactivé</choice>
+    <choice xml:lang="it">Disabilitato</choice>
+    <choice xml:lang="de">Deaktiviert</choice>
+  </enumChoice>
+  <enumChoice choice="Enabled">
+    <choice xml:lang="fr">Activé</choice>
+    <choice xml:lang="it">Abilitato</choice>
+    <choice xml:lang="de">Aktiviert</choice>
+  </enumChoice>
 </enumVal>

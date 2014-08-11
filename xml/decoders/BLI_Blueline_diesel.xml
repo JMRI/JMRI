@@ -665,6 +665,9 @@
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
+            <choice xml:lang="fr">Désactivé</choice>
+            <choice xml:lang="it">Disabilitato</choice>
+            <choice xml:lang="de">Deaktiviert</choice>
           </enumChoice>
           <enumChoice choice="Duty Cycle Strobe">
             <choice>Duty Cycle Strobe</choice>
@@ -734,6 +737,9 @@
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
+            <choice xml:lang="fr">Désactivé</choice>
+            <choice xml:lang="it">Disabilitato</choice>
+            <choice xml:lang="de">Deaktiviert</choice>
           </enumChoice>
           <enumChoice choice="CV131 Start Up Voltage">
             <choice>CV131 Start Up Voltage</choice>

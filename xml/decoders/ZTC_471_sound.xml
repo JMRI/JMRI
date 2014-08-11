@@ -965,6 +965,9 @@
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
+            <choice xml:lang="fr">Désactivé</choice>
+            <choice xml:lang="it">Disabilitato</choice>
+            <choice xml:lang="de">Deaktiviert</choice>
           </enumChoice>
           <enumChoice choice="Enabled When Horn On">
             <choice>Enabled When Horn On</choice>
@@ -1062,6 +1065,9 @@
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
+            <choice xml:lang="fr">Désactivé</choice>
+            <choice xml:lang="it">Disabilitato</choice>
+            <choice xml:lang="de">Deaktiviert</choice>
           </enumChoice>
           <enumChoice choice="Enabled When Horn On">
             <choice>Enabled When Horn On</choice>
@@ -1070,14 +1076,7 @@
         <label>Rear light F0R grade crossing logic</label>
       </variable>
       <variable CV="50" mask="XVXXXXXX" item="Function F0R option 3" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;     is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
-        <enumVal>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Rear light F0R Rule 17 mode</label>
       </variable>
       <variable CV="50" mask="VXXXXXXX" item="Function F0R option 4" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
@@ -1159,6 +1158,9 @@
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
+            <choice xml:lang="fr">Désactivé</choice>
+            <choice xml:lang="it">Disabilitato</choice>
+            <choice xml:lang="de">Deaktiviert</choice>
           </enumChoice>
           <enumChoice choice="Enabled When Horn On">
             <choice>Enabled When Horn On</choice>
@@ -1167,14 +1169,7 @@
         <label>FX1 grade crossing logic</label>
       </variable>
       <variable CV="51" mask="XVXXXXXX" item="Function 1 option 3">
-        <enumVal>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX1 Rule 17 mode</label>
       </variable>
       <variable CV="51" mask="VXXXXXXX" item="Function 1 option 4">
@@ -1256,6 +1251,9 @@
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
+            <choice xml:lang="fr">Désactivé</choice>
+            <choice xml:lang="it">Disabilitato</choice>
+            <choice xml:lang="de">Deaktiviert</choice>
           </enumChoice>
           <enumChoice choice="Enabled When Horn On">
             <choice>Enabled When Horn On</choice>
@@ -1264,14 +1262,7 @@
         <label>FX2 grade crossing logic</label>
       </variable>
       <variable CV="52" mask="XVXXXXXX" item="Function 2 option 3">
-        <enumVal>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX2 Rule 17 mode</label>
       </variable>
       <variable CV="52" mask="VXXXXXXX" item="Function 2 option 4">
@@ -1693,6 +1684,9 @@
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
+            <choice xml:lang="fr">Désactivé</choice>
+            <choice xml:lang="it">Disabilitato</choice>
+            <choice xml:lang="de">Deaktiviert</choice>
           </enumChoice>
           <enumChoice choice="Additional Reverb for Whistle">
             <choice>Additional Reverb for Whistle</choice>

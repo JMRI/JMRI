@@ -56,8 +56,9 @@
 	  </enumChoice>
 	  <enumChoice choice="Disabled">
             <choice>Disabled</choice>
-            <choice xml:lang="de">invalid</choice>
+            <choice xml:lang="fr">Désactivé</choice>
             <choice xml:lang="it">Disabilitato</choice>
+            <choice xml:lang="de">Deaktiviert</choice>
 	  </enumChoice>		  
 	</enumVal>
 	<label>Digital format</label>

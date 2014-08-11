@@ -64,20 +64,7 @@
         </enumVal>
         <label>Speed Curve Select</label>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version" tooltip="is the Decoder ID,  Read Only">
-        <decVal/>
-        <label>Manufacturer Version Number</label>
-        <label xml:lang="it">Versione Decoder: </label>
-        <label xml:lang="fr">Version décodeur: </label>
-        <label xml:lang="de">Decoder Version: </label>
-      </variable>
-      <variable CV="8" readOnly="yes" item="Manufacturer" tooltip="is the Manufacturer ID, MRC-143, Read Only">
-        <decVal/>
-        <label>Manufacturer ID</label>
-        <label xml:lang="it">ID Costruttore: </label>
-        <label xml:lang="fr">ID constructeur: </label>
-        <label xml:lang="de">Hersteller ID: </label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <variable CV="19" item="Consist Address" mask="XVVVVVVV" tooltip="set the Advanced Consist address, range 0-127" default="0">
         <decVal max="127"/>
         <label>Advanced Consist address</label>
@@ -177,14 +164,7 @@
         <label>Coupling Volume</label>
       </variable>
       <variable CV="63" item="Global lighting option 4" tooltip="" default="1">
-        <enumVal>
-          <enumChoice choice="Disable" value="0">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable" value="1">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
         <label>Auto Ditchlight flash</label>
       </variable>
       <variable CV="64" item="Sound Setting 15" tooltip="sets the Rail Clack Volume [range 0-3]" default="3">
@@ -219,14 +199,7 @@
         <label>Brake Release volume</label>
       </variable>
       <variable CV="115" item="Sound Option 5" tooltip="sets the Auto Brake Squeal [Enable/Disable]" default="1">
-        <enumVal>
-          <enumChoice choice="Disable" value="0">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable" value="1">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
         <label>Auto Brake squeal</label>
       </variable>
       <variable CV="117" item="Global lighting option 1" tooltip="selects the Light Mode" default="0">
@@ -330,14 +303,7 @@
         <label>Prime Mover</label>
       </variable>
       <variable CV="124" item="BEMF" tooltip="sets the BEMF [Enable/Disable]" default="1">
-        <enumVal>
-          <enumChoice choice="Disable" value="0">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable" value="1">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
         <label>Back EMF Load Control</label>
       </variable>
     </variables>

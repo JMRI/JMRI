@@ -84,6 +84,9 @@
         <enumVal>
           <enumChoice choice="Disable">
             <choice>Disable</choice>
+            <choice xml:lang="fr">Désactivé</choice>
+            <choice xml:lang="it">Disabilitato</choice>
+            <choice xml:lang="de">Deaktiviert</choice>
           </enumChoice>
           <enumChoice choice="Enable stop when Right Rail has +ve asymetric signal">
             <choice>Enable stop when Right Rail has +ve asymetric signal</choice>
@@ -102,6 +105,9 @@
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
+            <choice xml:lang="fr">Désactivé</choice>
+            <choice xml:lang="it">Disabilitato</choice>
+            <choice xml:lang="de">Deaktiviert</choice>
           </enumChoice>
           <enumChoice choice="Constant Broadcast" value="1">
             <choice>Constant Broadcast</choice>

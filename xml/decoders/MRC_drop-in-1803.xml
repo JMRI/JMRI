@@ -79,14 +79,7 @@
         <label xml:lang="fr">ID constructeur: </label>
         <label xml:lang="de">Hersteller ID: </label>
       </variable>
-      <variable CV="19" item="Consist Address" tooltip="set the Advanced Consist address, range 0-127" default="0" mask="XVVVVVVV">
-        <decVal max="127"/>
-        <label>Advanced Consist address</label>
-      </variable>
-      <variable CV="19" item="Consist Direction" default="0" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
-        <label>Locomotive Direction In Consist</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <variable CV="21" item="Functions Respond To" tooltip="selects the address that functions will respond to" default="1" mask="XXXXXXXV">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Function</label>
@@ -178,14 +171,7 @@
         <label>Coupling Volume</label>
       </variable>
       <variable CV="63" item="Global lighting option 5" tooltip="/119 sets ACC1 lighting options [range  0-1]" default="1">
-        <enumVal>
-          <enumChoice choice="Disable" value="0">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable" value="1">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
         <label>Ditch Lights Auto With Horn</label>
       </variable>
       <variable CV="64" item="Sound Setting 15" tooltip="sets the Rail Clack Volume [range 0-15]" default="12">
@@ -197,14 +183,7 @@
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-      <variable CV="105" item="User Id #1" tooltip="sets the User ID #1 [range 0-255]" default="0">
-        <decVal max="255"/>
-        <label>User ID #1</label>
-      </variable>
-      <variable CV="106" item="User Id #2" tooltip="sets the User ID #2 [range 0-255]" default="0">
-        <decVal max="255"/>
-        <label>User ID #2</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <variable CV="113" item="Sound Setting 16" tooltip="sets the Coupling Fire Volume [range 0-3]" default="3">
         <decVal max="3"/>
         <label>Coupling fire volume</label>
@@ -214,25 +193,11 @@
         <label>Brake Release volume</label>
       </variable>
       <variable CV="115" item="Sound Option 5" tooltip="sets the Auto Brake Squeal [Enable/Disable]" default="1">
-        <enumVal>
-          <enumChoice choice="Disable" value="0">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable" value="1">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
         <label>Auto Brake squeal</label>
       </variable>
       <variable CV="116" item="Sound Option 6" tooltip="selects Bell start with horn , [0 - disables 1 - enables]" default="0">
-        <enumVal>
-          <enumChoice choice="Disable" value="0">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable" value="1">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
         <label>Auto Bell with Horn</label>
       </variable>
       <variable CV="117" item="Global lighting option 1" tooltip="selects the Light Mode" default="0">
@@ -302,14 +267,7 @@
         <label>ACC2 Light Mode</label>
       </variable>
       <variable CV="121" item="Global lighting option 4" tooltip="sets the Auto Brake Squeal [Enable/Disable]" default="1">
-        <enumVal>
-          <enumChoice choice="Disable" value="0">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable" value="1">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
         <label>Auto Brake squeal</label>
       </variable>
       <variable CV="122" item="Sound Option 7" tooltip="can only have values of 0 or 3" default="0">

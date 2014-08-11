@@ -207,14 +207,7 @@
         <label>Brake Release volume</label>
       </variable>
       <variable CV="115" item="Sound Option 5" tooltip="sets the Auto Brake Squeal [Enable/Disable]" default="1">
-        <enumVal>
-          <enumChoice choice="Disable" value="0">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable" value="1">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
         <label>Auto Brake squeal</label>
       </variable>
       <variable CV="117" item="Global lighting option 1" tooltip="selects the Light Mode" default="0">

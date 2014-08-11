@@ -99,14 +99,7 @@
         <label>Advanced Consist address</label>
       </variable>
       <variable CV="21" item="Functions Respond To" mask="XXXXXXXV" tooltip="selects the address that functions will respond to, 0=own address, 1=consist address" default="0">
-        <enumVal>
-          <enumChoice choice="Functions respond to Locomotive Address Only">
-            <choice>Functions respond to Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Functions respond to Consist Address Only">
-            <choice>Functions respond to Consist Address Only</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Function</label>
       </variable>
       <variable CV="49" default="16" item="Sound Setting 1" comment="Range 0-16">
@@ -205,14 +198,7 @@
         <comment>Range 0-15</comment>
       </variable>
       <variable CV="63" item="Sound Option 3" default="1">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>F3 control air release enable</label>
       </variable>
       <variable CV="64" item="Sound Setting 12" default="12" comment="Range 0-15">

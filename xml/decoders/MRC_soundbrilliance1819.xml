@@ -224,14 +224,7 @@
         <comment>Range 0-3</comment>
       </variable>
       <variable item="Sound Option 7" CV="115" default="1" tooltip="range 0(off) or 1(enable)(Default)" comment="Air brake squeal">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Air brake squeal enable/disable</label>
         <comment>Air brake squeal</comment>
       </variable>

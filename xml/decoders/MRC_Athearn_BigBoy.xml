@@ -190,14 +190,7 @@
         <label>Rail Clack Volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable CV="105" item="User Id #1" default="0" tooltip="range 0-255, code your own ID">
-        <decVal max="255"/>
-        <label>User ID #1</label>
-      </variable>
-      <variable CV="106" item="User Id #2" default="0" tooltip="range 0-255, code your own ID">
-        <decVal max="255"/>
-        <label>User ID #2</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <variable CV="112" item="Sound Setting 15" default="3" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Conductor volume</label>
