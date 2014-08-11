@@ -47,16 +47,16 @@
   </revhistory>
   <variable item="User Id #1" CV="105">
     <decVal/>
-        <label>User ID #1</label>
-        <label xml:lang="it">Id Utente #1</label>
-        <label xml:lang="fr">CV Utilisateur #1</label>
-        <label xml:lang="de">Benutzer-CV #1</label>
+        <label>User ID #1 (0-255)</label>
+        <label xml:lang="it">Id Utente #1 (0-255)</label>
+        <label xml:lang="fr">CV Utilisateur #1 (0-255)</label>
+        <label xml:lang="de">Benutzer-CV #1 (0-255)</label>
   </variable>
   <variable item="User Id #2" CV="106">
     <decVal/>
-        <label>User ID #2</label>
-        <label xml:lang="it">Id Utente #2</label>
-        <label xml:lang="fr">CV Utilisateur #2</label>
-        <label xml:lang="de">Benutzer-CV #2</label>
+        <label>User ID #2 (0-255)</label>
+        <label xml:lang="it">Id Utente #2 (0-255)</label>
+        <label xml:lang="fr">CV Utilisateur #2 (0-255)</label>
+        <label xml:lang="de">Benutzer-CV #2 (0-255)</label>
   </variable>
 </variables>

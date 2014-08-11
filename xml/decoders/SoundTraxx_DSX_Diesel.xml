@@ -62,33 +62,12 @@
         <label xml:lang="fr">Décélération (1-255)</label>
         <label xml:lang="de">Bremszeit (1-255)</label>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version">
-        <decVal/>
-        <label>Manufacturer Version No</label>
-      </variable>
-      <variable CV="8" readOnly="yes" item="Manufacturer">
-        <decVal/>
-        <label>Manufacturer ID</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <variable CV="11" item="Packet Time-out Value">
         <decVal/>
         <label>Packet Timeout Value</label>
       </variable>
-      <variable CV="19" mask="XVVVVVVV" item="Consist Address">
-        <decVal/>
-        <label>Consist Address</label>
-      </variable>
-      <variable item="Consist Direction" CV="19" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Direction</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <variable item="Consist Address Active For F1" CV="21" mask="XXXXXXXV" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F1</label>
@@ -135,14 +114,7 @@
         <comment>Additional consist acceleration (combined with CV3)</comment>
       </variable>
       <variable CV="23" mask="VXXXXXXX" item="Consist Acceleration Adjustment Sign">
-        <enumVal>
-          <enumChoice choice="positive">
-            <choice>positive</choice>
-          </enumChoice>
-          <enumChoice choice="negative">
-            <choice>negative</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-PositiveNegative.xml"/>
         <label>Consist Acceleration Sign</label>
       </variable>
       <variable CV="24" mask="XVVVVVVV" default="0" item="Consist Deceleration Adjustment" comment="Additional consist braking (combined with CV4)">
@@ -151,25 +123,11 @@
         <comment>Additional consist braking (combined with CV4)</comment>
       </variable>
       <variable CV="24" mask="VXXXXXXX" item="Consist Deceleration Adjustment Sign">
-        <enumVal>
-          <enumChoice choice="positive">
-            <choice>positive</choice>
-          </enumChoice>
-          <enumChoice choice="negative">
-            <choice>negative</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-PositiveNegative.xml"/>
         <label>Consist Braking Sign</label>
       </variable>
       <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
-        <enumVal>
-          <enumChoice choice="forward">
-            <choice>forward</choice>
-          </enumChoice>
-          <enumChoice choice="reverse">
-            <choice>reverse</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-FwdRev.xml"/>
         <label>Normal direction of motion</label>
       </variable>
       <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
@@ -578,14 +536,7 @@
         <decVal max="15"/>
         <label>Dynamic Brake Volume</label>
       </variable>
-      <variable CV="105" item="User Id #1">
-        <decVal/>
-        <label>User Private ID #1</label>
-      </variable>
-      <variable CV="106" item="User Id #2">
-        <decVal/>
-        <label>User Private ID #2</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="8"/>
