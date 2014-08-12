@@ -569,6 +569,7 @@
           <enumChoice choice="Disabled" value="0">
             <choice>Disabled</choice>
             <choice xml:lang="fr">Désactivé</choice>
+            <choice xml:lang="it">Disabilitato</choice>
             <choice xml:lang="de">Deaktiviert</choice>
           </enumChoice>
           <enumChoice choice="F1 / F5" value="1">
@@ -625,6 +626,7 @@
           <enumChoice choice="Disabled" value="0">
             <choice>Disabled</choice>
             <choice xml:lang="fr">Désactivé</choice>
+            <choice xml:lang="it">Disabilitato</choice>
             <choice xml:lang="de">Deaktiviert</choice>
           </enumChoice>
           <enumChoice choice="F1 / F5" value="1">
@@ -698,6 +700,7 @@
           <enumChoice choice="Disabled" value="0">
             <choice>Disabled</choice>
             <choice xml:lang="fr">Désactivé</choice>
+            <choice xml:lang="it">Disabilitato</choice>
             <choice xml:lang="de">Deaktiviert</choice>
           </enumChoice>
           <enumChoice choice="F0 / F8" value="1">
@@ -734,6 +737,7 @@
           <enumChoice choice="Disabled" value="0">
             <choice>Disabled</choice>
             <choice xml:lang="fr">Désactivé</choice>
+            <choice xml:lang="it">Disabilitato</choice>
             <choice xml:lang="de">Deaktiviert</choice>
           </enumChoice>
           <enumChoice choice="F0" value="1">
@@ -783,6 +787,7 @@
           <enumChoice choice="Disabled" value="0">
             <choice>Disabled</choice>
             <choice xml:lang="fr">Désactivé</choice>
+            <choice xml:lang="it">Disabilitato</choice>
             <choice xml:lang="de">Deaktiviert</choice>
           </enumChoice>
           <enumChoice choice="F0 / F8" value="1">

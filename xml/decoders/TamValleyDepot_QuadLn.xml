@@ -155,36 +155,15 @@
         <label>Reserved</label>
       </variable>
       <variable item="Servo State Memory" CV="21" mask="XXXXXXXV" default="1">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Port State Memory</label>
       </variable>
       <variable item="Send Output Off" CV="21" mask="XXXXXXVX" default="0">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Send Output Off</label>
       </variable>
       <variable item="Input Interrogate" CV="21" mask="XXXXXVXX" default="1">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Input Interrogate</label>
       </variable>
       <variable item="Local Actions" CV="21" mask="XXXXVXXX" default="1">
@@ -199,14 +178,7 @@
         <label>Output Interrogate</label>
       </variable>
       <variable item="GPON Interrogate" CV="21" mask="XXXVXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>GPON Interrogate</label>
       </variable>
       <variable CV="21" mask="XXVXXXXX" item="Address Format" default="1">
@@ -232,14 +204,7 @@
         <label>Lock Indicator</label>
       </variable>
       <variable item="DCC Busy Retry" CV="21" mask="VXXXXXXX" default="1">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>DCC Busy Retry</label>
       </variable>
       <variable CV="33" item="Servo1 Closed" default="1260">
@@ -287,14 +252,7 @@
         <comment>Matches Closed/Thrown commands to the desired endpoints</comment>
       </variable>
       <variable CV="38" mask="XXXVXXXX" item="Servo1 Directional Speed" default="0">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Servo1 Directional Speed</label>
       </variable>
       <variable CV="51" mask="VVXXXXXX" item="Servo1 Thrown RapidStart" default="0">
@@ -341,14 +299,7 @@
         <label>Servo1 Lock</label>
       </variable>
       <variable CV="38" mask="XVXXXXXX" item="Servo1 Mid" default="0">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable </choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Servo1 Mid</label>
       </variable>
       <variable CV="38" mask="XXXXXXVV" item="Servo1 Output Message" default="2">
@@ -435,6 +386,9 @@
         <enumVal>
           <enumChoice choice="Disable - Input only">
             <choice>Disable</choice>
+            <choice xml:lang="fr">Désactivé</choice>
+            <choice xml:lang="it">Disabilitato</choice>
+            <choice xml:lang="de">Deaktiviert</choice>
           </enumChoice>
           <enumChoice choice="Steady Drive">
             <choice>Steady</choice>
@@ -703,6 +657,9 @@
         <enumVal>
           <enumChoice choice="Disable - Input only">
             <choice>Disable</choice>
+            <choice xml:lang="fr">Désactivé</choice>
+            <choice xml:lang="it">Disabilitato</choice>
+            <choice xml:lang="de">Deaktiviert</choice>
           </enumChoice>
           <enumChoice choice="Steady Drive">
             <choice>Steady</choice>
@@ -984,14 +941,7 @@
         <comment>Matches Closed/Thrown commands to the desired endpoints</comment>
       </variable>
       <variable CV="60" mask="XXXVXXXX" item="Servo2 Directional Speed" default="0">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Servo2 Directional Speed</label>
       </variable>
       <variable CV="73" mask="VVXXXXXX" item="Servo2 Thrown RapidStart" default="0">
@@ -1038,14 +988,7 @@
         <label>Servo2 Lock</label>
       </variable>
       <variable CV="60" mask="XVXXXXXX" item="Servo2 Mid" default="0">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable </choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Servo2 Mid</label>
       </variable>
       <variable CV="60" mask="XXXXXXVV" item="Servo2 Output Message" default="2">
@@ -1132,6 +1075,9 @@
         <enumVal>
           <enumChoice choice="Disable - Input only">
             <choice>Disable</choice>
+            <choice xml:lang="fr">Désactivé</choice>
+            <choice xml:lang="it">Disabilitato</choice>
+            <choice xml:lang="de">Deaktiviert</choice>
           </enumChoice>
           <enumChoice choice="Steady Drive">
             <choice>Steady</choice>
@@ -1400,6 +1346,9 @@
         <enumVal>
           <enumChoice choice="Disable - Input only">
             <choice>Disable</choice>
+            <choice xml:lang="fr">Désactivé</choice>
+            <choice xml:lang="it">Disabilitato</choice>
+            <choice xml:lang="de">Deaktiviert</choice>
           </enumChoice>
           <enumChoice choice="Steady Drive">
             <choice>Steady</choice>
@@ -1681,14 +1630,7 @@
         <comment>Matches Closed/Thrown commands to the desired endpoints</comment>
       </variable>
       <variable CV="82" mask="XXXVXXXX" item="Servo3 Directional Speed" default="0">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Servo3  Directional Speed</label>
       </variable>
       <variable CV="95" mask="VVXXXXXX" item="Servo3 Thrown RapidStart" default="0">
@@ -1735,14 +1677,7 @@
         <label>Servo3 Lock</label>
       </variable>
       <variable CV="82" mask="XVXXXXXX" item="Servo3 Mid" default="0">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable </choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Servo3 Mid</label>
       </variable>
       <variable CV="82" mask="XXXXXXVV" item="Servo3 Output Message" default="2">
@@ -1829,6 +1764,9 @@
         <enumVal>
           <enumChoice choice="Disable - Input only">
             <choice>Disable</choice>
+            <choice xml:lang="fr">Désactivé</choice>
+            <choice xml:lang="it">Disabilitato</choice>
+            <choice xml:lang="de">Deaktiviert</choice>
           </enumChoice>
           <enumChoice choice="Steady Drive">
             <choice>Steady</choice>
@@ -2097,6 +2035,9 @@
         <enumVal>
           <enumChoice choice="Disable - Input only">
             <choice>Disable</choice>
+            <choice xml:lang="fr">Désactivé</choice>
+            <choice xml:lang="it">Disabilitato</choice>
+            <choice xml:lang="de">Deaktiviert</choice>
           </enumChoice>
           <enumChoice choice="Steady Drive">
             <choice>Steady</choice>
@@ -2378,14 +2319,7 @@
         <comment>Matches Closed/Thrown commands to the desired endpoints</comment>
       </variable>
       <variable CV="104" mask="XXXVXXXX" item="Servo4 Directional Speed" default="0">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Servo4  Directional Speed</label>
       </variable>
       <variable CV="117" mask="VVXXXXXX" item="Servo4 Thrown RapidStart" default="0">
@@ -2432,14 +2366,7 @@
         <label>Servo4 Lock</label>
       </variable>
       <variable CV="104" mask="XVXXXXXX" item="Servo4 Mid" default="0">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable </choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Servo4 Mid</label>
       </variable>
       <variable CV="104" mask="XXXXXXVV" item="Servo4 Output Message" default="2">
@@ -2526,6 +2453,9 @@
         <enumVal>
           <enumChoice choice="Disable - Input only">
             <choice>Disable</choice>
+            <choice xml:lang="fr">Désactivé</choice>
+            <choice xml:lang="it">Disabilitato</choice>
+            <choice xml:lang="de">Deaktiviert</choice>
           </enumChoice>
           <enumChoice choice="Steady Drive">
             <choice>Steady</choice>
@@ -2794,6 +2724,9 @@
         <enumVal>
           <enumChoice choice="Disable - Input only">
             <choice>Disable</choice>
+            <choice xml:lang="fr">Désactivé</choice>
+            <choice xml:lang="it">Disabilitato</choice>
+            <choice xml:lang="de">Deaktiviert</choice>
           </enumChoice>
           <enumChoice choice="Steady Drive">
             <choice>Steady</choice>

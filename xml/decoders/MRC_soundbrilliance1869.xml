@@ -238,14 +238,7 @@
         <comment>Range 0-31</comment>
       </variable>
       <variable item="Sound Option 5" CV="115" default="1" tooltip="range 0(off) or 1(enable)(Default)">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Air brake squeal enable/disable</label>
       </variable>
       <variable CV="116" item="Sound Setting 14" default="3" tooltip="range 0-3" comment="Range 0-3">
@@ -279,14 +272,7 @@
         <comment>Range 0-10</comment>
       </variable>
       <variable CV="122" item="Sound Option 6" default="1" tooltip="range 0(single) or 1(double)(Default)" comment="MRC docs, use for articulated locomotives">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Double chuff enable</label>
         <comment>MRC docs, use for articulated locomotives</comment>
       </variable>

@@ -2432,14 +2432,7 @@
         <label>Turnout 8 follows turnout address</label>
       </variable>
       <variable item="Turnout 1 included in local route 1" CV="48" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 1 included in local route 1</label>
       </variable>
       <variable item="Local route 1 sets turnout 1" CV="49" mask="XXXXXXXV">
@@ -2454,14 +2447,7 @@
         <label>Local route 1 sets turnout 1</label>
       </variable>
       <variable item="Turnout 2 included in local route 1" CV="48" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 2 included in local route 1</label>
       </variable>
       <variable item="Local route 1 sets turnout 2" CV="49" mask="XXXXXXVX">
@@ -2498,14 +2484,7 @@
         <label>Local route 1 sets turnout 3</label>
       </variable>
       <variable item="Turnout 4 included in local route 1" CV="48" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 4 included in local route 1</label>
       </variable>
       <variable item="Local route 1 sets turnout 4" CV="49" mask="XXXXVXXX">
@@ -2520,14 +2499,7 @@
         <label>Local route 1 sets turnout 4</label>
       </variable>
       <variable item="Turnout 5 included in local route 1" CV="48" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 5 included in local route 1</label>
       </variable>
       <variable item="Local route 1 sets turnout 5" CV="49" mask="XXXVXXXX">
@@ -2542,14 +2514,7 @@
         <label>Local route 1 sets turnout 5</label>
       </variable>
       <variable item="Turnout 6 included in local route 1" CV="48" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 6 included in local route 1</label>
       </variable>
       <variable item="Local route 1 sets turnout 6" CV="49" mask="XXVXXXXX">
@@ -2564,14 +2529,7 @@
         <label>Local route 1 sets turnout 6</label>
       </variable>
       <variable item="Turnout 7 included in local route 1" CV="48" mask="XVXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 7 included in local route 1</label>
       </variable>
       <variable item="Local route 1 sets turnout 7" CV="49" mask="XVXXXXXX">
@@ -2586,14 +2544,7 @@
         <label>Local route 1 sets turnout 7</label>
       </variable>
       <variable item="Turnout 8 included in local route 1" CV="48" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 8 included in local route 1</label>
       </variable>
       <variable item="Local route 1 sets turnout 8" CV="49" mask="VXXXXXXX">
@@ -2608,14 +2559,7 @@
         <label>Local route 1 sets turnout 8</label>
       </variable>
       <variable item="Turnout 1 included in local route 2" CV="50" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 1 included in local route 2</label>
       </variable>
       <variable item="Local route 2 sets turnout 1" CV="51" mask="XXXXXXXV">
@@ -2630,14 +2574,7 @@
         <label>Local route 2 sets turnout 1</label>
       </variable>
       <variable item="Turnout 2 included in local route 2" CV="50" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 2 included in local route 2</label>
       </variable>
       <variable item="Local route 2 sets turnout 2" CV="51" mask="XXXXXXVX">
@@ -2652,14 +2589,7 @@
         <label>Local route 2 sets turnout 2</label>
       </variable>
       <variable item="Turnout 3 included in local route 2" CV="50" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 3 included in local route 2</label>
       </variable>
       <variable item="Local route 2 sets turnout 3" CV="51" mask="XXXXXVXX">
@@ -2674,14 +2604,7 @@
         <label>Local route 2 sets turnout 3</label>
       </variable>
       <variable item="Turnout 4 included in local route 2" CV="50" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 4 included in local route 2</label>
       </variable>
       <variable item="Local route 2 sets turnout 4" CV="51" mask="XXXXVXXX">
@@ -2696,14 +2619,7 @@
         <label>Local route 2 sets turnout 4</label>
       </variable>
       <variable item="Turnout 5 included in local route 2" CV="50" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 5 included in local route 2</label>
       </variable>
       <variable item="Local route 2 sets turnout 5" CV="51" mask="XXXVXXXX">
@@ -2718,14 +2634,7 @@
         <label>Local route 2 sets turnout 5</label>
       </variable>
       <variable item="Turnout 6 included in local route 2" CV="50" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 6 included in local route 2</label>
       </variable>
       <variable item="Local route 2 sets turnout 6" CV="51" mask="XXVXXXXX">
@@ -2740,14 +2649,7 @@
         <label>Local route 2 sets turnout 6</label>
       </variable>
       <variable item="Turnout 7 included in local route 2" CV="50" mask="XVXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 7 included in local route 2</label>
       </variable>
       <variable item="Local route 2 sets turnout 7" CV="51" mask="XVXXXXXX">
@@ -2762,14 +2664,7 @@
         <label>Local route 2 sets turnout 7</label>
       </variable>
       <variable item="Turnout 8 included in local route 2" CV="50" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 8 included in local route 2</label>
       </variable>
       <variable item="Local route 2 sets turnout 8" CV="51" mask="VXXXXXXX">
@@ -2784,14 +2679,7 @@
         <label>Local route 2 sets turnout 8</label>
       </variable>
       <variable item="Turnout 1 included in local route 3" CV="52" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 1 included in local route 3</label>
       </variable>
       <variable item="Local route 3 sets turnout 1" CV="53" mask="XXXXXXXV">
@@ -2806,14 +2694,7 @@
         <label>Local route 3 sets turnout 1</label>
       </variable>
       <variable item="Turnout 2 included in local route 3" CV="52" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 2 included in local route 3</label>
       </variable>
       <variable item="Local route 3 sets turnout 2" CV="53" mask="XXXXXXVX">
@@ -2828,14 +2709,7 @@
         <label>Local route 3 sets turnout 2</label>
       </variable>
       <variable item="Turnout 3 included in local route 3" CV="52" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 3 included in local route 3</label>
       </variable>
       <variable item="Local route 3 sets turnout 3" CV="53" mask="XXXXXVXX">
@@ -2850,14 +2724,7 @@
         <label>Local route 3 sets turnout 3</label>
       </variable>
       <variable item="Turnout 4 included in local route 3" CV="52" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 4 included in local route 3</label>
       </variable>
       <variable item="Local route 3 sets turnout 4" CV="53" mask="XXXXVXXX">
@@ -2872,14 +2739,7 @@
         <label>Local route 3 sets turnout 4</label>
       </variable>
       <variable item="Turnout 5 included in local route 3" CV="52" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 5 included in local route 3</label>
       </variable>
       <variable item="Local route 3 sets turnout 5" CV="53" mask="XXXVXXXX">
@@ -2894,14 +2754,7 @@
         <label>Local route 3 sets turnout 5</label>
       </variable>
       <variable item="Turnout 6 included in local route 3" CV="52" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 6 included in local route 3</label>
       </variable>
       <variable item="Local route 3 sets turnout 6" CV="53" mask="XXVXXXXX">
@@ -2916,14 +2769,7 @@
         <label>Local route 3 sets turnout 6</label>
       </variable>
       <variable item="Turnout 7 included in local route 3" CV="52" mask="XVXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 7 included in local route 3</label>
       </variable>
       <variable item="Local route 3 sets turnout 7" CV="53" mask="XVXXXXXX">
@@ -2938,14 +2784,7 @@
         <label>Local route 3 sets turnout 7</label>
       </variable>
       <variable item="Turnout 8 included in local route 3" CV="52" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 8 included in local route 3</label>
       </variable>
       <variable item="Local route 3 sets turnout 8" CV="53" mask="VXXXXXXX">
@@ -2960,14 +2799,7 @@
         <label>Local route 3 sets turnout 8</label>
       </variable>
       <variable item="Turnout 1 included in local route 4" CV="54" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 1 included in local route 4</label>
       </variable>
       <variable item="Local route 4 sets turnout 1" CV="55" mask="XXXXXXXV">
@@ -2982,14 +2814,7 @@
         <label>Local route 4 sets turnout 1</label>
       </variable>
       <variable item="Turnout 2 included in local route 4" CV="54" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 2 included in local route 4</label>
       </variable>
       <variable item="Local route 4 sets turnout 2" CV="55" mask="XXXXXXVX">
@@ -3004,14 +2829,7 @@
         <label>Local route 4 sets turnout 2</label>
       </variable>
       <variable item="Turnout 3 included in local route 4" CV="54" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 3 included in local route 4</label>
       </variable>
       <variable item="Local route 4 sets turnout 3" CV="55" mask="XXXXXVXX">
@@ -3026,14 +2844,7 @@
         <label>Local route 4 sets turnout 3</label>
       </variable>
       <variable item="Turnout 4 included in local route 4" CV="54" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 4 included in local route 4</label>
       </variable>
       <variable item="Local route 4 sets turnout 4" CV="55" mask="XXXXVXXX">
@@ -3048,14 +2859,7 @@
         <label>Local route 4 sets turnout 4</label>
       </variable>
       <variable item="Turnout 5 included in local route 4" CV="54" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 5 included in local route 4</label>
       </variable>
       <variable item="Local route 4 sets turnout 5" CV="55" mask="XXXVXXXX">
@@ -3070,14 +2874,7 @@
         <label>Local route 4 sets turnout 5</label>
       </variable>
       <variable item="Turnout 6 included in local route 4" CV="54" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 6 included in local route 4</label>
       </variable>
       <variable item="Local route 4 sets turnout 6" CV="55" mask="XXVXXXXX">
@@ -3092,14 +2889,7 @@
         <label>Local route 4 sets turnout 6</label>
       </variable>
       <variable item="Turnout 7 included in local route 4" CV="54" mask="XVXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 7 included in local route 4</label>
       </variable>
       <variable item="Local route 4 sets turnout 7" CV="55" mask="XVXXXXXX">
@@ -3114,14 +2904,7 @@
         <label>Local route 4 sets turnout 7</label>
       </variable>
       <variable item="Turnout 8 included in local route 4" CV="54" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 8 included in local route 4</label>
       </variable>
       <variable item="Local route 4 sets turnout 8" CV="55" mask="VXXXXXXX">
@@ -3136,14 +2919,7 @@
         <label>Local route 4 sets turnout 8</label>
       </variable>
       <variable item="Turnout 1 included in local route 5" CV="56" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 1 included in local route 5</label>
       </variable>
       <variable item="Local route 5 sets turnout 1" CV="57" mask="XXXXXXXV">
@@ -3158,14 +2934,7 @@
         <label>Local route 5 sets turnout 1</label>
       </variable>
       <variable item="Turnout 2 included in local route 5" CV="56" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 2 included in local route 5</label>
       </variable>
       <variable item="Local route 5 sets turnout 2" CV="57" mask="XXXXXXVX">
@@ -3180,14 +2949,7 @@
         <label>Local route 5 sets turnout 2</label>
       </variable>
       <variable item="Turnout 3 included in local route 5" CV="56" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 3 included in local route 5</label>
       </variable>
       <variable item="Local route 5 sets turnout 3" CV="57" mask="XXXXXVXX">
@@ -3202,14 +2964,7 @@
         <label>Local route 5 sets turnout 3</label>
       </variable>
       <variable item="Turnout 4 included in local route 5" CV="56" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 4 included in local route 5</label>
       </variable>
       <variable item="Local route 5 sets turnout 4" CV="57" mask="XXXXVXXX">
@@ -3224,14 +2979,7 @@
         <label>Local route 5 sets turnout 4</label>
       </variable>
       <variable item="Turnout 5 included in local route 5" CV="56" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 5 included in local route 5</label>
       </variable>
       <variable item="Local route 5 sets turnout 5" CV="57" mask="XXXVXXXX">
@@ -3246,14 +2994,7 @@
         <label>Local route 5 sets turnout 5</label>
       </variable>
       <variable item="Turnout 6 included in local route 5" CV="56" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 6 included in local route 5</label>
       </variable>
       <variable item="Local route 5 sets turnout 6" CV="57" mask="XXVXXXXX">
@@ -3268,14 +3009,7 @@
         <label>Local route 5 sets turnout 6</label>
       </variable>
       <variable item="Turnout 7 included in local route 5" CV="56" mask="XVXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 7 included in local route 5</label>
       </variable>
       <variable item="Local route 5 sets turnout 7" CV="57" mask="XVXXXXXX">
@@ -3290,14 +3024,7 @@
         <label>Local route 5 sets turnout 7</label>
       </variable>
       <variable item="Turnout 8 included in local route 5" CV="56" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 8 included in local route 5</label>
       </variable>
       <variable item="Local route 5 sets turnout 8" CV="57" mask="VXXXXXXX">
@@ -3312,14 +3039,7 @@
         <label>Local route 5 sets turnout 8</label>
       </variable>
       <variable item="Turnout 1 included in local route 6" CV="58" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 1 included in local route 6</label>
       </variable>
       <variable item="Local route 6 sets turnout 1" CV="59" mask="XXXXXXXV">
@@ -3334,14 +3054,7 @@
         <label>Local route 6 sets turnout 1</label>
       </variable>
       <variable item="Turnout 2 included in local route 6" CV="58" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 2 included in local route 6</label>
       </variable>
       <variable item="Local route 6 sets turnout 2" CV="59" mask="XXXXXXVX">
@@ -3356,14 +3069,7 @@
         <label>Local route 6 sets turnout 2</label>
       </variable>
       <variable item="Turnout 3 included in local route 6" CV="58" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 3 included in local route 6</label>
       </variable>
       <variable item="Local route 6 sets turnout 3" CV="59" mask="XXXXXVXX">
@@ -3378,14 +3084,7 @@
         <label>Local route 6 sets turnout 3</label>
       </variable>
       <variable item="Turnout 4 included in local route 6" CV="58" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 4 included in local route 6</label>
       </variable>
       <variable item="Local route 6 sets turnout 4" CV="59" mask="XXXXVXXX">
@@ -3400,14 +3099,7 @@
         <label>Local route 6 sets turnout 4</label>
       </variable>
       <variable item="Turnout 5 included in local route 6" CV="58" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 5 included in local route 6</label>
       </variable>
       <variable item="Local route 6 sets turnout 5" CV="59" mask="XXXVXXXX">
@@ -3422,14 +3114,7 @@
         <label>Local route 6 sets turnout 5</label>
       </variable>
       <variable item="Turnout 6 included in local route 6" CV="58" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 6 included in local route 6</label>
       </variable>
       <variable item="Local route 6 sets turnout 6" CV="59" mask="XXVXXXXX">
@@ -3444,14 +3129,7 @@
         <label>Local route 6 sets turnout 6</label>
       </variable>
       <variable item="Turnout 7 included in local route 6" CV="58" mask="XVXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 7 included in local route 6</label>
       </variable>
       <variable item="Local route 6 sets turnout 7" CV="59" mask="XVXXXXXX">
@@ -3466,14 +3144,7 @@
         <label>Local route 6 sets turnout 7</label>
       </variable>
       <variable item="Turnout 8 included in local route 6" CV="58" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 8 included in local route 6</label>
       </variable>
       <variable item="Local route 6 sets turnout 8" CV="59" mask="VXXXXXXX">
@@ -3488,14 +3159,7 @@
         <label>Local route 6 sets turnout 8</label>
       </variable>
       <variable item="Turnout 1 included in local route 7" CV="60" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 1 included in local route 7</label>
       </variable>
       <variable item="Local route 7 sets turnout 1" CV="61" mask="XXXXXXXV">
@@ -3510,14 +3174,7 @@
         <label>Local route 7 sets turnout 1</label>
       </variable>
       <variable item="Turnout 2 included in local route 7" CV="60" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 2 included in local route 7</label>
       </variable>
       <variable item="Local route 7 sets turnout 2" CV="61" mask="XXXXXXVX">
@@ -3532,14 +3189,7 @@
         <label>Local route 7 sets turnout 2</label>
       </variable>
       <variable item="Turnout 3 included in local route 7" CV="60" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 3 included in local route 7</label>
       </variable>
       <variable item="Local route 7 sets turnout 3" CV="61" mask="XXXXXVXX">
@@ -3554,14 +3204,7 @@
         <label>Local route 7 sets turnout 3</label>
       </variable>
       <variable item="Turnout 4 included in local route 7" CV="60" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 4 included in local route 7</label>
       </variable>
       <variable item="Local route 7 sets turnout 4" CV="61" mask="XXXXVXXX">
@@ -3576,14 +3219,7 @@
         <label>Local route 7 sets turnout 4</label>
       </variable>
       <variable item="Turnout 5 included in local route 7" CV="60" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 5 included in local route 7</label>
       </variable>
       <variable item="Local route 7 sets turnout 5" CV="61" mask="XXXVXXXX">
@@ -3598,14 +3234,7 @@
         <label>Local route 7 sets turnout 5</label>
       </variable>
       <variable item="Turnout 6 included in local route 7" CV="60" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 6 included in local route 7</label>
       </variable>
       <variable item="Local route 7 sets turnout 6" CV="61" mask="XXVXXXXX">
@@ -3620,14 +3249,7 @@
         <label>Local route 7 sets turnout 6</label>
       </variable>
       <variable item="Turnout 7 included in local route 7" CV="60" mask="XVXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 7 included in local route 7</label>
       </variable>
       <variable item="Local route 7 sets turnout 7" CV="61" mask="XVXXXXXX">
@@ -3642,14 +3264,7 @@
         <label>Local route 7 sets turnout 7</label>
       </variable>
       <variable item="Turnout 8 included in local route 7" CV="60" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 8 included in local route 7</label>
       </variable>
       <variable item="Local route 7 sets turnout 8" CV="61" mask="VXXXXXXX">
@@ -3664,14 +3279,7 @@
         <label>Local route 7 sets turnout 8</label>
       </variable>
       <variable item="Turnout 1 included in local route 8" CV="62" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 1 included in local route 8</label>
       </variable>
       <variable item="Local route 8 sets turnout 1" CV="63" mask="XXXXXXXV">
@@ -3686,14 +3294,7 @@
         <label>Local route 8 sets turnout 1</label>
       </variable>
       <variable item="Turnout 2 included in local route 8" CV="62" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 2 included in local route 8</label>
       </variable>
       <variable item="Local route 8 sets turnout 2" CV="63" mask="XXXXXXVX">
@@ -3708,14 +3309,7 @@
         <label>Local route 8 sets turnout 2</label>
       </variable>
       <variable item="Turnout 3 included in local route 8" CV="62" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 3 included in local route 8</label>
       </variable>
       <variable item="Local route 8 sets turnout 3" CV="63" mask="XXXXXVXX">
@@ -3730,14 +3324,7 @@
         <label>Local route 8 sets turnout 3</label>
       </variable>
       <variable item="Turnout 4 included in local route 8" CV="62" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 4 included in local route 8</label>
       </variable>
       <variable item="Local route 8 sets turnout 4" CV="63" mask="XXXXVXXX">
@@ -3752,14 +3339,7 @@
         <label>Local route 8 sets turnout 4</label>
       </variable>
       <variable item="Turnout 5 included in local route 8" CV="62" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 5 included in local route 8</label>
       </variable>
       <variable item="Local route 8 sets turnout 5" CV="63" mask="XXXVXXXX">
@@ -3774,14 +3354,7 @@
         <label>Local route 8 sets turnout 5</label>
       </variable>
       <variable item="Turnout 6 included in local route 8" CV="62" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 6 included in local route 8</label>
       </variable>
       <variable item="Local route 8 sets turnout 6" CV="63" mask="XXVXXXXX">
@@ -3796,14 +3369,7 @@
         <label>Local route 8 sets turnout 6</label>
       </variable>
       <variable item="Turnout 7 included in local route 8" CV="62" mask="XVXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 7 included in local route 8</label>
       </variable>
       <variable item="Local route 8 sets turnout 7" CV="63" mask="XVXXXXXX">
@@ -3818,14 +3384,7 @@
         <label>Local route 8 sets turnout 7</label>
       </variable>
       <variable item="Turnout 8 included in local route 8" CV="62" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 8 included in local route 8</label>
       </variable>
       <variable item="Local route 8 sets turnout 8" CV="63" mask="VXXXXXXX">
@@ -3840,14 +3399,7 @@
         <label>Local route 8 sets turnout 8</label>
       </variable>
       <variable item="Turnout 1 included in local route 9" CV="64" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 1 included in local route 9</label>
       </variable>
       <variable item="Local route 9 sets turnout 1" CV="65" mask="XXXXXXXV">
@@ -3862,14 +3414,7 @@
         <label>Local route 9 sets turnout 1</label>
       </variable>
       <variable item="Turnout 2 included in local route 9" CV="64" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 2 included in local route 9</label>
       </variable>
       <variable item="Local route 9 sets turnout 2" CV="65" mask="XXXXXXVX">
@@ -3884,14 +3429,7 @@
         <label>Local route 9 sets turnout 2</label>
       </variable>
       <variable item="Turnout 3 included in local route 9" CV="64" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 3 included in local route 9</label>
       </variable>
       <variable item="Local route 9 sets turnout 3" CV="65" mask="XXXXXVXX">
@@ -3906,14 +3444,7 @@
         <label>Local route 9 sets turnout 3</label>
       </variable>
       <variable item="Turnout 4 included in local route 9" CV="64" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 4 included in local route 9</label>
       </variable>
       <variable item="Local route 9 sets turnout 4" CV="65" mask="XXXXVXXX">
@@ -3928,14 +3459,7 @@
         <label>Local route 9 sets turnout 4</label>
       </variable>
       <variable item="Turnout 5 included in local route 9" CV="64" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 5 included in local route 9</label>
       </variable>
       <variable item="Local route 9 sets turnout 5" CV="65" mask="XXXVXXXX">
@@ -3950,14 +3474,7 @@
         <label>Local route 9 sets turnout 5</label>
       </variable>
       <variable item="Turnout 6 included in local route 9" CV="64" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 6 included in local route 9</label>
       </variable>
       <variable item="Local route 9 sets turnout 6" CV="65" mask="XXVXXXXX">
@@ -3972,14 +3489,7 @@
         <label>Local route 9 sets turnout 6</label>
       </variable>
       <variable item="Turnout 7 included in local route 9" CV="64" mask="XVXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 7 included in local route 9</label>
       </variable>
       <variable item="Local route 9 sets turnout 7" CV="65" mask="XVXXXXXX">
@@ -3994,14 +3504,7 @@
         <label>Local route 9 sets turnout 7</label>
       </variable>
       <variable item="Turnout 8 included in local route 9" CV="64" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 8 included in local route 9</label>
       </variable>
       <variable item="Local route 9 sets turnout 8" CV="65" mask="VXXXXXXX">
@@ -4016,14 +3519,7 @@
         <label>Local route 9 sets turnout 8</label>
       </variable>
       <variable item="Turnout 1 included in local route 10" CV="66" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 1 included in local route 10</label>
       </variable>
       <variable item="Local route 10 sets turnout 1" CV="67" mask="XXXXXXXV">
@@ -4038,14 +3534,7 @@
         <label>Local route 10 sets turnout 1</label>
       </variable>
       <variable item="Turnout 2 included in local route 10" CV="66" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 2 included in local route 10</label>
       </variable>
       <variable item="Local route 10 sets turnout 2" CV="67" mask="XXXXXXVX">
@@ -4060,14 +3549,7 @@
         <label>Local route 10 sets turnout 2</label>
       </variable>
       <variable item="Turnout 3 included in local route 10" CV="66" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 3 included in local route 10</label>
       </variable>
       <variable item="Local route 10 sets turnout 3" CV="67" mask="XXXXXVXX">
@@ -4082,14 +3564,7 @@
         <label>Local route 10 sets turnout 3</label>
       </variable>
       <variable item="Turnout 4 included in local route 10" CV="66" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 4 included in local route 10</label>
       </variable>
       <variable item="Local route 10 sets turnout 4" CV="67" mask="XXXXVXXX">
@@ -4104,14 +3579,7 @@
         <label>Local route 10 sets turnout 4</label>
       </variable>
       <variable item="Turnout 5 included in local route 10" CV="66" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 5 included in local route 10</label>
       </variable>
       <variable item="Local route 10 sets turnout 5" CV="67" mask="XXXVXXXX">
@@ -4126,14 +3594,7 @@
         <label>Local route 10 sets turnout 5</label>
       </variable>
       <variable item="Turnout 6 included in local route 10" CV="66" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 6 included in local route 10</label>
       </variable>
       <variable item="Local route 10 sets turnout 6" CV="67" mask="XXVXXXXX">
@@ -4148,14 +3609,7 @@
         <label>Local route 10 sets turnout 6</label>
       </variable>
       <variable item="Turnout 7 included in local route 10" CV="66" mask="XVXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 7 included in local route 10</label>
       </variable>
       <variable item="Local route 10 sets turnout 7" CV="67" mask="XVXXXXXX">
@@ -4170,14 +3624,7 @@
         <label>Local route 10 sets turnout 7</label>
       </variable>
       <variable item="Turnout 8 included in local route 10" CV="66" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 8 included in local route 10</label>
       </variable>
       <variable item="Local route 10 sets turnout 8" CV="67" mask="VXXXXXXX">

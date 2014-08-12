@@ -46,18 +46,7 @@
     <label xml:lang="de">ABC aktiviert</label>
   </variable>
   <variable CV="51" mask="XXXXXVXX" item="ABC Direction" default="0">
-    <enumVal>
-      <enumChoice choice="Enabled">
-        <choice>Enabled</choice>
-        <choice xml:lang="it">Abilitato</choice>
-        <choice xml:lang="de">Aktiviert</choice>
-      </enumChoice>
-      <enumChoice choice="Disabled">
-        <choice>Disabled</choice>
-        <choice xml:lang="it">Disabilitato</choice>
-        <choice xml:lang="de">Deaktiviert</choice>
-      </enumChoice>
-    </enumVal>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
     <label>ABC direction dependancy</label>
     <label xml:lang="it">Dipendenza Controlla Frenata da direzione</label>
     <label xml:lang="de">Richtungsabhängigkeit von ABC ist ausgeschaltet</label>

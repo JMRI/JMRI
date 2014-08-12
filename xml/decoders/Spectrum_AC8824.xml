@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2004, 2007, 2011 All rights reserved -->
 <!-- $Id: CreateDecoder.shtml 17977 2011-10-26$ -->
@@ -147,14 +147,7 @@
         <label>startup TURNOUT position S0</label>
       </variable>
       <variable item="Panelsw S0" CV="36" mask="XXXXVXXX" default="1">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Panelsw S0</label>
       </variable>
       <variable item="S1MINpos" CV="38" default="63">
@@ -218,14 +211,7 @@
         <label>startup TURNOUT position S1</label>
       </variable>
       <variable item="Panelsw S1" CV="41" mask="XXXXVXXX" default="1">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Panelsw S1</label>
       </variable>
       <variable item="S2MINpos" CV="43" default="63">
@@ -289,14 +275,7 @@
         <label>startup TURNOUT position S2</label>
       </variable>
       <variable item="Panelsw S2" CV="46" mask="XXXXVXXX" default="1">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Panelsw S2</label>
       </variable>
       <variable item="S3MINpos" CV="48" default="63">
@@ -360,14 +339,7 @@
         <label>startup TURNOUT position S3</label>
       </variable>
       <variable item="Panelsw S3" CV="51" mask="XXXXVXXX" default="1">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Panelsw S3</label>
       </variable>
       <variable item="S4MINpos" CV="53" default="63">
@@ -431,14 +403,7 @@
         <label>startup TURNOUT position S4</label>
       </variable>
       <variable item="Panelsw S4" CV="56" mask="XXXXVXXX" default="1">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Panelsw S4</label>
       </variable>
       <variable item="S5MINpos" CV="58" default="63">
@@ -502,14 +467,7 @@
         <label>startup TURNOUT position S5</label>
       </variable>
       <variable item="Panelsw S5" CV="61" mask="XXXXVXXX" default="1">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Panelsw S5</label>
       </variable>
       <variable item="S6MINpos" CV="63" default="63">
@@ -573,14 +531,7 @@
         <label>startup TURNOUT position S6</label>
       </variable>
       <variable item="Panelsw S6" CV="66" mask="XXXXVXXX" default="1">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Panelsw S6</label>
       </variable>
       <variable item="S7MINpos" CV="68" default="63">
@@ -644,14 +595,7 @@
         <label>startup TURNOUT position S7</label>
       </variable>
       <variable item="Panelsw S7" CV="71" mask="XXXXVXXX" default="1">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Panelsw S7</label>
       </variable>
       <!--*****END OF SERVO DEFAULTS*****-->
@@ -680,14 +624,7 @@
         <label>LOCO address high</label>
       </variable>
       <variable item="LOCO address lock" CV="77" mask="VXXXXXXX" default="1">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>LOCO address lock</label>
       </variable>
       <!--************** animation program EEPROM bytes ********************-->

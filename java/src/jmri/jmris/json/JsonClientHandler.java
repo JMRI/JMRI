@@ -38,6 +38,7 @@ import static jmri.jmris.json.JSON.REPORTERS;
 import static jmri.jmris.json.JSON.ROSTER;
 import static jmri.jmris.json.JSON.ROSTER_ENTRY;
 import static jmri.jmris.json.JSON.ROSTER_GROUPS;
+import static jmri.jmris.json.JSON.ROSTER_GROUP;
 import static jmri.jmris.json.JSON.ROUTE;
 import static jmri.jmris.json.JSON.ROUTES;
 import static jmri.jmris.json.JSON.SENSOR;
@@ -260,6 +261,8 @@ public class JsonClientHandler {
                     this.reporterServer.parseRequest(this.connection.getLocale(), data);
                 } else if (type.equals(ROSTER_ENTRY)) {
                     this.rosterServer.parseRosterEntryRequest(this.connection.getLocale(), data);
+                } else if (type.equals(ROSTER_GROUP)) {
+                    this.rosterServer.parseRosterGroupRequest(this.connection.getLocale(), data);
                 } else if (type.equals(ROUTE)) {
                     this.routeServer.parseRequest(this.connection.getLocale(), data);
                 } else if (type.equals(THROTTLE)) {

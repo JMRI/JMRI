@@ -191,16 +191,7 @@
         <comment xml:lang="it">0= nessuno, 40 realistico (5 sec), 255= circa 20 sec.</comment>
       </variable>
       <variable item="Switching speed enabled by F6" CV="54" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-            <choice xml:lang="it">Disabilitato</choice>
-          </enumChoice>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-            <choice xml:lang="it">Abilitato</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Switching speed enabled by F6</label>
         <label xml:lang="it">Velocità da manovra con F6</label>
       </variable>

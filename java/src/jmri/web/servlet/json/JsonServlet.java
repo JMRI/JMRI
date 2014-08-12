@@ -52,6 +52,7 @@ import static jmri.jmris.json.JSON.MEMORY;
 import static jmri.jmris.json.JSON.METADATA;
 import static jmri.jmris.json.JSON.NAME;
 import static jmri.jmris.json.JSON.NETWORK_SERVICES;
+import static jmri.jmris.json.JSON.SYSTEM_CONNECTIONS;
 import static jmri.jmris.json.JSON.NODE;
 import static jmri.jmris.json.JSON.PANELS;
 import static jmri.jmris.json.JSON.POWER;
@@ -61,6 +62,7 @@ import static jmri.jmris.json.JSON.REPORTERS;
 import static jmri.jmris.json.JSON.ROSTER;
 import static jmri.jmris.json.JSON.ROSTER_ENTRY;
 import static jmri.jmris.json.JSON.ROSTER_GROUPS;
+import static jmri.jmris.json.JSON.ROSTER_GROUP;
 import static jmri.jmris.json.JSON.ROUTE;
 import static jmri.jmris.json.JSON.ROUTES;
 import static jmri.jmris.json.JSON.SENSOR;
@@ -298,6 +300,8 @@ public class JsonServlet extends WebSocketServlet {
                         reply = JsonUtil.getHello(request.getLocale(), JsonServerManager.getJsonServerPreferences().getHeartbeatInterval());
                     } else if (type.equals(NETWORK_SERVICES)) {
                         reply = JsonUtil.getNetworkServices(request.getLocale());
+                    } else if (type.equals(SYSTEM_CONNECTIONS)) {
+                        reply = JsonUtil.getSystemConnections();
                     } else if (type.equals(NODE)) {
                         reply = JsonUtil.getNode(request.getLocale());
                     } else {
@@ -341,6 +345,8 @@ public class JsonServlet extends WebSocketServlet {
                         reply = JsonUtil.getReporter(request.getLocale(), name);
                     } else if (type.equals(ROSTER_ENTRY) || type.equals(ROSTER)) {
                         reply = JsonUtil.getRosterEntry(request.getLocale(), name);
+                    } else if (type.equals(ROSTER_GROUP)) {
+                        reply = JsonUtil.getRosterGroup(request.getLocale(), name);
                     } else if (type.equals(ROUTE)) {
                         if (longPoll) {
                             Route route = InstanceManager.routeManagerInstance().getBySystemName(name);

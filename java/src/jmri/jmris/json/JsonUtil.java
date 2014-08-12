@@ -119,6 +119,8 @@ import static jmri.jmris.json.JSON.REPORTER;
 import static jmri.jmris.json.JSON.RETURN_WHEN_EMPTY;
 import static jmri.jmris.json.JSON.ROAD;
 import static jmri.jmris.json.JSON.ROSTER_ENTRY;
+import static jmri.jmris.json.JSON.ROSTER_GROUP;
+import static jmri.jmris.json.JSON.ROSTER_GROUPS;
 import static jmri.jmris.json.JSON.ROUTE;
 import static jmri.jmris.json.JSON.ROUTE_ID;
 import static jmri.jmris.json.JSON.SENSOR;
@@ -765,6 +767,10 @@ public class JsonUtil {
             label.put(LOCKABLE, re.getFunctionLockable(i));
             labels.add(label);
         }
+        ArrayNode rga = entry.putArray(ROSTER_GROUPS);
+        for (int i = 0; i < re.getGroups().size(); i++) {
+        	rga.add(re.getGroups().get(i));
+        }
         return root;
     }
 
@@ -789,16 +795,18 @@ public class JsonUtil {
 
     static public JsonNode getRosterGroups(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
-        ObjectNode allEntries = mapper.createObjectNode();
-        allEntries.put(NAME, Roster.ALLENTRIES);
-        allEntries.put(LENGTH, Roster.instance().numEntries());
-        root.add(allEntries);
+        root.add(getRosterGroup(locale, Roster.ALLENTRIES));
         for (String name : Roster.instance().getRosterGroupList()) {
-            ObjectNode group = mapper.createObjectNode();
-            group.put(NAME, name);
-            group.put(LENGTH, Roster.instance().numGroupEntries(name));
-            root.add(group);
+            root.add(getRosterGroup(locale, name));
         }
+        return root;
+    }
+    static public JsonNode getRosterGroup(Locale locale, String name) {
+        ObjectNode root = mapper.createObjectNode();
+        root.put(TYPE, ROSTER_GROUP);
+        ObjectNode data = root.putObject(DATA);
+        data.put(NAME, name);
+        data.put(LENGTH, Roster.instance().getEntriesInGroup(name).size());
         return root;
     }
 

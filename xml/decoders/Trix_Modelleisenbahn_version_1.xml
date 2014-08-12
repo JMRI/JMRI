@@ -78,14 +78,7 @@
         <label>Speed Steps</label>
       </variable>
       <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Loco can operate on conventional DC</label>
       </variable>
       <variable CV="49" mask="XXXXVVVV" item="Motor Option 1" default="0" comment="Range 0-3">
@@ -125,41 +118,23 @@
         <comment>Range 0-3</comment>
       </variable>
       <variable CV="51" mask="XXXXXXXV" item="Motor Polarity Reversal" default="0">
-        <enumVal>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Motor Polarity Reversal</label>
       </variable>
       <variable CV="51" mask="XXXXXXVX" item="Lighting Polarity Reversal" default="0">
-        <enumVal>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Lighting Polarity Reversal</label>
       </variable>
       <variable CV="51" mask="XXXXXVXX" item="Track Polarity Reversal" default="0">
-        <enumVal>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Track Polarity Reversal</label>
       </variable>
       <variable CV="128" readOnly="yes" item="Decoder Software Version" default="1">
         <decVal/>
         <label>Decoder Software Version (read only): </label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
     </variables>
     <resets>

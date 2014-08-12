@@ -48,27 +48,13 @@
         <label xml:lang="fr">Décélération (0-31)</label>
         <label xml:lang="de">Bremszeit (0-31)</label>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version">
-        <decVal/>
-        <label>Manufacturer Version No: </label>
-      </variable>
-      <variable CV="8" readOnly="yes" item="Manufacturer">
-        <decVal/>
-        <label>Manufacturer ID: </label>
-      </variable>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <variable CV="19" mask="XVVVVVVV" item="Consist Address">
         <decVal/>
         <label>Consist Address</label>
       </variable>
       <variable item="Consist Direction" CV="19" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>Consist Direction</label>
       </variable>
       <variable item="Consist Acceleration Adjustment" CV="23" mask="XVVVVVVV">
@@ -102,14 +88,7 @@
         <label>Consist Deceleration Adjustment Sign</label>
       </variable>
       <variable item="Locomotive Direction" CV="29" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="reversed">
-            <choice>reversed</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>Locomotive Direction</label>
       </variable>
       <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode">
@@ -135,14 +114,7 @@
         <label>Power Source Conversion</label>
       </variable>
       <variable CV="29" mask="XXXXVXXX" item="Advanced Ack">
-        <enumVal>
-          <enumChoice choice="disabled">
-            <choice>disabled</choice>
-          </enumChoice>
-          <enumChoice choice="enabled">
-            <choice>enabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Advanced Decoder Acknowledgement</label>
       </variable>
       <variable item="Speed Table Definition" CV="29" mask="XXXVXXXX">

@@ -88,14 +88,7 @@
         <label>Speed steps</label>
       </variable>
       <variable CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
-        <enumVal>
-          <enumChoice choice="disabled">
-            <choice>disabled</choice>
-          </enumChoice>
-          <enumChoice choice="enabled">
-            <choice>enabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog conversion mode</label>
       </variable>
       <variable CV="50" item="DC Brake Momentum" mask="XXXXXVXX" comment="Governs how loco acts in DC track block" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">

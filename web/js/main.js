@@ -35,7 +35,7 @@ function getRosterGroups() {
             $(".navbar-roster-group-item").remove();
             if (data.length !== 0) {
                 $.each(data, function(index, value) {
-                    $("#navbar-roster-groups").append("<li class=\"navbar-roster-group-item\"><a href=\"/roster/group/" + encodeURIComponent(value.name) + "\"><span class=\"badge pull-right\">" + value.length + "</span>" + value.name + "</a></li>");
+                    $("#navbar-roster-groups").append("<li class=\"navbar-roster-group-item\"><a href=\"/roster/group/" + encodeURIComponent(value.data.name) + "\"><span class=\"badge pull-right\">" + value.data.length + "</span>" + value.data.name + "</a></li>");
                 });
             }
         }

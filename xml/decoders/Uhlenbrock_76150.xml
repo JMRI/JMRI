@@ -42,12 +42,17 @@
       <variable item="Decoder Version" CV="7" default="9" readOnly="yes">
         <decVal/>
         <label>Manufacturer Version No: </label>
-        <label xml:lang="de">Hersteller Version No: </label>	
+                <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+
       </variable>
       <variable item="Manufacturer" CV="8" readOnly="yes" default="85">
         <decVal/>
         <label>Manufacturer ID: </label>
-        <label xml:lang="de">Herstellerkennung: </label>			
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
@@ -130,7 +135,7 @@
         <decVal max="35"/>
         <label>Short circuit supervision</label>
         <label xml:lang="de">Kurzschlussüberwachung</label>
-        <tooltip>Do not change! 0=deactivated - 35=activated</tooltip>         
+        <tooltip>Do not change! 0=deactivated - 35=activated</tooltip>
       </variable>
       <variable item="Motorola address 2" CV="62" default="0" include="76150">
         <decVal max="80"/>

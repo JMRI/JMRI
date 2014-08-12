@@ -4,17 +4,22 @@ package jmri.jmrit.roster;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 import java.util.Vector;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.jmrit.symbolicprog.CvTableModel;
@@ -22,6 +27,7 @@ import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.util.FileUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
+
 import org.jdom.Attribute;
 import org.jdom.Element;
 
@@ -689,6 +695,24 @@ public class RosterEntry implements jmri.BasicRosterEntry {
         if (attributePairs == null) return null;
         return attributePairs.keySet().toArray(new String[attributePairs.size()]);
     }
+
+    /**
+     * Provide access to the set of roster groups
+     */
+    public List<String> getGroups() {
+        String[] attributes = getAttributeList();
+        List<String> groups = new ArrayList<String>();
+        if (attributes!=null){
+            Roster roster = Roster.instance();
+            for(int x=0; x<attributes.length; x++){
+                if(attributes[x].startsWith(roster.getRosterGroupPrefix())){
+                	groups.add(attributes[x].substring(roster.getRosterGroupPrefix().length()));
+                }
+            }
+        }
+        return groups;
+    }
+
 
     public int getMaxSpeedPCT() {
     return _maxSpeedPCT;

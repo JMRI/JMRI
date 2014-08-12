@@ -663,6 +663,9 @@
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
+            <choice xml:lang="fr">Désactivé</choice>
+            <choice xml:lang="it">Disabilitato</choice>
+            <choice xml:lang="de">Deaktiviert</choice>
           </enumChoice>
           <enumChoice choice="Enabled when horn is ON">
             <choice>Enabled when horn is ON</choice>
@@ -760,6 +763,9 @@
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
+            <choice xml:lang="fr">Désactivé</choice>
+            <choice xml:lang="it">Disabilitato</choice>
+            <choice xml:lang="de">Deaktiviert</choice>
           </enumChoice>
           <enumChoice choice="Enabled when horn is ON">
             <choice>Enabled when horn is ON</choice>
@@ -857,6 +863,9 @@
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
+            <choice xml:lang="fr">Désactivé</choice>
+            <choice xml:lang="it">Disabilitato</choice>
+            <choice xml:lang="de">Deaktiviert</choice>
           </enumChoice>
           <enumChoice choice="Enabled when horn is ON">
             <choice>Enabled when horn is ON</choice>
@@ -955,6 +964,9 @@
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
+            <choice xml:lang="fr">Désactivé</choice>
+            <choice xml:lang="it">Disabilitato</choice>
+            <choice xml:lang="de">Deaktiviert</choice>
           </enumChoice>
           <enumChoice choice="Enabled when horn is ON">
             <choice>Enabled when horn is ON</choice>
@@ -1052,6 +1064,9 @@
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
+            <choice xml:lang="fr">Désactivé</choice>
+            <choice xml:lang="it">Disabilitato</choice>
+            <choice xml:lang="de">Deaktiviert</choice>
           </enumChoice>
           <enumChoice choice="Enabled when horn is ON">
             <choice>Enabled when horn is ON</choice>
@@ -1149,6 +1164,9 @@
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
+            <choice xml:lang="fr">Désactivé</choice>
+            <choice xml:lang="it">Disabilitato</choice>
+            <choice xml:lang="de">Deaktiviert</choice>
           </enumChoice>
           <enumChoice choice="Enabled when horn is ON">
             <choice>Enabled when horn is ON</choice>

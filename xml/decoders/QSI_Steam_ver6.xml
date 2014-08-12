@@ -253,10 +253,8 @@
       <!-- This bit is not used by QSI
     <variable label="Advanced Decoder Acknowledgement" CV="29" mask="XXXXVXXX"
           item="Advanced Ack">
-      <enumVal>
-        <enumChoice choice="disabled"/>
-        <enumChoice choice="enabled"/>
-      </enumVal></variable>
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+      </variable>
 -->
       <variable item="Speed Table Definition" CV="29" mask="XXXVXXXX">
         <enumVal>

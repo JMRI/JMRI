@@ -203,6 +203,10 @@ public final class JSON {
      */
     public static final String ROSTER = "roster"; // NOI18N
     /**
+     * {@value #ROSTER_GROUP}
+     */
+    public static final String ROSTER_GROUP = "rosterGroup"; // NOI18N
+    /**
      * {@value #ROSTER_GROUPS}
      */
     public static final String ROSTER_GROUPS = "rosterGroups"; // NOI18N

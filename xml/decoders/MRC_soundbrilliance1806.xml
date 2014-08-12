@@ -255,14 +255,7 @@
         <label>Coupling Volume</label>
       </variable>
       <variable CV="63" item="Global lighting option 1" tooltip="" default="1">
-        <enumVal>
-          <enumChoice choice="Disable" value="0">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable" value="1">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
         <label>Auto Ditchlight flash with horn (for MRC 1802)</label>
       </variable>
       <variable CV="64" item="Sound Setting 15" tooltip="CV64 sets the Rail Clack Volume [range 0-3]" default="3">
@@ -297,14 +290,7 @@
         <label>Brake Release volume</label>
       </variable>
       <variable CV="115" item="Sound Option 5" tooltip="CV115 sets the Auto Brake Squeal [Enable/Disable]" default="1">
-        <enumVal>
-          <enumChoice choice="Disable" value="0">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable" value="1">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
         <label>Auto Brake squeal</label>
       </variable>
       <variable CV="117" item="Global lighting option 2" tooltip="CV117 selects the Light Mode" default="0">

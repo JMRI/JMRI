@@ -820,7 +820,9 @@
   <variable CV="61" mask="XVXXXXXX" item="EMF Static Config" tooltip="Motor controlled by Function button">
     <enumVal>
       <enumChoice choice="Disabled">
-         <choice xml:lang="it">Disabilita</choice>
+         <choice xml:lang="fr">Désactivé</choice>
+            <choice xml:lang="it">Disabilitato</choice>
+            <choice xml:lang="de">Deaktiviert</choice>
       </enumChoice>
       <enumChoice choice="Button control of motor">
          <choice xml:lang="it">Pulsante controllo Motore</choice>
