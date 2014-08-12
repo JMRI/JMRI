@@ -44,6 +44,11 @@ public class JsonRosterServer {
         this.listen();
     }
 
+    public void parseRosterGroupRequest(Locale locale, JsonNode data) throws IOException, JsonException {
+        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getRosterGroup(locale, data.path(NAME).asText())));
+        this.listen();
+    }
+
     public void dispose() {
         Roster.instance().removePropertyChangeListener(this.rosterListener);
         this.listening = false;
