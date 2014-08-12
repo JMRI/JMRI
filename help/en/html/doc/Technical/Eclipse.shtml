@@ -87,7 +87,7 @@ the following:
   <LI>From the main menu bar select "File" then "Import..."</LI>
   <LI>Click on "SVN" then "Project from SVN" then "Next"</LI>
   <LI>Now create a new repository location and enter this URL for read only access:
-   "svn://svn.code.sf.net/p/jmri/code/trunk/jmri".</LI>
+   "https://svn.code.sf.net/p/jmri/code/trunk/jmri".</LI>
   <P>If you have a SourceForge id and password enter the following URL with your user id in the
    path name: "https://user_id@svn.code.sf.net/p/jmri/code/trunk/jmri". Then when requested submit
    your id and password.</P>
