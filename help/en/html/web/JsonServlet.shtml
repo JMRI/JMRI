@@ -45,16 +45,17 @@
                 <a href='http://en.wikipedia.org/wiki/WebSocket'>WebSocket</a> interface for
                 making changes to the state of those entities, and listening for external changes.</p>
 
-            The <b>HTTP GET</b> feature of the servlet responds to the following URL patterns:
+            <p>The <b>HTTP GET</b> feature of the servlet responds to the following URL patterns:
             <ul>
                 <li>/json/cars</li>
                 <li>/json/car/&lt;ID&gt;</li>
                 <li>/json/sensors</li>
                 <li>/json/sensor/&lt;name&gt;</li>
-            </ul>Currently, the servlet supports cars, engines, lights, locations, memories, metadata, panels, power, railroad, reporters, roster, routes, sensors, signalHeads, signalMasts, trains, and turnouts.
+            </ul>Currently, the servlet supports cars, consists, engines, lights, locations, memories, metadata, 
+            networkServices, panels, power, railroad, reporters, roster, routes, 
+            sensors, signalHeads, signalMasts, systemConnections, trains, and turnouts.</p>
 
-            The WebSocket feature of this servlet
-            currently handles JSON strings in four different forms:
+            <p>The <b>WebSocket</b> feature of this servlet currently handles JSON strings in four different forms:
             <ul>
                 <li>list requests in the form: <code>{"type":"list","list":"trains"}</code>
                     that are passed to the JsonLister for handling.</li>
@@ -73,7 +74,7 @@
                     gets no response, while the JSON heartbeat causes a <code>{"type":"pong"}</code> response.</li>
                 <li>a signoff in the form: <code>{"type":"goodbye"}</code> to which an identical response
                     is sent before the connection gets closed.</li>
-            </ul>
+            </ul></p>
             The <b>WebSocket</b> feature of the servlet can be seen
             by browsing to the <b>/json/</b> url, where a <b>JSON console</b> is providing for testing.<br>
             Example commands and responses:
