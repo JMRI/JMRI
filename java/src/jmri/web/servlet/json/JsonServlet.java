@@ -61,6 +61,7 @@ import static jmri.jmris.json.JSON.REPORTERS;
 import static jmri.jmris.json.JSON.ROSTER;
 import static jmri.jmris.json.JSON.ROSTER_ENTRY;
 import static jmri.jmris.json.JSON.ROSTER_GROUPS;
+import static jmri.jmris.json.JSON.ROSTER_GROUP;
 import static jmri.jmris.json.JSON.ROUTE;
 import static jmri.jmris.json.JSON.ROUTES;
 import static jmri.jmris.json.JSON.SENSOR;
@@ -341,6 +342,8 @@ public class JsonServlet extends WebSocketServlet {
                         reply = JsonUtil.getReporter(request.getLocale(), name);
                     } else if (type.equals(ROSTER_ENTRY) || type.equals(ROSTER)) {
                         reply = JsonUtil.getRosterEntry(request.getLocale(), name);
+                    } else if (type.equals(ROSTER_GROUP)) {
+                        reply = JsonUtil.getRosterGroup(request.getLocale(), name);
                     } else if (type.equals(ROUTE)) {
                         if (longPoll) {
                             Route route = InstanceManager.routeManagerInstance().getBySystemName(name);
