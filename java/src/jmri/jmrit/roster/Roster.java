@@ -552,7 +552,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
                 }
                 r.setDecoderComment(xmlDecoderComment);
             } else {
-                log.info("skip unsaved roster entry with default name " + r.getId());
+                log.debug("skip unsaved roster entry with default name " + r.getId());
             }
         }
         //All Comments and Decoder Comment line feeds have been changed to processor directives
@@ -566,7 +566,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
             if (!_list.get(i).getId().equals(newLocoString)) {
                 values.addContent(_list.get(i).store());
             } else {
-                log.info("skip unsaved roster entry with default name " + _list.get(i).getId());
+                log.debug("skip unsaved roster entry with default name " + _list.get(i).getId());
             }
         }
 
@@ -618,7 +618,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
                 }
                 r.setDecoderComment(tempDecoderComment);
             } else {
-                log.info("skip unsaved roster entry with default name " + r.getId());
+                log.debug("skip unsaved roster entry with default name " + r.getId());
             }
         }
 
