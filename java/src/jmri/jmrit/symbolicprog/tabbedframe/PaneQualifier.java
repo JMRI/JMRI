@@ -33,7 +33,7 @@ public class PaneQualifier extends ArithmeticQualifier {
     }
 
     public void setWatchedAvailable(boolean enable) {
-        log.info("setWatchedAvailable with "+enable+" on "+index);
+        log.debug("setWatchedAvailable with "+enable+" on "+index);
         tabs.setEnabledAt(index, enable);
     }
 
