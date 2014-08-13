@@ -78,7 +78,7 @@ class LocoFile extends XmlFile {
 
                 String name = element.getAttribute("name").getValue();
                 String value = element.getAttribute("value").getValue();
-                log.info("CV named {} has value: {}", name, value);
+                log.debug("CV named {} has value: {}", name, value);
 
                 cvObject = cvModel.allCvMap().get(name);
                 if (cvObject == null) {
