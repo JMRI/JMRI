@@ -27,7 +27,6 @@ import static jmri.jmris.json.JSON.METADATA;
 import static jmri.jmris.json.JSON.METHOD;
 import static jmri.jmris.json.JSON.NAME;
 import static jmri.jmris.json.JSON.NETWORK_SERVICES;
-import static jmri.jmris.json.JSON.OPERATIONS;
 import static jmri.jmris.json.JSON.PANELS;
 import static jmri.jmris.json.JSON.PING;
 import static jmri.jmris.json.JSON.PONG;
@@ -37,8 +36,8 @@ import static jmri.jmris.json.JSON.REPORTER;
 import static jmri.jmris.json.JSON.REPORTERS;
 import static jmri.jmris.json.JSON.ROSTER;
 import static jmri.jmris.json.JSON.ROSTER_ENTRY;
-import static jmri.jmris.json.JSON.ROSTER_GROUPS;
 import static jmri.jmris.json.JSON.ROSTER_GROUP;
+import static jmri.jmris.json.JSON.ROSTER_GROUPS;
 import static jmri.jmris.json.JSON.ROUTE;
 import static jmri.jmris.json.JSON.ROUTES;
 import static jmri.jmris.json.JSON.SENSOR;
@@ -245,8 +244,6 @@ public class JsonClientHandler {
                     this.memoryServer.parseRequest(this.connection.getLocale(), data);
                 } else if (type.equals(METADATA)) {
                     this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getMetadata(this.connection.getLocale(), data.path(NAME).asText())));
-                } else if (type.equals(OPERATIONS)) {
-                    this.operationsServer.parseRequest(this.connection.getLocale(), data);
                 } else if (type.equals(POWER)) {
                     this.powerServer.parseRequest(this.connection.getLocale(), data);
                 } else if (type.equals(PROGRAMMER)) {

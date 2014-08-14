@@ -20,7 +20,7 @@ public final class JSON {
      * Protocol version 1.0 was first introduced in JMRI 3.4<br>
      * Protocol version 1.1 was first introduced in JMRI 3.7.1 and finalized in
      * JMRI 3.8<br>
-     * Protocol version 2.0 will be introduced in the JMRI 3.9 development cycle
+     * Protocol version 2.0 was first introduced in JMRI 3.9.3
      * <p>
      * {@value #JSON_PROTOCOL_VERSION}
      */
@@ -203,7 +203,8 @@ public final class JSON {
     public static final String ROSTER = "roster"; // NOI18N
     /**
      * {@value #ROSTER_GROUP}
-     * {@since 2.0}
+     *
+     * @since 2.0
      */
     public static final String ROSTER_GROUP = "rosterGroup"; // NOI18N
     /**
@@ -274,14 +275,6 @@ public final class JSON {
      * @since 2.0
      */
     public static final String NETWORK_SERVICE = "networkService"; // NOI18N
-    /**
-     * {@value #OPERATIONS}
-     * <p>
-     * @deprecated The use of the <code>{@value #OPERATIONS}</code> type will be
-     * dropped in version 2.0 of the JSON protocol. Use types corresponding to
-     * specific operations objects instead.
-     */
-    public static final String OPERATIONS = "operations"; // NOI18N
     /**
      * {@value #PANEL}
      */
