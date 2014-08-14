@@ -99,6 +99,7 @@ import static jmri.jmris.json.JSON.METADATA;
 import static jmri.jmris.json.JSON.MFG;
 import static jmri.jmris.json.JSON.MODEL;
 import static jmri.jmris.json.JSON.NAME;
+import static jmri.jmris.json.JSON.NETWORK_SERVICE;
 import static jmri.jmris.json.JSON.NODE;
 import static jmri.jmris.json.JSON.NULL;
 import static jmri.jmris.json.JSON.NUMBER;
@@ -1362,14 +1363,15 @@ public class JsonUtil {
     static public JsonNode getNetworkServices(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
         for (ZeroConfService service : ZeroConfService.allServices()) {
-            ObjectNode ns = mapper.createObjectNode();
-            ns.put(NAME, service.name());
-            ns.put(PORT, service.serviceInfo().getPort());
-            ns.put(TYPE, service.type());
+            ObjectNode ns = mapper.createObjectNode().put(TYPE, NETWORK_SERVICE);
+            ObjectNode data = ns.putObject(DATA);
+            data.put(NAME, service.name());
+            data.put(PORT, service.serviceInfo().getPort());
+            data.put(TYPE, service.type());
             Enumeration<String> pe = service.serviceInfo().getPropertyNames();
             while (pe.hasMoreElements()) {
                 String pn = pe.nextElement();
-                ns.put(pn, service.serviceInfo().getPropertyString(pn));
+                data.put(pn, service.serviceInfo().getPropertyString(pn));
             }
             root.add(ns);
         }

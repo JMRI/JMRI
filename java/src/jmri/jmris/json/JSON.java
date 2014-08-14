@@ -20,8 +20,7 @@ public final class JSON {
      * Protocol version 1.0 was first introduced in JMRI 3.4<br>
      * Protocol version 1.1 was first introduced in JMRI 3.7.1 and finalized in
      * JMRI 3.8<br>
-     * Protocol version 2.0 will be introduced in the JMRI 3.9 or later
-     * development cycle
+     * Protocol version 2.0 will be introduced in the JMRI 3.9 development cycle
      * <p>
      * {@value #JSON_PROTOCOL_VERSION}
      */
@@ -204,6 +203,7 @@ public final class JSON {
     public static final String ROSTER = "roster"; // NOI18N
     /**
      * {@value #ROSTER_GROUP}
+     * {@since 2.0}
      */
     public static final String ROSTER_GROUP = "rosterGroup"; // NOI18N
     /**
@@ -268,6 +268,12 @@ public final class JSON {
      * {@value #MEMORY}
      */
     public static final String MEMORY = "memory"; // NOI18N
+    /**
+     * {@value #NETWORK_SERVICE}
+     *
+     * @since 2.0
+     */
+    public static final String NETWORK_SERVICE = "networkService"; // NOI18N
     /**
      * {@value #OPERATIONS}
      * <p>
@@ -356,11 +362,13 @@ public final class JSON {
     public static final String TERMINATE = "terminate"; // NOI18N
     /**
      * {@value #TRACK}
+     *
      * @since 1.1
      */
     public static final String TRACK = "track";
     /**
      * {@value #DATE}
+     *
      * @since 1.1
      */
     public static final String DATE = "date";
@@ -506,6 +514,7 @@ public final class JSON {
     public static final String GROUP = "group"; // NOI18N
     /**
      * {@value #OWNER}
+     *
      * @since 1.1
      */
     public static final String OWNER = "owner"; // NOI18N
@@ -521,6 +530,7 @@ public final class JSON {
     public static final String SEQUENCE = "sequenceId"; // NOI18N
     /**
      * {@value #ARRIVAL_TIME}
+     *
      * @since 1.1
      */
     public static final String ARRIVAL_TIME = "arrivalTime"; // NOI18N
@@ -554,97 +564,118 @@ public final class JSON {
     public static final String ROUTE_ID = "routeId"; // NOI18N
     /**
      * {@value #HAZARDOUS}
+     *
      * @since 1.1
      */
     public static final String HAZARDOUS = "hazardous"; // NOI18N
     /**
      * {@value #KERNEL}
+     *
      * @since 1.1
      */
     public static final String KERNEL = "kernel"; // NOI18N
     /**
      * {@value #FINAL_DESTINATION}
+     *
      * @since 1.1
      */
     public static final String FINAL_DESTINATION = "finalDestination"; // NOI18N
     /**
      * {@value #REMOVE_COMMENT}
+     *
      * @since 1.1
      */
     public static final String REMOVE_COMMENT = "removeComment"; // NOI18N
     /**
      * {@value #ADD_COMMENT}
+     *
      * @since 1.1
      */
     public static final String ADD_COMMENT = "addComment"; // NOI18N
     /**
      * {@value #IS_LOCAL}
+     *
      * @since 1.1
      */
     public static final String IS_LOCAL = "isLocal";
     /**
      * {@value #ADD_HELPERS}
+     *
      * @since 1.1
      */
     public static final String ADD_HELPERS = "addHelpers";
     /**
      * {@value #CHANGE_CABOOSE}
+     *
      * @since 1.1
      */
     public static final String CHANGE_CABOOSE = "changeCaboose";
     /**
      * {@value #CHANGE_ENGINES}
+     *
      * @since 1.1
      */
     public static final String CHANGE_ENGINES = "changeEngines";
     /**
      * {@value #REMOVE_HELPERS}
+     *
      * @since 1.1
      */
     public static final String REMOVE_HELPERS = "removeHelpers";
     /**
      * {@value #OPTIONS}
+     *
      * @since 1.1
      */
     public static final String OPTIONS = "options";
     /**
      * {@value #ADD}
+     *
      * @since 1.1
      */
     public static final String ADD = "add";
     /**
-     * Indicates a drop or setout in operations
      * {@value #REMOVE}
+     *
+     * In operations, this indicates the dropping or setting out of a car or
+     * engine.
+     *
      * @since 1.1
      */
     public static final String REMOVE = "remove";
     /**
      * {@value #ADD_AND_REMOVE}
+     *
      * @since 1.1
      */
     public static final String ADD_AND_REMOVE = "addAndRemove";
     /**
      * {@value #TOTAL}
+     *
      * @since 1.1
      */
     public static final String TOTAL = "total";
     /**
      * {@value #LOADS}
+     *
      * @since 1.1
      */
     public static final String LOADS = "loads";
     /**
      * {@value #EMPTIES}
+     *
      * @since 1.1
      */
     public static final String EMPTIES = "empties";
     /**
      * {@value #RETURN_WHEN_EMPTY}
+     *
      * @since 1.1
      */
     public static final String RETURN_WHEN_EMPTY = "returnWhenEmpty";
     /**
      * {@value #UTILITY}
+     *
      * @since 1.1
      */
     public static final String UTILITY = "utility";
@@ -855,6 +886,7 @@ public final class JSON {
     public static final int THROWN = 0x04;
     /**
      * {@value #UNIT}
+     *
      * @since 1.1
      */
     public static final String UNIT = "unit"; // NOI18N
@@ -862,25 +894,27 @@ public final class JSON {
     /* JMRI JSON Client Autoconfiguration support */
     /**
      * {@value #PREFIX}
+     *
      * @since 2.0
      */
     public static final String PREFIX = "prefix"; // NOI18N
     /**
      * {@value #SYSTEM_CONNECTION}
+     *
      * @since 2.0
      */
     public static final String SYSTEM_CONNECTION = "systemConnection"; // NOI18N
     /**
      * {@value #SYSTEM_CONNECTIONS}
+     *
      * @since 2.0
      */
     public static final String SYSTEM_CONNECTIONS = "systemConnections"; // NOI18N
 
     /* ZeroConf support */
     /**
-     * {@value #ZEROCONF_SERVICE_TYPE}
-     * Not used within the protocol, but used to support discovery of servers
-     * supporting the protocol.
+     * {@value #ZEROCONF_SERVICE_TYPE} Not used within the protocol, but used to
+     * support discovery of servers supporting the protocol.
      */
     public static final String ZEROCONF_SERVICE_TYPE = "_jmri-json._tcp.local."; // NOI18N
 

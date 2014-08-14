@@ -7,8 +7,7 @@ import java.util.Properties;
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
-import static jmri.jmris.json.JSON.JSON;
-import static jmri.jmris.json.JSON.JSON_PROTOCOL_VERSION;
+import jmri.jmris.json.JSON;
 import jmri.util.FileUtil;
 import jmri.util.zeroconf.ZeroConfService;
 import jmri.web.servlet.directory.DirectoryHandler;
@@ -183,8 +182,8 @@ public final class WebServer implements LifeCycle.Listener {
     public void lifeCycleStarted(LifeCycle lc) {
         HashMap<String, String> properties = new HashMap<String, String>();
         properties.put("path", "/"); // NOI18N
-        properties.put(JSON, JSON_PROTOCOL_VERSION);
-        log.info("Starting ZeroConfService _http._tcp.local for Web Server");
+        properties.put(JSON.JSON, JSON.JSON_PROTOCOL_VERSION);
+        log.info("Starting ZeroConfService _http._tcp.local for Web Server with properties {}", properties);
         zeroConfService = ZeroConfService.create("_http._tcp.local.", preferences.getPort(), properties); // NOI18N
         zeroConfService.publish();
         log.debug("Web Server finished starting");

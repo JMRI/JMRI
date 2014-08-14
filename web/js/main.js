@@ -64,7 +64,7 @@ function getNetworkServices() {
             $(".visible-jmri_withrottle").addClass("hidden").removeClass("show");
             if (data.length !== 0) {
                 $.each(data, function(index, value) {
-                    var service = value.type.split(".")[0];
+                    var service = value.data.type.split(".")[0];
                     $(".visible-jmri" + service).addClass("show").removeClass("hidden");
                     $(".hidden-jmri" + service).addClass("hidden").removeClass("show");
                 });

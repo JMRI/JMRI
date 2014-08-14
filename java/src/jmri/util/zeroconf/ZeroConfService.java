@@ -143,7 +143,7 @@ public class ZeroConfService {
             properties.put("jmri", jmri.Version.getCanonicalVersion());
             properties.put("node", NodeIdentity.identity());
             s = new ZeroConfService(ServiceInfo.create(type, name, port, weight, priority, properties));
-            log.debug("Creating new ZeroConfService {}", s.key());
+            log.debug("Creating new ZeroConfService {} with properties {}", s.key(), properties);
         }
         return s;
     }
