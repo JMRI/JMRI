@@ -829,6 +829,9 @@ abstract public class AbstractMRTrafficController {
         return true;
     }
 
+
+    private int retransmitCount = 0;
+
     /**
      * Handle each reply when complete.
      * <P>
@@ -874,11 +877,19 @@ abstract public class AbstractMRTrafficController {
                     // to automatically handle by re-queueing the last sent
                     // message, otherwise go on to the next message
                     if (msg.isRetransmittableErrorMsg()) {
-                        log.debug("Automatic Recovery from Error Message: {}", msg.toString());
+                        log.debug("Automatic Recovery from Error Message: {}.  Retransmitted {} times.", msg.toString(),retransmitCount);
                         synchronized (xmtRunnable) {
                             mCurrentState = AUTORETRYSTATE;
+                            if(retransmitCount>0) {
+                               try{
+                                  xmtRunnable.wait(retransmitCount*100);
+                               } catch (InterruptedException e) {
+                                  Thread.currentThread().interrupt(); // retain if needed later
+                               }
+                            }
                             replyInDispatch = false;
                             xmtRunnable.notify();
+                            retransmitCount++;
                         }
                     } else {
                         // update state, and notify to continue
@@ -886,6 +897,7 @@ abstract public class AbstractMRTrafficController {
                             mCurrentState = NOTIFIEDSTATE;
                             replyInDispatch = false;
                             xmtRunnable.notify();
+                            retransmitCount = 0;
                         }
                     }
                     break;
