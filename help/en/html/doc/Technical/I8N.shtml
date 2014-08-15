@@ -240,10 +240,11 @@ you write.
 <p>
 Some web references on how to do this:
 <UL>
-<li><A HREF="http://java.sun.com/docs/books/tutorial/i18n/index.html">Sun internationalization tutorial</a>(highly recommended)
-<LI><A HREF="http://java.sun.com/j2se/1.3/docs/guide/intl/faq.html">Sun internationalization FAQ</a>
+<li><A HREF="http://docs.oracle.com/javase/6/docs/technotes/guides/intl/">Java Internationalization main page</a>
+<li><A HREF="http://docs.oracle.com/javase/tutorial/i18n/index.html">Sun internationalization tutorial</a>(highly recommended)
 </UL>
-
+(Note: Those are Java 6 links.  There are some nice I18N features in Java 7, but JMRI doesn't 
+use Java 7 yet)
 <P>
 JMRI is moving toward a set of conventions on how to structure and
 use the large amount of I18N information required.  
@@ -375,6 +376,33 @@ String choice = LocaleSelector.getAttribute(choiceElement, "choice")
 </pre></code>
 where "choiceElement" is a JDOM Element object containing a (possible translated)
 "choice" attribute.  Null will be returned if nothing is found.
+
+<a id="numbers">
+<h3>Numbers</h3>
+
+The number "10*10*10+2+3/10" is written in different ways in different places:
+"1002.3",
+"1,002.3", 
+"1.002,3" and perhaps other ways.
+<p>
+Java and Swing automatically handles this when converting numerical data (int, long, float, double, and Number types)
+to Strings for display.
+<p>
+On input, you need to add some additional code:
+<code><pre>
+NumberFormat format = NumberFormat.getInstance();
+Number number = format.parse("1.002,3");  // or "1,002.3" in e.g. the US
+double d = number.doubleValue();
+</pre></code>
+will load "d" with the correct numeric value. You can compress this to the idiom:
+<code><pre>
+double d = NumberFormat.getInstance().parse("1.002,3").doubleValue();
+</pre></code>
+For int values, use:
+<code><pre>
+int n = NumberFormat.getInstance().parse("1.002").intValue();
+</pre></code>
+with similar xxxValue() methods for byte, short, float and long.
 
 <a id="testing">
 <h3>Testing</h3>
