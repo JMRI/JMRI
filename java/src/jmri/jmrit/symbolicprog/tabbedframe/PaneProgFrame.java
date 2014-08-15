@@ -340,21 +340,24 @@ abstract public class PaneProgFrame extends JmriJFrame
      * <LI> Fill CV values from the roster entry
      * <LI> Create the programmer panes
      * </UL>
-     * @param pDecoderFile       XML file defining the decoder contents
+     * @param pDecoderFile      XML file defining the decoder contents; 
+     *                          if null, the decoder definition is found from the RosterEntry
      * @param pRosterEntry      RosterEntry for information on this locomotive
      * @param pFrameTitle       Name/title for the frame
      * @param pProgrammerFile   Name of the programmer file to use
      * @param pProg             Programmer object to be used to access CVs
      */
     @SuppressWarnings("unchecked")
-	public PaneProgFrame(DecoderFile pDecoderFile, RosterEntry pRosterEntry,
+	public PaneProgFrame(DecoderFile pDecoderFile, @NonNull RosterEntry pRosterEntry,
                         String pFrameTitle, String pProgrammerFile, Programmer pProg, boolean opsMode) {
         super(pFrameTitle);
 
+        _rosterEntry =  pRosterEntry;
         _opsMode = opsMode;
+        filename = pProgrammerFile;
+        mProgrammer   = pProg;
 
         // create the tables
-        mProgrammer   = pProg;
         cvModel       = new CvTableModel(progStatus, mProgrammer);
         iCvModel      = new IndexedCvTableModel(progStatus, mProgrammer);
 
@@ -364,10 +367,8 @@ abstract public class PaneProgFrame extends JmriJFrame
         resetModel    = new ResetTableModel(progStatus, mProgrammer);
 
         // handle the roster entry
-        _rosterEntry =  pRosterEntry;
-        if (_rosterEntry == null) log.error("null RosterEntry pointer");
-        else _rosterEntry.setOpen(true);
-        filename = pProgrammerFile;
+        _rosterEntry.setOpen(true);
+
         installComponents();
 
         if (_rosterEntry.getFileName() != null) {
@@ -461,7 +462,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      * <li>Then invokes DecoderFile.isIncluded() with the retrieved values.</li>
      * <li>Deals deals gracefully with null or missing elements and attributes.</li>
      * </ul>
-     * @param e XML             element with possible "include" and "exclude" attributes to be checked
+     * @param e                 XML element with possible "include" and "exclude" attributes to be checked
      * @param aModelElement     "model" element from the Decoder Index, used to get "model" and "productID".
      * @param aRosterEntry      The current roster entry, used to get "family".
      * @param extraIncludes     additional "include" terms
@@ -566,10 +567,9 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
     }
 
-    protected void loadDecoderFile(DecoderFile df, RosterEntry re) {
+    protected void loadDecoderFile(@NonNull DecoderFile df, @NonNull RosterEntry re) {
         if (df == null) {
-            log.warn("loadDecoder file invoked with null object");
-            return;
+            throw new IllegalArgumentException("loadDecoder file invoked with null object");
         }
         if (log.isDebugEnabled()) log.debug("loadDecoderFile from "+DecoderFile.fileLocation
                                         +" "+df.getFilename());
