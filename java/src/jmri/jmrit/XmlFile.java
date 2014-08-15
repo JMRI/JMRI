@@ -31,15 +31,17 @@ import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
 /**
- * Handle common aspects of XML files. <P> JMRI needs to be able to operate
- * offline, so it needs to store DTDs locally. At the same time, we want XML
- * files to be transportable, and to have their DTDs accessible via the web (for
+ * Handle common aspects of XML files. 
+ * <P> JMRI needs to be able to operate
+ * offline, so it needs to store resources locally. At the same time, we want XML
+ * files to be transportable, and to have their schema and stylesheets accessible via the web (for
  * browser rendering). Further, our code assumes that default values for
- * attributes will be provided, and it's necessary to read the DTD for that to
- * work. <p> We implement this using our own EntityResolvor, the
+ * attributes will be provided, and it's necessary to read the schema for that to
+ * work. 
+ * <p> We implement this using our own EntityResolver, the
  * {@link jmri.util.JmriLocalEntityResolver} class.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2007, 2012
+ * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2007, 2012, 2014
  * @version	$Revision$
  */
 public abstract class XmlFile {
@@ -90,7 +92,6 @@ public abstract class XmlFile {
     /**
      * Read a File as XML, and return the root object.
      *
-     * Multiple methods are tried to locate the DTD needed to do this.
      * Exceptions are only thrown when local recovery is impossible.
      *
      * @throws org.jdom.JDOMException only when all methods have failed
@@ -116,7 +117,6 @@ public abstract class XmlFile {
     /**
      * Read an {@link java.io.InputStream} as XML, and return the root object.
      *
-     * Multiple methods are tried to locate the DTD needed to do this.
      * Exceptions are only thrown when local recovery is impossible.
      *
      * @throws org.jdom.JDOMException only when all methods have failed
@@ -132,7 +132,6 @@ public abstract class XmlFile {
     /**
      * Read a URL as XML, and return the root object.
      *
-     * Multiple methods are tried to locate the DTD needed to do this.
      * Exceptions are only thrown when local recovery is impossible.
      *
      * @throws org.jdom.JDOMException only when all methods have failed
