@@ -485,9 +485,12 @@ public abstract class XmlFile {
         if (! href.startsWith("http://jmri.org/")) return doc;
         href = href.substring(16);
         
+        // if starts with 'xml/' we remove that; findFile will put it back
+        if (href.startsWith("xml/")) href = href.substring(4);
+        
         // read the XSLT transform into a Document to get XInclude done
         SAXBuilder builder = getBuilder(false);  // argument controls validation
-        Document xdoc = builder.build(new BufferedInputStream(new FileInputStream(new File(href))));
+        Document xdoc = builder.build(new BufferedInputStream(new FileInputStream(findFile(href))));
         org.jdom.transform.XSLTransformer transformer = new org.jdom.transform.XSLTransformer(xdoc);
         return transformer.transform(doc);
     }
