@@ -230,9 +230,6 @@ any .xml, .jhm files or the web*.shtml files in the top directory, as they
 are automatically produced.
 </ul>
 
-
-
-
 <a name="dev"><h2>Internationalization for Developers</h2>
 
 For internationalization to work, you have to do a few things in the code 
@@ -379,7 +376,6 @@ where "choiceElement" is a JDOM Element object containing a (possible translated
 
 <a id="numbers">
 <h3>Numbers</h3>
-
 The number "10*10*10+2+3/10" is written in different ways in different places:
 "1002.3",
 "1,002.3", 
@@ -390,17 +386,17 @@ to Strings for display.
 <p>
 On input, you need to add some additional code:
 <code><pre>
-NumberFormat format = NumberFormat.getInstance();
-Number number = format.parse("1.002,3");  // or "1,002.3" in e.g. the US
-double d = number.doubleValue();
+   NumberFormat format = NumberFormat.getInstance();
+   Number number = format.parse("1.002,3");  // or "1,002.3" in e.g. the US
+   double d = number.doubleValue();
 </pre></code>
 will load "d" with the correct numeric value. You can compress this to the idiom:
 <code><pre>
-double d = NumberFormat.getInstance().parse("1.002,3").doubleValue();
+   double d = NumberFormat.getInstance().parse("1.002,3").doubleValue();
 </pre></code>
 For int values, use:
 <code><pre>
-int n = NumberFormat.getInstance().parse("1.002").intValue();
+   int n = NumberFormat.getInstance().parse("1.002").intValue();
 </pre></code>
 with similar xxxValue() methods for byte, short, float and long.
 
