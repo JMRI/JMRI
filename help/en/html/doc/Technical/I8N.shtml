@@ -398,6 +398,10 @@ For output:
    String s = jmri.util.IntlUtilities.valueOf(1002.3);
 </pre></code>
 
+<p>
+Note:  You should still store and load values in XML files in Java's default coding,
+without using these formatting tools.  That way, the files can be moved
+from one user to another without worrying about whether they are using the same Locale.
 
 <a id="testing">
 <h3>Testing</h3>
