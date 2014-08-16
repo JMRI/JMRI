@@ -381,24 +381,23 @@ The number "10*10*10+2+3/10" is written in different ways in different places:
 "1,002.3", 
 "1.002,3" and perhaps other ways.
 <p>
-Java and Swing automatically handles this when converting numerical data (int, long, float, double, and Number types)
-to Strings for display.
+JMRI provides a helpful utility for handling this on input:
+
+<code><pre>
+   double d = jmri.util.IntlUtilities.doubleValue("1,002.3");
+   float  f = jmri.util.IntlUtilities.floatValue("1,002.3");
+</pre></code>
+
+Note that this can throw a java.text.ParseException if the input is unparsable, so 
+handling that is part of your user-error handling.
+
 <p>
-On input, you need to add some additional code:
+For output:
+
 <code><pre>
-   NumberFormat format = NumberFormat.getInstance();
-   Number number = format.parse("1.002,3");  // or "1,002.3" in e.g. the US
-   double d = number.doubleValue();
+   String s = jmri.util.IntlUtilities.valueOf(1002.3);
 </pre></code>
-will load "d" with the correct numeric value. You can compress this to the idiom:
-<code><pre>
-   double d = NumberFormat.getInstance().parse("1.002,3").doubleValue();
-</pre></code>
-For int values, use:
-<code><pre>
-   int n = NumberFormat.getInstance().parse("1.002").intValue();
-</pre></code>
-with similar xxxValue() methods for byte, short, float and long.
+
 
 <a id="testing">
 <h3>Testing</h3>
