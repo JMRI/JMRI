@@ -20,8 +20,8 @@ public class IntlUtilitiesTest extends TestCase {
         Locale startingLocale = Locale.getDefault();
         try {
             Locale.setDefault(Locale.US);
-            Assert.assertEquals("1.0", 1.0f, jmri.util.IntlUtilities.floatValue("1.0"));
-            Assert.assertEquals("2.3", 2.3f, jmri.util.IntlUtilities.floatValue("2.3"));
+            Assert.assertEquals("1.0", 1.0f, IntlUtilities.floatValue("1.0"));
+            Assert.assertEquals("2.3", 2.3f, IntlUtilities.floatValue("2.3"));
         } finally {
             Locale.setDefault(startingLocale);
         }
@@ -31,8 +31,8 @@ public class IntlUtilitiesTest extends TestCase {
         Locale startingLocale = Locale.getDefault();
         try {
             Locale.setDefault(Locale.ITALY);
-            Assert.assertEquals("1,0", 1.0f, jmri.util.IntlUtilities.floatValue("1,0"));            
-            Assert.assertEquals("2,3", 2.3f, jmri.util.IntlUtilities.floatValue("2,3"));            
+            Assert.assertEquals("1,0", 1.0f, IntlUtilities.floatValue("1,0"));            
+            Assert.assertEquals("2,3", 2.3f, IntlUtilities.floatValue("2,3"));            
         } finally {
             Locale.setDefault(startingLocale);
         }
@@ -43,8 +43,8 @@ public class IntlUtilitiesTest extends TestCase {
         Locale startingLocale = Locale.getDefault();
         try {
             Locale.setDefault(Locale.US);
-            Assert.assertEquals("1.0", 1.0, jmri.util.IntlUtilities.doubleValue("1.0"));
-            Assert.assertEquals("2.3", 2.3, jmri.util.IntlUtilities.doubleValue("2.3"));
+            Assert.assertEquals("1.0", 1.0, IntlUtilities.doubleValue("1.0"));
+            Assert.assertEquals("2.3", 2.3, IntlUtilities.doubleValue("2.3"));
         } finally {
             Locale.setDefault(startingLocale);
         }
@@ -54,8 +54,8 @@ public class IntlUtilitiesTest extends TestCase {
         Locale startingLocale = Locale.getDefault();
         try {
             Locale.setDefault(Locale.ITALY);
-            Assert.assertEquals("1,0", 1.0, jmri.util.IntlUtilities.doubleValue("1,0"));            
-            Assert.assertEquals("2,3", 2.3, jmri.util.IntlUtilities.doubleValue("2,3"));            
+            Assert.assertEquals("1,0", 1.0, IntlUtilities.doubleValue("1,0"));            
+            Assert.assertEquals("2,3", 2.3, IntlUtilities.doubleValue("2,3"));            
         } finally {
             Locale.setDefault(startingLocale);
         }
@@ -79,12 +79,12 @@ public class IntlUtilitiesTest extends TestCase {
         Locale startingLocale = Locale.getDefault();
         try {
             Locale.setDefault(Locale.US);
-            Assert.assertEquals("1.1",  "1.1", jmri.util.IntlUtilities.valueOf(1.1));
-            Assert.assertEquals("1.1f", "1.1", jmri.util.IntlUtilities.valueOf(1.1f));
-            Assert.assertEquals("2.3",  "2.3", jmri.util.IntlUtilities.valueOf(2.3));
-            Assert.assertEquals("2.3f", "2.3", jmri.util.IntlUtilities.valueOf(2.3f));
-            Assert.assertEquals("5", "5", jmri.util.IntlUtilities.valueOf(5));
-            Assert.assertEquals("1", "1", jmri.util.IntlUtilities.valueOf(1));
+            Assert.assertEquals("1.1",  "1.1", IntlUtilities.valueOf(1.1));
+            Assert.assertEquals("1.1f", "1.1", ntlUtilities.valueOf(1.1f));
+            Assert.assertEquals("2.3",  "2.3", IntlUtilities.valueOf(2.3));
+            Assert.assertEquals("2.3f", "2.3", IntlUtilities.valueOf(2.3f));
+            Assert.assertEquals("5", "5", IntlUtilities.valueOf(5));
+            Assert.assertEquals("1", "1", IntlUtilities.valueOf(1));
         } finally {
             Locale.setDefault(startingLocale);
         }
@@ -94,12 +94,12 @@ public class IntlUtilitiesTest extends TestCase {
         Locale startingLocale = Locale.getDefault();
         try {
             Locale.setDefault(Locale.ITALY);
-            Assert.assertEquals("1.1",  "1,1", jmri.util.IntlUtilities.valueOf(1.1));
-            Assert.assertEquals("1.1f", "1,1", jmri.util.IntlUtilities.valueOf(1.1f));
-            Assert.assertEquals("2.3",  "2,3", jmri.util.IntlUtilities.valueOf(2.3));
-            Assert.assertEquals("2.3f", "2,3", jmri.util.IntlUtilities.valueOf(2.3f));
-            Assert.assertEquals("5", "5", jmri.util.IntlUtilities.valueOf(5));
-            Assert.assertEquals("1", "1", jmri.util.IntlUtilities.valueOf(1));
+            Assert.assertEquals("1.1",  "1,1", IntlUtilities.valueOf(1.1));
+            Assert.assertEquals("1.1f", "1,1", IntlUtilities.valueOf(1.1f));
+            Assert.assertEquals("2.3",  "2,3", IntlUtilities.valueOf(2.3));
+            Assert.assertEquals("2.3f", "2,3", IntlUtilities.valueOf(2.3f));
+            Assert.assertEquals("5", "5", IntlUtilities.valueOf(5));
+            Assert.assertEquals("1", "1", IntlUtilities.valueOf(1));
         } finally {
             Locale.setDefault(startingLocale);
         }

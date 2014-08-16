@@ -19,32 +19,32 @@ import org.slf4j.LoggerFactory;
 public class IntlUtilities {
 
     /**
-     * Meant as a replacement for Float.valueOf("1").floatValue()
+     * Use as a replacement for Float.valueOf("1").floatValue()
      * and Float.parseFloat("1").floatValue()
      */
-    static float floatValue(String val) throws java.text.ParseException {
+    static public float floatValue(String val) throws java.text.ParseException {
         return java.text.NumberFormat.getInstance().parse(val).floatValue();
     }
     
     /**
-     * Meant as a replacement for Double.valueOf("1").doubleValue()
+     * Use as a replacement for Double.valueOf("1").doubleValue()
      * and Double.parseDouble("1").doubleValue()
      */
-    static double doubleValue(String val) throws java.text.ParseException {
+    static public double doubleValue(String val) throws java.text.ParseException {
         return java.text.NumberFormat.getInstance().parse(val).doubleValue();
     }
     
     /**
-     * Meant as a replacement for String.valueOf(2.3)
+     * Use as a replacement for String.valueOf(2.3)
      */
-    static String valueOf(double val) {
+    static public String valueOf(double val) {
         return java.text.NumberFormat.getInstance().format(val);
     }
     
     /**
-     * Meant as a replacement for String.valueOf(5)
+     * Use as a replacement for String.valueOf(5)
      */
-    static String valueOf(int val) {
+    static public String valueOf(int val) {
         return java.text.NumberFormat.getInstance().format(val);
     }
     
