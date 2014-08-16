@@ -697,8 +697,8 @@ public class Location implements java.beans.PropertyChangeListener {
 	}
 	
 	/**
-	 * Gets a sorted by id list of track for this location.
-	 * @return Sorted list by id of tracks at this location.
+	 * Gets a sorted by id list of tracks for this location.
+	 * @return Sorted list of tracks by id for this location.
 	 */
 	public List<Track> getTrackByIdList() {
 		List<Track> out = new ArrayList<Track>();
@@ -768,24 +768,16 @@ public class Location implements java.beans.PropertyChangeListener {
 	 * 
 	 * @param type
 	 *            track type: Track.YARD, Track.SPUR, Track.INTERCHANGE, Track.STAGING
-	 * @return list of tracks ordered by name
+	 * @return list of tracks ordered by name for this location
 	 */
 	public List<Track> getTrackByNameList(String type) {
-		// first get id list
-		List<Track> sortList = getTrackByIdList();
-		// now re-sort
-		List<Track> out = new ArrayList<Track>();
-		String locName = "";
-		boolean locAdded = false;
-		Track trackOut;
 
-		for (Track track : sortList) {
-			locAdded = false;
-			locName = track.getName();
+		List<Track> out = new ArrayList<Track>();
+
+		for (Track track : getTrackByIdList()) {
+			boolean locAdded = false;
 			for (int j = 0; j < out.size(); j++) {
-				trackOut = out.get(j);
-				String outLocName = trackOut.getName();
-				if (locName.compareToIgnoreCase(outLocName) < 0
+				if (track.getName().compareToIgnoreCase(out.get(j).getName()) < 0
 						&& (type != null && track.getTrackType().equals(type) || type == null)) {
 					out.add(j, track);
 					locAdded = true;
@@ -805,45 +797,37 @@ public class Location implements java.beans.PropertyChangeListener {
 	 * 
 	 * @param type
 	 *            track type: Track.YARD, Track.SPUR, Track.INTERCHANGE, Track.STAGING
-	 * @return list of track ids ordered by moves
+	 * @return list of tracks at this location ordered by moves
 	 */
 	public List<Track> getTrackByMovesList(String type) {
-		// first get id list
-		List<Track> sortList = getTrackByIdList();
-		// now re-sort
+		
 		List<Track> moveList = new ArrayList<Track>();
-		boolean locAdded = false;
-		Track track;
-		Track trackOut;
-
-		for (int i = 0; i < sortList.size(); i++) {
-			locAdded = false;
-			track = sortList.get(i);
-			int moves = track.getMoves();
+		
+		for (Track track : getTrackByIdList()) {
+			boolean locAdded = false;
 			for (int j = 0; j < moveList.size(); j++) {
-				trackOut = moveList.get(j);
-				int outLocMoves = trackOut.getMoves();
-				if (moves < outLocMoves && (type != null && track.getTrackType().equals(type) || type == null)) {
-					moveList.add(j, sortList.get(i));
+				if (track.getMoves() < moveList.get(j).getMoves()
+						&& (type != null && track.getTrackType().equals(type) || type == null)) {
+					moveList.add(j, track);
 					locAdded = true;
 					break;
 				}
 			}
 			if (!locAdded && (type != null && track.getTrackType().equals(type) || type == null)) {
-				moveList.add(sortList.get(i));
+				moveList.add(track);
 			}
 		}
-		// bias tracks with schedules
+		// bias tracks with schedules to the start of the list
 		List<Track> out = new ArrayList<Track>();
 		for (int i = 0; i < moveList.size(); i++) {
-			track = moveList.get(i);
+			Track track = moveList.get(i);
 			if (!track.getScheduleId().equals("")) {
-				out.add(moveList.get(i));
+				out.add(track);
 				moveList.remove(i--);
 			}
 		}
-		for (int i = 0; i < moveList.size(); i++) {
-			out.add(moveList.get(i));
+		for (Track track : moveList) {
+			out.add(track);
 		}
 		return out;
 	}
