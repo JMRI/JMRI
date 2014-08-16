@@ -1,4 +1,4 @@
-// FileUtil.java
+// SystemType.java
 
 package jmri.util;
 
