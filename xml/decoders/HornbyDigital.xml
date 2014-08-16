@@ -48,32 +48,16 @@
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-      <variable CV="29" mask="XXXXXXXV" default="0" item="Locomotive Direction" writeOnly="yes">
-        <enumVal>
-          <enumChoice choice="Forward">
-            <choice>Forward</choice>
-          </enumChoice>
-          <enumChoice choice="Reverse">
-            <choice>Reverse</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Normal direction of motion</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1" writeOnly="yes">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-          </enumChoice>
-          <enumChoice choice="28/128 (recommended)">
-            <choice>28/128 (recommended)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Steps</label>
-      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
       <!-- Hornby don't support changing this, but it should be written as 1 for consistency -->
       <variable CV="29" mask="XXXXXVXX" item="Analog Mode" default="1" writeOnly="yes">
         <decVal min="1" max="1"/>
         <label>Analog Mode</label>
+        <label xml:lang="it">Conversione Analogica Abilitata (DCC+Analogico)</label>
+        <label xml:lang="fr">Mode analogique activé</label>
+        <label xml:lang="de">Analogbetrieb Aktiviert</label>
       </variable>
     </variables>
   </decoder>

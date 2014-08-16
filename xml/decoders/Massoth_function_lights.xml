@@ -195,39 +195,10 @@
         </enumVal>
         <label>F8 Function Output in Analog Mode</label>
       </variable>
-      <variable CV="29" mask="XXXXXXXV" default="0" item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward">
-        <enumVal>
-          <enumChoice choice="Driving Direction Standard">
-            <choice>Driving Direction Standard</choice>
-          </enumChoice>
-          <enumChoice choice="Driving Direction Reverse">
-            <choice>Driving Direction Reverse</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Driving Direction</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXVX" default="0" item="Speed Step Mode" tooltip="Sets the speed step mode. 128 speed steps are recognized automatically">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-          </enumChoice>
-          <enumChoice choice="28">
-            <choice>28</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Steps</label>
-      </variable>
-      <variable CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)">
-        <enumVal>
-          <enumChoice choice="Digital Operation Only">
-            <choice>Digital Operation Only</choice>
-          </enumChoice>
-          <enumChoice choice="Digital + Analog Operation">
-            <choice>Digital + Analog Operation</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Analog conversion mode</label>
-      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <variable item="Data Processing" CV="49" mask="XXXXXXXV" default="0" tooltip="Automatic Detection of Serial/Parallel">
         <enumVal>
           <enumChoice choice="Parallel Data Processing Only">

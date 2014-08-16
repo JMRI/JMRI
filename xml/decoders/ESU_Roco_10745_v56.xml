@@ -67,27 +67,10 @@
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-      <variable CV="29" mask="XXXXXXXV" default="0" item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward">
-        <enumVal>
-          <enumChoice choice="Normal direction of travel"/>
-          <enumChoice choice="Reverse direction of travel"/>
-        </enumVal>
-        <label>Direction of Travel</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXVX" default="1" item="Speed Step Mode" tooltip="Sets the speed step mode. 128 speed steps are recognized automatically">
-        <enumVal>
-          <enumChoice choice="14"/>
-          <enumChoice choice="28/128"/>
-        </enumVal>
-        <label>Speed Steps</label>
-      </variable>
-      <variable CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)">
-        <enumVal>
-          <enumChoice choice="Digital Operation Only"/>
-          <enumChoice choice="Digital + Analog Operation"/>
-        </enumVal>
-        <label>Analogue mode</label>
-      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <variable CV="49" mask="XXXXXXXV" default="1" item="EMF Static Config">
         <enumVal>
           <enumChoice choice="Off"/>

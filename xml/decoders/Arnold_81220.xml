@@ -44,35 +44,9 @@
         <decVal/>
         <label>Undocumented CV8</label>
       </variable>
-      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Locomotive Direction</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="0">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>27</choice>
-          </enumChoice>
-          <enumChoice choice="28">
-            <choice>28</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Steps</label>
-      </variable>
-      <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
-        <enumVal>
-          <enumChoice choice="NMRA Digital only"/>
-          <enumChoice choice="DC conversion enabled"/>
-        </enumVal>
-        <label>Analog Detection</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <variable item="BEMF On Off" CV="49" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="On"/>

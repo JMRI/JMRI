@@ -89,76 +89,13 @@
         <label xml:lang="de">Total PWM Period</label>
         <comment xml:lang="de">Range 0-63</comment>
       </variable>
-      <variable CV="19" mask="XVVVVVVV" item="Consist Address" default="0" comment="Stores consist address. Range 0-127 (direction set in bit 7)">
-        <decVal min="0" max="127"/>
-        <label>Consist Address (0-127)</label>
-        <comment>Stores consist address. Range 0-127 (direction set in bit 7)</comment>
-        <label xml:lang="de">Consist Address</label>
-        <comment xml:lang="de">Stores consist address. Range 0-127 (direction set in bit 7)</comment>
-      </variable>
-      <variable item="Consist Direction" CV="19" mask="VXXXXXXX" comment="A consist address over 127 will also set this bit">
-        <enumVal>
-          <enumChoice choice="Forward">
-            <choice>Forward</choice>
-            <choice xml:lang="de">Forward</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-            <choice xml:lang="de">Reversed</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Direction</label>
-        <comment>A consist address over 127 will also set this bit</comment>
-        <label xml:lang="de">Consist Direction</label>
-        <comment xml:lang="de">A consist address over 127 will also set this bit</comment>
-      </variable>
-      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-            <choice xml:lang="de">Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-            <choice xml:lang="de">Reversed</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Locomotive Direction in Forward</label>
-        <label xml:lang="de">Locomotive Direction</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-            <choice xml:lang="de">14</choice>
-          </enumChoice>
-          <enumChoice choice="28/128">
-            <choice>28/128</choice>
-            <choice xml:lang="de">28/128</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Steps (Headlight Mode)</label>
-        <label xml:lang="de">Speed Step Mode</label>
-      </variable>
-      <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Loco can operate on conventional DC</label>
-        <label xml:lang="de">Analog (DC) Operation</label>
-      </variable>
-      <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition">
-        <enumVal>
-          <enumChoice choice="Use Vstart, Vmid, Vhigh">
-            <choice>Use Vstart, Vmid, Vhigh</choice>
-            <choice xml:lang="de">Use Vstart, Vmid, Vhigh</choice>
-          </enumChoice>
-          <enumChoice choice="Use the Speed Table">
-            <choice>Use the Speed Table</choice>
-            <choice xml:lang="de">Use the Speed Table</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Table Selection</label>
-        <label xml:lang="de">Speed Table Definition</label>
-      </variable>
+      <!-- CV=19 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/protection_cv30.xml"/>
       <variable CV="33" mask="XXXXVXXX" item="FL(f) controls output 1" default="1" minOut="1" minFn="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>

@@ -153,17 +153,8 @@
         </enumVal>
         <label>PWM Speed Table Selection</label>
       </variable>
-      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-          </enumChoice>
-          <enumChoice choice="28/128">
-            <choice>28/128</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed steps</label>
-      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
       <variable item="Speed Table Definition" CV="29" mask="XXXVXXXX" tooltip="PWM mode only">
         <enumVal>
           <enumChoice choice="Use PWM Start and Max Voltage">

@@ -113,93 +113,13 @@
         <label xml:lang="de">Total PWM Period</label>
         <comment xml:lang="de">Range 0-15</comment>
       </variable>
-      <variable CV="19" mask="XVVVVVVV" item="Consist Address">
-        <decVal/>
-        <label>Consist Address</label>
-        <label xml:lang="it">Indirizzo Consist</label>
-        <label xml:lang="de">Consist Address</label>
-      </variable>
-      <variable item="Consist Direction" CV="19" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-            <choice xml:lang="it">Normale</choice>
-            <choice xml:lang="de">Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-            <choice xml:lang="it">Invertita</choice>
-            <choice xml:lang="de">Reversed</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Direction</label>
-        <label xml:lang="it">Direzione Consist</label>
-        <label xml:lang="de">Consist Direction</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
-        <enumVal>
-          <enumChoice choice="Forward">
-            <choice>Forward</choice>
-            <choice xml:lang="it">Avanti</choice>
-            <choice xml:lang="de">Forward</choice>
-          </enumChoice>
-          <enumChoice choice="Reverse">
-            <choice>Reverse</choice>
-            <choice xml:lang="it">Indietro</choice>
-            <choice xml:lang="de">Reverse</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Normal direction of motion</label>
-        <label xml:lang="it">Normale direzione di marcia</label>
-        <label xml:lang="de">Locomotive Direction</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="0">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-            <choice xml:lang="de">14</choice>
-          </enumChoice>
-          <enumChoice choice="28">
-            <choice>28</choice>
-            <choice xml:lang="de">28</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Steps</label>
-        <label xml:lang="it">Step Velocità</label>
-        <label xml:lang="de">Speed Step Mode</label>
-      </variable>
-      <variable CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-            <choice xml:lang="de">Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-            <choice xml:lang="de">On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Analog conversion mode</label>
-        <label xml:lang="it">Modo Conversione Analogica</label>
-        <label xml:lang="de">Analog (DC) Operation</label>
-      </variable>
-      <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition">
-        <enumVal>
-          <enumChoice choice="Don't use Speed Table">
-            <choice>Don't use Speed Table</choice>
-            <choice xml:lang="it">Non usare Tabella velocità</choice>
-            <choice xml:lang="de">Don't use Speed Table</choice>
-          </enumChoice>
-          <enumChoice choice="Use Speed Table">
-            <choice>Use Speed Table</choice>
-            <choice xml:lang="it">Usare Tabella velocità</choice>
-            <choice xml:lang="de">Use Speed Table</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Use Speed Table</label>
-        <label xml:lang="it">Utilizzo Tabella velocità</label>
-        <label xml:lang="de">Speed Table Definition</label>
-      </variable>
+      <!-- CV=19 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
       <variable item="Back EMF control" CV="60" mask="XXXXXXXV" default="1">
         <enumVal>
           <enumChoice choice="Back EMF control inactive">

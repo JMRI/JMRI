@@ -72,62 +72,11 @@
         <label>Analog Mode Function Status - FL(r)</label>
         <label xml:lang="it">Stato Funzione in Analogico - FL(indietro)</label>
       </variable>
-      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
-        <enumVal>
-          <enumChoice choice="forward">
-            <choice>forward</choice>
-            <choice xml:lang="it">avanti</choice>
-          </enumChoice>
-          <enumChoice choice="reverse">
-            <choice>reverse</choice>
-            <choice xml:lang="it">indietro</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Normal direction of motion</label>
-        <label xml:lang="it">Normale direzione di marcia</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
-        <enumVal>
-          <enumChoice choice="14 speed step format">
-            <choice>14 speed step format</choice>
-            <choice xml:lang="it">Formato velocità 14 Step</choice>
-          </enumChoice>
-          <enumChoice choice="28 speed step format">
-            <choice>28 speed step format</choice>
-            <choice xml:lang="it">Formato velocità 28 Step</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed steps</label>
-        <label xml:lang="it">Step velocità</label>
-      </variable>
-      <variable item="Analog (DC) Operation" CV="29" mask="XXXXXVXX" default="1">
-        <enumVal>
-          <enumChoice choice="NMRA Digital only">
-            <choice>NMRA Digital only</choice>
-            <choice xml:lang="it">Solo NMRA Digitale</choice>
-          </enumChoice>
-          <enumChoice choice="DC conversion enabled">
-            <choice>DC conversion enabled</choice>
-            <choice xml:lang="it">Analogico abilitato</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Analog (DC) Operation</label>
-        <label xml:lang="it">Operazioni in Analogico</label>
-      </variable>
-      <variable item="Speed Table Definition" CV="29" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="Use Vstart, Vmid, Vhigh">
-            <choice>Use Vstart, Vmid, Vhigh</choice>
-            <choice xml:lang="it">Usa Vstart, Vmid, Vhigh</choice>
-          </enumChoice>
-          <enumChoice choice="Use table in CVs 66 through 95">
-            <choice>Use table in CVs 66 through 95</choice>
-            <choice xml:lang="it">Usa Tabella nelle CV 66-95</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Table Definition</label>
-        <label xml:lang="it">definizione Tabella Velocità</label>
-      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>

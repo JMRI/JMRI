@@ -131,10 +131,7 @@
         <label>                    outputs 7+8</label>
       </variable>
       <variable CV="29" mask="XVXXXXXX" item="Accessory Mode" default="1">
-        <enumVal>
-          <enumChoice choice="off"/>
-          <enumChoice choice="on"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Accessory Mode Setting</label>
       </variable>
       <variable CV="29" mask="VXXXXXXX" default="0" item="Sequential Address Mode">

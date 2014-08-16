@@ -100,27 +100,22 @@
         <label xml:lang="it">Volt Massimi (0-255):</label>
         <label xml:lang="de">Höchstgeschwindigkeit</label>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version" tooltip="The decoder version number (read only)">
-        <decVal/>
-        <label>Software Version Number</label>
-      </variable>
-      <variable CV="8" readOnly="yes" item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
-        <decVal/>
-        <label>Manufacturer Code</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXXV" default="0" item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward">
-        <enumVal>
-          <enumChoice choice="Forward"/>
-          <enumChoice choice="Reverse"/>
-        </enumVal>
-        <label>Normal direction of motion</label>
-      </variable>
+      <!-- CV 7-8 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <variable CV="29" mask="XXXXXXVX" default="0" item="Speed Step Mode" tooltip="Sets the speed step mode">
         <enumVal>
-          <enumChoice choice="14"/>
-          <enumChoice choice="28/128 (not LGB MTS)"/>
+          <enumChoice choice="14">
+            <choice>14</choice>
+          </enumChoice>
+          <enumChoice choice="28/128 (not LGB MTS)">
+            <choice>28/128 (not LGB MTS)</choice>
+            <choice xml:lang="it">28/128 (non LGB MTS)</choice>
+          </enumChoice>
         </enumVal>
         <label>Speed Steps</label>
+        <label xml:lang="it">Step Velocità</label>
       </variable>
       <variable item="Analog Starting Voltage" CV="58" default="48" tooltip="Adjust the sound to the loco starting settings - if sound starts before the loco starts moving, increase value">
         <decVal min="1" max="255"/>

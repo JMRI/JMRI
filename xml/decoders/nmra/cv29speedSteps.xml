@@ -47,13 +47,14 @@
   </revhistory>
   <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
     <enumVal>
-      <enumChoice choice="14">
-        <choice>14</choice>
-      </enumChoice>
-      <enumChoice choice="28/128">
-        <choice>28/128</choice>
-      </enumChoice>
-    </enumVal>
+          <enumChoice choice="14 speed step format">
+            <choice xml:lang="it">Formato 14 step</choice>
+          </enumChoice>
+          <enumChoice choice="28/128 speed step format">
+          <choice>28/128 speed step format(recommended)</choice>
+            <choice xml:lang="it">Formato 28 o 128 step</choice>
+          </enumChoice>
+        </enumVal>
     <label>Speed Steps</label>
     <label xml:lang="fr">Pas de vitesse</label>
     <label xml:lang="de">Fahrstufen</label>

@@ -74,67 +74,12 @@
         <label>Analog Mode Function Status - FL(r)</label>
         <label xml:lang="it">Stato Funzioni in Analogico - FL(indietro)</label>
       </variable>
-      <variable CV="19" mask="XVVVVVVV" item="Consist Address">
-        <decVal/>
-        <label>Consist Address</label>
-        <label xml:lang="it">Indirizzo Consist</label>
-      </variable>
-      <variable item="Consist Direction" CV="19" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-            <choice xml:lang="it">Normale</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-            <choice xml:lang="it">Invertita</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Direction</label>
-        <label xml:lang="it">Direzione Consist</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
-        <enumVal>
-          <enumChoice choice="forward">
-            <choice>forward</choice>
-            <choice xml:lang="it">avanti</choice>
-          </enumChoice>
-          <enumChoice choice="reverse">
-            <choice>reverse</choice>
-            <choice xml:lang="it">indietro</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Normal direction of motion</label>
-        <label xml:lang="it">Direzione di movimento Normale</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
-        <enumVal>
-          <enumChoice choice="14 speed step format">
-            <choice>14 speed step format</choice>
-            <choice xml:lang="it">Velocità: formato 14 step</choice>
-          </enumChoice>
-          <enumChoice choice="28 speed step format">
-            <choice>28 speed step format</choice>
-            <choice xml:lang="it">Velocità: formato 28 step</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed steps</label>
-        <label xml:lang="it">Step velocità</label>
-      </variable>
-      <variable item="Analog (DC) Operation" CV="29" mask="XXXXXVXX" default="1">
-        <enumVal>
-          <enumChoice choice="NMRA Digital only">
-            <choice>NMRA Digital only</choice>
-            <choice xml:lang="it">Solo DCC NMRA</choice>
-          </enumChoice>
-          <enumChoice choice="DC conversion enabled">
-            <choice>DC conversion enabled</choice>
-            <choice xml:lang="it">Conversione analogica abilitata</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Analog (DC) Operation</label>
-        <label xml:lang="it">Compatibilità Analogica</label>
-      </variable>
+      <!-- CV=19 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>

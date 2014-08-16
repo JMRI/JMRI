@@ -354,25 +354,20 @@
         <enumVal>
           <enumChoice choice="14 speed step not supported">
             <choice>14 speed step not supported</choice>
+            <choice xml:lang="it">Formato 14 step non supportato</choice>
           </enumChoice>
           <enumChoice choice="28 speed step format">
             <choice>28/128 speed step format</choice>
+            <choice xml:lang="it">Formato 28 o 128 step</choice>
           </enumChoice>
         </enumVal>
         <label>Speed Step</label>
+        <label xml:lang="fr">Pas de vitesse</label>
+        <label xml:lang="de">Fahrstufen</label>
+        <label xml:lang="it">Step Velocità</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
-      <variable item="Speed Table Definition" CV="29" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="Use Vstart, Vmid, Vhigh">
-            <choice>Use Vstart, Vmid, Vhigh</choice>
-          </enumChoice>
-          <enumChoice choice="Use table in CVs 66 through 95">
-            <choice>Use table in CVs 66 through 95</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Table Definition</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
       <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output 1</label>

@@ -48,37 +48,11 @@
     </family>
     <programming direct="yes" paged="no" register="yes" ops="yes"/>
     <variables>
+    <!-- CV=19 -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable CV="7" readOnly="yes" item="Decoder Version">
-        <decVal/>
-        <label>Decoder Version</label>
-      </variable>
-      <variable CV="8" readOnly="yes" item="Manufacturer" default="117">
-        <decVal/>
-        <label>Manufacturer</label>
-      </variable>
-      <variable item="Locomotive Direction" CV="29" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="reversed">
-            <choice>reversed</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Locomotive Direction</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-          </enumChoice>
-          <enumChoice choice="28/128">
-            <choice>28/128</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Steps</label>
-      </variable>
+      <!-- CV=29 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
       <variable CV="29" mask="XVXXXXXX" item="Analog (DC) Operation" default="1" comment="0=8 functions (ZIMO Man push button), 1=10 functions" tooltip="0=8 functions (ZIMO Man push button), 1=10 functions">
         <enumVal>
           <enumChoice choice="8 functions (ZIMO Man push button)">

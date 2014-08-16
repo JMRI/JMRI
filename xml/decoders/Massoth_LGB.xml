@@ -159,16 +159,8 @@
         <label xml:lang="it">Volt Massimi (0-255):</label>
         <label xml:lang="de">Höchstgeschwindigkeit</label>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version" tooltip="The decoder version number (read only)">
-        <decVal/>
-        <label>Software Version Number</label>
-        <label xml:lang="it">Numero versione Software</label>
-      </variable>
-      <variable CV="8" readOnly="yes" item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
-        <decVal/>
-        <label>Manufacturer Code</label>
-        <label xml:lang="it">Codice Costruttore</label>
-      </variable>
+      <!-- CV 7-8 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <variable CV="9" item="Total PWM Period" tooltip="Sets the motor drive frequency - Note: Back-EMF only works with 16 kHz">
         <enumVal>
           <enumChoice choice="16 kHz">
@@ -187,20 +179,8 @@
         <label>Motor Frequency</label>
         <label xml:lang="it">Frequenza Motore</label>
       </variable>
-      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward">
-        <enumVal>
-          <enumChoice choice="Forward">
-            <choice>Forward</choice>
-            <choice xml:lang="it">Avanti</choice>
-          </enumChoice>
-          <enumChoice choice="Reverse">
-            <choice>Reverse</choice>
-            <choice xml:lang="it">Invertita</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Normal direction of motion</label>
-        <label xml:lang="it">Normale direzione di marcia</label>
-      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" tooltip="Sets the speed step mode">
         <enumVal>
           <enumChoice choice="14">
@@ -214,18 +194,7 @@
         <label>Speed Steps</label>
         <label xml:lang="it">Step Velocità</label>
       </variable>
-      <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Analog conversion mode</label>
-        <label xml:lang="it">Modo Conversione Analogica</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition" tooltip="Determines whether loco will use manufacturer's internal or user-defined speed step table">
         <enumVal>
           <enumChoice choice="internal speed step table">

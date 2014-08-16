@@ -51,14 +51,8 @@
         <decVal/>
         <label>Vmid</label>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version">
-        <decVal/>
-        <label>Version ID</label>
-      </variable>
-      <variable CV="8" readOnly="yes" item="Manufacturer">
-        <decVal/>
-        <label>Manufacturer ID</label>
-      </variable>
+      <!-- CV 7-8 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <variable CV="9" default="20" item="Motor PWM Frequency" tooltip="0=100Hz, 15-22=variable-kHz" comment="Range 0/15-22">
         <enumVal>
           <enumChoice choice="100 Hz" value="0"/>
@@ -80,34 +74,11 @@
         </enumVal>
         <label>Alternative mode (analogue)</label>
       </variable>
-      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
-        <enumVal>
-          <enumChoice choice="Forward"/>
-          <enumChoice choice="Reverse"/>
-        </enumVal>
-        <label>Normal direction of motion</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
-        <enumVal>
-          <enumChoice choice="14"/>
-          <enumChoice choice="28/128 (recommended)"/>
-        </enumVal>
-        <label>Speed Steps</label>
-      </variable>
-      <variable CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
-        <enumVal>
-          <enumChoice choice="Off"/>
-          <enumChoice choice="On"/>
-        </enumVal>
-        <label>Analog conversion mode</label>
-      </variable>
-      <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition" default="1">
-        <enumVal>
-          <enumChoice choice="Don't use Speed Table"/>
-          <enumChoice choice="Use Speed Table"/>
-        </enumVal>
-        <label>Use Speed Table</label>
-      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
       <variable CV="30" mask="XXXXXXXV" item="Advanced Group 2 Option 1" readOnly="yes" default="0">
         <decVal/>
         <label>Error Information (read only)</label>

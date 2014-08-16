@@ -89,19 +89,7 @@
         <label xml:lang="it">Tabella Velocità/Comando Palmare intermedio</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
-      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode">
-        <enumVal>
-          <enumChoice choice="14 speed step format">
-            <choice xml:lang="it">Formato 14 step</choice>
-          </enumChoice>
-          <enumChoice choice="28 speed step format">
-            <choice xml:lang="it">Formato 28 step</choice>
-          </enumChoice>
-        </enumVal>
-        <label>FL Location</label>
-        <label xml:lang="fr">FL Location(fr)</label>
-        <label xml:lang="it">Step Velocità</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <variable CV="29" mask="XXXXVXXX" item="Advanced Ack">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
@@ -109,19 +97,7 @@
         <label xml:lang="fr">Advanced Decoder Acknowledgement(fr)</label>
         <label xml:lang="it">Riconoscimento Decoder Avanzato</label>
       </variable>
-      <variable item="Speed Table Definition" CV="29" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="Use Vstart, Vmid, Vhigh">
-            <choice xml:lang="it">Usare Vstart, Vmid, Vhigh</choice>
-          </enumChoice>
-          <enumChoice choice="Use table in CVs 66 through 95">
-            <choice xml:lang="it">Usare tabella con CV da 66 a 95</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Table Definition</label>
-        <label xml:lang="fr">Speed Table Definition(fr)</label>
-        <label xml:lang="it">Definizioni Tabella Velocità</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
       <!-- this next large group forms a table, so doesn't need translation -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/functionmap.xml"/>
       <!-- end of table that doesn't need translation -->

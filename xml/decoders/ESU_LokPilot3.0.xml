@@ -460,54 +460,15 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Allow command confirmation on channel 1</label>
       </variable>
-      <variable CV="29" mask="XXXXXXXV" default="0" item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward">
-        <enumVal>
-          <enumChoice choice="Normal direction of travel">
-            <choice>Normal direction of travel</choice>
-          </enumChoice>
-          <enumChoice choice="Reverse direction of travel">
-            <choice>Reverse direction of travel</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Direction of Travel</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXVX" default="0" item="Speed Step Mode" tooltip="Sets the speed step mode. 128 speed steps are recognized automatically">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-          </enumChoice>
-          <enumChoice choice="28/128">
-            <choice>28/128</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Steps</label>
-      </variable>
-      <variable CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)">
-        <enumVal>
-          <enumChoice choice="Digital Operation Only">
-            <choice>Digital Operation Only</choice>
-          </enumChoice>
-          <enumChoice choice="Digital + Analog Operation">
-            <choice>Digital + Analog Operation</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Analogue mode</label>
-      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <variable CV="29" mask="XXXXVXXX" default="0" item="Advanced Group 1 Option 5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable RailCom</label>
       </variable>
-      <variable CV="29" mask="XXXVXXXX" default="0" item="Speed Table Definition" tooltip="Determines whether loco will use manufacturer's internal or user-defined speed step table">
-        <enumVal>
-          <enumChoice choice="speed curve through CV 2, 5, 6">
-            <choice>speed curve through CV 2, 5, 6</choice>
-          </enumChoice>
-          <enumChoice choice="speed curve through CV 67 - 96">
-            <choice>speed curve through CV 67 - 96</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Selection of speed curve</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
       <variable CV="49" mask="XXXXXXXV" default="1" item="Dither option">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Load control</label>

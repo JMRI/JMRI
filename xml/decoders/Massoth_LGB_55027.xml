@@ -231,49 +231,33 @@
         </enumVal>
         <label>F6 Function Output in Analog Mode</label>
       </variable>
-      <variable CV="29" mask="XXXXXXXV" default="0" item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward">
-        <enumVal>
-          <enumChoice choice="normal direction">
-            <choice>normal direction</choice>
-          </enumChoice>
-          <enumChoice choice="reversed direction">
-            <choice>reversed direction</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Normal direction of motion</label>
-      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <variable CV="29" mask="XXXXXXVX" default="0" item="Speed Step Mode" tooltip="Sets the speed step mode. 128 speed steps are recognized automatically">
         <enumVal>
-          <enumChoice choice="14 speed steps (LGB MTS)">
-            <choice>14 speed steps (LGB MTS)</choice>
-          </enumChoice>
-          <enumChoice choice="28 speed steps (not for LGB)">
-            <choice>28 speed steps (not for LGB)</choice>
+          <enumChoice choice="14"/>
+          <enumChoice choice="28/128 (not LGB MTS)">
+            <choice>28/128 (not LGB MTS)</choice>
+            <choice xml:lang="it">28/128 (non LGB MTS)</choice>
           </enumChoice>
         </enumVal>
         <label>Speed Steps</label>
+        <label xml:lang="it">Step Velocità</label>
       </variable>
-      <variable CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)">
-        <enumVal>
-          <enumChoice choice="digital operation only">
-            <choice>digital operation only</choice>
-          </enumChoice>
-          <enumChoice choice="digital or analog">
-            <choice>digital or analog</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Analog conversion mode</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <variable CV="29" mask="XXXVXXXX" default="0" item="Speed Table Definition" tooltip="Determines whether loco will use manufacturer's internal or user-defined speed step table">
         <enumVal>
-          <enumChoice choice="factory-programmed speed steps">
-            <choice>factory-programmed speed steps</choice>
+        <enumChoice choice="internal speed step table">
+            <choice>internal speed step table</choice>
+            <choice xml:lang="it">tabella velocità interna</choice>
           </enumChoice>
-          <enumChoice choice="speed steps programmed by user (CV's 67-94)">
-            <choice>speed steps programmed by user (CV's 67-94)</choice>
+          <enumChoice choice="user-programmed speed step table (CV's 67-94)">
+            <choice>user-programmed speed step table (CV's 67-94)</choice>
+            <choice xml:lang="it">tabella velocità personalizzata (CV 67-94)</choice>
           </enumChoice>
         </enumVal>
         <label>Use Speed Table</label>
+        <label xml:lang="it">Usa Tabella velocità</label>
       </variable>
       <variable item="Function commands" CV="49" mask="XXXXXXXV" default="1" tooltip="When serial is selected, F1 - F8 also can be triggered parallel">
         <enumVal>

@@ -145,10 +145,7 @@
         <label>Address Mode</label>
       </variable>
       <variable CV="29" mask="VXXXXXXX" item="Accessory Mode" default="1">
-        <enumVal>
-          <enumChoice choice="off"/>
-          <enumChoice choice="on"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Accessory Mode Setting</label>
       </variable>
       <variable item="Lenz Toggle Mode" CV="33" mask="VVVVVVVV" default="15">

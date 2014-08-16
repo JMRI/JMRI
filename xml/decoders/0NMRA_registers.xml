@@ -51,35 +51,9 @@
         <label xml:lang="de">Bremszeit (0-31)</label>
       </variable>
       <!-- Register 5 -->
-      <variable item="Locomotive Direction" CV="29" mask="XXXXXXXV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-FwdRev.xml"/>
-        <label>Locomotive Direction</label>
-        <label xml:lang="it">Direzione Locomotiva</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode">
-        <enumVal>
-          <enumChoice choice="14 speed step format">
-            <choice xml:lang="it">Formato 14 step</choice>
-          </enumChoice>
-          <enumChoice choice="28 speed step format">
-            <choice xml:lang="it">Formato 28 step</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Step Mode</label>
-        <label xml:lang="it">Formato Step Velocità</label>
-      </variable>
-      <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation">
-        <enumVal>
-          <enumChoice choice="NMRA Digital only">
-            <choice xml:lang="it">Solo NMRA DCC</choice>
-          </enumChoice>
-          <enumChoice choice="DC conversion enabled">
-            <choice xml:lang="it">Conversione DC abilitata</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Power Source Conversion</label>
-        <label xml:lang="it">Conversione Sorgente Alimentazione</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <variable CV="29" mask="XXXXVXXX" item="Advanced Ack">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Advanced Decoder Acknowledgement</label>

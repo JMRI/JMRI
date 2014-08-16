@@ -150,56 +150,10 @@
         <label xml:lang="de">Consist Direction</label>
         <comment xml:lang="de">A consist address over 127 will also set this bit</comment>
       </variable>
-      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
-        <enumVal>
-          <enumChoice choice="Forward">
-            <choice>Forward</choice>
-            <choice xml:lang="it">Avanti</choice>
-            <choice xml:lang="de">Forward</choice>
-          </enumChoice>
-          <enumChoice choice="Reverse">
-            <choice>Reverse</choice>
-            <choice xml:lang="it">Indietro</choice>
-            <choice xml:lang="de">Reverse</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Locomotive's Normal Direction of Motion</label>
-        <label xml:lang="it">Normale direzione di marcia della Loco</label>
-        <label xml:lang="de">Locomotive Direction</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-            <choice xml:lang="de">14</choice>
-          </enumChoice>
-          <enumChoice choice="28/128 (recommended)">
-            <choice>28/128 (recommended)</choice>
-            <choice xml:lang="it">28/128 (raccomandato)</choice>
-            <choice xml:lang="de">28/128 (recommended)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Steps (aka Headlight Mode)</label>
-        <label xml:lang="it">Step velocità ( o Modalità luci di marcia)</label>
-        <label xml:lang="de">Speed Step Mode</label>
-      </variable>
-      <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
-        <enumVal>
-          <enumChoice choice="Off (DCC operation only)">
-            <choice>Off (DCC operation only)</choice>
-            <choice xml:lang="it">Off (Opera solo in DCC)</choice>
-            <choice xml:lang="de">Off (DCC operation only)</choice>
-          </enumChoice>
-          <enumChoice choice="On (loco can operate on DC or DCC)">
-            <choice>On (loco can operate on DC or DCC)</choice>
-            <choice xml:lang="it">On (loco può operare in DCC o Analogico)</choice>
-            <choice xml:lang="de">On (loco can operate on DC or DCC)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Analog Conversion Mode</label>
-        <label xml:lang="it">Modo Conversione Analogico</label>
-        <label xml:lang="de">Analog (DC) Operation</label>
-      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <variable item="Lenz RailCom (not used on all decoders)" CV="29" mask="XXXXVXXX" default="0" tooltip="Enables RailCom when used with Lenz systems">
         <enumVal>
           <enumChoice choice="RailCom disabled">
@@ -218,23 +172,7 @@
         <label xml:lang="de">Lenz RailCom (not used on all decoders)</label>
         <tooltip xml:lang="de">Enables RailCom when used with Lenz systems</tooltip>
       </variable>
-      <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition" default="0">
-        <enumVal>
-          <enumChoice choice="Don't Use Speed Table">
-            <choice>Don't Use Speed Table</choice>
-            <choice xml:lang="it">Non usare Tabella velocità</choice>
-            <choice xml:lang="de">Don't Use Speed Table</choice>
-          </enumChoice>
-          <enumChoice choice="Use Speed Table">
-            <choice>Use Speed Table</choice>
-            <choice xml:lang="it">Usare Tabella velocità</choice>
-            <choice xml:lang="de">Use Speed Table</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Use Speed Table</label>
-        <label xml:lang="it">Utilizzo Tabella Velocità</label>
-        <label xml:lang="de">Speed Table Definition</label>
-      </variable>
+       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
       <variable CV="50" mask="XXXXXXXV" item="Load Control" default="1" tooltip="Activates the Back EMF function">
         <enumVal>
           <enumChoice choice="Inactive">

@@ -45,18 +45,18 @@
       <revremark>Revision in original 0NMRA.xml file</revremark>
     </revision>
   </revhistory>
-  <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation">
+  <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1" tooltip="'4' bit. Allows the loco to run on DC, default is Off">
     <enumVal>
       <enumChoice choice="NMRA Digital only">
-        <choice>NMRA Digital only</choice>
+        <choice>NMRA Digital only (Digital Operation Only)</choice>
         <choice xml:lang="it">Solo NMRA Digitale</choice>
         <choice xml:lang="fr">Digital selon NMRA seulement</choice>
         <choice xml:lang="ca">NMRA Digital only (ca)</choice>
         <choice xml:lang="de">Nur Digital nach NMRA</choice>
       </enumChoice>
       <enumChoice choice="DC conversion enabled">
-        <choice>DC conversion enabled</choice>
-        <choice xml:lang="it">Conversione Analogica Abilitata</choice>
+        <choice>DC conversion enabled (Digital + Analog)</choice>
+        <choice xml:lang="it">Conversione Analogica Abilitata (DCC+Analogico)</choice>
         <choice xml:lang="fr">Mode analogique activé</choice>
         <choice xml:lang="ca">DC conversion enabled (ca)</choice>
         <choice xml:lang="de">Analogbetrieb Aktiviert</choice>
@@ -67,5 +67,6 @@
     <label xml:lang="ca">Power Source Conversion(ca)</label>
     <label xml:lang="de">Stromquelle Konversion</label>
     <label>Power Source Conversion</label>
+    <tooltip xml:lang="it">'4' bit. Permette alla loco di andare in DC, per default è Off</tooltip>
   </variable>
 </variables>
