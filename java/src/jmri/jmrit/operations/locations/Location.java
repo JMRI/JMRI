@@ -793,7 +793,8 @@ public class Location implements java.beans.PropertyChangeListener {
 
 	/**
 	 * Sorted list by track moves. Returns a list of a given track type. If type is null, all tracks for
-	 * the location are returned. Tracks with schedules are placed at the start of the list.
+	 * the location are returned. Tracks with schedules are placed at the start of the list.  Tracks
+	 * that are alternates are removed.
 	 * 
 	 * @param type
 	 *            track type: Track.YARD, Track.SPUR, Track.INTERCHANGE, Track.STAGING
@@ -818,13 +819,15 @@ public class Location implements java.beans.PropertyChangeListener {
 			}
 		}
 		// bias tracks with schedules to the start of the list
+		// remove any alternate tracks from the list
 		List<Track> out = new ArrayList<Track>();
 		for (int i = 0; i < moveList.size(); i++) {
 			Track track = moveList.get(i);
 			if (!track.getScheduleId().equals("")) {
 				out.add(track);
 				moveList.remove(i--);
-			}
+			} else if (track.isAlternate())
+				moveList.remove(i--);
 		}
 		for (Track track : moveList) {
 			out.add(track);

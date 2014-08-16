@@ -2011,6 +2011,17 @@ public class Track {
 			return _destinationOption;
 		return ALL_DESTINATIONS;
 	}
+	
+	/**
+	 * Used to determine if track has been assigned as an alternate
+	 * @return true if track is an alternate
+	 */
+	public boolean isAlternate() {
+		for (Track track : getLocation().getTrackList())
+			if (track.getAlternateTrack() == this)
+				return true;
+		return false;
+	}
 
 	public void dispose() {
 		setDirtyAndFirePropertyChange(DISPOSE_CHANGED_PROPERTY, null, DISPOSE_CHANGED_PROPERTY);
