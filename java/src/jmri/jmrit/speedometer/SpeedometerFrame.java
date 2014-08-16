@@ -25,6 +25,7 @@ import jmri.NamedBeanHandle;
 import jmri.Application;
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
+import jmri.util.IntlUtilities;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -90,6 +91,11 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
     SensorIcon stopSensorIcon1;
     SensorIcon stopSensorIcon2;
 
+    /**
+     * 
+     * @param d1 First timer distance in current units.  Express with the decimal marker in the current Locale.
+     * @param d2 Second timer distance in current units.  Express with the decimal marker in the current Locale.
+     */
     public void setInputs(String start, String stop1, String stop2, String d1, String d2) {
         startSensor.setText(start);
         stopSensor1.setText(stop1);
@@ -358,7 +364,12 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                             if (log.isDebugEnabled()) log.debug("set stop "+stopTime1);
                             // calculate and show speed
                             float secs = (stopTime1-startTime)/1000.f;
-                            float feet = Float.valueOf(distance1.getText()).floatValue();
+                            float feet = 0.0f;
+                            try {
+                                feet = IntlUtilities.floatValue(distance1.getText());
+                            } catch (java.text.ParseException ex) {
+                                log.error("invalid floating point number as input: "+distance1.getText());
+                            }
                             float speed;
                             if (dim == false) {
                               speed = (feet/5280.f)*(3600.f/secs);
@@ -397,8 +408,12 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                             if (log.isDebugEnabled()) log.debug("set stop "+stopTime2);
                             // calculate and show speed
                             float secs = (stopTime2-startTime)/1000.f;
-                            float feet = Float.valueOf(distance2.getText()).floatValue();
-
+                            float feet = 0.0f;
+                            try {
+                                feet = IntlUtilities.floatValue(distance2.getText());
+                            } catch (java.text.ParseException ex) {
+                                log.error("invalid floating point number as input: "+distance2.getText());
+                            }
                             float speed;
                             if (dim == false) {
                               speed = (feet/5280.f)*(3600.f/secs);
@@ -572,7 +587,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
         // Create root element
         Element root = new Element("speedometer-config");
         root.setAttribute("noNamespaceSchemaLocation",
-                "http://jmri.org/xml/schema/speedometer.xsd",
+                "http://jmri.org/xml/schema/speedometer-9-3-3.xsd",
                 org.jdom.Namespace.getNamespace("xsi",
                 "http://www.w3.org/2001/XMLSchema-instance"));
         Document doc = new Document(root);
@@ -608,7 +623,9 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                 e.addContent(new Element("sensorName").addContent(stopSensor1.getText()));
                 e.addContent(new Element("type").addContent("StopSensor1"));
                 e.addContent(new Element("trigger").addContent(stopOnEntry1.isSelected()?"entry":"exit"));
-                e.addContent(new Element("distance").addContent(distance1.getText()));
+                try {
+                    e.addContent(new Element("distance").addContent(String.valueOf(IntlUtilities.floatValue(distance1.getText()))));
+                } catch (java.text.ParseException ex) { log.error("Distance isn't a valid floating number: "+distance1.getText()); }
                 values.addContent(e);
             }
 
@@ -618,7 +635,9 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                 e.addContent(new Element("sensorName").addContent(stopSensor2.getText()));
                 e.addContent(new Element("type").addContent("StopSensor2"));
                 e.addContent(new Element("trigger").addContent(stopOnEntry2.isSelected()?"entry":"exit"));
-                e.addContent(new Element("distance").addContent(distance2.getText()));
+                try {
+                    e.addContent(new Element("distance").addContent(String.valueOf(IntlUtilities.floatValue(distance2.getText()))));
+                } catch (java.text.ParseException ex) { log.error("Distance isn't a valid floating number: "+distance2.getText()); }
                 values.addContent(e);
             }
         }
@@ -687,13 +706,25 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                         boolean trigger = e.getChild("trigger").getValue().equals("entry");
                         stopOnEntry1.setSelected(trigger);
                         stopOnExit1.setSelected(!trigger);
-                        distance1.setText(e.getChild("distance").getText());
+                        distance1.setText(
+                          IntlUtilities.valueOf(
+                            Float.parseFloat(
+                              e.getChild("distance").getText()
+                            )
+                          )
+                        );
                     } else if (sensorType.equals("StopSensor2")) {
                         stopSensor2.setText(e.getChild("sensorName").getText());
                         boolean trigger = e.getChild("trigger").getValue().equals("entry");
                         stopOnEntry2.setSelected(trigger);
                         stopOnExit2.setSelected(!trigger);
-                        distance2.setText(e.getChild("distance").getText());
+                        distance2.setText(
+                          IntlUtilities.valueOf(
+                            Float.parseFloat(
+                              e.getChild("distance").getText()
+                            )
+                          )
+                        );
                     } else {
                         log.warn("Unknown sensor type: " + sensorType);
                     }
