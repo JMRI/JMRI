@@ -69,14 +69,21 @@ public class JsonClientSystemConnectionMemo extends SystemConnectionMemo {
         log.debug("Configuring managers");
         InstanceManager.setLightManager(this.getLightManager());
         InstanceManager.store(this.getPowerManager(), PowerManager.class);
+        // make initial information requests from server to initialize listeners
+        this.getList(JSON.LIGHTS, this.lightManager);
+        try {
+            // setting power to unknown will cause a JSON server to return current power state
+            powerManager.setPower(PowerManager.UNKNOWN);
+        } catch (JmriException ex) {
+            log.error("Unable to request system state: {}", ex.getMessage());
+            log.debug("Complete exception:\n", ex);
+        }
     }
 
     private JsonClientLightManager getLightManager() {
         if (this.lightManager == null) {
             this.lightManager = new JsonClientLightManager(this);
             this.getTrafficController().addJsonClientListener(this.lightManager);
-            // Request all known lights from server
-            this.getList(JSON.LIGHTS, this.lightManager);
         }
         return this.lightManager;
     }
@@ -85,13 +92,6 @@ public class JsonClientSystemConnectionMemo extends SystemConnectionMemo {
         if (this.powerManager == null) {
             this.powerManager = new JsonClientPowerManager(this);
             this.getTrafficController().addJsonClientListener(this.powerManager);
-            try {
-                // setting power to unknown will cause a JSON server to return current power state
-                powerManager.setPower(PowerManager.UNKNOWN);
-            } catch (JmriException ex) {
-                log.error("Unable to request system state: {}", ex.getMessage());
-                log.debug("Complete exception:\n", ex);
-            }
         }
         return this.powerManager;
     }

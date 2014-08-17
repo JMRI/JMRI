@@ -195,6 +195,7 @@ public class JsonClientTrafficController extends AbstractMRTrafficController imp
         if (!helloData.path(JSON.NODE).isMissingNode()) {
             ((JsonClientSystemConnectionMemo) this.controller.getSystemConnectionMemo()).setNodeIdentity(helloData.path(JSON.NODE).asText());
         }
+        ((JsonClientSystemConnectionMemo) this.controller.getSystemConnectionMemo()).configureManagers();
         // Send LOCALE message
         /* Comment out following until Java 7 can be used.
          ObjectNode root = this.mapper.createObjectNode();

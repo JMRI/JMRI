@@ -25,7 +25,6 @@ public class JsonNetworkPortController extends AbstractNetworkPortController {
         JsonClientTrafficController control = new JsonClientTrafficController();
         control.connectPort(this);
         this.memo.setTrafficController(control);
-        this.memo.configureManagers();
 
         // mark OK for menus
         ActiveFlag.setActive();
