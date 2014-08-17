@@ -80,7 +80,7 @@ public class IntlUtilitiesTest extends TestCase {
         try {
             Locale.setDefault(Locale.US);
             Assert.assertEquals("1.1",  "1.1", IntlUtilities.valueOf(1.1));
-            Assert.assertEquals("1.1f", "1.1", ntlUtilities.valueOf(1.1f));
+            Assert.assertEquals("1.1f", "1.1", IntlUtilities.valueOf(1.1f));
             Assert.assertEquals("2.3",  "2.3", IntlUtilities.valueOf(2.3));
             Assert.assertEquals("2.3f", "2.3", IntlUtilities.valueOf(2.3f));
             Assert.assertEquals("5", "5", IntlUtilities.valueOf(5));
