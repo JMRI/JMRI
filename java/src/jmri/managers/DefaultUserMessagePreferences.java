@@ -91,11 +91,16 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implement
     
     static class DefaultUserMessagePreferencesHolder {
         static DefaultUserMessagePreferences
-            instance = new DefaultUserMessagePreferences();
+            instance = null;
     }
 
     public static DefaultUserMessagePreferences getInstance() {
+        if (DefaultUserMessagePreferencesHolder.instance == null) DefaultUserMessagePreferencesHolder.instance = new DefaultUserMessagePreferences();
         return DefaultUserMessagePreferencesHolder.instance;
+    }
+    
+    public static void resetInstance() {
+        DefaultUserMessagePreferencesHolder.instance = null;
     }
     
     public synchronized void allowSave() { DefaultUserMessagePreferencesHolder.instance.allowSave = true; }
