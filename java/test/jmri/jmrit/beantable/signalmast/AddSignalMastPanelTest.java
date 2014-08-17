@@ -13,6 +13,19 @@ import junit.framework.*;
 public class AddSignalMastPanelTest extends TestCase {
 
     public void testCreate() {
+        AddSignalMastPanel  a = new AddSignalMastPanel();
+        
+        jmri.util.JUnitAppender.assertWarnMessage("Won't protect preferences at shutdown without registered ShutDownManager");
+        jmri.util.JUnitAppender.assertWarnMessage("No Configuration file set, unable to save or load user preferences");
+        
+        // check that "Basic Model Signals" (basic directory) system is present
+        boolean found = false;
+        for (int i = 0; i < a.sigSysBox.getItemCount(); i++) {
+            if (a.sigSysBox.getItemAt(i).equals("Basic Model Signals")) {
+                found = true;
+            }
+        }
+        Assert.assertTrue("found Basic Model Signals", found);
     }
 
     // from here down is testing infrastructure
@@ -35,7 +48,21 @@ public class AddSignalMastPanelTest extends TestCase {
     }
     
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() throws Exception { 
+        apps.tests.Log4JFixture.setUp(); 
+        super.setUp(); 
+
+        jmri.util.JUnitUtil.resetInstanceManager(); 
+        jmri.util.JUnitUtil.initInternalTurnoutManager(); 
+        jmri.util.JUnitUtil.initInternalLightManager(); 
+        jmri.util.JUnitUtil.initInternalSensorManager();
+        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
+    }
+    protected void tearDown() throws Exception { 
+        jmri.util.JUnitUtil.resetInstanceManager(); 
+
+        super.tearDown();
+        apps.tests.Log4JFixture.tearDown(); 
+    }
     
 }
