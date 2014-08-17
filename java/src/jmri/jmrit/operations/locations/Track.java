@@ -170,6 +170,7 @@ public class Track {
 	public static final String SCHEDULE_MODE_CHANGED_PROPERTY = "trackScheduleMode"; // NOI18N
 	public static final String SCHEDULE_ID_CHANGED_PROPERTY = "trackScheduleId"; // NOI18N
 	public static final String SERVICE_ORDER_CHANGED_PROPERTY = "trackServiceOrder"; // NOI18N
+	public static final String ALTERNATE_TRACK_CHANGED_PROPERTY = "trackAlternate"; // NOI18N
 
 	public Track(String id, String name, String type, Location location) {
 		log.debug("New ({}) track ({}) id: {}", type, name, id);
@@ -419,7 +420,7 @@ public class Track {
 		else
 			_alternateTrackId = "";
 		if (!old.equals(_alternateTrackId))
-			setDirtyAndFirePropertyChange("alternateTrack", oldTrack, track); // NOI18N
+			setDirtyAndFirePropertyChange(ALTERNATE_TRACK_CHANGED_PROPERTY, oldTrack, track); // NOI18N
 	}
 
 	public Track getAlternateTrack() {

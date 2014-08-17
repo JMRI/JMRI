@@ -1051,6 +1051,13 @@ public class Location implements java.beans.PropertyChangeListener {
 		}
 		return false;
 	}
+	
+	public boolean hasAlternateTracks() {
+		for (Track track : getTrackList())
+			if (track.getAlternateTrack() != null)
+				return true;
+		return false;
+	}
 
 	public void dispose() {
 		List<Track> tracks = getTrackList();

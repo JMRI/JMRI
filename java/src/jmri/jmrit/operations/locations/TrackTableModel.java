@@ -52,7 +52,8 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 	protected static final int DESTINATION_COLUMN = 12;
 	protected static final int POOL_COLUMN = 13;
 	protected static final int PLANPICKUP_COLUMN = 14;
-	protected static final int EDIT_COLUMN = 15;
+	protected static final int ALT_TRACK_COLUMN = 15;
+	protected static final int EDIT_COLUMN = 16;
 
 	protected static final int HIGHESTCOLUMN = EDIT_COLUMN + 1;
 
@@ -124,6 +125,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 		tcm.getColumn(DESTINATION_COLUMN).setPreferredWidth(50);
 		tcm.getColumn(POOL_COLUMN).setPreferredWidth(70);
 		tcm.getColumn(PLANPICKUP_COLUMN).setPreferredWidth(70);
+		tcm.getColumn(ALT_TRACK_COLUMN).setPreferredWidth(120);
 		tcm.getColumn(EDIT_COLUMN).setPreferredWidth(80);
 		tcm.getColumn(EDIT_COLUMN).setCellRenderer(new ButtonRenderer());
 		tcm.getColumn(EDIT_COLUMN).setCellEditor(new ButtonEditor(new JButton()));
@@ -131,7 +133,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 		setColumnsVisible();
 	}
 
-	// only show "Load", "Ship", "Road", "Destination", "Planned" and "Pool" if they are needed
+	// only show "Load", "Ship", "Road", "Destination", "Planned", "Pool" "Alternate" if they are needed
 	protected void setColumnsVisible() {
 		XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
 		tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN), _location.hasLoadRestrications());
@@ -140,6 +142,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 		tcm.setColumnVisible(tcm.getColumnByModelIndex(DESTINATION_COLUMN), _location.hasDestinationRestrications());
 		tcm.setColumnVisible(tcm.getColumnByModelIndex(PLANPICKUP_COLUMN), _location.hasPlannedPickups());
 		tcm.setColumnVisible(tcm.getColumnByModelIndex(POOL_COLUMN), _location.hasPools());
+		tcm.setColumnVisible(tcm.getColumnByModelIndex(ALT_TRACK_COLUMN), _location.hasAlternateTracks());
 	}
 
 	public int getRowCount() {
@@ -182,6 +185,8 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 			return Bundle.getMessage("Pool");
 		case PLANPICKUP_COLUMN:
 			return Bundle.getMessage("PlanPickUp");
+		case ALT_TRACK_COLUMN:
+			return Bundle.getMessage("AlternateTrack");
 		case EDIT_COLUMN:
 			return Bundle.getMessage("Edit");
 		default:
@@ -220,6 +225,8 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 		case POOL_COLUMN:
 			return String.class;
 		case PLANPICKUP_COLUMN:
+			return String.class;
+		case ALT_TRACK_COLUMN:
 			return String.class;
 		case EDIT_COLUMN:
 			return JButton.class;
@@ -293,6 +300,12 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 			if (track.getIgnoreUsedLengthPercentage() > 0)
 				return track.getIgnoreUsedLengthPercentage() + "%";
 			return "";
+		case ALT_TRACK_COLUMN:
+			if (track.getAlternateTrack() != null)
+				return track.getAlternateTrack().getName();
+			if (track.isAlternate())
+				return Bundle.getMessage("Yes");
+			return "";
 		case EDIT_COLUMN:
 			return Bundle.getMessage("Edit");
 		default:
@@ -346,8 +359,9 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 				&& (e.getPropertyName().equals(Track.LOADS_CHANGED_PROPERTY)
 						|| e.getPropertyName().equals(Track.ROADS_CHANGED_PROPERTY)
 						|| e.getPropertyName().equals(Track.DESTINATION_OPTIONS_CHANGED_PROPERTY)
-						|| e.getPropertyName().equals(Track.POOL_CHANGED_PROPERTY) || e.getPropertyName().equals(
-						Track.PLANNEDPICKUPS_CHANGED_PROPERTY))) {
+						|| e.getPropertyName().equals(Track.POOL_CHANGED_PROPERTY) 
+						|| e.getPropertyName().equals(Track.PLANNEDPICKUPS_CHANGED_PROPERTY)
+						|| e.getPropertyName().equals(Track.ALTERNATE_TRACK_CHANGED_PROPERTY))) {
 			setColumnsVisible();
 		}
 	}
