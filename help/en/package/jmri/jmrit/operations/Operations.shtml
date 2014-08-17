@@ -1513,9 +1513,9 @@
    or the edit schedule windows. The program when it finds a spur full will send cars to the track
    you specify as the alternate track. If you don't specify an alternate, the program will try to
    find a yard at that location for the cars. The alternate track feature can be used to create an
-   "Off Spot" track for your cars. To prevent the program from placing cars on the off spot track
-   that aren't destined to your industry, use the "Select loads serviced by track" to only accept
-   cars with loads that your industry is demanding.
+   "Off Spot" track for your cars. Once you specify a track as an alternate, only cars destined for
+   the spur will be placed on the alternate track. You can also use the same alternate track for
+   several spurs.
 
    <P>Specifying an alternate track for a schedule also changes the behavior of cars with custom
     loads but without a final destination. When the program finds a car with a custom load, it will
