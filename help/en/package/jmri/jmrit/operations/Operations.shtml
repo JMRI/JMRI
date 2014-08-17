@@ -1473,9 +1473,9 @@
    <P>
     The second option is the ability to specify an alternate track. The program when it finds a spur
     full will try to send cars to the alternate track. If you don't specify an alternate, the
-    program will try to send the cars to a yard at that location. The alternate track feature can be
-    used to create an "Off Spot" track for your cars. See <A HREF="#AlternateTrack">Alternate
-     Track</A> below for more details.
+    program will try to send cars with a custom load or final destination to a yard at that
+    location. The alternate track feature can be used to create an "Off Spot" track for your cars.
+    See <A HREF="#AlternateTrack">Alternate Track</A> below for more details.
    </P>
 
    <P>Schedules can operate in one of two modes, sequential as described above, or in match
@@ -1511,8 +1511,7 @@
 
    You can add an alternate track to a spur from the "Tools" menu accessed from either the edit spur
    or the edit schedule windows. The program when it finds a spur full will send cars to the track
-   you specify as the alternate track. If you don't specify an alternate, the program will try to
-   find a yard at that location for the cars. The alternate track feature can be used to create an
+   you specify as the alternate track. The alternate track feature can be used to create an
    "Off Spot" track for your cars. Once you specify a track as an alternate, only cars destined for
    the spur will be placed on the alternate track. You can also use the same alternate track for
    several spurs.
