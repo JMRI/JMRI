@@ -5,7 +5,7 @@
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
 >
-  <name>AAR-2</name>
+  <name>AAR 1946</name>
   <date>1946</date>
   <reference>As described in the August 1946 version of the AAR publication "American Railway Signaling Principles and Practices", chapter II.</reference>
 
