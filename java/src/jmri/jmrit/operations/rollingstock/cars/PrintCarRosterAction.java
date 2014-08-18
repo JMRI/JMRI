@@ -120,6 +120,7 @@ public class PrintCarRosterAction extends AbstractAction {
 					continue; // car doesn't have a location skip
 				
 				location = "";
+				destination = "";
 				finalDestination = "";
 				returnWhenEmpty = "";
 				
