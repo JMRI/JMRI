@@ -31,6 +31,46 @@ public class DefaultSignalSystemManagerTest extends TestCase {
         Assert.assertTrue(d.getSystemNameList().size() >= 2);
     }
     
+    public void testUniqueNames() {
+        DefaultSignalSystemManager d = new DefaultSignalSystemManager();
+        java.util.List<String> l = d.getListOfNames();
+        for (int i = 0; i < l.size(); i++) {
+            for (int j = 0; j < l.size(); j++) {
+                if ((i!=j) && (l.get(i).equals(l.get(j))) ) {
+                    Assert.fail("Found "+l.get(i)+" at "+i+" and "+j);
+                }
+            }
+        }
+    }
+    
+    public void testUniqueSystemNames() {
+        DefaultSignalSystemManager d = new DefaultSignalSystemManager();
+        java.util.List<String> l = d.getListOfNames();
+        for (int i = 0; i < l.size(); i++) {
+            jmri.SignalSystem si = d.getSystem(l.get(i));
+            for (int j = 0; j < l.size(); j++) {
+                jmri.SignalSystem sj = d.getSystem(l.get(j));
+                if ((i!=j) && (si.getSystemName().equals(sj.getSystemName())) ) {
+                    Assert.fail("Found system name "+si.getSystemName()+" at "+i+" and "+j);
+                }
+            }
+        }
+    }
+    
+    public void testUniqueUserNames() {
+        DefaultSignalSystemManager d = new DefaultSignalSystemManager();
+        java.util.List<String> l = d.getListOfNames();
+        for (int i = 0; i < l.size(); i++) {
+            jmri.SignalSystem si = d.getSystem(l.get(i));
+            for (int j = 0; j < l.size(); j++) {
+                jmri.SignalSystem sj = d.getSystem(l.get(j));
+                if ((i!=j) && (si.getUserName().equals(sj.getUserName())) ) {
+                    Assert.fail("Found user name "+si.getUserName()+" at "+i+" and "+j);
+                }
+            }
+        }
+    }
+    
     // from here down is testing infrastructure
 
     public DefaultSignalSystemManagerTest(String s) {
