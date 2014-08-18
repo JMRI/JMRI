@@ -50,5 +50,5 @@ public class IntlUtilities {
     
     
     // initialize logging
-    static private Logger log = LoggerFactory.getLogger(IntlUtilities.class.getName());
+    //static private Logger log = LoggerFactory.getLogger(IntlUtilities.class.getName());
 }
