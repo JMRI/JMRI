@@ -52,7 +52,9 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
         this.chkStartWithActiveProfile.setSelected(ProfileManager.defaultManager().isAutoStartActiveProfile());
         this.valueChanged(null);
         int index = ProfileManager.defaultManager().getAllProfiles().indexOf(ProfileManager.defaultManager().getActiveProfile());
-        this.profilesTbl.setRowSelectionInterval(index, index);
+        if (index != -1) {
+            this.profilesTbl.setRowSelectionInterval(index, index);
+        }
         // Hide until I can figure out good way to export a profile
         // Should I include items in external user/roster/etc directories?
         this.btnExportProfile.setVisible(false);
@@ -534,27 +536,27 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
         return false; // ProfileManager preferences are saved immediately, so this is always false
     }
     /* Comment out until I get around to utilizing this, so Jenkins does not throw warnings.
-    private static class ZipFileFilter extends FileFilter {
+     private static class ZipFileFilter extends FileFilter {
 
-        public ZipFileFilter() {
-        }
+     public ZipFileFilter() {
+     }
 
-        @Override
-        public boolean accept(File f) {
-            if (!f.isDirectory()) {
-                int i = f.getName().lastIndexOf('.');
-                if (i > 0 && i < f.getName().length() - 1) {
-                    return f.getName().substring(i + 1).toLowerCase().equalsIgnoreCase("zip"); // NOI18N
-                }
-                return false;
-            }
-            return true;
-        }
+     @Override
+     public boolean accept(File f) {
+     if (!f.isDirectory()) {
+     int i = f.getName().lastIndexOf('.');
+     if (i > 0 && i < f.getName().length() - 1) {
+     return f.getName().substring(i + 1).toLowerCase().equalsIgnoreCase("zip"); // NOI18N
+     }
+     return false;
+     }
+     return true;
+     }
 
-        @Override
-        public String getDescription() {
-            return "Zip archives (.zip)";
-        }
-    }
-    */
+     @Override
+     public String getDescription() {
+     return "Zip archives (.zip)";
+     }
+     }
+     */
 }
