@@ -641,7 +641,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             if ( (a = programmerRoot.getChild("programmer").getAttribute("decoderFilePanes")) != null
                  && a.getValue().equals("yes")) {
                 if (decoderRoot != null) {
-                    decoderPaneList = (List<Element>)decoderRoot.getChildren("pane");
+                    decoderPaneList = decoderRoot.getChildren("pane");
                 }
             }
 

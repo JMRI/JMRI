@@ -126,7 +126,7 @@ public class NetworkTreePaneDemo extends TestCase {
                 System.out.print("Test prints selected treenode "+node);
                 if (node.getUserObject() instanceof NodeTreeRep.SelectionKey) {
                     System.out.println(" and invokes");
-                    ((NodeTreeRep.SelectionKey)node.getUserObject()).select((DefaultMutableTreeNode)node);
+                    ((NodeTreeRep.SelectionKey)node.getUserObject()).select(node);
                 } else {
                     System.out.println();
                 }
