@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import jmri.*;
 
 import jmri.NamedBeanHandle;
+import jmri.implementation.SignalSystemTestUtil;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -25,6 +26,18 @@ public class DefaultSignalAppearanceMapTest extends TestCase {
 	public void testCtor() {
 	    new DefaultSignalAppearanceMap("sys", "user");
 	}
+
+    public void testSearchOrder() throws Exception {
+        try {  // need try-finally to ensure junk deleted from user area
+            SignalSystemTestUtil.createMockSystem();
+                
+            // check that mock (test directory) system is present
+            InstanceManager.signalMastManagerInstance().provideSignalMast("IF$shsm:"+SignalSystemTestUtil.getMockSystemName()+":one-searchlight:h1");
+
+        } finally {
+            SignalSystemTestUtil.deleteMockSystem();
+        }
+    }
 
 	public void testDefaultMap() {
         SignalMast s = InstanceManager.signalMastManagerInstance().provideSignalMast("IF$shsm:basic:one-searchlight:h1");

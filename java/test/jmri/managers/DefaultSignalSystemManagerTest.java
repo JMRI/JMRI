@@ -6,6 +6,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import jmri.implementation.SignalSystemTestUtil;
+
 /**
  Tests for the jmri.managers.InternalTurnoutManager class.
  * @author	Bob Jacobsen Copyright 2009
@@ -20,6 +22,20 @@ public class DefaultSignalSystemManagerTest extends TestCase {
         Assert.assertTrue(l.contains("SPTCO-1960"));
     }
     
+    public void testSearchOrder() throws Exception {
+        try {  // need try-finally to ensure junk deleted from user area
+            SignalSystemTestUtil.createMockSystem();
+                
+            // check that mock (test directory) system is present
+            DefaultSignalSystemManager d = new DefaultSignalSystemManager();
+            java.util.List<String> l = d.getListOfNames();
+            Assert.assertTrue(l.contains(SignalSystemTestUtil.getMockSystemName()));
+
+        } finally {
+            SignalSystemTestUtil.deleteMockSystem();
+        }
+    }
+
     public void testLoadBasicAspects() {
         DefaultSignalSystemManager d = new DefaultSignalSystemManager();
         d.makeBean("basic");
