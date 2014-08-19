@@ -34,16 +34,20 @@ directory.
 
 <h2>Creating a New Signaling System</h2>
 
-For now, you need to manually create a new directory the JMRI 
+First, you need to manually create a new directory the JMRI 
 system file directory under the "xml/signals" or in the user 
-preferences directory "resources/signals" (from 2.13.5) these 
-will then hold your new signal definition.
+preferences directory "resources/signals" which
+will hold your new signal definition.
 By convention, the name of this directory (e.g. "basic" or
 "AAR-1946") provides the system name for your signal definition.
+Any SignalMasts you create that
+use your new signal system definition will include the
+signaling system's system name in their own (mast's) system
+name, so it's inconvenient to change the system name of the signal system.
 Think ahead a little bit:  Will there be variants of this
 definition for different eras or different divisions?  If
-so, include a year or location in the name, to make it easy
-to create modified versions.
+so, include a year or location in the name, to make it easier
+to create modified versions. 
 
 <p>
 Then, provide these files:
@@ -156,6 +160,25 @@ two searchlight, dwarf, semaphore, etc), you need to
 create an appearance file.
 
 <p>
+The top of the file is some boiler-plate that you can 
+copy from an existing system, then modify with your
+own author and revision history information.
+
+<p>
+The value of the "aspecttable" element should be the user name for 
+the overall system, as defined in the aspects.xml file's name element.
+
+<p>
+The "name" element is the user name for this particular type of signal mast.
+If should be pretty descriptive of the mast, and related in some obvious way to
+the filename.
+Use the "reference" and "description" elements to provide information to 
+future users of this signal system. You can see how this is displayed
+for a <a href="http://jmri.org/xml/signals/AAR-1946/appearance-SL-1-high-pbs.xml">sample file</a>.
+
+<p>
+Next is the "appearances" element, which contains a series of "appearance"
+elements that define how the individual aspects appear on this type of signal mast.
 Not every aspect needs to be defined in every file, as
 not every type of signal can show every aspect.
 
