@@ -587,7 +587,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
         // Create root element
         Element root = new Element("speedometer-config");
         root.setAttribute("noNamespaceSchemaLocation",
-                "http://jmri.org/xml/schema/speedometer-9-3-3.xsd",
+                "http://jmri.org/xml/schema/speedometer-3-9-3.xsd",
                 org.jdom.Namespace.getNamespace("xsi",
                 "http://www.w3.org/2001/XMLSchema-instance"));
         Document doc = new Document(root);
