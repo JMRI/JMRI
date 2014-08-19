@@ -1389,9 +1389,9 @@
    feature and shouldn't be used until you become very familiar with how the program generates
    manifests and switch lists. A schedule provides very fine control on the order types of cars will
    be delivered to a spur. You can specify the car type, when it can be delivered, the car's road
-   name and load. You can also decide the car's new load and destination. For example, if you wanted
-   two SP boxcars to be delivered followed by a tank car loaded with "Oil", you can create a
-   schedule that will do exactly that.
+   name and load. You can also decide the car's new load, destination, and when the car is to be
+   picked up. For example, if you wanted two SP boxcars to be delivered followed by a tank car
+   loaded with "Oil", you can create a schedule that will do exactly that.
 
    <P>To create a schedule press the "Edit" button next to "Optional Schedule" pull down menu on
     the "Edit Spur Track" window. Pressing the "Edit" button should create the "Add Schedule"
@@ -1403,20 +1403,26 @@
     Enter a name for your schedule and press the "Add Schedule" button on the bottom of the window.
     Now add your first delivery for this spur by selecting a car type in the menu box found in the
     lower left corner of the window and pressing the "Add car type" button. A new item should appear
-    in your schedule containing the type of car, a pull down menu for road names, and a count of 1.
-    You can if you wish specify a particular road for the type of car you entered, or leave it blank
-    if you don't care about the road name. You can also specify the car load received and shipped.
-    You can also control if the car will be delivered during the session. Select from the
-    "Timetable" pull down menu the train timetable you want. When a train timetable is selected, a
-    car will only be delivered when that train timetable is active. See Trains-&gt;Tools-&gt;<A
+    in your schedule containing the type of car, pull down menus for delivery, road names, loads,
+    destinations, and pickup. The schedule item also includes count of 1 and a wait of 0. 
+    </p>
+    <P>You can if
+    you wish specify a particular road for the type of car you entered, or leave it blank if you
+    don't care about the road name. You can also specify the car load received and shipped. You can
+    also control if the car will be delivered during the session and when the car is to be picked
+    up. Select from the "Delivery" pull down menu the train timetable when you want the car
+    delivered. Select under "Pickup" when you want the car pulled from the spur. You can also
+    specify a "Wait" value for the car. The wait value allows you to keep the car at the spur for a
+    certain number of trains. When a train timetable is selected for either delivery or pickup, a
+    car will only be serviced when that train timetable is active. See Trains-&gt;Tools-&gt;<A
      HREF="#Timetable">Timetable</A> to select the train timetable for your session.
    </P>
 
    <P>If you wanted more than one car type to be delivered consecutively, increase the count to
     the number that you wish. The maximum count is 100 and the minimum is 1. In the schedule shown
-    above, the schedule is requesting two SP Boxcars in a row, then a TankOil car with with a load
-    of "L(Oil)". After the TankOil car is delivered the schedule starts from the beginning, again
-    requesting two SP Boxcars followed by a TankOil car. The wait field allows you determine how
+    above, the schedule is requesting two SP Boxcars in a row, then a Tank Oil car with with a load
+    of "L(Oil)". After the Tank Oil car is delivered the schedule starts from the beginning, again
+    requesting two SP Boxcars followed by a Tank Oil car. The wait field allows you determine how
     many trains will visit the location before picking up the car. Useful if you want a car to
     remain still for several operating sessions.</P>
 
