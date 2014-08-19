@@ -7,20 +7,21 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Represents one schedule item of a schedule
  * 
- * @author Daniel Boudreau Copyright (C) 2009, 2010, 2013
+ * @author Daniel Boudreau Copyright (C) 2009, 2010, 2013, 2014
  * @version $Revision$
  */
 public class ScheduleItem implements java.beans.PropertyChangeListener {
 
 	protected String _id = "";
 	protected int _sequenceId = 0; // used to determine order in schedule
-	protected String _trainScheduleId = ""; // which day of the weeks to service this item
+	protected String _setoutTrainScheduleId = ""; // which day of the week to deliver car
 	protected String _type = ""; // the type of car
 	protected String _road = ""; // the car road
 	protected String _load = ""; // the car load requested
 	protected String _ship = ""; // the car load shipped
 	protected Location _destination = null; // car destination after load
 	protected Track _trackDestination = null;// car destination track after load
+	protected String _pickupTrainScheduleId = ""; // which day of the week to pickup car
 	protected int _count = 1; // the number of times this type of car must be dropped
 	protected int _wait = 0; // how many trains this car must wait before being picked up
 	protected int _hits = 0; // how many times this schedule item has been used
@@ -69,13 +70,23 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 		firePropertyChange(TYPE_CHANGED_PROPERTY, old, type);
 	}
 
-	public String getTrainScheduleId() {
-		return _trainScheduleId;
+	public String getSetoutTrainScheduleId() {
+		return _setoutTrainScheduleId;
 	}
 
-	public void setTrainScheduleId(String id) {
-		String old = _trainScheduleId;
-		_trainScheduleId = id;
+	public void setSetoutTrainScheduleId(String id) {
+		String old = _setoutTrainScheduleId;
+		_setoutTrainScheduleId = id;
+		firePropertyChange(TRAIN_SCHEDULE_CHANGED_PROPERTY, old, id);
+	}
+	
+	public String getPickupTrainScheduleId() {
+		return _pickupTrainScheduleId;
+	}
+
+	public void setPickupTrainScheduleId(String id) {
+		String old = _pickupTrainScheduleId;
+		_pickupTrainScheduleId = id;
 		firePropertyChange(TRAIN_SCHEDULE_CHANGED_PROPERTY, old, id);
 	}
 
@@ -221,7 +232,7 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 			return _trackDestination.getId();
 		return "";
 	}
-
+	
 	public void setComment(String comment) {
 		_comment = comment;
 	}
@@ -251,7 +262,9 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 		if ((a = e.getAttribute(Xml.SEQUENCE_ID)) != null)
 			_sequenceId = Integer.parseInt(a.getValue());
 		if ((a = e.getAttribute(Xml.TRAIN_SCHEDULE_ID)) != null)
-			_trainScheduleId = a.getValue();
+			_setoutTrainScheduleId = a.getValue();
+		if ((a = e.getAttribute(Xml.PICKUP_TRAIN_SCHEDULE_ID)) != null)
+			_pickupTrainScheduleId = a.getValue();
 		if ((a = e.getAttribute(Xml.COUNT)) != null)
 			_count = Integer.parseInt(a.getValue());
 		if ((a = e.getAttribute(Xml.WAIT)) != null)
@@ -284,7 +297,8 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 		org.jdom.Element e = new org.jdom.Element(Xml.ITEM);
 		e.setAttribute(Xml.ID, getId());
 		e.setAttribute(Xml.SEQUENCE_ID, Integer.toString(getSequenceId()));
-		e.setAttribute(Xml.TRAIN_SCHEDULE_ID, getTrainScheduleId());
+		e.setAttribute(Xml.TRAIN_SCHEDULE_ID, getSetoutTrainScheduleId());
+		e.setAttribute(Xml.PICKUP_TRAIN_SCHEDULE_ID, getPickupTrainScheduleId());
 		e.setAttribute(Xml.COUNT, Integer.toString(getCount()));
 		e.setAttribute(Xml.WAIT, Integer.toString(getWait()));
 		e.setAttribute(Xml.TYPE, getTypeName());

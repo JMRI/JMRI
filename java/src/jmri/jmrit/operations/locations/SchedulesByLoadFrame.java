@@ -150,13 +150,13 @@ public class SchedulesByLoadFrame extends OperationsFrame implements
 												+ ")"), 1, x);
 								// create string (type, timetable, road, load)
 								String s = item.getTypeName();
-								if (!item.getTrainScheduleId().equals("")
+								if (!item.getSetoutTrainScheduleId().equals("")
 										&& TrainScheduleManager.instance().getScheduleById(
-												item.getTrainScheduleId()) != null)
+												item.getSetoutTrainScheduleId()) != null)
 									s = s
 											+ ", "
 											+ TrainScheduleManager.instance()
-													.getScheduleById(item.getTrainScheduleId())
+													.getScheduleById(item.getSetoutTrainScheduleId())
 													.getName();
 								else
 									s = s + ",";

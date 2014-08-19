@@ -28,7 +28,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 /**
  * Table Model for edit of a schedule used by operations
  * 
- * @author Daniel Boudreau Copyright (C) 2009
+ * @author Daniel Boudreau Copyright (C) 2009, 2014
  * @version $Revision$
  */
 public class ScheduleTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
@@ -37,13 +37,14 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 	private static final int IDCOLUMN = 0;
 	private static final int CURRENTCOLUMN = IDCOLUMN + 1;
 	private static final int TYPECOLUMN = CURRENTCOLUMN + 1;
-	private static final int DAYCOLUMN = TYPECOLUMN + 1;
-	private static final int ROADCOLUMN = DAYCOLUMN + 1;
+	private static final int SETOUT_DAY_COLUMN = TYPECOLUMN + 1;
+	private static final int ROADCOLUMN = SETOUT_DAY_COLUMN + 1;
 	private static final int LOADCOLUMN = ROADCOLUMN + 1;
 	private static final int SHIPCOLUMN = LOADCOLUMN + 1;
 	private static final int DESTCOLUMN = SHIPCOLUMN + 1;
 	private static final int TRACKCOLUMN = DESTCOLUMN + 1;
-	private static final int COUNTCOLUMN = TRACKCOLUMN + 1;
+	private static final int PICKUP_DAY_COLUMN = TRACKCOLUMN + 1;
+	private static final int COUNTCOLUMN = PICKUP_DAY_COLUMN + 1;
 	private static final int WAITCOLUMN = COUNTCOLUMN + 1;
 	private static final int UPCOLUMN = WAITCOLUMN + 1;
 	private static final int DOWNCOLUMN = UPCOLUMN + 1;
@@ -122,12 +123,13 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(35);
 		table.getColumnModel().getColumn(CURRENTCOLUMN).setPreferredWidth(50);
 		table.getColumnModel().getColumn(TYPECOLUMN).setPreferredWidth(90);
-		table.getColumnModel().getColumn(DAYCOLUMN).setPreferredWidth(90);
+		table.getColumnModel().getColumn(SETOUT_DAY_COLUMN).setPreferredWidth(90);
 		table.getColumnModel().getColumn(ROADCOLUMN).setPreferredWidth(90);
 		table.getColumnModel().getColumn(LOADCOLUMN).setPreferredWidth(90);
 		table.getColumnModel().getColumn(SHIPCOLUMN).setPreferredWidth(90);
 		table.getColumnModel().getColumn(DESTCOLUMN).setPreferredWidth(130);
 		table.getColumnModel().getColumn(TRACKCOLUMN).setPreferredWidth(130);
+		table.getColumnModel().getColumn(PICKUP_DAY_COLUMN).setPreferredWidth(90);
 		table.getColumnModel().getColumn(COUNTCOLUMN).setPreferredWidth(45);
 		table.getColumnModel().getColumn(WAITCOLUMN).setPreferredWidth(40);
 		table.getColumnModel().getColumn(UPCOLUMN).setPreferredWidth(60);
@@ -151,8 +153,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 			return Bundle.getMessage("Current");
 		case TYPECOLUMN:
 			return Bundle.getMessage("Type");
-		case DAYCOLUMN:
-			return Bundle.getMessage("Timetable");
+		case SETOUT_DAY_COLUMN:
+			return Bundle.getMessage("Delivery");
 		case ROADCOLUMN:
 			return Bundle.getMessage("Road");
 		case LOADCOLUMN:
@@ -163,6 +165,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 			return Bundle.getMessage("Destination");
 		case TRACKCOLUMN:
 			return Bundle.getMessage("Track");
+		case PICKUP_DAY_COLUMN:
+			return Bundle.getMessage("Pickup");
 		case COUNTCOLUMN:
 			if (_matchMode)
 				return Bundle.getMessage("Hits");
@@ -188,7 +192,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 			return String.class;
 		case TYPECOLUMN:
 			return String.class;
-		case DAYCOLUMN:
+		case SETOUT_DAY_COLUMN:
 			return JComboBox.class;
 		case ROADCOLUMN:
 			return JComboBox.class;
@@ -199,6 +203,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		case DESTCOLUMN:
 			return JComboBox.class;
 		case TRACKCOLUMN:
+			return JComboBox.class;
+		case PICKUP_DAY_COLUMN:
 			return JComboBox.class;
 		case COUNTCOLUMN:
 			return String.class;
@@ -217,12 +223,13 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
 	public boolean isCellEditable(int row, int col) {
 		switch (col) {
-		case DAYCOLUMN:
+		case SETOUT_DAY_COLUMN:
 		case ROADCOLUMN:
 		case LOADCOLUMN:
 		case SHIPCOLUMN:
 		case DESTCOLUMN:
 		case TRACKCOLUMN:
+		case PICKUP_DAY_COLUMN:
 		case COUNTCOLUMN:
 		case WAITCOLUMN:
 		case UPCOLUMN:
@@ -247,8 +254,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 			return getCurrentPointer(si);
 		case TYPECOLUMN:
 			return getType(si);
-		case DAYCOLUMN:
-			return getDayComboBox(si);
+		case SETOUT_DAY_COLUMN:
+			return getSetoutDayComboBox(si);
 		case ROADCOLUMN:
 			return getRoadComboBox(si);
 		case LOADCOLUMN:
@@ -259,6 +266,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 			return getDestComboBox(si);
 		case TRACKCOLUMN:
 			return getTrackComboBox(si);
+		case PICKUP_DAY_COLUMN:
+			return getPickupDayComboBox(si);
 		case COUNTCOLUMN:
 			if (_matchMode)
 				return si.getHits();
@@ -282,8 +291,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 			return;
 		}
 		switch (col) {
-		case DAYCOLUMN:
-			setDay(value, row);
+		case SETOUT_DAY_COLUMN:
+			setSetoutDay(value, row);
 			break;
 		case ROADCOLUMN:
 			setRoad(value, row);
@@ -299,6 +308,9 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 			break;
 		case TRACKCOLUMN:
 			setTrack(value, row);
+			break;
+		case PICKUP_DAY_COLUMN:
+			setPickupDay(value, row);
 			break;
 		case COUNTCOLUMN:
 			setCount(value, row);
@@ -359,20 +371,36 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		return cb;
 	}
 
-	private JComboBox getDayComboBox(ScheduleItem si) {
+	private JComboBox getSetoutDayComboBox(ScheduleItem si) {
 		JComboBox cb = TrainScheduleManager.instance().getSelectComboBox();
-		TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(si.getTrainScheduleId());
+		TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(si.getSetoutTrainScheduleId());
 		if (sch != null) {
 			cb.setSelectedItem(sch);
 		}
-		if (sch == null && !si.getTrainScheduleId().equals("")) {
+		if (sch == null && !si.getSetoutTrainScheduleId().equals("")) {
 			String notValid = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si
-					.getTrainScheduleId() });
+					.getSetoutTrainScheduleId() });
 			cb.addItem(notValid);
 			cb.setSelectedItem(notValid);
 		}
 		return cb;
 	}
+	
+	private JComboBox getPickupDayComboBox(ScheduleItem si) {
+		JComboBox cb = TrainScheduleManager.instance().getSelectComboBox();
+		TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(si.getPickupTrainScheduleId());
+		if (sch != null) {
+			cb.setSelectedItem(sch);
+		}
+		if (sch == null && !si.getPickupTrainScheduleId().equals("")) {
+			String notValid = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si
+					.getPickupTrainScheduleId() });
+			cb.addItem(notValid);
+			cb.setSelectedItem(notValid);
+		}
+		return cb;
+	}
+
 
 	private JComboBox getLoadComboBox(ScheduleItem si) {
 		// log.debug("getLoadComboBox for ScheduleItem "+si.getType());
@@ -478,13 +506,23 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		si.setWait(wait);
 	}
 
-	private void setDay(Object value, int row) {
+	private void setSetoutDay(Object value, int row) {
 		ScheduleItem si = _list.get(row);
 		Object obj = ((JComboBox) value).getSelectedItem();
 		if (obj.equals("")) {
-			si.setTrainScheduleId("");
+			si.setSetoutTrainScheduleId("");
 		} else if (obj.getClass().equals(TrainSchedule.class)) {
-			si.setTrainScheduleId(((TrainSchedule) obj).getId());
+			si.setSetoutTrainScheduleId(((TrainSchedule) obj).getId());
+		}
+	}
+	
+	private void setPickupDay(Object value, int row) {
+		ScheduleItem si = _list.get(row);
+		Object obj = ((JComboBox) value).getSelectedItem();
+		if (obj.equals("")) {
+			si.setPickupTrainScheduleId("");
+		} else if (obj.getClass().equals(TrainSchedule.class)) {
+			si.setPickupTrainScheduleId(((TrainSchedule) obj).getId());
 		}
 	}
 

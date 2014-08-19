@@ -117,7 +117,7 @@ public class PrintLocationsAction extends AbstractAction {
 		// header
 		String s = Bundle.getMessage("Location") + TAB + TAB + TAB + Bundle.getMessage("Length") + " "
 				+ Bundle.getMessage("Used") + TAB + Bundle.getMessage("RS") + TAB + Bundle.getMessage("Cars")
-				+ TAB + Bundle.getMessage("Engines") + TAB + Bundle.getMessage("Pickup") + " "
+				+ TAB + Bundle.getMessage("Engines") + TAB + Bundle.getMessage("Pickups") + " "
 				+ Bundle.getMessage("Drop") + NEW_LINE;
 		writer.write(s);
 		for (Location location : locations) {

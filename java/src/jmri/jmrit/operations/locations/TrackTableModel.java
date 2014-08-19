@@ -170,7 +170,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 		case CARS_COLUMN:
 			return Bundle.getMessage("Cars");
 		case PICKUPS_COLUMN:
-			return Bundle.getMessage("Pickup");
+			return Bundle.getMessage("Pickups");
 		case SETOUT_COLUMN:
 			return Bundle.getMessage("Drop");
 		case LOAD_COLUMN:

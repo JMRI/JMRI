@@ -20,6 +20,8 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.TrainSchedule;
+import jmri.jmrit.operations.trains.TrainScheduleManager;
 
 /**
  * Action to print a summary of the Roster contents
@@ -28,7 +30,7 @@ import jmri.jmrit.operations.setup.Setup;
  * 
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Dennis Miller Copyright (C) 2005
- * @author Daniel Boudreau Copyright (C) 2008, 2010, 2011, 2012, 2013
+ * @author Daniel Boudreau Copyright (C) 2008, 2010, 2011, 2012, 2013, 2014
  * @version $Revision$
  */
 public class PrintCarRosterAction extends AbstractAction {
@@ -105,6 +107,7 @@ public class PrintCarRosterAction extends AbstractAction {
 		String rfid = "";
 		String last = "";
 		String wait = "";
+		String schedule = "";
 		String comment = "";
 
 		ownerMaxLen = CarOwners.instance().getCurMaxNameLength();
@@ -169,6 +172,13 @@ public class PrintCarRosterAction extends AbstractAction {
 					last = padAttribute(car.getLastDate().split(" ")[0], 10);
 				if (printCarWait.isSelected())
 					wait = padAttribute(Integer.toString(car.getWait()), 4);
+				if (printCarPickup.isSelected()) {
+					TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(car.getPickupScheduleId());
+					String name = "";
+					if (sch != null)
+						name = sch.getName();
+					schedule = padAttribute(name, 10);
+				}
 				if (printCarValue.isSelected())
 					value = padAttribute(car.getValue().trim(), Control.max_len_string_attibute);
 				if (printCarRfid.isSelected())
@@ -196,9 +206,9 @@ public class PrintCarRosterAction extends AbstractAction {
 				if (printCarComment.isSelected())
 					comment = car.getComment().trim();
 
-				String s = number + road + type + length + weight + color + load + kernel + owner + built
-						+ last + wait + value + rfid + location + train + destination + finalDestination 
-						+ returnWhenEmpty + comment;
+				String s = number + road + type + length + weight + color + load + kernel + owner + built + last + wait
+						+ schedule + value + rfid + location + train + destination + finalDestination + returnWhenEmpty
+						+ comment;
 
 				if (s.length() > numberCharPerLine)
 					s = s.substring(0, numberCharPerLine);
@@ -229,6 +239,7 @@ public class PrintCarRosterAction extends AbstractAction {
 				+ (printCarBuilt.isSelected() ? Bundle.getMessage("Built") + " " : "")
 				+ (printCarLast.isSelected() ? Bundle.getMessage("LastMoved") + " " : "")
 				+ (printCarWait.isSelected() ? Bundle.getMessage("Wait") + " " : "")
+				+ (printCarPickup.isSelected() ? padAttribute(Bundle.getMessage("Pickup"), 10) : "")
 				+ (printCarValue.isSelected() ? Setup.getValueLabel() + "        " : "")
 				+ (printCarRfid.isSelected() ? Setup.getRfidLabel() + "        " : "")
 				+ (printCarLocation.isSelected() ? padAttribute(Bundle.getMessage("Location"),
@@ -274,6 +285,7 @@ public class PrintCarRosterAction extends AbstractAction {
 			new Object[] { Setup.getRfidLabel() }));
 	JCheckBox printCarLast = new JCheckBox(Bundle.getMessage("PrintCarLastMoved"));
 	JCheckBox printCarWait = new JCheckBox(Bundle.getMessage("PrintCarWait"));
+	JCheckBox printCarPickup = new JCheckBox(Bundle.getMessage("PrintCarPickup"));
 	JCheckBox printCarLocation = new JCheckBox(Bundle.getMessage("PrintCarLocation"));
 	JCheckBox printCarTrain = new JCheckBox(Bundle.getMessage("PrintCarTrain"));
 	JCheckBox printCarDestination = new JCheckBox(Bundle.getMessage("PrintCarDestination"));
@@ -317,18 +329,19 @@ public class PrintCarRosterAction extends AbstractAction {
 			addItemLeft(pPanel, printCarBuilt, 0, 7);
 			addItemLeft(pPanel, printCarLast, 0, 8);
 			addItemLeft(pPanel, printCarWait, 0, 9);
+			addItemLeft(pPanel, printCarPickup, 0, 10);
 			if (Setup.isValueEnabled())
-				addItemLeft(pPanel, printCarValue, 0, 10);
+				addItemLeft(pPanel, printCarValue, 0, 11);
 			if (Setup.isRfidEnabled())
-				addItemLeft(pPanel, printCarRfid, 0, 11);
-			addItemLeft(pPanel, printCarLocation, 0, 12);
-			addItemLeft(pPanel, printCarTrain, 0, 13);
-			addItemLeft(pPanel, printCarDestination, 0, 14);
-			addItemLeft(pPanel, printCarFinalDestination, 0, 15);
-			addItemLeft(pPanel, printCarRWE, 0, 16);
-			addItemLeft(pPanel, printCarComment, 0, 17);
-			addItemLeft(pPanel, printSpace, 0, 18);
-			addItemLeft(pPanel, printPage, 0, 19);
+				addItemLeft(pPanel, printCarRfid, 0, 12);
+			addItemLeft(pPanel, printCarLocation, 0, 13);
+			addItemLeft(pPanel, printCarTrain, 0, 14);
+			addItemLeft(pPanel, printCarDestination, 0, 15);
+			addItemLeft(pPanel, printCarFinalDestination, 0, 16);
+			addItemLeft(pPanel, printCarRWE, 0, 17);
+			addItemLeft(pPanel, printCarComment, 0, 18);
+			addItemLeft(pPanel, printSpace, 0, 19);
+			addItemLeft(pPanel, printPage, 0, 20);
 
 			// set defaults
 			printCarsWithLocation.setSelected(false);
@@ -341,6 +354,7 @@ public class PrintCarRosterAction extends AbstractAction {
 			printCarBuilt.setSelected(false);
 			printCarLast.setSelected(false);
 			printCarWait.setSelected(false);
+			printCarPickup.setSelected(false);
 			printCarValue.setSelected(false);
 			printCarRfid.setSelected(false);
 			printCarLocation.setSelected(true);

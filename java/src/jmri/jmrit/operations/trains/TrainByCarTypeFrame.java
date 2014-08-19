@@ -283,8 +283,8 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 			// check to see if schedule timetable allows delivery
 			if (attribute.equals(TIMETABLE)
 					&& si.getTypeName().equals(carType)
-					&& (si.getTrainScheduleId().equals("") || TrainManager.instance().getTrainScheduleActiveId()
-							.equals(si.getTrainScheduleId())))
+					&& (si.getSetoutTrainScheduleId().equals("") || TrainManager.instance().getTrainScheduleActiveId()
+							.equals(si.getSetoutTrainScheduleId())))
 				return true;
 			// check to see if at least one schedule item can service car
 			if (attribute.equals(ALL)
@@ -292,8 +292,8 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 					&& (si.getReceiveLoadName().equals("") || car == null || si.getReceiveLoadName().equals(
 							car.getLoadName()))
 					&& (si.getRoadName().equals("") || car == null || si.getRoadName().equals(car.getRoadName()))
-					&& (si.getTrainScheduleId().equals("") || TrainManager.instance().getTrainScheduleActiveId()
-							.equals(si.getTrainScheduleId())))
+					&& (si.getSetoutTrainScheduleId().equals("") || TrainManager.instance().getTrainScheduleActiveId()
+							.equals(si.getSetoutTrainScheduleId())))
 				return true;
 		}
 		return false;

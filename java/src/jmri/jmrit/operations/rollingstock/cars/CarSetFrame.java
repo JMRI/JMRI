@@ -390,6 +390,9 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 						car.setWait(car.getNextWait());
 						car.setNextWait(0);
 					}
+					// change the pick up day
+					car.setPickupScheduleId(car.getNextPickupScheduleId());
+					car.setNextPickupScheduleId("");
 					// check for RWE
 					if (car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName())
 							&& car.getFinalDestination() == null

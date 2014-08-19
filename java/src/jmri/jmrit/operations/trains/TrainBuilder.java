@@ -12,7 +12,9 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+
 import javax.swing.JOptionPane;
+
 import jmri.Version;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -31,6 +33,7 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1225,6 +1228,7 @@ public class TrainBuilder extends TrainCommon {
 	 * can be serviced by this train
 	 */
 	private void removeCars() throws BuildFailedException {
+		addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
 		addLine(_buildReport, SEVEN, Bundle.getMessage("buildRemoveCars"));
 		for (_carIndex = 0; _carIndex < _carList.size(); _carIndex++) {
 			Car car = _carList.get(_carIndex);
@@ -1381,6 +1385,22 @@ public class TrainBuilder extends TrainCommon {
 					_carIndex--;
 					continue;
 				}
+				if (!car.getPickupScheduleId().equals("")) {
+					if (car.getPickupScheduleId().equals(TrainManager.instance().getTrainScheduleActiveId())) {
+						car.setPickupScheduleId("");
+					} else {
+						TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(car.getPickupScheduleId());
+						if (sch != null) {
+							addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
+									.getMessage("buildExcludeCarSchedule"), new Object[] { car.toString(),
+									car.getTypeName(), car.getLocationName(), car.getTrackName(),
+									sch.getName() }));
+							_carList.remove(car);
+							_carIndex--;
+							continue;
+						}
+					}				
+				}
 			}
 		}
 		// adjust car list to only have cars from one staging track
@@ -1438,6 +1458,7 @@ public class TrainBuilder extends TrainCommon {
 		}
 
 		// show how many cars were found
+		addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
 		addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildFoundCars"), new Object[] {
 				Integer.toString(_carList.size()), _train.getName() }));
 
@@ -3036,13 +3057,13 @@ public class TrainBuilder extends TrainCommon {
 					car.getTrackName(), si.getReceiveLoadName(), track.getLocation().getName(), track.getName() }));
 			return null;
 		}
-		if (!si.getTrainScheduleId().equals("")
-				&& !TrainManager.instance().getTrainScheduleActiveId().equals(si.getTrainScheduleId())) {
+		if (!si.getSetoutTrainScheduleId().equals("")
+				&& !TrainManager.instance().getTrainScheduleActiveId().equals(si.getSetoutTrainScheduleId())) {
 			log.debug("Schedule item isn't active");
 			// build the status message
 			TrainSchedule aSch = TrainScheduleManager.instance().getScheduleById(
 					TrainManager.instance().getTrainScheduleActiveId());
-			TrainSchedule tSch = TrainScheduleManager.instance().getScheduleById(si.getTrainScheduleId());
+			TrainSchedule tSch = TrainScheduleManager.instance().getScheduleById(si.getSetoutTrainScheduleId());
 			String aName = "";
 			String tName = "";
 			if (aSch != null)

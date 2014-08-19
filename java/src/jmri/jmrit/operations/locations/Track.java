@@ -1520,10 +1520,10 @@ public class Track {
 		for (int i = 0; i < scheduleItems.size(); i++) {
 			ScheduleItem si = scheduleItems.get(i);
 			// check train schedule
-			if (!si.getTrainScheduleId().equals("")
-					&& TrainScheduleManager.instance().getScheduleById(si.getTrainScheduleId()) == null) {
+			if (!si.getSetoutTrainScheduleId().equals("")
+					&& TrainScheduleManager.instance().getScheduleById(si.getSetoutTrainScheduleId()) == null) {
 				status = MessageFormat.format(Bundle.getMessage("NotValid"),
-						new Object[] { si.getTrainScheduleId() });
+						new Object[] { si.getSetoutTrainScheduleId() });
 				break;
 			}
 			if (!_location.acceptsTypeName(si.getTypeName())) {
@@ -1662,9 +1662,9 @@ public class Track {
 	}
 
 	private String checkScheduleItem(ScheduleItem si, Car car) {
-		if (!si.getTrainScheduleId().equals("")
-				&& !TrainManager.instance().getTrainScheduleActiveId().equals(si.getTrainScheduleId())) {
-			TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(si.getTrainScheduleId());
+		if (!si.getSetoutTrainScheduleId().equals("")
+				&& !TrainManager.instance().getTrainScheduleActiveId().equals(si.getSetoutTrainScheduleId())) {
+			TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(si.getSetoutTrainScheduleId());
 			if (sch != null)
 				return SCHEDULE + " (" + getScheduleName() + ") " + Bundle.getMessage("requestCarOnly")
 						+ " (" + sch.getName() + ")";
@@ -1732,8 +1732,8 @@ public class Track {
 		log.debug("Destination track (" + getName() + ") has schedule (" + getScheduleName()
 				+ ") item id: " + getScheduleItemId() + " mode: " + getScheduleMode()); // NOI18N
 		if (currentSi != null
-				&& (currentSi.getTrainScheduleId().equals("") || TrainManager.instance()
-						.getTrainScheduleActiveId().equals(currentSi.getTrainScheduleId()))
+				&& (currentSi.getSetoutTrainScheduleId().equals("") || TrainManager.instance()
+						.getTrainScheduleActiveId().equals(currentSi.getSetoutTrainScheduleId()))
 				&& car.getTypeName().equals(currentSi.getTypeName())
 				&& (currentSi.getRoadName().equals("") || car.getRoadName().equals(currentSi.getRoadName()))
 				&& (currentSi.getReceiveLoadName().equals("") || car.getLoadName().equals(currentSi.getReceiveLoadName()))) {
@@ -1752,7 +1752,7 @@ public class Track {
 					TrainManager.instance().getTrainScheduleActiveId());
 			if (sch != null)
 				timetableName = sch.getName();
-			sch = TrainScheduleManager.instance().getScheduleById(currentSi.getTrainScheduleId());
+			sch = TrainScheduleManager.instance().getScheduleById(currentSi.getSetoutTrainScheduleId());
 			if (sch != null)
 				currentTimetableName = sch.getName();
 			String mode = Bundle.getMessage("sequential");
@@ -1787,6 +1787,8 @@ public class Track {
 		// set the car's final destination and track
 		car.setFinalDestination(scheduleItem.getDestination());
 		car.setFinalDestinationTrack(scheduleItem.getDestinationTrack());
+		// set the car's pickup day
+		car.setNextPickupScheduleId(scheduleItem.getPickupTrainScheduleId());
 		// set the wait count
 		car.setNextWait(scheduleItem.getWait());
 		// bump hit count for this schedule item
