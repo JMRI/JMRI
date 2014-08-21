@@ -93,41 +93,15 @@
         <label xml:lang="de">Hersteller ID: </label>
         <label>Manufacturer ID: </label>
       </variable>
+      <!-- CV=19 -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
-      <variable CV="21" mask="XXXXXXXV" item="Consist Address Active For FL in Forward" tooltip="Functions Respond To Address">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
-        <label>Functions Respond To Address</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction" tooltip="Normal Direction of motion">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-FwdRev.xml"/>
-        <label>Normal direction of motion</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1" tooltip="Speed Steps">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-          </enumChoice>
-          <enumChoice choice="28/128 (recommended)">
-            <choice>28/128 (recommended)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Steps</label>
-      </variable>
-      <variable CV="29" mask="XXXXXVXX" default="0" item="Analog (DC) Operation" tooltip="Analog conversion mode">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Analog conversion mode</label>
-      </variable>
-      <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition" tooltip="Use speed table">
-        <enumVal>
-          <enumChoice choice="Don't use Speed Table">
-            <choice>Don't use Speed Table</choice>
-          </enumChoice>
-          <enumChoice choice="Use Speed Table">
-            <choice>Use Speed Table</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Use Speed Table</label>
-      </variable>
+      <!-- CV=21 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv21_lsb_MRC.xml"/>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
       <variable CV="49" item="Sound Option 1" default="1" tooltip="Sound on or off (except horn)">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Sound On/Off</label>

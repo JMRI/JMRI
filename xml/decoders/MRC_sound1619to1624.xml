@@ -109,81 +109,26 @@
       <variable CV="7" readOnly="yes" item="Decoder Version" default="0">
         <decVal/>
         <label>Version ID</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
       <variable CV="8" readOnly="yes" item="Manufacturer" default="143">
         <decVal/>
         <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
       </variable>
-      <variable CV="19" mask="XVVVVVVV" item="Consist Address">
-        <decVal/>
-        <label>Consist Address</label>
-      </variable>
-      <variable item="Consist Direction" CV="19" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Direction</label>
-      </variable>
-      <variable item="Consist Address Active For FL in Forward" CV="21" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Functions Respond To Address</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
-        <enumVal>
-          <enumChoice choice="Forward">
-            <choice>Forward</choice>
-          </enumChoice>
-          <enumChoice choice="Reverse">
-            <choice>Reverse</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Normal direction of motion</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-          </enumChoice>
-          <enumChoice choice="28/128 (recommended)">
-            <choice>28/128 (recommended)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Steps</label>
-      </variable>
-      <variable CV="29" mask="XXXXXVXX" default="0" item="Analog (DC) Operation">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Analog conversion mode</label>
-      </variable>
-      <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition">
-        <enumVal>
-          <enumChoice choice="Don't use Speed Table">
-            <choice>Don't use Speed Table</choice>
-          </enumChoice>
-          <enumChoice choice="Use Speed Table">
-            <choice>Use Speed Table</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Use Speed Table</label>
-      </variable>
+      <!-- CV=19 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <!-- CV=21 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv21_lsb_MRC.xml"/>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
       <variable CV="49" mask="XXXXXXXV" tooltip="F12 also sets sound on/off" default="1" item="Sound Option 1">
         <enumVal>
           <enumChoice choice="Off">
@@ -472,14 +417,8 @@
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-      <variable CV="105" item="User Id #1" default="0">
-        <decVal max="255"/>
-        <label>User ID #1</label>
-      </variable>
-      <variable CV="106" item="User Id #2" default="0">
-        <decVal max="255"/>
-        <label>User ID #2</label>
-      </variable>
+      <!-- CV 105-106 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <variable CV="112" item="Back EMF Start Speed Adjustment" default="0" comment="Range 0-7">
         <decVal max="7"/>
         <label>Back EMF start speed adjustment</label>
@@ -501,36 +440,15 @@
         <comment>Range 0-255</comment>
       </variable>
       <variable item="F3 to F4 Exchange" CV="37" default="0">
-        <enumVal>
-          <enumChoice choice="Off" value="0">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On" value="1">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-0_1.xml"/>
         <label>F3 to F4 Exchange</label>
       </variable>
       <variable item="F5 to F6 Exchange" CV="39" default="0">
-        <enumVal>
-          <enumChoice choice="Off" value="0">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On" value="1">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-0_1.xml"/>
         <label>F5 to F6 Exchange</label>
       </variable>
       <variable item="F8 to F12 Exchange" CV="42" default="0">
-        <enumVal>
-          <enumChoice choice="Off" value="0">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On" value="1">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-0_1.xml"/>
         <label>F8 to F12 Exchange</label>
       </variable>
       <variable item="Sound Option 6" CV="115" default="0">

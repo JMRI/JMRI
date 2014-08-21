@@ -72,30 +72,14 @@
         <label xml:lang="de">Hersteller ID: </label>
         <label>Manufacturer ID: </label>
       </variable>
+      <!-- CV=19 -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
-      <variable item="Functions Respond To Address" CV="21" mask="XXXXXXXV" tooltip="least significant bit">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
-        <label>Functions Respond To Address</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXXV" tooltip="'1' (least significant) bit, Forward(0)(default) or Reverse(1)" item="Locomotive Direction">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-FwdRev.xml"/>
-        <label>Normal direction of motion</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXVX" tooltip="'2' bit. Sets the Speed Step for motor, also affects some light settings" item="Speed Step Mode" default="1">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-          </enumChoice>
-          <enumChoice choice="28/128 (recommended)">
-            <choice>28/128 (recommended)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Steps</label>
-      </variable>
-      <variable CV="29" mask="XXXXXVXX" default="0" tooltip="'4' bit. Allows the loco to run on DC, default is Off" item="Analog (DC) Operation">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Analog conversion mode</label>
-      </variable>
+      <!-- CV=21 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv21_lsb_MRC.xml"/>
+     <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <variable CV="49" default="2" item="Sound Option 1" tooltip="0=Off, 1=Low, 2=Mid(default), 3=High" comment="Range 0-3">
         <decVal max="3"/>
         <label>Master Volume Control</label>

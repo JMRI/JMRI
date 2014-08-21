@@ -80,37 +80,18 @@
       <variable CV="19" mask="XVVVVVVV" item="Consist Address" tooltip="range 1-127">
         <decVal/>
         <label>Advanced consist address</label>
+        <label xml:lang="it">Indirizzo Consist</label>
+        <label xml:lang="fr">Addresse UM</label>
+        <label xml:lang="de">Verbundadresse</label>
+        <tooltip>Stores consist address. Range 0-127</tooltip>
+        <tooltip xml:lang="it">Indirizzo Consist. Valori 0-127</tooltip>
       </variable>
-      <variable CV="21" mask="XXXXXXXV" item="Consist Function" tooltip="least bit, ">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Functions Respond To Address</label>
-      </variable>
-      <variable CV="29" tooltip="'1' (least significant) bit, Forward(0)(default) or Reverse(1)" mask="XXXXXXXV" item="Locomotive Direction">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-FwdRev.xml"/>
-        <label>Normal direction of motion</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXVX" tooltip="'2' bit. Sets the Speed Step for motor, also may affect some light settings" item="Speed Step Mode" default="1">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-          </enumChoice>
-          <enumChoice choice="28/128 (recommended)">
-            <choice>28/128 (recommended)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Steps</label>
-      </variable>
-      <variable CV="29" tooltip="'4' bit. Allows the loco to run on DC, default is Off" mask="XXXXXVXX" default="0" item="Analog (DC) Operation">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Analog conversion mode</label>
-      </variable>
+      <!-- CV=21 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv21_lsb_MRC.xml"/>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <variable CV="49" default="2" item="Sound Setting 1" tooltip="O=Off, 1=Low, 2=Mid(default), 3=High" comment="Range 0-3">
         <decVal max="3"/>
         <label>Master Volume Control</label>
