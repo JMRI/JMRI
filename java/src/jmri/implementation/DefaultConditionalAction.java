@@ -140,6 +140,12 @@ public class DefaultConditionalAction implements ConditionalAction {
     	            if (bean == null) {
     	                log.error("invalid OBlock name= \""+_deviceName+"\" in conditional action");
     	             }
+    	            break;
+    	        case Conditional.ITEM_TYPE_OTHER:
+    	            bean = InstanceManager.getDefault(RouteManager.class).getRoute(devName);
+    	            if (bean == null) {
+    	                log.error("invalid Route name= \""+_deviceName+"\" in conditional action");
+    	            }
     		}
         } catch (java.lang.NumberFormatException ex){
         	//Can be considered normal if the logixs are loaded prior to any other beans
