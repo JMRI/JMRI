@@ -42,37 +42,16 @@
         <label xml:lang="fr">ID constructeur: </label>
         <label xml:lang="de">Hersteller ID: </label>
       </variable>
-      <variable CV="19" mask="XVVVVVVV" item="Consist Address" tooltip="set the Advanced Consist address, range 0-127">
-        <decVal/>
-        <label>Advanced consist address</label>
-      </variable>
-      <variable item="Consist Direction" CV="19" mask="VXXXXXXX" tooltip="sets the locomotive direction in the consist">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
-        <label>Consist Direction</label>
-      </variable>
+      <!-- CV=19 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <variable CV="21" mask="XXXXXXXV" tooltip="selects the address that accessory functions will respond to" item="Functions Respond To" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Function</label>
       </variable>
-      <variable CV="29" tooltip="'1' (least significant) bit, Forward(0)(default) or Reverse(1)" mask="XXXXXXXV" item="Locomotive Direction">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-FwdRev.xml"/>
-        <label>Normal direction of motion</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXVX" tooltip="'2' bit. Sets the Speed Step for motor, also affects some light settings" item="Speed Step Mode" default="1">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-          </enumChoice>
-          <enumChoice choice="28/128 (recommended)">
-            <choice>28/128 (recommended)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Steps</label>
-      </variable>
-      <variable CV="29" mask="XXXXXVXX" default="0" item="Analog (DC) Operation" tooltip="['4' bit] determines if loco motor will respond to DCC only (OFF) or DC and DCC (ON)">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Analog conversion mode</label>
-      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <variable CV="49" item="Sound Setting 26" default="63" tooltip="range 0-63" comment="Range 0-63">
         <decVal max="63"/>
         <label>Master sound volume</label>
@@ -264,36 +243,15 @@
         <label>Rail clack volume</label>
         <comment>Range 0-63</comment>
       </variable>
-      <variable CV="105" item="User Id #1" default="0" tooltip="range 0-255" comment="Range 0-255">
-        <decVal max="255"/>
-        <label>User ID #1</label>
-        <label xml:lang="it">Id Utente #1</label>
-        <label xml:lang="fr">CV Utilisateur #1</label>
-        <label xml:lang="de">Benutzer-CV #1</label>
-        <comment>Range 0-255</comment>
-      </variable>
-      <variable CV="106" item="User Id #2" default="0" tooltip="range 0-255" comment="Range 0-255">
-        <decVal max="255"/>
-        <label>User ID #2</label>
-        <label xml:lang="it">Id Utente #2</label>
-        <label xml:lang="fr">CV Utilisateur #2</label>
-        <label xml:lang="de">Benutzer-CV #2</label>
-        <comment>Range 0-255</comment>
-      </variable>
+      <!-- CV 105-106 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <variable CV="112" item="Sound Setting 22" default="60" tooltip="range 0-63" comment="Range 0-63">
         <decVal max="63"/>
         <label>Metal crank volume</label>
         <comment>Range 0-63</comment>
       </variable>
       <variable CV="115" item="Sound Option 8" default="1" tooltip="Off(0) or On(1)(default)">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Auto break squeal enable</label>
       </variable>
       <variable CV="116" item="Sound Setting 23" default="60" tooltip="range 0-63" comment="Range 0-63">
