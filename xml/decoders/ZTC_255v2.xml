@@ -61,7 +61,9 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <variable item="Total PWM Period" CV="9">
         <decVal/>
-        <label>Total PWM Period</label>
+        <label>Total PWM Period (Motor Drive Frequency)</label>
+        <label xml:lang="fr">Total PWM Period(fr)</label>
+        <label xml:lang="it">Periodo PWM (Frequenza pilotaggio Motore)</label>
       </variable>
       <variable item="Packet Time-out Value" CV="11">
         <decVal/>

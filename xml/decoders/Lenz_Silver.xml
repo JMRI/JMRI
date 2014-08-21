@@ -55,12 +55,16 @@
       <variable CV="7" readOnly="yes" item="Decoder Version" default="65">
         <decVal/>
         <label>Decoder Version No: </label>
-        <label xml:lang="de">Decoder Version</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
       <variable CV="8" readOnly="yes" item="Manufacturer" default="99">
         <decVal/>
         <label>Manufacturer ID: </label>
-        <label xml:lang="de">Manufacturer</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
       </variable>
       <variable CV="8" item="Reset" comment="Writing a value of 8 or 33 will reset decoder to factory defaults">
         <decVal/>
@@ -72,9 +76,11 @@
       <variable CV="9" item="Total PWM Period" default="15" comment="Range 0-63">
         <decVal min="0" max="63"/>
         <label>Back EMF Repetition Rate (0-63)</label>
-        <comment>Range 0-63</comment>
         <label xml:lang="de">Total PWM Period</label>
+        <label xml:lang="it">Periodo PWM (Frequenza pilotaggio Motore)</label>
+        <comment>Range 0-63</comment>
         <comment xml:lang="de">Range 0-63</comment>
+        <comment xml:lang="it">Valori 0-63</comment>
       </variable>
       <!-- CV=19 -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>

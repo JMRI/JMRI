@@ -71,7 +71,9 @@
       <variable CV="9" item="Total PWM Period" comment="Range 0-30" default="0">
         <decVal/>
         <label>Total PWM Period</label>
+        <label xml:lang="it">Periodo PWM (Frequenza pilotaggio Motore)</label>
         <comment>Range 0-30</comment>
+        <comment xml:lang="it">Valori 0-30</comment>
       </variable>
       <variable CV="11" item="Packet Time-out Value" comment="Range 0-255" default="0">
         <decVal/>

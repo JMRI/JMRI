@@ -42,11 +42,17 @@
       <variable item="Accel" CV="3" default="1" comment="Range 0-31">
         <decVal max="31"/>
         <label>Accel</label>
+        <label xml:lang="it">Accellerazione (0-31)</label>
+        <label xml:lang="fr">Accelération (0-31)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-31)</label>
         <comment>Range 0-31</comment>
       </variable>
       <variable item="Decel" CV="4" default="1" comment="Range 0-31">
         <decVal max="31"/>
         <label>Decel</label>
+        <label xml:lang="it">Decellerazione (0-31)</label>
+        <label xml:lang="fr">Décélération (0-31)</label>
+        <label xml:lang="de">Bremszeit (0-31)</label>
         <comment>Range 0-31</comment>
       </variable>
       <!-- deleted max and mid voltage-->

@@ -45,11 +45,17 @@
       <variable item="Accel" CV="3" comment="Range 0-15">
         <decVal max="15"/>
         <label>Accel</label>
+        <label xml:lang="it">Accellerazione (0-15)</label>
+        <label xml:lang="fr">Accelération (0-15)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-15)</label>
         <comment>Range 0-15</comment>
       </variable>
       <variable item="Decel" CV="4" comment="Range 0-15">
         <decVal max="15"/>
         <label>Decel</label>
+        <label xml:lang="it">Decellerazione (0-15)</label>
+        <label xml:lang="fr">Décélération (0-15)</label>
+        <label xml:lang="de">Bremszeit (0-15)</label>
         <comment>Range 0-15</comment>
       </variable>
       <variable item="Vhigh" CV="5" comment="Range 0-255">

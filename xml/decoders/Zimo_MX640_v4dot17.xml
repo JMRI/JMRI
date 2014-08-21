@@ -1159,7 +1159,7 @@
           </enumChoice>
         </enumVal>
         <label>PWM Frequency</label>
-        <label xml:lang="it">Frequenza PWM</label>
+        <label xml:lang="it">Frequenza PWM (Frequenza pilotaggio Motore)</label>
       </variable>
       <variable CV="112" mask="XVXXXXXX" default="0" item="Radio Power Conversion">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>

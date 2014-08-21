@@ -34,20 +34,8 @@
         <label xml:lang="de">Anfahrspannung</label>
         <comment>0-31</comment>
       </variable>
-      <variable CV="3" item="Accel">
-        <decVal max="31"/>
-        <label>Acceleration momentum</label>
-        <label xml:lang="it">Accellerazione (0-31)</label>
-        <label xml:lang="fr">Accelération (0-31)</label>
-        <label xml:lang="de">Anfahrverzögerung (0-31)</label>
-      </variable>
-      <variable CV="4" item="Decel">
-        <decVal max="31"/>
-        <label>Brake momentum</label>
-        <label xml:lang="it">Decellerazione (0-31)</label>
-        <label xml:lang="fr">Décélération (0-31)</label>
-        <label xml:lang="de">Bremszeit (0-31)</label>
-      </variable>
+      <!-- CV 3-4 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <variable CV="19" mask="XVVVVVVV" item="Consist Address">
         <decVal/>

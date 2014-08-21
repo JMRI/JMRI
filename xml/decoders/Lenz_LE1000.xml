@@ -36,27 +36,35 @@
       <variable item="Accel" CV="3" default="1" comment="Range 0-31">
         <decVal max="31"/>
         <label>Accel</label>
+        <label xml:lang="it">Accellerazione (0-31)</label>
+        <label xml:lang="fr">Accelération (0-31)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-31)</label>
         <comment>Range 0-31</comment>
-        <label xml:lang="de">Accel</label>
-        <comment xml:lang="de">Range 0-31</comment>
+        <comment xml:lang="it">Valori 0-31</comment>
       </variable>
       <variable item="Decel" CV="4" default="1" comment="Range 0-31">
         <decVal max="31"/>
         <label>Decel</label>
+        <label xml:lang="it">Decellerazione (0-31)</label>
+        <label xml:lang="fr">Décélération (0-31)</label>
+        <label xml:lang="de">Bremszeit (0-31)</label>
         <comment>Range 0-31</comment>
-        <label xml:lang="de">Decel</label>
-        <comment xml:lang="de">Range 0-31</comment>
+        <comment xml:lang="it">Valori 0-31</comment>
       </variable>
       <!-- deleted max and mid voltage-->
       <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
-        <label xml:lang="de">Decoder Version</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
       <variable CV="8" readOnly="yes" item="Manufacturer" default="99">
         <decVal/>
         <label>Manufacturer ID</label>
-        <label xml:lang="de">Manufacturer</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
       </variable>
       <variable CV="8" default="99" item="Reset" comment="Writing a value of 33 will reset decoder to factory defaults">
         <decVal/>

@@ -46,20 +46,8 @@
         <comment>Range 0-31</comment>
         <comment xml:lang="it">Valori 0-31</comment>
       </variable>
-      <variable item="Accel" CV="3" comment="Range 0-31">
-        <decVal max="31"/>
-        <label>Accel</label>
-         <label xml:lang="it">Accell.</label>
-        <comment>Range 0-31</comment>
-        <comment xml:lang="it">Valori 0-31</comment>
-      </variable>
-      <variable item="Decel" CV="4" comment="Range 0-31">
-        <decVal max="31"/>
-        <label>Decel</label>
-        <label xml:lang="it">Decell.</label>
-        <comment>Range 0-31</comment>
-        <comment xml:lang="it">Valori 0-31</comment>
-      </variable>
+      <!-- CV 3-4 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
       <!-- deleted max and mid voltage-->
       <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>

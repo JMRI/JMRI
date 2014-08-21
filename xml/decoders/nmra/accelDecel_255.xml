@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: accelDecel.xml 26993 2014-08-17 01:13:09Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -45,18 +45,22 @@
       <revremark>Revision in original 0NMRA.xml file</revremark>
     </revision>
   </revhistory>
-  <variable CV="3" item="Accel">
-    <decVal max="31"/>
-    <label xml:lang="it">Accellerazione (0-31)</label>
-    <label xml:lang="fr">Accelération (0-31)</label>
-    <label xml:lang="de">Anfahrverzögerung (0-31)</label>
+  <variable CV="3" item="Accel" default="0" comment="Range 0-255">
+    <decVal max="255"/>
+    <label xml:lang="it">Accellerazione (0-255)</label>
+    <label xml:lang="fr">Accelération (0-255)</label>
+    <label xml:lang="de">Anfahrverzögerung (0-255)</label>
     <label>Acceleration Rate</label>
+    <comment>Range 0-255</comment>
+        <comment xml:lang="it">Valori 0-255</comment>
   </variable>
-  <variable CV="4" item="Decel">
-    <decVal max="31"/>
+  <variable CV="4" item="Decel" default="0" comment="Range 0-255">
+    <decVal max="255"/>
     <label>Deceleration Rate</label>
-    <label xml:lang="it">Decellerazione (0-31)</label>
-    <label xml:lang="fr">Décélération (0-31)</label>
-    <label xml:lang="de">Bremszeit (0-31)</label>
+    <label xml:lang="it">Decellerazione (0-255)</label>
+    <label xml:lang="fr">Décélération (0-255)</label>
+    <label xml:lang="de">Bremszeit (0-255)</label>
+    <comment>Range 0-255</comment>
+        <comment xml:lang="it">Valori 0-255</comment>
   </variable>
 </variables>

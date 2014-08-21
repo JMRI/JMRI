@@ -41,7 +41,9 @@
       <variable CV="9" item="Total PWM Period" comment="1-255 PWM drive freq in 128us increments" default="195">
         <decVal/>
         <label>Motor drive frequency</label>
+        <label xml:lang="it">Periodo PWM (Frequenza pilotaggio Motore)</label>
         <comment>1-255 PWM drive freq in 128us increments</comment>
+        <comment xml:lang="it">Valori 1-255, frequenza in incrementi di 128us</comment>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAccelDecelSigned.xml"/>

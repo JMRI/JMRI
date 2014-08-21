@@ -56,7 +56,9 @@
       <variable CV="9" item="Total PWM Period" comment="1-255 PWM drive freq in 128us increments; 0 = frequency is 15,625 Hz" tooltip="When set to 0, frequency is 15,625 Hz">
         <decVal/>
         <label>Motor drive frequency</label>
-        <comment>1-255 PWM drive freq in 128us increments; 0 = frequency is 15,625 Hz</comment>
+        <label xml:lang="it">Periodo PWM (Frequenza pilotaggio Motore)</label>
+        <comment>1-255 PWM drive freq in 128us increments</comment>
+        <comment xml:lang="it">Valori 1-255, frequenza in incrementi di 128us</comment>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <variable item="Consist Address Active For F1" CV="21" mask="XXXXXXXV" minFn="1">

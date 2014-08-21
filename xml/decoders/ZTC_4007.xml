@@ -62,6 +62,7 @@
       <variable item="Total PWM Period" CV="9" default="1" tooltip="Sets motor drive frequency. Range=0 to 255. Low value=large motor; High value=coreless motors">
         <decVal/>
         <label>Total PWM Period</label>
+        <label xml:lang="it">Periodo PWM (Frequenza pilotaggio Motore)</label>
       </variable>
       <variable item="Packet Time-out Value" CV="11" default="100" tooltip="Delay on no DCC x 0.01 sec before switching to DC mode">
         <decVal/>

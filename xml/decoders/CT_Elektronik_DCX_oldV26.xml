@@ -81,13 +81,17 @@
       <variable CV="7" readOnly="yes" item="Decoder Version" default="26">
         <decVal/>
         <label>Decoder Version: </label>
-		<label xml:lang="de">Decoder Version: </label>	
+		    <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
       <variable CV="8" readOnly="yes" item="Manufacturer" default="117">
         <decVal/>
         <label>Manufacturer ID: </label>
-		<label xml:lang="de">Hersteller ID: </label>
-      </variable>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+		      </variable>
       <variable CV="9" mask="XVVVVVVV" item="Motor PWM Frequency" default="22" tooltip="13-63=30-150Hz, frequency=1953/CV value">
         <decVal min="13" max="63"/>
         <label>Motor PWM Frequency</label>

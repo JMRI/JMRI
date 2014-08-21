@@ -41,24 +41,8 @@
         <comment>Range 0-252</comment>
         <comment xml:lang="it">Valori 0-252</comment>
       </variable>
-      <variable CV="3" default="0" item="Accel" comment="Range 0-255">
-        <decVal max="255"/>
-        <label>Acceleration</label>
-        <label xml:lang="it">Accellerazione (0-255)</label>
-        <label xml:lang="fr">Accelération (0-255)</label>
-        <label xml:lang="de">Anfahrverzögerung (0-255)</label>
-        <comment>Range 0-255</comment>
-        <comment xml:lang="it">Valori 0-255</comment>
-      </variable>
-      <variable CV="4" default="0" item="Decel" comment="Range 0-255">
-        <decVal max="255"/>
-        <label>Deceleration</label>
-        <label xml:lang="it">Decellerazione (0-255)</label>
-        <label xml:lang="fr">Décélération (0-255)</label>
-        <label xml:lang="de">Bremszeit (0-255)</label>
-        <comment>Range 0-255</comment>
-        <comment xml:lang="it">Valori 0-255</comment>
-      </variable>
+      <!-- CV 3-4 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
       <variable item="Vhigh" CV="5" default="252" comment="Range 0-252">
         <decVal max="252"/>
         <label>Vhigh</label>
@@ -96,10 +80,11 @@
         <label>Manufacturer ID - Reset</label>
         <label xml:lang="it">Reset ai valori di Fabbrica</label>
       </variable>
-      <variable item="Total PWM Period" CV="9" default="0">
+     <variable item="Total PWM Period" CV="9">
         <decVal/>
-        <label>Total PWM Period</label>
-        <label xml:lang="it">Periodo Totale PWM</label>
+        <label>Total PWM Period (Motor Drive Frequency)</label>
+        <label xml:lang="fr">Total PWM Period(fr)</label>
+        <label xml:lang="it">Periodo PWM (Frequenza pilotaggio Motore)</label>
       </variable>
       <variable CV="10" default="0" item="EMF Droop Config" tooltip="Range 0-252">
         <decVal max="252"/>

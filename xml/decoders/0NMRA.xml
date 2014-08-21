@@ -28,11 +28,11 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/vStartHighMid.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
-      <variable item="Total PWM Period" CV="9">
+    <variable item="Total PWM Period" CV="9">
         <decVal/>
-        <label>Total PWM Period</label>
+        <label>Total PWM Period (Motor Drive Frequency)</label>
         <label xml:lang="fr">Total PWM Period(fr)</label>
-        <label xml:lang="it">Periodo Totale PWM</label>
+        <label xml:lang="it">Periodo PWM (Frequenza pilotaggio Motore)</label>
       </variable>
       <variable item="EMF Feedback Cutout" CV="10">
         <decVal/>

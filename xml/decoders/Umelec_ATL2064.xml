@@ -83,6 +83,7 @@
       <variable item="Total PWM Period" CV="9" default="63" comment="Range 40-63">
         <decVal/>
         <label>Total PWM Period</label>
+        <label xml:lang="it">Periodo PWM (Frequenza pilotaggio Motore)</label>
         <comment>Range 40-63</comment>
       </variable>
       <!-- CV=19 -->

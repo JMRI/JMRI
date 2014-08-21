@@ -75,20 +75,32 @@
       <variable item="Vhigh" CV="5" default="252" comment="Range 0-252">
         <decVal max="252"/>
         <label>Vhigh</label>
+        <label xml:lang="it">Volt Massimi (0-252)</label>
+       <label xml:lang="fr">Vmax(0-252)</label>
+       <label xml:lang="de">Höchstgeschwindigkeit(0-252)</label>
         <comment>Range 0-252</comment>
       </variable>
       <variable item="Vmid" CV="6" default="75" comment="Range 0-252">
         <decVal max="252"/>
         <label>Vmid</label>
+        <label xml:lang="it">Volt Intermedi(0-252)</label>
+        <label xml:lang="fr">Vmoy(0-252)</label>
+        <label xml:lang="de">Mittengeschwindigkeit(0-252)</label>
         <comment>Range 0-252</comment>
       </variable>
       <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Decoder Version</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
       <variable CV="8" readOnly="yes" item="Manufacturer" default="117">
         <decVal/>
         <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
       </variable>
       <!--	<variable label="Manufacturer ID - Reset" CV="8">
 			<decVal/>
@@ -96,11 +108,13 @@
       <variable item="Total PWM Period" CV="9" default="150" tooltip="13-63=30-150Hz, 141-191=16kHz" comment="Range 13-63/141-191">
         <decVal/>
         <label>Total PWM Period</label>
+        <label xml:lang="fr">Total PWM Period(fr)</label>
+        <label xml:lang="it">Periodo Totale PWM</label>
         <comment>Range 13-63/141-191</comment>
       </variable>
       <!-- CV=19 -->
-<xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
-<!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+     <!-- CV=29 -->
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>

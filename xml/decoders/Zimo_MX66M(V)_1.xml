@@ -47,24 +47,8 @@
         <comment>Range 0-252</comment>
         <comment xml:lang="it">Valori 0-252</comment>
       </variable>
-      <variable item="Acceleration" CV="3" default="0" comment="Range 0-255">
-        <decVal max="255"/>
-        <label>Acceleration</label>
-        <label xml:lang="it">Accellerazione</label>
-        <label xml:lang="fr">Accélération</label>
-        <label xml:lang="de">Beschleunigungszeit</label>
-        <comment>Range 0-255</comment>
-        <comment xml:lang="it">Valori 0-255</comment>
-      </variable>
-      <variable item="Deceleration" CV="4" default="0" comment="Range 0-255">
-        <decVal max="255"/>
-        <label>Deceleration</label>
-        <label xml:lang="it">Decellerazione</label>
-       <label xml:lang="fr">Décélération</label>
-       <label xml:lang="de">Bremszeit</label>
-        <comment>Range 0-255</comment>
-        <comment xml:lang="it">Valori 0-255</comment>
-      </variable>
+      <!-- CV 3-4 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
       <variable item="Vhigh" CV="5" default="1" comment="Range 0-252">
         <decVal max="252"/>
         <label>Vhigh</label>
@@ -104,7 +88,7 @@
       <variable item="Total PWM Period" CV="9" default="0" comment="Range 0/1-100/176-255">
         <decVal/>
         <label>Total PWM Period</label>
-        <label xml:lang="it">Periodo Totale PWM </label>
+        <label xml:lang="it">Periodo PWM (Frequenza pilotaggio Motore)</label>
         <comment>Range 0/176-255</comment>
         <comment xml:lang="it">Valori 0 / 176-255</comment>
       </variable>

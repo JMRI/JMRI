@@ -137,9 +137,11 @@
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <!--  Not in SoundTraxx Tsu Steam file -->
-      <variable CV="9" item="Total PWM Period" default="0" tooltip="PWM">
+      <variable item="Total PWM Period" CV="9">
         <decVal/>
-        <label>PWM Period</label>
+        <label>Total PWM Period (Motor Drive Frequency)</label>
+        <label xml:lang="fr">Total PWM Period(fr)</label>
+        <label xml:lang="it">Periodo PWM (Frequenza pilotaggio Motore)</label>
       </variable>
       <variable CV="10" item="EMF Feedback Cutout" default="0" tooltip="&lt;html&gt;Up to 127, this sets the speed step above which the intensity of BEMF control will be reduced&lt;br&gt;     to zero.  Values over 127 cause the BEMF to decrease as a percentage (up to 50%).&lt;/html&gt;">
         <decVal/>

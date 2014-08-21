@@ -42,9 +42,9 @@
       <variable CV="4" item="Decel" default="0" comment="Range 0-32">
         <decVal max="32"/>
         <label>Deceleration</label>
-        <label xml:lang="it">Decellerazione (1-32)</label>
-        <label xml:lang="fr">Décélération (1-32)</label>
-        <label xml:lang="de">Bremszeit (1-32)</label>
+        <label xml:lang="it">Decellerazione (0-32)</label>
+        <label xml:lang="fr">Décélération (0-32)</label>
+        <label xml:lang="de">Bremszeit (0-32)</label>
         <comment>Range 0-32</comment>
       </variable>
       <variable CV="5" item="Vhigh" default="32" comment="Range 0-32">

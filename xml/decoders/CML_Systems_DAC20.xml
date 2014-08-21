@@ -33,14 +33,8 @@
         <decVal min="0" max="7"/>
         <label>High 3 bytes of Address CV6</label>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version">
-        <decVal/>
-        <label>Version ID</label>
-      </variable>
-      <variable CV="8" readOnly="yes" item="Manufacturer">
-        <decVal/>
-        <label>Manufacturer ID</label>
-      </variable>
+      <!-- CV 7-8 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <variable item="Number of outputs" CV="9" default="0" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="8" value="0"/>

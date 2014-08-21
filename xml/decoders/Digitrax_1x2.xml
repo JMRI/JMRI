@@ -50,16 +50,8 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/vStartHighMid.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
-      <variable CV="7" readOnly="yes" item="Decoder Version">
-        <decVal/>
-        <label>Version ID</label>
-        <label xml:lang="it">ID versione</label>
-      </variable>
-      <variable CV="8" readOnly="yes" item="Manufacturer">
-        <decVal/>
-        <label>Manufacturer ID</label>
-        <label xml:lang="it">ID Costruttore</label>
-      </variable>
+      <!-- CV 7-8 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <variable CV="13" mask="XXXXXXXV" minFn="1" item="Analog Mode Function Status - F1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F1 during DC operation</label>

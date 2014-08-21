@@ -26,14 +26,8 @@
     </family>
     <programming direct="no" paged="yes" register="no" ops="no"/>
     <variables>
-      <variable CV="7" readOnly="yes" item="Decoder Version">
-        <decVal/>
-        <label>Version ID</label>
-      </variable>
-      <variable CV="8" readOnly="yes" item="Manufacturer">
-        <decVal/>
-        <label>Manufacturer ID</label>
-      </variable>
+      <!-- CV 7-8 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <variable item="Address 1" CV="1" mask="XXVVVVVV" comment="Decoder address LSB">
         <decVal min="0" max="63"/>
         <label>Address 1</label>

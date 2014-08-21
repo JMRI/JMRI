@@ -84,6 +84,7 @@
       <variable item="Total PWM Period" CV="9" default="215">
         <decVal/>
         <label>Total PWM Period</label>
+        <label xml:lang="it">Periodo PWM (Frequenza pilotaggio Motore)</label>
       </variable>
       <variable item=" Analog (DC) Operation " CV="12" comment="DC Conversion Active?" mask="XXXXXXXV">
         <enumVal>

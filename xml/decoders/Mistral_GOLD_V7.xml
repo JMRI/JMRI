@@ -85,6 +85,7 @@
       <variable item="Total PWM Period" CV="9" default="0">
         <decVal max="255"/>
         <label>Total PWM Period</label>
+        <label xml:lang="it">Periodo PWM (Frequenza pilotaggio Motore)</label>
       </variable>
       <variable item="EMF Feedback Cutout" CV="10" default="175">
         <decVal max="255"/>

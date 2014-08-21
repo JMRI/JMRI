@@ -64,16 +64,8 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes" transpRead="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable CV="7" readOnly="yes" item="Decoder Version">
-        <decVal/>
-        <label>Version ID</label>
-        <label xml:lang="it">ID Versione</label>
-      </variable>
-      <variable CV="8" readOnly="yes" item="Manufacturer">
-        <decVal/>
-        <label>Manufacturer ID</label>
-        <label xml:lang="it">ID Costruttore</label>
-      </variable>
+      <!-- CV 7-8 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/consistAddrDirection.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/cv21.22.xml"/>
       <variable CV="49" mask="XXXXVVVV" minOut="1" item="Function F0F effect generated">
