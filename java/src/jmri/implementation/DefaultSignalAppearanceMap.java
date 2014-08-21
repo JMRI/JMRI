@@ -336,7 +336,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     }
     
     /**
-    * Returns a list of postential aspects that we could set the signalmast to
+    * Returns a list of potential aspects that we could set the signalmast to
     * given the state of the advanced signal mast.
     */
     public String[] getValidAspectsForAdvancedAspect(String advancedAspect){
