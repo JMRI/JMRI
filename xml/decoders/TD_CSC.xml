@@ -319,44 +319,35 @@
       <variable CV="7" mask="VVVVVVVV" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
       <variable CV="8" item="Manufacturer" default="25">
         <decVal/>
         <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
       </variable>
       <variable item="Ops Mode" CV="9" mask="XXXXXXXV" default="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Ops Mode</label>
       </variable>
       <variable item="Logic Cell State Msg" CV="9" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Logic Cell State Msg</label>
       </variable>
       <variable item="DCC gateway" CV="9" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC gateway</label>
       </variable>
       <variable item="Interrogate inputs" CV="9" mask="XVXXXXXX">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Interrogate inputs</label>
       </variable>
       <variable item="Common Cathode LEDs" CV="9" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Common Cathode LEDs</label>
       </variable>
       <!-- Begin inputs 1-8 variable definition -->
@@ -365,17 +356,11 @@
         <label>Address 1</label>
       </variable>
       <variable CV="11" mask="VXXXXXXX" item="Inv 1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable CV="11" mask="XVXXXXXX" item="Tog 1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle</label>
       </variable>
       <variable item="Type 1" CV="11" mask="XXVVXXXX">
@@ -396,17 +381,11 @@
         <label>Address 2</label>
       </variable>
       <variable CV="14" mask="VXXXXXXX" item="Inv 2">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable CV="14" mask="XVXXXXXX" item="Tog 2">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle</label>
       </variable>
       <variable item="Type 2" CV="14" mask="XXVVXXXX">
@@ -427,17 +406,11 @@
         <label>Address 3</label>
       </variable>
       <variable CV="17" mask="VXXXXXXX" item="Inv 3">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable CV="17" mask="XVXXXXXX" item="Tog 3">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle</label>
       </variable>
       <variable item="Type 3" CV="17" mask="XXVVXXXX">
@@ -458,17 +431,11 @@
         <label>Address 4</label>
       </variable>
       <variable CV="20" mask="VXXXXXXX" item="Inv 4">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable CV="20" mask="XVXXXXXX" item="Tog 4">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle</label>
       </variable>
       <variable item="Type 4" CV="20" mask="XXVVXXXX">
@@ -489,17 +456,11 @@
         <label>Address 5</label>
       </variable>
       <variable CV="23" mask="VXXXXXXX" item="Inv 5">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable CV="23" mask="XVXXXXXX" item="Tog 5">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle</label>
       </variable>
       <variable item="Type 5" CV="23" mask="XXVVXXXX">
@@ -520,17 +481,11 @@
         <label>Address 6</label>
       </variable>
       <variable CV="26" mask="VXXXXXXX" item="Inv 6">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable CV="26" mask="XVXXXXXX" item="Tog 6">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle</label>
       </variable>
       <variable item="Type 6" CV="26" mask="XXVVXXXX">
@@ -551,17 +506,11 @@
         <label>Address 7</label>
       </variable>
       <variable CV="29" mask="VXXXXXXX" item="Inv 7">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable CV="29" mask="XVXXXXXX" item="Tog 7">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle</label>
       </variable>
       <variable item="Type 7" CV="29" mask="XXVVXXXX">
@@ -582,17 +531,11 @@
         <label>Address 8</label>
       </variable>
       <variable CV="32" mask="VXXXXXXX" item="Inv 8">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable CV="32" mask="XVXXXXXX" item="Tog 8">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle</label>
       </variable>
       <variable item="Type 8" CV="32" mask="XXVVXXXX">
@@ -614,17 +557,11 @@
         <label>Address 9</label>
       </variable>
       <variable CV="35" mask="VXXXXXXX" item="Inv 9">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable CV="35" mask="XVXXXXXX" item="Tog 9">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle</label>
       </variable>
       <variable item="Type 9" CV="35" mask="XXVVXXXX">
@@ -645,17 +582,11 @@
         <label>Address 10</label>
       </variable>
       <variable CV="38" mask="VXXXXXXX" item="Inv 10">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable CV="38" mask="XVXXXXXX" item="Tog 10">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle</label>
       </variable>
       <variable item="Type 10" CV="38" mask="XXVVXXXX">
@@ -676,17 +607,11 @@
         <label>Address 11</label>
       </variable>
       <variable CV="41" mask="VXXXXXXX" item="Inv 11">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable CV="41" mask="XVXXXXXX" item="Tog 11">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle</label>
       </variable>
       <variable item="Type 11" CV="41" mask="XXVVXXXX">
@@ -707,17 +632,11 @@
         <label>Address 12</label>
       </variable>
       <variable CV="44" mask="VXXXXXXX" item="Inv 12">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable CV="44" mask="XVXXXXXX" item="Tog 12">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle</label>
       </variable>
       <variable item="Type 12" CV="44" mask="XXVVXXXX">
@@ -738,17 +657,11 @@
         <label>Address 13</label>
       </variable>
       <variable CV="47" mask="VXXXXXXX" item="Inv 13">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable CV="47" mask="XVXXXXXX" item="Tog 13">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle</label>
       </variable>
       <variable item="Type 13" CV="47" mask="XXVVXXXX">
@@ -769,17 +682,11 @@
         <label>Address 14</label>
       </variable>
       <variable CV="50" mask="VXXXXXXX" item="Inv 14">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable CV="50" mask="XVXXXXXX" item="Tog 14">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle</label>
       </variable>
       <variable item="Type 14" CV="50" mask="XXVVXXXX">
@@ -800,17 +707,11 @@
         <label>Address 15</label>
       </variable>
       <variable CV="53" mask="VXXXXXXX" item="Inv 15">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable CV="53" mask="XVXXXXXX" item="Tog 15">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle</label>
       </variable>
       <variable item="Type 15" CV="53" mask="XXVVXXXX">
@@ -831,17 +732,11 @@
         <label>Address 16</label>
       </variable>
       <variable CV="56" mask="VXXXXXXX" item="Inv 16">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable CV="56" mask="XVXXXXXX" item="Tog 16">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle</label>
       </variable>
       <variable item="Type 16" CV="56" mask="XXVVXXXX">
@@ -864,10 +759,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="59" mask="XXXXVXXX" item="DCC Message 1A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="59" mask="XXVVXXXX" item="Message 1A">
@@ -905,10 +797,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="61" mask="XXXXVXXX" item="DCC Message 1B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="61" mask="XXVVXXXX" item="Message 1B">
@@ -953,10 +842,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="63" mask="XXXXVXXX" item="DCC Message 1C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="63" mask="XXVVXXXX" item="Message 1C">
@@ -1005,17 +891,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="64" mask="VXXXXXXX" item="Inv o1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="64" mask="XXXXXVXX" item="Recip1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="64" mask="XXXVVXXX" item="Eff1">
@@ -1195,17 +1075,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="71" mask="VXXXXXXX" item="Inv o2">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="71" mask="XXXXXVXX" item="Recip2">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="71" mask="XXXVVXXX" item="Eff2">
@@ -1232,10 +1106,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="73" mask="XXXXVXXX" item="DCC Message 3A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="73" mask="XXVVXXXX" item="Message 3A">
@@ -1321,10 +1192,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="77" mask="XXXXVXXX" item="DCC Message 3C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="77" mask="XXVVXXXX" item="Message 3C">
@@ -1373,10 +1241,7 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="78" mask="VXXXXXXX" item="Inv o3">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="78" mask="XXXXXVXX" item="Recip3">
@@ -1410,10 +1275,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="80" mask="XXXXVXXX" item="DCC Message 4A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="80" mask="XXVVXXXX" item="Message 4A">
@@ -1551,17 +1413,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="85" mask="VXXXXXXX" item="Inv o4">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="85" mask="XXXXXVXX" item="Recip4">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="85" mask="XXXVVXXX" item="Eff4">
@@ -1588,10 +1444,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="87" mask="XXXXVXXX" item="DCC Message 5A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="87" mask="XXVVXXXX" item="Message 5A">
@@ -1677,10 +1530,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="91" mask="XXXXVXXX" item="DCC Message 5C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="91" mask="XXVVXXXX" item="Message 5C">
@@ -1729,17 +1579,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="92" mask="VXXXXXXX" item="Inv o5">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="92" mask="XXXXXVXX" item="Recip5">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="92" mask="XXXVVXXX" item="Eff5">
@@ -1766,10 +1610,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="94" mask="XXXXVXXX" item="DCC Message 6A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="94" mask="XXVVXXXX" item="Message 6A">
@@ -1807,10 +1648,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="96" mask="XXXXVXXX" item="DCC Message 6B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="96" mask="XXVVXXXX" item="Message 6B">
@@ -1855,10 +1693,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="98" mask="XXXXVXXX" item="DCC Message 6C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="98" mask="XXVVXXXX" item="Message 6C">
@@ -1907,17 +1742,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="99" mask="VXXXXXXX" item="Inv o6">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="99" mask="XXXXXVXX" item="Recip6">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="99" mask="XXXVVXXX" item="Eff6">
@@ -1944,10 +1773,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="101" mask="XXXXVXXX" item="DCC Message 7A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="101" mask="XXVVXXXX" item="Message 7A">
@@ -1985,10 +1811,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="103" mask="XXXXVXXX" item="DCC Message 7B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="103" mask="XXVVXXXX" item="Message 7B">
@@ -2033,10 +1856,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="105" mask="XXXXVXXX" item="DCC Message 7C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="105" mask="XXVVXXXX" item="Message 7C">
@@ -2085,17 +1905,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="106" mask="VXXXXXXX" item="Inv o7">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="106" mask="XXXXXVXX" item="Recip7">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="106" mask="XXXVVXXX" item="Eff7">
@@ -2122,10 +1936,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="108" mask="XXXXVXXX" item="DCC Message 8A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="108" mask="XXVVXXXX" item="Message 8A">
@@ -2163,10 +1974,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="110" mask="XXXXVXXX" item="DCC Message 8B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="110" mask="XXVVXXXX" item="Message 8B">
@@ -2211,10 +2019,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="112" mask="XXXXVXXX" item="DCC Message 8C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="112" mask="XXVVXXXX" item="Message 8C">
@@ -2263,17 +2068,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="113" mask="VXXXXXXX" item="Inv o8">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="113" mask="XXXXXVXX" item="Recip8">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="113" mask="XXXVVXXX" item="Eff8">
@@ -2300,10 +2099,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="115" mask="XXXXVXXX" item="DCC Message 9A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="115" mask="XXVVXXXX" item="Message 9A">
@@ -2341,10 +2137,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="117" mask="XXXXVXXX" item="DCC Message 9B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="117" mask="XXVVXXXX" item="Message 9B">
@@ -2389,10 +2182,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="119" mask="XXXXVXXX" item="DCC Message 9C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="119" mask="XXVVXXXX" item="Message 9C">
@@ -2441,17 +2231,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="120" mask="VXXXXXXX" item="Inv o9">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="120" mask="XXXXXVXX" item="Recip9">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="120" mask="XXXVVXXX" item="Eff9">
@@ -2478,10 +2262,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="122" mask="XXXXVXXX" item="DCC Message 10A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="122" mask="XXVVXXXX" item="Message 10A">
@@ -2519,10 +2300,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="124" mask="XXXXVXXX" item="DCC Message 10B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="124" mask="XXVVXXXX" item="Message 10B">
@@ -2567,10 +2345,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="126" mask="XXXXVXXX" item="DCC Message 10C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="126" mask="XXVVXXXX" item="Message 10C">
@@ -2619,17 +2394,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="127" mask="VXXXXXXX" item="Inv o10">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="127" mask="XXXXXVXX" item="Recip10">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="127" mask="XXXVVXXX" item="Eff10">
@@ -2656,10 +2425,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="129" mask="XXXXVXXX" item="DCC Message 11A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="129" mask="XXVVXXXX" item="Message 11A">
@@ -2697,10 +2463,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="131" mask="XXXXVXXX" item="DCC Message 11B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="131" mask="XXVVXXXX" item="Message 11B">
@@ -2745,10 +2508,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="133" mask="XXXXVXXX" item="DCC Message 11C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="133" mask="XXVVXXXX" item="Message 11C">
@@ -2797,17 +2557,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="134" mask="VXXXXXXX" item="Inv o11">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="134" mask="XXXXXVXX" item="Recip11">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="134" mask="XXXVVXXX" item="Eff11">
@@ -2834,10 +2588,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="136" mask="XXXXVXXX" item="DCC Message 12A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="136" mask="XXVVXXXX" item="Message 12A">
@@ -2875,10 +2626,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="138" mask="XXXXVXXX" item="DCC Message 12B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="138" mask="XXVVXXXX" item="Message 12B">
@@ -2923,10 +2671,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="140" mask="XXXXVXXX" item="DCC Message 12C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="140" mask="XXVVXXXX" item="Message 12C">
@@ -2975,17 +2720,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="141" mask="VXXXXXXX" item="Inv o12">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="141" mask="XXXXXVXX" item="Recip12">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="141" mask="XXXVVXXX" item="Eff12">
@@ -3012,10 +2751,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="143" mask="XXXXVXXX" item="DCC Message 13A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="143" mask="XXVVXXXX" item="Message 13A">
@@ -3053,10 +2789,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="145" mask="XXXXVXXX" item="DCC Message 13B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="145" mask="XXVVXXXX" item="Message 13B">
@@ -3101,10 +2834,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="147" mask="XXXXVXXX" item="DCC Message 13C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="147" mask="XXVVXXXX" item="Message 13C">
@@ -3153,17 +2883,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="148" mask="VXXXXXXX" item="Inv o13">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="148" mask="XXXXXVXX" item="Recip13">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="148" mask="XXXVVXXX" item="Eff13">
@@ -3190,10 +2914,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="150" mask="XXXXVXXX" item="DCC Message 14A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="150" mask="XXVVXXXX" item="Message 14A">
@@ -3231,10 +2952,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="152" mask="XXXXVXXX" item="DCC Message 14B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="152" mask="XXVVXXXX" item="Message 14B">
@@ -3279,10 +2997,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="154" mask="XXXXVXXX" item="DCC Message 14C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="154" mask="XXVVXXXX" item="Message 14C">
@@ -3331,17 +3046,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="155" mask="VXXXXXXX" item="Inv o14">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="155" mask="XXXXXVXX" item="Recip14">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="155" mask="XXXVVXXX" item="Eff14">
@@ -3368,10 +3077,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="157" mask="XXXXVXXX" item="DCC Message 15A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="157" mask="XXVVXXXX" item="Message 15A">
@@ -3509,17 +3215,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="162" mask="VXXXXXXX" item="Inv o15">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="162" mask="XXXXXVXX" item="Recip15">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="162" mask="XXXVVXXX" item="Eff15">
@@ -3546,10 +3246,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="164" mask="XXXXVXXX" item="DCC Message 16A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="164" mask="XXVVXXXX" item="Message 16A">
@@ -3587,10 +3284,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="166" mask="XXXXVXXX" item="DCC Message 16B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="166" mask="XXVVXXXX" item="Message 16B">
@@ -3635,10 +3329,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="168" mask="XXXXVXXX" item="DCC Message 16C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="168" mask="XXVVXXXX" item="Message 16C">
@@ -3687,17 +3378,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="169" mask="VXXXXXXX" item="Inv o16">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="169" mask="XXXXXVXX" item="Recip16">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="169" mask="XXXVVXXX" item="Eff16">
@@ -3724,10 +3409,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="171" mask="XXXXVXXX" item="DCC Message 17A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="171" mask="XXVVXXXX" item="Message 17A">
@@ -3765,10 +3447,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="173" mask="XXXXVXXX" item="DCC Message 17B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="173" mask="XXVVXXXX" item="Message 17B">
@@ -3813,10 +3492,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="175" mask="XXXXVXXX" item="DCC Message 17C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="175" mask="XXVVXXXX" item="Message 17C">
@@ -3862,10 +3538,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="177" mask="XXXXVXXX" item="DCC Message 18A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="177" mask="XXVVXXXX" item="Message 18A">
@@ -3903,10 +3576,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="179" mask="XXXXVXXX" item="DCC Message 18B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="179" mask="XXVVXXXX" item="Message 18B">
@@ -3951,10 +3621,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="181" mask="XXXXVXXX" item="DCC Message 18C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="181" mask="XXVVXXXX" item="Message 18C">
@@ -4000,10 +3667,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="183" mask="XXXXVXXX" item="DCC Message 19A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="183" mask="XXVVXXXX" item="Message 19A">
@@ -4041,10 +3705,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="185" mask="XXXXVXXX" item="DCC Message 19B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="185" mask="XXVVXXXX" item="Message 19B">
@@ -4089,10 +3750,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="187" mask="XXXXVXXX" item="DCC Message 19C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="187" mask="XXVVXXXX" item="Message 19C">
@@ -4138,10 +3796,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="189" mask="XXXXVXXX" item="DCC Message 20A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="189" mask="XXVVXXXX" item="Message 20A">
@@ -4179,10 +3834,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="191" mask="XXXXVXXX" item="DCC Message 20B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="191" mask="XXVVXXXX" item="Message 20B">
@@ -4227,10 +3879,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="193" mask="XXXXVXXX" item="DCC Message 20C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="193" mask="XXVVXXXX" item="Message 20C">
@@ -4276,10 +3925,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="195" mask="XXXXVXXX" item="DCC Message 21A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="195" mask="XXVVXXXX" item="Message 21A">
@@ -4317,10 +3963,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="197" mask="XXXXVXXX" item="DCC Message 21B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="197" mask="XXVVXXXX" item="Message 21B">
@@ -4365,10 +4008,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="199" mask="XXXXVXXX" item="DCC Message 21C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="199" mask="XXVVXXXX" item="Message 21C">
@@ -4414,10 +4054,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="201" mask="XXXXVXXX" item="DCC Message 22A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="201" mask="XXVVXXXX" item="Message 22A">
@@ -4455,10 +4092,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="203" mask="XXXXVXXX" item="DCC Message 22B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="203" mask="XXVVXXXX" item="Message 22B">
@@ -4503,10 +4137,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="205" mask="XXXXVXXX" item="DCC Message 22C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="205" mask="XXVVXXXX" item="Message 22C">
@@ -4552,10 +4183,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="207" mask="XXXXVXXX" item="DCC Message 23A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="207" mask="XXVVXXXX" item="Message 23A">
@@ -4593,10 +4221,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="209" mask="XXXXVXXX" item="DCC Message 23B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="209" mask="XXVVXXXX" item="Message 23B">
@@ -4641,10 +4266,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="211" mask="XXXXVXXX" item="DCC Message 23C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="211" mask="XXVVXXXX" item="Message 23C">
@@ -4690,10 +4312,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="213" mask="XXXXVXXX" item="DCC Message 24A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="213" mask="XXVVXXXX" item="Message 24A">
@@ -4731,10 +4350,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="215" mask="XXXXVXXX" item="DCC Message 24B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="215" mask="XXVVXXXX" item="Message 24B">
@@ -4779,10 +4395,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="217" mask="XXXXVXXX" item="DCC Message 24C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="217" mask="XXVVXXXX" item="Message 24C">
@@ -4918,10 +4531,7 @@
         <label>Address of first block (B1)</label>
       </variable>
       <variable item="Block detectors connected to inputs?" CV="234" mask="VXXXXXXX" default="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <qualifier>
           <variableref>Setups</variableref>
           <relation>ne</relation>
@@ -5037,10 +4647,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="258" mask="XXXXVXXX" item="DCC Message 25A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="258" mask="XXVVXXXX" item="Message 25A">
@@ -5082,10 +4689,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="260" mask="XXXXVXXX" item="DCC Message 25B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="260" mask="XXVVXXXX" item="Message 25B">
@@ -5134,10 +4738,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="262" mask="XXXXVXXX" item="DCC Message 25C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="262" mask="XXVVXXXX" item="Message 25C">
@@ -5187,10 +4788,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="264" mask="XXXXVXXX" item="DCC Message 26A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="264" mask="XXVVXXXX" item="Message 26A">
@@ -5232,10 +4830,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="266" mask="XXXXVXXX" item="DCC Message 26B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="266" mask="XXVVXXXX" item="Message 26B">
@@ -5284,10 +4879,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="268" mask="XXXXVXXX" item="DCC Message 26C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="268" mask="XXVVXXXX" item="Message 26C">
@@ -5337,10 +4929,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="270" mask="XXXXVXXX" item="DCC Message 27A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="270" mask="XXVVXXXX" item="Message 27A">
@@ -5382,10 +4971,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="272" mask="XXXXVXXX" item="DCC Message 27B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="272" mask="XXVVXXXX" item="Message 27B">
@@ -5434,10 +5020,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="274" mask="XXXXVXXX" item="DCC Message 27C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="274" mask="XXVVXXXX" item="Message 27C">
@@ -5487,10 +5070,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="276" mask="XXXXVXXX" item="DCC Message 28A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="276" mask="XXVVXXXX" item="Message 28A">
@@ -5532,10 +5112,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="278" mask="XXXXVXXX" item="DCC Message 28B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="278" mask="XXVVXXXX" item="Message 28B">
@@ -5584,10 +5161,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="280" mask="XXXXVXXX" item="DCC Message 28C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="280" mask="XXVVXXXX" item="Message 28C">
@@ -5637,10 +5211,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="282" mask="XXXXVXXX" item="DCC Message 29A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="282" mask="XXVVXXXX" item="Message 29A">
@@ -5678,10 +5249,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="284" mask="XXXXVXXX" item="DCC Message 29B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="284" mask="XXVVXXXX" item="Message 29B">
@@ -5726,10 +5294,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="286" mask="XXXXVXXX" item="DCC Message 29C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="286" mask="XXVVXXXX" item="Message 29C">
@@ -5775,10 +5340,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="288" mask="XXXXVXXX" item="DCC Message 30A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="288" mask="XXVVXXXX" item="Message 30A">
@@ -5816,10 +5378,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="290" mask="XXXXVXXX" item="DCC Message 30B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="290" mask="XXVVXXXX" item="Message 30B">
@@ -5864,10 +5423,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="292" mask="XXXXVXXX" item="DCC Message 30C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="292" mask="XXVVXXXX" item="Message 30C">
@@ -5913,10 +5469,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="294" mask="XXXXVXXX" item="DCC Message 31A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="294" mask="XXVVXXXX" item="Message 31A">
@@ -5954,10 +5507,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="296" mask="XXXXVXXX" item="DCC Message 31B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="296" mask="XXVVXXXX" item="Message 31B">
@@ -6002,10 +5552,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="298" mask="XXXXVXXX" item="DCC Message 31C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="298" mask="XXVVXXXX" item="Message 31C">
@@ -6051,10 +5598,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="300" mask="XXXXVXXX" item="DCC Message 32A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="300" mask="XXVVXXXX" item="Message 32A">
@@ -6092,10 +5636,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="302" mask="XXXXVXXX" item="DCC Message 32B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="302" mask="XXVVXXXX" item="Message 32B">
@@ -6140,10 +5681,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="304" mask="XXXXVXXX" item="DCC Message 32C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="304" mask="XXVVXXXX" item="Message 32C">
@@ -6189,10 +5727,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="306" mask="XXXXVXXX" item="DCC Message 33A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="306" mask="XXVVXXXX" item="Message 33A">
@@ -6230,10 +5765,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="308" mask="XXXXVXXX" item="DCC Message 33B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="308" mask="XXVVXXXX" item="Message 33B">
@@ -6278,10 +5810,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="310" mask="XXXXVXXX" item="DCC Message 33C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="310" mask="XXVVXXXX" item="Message 33C">
@@ -6327,10 +5856,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="312" mask="XXXXVXXX" item="DCC Message 34A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="312" mask="XXVVXXXX" item="Message 34A">
@@ -6368,10 +5894,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="314" mask="XXXXVXXX" item="DCC Message 34B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="314" mask="XXVVXXXX" item="Message 34B">
@@ -6416,10 +5939,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="316" mask="XXXXVXXX" item="DCC Message 34C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="316" mask="XXVVXXXX" item="Message 34C">
@@ -6465,10 +5985,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="318" mask="XXXXVXXX" item="DCC Message 35A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="318" mask="XXVVXXXX" item="Message 35A">
@@ -6506,10 +6023,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="320" mask="XXXXVXXX" item="DCC Message 35B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="320" mask="XXVVXXXX" item="Message 35B">
@@ -6554,10 +6068,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="322" mask="XXXXVXXX" item="DCC Message 35C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="322" mask="XXVVXXXX" item="Message 35C">
@@ -6603,10 +6114,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="324" mask="XXXXVXXX" item="DCC Message 36A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="324" mask="XXVVXXXX" item="Message 36A">
@@ -6644,10 +6152,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="326" mask="XXXXVXXX" item="DCC Message 36B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="326" mask="XXVVXXXX" item="Message 36B">
@@ -6692,10 +6197,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="328" mask="XXXXVXXX" item="DCC Message 36C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="328" mask="XXVVXXXX" item="Message 36C">
@@ -6741,10 +6243,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="330" mask="XXXXVXXX" item="DCC Message 37A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="330" mask="XXVVXXXX" item="Message 37A">
@@ -6782,10 +6281,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="332" mask="XXXXVXXX" item="DCC Message 37B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="332" mask="XXVVXXXX" item="Message 37B">
@@ -6830,10 +6326,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="334" mask="XXXXVXXX" item="DCC Message 37C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="334" mask="XXVVXXXX" item="Message 37C">
@@ -6879,10 +6372,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="336" mask="XXXXVXXX" item="DCC Message 38A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="336" mask="XXVVXXXX" item="Message 38A">
@@ -6920,10 +6410,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="338" mask="XXXXVXXX" item="DCC Message 38B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="338" mask="XXVVXXXX" item="Message 38B">
@@ -6968,10 +6455,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="340" mask="XXXXVXXX" item="DCC Message 38C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="340" mask="XXVVXXXX" item="Message 38C">
@@ -7017,10 +6501,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="342" mask="XXXXVXXX" item="DCC Message 39A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="342" mask="XXVVXXXX" item="Message 39A">
@@ -7058,10 +6539,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="344" mask="XXXXVXXX" item="DCC Message 39B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="344" mask="XXVVXXXX" item="Message 39B">
@@ -7106,10 +6584,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="346" mask="XXXXVXXX" item="DCC Message 39C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="346" mask="XXVVXXXX" item="Message 39C">
@@ -7155,10 +6630,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="348" mask="XXXXVXXX" item="DCC Message 40A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="348" mask="XXVVXXXX" item="Message 40A">
@@ -7196,10 +6668,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="350" mask="XXXXVXXX" item="DCC Message 40B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="350" mask="XXVVXXXX" item="Message 40B">
@@ -7244,10 +6713,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="352" mask="XXXXVXXX" item="DCC Message 40C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="352" mask="XXVVXXXX" item="Message 40C">
@@ -7293,10 +6759,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="354" mask="XXXXVXXX" item="DCC Message 41A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="354" mask="XXVVXXXX" item="Message 41A">
@@ -7334,10 +6797,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="356" mask="XXXXVXXX" item="DCC Message 41B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="356" mask="XXVVXXXX" item="Message 41B">
@@ -7382,10 +6842,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="358" mask="XXXXVXXX" item="DCC Message 41C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="358" mask="XXVVXXXX" item="Message 41C">
@@ -7431,10 +6888,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="360" mask="XXXXVXXX" item="DCC Message 42A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="360" mask="XXVVXXXX" item="Message 42A">
@@ -7472,10 +6926,7 @@
         <label>Condition B Address</label>
       </variable>
       <variable CV="362" mask="XXXXVXXX" item="DCC Message 42B">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="362" mask="XXVVXXXX" item="Message 42B">
@@ -7520,10 +6971,7 @@
         <label>Condition C Address</label>
       </variable>
       <variable CV="364" mask="XXXXVXXX" item="DCC Message 42C">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="364" mask="XXVVXXXX" item="Message 42C">
@@ -7569,10 +7017,7 @@
         <label>Condition A Address</label>
       </variable>
       <variable CV="366" mask="XXXXVXXX" item="DCC Message 43A">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="366" mask="XXVVXXXX" item="Message 43A">
@@ -13546,10 +12991,7 @@
         <label>Address</label>
       </variable>
       <variable CV="644" mask="XXXXVXXX" item="DCC Message 66D" default="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DCC Signal</label>
       </variable>
       <variable CV="644" mask="XXVVXXXX" item="Message 66D">

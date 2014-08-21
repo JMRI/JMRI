@@ -280,15 +280,10 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumCurve.xml"/>
         <label>Speed Table Selection</label>
       </variable>
-      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
-        <label>Locomotive's Normal Direction of Motion</label>
-      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
-      <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumCV29Analog.xml"/>
-        <label>Alternate Power Source Enable</label>
-      </variable>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
       <variable CV="30" mask="XXXXXXXV" item="Advanced Group 1 Option 3" default="0" tooltip="Enable locking of CVs when decoder is used in a multi-decoder installation">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLock.xml"/>

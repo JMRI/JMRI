@@ -109,18 +109,8 @@
       </variable>
       <!-- CV 17 -->
       <!-- CV 19 -->
-      <variable CV="19" mask="XVVVVVVV" default="0" item="Consist Address" tooltip="XVVVVVVV  (0 -127) default=0">
-        <decVal min="0" max="127"/>
-        <label>Consist Address</label>
-      </variable>
-      <!-- CV 19 -->
-      <variable CV="19" mask="VXXXXXXX" default="0" item="Consist Direction" tooltip="VXXXXXXX  default=0">
-        <enumVal>
-          <enumChoice choice="Forward"/>
-          <enumChoice choice="Reverse"/>
-        </enumVal>
-        <label>Consist Direction</label>
-      </variable>
+      <!-- CV=19 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <variable item="Consist Address Active For F1" CV="21" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="Locomotive Address Only"/>
@@ -186,17 +176,8 @@
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
-      <variable CV="29" mask="XXXXVXXX" default="0" item="Enable RailCom" tooltip="XXXXVXXX  default=0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Enable RailCom</label>
-      </variable>
-      <variable CV="29" mask="XXXVXXXX" default="0" item="Speed Table Definition" tooltip="XXXVXXXX  default=0">
-        <enumVal>
-          <enumChoice choice="Vstart/mid/high"/>
-          <enumChoice choice="Use Speed Table"/>
-        </enumVal>
-        <label>Speed Table Definition</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29RailCom.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
       <variable CV="29" mask="VXXXXXXX" default="0" item="Decoder Type" tooltip="VXXXXXXX  default=0">
         <enumVal>
           <enumChoice choice="MultiFuncton"/>

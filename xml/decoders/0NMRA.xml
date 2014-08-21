@@ -91,12 +91,7 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
-      <variable CV="29" mask="XXXXVXXX" item="Advanced Ack">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Advanced Decoder Acknowledgement</label>
-        <label xml:lang="fr">Advanced Decoder Acknowledgement(fr)</label>
-        <label xml:lang="it">Riconoscimento Decoder Avanzato</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29AdvAck.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
       <!-- this next large group forms a table, so doesn't need translation -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/functionmap.xml"/>

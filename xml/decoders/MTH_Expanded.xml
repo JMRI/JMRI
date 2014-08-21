@@ -50,8 +50,11 @@
         <label xml:lang="it">PWM Volt Massimi (0-255):</label>
         <label xml:lang="de">PWM Höchstgeschwindigkeit</label>
       </variable>
+      <!-- CV 7-8 -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+      <!-- CV=19 -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+       <!-- CV=21 -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22.xml"/>
       <variable item="Consist Address Active For F9" CV="22" mask="XXXXXVXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
@@ -155,17 +158,7 @@
       </variable>
       <!-- CV=29 -->
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
-      <variable item="Speed Table Definition" CV="29" mask="XXXVXXXX" tooltip="PWM mode only">
-        <enumVal>
-          <enumChoice choice="Use PWM Start and Max Voltage">
-            <choice>Use PWM Start and Max Voltage</choice>
-          </enumChoice>
-          <enumChoice choice="Use PWM Speed Table Selection">
-            <choice>Use PWM Speed Table Selection</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Table Definition</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
       <variable CV="52" mask="XXXXXXXV" item="Motor Option 1">
         <enumVal>
           <enumChoice choice="sMPH">

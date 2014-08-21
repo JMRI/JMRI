@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: cv21.22.xml 26993 2014-08-17 01:13:09Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -20,43 +20,24 @@
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
       <personname>
-        <firstname>Michael</firstname>
-        <surname>Mosher</surname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
       </personname>
     </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
-      <revnumber>2</revnumber>
-      <date>2013-07-29</date>
-      <authorinitials>PB</authorinitials>
-      <revremark>Added German, French</revremark>
-    </revision>
-    <revision>
       <revnumber>1</revnumber>
-      <date>2013-01-22</date>
-      <authorinitials>MM</authorinitials>
-      <revremark>Initial release</revremark>
+      <date>2014-08-19</date>
+      <authorinitials>EF</authorinitials>
+      <revremark>New for LSB only</revremark>
     </revision>
   </revhistory>
-  <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition" default="0">
-    <enumVal>
-      <enumChoice choice="Don't use Speed Table, use Start Voltage (Vstart)">
-        <choice>Don't use Speed Table, use Start Voltage (Vstart and Vmax)</choice>
-        <choice xml:lang="it">Non usare Tabella, usa Tensione Iniziale (Vstart e Vmax)</choice>
-        <choice xml:lang="fr">Utiliser V démarrage (Vstart-Vmax)</choice>
-        <choice xml:lang="de">Anfahrspannung (Vstart-Vmax) nutzen</choice>
-      </enumChoice>
-      <enumChoice choice="Use Speed Table">
-        <choice>Use Speed Table</choice>
-        <choice xml:lang="it">Usa Tabella Velocità</choice>
-        <choice xml:lang="fr">Utiliser tableau de vitesse</choice>
-        <choice xml:lang="de">Geschw.-kennlinie nutzen</choice>
-      </enumChoice>
-    </enumVal>
-    <label>Use Speed Table</label>
-    <label xml:lang="fr">Tableau de vitesse</label>
-    <label xml:lang="de">Geschwindigkeitskennlinie nutzen</label>
-    <label xml:lang="it">Uso Tabella Velocità</label>
-  </variable>
+  <variable item="Functions Respond to Address" CV="21" mask="XXXXXXXV" tooltip="Selects the address accessory functions will respond .Least bit default=0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Functions Respond to Address</label>
+        <label xml:lang="it">Indirizzo valido per le Funzioni</label>
+        <tooltip>Selects the address accessory functions will respond to</tooltip>
+        <tooltip xml:lang="it">Seleziona l'indirizzo a cui rispondono le Funzioni</tooltip>
+      </variable>
 </variables>

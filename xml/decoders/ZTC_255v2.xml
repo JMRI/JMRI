@@ -86,32 +86,10 @@
         <label>ZTC Talkback Configuration</label>
         <comment>Used to configure ZTC Talkback 0= Talkback OFF, 1= Constant Broadcast, 2= Broadcast on detection of Asymetric Signal</comment>
       </variable>
-      <variable item="Locomotive Direction" CV="29" mask="XXXXXXXV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
-        <label>Locomotive Direction</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode">
-        <enumVal>
-          <enumChoice choice="14 speed step format">
-            <choice>14 speed step format</choice>
-          </enumChoice>
-          <enumChoice choice="28 speed step format">
-            <choice>28 speed step format</choice>
-          </enumChoice>
-        </enumVal>
-        <label>FL Location</label>
-      </variable>
-      <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation">
-        <enumVal>
-          <enumChoice choice="NMRA Digital only">
-            <choice>NMRA Digital only</choice>
-          </enumChoice>
-          <enumChoice choice="DC conversion enabled">
-            <choice>DC conversion enabled</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Power Source Conversion</label>
-      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <variable CV="29" mask="XXXXVXXX" item="ZTC Talkback">
         <enumVal>
           <enumChoice choice="disabled">

@@ -48,18 +48,16 @@
   <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition" default="0">
     <enumVal>
       <enumChoice choice="Use Vstart, Vmid, Vhigh">
-        <choice>Use Vstart, Vmid, Vhigh</choice>
-        <choice xml:lang="it">Usa Vstart-Vmid-Vmax</choice>
-        <choice xml:lang="fr">Utiliser Vstart, Vmoy, Vmax</choice>
-        <choice xml:lang="de">Anfahr-, Mitten-, Höchst-geschwindigkeit nutzen</choice>
-        <choice xml:lang="it">Usa Vstart, Vmid, Vhigh</choice>
+        <choice>Use Vstart, Vmid, Vhigh (CV29, bit 4)</choice>
+        <choice xml:lang="it">Usa Vstart-Vmid-Vmax (CV29, bit 4)</choice>
+        <choice xml:lang="fr">Utiliser Vstart, Vmoy, Vmax (CV29, bit 4)</choice>
+        <choice xml:lang="de">Anfahr-, Mitten-, Höchst-geschwindigkeit nutzen (CV29, bit 4)</choice>
       </enumChoice>
       <enumChoice choice="Use Speed Table">
-        <choice>Use Speed Table</choice>
-        <choice xml:lang="it">Usa Tabella Velocità'</choice>
-        <choice xml:lang="fr">Utiliser tableau de vitesse</choice>
-        <choice xml:lang="de">Geschwindigkeitskennlinie nutzen</choice>
-        <choice xml:lang="it">Usa Tabella</choice>
+        <choice>Use Speed Table (CV's 67-94)</choice>
+        <choice xml:lang="it">Usa Tabella Velocità' (CV's 67-94)</choice>
+        <choice xml:lang="fr">Utiliser tableau de vitesse (CV's 67-94)</choice>
+        <choice xml:lang="de">Geschwindigkeitskennlinie nutzen (CV's 67-94)</choice>
       </enumChoice>
     </enumVal>
     <label>Use Speed Table</label>

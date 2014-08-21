@@ -62,6 +62,8 @@
         <enumVal>
           <enumChoice choice="Use Vstart, Vmid, Vhigh">
             <choice>Use Vstart, Vmid, Vhigh</choice>
+            <choice xml:lang="it">Usa Tensione  (Vstart, Vmid, Vhigh)</choice>
+            <choice xml:lang="fr">Utiliser V démarrage (Vstart, Vmid, Vhigh)</choice>
             <choice xml:lang="de">Anfahr-, Mitten-, Höchst-geschwindigkeit nutzen</choice>
           </enumChoice>
           <!--
@@ -73,6 +75,8 @@
         </enumVal>
         <label>Speed Table Definition - Not Used</label>
         <label xml:lang="de">Geschwindigkeitskennlinie - Nicht belegt</label>
+        <label xml:lang="fr">Tableau de vitesse=no</label>
+        <label xml:lang="it">Tabella Velocità non usata</label>
       </variable>
       <!-- No function mapping -->
       <!-- <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/functionmap2outputs.xml"/>  -->

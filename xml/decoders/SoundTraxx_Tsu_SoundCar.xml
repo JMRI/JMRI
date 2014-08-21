@@ -299,7 +299,7 @@
       <variable CV="24" mask="VXXXXXXX" item="Consist Deceleration Adjustment Sign" default="0" tooltip="Determines whether value is added to or subtracted from loco baseline braking rate">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-AddSubtract2.xml"/>
         <label>Consist Braking Sign</label>
-        <label xml:lang="it">Segno Frenata consist</label>
+        <label xml:lang="it">Segno Frenata Consist</label>
       </variable>
       <!-- Not used in this decoder - Sound only
       <variable CV="25" item="Speed Table Selection" mask="XXXVVVVV" default="0" tooltip="Select a manufacturers speed curve, or use a curve you define yourself">
@@ -307,17 +307,10 @@
         <label>Speed Table Selection</label>
       </variable>
 	  -->
-      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
-        <label>Locomotive's Normal Direction of Motion</label>
-        <label xml:lang="it">Normale direzione di marcia</label>
-      </variable>
+      <!-- CV=29 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
-      <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumCV29Analog.xml"/>
-        <label>Alternate Power Source Enable</label>
-        <label xml:lang="it">Abilitazione alimentazione alternativa</label>
-      </variable>
+       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
 	  <!-- Not used in this decoder - Sound only
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
 	  -->

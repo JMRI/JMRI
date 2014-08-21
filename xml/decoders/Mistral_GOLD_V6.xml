@@ -205,10 +205,7 @@
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
-      <variable CV="29" mask="XXXXVXXX" item="Advanced Ack">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Advanced Decoder Acknowledgement</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29AdvAck.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
       <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>

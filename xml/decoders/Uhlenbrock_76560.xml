@@ -96,11 +96,7 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv29analog.xml"/>
-      <variable item="RailCom" CV="29" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>RailCom</label>
-        <label xml:lang="de">RailCom</label>
-      </variable>	  
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29RailCom.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
       <!-- Include function mapping -->
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/functionmap7outputs.xml"/>

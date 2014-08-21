@@ -325,50 +325,11 @@
         </enumVal>
         <label>Speed Table Selection</label>
       </variable>
-      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
-        <enumVal>
-          <enumChoice choice="Forward">
-            <choice>Forward</choice>
-          </enumChoice>
-          <enumChoice choice="Reverse">
-            <choice>Reverse</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Locomotive's Normal Direction of Motion</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-          </enumChoice>
-          <enumChoice choice="28/128">
-            <choice>28/128</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Steps</label>
-      </variable>
-      <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
-        <enumVal>
-          <enumChoice choice="NMRA Digital Only">
-            <choice>NMRA Digital Only</choice>
-          </enumChoice>
-          <enumChoice choice="Alternate Power Source Enabled">
-            <choice>Alternate Power Source Enabled</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Alternate Power Source Enable</label>
-      </variable>
-      <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition" default="0">
-        <enumVal>
-          <enumChoice choice="Use Start Voltage (Vstart)">
-            <choice>Use Start Voltage (Vstart)</choice>
-          </enumChoice>
-          <enumChoice choice="Use Speed Table">
-            <choice>Use Speed Table</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Use Speed Table</label>
-      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
       <variable CV="30" mask="XXXXXXXV" item="Advanced Group 1 Option 3" default="0" tooltip="Enable locking of CVs when decoder is used in a multi-decoder installation">
         <enumVal>
           <enumChoice choice="Normal operation (no locking)">

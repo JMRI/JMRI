@@ -27,6 +27,11 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>8</revnumber>
+      <date>2014-08-20</date>
+      <authorinitials>EF</authorinitials>
+      <revremark>Added Italian-Francais</revremark>
+    </revision><revision>
       <revnumber>7</revnumber>
       <date>2013-07-31</date>
       <authorinitials>PB</authorinitials>

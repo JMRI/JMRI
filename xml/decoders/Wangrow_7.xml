@@ -49,14 +49,8 @@
         <label xml:lang="de">Bremszeit (0-31)</label>
       </variable>
      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
-      <variable CV="19" mask="XVVVVVVV" item="Consist Address">
-        <decVal/>
-        <label>Consist Address</label>
-      </variable>
-      <variable item="Consist Direction" CV="19" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
-        <label>Consist Direction</label>
-      </variable>
+     <!-- CV=19 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <variable item="Consist Acceleration Adjustment" CV="23" mask="XVVVVVVV">
         <decVal max="127"/>
         <label>Consist Acceleration Adjustment</label>
@@ -87,47 +81,12 @@
         </enumVal>
         <label>Consist Deceleration Adjustment Sign</label>
       </variable>
-      <variable item="Locomotive Direction" CV="29" mask="XXXXXXXV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
-        <label>Locomotive Direction</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode">
-        <enumVal>
-          <enumChoice choice="14 speed step format">
-            <choice>14 speed step format</choice>
-          </enumChoice>
-          <enumChoice choice="28 speed step format">
-            <choice>28 speed step format</choice>
-          </enumChoice>
-        </enumVal>
-        <label>FL Location</label>
-      </variable>
-      <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation">
-        <enumVal>
-          <enumChoice choice="NMRA Digital only">
-            <choice>NMRA Digital only</choice>
-          </enumChoice>
-          <enumChoice choice="DC conversion enabled">
-            <choice>DC conversion enabled</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Power Source Conversion</label>
-      </variable>
-      <variable CV="29" mask="XXXXVXXX" item="Advanced Ack">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Advanced Decoder Acknowledgement</label>
-      </variable>
-      <variable item="Speed Table Definition" CV="29" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="Use Vstart, Vmid, Vhigh">
-            <choice>Use Vstart, Vmid, Vhigh</choice>
-          </enumChoice>
-          <enumChoice choice="Use table in CVs 66 through 95">
-            <choice>Use table in CVs 66 through 95</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Table Definition</label>
-      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29AdvAck.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
       <variable CV="49" item="Global lighting option 1">
         <decVal/>
         <label>F2, F3 blink control</label>

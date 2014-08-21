@@ -34,37 +34,13 @@
       <!-- <variable CV="7" readOnly="yes" item="Decoder Version" default="27">-->
       <!--<variable CV="8" readOnly="yes" item="Manufacturer" default="153">-->
       <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+      <!-- CV=19 -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
-      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-FwdRev.xml"/>
-        <label>Normal direction of motion</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-          </enumChoice>
-          <enumChoice choice="28/128">
-            <choice>28/128</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed steps</label>
-      </variable>
-      <variable CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Analog conversion mode</label>
-      </variable>
-      <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition">
-        <enumVal>
-          <enumChoice choice="Use Vstart, Vmid, Vhigh">
-            <choice>Use Vstart, Vmid, Vhigh</choice>
-          </enumChoice>
-          <enumChoice choice="Use Table">
-            <choice>Use Table</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Use Speed Table</label>
-      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
       <variable CV="49" mask="XXXXVVVV" item="Function F0F effect generated" default="0">
         <enumVal>
           <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Normonoffcntrl.xml"/>

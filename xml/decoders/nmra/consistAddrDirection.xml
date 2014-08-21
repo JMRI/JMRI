@@ -53,17 +53,17 @@
   </revhistory>
   <variable CV="19" mask="XVVVVVVV" item="Consist Address" default="0" tooltip="Stores consist address. Range 0-127 (direction set in bit 7)">
     <decVal max="127"/>
-        <label>Consist Address</label>
-    <label xml:lang="it">Indirizzo Consist</label>
+    <label>Advanced Consist Address</label>
+    <label xml:lang="it">Indirizzo Consist Avanzato</label>
     <label xml:lang="fr">Addresse UM</label>
     <label xml:lang="de">Verbundadresse</label>
     <tooltip>Stores consist address. Range 0-127 (direction set in bit 7)</tooltip>
-    <tooltip xml:lang="it">Stores consist address. Range 0-127 (direction set in bit 7)</tooltip>
+    <tooltip xml:lang="it">Indirizzo Consist. Valori 0-127 (direzione nel bit 7)</tooltip>
   </variable>
   <variable item="Consist Direction" CV="19" mask="VXXXXXXX" default="0" tooltip="This loco runs Normal(default) or Reversed(address+128) when in the consist">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
-    <label>Consist Direction</label>
-    <label xml:lang="it">Direzione Consist</label>
+    <label>Locomotive Direction In Consist</label>
+    <label xml:lang="it">Direzione Loco nel Consist</label>
     <label xml:lang="fr">Direction UM</label>
     <label xml:lang="de">Verbund-Richtung</label>
     <tooltip>This loco runs Normal(default) or Reversed(address+128) when in the consist</tooltip>

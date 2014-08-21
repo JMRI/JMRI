@@ -124,21 +124,9 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-PositiveNegative.xml"/>
         <label>Consist Braking Sign</label>
       </variable>
-      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-FwdRev.xml"/>
-        <label>Normal direction of motion</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-          </enumChoice>
-          <enumChoice choice="28/128">
-            <choice>28/128</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed steps</label>
-      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
       <variable CV="30" mask="XXXXXXXV" item="Advanced Group 1 Option 1">
         <enumVal>
           <enumChoice choice="System Normal">

@@ -229,51 +229,11 @@
         <label>Deceleration Trim Sign</label>
         <label xml:lang="it">Segno Regolazione fine Decellarazione</label>
       </variable>
-      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-FwdRev.xml"/>
-    <label>Normal direction of motion</label>
-    <label xml:lang="it">Normale direzione di marcia</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-          </enumChoice>
-          <enumChoice choice="28/128 (recommended)">
-            <choice>28/128 (recommended)</choice>
-            <choice xml:lang="it">28/128 (raccomandato)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Steps</label>
-        <label xml:lang="fr">Pas de vitesse</label>
-        <label xml:lang="de">Fahrstufen</label>
-        <label xml:lang="it">Step Velocità</label>
-      </variable>
-      <variable CV="29" mask="XXXXXVXX" default="0" item="Analog (DC) Operation">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Analog conversion mode</label>
-    <label xml:lang="it">Modo Conversione Analogica</label>
-      </variable>
-      <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition">
-    <enumVal>
-      <enumChoice choice="Use Vstart, Vmid, Vhigh (CV29, bit 4)">
-        <choice>Use Vstart, Vmid, Vhigh (CV29, bit 4)</choice>
-        <choice xml:lang="it">Usa Vstart, Vmid, Vhigh (CV29, bit 4)</choice>
-        <choice xml:lang="fr">Utiliser V démarrage (Vstart)</choice>
-        <choice xml:lang="de">Anfahrspannung (Vstart) nutzen</choice>
-      </enumChoice>
-      <enumChoice choice="Use Table (CV's 67-94)">
-        <choice>Use Table (CV's 67-94)</choice>
-        <choice xml:lang="it">Usa Tabella Velocità (CV's 67-94)</choice>
-        <choice xml:lang="fr">Utiliser tableau de vitesse (CV's 67-94)</choice>
-        <choice xml:lang="de">Geschw.-kennlinie nutzen (CV's 67-94)</choice>
-      </enumChoice>
-    </enumVal>
-    <label>Use Speed Table</label>
-    <label xml:lang="fr">Tableau de vitesse</label>
-    <label xml:lang="de">Geschwindigkeitskennlinie nutzen</label>
-    <label xml:lang="it">Usa Tabella Velocità</label>
-      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
       <variable item="FL(f) controls output 1" CV="33" default="1" mask="XXXXXXXV" minOut="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(f) controls output 1</label>

@@ -55,42 +55,11 @@
         <label>Yellow Wire Active in Consist (MU)</label>
         <label xml:lang="it">Filo Giallo Attivo in Consist</label>
       </variable>
-      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-FwdRev.xml"/>
-        <label>Normal direction of motion</label>
-        <label xml:lang="it">Normale direzione di marcia</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-          </enumChoice>
-          <enumChoice choice="28/128">
-            <choice>28/128</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed steps</label>
-        <label xml:lang="it">Step Velocità</label>
-      </variable>
-      <variable CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Analog conversion mode</label>
-        <label xml:lang="it">Modo Conversione Analogica</label>
-      </variable>
-      <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition">
-        <enumVal>
-          <enumChoice choice="Use Vstart, Vmid, Vhigh">
-            <choice>Use Vstart, Vmid, Vhigh</choice>
-            <choice xml:lang="it">Usa Vstart, Vmid, Vhigh</choice>
-          </enumChoice>
-          <enumChoice choice="Use Table">
-            <choice>Use Table</choice>
-            <choice xml:lang="it">Usa Tabella Velocità</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Use Speed Table</label>
-        <label xml:lang="it">Usa Tabella Velocità</label>
-      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
       <variable item="Decoder Reset" CV="30" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="Normal">
