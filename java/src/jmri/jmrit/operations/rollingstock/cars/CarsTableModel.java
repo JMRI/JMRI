@@ -340,7 +340,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 			// load defaults, xml file data not found
 			// Cars frame table column widths, starts with Select column and ends with Edit
 			int[] tableColumnWidths = { 60, 60, 60, 65, 35, 75, 75, 65, 190, 190, 190, 190, 65, 50, 50, 50, 50, 50, 50,
-					50, 65, 70 };
+					50, 50, 65, 70 };
 			for (int i = 0; i < tcm.getColumnCount(); i++)
 				tcm.getColumn(i).setPreferredWidth(tableColumnWidths[i]);
 		}
