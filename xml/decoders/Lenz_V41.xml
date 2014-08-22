@@ -94,51 +94,16 @@
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
       <variable CV="50" mask="XXXXXXVX" item="Accel/Decel Trim" default="0" comment="Switch on/off Acceleration/Deceleration trim">
-        <enumVal>
-          <enumChoice choice="Trim Off">
-            <choice>Trim Off</choice>
-            <choice xml:lang="de">Trim Off</choice>
-          </enumChoice>
-          <enumChoice choice="Trim On">
-            <choice>Trim On</choice>
-            <choice xml:lang="de">Trim On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Accel/Decel Trim</label>
         <comment>Switch on/off Acceleration/Deceleration trim</comment>
         <label xml:lang="de">Accel/Decel Trim</label>
         <comment xml:lang="de">Switch on/off Acceleration/Deceleration trim</comment>
       </variable>
-      <variable CV="50" mask="XXXXXVXX" item="DC Brake Momentum" default="0" comment="Governs how loco acts in DC track block">
-        <enumVal>
-          <enumChoice choice="Loco runs under DC analog voltage control">
-            <choice>Loco runs under DC analog voltage control</choice>
-            <choice xml:lang="de">Loco runs under DC analog voltage control</choice>
-          </enumChoice>
-          <enumChoice choice="Loco brakes to a stop using momentum set in CV4">
-            <choice>Loco brakes to a stop using momentum set in CV4</choice>
-            <choice xml:lang="de">Loco brakes to a stop using momentum set in CV4</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Brake Momentum on DC</label>
-        <comment>Governs how loco acts in DC track block</comment>
-        <label xml:lang="de">DC Brake Momentum</label>
-        <comment xml:lang="de">Governs how loco acts in DC track block</comment>
-      </variable>
-      <variable CV="51" mask="XXXXXXXV" item="Directional Headlights" default="0">
-        <enumVal>
-          <enumChoice choice="Directional Lights">
-            <choice>Directional Lights</choice>
-            <choice xml:lang="de">Directional Lights</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 Independent Front/Rear Lights">
-            <choice>Rule 17 Independent Front/Rear Lights</choice>
-            <choice xml:lang="de">Rule 17 Independent Front/Rear Lights</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Headlight Control</label>
-        <label xml:lang="de">Directional Headlights</label>
-      </variable>
+      <!-- CV=50 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv50_DCbrake.xml"/>
+     <!-- CV=51 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv51_DirectionalHeadlights.xml"/>
       <variable CV="51" mask="XXXXXXVX" item="Global lighting option 1" default="0" comment="Only relevant for 'Directional Lights'">
         <enumVal>
           <enumChoice choice="Disabled">

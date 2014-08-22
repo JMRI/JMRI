@@ -95,25 +95,27 @@
         <comment>DC Conversion Active?</comment>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
-      <variable CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Analog conversion mode</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <variable item="Directional Headlights" CV="61" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="Headlights are directional and operate automatically">
             <choice>Headlights are directional and operate automatically</choice>
+            <choice xml:lang="it">Luci di testa direzionali e automatiche</choice>
           </enumChoice>
           <enumChoice choice="Headlights are independently controlled (F0-Front, F4-Rear)">
             <choice>Headlights are independently controlled (F0-Front, F4-Rear)</choice>
+            <choice xml:lang="it">Luci di testa controllate indipendentemente (F0-Avanti, F4-Retro)</choice>
           </enumChoice>
         </enumVal>
         <label>Directional Headlights</label>
+        <label xml:lang="it">Luci di testa direzionali</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart_63.xml"/>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="8" default="8"/>
+      <factReset label="Reset All CVs" CV="8" default="8">
+         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
     </resets>
   </decoder>
 </decoder-config>

@@ -36,7 +36,9 @@
       </variable>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="55" default="55"/>
+      <factReset label="Reset All CVs" CV="55" default="55">
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
     </resets>
   </decoder>
   <pane>

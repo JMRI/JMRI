@@ -89,7 +89,9 @@
       <xi:include href="http://jmri.org/xml/decoders/lenz/serviceNo_cv128.xml"/>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="8" default="33"/>
+      <factReset label="Reset All CVs" CV="8" default="33">
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
     </resets>
   </decoder>
   <xi:include href="http://jmri.org/xml/decoders/lenz/paneFunctionMap.xml"/>

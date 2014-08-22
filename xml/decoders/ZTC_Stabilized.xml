@@ -117,12 +117,15 @@
         <enumVal>
           <enumChoice choice="Headlights are directional and operate automatically">
             <choice>Headlights are directional and operate automatically</choice>
+            <choice xml:lang="it">Luci di testa direzionali e automatiche</choice>
           </enumChoice>
           <enumChoice choice="Headlights are independently controlled (F0-Front, F4-Rear)">
             <choice>Headlights are independently controlled (F0-Front, F4-Rear)</choice>
+            <choice xml:lang="it">Luci di testa controllate indipendentemente (F0-Avanti, F4-Retro)</choice>
           </enumChoice>
         </enumVal>
         <label>Directional Headlights</label>
+        <label xml:lang="it">Luci di testa direzionali</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart_63.xml"/>
       <!-- Define the fixed Function-Output mapping -->
@@ -130,7 +133,9 @@
       <constant item="F2 controls output 4" minOut="4" default="1"/>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="8" default="8"/>
+      <factReset label="Reset All CVs" CV="8" default="8">
+         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
     </resets>
   </decoder>
   <pane>

@@ -212,8 +212,12 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="8" default="8"/>
-      <factReset label="Reset All CVs except speed table" CV="8" default="9"/>
+      <factReset label="Reset All CVs" CV="8" default="8">
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
+      <factReset label="Reset All CVs except speed table" CV="8" default="9">
+        <label xml:lang="it">Reset delle CV salvo Tabella Velocità ai valori di fabbrica</label>
+      </factReset>
     </resets>
   </decoder>
   <xi:include href="http://jmri.org/xml/decoders/digitrax/PaneDigitrax.xml"/>

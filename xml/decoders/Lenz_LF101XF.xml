@@ -395,9 +395,11 @@
       <variable CV="49" item="Directional headlights" comment="output A" mask="XXXXXXXV">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Headlights reverse polarity with direction</label>
-        <comment>output A</comment>
+        <label xml:lang="it">Luci di testa direzionali e automatiche</label>
         <label xml:lang="de">Directional headlights</label>
+        <comment>output A</comment>
         <comment xml:lang="de">output A</comment>
+        <comment xml:lang="it">Uscita A</comment>
       </variable>
       <variable item="Output A dim intensity" CV="50" default="255" comment="Controls how much Output B dims (0-dark to 255-max bright)">
         <decVal min="0" max="255"/>

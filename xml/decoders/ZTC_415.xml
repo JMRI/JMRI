@@ -1034,12 +1034,15 @@
         <enumVal>
           <enumChoice choice="Normal headlight operation">
             <choice>Normal headlight operation</choice>
+            <choice xml:lang="it">Luci di testa direzionali e automatiche</choice>
           </enumChoice>
           <enumChoice choice="Reverse light lead controlled by F4">
             <choice>Reverse light lead controlled by F4</choice>
+            <choice xml:lang="it">Luci di testa controllate da F4</choice>
           </enumChoice>
         </enumVal>
         <label>Directional Headlights</label>
+        <label xml:lang="it">Luci di testa direzionali</label>
       </variable>
       <variable item="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>

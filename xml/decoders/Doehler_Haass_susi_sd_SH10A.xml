@@ -52,7 +52,9 @@
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_cv968-973.xml"/>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="900" default="101"/>
+      <factReset label="Reset All CVs" CV="900" default="101">
+         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
     </resets>
   </decoder>
 </decoder-config>

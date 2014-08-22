@@ -213,27 +213,8 @@
         <comment xml:lang="de">Governs how loco acts in DC track block</comment>
         <tooltip xml:lang="de">Governs how loco responds in DC powered track block (Analog Conversion Mode must be OFF)</tooltip>
       </variable>
-      <variable CV="51" mask="XXXXXXXV" item="Directional Headlights" default="0" tooltip="Enables Rule 17 for headlights (independent control)" comment="output A">
-        <enumVal>
-          <enumChoice choice="Headlights are directional and operate automatically">
-            <choice>Headlights are directional and operate automatically</choice>
-            <choice xml:lang="it">Luci di test a sono direzionali ed operano automaticamente</choice>
-            <choice xml:lang="de">Headlights are directional and operate automatically</choice>
-          </enumChoice>
-          <enumChoice choice="Headlights are independently controlled (F0-Front, F1-Rear)">
-            <choice>Headlights are independently controlled (F0-Front, F1-Rear)</choice>
-            <choice xml:lang="it">Luci di testa sono controllate manualmente ( F0-frontali, F1-posteriori)</choice>
-            <choice xml:lang="de">Headlights are independently controlled (F0-Front, F1-Rear)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Directional Headlights</label>
-        <label xml:lang="it">Luci Direzionali</label>
-        <comment>output A</comment>
-        <comment xml:lang="it">uscita A</comment>
-        <label xml:lang="de">Directional Headlights</label>
-        <comment xml:lang="de">output A</comment>
-        <tooltip xml:lang="de">Enables Rule 17 for headlights (independent control)</tooltip>
-      </variable>
+      <!-- CV=51 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv51_DirectionalHeadlights.xml"/>
       <variable CV="51" mask="XXXXXXVX" item="Function F0F behavior" default="0" tooltip="Determines how front headlight dims (when dimming is enabled)" comment="CV 52 controls amount">
         <enumVal>
           <enumChoice choice="Front headlight is always dimmed">
@@ -254,6 +235,7 @@
         <label xml:lang="de">Function F0F behavior</label>
         <comment xml:lang="de">CV 52 controls amount</comment>
         <tooltip xml:lang="de">Determines how front headlight dims (when dimming is enabled)</tooltip>
+        <tooltip xml:lang="de">Controllo attenuazione luci frontali (quando abilitato)</tooltip>
       </variable>
       <variable CV="51" mask="XXXXXVXX" item="Function F0F effect generated" default="0" tooltip="Enables front headlight dimming">
         <enumVal>

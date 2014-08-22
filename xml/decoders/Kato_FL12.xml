@@ -34,7 +34,7 @@
     <resets>
       <factReset label="Reset All CVs" CV="8" default="8">
         <label>Reset All CVs</label>
-        <label xml:lang="it">Ripristino di tutte le CV</label>
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
       </factReset>
     </resets>
   </decoder>

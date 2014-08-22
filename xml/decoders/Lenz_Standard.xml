@@ -370,16 +370,7 @@
         <label xml:lang="de">EMF Switch</label>
       </variable>
       <variable CV="50" mask="XVXXXXXX" item="BEMF Control" default="0">
-        <enumVal>
-          <enumChoice choice="On ">
-            <choice>On </choice>
-            <choice xml:lang="de">On </choice>
-          </enumChoice>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-            <choice xml:lang="de">Off</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
         <label>BEMF Control</label>
         <label xml:lang="de">BEMF Control</label>
       </variable>
@@ -555,7 +546,9 @@
       </variable>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="8" default="33"/>
+      <factReset label="Reset All CVs" CV="8" default="33">
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
     </resets>
   </decoder>
   <xi:include href="http://jmri.org/xml/decoders/lenz/paneLighting.xml"/>

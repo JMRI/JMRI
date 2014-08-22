@@ -179,16 +179,7 @@
         <label xml:lang="de">Speed Table Definition</label>
       </variable>
       <variable CV="50" mask="XXXXXXVX" item="Consist Adjustments Active" comment="Accel/Decel Off/On">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-            <choice xml:lang="de">Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-            <choice xml:lang="de">On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Enable Accel/Decel Trim</label>
         <label xml:lang="it">Abilita incremento Accell./Decell. </label>
         <comment>Accel/Decel Off/On</comment>
@@ -196,46 +187,10 @@
         <label xml:lang="de">Consist Adjustments Active</label>
         <comment xml:lang="de">Accel/Decel Off/On</comment>
       </variable>
-      <variable CV="50" mask="XXXXXVXX" item="DC Brake Momentum" comment="Governs how loco acts in DC track block">
-        <enumVal>
-          <enumChoice choice="Loco runs under DC analog voltage control">
-            <choice>Loco runs under DC analog voltage control</choice>
-            <choice xml:lang="it">Loco viaggia sotto controllo della tensione Analogica</choice>
-            <choice xml:lang="de">Loco runs under DC analog voltage control</choice>
-          </enumChoice>
-          <enumChoice choice="Loco brakes to a stop using momentum set in CV4">
-            <choice>Loco brakes to a stop using momentum set in CV4</choice>
-            <choice xml:lang="it">Loco frena e si ferma usando Inerzia impostata in CV4</choice>
-            <choice xml:lang="de">Loco brakes to a stop using momentum set in CV4</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Brake Momentum on DC</label>
-        <label xml:lang="it">Inerzia Frenata in Analogico</label>
-        <comment>Governs how loco acts in DC track block</comment>
-        <comment xml:lang="it">determina comportamento Loco in tratta Analogica</comment>
-        <label xml:lang="de">DC Brake Momentum</label>
-        <comment xml:lang="de">Governs how loco acts in DC track block</comment>
-      </variable>
-      <variable item="Directional Headlights" CV="51" mask="XXXXXXXV" comment="Output A">
-        <enumVal>
-          <enumChoice choice="Headlights are directional and operate automatically">
-            <choice>Headlights are directional and operate automatically</choice>
-            <choice xml:lang="it">Luci di testa direzionali e automatiche</choice>
-            <choice xml:lang="de">Headlights are directional and operate automatically</choice>
-          </enumChoice>
-          <enumChoice choice="Headlights are independantly controlled (F0-Front, F1-Rear)">
-            <choice>Headlights are independantly controlled (F0-Front, F1-Rear)</choice>
-            <choice xml:lang="it">Luci di testa controllate indipendentemente (F0-Avanti, F1-Retro)</choice>
-            <choice xml:lang="de">Headlights are independantly controlled (F0-Front, F1-Rear)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Directional Headlights</label>
-        <label xml:lang="it">Luci di testa direzionali</label>
-        <comment>Output A</comment>
-        <comment xml:lang="it">Uscita A</comment>
-        <label xml:lang="de">Directional Headlights</label>
-        <comment xml:lang="de">Output A</comment>
-      </variable>
+      <!-- CV=50 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv50_DCbrake.xml"/>
+      <!-- CV=51 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv51_DirectionalHeadlights.xml"/>
       <variable item="Dimming Control" CV="51" mask="XXXXXXVX" comment="Controls how headlight dims (CV 52 controls amount)">
         <enumVal>
           <enumChoice choice="Function dimming disabled">

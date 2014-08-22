@@ -77,30 +77,10 @@
         </enumVal>
         <label>Motor Drive Selection</label>
       </variable>
-      <variable CV="50" item="DC Brake Momentum" mask="XXXXXVXX" comment="Governs how loco acts in DC track block">
-        <enumVal>
-          <enumChoice choice="Loco runs under DC analog voltage control">
-            <choice>Loco runs under DC analog voltage control</choice>
-          </enumChoice>
-          <enumChoice choice="Loco brakes to a stop using momentum set in CV4">
-            <choice>Loco brakes to a stop using momentum set in CV4</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Brake Momentum on DC</label>
-        <comment>Governs how loco acts in DC track block</comment>
-      </variable>
-      <variable item="Directional Headlights" CV="51" mask="XXXXXXXV" comment="Output A">
-        <enumVal>
-          <enumChoice choice="Headlights are directional and operate automatically">
-            <choice>Headlights are directional and operate automatically</choice>
-          </enumChoice>
-          <enumChoice choice="Headlights are independantly controlled (F0-Front, F1-Rear)">
-            <choice>Headlights are independantly controlled (F0-Front, F1-Rear)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Directional Headlights</label>
-        <comment>Output A</comment>
-      </variable>
+      <!-- CV=50 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv50_DCbrake.xml"/>
+      <!-- CV=51 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv51_DirectionalHeadlights.xml"/>
       <variable item="Output A dimming control" CV="51" mask="XXXXXXVX" comment="Controls how headlight dims (CV 52 controls amount)">
         <enumVal>
           <enumChoice choice="Always dim">
@@ -281,7 +261,9 @@
       <constant item="FL(r) controls output 2" minOut="2" default="1"/>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="8" default="33"/>
+      <factReset label="Reset All CVs" CV="8" default="33">
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
     </resets>
   </decoder>
   <pane>

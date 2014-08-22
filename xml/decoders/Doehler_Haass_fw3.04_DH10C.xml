@@ -84,7 +84,9 @@
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv14_motorola.xml"/>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="8" default="8"/>
+      <factReset label="Reset All CVs" CV="8" default="8">
+         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
     </resets>
   </decoder>
   <!-- Common pane(s) for all Doehler und Haass decoders  -->

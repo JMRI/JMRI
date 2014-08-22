@@ -37,14 +37,8 @@
       <!-- CV 3-4 -->
      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
-      <variable CV="19" mask="XVVVVVVV" item="Consist Address">
-        <decVal/>
-        <label>Consist Address</label>
-      </variable>
-      <variable item="Consist Direction" CV="19" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-FwdRev.xml"/>
-        <label>Consist Direction</label>
-      </variable>
+      <!-- CV=19 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <variable item="Consist Acceleration Adjustment" CV="23" mask="XVVVVVVV">
         <decVal max="127"/>
         <label>Consist Acceleration Adjustment</label>
@@ -83,14 +77,8 @@
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-      <variable item="User Id #1" CV="105">
-        <decVal/>
-        <label>User Id #1</label>
-      </variable>
-      <variable item="User Id #2" CV="106">
-        <decVal/>
-        <label>User Id #2</label>
-      </variable>
+      <!-- CV 105-106 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <!-- Atlas-specific variables -->
       <variable CV="50" mask="XXXXXXVX" item="Consist Adjustments Active">
         <enumVal>
@@ -104,27 +92,12 @@
         <label>Consist Accel and Decel Trims</label>
       </variable>
       <variable CV="50" mask="XXXXXVXX" item="DC Brake Momentum">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Brake Momentum on DC operation</label>
+        <label xml:lang="it">Inerzia frenata in Analogico</label>
       </variable>
-      <variable item="Directional Headlights" CV="51" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="Headlights are Directional">
-            <choice>Headlights are Directional</choice>
-          </enumChoice>
-          <enumChoice choice="Headlights Independent, F0 front, F1 rear">
-            <choice>Headlights Independent, F0 front, F1 rear</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Directional Headlights</label>
-      </variable>
+      <!-- CV=51 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv51_DirectionalHeadlights.xml"/>
       <variable CV="51" mask="XXXXXXVX" item="Global lighting option 1">
         <enumVal>
           <enumChoice choice="Dimming Disabled">
@@ -160,7 +133,9 @@
       <constant item="FL(r) controls output 2" minOut="2" default="1"/>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="8" default="33"/>
+      <factReset label="Reset All CVs" CV="8" default="33">
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
     </resets>
   </decoder>
   <pane>

@@ -113,38 +113,10 @@
         <comment>Governs how loco acts in DC track block</comment>
         <comment xml:lang="it">Governa come la loco reagisce in blocchi analogici</comment>
       </variable>
-      <variable CV="50" item="DC Brake Momentum" mask="XXXXXVXX" comment="Governs how loco acts in DC track block">
-        <enumVal>
-          <enumChoice choice="Loco runs under DC analog voltage control">
-            <choice>Loco runs under DC analog voltage control</choice>
-            <choice xml:lang="it">Loco viaggia con controlla Analogico</choice>
-          </enumChoice>
-          <enumChoice choice="Loco brakes to a stop using momentum set in CV4">
-            <choice>Loco brakes to a stop using momentum set in CV4</choice>
-            <choice xml:lang="it">Loco frena fino a fermarsi usando inerzia stabilita da CV4</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Brake Momentum on DC</label>
-        <label xml:lang="it">Inerzia Frenata in Analogico</label>
-        <comment>Governs how loco acts in DC track block</comment>
-        <comment xml:lang="it">Governa come la loco reagisce in blocchi analogici</comment>
-      </variable>
-      <variable item="Directional Headlights" CV="51" comment="output A" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="Headlights are directional and operate automatically">
-            <choice>Headlights are directional and operate automatically</choice>
-            <choice xml:lang="it">Luci Frontali automatiche e direzionali</choice>
-          </enumChoice>
-          <enumChoice choice="Headlights are independantly controlled (F0-Front, F1-Rear)">
-            <choice>Headlights are independantly controlled (F0-Front, F1-Rear)</choice>
-            <choice xml:lang="it">Luci Frontali indipendenti e controllate da F0 (frontali) e F1 (retro)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Directional Headlights</label>
-        <label xml:lang="it">Luci Direzionali</label>
-        <comment>output A</comment>
-        <comment xml:lang="it">uscita A</comment>
-      </variable>
+      <!-- CV=50 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv50_DCbrake.xml"/>
+      <!-- CV=51 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv51_DirectionalHeadlights.xml"/>
       <variable CV="51" mask="XXXXXXVX" item="Global lighting option 1" tooltip="If headlights are directional, F1 dims headlight - If headlights are non directional, F4 dims headlights">
         <enumVal>
           <enumChoice choice="Dimming Disabled">

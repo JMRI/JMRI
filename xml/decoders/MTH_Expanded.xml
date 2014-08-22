@@ -301,10 +301,18 @@
       </variable>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="8" default="8"/>
-      <factReset label="Reset All CVs except user speed table" CV="8" default="192"/>
-      <factReset label="Reset volumes, smoke and light settings" CV="8" default="64"/>
-      <factReset label="Reset address" CV="8" default="128"/>
+      <factReset label="Reset All CVs" CV="8" default="8">
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
+      <factReset label="Reset All CVs except user speed table" CV="8" default="192">
+        <label xml:lang="it">Reset delle CV salvo Tabella Velocità ai valori di fabbrica</label>
+      </factReset>
+      <factReset label="Reset volumes, smoke and light settings" CV="8" default="64">
+       <label xml:lang="it">Reset volume, fumo e luci ai valori di fabbrica</label>
+      </factReset>
+      <factReset label="Reset address" CV="8" default="128">
+        <label xml:lang="it">Reset indirizzo ai valori di fabbrica</label>
+      </factReset>
     </resets>
   </decoder>
   <pane>

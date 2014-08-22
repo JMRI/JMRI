@@ -66,13 +66,17 @@
         <enumVal>
           <enumChoice choice="Loco runs under DC analog voltage control">
             <choice>Loco runs under DC analog voltage control</choice>
+             <choice xml:lang="it">Loco va in Analogico</choice>
           </enumChoice>
           <enumChoice choice="Loco brakes to a stop using momentum set in CV4">
             <choice>Loco brakes to a stop using momentum set in CV4</choice>
+            <choice xml:lang="it">Loco frena fino a fermarsi usando inerzia in CV4</choice>
           </enumChoice>
         </enumVal>
         <label>Brake Momentum on DC</label>
+        <label xml:lang="it">Inerzia frenata in Analogico</label>
         <comment>Governs how loco acts in DC track block</comment>
+        <comment xml:lang="it">Comportamento Loco in blocco analogico</comment>
       </variable>
       <variable CV="51" mask="VVVVVVVV" item="Function F0F options" comment="Controls which function dims headlight (CV 52 controls amount)" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
         <enumVal>
@@ -124,7 +128,9 @@
       <constant item="FL(r) controls output 2" minOut="2" default="1"/>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="8" default="33"/>
+      <factReset label="Reset All CVs" CV="8" default="33">
+         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
     </resets>
   </decoder>
 </decoder-config>

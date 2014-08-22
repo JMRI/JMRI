@@ -48,10 +48,7 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <variable item="BEMF On Off" CV="49" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="On"/>
-          <enumChoice choice="Off"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
         <label>BEMF On Off</label>
       </variable>
       <variable item="Short Circuit Detection" CV="49" mask="XXXXXXVX">
@@ -62,10 +59,7 @@
         <label>Short Circuit Detection</label>
       </variable>
       <variable item="Data Memory" CV="49" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="On"/>
-          <enumChoice choice="Off"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
         <label>Data Memory</label>
       </variable>
       <variable CV="49" mask="XXXXVXXX" default="0" item="Operation Mode" tooltip="DCC or Analog">
@@ -76,10 +70,7 @@
         <label>Operation Mode</label>
       </variable>
       <variable item="Motorola Detection" CV="49" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="On"/>
-          <enumChoice choice="Off"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
         <label>Motorola Detection</label>
       </variable>
       <variable CV="50" default="20" item="Pulse Width" tooltip="Deterimines load compensation. Low number=fast compensation">

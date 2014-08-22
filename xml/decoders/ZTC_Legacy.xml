@@ -124,12 +124,15 @@
         <enumVal>
           <enumChoice choice="Headlights are directional and operate automatically">
             <choice>Headlights are directional and operate automatically</choice>
+            <choice xml:lang="it">Luci di testa direzionali e automatiche</choice>
           </enumChoice>
           <enumChoice choice="Headlights are independently controlled (F0-Front, F4-Rear)">
             <choice>Headlights are independently controlled (F0-Front, F4-Rear)</choice>
+            <choice xml:lang="it">Luci di testa controllate indipendentemente (F0-Avanti, F4-Retro)</choice>
           </enumChoice>
         </enumVal>
         <label>Directional Headlights</label>
+        <label xml:lang="it">Luci di testa direzionali</label>
       </variable>
       <variable item="Kick Start" CV="65" comment="Range 0-63">
         <decVal max="63"/>

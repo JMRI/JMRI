@@ -35,16 +35,25 @@
         <label xml:lang="fr">V démarr.</label>
         <label xml:lang="de">Anfahrspannung</label>
         <comment>Range 0-31</comment>
+        <comment xml:lang="it">Valori 0-31</comment>
       </variable>
       <variable item="Accel" CV="3" default="1" comment="Range 0-31">
         <decVal max="31"/>
         <label>Accel</label>
+        <label xml:lang="it">Accellerazione (0-31)</label>
+        <label xml:lang="fr">Accelération (0-31)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-31)</label>
         <comment>Range 0-31</comment>
+        <comment xml:lang="it">Valori 0-31</comment>
       </variable>
       <variable item="Decel" CV="4" default="1" comment="Range 0-31">
         <decVal max="31"/>
         <label>Decel</label>
+        <label xml:lang="it">Decellerazione (0-31)</label>
+        <label xml:lang="fr">Décélération (0-31)</label>
+        <label xml:lang="de">Bremszeit (0-31)</label>
         <comment>Range 0-31</comment>
+        <comment xml:lang="it">Valori 0-31</comment>
       </variable>
       <!-- CV=19 -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
@@ -52,18 +61,8 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
-      <variable CV="50" item="DC Brake Momentum" mask="XXXXXVXX" comment="Governs how loco acts in DC track block">
-        <enumVal>
-          <enumChoice choice="Loco runs under DC analog voltage control">
-            <choice>Loco runs under DC analog voltage control</choice>
-          </enumChoice>
-          <enumChoice choice="Loco brakes to a stop using momentum set in CV4">
-            <choice>Loco brakes to a stop using momentum set in CV4</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Brake Momentum on DC</label>
-        <comment>Governs how loco acts in DC track block</comment>
-      </variable>
+      <!-- CV=50 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv50_DCbrake.xml"/>
       <variable CV="51" mask="VVVVVVVV" item="Function F0F options" comment="Controls which function dims headlight (CV 52 controls amount)">
         <enumVal>
           <enumChoice choice="Always Dim" value="00000000">
@@ -95,28 +94,28 @@
           </enumChoice>
         </enumVal>
         <label>Headlight Dimmed By</label>
+        <label xml:lang="it">Luci Frontali smorzate da</label>
         <comment>Controls which function dims headlight (CV 52 controls amount)</comment>
+        <comment xml:lang="it">Seleziona funzione per smorzamento luci anteriori (CV52 controlla quantità)</comment>
       </variable>
       <variable CV="52" default="64" comment="Controls how much headlights dim (0-dark to 255-max bright)" item="Function F0F behavior">
         <decVal min="0" max="255"/>
         <label>Headlight Dimming intensity</label>
+        <label xml:lang="it">Intensità smorzamento Luci Frontali</label>
         <comment>Controls how much headlights dim (0-dark to 255-max bright)</comment>
+        <comment xml:lang="it">Seleziona valore smorzamento luci anteriori (0-spente 255-max luce)</comment>
       </variable>
       <!-- User private ID CV's are not documented by Bachamann, but appear to work -->
-      <variable CV="105" item="User Id #1">
-        <decVal/>
-        <label>User Private ID #1</label>
-      </variable>
-      <variable CV="106" item="User Id #2">
-        <decVal/>
-        <label>User Private ID #2</label>
-      </variable>
+      <!-- CV 105-106 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <!-- Define the fixed Function-Output mapping -->
       <constant item="FL(f) controls output 1" minOut="1" default="1"/>
       <constant item="FL(r) controls output 2" minOut="2" default="1"/>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="8" default="33"/>
+      <factReset label="Reset All CVs" CV="8" default="33">
+         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
     </resets>
   </decoder>
   <pane>
