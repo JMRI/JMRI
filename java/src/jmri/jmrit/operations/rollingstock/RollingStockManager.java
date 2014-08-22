@@ -488,6 +488,7 @@ public class RollingStockManager {
 	// BY_WAIT = 16
 	protected static final int BY_LAST = 17;
 	protected static final int BY_BLOCKING = 18;
+	// BY_PICKUP = 19
 
 	protected Object getRsAttribute(RollingStock rs, int attribute) {
 		switch (attribute) {

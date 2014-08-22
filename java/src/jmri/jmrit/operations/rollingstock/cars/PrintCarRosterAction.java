@@ -20,8 +20,6 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.TrainSchedule;
-import jmri.jmrit.operations.trains.TrainScheduleManager;
 
 /**
  * Action to print a summary of the Roster contents
@@ -172,13 +170,8 @@ public class PrintCarRosterAction extends AbstractAction {
 					last = padAttribute(car.getLastDate().split(" ")[0], 10);
 				if (printCarWait.isSelected())
 					wait = padAttribute(Integer.toString(car.getWait()), 4);
-				if (printCarPickup.isSelected()) {
-					TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(car.getPickupScheduleId());
-					String name = "";
-					if (sch != null)
-						name = sch.getName();
-					schedule = padAttribute(name, 10);
-				}
+				if (printCarPickup.isSelected())
+					schedule = padAttribute(car.getPickupScheduleName(), 10);
 				if (printCarValue.isSelected())
 					value = padAttribute(car.getValue().trim(), Control.max_len_string_attibute);
 				if (printCarRfid.isSelected())

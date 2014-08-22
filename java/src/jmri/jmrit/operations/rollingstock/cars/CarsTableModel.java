@@ -51,9 +51,10 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 	private static final int VALUE_COLUMN = 16;
 	private static final int RFID_COLUMN = 17;
 	private static final int WAIT_COLUMN = 18;
-	private static final int LAST_COLUMN = 19;
-	private static final int SET_COLUMN = 20;
-	private static final int EDIT_COLUMN = 21;
+	private static final int PICKUP_COLUMN = 19;
+	private static final int LAST_COLUMN = 20;
+	private static final int SET_COLUMN = 21;
+	private static final int EDIT_COLUMN = 22;
 
 	private static final int HIGHESTCOLUMN = EDIT_COLUMN + 1;
 
@@ -74,7 +75,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 	public final int SORTBYFINALDESTINATION = 15;
 	public final int SORTBYVALUE = 16;
 	public final int SORTBYWAIT = 17;
-	public final int SORTBYLAST = 18;
+	public final int SORTBYPICKUP = 18;
+	public final int SORTBYLAST = 19;
 
 	private int _sort = SORTBYNUMBER;
 
@@ -106,13 +108,14 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 			tcm.setColumnVisible(tcm.getColumnByModelIndex(FINAL_DESTINATION_COLUMN), sort == SORTBYFINALDESTINATION);
 			tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_COLUMN), sort == SORTBYRWE);
 		} else if (sort == SORTBYMOVES || sort == SORTBYBUILT || sort == SORTBYOWNER || sort == SORTBYVALUE
-				|| sort == SORTBYRFID || sort == SORTBYWAIT || sort == SORTBYLAST) {
+				|| sort == SORTBYRFID || sort == SORTBYWAIT || sort == SORTBYPICKUP || sort == SORTBYLAST) {
 			tcm.setColumnVisible(tcm.getColumnByModelIndex(MOVES_COLUMN), sort == SORTBYMOVES);
 			tcm.setColumnVisible(tcm.getColumnByModelIndex(BUILT_COLUMN), sort == SORTBYBUILT);
 			tcm.setColumnVisible(tcm.getColumnByModelIndex(OWNER_COLUMN), sort == SORTBYOWNER);
 			tcm.setColumnVisible(tcm.getColumnByModelIndex(VALUE_COLUMN), sort == SORTBYVALUE);
 			tcm.setColumnVisible(tcm.getColumnByModelIndex(RFID_COLUMN), sort == SORTBYRFID);
 			tcm.setColumnVisible(tcm.getColumnByModelIndex(WAIT_COLUMN), sort == SORTBYWAIT);
+			tcm.setColumnVisible(tcm.getColumnByModelIndex(PICKUP_COLUMN), sort == SORTBYPICKUP);
 			tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_COLUMN), sort == SORTBYLAST);
 		} else {
 			fireTableDataChanged();
@@ -155,6 +158,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 			return Setup.getRfidLabel();
 		case SORTBYWAIT:
 			return Bundle.getMessage("Wait");
+		case SORTBYPICKUP:
+			return Bundle.getMessage("Pickup");
 		case SORTBYLAST:
 			return Bundle.getMessage("Last");
 		default:
@@ -272,6 +277,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 			list = manager.getByFinalDestinationList();
 		else if (_sort == SORTBYWAIT)
 			list = manager.getByWaitList();
+		else if (_sort == SORTBYPICKUP)
+			list = manager.getByPickupList();
 		else if (_sort == SORTBYLAST)
 			list = manager.getByLastDateList();
 		else
@@ -352,6 +359,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 		tcm.setColumnVisible(tcm.getColumnByModelIndex(VALUE_COLUMN), false);
 		tcm.setColumnVisible(tcm.getColumnByModelIndex(RFID_COLUMN), false);
 		tcm.setColumnVisible(tcm.getColumnByModelIndex(WAIT_COLUMN), false);
+		tcm.setColumnVisible(tcm.getColumnByModelIndex(PICKUP_COLUMN), false);
 		tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_COLUMN), false);
 	}
 
@@ -403,6 +411,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 			return Setup.getRfidLabel();
 		case WAIT_COLUMN:
 			return Bundle.getMessage("Wait");
+		case PICKUP_COLUMN:
+			return Bundle.getMessage("Pickup");
 		case LAST_COLUMN:
 			return Bundle.getMessage("LastMoved");
 		case SET_COLUMN:
@@ -433,6 +443,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 		case EDIT_COLUMN:
 		case MOVES_COLUMN:
 		case WAIT_COLUMN:
+//		case PICKUP_COLUMN:
 			return true;
 		default:
 			return false;
@@ -530,6 +541,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 			return car.getRfid();
 		case WAIT_COLUMN:
 			return car.getWait();
+		case PICKUP_COLUMN:
+			return car.getPickupScheduleName();
 		case LAST_COLUMN:
 			return car.getLastDate();
 		case SET_COLUMN:

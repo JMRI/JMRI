@@ -2,12 +2,15 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.beans.PropertyChangeEvent;
 
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.jmrit.operations.trains.TrainSchedule;
+import jmri.jmrit.operations.trains.TrainScheduleManager;
 
 /**
  * Represents a car on the layout
@@ -288,6 +291,14 @@ public class Car extends RollingStock {
 	
 	public String getNextPickupScheduleId() {
 		return _nextPickupScheduleId;
+	}
+	
+	public String getPickupScheduleName() {
+		TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(getPickupScheduleId());
+		String name = "";
+		if (sch != null)
+			name = sch.getName();
+		return name;
 	}
 
 	/**

@@ -13,7 +13,6 @@ import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
-
 import java.util.Enumeration;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -267,20 +266,25 @@ public class CarManager extends RollingStockManager {
 	}
 
 	/**
-	 * Sort by car kernel names
+	 * Sort by car wait count
 	 * 
-	 * @return list of cars ordered by car kernel
+	 * @return list of cars ordered by wait count
 	 */
 	public List<RollingStock> getByWaitList() {
 		return getByIntList(getByIdList(), BY_WAIT);
+	}
+	
+	public List<RollingStock> getByPickupList() {
+		return getByList(getByIdList(), BY_PICKUP);
 	}
 
 	// The special sort options for cars
 	private static final int BY_LOAD = 4;
 	private static final int BY_KERNEL = 5;
 	private static final int BY_RWE = 13; // Return When Empty
-	private static final int BY_FINAL_DEST = 14;// Next destination
+	private static final int BY_FINAL_DEST = 14;
 	private static final int BY_WAIT = 16;
+	private static final int BY_PICKUP = 19;
 
 	// add car options to sort list
 	protected Object getRsAttribute(RollingStock rs, int attribute) {
@@ -296,6 +300,8 @@ public class CarManager extends RollingStockManager {
 			return car.getFinalDestinationName() + car.getFinalDestinationTrackName();
 		case BY_WAIT:
 			return car.getWait(); // returns an integer
+		case BY_PICKUP: 
+			return car.getPickupScheduleName();
 		default:
 			return super.getRsAttribute(car, attribute);
 		}
