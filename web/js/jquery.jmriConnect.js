@@ -216,7 +216,7 @@
 				},
 				message: function(e) {jmri.fullData(e.originalEvent.data);},
 				events: {
-					error: function(e) {jmri.error(e.code, e.message);},
+					error: function(e) {jmri.error(e.data.code, e.data.message);},
 					pong: function(e) {},
 					goodbye: function(e) {
 						jmri.socket.close();

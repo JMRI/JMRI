@@ -53,8 +53,9 @@ public class JsonThrottleServer {
     public void sendErrorMessage(int code, String message) throws IOException {
         ObjectNode root = this.mapper.createObjectNode();
         root.put(TYPE, ERROR);
-        root.put(CODE, code);
-        root.put(MESSAGE, message);
+        ObjectNode data = root.putObject(DATA);
+        data.put(CODE, code);
+        data.put(MESSAGE, message);
         this.connection.sendMessage(this.mapper.writeValueAsString(root));
     }
 
