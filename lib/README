@@ -96,10 +96,6 @@ annotations.jar, jsr305.jar:
 servlet.jar:
   jakarta-servletapi-3.2.3-src/lib/servlet.jar
 
-swing-worker-1.2.jar
-    SwingWorker 1.2 (Backport of SwingWorker from Java 1.6)
-    from https://swingworker.dev.java.net/servlets/ProjectDocumentList
-    
 libusb-jar (ch.ntb.usb.jar)
         http://inf.ntb.ch/infoportal/help/index.jsp?topic=/ch.ntb.infoportal/tools.html
         http://libusb.wiki.sourceforge.net/
