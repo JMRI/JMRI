@@ -62,9 +62,9 @@ public class HardcopyWriter extends Writer {
 	protected boolean printHeader = true;
 
 	protected boolean isPreview;
-	protected Graphics previewedPage;
+//	protected Graphics previewedPage;
 	protected Image previewImage;
-	protected Graphics previewImagegr;
+//	protected Graphics previewImagegr;
 	protected Vector<Image> pageImages = new Vector<Image>(3, 3);
 	protected JmriJFrame previewFrame;
 	protected JPanel previewPanel;
