@@ -8,12 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Abstraction of DataOutputStream and WebSocket.Connection classes
+ * Abstraction of DataOutputStream and WebSocket.Connection classes.
  *
  * Used so that that server objects need only to use a single object/method to
  * send data to any supported object type.
  *
- * @author rhwood Randall Wood Copyright (C) 2012
+ * @author rhwood Randall Wood Copyright (C) 2012, 2014
  */
 public class JmriConnection {
 
@@ -23,7 +23,7 @@ public class JmriConnection {
     private final static Logger log = LoggerFactory.getLogger(JmriConnection.class);
 
     /**
-     * Create a JmriConnection that sends output to a WebSocket
+     * Create a JmriConnection that sends output to a WebSocket.
      *
      * @param connection
      */
@@ -32,7 +32,7 @@ public class JmriConnection {
     }
 
     /**
-     * Create a JmriConnection that sends output to a DataOutputStream
+     * Create a JmriConnection that sends output to a DataOutputStream.
      *
      * @param output
      */
@@ -74,6 +74,11 @@ public class JmriConnection {
         }
     }
 
+    /**
+     * Close the connection.
+     *
+     * @throws IOException
+     */
     public void close() throws IOException {
         if (this.dataOutputStream != null) {
             this.dataOutputStream.close();
