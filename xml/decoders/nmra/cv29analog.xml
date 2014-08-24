@@ -67,7 +67,7 @@
     <label xml:lang="ca">Power Source Conversion(ca)</label>
     <label xml:lang="de">Stromquelle Konversion</label>
     <label>Power Source Conversion</label>
-    <tooltip>NMRA Digital only: Digital Operation Only - DC conversion enabled: both Digital + Analog, default is Off</tooltip>&gt;
+    <tooltip>NMRA Digital only: Digital Operation Only - DC conversion enabled: both Digital + Analog, default is Off</tooltip>
     <tooltip xml:lang="it">'4' bit. Permette alla loco di andare in DC, per default è Off</tooltip>
   </variable>
 </variables>
