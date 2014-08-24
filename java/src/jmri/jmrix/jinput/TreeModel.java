@@ -2,12 +2,19 @@
 
 package jmri.jmrix.jinput;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-
-import net.java.games.input.*;
+import net.java.games.input.Component;
+import net.java.games.input.Controller;
+import net.java.games.input.ControllerEnvironment;
+import net.java.games.input.Event;
+import net.java.games.input.EventQueue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * TreeModel represents the USB controllers and components
@@ -86,6 +93,7 @@ public final class TreeModel extends DefaultTreeModel {
         /**
          * Continually poll for events. Report any found.
          */
+        @Override
         public void run() {
             while(true) {
                 Controller[] controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
@@ -159,7 +167,7 @@ public final class TreeModel extends DefaultTreeModel {
     // note they might not arrive for a while
     Controller[] ca;
     
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @SuppressWarnings(value="EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public Controller[] controllers() { return ca; }
     
     /**
@@ -175,12 +183,13 @@ public final class TreeModel extends DefaultTreeModel {
             this.component = component;
             this.value = value;
             
-            javax.swing.SwingUtilities.invokeLater(this);
+            SwingUtilities.invokeLater(this);
         }
 
         /**
          * Handle report on Swing thread to ensure tree node exists and is updated
          */
+        @Override
         public void run() {
             // ensure controller node exists directly under root
             String cname = controller.getName()+" ["+controller.getType().toString()+"]";
@@ -229,11 +238,11 @@ public final class TreeModel extends DefaultTreeModel {
         }
     }
     
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
+    PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
+    public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
 

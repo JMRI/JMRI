@@ -2,16 +2,28 @@
 
 package jmri.jmrix.jinput.treecontrol;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.awt.*;
-import javax.swing.*;
-import javax.swing.tree.*;
-import javax.swing.event.*;
-
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
+import javax.swing.JTree;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultTreeSelectionModel;
+import javax.swing.tree.TreePath;
 import jmri.jmrix.jinput.TreeModel;
 import jmri.jmrix.jinput.UsbNode;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Create a JPanel containing a tree of JInput sources.
@@ -56,6 +68,7 @@ public class TreePanel extends JPanel {
         dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
 
         dTree.addTreeSelectionListener(new TreeSelectionListener() {
+            @Override
             public void valueChanged(TreeSelectionEvent e) {
                 if (!dTree.isSelectionEmpty() && dTree.getSelectionPath()!=null ) {
                        // node has been selected
@@ -141,13 +154,15 @@ public class TreePanel extends JPanel {
         p2.add(p);
         
         // attach controls
-        sensorBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+        sensorBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 checkSensorBox();
             }
         });
-        memoryBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+        memoryBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 checkMemoryBox();
             }
         });
@@ -160,8 +175,9 @@ public class TreePanel extends JPanel {
         
         // starting listening for changes
         TreeModel.instance().addPropertyChangeListener(
-            new java.beans.PropertyChangeListener(){
-                public void propertyChange(java.beans.PropertyChangeEvent e) {
+            new PropertyChangeListener(){
+                @Override
+                public void propertyChange(PropertyChangeEvent e) {
                     if (currentNode == null) return;
                     if (e.getOldValue()!=currentNode) return;
                     // right place, update

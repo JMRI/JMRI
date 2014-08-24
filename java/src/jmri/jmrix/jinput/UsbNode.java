@@ -2,13 +2,14 @@
 
 package jmri.jmrix.jinput;
 
+import java.util.HashMap;
+import javax.swing.tree.DefaultMutableTreeNode;
+import jmri.InstanceManager;
+import jmri.Sensor;
+import net.java.games.input.Component;
+import net.java.games.input.Controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.*;
-
-import javax.swing.tree.DefaultMutableTreeNode;
-
-import net.java.games.input.*;
 
 /**
  * UsbNode represents the USB controllers or component.
@@ -32,6 +33,7 @@ public class UsbNode extends DefaultMutableTreeNode {
         this.component = component;
     }
     
+    @Override
     public int hashCode() { 
         if (component != null) return component.hashCode();
         if (controller == null) return super.hashCode();
@@ -41,6 +43,7 @@ public class UsbNode extends DefaultMutableTreeNode {
     public Controller getController() { return controller;}
     public Component getComponent() { return component; }
     
+    @Override
     public boolean equals(Object a) {
         if (a == null) return false;
         if (! (a instanceof UsbNode)) return false;
@@ -99,7 +102,7 @@ public class UsbNode extends DefaultMutableTreeNode {
         return node;
     }
 
-    static private java.util.HashMap<Object,UsbNode> map = new java.util.HashMap<Object,UsbNode>();
+    static private HashMap<Object,UsbNode> map = new HashMap<Object,UsbNode>();
 
     static Logger log = LoggerFactory.getLogger(UsbNode.class.getName());
 }

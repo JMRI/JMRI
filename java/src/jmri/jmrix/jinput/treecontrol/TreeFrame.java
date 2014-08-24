@@ -2,23 +2,23 @@
 
 package jmri.jmrix.jinput.treecontrol;
 
+import java.awt.Container;
+import java.util.ResourceBundle;
+import javax.swing.BoxLayout;
+import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.*;
-
-import java.util.ResourceBundle;
-
-import javax.swing.*;
 
 /**
  * Frame for controlling JInput access to USN
  * @author	 Bob Jacobsen   Copyright (C) 2008
  * @version	 $Revision$
  */
-public class TreeFrame extends jmri.util.JmriJFrame {
+public class TreeFrame extends JmriJFrame {
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.jinput.treecontrol.TreeBundle");
 
+    @Override
     public void initComponents() throws Exception {
 
         // set the frame's initial state

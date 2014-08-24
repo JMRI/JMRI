@@ -2,6 +2,7 @@
 
 package jmri.jmrix.jinput.treecontrol;
 
+import jmri.util.JmriJFrameAction;
 
 /**
  * Create a JInput control window.
@@ -9,7 +10,7 @@ package jmri.jmrix.jinput.treecontrol;
  * @author   Bob Jacobsen Copyright 2008
  * @version	$Revision$
  */
-public class TreeAction extends jmri.util.JmriJFrameAction {
+public class TreeAction extends JmriJFrameAction {
 
     public TreeAction(String s) { 
         super(s);
@@ -19,6 +20,7 @@ public class TreeAction extends jmri.util.JmriJFrameAction {
         this("USB Input Control");
     }
 
+    @Override
     public String getName() {
         return "jmri.jmrix.jinput.treecontrol.TreeFrame";
     }
