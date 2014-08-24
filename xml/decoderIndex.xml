@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="/xml/XSLT/DecoderID.xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 20140811-1529-jake on Mon Aug 11 08:29:05 PDT 2014 $Id$-->
-  <decoderIndex version="429">
-    <mfgList nmraListDate="2014-06-04" updated="2014-08-11" lastadd="107">
+  <!--Written by JMRI version 20140824-0631-jake on Sun Aug 24 07:31:59 WEST 2014 $Id$-->
+  <decoderIndex version="431">
+    <mfgList nmraListDate="2014-06-04" updated="2014-08-24" lastadd="107">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
       <manufacturer mfg="AMW" mfgID="19" />
       <manufacturer mfg="ANE Model Co, Ltd" mfgID="45" />
+      <manufacturer mfg="AXJ Electronics" mfgID="110" />
       <manufacturer mfg="Advance IC Engineering, Inc." mfgID="17" />
       <manufacturer mfg="Aristo-Craft Trains" mfgID="34" />
       <manufacturer mfg="Arnold - Rivarossi" mfgID="173" />
@@ -68,7 +69,8 @@
       <manufacturer mfg="Kuehn Ing." mfgID="157" />
       <manufacturer mfg="LDH" mfgID="56" />
       <manufacturer mfg="LGB" mfgID="159" />
-      <manufacturer mfg="LS Models Spr" mfgID="77" />
+      <manufacturer mfg="LS Models Sprl" mfgID="77" />
+      <manufacturer mfg="LSdigital" mfgID="112" />
       <manufacturer mfg="Lahti Associates" mfgID="14" />
       <manufacturer mfg="Lenz" mfgID="99" />
       <manufacturer mfg="MAWE Elektronik" mfgID="68" />
@@ -77,15 +79,17 @@
       <manufacturer mfg="MRC" mfgID="143" />
       <manufacturer mfg="MTB Model" mfgID="72" />
       <manufacturer mfg="MTH Electric Trains, Inc." mfgID="27" />
+      <manufacturer mfg="MÜT GmbH" mfgID="118" />
       <manufacturer mfg="Massoth Elektronik, GmbH" mfgID="123" />
       <manufacturer mfg="Mistral Train Models" mfgID="29" />
       <manufacturer mfg="MoBaTrain.de" mfgID="24" />
       <manufacturer mfg="Modelleisenbahn GmbH" mfgID="161" />
+      <manufacturer mfg="MyLocoSound" mfgID="116" />
       <manufacturer mfg="N&amp;Q Electronics" mfgID="50" />
       <manufacturer mfg="NAC Services, Inc" mfgID="37" />
       <manufacturer mfg="NMRA Reserved" mfgID="238" />
       <manufacturer mfg="Nagasue System Design Office" mfgID="103" />
-      <manufacturer mfg="New Youk Byano Limited" mfgID="71" />
+      <manufacturer mfg="New York Byano Limited" mfgID="71" />
       <manufacturer mfg="Ngineering" mfgID="43" />
       <manufacturer mfg="Noarail" mfgID="63" />
       <manufacturer mfg="North Coast Engineering" mfgID="11" />
@@ -96,6 +100,7 @@
       <manufacturer mfg="Phoenix Sound Systems, Inc." mfgID="107" />
       <manufacturer mfg="Pojezdy.EU" mfgID="89" />
       <manufacturer mfg="PpP Digital" mfgID="74" />
+      <manufacturer mfg="Praecipuus" mfgID="33" />
       <manufacturer mfg="ProfiLok Modellbahntechnik GmbH" mfgID="125" />
       <manufacturer mfg="Public-domain and DIY" mfgID="13" />
       <manufacturer mfg="QElectronics GmbH" mfgID="55" />
@@ -111,6 +116,7 @@
       <manufacturer mfg="Regal Way Co. Ltd" mfgID="32" />
       <manufacturer mfg="Rock Junction Controls" mfgID="149" />
       <manufacturer mfg="Roco Modelspielwaren" mfgID="161" />
+      <manufacturer mfg="Rocrail" mfgID="70" />
       <manufacturer mfg="S Helper Service" mfgID="23" />
       <manufacturer mfg="SPROG DCC" mfgID="44" />
       <manufacturer mfg="Sanda Kan Industrial" mfgID="95" />
@@ -131,17 +137,18 @@
       <manufacturer mfg="Train Modules" mfgID="61" />
       <manufacturer mfg="Train Technology" mfgID="2" />
       <manufacturer mfg="TrainTech" mfgID="104" />
+      <manufacturer mfg="Trenes Digitales" mfgID="100" />
       <manufacturer mfg="Trix Modelleisenbahn" mfgID="131" />
       <manufacturer mfg="Uhlenbrock Elektronik" mfgID="85" />
       <manufacturer mfg="Umelec Ing Buero" mfgID="147" />
       <manufacturer mfg="Viessmann Modellspielwaren GmbH" mfgID="109" />
-      <manufacturer mfg="W. S. Ataras Engineering" mfgID="119" />
       <manufacturer mfg="W.S. Ataras Engineering" mfgID="119" />
       <manufacturer mfg="WP Railshops" mfgID="163" />
       <manufacturer mfg="Wangrow" mfgID="12" />
       <manufacturer mfg="Wekomm Engineering, GmbH" mfgID="86" />
       <manufacturer mfg="ZTC" mfgID="132" />
       <manufacturer mfg="Zimo" mfgID="145" />
+      <manufacturer mfg="csikos-muhely" mfgID="120" />
     </mfgList>
     <familyList>
       <family name="NMRA standard CV definitions" mfg="NMRA" file="0NMRA.xml">
@@ -8860,6 +8867,37 @@
           <output name="Compressor" label="RPM -" />
           <output name="Brakes" />
           <output name="Coupler" />
+        </model>
+        <model model="PCC Streetcar" numOuts="4" numFns="14" connector="other" productID="PCC" comment="Some displayed sound options may not be in use">
+          <versionCV lowVersionID="64" />
+          <output name="3" label="Interior" />
+          <output name="4" label="Adv. Light" />
+          <output name="Air Horn" label="" />
+          <output name="Gong" label="" />
+          <output name="Wheel" label="Groan" />
+          <output name="Short" label="Horn" />
+          <output name="Motor" label="Generator" />
+          <output name="Passenger" label="Stop" />
+          <output name="Emergency" label="Beacon" />
+          <output name="Mute" label="" />
+          <output name="Doors" label="Open/Close" />
+          <output name="Normal" label="Stop" />
+          <output name="Stop" label="Request" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Headlights/Dash lights</functionlabel>
+            <functionlabel num="1" lockable="false">Gong</functionlabel>
+            <functionlabel num="2" lockable="false">PCC Super Resilient Wheel Groan</functionlabel>
+            <functionlabel num="3" lockable="true">SEPTA/TTC Advance Light</functionlabel>
+            <functionlabel num="4" lockable="true">SEPTA Emergency Beacon</functionlabel>
+            <functionlabel num="5" lockable="true">Interior lights/Destination sign</functionlabel>
+            <functionlabel num="6" lockable="false">Motor Generator start-up/shut down</functionlabel>
+            <functionlabel num="7" lockable="true">Passenger Stop</functionlabel>
+            <functionlabel num="8" lockable="true">Mute</functionlabel>
+            <functionlabel num="9" lockable="true">Normal Vehicle Stop (No sounds)</functionlabel>
+            <functionlabel num="10" lockable="true">Doors Opening/Closing</functionlabel>
+            <functionlabel num="11" lockable="true">Passenger Stop Request Signal</functionlabel>
+            <functionlabel num="12" lockable="true" />
+          </functionlabels>
         </model>
         <functionlabels>
           <functionlabel num="0" lockable="true">Headlight</functionlabel>
