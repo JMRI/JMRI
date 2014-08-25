@@ -97,7 +97,7 @@ public class HardcopyWriter extends Writer {
 	// constructor modified to add default printer name and page orientation
 	public HardcopyWriter(Frame frame, String jobname, int fontsize, double leftmargin, double rightmargin,
 			double topmargin, double bottommargin, boolean preview, String printerName, boolean landscape,
-			boolean printHeader) throws HardcopyWriter.PrintCanceledException {
+			boolean printHeader, Dimension pagesize) throws HardcopyWriter.PrintCanceledException {
 
 		// print header?
 		this.printHeader = printHeader;
@@ -107,10 +107,9 @@ public class HardcopyWriter extends Writer {
 		if (landscape) {
 			pageAttributes.setOrientationRequested(PageAttributes.OrientationRequestedType.LANDSCAPE);
 			if (preview)
-				pagesize = new Dimension(792, 612);
-		} else if (!printHeader && preview) {
-			// Paper size is 3.25 x 11 if there isn't a header
-			pagesize = new Dimension(290, 792);
+				this.pagesize = new Dimension(792, 612);
+		} else if (preview && pagesize != null) {
+			this.pagesize = pagesize;
 		}
 
 		hardcopyWriter(frame, jobname, fontsize, leftmargin, rightmargin, topmargin, bottommargin, preview);

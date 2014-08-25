@@ -4,7 +4,9 @@ package jmri.jmrit.operations.trains;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -69,15 +71,20 @@ public class TrainPrintUtilities {
 		boolean isLandScape = false;
 		boolean printHeader = true;
 		double margin = .5;
+		Dimension pagesize = null;
 		if (orientation.equals(Setup.LANDSCAPE)) {
 			margin = .65;
 			isLandScape = true;
 		}
-		if (orientation.equals(Setup.HANDHELD))
+		if (orientation.equals(Setup.HANDHELD) || orientation.equals(Setup.HALFPAGE)) {
 			printHeader = false;
+			pagesize = new Dimension(290, 792);
+			if (orientation.equals(Setup.HALFPAGE))
+				pagesize = new Dimension(345, 792);
+		}
 		try {
 			writer = new HardcopyWriter(mFrame, name, fontSize, margin, margin, .5, .5,
-					isPreview, printerName, isLandScape, printHeader);
+					isPreview, printerName, isLandScape, printHeader, pagesize);
 		} catch (HardcopyWriter.PrintCanceledException ex) {
 			log.debug("Print cancelled");
 			return;

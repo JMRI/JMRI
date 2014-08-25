@@ -1714,6 +1714,8 @@ public class TrainCommon {
 		// landscape has a .65 margins
 		if (orientation.equals(Setup.LANDSCAPE))
 			pagesize = new Dimension(702, 523);
+		if (orientation.equals(Setup.HALFPAGE)) // 4.5 x 11
+			pagesize = new Dimension(261, 720);
 		if (orientation.equals(Setup.HANDHELD))
 			pagesize = new Dimension(206, 720);
 		return pagesize;

@@ -78,7 +78,7 @@ public class PrintCarRosterAction extends AbstractAction {
 		HardcopyWriter writer = null;
 		try {
 			writer = new HardcopyWriter(mFrame, Bundle.getMessage("TitleCarRoster"), 10, .5, .5, .5, .5,
-					isPreview, "", landscape, true);
+					isPreview, "", landscape, true, null);
 		} catch (HardcopyWriter.PrintCanceledException ex) {
 			log.debug("Print cancelled");
 			return;

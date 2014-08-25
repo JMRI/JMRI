@@ -111,6 +111,7 @@ public class Setup {
 
 	public static final String PORTRAIT = Bundle.getMessage("Portrait");
 	public static final String LANDSCAPE = Bundle.getMessage("Landscape");
+	public static final String HALFPAGE = Bundle.getMessage("HalfPage");
 	public static final String HANDHELD = Bundle.getMessage("HandHeld");
 
 	public static final String LENGTHABV = Bundle.getMessage("LengthSymbol");
@@ -1436,6 +1437,7 @@ public class Setup {
 		JComboBox box = new JComboBox();
 		box.addItem(PORTRAIT);
 		box.addItem(LANDSCAPE);
+		box.addItem(HALFPAGE);
 		box.addItem(HANDHELD);
 		return box;
 	}
