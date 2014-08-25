@@ -42,8 +42,9 @@ For other details on JMRI internals, please see the
 
 <P>
 JMRI uses the Jakarta
-<A HREF="http://jakarta.apache.org/log4j/docs/index.html">Log4J</a>
-package to handle logging during program operation.
+<A HREF="https://logging.apache.org/log4j/1.2/index.html">Log4J</a>
+package to handle logging during program operation. Specifically, as of
+Summer 2014, we use version 1.2.15; note that's not the most recent one!
 <P>
 Log4J provides several levels of messages:
 <UL>
