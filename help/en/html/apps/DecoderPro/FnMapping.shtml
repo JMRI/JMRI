@@ -31,13 +31,13 @@ nicely tuned.
 <P>
 The fnmapping element works by looking for variables with names
 like  "F2 controls output 1".  Specifically, it's looking for a name that consists
-of three (or four) parts:
+of four (or five) parts:
 <OL>
-<LI>A function name.  This could be "Fn" or "Fnn", where n or nn is a decimal number.
-Two special names for F0 are also recognized:  "FL(f)" and "FL(r)"
-<LI>The exact string " controls output ".  Note the spaces!
-<LI>An output's decimal number (preferred) OR name.
-<LI>An optional "(alt)" suffix. This allows for an alternate definition of an output, such as for the Tsunami function group exchange feature.
+<li>A function name.  This could be "FL" or "Fn" or "Fnn", where n or nn is a decimal number in the range 0-28.</li>
+<li>An optional "(f)" or "(r)" suffix to the function name.</li>
+<li>The exact string "&nbsp;controls output&nbsp;". Note the single spaces before and after!</li>
+<li>An output's decimal number (preferred) OR name.</li>
+<li>An optional "(alt)" suffix to the output number (or name). This allows for an alternate definition of an output, such as for the Tsunami function group exchange feature.</li>
 </OL>
 <P>
 After finding all the matching variables in the configuration file, the 

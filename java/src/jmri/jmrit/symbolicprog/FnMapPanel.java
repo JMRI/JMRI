@@ -39,7 +39,6 @@ import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
  */
 public class FnMapPanel extends JPanel {
     // columns
-    int cvNum = -1;
     int fnName = 0;
     int firstOut = 1;
     
@@ -50,9 +49,9 @@ public class FnMapPanel extends JPanel {
     int firstFn = 3;
     
     // these will eventually be passed in from the ctor
-    int numFn = 14;  // include FL(f) and FL(r) in the total
+    int highestFn = 28;
+    int numFn = (highestFn +2) * 3 ;  // include FL and F0, plus all (f) and (r) variants in the total
     int numOut = 20;
-    int maxFn = 30;  // include FL(f) and FL(r) in the total; update list of names if you update this
     int maxOut = 40; // update list of names if you update this
     
     GridBagLayout gl = null;
@@ -80,57 +79,8 @@ public class FnMapPanel extends JPanel {
             add(l);
             cs.gridwidth = 1;
         }
-        // dummy structure until we figure out how to convey CV numbers programmatically
-        if (cvNum>=0) {
-            labelAt( 0, 0, "CV");
-            labelAt( firstFn   , cvNum, "33");
-            labelAt( firstFn+ 1, cvNum, "34");
-            labelAt( firstFn+ 2, cvNum, "35");
-            labelAt( firstFn+ 3, cvNum, "36");
-            labelAt( firstFn+ 4, cvNum, "37");
-            labelAt( firstFn+ 5, cvNum, "38");
-            labelAt( firstFn+ 6, cvNum, "39");
-            labelAt( firstFn+ 7, cvNum, "40");
-            labelAt( firstFn+ 8, cvNum, "41");
-            labelAt( firstFn+ 9, cvNum, "42");
-            labelAt( firstFn+10, cvNum, "43");
-            labelAt( firstFn+11, cvNum, "44");
-            labelAt( firstFn+12, cvNum, "45");
-            labelAt( firstFn+13, cvNum, "46");
-        }
         
-        labelAt(0,fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Description"));
-        
-        labelAt( firstFn   , fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function0F"));
-        labelAt( firstFn+ 1, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function0R"));
-        if (numFn>2) labelAt( firstFn+ 2, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function1"));
-        if (numFn>3) labelAt( firstFn+ 3, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function2"));
-        if (numFn>4) labelAt( firstFn+ 4, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function3"));
-        if (numFn>5) labelAt( firstFn+ 5, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function4"));
-        if (numFn>6) labelAt( firstFn+ 6, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function5"));
-        if (numFn>7) labelAt( firstFn+ 7, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function6"));
-        if (numFn>8) labelAt( firstFn+ 8, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function7"));
-        if (numFn>9) labelAt( firstFn+ 9, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function8"));
-        if (numFn>10) labelAt( firstFn+10, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function9"));
-        if (numFn>11) labelAt( firstFn+11, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function10"));
-        if (numFn>12) labelAt( firstFn+12, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function11"));
-        if (numFn>13) labelAt( firstFn+13, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function12"));
-        if (numFn>14) labelAt( firstFn+14, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function13"));
-        if (numFn>15) labelAt( firstFn+15, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function14"));
-        if (numFn>16) labelAt( firstFn+16, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function15"));
-        if (numFn>17) labelAt( firstFn+17, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function16"));
-        if (numFn>18) labelAt( firstFn+18, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function17"));
-        if (numFn>19) labelAt( firstFn+19, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function18"));
-        if (numFn>20) labelAt( firstFn+20, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function19"));
-        if (numFn>21) labelAt( firstFn+21, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function20"));
-        if (numFn>22) labelAt( firstFn+22, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function21"));
-        if (numFn>23) labelAt( firstFn+23, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function22"));
-        if (numFn>24) labelAt( firstFn+24, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function23"));
-        if (numFn>25) labelAt( firstFn+25, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function24"));
-        if (numFn>26) labelAt( firstFn+26, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function25"));
-        if (numFn>27) labelAt( firstFn+27, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function26"));
-        if (numFn>28) labelAt( firstFn+28, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function27"));
-        if (numFn>29) labelAt( firstFn+29, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Function28"));
+        labelAt(0,fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("Description"), GridBagConstraints.LINE_START);
         
         // label outputs
         for (int iOut=0; iOut<numOut; iOut++) {
@@ -138,42 +88,68 @@ public class FnMapPanel extends JPanel {
             labelAt( outputLabel, firstOut+iOut, outLabel[iOut]);
         }
         
-        for (int iFn = 0; iFn < numFn; iFn++) {
-            for (int iOut = 0; iOut < numOut; iOut++) {
-                // find the variable using the output number or label
-                // include an (alt) variant to enable Tsunami function exchange definitions
-                String nameBase = fnList[iFn]+" controls output ";
-                String[] names;
-                if ( outName[iOut].equals(Integer.toString(iOut+1)) ) {
-                    names = new String[] {nameBase+outName[iOut],nameBase+outName[iOut]+"(alt)"};
-                } else {
-                    names = new String[] {nameBase+(iOut+1),nameBase+(iOut+1)+"(alt)",
-                        nameBase+outName[iOut],nameBase+outName[iOut]+"(alt)"};
-                }
-                for (String name : names) {
-                    int iVar = _varModel.findVarIndex(name);
-                    if (iVar>=0) {
-                        if (log.isDebugEnabled()) log.debug("Process var: "+name+" as index "+iVar);
-                        varsUsed.add(Integer.valueOf(iVar));
-                        JComponent j = (JComponent)(_varModel.getRep(iVar, "checkbox"));
-                        VariableValue var = _varModel.getVariable(iVar);
-                        j.setToolTipText(PaneProgPane.addCvDescription(null, var.getCvDescription(), var.getMask()));
-                        int row = firstFn+iFn;
-                        int column = firstOut+iOut;
-                        saveAt(row, column, j);
+        // Loop through function names and output names looking for variables
+        int row = firstFn;
+        for (int iFn = -1; iFn <= highestFn; iFn++) {
+            if ( (row - firstFn) >= numFn ) break; // for compatibility with legacy defintions
+            for (String fnVar : fnVarList ) {
+                String fnNameString = "F" + ((iFn == -1) ? "L" : String.valueOf(iFn)) + fnVar;
+                boolean rowIsUsed = false;
+                for (int iOut = 0; iOut < numOut; iOut++) {
+                    // find the variable using the output number or label
+                    // include an (alt) variant to enable Tsunami function exchange definitions
+                    String nameBase = fnNameString + " controls output ";
+                    String[] names;
+                    if ( outName[iOut].equals(Integer.toString(iOut+1)) ) {
+                        names = new String[] {nameBase+outName[iOut],nameBase+outName[iOut]+"(alt)"};
                     } else {
-                        if (log.isDebugEnabled()) log.debug("Did not find var: "+name);
+                        names = new String[] {nameBase+(iOut+1),nameBase+(iOut+1)+"(alt)",
+                            nameBase+outName[iOut],nameBase+outName[iOut]+"(alt)"};
+                    }
+                    for (String name : names) {
+//                         log.info(name);
+                        int iVar = _varModel.findVarIndex(name);
+                        if (iVar>=0) {
+                            if (log.isDebugEnabled()) log.debug("Process var: "+name+" as index "+iVar);
+                            varsUsed.add(Integer.valueOf(iVar));
+                            JComponent j = (JComponent)(_varModel.getRep(iVar, "checkbox"));
+                            VariableValue var = _varModel.getVariable(iVar);
+                            j.setToolTipText(PaneProgPane.addCvDescription(null, var.getCvDescription(), var.getMask()));
+                            int column = firstOut+iOut;
+                            saveAt(row, column, j);
+                            rowIsUsed = true;                          
+                        } else {
+                            if (log.isDebugEnabled()) log.debug("Did not find var: "+name);
+                        }
                     }
                 }
+                if ( rowIsUsed ) {
+                    if ( fnNameString.equals("FL(f)") ) {
+                        fnNameString = ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FunctionLf");
+                    } else if ( fnNameString.equals("FL(r)") ) {
+                        fnNameString = ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FunctionLr");
+                    } else if ( fnNameString.endsWith(fnVarList[1] ) ) {
+                        fnNameString = ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FunctionPrefix") + " " +
+                            fnNameString.substring(1, fnNameString.length() - fnVarList[1].length()) + 
+                            ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FunctionSuffixF");
+                    } else if ( fnNameString.endsWith(fnVarList[2] ) ) {
+                        fnNameString = ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FunctionPrefix") + " " +
+                            fnNameString.substring(1, fnNameString.length() - fnVarList[2].length()) + 
+                            ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FunctionSuffixR");
+                    } else {
+                        fnNameString = ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FunctionPrefix") + " " +
+                            fnNameString.substring(1); 
+                    }
+                    labelAt(row, fnName, fnNameString, GridBagConstraints.LINE_START);
+                    row++;
+                }
+
             }
         }
         if (log.isDebugEnabled()) log.debug("Function map complete");
     }
     
-    final String[] fnList = new String[] { "FL(f)", "FL(r)", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", 
-                                           "F11", "F12", "F13", "F14", "F15", "F16", "F17", "F18", "F19", "F20",
-                                           "F21", "F22", "F23", "F24", "F25", "F26", "F27", "F28"
-                                            };
+    final String[] fnVarList = new String[] {"", "(f)", "(r)" };
     
     final String[] outLabel = new String[] {"White", "Yellow", "Green", "Vlt/Brwn", "", "", "", "", "", "",
                                             "", "", "", "", "","", "", "", "", "",
@@ -188,17 +164,26 @@ public class FnMapPanel extends JPanel {
                                             };
     
     void saveAt(int row, int column, JComponent j) {
+        this.saveAt(row, column, j, GridBagConstraints.CENTER);
+    }
+    
+    void saveAt(int row, int column, JComponent j, int anchor) {
         if (row<0 || column<0) return;
         cs.gridy = row;
         cs.gridx = column;
+        cs.anchor = anchor;
         gl.setConstraints(j, cs);
         add(j);
     }
     
     void labelAt(int row, int column, String name) {
+        this.labelAt(row, column, name, GridBagConstraints.CENTER);
+    }
+    
+    void labelAt(int row, int column, String name, int anchor) {
         if (row<0 || column<0) return;
         JLabel t = new JLabel(" "+name+" ");
-        saveAt(row, column, t);
+        saveAt(row, column, t, anchor);
     }
     
     /**
