@@ -145,7 +145,7 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
             BlockBossLogic bb =null;
             try{
                 bb = BlockBossLogic.getStoppedObject(block.getAttributeValue("signal"));
-            } catch (java.lang.IllegalArgumentException e) {
+            } catch (java.lang.Exception e) {
                 log.error("An error occured trying to find the signal for the signal elements for " + block.getAttributeValue("signal"));
                 result = false;
             }
