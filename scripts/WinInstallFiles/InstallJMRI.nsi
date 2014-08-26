@@ -396,7 +396,6 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\lib\servlet.jar"
 
     ; -- Delete .jar & support files installed using previous layout
-    Delete "$OUTDIR\activation.jar"
     Delete "$OUTDIR\ch.ntb.usb.jar"
     Delete "$OUTDIR\comm.jar"
     Delete "$OUTDIR\crimson.jar"

@@ -4,7 +4,6 @@
 	<classpathentry excluding="**/.cvsignore|**/COPYING" kind="src" path="java/test"/>
 	<classpathentry excluding="**/.cvsignore|**/COPYING" kind="src" path="java/tmp"/>
 	<classpathentry excluding="**/Thumbs.db" kind="src" path="resources"/>
-	<classpathentry kind="lib" path="lib/activation.jar"/>
 	<classpathentry kind="lib" path="lib/annotations.jar"/>
 	<classpathentry kind="lib" path="lib/ch.ntb.usb.jar"/>
 	<classpathentry kind="lib" path="lib/commons-lang3-3.2.1.jar"/>

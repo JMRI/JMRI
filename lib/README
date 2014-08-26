@@ -109,9 +109,6 @@ libusb-jar (ch.ntb.usb.jar)
 JavaMail 1.4.1
   mailapi.jar
   smtp.jar
-
-JavaBeans Activation Framework 1.1.1 (needed by JavaMail until JRE 1.6, which contains) 
-  activation.jar
   
 Joal 1.1.2
   from <https://joal.dev.java.net/servlets/ProjectDocumentList?folderID=9265&expandFolder=9265&folderID=9264>
