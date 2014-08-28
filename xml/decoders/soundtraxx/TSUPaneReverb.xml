@@ -32,101 +32,53 @@
     <row>
       <column>
         <row>
-          <display item="Reverb Output Level" layout="above" label="">
-            <label/>
-          </display>
-          <label>
-            <text> </text>
-          </label>
+          <display item="Reverb Output Level" layout="above" label=""/>
+          <label><text> </text></label>
           <display item="Reverb Output Level" layout="above" format="hslider"/>
         </row>
-        <label>
-          <text> </text>
-        </label>
+          <label><text> </text></label>
         <row>
-          <display item="Reverb Delay" layout="above" label="">
-            <label/>
-          </display>
-          <label>
-            <text> </text>
-          </label>
+          <display item="Reverb Delay" layout="above" label=""/>
+          <label><text> </text></label>
           <display item="Reverb Delay" layout="above" format="hslider"/>
         </row>
-        <label>
-          <text> </text>
-        </label>
+          <label><text> </text></label>
         <row>
-          <display item="Reverb Gain" layout="above" label="">
-            <label/>
-          </display>
-          <label>
-            <text> </text>
-          </label>
+          <display item="Reverb Gain" layout="above" label=""/>
+          <label><text> </text></label>
           <display item="Reverb Gain" layout="above" format="hslider"/>
         </row>
-        <label>
-          <text> </text>
-        </label>
+          <label><text> </text></label>
         <row>
-          <display item="Whistle Reverb Level" layout="above" label="">
-            <label/>
-          </display>
-          <label>
-            <text> </text>
-          </label>
+          <display item="Whistle Reverb Level" layout="above" label=""/>
+          <label><text> </text></label>
           <display item="Whistle Reverb Level" layout="above" format="hslider"/>
         </row>
-        <label>
-          <text> </text>
-        </label>
-        <row>
-          <display item="Bell Reverb Level" layout="above" label="">
-            <label/>
-          </display>
-          <label>
-            <text> </text>
-          </label>
+          <label><text> </text></label>
+        <row>          
+          <display item="Bell Reverb Level" layout="above" label=""/>
+          <label><text> </text></label>
           <display item="Bell Reverb Level" layout="above" format="hslider"/>
         </row>
-        <label>
-          <text> </text>
-        </label>
+          <label><text> </text></label>
         <row>
-          <display item="Exhaust Reverb Level" layout="above" label="">
-            <label/>
-          </display>
-          <label>
-            <text> </text>
-          </label>
+          <display item="Exhaust Reverb Level" layout="above" label=""/>
+          <label><text> </text></label>
           <display item="Exhaust Reverb Level" layout="above" format="hslider"/>
         </row>
-        <label>
-          <text> </text>
-        </label>
+          <label><text> </text></label>
         <row>
-          <display item="Air Pump Reverb Level" layout="above" label="">
-            <label/>
-          </display>
-          <label>
-            <text> </text>
-          </label>
+          <display item="Air Pump Reverb Level" layout="above" label=""/>
+          <label><text> </text></label>
           <display item="Air Pump Reverb Level" layout="above" format="hslider"/>
         </row>
-        <label>
-          <text> </text>
-        </label>
+          <label><text> </text></label>
         <row>
-          <display item="Prime Mover 3 Reverb Level" layout="above" label="">
-            <label/>
-          </display>
-          <label>
-            <text> </text>
-          </label>
+          <display item="Prime Mover 3 Reverb Level" layout="above" label=""/>
+          <label><text> </text></label>
           <display item="Prime Mover 3 Reverb Level" layout="above" format="hslider"/>
         </row>
-        <label>
-          <text> </text>
-        </label>
+          <label><text> </text></label>
       </column>
     </row>
   </column>

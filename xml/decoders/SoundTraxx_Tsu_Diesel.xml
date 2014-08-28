@@ -26,50 +26,57 @@
   <version author="Jack Shall lcrr@bellsouth.net" version="11" lastUpdated="20111023"/>
   <version author="Jack Shall lcrr@bellsouth.net" version="12" lastUpdated="20120824"/>
   <version author="Michael Mosher" version="13" lastUpdated="20130208"/>
-  <version author="Alain Le Marchand" version="14" lastUpdated="20140530"/>  
-  <!-- This file contains the Tsunami definitions for ALL of the internal combustion engine locomotives	-->
-  <!-- version 1	Based on the "Soundtraxx_Tsu_(various diesels)" series of files.					-->
+  <version author="Alain Le Marchand" version="14" lastUpdated="20140530"/>
+  <version author="Alain Le Marchand" version="15" lastUpdated="20140827"/>
+  <!-- This file contains the Tsunami definitions for ALL of the internal combustion engine locomotives         -->
+  <!-- version 1	Based on the "Soundtraxx_Tsu_(various diesels)" series of files.			-->
   <!--			Co-authored by Michael Mosher.	Special thanks to Bob Jacobsen and Phil Utley		-->
-  <!--			for their assistance, and Marc Fournier for getting the ball rolling.				-->
-  <!--			This file incorporates the "include" attribute to allow proper display of			-->
+  <!--			for their assistance, and Marc Fournier for getting the ball rolling.			-->
+  <!--			This file incorporates the "include" attribute to allow proper display of		-->
   <!--			various elements based on their pertinence to a particular model.  When adding		-->
   <!--			models, the productID must be attached to the proper sets of horn selections.		-->
   <!-- version 2	Fixed bug in CV112 where auto/manual control of air compressor and radiator fans	-->
   <!--			was reversed (this was corrected in Tsunami Diesel Tech. Ref. v1.10).  Fixed bug	-->
   <!--			in CV116, bit 4 "Engine RPM Interlock".  Added CV116, bit 5 "Auto Engine Start		-->
-  <!--			Enable" and CV118 "Motor Recovery Speed".  Updated some tool tips.					-->
-  <!-- version 3	Added Alco 539 models 827011, 827012, 828049.										-->
-  <!-- version 4	Added Kato loco specific models 828060,828061,828062,828063,828064,828065.			-->
-  <!--			Thanks to Michael Mosher and Jarrette Ireland for providing horn info.				-->
-  <!--			Removed default="3" from CV17 to solve bug found by M. Fournier.					-->
+  <!--			Enable" and CV118 "Motor Recovery Speed".  Updated some tool tips.			-->
+  <!-- version 3	Added Alco 539 models 827011, 827012, 828049.						-->
+  <!-- version 4	Added Kato loco specific models 828060,828061,828062,828063,828064,828065.		-->
+  <!--			Thanks to Michael Mosher and Jarrette Ireland for providing horn info.			-->
+  <!--			Removed default="3" from CV17 to solve bug found by M. Fournier.			-->
   <!-- version 5	Added Baldwin VO (model 827111), 608NA (model 827112) and 608A (model 827113).		-->
-  <!-- version 6	Added EMD 645-Turbo (model 827002), EMD 710 (model 827003) and						-->
-  <!--			GE Cummins (model 827014) TSU-750 series decoders.									-->
+  <!-- version 6	Added EMD 645-Turbo (model 827002), EMD 710 (model 827003) and				-->
+  <!--			GE Cummins (model 827014) TSU-750 series decoders.					-->
   <!-- version 7	Added BW1000 series decoders: EMD 567 (828020), Baldwin 608A Turbo (828023),		-->
-  <!--			ALCO 251 V16 (828025) and GE FDL-16 (828026).										-->
-  <!--			Also added TSU-1000 UP Gas Turbine (827114).										-->
+  <!--			ALCO 251 V16 (828025) and GE FDL-16 (828026).						-->
+  <!--			Also added TSU-1000 UP Gas Turbine (827114).                                		-->
   <!-- version 8	Added the new sound CVs used in the TSU-1000 UP Gas Turbine (827114).  Made minor	-->
   <!--			formatting changes in Sounds and Advanced section.  Created new Pane for Tsunami 	-->
-  <!--			lighting.  Added new lighting CVs 53, 54, 57 and 58.  Added Rule 17 mode to			-->
-  <!--			FX5/FX6.  Moved custom Pane formats to external files.								-->
-  <!--			Special thanks to Michael Mosher for his assistance.								-->
+  <!--			lighting.  Added new lighting CVs 53, 54, 57 and 58.  Added Rule 17 mode to		-->
+  <!--			FX5/FX6.  Moved custom Pane formats to external files.                  		-->
+  <!--			Special thanks to Michael Mosher for his assistance.					-->
   <!-- version 9	Added new 1000 series decoders: EMD 710 G3C-T2 (827115), GE Gevo-12 (827116)		-->
   <!-- version 10	Added decoders: EMD 567D (Turbo) (827119)(828039), EMD 567 (Dual) (827018)(827118),	-->
   <!--			GE FDL-16 (Modern) (827117)(828038)(828057), ALCO 251C (Supercharged) (828037).		-->
   <!--			Also added TSU-750 UP Gas Turbine (827015), TSU-GN1000 EMD 710 G3C-T2 (828053) and	-->
-  <!--			TSU-KT1000 for KATO GP35 (828067)													-->
+  <!--			TSU-KT1000 for KATO GP35 (828067)							-->
   <!-- version 11	Added new TSU-1000 series decoder: GE FDL-16 (Dual Motors) (827124).  Modified a	-->
   <!-- 			few of the control labels for the Gas Turbine definition to help clarify the intent	-->
   <!-- 			of these controls.  Slight rearrangement of Sound controls to improve clarity.		-->
-  <!-- version 12	Added new GN1000 series decoder: EMD 645 (Non-Turbo) (828058)						-->
-  <!-- version 13	Add AT1000 for Genset and make more use of extrenal includes -->
+  <!-- version 12	Added new GN1000 series decoder: EMD 645 (Non-Turbo) (828058)				-->
+  <!-- version 13	Add AT1000 for Genset and make more use of extrenal includes                            -->
   <!-- version 14	Fixed function mapping for TSU-750 with 2 physical outputs only (no physical FX5 an FX6)-->
-  <!--                  Added Function Groups 2/3 exchange from Dave Heap (initially introduced for Genesis)     -->
+  <!--                  Added Function Groups 2/3 exchange from Dave Heap (initially introduced for Genesis)    -->
+  <!-- version 15	Fixed CV171 to 173 for Genset                                                           -->
+  <!--                  Added TSU-IM1000 (828070, 828071, 828074) from Addendum for TSU-IM1000 (SW rel. 1.18)   -->
+  <!--                    + default values read in decoder for 828070 (EMD 567) thanks to Steve Eckart          -->
+  <!--                    + default values from OEM versions doc. for 828071, 828074 (CV49 to 57 light effects) -->
+  <!--                  (to be checked, likely not to be fully applicable to full fledged TSU-IM1000)		-->
+  <!--                  Added TSU-GN1000 GEVO-12 (828059), TSU-KT1000 P42 (828068)      			-->
   <!-- Note:    Output number for "named" outputs (i.e. when name is not an integer) starts at numOuts+1.
                 Numbering is then incremental in the order of declaration of the named outputs.
-                For these decoders, convention is taken that FX5=output 3, FX6=output 4, Whistle=output 5, etc. 
+                For these decoders, convention is taken that FX5=output 3, FX6=output 4, Whistle=output 5, etc.
                 FX5 or FX6 are either physical or logical outputs (for TSU-750) used for "Rule 17 mode"         -->
-<!-- 		For Diesel decoders output "9" is reserved (not used).  Associated bit is skipped -->				
+  <!-- 		For Diesel decoders output "9" is reserved (not used).  Associated bit is skipped               -->
   <!-- Decoder Model information follows -->
   <decoder>
     <family name="Tsunami Diesel" mfg="Throttle-Up (SoundTraxx)" comment="These are the -retail- version Tsunami diesel decoders">
@@ -733,7 +740,7 @@
         <output name="Short" label="Horn">
          <label xml:lang="it">Tromba</label>
         </output>
-        <output name="Reserved"/>		
+        <output name="Reserved"/>
         <output name="Fans" label="Turbine On"/>
         <output name="Dimming"/>
         <output name="Mute"/>
@@ -1241,6 +1248,104 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
+      <model model="TSU-GN1000 GEVO-12" numOuts="4" numFns="14" connector="other" productID="828059" comment="Model 828059">
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+        <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
+        <output name="Fans" label="RPM +"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Compressor" label="RPM -"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="TSU-IM1000 EMD 567" numOuts="4" numFns="14" connector="other" productID="828070" comment="Model 828070 for Intermountain EMD F-series">
+        <versionCV lowVersionID="64"/>
+        <output name="1" label="Headlight"/>
+        <output name="2" label="N/A"/>
+        <output name="3" label="Mars Light"/>
+        <output name="4" label="# Board"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="Dynamic" label="Brakes">
+         <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="FX7" label="FX5B"/>
+        <output name="Fans" label="RPM +"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Compressor" label="RPM -"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+        <functionlabels>
+          <functionlabel num="5" lockable="true">Number Board</functionlabel>
+          <functionlabel num="6" lockable="true">Mars Light</functionlabel>
+        </functionlabels>
+      </model>
+      <model model="TSU-IM1000 EMD 645 Turbo" numOuts="4" numFns="14" connector="other" productID="828071" comment="Model 828071 for Intermountain EMD SD40-2">
+        <versionCV lowVersionID="64"/>
+        <output name="1" label="Headlight"/>
+        <output name="2" label="Backlight"/>
+        <output name="3" label="# Board"/>
+        <output name="4" label="Ditch Lights"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="Dynamic" label="Brakes">
+         <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="FX7" label="FX5B"/>
+        <output name="Fans" label="RPM +"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Compressor" label="RPM -"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+        <functionlabels>
+          <functionlabel num="5" lockable="true">Number Board</functionlabel>
+          <functionlabel num="6" lockable="true">Ditch Lights</functionlabel>
+        </functionlabels>
+      </model>
+      <model model="TSU-IM1000 GE GEVO-12" numOuts="4" numFns="14" connector="other" productID="828074" comment="Model 828074 for Intermountain GE ES44AC/DC">
+        <versionCV lowVersionID="64"/>
+        <output name="1" label="Headlight"/>
+        <output name="2" label="Backlight"/>
+        <output name="3" label="# Board"/>
+        <output name="4" label="R Ditch Light"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="Dynamic" label="Brakes">
+         <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="L Ditch Light"/>
+        <output name="Fans" label="RPM +"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Compressor" label="RPM -"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+        <functionlabels>
+          <functionlabel num="5" lockable="true">Number Board</functionlabel>
+          <functionlabel num="6" lockable="true">Ditch Lights</functionlabel>
+        </functionlabels>
+      </model>
       <model model="TSU-KT1000 Kato C44-9W" numOuts="4" numFns="14" connector="other" productID="828061" comment="Model 828061 and 828066">
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
@@ -1380,6 +1485,26 @@
         <output name="Coupler"/>
       </model>
       <model model="TSU-KT1000 Kato SD70" numOuts="4" numFns="14" connector="other" productID="828060" comment="Model 828060">
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+         <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+         <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
+        <output name="Fans" label="RPM +"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Compressor" label="RPM -"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="TSU-KT1000 Kato P42" numOuts="4" numFns="14" connector="other" productID="828068" comment="Model 828068">
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
         <output name="Bell"/>
@@ -1764,6 +1889,10 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output Short Horn</label>
       </variable>
+			<variable item="F3 controls output 9" CV="37" mask="XXVXXXXX" default="0" include="828070,828071,828074">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output output 9</label>
+      </variable>
       <variable item="F3 controls output 10" CV="37" mask="XVXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output Fans(+)</label>
@@ -1792,6 +1921,10 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Short Horn</label>
       </variable>
+      <variable item="F4 controls output 9" CV="38" mask="XXVXXXXX" default="0" include="828070,828071,828074">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output output 9</label>
+      </variable>
       <variable item="F4 controls output 10" CV="38" mask="XVXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Fans(+)</label>
@@ -1800,23 +1933,31 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Dimming</label>
       </variable>
-	  <!-- begin exchangeable function groups -->
+      <!-- begin exchangeable function groups -->
       <variables>
         <qualifier>
           <variableref>Function Group 2 and 3 Exchange</variableref>
           <relation>eq</relation>
           <value>0</value>
-        </qualifier>      
+        </qualifier>
           <!-- begin normal function group 2 -->
             <variable item="F5 controls output 6" CV="39" mask="XXXXXXXV" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output Bell</label>
             </variable>
-            <variable item="F5 controls output 3" CV="39" mask="XXXXXXVX" minOut="1" default="1">
+            <variable item="F5 controls output 3" CV="39" mask="XXXXXXVX" minOut="1" default="1" exclude="828070">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output FX5</label>
             </variable>
-            <variable item="F5 controls output 4" CV="39" mask="XXXXXVXX" minOut="2" default="0">
+            <variable item="F5 controls output 3" CV="39" mask="XXXXXXVX" minOut="1" default="0" include="828070">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F5 controls output FX5</label>
+            </variable>
+            <variable item="F5 controls output 4" CV="39" mask="XXXXXVXX" minOut="2" default="0" exclude="828070">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F5 controls output FX6</label>
+            </variable>
+            <variable item="F5 controls output 4" CV="39" mask="XXXXXVXX" minOut="2" default="1" include="828070">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output FX6</label>
             </variable>
@@ -1827,6 +1968,10 @@
             <variable item="F5 controls output 8" CV="39" mask="XXXVXXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output Short Horn</label>
+            </variable>
+            <variable item="F5 controls output 9" CV="39" mask="XXVXXXXX" default="0" include="828070,828071,828074">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F5 controls output output 9</label>
             </variable>
             <variable item="F5 controls output 10" CV="39" mask="XVXXXXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -1840,11 +1985,19 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F6 controls output Bell</label>
             </variable>
-            <variable item="F6 controls output 3" CV="40" mask="XXXXXXVX" minOut="1" default="0">
+            <variable item="F6 controls output 3" CV="40" mask="XXXXXXVX" minOut="1" default="0" exclude="828070">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F6 controls output FX5</label>
             </variable>
-            <variable item="F6 controls output 4" CV="40" mask="XXXXXVXX" minOut="2" default="1">
+            <variable item="F6 controls output 3" CV="40" mask="XXXXXXVX" minOut="1" default="1" include="828070">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F6 controls output FX5</label>
+            </variable>
+            <variable item="F6 controls output 4" CV="40" mask="XXXXXVXX" minOut="2" default="1" exclude="828070">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F6 controls output FX6</label>
+            </variable>
+            <variable item="F6 controls output 4" CV="40" mask="XXXXXVXX" minOut="2" default="0" include="828070">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F6 controls output FX6</label>
             </variable>
@@ -1855,6 +2008,14 @@
             <variable item="F6 controls output 8" CV="40" mask="XXXVXXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F6 controls output Short Horn</label>
+            </variable>
+            <variable item="F6 controls output 9" CV="40" mask="XXVXXXXX" default="0" include="828070">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F6 controls output output 9</label>
+            </variable>
+            <variable item="F6 controls output 9" CV="40" mask="XXVXXXXX" default="1" include="828071,828074">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F6 controls output output 9</label>
             </variable>
             <variable item="F6 controls output 10" CV="40" mask="XVXXXXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -1871,6 +2032,10 @@
             <variable item="F7 controls output 8" CV="41" mask="XXXXXXVX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F7 controls output Short Horn</label>
+            </variable>
+            <variable item="F7 controls output 9" CV="41" mask="XXXXXVXX" default="0" include="828070,828071,828074">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F7 controls output output 9</label>
             </variable>
             <variable item="F7 controls output 10" CV="41" mask="XXXXVXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -1900,6 +2065,10 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F8 controls output Short Horn</label>
             </variable>
+            <variable item="F8 controls output 9" CV="42" mask="XXXXXVXX" default="0" include="828070,828071,828074">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F8 controls output output 9</label>
+            </variable>
             <variable item="F8 controls output 10" CV="42" mask="XXXXVXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F8 controls output Fans(+)</label>
@@ -1921,7 +2090,7 @@
                 <label>F8 controls output Brakes</label>
             </variable>
             <!-- end normal function group 2 -->
-            <!-- begin normal function group 3 -->    
+            <!-- begin normal function group 3 -->
             <variable item="F9 controls output 7" CV="43" mask="XXXXXXXV" default="0" minFn="9">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F9 controls output Dynamics</label>
@@ -1929,6 +2098,10 @@
             <variable item="F9 controls output 8" CV="43" mask="XXXXXXVX" default="0" minFn="9">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F9 controls output Short Horn</label>
+            </variable>
+            <variable item="F9 controls output 9" CV="43" mask="XXXXXVXX" default="0" minFn="9" include="828070,828071,828074">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F9 controls output output 9</label>
             </variable>
             <variable item="F9 controls output 10" CV="43" mask="XXXXVXXX" default="1" minFn="9">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -1953,6 +2126,10 @@
             <variable item="F10 controls output 8" CV="44" mask="XXXXXXXV" default="0" minFn="10">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F10 controls output Short Horn</label>
+            </variable>
+            <variable item="F10 controls output 9" CV="44" mask="XXXXXXVX" default="0" minFn="10" include="828070,828071,828074">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F10 controls output output 9</label>
             </variable>
             <variable item="F10 controls output 10" CV="44" mask="XXXXXVXX" default="0" minFn="10">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -1982,6 +2159,10 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F11 controls output Short Horn</label>
             </variable>
+            <variable item="F11 controls output 9" CV="45" mask="XXXXXXVX" default="0" minFn="11" include="828070,828071,828074">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F11 controls output output 9</label>
+            </variable>
             <variable item="F11 controls output 10" CV="45" mask="XXXXXVXX" default="0" minFn="11">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F11 controls output Fans(+)</label>
@@ -2009,6 +2190,10 @@
             <variable item="F12 controls output 8" CV="46" mask="XXXXXXXV" default="0" minFn="12">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F12 controls output Short Horn</label>
+            </variable>
+            <variable item="F12 controls output 9" CV="46" mask="XXXXXXVX" default="0" minFn="12" include="828070,828071,828074">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F12 controls output output 9</label>
             </variable>
             <variable item="F12 controls output 10" CV="46" mask="XXXXXVXX" default="0" minFn="12">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -2047,11 +2232,19 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F9 controls output Bell</label>
             </variable>
-            <variable item="F9 controls output 3(alt)" CV="39" mask="XXXXXXVX" minOut="1" default="1">
+            <variable item="F9 controls output 3(alt)" CV="39" mask="XXXXXXVX" minOut="1" default="1" exclude="828070">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F9 controls output FX5</label>
             </variable>
-            <variable item="F9 controls output 4(alt)" CV="39" mask="XXXXXVXX" minOut="2" default="0">
+            <variable item="F9 controls output 3(alt)" CV="39" mask="XXXXXXVX" minOut="1" default="0" include="828070">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F9 controls output FX5</label>
+            </variable>
+            <variable item="F9 controls output 4(alt)" CV="39" mask="XXXXXVXX" minOut="2" default="0" exclude="828070">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F9 controls output FX6</label>
+            </variable>
+            <variable item="F9 controls output 4(alt)" CV="39" mask="XXXXXVXX" minOut="2" default="1" include="828070">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F9 controls output FX6</label>
             </variable>
@@ -2062,6 +2255,10 @@
             <variable item="F9 controls output 8(alt)" CV="39" mask="XXXVXXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F9 controls output Short Horn</label>
+            </variable>
+            <variable item="F9 controls output 9(alt)" CV="39" mask="XXVXXXXX" default="0" include="828070,828071,828074">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F9 controls output output 9</label>
             </variable>
             <variable item="F9 controls output 10(alt)" CV="39" mask="XVXXXXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -2075,11 +2272,19 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F10 controls output Bell</label>
             </variable>
-            <variable item="F10 controls output 3(alt)" CV="40" mask="XXXXXXVX" minOut="1" default="0">
+            <variable item="F10 controls output 3(alt)" CV="40" mask="XXXXXXVX" minOut="1" default="0" exclude="828070">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F10 controls output FX5</label>
             </variable>
-            <variable item="F10 controls output 4(alt)" CV="40" mask="XXXXXVXX" minOut="2" default="1">
+            <variable item="F10 controls output 3(alt)" CV="40" mask="XXXXXXVX" minOut="1" default="1" include="828070">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F10 controls output FX5</label>
+            </variable>
+            <variable item="F10 controls output 4(alt)" CV="40" mask="XXXXXVXX" minOut="2" default="1" exclude="828070">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F10 controls output FX6</label>
+            </variable>
+            <variable item="F10 controls output 4(alt)" CV="40" mask="XXXXXVXX" minOut="2" default="0" include="828070">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F10 controls output FX6</label>
             </variable>
@@ -2090,6 +2295,14 @@
             <variable item="F10 controls output 8(alt)" CV="40" mask="XXXVXXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F10 controls output Short Horn</label>
+            </variable>
+            <variable item="F10 controls output 9(alt)" CV="40" mask="XXVXXXXX" default="0" include="828070">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F10 controls output output 9</label>
+            </variable>
+            <variable item="F10 controls output 9(alt)" CV="40" mask="XXVXXXXX" default="1" include="828071,828074">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F10 controls output output 9</label>
             </variable>
             <variable item="F10 controls output 10(alt)" CV="40" mask="XVXXXXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -2106,6 +2319,10 @@
             <variable item="F11 controls output 8(alt)" CV="41" mask="XXXXXXVX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F11 controls output Short Horn</label>
+            </variable>
+            <variable item="F11 controls output 9(alt)" CV="41" mask="XXXXXVXX" default="0" include="828070,828071,828074">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F11 controls output 9</label>
             </variable>
             <variable item="F11 controls output 10(alt)" CV="41" mask="XXXXVXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -2135,6 +2352,10 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F12 controls output Short Horn</label>
             </variable>
+            <variable item="F12 controls output 9(alt)" CV="42" mask="XXXXXVXX" default="0" include="828070,828071,828074">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F12 controls output output 9</label>
+            </variable>
             <variable item="F12 controls output 10(alt)" CV="42" mask="XXXXVXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F12 controls output Fans(+)</label>
@@ -2156,7 +2377,7 @@
                 <label>F12 controls output Brakes</label>
             </variable>
           <!-- end exchanged function group 2 -->
-          <!-- begin exchanged function group 3 -->   
+          <!-- begin exchanged function group 3 -->
             <variable item="F5 controls output 7(alt)" CV="43" mask="XXXXXXXV" default="0" minFn="9">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output Dynamics</label>
@@ -2164,6 +2385,10 @@
             <variable item="F5 controls output 8(alt)" CV="43" mask="XXXXXXVX" default="0" minFn="9">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output Short Horn</label>
+            </variable>
+            <variable item="F5 controls output 9(alt)" CV="43" mask="XXXXXVXX" default="0" minFn="9" include="828070,828071,828074">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F5 controls output output 9</label>
             </variable>
             <variable item="F5 controls output 10(alt)" CV="43" mask="XXXXVXXX" default="1" minFn="9">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -2188,6 +2413,10 @@
             <variable item="F6 controls output 8(alt)" CV="44" mask="XXXXXXXV" default="0" minFn="10">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F6 controls output Short Horn</label>
+            </variable>
+            <variable item="F6 controls output 9(alt)" CV="44" mask="XXXXXXVX" default="0" minFn="10" include="828070,828071,828074">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F6 controls output output 9</label>
             </variable>
             <variable item="F6 controls output 10(alt)" CV="44" mask="XXXXXVXX" default="0" minFn="10">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -2217,6 +2446,10 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F7 controls output Short Horn</label>
             </variable>
+            <variable item="F7 controls output 9(alt)" CV="45" mask="XXXXXXVX" default="0" minFn="11" include="828070,828071,828074">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F7 controls output output 9</label>
+            </variable>
             <variable item="F7 controls output 10(alt)" CV="45" mask="XXXXXVXX" default="0" minFn="11">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F7 controls output Fans(+)</label>
@@ -2245,6 +2478,10 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F8 controls output Short Horn</label>
             </variable>
+            <variable item="F8 controls output 9(alt)" CV="46" mask="XXXXXXXV" default="0" minFn="12" include="828070,828071,828074">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F8 controls output output 9</label>
+            </variable>
             <variable item="F8 controls output 10(alt)" CV="46" mask="XXXXXVXX" default="0" minFn="12">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F8 controls output Fans(+)</label>
@@ -2271,11 +2508,11 @@
             </variable>
           <!-- end exchanged function group 3 -->
       </variables>
-      <!-- end exchangeable function groups -->   	  
+      <!-- end exchangeable function groups -->
       <variable CV="47" mask="XVVVVVVV" item="Sound Option 11" default="0" tooltip="Value of 0 = Disabled.  See command station instructions for value to enable this feature.">
         <decVal/>
         <label>Analog Horn Control (0-255)</label>
-      </variable>	  
+      </variable>
       <!-- Lighting Configuration follows -->
       <variable item="Headlight F0(f) Effect Selection" CV="49" mask="XXXXVVVV" default="15" tooltip="Determines the effect generated from the headlight">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
@@ -2293,11 +2530,23 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumR17HL.xml"/>
         <label>Headlight F0(f) Rule 17 Mode</label>
       </variable>
-      <variable item="Headlight F0(f) Light Type" CV="49" mask="VXXXXXXX" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable item="Headlight F0(f) Light Type" CV="49" mask="VXXXXXXX" default="0" exclude="828070,828071,828074" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>Headlight F0(f) Light Type</label>
       </variable>
-      <variable item="Backup Light F0(r) Effect Selection" CV="50" mask="XXXXVVVV" default="15" tooltip="Determines the effect generated from the backup light">
+      <variable item="Headlight F0(f) Light Type" CV="49" mask="VXXXXXXX" default="1" include="828070,828071,828074" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
+        <label>Headlight F0(f) Light Type</label>
+      </variable>
+      <variable item="Backup Light F0(r) Effect Selection" CV="50" mask="XXXXVVVV" default="15" exclude="828070,828071" tooltip="Determines the effect generated from the backup light">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
+        <label>Backup Light F0(r) Effect Selection</label>
+      </variable>
+      <variable item="Backup Light F0(r) Effect Selection" CV="50" mask="XXXXVVVV" default="0" include="828070" tooltip="Determines the effect generated from the backup light">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
+        <label>Backup Light F0(r) Effect Selection</label>
+      </variable>
+      <variable item="Backup Light F0(r) Effect Selection" CV="50" mask="XXXXVVVV" default="1" include="828071" tooltip="Determines the effect generated from the backup light">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
         <label>Backup Light F0(r) Effect Selection</label>
       </variable>
@@ -2309,165 +2558,263 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Backup Light F0(r) Grade Crossing Logic</label>
       </variable>
-      <variable item="Backup Light F0(r) Rule 17 Mode" CV="50" mask="XVXXXXXX" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
+      <variable item="Backup Light F0(r) Rule 17 Mode" CV="50" mask="XVXXXXXX" default="0" exclude="828070" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumR17RL.xml"/>
         <label>Backup Light F0(r) Rule 17 Mode</label>
       </variable>
-      <variable item="Backup Light F0(r) Light Type" CV="50" mask="VXXXXXXX" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable item="Backup Light F0(r) Rule 17 Mode" CV="50" mask="XVXXXXXX" default="1" include="828070" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumR17RL.xml"/>
+        <label>Backup Light F0(r) Rule 17 Mode</label>
+      </variable>
+      <variable item="Backup Light F0(r) Light Type" CV="50" mask="VXXXXXXX" default="0" exclude="828071,828074" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>Backup Light F0(r) Light Type</label>
       </variable>
-      <variable item="FX5 Effect Selection" CV="51" mask="XXXXVVVV" default="1" minOut="3" comment="Don't show this for the TSU-750 models" tooltip="Determines the effect generated from the FX5 light output">
+			<variable item="Backup Light F0(r) Light Type" CV="50" mask="VXXXXXXX" default="1" include="828071,828074" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
+        <label>Backup Light F0(r) Light Type</label>
+      </variable>
+      <variable item="FX5 Effect Selection" CV="51" mask="XXXXVVVV" default="1" minOut="3" exclude="828070,828071" tooltip="Determines the effect generated from the FX5 light output">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
         <label>FX5 Effect Selection</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX5 Phase Selection" CV="51" mask="XXXVXXXX" minOut="3" comment="Don't show this for the TSU-750 models" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+      <variable item="FX5 Effect Selection" CV="51" mask="XXXXVVVV" default="2" minOut="3" include="828070,828071" tooltip="Determines the effect generated from the FX5 light output">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
+        <label>FX5 Effect Selection</label>
+        <comment>Don't show this for the TSU-750 models</comment>
+      </variable>
+      <variable item="FX5 Phase Selection" CV="51" mask="XXXVXXXX" minOut="3" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
         <label>FX5 Phase Selection</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX5 Grade Crossing Logic" CV="51" mask="XXVXXXXX" minOut="3" comment="Don't show this for the TSU-750 models" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+      <variable item="FX5 Grade Crossing Logic" CV="51" mask="XXVXXXXX" minOut="3" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX5 Grade Crossing Logic</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX5 Rule 17 Mode" CV="51" mask="XVXXXXXX" minOut="3" comment="Don't show this for the TSU-750 models" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
+      <variable item="FX5 Rule 17 Mode" CV="51" mask="XVXXXXXX" default="0" minOut="3" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumR17FX5.xml"/>
         <label>FX5 Rule 17 Mode</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX5 Light Type" CV="51" mask="VXXXXXXX" minOut="3" comment="Don't show this for the TSU-750 models" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable item="FX5 Light Type" CV="51" mask="VXXXXXXX" default="0" minOut="3" exclude="828070,828071,828074" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>FX5 Light Type</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX6 Effect Selection" CV="52" mask="XXXXVVVV" default="1" minOut="4" comment="Don't show this for the TSU-750 models" tooltip="Determines the effect generated from the FX6 light output">
+      <variable item="FX5 Light Type" CV="51" mask="VXXXXXXX" default="1" minOut="3" include="828070,828071,828074" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
+        <label>FX5 Light Type</label>
+        <comment>Don't show this for the TSU-750 models</comment>
+      </variable>
+      <variable item="FX6 Effect Selection" CV="52" mask="XXXXVVVV" default="1" minOut="4" exclude="828070,828074" tooltip="Determines the effect generated from the FX6 light output">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
         <label>FX6 Effect Selection</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX6 Phase Selection" CV="52" mask="XXXVXXXX" minOut="4" comment="Don't show this for the TSU-750 models" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+      <variable item="FX6 Effect Selection" CV="52" mask="XXXXVVVV" default="0" minOut="4" include="828070" tooltip="Determines the effect generated from the FX6 light output">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
+        <label>FX6 Effect Selection</label>
+        <comment>Don't show this for the TSU-750 models</comment>
+      </variable>
+      <variable item="FX6 Effect Selection" CV="52" mask="XXXXVVVV" default="9" minOut="4" include="828074" tooltip="Determines the effect generated from the FX6 light output">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
+        <label>FX6 Effect Selection</label>
+        <comment>Don't show this for the TSU-750 models</comment>
+      </variable>
+      <variable item="FX6 Phase Selection" CV="52" mask="XXXVXXXX" minOut="4" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
         <label>FX6 Phase Selection</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX6 Grade Crossing Logic" CV="52" mask="XXVXXXXX" minOut="4" comment="Don't show this for the TSU-750 models" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+      <variable item="FX6 Grade Crossing Logic" CV="52" mask="XXVXXXXX" default="0" minOut="4" exclude="828074" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX6 Grade Crossing Logic</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX6 Rule 17 Mode" CV="52" mask="XVXXXXXX" minOut="4" comment="Don't show this for the TSU-750 models" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
+      <variable item="FX6 Grade Crossing Logic" CV="52" mask="XXVXXXXX" default="1" minOut="4" include="828074" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX6 Grade Crossing Logic</label>
+        <comment>Don't show this for the TSU-750 models</comment>
+      </variable>
+      <variable item="FX6 Rule 17 Mode" CV="52" mask="XVXXXXXX" minOut="4" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumR17FX6.xml"/>
         <label>FX6 Rule 17 Mode</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX6 Light Type" CV="52" mask="VXXXXXXX" minOut="4" comment="Don't show this for the TSU-750 models" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable item="FX6 Light Type" CV="52" mask="VXXXXXXX" default="0" minOut="4" exclude="828074" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>FX6 Light Type</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX5B Effect Selection" CV="53" mask="XXXXVVVV" default="15" minOut="3" include="827114" comment="This CV for Gas Turbine only. Don't show this for the TSU-750 models" tooltip="Determines the second effect associated with the FX5 light output">
+      <variable item="FX6 Light Type" CV="52" mask="VXXXXXXX" default="1" minOut="4" include="828074" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
+        <label>FX6 Light Type</label>
+        <comment>Don't show this for the TSU-750 models</comment>
+      </variable>
+      <variable item="FX5B Effect Selection" CV="53" mask="XXXXVVVV" default="15" minOut="3" include="827114" tooltip="Determines the second effect associated with the FX5 light output">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
         <label>FX5B Effect Selection</label>
-        <comment>This CV for Gas Turbine only. Don't show this for the TSU-750 models</comment>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX5B Phase Selection" CV="53" mask="XXXVXXXX" minOut="3" include="827114" comment="This CV for Gas Turbine only. Don't show this for the TSU-750 models" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+      <variable item="FX5B Effect Selection" CV="53" mask="XXXXVVVV" default="0" minOut="3" include="828070,828071,828074" tooltip="Determines the second effect associated with the FX5 light output">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
+        <label>FX5B Effect Selection</label>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
+      </variable>
+      <variable item="FX5B Phase Selection" CV="53" mask="XXXVXXXX" default="0" minOut="3" include="827114,828070,828071,828074" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
         <label>FX5B Phase Selection</label>
-        <comment>This CV for Gas Turbine only. Don't show this for the TSU-750 models</comment>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX5B Grade Crossing Logic" CV="53" mask="XXVXXXXX" minOut="3" include="827114" comment="This CV for Gas Turbine only. Don't show this for the TSU-750 models" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+      <variable item="FX5B Grade Crossing Logic" CV="53" mask="XXVXXXXX" default="0" minOut="3" include="827114,828070,828071,828074" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX5B Grade Crossing Logic</label>
-        <comment>This CV for Gas Turbine only. Don't show this for the TSU-750 models</comment>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX5B Rule 17 Mode" CV="53" mask="XVXXXXXX" minOut="3" include="827114" comment="This CV for Gas Turbine only. Don't show this for the TSU-750 models" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
+      <variable item="FX5B Rule 17 Mode" CV="53" mask="XVXXXXXX" default="0" minOut="3" include="827114,828070,828071,828074" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumR17FX5.xml"/>
         <label>FX5B Rule 17 Mode</label>
-        <comment>This CV for Gas Turbine only. Don't show this for the TSU-750 models</comment>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX5B Light Type" CV="53" mask="VXXXXXXX" minOut="3" include="827114" comment="This CV for Gas Turbine only. Don't show this for the TSU-750 models" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable item="FX5B Light Type" CV="53" mask="VXXXXXXX" default="0" minOut="3" include="827114,828070,828071,828074" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>FX5B Light Type</label>
-        <comment>This CV for Gas Turbine only. Don't show this for the TSU-750 models</comment>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX6B Effect Selection" CV="54" mask="XXXXVVVV" default="15" minOut="4" include="827114" comment="This CV for Gas Turbine only. Don't show this for the TSU-750 models" tooltip="Determines the second effect associated with the FX6 light output">
+      <variable item="FX6B Effect Selection" CV="54" mask="XXXXVVVV" default="15" minOut="4" include="827114" tooltip="Determines the second effect associated with the FX6 light output">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
         <label>FX6B Effect Selection</label>
-        <comment>This CV for Gas Turbine only. Don't show this for the TSU-750 models</comment>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX6B Phase Selection" CV="54" mask="XXXVXXXX" minOut="4" include="827114" comment="This CV for Gas Turbine only. Don't show this for the TSU-750 models" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+      <variable item="FX6B Effect Selection" CV="54" mask="XXXXVVVV" default="0" minOut="4" include="828070,828071" tooltip="Determines the second effect associated with the FX6 light output">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
+        <label>FX6B Effect Selection</label>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
+      </variable>
+      <variable item="FX6B Effect Selection" CV="54" mask="XXXXVVVV" default="9" minOut="4" include="828074" tooltip="Determines the second effect associated with the FX6 light output">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
+        <label>FX6B Effect Selection</label>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
+      </variable>
+      <variable item="FX6B Phase Selection" CV="54" mask="XXXVXXXX" default="0" minOut="4" include="827114,828070,828071" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
         <label>FX6B Phase Selection</label>
-        <comment>This CV for Gas Turbine only. Don't show this for the TSU-750 models</comment>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX6B Grade Crossing Logic" CV="54" mask="XXVXXXXX" minOut="4" include="827114" comment="This CV for Gas Turbine only. Don't show this for the TSU-750 models" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+      <variable item="FX6B Phase Selection" CV="54" mask="XXXVXXXX" default="1" minOut="4" include="828074" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
+        <label>FX6B Phase Selection</label>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
+      </variable>
+      <variable item="FX6B Grade Crossing Logic" CV="54" mask="XXVXXXXX" default="0" minOut="4" include="827114,828070,828071" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX6B Grade Crossing Logic</label>
-        <comment>This CV for Gas Turbine only. Don't show this for the TSU-750 models</comment>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX6B Rule 17 Mode" CV="54" mask="XVXXXXXX" minOut="4" include="827114" comment="This CV for Gas Turbine only. Don't show this for the TSU-750 models" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
+      <variable item="FX6B Grade Crossing Logic" CV="54" mask="XXVXXXXX" default="1" minOut="4" include="828074" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX6B Grade Crossing Logic</label>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
+      </variable>
+      <variable item="FX6B Rule 17 Mode" CV="54" mask="XVXXXXXX" default="0" minOut="4" include="827114,828070,828071,828074" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumR17FX6.xml"/>
         <label>FX6B Rule 17 Mode</label>
-        <comment>This CV for Gas Turbine only. Don't show this for the TSU-750 models</comment>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX6B Light Type" CV="54" mask="VXXXXXXX" minOut="4" include="827114" comment="This CV for Gas Turbine only. Don't show this for the TSU-750 models" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable item="FX6B Light Type" CV="54" mask="VXXXXXXX" default="0" minOut="4" include="827114,828070,828071" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>FX6B Light Type</label>
-        <comment>This CV for Gas Turbine only. Don't show this for the TSU-750 models</comment>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX5 Forward Directional Control" CV="57" mask="XXXXXXXV" default="1" minOut="4" include="827114" comment="This CV for Gas Turbine only. Don't show this for the TSU-750 models" tooltip="Check to enable FX5 function output in Forward direction">
+      <variable item="FX6B Light Type" CV="54" mask="VXXXXXXX" default="1" minOut="4" include="828074" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
+        <label>FX6B Light Type</label>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
+      </variable>
+      <variable item="FX5 Forward Directional Control" CV="57" mask="XXXXXXXV" default="1" minOut="4" include="827114,828070,828071,828074" tooltip="Check to enable FX5 function output in Forward direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX5 Forward Directional Control</label>
-        <comment>This CV for Gas Turbine only. Don't show this for the TSU-750 models</comment>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX5 Reverse Directional Control" CV="57" mask="XXXXXXVX" default="1" minOut="4" include="827114" comment="This CV for Gas Turbine only. Don't show this for the TSU-750 models" tooltip="Check to enable FX5 function output in Reverse direction">
+      <variable item="FX5 Reverse Directional Control" CV="57" mask="XXXXXXVX" default="1" minOut="4" include="827114,828074" tooltip="Check to enable FX5 function output in Reverse direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX5 Reverse Directional Control</label>
-        <comment>This CV for Gas Turbine only. Don't show this for the TSU-750 models</comment>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX5B Forward Directional Control" CV="57" mask="XXXXXVXX" default="1" minOut="4" include="827114" comment="This CV for Gas Turbine only. Don't show this for the TSU-750 models" tooltip="Check to enable FX5B function output in Forward direction">
+      <variable item="FX5 Reverse Directional Control" CV="57" mask="XXXXXXVX" default="0" minOut="4" include="828070,828071" tooltip="Check to enable FX5 function output in Reverse direction">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX5 Reverse Directional Control</label>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
+      </variable>
+      <variable item="FX5B Forward Directional Control" CV="57" mask="XXXXXVXX" default="1" minOut="4" include="827114,828070,828074" tooltip="Check to enable FX5B function output in Forward direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX5B Forward Directional Control</label>
-        <comment>This CV for Gas Turbine only. Don't show this for the TSU-750 models</comment>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX5B Reverse Directional Control" CV="57" mask="XXXXVXXX" default="1" minOut="4" include="827114" comment="This CV for Gas Turbine only. Don't show this for the TSU-750 models" tooltip="Check to enable FX5B function output in Reverse direction">
+      <variable item="FX5B Forward Directional Control" CV="57" mask="XXXXXVXX" default="0" minOut="4" include="828071" tooltip="Check to enable FX5B function output in Forward direction">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX5B Forward Directional Control</label>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
+      </variable>
+      <variable item="FX5B Reverse Directional Control" CV="57" mask="XXXXVXXX" default="1" minOut="4" include="827114,828070" tooltip="Check to enable FX5B function output in Reverse direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX5B Reverse Directional Control</label>
-        <comment>This CV for Gas Turbine only. Don't show this for the TSU-750 models</comment>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX6 Forward Directional Control" CV="57" mask="XXXVXXXX" default="1" minOut="4" include="827114" comment="This CV for Gas Turbine only. Don't show this for the TSU-750 models" tooltip="Check to enable FX6 function output in Forward direction">
+      <variable item="FX5B Reverse Directional Control" CV="57" mask="XXXXVXXX" default="0" minOut="4" include="828071,828074" tooltip="Check to enable FX5B function output in Reverse direction">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX5B Reverse Directional Control</label>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
+      </variable>
+      <variable item="FX6 Forward Directional Control" CV="57" mask="XXXVXXXX" default="1" minOut="4" include="827114,828070,828074" tooltip="Check to enable FX6 function output in Forward direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX6 Forward Directional Control</label>
-        <comment>This CV for Gas Turbine only. Don't show this for the TSU-750 models</comment>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX6 Reverse Directional Control" CV="57" mask="XXVXXXXX" default="1" minOut="4" include="827114" comment="This CV for Gas Turbine only. Don't show this for the TSU-750 models" tooltip="Check to enable FX6 function output in Reverse direction">
+      <variable item="FX6 Forward Directional Control" CV="57" mask="XXXVXXXX" default="0" minOut="4" include="828071" tooltip="Check to enable FX6 function output in Forward direction">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX6 Forward Directional Control</label>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
+      </variable>
+      <variable item="FX6 Reverse Directional Control" CV="57" mask="XXVXXXXX" default="1" minOut="4" include="827114,828070,828074" tooltip="Check to enable FX6 function output in Reverse direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX6 Reverse Directional Control</label>
-        <comment>This CV for Gas Turbine only. Don't show this for the TSU-750 models</comment>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX6B Forward Directional Control" CV="57" mask="XVXXXXXX" default="1" minOut="4" include="827114" comment="This CV for Gas Turbine only. Don't show this for the TSU-750 models" tooltip="Check to enable FX6B function output in Forward direction">
+      <variable item="FX6 Reverse Directional Control" CV="57" mask="XXVXXXXX" default="0" minOut="4" include="828071" tooltip="Check to enable FX6 function output in Reverse direction">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX6 Reverse Directional Control</label>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
+      </variable>
+      <variable item="FX6B Forward Directional Control" CV="57" mask="XVXXXXXX" default="1" minOut="4" include="827114,828070,828071" tooltip="Check to enable FX6B function output in Forward direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX6B Forward Directional Control</label>
-        <comment>This CV for Gas Turbine only. Don't show this for the TSU-750 models</comment>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX6B Reverse Directional Control" CV="57" mask="VXXXXXXX" default="1" minOut="4" include="827114" comment="This CV for Gas Turbine only. Don't show this for the TSU-750 models" tooltip="Check to enable FX6B function output in Reverse direction">
+      <variable item="FX6B Forward Directional Control" CV="57" mask="XVXXXXXX" default="0" minOut="4" include="828074" tooltip="Check to enable FX6B function output in Forward direction">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX6B Forward Directional Control</label>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
+      </variable>
+      <variable item="FX6B Reverse Directional Control" CV="57" mask="VXXXXXXX" default="1" minOut="4" include="827114,828070,828071,828074" tooltip="Check to enable FX6B function output in Reverse direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX6B Reverse Directional Control</label>
-        <comment>This CV for Gas Turbine only. Don't show this for the TSU-750 models</comment>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX5 Lighting Overide" CV="58" mask="XXXXXXXV" minOut="4" default="0" include="827114" comment="This CV for Gas Turbine only. Don't show this for the TSU-750 models" tooltip="When enabled, turning on FX5 will turn off all other lighting function outputs">
+      <variable item="FX5 Lighting Overide" CV="58" mask="XXXXXXXV" minOut="4" default="0" include="827114,828070,828071,828074" tooltip="When enabled, turning on FX5 will turn off all other lighting function outputs">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumOverideFX5.xml"/>
         <label>FX5 Lighting Overide</label>
-        <comment>This CV for Gas Turbine only. Don't show this for the TSU-750 models</comment>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX6 Lighting Overide" CV="58" mask="XXXXXXVX" minOut="4" default="0" include="827114" comment="This CV for Gas Turbine only. Don't show this for the TSU-750 models" tooltip="When enabled, turning on FX6 will turn off all other lighting function outputs">
+      <variable item="FX6 Lighting Overide" CV="58" mask="XXXXXXVX" minOut="4" default="0" include="827114,828070,828071,828074" tooltip="When enabled, turning on FX6 will turn off all other lighting function outputs">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumOverideFX6.xml"/>
         <label>FX6 Lighting Overide</label>
-        <comment>This CV for Gas Turbine only. Don't show this for the TSU-750 models</comment>
+        <comment>This CV for Gas Turbine and Intermountain only. Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="Hyperlight Flash Rate (0-15)" CV="59" mask="XXXXVVVV" default="3" comment="0 is fast, 15 is slow, 4 is recommended for start" tooltip="Sets the overall flash rate of the Hyperlight effects">
+      <variable item="Hyperlight Flash Rate (0-15)" CV="59" mask="XXXXVVVV" default="4" comment="0 is fast, 15 is slow, 4 is recommended for start" tooltip="Sets the overall flash rate of the Hyperlight effects">
         <decVal max="15"/>
         <label>Hyperlight Flash Rate (0-15)</label>
         <comment>0 is fast, 15 is slow, 4 is recommended for start</comment>
@@ -2491,7 +2838,11 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumTransponding.xml"/>
         <label>Transponding Control</label>
       </variable>
-      <variable CV="63" item="Radio Power Conversion" default="20" tooltip="Sets the voltage difference between when the decoder first powers up and when the locomotive starts to move">
+      <variable CV="63" item="Radio Power Conversion" default="20" exclude="828070" tooltip="Sets the voltage difference between when the decoder first powers up and when the locomotive starts to move">
+        <decVal/>
+        <label>Analog Mode Motor Start Voltage (0-255)</label>
+      </variable>
+      <variable CV="63" item="Radio Power Conversion" default="40" include="828070" tooltip="Sets the voltage difference between when the decoder first powers up and when the locomotive starts to move">
         <decVal/>
         <label>Analog Mode Motor Start Voltage (0-255)</label>
       </variable>
@@ -2549,12 +2900,17 @@
         <decVal/>
         <label>Quiet Mode Timeout Period</label>
       </variable>
-      <variable CV="114" item="Sound Group 3 Option 2" default="4" tooltip="Controls the speed at which the bell rings (higher no. = slower rate">
+      <variable CV="114" item="Sound Group 3 Option 2" default="4" exclude="828070" tooltip="Controls the speed at which the bell rings (higher no. = slower rate">
+        <decVal max="15"/>
+        <label>Bell Ring Rate</label>
+      </variable>
+      <variable CV="114" item="Sound Group 3 Option 2" default="3" include="828070" tooltip="Controls the speed at which the bell rings (higher no. = slower rate">
         <decVal max="15"/>
         <label>Bell Ring Rate</label>
       </variable>
       <!-- Airhorn Selection follows -->
-      <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="9" comment="Show these horns for the models (productID) listed below" include="827001,827004,827008,827011,827012,827014,827015,827018,827101,827104,827106,827108,827111,827112,827113,827114,827118,827119,827124,828020,828023,828025,828037,828039,828040,828043,828045,828047,828049,828050,828065,828067" tooltip="Selects which airhorn to use">
+      <!-- Airhorn Set #1 : EMD 567, ALCO 244, 251, 539 F-M, Baldwin, Gas Turbine, GE Dual FDL-16, GE Cummins -->
+      <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="9" comment="Show these horns for the models (productID) listed below" include="827001,827004,827008,827011,827012,827014,827015,827018,827101,827104,827106,827108,827111,827112,827113,827114,827118,827119,827124,828020,828023,828025,828037,828039,828040,828043,828045,828047,828049,828050,828065,828067,828070" tooltip="Selects which airhorn to use">
         <enumVal>
           <enumChoice choice="Wabco A2">
             <choice>Wabco A2</choice>
@@ -2608,7 +2964,7 @@
         <label>Airhorn Select</label>
         <comment>Show these horns for the models (productID) listed below</comment>
       </variable>
-      <variable CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0" comment="Show these horns for the models (productID) listed below" include="827001,827004,827008,827011,827012,827014,827015,827018,827101,827104,827106,827108,827111,827112,827113,827114,827118,827119,827124,828020,828023,828025,828037,828039,828040,828043,828045,828047,828049,828050,828065,828067" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
+      <variable CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0" comment="Show these horns for the models (productID) listed below" include="827001,827004,827008,827011,827012,827014,827015,827018,827101,827104,827106,827108,827111,827112,827113,827114,827118,827119,827124,828020,828023,828025,828037,828039,828040,828043,828045,828047,828049,828050,828065,828067,828070" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
         <enumVal>
           <enumChoice choice="Short horn blast">
             <choice>Short horn blast</choice>
@@ -2662,6 +3018,7 @@
         <label>Alternate Airhorn Select</label>
         <comment>Show these horns for the models (productID) listed below</comment>
       </variable>
+      <!-- Airhorn Set #2 : Alco 251 V12-->
       <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="9" comment="Show these horns for the models (productID) listed below" include="827105,828044" tooltip="Selects which airhorn to use">
         <enumVal>
           <enumChoice choice="Wabco A2">
@@ -2770,7 +3127,8 @@
         <label>Alternate Airhorn Select</label>
         <comment>Show these horns for the models (productID) listed below</comment>
       </variable>
-      <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="9" comment="Show these horns for the models (productID) listed below" include="827002,827102,827107,827109,827117,828026,828038,828041,828046,828048,828051,828056,828057,828058,828061,828062,828063,828064" tooltip="Selects which airhorn to use">
+      <!-- Airhorn Set #3 : EMD 645, GE FDL-16 -->
+      <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="9" comment="Show these horns for the models (productID) listed below" include="827002,827102,827107,827109,827117,828026,828038,828041,828046,828048,828051,828056,828057,828058,828061,828062,828063,828064,828068,828071" tooltip="Selects which airhorn to use">
         <enumVal>
           <enumChoice choice="Wabco E2">
             <choice>Wabco E2</choice>
@@ -2824,7 +3182,7 @@
         <label>Airhorn Select</label>
         <comment>Show these horns for the models (productID) listed below</comment>
       </variable>
-      <variable CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0" comment="Show these horns for the models (productID) listed below" include="827002,827102,827107,827109,827117,828026,828038,828041,828046,828048,828051,828056,828057,828058,828061,828062,828063,828064" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
+      <variable CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0" comment="Show these horns for the models (productID) listed below" include="827002,827102,827107,827109,827117,828026,828038,828041,828046,828048,828051,828056,828057,828058,828061,828062,828063,828064,828068,828071" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
         <enumVal>
           <enumChoice choice="Short Horn">
             <choice>Short Horn</choice>
@@ -2878,6 +3236,7 @@
         <label>Alternate Airhorn Select</label>
         <comment>Show these horns for the models (productID) listed below</comment>
       </variable>
+      <!-- Airhorn Set #4 : EMD 710-->
       <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="9" comment="Show these horns for the models (productID) listed below" include="827003,827103,828042,828052,828060" tooltip="Selects which airhorn to use">
         <enumVal>
           <enumChoice choice="Wabco E2">
@@ -2986,6 +3345,7 @@
         <label>Alternate Airhorn Select</label>
         <comment>Show these horns for the models (productID) listed below</comment>
       </variable>
+      <!-- Airhorn Set #5 : Cummins GenSet -->
       <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="9" comment="Show these horns for the models (productID) listed below" include="828036" tooltip="Selects which airhorn to use">
         <enumVal>
           <enumChoice choice="Wabco E2">
@@ -3094,6 +3454,7 @@
         <label>Alternate Airhorn Select</label>
         <comment>Show these horns for the models (productID) listed below</comment>
       </variable>
+      <!-- Airhorn Set #6 : Galloping Goose -->
       <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" comment="These are the horns for the Galloping Goose" include="827010,827110" tooltip="Selects which horn to use">
         <enumVal>
           <enumChoice choice="RGS Goose #5">
@@ -3154,6 +3515,7 @@
         <label>Alternate Horn Select</label>
         <comment>These are the horns for the Galloping Goose</comment>
       </variable>
+      <!-- Airhorn Set #7 : EMD 710 G3C-T2-->
       <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="9" comment="Show these horns for the models (productID) listed below" include="827115,828053" tooltip="Selects which airhorn to use">
         <enumVal>
           <enumChoice choice="Nathan M3">
@@ -3262,7 +3624,8 @@
         <label>Alternate Airhorn Select</label>
         <comment>Show these horns for the models (productID) listed below</comment>
       </variable>
-      <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="9" comment="Show these horns for the models (productID) listed below" include="827116" tooltip="Selects which airhorn to use">
+      <!-- Airhorn Set #8 : GEVO-12 -->
+      <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="9" comment="Show these horns for the models (productID) listed below" include="827116,828059,828074" tooltip="Selects which airhorn to use">
         <enumVal>
           <enumChoice choice="Nathan M3">
             <choice>Nathan M3</choice>
@@ -3316,7 +3679,7 @@
         <label>Airhorn Select</label>
         <comment>Show these horns for the models (productID) listed below</comment>
       </variable>
-      <variable CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0" comment="Show these horns for the models (productID) listed below" include="827116" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
+      <variable CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0" comment="Show these horns for the models (productID) listed below" include="827116,828059,828074" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
         <enumVal>
           <enumChoice choice="Short Horn">
             <choice>Short Horn</choice>
@@ -3533,21 +3896,21 @@
         <decVal/>
         <label>Engine Exhaust Reverb Level</label>
       </variable>
-      <variable CV="171" mask="VVVVVVVV" item="Exhaust Reverb Level" default="0" include="828036" tooltip="Sets the percentage of the diesel engine exhaust signal level to mix into the reverb input">
+      <variable CV="171" mask="VVVVVVVV" item="Exhaust Reverb Level" default="0" include="828036" tooltip="Sets the percentage of the prime mover #1 signal level to mix into the reverb input">
         <decVal/>
-        <label>Engine Exhaust Reverb Level</label>
+        <label>Prime Mover 1 Reverb Level</label>
       </variable>
       <variable CV="172" mask="VVVVVVVV" item="Air Pump Reverb Level" default="0" exclude="828036" tooltip="Sets the percentage of the air compressor signal level to mix into the reverb input">
         <decVal/>
         <label>Air Compressor Reverb Level</label>
       </variable>
-      <variable CV="172" mask="VVVVVVVV" item="Air Pump Reverb Level" default="0" include="828036" tooltip="Sets the percentage of the air compressor signal level to mix into the reverb input">
+      <variable CV="172" mask="VVVVVVVV" item="Air Pump Reverb Level" default="0" include="828036" tooltip="Sets the percentage of the prime mover #2 signal level to mix into the reverb input">
         <decVal/>
-        <label>Air Compressor Reverb Level</label>
+        <label>Prime Mover 2 Reverb Level</label>
       </variable>
-      <variable item="Prime Mover 3 Reverb Level" CV="172" mask="VVVVVVVV" default="0" include="828036" tooltip="Sets the percentage of the air compressor signal level to mix into the reverb input">
+      <variable CV="173" mask="VVVVVVVV" item="Prime Mover 3 Reverb Level" default="0" include="828036" tooltip="Sets the percentage of the prime mover #3 signal level to mix into the reverb input">
         <decVal/>
-        <label>Air Compressor Reverb Level</label>
+        <label>Prime Mover 3 Reverb Level</label>
       </variable>
       <!-- Automatic Sound Controls (ASC) follow -->
       <variable item="Bell-On Set Point" CV="193" mask="XVVVVVVV" default="15" tooltip="Specifies the throttle speed step where the automatic bell will first turn on">
@@ -3608,11 +3971,19 @@
       </variable>
       <!-- End of variables for file-specific panes -->
       <!-- Advanced Motor Control Features follow -->
-      <variable CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="25" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
+      <variable CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="25" exclude="828070" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
         <decVal/>
         <label>Motor Kp Coefficient (0-255)</label>
       </variable>
-      <variable CV="210" mask="VVVVVVVV" item="Advanced Group 2 Option 2" default="20" tooltip="Specifies a gain factor for the integral part of the PID motor control equation">
+      <variable CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="30" include="828070" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
+        <decVal/>
+        <label>Motor Kp Coefficient (0-255)</label>
+      </variable>
+      <variable CV="210" mask="VVVVVVVV" item="Advanced Group 2 Option 2" default="20" exclude="828070,828071,828074" tooltip="Specifies a gain factor for the integral part of the PID motor control equation">
+        <decVal/>
+        <label>Motor Ki Coefficient (0-255)</label>
+      </variable>
+      <variable CV="210" mask="VVVVVVVV" item="Advanced Group 2 Option 2" default="25" include="828070,828071,828074" tooltip="Specifies a gain factor for the integral part of the PID motor control equation">
         <decVal/>
         <label>Motor Ki Coefficient (0-255)</label>
       </variable>
@@ -3620,11 +3991,19 @@
         <decVal/>
         <label>Motor Control Intensity (0-255)</label>
       </variable>
-      <variable CV="213" mask="VVVVVVVV" item="Advanced Group 2 Option 4" default="15" tooltip="Specifies the time period in mS (milliseconds) between measurements">
+      <variable CV="213" mask="VVVVVVVV" item="Advanced Group 2 Option 4" default="15" exclude="828070,828071,828074" tooltip="Specifies the time period in mS (milliseconds) between measurements">
         <decVal max="31"/>
         <label>Motor Control Sample Period (0-31)</label>
       </variable>
-      <variable CV="214" mask="VVVVVVVV" item="Advanced Group 2 Option 5" default="15" tooltip="Specifies a gain factor for the derivative part of the PID motor control equation">
+      <variable CV="213" mask="VVVVVVVV" item="Advanced Group 2 Option 4" default="24" include="828070,828071,828074" tooltip="Specifies the time period in mS (milliseconds) between measurements">
+        <decVal max="31"/>
+        <label>Motor Control Sample Period (0-31)</label>
+      </variable>
+      <variable CV="214" mask="VVVVVVVV" item="Advanced Group 2 Option 5" default="15" exclude="828070,828071,828074" tooltip="Specifies a gain factor for the derivative part of the PID motor control equation">
+        <decVal/>
+        <label>Motor Control Sample Aperture Time (0-255)</label>
+      </variable>
+      <variable CV="214" mask="VVVVVVVV" item="Advanced Group 2 Option 5" default="7" include="828070,828071,828074" tooltip="Specifies a gain factor for the derivative part of the PID motor control equation">
         <decVal/>
         <label>Motor Control Sample Aperture Time (0-255)</label>
       </variable>
