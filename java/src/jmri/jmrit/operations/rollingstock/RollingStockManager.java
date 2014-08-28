@@ -219,7 +219,8 @@ public class RollingStockManager {
 					number = sortIn.get(i).getNumber().split("-");
 					rsNumber = Integer.parseInt(number[0]);
 					sortIn.get(i).number = rsNumber;
-				} catch (NumberFormatException e2) {
+					// two possible exceptions, ArrayIndexOutOfBoundsException on split, and NumberFormatException on parseInt
+				} catch (Exception e2) {
 					sortIn.get(i).number = notInteger;
 					// sort alpha numeric numbers at the end of the out list
 					String numberIn = sortIn.get(i).getNumber();
