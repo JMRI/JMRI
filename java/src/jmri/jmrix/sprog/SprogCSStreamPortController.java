@@ -34,6 +34,7 @@ public class SprogCSStreamPortController extends AbstractStreamPortController im
        // connect to the traffic controller
        ((SprogSystemConnectionMemo)adaptermemo).setSprogTrafficController(control);
        control.setAdapterMemo((SprogSystemConnectionMemo)adaptermemo);
+       ((SprogSystemConnectionMemo)adaptermemo).configureCommandStation();
        ((SprogSystemConnectionMemo)adaptermemo).configureManagers();
        control.connectPort(this);
 
