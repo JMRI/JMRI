@@ -270,7 +270,7 @@ public class RollingStockManager {
 						try {
 							number = out.get(j).getNumber().split("-");
 							outRsNumber = Integer.parseInt(number[0]);
-						} catch (NumberFormatException e2) {
+						} catch (Exception e2) {
 							// force add
 							outRsNumber = rsNumber + 1;
 						}
