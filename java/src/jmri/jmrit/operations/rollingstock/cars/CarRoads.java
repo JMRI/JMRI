@@ -123,11 +123,15 @@ public class CarRoads {
 
 	public int getCurMaxNameLength() {
 		if (maxNameLength == 0) {
+			String maxName = "";
 			maxNameLength = MIN_NAME_LENGTH;
 			for (String name : getNames()) {
-				if (name.length() > maxNameLength)
+				if (name.length() > maxNameLength) {
+					maxName = name;
 					maxNameLength = name.length();
+				}
 			}
+			log.info("Max road name ({}) length {}", maxName, maxNameLength);
 		}
 		return maxNameLength;
 	}

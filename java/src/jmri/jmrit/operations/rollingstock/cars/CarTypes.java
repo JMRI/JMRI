@@ -180,12 +180,16 @@ public class CarTypes {
 	 */
 	public int getCurMaxNameLength() {
 		if (maxNameLength == 0) {
+			String maxName = "";
 			maxNameLength = MIN_NAME_LENGTH;
 			for (String name : getNames()) {
 				String [] subString = name.split("-");
-				if (subString[0].length() > maxNameLength)
+				if (subString[0].length() > maxNameLength) {
+					maxName = name;
 					maxNameLength = subString[0].length();
+				}
 			}
+			log.info("Max car type name ({}) length {}", maxName, maxNameLength);
 		}
 		return maxNameLength;
 	}
