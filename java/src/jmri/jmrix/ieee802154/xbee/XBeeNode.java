@@ -232,5 +232,48 @@ public class XBeeNode extends IEEE802154Node {
 
    private XBeeIOStream mStream = null;
 
+  /*
+   * Connect a StreamPortController object to the XBeeIOStream
+   * associated with this node
+   * @param cont AbstractSTreamPortController object to connect.
+   */
+  public void connectPortController(jmri.jmrix.AbstractStreamPortController cont){
+     connectedController = cont;
+  }
+  /*
+   * Create a new object derived from AbstractStreamPortController and
+   * connect it to the IOStream associated with this object.
+   */
+  public void connectPortController(Class<jmri.jmrix.AbstractStreamPortController> T){
+     try {
+        java.lang.reflect.Constructor<?> ctor = T.getConstructor(java.io.DataInputStream.class,java.io.DataOutputStream.class,String.class);
+        connectedController = ( jmri.jmrix.AbstractStreamPortController ) ctor.newInstance(getIOStream().getInputStream(),getIOStream().getOutputStream(),"XBee Node " + getPreferedName()); 
+        connectedController.configure(); 
+     } catch ( java.lang.InstantiationException ie ) {
+        log.error("Unable to construct Stream Port Controller for node.");
+        ie.printStackTrace();
+     } catch ( java.lang.NoSuchMethodException nsm ) {
+        log.error("Unable to construct Stream Port Controller for node.");
+        nsm.printStackTrace();
+     } catch ( java.lang.IllegalAccessException iae ) {
+        log.error("Unable to construct Stream Port Controller for node.");
+        iae.printStackTrace();
+     } catch ( java.lang.reflect.InvocationTargetException ite ) {
+        log.error("Unable to construct Stream Port Controller for node.");
+        ite.printStackTrace();
+     }
+   }
+
+  /*
+   * return the StreamPortController ojbect associated with the XBeeIOStream
+   * associated with this node.
+   * @return jmri.jmrix.AbstractStreamPortController
+   */
+  public jmri.jmrix.AbstractStreamPortController getPortController() {
+     return connectedController;
+  }
+
+   private jmri.jmrix.AbstractStreamPortController connectedController = null;
+
    private static Logger log = LoggerFactory.getLogger(XBeeNode.class.getName());
 }
