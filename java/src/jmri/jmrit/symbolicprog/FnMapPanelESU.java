@@ -300,16 +300,16 @@ public class FnMapPanelESU extends JPanel {
             String osVersion = System.getProperty("os.version");
             String javaVersion = System.getProperty("java.version");
             if ( javaVersion.startsWith("1.6.") ) {
-                warnMsg = warnMsg + "<strong>WARNING: The version of Java installed on your system (" + javaVersion +") has a bug<br/>" +
+                warnMsg = warnMsg + "<span style=\"font-size:1.5em;color:red\"><strong>WARNING: The version of Java installed on your system (" + javaVersion +") has a bug<br/>" +
                      "that may cause JMRI to generate an error when using with this definition.<br/>" +
-                     "</strong>";
+                     "</strong></span>";
                  if ( osVersion.startsWith("10.5.") || osVersion.startsWith("10.6.") ) {
-                    warnMsg = warnMsg + "<strong>To avoid this problem, change GUI as per the suggestion below.<br/>" +
-                         "</strong><br/>";
+                    warnMsg = warnMsg + "<span style=\"font-size:1.2em\"><strong>To avoid this problem, change GUI as per the suggestion below.<br/>" +
+                         "</strong></span><br/>";
                      } else {
-                    warnMsg = warnMsg + "<strong>To avoid this problem, change GUI as per the suggestion below<br/>" +
+                    warnMsg = warnMsg + "<span style=\"font-size:1.2em\"><strong>To avoid this problem, change GUI as per the suggestion below<br/>" +
                          "or update to Oracle Java from http://www.java.com/<br/>" +
-                         "</strong><br/>";
+                         "</strong></span><br/>";
                      }
             }
             warnMsg = warnMsg + "<strong>You are using the Mac OS X native GUI<br/>" +
