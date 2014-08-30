@@ -4,6 +4,10 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
@@ -69,6 +73,13 @@ public class ProfileManagerDialog extends JDialog {
                 }
             }
         });
+        this.jScrollPane1.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+
+            @Override
+            public void adjustmentValueChanged(AdjustmentEvent e) {
+                profilesValueChanged(null);
+            }
+        });
     }
 
     /**
@@ -92,6 +103,11 @@ public class ProfileManagerDialog extends JDialog {
         ResourceBundle bundle = ResourceBundle.getBundle("jmri/profile/Bundle"); // NOI18N
         setTitle(bundle.getString("ProfileManagerDialog.title")); // NOI18N
         setMinimumSize(new Dimension(310, 110));
+        addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
+                formMousePressed(evt);
+            }
+        });
         addWindowListener(new WindowAdapter() {
             public void windowOpened(WindowEvent evt) {
                 formWindowOpened(evt);
@@ -281,6 +297,11 @@ public class ProfileManagerDialog extends JDialog {
         countDownLbl.setVisible(false);
         btnSelect.setEnabled(true);
     }//GEN-LAST:event_profilesValueChanged
+
+    private void formMousePressed(MouseEvent evt) {//GEN-FIRST:event_formMousePressed
+        this.profilesValueChanged(null);
+    }//GEN-LAST:event_formMousePressed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private JButton btnCreate;
     private JButton btnSelect;
