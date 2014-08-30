@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -330,15 +331,17 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
     }//GEN-LAST:event_btnAddSearchPathActionPerformed
 
     private void btnRemoveSearchPathActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnRemoveSearchPathActionPerformed
-        File path = (File) searchPaths.getSelectedValue();
-        try {
-            ProfileManager.defaultManager().removeSearchPath(path);
-        } catch (IOException ex) {
-            log.warn("Unable to write profiles while removing search path {}", path.getPath(), ex);
-            JOptionPane.showMessageDialog(this,
-                    Bundle.getMessage("ProfilePreferencesPanel.btnRemoveSearchPath.errorMessage", path.getPath(), ex.getLocalizedMessage()),
-                    Bundle.getMessage("ProfilePreferencesPanel.btnRemoveSearchPath.errorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+        for (Object value : this.searchPaths.getSelectedValues()) { // getSelectedValues is deprecated in Java 1.7
+            File path = (File) value;
+            try {
+                ProfileManager.defaultManager().removeSearchPath(path);
+            } catch (IOException ex) {
+                log.warn("Unable to write profiles while removing search path {}", path.getPath(), ex);
+                JOptionPane.showMessageDialog(this,
+                        Bundle.getMessage("ProfilePreferencesPanel.btnRemoveSearchPath.errorMessage", path.getPath(), ex.getLocalizedMessage()),
+                        Bundle.getMessage("ProfilePreferencesPanel.btnRemoveSearchPath.errorTitle"),
+                        JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btnRemoveSearchPathActionPerformed
 
@@ -378,30 +381,35 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
     }//GEN-LAST:event_btnCreateNewProfileActionPerformed
 
     private void btnDeleteProfileActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnDeleteProfileActionPerformed
-        Profile deletedProfile = ProfileManager.defaultManager().getAllProfiles().get(profilesTbl.getSelectedRow());
-        int result = JOptionPane.showOptionDialog(this,
-                Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.dlgMessage", deletedProfile.getName()), // NOI18N
-                Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.dlgTitle", deletedProfile.getName()), // NOI18N
-                JOptionPane.OK_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null, // use default icon
-                new String[]{
-                    Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.text"), // NOI18N
-                    Bundle.getMessage("AddProfileDialog.btnCancel.text") // NOI18N
-                },
-                JOptionPane.CANCEL_OPTION
-        );
-        if (result == JOptionPane.OK_OPTION) {
-            if (!FileUtil.delete(deletedProfile.getPath())) {
-                log.warn("Unable to delete profile directory {}", deletedProfile.getPath());
-                JOptionPane.showMessageDialog(this,
-                        Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.errorMessage", deletedProfile.getPath()),
-                        Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.errorMessage"),
-                        JOptionPane.ERROR_MESSAGE);
+        ArrayList<Profile> profiles = new ArrayList<Profile>(this.profilesTbl.getSelectedRowCount());
+        for (int row : this.profilesTbl.getSelectedRows()) {
+            profiles.add(ProfileManager.defaultManager().getAllProfiles().get(row));
+        }
+        for (Profile deletedProfile : profiles) {
+            int result = JOptionPane.showOptionDialog(this,
+                    Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.dlgMessage", deletedProfile.getName()), // NOI18N
+                    Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.dlgTitle", deletedProfile.getName()), // NOI18N
+                    JOptionPane.OK_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null, // use default icon
+                    new String[]{
+                        Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.text"), // NOI18N
+                        Bundle.getMessage("AddProfileDialog.btnCancel.text") // NOI18N
+                    },
+                    JOptionPane.CANCEL_OPTION
+            );
+            if (result == JOptionPane.OK_OPTION) {
+                if (!FileUtil.delete(deletedProfile.getPath())) {
+                    log.warn("Unable to delete profile directory {}", deletedProfile.getPath());
+                    JOptionPane.showMessageDialog(this,
+                            Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.errorMessage", deletedProfile.getPath()),
+                            Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.errorMessage"),
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                ProfileManager.defaultManager().removeProfile(deletedProfile);
+                log.info("Removed profile \"{}\" from {}", deletedProfile.getName(), deletedProfile.getPath());
+                profilesTbl.repaint();
             }
-            ProfileManager.defaultManager().removeProfile(deletedProfile);
-            log.info("Removed profile \"{}\" from {}", deletedProfile.getName(), deletedProfile.getPath());
-            profilesTbl.repaint();
         }
     }//GEN-LAST:event_btnDeleteProfileActionPerformed
 
@@ -513,7 +521,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        if (profilesTbl.getSelectedRow() != -1 && profilesTbl.getSelectedRow() < ProfileManager.defaultManager().getAllProfiles().size()) {
+        if (profilesTbl.getSelectedRowCount() == 1 && profilesTbl.getSelectedRow() < ProfileManager.defaultManager().getAllProfiles().size()) {
             Profile p = ProfileManager.defaultManager().getAllProfiles().get(profilesTbl.getSelectedRow());
             this.btnDeleteProfile.setEnabled(!p.equals(ProfileManager.defaultManager().getActiveProfile()));
             if (ProfileManager.defaultManager().getNextActiveProfile() != null) {
@@ -523,6 +531,18 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
             }
             this.btnCopyProfile.setEnabled(true);
             this.btnExportProfile.setEnabled(true);
+        } else if (this.profilesTbl.getSelectedRowCount() > 1) {
+            this.btnDeleteProfile.setEnabled(true);
+            for (int row : this.profilesTbl.getSelectedRows()) {
+                Profile p = ProfileManager.defaultManager().getAllProfiles().get(row);
+                if (p.equals(ProfileManager.defaultManager().getActiveProfile())) {
+                    this.btnDeleteProfile.setEnabled(false);
+                    break;
+                }
+            }
+            this.btnCopyProfile.setEnabled(false);
+            this.btnExportProfile.setEnabled(false);
+            this.btnActivateProfile.setEnabled(false);
         } else {
             this.btnDeleteProfile.setEnabled(false);
             this.btnCopyProfile.setEnabled(false);
