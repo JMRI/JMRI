@@ -27,6 +27,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>33</revnumber>
+      <date>2014-08-30</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Add minOut="1"/"2" to deal with "no function" Soundbugs(TM)</revremark>
+    </revision>
+    <revision>    
       <revnumber>32</revnumber>
       <date>2012-12-27</date>
       <authorinitials>BJ</authorinitials>
@@ -39,22 +45,22 @@
       <revremark>Revision in original Digitrax_01x3.xml file</revremark>
     </revision>
   </revhistory>
-  <variable CV="49" mask="XXXXVVVV" item="Function F0F effect generated">
+  <variable CV="49" mask="XXXXVVVV" item="Function F0F effect generated" minOut="1">
     <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
     <label>Forward light F0F effect generated</label>
     <label xml:lang="it">Luce anteriore effetto in marcia avanti</label>
   </variable>
-  <variable CV="49" mask="VVVVXXXX" item="Function F0F behavior">
+  <variable CV="49" mask="VVVVXXXX" item="Function F0F behavior" minOut="1">
     <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
     <label>Forward light F0F behavior</label>
     <label xml:lang="it">Luce anteriore funzionamento in marcia avanti</label>
   </variable>
-  <variable CV="50" mask="XXXXVVVV" item="Function F0R effect generated">
+  <variable CV="50" mask="XXXXVVVV" item="Function F0R effect generated" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
     <label>Reverse light F0R effect generated</label>
     <label xml:lang="it">Luce anteriore effetto in marcia indietro</label>
   </variable>
-  <variable CV="50" mask="VVVVXXXX" item="Function F0R behavior">
+  <variable CV="50" mask="VVVVXXXX" item="Function F0R behavior" minOut="2">
     <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
     <label>Reverse light F0R behavior</label>
     <label xml:lang="it">Luce anteriore funzionamento in marcia indietro</label>
