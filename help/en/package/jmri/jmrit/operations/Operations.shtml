@@ -2379,7 +2379,8 @@
    <H3>Import Locomotives</H3>
 
    If you already have a list of locomotives in your JMRI roster or in a database, you can import
-   the locomotives into the program. To get your locomotives from your JMRI roster, select "Import
+   the locomotives into the program. The program will only import locomotives from your JMRI roster
+   that have a road name and number. To get your locomotives from your JMRI roster, select "Import
    from JMRI roster" from the Tools-&gt;Operations-&gt;Locomotives-&gt;Tools menu. Only locomotives
    that don't exist will be added to the programs locomotive roster. This way you can use this tool
    any time you add locomotives to your JMRI locomotive roster. The JMRI locomotive roster doesn't
