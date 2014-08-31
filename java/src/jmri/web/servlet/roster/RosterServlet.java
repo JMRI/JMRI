@@ -225,35 +225,56 @@ public class RosterServlet extends HttpServlet {
      */
     protected void doEntry(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String[] pathInfo = request.getPathInfo().substring(1).split("/");
-        String id = pathInfo[0];
+        int idOffset = 0;
         String type = null;
         if (pathInfo[0].equals("entry")) {
             if (pathInfo.length == 1) {
                 // path must be /roster/<id> or /roster/entry/<id>
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST);
             }
-            id = pathInfo[1];
+            idOffset = 1;
         }
-        if (pathInfo.length > 1 && !pathInfo[pathInfo.length - 1].equals(id)) {
+        String id = pathInfo[idOffset];
+        if (pathInfo.length > (1 + idOffset)) {
             type = pathInfo[pathInfo.length - 1];
         }
         RosterEntry re = Roster.instance().getEntryForId(id);
-        if (re == null) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Could not find roster entry " + id);
-        } else if (type == null || type.equals("entry")) {
-            // this should be an entirely different format than the table
-            this.doRoster(request, response, this.mapper.createObjectNode().put(ID, id), false);
-        } else if (type.equals("image")) {
-            this.doImage(request, response, new File(FileUtil.getAbsoluteFilename(re.getImagePath())));
-        } else if (type.equals("icon")) {
-            this.doImage(request, response, new File(FileUtil.getAbsoluteFilename(re.getIconPath())));
-        } else if (type.equals("file")) {
-            ServletUtil.getInstance().writeFile(response, new File(Roster.getFileLocation(), "roster" + File.separator + re.getFileName()), ServletUtil.UTF8_APPLICATION_XML); // NOI18N
-        } else if (type.equals("throttle")) {
-            ServletUtil.getInstance().writeFile(response, new File(FileUtil.getUserFilesPath(), "throttle" + File.separator + id + ".xml"), ServletUtil.UTF8_APPLICATION_XML); // NOI18N
-        } else {
-            // don't know what to do
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+        try {
+            if (re == null) {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Could not find roster entry " + id);
+            } else if (type == null || type.equals("entry")) {
+                // this should be an entirely different format than the table
+                this.doRoster(request, response, this.mapper.createObjectNode().put(ID, id), false);
+            } else if (type.equals(JSON.IMAGE)) {
+                this.doImage(request, response, new File(FileUtil.getAbsoluteFilename(re.getImagePath())));
+            } else if (type.equals(JSON.ICON)) {
+                int function = -1;
+                if (pathInfo.length != (2 + idOffset)) {
+                    function = Integer.parseInt(pathInfo[pathInfo.length - 2].substring(1));
+                }
+                if (function == -1) {
+                    this.doImage(request, response, new File(FileUtil.getAbsoluteFilename(re.getIconPath())));
+                } else {
+                    this.doImage(request, response, new File(FileUtil.getAbsoluteFilename(re.getFunctionImage(function))));
+                }
+            } else if (type.equals(JSON.SELECTED_ICON)) {
+                if (pathInfo.length != (2 + idOffset)) {
+                    int function = Integer.parseInt(pathInfo[pathInfo.length - 2].substring(1));
+                    this.doImage(request, response, new File(FileUtil.getAbsoluteFilename(re.getFunctionSelectedImage(function))));
+                }
+            } else if (type.equals("file")) {
+                ServletUtil.getInstance().writeFile(response, new File(Roster.getFileLocation(), "roster" + File.separator + re.getFileName()), ServletUtil.UTF8_APPLICATION_XML); // NOI18N
+            } else if (type.equals("throttle")) {
+                ServletUtil.getInstance().writeFile(response, new File(FileUtil.getUserFilesPath(), "throttle" + File.separator + id + ".xml"), ServletUtil.UTF8_APPLICATION_XML); // NOI18N
+            } else {
+                // don't know what to do
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            }
+        } catch (NullPointerException ex) {
+            // triggered by instanciating a File with null path
+            // this would happen when an image or icon is requested for a
+            // rosterEntry that has no such image or icon associated with it
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
