@@ -17,21 +17,23 @@
   <version author="Brett Hoffman bhoffman351@mac.com" version="2" lastUpdated="20111231"/>
   <version author="Michael Mosher" version="3" lastUpdated="20120524"/>
   <version author="Alain Le Marchand" version="4" lastUpdated="20140615"/>
-    <version author="Alain Le Marchand" version="5" lastUpdated="20140810"/>
-  <!-- This file contains the definitions for the Bachmann spec'd Sound Value series of decoders            -->
+  <version author="Alain Le Marchand" version="5" lastUpdated="20140810"/>
+  <version author="Alain Le Marchand" version="6" lastUpdated="20140831"/>  
+  <!-- This file contains the definitions for the Bachmann spec'd Sound Value series of decoders        -->
   <!-- version 1	Based on the "Soundtraxx_Tsu_Diesel files.                                          -->
-  <!--			Includes the Alco S4, FA2, and FB2                                                  -->
+  <!--              Includes the Alco S4, FA2, and FB2                                                  -->
   <!-- version 2	Added FX5/6, BEMF. Removed Brake Squeal                                             -->
   <!-- version 3	Add CV5,6,132 per document on Soundtraxx web                                        -->
-  <!-- version 4        Fixed function mapping (no physical FX5 and FX6 except DD40AX)                      -->
-  <!--                  Added Function Groups 2/3 exchange from Dave Heap (initially introduced for Genesis -->
-  <!--                  Factoring in line with most recent Tsunami decoders definition files                -->
-  <!--                  Add CV112 per document on Sounstraxx web                                            -->
-  <!--                  Add EMD GP7, SD70ACe, GEVO ES44AC (generic airhorn names, doc. not available)       -->
-  <!-- version 5        updated SD70ACe, GEVO ES44AC as per Soundtraxx doc. published Aug.1st, 2014         -->
-  <!--				= airhorn names, CV118, CV196                                               -->
-  <!--                  Add GG1 Electric                                                                    -->
-  <!--			Fixed different default values according to SoundTraxx documentation                -->
+  <!-- version 4    Fixed function mapping (no physical FX5 and FX6 except DD40AX)                      -->
+  <!--              Added Function Groups 2/3 exchange from Dave Heap (initially introduced for Genesis -->
+  <!--              Factoring in line with most recent Tsunami decoders definition files                -->
+  <!--              Add CV112 per document on Sounstraxx web                                            -->
+  <!--              Add EMD GP7, SD70ACe, GEVO ES44AC (generic airhorn names, doc. not available)       -->
+  <!-- version 5    updated SD70ACe, GEVO ES44AC as per Soundtraxx doc. published Aug.1st, 2014         -->
+  <!--                      = airhorn names, CV118, CV196                                               -->
+  <!--              Add GG1 Electric                                                                    -->
+  <!--              Fixed different default values according to SoundTraxx documentation                -->
+  <!-- version 6    Add CV51 and CV52 for DD40AX. Not documented but tested active on real model        -->  
   <!-- Note:    Output number for "named" outputs (i.e. when name is not an integer) starts at numOuts+1.
                 Numbering is then incremental in the order of declaration of the named outputs.
                 For these decoders, convention is taken that FX5=output 3, FX6=output 4, Whistle=output 5, etc.
@@ -1399,6 +1401,56 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>Backup Light F0(r) Light Type</label>
       </variable>
+      <variable item="FX5 Effect Selection" CV="51" mask="XXXXVVVV" default="7" minOut="3" include="EMD_DD40AX" tooltip="Determines the effect generated from the FX5 light output">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
+        <label>FX5 Effect Selection</label>
+        <comment>Don't show this for the TSU-750 models</comment>
+      </variable>
+      <variable item="FX5 Phase Selection" CV="51" mask="XXXVXXXX" default="0" minOut="3" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
+        <label>FX5 Phase Selection</label>
+        <comment>Don't show this for the TSU-750 models</comment>
+      </variable>
+      <variable item="FX5 Grade Crossing Logic" CV="51" mask="XXVXXXXX" default="0" minOut="3" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX5 Grade Crossing Logic</label>
+        <comment>Don't show this for the TSU-750 models</comment>
+      </variable>
+      <variable item="FX5 Rule 17 Mode" CV="51" mask="XVXXXXXX" default="0" minOut="3" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumR17FX5.xml"/>
+        <label>FX5 Rule 17 Mode</label>
+        <comment>Don't show this for the TSU-750 models</comment>
+      </variable>
+      <variable item="FX5 Light Type" CV="51" mask="VXXXXXXX" default="1" minOut="3"  include="EMD_DD40AX" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
+        <label>FX5 Light Type</label>
+        <comment>Don't show this for the TSU-750 models</comment>
+      </variable>
+      <variable item="FX6 Effect Selection" CV="52" mask="XXXXVVVV" default="0" minOut="4" tooltip="Determines the effect generated from the FX6 light output">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
+        <label>FX6 Effect Selection</label>
+        <comment>Don't show this for the TSU-750 models</comment>
+      </variable>
+      <variable item="FX6 Phase Selection" CV="52" mask="XXXVXXXX" default="0" minOut="4" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
+        <label>FX6 Phase Selection</label>
+        <comment>Don't show this for the TSU-750 models</comment>
+      </variable>
+      <variable item="FX6 Grade Crossing Logic" CV="52" mask="XXVXXXXX" default="0" minOut="4" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX6 Grade Crossing Logic</label>
+        <comment>Don't show this for the TSU-750 models</comment>
+      </variable>
+      <variable item="FX6 Rule 17 Mode" CV="52" mask="XVXXXXXX" default="0" minOut="4" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumR17FX6.xml"/>
+        <label>FX6 Rule 17 Mode</label>
+        <comment>Don't show this for the TSU-750 models</comment>
+      </variable>
+      <variable item="FX6 Light Type" CV="52" mask="VXXXXXXX" default="0" minOut="4" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
+        <label>FX6 Light Type</label>
+        <comment>Don't show this for the TSU-750 models</comment>
+      </variable>     
       <variable item="Hyperlight Flash Rate (0-15)" CV="59" mask="XXXXVVVV" default="4" comment="0 is fast, 15 is slow, 4 is recommended for start" tooltip="Sets the overall flash rate of the Hyperlight effects">
         <decVal max="15"/>
         <label>Hyperlight Flash Rate (0-15)</label>
@@ -1518,13 +1570,13 @@
       </variable>
       <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="EMD_DD40AX" tooltip="Selects which airhorn to use">
         <enumVal>
-          <enumChoice choice="Leslie SST">
+          <enumChoice choice="Leslie S5T">
             <choice>Leslie SST</choice>
           </enumChoice>
           <enumChoice choice="Leslie S3L">
             <choice>Leslie S3L</choice>
           </enumChoice>
-          <enumChoice choice="Leslie RSST">
+          <enumChoice choice="Leslie RS5T">
             <choice>Leslie RSST</choice>
           </enumChoice>
         </enumVal>
