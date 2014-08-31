@@ -780,7 +780,7 @@ public class JsonUtil {
         entry.put(IMAGE_ICON_NAME, file.getName());
         entry.put(SHUNTING_FUNCTION, re.getShuntingFunction());
         ArrayNode labels = entry.putArray(FUNCTION_KEYS);
-        for (int i = 0; i < re.getMAXFNNUM(); i++) {
+        for (int i = 0; i <= re.getMAXFNNUM(); i++) {
             ObjectNode label = mapper.createObjectNode();
             label.put(NAME, F + i);
             label.put(LABEL, re.getFunctionLabel(i));
