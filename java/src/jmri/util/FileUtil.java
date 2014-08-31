@@ -134,17 +134,17 @@ public class FileUtil {
      * resource directory in the preferences directory (deprecated; see
      * "preference:" above)</li>
      * <li>Starts with "profile:", treat the rest as a relative path below the
-     * profile directory as specified in the active
+     * profile directory as specified in the
+     * active{@link jmri.profile.Profile}</li>
      * <li>Starts with "scripts:", treat the rest as a relative path below the
-     * scripts directory as specified in the active
-     * {@link jmri.profile.Profile}</li>
+     * scripts directory</li>
      * <li>Otherwise, treat the name as a relative path below the program
      * directory</li>
      * </ul>
      * In any case, absolute pathnames will work.
      *
-     * @param pName The name string, possibly starting with program:,
-     * preference:, home:, file:, scripts: or resource:
+     * @param pName The name string, possibly starting with file:, home:,
+     * profile:, program:, preference:, scripts:, settings, or resource:
      * @return Absolute or relative file name to use, or null.
      * @since 2.7.2
      */
