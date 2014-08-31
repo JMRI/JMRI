@@ -1,8 +1,7 @@
 package jmri.jmrit.roster;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -10,7 +9,6 @@ import java.awt.Insets;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 import java.util.Vector;
-
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,9 +16,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
-
-import jmri.util.FileUtil;
 import jmri.util.swing.EditableResizableImagePanel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /*
 * <hr>
@@ -49,7 +47,7 @@ import jmri.util.swing.EditableResizableImagePanel;
  *
  * @author Lionel Jeanson - Copyright 2009
  */
-public class RosterMediaPane extends javax.swing.JPanel {
+public class RosterMediaPane extends JPanel {
 
 	private static final long serialVersionUID = 2420617780437463773L;
 	JLabel _imageFPlabel = new JLabel();
@@ -64,15 +62,15 @@ public class RosterMediaPane extends javax.swing.JPanel {
 
 	public RosterMediaPane(RosterEntry r) {
 		_imageFilePath = new EditableResizableImagePanel(r.getImagePath(), 320, 240);
-		_imageFilePath.setDropFolder(FileUtil.getUserResourcePath());
+		_imageFilePath.setDropFolder(LocoFile.getFileLocation());
 		_imageFilePath.setToolTipText(rb.getString("MediaRosterImageToolTip"));
-		_imageFilePath.setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
+		_imageFilePath.setBorder(BorderFactory.createLineBorder(Color.blue));
 		_imageFPlabel.setText(rb.getString("MediaRosterImageLabel"));
 
 		_iconFilePath = new EditableResizableImagePanel(r.getIconPath(), 160, 120);
-		_iconFilePath.setDropFolder(FileUtil.getUserResourcePath());
+		_iconFilePath.setDropFolder(LocoFile.getFileLocation());
 		_iconFilePath.setToolTipText(rb.getString("MediaRosterIconToolTip"));
-		_iconFilePath.setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
+		_iconFilePath.setBorder(BorderFactory.createLineBorder(Color.blue));
 		_iconFPlabel.setText(rb.getString("MediaRosterIconLabel"));
 
 		_URL.setText(r.getURL());

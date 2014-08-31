@@ -4,6 +4,7 @@ package jmri.jmrit.roster;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import jmri.util.FileUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
 import org.jdom.Attribute;
 import org.jdom.Element;
+import org.jdom.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -106,8 +108,8 @@ public class RosterEntry implements jmri.BasicRosterEntry {
 
     java.util.TreeMap<String, String> attributePairs;
 
-    protected String _imageFilePath = FileUtil.getUserResourcePath(); // at DndImagePanel init will
-    protected String _iconFilePath = FileUtil.getUserResourcePath();  // force image copy to that folder
+    protected String _imageFilePath = null;
+    protected String _iconFilePath = null;
     protected String _URL = "";
 
     protected RosterSpeedProfile _sp = null;
@@ -308,7 +310,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
         } else {
             _protocol = LocoAddress.Protocol.DCC_SHORT;
         }
-        firePropertyChange("longaddress", old, Boolean.valueOf(b));
+        firePropertyChange("longaddress", old, b);
     }
 
     public RosterSpeedProfile getSpeedProfile() {
@@ -325,10 +327,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
 
     @Override
     public boolean isLongAddress() {
-        if (_protocol == LocoAddress.Protocol.DCC_LONG) {
-            return true;
-        }
-        return false;
+        return _protocol == LocoAddress.Protocol.DCC_LONG;
     }
 
     public void setProtocol(LocoAddress.Protocol protocol) {
@@ -385,6 +384,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
         return _decoderComment;
     }
 
+    @Override
     public DccLocoAddress getDccLocoAddress() {
         int n;
         try {
@@ -462,10 +462,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
 
     @Override
     public boolean isOpen() {
-        if (openCounter == 0) {
-            return false;
-        }
-        return true;
+        return openCounter != 0;
     }
 
     /**
@@ -507,11 +504,35 @@ public class RosterEntry implements jmri.BasicRosterEntry {
         }
 
         // file path were saved without default xml config path 
-        if ((a = e.getAttribute("imageFilePath")) != null) {
-            _imageFilePath = FileUtil.getUserResourcePath() + a.getValue();
+        if ((a = e.getAttribute("imageFilePath")) != null && !a.getValue().isEmpty()) {
+            try {
+                if (FileUtil.getFile(a.getValue()).isFile()) {
+                    _imageFilePath = FileUtil.getAbsoluteFilename(a.getValue());
+                }
+            } catch (FileNotFoundException ex) {
+                try {
+                    if (FileUtil.getFile(FileUtil.getUserResourcePath() + a.getValue()).isFile()) {
+                        _imageFilePath = FileUtil.getUserResourcePath() + a.getValue();
+                    }
+                } catch (FileNotFoundException ex1) {
+                    _imageFilePath = null;
+                }
+            }
         }
-        if ((a = e.getAttribute("iconFilePath")) != null) {
-            _iconFilePath = FileUtil.getUserResourcePath() + a.getValue();
+        if ((a = e.getAttribute("iconFilePath")) != null && !a.getValue().isEmpty()) {
+            try {
+                if (FileUtil.getFile(a.getValue()).isFile()) {
+                    _iconFilePath = FileUtil.getAbsoluteFilename(a.getValue());
+                }
+            } catch (FileNotFoundException ex) {
+                try {
+                    if (FileUtil.getFile(FileUtil.getUserResourcePath() + a.getValue()).isFile()) {
+                        _iconFilePath = FileUtil.getUserResourcePath() + a.getValue();
+                    }
+                } catch (FileNotFoundException ex1) {
+                    _iconFilePath = null;
+                }
+            }
         }
         if ((a = e.getAttribute("URL")) != null) {
             _URL = a.getValue();
@@ -541,7 +562,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
             // but may give the wrong answer in some cases (low value long addresses on NCE)
 
             jmri.ThrottleManager tf = jmri.InstanceManager.throttleManagerInstance();
-            int address = 0;
+            int address;
             try {
                 address = Integer.parseInt(_dccAddress);
             } catch (NumberFormatException e2) {
@@ -620,9 +641,8 @@ public class RosterEntry implements jmri.BasicRosterEntry {
         }
         if (e3 != null) {
             // load function names
-            java.util.List<Element> l = e3.getChildren("functionlabel");
-            for (int i = 0; i < l.size(); i++) {
-                Element fn = l.get(i);
+            List<Element> l = e3.getChildren("functionlabel");
+            for (Element fn : l) {
                 int num = Integer.parseInt(fn.getAttribute("num").getValue());
                 String lock = fn.getAttribute("lockable").getValue();
                 String val = fn.getText();
@@ -630,11 +650,35 @@ public class RosterEntry implements jmri.BasicRosterEntry {
                     this.setFunctionLabel(num, val);
                     this.setFunctionLockable(num, lock.equals("true"));
                     Attribute a;
-                    if ((a = fn.getAttribute("functionImage")) != null) {
-                        this.setFunctionImage(num, FileUtil.getUserResourcePath() + a.getValue());
+                    if ((a = fn.getAttribute("functionImage")) != null && !a.getValue().isEmpty()) {
+                        try {
+                            if (FileUtil.getFile(a.getValue()).isFile()) {
+                                this.setFunctionImage(num, FileUtil.getAbsoluteFilename(a.getValue()));
+                            }
+                        } catch (FileNotFoundException ex) {
+                            try {
+                                if (FileUtil.getFile(FileUtil.getUserResourcePath() + a.getValue()).isFile()) {
+                                    this.setFunctionImage(num, FileUtil.getUserResourcePath() + a.getValue());
+                                }
+                            } catch (FileNotFoundException ex1) {
+                                this.setFunctionImage(num, null);
+                            }
+                        }
                     }
-                    if ((a = fn.getAttribute("functionImageSelected")) != null) {
-                        this.setFunctionSelectedImage(num, FileUtil.getUserResourcePath() + a.getValue());
+                    if ((a = fn.getAttribute("functionImageSelected")) != null && !a.getValue().isEmpty()) {
+                        try {
+                            if (FileUtil.getFile(a.getValue()).isFile()) {
+                                this.setFunctionSelectedImage(num, FileUtil.getAbsoluteFilename(a.getValue()));
+                            }
+                        } catch (FileNotFoundException ex) {
+                            try {
+                                if (FileUtil.getFile(FileUtil.getUserResourcePath() + a.getValue()).isFile()) {
+                                    this.setFunctionSelectedImage(num, FileUtil.getUserResourcePath() + a.getValue());
+                                }
+                            } catch (FileNotFoundException ex1) {
+                                this.setFunctionSelectedImage(num, null);
+                            }
+                        }
                     }
                 }
             }
@@ -663,9 +707,8 @@ public class RosterEntry implements jmri.BasicRosterEntry {
         }
         if (e3 != null) {
             // load sound names
-            java.util.List<Element> l = e3.getChildren("soundlabel");
-            for (int i = 0; i < l.size(); i++) {
-                Element fn = l.get(i);
+            List<Element> l = e3.getChildren("soundlabel");
+            for (Element fn : l) {
                 int num = Integer.parseInt(fn.getAttribute("num").getValue());
                 String val = fn.getText();
                 if ((this.getSoundLabel(num) == null) || (source.equalsIgnoreCase("model"))) {
@@ -686,9 +729,8 @@ public class RosterEntry implements jmri.BasicRosterEntry {
     @SuppressWarnings("unchecked")
     public void loadAttributes(Element e3) {
         if (e3 != null) {
-            java.util.List<Element> l = e3.getChildren("keyvaluepair");
-            for (int i = 0; i < l.size(); i++) {
-                Element fn = l.get(i);
+            List<Element> l = e3.getChildren("keyvaluepair");
+            for (Element fn : l) {
                 String key = fn.getChild("key").getText();
                 String value = fn.getChild("value").getText();
                 this.putAttribute(key, value);
@@ -769,7 +811,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
         if ((functionImages != null) && (functionImages[fn] != null)) {
             return functionImages[fn];
         }
-        return FileUtil.getUserResourcePath();
+        return null;
     }
 
     public void setFunctionSelectedImage(int fn, String s) {
@@ -785,7 +827,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
         if ((functionSelectedImages != null) && (functionSelectedImages[fn] != null)) {
             return functionSelectedImages[fn];
         }
-        return FileUtil.getUserResourcePath();
+        return null;
     }
 
     /**
@@ -878,9 +920,9 @@ public class RosterEntry implements jmri.BasicRosterEntry {
         List<String> groups = new ArrayList<String>();
         if (attributes != null) {
             Roster roster = Roster.instance();
-            for (int x = 0; x < attributes.length; x++) {
-                if (attributes[x].startsWith(roster.getRosterGroupPrefix())) {
-                    groups.add(attributes[x].substring(roster.getRosterGroupPrefix().length()));
+            for (String attribute : attributes) {
+                if (attribute.startsWith(roster.getRosterGroupPrefix())) {
+                    groups.add(attribute.substring(roster.getRosterGroupPrefix().length()));
                 }
             }
         }
@@ -924,18 +966,10 @@ public class RosterEntry implements jmri.BasicRosterEntry {
         e.setAttribute("dccAddress", getDccAddress());
         //e.setAttribute("protocol",""+getProtocol());
         e.setAttribute("comment", getComment());
-        e.setAttribute("maxSpeed", (Integer.valueOf(getMaxSpeedPCT()).toString()));
+        e.setAttribute("maxSpeed", (Integer.toString(getMaxSpeedPCT())));
         // file path are saved without default xml config path
-        try {
-            e.setAttribute("imageFilePath", getImagePath().substring(FileUtil.getUserResourcePath().length()));
-        } catch (java.lang.StringIndexOutOfBoundsException ex) {
-            e.setAttribute("imageFilePath", "");
-        }
-        try {
-            e.setAttribute("iconFilePath", getIconPath().substring(FileUtil.getUserResourcePath().length()));
-        } catch (java.lang.StringIndexOutOfBoundsException ex) {
-            e.setAttribute("iconFilePath", "");
-        }
+        e.setAttribute("imageFilePath", (this.getImagePath() != null) ? FileUtil.getPortableFilename(this.getImagePath()) : "");
+        e.setAttribute("iconFilePath", (this.getIconPath() != null) ? FileUtil.getPortableFilename(this.getIconPath()) : "");
         e.setAttribute("URL", getURL());
         e.setAttribute("IsShuntingOn", getShuntingFunction());
 
@@ -967,19 +1001,11 @@ public class RosterEntry implements jmri.BasicRosterEntry {
                         lockable = functionLockables[i];
                     }
                     fne.setAttribute("lockable", lockable ? "true" : "false");
-                    if ((functionImages != null) && (functionImages[i] != null)) {
-                        try {
-                            fne.setAttribute("functionImage", functionImages[i].substring(FileUtil.getUserResourcePath().length()));
-                        } catch (StringIndexOutOfBoundsException eob) {
-                            fne.setAttribute("functionImage", "");
-                        }
+                    if ((functionImages != null)) {
+                        fne.setAttribute("functionImage", (functionImages[i] != null) ? FileUtil.getPortableFilename(functionImages[i]) : "");
                     }
-                    if ((functionSelectedImages != null) && (functionSelectedImages[i] != null)) {
-                        try {
-                            fne.setAttribute("functionImageSelected", functionSelectedImages[i].substring(FileUtil.getUserResourcePath().length()));
-                        } catch (StringIndexOutOfBoundsException eob) {
-                            fne.setAttribute("functionImageSelected", "");
-                        }
+                    if ((functionSelectedImages != null)) {
+                        fne.setAttribute("functionImageSelected", (functionSelectedImages[i] != null) ? FileUtil.getPortableFilename(functionSelectedImages[i]) : "");
                     }
                     fne.addContent(functionLabels[i]);
                     d.addContent(fne);
@@ -1067,7 +1093,10 @@ public class RosterEntry implements jmri.BasicRosterEntry {
         // read in the content
         try {
             mRootElement = df.rootFromName(fullFilename);
-        } catch (Exception e) {
+            // In Java 1.7+ these two exceptions can be caught in one statement
+        } catch (JDOMException e) {
+            log.error("Exception while loading loco XML file: " + getFileName() + " exception: " + e);
+        } catch (IOException e) {
             log.error("Exception while loading loco XML file: " + getFileName() + " exception: " + e);
         }
 
@@ -1391,7 +1420,6 @@ public class RosterEntry implements jmri.BasicRosterEntry {
         //and create a vector to hold the processed text pieces
         StringTokenizer commentTokens = new StringTokenizer(comment, "\n", true);
         Vector<String> textVector = new Vector<String>(commentTokens.countTokens());
-        String newLine = "\n";
         while (commentTokens.hasMoreTokens()) {
             String commentToken = commentTokens.nextToken();
             int startIndex = 0;
@@ -1461,7 +1489,9 @@ public class RosterEntry implements jmri.BasicRosterEntry {
         LocoFile lf = new LocoFile();  // used as a temporary
         try {
             mRootElement = lf.rootFromName(LocoFile.getFileLocation() + getFileName());
-        } catch (Exception e) {
+        } catch (JDOMException e) {
+            log.error("Exception while loading loco XML file: " + getFileName() + " exception: " + e);
+        } catch (IOException e) {
             log.error("Exception while loading loco XML file: " + getFileName() + " exception: " + e);
         }
     }

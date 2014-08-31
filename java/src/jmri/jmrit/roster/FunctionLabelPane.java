@@ -2,25 +2,22 @@
 
 package jmri.jmrit.roster;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.io.IOException;
-
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-
-import jmri.util.FileUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.swing.EditableResizableImagePanel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -41,7 +38,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
 
     // we're doing a manual allocation of position for
     // now, based on 28 labels
-    private int maxfunction = 28;
+    private final int maxfunction = 28;
     
     public FunctionLabelPane(RosterEntry r) {
 
@@ -114,16 +111,16 @@ public class FunctionLabelPane extends javax.swing.JPanel {
             cL.gridx++;
             
             // add the function buttons
-    		_imageFilePath[i] = new EditableResizableImagePanel(r.getFunctionImage(i), 20, 20);
-    		_imageFilePath[i].setDropFolder(FileUtil.getUserResourcePath());
+    		_imageFilePath[i] = new EditableResizableImagePanel((r.getFunctionImage(i) != null) ? r.getFunctionImage(i) : "", 20, 20);
+    		_imageFilePath[i].setDropFolder(LocoFile.getFileLocation());
     		_imageFilePath[i].setBackground(new Color(0,0,0,0));
     		_imageFilePath[i].setToolTipText(Bundle.getMessage("FunctionButtonRosterImageToolTip"));
     		_imageFilePath[i].setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
             add(_imageFilePath[i], cL);
             cL.gridx++;
             
-    		_imagePressedFilePath[i] = new EditableResizableImagePanel(r.getFunctionSelectedImage(i), 20, 20);
-    		_imagePressedFilePath[i].setDropFolder(FileUtil.getUserResourcePath());
+    		_imagePressedFilePath[i] = new EditableResizableImagePanel((r.getFunctionSelectedImage(i) != null) ? r.getFunctionSelectedImage(i) : "", 20, 20);
+    		_imagePressedFilePath[i].setDropFolder(LocoFile.getFileLocation());
     		_imagePressedFilePath[i].setBackground(new Color(0,0,0,0));
     		_imagePressedFilePath[i].setToolTipText(Bundle.getMessage("FunctionButtonPressedRosterImageToolTip"));
     		_imagePressedFilePath[i].setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
@@ -148,7 +145,9 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     }
     
     /**
-     * Does the GUI contents agree with a RosterEntry?
+     * Do the GUI contents agree with a RosterEntry?
+     * @param r
+     * @return true if GUI differs from RosterEntry
      */
     public boolean guiChanged(RosterEntry r) {
         if (labels!=null) {
@@ -201,6 +200,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
         
     /** 
      * Fill a RosterEntry object from GUI contents
+     * @param r
      **/
     public void update(RosterEntry r) {
         if (labels!=null) {
@@ -290,8 +290,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
                     int nameLeftIndex = 0;
                     int nameRightIndex = name.length();
                     int valueLeftIndex = 0;
-                    int valueRightIndex = 0;
-                    valueRightIndex =value.length();
+                    int valueRightIndex = value.length();
                     String trimmedName;
                     String trimmedValue;
 
