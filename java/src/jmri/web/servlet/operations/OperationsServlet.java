@@ -155,8 +155,8 @@ public class OperationsServlet extends HttpServlet {
         } else if (JSON.JSON.equals(request.getParameter("format"))) {
             log.debug("Getting manifest JSON code for train {}", id);
             JsonNode manifest = this.mapper.readTree(new JsonManifest(train).getFile());
-            if (manifest.path(JSON.IMAGE_FILE_NAME).isTextual()) {
-                ((ObjectNode) manifest).put(JSON.IMAGE_FILE_NAME, WebServer.URIforPortablePath(FileUtil.getPortableFilename(manifest.path(JSON.IMAGE_FILE_NAME).asText())));
+            if (manifest.path(JSON.IMAGE).isTextual()) {
+                ((ObjectNode) manifest).put(JSON.IMAGE, WebServer.URIforPortablePath(FileUtil.getPortableFilename(manifest.path(JSON.IMAGE).asText())));
             }
             String content = this.mapper.writeValueAsString(manifest);
             response.setContentType(ServletUtil.UTF8_APPLICATION_JSON);

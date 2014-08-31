@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
-import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -72,8 +71,6 @@ import static jmri.jmris.json.JSON.ICON;
 import static jmri.jmris.json.JSON.ICON_NAME;
 import static jmri.jmris.json.JSON.ID;
 import static jmri.jmris.json.JSON.IMAGE;
-import static jmri.jmris.json.JSON.IMAGE_FILE_NAME;
-import static jmri.jmris.json.JSON.IMAGE_ICON_NAME;
 import static jmri.jmris.json.JSON.INACTIVE;
 import static jmri.jmris.json.JSON.INCONSISTENT;
 import static jmri.jmris.json.JSON.INVERTED;
@@ -773,11 +770,7 @@ public class JsonUtil {
         entry.put(COMMENT, re.getComment());
         entry.put(MAX_SPD_PCT, Integer.toString(re.getMaxSpeedPCT()));
         entry.put(IMAGE, (re.getImagePath() != null) ? "/" + ROSTER + "/" + re.getId() + "/" + IMAGE : (String) null);
-        File file = new File(re.getImagePath());
-        entry.put(IMAGE_FILE_NAME, file.getName());
         entry.put(ICON, (re.getIconPath() != null) ? "/" + ROSTER + "/" + re.getId() + "/" + ICON : (String) null);
-        file = new File(re.getIconPath());
-        entry.put(IMAGE_ICON_NAME, file.getName());
         entry.put(SHUNTING_FUNCTION, re.getShuntingFunction());
         ArrayNode labels = entry.putArray(FUNCTION_KEYS);
         for (int i = 0; i <= re.getMAXFNNUM(); i++) {
