@@ -483,16 +483,46 @@ public final class JSON {
     public static final String MAX_SPD_PCT = "maxSpeedPct"; // NOI18N
     /**
      * {@value #IMAGE_FILE_NAME}
+     *
+     * Note that this key duplicates {@link #IMAGE_ICON_NAME}, causing clients
+     * to be provided conflicting information. This key will be removed prior to
+     * the release of JMRI 3.10.
+     *
+     * @deprecated Use {@link #IMAGE} instead.
      */
     public static final String IMAGE_FILE_NAME = "imageFileName"; // NOI18N
     /**
      * {@value #IMAGE_ICON_NAME}
+     *
+     * Note that this key duplicates {@link #IMAGE_FILE_NAME}, causing clients
+     * to be provided conflicting information. This key will be removed prior to
+     * the release of JMRI 3.10.
+     *
+     * @deprecated Use {@link #ICON} instead.
      */
     public static final String IMAGE_ICON_NAME = "imageFileName"; // NOI18N
     /**
      * {@value #FUNCTION_KEYS}
      */
     public static final String FUNCTION_KEYS = "functionKeys"; // NOI18N
+    /**
+     * {@value #IMAGE}
+     *
+     * @since 2.0
+     */
+    public static final String IMAGE = "image"; // NOI18N
+    /**
+     * {@value #ICON}
+     *
+     * @since 2.0
+     */
+    public static final String ICON = "icon"; // NOI18N
+    /**
+     * {@value #SELECTED_ICON}
+     *
+     * @since 2.0
+     */
+    public static final String SELECTED_ICON = "selectedIcon"; // NOI18N
     /**
      * {@value #LABEL}
      */
@@ -511,6 +541,12 @@ public final class JSON {
      * @since 1.1
      */
     public static final String OWNER = "owner"; // NOI18N
+    /**
+     * {@value #SHUNTING_FUNCTION}
+     *
+     * @since 2.0
+     */
+    public static final String SHUNTING_FUNCTION = "shuntingFunction"; // NOI18N
 
     /* JSON route (operations) tokens */
     /**

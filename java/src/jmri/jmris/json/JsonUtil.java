@@ -68,8 +68,10 @@ import static jmri.jmris.json.JSON.GROUP;
 import static jmri.jmris.json.JSON.HAZARDOUS;
 import static jmri.jmris.json.JSON.HEARTBEAT;
 import static jmri.jmris.json.JSON.HELLO;
+import static jmri.jmris.json.JSON.ICON;
 import static jmri.jmris.json.JSON.ICON_NAME;
 import static jmri.jmris.json.JSON.ID;
+import static jmri.jmris.json.JSON.IMAGE;
 import static jmri.jmris.json.JSON.IMAGE_FILE_NAME;
 import static jmri.jmris.json.JSON.IMAGE_ICON_NAME;
 import static jmri.jmris.json.JSON.INACTIVE;
@@ -119,13 +121,16 @@ import static jmri.jmris.json.JSON.REPORT;
 import static jmri.jmris.json.JSON.REPORTER;
 import static jmri.jmris.json.JSON.RETURN_WHEN_EMPTY;
 import static jmri.jmris.json.JSON.ROAD;
+import static jmri.jmris.json.JSON.ROSTER;
 import static jmri.jmris.json.JSON.ROSTER_ENTRY;
 import static jmri.jmris.json.JSON.ROSTER_GROUP;
 import static jmri.jmris.json.JSON.ROSTER_GROUPS;
 import static jmri.jmris.json.JSON.ROUTE;
 import static jmri.jmris.json.JSON.ROUTE_ID;
+import static jmri.jmris.json.JSON.SELECTED_ICON;
 import static jmri.jmris.json.JSON.SENSOR;
 import static jmri.jmris.json.JSON.SEQUENCE;
+import static jmri.jmris.json.JSON.SHUNTING_FUNCTION;
 import static jmri.jmris.json.JSON.SIGNAL_HEAD;
 import static jmri.jmris.json.JSON.SIGNAL_MAST;
 import static jmri.jmris.json.JSON.SIZE_LIMIT;
@@ -740,6 +745,17 @@ public class JsonUtil {
         }
     }
 
+    /**
+     * Returns the JSON representation of a roster entry.
+     *
+     * Note that this returns, for images and icons, a URL relative to the root
+     * folder of the JMRI server. It is expected that clients will fill in the
+     * server IP address and port as they know it to be.
+     *
+     * @param locale
+     * @param id
+     * @return a roster entry in JSON notation
+     */
     static public JsonNode getRosterEntry(Locale locale, String id) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, ROSTER_ENTRY);
@@ -756,21 +772,26 @@ public class JsonUtil {
         entry.put(MODEL, re.getModel());
         entry.put(COMMENT, re.getComment());
         entry.put(MAX_SPD_PCT, Integer.toString(re.getMaxSpeedPCT()));
+        entry.put(IMAGE, (re.getImagePath() != null) ? "/" + ROSTER + "/" + re.getId() + "/" + IMAGE : (String) null);
         File file = new File(re.getImagePath());
         entry.put(IMAGE_FILE_NAME, file.getName());
+        entry.put(ICON, (re.getIconPath() != null) ? "/" + ROSTER + "/" + re.getId() + "/" + ICON : (String) null);
         file = new File(re.getIconPath());
         entry.put(IMAGE_ICON_NAME, file.getName());
+        entry.put(SHUNTING_FUNCTION, re.getShuntingFunction());
         ArrayNode labels = entry.putArray(FUNCTION_KEYS);
         for (int i = 0; i < re.getMAXFNNUM(); i++) {
             ObjectNode label = mapper.createObjectNode();
             label.put(NAME, F + i);
-            label.put(LABEL, (re.getFunctionLabel(i) != null) ? re.getFunctionLabel(i) : F + i);
+            label.put(LABEL, re.getFunctionLabel(i));
             label.put(LOCKABLE, re.getFunctionLockable(i));
+            label.put(ICON, (re.getFunctionImage(i) != null) ? "/" + ROSTER + "/" + re.getId() + "/" + F + i + "/" + ICON : (String) null);
+            label.put(SELECTED_ICON, (re.getFunctionSelectedImage(i) != null) ? "/" + ROSTER + "/" + re.getId() + "/" + F + i + "/" + SELECTED_ICON : (String) null);
             labels.add(label);
         }
         ArrayNode rga = entry.putArray(ROSTER_GROUPS);
         for (int i = 0; i < re.getGroups().size(); i++) {
-        	rga.add(re.getGroups().get(i));
+            rga.add(re.getGroups().get(i));
         }
         return root;
     }
@@ -802,6 +823,7 @@ public class JsonUtil {
         }
         return root;
     }
+
     static public JsonNode getRosterGroup(Locale locale, String name) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, ROSTER_GROUP);
