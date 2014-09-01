@@ -758,6 +758,14 @@ public final class JSON {
      * {@value #F}
      */
     public static final String F = "F"; // NOI18N
+    /**
+     * Used by a {@link jmri.jmris.json.JsonThrottle} to notify clients of the
+     * number of clients controlling the same throttle.
+     * <p>
+     * {@value #CLIENTS}
+     * @since 2.0
+     */
+    public static final String CLIENTS = "clients"; // NOI18N
 
     /* JSON Sensor and Turnout Tokens */
     /**

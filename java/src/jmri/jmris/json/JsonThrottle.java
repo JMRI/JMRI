@@ -19,6 +19,7 @@ import jmri.JmriException;
 import jmri.Throttle;
 import jmri.ThrottleListener;
 import static jmri.jmris.json.JSON.ADDRESS;
+import static jmri.jmris.json.JSON.CLIENTS;
 import static jmri.jmris.json.JSON.ESTOP;
 import static jmri.jmris.json.JSON.F;
 import static jmri.jmris.json.JSON.FORWARD;
@@ -75,6 +76,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
         if (JsonThrottle.throttles.containsKey(address)) {
             JsonThrottle throttle = JsonThrottle.throttles.get(address);
             throttle.servers.add(server);
+            throttle.sendMessage(throttle.mapper.createObjectNode().put(CLIENTS, throttle.servers.size()));
             return throttle;
         } else {
             JsonThrottle throttle = new JsonThrottle(address, server);
@@ -98,7 +100,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     public void release(JsonThrottleServer server) {
         this.release(server, true);
     }
-    
+
     private void release(JsonThrottleServer server, boolean notifyClient) {
         if (this.throttle != null) {
             if (this.servers.size() == 1) {
@@ -115,6 +117,8 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
             // Release address-based reference to this throttle if there are no servers using it
             // so that when the server releases its reference, this throttle can be garbage collected
             JsonThrottle.throttles.remove(this.address);
+        } else {
+            this.sendMessage(this.mapper.createObjectNode().put(CLIENTS, this.servers.size()));
         }
     }
 
@@ -202,7 +206,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     }
 
     public void sendMessage(ObjectNode data) {
-        for (JsonThrottleServer server : this.servers) {
+        for (JsonThrottleServer server : (ArrayList<JsonThrottleServer>) this.servers.clone()) {
             this.sendMessage(data, server);
         }
     }
@@ -212,7 +216,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
             server.sendMessage(this, data);
         } catch (IOException ex) {
             this.close(server, false);
-            log.warn("Unable to send message, closing connection.", ex);
+            log.warn("Unable to send message, closing connection: {}", ex.getMessage());
             try {
                 server.connection.close();
             } catch (IOException e1) {
@@ -308,6 +312,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
         data.put(Throttle.F26, this.throttle.getF26());
         data.put(Throttle.F27, this.throttle.getF27());
         data.put(Throttle.F28, this.throttle.getF28());
+        data.put(CLIENTS, this.servers.size());
         if (this.throttle.getRosterEntry() != null) {
             data.put(ROSTER_ENTRY, this.throttle.getRosterEntry().getId());
         }
