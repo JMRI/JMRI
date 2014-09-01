@@ -3,15 +3,15 @@ package jmri.jmris.json;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
@@ -30,150 +30,191 @@ import static jmri.jmris.json.JSON.SPEED;
 import static jmri.jmris.json.JSON.STATUS;
 import static jmri.jmris.json.JSON.THROTTLE;
 import jmri.jmrit.roster.Roster;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
 
-    private final JsonThrottleServer server;
-    private final String throttleId;
+    private final ArrayList<JsonThrottleServer> servers = new ArrayList<JsonThrottleServer>();
     private Throttle throttle;
-    private final ObjectMapper mapper;
+    private DccLocoAddress address = null;
+    private final ObjectMapper mapper = new ObjectMapper();
+    private static HashMap<DccLocoAddress, JsonThrottle> throttles = null;
     private static final Logger log = LoggerFactory.getLogger(JsonThrottle.class);
 
-    @SuppressWarnings("LeakingThisInConstructor")
-    public JsonThrottle(String throttleId, JsonNode data, JsonThrottleServer server) throws JmriException {
-        this.throttleId = throttleId;
-        this.server = server;
-        this.mapper = new ObjectMapper();
-        boolean result = false;
+    private JsonThrottle(DccLocoAddress address, JsonThrottleServer server) {
+        this.address = address;
+        this.servers.add(server);
+    }
+
+    public static JsonThrottle getThrottle(String throttleId, JsonNode data, JsonThrottleServer server) throws JmriException, IOException {
+        DccLocoAddress address = null;
         if (!data.path(ADDRESS).isMissingNode()) {
-            result = InstanceManager.throttleManagerInstance().requestThrottle(data.path(ADDRESS).asInt(), this);
+            if (InstanceManager.throttleManagerInstance().canBeLongAddress(data.path(ADDRESS).asInt())
+                    || InstanceManager.throttleManagerInstance().canBeShortAddress(data.path(ADDRESS).asInt())) {
+                address = new DccLocoAddress(data.path(ADDRESS).asInt(),
+                        !InstanceManager.throttleManagerInstance().canBeShortAddress(data.path(ADDRESS).asInt()));
+            } else {
+                server.sendErrorMessage(-103, Bundle.getMessage(server.connection.getLocale(), "ErrorThrottleInvalidAddress", data.path(ADDRESS).asInt()));
+                throw new JmriException("Address " + data.path(ADDRESS).asInt() + " is not a valid address."); // NOI18N
+            }
         } else if (!data.path(ID).isMissingNode()) {
             try {
-                result = InstanceManager.throttleManagerInstance().requestThrottle(Roster.instance().getEntryForId(data.path(ID).asText()), this);
+                address = Roster.instance().getEntryForId(data.path(ID).asText()).getDccLocoAddress();
             } catch (NullPointerException ex) {
-                this.sendErrorMessage(-100, Bundle.getMessage(this.server.connection.getLocale(),"ErrorThrottleRosterEntry", data.path(ID).asText()));
+                server.sendErrorMessage(-100, Bundle.getMessage(server.connection.getLocale(), "ErrorThrottleRosterEntry", data.path(ID).asText()));
                 throw new JmriException("Roster entry " + data.path(ID).asText() + " does not exist."); // NOI18N
             }
         } else {
-            this.sendErrorMessage(-101, Bundle.getMessage(this.server.connection.getLocale(),"ErrorThrottleNoAddress"));
+            server.sendErrorMessage(-101, Bundle.getMessage(server.connection.getLocale(), "ErrorThrottleNoAddress"));
             throw new JmriException("No address specified."); // NOI18N
         }
-        if (!result) {
-            // notify end user when notifyFailedThrottleRequest is called
-            throw new JmriException("Unable to get throttle."); // NOI18N
+        if (JsonThrottle.throttles == null) {
+            JsonThrottle.throttles = new HashMap<DccLocoAddress, JsonThrottle>();
+        }
+        if (JsonThrottle.throttles.containsKey(address)) {
+            JsonThrottle throttle = JsonThrottle.throttles.get(address);
+            throttle.servers.add(server);
+            return throttle;
+        } else {
+            JsonThrottle throttle = new JsonThrottle(address, server);
+            if (!InstanceManager.throttleManagerInstance().requestThrottle(address, throttle)) {
+                throw new JmriException("Unable to get throttle."); // NOI18N
+            }
+            JsonThrottle.throttles.put(address, throttle);
+            return throttle;
         }
     }
 
-    public void close() {
+    public void close(JsonThrottleServer server, boolean notifyClient) {
         if (this.throttle != null) {
-            this.throttle.setSpeedSetting(0);
-            this.release();
+            if (this.servers.size() == 1) {
+                this.throttle.setSpeedSetting(0);
+            }
+            this.release(server, notifyClient);
         }
     }
 
-    public void release() {
+    public void release(JsonThrottleServer server) {
+        this.release(server, true);
+    }
+    
+    private void release(JsonThrottleServer server, boolean notifyClient) {
         if (this.throttle != null) {
-            this.throttle.release(this);
-            this.throttle.removePropertyChangeListener(this);
-            this.throttle = null;
-            this.sendMessage(this.mapper.createObjectNode().putNull(RELEASE));
+            if (this.servers.size() == 1) {
+                this.throttle.release(this);
+                this.throttle.removePropertyChangeListener(this);
+                this.throttle = null;
+            }
+            if (notifyClient) {
+                this.sendMessage(this.mapper.createObjectNode().putNull(RELEASE), server);
+            }
+        }
+        this.servers.remove(server);
+        if (this.servers.isEmpty()) {
+            // Release address-based reference to this throttle if there are no servers using it
+            // so that when the server releases its reference, this throttle can be garbage collected
+            JsonThrottle.throttles.remove(this.address);
         }
     }
 
-    public void parseRequest(Locale locale, JsonNode data) {
-    	Iterator<Entry<String, JsonNode>> nodeIterator = data.fields();
-    	while (nodeIterator.hasNext()) {
-    	   Map.Entry<String, JsonNode> entry = (Map.Entry<String, JsonNode>) nodeIterator.next();
-    	   String k = entry.getKey();
-    	   JsonNode v = entry.getValue();
-//    	   log.debug("key-->'{}', value-->{}", k, v);
-    	   if (k.equals(THROTTLE)) { 
-    		   //no action for throttle item, but since it always exists, checking for it shortcuts the processing a bit
-    	   } else if (k.equals(ESTOP)) {
-               this.throttle.setSpeedSetting(-1);
-    	   } else if (k.equals(IDLE)) {
-               this.throttle.setSpeedSetting(0);
-    	   } else if (k.equals(SPEED)) {
-               this.throttle.setSpeedSetting((float) v.asDouble());
-    	   } else if (k.equals(FORWARD)) {
-               this.throttle.setIsForward(v.asBoolean());
-    	   } else if (k.equals(Throttle.F0)) {
-               this.throttle.setF0(v.asBoolean());
-    	   } else if (k.equals(Throttle.F1)) {
-               this.throttle.setF1(v.asBoolean());
-    	   } else if (k.equals(Throttle.F2)) {
-               this.throttle.setF2(v.asBoolean());
-    	   } else if (k.equals(Throttle.F3)) {
-               this.throttle.setF3(v.asBoolean());
-    	   } else if (k.equals(Throttle.F4)) {
-               this.throttle.setF4(v.asBoolean());
-    	   } else if (k.equals(Throttle.F5)) {
-               this.throttle.setF5(v.asBoolean());
-    	   } else if (k.equals(Throttle.F6)) {
-               this.throttle.setF6(v.asBoolean());
-    	   } else if (k.equals(Throttle.F7)) {
-               this.throttle.setF7(v.asBoolean());
-    	   } else if (k.equals(Throttle.F8)) {
-               this.throttle.setF8(v.asBoolean());
-    	   } else if (k.equals(Throttle.F9)) {
-               this.throttle.setF9(v.asBoolean());
-    	   } else if (k.equals(Throttle.F10)) {
-               this.throttle.setF10(v.asBoolean());
-    	   } else if (k.equals(Throttle.F11)) {
-               this.throttle.setF11(v.asBoolean());
-    	   } else if (k.equals(Throttle.F12)) {
-               this.throttle.setF12(v.asBoolean());
-    	   } else if (k.equals(Throttle.F13)) {
-               this.throttle.setF13(v.asBoolean());
-    	   } else if (k.equals(Throttle.F14)) {
-               this.throttle.setF14(v.asBoolean());
-    	   } else if (k.equals(Throttle.F15)) {
-               this.throttle.setF15(v.asBoolean());
-    	   } else if (k.equals(Throttle.F16)) {
-               this.throttle.setF16(v.asBoolean());
-    	   } else if (k.equals(Throttle.F17)) {
-               this.throttle.setF17(v.asBoolean());
-    	   } else if (k.equals(Throttle.F18)) {
-               this.throttle.setF18(v.asBoolean());
-    	   } else if (k.equals(Throttle.F19)) {
-               this.throttle.setF19(v.asBoolean());
-    	   } else if (k.equals(Throttle.F20)) {
-               this.throttle.setF20(v.asBoolean());
-    	   } else if (k.equals(Throttle.F21)) {
-               this.throttle.setF21(v.asBoolean());
-    	   } else if (k.equals(Throttle.F22)) {
-               this.throttle.setF22(v.asBoolean());
-    	   } else if (k.equals(Throttle.F23)) {
-               this.throttle.setF23(v.asBoolean());
-    	   } else if (k.equals(Throttle.F24)) {
-               this.throttle.setF24(v.asBoolean());
-    	   } else if (k.equals(Throttle.F25)) {
-               this.throttle.setF25(v.asBoolean());
-    	   } else if (k.equals(Throttle.F26)) {
-               this.throttle.setF26(v.asBoolean());
-    	   } else if (k.equals(Throttle.F27)) {
-               this.throttle.setF27(v.asBoolean());
-    	   } else if (k.equals(Throttle.F28)) {
-               this.throttle.setF28(v.asBoolean());
-    	   } else if (k.equals(RELEASE)) {
-               this.server.release(throttleId);
-    	   } else if (k.equals(STATUS)) {
-               this.sendStatus();
-    	   }
-    	}
+    public void parseRequest(Locale locale, JsonNode data, JsonThrottleServer server) {
+        Iterator<Entry<String, JsonNode>> nodeIterator = data.fields();
+        while (nodeIterator.hasNext()) {
+            Map.Entry<String, JsonNode> entry = (Map.Entry<String, JsonNode>) nodeIterator.next();
+            String k = entry.getKey();
+            JsonNode v = entry.getValue();
+            if (k.equals(THROTTLE)) {
+                //no action for throttle item, but since it always exists, checking for it shortcuts the processing a bit
+            } else if (k.equals(ESTOP)) {
+                this.throttle.setSpeedSetting(-1);
+                break; // stop processing any commands that may conflict with ESTOP
+            } else if (k.equals(IDLE)) {
+                this.throttle.setSpeedSetting(0);
+            } else if (k.equals(SPEED)) {
+                this.throttle.setSpeedSetting((float) v.asDouble());
+            } else if (k.equals(FORWARD)) {
+                this.throttle.setIsForward(v.asBoolean());
+            } else if (k.equals(Throttle.F0)) {
+                this.throttle.setF0(v.asBoolean());
+            } else if (k.equals(Throttle.F1)) {
+                this.throttle.setF1(v.asBoolean());
+            } else if (k.equals(Throttle.F2)) {
+                this.throttle.setF2(v.asBoolean());
+            } else if (k.equals(Throttle.F3)) {
+                this.throttle.setF3(v.asBoolean());
+            } else if (k.equals(Throttle.F4)) {
+                this.throttle.setF4(v.asBoolean());
+            } else if (k.equals(Throttle.F5)) {
+                this.throttle.setF5(v.asBoolean());
+            } else if (k.equals(Throttle.F6)) {
+                this.throttle.setF6(v.asBoolean());
+            } else if (k.equals(Throttle.F7)) {
+                this.throttle.setF7(v.asBoolean());
+            } else if (k.equals(Throttle.F8)) {
+                this.throttle.setF8(v.asBoolean());
+            } else if (k.equals(Throttle.F9)) {
+                this.throttle.setF9(v.asBoolean());
+            } else if (k.equals(Throttle.F10)) {
+                this.throttle.setF10(v.asBoolean());
+            } else if (k.equals(Throttle.F11)) {
+                this.throttle.setF11(v.asBoolean());
+            } else if (k.equals(Throttle.F12)) {
+                this.throttle.setF12(v.asBoolean());
+            } else if (k.equals(Throttle.F13)) {
+                this.throttle.setF13(v.asBoolean());
+            } else if (k.equals(Throttle.F14)) {
+                this.throttle.setF14(v.asBoolean());
+            } else if (k.equals(Throttle.F15)) {
+                this.throttle.setF15(v.asBoolean());
+            } else if (k.equals(Throttle.F16)) {
+                this.throttle.setF16(v.asBoolean());
+            } else if (k.equals(Throttle.F17)) {
+                this.throttle.setF17(v.asBoolean());
+            } else if (k.equals(Throttle.F18)) {
+                this.throttle.setF18(v.asBoolean());
+            } else if (k.equals(Throttle.F19)) {
+                this.throttle.setF19(v.asBoolean());
+            } else if (k.equals(Throttle.F20)) {
+                this.throttle.setF20(v.asBoolean());
+            } else if (k.equals(Throttle.F21)) {
+                this.throttle.setF21(v.asBoolean());
+            } else if (k.equals(Throttle.F22)) {
+                this.throttle.setF22(v.asBoolean());
+            } else if (k.equals(Throttle.F23)) {
+                this.throttle.setF23(v.asBoolean());
+            } else if (k.equals(Throttle.F24)) {
+                this.throttle.setF24(v.asBoolean());
+            } else if (k.equals(Throttle.F25)) {
+                this.throttle.setF25(v.asBoolean());
+            } else if (k.equals(Throttle.F26)) {
+                this.throttle.setF26(v.asBoolean());
+            } else if (k.equals(Throttle.F27)) {
+                this.throttle.setF27(v.asBoolean());
+            } else if (k.equals(Throttle.F28)) {
+                this.throttle.setF28(v.asBoolean());
+            } else if (k.equals(RELEASE)) {
+                server.release(this);
+            } else if (k.equals(STATUS)) {
+                this.sendStatus(server);
+            }
+        }
     }
 
     public void sendMessage(ObjectNode data) {
+        for (JsonThrottleServer server : this.servers) {
+            this.sendMessage(data, server);
+        }
+    }
+
+    public void sendMessage(ObjectNode data, JsonThrottleServer server) {
         try {
-            this.server.sendMessage(throttleId, data);
+            server.sendMessage(this, data);
         } catch (IOException ex) {
-            this.close();
+            this.close(server, false);
             log.warn("Unable to send message, closing connection.", ex);
             try {
-                this.server.connection.close();
+                server.connection.close();
             } catch (IOException e1) {
                 log.warn("Unable to close connection.", e1);
             }
@@ -195,10 +236,10 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     }
 
     @Override
-    public void notifyThrottleFound(DccThrottle t) {
+    public void notifyThrottleFound(DccThrottle throttle) {
         try {
-            this.throttle = t;
-            t.addPropertyChangeListener(this);
+            this.throttle = throttle;
+            throttle.addPropertyChangeListener(this);
             this.sendStatus();
         } catch (Exception e) {
             log.debug(e.getLocalizedMessage(), e);
@@ -207,23 +248,33 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
 
     @Override
     public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
-        this.sendErrorMessage(-102, Bundle.getMessage(this.server.connection.getLocale(), "ErrorThrottleRequestFailed", address, reason));
+        for (JsonThrottleServer server : this.servers) {
+            this.sendErrorMessage(-102, Bundle.getMessage(server.connection.getLocale(), "ErrorThrottleRequestFailed", address, reason), server);
+        }
     }
 
-    private void sendErrorMessage(int code, String message) {
+    private void sendErrorMessage(int code, String message, JsonThrottleServer server) {
         try {
-            this.server.sendErrorMessage(code, message);
+            server.sendErrorMessage(code, message);
         } catch (IOException e) {
             try {
-                this.server.connection.close();
+                server.connection.close();
             } catch (IOException e1) {
-                log.warn("Unable to close connection.", e);
+                log.warn("Unable to close connection.", e1);
             }
             log.warn("Unable to send message, closing connection.", e);
         }
     }
 
     private void sendStatus() {
+        this.sendMessage(this.getStatus());
+    }
+
+    protected void sendStatus(JsonThrottleServer server) {
+        this.sendMessage(this.getStatus(), server);
+    }
+
+    private ObjectNode getStatus() {
         ObjectNode data = this.mapper.createObjectNode();
         data.put(ADDRESS, this.throttle.getLocoAddress().getNumber());
         data.put(SPEED, this.throttle.getSpeedSetting());
@@ -260,6 +311,6 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
         if (this.throttle.getRosterEntry() != null) {
             data.put(ROSTER_ENTRY, this.throttle.getRosterEntry().getId());
         }
-        this.sendMessage(data);
+        return data;
     }
 }

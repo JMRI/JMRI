@@ -22,24 +22,28 @@ public class JsonThrottleServer {
     private final ObjectMapper mapper;
     protected final JmriConnection connection;
     private final HashMap<String, JsonThrottle> throttles;
+    private final HashMap<JsonThrottle, String> throttleIds;
     static final Logger log = LoggerFactory.getLogger(JsonThrottleServer.class.getName());
 
     public JsonThrottleServer(JmriConnection connection) {
         this.connection = connection;
         this.mapper = new ObjectMapper();
         this.throttles = new HashMap<String, JsonThrottle>(0);
+        this.throttleIds = new HashMap<JsonThrottle, String>(0);
     }
 
     public void dispose() {
         for (String throttleId : this.throttles.keySet()) {
-            this.throttles.get(throttleId).close();
+            this.throttles.get(throttleId).close(this, false);
             this.throttles.remove(throttleId);
         }
+        this.throttleIds.clear();
     }
 
-    protected void release(String throttleId) {
-        this.throttles.get(throttleId).release();
-        this.throttles.remove(throttleId);
+    protected void release(JsonThrottle throttle) {
+        throttle.release(this);
+        this.throttles.remove(this.throttleIds.get(throttle));
+        this.throttleIds.remove(throttle);
     }
 
     public void sendMessage(String throttleId, ObjectNode data) throws IOException {
@@ -48,6 +52,10 @@ public class JsonThrottleServer {
         data.put(THROTTLE, throttleId);
         root.put(DATA, data);
         this.connection.sendMessage(this.mapper.writeValueAsString(root));
+    }
+
+    public void sendMessage(JsonThrottle throttle, ObjectNode data) throws IOException {
+        this.sendMessage(this.throttleIds.get(throttle), data);
     }
 
     public void sendErrorMessage(int code, String message) throws IOException {
@@ -68,13 +76,15 @@ public class JsonThrottleServer {
         JsonThrottle throttle = this.throttles.get(id);
         if (!this.throttles.containsKey(id)) {
             try {
-                throttle = new JsonThrottle(id, data, this);
+                throttle = JsonThrottle.getThrottle(id, data, this);
                 this.throttles.put(id, throttle);
+                this.throttleIds.put(throttle, id);
+                throttle.sendStatus(this);
             } catch (JmriException je) {
                 this.sendErrorMessage(-1, je.getMessage());
                 return;
             }
         }
-        throttle.parseRequest(locale, data);
+        throttle.parseRequest(locale, data, this);
     }
 }
