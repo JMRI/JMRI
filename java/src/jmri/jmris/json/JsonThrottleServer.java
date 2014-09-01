@@ -47,11 +47,13 @@ public class JsonThrottleServer {
     }
 
     public void sendMessage(String throttleId, ObjectNode data) throws IOException {
-        ObjectNode root = this.mapper.createObjectNode();
-        root.put(TYPE, THROTTLE);
-        data.put(THROTTLE, throttleId);
-        root.put(DATA, data);
-        this.connection.sendMessage(this.mapper.writeValueAsString(root));
+        if (throttleId != null) {
+            ObjectNode root = this.mapper.createObjectNode();
+            root.put(TYPE, THROTTLE);
+            data.put(THROTTLE, throttleId);
+            root.put(DATA, data);
+            this.connection.sendMessage(this.mapper.writeValueAsString(root));
+        }
     }
 
     public void sendMessage(JsonThrottle throttle, ObjectNode data) throws IOException {
