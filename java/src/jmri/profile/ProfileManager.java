@@ -441,6 +441,10 @@ public class ProfileManager extends Bean {
                 return (pathname.isDirectory() && Arrays.asList(pathname.list()).contains(Profile.PROPERTIES));
             }
         });
+        if (profilePaths == null) {
+            log.error("There was an error reading directory {}.", searchPath.getPath());
+            return;
+        }
         for (File pp : profilePaths) {
             try {
                 Profile p = new Profile(pp);
