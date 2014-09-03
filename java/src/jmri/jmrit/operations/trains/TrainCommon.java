@@ -1692,15 +1692,18 @@ public class TrainCommon {
 	}
 
 	/**
-	 * Checks to see if the the string fits on the page.
+	 * Checks to see if the the string fits on the page. Also checks
+	 * for the new line character.
 	 * 
 	 * @param string
 	 * @param orientation
 	 * @param fontName
 	 * @param fontSize
-	 * @return true if string length is longer than page width
+	 * @return true if string length is longer than page width or string has a new line character.
 	 */
 	private boolean checkStringLength(String string, String orientation, String fontName, int fontSize) {
+		if (string.contains(NEW_LINE))
+			return true;
 		Font font = new Font(fontName, Font.PLAIN, fontSize); // NOI18N
 		JLabel label = new JLabel();
 		FontMetrics metrics = label.getFontMetrics(font);
