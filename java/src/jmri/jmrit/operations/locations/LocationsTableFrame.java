@@ -90,6 +90,7 @@ public class LocationsTableFrame extends OperationsFrame {
 		//	build menu
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+		toolMenu.add(new LocationCopyAction());
 		toolMenu.add(new SchedulesTableAction(Bundle.getMessage("Schedules")));
 		toolMenu.add(new ModifyLocationsAction(Bundle.getMessage("TitleModifyLocations")));
 		toolMenu.add(new ShowCarsByLocationAction(false, null, null));

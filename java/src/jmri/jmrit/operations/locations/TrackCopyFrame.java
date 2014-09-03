@@ -16,8 +16,6 @@ import jmri.jmrit.operations.setup.Control;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
-import java.util.List;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -264,9 +262,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 	}
 	
 	private void moveRollingStock(Track fromTrack, Track toTrack, RollingStockManager manager) {
-		List<RollingStock> list = manager.getByIdList();
-		for (int i=0; i<list.size(); i++) {
-			RollingStock rs = list.get(i);
+		for (RollingStock rs : manager.getByIdList()) {
 			if (rs.getTrack() == fromTrack) {
 				rs.setLocation(toTrack.getLocation(), toTrack, true);
 			}

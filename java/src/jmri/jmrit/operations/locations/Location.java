@@ -131,6 +131,41 @@ public class Location implements java.beans.PropertyChangeListener {
 	public String getName() {
 		return _name;
 	}
+	
+	/**
+	 * Makes a copy of this location.
+	 * @param newLocation the location to copy to
+	 */
+	public void copyLocation (Location newLocation) {
+		newLocation.setComment(getComment());
+		newLocation.setDefaultPrinterName(getDefaultPrinterName());
+		newLocation.setLocationOps(getLocationOps());
+		newLocation.setSwitchListComment(getSwitchListComment());
+		newLocation.setSwitchListEnabled(isSwitchListEnabled());
+		newLocation.setTrainDirections(getTrainDirections());
+		// TODO should we set the train icon coordinates?
+		// rolling stock serviced by this location
+		for (String type : newLocation.getTypeNames())
+			if (acceptsTypeName(type))
+				continue;
+			else
+				newLocation.deleteTypeName(type);			
+		copyTracksLocation(newLocation);
+		
+	}
+	
+	/**
+	 * Copies all of the tracks at this location. If there's a track already at the copy to location
+	 * with the same name, the track is skipped.
+	 * @param location the location to copy the tracks to.
+	 */
+	public void copyTracksLocation (Location location) {
+		for (Track track : getTrackList()) {
+			if (location.getTrackByName(track.getName(), null) != null)
+				continue;
+			track.copyTrack(track.getName(), location);		
+		}
+	}
 
 	public PhysicalLocation getPhysicalLocation() {
 		return (_physicalLocation);
