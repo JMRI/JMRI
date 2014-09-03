@@ -27,8 +27,8 @@ import java.util.List;
  */
 public class PrintLocationsByCarTypesAction extends AbstractAction {
 
-	static final String newLine = "\n"; // NOI18N
-	static final String tab = "\t"; // NOI18N
+	static final String NEW_LINE = "\n"; // NOI18N
+	static final String TAB = "\t"; // NOI18N
 
 	LocationManager locManager = LocationManager.instance();
 
@@ -67,24 +67,24 @@ public class PrintLocationsByCarTypesAction extends AbstractAction {
 
 		try {
 			// title line
-			String s = Bundle.getMessage("Type") + tab + Bundle.getMessage("Location") + tab
-					+ Bundle.getMessage("Track") + newLine;
+			String s = Bundle.getMessage("Type") + TAB + Bundle.getMessage("Location") + TAB
+					+ Bundle.getMessage("Track") + NEW_LINE;
 			writer.write(s);
 			// car types
 			for (int t = 0; t < carTypes.length; t++) {
-				s = carTypes[t] + newLine;
+				s = carTypes[t] + NEW_LINE;
 				writer.write(s);
 				// locations
 				for (int i = 0; i < locations.size(); i++) {
 					Location location = locations.get(i);
 					if (location.acceptsTypeName(carTypes[t])) {
-						s = tab + location.getName() + newLine;
+						s = TAB + location.getName() + NEW_LINE;
 						writer.write(s);
 						// tracks
 						List<Track> tracks = location.getTrackByNameList(null);
 						for (Track track : tracks) {
 							if (track.acceptsTypeName(carTypes[t])) {
-								s = tab + tab + tab + track.getName() + newLine;
+								s = TAB + TAB + TAB + track.getName() + NEW_LINE;
 								writer.write(s);
 							}
 						}

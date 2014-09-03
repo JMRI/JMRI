@@ -108,8 +108,6 @@ public class OperationsSetupFrame extends OperationsFrame implements
 	JComboBox localComboBox = new JComboBox();
 	JComboBox terminateComboBox = new JComboBox();
 
-	protected static final String NEW_LINE = "\n"; // NOI18N
-
 	public OperationsSetupFrame() {
 		super(Bundle.getMessage("TitleOperationsSetup"));
 	}

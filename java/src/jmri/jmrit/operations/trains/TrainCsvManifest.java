@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.List;
+
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -19,6 +20,7 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,7 +67,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
 		addLine(fileOut, VT + getDate(true));
 		// train comment can have multiple lines
 		if (!train.getComment().equals("")) {
-			String[] comments = train.getComment().split("\n"); // NOI18N
+			String[] comments = train.getComment().split(NEW_LINE); // NOI18N
 			for (int i = 0; i < comments.length; i++)
 				addLine(fileOut, TC + ESC + comments[i] + ESC);
 		}
@@ -105,7 +107,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
 				// add location comment
 				if (Setup.isPrintLocationCommentsEnabled() && !loc.getComment().equals("")) {
 					// location comment can have multiple lines
-					String[] comments = loc.getComment().split("\n"); // NOI18N
+					String[] comments = loc.getComment().split(NEW_LINE); // NOI18N
 					for (String comment : comments)
 						addLine(fileOut, LC + ESC + comment + ESC);
 				}
