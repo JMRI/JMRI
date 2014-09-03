@@ -228,7 +228,7 @@ public class JsonClientHandler {
                 } else if (list.equals(NETWORK_SERVICES)) {
                     reply = JsonUtil.getNetworkServices(this.connection.getLocale());
                 } else if (list.equals(SYSTEM_CONNECTIONS)) {
-                    reply = JsonUtil.getSystemConnections();
+                    reply = JsonUtil.getSystemConnections(this.connection.getLocale());
                 } else {
                     this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownList", list));
                     return;

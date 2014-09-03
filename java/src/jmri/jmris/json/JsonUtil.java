@@ -170,6 +170,8 @@ import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrix.ConnectionConfig;
+import jmri.jmrix.SystemConnectionMemo;
+import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import jmri.util.node.NodeIdentity;
 import jmri.util.zeroconf.ZeroConfService;
@@ -1118,8 +1120,9 @@ public class JsonUtil {
         }
     }
 
-    static public JsonNode getSystemConnections() {
+    static public JsonNode getSystemConnections(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
+        ArrayList<String> prefixes = new ArrayList<String>();
         for (Object instance : InstanceManager.configureManagerInstance().getInstanceList(ConnectionConfig.class)) {
             ConnectionConfig config = (ConnectionConfig) instance;
             if (!config.getDisabled()) {
@@ -1128,8 +1131,33 @@ public class JsonUtil {
                 data.put(NAME, config.getConnectionName());
                 data.put(MFG, config.getManufacturer());
                 data.put(PREFIX, config.getAdapter().getSystemConnectionMemo().getSystemPrefix());
+                prefixes.add(config.getAdapter().getSystemConnectionMemo().getSystemPrefix());
                 root.add(connection);
             }
+        }
+        for (Object instance : InstanceManager.getList(SystemConnectionMemo.class)) {
+            SystemConnectionMemo memo = (SystemConnectionMemo) instance;
+            if (!memo.getDisabled() && !prefixes.contains(memo.getSystemPrefix())) {
+                ObjectNode connection = mapper.createObjectNode().put(TYPE, SYSTEM_CONNECTION);
+                ObjectNode data = connection.putObject(DATA);
+                data.put(NAME, memo.getUserName());
+                data.put(PREFIX, memo.getSystemPrefix());
+                data.putNull(MFG);
+                prefixes.add(memo.getSystemPrefix());
+                root.add(connection);
+            }
+        }
+        // Following is required because despite there being a SystemConnectionMemo
+        // for the default internal connection, it is not used for the default internal
+        // connection. This allows a client to map the server's internal objects.
+        String prefix = "I";
+        if (!prefixes.contains(prefix)) {
+            ObjectNode connection = mapper.createObjectNode().put(TYPE, SYSTEM_CONNECTION);
+            ObjectNode data = connection.putObject(DATA);
+            data.put(NAME, ConnectionNameFromSystemName.getConnectionName(prefix));
+            data.put(PREFIX, prefix);
+            data.putNull(MFG);
+            root.add(connection);
         }
         return root;
     }

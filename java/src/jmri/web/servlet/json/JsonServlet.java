@@ -52,7 +52,6 @@ import static jmri.jmris.json.JSON.MEMORY;
 import static jmri.jmris.json.JSON.METADATA;
 import static jmri.jmris.json.JSON.NAME;
 import static jmri.jmris.json.JSON.NETWORK_SERVICES;
-import static jmri.jmris.json.JSON.SYSTEM_CONNECTIONS;
 import static jmri.jmris.json.JSON.NODE;
 import static jmri.jmris.json.JSON.PANELS;
 import static jmri.jmris.json.JSON.POWER;
@@ -61,8 +60,8 @@ import static jmri.jmris.json.JSON.REPORTER;
 import static jmri.jmris.json.JSON.REPORTERS;
 import static jmri.jmris.json.JSON.ROSTER;
 import static jmri.jmris.json.JSON.ROSTER_ENTRY;
-import static jmri.jmris.json.JSON.ROSTER_GROUPS;
 import static jmri.jmris.json.JSON.ROSTER_GROUP;
+import static jmri.jmris.json.JSON.ROSTER_GROUPS;
 import static jmri.jmris.json.JSON.ROUTE;
 import static jmri.jmris.json.JSON.ROUTES;
 import static jmri.jmris.json.JSON.SENSOR;
@@ -72,6 +71,7 @@ import static jmri.jmris.json.JSON.SIGNAL_HEADS;
 import static jmri.jmris.json.JSON.SIGNAL_MAST;
 import static jmri.jmris.json.JSON.SIGNAL_MASTS;
 import static jmri.jmris.json.JSON.STATE;
+import static jmri.jmris.json.JSON.SYSTEM_CONNECTIONS;
 import static jmri.jmris.json.JSON.TIME;
 import static jmri.jmris.json.JSON.TRAIN;
 import static jmri.jmris.json.JSON.TRAINS;
@@ -301,7 +301,7 @@ public class JsonServlet extends WebSocketServlet {
                     } else if (type.equals(NETWORK_SERVICES)) {
                         reply = JsonUtil.getNetworkServices(request.getLocale());
                     } else if (type.equals(SYSTEM_CONNECTIONS)) {
-                        reply = JsonUtil.getSystemConnections();
+                        reply = JsonUtil.getSystemConnections(request.getLocale());
                     } else if (type.equals(NODE)) {
                         reply = JsonUtil.getNode(request.getLocale());
                     } else {
