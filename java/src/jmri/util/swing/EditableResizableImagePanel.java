@@ -5,10 +5,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.IOException;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import jmri.util.FileUtil;
 import jmri.util.iharder.dnd.FileDrop;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,8 +76,8 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
     // For contextual menu remove
     class MyMouseAdapter implements MouseListener {
 
-        private JPopupMenu popUpMenu;
-        private JMenuItem removeMenuItem;
+        private final JPopupMenu popUpMenu;
+        private final JMenuItem removeMenuItem;
         private ResizableImagePanel rip;
 
         public MyMouseAdapter(ResizableImagePanel resizableImagePanel) {
@@ -127,27 +127,6 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
         }
     }
 
-    private static void copyFile(File in, File out) throws Exception {
-        if (!out.getParentFile().mkdirs()) // make directorys, check success
-        {
-            log.error("failed to make directories to copy file");
-        }
-        FileInputStream fis = new FileInputStream(in);
-        FileOutputStream fos = new FileOutputStream(out);
-        try {
-            byte[] buf = new byte[1024];
-            int i = 0;
-            while ((i = fis.read(buf)) != -1) {
-                fos.write(buf, 0, i);
-            }
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            fis.close();
-            fos.close();
-        }
-    }
-
     public void setDropFolder(String s) {
         dropFolder = s;
     }
@@ -172,8 +151,9 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
             dest = new File(dropFolder + File.separatorChar + files[0].getName());
             if (files[0].getParent().compareTo(dest.getParent()) != 0) {
                 try {
-                    copyFile(files[0], dest);
-                } catch (Exception ex) {
+                    FileUtil.createDirectory(dest.getParentFile().getPath());
+                    FileUtil.copy(files[0], dest);
+                } catch (IOException ex) {
                     log.error("filesDropped: error while copying new file, using original file");
                     dest = files[0];
                 }
