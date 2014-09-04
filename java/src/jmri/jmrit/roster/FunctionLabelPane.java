@@ -112,7 +112,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
             cL.gridx++;
 
             // add the function buttons
-            _imageFilePath[i] = new EditableResizableImagePanel((r.getFunctionImage(i) != null) ? r.getFunctionImage(i) : "", 20, 20);
+            _imageFilePath[i] = new EditableResizableImagePanel(r.getFunctionImage(i), 20, 20);
             _imageFilePath[i].setDropFolder(LocoFile.getFileLocation());
             _imageFilePath[i].setBackground(new Color(0, 0, 0, 0));
             _imageFilePath[i].setToolTipText(Bundle.getMessage("FunctionButtonRosterImageToolTip"));
@@ -120,7 +120,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
             add(_imageFilePath[i], cL);
             cL.gridx++;
 
-            _imagePressedFilePath[i] = new EditableResizableImagePanel((r.getFunctionSelectedImage(i) != null) ? r.getFunctionSelectedImage(i) : "", 20, 20);
+            _imagePressedFilePath[i] = new EditableResizableImagePanel(r.getFunctionSelectedImage(i), 20, 20);
             _imagePressedFilePath[i].setDropFolder(LocoFile.getFileLocation());
             _imagePressedFilePath[i].setBackground(new Color(0, 0, 0, 0));
             _imagePressedFilePath[i].setToolTipText(Bundle.getMessage("FunctionButtonPressedRosterImageToolTip"));
@@ -180,7 +180,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
         if (_imageFilePath != null) {
             for (int i = 0; i < _imageFilePath.length; i++) {
                 if (_imageFilePath[i] != null) {
-                    if (r.getFunctionImage(i) == null && !_imageFilePath[i].getImagePath().equals("")) {
+                    if (r.getFunctionImage(i) == null && _imageFilePath[i].getImagePath() != null) {
                         return true;
                     }
                     if (r.getFunctionImage(i) != null && !r.getFunctionImage(i).equals(_imageFilePath[i].getImagePath())) {
@@ -192,7 +192,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
         if (_imagePressedFilePath != null) {
             for (int i = 0; i < _imagePressedFilePath.length; i++) {
                 if (_imagePressedFilePath[i] != null) {
-                    if (r.getFunctionSelectedImage(i) == null && !_imagePressedFilePath[i].getImagePath().equals("")) {
+                    if (r.getFunctionSelectedImage(i) == null && _imagePressedFilePath[i].getImagePath() != null) {
                         return true;
                     }
                     if (r.getFunctionSelectedImage(i) != null && !r.getFunctionSelectedImage(i).equals(_imagePressedFilePath[i].getImagePath())) {

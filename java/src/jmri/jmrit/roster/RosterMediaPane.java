@@ -140,10 +140,12 @@ public class RosterMediaPane extends JPanel {
         if (!r.getURL().equals(_URL.getText())) {
             return true;
         }
-        if (!r.getImagePath().equals(_imageFilePath.getImagePath())) {
+        if ((r.getImagePath() != null && !r.getImagePath().equals(_imageFilePath.getImagePath()))
+                || (r.getImagePath() == null && _imageFilePath.getImagePath() != null)) {
             return true;
         }
-        if (!r.getIconPath().equals(_iconFilePath.getImagePath())) {
+        if ((r.getIconPath() != null && !r.getIconPath().equals(_iconFilePath.getImagePath()))
+                || (r.getIconPath() == null && _iconFilePath.getImagePath() != null)) {
             return true;
         }
         return rosterAttributesModel.wasModified();

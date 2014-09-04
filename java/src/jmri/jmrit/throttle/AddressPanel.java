@@ -1,31 +1,39 @@
 package jmri.jmrit.throttle;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import javax.swing.*;
-
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.*;
-import java.util.List;
 import java.io.File;
-
-import jmri.DccThrottle;
-import jmri.ThrottleListener;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 import jmri.DccLocoAddress;
+import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.Programmer;
-import jmri.jmrit.roster.*;
+import jmri.ThrottleListener;
 import jmri.jmrit.DccLocoAddressSelector;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
 import jmri.jmrit.symbolicprog.ProgDefault;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgFrame;
 import jmri.jmrix.nce.consist.NceConsistRoster;
 import jmri.jmrix.nce.consist.NceConsistRosterEntry;
-
 import org.jdom.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A JInternalFrame that provides a way for the user to enter a decoder address.
@@ -131,7 +139,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 			backgroundPanel.setImagePath(null);
 			String rosterEntryTitle = getRosterEntrySelector().getSelectedRosterEntries()[0].titleString();
 			RosterEntry re = Roster.instance().entryFromTitle(rosterEntryTitle);
-			if ((re != null) && (re.getImagePath()!=null)){
+			if (re != null){
 				backgroundPanel.setImagePath(re.getImagePath());
 			}
 		}

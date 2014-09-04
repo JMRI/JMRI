@@ -136,30 +136,28 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
     }
 
     /**
-     * Set image file path, display will be updated If passed value is null,
+     * Set image file path, display will be updated if passed value is null,
      * blank image
      *
      * @param s
      */
     public void setImagePath(String s) {
-        if (s == null) {
-            if ((_imagePath != null) && (!(new File(_imagePath)).isDirectory())) {
-                _imagePath = (new File(_imagePath)).getParent();
-            } else if (_imagePath == null) {
-                // What is the advantage of passing an invalid path for an image
-                // if no image is specified?
-                _imagePath = "/";
-            }
-        } else {
+        if (s != null && !s.equals("")) {
             _imagePath = s;
-        }
-        log.debug("Image path is now : {}", _imagePath);
-        try {
-            image = ImageIO.read(new File(_imagePath));
-        } catch (IOException ex) {
-            log.debug("{} is not a valid image file, exception: ", _imagePath, ex);
+        } else {
+            _imagePath = null;
             image = null;
             scaledImage = null;
+        }
+        log.debug("Image path is now : {}", _imagePath);
+        if (_imagePath != null) {
+            try {
+                image = ImageIO.read(new File(_imagePath));
+            } catch (IOException ex) {
+                log.error("{} is not a valid image file, exception: ", _imagePath, ex);
+                image = null;
+                scaledImage = null;
+            }
         }
         if (isResizingContainer()) {
             resizeContainer();

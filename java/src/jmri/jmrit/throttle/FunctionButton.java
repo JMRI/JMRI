@@ -1,7 +1,5 @@
 package jmri.jmrit.throttle;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -13,17 +11,16 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JToggleButton;
-
 import jmri.util.FileUtil;
 import jmri.util.swing.ResizableImagePanel;
-
 import org.jdom.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -498,15 +495,12 @@ public class FunctionButton extends JToggleButton implements ActionListener
 	
 	public void setSelectedIconPath(String fnImg) {
 		selectedIconPath = fnImg;
-		ResizableImagePanel fnSelectedImage = null;
-		if (fnImg != null) {
-			fnSelectedImage = new ResizableImagePanel();
-			fnSelectedImage.setBackground(new Color(0,0,0,0));
-			fnSelectedImage.setRespectAspectRatio(true);
-			fnSelectedImage.setSize(new Dimension(FunctionButton.BUT_IMG_SIZE, FunctionButton.BUT_IMG_SIZE));
-			fnSelectedImage.setImagePath(fnImg);
-		}
-		if ((fnSelectedImage != null) && (fnSelectedImage.getScaledImage()!=null)) {
+		ResizableImagePanel fnSelectedImage = new ResizableImagePanel();
+		fnSelectedImage.setBackground(new Color(0,0,0,0));
+		fnSelectedImage.setRespectAspectRatio(true);
+		fnSelectedImage.setSize(new Dimension(FunctionButton.BUT_IMG_SIZE, FunctionButton.BUT_IMG_SIZE));
+                fnSelectedImage.setImagePath(fnImg);
+		if (fnSelectedImage.getScaledImage()!=null) {
 			ImageIcon icon = new ImageIcon(fnSelectedImage.getScaledImage());
 			setSelectedIcon(icon);			
 			setPressedIcon(icon);			
