@@ -4,6 +4,7 @@
 #
 # The next line is maintained by CVS, please don't change it
 # $Revision: 17977 $
+from time import sleep
 
 def closeTurnout(toName):
     to = turnouts.getTurnout(toName)
