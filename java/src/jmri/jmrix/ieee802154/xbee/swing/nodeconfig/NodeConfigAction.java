@@ -22,8 +22,14 @@ public class NodeConfigAction extends jmri.jmrix.ieee802154.swing.nodeconfig.Nod
        if(cm==null) 
        {
           // find the first registered memo.
-          xcm=(jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo)(jmri.InstanceManager.
+          try {
+             xcm=(jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo)(jmri.InstanceManager.
                getList(jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo.class).get(0));
+          } catch( java.lang.NullPointerException npe) {
+              // no memo is registered, is this the first time the
+              // connection has been configured?
+              log.debug("No XBee System Connection Memo available");
+          }
        }
        else xcm=cm;
     }

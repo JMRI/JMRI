@@ -22,9 +22,14 @@ public class NodeConfigAction extends AbstractAction {
        super(s);
        if(cm==null) 
        {
-          // find the first registered memo.
-          icm=(jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo)(jmri.InstanceManager.
+          try{
+             // find the first registered memo.
+             icm=(jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo)(jmri.InstanceManager.
                getList(jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo.class).get(0));
+          } catch(java.lang.NullPointerException npe) {
+               // no memo exists, are we configuring this for the first time?
+               log.debug("No IEEE 802.15.4 System Connection Memo available");
+          }
        }
        else icm=cm;
     }
