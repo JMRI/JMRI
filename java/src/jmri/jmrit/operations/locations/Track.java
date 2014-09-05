@@ -1708,7 +1708,7 @@ public class Track {
 			log.debug("Car (" + car.toString() + ") is part of kernel (" + car.getKernelName() + ")");
 			return OKAY;
 		}
-		// a car has a schedule id if the schedule was in match mode
+		// a car can have a scheduleId if the schedule is in match mode, or the car was routed to this spur
 		if (!car.getScheduleId().equals("")) {
 			String id = car.getScheduleId();
 			log.debug("Car ({}) has schedule id ({})", car.toString(), car.getScheduleId());
