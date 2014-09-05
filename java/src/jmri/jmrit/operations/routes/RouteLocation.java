@@ -27,6 +27,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	protected int _trainDir = (Setup.getTrainDirection() == Setup.EAST + Setup.WEST) ? EAST : NORTH; // train direction
 	protected int _maxTrainLength = Setup.getMaxTrainLength();
 	protected int _maxCarMoves = Setup.getCarMoves();
+	protected String _randomControl = DISABLED;
 	protected boolean _drops = true; // when true set outs allowed at this location
 	protected boolean _pickups = true; // when true pick ups allowed at this location
 	protected int _sequenceId = 0; // used to determine location order in route
@@ -59,6 +60,8 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	public static final String MAXMOVES_CHANGED_PROPERTY = "maxMovesChange"; // NOI18N
 	public static final String TRAIN_DIRECTION_CHANGED_PROPERTY = "trainDirectionChange"; // NOI18N
 	public static final String DEPARTURE_TIME_CHANGED_PROPERTY = "routeDepartureTimeChange"; // NOI18N
+	
+	public static final String DISABLED = "Off";
 
 	public RouteLocation(String id, Location location) {
 		log.debug("New route location ({}) id: {}", location.getName(), id);
@@ -198,6 +201,17 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	 */
 	public int getMaxCarMoves() {
 		return _maxCarMoves;
+	}
+	
+	public void setRandomControl(String value) {
+		String old = _randomControl;
+		_randomControl = value;
+		if (!old.equals(value))
+			setDirtyAndFirePropertyChange("randomControl", old, value);
+	}
+	
+	public String getRandomControl() {
+		return _randomControl;
 	}
 
 	/**
@@ -417,6 +431,8 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 			_grade = Double.parseDouble(a.getValue());
 		if ((a = e.getAttribute(Xml.MAX_CAR_MOVES)) != null)
 			_maxCarMoves = Integer.parseInt(a.getValue());
+		if ((a = e.getAttribute(Xml.RANDOM_CONTROL)) != null)
+			_randomControl = a.getValue();
 		if ((a = e.getAttribute(Xml.PICKUPS)) != null)
 			_pickups = a.getValue().equals(Xml.YES);
 		if ((a = e.getAttribute(Xml.DROPS)) != null)
@@ -451,6 +467,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 		e.setAttribute(Xml.MAX_TRAIN_LENGTH, Integer.toString(getMaxTrainLength()));
 		e.setAttribute(Xml.GRADE, Double.toString(getGrade()));
 		e.setAttribute(Xml.MAX_CAR_MOVES, Integer.toString(getMaxCarMoves()));
+		e.setAttribute(Xml.RANDOM_CONTROL, getRandomControl());
 		e.setAttribute(Xml.PICKUPS, isPickUpAllowed() ? Xml.YES : Xml.NO);
 		e.setAttribute(Xml.DROPS, isDropAllowed() ? Xml.YES : Xml.NO);
 		e.setAttribute(Xml.WAIT, Integer.toString(getWait()));

@@ -29,6 +29,7 @@ public class Xml {
 	static final String MAX_TRAIN_LENGTH = "maxTrainLength"; // NOI18N
 	static final String GRADE = "grade"; // NOI18N
 	static final String MAX_CAR_MOVES = "maxCarMoves"; // NOI18N
+	static final String RANDOM_CONTROL = "randomControl"; // NOI18N
 	static final String PICKUPS = "pickups"; // NOI18N
 	static final String DROPS = "drops"; // NOI18N
 	static final String WAIT = "wait"; // NOI18N

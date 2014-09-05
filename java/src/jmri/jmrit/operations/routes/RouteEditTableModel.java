@@ -33,23 +33,24 @@ import jmri.jmrit.operations.setup.Setup;
 public class RouteEditTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
 	// Defines the columns
-	private static final int IDCOLUMN = 0;
-	private static final int NAMECOLUMN = IDCOLUMN + 1;
-	private static final int TRAINCOLUMN = NAMECOLUMN + 1;
-	private static final int MAXMOVESCOLUMN = TRAINCOLUMN + 1;
-	private static final int PICKUPCOLUMN = MAXMOVESCOLUMN + 1;
-	private static final int DROPCOLUMN = PICKUPCOLUMN + 1;
-	private static final int WAITCOLUMN = DROPCOLUMN + 1;
-	private static final int MAXLENGTHCOLUMN = WAITCOLUMN + 1;
-	private static final int GRADE = MAXLENGTHCOLUMN + 1;
+	private static final int ID_COLUMN = 0;
+	private static final int NAME_COLUMN = ID_COLUMN + 1;
+	private static final int TRAIN_COLUMN = NAME_COLUMN + 1;
+	private static final int MAXMOVES_COLUMN = TRAIN_COLUMN + 1;
+	private static final int RANDOM_CONTROL_COLUMN = MAXMOVES_COLUMN + 1;
+	private static final int PICKUP_COLUMN = RANDOM_CONTROL_COLUMN + 1;
+	private static final int DROP_COLUMN = PICKUP_COLUMN + 1;
+	private static final int WAIT_COLUMN = DROP_COLUMN + 1;
+	private static final int MAXLENGTH_COLUMN = WAIT_COLUMN + 1;
+	private static final int GRADE = MAXLENGTH_COLUMN + 1;
 	private static final int TRAINICONX = GRADE + 1;
 	private static final int TRAINICONY = TRAINICONX + 1;
-	private static final int COMMENTCOLUMN = TRAINICONY + 1;
-	private static final int UPCOLUMN = COMMENTCOLUMN + 1;
-	private static final int DOWNCOLUMN = UPCOLUMN + 1;
-	private static final int DELETECOLUMN = DOWNCOLUMN + 1;
+	private static final int COMMENT_COLUMN = TRAINICONY + 1;
+	private static final int UP_COLUMN = COMMENT_COLUMN + 1;
+	private static final int DOWN_COLUMN = UP_COLUMN + 1;
+	private static final int DELETE_COLUMN = DOWN_COLUMN + 1;
 
-	private static final int HIGHESTCOLUMN = DELETECOLUMN + 1;
+	private static final int HIGHEST_COLUMN = DELETE_COLUMN + 1;
 
 	private boolean _showWait = true;
 	private JTable _table;
@@ -94,14 +95,14 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 		TableColumnModel tcm = table.getColumnModel();
 		ButtonRenderer buttonRenderer = new ButtonRenderer();
 		TableCellEditor buttonEditor = new ButtonEditor(new javax.swing.JButton());
-		tcm.getColumn(COMMENTCOLUMN).setCellRenderer(buttonRenderer);
-		tcm.getColumn(COMMENTCOLUMN).setCellEditor(buttonEditor);
-		tcm.getColumn(UPCOLUMN).setCellRenderer(buttonRenderer);
-		tcm.getColumn(UPCOLUMN).setCellEditor(buttonEditor);
-		tcm.getColumn(DOWNCOLUMN).setCellRenderer(buttonRenderer);
-		tcm.getColumn(DOWNCOLUMN).setCellEditor(buttonEditor);
-		tcm.getColumn(DELETECOLUMN).setCellRenderer(buttonRenderer);
-		tcm.getColumn(DELETECOLUMN).setCellEditor(buttonEditor);
+		tcm.getColumn(COMMENT_COLUMN).setCellRenderer(buttonRenderer);
+		tcm.getColumn(COMMENT_COLUMN).setCellEditor(buttonEditor);
+		tcm.getColumn(UP_COLUMN).setCellRenderer(buttonRenderer);
+		tcm.getColumn(UP_COLUMN).setCellEditor(buttonEditor);
+		tcm.getColumn(DOWN_COLUMN).setCellRenderer(buttonRenderer);
+		tcm.getColumn(DOWN_COLUMN).setCellEditor(buttonEditor);
+		tcm.getColumn(DELETE_COLUMN).setCellRenderer(buttonRenderer);
+		tcm.getColumn(DELETE_COLUMN).setCellEditor(buttonEditor);
 		table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
 		table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
 
@@ -118,21 +119,22 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 		// set column preferred widths
 		if (_frame.loadTableDetails(table))
 			return; // done
-		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(40);
-		table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(150);
-		table.getColumnModel().getColumn(TRAINCOLUMN).setPreferredWidth(95);
-		table.getColumnModel().getColumn(MAXMOVESCOLUMN).setPreferredWidth(50);
-		table.getColumnModel().getColumn(PICKUPCOLUMN).setPreferredWidth(65);
-		table.getColumnModel().getColumn(DROPCOLUMN).setPreferredWidth(65);
-		table.getColumnModel().getColumn(WAITCOLUMN).setPreferredWidth(60);
-		table.getColumnModel().getColumn(MAXLENGTHCOLUMN).setPreferredWidth(75);
+		table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(40);
+		table.getColumnModel().getColumn(NAME_COLUMN).setPreferredWidth(150);
+		table.getColumnModel().getColumn(TRAIN_COLUMN).setPreferredWidth(95);
+		table.getColumnModel().getColumn(MAXMOVES_COLUMN).setPreferredWidth(50);
+		table.getColumnModel().getColumn(RANDOM_CONTROL_COLUMN).setPreferredWidth(65);
+		table.getColumnModel().getColumn(PICKUP_COLUMN).setPreferredWidth(65);
+		table.getColumnModel().getColumn(DROP_COLUMN).setPreferredWidth(65);
+		table.getColumnModel().getColumn(WAIT_COLUMN).setPreferredWidth(60);
+		table.getColumnModel().getColumn(MAXLENGTH_COLUMN).setPreferredWidth(75);
 		table.getColumnModel().getColumn(GRADE).setPreferredWidth(50);
 		table.getColumnModel().getColumn(TRAINICONX).setPreferredWidth(35);
 		table.getColumnModel().getColumn(TRAINICONY).setPreferredWidth(35);
-		table.getColumnModel().getColumn(COMMENTCOLUMN).setPreferredWidth(70);
-		table.getColumnModel().getColumn(UPCOLUMN).setPreferredWidth(60);
-		table.getColumnModel().getColumn(DOWNCOLUMN).setPreferredWidth(70);
-		table.getColumnModel().getColumn(DELETECOLUMN).setPreferredWidth(70);
+		table.getColumnModel().getColumn(COMMENT_COLUMN).setPreferredWidth(70);
+		table.getColumnModel().getColumn(UP_COLUMN).setPreferredWidth(60);
+		table.getColumnModel().getColumn(DOWN_COLUMN).setPreferredWidth(70);
+		table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(70);
 	}
 
 	public int getRowCount() {
@@ -140,30 +142,32 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 	}
 
 	public int getColumnCount() {
-		return HIGHESTCOLUMN;
+		return HIGHEST_COLUMN;
 	}
 
 	public String getColumnName(int col) {
 		switch (col) {
-		case IDCOLUMN:
+		case ID_COLUMN:
 			return Bundle.getMessage("Id");
-		case NAMECOLUMN:
+		case NAME_COLUMN:
 			return Bundle.getMessage("Location");
-		case TRAINCOLUMN:
+		case TRAIN_COLUMN:
 			return Bundle.getMessage("TrainDirection");
-		case MAXMOVESCOLUMN:
+		case MAXMOVES_COLUMN:
 			return Bundle.getMessage("MaxMoves");
-		case PICKUPCOLUMN:
+		case RANDOM_CONTROL_COLUMN:
+			return Bundle.getMessage("Random");
+		case PICKUP_COLUMN:
 			return Bundle.getMessage("Pickups");
-		case DROPCOLUMN:
+		case DROP_COLUMN:
 			return Bundle.getMessage("Drops");
-		case WAITCOLUMN: {
+		case WAIT_COLUMN: {
 			if (_showWait)
 				return Bundle.getMessage("Wait");
 			else
 				return Bundle.getMessage("Time");
 		}
-		case MAXLENGTHCOLUMN:
+		case MAXLENGTH_COLUMN:
 			return Bundle.getMessage("MaxLength");
 		case GRADE:
 			return Bundle.getMessage("Grade");
@@ -171,13 +175,13 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 			return Bundle.getMessage("X");
 		case TRAINICONY:
 			return Bundle.getMessage("Y");
-		case COMMENTCOLUMN:
+		case COMMENT_COLUMN:
 			return Bundle.getMessage("Comment");
-		case UPCOLUMN:
+		case UP_COLUMN:
 			return Bundle.getMessage("Up");
-		case DOWNCOLUMN:
+		case DOWN_COLUMN:
 			return Bundle.getMessage("Down");
-		case DELETECOLUMN:
+		case DELETE_COLUMN:
 			return Bundle.getMessage("Delete");
 		default:
 			return "unknown"; // NOI18N
@@ -186,25 +190,27 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 
 	public Class<?> getColumnClass(int col) {
 		switch (col) {
-		case IDCOLUMN:
+		case ID_COLUMN:
 			return String.class;
-		case NAMECOLUMN:
+		case NAME_COLUMN:
 			return String.class;
-		case TRAINCOLUMN:
+		case TRAIN_COLUMN:
 			return JComboBox.class;
-		case MAXMOVESCOLUMN:
+		case MAXMOVES_COLUMN:
 			return String.class;
-		case PICKUPCOLUMN:
+		case RANDOM_CONTROL_COLUMN:
 			return JComboBox.class;
-		case DROPCOLUMN:
+		case PICKUP_COLUMN:
 			return JComboBox.class;
-		case WAITCOLUMN: {
+		case DROP_COLUMN:
+			return JComboBox.class;
+		case WAIT_COLUMN: {
 			if (_showWait)
 				return String.class;
 			else
 				return JComboBox.class;
 		}
-		case MAXLENGTHCOLUMN:
+		case MAXLENGTH_COLUMN:
 			return String.class;
 		case GRADE:
 			return String.class;
@@ -212,13 +218,13 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 			return String.class;
 		case TRAINICONY:
 			return String.class;
-		case COMMENTCOLUMN:
+		case COMMENT_COLUMN:
 			return JButton.class;
-		case UPCOLUMN:
+		case UP_COLUMN:
 			return JButton.class;
-		case DOWNCOLUMN:
+		case DOWN_COLUMN:
 			return JButton.class;
-		case DELETECOLUMN:
+		case DELETE_COLUMN:
 			return JButton.class;
 		default:
 			return null;
@@ -227,19 +233,20 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 
 	public boolean isCellEditable(int row, int col) {
 		switch (col) {
-		case DELETECOLUMN:
-		case TRAINCOLUMN:
-		case MAXMOVESCOLUMN:
-		case PICKUPCOLUMN:
-		case DROPCOLUMN:
-		case WAITCOLUMN:
-		case MAXLENGTHCOLUMN:
+		case DELETE_COLUMN:
+		case TRAIN_COLUMN:
+		case MAXMOVES_COLUMN:
+		case RANDOM_CONTROL_COLUMN:
+		case PICKUP_COLUMN:
+		case DROP_COLUMN:
+		case WAIT_COLUMN:
+		case MAXLENGTH_COLUMN:
 		case GRADE:
 		case TRAINICONX:
 		case TRAINICONY:
-		case COMMENTCOLUMN:
-		case UPCOLUMN:
-		case DOWNCOLUMN:
+		case COMMENT_COLUMN:
+		case UP_COLUMN:
+		case DOWN_COLUMN:
 			return true;
 		default:
 			return false;
@@ -253,28 +260,33 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 		if (rl == null)
 			return "ERROR unknown route location " + row; // NOI18N
 		switch (col) {
-		case IDCOLUMN:
+		case ID_COLUMN:
 			return rl.getId();
-		case NAMECOLUMN:
+		case NAME_COLUMN:
 			return rl.getName();
-		case TRAINCOLUMN: {
+		case TRAIN_COLUMN: {
 			JComboBox cb = Setup.getComboBox();
 			cb.setSelectedItem(rl.getTrainDirectionString());
 			return cb;
 		}
-		case MAXMOVESCOLUMN:
+		case MAXMOVES_COLUMN:
 			return Integer.toString(rl.getMaxCarMoves());
-		case PICKUPCOLUMN: {
+		case RANDOM_CONTROL_COLUMN: {
+			JComboBox cb = getRandomControlComboBox();
+			cb.setSelectedItem(rl.getRandomControl());
+			return cb;
+		}
+		case PICKUP_COLUMN: {
 			JComboBox cb = getYesNoComboBox();
 			cb.setSelectedItem(rl.isPickUpAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"));
 			return cb;
 		}
-		case DROPCOLUMN: {
+		case DROP_COLUMN: {
 			JComboBox cb = getYesNoComboBox();
 			cb.setSelectedItem(rl.isDropAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"));
 			return cb;
 		}
-		case WAITCOLUMN: {
+		case WAIT_COLUMN: {
 			if (_showWait) {
 				return Integer.toString(rl.getWait());
 			} else {
@@ -283,7 +295,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 				return cb;
 			}
 		}
-		case MAXLENGTHCOLUMN:
+		case MAXLENGTH_COLUMN:
 			return Integer.toString(rl.getMaxTrainLength());
 		case GRADE:
 			return Double.toString(rl.getGrade());
@@ -291,17 +303,17 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 			return Integer.toString(rl.getTrainIconX());
 		case TRAINICONY:
 			return Integer.toString(rl.getTrainIconY());
-		case COMMENTCOLUMN: {
+		case COMMENT_COLUMN: {
 			if (rl.getComment().equals(""))
 				return Bundle.getMessage("Add");
 			else
 				return Bundle.getMessage("Edit");
 		}
-		case UPCOLUMN:
+		case UP_COLUMN:
 			return Bundle.getMessage("Up");
-		case DOWNCOLUMN:
+		case DOWN_COLUMN:
 			return Bundle.getMessage("Down");
-		case DELETECOLUMN:
+		case DELETE_COLUMN:
 			return Bundle.getMessage("Delete");
 		default:
 			return "unknown " + col; // NOI18N
@@ -314,38 +326,41 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 			return;
 		}
 		switch (col) {
-		case COMMENTCOLUMN:
+		case COMMENT_COLUMN:
 			setComment(row);
 			break;
-		case UPCOLUMN:
+		case UP_COLUMN:
 			moveUpRouteLocation(row);
 			break;
-		case DOWNCOLUMN:
+		case DOWN_COLUMN:
 			moveDownRouteLocation(row);
 			break;
-		case DELETECOLUMN:
+		case DELETE_COLUMN:
 			deleteRouteLocation(row);
 			break;
-		case TRAINCOLUMN:
+		case TRAIN_COLUMN:
 			setTrainDirection(value, row);
 			break;
-		case MAXMOVESCOLUMN:
+		case MAXMOVES_COLUMN:
 			setMaxTrainMoves(value, row);
 			break;
-		case PICKUPCOLUMN:
+		case RANDOM_CONTROL_COLUMN:
+			setRandomControlValue(value, row);
+			break;
+		case PICKUP_COLUMN:
 			setPickup(value, row);
 			break;
-		case DROPCOLUMN:
+		case DROP_COLUMN:
 			setDrop(value, row);
 			break;
-		case WAITCOLUMN: {
+		case WAIT_COLUMN: {
 			if (_showWait)
 				setWait(value, row);
 			else
 				setDepartureTime(value, row);
 		}
 			break;
-		case MAXLENGTHCOLUMN:
+		case MAXLENGTH_COLUMN:
 			setMaxTrainLength(value, row);
 			break;
 		case GRADE:
@@ -413,6 +428,10 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 			JOptionPane.showMessageDialog(null, Bundle.getMessage("MaximumLocationMoves"), Bundle
 					.getMessage("CanNotChangeMoves"), JOptionPane.ERROR_MESSAGE);
 		}
+	}
+	
+	private void setRandomControlValue(Object value, int row) {
+		routeList.get(row).setRandomControl((String) ((JComboBox) value).getSelectedItem());
 	}
 
 	private void setDrop(Object value, int row) {
@@ -564,6 +583,14 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 		JComboBox cb = new JComboBox();
 		cb.addItem(Bundle.getMessage("yes"));
 		cb.addItem(Bundle.getMessage("no"));
+		return cb;
+	}
+	
+	private JComboBox getRandomControlComboBox() {
+		JComboBox cb = new JComboBox();
+		cb.addItem(RouteLocation.DISABLED);
+		for (int i = 10; i < 101; i = i + 10)
+			cb.addItem(Integer.toString(i));
 		return cb;
 	}
 
