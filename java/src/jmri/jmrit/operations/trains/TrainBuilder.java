@@ -2895,7 +2895,7 @@ public class TrainBuilder extends TrainCommon {
 				car.setLoadGeneratedFromStaging(true);
 				// is car part of kernel?
 				car.updateKernel();
-//				track.bumpSchedule();
+				track.bumpSchedule();
 				return true; // done, car now has a custom load
 			}
 			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCanNotRouteCar"), new Object[] {
