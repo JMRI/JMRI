@@ -38,49 +38,49 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(f) controls output A</label>
     <label xml:lang="it">Luci in avanti controlla uscita A</label>
-    <label xml:lang="de">FL(f) steuert Ausgang A</label>
+    <label xml:lang="de">FL(v) steuert Ausgang A</label>
   </variable>
   <variable CV="33" mask="XXXXXXVX" item="FL(f) controls output 2" minOut="2" minFn="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(f) controls output B</label>
     <label xml:lang="it">Luci in avanti controlla uscita B</label>
-    <label xml:lang="de">FL(f) steuert Ausgang B</label>
+    <label xml:lang="de">FL(v) steuert Ausgang B</label>
   </variable>
   <variable CV="33" mask="XXXXXVXX" item="FL(f) controls output 3" minOut="3" minFn="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(f) controls output C</label>
     <label xml:lang="it">Luci in avanti controlla uscita C</label>
-    <label xml:lang="de">FL(f) steuert Ausgang C</label>
+    <label xml:lang="de">FL(v) steuert Ausgang C</label>
   </variable>
   <variable CV="33" mask="XXXXVXXX" item="FL(f) controls output 4" minOut="4" minFn="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(f) controls output D</label>
     <label xml:lang="it">Luci in avanti controlla uscita D</label>
-    <label xml:lang="de">FL(f) steuert Ausgang D</label>
+    <label xml:lang="de">FL(v) steuert Ausgang D</label>
   </variable>
   <variable CV="33" mask="XXXVXXXX" item="FL(f) controls output 5" minOut="5" minFn="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(f) controls output E</label>
     <label xml:lang="it">Luci in avanti controlla uscita E</label>
-    <label xml:lang="de">FL(f) steuert Ausgang E</label>
+    <label xml:lang="de">FL(v) steuert Ausgang E</label>
   </variable>
   <variable CV="33" mask="XXVXXXXX" item="FL(f) controls output 6" minOut="6" minFn="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(f) controls output F</label>
     <label xml:lang="it">Luci in avanti controlla uscita F</label>
-    <label xml:lang="de">FL(f) steuert Ausgang F</label>
+    <label xml:lang="de">FL(v) steuert Ausgang F</label>
   </variable>
   <variable CV="33" mask="XVXXXXXX" item="FL(f) controls output 7" minOut="7" minFn="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(f) controls output G</label>
     <label xml:lang="it">Luci in avanti controlla uscita G</label>
-    <label xml:lang="de">FL(f) steuert Ausgang G</label>
+    <label xml:lang="de">FL(v) steuert Ausgang G</label>
   </variable>
   <variable CV="33" mask="VXXXXXXX" item="FL(f) controls output 8" minOut="8" minFn="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(f) controls output H</label>
     <label xml:lang="it">Luci in avanti controlla uscita H</label>
-    <label xml:lang="de">FL(f) steuert Ausgang H</label>
+    <label xml:lang="de">FL(v) steuert Ausgang H</label>
   </variable>
   <variable CV="34" mask="XXXXXXXV" item="FL(r) controls output 1" minOut="1" minFn="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -130,53 +130,53 @@
     <label xml:lang="it">Luci in retro controlla uscita H</label>
     <label xml:lang="de">FL(r) steuert Ausgang H</label>
   </variable>
-  <variable CV="35" mask="XXXXXXXV" item="F1f controls output 1" minOut="1" minFn="1">
+  <variable CV="35" mask="XXXXXXXV" item="F1(f) controls output 1" minOut="1" minFn="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(f) controls output A</label>
     <label xml:lang="it">F1 in avanti controlla uscita A</label>
-    <label xml:lang="de">F1f steuert Ausgang A</label>
+    <label xml:lang="de">F1(v) steuert Ausgang A</label>
   </variable>
-  <variable CV="35" mask="XXXXXXVX" item="F1f controls output 2" minOut="2" minFn="1">
+  <variable CV="35" mask="XXXXXXVX" item="F1(f) controls output 2" minOut="2" minFn="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(f) controls output B</label>
     <label xml:lang="it">F1 in avanti controlla uscita B</label>
-    <label xml:lang="de">F1f steuert Ausgang B</label>
+    <label xml:lang="de">F1(v) steuert Ausgang B</label>
   </variable>
-  <variable CV="35" mask="XXXXXVXX" item="F1f controls output 3" default="1" minOut="3" minFn="1">
+  <variable CV="35" mask="XXXXXVXX" item="F1(f) controls output 3" default="1" minOut="3" minFn="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(f) controls output C</label>
     <label xml:lang="it">F1 in avanti controlla uscita C</label>
-    <label xml:lang="de">F1f steuert Ausgang C</label>
+    <label xml:lang="de">F1(v) steuert Ausgang C</label>
   </variable>
-  <variable CV="35" mask="XXXXVXXX" item="F1f controls output 4" minOut="4" minFn="1">
+  <variable CV="35" mask="XXXXVXXX" item="F1(f) controls output 4" minOut="4" minFn="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(f) controls output D</label>
     <label xml:lang="it">F1 in avanti controlla uscita D</label>
-    <label xml:lang="de">F1f steuert Ausgang D</label>
+    <label xml:lang="de">F1(v) steuert Ausgang D</label>
   </variable>
-  <variable CV="35" mask="XXXVXXXX" item="F1f controls output 5" minOut="5" minFn="1">
+  <variable CV="35" mask="XXXVXXXX" item="F1(f) controls output 5" minOut="5" minFn="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(f) controls output E</label>
     <label xml:lang="it">F1 in avanti controlla uscita E</label>
-    <label xml:lang="de">F1f steuert Ausgang E</label>
+    <label xml:lang="de">F1(v) steuert Ausgang E</label>
   </variable>
-  <variable CV="35" mask="XXVXXXXX" item="F1f controls output 6" minOut="6" minFn="1">
+  <variable CV="35" mask="XXVXXXXX" item="F1(f) controls output 6" minOut="6" minFn="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(f) controls output F</label>
     <label xml:lang="it">F1 in avanti controlla uscita F</label>
-    <label xml:lang="de">F1f steuert Ausgang F</label>
+    <label xml:lang="de">F1(v) steuert Ausgang F</label>
   </variable>
-  <variable CV="35" mask="XVXXXXXX" item="F1f controls output 7" minOut="7" minFn="1">
+  <variable CV="35" mask="XVXXXXXX" item="F1(f) controls output 7" minOut="7" minFn="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(f) controls output G</label>
     <label xml:lang="it">F1 in avanti controlla uscita G</label>
-    <label xml:lang="de">F1f steuert Ausgang G</label>
+    <label xml:lang="de">F1(v) steuert Ausgang G</label>
   </variable>
-  <variable CV="35" mask="VXXXXXXX" item="F1f controls output 8" minOut="8" minFn="1">
+  <variable CV="35" mask="VXXXXXXX" item="F1(f) controls output 8" minOut="8" minFn="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(f) controls output H</label>
     <label xml:lang="it">F1 in avanti controlla uscita H</label>
-    <label xml:lang="de">F1f steuert Ausgang H</label>
+    <label xml:lang="de">F1(v) steuert Ausgang H</label>
   </variable>
   <variable CV="36" mask="XXXXXXXV" item="F2 controls output 1" minOut="1" minFn="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -706,53 +706,53 @@
     <label xml:lang="it">F12 controlla uscita H</label>
     <label xml:lang="de">F12 steuert Ausgang H</label>
   </variable>
-  <variable CV="47" mask="XXXXXXXV" item="F1r controls output 1" minOut="1" minFn="1">
+  <variable CV="47" mask="XXXXXXXV" item="F1(r) controls output 1" minOut="1" minFn="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(r) controls output A</label>
     <label xml:lang="it">F1 in retro controlla uscita A</label>
-    <label xml:lang="de">F1r controls output 1</label>
+    <label xml:lang="de">F1(r) controls output 1</label>
   </variable>
-  <variable CV="47" mask="XXXXXXVX" item="F1r controls output 2" minOut="2" minFn="1">
+  <variable CV="47" mask="XXXXXXVX" item="F1(r) controls output 2" minOut="2" minFn="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(r) controls output B</label>
     <label xml:lang="it">F1 in retro controlla uscita B</label>
-    <label xml:lang="de">F1r controls output 2</label>
+    <label xml:lang="de">F1(r) controls output 2</label>
   </variable>
-  <variable CV="47" mask="XXXXXVXX" item="F1r controls output 3" default="1" minOut="3" minFn="1">
+  <variable CV="47" mask="XXXXXVXX" item="F1(r) controls output 3" default="1" minOut="3" minFn="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(r) controls output C</label>
     <label xml:lang="it">F1 in retro controlla uscita C</label>
-    <label xml:lang="de">F1r controls output 3</label>
+    <label xml:lang="de">F1(r) controls output 3</label>
   </variable>
-  <variable CV="47" mask="XXXXVXXX" item="F1r controls output 4" minOut="4" minFn="1">
+  <variable CV="47" mask="XXXXVXXX" item="F1(r) controls output 4" minOut="4" minFn="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(r) controls output D</label>
     <label xml:lang="it">F1 in retro controlla uscita D</label>
-    <label xml:lang="de">F1r controls output 4</label>
+    <label xml:lang="de">F1(r) controls output 4</label>
   </variable>
-  <variable CV="47" mask="XXXVXXXX" item="F1r controls output 5" minOut="5" minFn="1">
+  <variable CV="47" mask="XXXVXXXX" item="F1(r) controls output 5" minOut="5" minFn="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(r) controls output E</label>
     <label xml:lang="it">F1 in retro controlla uscita E</label>
-    <label xml:lang="de">F1r controls output 5</label>
+    <label xml:lang="de">F1(r) controls output 5</label>
   </variable>
-  <variable CV="47" mask="XXVXXXXX" item="F1r controls output 6" minOut="6" minFn="1">
+  <variable CV="47" mask="XXVXXXXX" item="F1(r) controls output 6" minOut="6" minFn="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(r) controls output F</label>
     <label xml:lang="it">F1 in retro controlla uscita F</label>
-    <label xml:lang="de">F1r controls output 6</label>
+    <label xml:lang="de">F1(r) controls output 6</label>
   </variable>
-  <variable CV="47" mask="XVXXXXXX" item="F1r controls output 7" minOut="7" minFn="1">
+  <variable CV="47" mask="XVXXXXXX" item="F1(r) controls output 7" minOut="7" minFn="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(r) controls output G</label>
     <label xml:lang="it">F1 in retro controlla uscita G</label>
-    <label xml:lang="de">F1r controls output 7</label>
+    <label xml:lang="de">F1(r) controls output 7</label>
   </variable>
-  <variable CV="47" mask="VXXXXXXX" item="F1r controls output 8" minOut="8" minFn="1">
+  <variable CV="47" mask="VXXXXXXX" item="F1(r) controls output 8" minOut="8" minFn="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(r) controls output H</label>
     <label xml:lang="it">F1 in retro controlla uscita H</label>
-    <label xml:lang="de">F1r controls output 8</label>
+    <label xml:lang="de">F1(r) controls output 8</label>
   </variable>
   <variable CV="129" mask="XXXXXXXV" item="F13 controls output 1" minOut="1" minFn="13">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
