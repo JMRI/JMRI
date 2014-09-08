@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="/xml/XSLT/DecoderID.xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 20140824-0631-jake on Sun Aug 24 07:31:59 WEST 2014 $Id$-->
-  <decoderIndex version="431">
+  <!--Written by JMRI version 20140908-1113-heap on Mon Sep 08 21:14:03 EST 2014 $Id$-->
+  <decoderIndex version="455">
     <mfgList nmraListDate="2014-06-04" updated="2014-08-24" lastadd="107">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -1310,6 +1310,15 @@
           <output name="6" label="Pad" connection="solder" />
           <size length="2.165" width="0.472" height="0.098" units="inches" />
         </model>
+        <model model="DN166I2B" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale FP7 released 2014">
+          <output name="1" label="Pad/LED" connection="solder" />
+          <output name="2" label="Pad/LED" connection="solder" />
+          <output name="3" label="Pad" connection="solder" />
+          <output name="4" label="Pad" connection="solder" />
+          <output name="5" label="Pad" connection="solder" />
+          <output name="6" label="Pad" connection="solder" />
+          <size length="2.165" width="0.472" height="0.098" units="inches" />
+        </model>
         <model model="DN166PS" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="N" connector="NMRAmedium" comment="N/HO-Scale, with Medium Plug">
           <output name="1" label="White" connection="plug" />
           <output name="2" label="Yellow" connection="plug" />
@@ -1534,11 +1543,11 @@
           <functionlabel num="12" lockable="false">Safety Blow off</functionlabel>
         </functionlabels>
       </family>
-      <family name="SFX Sound Only Decoders" mfg="Digitrax" file="Digitrax_0SFX0x4.xml">
-        <model model="SFX004" numOuts="0" numFns="0" lowVersionID="16" highVersionID="16" formFactor="HO">
-          <size length=".71" width="0.75" height="0.25" units="inches" />
+      <family name="SFX Sound Only Decoders" mfg="Digitrax" lowVersionID="16" highVersionID="16" file="Digitrax_0SFX0x4.xml">
+        <model model="SFX004" numOuts="0" numFns="0" formFactor="HO" productID="SFX004" comment="8-bit Soundbug(TM) for DH165xx decoders &amp; others">
+          <size length=".807" width="0.67" height="0.25" units="inches" />
         </model>
-        <model model="SFX0416" numOuts="6" numFns="8" lowVersionID="16" highVersionID="16" formFactor="HO">
+        <model model="SFX0416" numOuts="6" numFns="8" formFactor="HO" productID="SFX0416" comment="Wired Mobile Decoder with SoundFX(R) &amp; FX3 Function">
           <output name="1" label="wht" connection="solder">
             <label xml:lang="it">"Bian"</label>
           </output>
@@ -1551,9 +1560,9 @@
           <output name="4" label="vlt" connection="solder">
             <label xml:lang="it">"Viol"</label>
           </output>
-          <size length="1.2" width="0.41" height="0.18" units="inches" />
+          <size length="1.2" width="0.42" height="0.21" units="inches" />
         </model>
-        <model model="SFX064" numOuts="6" numFns="8" lowVersionID="16" highVersionID="16" formFactor="HO">
+        <model model="SFX064" numOuts="6" numFns="8" formFactor="HO" productID="SFX064" comment="Wired Mobile Decoder with SoundFX(R) &amp; FX3 Function">
           <output name="1" label="wht" connection="solder">
             <label xml:lang="it">"Gial"</label>
           </output>
@@ -1574,6 +1583,24 @@
           </output>
           <size length="1.22" width="0.66" height="0.25" units="inches" />
         </model>
+        <model model="SFX006" numOuts="0" numFns="0" formFactor="HO" productID="SFX006" comment="8, 12, 16-bit Soundbug(TM) for DH165xx decoders &amp; others">
+          <size length=".807" width="0.67" height="0.25" units="inches" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Lights</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="true">Horn/Whistle</functionlabel>
+          <functionlabel num="3" lockable="false">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Air feat. disabled</functionlabel>
+          <functionlabel num="5" lockable="true">Dyn. Brakes Fans/Water Pump</functionlabel>
+          <functionlabel num="6" lockable="false">Notch UP/Blowdown</functionlabel>
+          <functionlabel num="7" lockable="false">Xing Gate Airhorn/Notch DOWN/Wheel Slip</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="false">Brake squeal</functionlabel>
+          <functionlabel num="10" lockable="false">Xing Gate Airhorn</functionlabel>
+          <functionlabel num="11" lockable="false">Greaser</functionlabel>
+          <functionlabel num="12" lockable="false">Safety Blowoff</functionlabel>
+        </functionlabels>
       </family>
       <family name="SFX Sound Decoders - Series 6" mfg="Digitrax" lowVersionID="16" highVersionID="16" file="Digitrax_0SFX_Series6.xml">
         <model model="SDH166D" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="SDH166D" comment="H0-Scale 8-bit Sound Decoder, wired">
@@ -2733,14 +2760,14 @@
       </family>
       <family name="ESU LokPilot V4.0" mfg="Electronic Solutions Ulm GmbH" file="ESU_LokPilotV4.0.xml">
         <model model="LokPilot V4.0" numOuts="105" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LPV4">
-          <output name="97" label="" />
-          <output name="98" label="" />
-          <output name="99" label="" />
-          <output name="100" label="" />
-          <output name="101" label="" />
-          <output name="102" label="" />
-          <output name="103" label="" />
-          <output name="104" label="" />
+          <output name="97" label="|" />
+          <output name="98" label="|" />
+          <output name="99" label="|" />
+          <output name="100" label="|" />
+          <output name="101" label="|" />
+          <output name="102" label="|" />
+          <output name="103" label="|" />
+          <output name="104" label="|" />
           <output name="105" label="Virtual|Drv Snd" />
           <size length="21.3" width="15.5" height="5.5" units="mm" />
           <!-- connector="NEM651, NEM 652, 21MTC, Plux12, wires" -->
@@ -2751,27 +2778,27 @@
           </protocols>
         </model>
         <model model="LokPilot DCC V4.0" numOuts="105" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LPV4DCC">
-          <output name="97" label="" />
-          <output name="98" label="" />
-          <output name="99" label="" />
-          <output name="100" label="" />
-          <output name="101" label="" />
-          <output name="102" label="" />
-          <output name="103" label="" />
-          <output name="104" label="" />
+          <output name="97" label="|" />
+          <output name="98" label="|" />
+          <output name="99" label="|" />
+          <output name="100" label="|" />
+          <output name="101" label="|" />
+          <output name="102" label="|" />
+          <output name="103" label="|" />
+          <output name="104" label="|" />
           <output name="105" label="Virtual|Drv Snd" />
           <size length="21.3" width="15.5" height="5.5" units="mm" />
           <!-- connector="NEM651, NEM 652, 21MTC" -->
         </model>
         <model model="LokPilot Micro V4.0" numOuts="105" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LPmV4">
-          <output name="97" label="" />
-          <output name="98" label="" />
-          <output name="99" label="" />
-          <output name="100" label="" />
-          <output name="101" label="" />
-          <output name="102" label="" />
-          <output name="103" label="" />
-          <output name="104" label="" />
+          <output name="97" label="|" />
+          <output name="98" label="|" />
+          <output name="99" label="|" />
+          <output name="100" label="|" />
+          <output name="101" label="|" />
+          <output name="102" label="|" />
+          <output name="103" label="|" />
+          <output name="104" label="|" />
           <output name="105" label="Virtual|Drv Snd" />
           <size length="10.5" width="5.8" height="2.8" units="mm" />
           <!-- connector="NEM651, NEM 652, Next18" -->
@@ -2782,35 +2809,35 @@
           </protocols>
         </model>
         <model model="LokPilot Micro DCC V4.0" numOuts="105" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LPmV4DCC">
-          <output name="97" label="" />
-          <output name="98" label="" />
-          <output name="99" label="" />
-          <output name="100" label="" />
-          <output name="101" label="" />
-          <output name="102" label="" />
-          <output name="103" label="" />
-          <output name="104" label="" />
+          <output name="97" label="|" />
+          <output name="98" label="|" />
+          <output name="99" label="|" />
+          <output name="100" label="|" />
+          <output name="101" label="|" />
+          <output name="102" label="|" />
+          <output name="103" label="|" />
+          <output name="104" label="|" />
           <output name="105" label="Virtual|Drv Snd" />
           <size length="10.5" width="5.8" height="2.8" units="mm" />
           <!-- connector="NEM651, Next18" -->
         </model>
         <model model="LokPilot Fx V4.0" numOuts="105" numFns="32" extFnsESU="yes" productID="LPfxV4">
-          <output name="65" label="" />
-          <output name="66" label="" />
-          <output name="67" label="" />
-          <output name="68" label="" />
-          <output name="69" label="" />
-          <output name="70" label="" />
-          <output name="71" label="" />
-          <output name="72" label="" />
-          <output name="97" label="" />
-          <output name="98" label="" />
-          <output name="99" label="" />
-          <output name="100" label="" />
-          <output name="101" label="" />
-          <output name="102" label="" />
-          <output name="103" label="" />
-          <output name="104" label="" />
+          <output name="65" label="|" />
+          <output name="66" label="|" />
+          <output name="67" label="|" />
+          <output name="68" label="|" />
+          <output name="69" label="|" />
+          <output name="70" label="|" />
+          <output name="71" label="|" />
+          <output name="72" label="|" />
+          <output name="97" label="|" />
+          <output name="98" label="|" />
+          <output name="99" label="|" />
+          <output name="100" label="|" />
+          <output name="101" label="|" />
+          <output name="102" label="|" />
+          <output name="103" label="|" />
+          <output name="104" label="|" />
           <output name="105" label="Virtual|Drv Snd" />
           <size length="17.5" width="15.5" height="5.5" units="mm" />
           <!-- connector="NEM651, 21MTC" -->
@@ -2821,14 +2848,14 @@
           </protocols>
         </model>
         <model model="LokPilot XL V4.0" numOuts="105" numFns="32" maxMotorCurrent="4A" extFnsESU="yes" productID="LPV4">
-          <output name="97" label="" />
-          <output name="98" label="" />
-          <output name="99" label="" />
-          <output name="100" label="" />
-          <output name="101" label="" />
-          <output name="102" label="" />
-          <output name="103" label="" />
-          <output name="104" label="" />
+          <output name="97" label="|" />
+          <output name="98" label="|" />
+          <output name="99" label="|" />
+          <output name="100" label="|" />
+          <output name="101" label="|" />
+          <output name="102" label="|" />
+          <output name="103" label="|" />
+          <output name="104" label="|" />
           <output name="105" label="Virtual|Drv Snd" />
           <size length="55" width="25" height="10" units="mm" />
           <!-- connector="screw terminals" -->
@@ -8413,6 +8440,104 @@
           <output name="Brakes" />
           <output name="Coupler" />
         </model>
+        <model model="TSU-GN1000 GEVO-12" numOuts="4" numFns="14" connector="other" productID="828059" comment="Model 828059">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="Reserved" />
+          <output name="Fans" label="RPM +" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Compressor" label="RPM -" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="TSU-IM1000 EMD 567" numOuts="4" numFns="14" connector="other" productID="828070" comment="Model 828070 for Intermountain EMD F-series">
+          <versionCV lowVersionID="64" />
+          <output name="1" label="Headlight" />
+          <output name="2" label="N/A" />
+          <output name="3" label="Mars Light" />
+          <output name="4" label="# Board" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="FX7" label="FX5B" />
+          <output name="Fans" label="RPM +" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Compressor" label="RPM -" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="5" lockable="true">Number Board</functionlabel>
+            <functionlabel num="6" lockable="true">Mars Light</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="TSU-IM1000 EMD 645 Turbo" numOuts="4" numFns="14" connector="other" productID="828071" comment="Model 828071 for Intermountain EMD SD40-2">
+          <versionCV lowVersionID="64" />
+          <output name="1" label="Headlight" />
+          <output name="2" label="Backlight" />
+          <output name="3" label="# Board" />
+          <output name="4" label="Ditch Lights" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="FX7" label="FX5B" />
+          <output name="Fans" label="RPM +" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Compressor" label="RPM -" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="5" lockable="true">Number Board</functionlabel>
+            <functionlabel num="6" lockable="true">Ditch Lights</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="TSU-IM1000 GE GEVO-12" numOuts="4" numFns="14" connector="other" productID="828074" comment="Model 828074 for Intermountain GE ES44AC/DC">
+          <versionCV lowVersionID="64" />
+          <output name="1" label="Headlight" />
+          <output name="2" label="Backlight" />
+          <output name="3" label="# Board" />
+          <output name="4" label="R Ditch Light" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="L Ditch Light" />
+          <output name="Fans" label="RPM +" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Compressor" label="RPM -" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="5" lockable="true">Number Board</functionlabel>
+            <functionlabel num="6" lockable="true">Ditch Lights</functionlabel>
+          </functionlabels>
+        </model>
         <model model="TSU-KT1000 Kato C44-9W" numOuts="4" numFns="14" connector="other" productID="828061" comment="Model 828061 and 828066">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
@@ -8552,6 +8677,26 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-KT1000 Kato SD70" numOuts="4" numFns="14" connector="other" productID="828060" comment="Model 828060">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="Reserved" />
+          <output name="Fans" label="RPM +" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Compressor" label="RPM -" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="TSU-KT1000 Kato P42" numOuts="4" numFns="14" connector="other" productID="828068" comment="Model 828068">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />

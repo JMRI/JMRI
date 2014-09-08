@@ -20,31 +20,52 @@ import org.jdom.*;
 
 /**
  * <p>Provide a graphical representation of the ESU mapping table.
- * Each row represents a possible mapping between input conditions (cab functions, etc.)
+ * Each row represents a possible mapping between input conditions (function keys, etc.)
  * and logical, physical or sound outputs.</p>
- * <p>Uses the "model" element from the decoder definition file
+ * <p>Uses data from the "model" element from the decoder definition file
  * to configure the number of rows and columns and set up any
- * custom column names.</p>
+ * custom column names:</p>
  *  <dl>
+ *   <dt>extFnsESU="true"</dt>
+ *     <dd>Uses the ESU-style function map rather than the NMRA style.</dd>
+ *     <dd>&nbsp;</dd>
  *   <dt>numOuts</dt>
- *     <dd>Number of columns</dd>
+ *     <dd>Highest column number to display.</dd>
+ *     <dd>&nbsp;</dd>
  *   <dt>numFns</dt>
- *     <dd>Number of mapping rows</dd>
- *   <dt>output name="ddd" label="xxx|yyy"</dt>
- *     <dd>Replace default name of column "ddd" with "xxx yyy"</dd>
- *   <dt>output name="text1" label="text2"</dt>
- *     <dd>Replace default name of the nth column with "text1 text2"
- *     (assuming this line is the nth "output" element of the "model" element from the decoder definition file).</dd>
+ *     <dd>Number of mapping rows to display.</dd>
+ *     <dd>&nbsp;</dd>
+ *   <dt>output</dt>
+ *     <dd>name="n" label="yyy"</dd>
+ *       <dd>&nbsp;-&nbsp;Set lower line of heading for column number "n" to "yyy".</dd>
+ *       <dd>&nbsp;</dd>
+ *     <dd>name="n" label="xxx|yyy"</dd>
+ *       <dd>&nbsp;-&nbsp;Set upper line of heading for column number "n" to "xxx" and lower line to "yyy".</dd>
+ *       <dd>&nbsp;</dd>
+ *     <dd>name="n" label="|"</dd>
+ *       <dd>&nbsp;-&nbsp;Sets both lines of heading for column number "n" to blank, causing the column to be suppressed from the table.</dd>
+ *       <dd>&nbsp;</dd>
+ *     <dd>name="text1" label="text2"</dd>
+ *       <dd>&nbsp;-&nbsp;Set upper line of heading of the nth column to "xxx" and lower line to "yyy",
+ *     where this line is the nth "output" element of the "model" element in the decoder definition file.</dd>
  * </dl>
  *  <dl>
- *  <dt>Default column labels are coded in String array outDescESU[] of this class.</dt>
- *   <dd>Column labels can be overridden by the "output" element of the "model" element from the decoder definition file.</dd>
- *  <dt>Two rows are available for column labels.</dt>
- *   <dd>Use the '/' character to designate a row break.</dd>
+ *  <dt>Default column headings:</dt>
+ *   <dd>Coded in String array outDescESU[] of this class.</dd>
+ *   <dd>Column headings can be overridden by the "output" elements documented above.</dd>
+ *   <dd>&nbsp;</dd>
+ *  <dt>Two rows are available for column headings:</dt>
+ *   <dd>Use the "|" character to designate a row break.</dd>
  * </dl>
  *  <dl>
- *  <dt>Variable definitions for the decoder file are of the form:</dt>
- *   <dd>"ESU Function Row m Column n"</dd>
+ *  <dt>Columns will be suppressed if any of the following are true:</dt>
+ *   <dd>No variables are found for that column.</dd>
+ *   <dd>The column output name is of the form name="n" label="|".</dd>
+ *   <dd>Column number is &gt; numOuts.</dd>
+ * </dl>
+ *  <dl>
+ *  <dt>Searches the decoder file for variable definitions of the form:</dt>
+ *   <dd>"ESU Function Row xx Column yy"</dd>
  * </dl>
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
@@ -102,7 +123,7 @@ public class FnMapPanelESU extends JPanel {
      * <p>Default column labels.
      * <dl>
      *  <dt>Two rows are available for column labels</dt>
-     *   <dd>Use the '/' character to designate a row break</dd>
+     *   <dd>Use the '|' character to designate a row break</dd>
      * </dl></p>
      * <p>Column labels can be overridden by the "output" element of the "model" element from the decoder definition file.</p>
      */
@@ -112,7 +133,7 @@ public class FnMapPanelESU extends JPanel {
         ,"F20|on","F20|off","F21|on","F21|off","F22|on","F22|off","F23|on","F23|off","F24|on","F24|off","F25|on","F25|off","F26|on","F26|off","F27|on","F27|off","F28|on","F28|off"
         ,"sensW|on","sensW|off","Sens1|on","Sens1|off","Sens2|on","Sens2|off","Sens3|on","Sens3|off","Sens4|on","Sens4|off"
         ,"Head|light[1]","Rear|light[1]","Aux|1[1]","Aux|2[1]","Aux|3","Aux|4","Aux|5","Aux|6","Aux|7","Aux|8","Aux|9","Aux|10","Head|light[2]","Rear|light[2]","Aux|1[2]","Aux|2[2]"
-        ,"Momentum|off","Shunt|mode","Dynamic|brake","Uncouple|Cycle","","Fire|box","Dim|lights","Grade|cross","Smoke|gen","Notch|up","Notch|down","Sound|fade","Brk sql|off","Doppler|effect","Volume|& mute","Shift|mode"
+        ,"Momentum|off","Shunt|mode","Dynamic|brake","Uncouple|Cycle","|","Fire|box","Dim|lights","Grade|cross","Smoke|gen","Notch|up","Notch|down","Sound|fade","Brk sql|off","Doppler|effect","Volume|& mute","Shift|mode"
         ,"SS|1","SS|2","SS|3","SS|4","SS|5","SS|6","SS|7","SS|8","SS|9","SS|10","SS|11","SS|12","SS|13","SS|14","SS|15","SS|16","SS|17","SS|18","SS|19","SS|20","SS|21","SS|22","SS|23","SS|24"
     };
 
@@ -167,7 +188,7 @@ public class FnMapPanelESU extends JPanel {
                     outBlockStart = iOut+outBlockLength[outBlockNum];
                 }
 
-                // check if column is used
+                // if column is not suppressed by blank headers
                 if ( !outName[iOut].equals("") || !outLabel[iOut].equals("") ) {
                     // set up the variable using the output label
                     String name = "ESU Function Row "+Integer.toString(iRow+1)+" Column "+Integer.toString(iOut+1);
@@ -369,9 +390,9 @@ public class FnMapPanelESU extends JPanel {
         catch (Exception e) {log.error("error handling decoder's numFns value");}
         if (log.isDebugEnabled()) log.debug("numFns, numOuts "+numRows+","+numOut);
         
-        // add ESU default labels before reading custom ones
+        // add ESU default split labels before reading custom ones
         for (int iOut=0; iOut<maxOut; iOut++) {
-            loadDescESU(iOut, outDescESU[iOut]);
+            loadSplitLabel(iOut, outDescESU[iOut]);
         } 
 
         // take all "output" children
@@ -386,11 +407,10 @@ public class FnMapPanelESU extends JPanel {
                 // yes, since it was converted.  All we do with
                 // these are store the label index (if it exists)
                 String at = LocaleSelector.getAttribute(e, "label");
-                if ( at!=null && outputNum<=numOut) {
-                    loadDescESU(outputNum-1, at);
-                    }
+                if ( at!=null ) {
+                    loadSplitLabel(outputNum-1, at);
                 }
-            catch (java.lang.NumberFormatException ex) {
+            } catch (java.lang.NumberFormatException ex) {
                 // not a number, must be a name
                 if (i<maxOut) {
                     outName[i] = name;
@@ -404,18 +424,18 @@ public class FnMapPanelESU extends JPanel {
         }
     }
     
-    // split and load ESU default labels
-    void loadDescESU(int iOut, String theLabel) {
-        if (iOut < outDescESU.length) {
-            String itemESU[] = theLabel.split("\\|");
-            if ( theLabel.equals("") || theLabel.equals("|") ) {
+    // split and load two-line labels
+    void loadSplitLabel(int iOut, String theLabel) {
+        if (iOut < maxOut) {
+            String itemList[] = theLabel.split("\\|");
+            if ( theLabel.equals("|") ) {
                 outName[iOut] = "";
                 outLabel[iOut] = "";
-            } else if (itemESU.length == 1) {
-                outLabel[iOut] = itemESU[0];
-            } else if (itemESU.length > 1) {
-                outName[iOut] = itemESU[0];
-                outLabel[iOut] = itemESU[1];
+            } else if (itemList.length == 1) {
+                outLabel[iOut] = itemList[0];
+            } else if (itemList.length > 1) {
+                outName[iOut] = itemList[0];
+                outLabel[iOut] = itemList[1];
             }
         }
     }
