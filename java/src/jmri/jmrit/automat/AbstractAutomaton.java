@@ -589,18 +589,20 @@ public class AbstractAutomaton implements Runnable {
      * @return A usable throttle, or null if error
      */
     public DccThrottle getThrottle(int address, boolean longAddress) {
-        if (!inThread) log.warn("getThrottle invoked from invalid context");
+        log.debug("requesting DccThrottle for addr " + address);
+    	if (!inThread) log.warn("getThrottle invoked from invalid context");
         throttle = null;
         boolean ok = true;
         ok = InstanceManager.throttleManagerInstance()
                 .requestThrottle(address,new ThrottleListener() {
                     public void notifyThrottleFound(DccThrottle t) {
-                        throttle = t;
+//                        throttle = t;
                         synchronized (self) {
                             self.notifyAll(); // should be only one thread waiting, but just in case
                         }
                     }
                     public void notifyFailedThrottleRequest(jmri.DccLocoAddress address, String reason){
+                		log.error ("Throttle request failed for "+address+" because "+reason);
                     }
                 });
                 
@@ -625,6 +627,7 @@ public class AbstractAutomaton implements Runnable {
      * @return A usable throttle, or null if error
      */
     public DccThrottle getThrottle(BasicRosterEntry re) {
+        log.debug("requesting DccThrottle for rosterEntry " + re.getId());
         if (!inThread) log.warn("getThrottle invoked from invalid context");
         throttle = null;
         boolean ok = true;
@@ -637,6 +640,7 @@ public class AbstractAutomaton implements Runnable {
                         }
                     }
                     public void notifyFailedThrottleRequest(jmri.DccLocoAddress address, String reason){
+                		log.error ("Throttle request failed for "+address+" because "+reason);
                     }
                 });
                 

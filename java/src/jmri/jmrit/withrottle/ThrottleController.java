@@ -206,6 +206,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     }
 
     public void notifyFailedThrottleRequest(DccLocoAddress address, String reason){
+		log.error ("Throttle request failed for "+address+" because "+reason);
     }
 
 

@@ -43,6 +43,7 @@ public class ConsistFunctionController implements ThrottleListener{
     }
 
     public void notifyFailedThrottleRequest(DccLocoAddress address, String reason){
+		log.error ("Throttle request failed for "+address+" because "+reason);
     }
 
     
