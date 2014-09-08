@@ -64,8 +64,10 @@ import org.jdom.*;
  *   <dd>Column number is &gt; numOuts.</dd>
  * </dl>
  *  <dl>
- *  <dt>Searches the decoder file for variable definitions of the form:</dt>
- *   <dd>"ESU Function Row xx Column yy"</dd>
+ *  <dt>Variable definitions:</dt>
+ *   <dd>Are of the form "ESU Function Row xx Column yy" and are created "on the fly" by this class.
+ *     Up to 5,120 variables are needed to populate the function map. It is more efficient to create
+ *     these in code than to use XML in the decoder file.</dd>
  * </dl>
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
