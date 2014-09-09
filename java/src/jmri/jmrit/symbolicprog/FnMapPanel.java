@@ -132,7 +132,7 @@ public class FnMapPanel extends JPanel {
         {
             JLabel l = new JLabel(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FnMapOutWireOr"));
             cs.gridy = outputName;
-            cs.gridx = 3;
+            cs.gridx = firstOut;
             cs.gridwidth = GridBagConstraints.REMAINDER;
             gl.setConstraints(l, cs);
             add(l);
@@ -225,6 +225,10 @@ public class FnMapPanel extends JPanel {
                 labelAt( outputLabel, firstOut+iOut, outLabel[iOut]);
             }
         }        
+
+        // padding for the case of few outputs
+        cs.gridwidth = GridBagConstraints.REMAINDER;
+        labelAt( outputNum, firstOut+numOut,"");
     }
         
     void saveAt(int row, int column, JComponent j) {
@@ -233,6 +237,7 @@ public class FnMapPanel extends JPanel {
     
     void saveAt(int row, int column, JComponent j, int anchor) {
         if (row<0 || column<0) return;
+        cs = new GridBagConstraints();
         cs.gridy = row;
         cs.gridx = column;
         cs.anchor = anchor;
@@ -304,7 +309,7 @@ public class FnMapPanel extends JPanel {
     void loadSplitLabel(int iOut, String theLabel) {
         if (iOut < maxOut) {
             String itemList[] = theLabel.split("\\|");
-            log.info("theLabel=\""+theLabel+"\" itemList.length=\""+itemList.length+"\"");
+//             log.info("theLabel=\""+theLabel+"\" itemList.length=\""+itemList.length+"\"");
             if ( theLabel.equals("|") ) {
                 outName[iOut] = "";
                 outLabel[iOut] = "";
