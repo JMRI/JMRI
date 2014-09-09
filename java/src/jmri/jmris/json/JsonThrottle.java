@@ -83,6 +83,9 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
             if (!InstanceManager.throttleManagerInstance().requestThrottle(address, throttle)) {
                 throw new JmriException("Unable to get throttle."); // NOI18N
             }
+            if (throttle.throttle==null) {
+                throw new JmriException("Failed to get throttle for address " + address); // NOI18N
+            }
             JsonThrottle.throttles.put(address, throttle);
             return throttle;
         }
