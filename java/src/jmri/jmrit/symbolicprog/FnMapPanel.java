@@ -170,7 +170,9 @@ public class FnMapPanel extends JPanel {
                                 varsUsed.add(Integer.valueOf(iVar));
                                 JComponent j = (JComponent)(_varModel.getRep(iVar, "checkbox"));
                                 VariableValue var = _varModel.getVariable(iVar);
-                                j.setToolTipText(PaneProgPane.addCvDescription(null, var.getCvDescription(), var.getMask()));
+                                j.setToolTipText(PaneProgPane.addCvDescription( (fnNameString+" "+
+                                    ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FnMapControlsOutput")+" "+
+                                    outName[iOut]+" "+outLabel[iOut]), var.getCvDescription(), var.getMask()) );
                                 String temp = _varModel.getLabel(iVar);
 //                                 log.info("label='" + temp + "'");
 //                                 log.info("nameBase='" + nameBase + "'");
