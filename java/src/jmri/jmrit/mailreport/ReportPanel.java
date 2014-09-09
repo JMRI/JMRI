@@ -98,9 +98,9 @@ public class ReportPanel extends JPanel {
         checkLog.setSelected(true);
         p1.add(checkLog);
 
-//        checkCopy = new JCheckBox(rb.getString("CheckCopy"));
-//        checkCopy.setSelected(true);
-//        p1.add(checkCopy);
+        checkCopy = new JCheckBox(rb.getString("CheckCopy"));
+        checkCopy.setSelected(true);
+        p1.add(checkCopy);
         add(p1);
 
         sendButton = new javax.swing.JButton(rb.getString("ButtonSend"));
@@ -131,6 +131,9 @@ public class ReportPanel extends JPanel {
 
             // add reporter email address
             msg.addFormField("reporter", emailField.getText());
+
+            // add if to Cc sender
+            msg.addFormField("sendcopy", checkCopy.isSelected()?"yes":"no");
 
             // add problem summary
             msg.addFormField("summary", summaryField.getText());
