@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.HeadlessException;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.net.SocketException;
@@ -22,20 +23,19 @@ import jmri.util.PortNameMapper;
 import jmri.util.PortNameMapper.SerialPortFriendlyName;
 import jmri.util.zeroconf.ZeroConfService;
 
-
 /**
  * Provide the JMRI context info.
  *<p>
  *
- * @author	Bob Jacobsen    Copyright (C) 2007, 2009
- * @author  Matt Harris Copyright (C) 2008, 2009
+ * @author          Bob Jacobsen    Copyright (C) 2007, 2009
+ * @author          Matt Harris     Copyright (C) 2008, 2009
  *
  * @version         $Revision$
  */
 public class ReportContext {
 
     String report = "";
-    
+
     /**
      * Provide a report of the current JMRI context
      * @param reportNetworkInfo true if network connection and zeroconf service
@@ -43,7 +43,7 @@ public class ReportContext {
      * @return current JMRI context
      */
     public String getReport(boolean reportNetworkInfo) {
-        
+
         addString("JMRI Version: "+jmri.Version.name()+"  ");	 
         addString("JMRI configuration file name: "
                     +System.getProperty("org.jmri.apps.Apps.configFilename")+"  ");	 
@@ -59,13 +59,13 @@ public class ReportContext {
                 addString("Connection " + x + ": " + conn.getManufacturer() + " connected via " + conn.name() + " on " + conn.getInfo()+ " Disabled " + conn.getDisabled());
             }
         }
-        
+
         addString("Available Communication Ports:");
         addCommunicationPortInfo();
 
         String prefs = FileUtil.getUserFilesPath();
         addString("Preferences directory: "+prefs+"  ");
-        
+
         String prog = System.getProperty("user.dir");
         addString("Program directory: "+prog+"  ");
 
@@ -99,7 +99,7 @@ public class ReportContext {
         addProperty("java.ext.dirs");
 
         addProperty("file.encoding");
-        		
+
         addProperty("os.name");
         addProperty("os.arch");
         addProperty("os.version");
@@ -107,7 +107,7 @@ public class ReportContext {
         addProperty("python.home");
         addProperty("python.path");
         addProperty("python.startup");
-        
+
         addProperty("user.name");
         addProperty("user.home");
         addProperty("user.dir");
@@ -117,20 +117,20 @@ public class ReportContext {
         addProperty("jmri.log.path");
 
         addScreenSize();
-        
+
         if (reportNetworkInfo) addNetworkInfo();
         
         return report;
-	
-	}
-		
-	void addString(String val) {
-        report = report + val+"\n";	    
+
     }
-	void addProperty(String prop) {
+
+    void addString(String val) {
+        report = report + val+"\n";
+    }
+    void addProperty(String prop) {
         addString(prop+": "+System.getProperty(prop)+"  ");	    
     }
-    
+
     /** 
      * Provide screen - size information.  This is
      * based on the jmri.util.JmriJFrame calculation, 
@@ -141,54 +141,53 @@ public class ReportContext {
         try {
             // Find screen size. This throws null-pointer exceptions on
             // some Java installs, however, for unknown reasons, so be
-            // prepared to fal back.
+            // prepared to fall back.
             JFrame dummy = new JFrame();
             try {
                 Insets insets = dummy.getToolkit().getScreenInsets(dummy.getGraphicsConfiguration());
                 Dimension screen = dummy.getToolkit().getScreenSize();
                 addString("Screen size h:"+screen.height+", w:"+screen.width+" Inset t:"+insets.top+", b:"+insets.bottom
                         +"; l:"+insets.left+", r:"+insets.right);
-            } catch (NoSuchMethodError e) {
+            } catch (NoSuchMethodError ex) {
                 Dimension screen = dummy.getToolkit().getScreenSize();
                 addString("Screen size h:"+screen.height+", w:"+screen.width
                             +" (No Inset method available)");
             }
-        } catch (Throwable e2) {
+        } catch (HeadlessException ex) {
             // failed, fall back to standard method
-            addString("(Cannot sense screen size due to "+e2.toString()+")");
+            addString("(Cannot sense screen size due to "+ex.toString()+")");
         }
-        
+
         try {
             // Find screen resolution. Not expected to fail, but just in case....
             int dpi = Toolkit.getDefaultToolkit().getScreenResolution();
             addString("Screen resolution: "+dpi);
-        } catch (Throwable e2) {
+        } catch (HeadlessException ex) {
             addString("Screen resolution not available");
         }
-        
+
         // look at context
         //Rectangle virtualBounds = new Rectangle();
         try {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             addString("Environment max bounds: "+ge.getMaximumWindowBounds());
-            
+
             try {
                 GraphicsDevice[] gs = ge.getScreenDevices();
-                for (int j = 0; j < gs.length; j++) { 
-                    GraphicsDevice gd = gs[j];
+                for (GraphicsDevice gd : gs) {
                     GraphicsConfiguration[] gc = gd.getConfigurations();
                     for (int i=0; i < gc.length; i++) {
                         addString("bounds["+i+"] = "+gc[i].getBounds());
                         // virtualBounds = virtualBounds.union(gc[i].getBounds());
                     }
                     addString("Device: " + gd.getIDstring() + " bounds = " + gd.getDefaultConfiguration().getBounds() +
-                              " " + gd.getDefaultConfiguration().toString());
+                            " " + gd.getDefaultConfiguration().toString());
                 } 
-            } catch (Throwable e2) {
-                addString("Exception getting device bounds "+e2.getMessage());
+            } catch (HeadlessException ex) {
+                addString("Exception getting device bounds "+ex.getMessage());
             }
-        } catch (Throwable e1) {
-            addString("Exception getting max window bounds "+e1.getMessage());
+        } catch (HeadlessException ex) {
+            addString("Exception getting max window bounds "+ex.getMessage());
         }
         // Return the insets using a custom class
         // which should return the correct values under
@@ -198,11 +197,11 @@ public class ReportContext {
             addString("JmriInsets t:"+jmriInsets.top+", b:"+jmriInsets.bottom
                      +"; l:"+jmriInsets.left+", r:"+jmriInsets.right);
         }
-        catch (Throwable e) {
-            addString("Exception getting JmriInsets" + e.getMessage());
+        catch (Throwable ex) {
+            addString("Exception getting JmriInsets" + ex.getMessage());
         }
     }
-    
+
     /**
      * Add network connection and running service information
      */
@@ -228,7 +227,7 @@ public class ReportContext {
         } catch (SocketException ex) {
             addString("Unable to enumerate Network Interfaces");
         }
-                    
+
         Collection<ZeroConfService> services = ZeroConfService.allServices();
         for (InetAddress address : ZeroConfService.netServices().keySet()) {
             addString("ZeroConfService host: " + ZeroConfService.hostName(address) + " running " + services.size() + " service(s)");
@@ -258,7 +257,7 @@ public class ReportContext {
             }
         }
     }
-    
+
     /**
      * Add communication port information
      */
@@ -278,9 +277,9 @@ public class ReportContext {
                 portsList.add(id.getName());
             }
         }
-        
+
         addString(String.format(" Found %s serial ports", ports.size()));
-        
+
         // now output the details
         for (CommPortIdentifier id: ports) {
             // output details
@@ -289,13 +288,13 @@ public class ReportContext {
                 port = new SerialPortFriendlyName(id.getName(), null);
                 PortNameMapper.getPortNameMap().put(id.getName(), port);
             }
-            	addString(" Port: " + port.getDisplayName()
+                addString(" Port: " + port.getDisplayName()
                         + (id.isCurrentlyOwned()
                         ? " - in use by: " + id.getCurrentOwner()
                         : " - not in use"));
         }
     }
-    
+
 }
 
 /* @(#)ReportContext.java */

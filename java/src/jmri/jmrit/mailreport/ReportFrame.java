@@ -13,9 +13,10 @@ import javax.swing.*;
 public class ReportFrame extends jmri.util.JmriJFrame {
 
     public ReportFrame() {
-        super();
+        super(false,true);
     }
 
+    @Override
     public void initComponents() throws Exception {
 
         setTitle(java.util.ResourceBundle.getBundle("jmri.jmrit.mailreport.ReportBundle").getString("Title"));
@@ -24,7 +25,7 @@ public class ReportFrame extends jmri.util.JmriJFrame {
         getContentPane().add(new ReportPanel());
 
         addHelpMenu("package.jmri.jmrit.mailreport.Report", true);
-        
+
         pack();
     }
 }
