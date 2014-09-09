@@ -582,13 +582,16 @@ public class AbstractAutomaton implements Runnable {
     }
     
     private DccThrottle throttle;
+    private boolean failedThrottleRequest = false;
+    
     /**
      * Obtains a DCC throttle, including waiting for the command station response.
      * @param address
      * @param longAddress true if this is a long address, false for a short address
+     * @param waitSecs number of seconds to wait for throttle to acquire before returning null
      * @return A usable throttle, or null if error
      */
-    public DccThrottle getThrottle(int address, boolean longAddress) {
+    public DccThrottle getThrottle(int address, boolean longAddress, int waitSecs) {
         log.debug("requesting DccThrottle for addr " + address);
     	if (!inThread) log.warn("getThrottle invoked from invalid context");
         throttle = null;
@@ -596,13 +599,17 @@ public class AbstractAutomaton implements Runnable {
         ok = InstanceManager.throttleManagerInstance()
                 .requestThrottle(address,new ThrottleListener() {
                     public void notifyThrottleFound(DccThrottle t) {
-//                        throttle = t;
+                        throttle = t;
                         synchronized (self) {
                             self.notifyAll(); // should be only one thread waiting, but just in case
                         }
                     }
                     public void notifyFailedThrottleRequest(jmri.DccLocoAddress address, String reason){
                 		log.error ("Throttle request failed for "+address+" because "+reason);
+                		failedThrottleRequest = true;
+                        synchronized (self) {
+                            self.notifyAll(); // should be only one thread waiting, but just in case
+                        }
                     }
                 });
                 
@@ -613,20 +620,26 @@ public class AbstractAutomaton implements Runnable {
         }
         
         // now wait for reply from identified throttle
-        while (throttle == null) {
+        int waited = 0;  
+        while (throttle == null && failedThrottleRequest==false && waited <= waitSecs) {
             log.debug("waiting for throttle");
-            wait(10000);
+            wait(1000);  //  1 seconds
+            waited++;
             if (throttle == null) log.warn("Still waiting for throttle "+address+"!");
         }
         return throttle;
+    }
+    public DccThrottle getThrottle(int address, boolean longAddress) {
+    	return getThrottle(address, longAddress, 30);  //default to 30 seconds wait
     }
 
     /**
      * Obtains a DCC throttle, including waiting for the command station response.
      * @param re specifies the desired locomotive
+     * @param waitSecs number of seconds to wait for throttle to acquire before returning null
      * @return A usable throttle, or null if error
      */
-    public DccThrottle getThrottle(BasicRosterEntry re) {
+    public DccThrottle getThrottle(BasicRosterEntry re, int waitSecs) {
         log.debug("requesting DccThrottle for rosterEntry " + re.getId());
         if (!inThread) log.warn("getThrottle invoked from invalid context");
         throttle = null;
@@ -641,6 +654,10 @@ public class AbstractAutomaton implements Runnable {
                     }
                     public void notifyFailedThrottleRequest(jmri.DccLocoAddress address, String reason){
                 		log.error ("Throttle request failed for "+address+" because "+reason);
+                		failedThrottleRequest = true;
+                        synchronized (self) {
+                            self.notifyAll(); // should be only one thread waiting, but just in case
+                        }
                     }
                 });
                 
@@ -651,12 +668,17 @@ public class AbstractAutomaton implements Runnable {
         }
         
         // now wait for reply from identified throttle
-        while (throttle == null) {
+        int waited = 0;  
+        while (throttle == null && failedThrottleRequest==false && waited <= waitSecs) {
             log.debug("waiting for throttle");
-            wait(10000);
+            wait(1000);  //  1 seconds
+            waited++;
             if (throttle == null) log.warn("Still waiting for throttle "+re.getId()+"!");
         }
         return throttle;
+    }
+    public DccThrottle getThrottle(BasicRosterEntry re) {
+    	return getThrottle(re, 30);  //default to 30 seconds
     }
 
     
