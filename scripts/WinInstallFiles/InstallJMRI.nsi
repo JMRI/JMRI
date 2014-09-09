@@ -391,11 +391,13 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\jdom-jdk11.jar"
 
     ; -- Delete old .jar & support files in lib/ directory
+    Delete "$OUTDIR\lib\activation.jar"
     Delete "$OUTDIR\lib\crimson.jar"
     Delete "$OUTDIR\lib\comm.jar"
     Delete "$OUTDIR\lib\servlet.jar"
 
     ; -- Delete .jar & support files installed using previous layout
+    Delete "$OUTDIR\activation.jar"
     Delete "$OUTDIR\ch.ntb.usb.jar"
     Delete "$OUTDIR\comm.jar"
     Delete "$OUTDIR\crimson.jar"
