@@ -301,7 +301,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     public void failedThrottleRequest(DccLocoAddress address, String reason) {
         ArrayList<WaitingThrottle> a = throttleListeners.get(address);
         if (a==null) {
-            log.warn("notifyThrottleKnown with zero-length listeners: "+address);
+            log.warn("failedThrottleRequest with zero-length listeners: "+address);
         } else {
             for (int i = 0; i<a.size(); i++) {
                 ThrottleListener l = a.get(i).getListener();
@@ -311,7 +311,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         throttleListeners.remove(address);
         ArrayList<WaitingThrottle> p = listenerOnly.get(address);
         if (p==null) {
-            log.debug("notifyThrottleKnown with zero-length PropertyChange listeners: "+address);
+            log.debug("failedThrottleRequest with zero-length PropertyChange listeners: "+address);
         } else {
             for (int i = 0; i<p.size(); i++) {
                 PropertyChangeListener l = p.get(i).getPropertyChangeListener();
