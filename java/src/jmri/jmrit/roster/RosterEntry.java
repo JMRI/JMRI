@@ -59,6 +59,29 @@ import org.slf4j.LoggerFactory;
  */
 public class RosterEntry implements jmri.BasicRosterEntry {
 
+    // identifiers for property change events
+    public static final String ID = "id"; // NOI18N
+    public static final String FILENAME = "filename"; // NOI18N
+    public static final String ROADNAME = "roadname"; // NOI18N
+    public static final String MFG = "mfg"; // NOI18N
+    public static final String MODEL = "model"; // NOI18N
+    public static final String OWNER = "owner"; // NOI18N
+    public static final String DCC_ADDRESS = "dccaddress"; // NOI18N
+    public static final String LONG_ADDRESS = "longaddress"; // NOI18N
+    public static final String PROTOCOL = "protocol"; // NOI18N
+    public static final String COMMENT = "comment"; // NOI18N
+    public static final String DECODER_MODEL = "decodermodel"; // NOI18N
+    public static final String DECODER_FAMILY = "decoderfamily"; // NOI18N
+    public static final String DECODER_COMMENT = "decodercomment"; // NOI18N
+    public static final String IMAGE_FILE_PATH = "imagefilepath"; // NOI18N
+    public static final String ICON_FILE_PATH = "iconfilepath"; // NOI18N
+    public static final String URL = "url"; // NOI18N
+    public static final String DATE_UPDATED = "dateupdated"; // NOI18N
+    public static final String FUNCTION_IMAGE = "functionImage"; // NOI18N
+    public static final String FUNCTION_SELECTED_IMAGE = "functionSelectedImage"; // NOI18N
+    public static final String ATTRIBUTE_UPDATED = "attributeUpdated:"; // NOI18N
+    public static final String ATTRIBUTE_DELETED = "attributeDeleted"; // NOI18N
+
     // members to remember all the info
     protected String _fileName = null;
 
@@ -186,7 +209,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
         _id = s;
         if (oldID == null || !oldID.equals(s)) {
             Roster.instance().entryIdChanged(this);
-            firePropertyChange("id", oldID, s);
+            firePropertyChange(RosterEntry.ID, oldID, s);
         }
     }
 
@@ -198,7 +221,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
     public void setFileName(String s) {
         String oldName = _fileName;
         _fileName = s;
-        firePropertyChange("filename", oldName, s);
+        firePropertyChange(RosterEntry.FILENAME, oldName, s);
     }
 
     public String getFileName() {
@@ -242,7 +265,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
     public void setRoadName(String s) {
         String old = _roadName;
         _roadName = s;
-        firePropertyChange("roadname", old, s);
+        firePropertyChange(RosterEntry.ROADNAME, old, s);
     }
 
     public String getRoadName() {
@@ -252,7 +275,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
     public void setRoadNumber(String s) {
         String old = _roadNumber;
         _roadNumber = s;
-        firePropertyChange("roadname", old, s);
+        firePropertyChange(RosterEntry.ROADNAME, old, s);
     }
 
     public String getRoadNumber() {
@@ -262,7 +285,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
     public void setMfg(String s) {
         String old = _mfg;
         _mfg = s;
-        firePropertyChange("mfg", old, s);
+        firePropertyChange(RosterEntry.MFG, old, s);
     }
 
     public String getMfg() {
@@ -272,7 +295,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
     public void setModel(String s) {
         String old = _model;
         _model = s;
-        firePropertyChange("model", old, s);
+        firePropertyChange(RosterEntry.MODEL, old, s);
     }
 
     public String getModel() {
@@ -282,7 +305,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
     public void setOwner(String s) {
         String old = _owner;
         _owner = s;
-        firePropertyChange("owner", old, s);
+        firePropertyChange(RosterEntry.OWNER, old, s);
     }
 
     public String getOwner() {
@@ -292,7 +315,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
     public void setDccAddress(String s) {
         String old = _dccAddress;
         _dccAddress = s;
-        firePropertyChange("dccaddress", old, s);
+        firePropertyChange(RosterEntry.DCC_ADDRESS, old, s);
     }
 
     @Override
@@ -310,7 +333,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
         } else {
             _protocol = LocoAddress.Protocol.DCC_SHORT;
         }
-        firePropertyChange("longaddress", old, b);
+        firePropertyChange(RosterEntry.LONG_ADDRESS, old, b);
     }
 
     public RosterSpeedProfile getSpeedProfile() {
@@ -333,7 +356,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
     public void setProtocol(LocoAddress.Protocol protocol) {
         LocoAddress.Protocol old = _protocol;
         _protocol = protocol;
-        firePropertyChange("protocol", old, _protocol);
+        firePropertyChange(RosterEntry.PROTOCOL, old, _protocol);
     }
 
     public LocoAddress.Protocol getProtocol() {
@@ -347,7 +370,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
     public void setComment(String s) {
         String old = _comment;
         _comment = s;
-        firePropertyChange("comment", old, s);
+        firePropertyChange(RosterEntry.COMMENT, old, s);
     }
 
     public String getComment() {
@@ -357,7 +380,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
     public void setDecoderModel(String s) {
         String old = _decoderModel;
         _decoderModel = s;
-        firePropertyChange("decodermodel", old, s);
+        firePropertyChange(RosterEntry.DECODER_MODEL, old, s);
     }
 
     public String getDecoderModel() {
@@ -367,7 +390,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
     public void setDecoderFamily(String s) {
         String old = _decoderFamily;
         _decoderFamily = s;
-        firePropertyChange("decoderfamily", old, s);
+        firePropertyChange(RosterEntry.DECODER_FAMILY, old, s);
     }
 
     public String getDecoderFamily() {
@@ -377,7 +400,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
     public void setDecoderComment(String s) {
         String old = _decoderComment;
         _decoderComment = s;
-        firePropertyChange("decodercomment", old, s);
+        firePropertyChange(RosterEntry.DECODER_COMMENT, old, s);
     }
 
     public String getDecoderComment() {
@@ -399,7 +422,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
     public void setImagePath(String s) {
         String old = _imageFilePath;
         _imageFilePath = s;
-        firePropertyChange("imagefilepath", old, s);
+        firePropertyChange(RosterEntry.IMAGE_FILE_PATH, old, s);
     }
 
     public String getImagePath() {
@@ -409,7 +432,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
     public void setIconPath(String s) {
         String old = _iconFilePath;
         _iconFilePath = s;
-        firePropertyChange("iconfilepath", old, s);
+        firePropertyChange(RosterEntry.ICON_FILE_PATH, old, s);
     }
 
     public String getIconPath() {
@@ -428,7 +451,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
     public void setURL(String s) {
         String old = _URL;
         _URL = s;
-        firePropertyChange("url", old, s);
+        firePropertyChange(RosterEntry.URL, old, s);
     }
 
     public String getURL() {
@@ -438,7 +461,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
     public void setDateUpdated(String s) {
         String old = _dateUpdated;
         _dateUpdated = s;
-        firePropertyChange("dateupdated", old, s);
+        firePropertyChange(RosterEntry.DATE_UPDATED, old, s);
     }
 
     public String getDateUpdated() {
@@ -804,7 +827,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
         }
         String old = functionImages[fn];
         functionImages[fn] = s;
-        firePropertyChange("functionImage" + fn, old, s);
+        firePropertyChange(RosterEntry.FUNCTION_IMAGE + fn, old, s);
     }
 
     public String getFunctionImage(int fn) {
@@ -820,7 +843,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
         }
         String old = functionSelectedImages[fn];
         functionSelectedImages[fn] = s;
-        firePropertyChange("functionSelectedImage" + fn, old, s);
+        firePropertyChange(RosterEntry.FUNCTION_SELECTED_IMAGE + fn, old, s);
     }
 
     public String getFunctionSelectedImage(int fn) {
@@ -869,7 +892,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
             attributePairs = new java.util.TreeMap<String, String>();
         }
         attributePairs.put(key, value);
-        firePropertyChange("attributeUpdated:" + key, oldValue, value);
+        firePropertyChange(RosterEntry.ATTRIBUTE_UPDATED + key, oldValue, value);
     }
 
     @Override
@@ -884,7 +907,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
     public void deleteAttribute(String key) {
         if (attributePairs != null) {
             attributePairs.remove(key);
-            firePropertyChange("attributeDeleted", key, null);
+            firePropertyChange(RosterEntry.ATTRIBUTE_DELETED, key, null);
         }
     }
 
