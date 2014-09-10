@@ -193,7 +193,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         }
         _list.remove(_list.indexOf(e));
         setDirty(true);
-        firePropertyChange(REMOVE, null, e);
+        firePropertyChange(REMOVE, e, null);
     }
 
     /**
