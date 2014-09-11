@@ -2872,6 +2872,12 @@ public class TrainBuilder extends TrainCommon {
 		}
 		addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildSearchTrackNewLoad"), new Object[] {
 				car.toString(), car.getTypeName(), car.getLoadName(), car.getLocationName(), car.getTrackName() }));
+		// check to see if car type has custom loads
+		if (CarLoads.instance().getNames(car.getTypeName()).size() == 2) {
+			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarNoCustomLoad"), new Object[] { car
+				.toString(), car.getTypeName() }));
+			return false;
+		}
 		if (car.getKernel() != null) {
 			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarPartOfKernel"),
 					new Object[] { car.toString(), car.getKernelName(), car.getKernel().getSize(),
@@ -3810,7 +3816,7 @@ public class TrainBuilder extends TrainCommon {
 		loads.remove(CarLoads.instance().getDefaultEmptyName());
 		loads.remove(CarLoads.instance().getDefaultLoadName());
 		if (loads.size() == 0) {
-			log.debug("No custom loads for staging track {}", stageTrack.getName());
+			log.debug("No custom loads for car type ({}) ignoring staging track ({})", car.getTypeName(), stageTrack.getName());
 			return false;
 		}
 		addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildSearchTrackLoadStaging"),
