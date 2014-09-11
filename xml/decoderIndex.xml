@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="/xml/XSLT/DecoderID.xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 20140908-1113-heap on Mon Sep 08 21:14:03 EST 2014 $Id$-->
-  <decoderIndex version="455">
+  <!--Written by JMRI version 20140911-0224-jake on Wed Sep 10 19:24:25 PDT 2014 $Id$-->
+  <decoderIndex version="457">
     <mfgList nmraListDate="2014-06-04" updated="2014-08-24" lastadd="107">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -3618,78 +3618,78 @@
         </model>
       </family>
       <family name="Lenz Plus decoders released March 2010" mfg="Lenz" highVersionID="99" lowVersionID="90" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" file="Lenz_Plus_2010.xml">
-        <model model="Standard+ NEM652 10231-01" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
+        <model model="Standard+ NEM652 10231-01" numOuts="3" numFns="31" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
           <output name="1" label="A" maxcurrent="0.3A" />
           <output name="2" label="B" maxcurrent="0.3A" />
           <output name="3" label="C" maxcurrent="0.3A" />
         </model>
-        <model model="Silver+ mini wired 10310-01" numOuts="2" numFns="30" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
+        <model model="Silver+ mini wired 10310-01" numOuts="2" numFns="31" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
           <output name="1" label="A - White" maxcurrent="0.3A" />
           <output name="2" label="B - Yellow" maxcurrent="0.3A" />
         </model>
-        <model model="Silver+ mini NEM651 10311-01" numOuts="2" numFns="30" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
+        <model model="Silver+ mini NEM651 10311-01" numOuts="2" numFns="31" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
           <output name="1" label="A" maxcurrent="0.3A" />
           <output name="2" label="B" maxcurrent="0.3A" />
         </model>
-        <model model="Silver+ mini wired 10310-02" numOuts="2" numFns="30" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
+        <model model="Silver+ mini wired 10310-02" numOuts="2" numFns="31" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
           <output name="1" label="A - White" maxcurrent="0.3A" />
           <output name="2" label="B - Yellow" maxcurrent="0.3A" />
         </model>
-        <model model="Silver+ mini NEM651 10311-02" numOuts="2" numFns="30" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
+        <model model="Silver+ mini NEM651 10311-02" numOuts="2" numFns="31" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
           <output name="1" label="A" maxcurrent="0.3A" />
           <output name="2" label="B" maxcurrent="0.3A" />
         </model>
-        <model model="Silver+ NEM652 10331-01" numOuts="5" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
+        <model model="Silver+ NEM652 10331-01" numOuts="5" numFns="31" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
           <output name="1" label="A" maxcurrent="0.5A" />
           <output name="2" label="B" maxcurrent="0.5A" />
           <output name="3" label="C" maxcurrent="0.5A" />
           <output name="4" label="D" maxcurrent="0.5A" />
           <output name="5" label="E" maxcurrent="0.5A" />
         </model>
-        <model model="Silver+ PluX12 10312-01" numOuts="5" numFns="30" maxMotorCurrent="0.75A" formFactor="TT" maxTotalCurrent="0.75A">
+        <model model="Silver+ PluX12 10312-01" numOuts="5" numFns="31" maxMotorCurrent="0.75A" formFactor="TT" maxTotalCurrent="0.75A">
           <output name="1" label="A" maxcurrent="0.5A" />
           <output name="2" label="B" maxcurrent="0.5A" />
           <output name="3" label="C" maxcurrent="0.5A" />
           <output name="4" label="D" maxcurrent="0.5A" />
           <output name="5" label="E" maxcurrent="0.5A" />
         </model>
-        <model model="Silver+ Next18 10312-01" numOuts="5" numFns="30" maxMotorCurrent="0.75A" formFactor="TT" maxTotalCurrent="0.75A" comment="New in 2014">
+        <model model="Silver+ Next18 10312-01" numOuts="5" numFns="31" maxMotorCurrent="0.75A" formFactor="TT" maxTotalCurrent="0.75A" comment="New in 2014">
           <output name="1" label="A" maxcurrent="0.5A" />
           <output name="2" label="B" maxcurrent="0.5A" />
           <output name="3" label="C" maxcurrent="0.5A" />
           <output name="4" label="D" maxcurrent="0.5A" />
           <output name="5" label="E" maxcurrent="0.5A" />
         </model>
-        <model model="Silver+ 21 10321-01" numOuts="5" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
+        <model model="Silver+ 21 10321-01" numOuts="5" numFns="31" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
           <output name="1" label="A" maxcurrent="0.5A" />
           <output name="2" label="B" maxcurrent="0.5A" />
           <output name="3" label="C" maxcurrent="0.5A" />
           <output name="4" label="D" maxcurrent="0.5A" />
           <output name="5" label="E" maxcurrent="0.5A" />
         </model>
-        <model model="Silver+ direct 10330-01" numOuts="5" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
+        <model model="Silver+ direct 10330-01" numOuts="5" numFns="31" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
           <output name="1" label="A" maxcurrent="0.5A" />
           <output name="2" label="B" maxcurrent="0.5A" />
           <output name="3" label="C" maxcurrent="0.5A" />
           <output name="4" label="D" maxcurrent="0.5A" />
           <output name="5" label="E" maxcurrent="0.5A" />
         </model>
-        <model model="Gold+ mini wired 10410-01" numOuts="2" numFns="30" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
+        <model model="Gold+ mini wired 10410-01" numOuts="2" numFns="31" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
           <output name="1" label="A - White" maxcurrent="0.3A" />
           <output name="2" label="B - Yellow" maxcurrent="0.3A" />
         </model>
-        <model model="Gold+ mini NEM651 10411-01" numOuts="2" numFns="30" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
+        <model model="Gold+ mini NEM651 10411-01" numOuts="2" numFns="31" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
           <output name="1" label="A" maxcurrent="0.3A" />
           <output name="2" label="B" maxcurrent="0.3A" />
         </model>
-        <model model="Gold+ NEM652 10433-01" numOuts="5" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
+        <model model="Gold+ NEM652 10433-01" numOuts="5" numFns="31" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
           <output name="1" label="A" maxcurrent="0.5A" />
           <output name="2" label="B" maxcurrent="0.5A" />
           <output name="3" label="C" maxcurrent="0.5A" />
           <output name="4" label="D" maxcurrent="0.5A" />
           <output name="5" label="E" maxcurrent="0.5A" />
         </model>
-        <model model="Gold maxi 10440" numOuts="8" numFns="30" maxMotorCurrent="3.0A" formFactor="0" maxTotalCurrent="3.0A" comment="New in 2014" connector="SUSI">
+        <model model="Gold maxi 10440" numOuts="8" numFns="31" maxMotorCurrent="3.0A" formFactor="0" maxTotalCurrent="3.0A" comment="New in 2014" connector="SUSI">
           <versionCV highVersionID="72" lowVersionID="72" />
           <output name="1" label="A" maxcurrent="1.0A" />
           <output name="2" label="B" maxcurrent="1.0A" />
@@ -4860,6 +4860,34 @@
           <functionlabel num="8" lockable="false">Short horn</functionlabel>
           <functionlabel num="9" lockable="false">Air Brakes</functionlabel>
           <functionlabel num="10" lockable="false">Door</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="MyLocoSound DCC" mfg="MyLocoSound" type="mobile" lowVersionID="1" highVersionID="9" comment="with stay-alive capacitor" file="MyLocoSound-DCC.xml">
+        <model model="Diesel" numOuts="2" numFns="11" productID="Diesel" maxMotorCurrent="1.5A" formFactor="HO" connector="NMRAmedium" comment="with 40mm x 20mm high bass speaker">
+          <size length="50" width="28" height="12" units="mm" />
+          <functionlabels>
+            <functionlabel num="2" lockable="false">Horn</functionlabel>
+            <functionlabel num="3" lockable="false">Short Horn</functionlabel>
+            <functionlabel num="5" lockable="false">Airbrake</functionlabel>
+            <functionlabel num="8" lockable="true">Turbocharger</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Steam" numOuts="2" numFns="11" productID="Steam" maxMotorCurrent="1.5A" formFactor="HO" connector="NMRAmedium" comment="with 27mm diameter, 8 ohm speaker">
+          <size length="50" width="28" height="12" units="mm" />
+          <functionlabels>
+            <functionlabel num="2" lockable="false">Whistle</functionlabel>
+            <functionlabel num="3" lockable="false">Short Whistle</functionlabel>
+            <functionlabel num="5" lockable="true">Safety valve</functionlabel>
+            <functionlabel num="8" lockable="true">Westinghouse brake pump</functionlabel>
+          </functionlabels>
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Lights</functionlabel>
+          <functionlabel num="1" lockable="true">Mute</functionlabel>
+          <functionlabel num="4" lockable="true">Bell</functionlabel>
+          <functionlabel num="6" lockable="false">Guard’s whistle</functionlabel>
+          <functionlabel num="7" lockable="true">Shunting</functionlabel>
+          <functionlabel num="10" lockable="true">Lights</functionlabel>
         </functionlabels>
       </family>
       <family name="Non silent drive directional Lights" mfg="North Coast Engineering" lowVersionID="21" highVersionID="21" file="NCE_D102EU.xml">
