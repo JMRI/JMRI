@@ -640,6 +640,9 @@ public final class JSON {
     /**
      * {@value #ADD}
      *
+     * As an attribute of a {@link #ROSTER}, this is an entry that has been
+     * added to the roster.
+     *
      * @since 1.1
      */
     public static final String ADD = "add";
@@ -648,6 +651,9 @@ public final class JSON {
      *
      * In operations, this indicates the dropping or setting out of a car or
      * engine.
+     *
+     * As an attribute of a {@link #ROSTER}, this is an entry that has been
+     * removed from the roster.
      *
      * @since 1.1
      */
@@ -763,6 +769,7 @@ public final class JSON {
      * number of clients controlling the same throttle.
      * <p>
      * {@value #CLIENTS}
+     *
      * @since 2.0
      */
     public static final String CLIENTS = "clients"; // NOI18N
