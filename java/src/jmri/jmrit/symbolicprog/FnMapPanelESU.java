@@ -26,7 +26,7 @@ import org.jdom.*;
  * to configure the number of rows and columns and set up any
  * custom column names:</p>
  *  <dl>
- *   <dt>extFnsESU="true"</dt>
+ *   <dt>extFnsESU="yes"</dt>
  *     <dd>Uses the ESU-style function map rather than the NMRA style.</dd>
  *     <dd>&nbsp;</dd>
  *   <dt>numOuts</dt>
@@ -67,7 +67,7 @@ import org.jdom.*;
  *  <dt>Variable definitions:</dt>
  *   <dd>Are of the form "ESU Function Row xx Column yy" and are created "on the fly" by this class.
  *     Up to 5,120 variables are needed to populate the function map. It is more efficient to create
- *     these in code than to use XML in the decoder file.</dd>
+ *     these in code than to use XML in the decoder file. <strong>DO NOT</strong> specify them in the decoder file.</dd>
  * </dl>
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
