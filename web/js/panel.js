@@ -631,7 +631,7 @@ function $handleLinkingLabelClick(e) {
         if (typeof $frameType == "undefined") {
             $url = "/frame/" + $frameName + ".html"; //not in list, open using frameserver
         } else {
-            $url = "?name=" + $frameType + "/" + $frameName; //format for panel server
+            $url = "/panel/" + $frameType + "/" + $frameName; //format for panel server
         }
     }
     window.location = $url;  //navigate to the specified url
@@ -1213,9 +1213,9 @@ var $reDrawIcon = function($widget) {
     //additional naming for indicator*icon widgets to reflect occupancy
     $indicator = ($widget.occupancysensor && $widget.occupancystate == ACTIVE ? "Occupied" : "");
     if ($widget['icon' + $indicator + ($widget.state + "").replace(/ /g, "_")]) {
-    	$('img#' + $widget.id).attr('src', $widget['icon' + $indicator + ($widget.state + "").replace(/ /g, "_")]);  //set image src to next state's image
+        $('img#' + $widget.id).attr('src', $widget['icon' + $indicator + ($widget.state + "").replace(/ /g, "_")]);  //set image src to next state's image
     } else {
-    	if (window.console)
+        if (window.console)
     		console.log("ERROR: image not defined for " + $widget.widgetType + " " +$widget.id+", state=" + $widget.state+", occ=" +$widget.occupancystate);
     }
 };
@@ -1229,14 +1229,14 @@ var $setWidgetState = function($id, $newState) {
         $widget.state = $newState;
         switch ($widget.widgetFamily) {
             case "icon" :
-            	$reDrawIcon($widget)
-            	break;
+                $reDrawIcon($widget)
+                break;
             case "text" :
                 if ($widget.jsonType == "memory") {
                     if ($widget.widgetType == "fastclock") {
                         $drawClock($widget);
                     } else {
-                    		$('div#' + $id).text($newState);  //set memory text to new value from server
+                        $('div#' + $id).text($newState);  //set memory text to new value from server
                     }
                 } else {
                     if (typeof $widget['text' + $newState] !== "undefined") {
@@ -1415,11 +1415,11 @@ var requestPanelXML = function(panelName) {
 
 //preload all images referred to by the widget
 var $preloadWidgetImages = function($widget) {
-	for (k in $widget) {
-		if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && $widget[k] != "yes") { //if attribute names starts with 'icon', it's an image, so preload it
-			$("<img src='" + $widget[k] + "'/>");
-		}
-	};
+    for (k in $widget) {
+        if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && $widget[k] != "yes") { //if attribute names starts with 'icon', it's an image, so preload it
+            $("<img src='" + $widget[k] + "'/>");
+        }
+};
 };
 
 //determine widget "family" for broadly grouping behaviors
@@ -1507,8 +1507,8 @@ function updateWidgets(systemName, state) {
 }
 
 function updateOccupancy(occupancyName, state) {
-	if (occupancyNames[occupancyName]) {
-		if (window.console)
+    if (occupancyNames[occupancyName]) {
+        if (window.console)
 			console.log("setting occupancies for sensor"+ occupancyName + " to " + state);
         $.each(occupancyNames[occupancyName], function(index, widgetId) {
             $widget = $gWidgets[widgetId];
@@ -1532,34 +1532,41 @@ function updateOccupancy(occupancyName, state) {
     }
 }
 
-function listPanels() {
+function listPanels(name) {
     $.ajax({
         url: "/panel/?format=json",
         data: {},
         success: function(data, textStatus, jqXHR) {
             if (data.length !== 0) {
-                $("#panel-list").empty();
-                $("#activity-alert").addClass("hidden").removeClass("show");
-                $("#panel-list").addClass("show").removeClass("hidden");
                 $.each(data, function(index, value) {
-                    $("#panel-list").append("<div class=\"col-sm-6 col-md-4 col-lg-3\"><div class=\"thumbnail\"><a href=\"/panel/" + value.name + "\"><div class=\"thumbnail-image\"><img src=\"/panel/" + value.name + "?format=png\" style=\"width: 100%;\"></div><div class=\"caption\">" + value.userName + "</div></a></div></div>");
-                    // (12 / col-lg-#) % index + 1
-                    if (4 % (index + 1)) {
-                        $("#panel-list").append("<div class=\"clearfix visible-lg\"></div>");
-                    }
-                    // (12 / col-md-#) % index + 1
-                    if (3 % (index + 1)) {
-                        $("#panel-list").append("<div class=\"clearfix visible-md\"></div>");
-                    }
-                    // (12 / col-sm-#) % index + 1
-                    if (2 % (index + 1)) {
-                        $("#panel-list").append("<div class=\"clearfix visible-sm\"></div>");
-                    }
+                    $gPanelList[value.userName] = value.type;
                 });
-                // resizeThumbnails(); // sometimes gets .thumbnail sizes too small under image. Why?
-            } else {
-                $("#activity-alert").addClass("hidden").removeClass("show");
-                $("#warning-no-panels").addClass("show").removeClass("hidden");
+            }
+            if (name === null || typeof (panelName) === undefined) {
+                if (data.length !== 0) {
+                    $("#panel-list").empty();
+                    $("#activity-alert").addClass("hidden").removeClass("show");
+                    $("#panel-list").addClass("show").removeClass("hidden");
+                    $.each(data, function(index, value) {
+                        $("#panel-list").append("<div class=\"col-sm-6 col-md-4 col-lg-3\"><div class=\"thumbnail\"><a href=\"/panel/" + value.name + "\"><div class=\"thumbnail-image\"><img src=\"/panel/" + value.name + "?format=png\" style=\"width: 100%;\"></div><div class=\"caption\">" + value.userName + "</div></a></div></div>");
+                        // (12 / col-lg-#) % index + 1
+                        if (4 % (index + 1)) {
+                            $("#panel-list").append("<div class=\"clearfix visible-lg\"></div>");
+                        }
+                        // (12 / col-md-#) % index + 1
+                        if (3 % (index + 1)) {
+                            $("#panel-list").append("<div class=\"clearfix visible-md\"></div>");
+                        }
+                        // (12 / col-sm-#) % index + 1
+                        if (2 % (index + 1)) {
+                            $("#panel-list").append("<div class=\"clearfix visible-sm\"></div>");
+                        }
+                    });
+                    // resizeThumbnails(); // sometimes gets .thumbnail sizes too small under image. Why?
+                } else {
+                    $("#activity-alert").addClass("hidden").removeClass("show");
+                    $("#warning-no-panels").addClass("show").removeClass("hidden");
+                }
             }
         }
     });
@@ -1598,8 +1605,8 @@ $(document).ready(function() {
     $("#navbar-panel-reload > a").attr("href", location.href);
     $("#navbar-panel-xml > a").attr("href", location.href + "?format=xml");
     // show panel thumbnails if no panel name
+    listPanels(panelName);
     if (panelName === null || typeof (panelName) === undefined) {
-        listPanels();
         $("#panel-list").addClass("show").removeClass("hidden");
         $("#panel-area").addClass("hidden").removeClass("show");
     } else {
