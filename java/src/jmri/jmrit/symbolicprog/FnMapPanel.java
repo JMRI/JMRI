@@ -29,17 +29,20 @@ import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
  *     <dd>&nbsp;</dd>
  *   <dt>output</dt>
  *     <dd>name="n" label="yyy"</dd>
- *       <dd>&nbsp;-&nbsp;Set lower line of heading for column number "n" to "yyy".</dd>
+ *       <dd>&nbsp;-&nbsp;Set lower line of heading for column number "n" to "yyy".*</dd>
  *       <dd>&nbsp;</dd>
  *     <dd>name="n" label="xxx|yyy"</dd>
- *       <dd>&nbsp;-&nbsp;Set upper line of heading for column number "n" to "xxx" and lower line to "yyy".</dd>
+ *       <dd>&nbsp;-&nbsp;Set upper line of heading for column number "n" to "xxx" and lower line to "yyy".*</dd>
  *       <dd>&nbsp;</dd>
  *     <dd>name="n" label="|"</dd>
- *       <dd>&nbsp;-&nbsp;Sets both lines of heading for column number "n" to blank, causing the column to be suppressed from the table.</dd>
+ *       <dd>&nbsp;-&nbsp;Sets both lines of heading for column number "n" to blank, causing the column to be suppressed from the table.*</dd>
+ *       <dd>&nbsp;</dd>
+ *       <dd>&nbsp;*&nbsp;The forms above increase the value of numOuts to n if numOuts &lt; n.</dd>
  *       <dd>&nbsp;</dd>
  *     <dd>name="text1" label="text2"</dd>
- *       <dd>&nbsp;-&nbsp;Set upper line of heading of column numOuts+1 to "xxx" and lower line to "yyy".
+ *       <dd>&nbsp;-&nbsp;Set upper line of heading of column numOuts+1 to "xxx" and lower line to "yyy". 
  *     numOuts is then incremented.</dd>
+ *       <dd>&nbsp;(This is a legacy form, the other forms are preferred.)</dd>
  * </dl>
  *  <dl>
  *  <dt>Default column headings:</dt>

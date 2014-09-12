@@ -77,7 +77,7 @@ Several attributes and elements of the "model" element of the decoder file also 
 <li>numOuts - the number of physical outputs (wires) on the decoder.</li>
 <li>numFns - this is a legacy attribute that limits the total number of function mapping lines displayed.
                 It is no longer required as the JMRI code now automatically suppresses unused lines.</li>
-<li>output - the "name" attribute of the "output" element can be used to modify what is displayed in Function Map columns.
+<li>output - the "name" and "label" attributes of the "output" element can be used to modify what is displayed in Function Map columns.
                 For details see this <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/FnMapPanel.html" target="_blank">JavaDoc page</a>.</li>
 <li>extFnsESU - when set to "yes" invokes the specialised Function Map page required for later model ESU decoders.
                 The requirements and meaning of some fnmapping elements are also changed.
