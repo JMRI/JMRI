@@ -752,14 +752,28 @@ public class JsonUtil {
      * server IP address and port as they know it to be.
      *
      * @param locale
-     * @param id
+     * @param id The id of an entry in the roster.
      * @return a roster entry in JSON notation
      */
     static public JsonNode getRosterEntry(Locale locale, String id) {
+        return JsonUtil.getRosterEntry(locale, Roster.instance().getEntryForId(id));
+    }
+
+    /**
+     * Returns the JSON representation of a roster entry.
+     *
+     * Note that this returns, for images and icons, a URL relative to the root
+     * folder of the JMRI server. It is expected that clients will fill in the
+     * server IP address and port as they know it to be.
+     *
+     * @param locale
+     * @param re A RosterEntry that may or may not be in the roster.
+     * @return a roster entry in JSON notation
+     */
+    static public JsonNode getRosterEntry(Locale locale, RosterEntry re) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, ROSTER_ENTRY);
         ObjectNode entry = root.putObject(DATA);
-        RosterEntry re = Roster.instance().getEntryForId(id);
         entry.put(NAME, re.getId());
         entry.put(ADDRESS, re.getDccAddress());
         entry.put(IS_LONG_ADDRESS, re.isLongAddress());
