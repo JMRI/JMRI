@@ -1609,6 +1609,8 @@ $(document).ready(function() {
     if (panelName === null || typeof (panelName) === undefined) {
         $("#panel-list").addClass("show").removeClass("hidden");
         $("#panel-area").addClass("hidden").removeClass("show");
+        // hide the Show XML menu when listing panels
+        $("#navbar-panel-xml").addClass("hidden").removeClass("show");
     } else {
         jmri = $.JMRI({
             didReconnect: function() {
@@ -1651,18 +1653,20 @@ $(document).ready(function() {
         // include name of panel in page title. Will be updated to userName later
         setTitle(panelName);
 
-        //add a widget to retrieve current fastclock rate
-        //TODO: replace with websocket timer
+        // Add a widget to retrieve current fastclock rate
+        // this is a widget so special logic for retrieving this information
+        // is not required
         $widget = new Array();
         $widget.jsonType = "memory";
-        $widget['name'] = "IMRATEFACTOR";  //already defined in JMRI
+        $widget['name'] = "IMRATEFACTOR";  // already defined in JMRI
         $widget['id'] = $widget['name'];
         $widget['safeName'] = $widget['name'];
         $widget['state'] = "1.0";
         $gWidgets[$widget.id] = $widget;
 
-        //request actual xml of panel, and process it on return
-        // NOTE: uses settimeout simply to release control and allow panel list to populate
+        // request actual xml of panel, and process it on return
+        // uses setTimeout simply to not block other JavaScript since
+        // requestPanelXML has a long timeout
         setTimeout(function() {
             requestPanelXML(panelName);
         },
