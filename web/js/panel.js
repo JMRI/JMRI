@@ -632,11 +632,11 @@ function $handleLinkingLabelClick(e) {
     var $url = $widget.url;
     if ($url.toLowerCase().indexOf("frame:") == 0) {
         $frameName = $url.substring(6); //if "frame" found, remove it
-        $frameType = $gPanelList[$frameName];  //find panel type in panel list
-        if (typeof $frameType == "undefined") {
+        $frameUrl = $gPanelList[$frameName];  //find panel in panel list
+        if (typeof $frameUrl == "undefined") {
             $url = "/frame/" + $frameName + ".html"; //not in list, open using frameserver
         } else {
-            $url = "/panel/" + $frameType + "/" + $frameName; //format for panel server
+            $url = "/panel/" + $frameUrl; //format for panel server
         }
     }
     window.location = $url;  //navigate to the specified url
@@ -1535,7 +1535,7 @@ function listPanels(name) {
         success: function(data, textStatus, jqXHR) {
             if (data.length !== 0) {
                 $.each(data, function(index, value) {
-                    $gPanelList[value.userName] = value.type;
+                    $gPanelList[value.userName] = value.name;
                 });
             }
             if (name === null || typeof (panelName) === undefined) {
