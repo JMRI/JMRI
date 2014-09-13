@@ -11,6 +11,7 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.Sensor;
+import jmri.ThrottleManager;
 import jmri.Turnout;
 import jmri.BasicRosterEntry;
 import jmri.ThrottleListener;
@@ -596,26 +597,28 @@ public class AbstractAutomaton implements Runnable {
     	if (!inThread) log.warn("getThrottle invoked from invalid context");
         throttle = null;
         boolean ok = true;
-        ok = InstanceManager.throttleManagerInstance()
-                .requestThrottle(address,new ThrottleListener() {
-                    public void notifyThrottleFound(DccThrottle t) {
-                        throttle = t;
-                        synchronized (self) {
-                            self.notifyAll(); // should be only one thread waiting, but just in case
-                        }
-                    }
-                    public void notifyFailedThrottleRequest(jmri.DccLocoAddress address, String reason){
-                		log.error ("Throttle request failed for "+address+" because "+reason);
-                		failedThrottleRequest = true;
-                        synchronized (self) {
-                            self.notifyAll(); // should be only one thread waiting, but just in case
-                        }
-                    }
-                });
+        ThrottleListener throttleListener = new ThrottleListener() {
+            public void notifyThrottleFound(DccThrottle t) {
+                throttle = t;
+                synchronized (self) {
+                    self.notifyAll(); // should be only one thread waiting, but just in case
+                }
+            }
+            public void notifyFailedThrottleRequest(jmri.DccLocoAddress address, String reason){
+        		log.error ("Throttle request failed for "+address+" because "+reason);
+        		failedThrottleRequest = true;
+                synchronized (self) {
+                    self.notifyAll(); // should be only one thread waiting, but just in case
+                }
+            }
+        };
+        ok = InstanceManager.getDefault(ThrottleManager.class)
+                .requestThrottle(address, throttleListener);
                 
         // check if reply is coming
         if (!ok) {
         	log.info("Throttle for loco "+address+" not available");
+        	InstanceManager.getDefault(ThrottleManager.class).cancelThrottleRequest(address, throttleListener);  //kill the pending request
         	return null;
         }
         
@@ -626,6 +629,10 @@ public class AbstractAutomaton implements Runnable {
             wait(1000);  //  1 seconds
             waited++;
             if (throttle == null) log.warn("Still waiting for throttle "+address+"!");
+        }
+        if (throttle == null ) {
+        	log.debug("canceling request for Throttle "+address);
+        	InstanceManager.getDefault(ThrottleManager.class).cancelThrottleRequest(address, throttleListener);  //kill the pending request
         }
         return throttle;
     }
@@ -644,26 +651,28 @@ public class AbstractAutomaton implements Runnable {
         if (!inThread) log.warn("getThrottle invoked from invalid context");
         throttle = null;
         boolean ok = true;
+        ThrottleListener throttleListener =new ThrottleListener() {
+            public void notifyThrottleFound(DccThrottle t) {
+                throttle = t;
+                synchronized (self) {
+                    self.notifyAll(); // should be only one thread waiting, but just in case
+                }
+            }
+            public void notifyFailedThrottleRequest(jmri.DccLocoAddress address, String reason){
+        		log.error ("Throttle request failed for "+address+" because "+reason);
+        		failedThrottleRequest = true;
+                synchronized (self) {
+                    self.notifyAll(); // should be only one thread waiting, but just in case
+                }
+            }
+        }; 
         ok = InstanceManager.throttleManagerInstance()
-                .requestThrottle(re,new ThrottleListener() {
-                    public void notifyThrottleFound(DccThrottle t) {
-                        throttle = t;
-                        synchronized (self) {
-                            self.notifyAll(); // should be only one thread waiting, but just in case
-                        }
-                    }
-                    public void notifyFailedThrottleRequest(jmri.DccLocoAddress address, String reason){
-                		log.error ("Throttle request failed for "+address+" because "+reason);
-                		failedThrottleRequest = true;
-                        synchronized (self) {
-                            self.notifyAll(); // should be only one thread waiting, but just in case
-                        }
-                    }
-                });
+                .requestThrottle(re, throttleListener);
                 
         // check if reply is coming
         if (!ok) {
         	log.info("Throttle for loco "+re.getId()+" not available");
+        	InstanceManager.getDefault(ThrottleManager.class).cancelThrottleRequest(re, throttleListener);  //kill the pending request
         	return null;
         }
         
@@ -674,6 +683,10 @@ public class AbstractAutomaton implements Runnable {
             wait(1000);  //  1 seconds
             waited++;
             if (throttle == null) log.warn("Still waiting for throttle "+re.getId()+"!");
+        }
+        if (throttle == null ) {
+        	log.debug("canceling request for Throttle "+re.getId());
+        	InstanceManager.getDefault(ThrottleManager.class).cancelThrottleRequest(re, throttleListener);  //kill the pending request
         }
         return throttle;
     }
