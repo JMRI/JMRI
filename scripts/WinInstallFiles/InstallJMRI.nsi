@@ -50,6 +50,10 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.21.1
+; - Updated Uninstall operations so that DecoderPro3 icons on Desktop and in 
+; - Start Menu are deleted during Unninstall process
+; -------------------------------------------------------------------------
 ; - Version 0.1.21.0
 ; - Add request for administrator level access when installing to correct
 ; - for bug highlighted by Suzie Tall
@@ -215,7 +219,7 @@
   ; -- usually, this will be determined by the build.xml ant script
   !define JRE_VER   "1.6"                       ; Required JRE version
 !endif
-!define INST_VER  "0.1.21.0"                    ; Installer version
+!define INST_VER  "0.1.21.1"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -745,6 +749,7 @@ Section "Uninstall" ; SEC_CRUNINST
   ; -- Remove all shortcuts
   !insertmacro MUI_STARTMENU_GETFOLDER JMRIStartMenu $0
   Delete "$SMPROGRAMS\$0\DecoderPro.lnk"
+  Delete "$SMPROGRAMS\$0\DecoderPro3.lnk"
   Delete "$SMPROGRAMS\$0\PanelPro.lnk"
   Delete "$SMPROGRAMS\$0\SoundPro.lnk"
   Delete "$SMPROGRAMS\$0\Tools and Demos\JmriDemo.lnk"
@@ -761,6 +766,7 @@ Section "Uninstall" ; SEC_CRUNINST
   Delete "$DESKTOP\DecoderPro.lnk"
   Delete "$DESKTOP\PanelPro.lnk"
   Delete "$DESKTOP\SoundPro.lnk"
+  Delete "$DESKTOP\DecoderPro3.lnk"
 
   ; -- Remove registry entries
   DeleteRegKey SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI"
