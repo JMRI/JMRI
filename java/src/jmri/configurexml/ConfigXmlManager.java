@@ -183,7 +183,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     ArrayList<Object> tlist = new ArrayList<Object>();
     ArrayList<Object> ulist = new ArrayList<Object>();
     ArrayList<Object> uplist = new ArrayList<Object>();
-    ArrayList<Element> loadDeferredList = new ArrayList<Element>();
+    private ArrayList<Element> loadDeferredList = new ArrayList<Element>();
 
     /**
      * Find the name of the adapter class for an object.
@@ -872,5 +872,12 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     
     // initialize logging
     static Logger log = LoggerFactory.getLogger(ConfigXmlManager.class.getName());
+
+    /**
+     * @return the loadDeferredList
+     */
+    protected ArrayList<Element> getLoadDeferredList() {
+        return loadDeferredList;
+    }
 }
 
