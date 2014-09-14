@@ -133,12 +133,13 @@ ISO 8859-1 characters.  If you want to use unicode characters,
 these must be manually escaped.  
 (The 'native2ascii' command-line tool can help with this.)
 Please see the 
-<A HREF="http://www.oracle.com/technetwork/java/javase/tech/faq-jsp-138165.html">Java internationalization FAQ</a>
+<A HREF="https://web.archive.org/web/20030217222249/http://java.sun.com/j2se/1.3/docs/guide/intl/faq.html">Java internationalization FAQ</a>
 for more info on how to include those characters in your property files, particularly the
 question on "How do I specify non-ASCII strings in a properties file?".
 An example is the 
 <a href="https://sourceforge.net/p/jmri/code/22287/tree/trunk/jmri/java/src/apps/AppsBundle_cs_CZ.properties">java/src/apps/AppsBundle_cs_CZ.properties</a> 
 file, which contains diacritical letters for the Czech translation. 
+The "<a href="http://docs.oracle.com/javase/7/docs/technotes/tools/index.html#intl">native2ascii</a>" tool can help with this.
 <P>
 There are several properties files that are used for internal control,
 and should not be translated.  These are marked by a comment at the top
