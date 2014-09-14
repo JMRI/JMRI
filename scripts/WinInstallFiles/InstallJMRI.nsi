@@ -463,6 +463,28 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\resources\GreenPowerLED.gif"
     Delete "$OUTDIR\resources\RedPowerLED.gif"
     Delete "$OUTDIR\resources\YellowPowerLED.gif"
+  
+  ; -- Remove all shortcuts
+  !insertmacro MUI_STARTMENU_GETFOLDER JMRIStartMenu $0
+  Delete "$SMPROGRAMS\$0\DecoderPro.lnk"
+  Delete "$SMPROGRAMS\$0\DecoderPro3.lnk"
+  Delete "$SMPROGRAMS\$0\PanelPro.lnk"
+  Delete "$SMPROGRAMS\$0\SoundPro.lnk"
+  Delete "$SMPROGRAMS\$0\Tools and Demos\JmriDemo.lnk"
+  Delete "$SMPROGRAMS\$0\Tools and Demos\LocoTools.lnk"
+  Delete "$SMPROGRAMS\$0\Tools and Demos\CornwallRR.lnk"
+  Delete "$SMPROGRAMS\$0\Tools and Demos\InstallTest.lnk"
+  Delete "$SMPROGRAMS\$0\Tools and Demos\InstallTest.pif" ; -- for Win98
+  Delete "$SMPROGRAMS\$0\Tools and Demos\DecoderPro3.lnk"
+  SetFileAttributes "$SMPROGRAMS\$0\Tools and Demos\Preferences.lnk" NORMAL
+  Delete "$SMPROGRAMS\$0\Tools and Demos\Preferences.lnk"
+  Delete "$SMPROGRAMS\$0\Uninstall.lnk"
+  RMDir "$SMPROGRAMS\$0\Tools and Demos\"
+  RMDir "$SMPROGRAMS\$0\"
+  Delete "$DESKTOP\DecoderPro.lnk"
+  Delete "$DESKTOP\DecoderPro3.lnk"
+  Delete "$DESKTOP\PanelPro.lnk"
+  Delete "$DESKTOP\SoundPro.lnk"
 
   SectionEnd ; SEC_CLEANUP
   
