@@ -3426,6 +3426,11 @@ public class TrainBuilder extends TrainCommon {
 			throws BuildFailedException {
 		addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildFindDestinationForCar"), new Object[] {
 				car.toString(), car.getTypeName(), car.getLoadName(), (car.getLocationName() + ", " + car.getTrackName()) }));
+		if (car.getKernel() != null)
+			addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCarPartOfKernel"),
+					new Object[] { car.toString(), car.getKernelName(), car.getKernel().getSize(),
+							car.getKernel().getTotalLength(), Setup.getLengthUnit().toLowerCase() }));
+		
 		int start = routeIndex; // start looking after car's current location
 		RouteLocation rld = null; // the route location destination being checked for the car
 		RouteLocation rldSave = null; // holds the best route location destination for the car
