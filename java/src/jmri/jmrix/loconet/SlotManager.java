@@ -231,13 +231,6 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         }
     }
 
-    /**
-     * Stores the opcode of the previously-processed message for context.
-     * This is needed to know whether a SLOT DATA READ is a response to
-     * a REQ LOCO ADDR, for example.
-     */
-    int lastMessage = -1;
-
     LocoNetMessage immedPacket;
     
     /**
@@ -292,11 +285,6 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 tc.sendLocoNetMessage(mo);             
             }
         }
-        
-        // save this message for context next time
-        // unless it is a OPC_GPBUSY AJS 28-Mar-03
-        if( m.getOpCode() != LnConstants.OPC_GPBUSY )
-            lastMessage = m.getOpCode();
     }
 
     /**
@@ -492,22 +480,22 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
 
     protected void respondToAddrRequest(LocoNetMessage m, int i) {
-        // if the last was a OPC_LOCO_ADR and this was OPC_SL_RD_DATA
-        if ( (lastMessage==0xBF) && (m.getOpCode()==0xE7)) {
+        // if this is OPC_SL_RD_DATA
+        if (m.getOpCode()==0xE7) {
             // yes, see if request exists
             // note that slot has already been told, so
             // slot i has the address of this request
             int addr = _slots[i].locoAddr();
-            if (log.isDebugEnabled()) log.debug("LOCO_ADR resp of slot "+i+" loco "+addr);
+            log.debug("LOCO_ADR resp is slot {} for addr {}", i, addr);
             SlotListener l = mLocoAddrHash.get(Integer.valueOf(addr));
             if (l!=null) {
                 // only notify once per request
                 mLocoAddrHash.remove(Integer.valueOf(addr));
                 // and send the notification
-                if (log.isDebugEnabled()) log.debug("notify listener");
+                log.debug("notify listener");
                 l.notifyChangedSlot(_slots[i]);
             } else {
-                if (log.isDebugEnabled()) log.debug("no request for this");
+                log.debug("no request for addr {}", addr);
             }
         }
     }

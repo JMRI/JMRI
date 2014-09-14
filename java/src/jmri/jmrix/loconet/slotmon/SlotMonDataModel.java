@@ -484,8 +484,8 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             {
                 LocoNetSlot s = memo.getSlotManager().slot(slotNum(row));
                 
-                if(s.slotStatus() != LnConstants.LOCO_IN_USE)
-                    {
+                if(s.slotStatus() != LnConstants.LOCO_IN_USE) {
+                    log.debug("Freeing {} from slot {}, old status: {}", s.locoAddr(), s.getSlot(), s.slotStatus());
                         memo.getLnTrafficController().sendLocoNetMessage(
                                                                          s.writeStatus(LnConstants.LOCO_FREE
 								));
