@@ -50,6 +50,14 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.21.2
+; - Updated "-CleanUp" so that any previous desktop icons are removed before
+; -   installation.
+; - Updated "-CleanUp" so that if the Start Menu folder already exits, it
+; -   is removed before installation.
+; - Provided work-around for deletion of Preferences.lnk on systems which
+; -   are slow to change file attributes.
+; -------------------------------------------------------------------------
 ; - Version 0.1.21.1
 ; - Updated Uninstall operations so that DecoderPro3 icons on Desktop and in 
 ; - Start Menu are deleted during Unninstall process
@@ -219,7 +227,7 @@
   ; -- usually, this will be determined by the build.xml ant script
   !define JRE_VER   "1.6"                       ; Required JRE version
 !endif
-!define INST_VER  "0.1.21.1"                    ; Installer version
+!define INST_VER  "0.1.21.2"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -464,28 +472,37 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\resources\RedPowerLED.gif"
     Delete "$OUTDIR\resources\YellowPowerLED.gif"
   
-  ; -- Remove all shortcuts
-  !insertmacro MUI_STARTMENU_GETFOLDER JMRIStartMenu $0
-  Delete "$SMPROGRAMS\$0\DecoderPro.lnk"
-  Delete "$SMPROGRAMS\$0\DecoderPro3.lnk"
-  Delete "$SMPROGRAMS\$0\PanelPro.lnk"
-  Delete "$SMPROGRAMS\$0\SoundPro.lnk"
-  Delete "$SMPROGRAMS\$0\Tools and Demos\JmriDemo.lnk"
-  Delete "$SMPROGRAMS\$0\Tools and Demos\LocoTools.lnk"
-  Delete "$SMPROGRAMS\$0\Tools and Demos\CornwallRR.lnk"
-  Delete "$SMPROGRAMS\$0\Tools and Demos\InstallTest.lnk"
-  Delete "$SMPROGRAMS\$0\Tools and Demos\InstallTest.pif" ; -- for Win98
-  Delete "$SMPROGRAMS\$0\Tools and Demos\DecoderPro3.lnk"
-  SetFileAttributes "$SMPROGRAMS\$0\Tools and Demos\Preferences.lnk" NORMAL
-  Delete "$SMPROGRAMS\$0\Tools and Demos\Preferences.lnk"
-  Delete "$SMPROGRAMS\$0\Uninstall.lnk"
-  RMDir "$SMPROGRAMS\$0\Tools and Demos\"
-  RMDir "$SMPROGRAMS\$0\"
-  Delete "$DESKTOP\DecoderPro.lnk"
-  Delete "$DESKTOP\DecoderPro3.lnk"
-  Delete "$DESKTOP\PanelPro.lnk"
-  Delete "$DESKTOP\SoundPro.lnk"
+    ; -- If the current install Start Menu folder exists, remove any 
+    ; --        predictably-named JMRI-related contents.
 
+    !insertmacro MUI_STARTMENU_GETFOLDER JMRIStartMenu $0
+    
+    ; -- Change file attributes early so they have time to propagate on systems 
+    ; --        with unexpected delays in the filesystem.
+    SetFileAttributes "$SMPROGRAMS\$0\Tools and Demos\Preferences.lnk" NORMAL
+
+    Delete "$SMPROGRAMS\$0\DecoderPro.lnk"
+    Delete "$SMPROGRAMS\$0\DecoderPro3.lnk"
+    Delete "$SMPROGRAMS\$0\PanelPro.lnk"
+    Delete "$SMPROGRAMS\$0\SoundPro.lnk"
+    Delete "$SMPROGRAMS\$0\Tools and Demos\JmriDemo.lnk"
+    Delete "$SMPROGRAMS\$0\Tools and Demos\LocoTools.lnk"
+    Delete "$SMPROGRAMS\$0\Tools and Demos\CornwallRR.lnk"
+    Delete "$SMPROGRAMS\$0\Tools and Demos\InstallTest.lnk"
+    Delete "$SMPROGRAMS\$0\Tools and Demos\InstallTest.pif" ; -- for Win98
+    Delete "$SMPROGRAMS\$0\Tools and Demos\DecoderPro3.lnk"
+    Delete "$SMPROGRAMS\$0\Tools and Demos\Preferences.lnk"
+    Delete "$SMPROGRAMS\$0\Uninstall.lnk"
+    RMDir "$SMPROGRAMS\$0\Tools and Demos\"
+    RMDir "$SMPROGRAMS\$0\"
+
+    ; -- Remove any predictably-named JMRI shortcuts from the Desktop
+
+    Delete "$DESKTOP\DecoderPro.lnk"
+    Delete "$DESKTOP\DecoderPro3.lnk"
+    Delete "$DESKTOP\PanelPro.lnk"
+    Delete "$DESKTOP\SoundPro.lnk"
+  
   SectionEnd ; SEC_CLEANUP
   
   Section "Main" SEC_MAIN
@@ -770,6 +787,11 @@ Section "Uninstall" ; SEC_CRUNINST
   
   ; -- Remove all shortcuts
   !insertmacro MUI_STARTMENU_GETFOLDER JMRIStartMenu $0
+
+    ; -- Change file attributes early so they have time to propagate on systems 
+    ; --        with unexpected delays in the filesystem.
+    SetFileAttributes "$SMPROGRAMS\$0\Tools and Demos\Preferences.lnk" NORMAL
+
   Delete "$SMPROGRAMS\$0\DecoderPro.lnk"
   Delete "$SMPROGRAMS\$0\DecoderPro3.lnk"
   Delete "$SMPROGRAMS\$0\PanelPro.lnk"
@@ -780,7 +802,6 @@ Section "Uninstall" ; SEC_CRUNINST
   Delete "$SMPROGRAMS\$0\Tools and Demos\InstallTest.lnk"
   Delete "$SMPROGRAMS\$0\Tools and Demos\InstallTest.pif" ; -- for Win98
   Delete "$SMPROGRAMS\$0\Tools and Demos\DecoderPro3.lnk"
-  SetFileAttributes "$SMPROGRAMS\$0\Tools and Demos\Preferences.lnk" NORMAL
   Delete "$SMPROGRAMS\$0\Tools and Demos\Preferences.lnk"
   Delete "$SMPROGRAMS\$0\Uninstall.lnk"
   RMDir "$SMPROGRAMS\$0\Tools and Demos\"
