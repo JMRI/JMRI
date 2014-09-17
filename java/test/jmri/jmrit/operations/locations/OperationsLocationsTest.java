@@ -1244,21 +1244,21 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Track t1 full", 100, t1.getUsedLength());
 
 		// try to over load track, should fail
-		Assert.assertEquals("Place C8", Track.LENGTH + " (25) " + Setup.getLengthUnit().toLowerCase(), c8.setLocation(
+		Assert.assertEquals("Place C8", Track.LENGTH + " 25 " + Setup.getLengthUnit().toLowerCase(), c8.setLocation(
 				l, t1));
 		// try setting car's destination
-		Assert.assertEquals("Set Destination C8", Track.LENGTH + " (25) " + Setup.getLengthUnit().toLowerCase(), c8
+		Assert.assertEquals("Set Destination C8", Track.LENGTH + " 25 " + Setup.getLengthUnit().toLowerCase(), c8
 				.setDestination(l, t1));
 
 		// now use planned pickup feature
 		t1.setIgnoreUsedLengthPercentage(25); // ignore 25% of used track length
 		Assert.assertEquals("Set Destination C5", Track.OKAY, c5.setDestination(l, t1));
 		Assert.assertEquals("Track t1 reserved", 25, t1.getReserved()); // C5 destination is t1
-		Assert.assertEquals("Place C6", Track.LENGTH + " (25) " + Setup.getLengthUnit().toLowerCase(), c6.setLocation(
+		Assert.assertEquals("Place C6", Track.LENGTH + " 25 " + Setup.getLengthUnit().toLowerCase(), c6.setLocation(
 				l, t1));
 		Assert.assertEquals("Remove Destination C5", Track.OKAY, c5.setDestination(null, null));
 		Assert.assertEquals("Place C6", Track.OKAY, c6.setLocation(l, t1));
-		Assert.assertEquals("Set Destination C5", Track.LENGTH + " (25) " + Setup.getLengthUnit().toLowerCase(), c5
+		Assert.assertEquals("Set Destination C5", Track.LENGTH + " 25 " + Setup.getLengthUnit().toLowerCase(), c5
 				.setDestination(l, t1));
 
 		Assert.assertEquals("Track t1 now over loaded by 25%", 125, t1.getUsedLength());
@@ -1266,11 +1266,11 @@ public class OperationsLocationsTest extends TestCase {
 		// now try 75% planned pick ups
 		t1.setIgnoreUsedLengthPercentage(75); // ignore 75% of used track length
 		Assert.assertEquals("Set Destination C7", Track.OKAY, c7.setDestination(l, t1));
-		Assert.assertEquals("Place C8", Track.LENGTH + " (25) " + Setup.getLengthUnit().toLowerCase(), c8.setLocation(
+		Assert.assertEquals("Place C8", Track.LENGTH + " 25 " + Setup.getLengthUnit().toLowerCase(), c8.setLocation(
 				l, t1));
 		Assert.assertEquals("Remove Destination C7", Track.OKAY, c7.setDestination(null, null));
 		Assert.assertEquals("Place C8", Track.OKAY, c8.setLocation(l, t1));
-		Assert.assertEquals("Set Destination C7", Track.LENGTH + " (50) " + Setup.getLengthUnit().toLowerCase(), c7
+		Assert.assertEquals("Set Destination C7", Track.LENGTH + " 50 " + Setup.getLengthUnit().toLowerCase(), c7
 				.setDestination(l, t1));
 		Assert.assertEquals("Set Destination C9", Track.OKAY, c9.setDestination(l, t1));
 
@@ -1286,7 +1286,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Track t1 over loaded by 50%", 150, t1.getUsedLength());
 		c10.setLength("22"); // make car one foot longer
 		// and try again, should fail
-		Assert.assertEquals("Set Destination C10", Track.LENGTH + " (26) " + Setup.getLengthUnit().toLowerCase(), c10
+		Assert.assertEquals("Set Destination C10", Track.LENGTH + " 26 " + Setup.getLengthUnit().toLowerCase(), c10
 				.setDestination(l, t1));
 		// remove c8 length 21+4 = 25
 		Assert.assertEquals("remove C8", Track.OKAY, c8.setLocation(null, null));
@@ -1295,9 +1295,9 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Track t1 reserved", 75, t1.getReserved()); // C9 and c10 destination is t1
 		Assert.assertEquals("Track t1 over loaded by 25%", 125, t1.getUsedLength());
 		// shouldn't be able to place c8 on track, 75 feet or cars in bound, and 125 used, so track is full
-		Assert.assertEquals("Place C8", Track.LENGTH + " (25) " + Setup.getLengthUnit().toLowerCase(), c8.setLocation(
+		Assert.assertEquals("Place C8", Track.LENGTH + " 25 " + Setup.getLengthUnit().toLowerCase(), c8.setLocation(
 				l, t1));
-		Assert.assertEquals("Set Destination C8", Track.LENGTH + " (25) " + Setup.getLengthUnit().toLowerCase(), c8
+		Assert.assertEquals("Set Destination C8", Track.LENGTH + " 25 " + Setup.getLengthUnit().toLowerCase(), c8
 				.setDestination(l, t1));
 		// allow full length of track for in bound cars, c6 length 21+4 = 25
 		Assert.assertEquals("remove C6", Track.OKAY, c6.setLocation(null, null));

@@ -132,17 +132,17 @@ public class OperationsRollingStockTest extends TestCase {
 		/* type needs to be valid for Location */
 		testlocation1.addTypeName("TESTTYPE");
 		testresult = rs1.setLocation(testlocation1, testtrack1);
-		Assert.assertEquals("RollingStock null Set Location type", "length ()", testresult);
+		Assert.assertEquals("RollingStock null Set Location type", "rolling stock length ()", testresult);
 
 		/* track needs to have a defined length */
 		rs1.setLength("41");
 		testresult = rs1.setLocation(testlocation1, testtrack1);
-		Assert.assertEquals("RollingStock null Set Length null", "capacity (45) " + Setup.getLengthUnit().toLowerCase(), testresult);
+		Assert.assertEquals("RollingStock null Set Length null", "track capacity 0 " + Setup.getLengthUnit().toLowerCase(), testresult);
 
 		/* track needs to be long enough */
 		testtrack1.setLength(40);
 		testresult = rs1.setLocation(testlocation1, testtrack1);
-		Assert.assertEquals("RollingStock null Set Length short", "capacity (45) " + Setup.getLengthUnit().toLowerCase(), testresult);
+		Assert.assertEquals("RollingStock null Set Length short", "track capacity 40 " + Setup.getLengthUnit().toLowerCase(), testresult);
 
 		/* track needs to be long enough */
 		testtrack1.setLength(44);  // rs length + Coupler == 4

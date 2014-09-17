@@ -1459,6 +1459,7 @@ public class TrainBuilder extends TrainCommon {
 				}
 			}
 			// show how many cars are departing from staging
+			addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
 			addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildDepartingStagingCars"),
 					new Object[] { _departStageTrack.getLocation().getName(), _departStageTrack.getName(),
 							numCarsFromStaging }));
@@ -2854,7 +2855,7 @@ public class TrainBuilder extends TrainCommon {
 	 */
 	private boolean generateCarLoadFromStaging(Car car) throws BuildFailedException {
 		if (car.getTrack() == null || !car.getTrack().getTrackType().equals(Track.STAGING)
-				|| !car.getTrack().isAddCustomLoadsAnySpurEnabled()
+				|| (!car.getTrack().isAddCustomLoadsAnySpurEnabled() && !car.getTrack().isAddCustomLoadsEnabled())
 				|| !car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName()) || car.getDestination() != null
 				|| car.getFinalDestination() != null) {
 			log.debug("No load generation for car ({}) isAddLoadsAnySpurEnabled: " // NOI18N
@@ -2889,6 +2890,9 @@ public class TrainBuilder extends TrainCommon {
 			ScheduleItem si = getScheduleItem(car, track);
 			if (si == null)
 				continue; // no match
+			// only use tracks serviced by this train?
+			if (car.getTrack().isAddCustomLoadsEnabled() && _train.getRoute().getLastLocationByName(track.getLocation().getName()) == null)
+				continue;
 			// need to set car load so testDestination will work properly
 			String oldCarLoad = car.getLoadName();
 			car.setLoadName(si.getReceiveLoadName());
@@ -2971,7 +2975,7 @@ public class TrainBuilder extends TrainCommon {
 			tracks.remove(track);
 			log.debug("Try staging track ({}, {})", track.getLocation().getName(), track.getName());
 			// find a staging track that isn't at the departure
-			if (track.getLocation() == _departLocation && track.getLocation() != _terminateLocation) {
+			if (track.getLocation() == _departLocation) {
 				log.debug("Don't use departure location ({})", track.getLocation().getName());
 				continue;
 			}
@@ -3427,7 +3431,7 @@ public class TrainBuilder extends TrainCommon {
 		addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildFindDestinationForCar"), new Object[] {
 				car.toString(), car.getTypeName(), car.getLoadName(), (car.getLocationName() + ", " + car.getTrackName()) }));
 		if (car.getKernel() != null)
-			addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCarPartOfKernel"),
+			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarPartOfKernel"),
 					new Object[] { car.toString(), car.getKernelName(), car.getKernel().getSize(),
 							car.getKernel().getTotalLength(), Setup.getLengthUnit().toLowerCase() }));
 		
@@ -3576,6 +3580,8 @@ public class TrainBuilder extends TrainCommon {
 					if (!checkTrainCanDrop(car, testTrack))
 						continue;
 					String status = car.testDestination(testDestination, testTrack);
+					// TODO the following code isn't really needed anymore.  All spurs were already checked, but
+					// this code does report why the spur wasn't used.
 					// is the destination a spur with a schedule demanding this car's custom load?
 					if (status.equals(Track.OKAY) && !testTrack.getScheduleId().equals("")
 							&& !car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName())
@@ -3589,9 +3595,9 @@ public class TrainBuilder extends TrainCommon {
 					// and is car departing a staging track that can generate schedule loads?
 					// alternate track isn't checked
 					if (!status.equals(Track.OKAY)
-							&& (!status.startsWith(Track.TYPE)) // can't generate load for spur that doesn't accept this
-																// car type
-							&& (!status.startsWith(Track.LENGTH)) // can't generate load for spur that is full
+							&& !status.startsWith(Track.TYPE) // wrong car type for this spur
+							&& !status.startsWith(Track.LENGTH) // can't generate load for spur that is full
+							&& !status.startsWith(Track.CAPACITY) // can't use a spur that is too short
 							&& testTrack.getTrackType().equals(Track.SPUR)
 							&& !testTrack.getScheduleId().equals("")
 							&& (car.getTrack().isAddCustomLoadsEnabled() || car.getTrack()
@@ -3599,11 +3605,11 @@ public class TrainBuilder extends TrainCommon {
 							&& car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName())) {
 						// can we use this track?
 						if (!testTrack.isSpaceAvailable(car)) {
-							addLine(_buildReport, SEVEN, MessageFormat.format(
-									Bundle.getMessage("buildNoDestTrackSpace"), new Object[] { car.toString(),
-											testTrack.getLocation().getName(), testTrack.getName(),
-											testTrack.getNumberOfCarsInRoute(), testTrack.getReservedInRoute(),
-											Setup.getLengthUnit().toLowerCase(), testTrack.getReservationFactor() }));
+							addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
+									.getMessage("buildNoDestTrackSpace"), new Object[] { car.toString(),
+									testTrack.getLocation().getName(), testTrack.getName(),
+									testTrack.getNumberOfCarsInRoute(), testTrack.getReservedInRoute(),
+									Setup.getLengthUnit().toLowerCase(), testTrack.getReservationFactor() }));
 							continue; // no
 						}
 						addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildGenerateLoad"),
@@ -3810,7 +3816,8 @@ public class TrainBuilder extends TrainCommon {
 			return false;
 		}
 		// Departing and returning to same location in staging?
-		if (!_train.isAllowReturnToStagingEnabled() && !car.isCaboose() && !car.hasFred() && !car.isPassenger()
+		if (!_train.isAllowReturnToStagingEnabled() && !Setup.isAllowReturnToStagingEnabled() && !car.isCaboose()
+				&& !car.hasFred() && !car.isPassenger()
 				&& splitString(car.getLocationName()).equals(splitString(stageTrack.getLocation().getName()))) {
 			log.debug("Returning car to staging not allowed");
 			return false;

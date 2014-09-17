@@ -140,11 +140,11 @@ public class Track {
 
 	// return status when checking rolling stock
 	public static final String OKAY = Bundle.getMessage("okay");
-	public static final String LENGTH = Bundle.getMessage("length");
+	public static final String LENGTH = Bundle.getMessage("rollingStock") + " " + Bundle.getMessage("length");
 	public static final String TYPE = Bundle.getMessage("type");
 	public static final String ROAD = Bundle.getMessage("road");
 	public static final String LOAD = Bundle.getMessage("load");
-	public static final String CAPACITY = Bundle.getMessage("capacity");
+	public static final String CAPACITY = Bundle.getMessage("track") + " " + Bundle.getMessage("capacity");
 	public static final String SCHEDULE = Bundle.getMessage("schedule");
 	public static final String CUSTOM = Bundle.getMessage("custom");
 	public static final String DESTINATION = Bundle.getMessage("carDestination");
@@ -1298,10 +1298,10 @@ public class Track {
 			// check.
 			// Is rolling stock too long for this track?
 			if (getLength() < length)
-				return CAPACITY + " (" + length + ") " + Setup.getLengthUnit().toLowerCase();// NOI18N
+				return CAPACITY + " " + getLength() + " " + Setup.getLengthUnit().toLowerCase();// NOI18N
 			log.debug("Rolling stock (" + rs.toString() + ") not accepted at location (" + getLocation().getName()
 					+ ", " + getName() + ") no room!"); // NOI18N
-			return LENGTH + " (" + length + ") " + Setup.getLengthUnit().toLowerCase();// NOI18N
+			return LENGTH + " " + length + " " + Setup.getLengthUnit().toLowerCase();// NOI18N
 		}
 		return OKAY;
 	}
