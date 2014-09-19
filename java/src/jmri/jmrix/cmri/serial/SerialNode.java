@@ -155,7 +155,7 @@ public class SerialNode extends AbstractNode {
     }
     	
     /**
-     * Public method setting an output bit.
+     * Set a single output bit.
      *    Note:  state = 'true' for 0, 'false' for 1
      *           bits are numbered from 1 (not 0)
      */
@@ -179,7 +179,7 @@ public class SerialNode extends AbstractNode {
     }
     	
     /**
-     * Public method get the current state of an output bit.
+     * Get the current state of a single output bit.
      *    Note:  returns 'true' for 0, 'false' for 1
      *           bits are numbered from 1 (not 0)
      */
@@ -204,19 +204,19 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Public method to return state of Sensors.
+     * Get state of Sensor polling.
      *  Note:  returns 'true' if at least one sensor is active for this node
      */
     public boolean getSensorsActive() { return hasActiveSensors; }
 
     /**
-     * Public method to set state of Sensors.
+     * Set state of Sensor polling.
      * Used to disable polling for test purposes only.
      */
     public void setSensorsActive(boolean flag) { hasActiveSensors = flag; }
     
     /**
-     * Public method to return number of input cards.
+     * Get number of input cards.
      */
     public int numInputCards() {
     	int result = 0;
@@ -233,7 +233,7 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Public method to return number of output cards.
+     * Get number of output cards.
      */
     public int numOutputCards() {
     	int result = 0;
@@ -250,7 +250,7 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Public method to return node type
+     * Get node type
      *   Current types are:
      *      SMINI, USIC_SUSIC,
      */
@@ -259,7 +259,7 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Public method to set node type
+     * Set node type
      *   Current types are:
      *      SMINI, USIC_SUSIC,
      *   For SMINI, also sets cardTypeLocation[] and bitsPerCard
@@ -291,14 +291,14 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Public method to return number of bits per card.
+     * Get number of bits per card.
      */
     public int getNumBitsPerCard() {
         return (bitsPerCard);
     }
 
     /**
-     * Public method to set number of bits per card.
+     * Set number of bits per card.
      */
     public void setNumBitsPerCard(int bits) {
         if ( (bits==24) || (bits==32) || (bits==16) ) {
@@ -318,14 +318,14 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Public method to return transmission delay.
+     * Get transmission delay.
      */
     public int getTransmissionDelay() {
         return (transmissionDelay);
     }
 
     /**
-     * Public method to set transmission delay.
+     * Set transmission delay.
      *   delay - delay between bytes on receive (units of 10 microsec.)
      *   Note: two bytes are used, so range is 0-65,535.  If delay
      *          is out of range, it is restricted to the allowable range
@@ -341,7 +341,7 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Public method to return pulse width.
+     * Get pulse width.
 	 *    Used with pulsed turnout control.
      */
     public int getPulseWidth() {
@@ -349,7 +349,7 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Public method to set pulse width.
+     * Set pulse width.
      *   width - width of pulse used for pulse controlled turnout control (millisec.)
      *   Note: Pulse width must be between 100 and 10000 milliseconds.  If width
      *          is out of range, it is restricted to the allowable range
@@ -365,7 +365,7 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Public method to set the type of one card.
+     * Set the type of one card.
      *   address - address recognized for this card by the node hardware.
      *               for USIC_SUSIC address set in card's dip switches (0 - 63)
      *   type - INPUT_CARD, OUTPUT_CARD, or NO_CARD
@@ -393,7 +393,7 @@ public class SerialNode extends AbstractNode {
         cardTypeLocation[address] = (byte) type;
     }
 
-    /** Public method to test for OUTPUT_CARD type.
+    /** Test for OUTPUT_CARD type.
      *   Returns true if card with 'cardNum' is an output card.
      *   Returns false if card is not an output card, or if
      *       'cardNum' is out of range.
@@ -410,7 +410,7 @@ public class SerialNode extends AbstractNode {
         return (cardTypeLocation[cardNum]==OUTPUT_CARD);
     }
 
-    /** Public method to test for INPUT_CARD type.
+    /** Test for INPUT_CARD type.
      *   Returns true if card with 'cardNum' is an input card.
      *   Returns false if card is not an input card, or if
      *       'cardNum' is out of range.
@@ -427,7 +427,7 @@ public class SerialNode extends AbstractNode {
         return (cardTypeLocation[cardNum]==INPUT_CARD);
     }
 
-    /** Public method to return 'Output Card Index'
+    /** Get 'Output Card Index'
      *   Returns the index this output card would have in an
      *     array of output cards for this node.  Can be used
      *     to locate this card's bytes in an output message.
@@ -453,7 +453,7 @@ public class SerialNode extends AbstractNode {
         return (0);
     }
 
-    /** Public method to return 'Input Card Index'
+    /** Get 'Input Card Index'
      *   Returns the index this input card would have in an
      *     array of input cards for this node.  Can be used
      *     to locate this card's bytes in an receive message.
@@ -480,7 +480,7 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Public Method to set location of SearchLightBits (SMINI only)
+     * Set location of SearchLightBits (SMINI only)
      *   bit - bitNumber of the low bit of an oscillating search light bit pair
      *   Notes:  Bits are numbered from 0
      *           Two bits are set by each call - bit and bit + 1.
@@ -513,7 +513,7 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Public Method to clear location of SearchLightBits (SMINI only)
+     * Clear location of SearchLightBits (SMINI only)
      *   bit - bitNumber of the low bit of an oscillating search light bit pair
      *   Notes:  Bits are numbered from 0
      *           Two bits are cleared by each call - bit and bit + 1.
@@ -546,7 +546,7 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Public Method to query SearchLightBits by bit number (SMINI only)
+     * Query SearchLightBits by bit number (SMINI only)
      *   bit - bitNumber of the either bit of an oscillating search light bit pair
      *   Note: returns 'true' if bit is an oscillating SearchLightBit, otherwise
      *          'false' is returned
@@ -571,7 +571,7 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Public Method to create an Initialization packet (SerialMessage) for this node
+     * Create an Initialization packet (SerialMessage) for this node
      */
     public AbstractMRMessage createInitPacket() {
         // Assemble initialization byte array from node information
@@ -655,7 +655,7 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Public Method to create an Transmit packet (SerialMessage)
+     * Create an Transmit packet (SerialMessage)
      */
     public AbstractMRMessage createOutPacket() {
         // Count the number of DLE's to be inserted
@@ -763,6 +763,12 @@ public class SerialNode extends AbstractNode {
     }
 
     int timeout = 0;
+    
+    /**
+     * @return true if polling active and currently OK
+     */
+    public boolean isPollingOK() { return timeout == 0; }
+    
     /**
      *
      * @return true if initialization required
@@ -776,8 +782,9 @@ public class SerialNode extends AbstractNode {
         if (log.isDebugEnabled()) log.warn("Timeout to poll for UA="+getNodeAddress()+": consecutive timeouts: "+timeout);
         
         if (timeout>5) { // enough, reinit
-            // reset timeout count to zero to give polls another try
-            timeout = 0;
+            // reset timeout count to one to give polls another try
+            // but not zero because that means operating OK
+            timeout = 1;
             // reset poll and send control so will retry initialization
             setMustSend();
             
