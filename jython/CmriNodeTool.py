@@ -4,7 +4,7 @@
 # Author: Ken Cameron, copyright 2009
 # Part of the JMRI distribution
 #
-# The next line is maintained by CVS, please don't change it
+# The next line is maintained by SVN, please don't change it
 # $Revision$
 ##
 
