@@ -81,10 +81,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
         } else {
             JsonThrottle throttle = new JsonThrottle(address, server);
             if (!InstanceManager.throttleManagerInstance().requestThrottle(address, throttle)) {
-                throw new JmriException("Unable to get throttle."); // NOI18N
-            }
-            if (throttle.throttle==null) {
-                throw new JmriException("Failed to get throttle for address " + address); // NOI18N
+                throw new JmriException("Error getting throttle for " + address); // NOI18N
             }
             JsonThrottle.throttles.put(address, throttle);
             return throttle;
@@ -264,21 +261,25 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
         try {
             server.sendErrorMessage(code, message);
         } catch (IOException e) {
+            log.warn("Unable to send message, closing connection. ", e);
             try {
                 server.connection.close();
             } catch (IOException e1) {
                 log.warn("Unable to close connection.", e1);
             }
-            log.warn("Unable to send message, closing connection.", e);
         }
     }
 
     private void sendStatus() {
-        this.sendMessage(this.getStatus());
+        if (this.throttle != null) { 
+        	this.sendMessage(this.getStatus());
+        }
     }
 
     protected void sendStatus(JsonThrottleServer server) {
-        this.sendMessage(this.getStatus(), server);
+        if (this.throttle != null) {    	
+        	this.sendMessage(this.getStatus(), server);
+        }
     }
 
     private ObjectNode getStatus() {
