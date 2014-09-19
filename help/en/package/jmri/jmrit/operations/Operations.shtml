@@ -150,6 +150,7 @@
       <LI><A HREF="#ReadingBuildReport">Reading the Build Report</A></LI>
       <LI><A HREF="#PrintingManifests">Printing Manifests</A></LI>
       <LI><A HREF="#SwitchList">Switch Lists</A></LI>
+      <LI><A HREF="#CustomSwitchLists">Custom Switch Lists</A></LI>
       <LI><A HREF="#TrainMove">Moving Trains</A></LI>
       <LI><A HREF="#TerminateTrain">Terminate Train</A></LI>
       <LI><A HREF="#SaveBuilds">Save Builds</A></LI>
@@ -895,6 +896,7 @@
      HREF=http://groups.yahoo.com/group/jmriusers/files/Operations>http://groups.yahoo.com/group/jmriusers/files/Operations.</A>
    </P>
    
+   <A NAME="GenerateCsvSwitchLists"></A>
    <H4>Generate CSV Switch Lists</H4>
 
    <P>You can also generate custom switch lists using a comma separated value (.csv) files. You
@@ -3478,6 +3480,10 @@
     
        
    <img src="images/SwitchListMenu.png">
+   
+   <P>The "Print Switch List Changes" button will become active after you've printed out your switch lists, and
+   a change occurs to one of your locations due to building a new train. Pressing this button will send only new
+   switch lists for a location to your printer.</P>
 
    <P>The switch list menu also lets you add a comment to the switch list for a location and
     select which printer to use when printing out the switch list. Note that the program when
@@ -3540,7 +3546,28 @@
 
    <P>If you select or deselect any of the switch list options, you will need to press the
     "Save" button to activate them.</P>
+    
+    <h4>Consolidation Mode Buttons (Not Real Time)</h4>
+    When you deselect the "Real Time" checkbox, two new buttons will appear, "Update Switch Lists" and "Reset Switch Lists".
+    The "Update Switch Lists" is used to append new train builds to the existing switch lists for each of the locations
+    selected.  The "Reset Switch Lists" removes terminated and reset trains from your switch lists, and restores all switch lists
+    for trains that are built.
+    
+    <A NAME="CustomSwitchLists"></A>
+    <H3>Custom Switch Lists</H3>
+    
+    You can if you wish create custom switch lists using an Excel program. See <A HREF="#SettingsOptions">Options</A>
+    and select the "Generate CSV Switch List" to enable this feature. To configure where to find the Excel program
+    see <A HREF="#SetupExcelProgram">Setup Excel Program (Manifest Creator)</A>.
 
+   <P>Three new buttons will appear at the bottom of the "Switch Lists by Location" window,
+    "Run", "Generate csv Switch Lists", and "Generate csv Switch Lists Changes". The "Run" button is
+    used to create custom switch lists for all of the selected locations by executing an Excel
+    program. The csv files are first created for a location, and then the custom Excel program is
+    called to create and print the custom switch list. The "Generate csv Switch Lists" will create a
+    csv file for each of the selected locations. And the "Generate csv Switch Lists Changes" will
+    only create new csv files for locations that have have been modified by a new train build. You
+    can find the csv files in the csvSwitchList directory.</P>
 
    <A NAME="TrainMove"></A>
    <H3>Moving Trains</H3>
