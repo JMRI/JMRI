@@ -12,7 +12,7 @@ import jmri.ProgrammerManager;
 import jmri.ReporterManager;
 import jmri.SensorManager;
 import jmri.ThrottleManager;
-import jmri.TurnoutManager;;
+import jmri.TurnoutManager;
 
 import java.util.ResourceBundle;
 import jmri.jmrix.srcp.parser.*;
