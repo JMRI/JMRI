@@ -252,8 +252,9 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
 
     @Override
     public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
-        for (JsonThrottleServer server : this.servers) {
+        for (JsonThrottleServer server : (ArrayList<JsonThrottleServer>) this.servers.clone()) {
             this.sendErrorMessage(-102, Bundle.getMessage(server.connection.getLocale(), "ErrorThrottleRequestFailed", address, reason), server);
+            server.release(this);
         }
     }
 
