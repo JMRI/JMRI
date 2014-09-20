@@ -28,6 +28,7 @@ import javax.swing.Timer;
 import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.KeyStroke;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -192,6 +193,17 @@ public class ProfileManagerDialog extends JDialog {
         );
 
         listLabel.getAccessibleContext().setAccessibleName(bundle.getString("ProfileManagerDialog.listLabel.text")); // NOI18N
+
+        // add a key listener to the scroll pane (which has focus when
+        // the dialog opens) that causes the "select" button to be
+        // pressed when the enter key is pressed.
+        jScrollPane1.getInputMap().put(KeyStroke.getKeyStroke("ENTER"),"pressed");
+        jScrollPane1.getActionMap().put("pressed",new javax.swing.AbstractAction(){
+             public void actionPerformed(ActionEvent actionEvent) {
+                 btnSelect.doClick();
+             }
+        });
+
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
