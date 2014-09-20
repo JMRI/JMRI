@@ -44,6 +44,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(SRCPPowerManagerTest.class));
         suite.addTest(new TestSuite(SRCPProgrammerTest.class));
         suite.addTest(new TestSuite(SRCPProgrammerManagerTest.class));
+        suite.addTest(new TestSuite(SRCPClockControlTest.class));
         suite.addTest(jmri.jmrix.srcp.parser.SRCPClientParserTests.suite());
 
         return suite;

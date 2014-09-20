@@ -5,8 +5,15 @@ package jmri.jmrix.srcp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.ClockControl;
 import jmri.InstanceManager;
-import jmri.*;
+import jmri.PowerManager;
+import jmri.ProgrammerManager;
+import jmri.ReporterManager;
+import jmri.SensorManager;
+import jmri.ThrottleManager;
+import jmri.TurnoutManager;;
+
 import java.util.ResourceBundle;
 import jmri.jmrix.srcp.parser.*;
 
@@ -98,6 +105,22 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
     private ThrottleManager throttleManager;
 
     /*
+     * Provides access to the Clock Control for this particular connection.
+     * NOTE: May return null if the Clock Control has not been set.
+     */
+    public ClockControl getClockControl(){
+        return clockControl;
+
+    }
+    public void setClockControl(ClockControl t){
+         clockControl = t;
+         InstanceManager.store(clockControl, ClockControl.class);
+         InstanceManager.setDefault(ClockControl.class, clockControl);
+    }
+
+    private ClockControl clockControl = null;
+
+    /*
      * Provides access to the Power Manager for this particular connection.
      */
     public PowerManager getPowerManager(){
@@ -151,6 +174,8 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
             return (T)getSensorManager();
         if (T.equals(jmri.TurnoutManager.class))
             return (T)getTurnoutManager();
+        if (T.equals(jmri.ClockControl.class))
+            return (T)getClockControl();
         return null; // nothing, by default
     }
     
@@ -171,6 +196,8 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
             return (null != sensorManager);
         if (type.equals(jmri.TurnoutManager.class))
             return (null != turnoutManager);
+        if (type.equals(jmri.ClockControl.class))
+            return (null != clockControl);
         return false; // nothing, by default
     }
     
@@ -228,6 +255,8 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
                     } else if(DeviceType.equals("GL")) {
                         setThrottleManager(new jmri.jmrix.srcp.SRCPThrottleManager(this)); 
                         jmri.InstanceManager.setThrottleManager(getThrottleManager());
+                    } else if(DeviceType.equals("TIME")) {
+                        setClockControl(new jmri.jmrix.srcp.SRCPClockControl(this)); 
                     }
                  }
              }
