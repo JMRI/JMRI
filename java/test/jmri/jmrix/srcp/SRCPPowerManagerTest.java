@@ -21,6 +21,18 @@ public class SRCPPowerManagerTest extends TestCase {
         Assert.assertNotNull(m);
     }
 
+    public void testBusSpeciticCtor() {
+        SRCPBusConnectionMemo sm=new SRCPBusConnectionMemo(new SRCPTrafficController(){
+          @Override
+          public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
+           }
+        },"A",1);
+        SRCPPowerManager m = new SRCPPowerManager(sm,1);
+        Assert.assertNotNull(m);
+    }
+
+
+
     // from here down is testing infrastructure
     public SRCPPowerManagerTest(String s) {
         super(s);
