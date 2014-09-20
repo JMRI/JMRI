@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -28,7 +30,6 @@ import javax.swing.Timer;
 import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.KeyStroke;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -127,6 +128,11 @@ public class ProfileManagerDialog extends JDialog {
                 profilesValueChanged(evt);
             }
         });
+        profiles.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent evt) {
+                profilesKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(profiles);
         profiles.getAccessibleContext().setAccessibleName(bundle.getString("ProfileManagerDialog.profiles.AccessibleContext.accessibleName")); // NOI18N
 
@@ -157,8 +163,7 @@ public class ProfileManagerDialog extends JDialog {
 
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -176,8 +181,7 @@ public class ProfileManagerDialog extends JDialog {
                     .addComponent(jScrollPane1))
                 .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -193,17 +197,6 @@ public class ProfileManagerDialog extends JDialog {
         );
 
         listLabel.getAccessibleContext().setAccessibleName(bundle.getString("ProfileManagerDialog.listLabel.text")); // NOI18N
-
-        // add a key listener to the scroll pane (which has focus when
-        // the dialog opens) that causes the "select" button to be
-        // pressed when the enter key is pressed.
-        jScrollPane1.getInputMap().put(KeyStroke.getKeyStroke("ENTER"),"pressed");
-        jScrollPane1.getActionMap().put("pressed",new javax.swing.AbstractAction(){
-             public void actionPerformed(ActionEvent actionEvent) {
-                 btnSelect.doClick();
-             }
-        });
-
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -313,6 +306,12 @@ public class ProfileManagerDialog extends JDialog {
     private void formMousePressed(MouseEvent evt) {//GEN-FIRST:event_formMousePressed
         this.profilesValueChanged(null);
     }//GEN-LAST:event_formMousePressed
+
+    private void profilesKeyPressed(KeyEvent evt) {//GEN-FIRST:event_profilesKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            this.btnSelect.doClick();
+        }
+    }//GEN-LAST:event_profilesKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private JButton btnCreate;
