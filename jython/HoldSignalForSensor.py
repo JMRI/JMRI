@@ -10,7 +10,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by SVN, please don't change it
-# $Revision: 24575 $
+# $Revision$
    
 from org.apache.log4j import Logger
 

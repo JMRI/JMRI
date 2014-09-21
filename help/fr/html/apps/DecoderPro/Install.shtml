@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: Install.shtml 22543 2013-01-19 18:57:06Z jacobsen $ -->
+<!-- $Id$ -->
 <!-- Translated by Blorec Herv&#233; le 2013-09-25-->
 <title>JMRI: Downloading and Installing DecoderPro</title>
 
@@ -18,7 +18,7 @@
 <body>
 <!--#include virtual="/Header" -->
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: Install.shtml 22543 2013-01-19 18:57:06Z jacobsen $ -->
+<!-- $Id$ -->
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 

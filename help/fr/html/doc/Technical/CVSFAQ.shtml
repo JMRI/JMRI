@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CVSFAQ.shtml 21896 2012-12-19 12:12:05Z rhwood $ -->
+<!-- $Id$ -->
 <!-- UpDated by Blorec Herv&#233; 2013-09-25-->  
 <html lang="fr">
 <head>
@@ -103,7 +103,7 @@ au besoin. Si vous avez d&#233;j&#224; une version v&#233;rifi&#233;e et que vou
  une version sp&#233;cifique, changer le commandement "co" par "update-d"
 
 <A name="refid">
-<h3>Quelles sont ces lignes comme <i>$Revision: 1.7 $</i> and <i>$Id: CVSFAQ.shtml,v 1.7 2010/05/03 02:56:04 jacobsen Exp $</i>?</h3>
+<h3>Quelles sont ces lignes comme <i>$Revision$</i> and <i>$Id$</i>?</h3>
 </a>
 
 Elles sont automatiquement mises &#224; jour par CVS &#224; chaque fois qu'une nouvelle version du fichier est v&#233;rifi&#233;, dans le r&#233;f&#233;rentiel. S'il vous pla&#238;t ne pas les modifier!

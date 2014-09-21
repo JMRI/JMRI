@@ -2,8 +2,8 @@
 <html lang="fr">
     <head>
         <!-- Copyright 2012 -->
-        <!-- $Id: JsonServlet.shtml 20353 2012-04-15 11:48:26Z mstevetodd $ -->
-	<!-- $Id: Translated by Herv&#233; Blorec 2013-10-07 $ -->
+        <!-- $Id$ -->
+	<!-- $Id$ -->
         <title>JMRI: Json Servlet</title>
 
         <!-- Style -->

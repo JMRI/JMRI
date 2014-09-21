@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: CreateDecoder.shtml 23467 2013-05-22 00:25:41Z jacobsen $ -->
+<!-- $Id$ -->
  <!--Updated et Translated by Herv&#233; Blorec le 2013-08-30 -->
 <title>JMRI: DecoderPro User Guide - Creating A Custom Decoder File</title>
 
@@ -62,7 +62,7 @@ HREF="../../../../../xml/decoders/Digitrax_1x2.xml">Digitrax_1x2.xml</a>):
 <p class=example>
 &lt;?xml version="1.0"?&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;!DOCTYPE decoder-config SYSTEM "decoder-config.dtd"&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- $Id: CreateDecoder.shtml,v 1.5 2009/03/12 22:59:03 matthewharris Exp $ --&gt;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- $Id$ --&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;decoder-config&gt;<BR>
 </p>
 

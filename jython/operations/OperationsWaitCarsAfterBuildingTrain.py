@@ -8,7 +8,7 @@
 #
 # Author: Daniel Boudreau, copyright 2011, 2012
 # The next line is maintained by CVS, please don't change it
-# $Revision: 17977 $
+# $Revision$
 #
 # To use this script you must assign the train that you want the cars waited, 
 # and the wait value.  

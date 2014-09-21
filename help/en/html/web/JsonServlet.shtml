@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <!-- Copyright 2012 -->
-        <!-- $Id: JsonServlet.shtml 20353 2012-04-15 11:48:26Z mstevetodd $ -->
+        <!-- $Id$ -->
         <title>JMRI JSON Protocol</title>
 
         <!-- Style -->

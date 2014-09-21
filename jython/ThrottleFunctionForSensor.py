@@ -6,7 +6,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 17977 $
+# $Revision$
 
 from org.apache.log4j import Logger
 

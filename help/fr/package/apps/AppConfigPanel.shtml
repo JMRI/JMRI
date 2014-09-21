@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: AppConfigPanel.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- $Id$ -->
 <!-- UpDated  by Blorec Herv&#233;  2013-10-08--> 
 <html lang="fr">
 <head>
@@ -9,7 +9,7 @@
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="JMRI help preferences">
-<!-- $Id: AppConfigPanel.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- $Id$ -->
 <!-- Style -->
   <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
