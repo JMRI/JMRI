@@ -71,10 +71,12 @@ First, we merge in as much tentative content as possible to the SVN trunk.
 ( ) Confirm that properties, html, etc files have "CVS" properties set. They
     should, but new ones might not.
 
-    find java/src -name \*.properties -exec svn propset svn:keywords "Date Revision Version Id Author" {} \;
-    find jython -name \*.py -exec svn propset svn:keywords "Date Revision Version Id Author" {} \;
-    find xml -name \*.xml -exec svn propset svn:keywords "Date Revision Version Id Author" {} \;
-    find help -name \*html -exec svn propset svn:keywords "Date Revision Version Id Author" {} \;
+    find java/src -name \*.properties -exec svn propset -q svn:keywords "Date Revision Version Id Author" {} \;
+    find jython -name \*.py -exec svn propset -q svn:keywords "Date Revision Version Id Author" {} \;
+    find xml -name \*.xml -exec svn propset -q svn:keywords "Date Revision Version Id Author" {} \;
+    find help -name \*html -exec svn propset -q svn:keywords "Date Revision Version Id Author" {} \;
+    
+    You'll get a message for each file, but will only need to commit changes.
     
 ( ) Confirm that all the above changes have been committed back to SVN trunk
 
