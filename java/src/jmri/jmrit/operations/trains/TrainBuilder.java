@@ -3907,6 +3907,9 @@ public class TrainBuilder extends TrainCommon {
 				continue;
 			log.debug("Car ({}) destination track ({}) has final destination track ({}) location ({})", 
 					car.toString(), car.getDestinationTrackName(), car.getFinalDestinationTrackName(), car.getDestinationName()); // NOI18N
+			// is the car in a kernel?
+			if (car.getKernel() != null && !car.getKernel().isLead(car))
+				continue;
 			if (car.testDestination(car.getFinalDestination(), car.getFinalDestinationTrack()).equals(Track.OKAY)) {
 				Track alternate = car.getFinalDestinationTrack().getAlternateTrack();
 				if (alternate != null
@@ -3917,10 +3920,19 @@ public class TrainBuilder extends TrainCommon {
 						&& checkTrainCanDrop(car, car.getFinalDestinationTrack())) {
 					log.debug("Car ({}) alternate track ({}) can be redirected to final destination track ({})", 
 							car.toString(), car.getDestinationTrackName(), car.getFinalDestinationTrackName());
-					addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildRedirectFromAlternate"),
-							new Object[] { car.getFinalDestinationName(), car.getFinalDestinationTrackName(),
-									car.toString(), car.getDestinationTrackName() }));
-					car.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack());
+					if (car.getKernel() != null) {
+						for (Car k : car.getKernel().getCars()) {
+							addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildRedirectFromAlternate"),
+									new Object[] { car.getFinalDestinationName(), car.getFinalDestinationTrackName(),
+											k.toString(), car.getDestinationTrackName() }));
+							k.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack());
+						}
+					} else {
+						addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildRedirectFromAlternate"),
+								new Object[] { car.getFinalDestinationName(), car.getFinalDestinationTrackName(),
+										car.toString(), car.getDestinationTrackName() }));
+						car.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack());
+					}
 					redirected = true;
 				}
 			}
