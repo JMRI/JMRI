@@ -1,5 +1,10 @@
 package jmri.jmrix.loconet;
 
+import java.util.Hashtable;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.DccThrottle;
 import jmri.ThrottleManager;
 import jmri.LocoAddress;
@@ -41,11 +46,48 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
 	 *
 	 * This returns directly, having arranged for the Throttle
 	 * object to be delivered via callback
+	 * since there are situations where the command station does not respond,
+	 * (slots full, command station powered off, others?)
+	 * this code will retry and then fail the request if no response occurs
 	 */
 	public void requestThrottleSetup(LocoAddress address, boolean control) {
-            slotManager.slotFromLocoAddress(((DccLocoAddress)address).getNumber(), this);
+		
+		slotManager.slotFromLocoAddress(((DccLocoAddress)address).getNumber(), this);  //first try
+
+		class RetrySetup implements Runnable {  //setup for retries and failure check
+			DccLocoAddress address;
+			SlotListener list;
+			RetrySetup(DccLocoAddress address, SlotListener list){
+				this.address=address;
+				this.list=list;
+			}
+			public void run() {
+				int attempts = 1;  //already tried once above
+				int maxAttempts = 2;
+				while(attempts<=maxAttempts){
+					try {
+						Thread.sleep(1000);  //wait one second
+					} catch (InterruptedException ex) {
+						return;  //stop waiting if slot is found or error occurs
+					}
+					String msg = "No response to slot request for {}, attempt {}"; 
+					if (attempts < maxAttempts) {
+						slotManager.slotFromLocoAddress(address.getNumber(), list);
+						msg += ", trying again.";
+					}
+					log.debug(msg, address, attempts);
+					attempts++;
+				}
+				log.error("No response to slot request for {} after {} attempts.", address, attempts-1);
+				failedThrottleRequest(address, "Failed to get response from command station");
+			}
+		}
+		Thread thr = new Thread(new RetrySetup((DccLocoAddress)address, this));
+		thr.start();
+		waitingForNotification.put(((DccLocoAddress)address).getNumber(), thr);
 	}
-	
+
+	Hashtable<Integer, Thread> waitingForNotification = new Hashtable<Integer, Thread>(5);
 
     /**
      * LocoNet does have a Dispatch function
@@ -72,6 +114,11 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     public void notifyChangedSlot(LocoNetSlot s) {
     	DccThrottle throttle = new LocoNetThrottle((LocoNetSystemConnectionMemo)adapterMemo, s);
     	notifyThrottleKnown(throttle, new DccLocoAddress(s.locoAddr(),isLongAddress(s.locoAddr()) ) );
+        //end the waiting thread since we got a response
+    	if(waitingForNotification.containsKey(s.locoAddr())){
+        	waitingForNotification.get(s.locoAddr()).interrupt();                       
+            waitingForNotification.remove(s.locoAddr());
+        }    	
     }
 
     /**
@@ -132,5 +179,31 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         			tSlot.writeStatus(LnConstants.LOCO_COMMON));
         super.releaseThrottle(t, l);
     }
+    @Override
+    public void failedThrottleRequest(DccLocoAddress address, String reason){
+        super.failedThrottleRequest(address, reason);
+        //now end and remove any waiting thread
+        if(waitingForNotification.containsKey(address.getNumber())){
+        	waitingForNotification.get(address.getNumber()).interrupt();
+        	waitingForNotification.remove(address.getNumber());
+        }
+    }
+    
+        /**
+     * Cancel a request for a throttle
+     * @param address The decoder address desired.
+     * @param isLong True if this is a request for a DCC long (extended) address.
+     * @param l The ThrottleListener cancelling request for a throttle.
+     */
+    @Override
+    public void cancelThrottleRequest(int address, boolean isLong, ThrottleListener l) {
+        super.cancelThrottleRequest(address, isLong, l);
+        if(waitingForNotification.containsKey(address)){
+        	waitingForNotification.get(address).interrupt();
+            waitingForNotification.remove(address);
+        }
+    }
 
+
+    static Logger log = LoggerFactory.getLogger(LnThrottleManager.class.getName());
 }
