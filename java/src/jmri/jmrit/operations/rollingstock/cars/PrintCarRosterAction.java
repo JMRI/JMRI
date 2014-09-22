@@ -34,8 +34,6 @@ import jmri.jmrit.operations.setup.Setup;
  */
 public class PrintCarRosterAction extends AbstractAction {
 
-	CarManager carManager = CarManager.instance();
-
 	public PrintCarRosterAction(String actionName, Frame frame, boolean preview, Component pWho) {
 		super(actionName);
 		mFrame = frame;
@@ -63,7 +61,6 @@ public class PrintCarRosterAction extends AbstractAction {
 	}
 
 	int numberCharPerLine = 90;
-	int ownerMaxLen = CarOwners.instance().getCurMaxNameLength();
 
 	private void printCars() {
 
@@ -107,10 +104,6 @@ public class PrintCarRosterAction extends AbstractAction {
 		String wait = "";
 		String schedule = "";
 		String comment = "";
-
-		ownerMaxLen = CarOwners.instance().getCurMaxNameLength();
-		if (printCarLoad.isSelected() || printCarKernel.isSelected() || printCarColor.isSelected())
-			ownerMaxLen = 5;
 
 		try {
 			printTitleLine(writer);
@@ -162,7 +155,7 @@ public class PrintCarRosterAction extends AbstractAction {
 				if (printCarKernel.isSelected())
 					kernel = padAttribute(car.getKernelName().trim(), Control.max_len_string_attibute);
 				if (printCarOwner.isSelected())
-					owner = padAttribute(car.getOwner().trim(), ownerMaxLen);
+					owner = padAttribute(car.getOwner().trim(), CarOwners.instance().getCurMaxNameLength());
 				if (printCarBuilt.isSelected())
 					built = padAttribute(car.getBuilt().trim(), Control.max_len_string_built_name);
 				if (printCarLast.isSelected())
@@ -229,7 +222,7 @@ public class PrintCarRosterAction extends AbstractAction {
 				+ (printCarLoad.isSelected() ? padAttribute(Bundle.getMessage("Load"), CarLoads.instance()
 						.getCurMaxNameLength()) : "")
 				+ (printCarKernel.isSelected() ? padAttribute(("Kernel"), Control.max_len_string_attibute) : "")
-				+ (printCarOwner.isSelected() ? padAttribute(Bundle.getMessage("Owner"), ownerMaxLen) : "")
+				+ (printCarOwner.isSelected() ? padAttribute(Bundle.getMessage("Owner"), CarOwners.instance().getCurMaxNameLength()) : "")
 				+ (printCarBuilt.isSelected() ? Bundle.getMessage("Built") + " " : "")
 				+ (printCarLast.isSelected() ? Bundle.getMessage("LastMoved") + " " : "")
 				+ (printCarWait.isSelected() ? Bundle.getMessage("Wait") + " " : "")
@@ -260,7 +253,7 @@ public class PrintCarRosterAction extends AbstractAction {
 			buf.append(" ");
 		return buf.toString();
 	}
-	
+
 	JComboBox sortByComboBox = new JComboBox();
 	JComboBox manifestOrientationComboBox = Setup.getOrientationComboBox();
 
@@ -373,11 +366,8 @@ public class PrintCarRosterAction extends AbstractAction {
 			getContentPane().add(pOrientation);
 			getContentPane().add(panePanel);
 			getContentPane().add(pButtons);
-
-			setMinimumSize(new Dimension(200, Control.panelHeight));
-
-			pack();
-			setVisible(true);
+			
+			initMinimumSize(new Dimension(Control.smallPanelWidth, Control.panelHeight));
 		}
 
 		public void initComponents() {
@@ -393,7 +383,7 @@ public class PrintCarRosterAction extends AbstractAction {
 				printPage.setSelected(false);
 			}
 		}
-		
+
 		private void loadSortByComboBox(JComboBox box) {
 			for (int i = panel.carsTableModel.SORTBY_NUMBER; i <= panel.carsTableModel.SORTBY_LAST; i++) {
 				box.addItem(panel.carsTableModel.getSortByName(i));
