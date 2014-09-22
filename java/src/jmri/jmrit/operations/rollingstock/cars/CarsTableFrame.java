@@ -281,61 +281,61 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("radio button activated");
 		if (ae.getSource() == sortByNumber) {
-			carsTableModel.setSort(carsTableModel.SORTBYNUMBER);
+			carsTableModel.setSort(carsTableModel.SORTBY_NUMBER);
 		}
 		if (ae.getSource() == sortByRoad) {
-			carsTableModel.setSort(carsTableModel.SORTBYROAD);
+			carsTableModel.setSort(carsTableModel.SORTBY_ROAD);
 		}
 		if (ae.getSource() == sortByType) {
-			carsTableModel.setSort(carsTableModel.SORTBYTYPE);
+			carsTableModel.setSort(carsTableModel.SORTBY_TYPE);
 		}
 		if (ae.getSource() == sortByColor) {
-			carsTableModel.setSort(carsTableModel.SORTBYCOLOR);
+			carsTableModel.setSort(carsTableModel.SORTBY_COLOR);
 		}
 		if (ae.getSource() == sortByLoad) {
-			carsTableModel.setSort(carsTableModel.SORTBYLOAD);
+			carsTableModel.setSort(carsTableModel.SORTBY_LOAD);
 		}
 		if (ae.getSource() == sortByKernel) {
-			carsTableModel.setSort(carsTableModel.SORTBYKERNEL);
+			carsTableModel.setSort(carsTableModel.SORTBY_KERNEL);
 		}
 		if (ae.getSource() == sortByLocation) {
-			carsTableModel.setSort(carsTableModel.SORTBYLOCATION);
+			carsTableModel.setSort(carsTableModel.SORTBY_LOCATION);
 		}
 		if (ae.getSource() == sortByDestination) {
-			carsTableModel.setSort(carsTableModel.SORTBYDESTINATION);
+			carsTableModel.setSort(carsTableModel.SORTBY_DESTINATION);
 		}
 		if (ae.getSource() == sortByFinalDestination) {
-			carsTableModel.setSort(carsTableModel.SORTBYFINALDESTINATION);
+			carsTableModel.setSort(carsTableModel.SORTBY_FINALDESTINATION);
 		}
 		if (ae.getSource() == sortByRwe) {
-			carsTableModel.setSort(carsTableModel.SORTBYRWE);
+			carsTableModel.setSort(carsTableModel.SORTBY_RWE);
 		}
 		if (ae.getSource() == sortByTrain) {
-			carsTableModel.setSort(carsTableModel.SORTBYTRAIN);
+			carsTableModel.setSort(carsTableModel.SORTBY_TRAIN);
 		}
 		if (ae.getSource() == sortByMoves) {
-			carsTableModel.setSort(carsTableModel.SORTBYMOVES);
+			carsTableModel.setSort(carsTableModel.SORTBY_MOVES);
 		}
 		if (ae.getSource() == sortByBuilt) {
-			carsTableModel.setSort(carsTableModel.SORTBYBUILT);
+			carsTableModel.setSort(carsTableModel.SORTBY_BUILT);
 		}
 		if (ae.getSource() == sortByOwner) {
-			carsTableModel.setSort(carsTableModel.SORTBYOWNER);
+			carsTableModel.setSort(carsTableModel.SORTBY_OWNER);
 		}
 		if (ae.getSource() == sortByValue) {
-			carsTableModel.setSort(carsTableModel.SORTBYVALUE);
+			carsTableModel.setSort(carsTableModel.SORTBY_VALUE);
 		}
 		if (ae.getSource() == sortByRfid) {
-			carsTableModel.setSort(carsTableModel.SORTBYRFID);
+			carsTableModel.setSort(carsTableModel.SORTBY_RFID);
 		}
 		if (ae.getSource() == sortByWait) {
-			carsTableModel.setSort(carsTableModel.SORTBYWAIT);
+			carsTableModel.setSort(carsTableModel.SORTBY_WAIT);
 		}
 		if (ae.getSource() == sortByPickup) {
-			carsTableModel.setSort(carsTableModel.SORTBYPICKUP);
+			carsTableModel.setSort(carsTableModel.SORTBY_PICKUP);
 		}
 		if (ae.getSource() == sortByLast) {
-			carsTableModel.setSort(carsTableModel.SORTBYLAST);
+			carsTableModel.setSort(carsTableModel.SORTBY_LAST);
 		}
 		// clear any sorts by column
 		clearTableSort(carsTable);

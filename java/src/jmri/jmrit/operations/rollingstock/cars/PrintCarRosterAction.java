@@ -34,7 +34,7 @@ import jmri.jmrit.operations.setup.Setup;
  */
 public class PrintCarRosterAction extends AbstractAction {
 
-	CarManager manager = CarManager.instance();
+	CarManager carManager = CarManager.instance();
 
 	public PrintCarRosterAction(String actionName, Frame frame, boolean preview, Component pWho) {
 		super(actionName);
@@ -64,7 +64,6 @@ public class PrintCarRosterAction extends AbstractAction {
 
 	int numberCharPerLine = 90;
 	int ownerMaxLen = CarOwners.instance().getCurMaxNameLength();
-	List<RollingStock> cars;
 
 	private void printCars() {
 
@@ -116,8 +115,9 @@ public class PrintCarRosterAction extends AbstractAction {
 		try {
 			printTitleLine(writer);
 			String previousLocation = "";
-			for (int i = 0; i < cars.size(); i++) {
-				Car car = (Car) cars.get(i);
+			List<RollingStock> cars = panel.carsTableModel.getCarList(sortByComboBox.getSelectedIndex());
+			for (RollingStock rs : cars) {
+				Car car = (Car) rs;
 				if (printCarsWithLocation.isSelected() && car.getLocation() == null)
 					continue; // car doesn't have a location skip
 
@@ -260,9 +260,8 @@ public class PrintCarRosterAction extends AbstractAction {
 			buf.append(" ");
 		return buf.toString();
 	}
-
-	JLabel sort = new JLabel(" ");
-
+	
+	JComboBox sortByComboBox = new JComboBox();
 	JComboBox manifestOrientationComboBox = Setup.getOrientationComboBox();
 
 	JCheckBox printCarsWithLocation = new JCheckBox(Bundle.getMessage("PrintCarsWithLocation"));
@@ -302,7 +301,7 @@ public class PrintCarRosterAction extends AbstractAction {
 			// create panel
 			JPanel pSortBy = new JPanel();
 			pSortBy.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SortBy")));
-			pSortBy.add(sort);
+			pSortBy.add(sortByComboBox);
 
 			JPanel pOrientation = new JPanel();
 			pOrientation.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutOrientation")));
@@ -386,14 +385,20 @@ public class PrintCarRosterAction extends AbstractAction {
 				cpof.setTitle(Bundle.getMessage("MenuItemPreview"));
 			else
 				cpof.setTitle(Bundle.getMessage("MenuItemPrint"));
-			sort.setText(panel.carsTableModel.getSortByName());
-			cars = panel.getSortByList();
+			loadSortByComboBox(sortByComboBox);
 			printSpace.setEnabled(panel.sortByLocation.isSelected());
 			printPage.setEnabled(panel.sortByLocation.isSelected());
 			if (!panel.sortByLocation.isSelected()) {
 				printSpace.setSelected(false);
 				printPage.setSelected(false);
 			}
+		}
+		
+		private void loadSortByComboBox(JComboBox box) {
+			for (int i = panel.carsTableModel.SORTBY_NUMBER; i <= panel.carsTableModel.SORTBY_LAST; i++) {
+				box.addItem(panel.carsTableModel.getSortByName(i));
+			}
+			box.setSelectedItem(panel.carsTableModel.getSortByName());
 		}
 
 		public void buttonActionPerformed(java.awt.event.ActionEvent ae) {

@@ -58,27 +58,27 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 
 	private static final int HIGHESTCOLUMN = EDIT_COLUMN + 1;
 
-	public final int SORTBYNUMBER = 1;
-	public final int SORTBYROAD = 2;
-	public final int SORTBYTYPE = 3;
-	public final int SORTBYLOCATION = 4;
-	public final int SORTBYDESTINATION = 5;
-	public final int SORTBYTRAIN = 6;
-	public final int SORTBYMOVES = 7;
-	public final int SORTBYKERNEL = 8;
-	public final int SORTBYLOAD = 9;
-	public final int SORTBYCOLOR = 10;
-	public final int SORTBYBUILT = 11;
-	public final int SORTBYOWNER = 12;
-	public final int SORTBYRFID = 13;
-	public final int SORTBYRWE = 14; // return when empty
-	public final int SORTBYFINALDESTINATION = 15;
-	public final int SORTBYVALUE = 16;
-	public final int SORTBYWAIT = 17;
-	public final int SORTBYPICKUP = 18;
-	public final int SORTBYLAST = 19;
+	public final int SORTBY_NUMBER = 0;
+	public final int SORTBY_ROAD = 1;
+	public final int SORTBY_TYPE = 2;
+	public final int SORTBY_LOCATION = 3;
+	public final int SORTBY_DESTINATION = 4;
+	public final int SORTBY_TRAIN = 5;
+	public final int SORTBY_MOVES = 6;
+	public final int SORTBY_KERNEL = 7;
+	public final int SORTBY_LOAD = 8;
+	public final int SORTBY_COLOR = 9;
+	public final int SORTBY_BUILT = 10;
+	public final int SORTBY_OWNER = 11;
+	public final int SORTBY_RFID = 12;
+	public final int SORTBY_RWE = 13; // return when empty
+	public final int SORTBY_FINALDESTINATION = 14;
+	public final int SORTBY_VALUE = 15;
+	public final int SORTBY_WAIT = 16;
+	public final int SORTBY_PICKUP = 17;
+	public final int SORTBY_LAST = 18;
 
-	private int _sort = SORTBYNUMBER;
+	private int _sort = SORTBY_NUMBER;
 
 	List<RollingStock> sysList = null; // list of cars
 	boolean showAllCars = true; // when true show all cars
@@ -100,67 +100,71 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 		_sort = sort;
 		updateList();
 		XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
-		if (sort == SORTBYCOLOR || sort == SORTBYLOAD) {
-			tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN), sort == SORTBYLOAD);
-			tcm.setColumnVisible(tcm.getColumnByModelIndex(COLOR_COLUMN), sort == SORTBYCOLOR);
-		} else if (sort == SORTBYDESTINATION || sort == SORTBYFINALDESTINATION || sort == SORTBYRWE) {
-			tcm.setColumnVisible(tcm.getColumnByModelIndex(DESTINATION_COLUMN), sort == SORTBYDESTINATION);
-			tcm.setColumnVisible(tcm.getColumnByModelIndex(FINAL_DESTINATION_COLUMN), sort == SORTBYFINALDESTINATION);
-			tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_COLUMN), sort == SORTBYRWE);
-		} else if (sort == SORTBYMOVES || sort == SORTBYBUILT || sort == SORTBYOWNER || sort == SORTBYVALUE
-				|| sort == SORTBYRFID || sort == SORTBYWAIT || sort == SORTBYPICKUP || sort == SORTBYLAST) {
-			tcm.setColumnVisible(tcm.getColumnByModelIndex(MOVES_COLUMN), sort == SORTBYMOVES);
-			tcm.setColumnVisible(tcm.getColumnByModelIndex(BUILT_COLUMN), sort == SORTBYBUILT);
-			tcm.setColumnVisible(tcm.getColumnByModelIndex(OWNER_COLUMN), sort == SORTBYOWNER);
-			tcm.setColumnVisible(tcm.getColumnByModelIndex(VALUE_COLUMN), sort == SORTBYVALUE);
-			tcm.setColumnVisible(tcm.getColumnByModelIndex(RFID_COLUMN), sort == SORTBYRFID);
-			tcm.setColumnVisible(tcm.getColumnByModelIndex(WAIT_COLUMN), sort == SORTBYWAIT);
-			tcm.setColumnVisible(tcm.getColumnByModelIndex(PICKUP_COLUMN), sort == SORTBYPICKUP);
-			tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_COLUMN), sort == SORTBYLAST);
+		if (sort == SORTBY_COLOR || sort == SORTBY_LOAD) {
+			tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN), sort == SORTBY_LOAD);
+			tcm.setColumnVisible(tcm.getColumnByModelIndex(COLOR_COLUMN), sort == SORTBY_COLOR);
+		} else if (sort == SORTBY_DESTINATION || sort == SORTBY_FINALDESTINATION || sort == SORTBY_RWE) {
+			tcm.setColumnVisible(tcm.getColumnByModelIndex(DESTINATION_COLUMN), sort == SORTBY_DESTINATION);
+			tcm.setColumnVisible(tcm.getColumnByModelIndex(FINAL_DESTINATION_COLUMN), sort == SORTBY_FINALDESTINATION);
+			tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_COLUMN), sort == SORTBY_RWE);
+		} else if (sort == SORTBY_MOVES || sort == SORTBY_BUILT || sort == SORTBY_OWNER || sort == SORTBY_VALUE
+				|| sort == SORTBY_RFID || sort == SORTBY_WAIT || sort == SORTBY_PICKUP || sort == SORTBY_LAST) {
+			tcm.setColumnVisible(tcm.getColumnByModelIndex(MOVES_COLUMN), sort == SORTBY_MOVES);
+			tcm.setColumnVisible(tcm.getColumnByModelIndex(BUILT_COLUMN), sort == SORTBY_BUILT);
+			tcm.setColumnVisible(tcm.getColumnByModelIndex(OWNER_COLUMN), sort == SORTBY_OWNER);
+			tcm.setColumnVisible(tcm.getColumnByModelIndex(VALUE_COLUMN), sort == SORTBY_VALUE);
+			tcm.setColumnVisible(tcm.getColumnByModelIndex(RFID_COLUMN), sort == SORTBY_RFID);
+			tcm.setColumnVisible(tcm.getColumnByModelIndex(WAIT_COLUMN), sort == SORTBY_WAIT);
+			tcm.setColumnVisible(tcm.getColumnByModelIndex(PICKUP_COLUMN), sort == SORTBY_PICKUP);
+			tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_COLUMN), sort == SORTBY_LAST);
 		} else {
 			fireTableDataChanged();
 		}
 	}
-
+	
 	public String getSortByName() {
-		switch (_sort) {
-		case SORTBYNUMBER:
+		return getSortByName(_sort);
+	}
+	
+	public String getSortByName(int sort) {
+		switch (sort) {
+		case SORTBY_NUMBER:
 			return Bundle.getMessage("Number");
-		case SORTBYROAD:
+		case SORTBY_ROAD:
 			return Bundle.getMessage("Road");
-		case SORTBYTYPE:
+		case SORTBY_TYPE:
 			return Bundle.getMessage("Type");
-		case SORTBYCOLOR:
+		case SORTBY_COLOR:
 			return Bundle.getMessage("Color");
-		case SORTBYLOAD:
+		case SORTBY_LOAD:
 			return Bundle.getMessage("Load");
-		case SORTBYKERNEL:
+		case SORTBY_KERNEL:
 			return Bundle.getMessage("Kernel");
-		case SORTBYLOCATION:
+		case SORTBY_LOCATION:
 			return Bundle.getMessage("Location");
-		case SORTBYDESTINATION:
+		case SORTBY_DESTINATION:
 			return Bundle.getMessage("Destination");
-		case SORTBYTRAIN:
+		case SORTBY_TRAIN:
 			return Bundle.getMessage("Train");
-		case SORTBYFINALDESTINATION:
+		case SORTBY_FINALDESTINATION:
 			return Bundle.getMessage("FinalDestination");
-		case SORTBYRWE:
+		case SORTBY_RWE:
 			return Bundle.getMessage("ReturnWhenEmpty");
-		case SORTBYMOVES:
+		case SORTBY_MOVES:
 			return Bundle.getMessage("Moves");
-		case SORTBYBUILT:
+		case SORTBY_BUILT:
 			return Bundle.getMessage("Built");
-		case SORTBYOWNER:
+		case SORTBY_OWNER:
 			return Bundle.getMessage("Owner");
-		case SORTBYVALUE:
+		case SORTBY_VALUE:
 			return Setup.getValueLabel();
-		case SORTBYRFID:
+		case SORTBY_RFID:
 			return Setup.getRfidLabel();
-		case SORTBYWAIT:
+		case SORTBY_WAIT:
 			return Bundle.getMessage("Wait");
-		case SORTBYPICKUP:
+		case SORTBY_PICKUP:
 			return Bundle.getMessage("Pickup");
-		case SORTBYLAST:
+		case SORTBY_LAST:
 			return Bundle.getMessage("Last");
 		default:
 			return "Error"; // NOI18N
@@ -244,45 +248,72 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 	}
 
 	public List<RollingStock> getSelectedCarList() {
+		return getCarList(_sort);
+	}
+	
+	public List<RollingStock> getCarList(int sort) {
 		List<RollingStock> list;
-		if (_sort == SORTBYROAD)
-			list = manager.getByRoadNameList();
-		else if (_sort == SORTBYTYPE)
-			list = manager.getByTypeList();
-		else if (_sort == SORTBYLOCATION)
-			list = manager.getByLocationList();
-		else if (_sort == SORTBYDESTINATION)
-			list = manager.getByDestinationList();
-		else if (_sort == SORTBYTRAIN)
-			list = manager.getByTrainList();
-		else if (_sort == SORTBYMOVES)
-			list = manager.getByMovesList();
-		else if (_sort == SORTBYKERNEL)
-			list = manager.getByKernelList();
-		else if (_sort == SORTBYLOAD)
-			list = manager.getByLoadList();
-		else if (_sort == SORTBYCOLOR)
-			list = manager.getByColorList();
-		else if (_sort == SORTBYOWNER)
-			list = manager.getByOwnerList();
-		else if (_sort == SORTBYBUILT)
-			list = manager.getByBuiltList();
-		else if (_sort == SORTBYVALUE)
-			list = manager.getByValueList();
-		else if (_sort == SORTBYRFID)
-			list = manager.getByRfidList();
-		else if (_sort == SORTBYRWE)
-			list = manager.getByRweList();
-		else if (_sort == SORTBYFINALDESTINATION)
-			list = manager.getByFinalDestinationList();
-		else if (_sort == SORTBYWAIT)
-			list = manager.getByWaitList();
-		else if (_sort == SORTBYPICKUP)
-			list = manager.getByPickupList();
-		else if (_sort == SORTBYLAST)
-			list = manager.getByLastDateList();
-		else
+		switch (sort) {
+		case SORTBY_NUMBER:
 			list = manager.getByNumberList();
+			break;
+		case SORTBY_ROAD:
+			list = manager.getByRoadNameList();
+			break;
+		case SORTBY_TYPE:
+			list = manager.getByTypeList();
+			break;
+		case SORTBY_COLOR:
+			list = manager.getByColorList();
+			break;
+		case SORTBY_LOAD:
+			list = manager.getByLoadList();
+			break;
+		case SORTBY_KERNEL:
+			list = manager.getByKernelList();
+			break;
+		case SORTBY_LOCATION:
+			list = manager.getByLocationList();
+			break;
+		case SORTBY_DESTINATION:
+			list = manager.getByDestinationList();
+			break;
+		case SORTBY_TRAIN:
+			list = manager.getByTrainList();
+			break;
+		case SORTBY_FINALDESTINATION:
+			list = manager.getByFinalDestinationList();
+			break;
+		case SORTBY_RWE:
+			list = manager.getByRweList();
+			break;
+		case SORTBY_MOVES:
+			list = manager.getByMovesList();
+			break;
+		case SORTBY_BUILT:
+			list = manager.getByBuiltList();
+			break;
+		case SORTBY_OWNER:
+			list = manager.getByOwnerList();
+			break;
+		case SORTBY_VALUE:
+			list = manager.getByValueList();
+			break;
+		case SORTBY_RFID:
+			list = manager.getByRfidList();
+			break;
+		case SORTBY_WAIT:
+			list = manager.getByWaitList();
+			break;
+		case SORTBY_PICKUP:
+			list = manager.getByPickupList();
+			break;
+		case SORTBY_LAST:
+			list = manager.getByLastDateList();
+			break;
+		default:
+			list = manager.getByNumberList();
+		}
 		filterList(list);
 		return list;
 	}
@@ -443,7 +474,6 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 		case EDIT_COLUMN:
 		case MOVES_COLUMN:
 		case WAIT_COLUMN:
-//		case PICKUP_COLUMN:
 			return true;
 		default:
 			return false;
