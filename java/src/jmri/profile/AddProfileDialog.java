@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.profile;
 
 import java.awt.Dialog;
@@ -32,8 +28,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Add a new {@link Profile} to JMRI.
  *
- * @author rhwood
+ * @author Randall Wood
  */
 public class AddProfileDialog extends javax.swing.JDialog {
 
@@ -78,7 +75,7 @@ public class AddProfileDialog extends javax.swing.JDialog {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         ResourceBundle bundle = ResourceBundle.getBundle("jmri/profile/Bundle"); // NOI18N
         setTitle(bundle.getString("AddProfileDialog.title")); // NOI18N
-        setMinimumSize(new Dimension(413, 217));
+        setMinimumSize(new Dimension(413, 239));
         setPreferredSize(new Dimension(517, 239));
         setSize(new Dimension(413, 239));
 
@@ -167,8 +164,7 @@ public class AddProfileDialog extends javax.swing.JDialog {
 
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -201,8 +197,7 @@ public class AddProfileDialog extends javax.swing.JDialog {
                         .addComponent(btnCancel)))
                 .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblProfileNameAndLocation)
@@ -227,7 +222,7 @@ public class AddProfileDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancel)
                     .addComponent(btnOk))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
