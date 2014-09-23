@@ -1118,10 +1118,10 @@ public class TrainBuilder extends TrainCommon {
 					_train.getName(), roadCaboose, rl.getName(), rld.getName() }));
 		}
 		// Does the route have enough moves?
-		if (requiresCaboose && rl.getMaxCarMoves() - rl.getCarMoves() <= 0) {
-			throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorNoMoves"), new Object[] {
-					rl.getName(), rl.getId(), Bundle.getMessage("Caboose") }));
-		}
+//		if (requiresCaboose && rl.getMaxCarMoves() - rl.getCarMoves() <= 0) {
+//			throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorNoMoves"), new Object[] {
+//					rl.getName(), rl.getId(), Bundle.getMessage("Caboose") }));
+//		}
 		// Now go through the car list looking for cabooses
 		boolean cabooseTip = true; // add a user tip to the build report about cabooses if none found
 		boolean cabooseAtDeparture = false; // set to true if caboose at departure location is found
