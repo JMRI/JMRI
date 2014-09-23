@@ -64,6 +64,12 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                n.addContent(makeParameter("name", node.getIdentifier()));
                n.addContent(makeParameter("polled", node.getPoll()?"yes":"no"));
 
+               jmri.jmrix.AbstractStreamPortController pc=null;
+               if((pc=node.getPortController()) != null ) {
+                   n.addContent(makeParameter("StreamController",
+                               pc.getClass().getName()));
+               }
+               
                // look for the next node
                node = (XBeeNode) xtc.getNode(index);
                index ++;
@@ -113,7 +119,22 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             // Trigger initialization of this Node to reflect these parameters
             XBeeConnectionMemo xcm = (XBeeConnectionMemo)adapter.getSystemConnectionMemo();
             XBeeTrafficController xtc=(XBeeTrafficController)xcm.getTrafficController();
-        xtc.registerNode(node);
+            xtc.registerNode(node);
+
+            // if there is a stream port controller stored for this
+            // node, we need to load that after the node starts running.
+            // otherwise, the IOStream associated with the node has not
+            // been configured.
+            String streamController = findParmValue(n,"StreamController");
+            if(streamController != null) {
+               try {
+                  java.lang.Class T = Class.forName(streamController);
+                  node.connectPortController(T);
+               } catch(java.lang.ClassNotFoundException cnfe) {
+                  //log.error("Unable to find class for stream controller : {}",streamController);
+               }
+            }
+
         }
     }
 
