@@ -36,6 +36,7 @@ public class ReportPanel extends JPanel {
     JCheckBox checkContext;
     JCheckBox checkNetwork;
     JCheckBox checkLog;
+    JCheckBox checkPanel;
     JCheckBox checkCopy;
 
     public ReportPanel() {
@@ -98,6 +99,10 @@ public class ReportPanel extends JPanel {
         checkLog.setSelected(true);
         p1.add(checkLog);
 
+        checkPanel = new JCheckBox(rb.getString("CheckPanel"));
+        checkPanel.setSelected(true);
+        p1.add(checkPanel);
+
         checkCopy = new JCheckBox(rb.getString("CheckCopy"));
         checkCopy.setSelected(true);
         p1.add(checkCopy);
@@ -125,7 +130,7 @@ public class ReportPanel extends JPanel {
 
             log.debug("start send");
             String charSet = "UTF-8";  //NO18N
-            String requestURL = "http://jmri.org/problem-report.php";  //NO18N
+            String requestURL = "http://jmri.org/problem-report.php";  //NOI18N
 
             MultipartMessage msg = new MultipartMessage(requestURL, charSet);
 
@@ -141,10 +146,23 @@ public class ReportPanel extends JPanel {
             // build detailed error report (include context if selected)
             String report = descField.getText() + "\r\n";
             if (checkContext.isSelected()) {
-                report += "=========================================================\r\n"; //NO18N
+                report += "=========================================================\r\n"; //NOI18N
                 report += ( new ReportContext()).getReport(checkNetwork.isSelected() && checkNetwork.isEnabled());
             }
             msg.addFormField("problem", report);
+
+            // add panel file if OK
+            if (checkPanel.isSelected()) {
+                // Check that a panel file has been loaded
+                File file=jmri.configurexml.LoadXmlUserAction.getCurrentFile();
+                if (file!=null) {
+                    log.debug("add panel file: " + file.getPath());
+                    msg.addFilePart("logfileupload[]", jmri.configurexml.LoadXmlUserAction.getCurrentFile());
+                } else {
+                    // No panel file loaded
+                    log.warn("No panel file loaded - not sending");
+                }
+            }
 
             // add the log if OK
             if (checkLog.isSelected()) {

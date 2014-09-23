@@ -11,6 +11,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.HeadlessException;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.io.File;
 import java.net.SocketException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -44,19 +45,19 @@ public class ReportContext {
      */
     public String getReport(boolean reportNetworkInfo) {
 
-        addString("JMRI Version: "+jmri.Version.name()+"  ");	 
+        addString("JMRI Version: "+jmri.Version.name()+"   ");	 
         addString("JMRI configuration file name: "
-                    +System.getProperty("org.jmri.apps.Apps.configFilename")+"  ");	 
+                    +System.getProperty("org.jmri.apps.Apps.configFilename")+"   ");	 
         if (jmri.util.JmriJFrame.getFrameList().get(0)!=null)
             addString("JMRI main window name: "
-                    +jmri.util.JmriJFrame.getFrameList().get(0).getTitle()+"  ");	 
+                    +jmri.util.JmriJFrame.getFrameList().get(0).getTitle()+"   ");	 
 
-        addString("JMRI Application: "+jmri.Application.getApplicationName()+"  ");
+        addString("JMRI Application: "+jmri.Application.getApplicationName()+"   ");
         ArrayList<Object> connList = jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class);
         if (connList!=null){
             for (int x = 0; x<connList.size(); x++){
                 jmri.jmrix.ConnectionConfig conn = (jmri.jmrix.ConnectionConfig)connList.get(x);
-                addString("Connection " + x + ": " + conn.getManufacturer() + " connected via " + conn.name() + " on " + conn.getInfo()+ " Disabled " + conn.getDisabled());
+                addString("Connection " + x + ": " + conn.getManufacturer() + " connected via " + conn.name() + " on " + conn.getInfo()+ " Disabled " + conn.getDisabled() + "   ");
             }
         }
 
@@ -64,20 +65,23 @@ public class ReportContext {
         addCommunicationPortInfo();
 
         String prefs = FileUtil.getUserFilesPath();
-        addString("Preferences directory: "+prefs+"  ");
+        addString("Preferences directory: "+prefs+"   ");
 
         String prog = System.getProperty("user.dir");
-        addString("Program directory: "+prog+"  ");
+        addString("Program directory: "+prog+"   ");
 
         String roster = jmri.jmrit.roster.Roster.defaultRosterFilename();
-        addString("Roster index location: "+roster+"  ");
+        addString("Roster index location: "+roster+"   ");
+
+        File panel = jmri.configurexml.LoadXmlUserAction.getCurrentFile();
+        addString("Current panel file: "+(panel==null?"[none]":panel.getPath())+"   ");
 
         //String operations = jmri.jmrit.operations.setup.OperationsSetupXml.getFileLocation();
         //addString("Operations files location: "+operations+"  ");
 
         jmri.jmrit.audio.AudioFactory af = jmri.InstanceManager.audioManagerInstance().getActiveAudioFactory();
         String audio = af!=null?af.toString():"[not initialised]";
-        addString("Audio factory type: "+audio+"  ");
+        addString("Audio factory type: "+audio+"   ");
 
         addProperty("java.version");
         addProperty("java.vendor");
@@ -128,7 +132,7 @@ public class ReportContext {
         report = report + val+"\n";
     }
     void addProperty(String prop) {
-        addString(prop+": "+System.getProperty(prop)+"  ");	    
+        addString(prop+": "+System.getProperty(prop)+"   ");	    
     }
 
     /** 
@@ -235,20 +239,20 @@ public class ReportContext {
         if (services.size()>0) {
             for (ZeroConfService service: services) {
                 addString("ZeroConfService: " + service.serviceInfo().getQualifiedName() + "  ");
-                addString(" Name: " + service.name() + "  ");
+                addString(" Name: " + service.name() + "   ");
                 try {
                     for (String address: service.serviceInfo().getHostAddresses()) {
-                        addString(" Address:" + address + "  ");
+                        addString(" Address:" + address + "   ");
                     }
                 } catch (NullPointerException ex) {
                         addString(" Address: [unknown due to NPE]");
                 }
-                addString(" Port: " + service.serviceInfo().getPort() + "  ");
-                addString(" Server: " + service.serviceInfo().getServer() + "  ");
-                addString(" Type: " + service.type() + "  ");
+                addString(" Port: " + service.serviceInfo().getPort() + "   ");
+                addString(" Server: " + service.serviceInfo().getServer() + "   ");
+                addString(" Type: " + service.type() + "   ");
                 try {
                     for (String url: service.serviceInfo().getURLs()) {
-                        addString(" URL: " + url + "  ");                    
+                        addString(" URL: " + url + "   ");                    
                     }
                 } catch (NullPointerException ex) {
                         addString(" URL: [unknown due to NPE]");
@@ -266,7 +270,6 @@ public class ReportContext {
         Enumeration<CommPortIdentifier> portIDs = CommPortIdentifier.getPortIdentifiers();
         
         ArrayList<CommPortIdentifier> ports = new ArrayList<CommPortIdentifier>();
-        ArrayList<String> portsList = new ArrayList<String>();
         
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
@@ -274,7 +277,6 @@ public class ReportContext {
             // filter out line printers 
             if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) {
                 ports.add(id);
-                portsList.add(id.getName());
             }
         }
 
@@ -291,7 +293,7 @@ public class ReportContext {
                 addString(" Port: " + port.getDisplayName()
                         + (id.isCurrentlyOwned()
                         ? " - in use by: " + id.getCurrentOwner()
-                        : " - not in use"));
+                        : " - not in use") + "   ");
         }
     }
 
