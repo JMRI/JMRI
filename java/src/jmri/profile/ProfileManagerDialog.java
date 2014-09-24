@@ -101,7 +101,7 @@ public class ProfileManagerDialog extends JDialog {
         btnUseExisting = new JButton();
         countDownLbl = new JLabel();
 
-        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         ResourceBundle bundle = ResourceBundle.getBundle("jmri/profile/Bundle"); // NOI18N
         setTitle(bundle.getString("ProfileManagerDialog.title")); // NOI18N
         setMinimumSize(new Dimension(310, 110));
@@ -113,6 +113,9 @@ public class ProfileManagerDialog extends JDialog {
         addWindowListener(new WindowAdapter() {
             public void windowOpened(WindowEvent evt) {
                 formWindowOpened(evt);
+            }
+            public void windowClosing(WindowEvent evt) {
+                formWindowClosing(evt);
             }
         });
 
@@ -203,6 +206,7 @@ public class ProfileManagerDialog extends JDialog {
 
     private void btnSelectActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnSelectActionPerformed
         timer.stop();
+        countDown = -1;
         countDownLbl.setVisible(false);
         if (profiles.getSelectedValue() != null) {
             ProfileManager.defaultManager().setActiveProfile((Profile) profiles.getSelectedValue());
@@ -251,6 +255,7 @@ public class ProfileManagerDialog extends JDialog {
                     ProfileManager.defaultManager().setActiveProfile((Profile) profiles.getSelectedValue());
                     log.info("Automatically starting with profile " + ProfileManager.defaultManager().getActiveProfile().getId() + " after timeout.");
                     timer.stop();
+                    countDown = -1;
                     dispose();
                 }
             }
@@ -312,6 +317,12 @@ public class ProfileManagerDialog extends JDialog {
             this.btnSelect.doClick();
         }
     }//GEN-LAST:event_profilesKeyPressed
+
+    private void formWindowClosing(WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        if (countDown != -1) {
+            System.exit(255);
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private JButton btnCreate;
