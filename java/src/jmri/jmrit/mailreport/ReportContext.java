@@ -19,6 +19,8 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.ArrayList;
 import javax.swing.JFrame;
+import jmri.profile.Profile;
+import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
 import jmri.util.PortNameMapper;
 import jmri.util.PortNameMapper.SerialPortFriendlyName;
@@ -63,6 +65,10 @@ public class ReportContext {
 
         addString("Available Communication Ports:");
         addCommunicationPortInfo();
+
+        Profile profile = ProfileManager.defaultManager().getActiveProfile();
+        addString("Active profile: "+profile.getName()+"   ");
+        addString("Profile location: "+profile.getPath().getPath()+"   ");
 
         String prefs = FileUtil.getUserFilesPath();
         addString("Preferences directory: "+prefs+"   ");
