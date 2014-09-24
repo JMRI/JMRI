@@ -1,12 +1,12 @@
 # This script demonstrates the ability to connect a stream port
 # controller to an XBee node.  The port controller then behaves
-# like any other connection, but the data is tunneled via the
-# XBee Network.
+# like any other connection, but it's data is tunneled via the 
+# XBee network.
 #
-# This version of the script performs all the actions required to
-# gather the streams and create the port controller object.
+# This version uses tools provided by the node to automatically
+# configure the port from the class name of the connection type.
 #
-# Derived from XBeeRemoteSerialPortTest.py
+# Derived from XBeeSystemConnectTest.py
 #
 # Author: Bob Jacobsen, copyright 2009
 # Author: Paul Bender, copyright 2014
@@ -34,10 +34,8 @@ class XBeeSystemConnectionTest(jmri.jmrit.automat.AbstractAutomaton) :
         self.cm = jmri.InstanceManager.getDefault(jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo)
         self.tc = self.cm.getTrafficController()
         self.Xbee = self.tc.getNodeFromAddress(3) # change the address to that of a suitable node.
-        self.xbeestream = self.XBee.getIOStream() 
         # set up an XPressNet connection as a test.
-        self.xnetstreamport = jmri.jmrix.lenz.XNetStreamPortController(self.xbeestream.getInputStream(), self.xbeestream.getOutputStream(), "test")
-        self.xnetstreamport.configure()
+        self.Xbee.connectPortController(jmri.jmrix.lenz.XNetStreamPortController)
         print "Port opened OK"
         return
     
