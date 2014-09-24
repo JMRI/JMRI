@@ -506,6 +506,7 @@ public class ProfileManager extends Bean {
             File pp = new File(FileUtil.getPreferencesPath() + pid);
             Profile profile = new Profile(pn, pid, pp);
             this.addProfile(profile);
+            this.setAutoStartActiveProfile(true);
             log.info("Created default profile \"{}\"", pn);
             return profile;
         } else {
