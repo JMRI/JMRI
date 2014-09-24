@@ -69,6 +69,7 @@ public class ReportContext {
         Profile profile = ProfileManager.defaultManager().getActiveProfile();
         addString("Active profile: "+profile.getName()+"   ");
         addString("Profile location: "+profile.getPath().getPath()+"   ");
+        addString("Profile ID: "+profile.getId()+"   ");
 
         String prefs = FileUtil.getUserFilesPath();
         addString("Preferences directory: "+prefs+"   ");
