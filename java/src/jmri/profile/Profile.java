@@ -11,7 +11,7 @@ import java.util.Properties;
  * completely separate set of preferences at each launch without relying on host
  * OS-specific tricks to ensure this happens.
  *
- * @author rhwood Copyright (C) 2013
+ * @author Randall Wood Copyright (C) 2013, 2014
  */
 public class Profile {
 
@@ -57,15 +57,20 @@ public class Profile {
         if ((new File(path, PROPERTIES)).canRead()) {
             throw new IllegalArgumentException("A profile already exists at " + path); // NOI18N
         }
+        if (Profile.containsProfile(path)) {
+            throw new IllegalArgumentException(path + " contains a profile in a subdirectory."); // NOI18N
+        }
+        if (Profile.inProfile(path)) {
+            throw new IllegalArgumentException(path + " is within an existing profile."); // NOI18N
+        }
         this.name = name;
         this.id = id + "." + ProfileManager.createUniqueId();
         this.path = path;
-        if (path.mkdirs()) {
-            this.save();
-        }
+        path.mkdirs();
         if (!path.isDirectory()) {
             throw new IllegalArgumentException(path + " is not a directory"); // NOI18N
         }
+        this.save();
         if (!(new File(path, PROPERTIES)).canRead()) {
             throw new IllegalArgumentException(path + " does not contain a profile.properties file"); // NOI18N
         }
@@ -200,5 +205,44 @@ public class Profile {
      */
     public String getUniqueId() {
         return this.id.substring(this.id.lastIndexOf(".") + 1); // NOI18N
+    }
+
+    /**
+     * Test if the given path or subdirectories contains a Profile.
+     *
+     * @param path
+     * @return true if path or subdirectories contains a Profile.
+     * @since 3.9.4
+     */
+    public static boolean containsProfile(File path) {
+        if (path.isDirectory()) {
+            if ((new File(path, PROPERTIES)).canRead()) {
+                return true;
+            } else {
+                for (String filename : path.list()) {
+                    if (Profile.containsProfile(new File(path, filename))) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Test if the given path is within a directory that is a Profile.
+     *
+     * @param path
+     * @return true if path or parent directories is a Profile.
+     * @since 3.9.4
+     */
+    public static boolean inProfile(File path) {
+        if (path.getParentFile() != null) {
+            if ((new File(path.getParentFile(), PROPERTIES)).canRead()) {
+                return true;
+            }
+            return Profile.inProfile(path.getParentFile());
+        }
+        return false;
     }
 }
