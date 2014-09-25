@@ -84,13 +84,6 @@ You can put anything you want here.  Some people have
 used it to record whether a NMRA plug was used, whether the
 decoder was soldered in, etc.
 
-<DT>Filename
-<dd>
-This is here for information; you can't change it, and
-you don't have to worry about it. Note that
-even if you change the ID for this entry, the original file
-will still be used.
-
 </dl></p>
 
 <a id="menu">

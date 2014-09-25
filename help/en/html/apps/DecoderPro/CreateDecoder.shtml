@@ -152,17 +152,24 @@ manufacturer name here as you used in the filename.
 The manufacturer can load a version number into CV 7 of a decoder.
 Not all manufacturers do this, but if one is available the
 programmer can check if this file is being used with the expected
-decoder type.  If only one value is valid, define the attribute
-lowVersionID, e.g.
+decoder type.  If only one specific value is valid, define the both 
+lowVersionID and highVersionID with the same value, e.g.
 
 <p class=example>
-&nbsp;&nbsp;&nbsp;&nbsp;lowVersionID="123"
+&nbsp;&nbsp;&nbsp;&nbsp;lowVersionID="123"&nbsp;highVersionID="123"
 </p>
 If the decoder type can have any one of a range of numbers,
 for example because the manufacturer has made some updates,
-define both attributes.
+define both attributes to cover the range:
+
+<p class=example>
+&nbsp;&nbsp;&nbsp;&nbsp;lowVersionID="21"&nbsp;highVersionID="42"
+</p>
 If you don't know the version number, don't define
-either of these attributes.
+either of these attributes; just leave them off.
+lowVersionID defaults to 0, highVersionID defaults to 255, 
+so together the defaults mean "any value".
+
 <li><dfn>comment</dfn> - this is optional. You might want to include your name, or other
 info about the changes in the file.
 </ul>
@@ -183,6 +190,10 @@ them, leaving something like:</p>
 <p class=example>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;model model="DH142" /&gt;
 </p>
+
+The model element can also contain lowVersionID and/or highVersionID
+attributes, which apply to just that model. If one doesn't
+appear, the value from the family element (or its default) will be used.
 
 </dd>
 
