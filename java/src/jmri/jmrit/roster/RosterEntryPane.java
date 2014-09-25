@@ -62,7 +62,6 @@ public class RosterEntryPane extends javax.swing.JPanel  {
     //This way the shrinking does not happen and the scroll bars are outside the field area,
     //leaving the contents visible
     JScrollPane commentScroller = new JScrollPane(comment,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-    JLabel filename 		= new JLabel();
     JLabel dateUpdated   	= new JLabel();
     JLabel decoderModel 	= new JLabel();
     JLabel decoderFamily 	= new JLabel();
@@ -77,7 +76,6 @@ public class RosterEntryPane extends javax.swing.JPanel  {
     public RosterEntryPane(RosterEntry r) {
 
         id.setText(r.getId());
-        filename.setText(r.getFileName());
 
         if (r.getDccAddress().equals("")) {
             // null address, so clear selector
@@ -147,7 +145,6 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         selPanel.setToolTipText(rb.getString("ToolTipDccAddress"));
         decoderModel.setToolTipText(rb.getString("ToolTipDecoderModel"));
         decoderFamily.setToolTipText(rb.getString("ToolTipDecoderFamily"));
-        filename.setToolTipText(rb.getString("ToolTipFilename"));
         dateUpdated.setToolTipText(rb.getString("ToolTipDateUpdated"));
         id.addFocusListener(
             new FocusListener() {
@@ -184,71 +181,71 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         gbLayout.setConstraints(id,cR);
         add(id);
 
-        cL.gridy = 1;
+        cL.gridy++;
         JLabel row1Label = new JLabel(rb.getString("FieldRoadName")+":");
         gbLayout.setConstraints(row1Label,cL);
         add(row1Label);
 
-        cR.gridy = 1;
+        cR.gridy = cL.gridy;
         roadName.setMinimumSize(minFieldDim);
         gbLayout.setConstraints(roadName,cR);
         add(roadName);
 
-        cL.gridy = 2;
+        cL.gridy++;
         JLabel row2Label = new JLabel(rb.getString("FieldRoadNumber")+":");
         gbLayout.setConstraints(row2Label,cL);
         add(row2Label);
 
-        cR.gridy = 2;
+        cR.gridy = cL.gridy;
         roadNumber.setMinimumSize(minFieldDim);
         gbLayout.setConstraints(roadNumber,cR);
         add(roadNumber);
 
-        cL.gridy = 3;
+        cL.gridy++;
         JLabel row3Label = new JLabel(rb.getString("FieldManufacturer")+":");
         gbLayout.setConstraints(row3Label,cL);
         add(row3Label);
 
-        cR.gridy = 3;
+        cR.gridy = cL.gridy;
         mfg.setMinimumSize(minFieldDim);
         gbLayout.setConstraints(mfg,cR);
         add(mfg);
 
-        cL.gridy = 4;
+        cL.gridy++;
         JLabel row4Label = new JLabel(rb.getString("FieldOwner")+":");
         gbLayout.setConstraints(row4Label,cL);
         add(row4Label);
 
-        cR.gridy = 4;
+        cR.gridy = cL.gridy;
         owner.setMinimumSize(minFieldDim);
         gbLayout.setConstraints(owner,cR);
         add(owner);
 
-        cL.gridy = 5;
+        cL.gridy++;
         JLabel row5Label = new JLabel(rb.getString("FieldModel")+":");
         gbLayout.setConstraints(row5Label,cL);
         add(row5Label);
 
-        cR.gridy = 5;
+        cR.gridy = cL.gridy;
         model.setMinimumSize(minFieldDim);
         gbLayout.setConstraints(model,cR);
         add(model);
 
-        cL.gridy = 6;
+        cL.gridy++;
         JLabel row6Label = new JLabel(rb.getString("FieldDCCAddress")+":");
         gbLayout.setConstraints(row6Label,cL);
         add(row6Label);
 
-        cR.gridy = 6;
+        cR.gridy = cL.gridy;
         gbLayout.setConstraints(selPanel,cR);
         add(selPanel);
 
-        cL.gridy = 7;
+        cL.gridy++;
         JLabel row7Label = new JLabel(rb.getString("FieldSpeedLimit")+":");
         gbLayout.setConstraints(row7Label,cL);
         add(row7Label);
 
-        cR.gridy = 7;
+        cR.gridy = cL.gridy;
         maxSpeedSpinner.setEditor(new JSpinner.NumberEditor(maxSpeedSpinner, "#"));
         /*
          * Code below can disables editing of field (commented out for now)
@@ -258,63 +255,53 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         gbLayout.setConstraints(maxSpeedSpinner,cR);
         add(maxSpeedSpinner);
         
-        cL.gridy = 8;
+        cL.gridy++;
         JLabel row8Label = new JLabel(rb.getString("FieldComment")+":");
         gbLayout.setConstraints(row8Label,cL);
         add(row8Label);
 
-        cR.gridy = 8;
+        cR.gridy = cL.gridy;
         commentScroller.setMinimumSize(minScrollerDim);
         gbLayout.setConstraints(commentScroller,cR);
         add(commentScroller);
 
-        cL.gridy = 9;
+        cL.gridy++;
         JLabel row9Label = new JLabel(rb.getString("FieldDecoderFamily")+":");
         gbLayout.setConstraints(row9Label,cL);
         add(row9Label);
 
-        cR.gridy = 9;
+        cR.gridy = cL.gridy;
         decoderFamily.setMinimumSize(minFieldDim);
         gbLayout.setConstraints(decoderFamily,cR);
         add(decoderFamily);
 
-        cL.gridy = 10;
+        cL.gridy++;
         JLabel row10Label = new JLabel(rb.getString("FieldDecoderModel")+":");
         gbLayout.setConstraints(row10Label,cL);
         add(row10Label);
 
-        cR.gridy = 10;
+        cR.gridy = cL.gridy;
         decoderModel.setMinimumSize(minFieldDim);
         gbLayout.setConstraints(decoderModel,cR);
         add(decoderModel);
 
-        cL.gridy = 11;
+        cL.gridy++;
         JLabel row11Label = new JLabel(rb.getString("FieldDecoderComment")+":");
         gbLayout.setConstraints(row11Label,cL);
         add(row11Label);
 
-        cR.gridy = 11;
+        cR.gridy = cL.gridy;
         decoderCommentScroller.setMinimumSize(minScrollerDim);
         gbLayout.setConstraints(decoderCommentScroller,cR);
         add(decoderCommentScroller);
 
-        cL.gridy = 12;
-        JLabel row12Label = new JLabel(rb.getString("FieldFilename")+":");
-        gbLayout.setConstraints(row12Label,cL);
-        add(row12Label);
-
-        cR.gridy = 12;
-        filename.setMinimumSize(minFieldDim);
-        gbLayout.setConstraints(filename,cR);
-        add(filename);
-
-        cL.gridy = 13;
+        cL.gridy++;
         JLabel row13Label = new JLabel(rb.getString("FieldDateUpdated")+":");
         gbLayout.setConstraints(row13Label,cL);
         add(row13Label);
 
-        cR.gridy = 13;
-        filename.setMinimumSize(minFieldDim);
+        cR.gridy = cL.gridy;
+        dateUpdated.setMinimumSize(minFieldDim);
         gbLayout.setConstraints(dateUpdated,cR);
         add(dateUpdated);
     }
