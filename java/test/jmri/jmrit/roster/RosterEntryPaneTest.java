@@ -68,7 +68,6 @@ public class RosterEntryPaneTest extends TestCase {
         p.update(n);
         
         // check for field text contents
-        Assert.assertEquals("file name in pane", "file here", p.filename.getText());
         Assert.assertEquals("file name returned", null, n.getFileName());
         Assert.assertEquals("DCC Address ", "1234", n.getDccAddress());
         Assert.assertEquals("road name ", "SP", n.getRoadName());
