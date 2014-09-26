@@ -1425,7 +1425,7 @@
     above, the schedule is requesting two SP Boxcars in a row, then a Tank Oil car with with a load
     of "L(Oil)". After the Tank Oil car is delivered the schedule starts from the beginning, again
     requesting two SP Boxcars followed by a Tank Oil car. The wait field allows you determine how
-    many trains will visit the location before picking up the car. Useful if you want a car to
+    many trains will try to service the spur before picking up the car. Useful if you want a car to
     remain still for several operating sessions.</P>
 
    <P>Repeat selecting the car types and pressing to "Add car type" until your have a delivery
