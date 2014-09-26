@@ -4,6 +4,7 @@ package jmri.jmrix.zimo;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import jmri.jmrix.SystemConnectionMemo;
 
 /**
  * Abstract base for classes representing a MX-1 communications port
@@ -36,6 +37,19 @@ public abstract class Mx1PortController extends jmri.jmrix.AbstractSerialPortCon
 	public abstract boolean okToSend();
     
     protected Mx1SystemConnectionMemo adaptermemo = null;
+    
+    public void setDisabled(boolean disabled) { 
+        mDisabled = disabled;
+        if(adaptermemo!=null)
+            adaptermemo.setDisabled(disabled);
+    }
+    
+    @Override
+    public SystemConnectionMemo getSystemConnectionMemo() { 
+    	if (adaptermemo == null)
+    		adaptermemo= new Mx1SystemConnectionMemo();
+    	return adaptermemo; 
+    }
 }
 
 

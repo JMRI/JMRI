@@ -34,25 +34,15 @@ import java.beans.PropertyChangeEvent;
  */
 public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
 
-	protected Mx1Programmer() {
-		// error if more than one constructed?
-		if (self != null)
-			log.error("Creating too many Mx1Programmer objects");
-		// register this as the default, register as the Programmer
+    protected Mx1TrafficController tc;
 
+	protected Mx1Programmer(Mx1TrafficController _tc) {
+		this.tc=_tc;
         // connect to listen
-        controller().addMx1Listener(~0, this);
-        }
-
-	/*
-	 * method to find the existing Mx1Programmer object, if need be creating one
-	 */
-	static public final Mx1Programmer instance() {
-		if (self == null) self = new Mx1Programmer();
-		return self;
-		}
-	static volatile private Mx1Programmer self = null;  // needs to be accessible from tests
-
+        log.info("" + this.tc);
+        this.tc.addMx1Listener(~0, this);
+    }
+    
 	// handle mode
 	protected int _mode = Programmer.PAGEMODE;
 
@@ -128,16 +118,18 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
 		_cv = CV;
 		// start the error timer
 		startShortTimer();
-                // format and send message to go to program mode
-                if (_mode == Programmer.PAGEMODE){
-                  if (firstTime){
-                   controller().sendMx1Message(Mx1TrafficController.instance()
-                       .getCommandStation().resetModeMsg(), this);
-                   firstTime = false;
-                  }
-                   controller().sendMx1Message(Mx1TrafficController.instance()
-                       .getCommandStation().getWritePagedCVMsg(CV, val), this);
+        // format and send message to go to program mode
+        if (_mode == Programmer.PAGEMODE){
+            if(tc.getProtocol()==Mx1Packetizer.ASCII){
+                if (firstTime){
+                    tc.sendMx1Message(tc.getCommandStation().resetModeMsg(), this);
+                    firstTime = false;
                 }
+                tc.sendMx1Message(tc.getCommandStation().getWritePagedCVMsg(CV, val), this);
+            } else {
+                tc.sendMx1Message(Mx1Message.getDecProgCmd(0, _cv, val, true), this);
+            }
+        }
 	}
 
 	public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
@@ -145,25 +137,27 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
 	}
 
 	synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
-          	if (log.isDebugEnabled()) log.debug("readCV "+CV+" listens "+p);
+        if (log.isDebugEnabled()) log.debug("readCV "+CV+" listens "+p);
 		useProgrammer(p);
 		_progRead = true;
 		// set new state
 		progState = INQUIRESENT;
-                _cv = CV;
-                // start the error timer
+        _cv = CV;
+        // start the error timer
 		startShortTimer();
                 // format and send message to go to program mode
-                if (_mode == Programmer.PAGEMODE){
-                  if (firstTime){
-                    controller().sendMx1Message(Mx1TrafficController.instance()
-                        .getCommandStation().resetModeMsg(), this);
+        if (_mode == Programmer.PAGEMODE){
+            if(tc.getProtocol()==Mx1Packetizer.ASCII){
+                if (firstTime){
+                    tc.sendMx1Message(tc.getCommandStation().resetModeMsg(), this);
                     firstTime = false;
-                  }
-                  controller().sendMx1Message(Mx1TrafficController.instance()
-                      .getCommandStation().getReadPagedCVMsg(CV), this);
                 }
+                tc.sendMx1Message(tc.getCommandStation().getReadPagedCVMsg(CV), this);
+            } else {
+                tc.sendMx1Message(Mx1Message.getDecProgCmd(0, _cv, -1, true), this);
+            }
         }
+    }
 
 	private jmri.ProgListener _usingProgrammer = null;
 
@@ -181,43 +175,56 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
 	}
 
 	synchronized public void message(Mx1Message m) {
-                if (progState == NOTPROGRAMMING) {
-                  // we get the complete set of replies now, so ignore these
-                  return;
-		}
-                else if (progState == INQUIRESENT) {
-                  if (log.isDebugEnabled()) log.debug("reply in INQUIRESENT state");
+        if (progState == NOTPROGRAMMING) {
+            // we get the complete set of replies now, so ignore these
+            return;
+		} else if (progState == INQUIRESENT) {
+            if (log.isDebugEnabled()) log.debug("reply in INQUIRESENT state");
+            if(tc.getProtocol()==Mx1Packetizer.ASCII){
                   //check for right message, else return
-                  if (m.getElement(0)==0x51 && m.getElement(1)==0x4E
-                      && m.getElement(2)==0x30 && m.getElement(3)==0x30){
+                if (m.getElement(0)==0x51 && m.getElement(1)==0x4E
+                    && m.getElement(2)==0x30 && m.getElement(3)==0x30){
                     // valid operation response
                     // see why waiting
                     if (_progRead) {
-                      // read was in progress - get return value
-                      // convert asci into ebcdic
-                      int highVal = ascToBcd(m.getElement(6));
-                      highVal = highVal*16&0xF0;
-                      int lowVal = ascToBcd(m.getElement(7));
-                      _val = (highVal | lowVal);
+                        // read was in progress - get return value
+                        // convert asci into ebcdic
+                        int highVal = ascToBcd(m.getElement(6));
+                        highVal = highVal*16&0xF0;
+                        int lowVal = ascToBcd(m.getElement(7));
+                        _val = (highVal | lowVal);
                     }
                     progState = NOTPROGRAMMING;
                     stopTimer();
                     // if this was a read, we cached the value earlier.  If its a
                     // write, we're to return the original write value
                     notifyProgListenerEnd(_val, jmri.ProgListener.OK);
-                    controller().sendMx1Message(Mx1TrafficController.instance()
-                        .getCommandStation().resetModeMsg(), this);
+                    tc.sendMx1Message(tc.getCommandStation().resetModeMsg(), this);
                     return;
                   // faulty message
-		} else {
+                } else {
                     progState = NOTPROGRAMMING;
                     stopTimer();
-                    controller().sendMx1Message(Mx1TrafficController.instance()
+                    tc.sendMx1Message(tc
                         .getCommandStation().resetModeMsg(), this);
                     notifyProgListenerEnd(_val, jmri.ProgListener.NoLocoDetected);
                     return;
+                }
+            } else {
+                if(m.getPrimaryMessage()==Mx1Message.PROGCMD && m.getMessageType()==Mx1Message.REPLY2){
+                    if (_progRead) {
+                        _val = m.getCvValue();
                     }
-		}
+                    progState = NOTPROGRAMMING;
+                    stopTimer();
+                    // if this was a read, we cached the value earlier.  If its a
+                    // write, we're to return the original write value
+                    notifyProgListenerEnd(_val, jmri.ProgListener.OK);
+                    /*tc.sendMx1Message(tc.getCommandStation().resetModeMsg(), this);*/
+                    return;
+                }
+            }
+        }
 	}
 
 	/**
@@ -229,9 +236,10 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
 			if (log.isDebugEnabled()) log.debug("timeout!");
 			// perhaps no loco present? Fail back to end of programming
 			progState = NOTPROGRAMMING;
-			controller().sendMx1Message(Mx1TrafficController.instance()
-                                    .getCommandStation().resetModeMsg(),
+			if(tc.getProtocol()==Mx1Packetizer.ASCII){
+                tc.sendMx1Message(tc.getCommandStation().resetModeMsg(),
                                     this);
+            }
 			notifyProgListenerEnd(_val, jmri.ProgListener.FailedTimeout);
 		}
 	}
@@ -246,37 +254,27 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
 		temp.programmingOpReply(value, status);
 	}
 
-	Mx1TrafficController _controller = null;
-
-	protected Mx1TrafficController controller() {
-		// connect the first time
-		if (_controller == null) {
-			_controller = Mx1TrafficController.instance();
-		}
-		return _controller;
-	}
-
-        public int ascToBcd(int hex) {
-                switch (hex) {
-                  case 0x46: return 0x0F;
-                  case 0x45: return 0x0E;
-                  case 0x65: return 0x0E;
-                  case 0x44: return 0x0D;
-                  case 0x43: return 0x0C;
-                  case 0x42: return 0x0B;
-                  case 0x41: return 0x0A;
-                  case 0x39: return 0x09;
-                  case 0x38: return 0x08;
-                  case 0x37: return 0x07;
-                  case 0x36: return 0x06;
-                  case 0x35: return 0x05;
-                  case 0x34: return 0x04;
-                  case 0x33: return 0x03;
-                  case 0x32: return 0x02;
-                  case 0x31: return 0x01;
-                  default: return 0x00;
-            }
+    public int ascToBcd(int hex) {
+            switch (hex) {
+              case 0x46: return 0x0F;
+              case 0x45: return 0x0E;
+              case 0x65: return 0x0E;
+              case 0x44: return 0x0D;
+              case 0x43: return 0x0C;
+              case 0x42: return 0x0B;
+              case 0x41: return 0x0A;
+              case 0x39: return 0x09;
+              case 0x38: return 0x08;
+              case 0x37: return 0x07;
+              case 0x36: return 0x06;
+              case 0x35: return 0x05;
+              case 0x34: return 0x04;
+              case 0x33: return 0x03;
+              case 0x32: return 0x02;
+              case 0x31: return 0x01;
+              default: return 0x00;
         }
+    }
 
    static Logger log = LoggerFactory.getLogger(Mx1Programmer.class.getName());
 

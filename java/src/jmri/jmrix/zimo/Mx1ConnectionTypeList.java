@@ -15,7 +15,8 @@ public class Mx1ConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
 
     public String[] getAvailableProtocolClasses() { 
         return new String[] {
-              "jmri.jmrix.zimo.mx1.ConnectionConfig"
+              "jmri.jmrix.zimo.mx1.ConnectionConfig",
+              "jmri.jmrix.zimo.mxulf.ConnectionConfig"
         };
     }
 

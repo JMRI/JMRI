@@ -4,6 +4,8 @@ package jmri.jmrix.zimo;
 
 import jmri.JmriException;
 import jmri.PowerManager;
+import static jmri.PowerManager.OFF;
+import static jmri.PowerManager.ON;
 
 /**
  * PowerManager implementation for controlling layout power.
@@ -16,9 +18,9 @@ import jmri.PowerManager;
  */
 public class Mx1PowerManager implements PowerManager, Mx1Listener {
 
-	public Mx1PowerManager() {
+	public Mx1PowerManager(Mx1TrafficController tc) {
 		// connect to the TrafficManager
-		tc = Mx1TrafficController.instance();
+		this.tc=tc;
 		tc.addMx1Listener(~0, this);
         }
 
@@ -28,25 +30,34 @@ public class Mx1PowerManager implements PowerManager, Mx1Listener {
 
 	public void setPower(int v) throws JmriException {
 		power = UNKNOWN;
-		checkTC();
-                if (v==ON) {
-                  // send GPON
-                  Mx1Message m = new Mx1Message(3);
-                  m.setElement(0, 0x53);
-                  m.setElement(1, 0x45);
-                  tc.sendMx1Message(m, this);
-                  }
-                else if (v==OFF) {
-		  // send GPOFF
-		  Mx1Message m = new Mx1Message(3);
-                  m.setElement(0, 0x53);
-                  m.setElement(1, 0x41);
-                  tc.sendMx1Message(m, this);
-                  }
-                // request status
-                Mx1Message m = new Mx1Message(2);
-                m.setElement(0, 0x5A);
-                tc.sendMx1Message(m, this);
+        if(tc.getProtocol()==Mx1Packetizer.ASCII){
+            checkTC();
+            if (v==ON) {
+              // send GPON
+              Mx1Message m = new Mx1Message(3);
+              m.setElement(0, 0x53);
+              m.setElement(1, 0x45);
+              tc.sendMx1Message(m, this);
+              }
+            else if (v==OFF) {
+              // send GPOFF
+              Mx1Message m = new Mx1Message(3);
+                      m.setElement(0, 0x53);
+                      m.setElement(1, 0x41);
+                      tc.sendMx1Message(m, this);
+            }
+            // request status
+            Mx1Message m = new Mx1Message(2);
+            m.setElement(0, 0x5A);
+            tc.sendMx1Message(m, this);
+        } else {
+            if (v==ON) {
+                tc.sendMx1Message(Mx1Message.setPowerOn(), this);
+            } else if (v==OFF) {
+                tc.sendMx1Message(Mx1Message.setPowerOff(), this);
+            }
+            tc.sendMx1Message(Mx1Message.getTrackStatus(), this);
+        }
 		firePropertyChange("Power", null, null);
 	}
 

@@ -26,16 +26,20 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         this.st = st;
         register();
         InstanceManager.store(this, Mx1SystemConnectionMemo.class); // also register as specific type
+                // create and register the ComponentFactory
+        InstanceManager.store(componentFactory = new jmri.jmrix.zimo.swing.Mx1ComponentFactory(this), 
+                                jmri.jmrix.swing.ComponentFactory.class);
     }
     
-     public Mx1SystemConnectionMemo() {
+    jmri.jmrix.swing.ComponentFactory componentFactory = null;
+    
+    public Mx1SystemConnectionMemo() {
         super("Z", "MX-1");
         register(); // registers general type
         InstanceManager.store(this, Mx1SystemConnectionMemo.class); // also register as specific type
 
-        //Needs to be implemented
-        /*InstanceManager.store(cf = new jmri.jmrix.ecos.swing.ComponentFactory(this), 
-                        jmri.jmrix.swing.ComponentFactory.class);*/
+        InstanceManager.store(componentFactory = new jmri.jmrix.zimo.swing.Mx1ComponentFactory(this), 
+                                jmri.jmrix.swing.ComponentFactory.class);
     }
     
     jmri.jmrix.swing.ComponentFactory cf = null;
@@ -47,13 +51,6 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public Mx1TrafficController getMx1TrafficController() { return st; }
     public void setMx1TrafficController(Mx1TrafficController st) { this.st = st; }
     private Mx1TrafficController st;
-    
-    /**
-     * Provide a menu with all items attached to this system connection
-     */
-    public javax.swing.JMenu getMenu() {
-        return new Mx1Menu(this);
-    }
     
     /**
      * Configure the programming manager and "command station" objects
@@ -70,9 +67,9 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return true;
         if (type.equals(jmri.PowerManager.class))
             return true;
-        if ((type.equals(jmri.CommandStation.class))){
+        /*if ((type.equals(jmri.CommandStation.class))){
             return true;
-        }
+        }*/
         return false; // nothing, by default
     }
 
@@ -85,8 +82,8 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return (T)getProgrammerManager();
         if (T.equals(jmri.PowerManager.class))
             return (T)getPowerManager();
-        if (T.equals(jmri.CommandStation.class))
-            return (T)commandStation;
+        /*if (T.equals(jmri.CommandStation.class))
+            return (T)commandStation;*/
         return null; // nothing, by default
     }
     /**
@@ -101,7 +98,7 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         jmri.InstanceManager.setProgrammerManager(
             getProgrammerManager());
 
-        powerManager = new jmri.jmrix.zimo.Mx1PowerManager();
+        powerManager = new jmri.jmrix.zimo.Mx1PowerManager(getMx1TrafficController());
         jmri.InstanceManager.setPowerManager(powerManager);
     }
 
@@ -110,7 +107,11 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public ProgrammerManager getProgrammerManager() {
         if (programmerManager == null){
-            programmerManager = new jmri.managers.DefaultProgrammerManager(jmri.jmrix.zimo.Mx1Programmer.instance(), this);
+            if(st.getProtocol()==Mx1Packetizer.BINARY){
+                programmerManager = new Mx1ProgrammerManager(new Mx1Programmer(getMx1TrafficController()), this);
+            } else {
+                programmerManager = new jmri.managers.DefaultProgrammerManager(new jmri.jmrix.zimo.Mx1Programmer(getMx1TrafficController()), this);
+            }
         }
         return programmerManager;
     }

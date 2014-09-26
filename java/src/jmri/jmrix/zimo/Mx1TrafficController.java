@@ -20,25 +20,25 @@ import java.util.Vector;
  */
 public abstract class Mx1TrafficController implements Mx1Interface {
 
-    /**
-	 * static function returning the TrafficController instance to use.
-	 * @return The registered TrafficController instance for general use,
-	 *         if need be creating one.
-	 */
-	static public Mx1TrafficController instance() {
-		return self;
-	}
-
-	static Mx1TrafficController self = null;
-
+    public Mx1TrafficController(){
+        super();
+    }
     /**
      * Must provide a ZimoCommandStation reference at creation time
      * @param pCommandStation reference to associated command station object,
      *          preserved for later.
      */
-    Mx1TrafficController(Mx1CommandStation pCommandStation) {
+    Mx1TrafficController(Mx1CommandStation pCommandStation, boolean prot) {
         mCommandStation = pCommandStation;
+        protocol = prot;
     }
+    
+    public final static boolean ASCII = false;
+    public final static boolean BINARY = true;
+    
+    boolean protocol = ASCII;
+    
+    public boolean getProtocol() { return protocol; }
 
     // Abstract methods for the Mx1Interface
     abstract public boolean status();
@@ -96,7 +96,23 @@ public abstract class Mx1TrafficController implements Mx1Interface {
      * @return associated Command Station object
      */
     public Mx1CommandStation getCommandStation() { return mCommandStation; }
-
+    
+    public void setAdapterMemo(Mx1SystemConnectionMemo memo){
+        adaptermemo = memo;
+    }
+    
+    Mx1SystemConnectionMemo adaptermemo;
+    
+    public String getUserName() { 
+        if(adaptermemo==null) return "Zimo"; //IN18N
+        return adaptermemo.getUserName();
+    }
+    
+    public String getSystemPrefix() { 
+        if(adaptermemo==null) return "Z"; //IN18N
+        return adaptermemo.getSystemPrefix();
+    }
+    
 	static Logger log = LoggerFactory.getLogger(Mx1TrafficController.class.getName());
 }
 

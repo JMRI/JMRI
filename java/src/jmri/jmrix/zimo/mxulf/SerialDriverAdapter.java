@@ -1,17 +1,17 @@
 /**
- * MX1Adapter.java
+ * mxulfAdapter.java
  *
- * Title:		MX1Adapter
+ * Title:		mxulfAdapter
  * Description:		Provide access to Zimo's MX-1 on an attached serial comm port.
- *			Normally controlled by the zimo.mx1.Mx1Frame class.
+ *			Normally controlled by the zimo.mxulf.mxulfFrame class.
  * @author		Bob Jacobsen   Copyright (C) 2002
- * @version		$Revision$
+ * @version		$Revision: 22821 $
  *
- * Adapted for use with Zimo MX-1 by Sip Bosch
+ * Adapted for use with Zimo MXULF by Kevin Dickerson
  *
  */
 
-package jmri.jmrix.zimo.mx1;
+package jmri.jmrix.zimo.mxulf;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,12 +30,14 @@ import java.io.DataOutputStream;
 import java.io.DataInputStream;
 import java.io.InputStream;
 
-public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix.SerialPortAdapter {
 
-    public Mx1Adapter(){
+    public SerialDriverAdapter(){
         super();
+        log.info("This called");
+        setManufacturer(jmri.jmrix.DCCManufacturerList.ZIMO);
         option1Name = "FlowControl";
-        options.put(option1Name, new Option("MX-1 connection uses : ", validOption1));
+        options.put(option1Name, new Option("MXULF connection uses : ", validOption1));
         adaptermemo = new Mx1SystemConnectionMemo();
     }
 
@@ -180,19 +182,19 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
 	 * connected to this port
 	 */
 	public void configure() {
-            Mx1CommandStation cs = new Mx1CommandStation();
-            adaptermemo.setCommandStation(cs);
-          // connect to a packetizing traffic controller
-            Mx1Packetizer packets = new Mx1Packetizer(cs, Mx1Packetizer.ASCII);
-            packets.connectPort(this);
-            
-            adaptermemo.setMx1TrafficController(packets);
-            adaptermemo.configureManagers();
+        Mx1CommandStation cs = new Mx1CommandStation();
+        adaptermemo.setCommandStation(cs);
+      // connect to a packetizing traffic controller
+        Mx1Packetizer packets = new Mx1Packetizer(cs, Mx1Packetizer.BINARY);
+        packets.connectPort(this);
+        
+        adaptermemo.setMx1TrafficController(packets);
+        adaptermemo.configureManagers();
 
-             // start operation
-             packets.startThreads();
+         // start operation
+        packets.startThreads();
 
-             jmri.jmrix.zimo.ActiveFlag.setActive();
+        jmri.jmrix.zimo.ActiveFlag.setActive();
 
 	}
 
@@ -234,7 +236,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
 		activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
 
 		// find and configure flow control
-		int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also defaults in selectedOption1
+		int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT | SerialPort.FLOWCONTROL_RTSCTS_IN; // default, but also defaults in selectedOption1
 		if (getOptionState(option1Name).equals(validOption1[1]))
 			flow = 0;
 		activeSerialPort.setFlowControlMode(flow);
@@ -249,28 +251,24 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
 		return validSpeeds;
 	}
 
-    protected String [] validSpeeds = new String[]{"1,200 baud", "2,400 baud", "4,800 baud",
-    "9,600 baud", "19,200 baud", "38,400 baud"};
-    protected int [] validSpeedValues = new int[]{1200, 2400, 4800, 9600, 19200, 38400};
+    protected String [] validSpeeds = new String[]{"9,600 baud (Default)", "1,200 baud", "2,400 baud", "4,800 baud",
+    "19,200 baud", "38,400 baud"};
+    protected int [] validSpeedValues = new int[]{9600, 1200, 2400, 4800, 19200, 38400};
 
     // meanings are assigned to these above, so make sure the order is consistent
     protected String [] validOption1 = new String[]{"hardware flow control (recommended)", "no flow control"};
-    protected String [] validOption2 = new String[]{"3", "5"};
+
     //protected String selectedOption1=validOption1[0];
 
     private boolean opened = false;
     InputStream serialStream = null;
-
-    static public Mx1Adapter instance() {
-        if (mInstance == null) mInstance = new Mx1Adapter();
-        return mInstance;
-    }
-    static Mx1Adapter mInstance = null;
     
     String manufacturerName = jmri.jmrix.DCCManufacturerList.ZIMO;
     
     public String getManufacturer() { return manufacturerName; }
     public void setManufacturer(String manu) { manufacturerName=manu; }
+    
+    public Mx1SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
     
     public void dispose(){
         if (adaptermemo!=null)
@@ -278,6 +276,6 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
         adaptermemo = null;
     }
 
-    static Logger log = LoggerFactory.getLogger(Mx1Adapter.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }
