@@ -53,7 +53,7 @@ public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
     }
     
     public boolean getLongMessage(){
-        if(protocol = Mx1Packetizer.BINARY){
+        if(protocol == Mx1Packetizer.BINARY){
             if((getElement(1)&0x80) == 0x80)
                 return true;
         }
@@ -264,7 +264,7 @@ public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
                             int cv = (((getElement(5+offset)&0xff) << 8) + (getElement(6+offset)&0xff));
                             txt.append(" CV: "+Integer.toString(cv));
                             if(getNumDataElements()==(8+offset)){
-                                txt.append(" Set To: " + (int)(getElement(7+offset)&0xff));
+                                txt.append(" Set To: " + (getElement(7+offset)&0xff));
                             }
                             break;
                     case 254: txt.append(" Cur Acc Memory ");
@@ -308,7 +308,7 @@ public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
             offset=+2;
         }
         if(getNumDataElements()==(8+offset)){
-            return (int)(getElement(7+offset)&0xff);
+            return (getElement(7+offset)&0xff);
         }
         return -1;
     }

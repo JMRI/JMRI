@@ -272,7 +272,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                             xmtPackets.remove(message.get(3));
                         }
                         Mx1Message msg;
-                        boolean error = false;
+                        //boolean error = false;
                         if((message.get(1)&0x80) == 0x80){ //Long Packet
                             //Remove crc element
                             msg = new Mx1Message(message.size()-2, Mx1Packetizer.BINARY);

@@ -123,7 +123,7 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         commandStation=cs;
     }
     
-    private Mx1CommandStation commandStation;
+    //private Mx1CommandStation commandStation;
 
     public Mx1PowerManager getPowerManager() { return powerManager; }
     
