@@ -120,7 +120,7 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
     
     public void setCommandStation(Mx1CommandStation cs){
-        commandStation=cs;
+        //commandStation=cs;
     }
     
     //private Mx1CommandStation commandStation;
