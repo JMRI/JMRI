@@ -474,8 +474,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                     	msg = Bundle.getMessage("WaitForClear", _trainName, blockName);
                         break;
                     case Warrant.WAIT_FOR_TRAIN:
-                        return Bundle.getMessage("WaitForTrain",
-                        			cmdIdx, getBlockOrderAt(blkIdx).getBlock().getDisplayName());
+                        return Bundle.getMessage("WaitForTrain", cmdIdx,
+                        			getBlockOrderAt(blkIdx).getBlock().getDisplayName(), speed);
                     case Warrant.WAIT_FOR_SENSOR:
                         return Bundle.getMessage("WaitForSensor",
                         			cmdIdx, _engineer.getWaitSensor().getDisplayName(),

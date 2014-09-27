@@ -53,15 +53,7 @@ public class ShapeDrawer  {
                     newPolygon();
                 }
             });
-        /*
-        shapeItem = new JMenuItem(Bundle.getMessage("drawLine"));
-        drawMenu.add(shapeItem);
-        shapeItem.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent event) {
-                	newLine();
-                }
-            });
-            */
+        
         shapeItem = new JMenuItem(Bundle.getMessage("drawCircle"));
         drawMenu.add(shapeItem);
         shapeItem.addActionListener(new ActionListener() {
@@ -79,13 +71,6 @@ public class ShapeDrawer  {
 
     	return drawMenu;
     }
-	
-	public void setDrawFrame(DrawFrame f) {
-    	if (_drawFrame==null) {
-        	_drawFrame = f;
-        	_drawFrame.setParent(this);
-    	}
-	}
     
     private void newRectangle() {
     	if (_drawFrame==null) {
@@ -109,8 +94,7 @@ public class ShapeDrawer  {
     		_drawFrame.toFront();
     	}
     }
-//    private void newLine() {   	
-//    }
+
     private void newCircle() {   	
     	if (_drawFrame==null) {
         	_drawFrame = new DrawCircle("newShape", "circle", this);    		
@@ -127,7 +111,7 @@ public class ShapeDrawer  {
     }
     
     protected void closeDrawFrame(DrawFrame f) {
-    	_drawFrame = null;   	
+		_drawFrame = null;   	
     }
     
     protected ControlPanelEditor getEditor() {
@@ -162,8 +146,8 @@ public class ShapeDrawer  {
     		} else {
 				if (_currentSelection!= null) {
 					_currentSelection.removeHandles();
+					_currentSelection = null;    			
 				}
-				_currentSelection = null;    			
     		}
     	}
     	return false;

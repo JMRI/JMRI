@@ -8,6 +8,7 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.ToolTip;
 import jmri.jmrit.display.controlPanelEditor.shape.*;
 import org.jdom.Attribute;
+import org.jdom.DataConversionException;
 import org.jdom.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,7 +74,6 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
             element.addContent(elem);        	
         }
         element.setAttribute("lineWidth", ""+p.getLineWidth());
-        element.setAttribute("alpha", ""+p.getAlpha());
 
 		NamedBeanHandle<Sensor> handle = p.getControlSensorHandle();
 		if (handle!=null) {
@@ -91,6 +91,7 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
         elem.setAttribute("red", ""+c.getRed());
         elem.setAttribute("green", ""+c.getGreen());
         elem.setAttribute("blue", ""+c.getBlue());
+        elem.setAttribute("alpha", ""+c.getAlpha());
         return elem;
     }
    
@@ -155,9 +156,17 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
             }
         }
         ps.setLineWidth(getInt(element, "lineWidth"));
-        ps.setAlpha(getInt(element, "alpha"));
-        ps.setLineColor(getColor(element, "lineColor"));
-        ps.setFillColor(getColor(element, "fillColor"));
+        int alpha = -1;
+        try {
+            a = element.getAttribute("alpha");
+            if(a!=null) {
+            	alpha = a.getIntValue();        	
+            }
+        } catch (DataConversionException ex) {
+            log.warn("invalid 'alpha' value (non integer)");
+        }
+        ps.setLineColor(getColor(element, "lineColor", alpha));
+        ps.setFillColor(getColor(element, "fillColor", alpha));
         
         ps.makeShape();
         ps.rotate(getInt(element, "degrees"));
@@ -183,8 +192,11 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
         }
         ps.updateSize();
    }
-	
-	public Color getColor(Element element, String name) {
+
+	/* pre version 3.9.4 alpha was only used for fill color.
+	 * alpha == -1 indicates 3.9.4 or later
+	 */
+	public Color getColor(Element element, String name, int alpha) {
 		Element elem = element.getChild(name);
 		if (elem==null) {
 			return null;
@@ -193,7 +205,14 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
 	        int red = elem.getAttribute("red").getIntValue();
 	        int blue = elem.getAttribute("blue").getIntValue();
 	        int green = elem.getAttribute("green").getIntValue();
-	        return new Color(red, green, blue);			
+	        if (alpha==-1) {
+		        alpha = elem.getAttribute("alpha").getIntValue();	        	
+		        return new Color(red, green, blue, alpha);			
+	        } else if (name.equals("lineColor")) {
+	        	return new Color(red, green, blue);
+	        } else {
+	        	return new Color(red, green, blue, alpha);	        	
+	        }
 		} catch (Exception e) {
             log.warn("failed to convert color attribute for "+name+" - "+e);			
 		}

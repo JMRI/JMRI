@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
 
 public class PositionablePolygon extends PositionableShape {
 	
-//	ArrayList <Point> 		_vertices;
 	ArrayList<Rectangle>	_vertexHandles;
 	boolean _editing = false;
 
@@ -81,8 +80,10 @@ public class PositionablePolygon extends PositionableShape {
         popup.add(new javax.swing.AbstractAction(txt) {
         	PositionablePolygon ps;
                 public void actionPerformed(ActionEvent e) {
-                	_editFrame = new DrawPolygon(getEditor(), "polygon", ps);
-                	setEditParams();               	
+                	if (_editFrame==null) {
+                    	_editFrame = new DrawPolygon(getEditor(), "polygon", ps);
+                    	setEditParams();               	                		
+                	}
                 }
                 javax.swing.AbstractAction init(PositionablePolygon p) {
                 	ps = p;
@@ -101,12 +102,13 @@ public class PositionablePolygon extends PositionableShape {
     }
 
     @Override
-    protected void removeHandles() {
+    public void removeHandles() {
     	_vertexHandles = null;
       	super.removeHandles();    		
    }
    
-    protected void drawHandles() {
+    @Override
+    public void drawHandles() {
     	if (_editing) {
     		_vertexHandles = new ArrayList<Rectangle>();
         	PathIterator iter = getPathIterator(null);
@@ -115,7 +117,7 @@ public class PositionablePolygon extends PositionableShape {
          		iter.currentSegment(coord);
            		int x = Math.round(coord[0]);
            		int y = Math.round(coord[1]);
-           		_vertexHandles.add(new Rectangle(x-SIZE/2, y-SIZE/2, SIZE, SIZE));
+           		_vertexHandles.add(new Rectangle(x-SIZE, y-SIZE, 2*SIZE, 2*SIZE));
     			iter.next();
         	}   	
     	} else {

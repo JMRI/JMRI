@@ -1,8 +1,6 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
 import java.awt.Rectangle;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
 import javax.swing.*;
@@ -40,17 +38,6 @@ public class DrawCircle extends DrawFrame {
        p.add(new JLabel(Bundle.getMessage("circle")));
        JPanel pp = new JPanel();
        _radiusText = new JTextField(6);
-       _radiusText.addKeyListener(new KeyListener() {
-           public void keyTyped(KeyEvent E) { }
-           public void keyPressed(KeyEvent E){ }
-           public void keyReleased(KeyEvent E) { 
-             JTextField tmp = (JTextField) E.getSource();
-             String t = tmp.getText();
-             if (t!=null && t.length()>0) {
-                 _radius = Integer.parseInt(t);        	 
-             }
-           }
-       	});
 	   _radiusText.setText(Integer.toString(_radius));
        _radiusText.setHorizontalAlignment(JTextField.RIGHT);
        pp.add(_radiusText);
@@ -99,13 +86,10 @@ public class DrawCircle extends DrawFrame {
      */
     protected void updateFigure(PositionableShape p) {
     	PositionableCircle pos = (PositionableCircle)p;
-    	try {
-    		p._height = p._width = Integer.parseInt(_radiusText.getText());
-    		pos.makeShape();
-    	} catch (NumberFormatException nfe) {
-    		JOptionPane.showMessageDialog(this, nfe,
-    				Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
-    	}
+    	_radius = getInteger(_radiusText, _radius);
+    	p._width = _radius;
+    	p._height = _radius;
+    	pos.makeShape();
 		setPositionableParams(pos);
     }
 

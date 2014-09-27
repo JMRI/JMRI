@@ -535,7 +535,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 for(int i=0; i<_selectionGroup.size();i++){
                 	Positionable p = _selectionGroup.get(i);
                     if (!(p instanceof jmri.jmrit.display.controlPanelEditor.shape.PositionableShape)) {
-                        g.drawRect(p.getX(), p.getY(), p.maxWidth(), p.maxHeight());                        	
+                        g.drawRect(p.getX(), p.getY(), p.maxWidth(), p.maxHeight());
+                    } else {
+                    	jmri.jmrit.display.controlPanelEditor.shape.PositionableShape s = 
+                    			(jmri.jmrit.display.controlPanelEditor.shape.PositionableShape)p;
+                    	s.drawHandles();
                     }
                 }
             }
@@ -604,8 +608,23 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
         if (!_editable) {
             _highlightcomponent = null;
-            _selectionGroup = null;
+            deselectSelectionGroup();
         }
+    }
+    
+    protected void deselectSelectionGroup() {
+    	if (_selectionGroup==null) {
+    		return;
+    	}
+        for(int i=0; i<_selectionGroup.size();i++){
+        	Positionable p = _selectionGroup.get(i);
+            if (p instanceof jmri.jmrit.display.controlPanelEditor.shape.PositionableShape) {
+            	jmri.jmrit.display.controlPanelEditor.shape.PositionableShape s = 
+            			(jmri.jmrit.display.controlPanelEditor.shape.PositionableShape)p;
+            	s.removeHandles();
+            }
+        }
+        _selectionGroup = null;    	
     }
     
 	// accessor routines for persistent information
@@ -2440,7 +2459,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (_debug) log.debug("makeSelectionGroup: "+_selectionGroup.size()+" selected.");
         if (_selectionGroup.size() < 1) {
             _selectRect = null;
-            _selectionGroup = null;
+            deselectSelectionGroup();
         }
     }
 
@@ -2623,7 +2642,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             for (int i=0; i<_selectionGroup.size(); i++) {
                 _selectionGroup.get(i).remove();
             }
-            _selectionGroup = null;
+            deselectSelectionGroup();
         }
     }
 

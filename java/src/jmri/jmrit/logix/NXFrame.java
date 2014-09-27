@@ -587,12 +587,14 @@ public class NXFrame extends WarrantRoute {
 		
     	float remRamp = rampLength;
 		while (curSteps < numSteps) {
-			curSpeed = rampSpeed(w, (int)speedTime, curSpeed, speedIncre, blockName, 1);
+        	w.addThrottleCommand(new ThrottleSetting(1000, "Speed", Float.toString(speedIncre), blockName));
+        	curSpeed += speedIncre;
+//			curSpeed = rampSpeed(w, (int)speedTime, curSpeed, speedIncre, blockName, 1);
 			speedIncre = delta;
 			curSteps++;
 			curDistance = curSpeed*speedTime/(FACTOR*_scale);
 	    	if (log.isDebugEnabled()) log.debug("Ramp up 1 speed change in block \""+blockName+"\" to speed "+curSpeed+
-	    			" after "+speedTime+"ms. at curDistance= "+curDistance);
+	    			" after "+1000+"ms. at curDistance= "+curDistance);
 			int steps = 0;
 			while (curSteps+steps<numSteps) {				
 				float len = (curSpeed + steps*delta)*time/(FACTOR*_scale);
@@ -616,7 +618,7 @@ public class NXFrame extends WarrantRoute {
        		}
     		totalLen -= blockLen;
     		remRamp -= curDistance;
-			noopTime = 0;		// ms time for entry into next block
+			noopTime = time/2;		// ms time for entry into next block
 			if (blockLen > curDistance) {
 				noopTime = (blockLen-curDistance)*(FACTOR*_scale)/curSpeed;
 			}
@@ -688,7 +690,9 @@ public class NXFrame extends WarrantRoute {
      	    	} else {
      	    		_eStop = false;
      	        	if (curSteps>1) {
-         				curSpeed = rampSpeed(w, (int)speedTime, curSpeed, -delta, blockName, 1);     	        		
+     	        		curSpeed -= delta;
+     	        		w.addThrottleCommand(new ThrottleSetting(1000, "Speed", Float.toString(curSpeed), blockName));
+       //  				curSpeed = rampSpeed(w, (int)speedTime, curSpeed, -delta, blockName, 1);     	        		
          		    	if (log.isDebugEnabled()) log.debug("Ramp down 1 speed change in last block \""+blockName+"\" to speed "+curSpeed+
          		    			" after "+speedTime+"ms. from curDistance= "+curDistance);
          		    	curSteps -=2;

@@ -1,8 +1,6 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
 import java.awt.Rectangle;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.*;
@@ -34,17 +32,6 @@ public class DrawRoundRect extends DrawRectangle {
        p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
        JPanel pp = new JPanel();
        _radiusText = new JTextField(6);
-       _radiusText.addKeyListener(new KeyListener() {
-           public void keyTyped(KeyEvent E) { }
-           public void keyPressed(KeyEvent E){ }
-           public void keyReleased(KeyEvent E) { 
-             JTextField tmp = (JTextField) E.getSource();
-             String t = tmp.getText();
-             if (t!=null && t.length()>0) {
-                 _radius = Integer.parseInt(t);        	 
-             }
-           }
-       	});
 	   _radiusText.setText(Integer.toString(_radius));
        _radiusText.setHorizontalAlignment(JTextField.RIGHT);
        pp.add(_radiusText);
@@ -95,9 +82,11 @@ public class DrawRoundRect extends DrawRectangle {
 	 */
 	protected void updateFigure(PositionableShape p) {
 	   PositionableRoundRect pos = (PositionableRoundRect)p;
-	   super.updateFigure(p);
+	   _radius = getInteger(_radiusText, _radius);
+	   p._width = getInteger(_widthText, p._width);
+	   p._height = getInteger(_heightText, p._height);
+	   pos.makeShape();
 	   setPositionableParams(pos);
-//	   pos.makeShape();
 	}
 
     static Logger log = LoggerFactory.getLogger(DrawRoundRect.class.getName());

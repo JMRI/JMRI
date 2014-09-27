@@ -135,7 +135,6 @@ import jmri.jmrit.logix.OBlock;
     	int height = ed.getFontMetrics(ed.getFont()).getHeight();	// limit height to locoIcon height
     	_loco.setLineWidth(1);
     	_loco.setLineColor(Color.BLACK);
-    	_loco.setAlpha(255);
     	_loco.setFillColor(block.getMarkerBackground());
     	_loco.setBlock(block);
     	_loco.setWidth(width+height/2);

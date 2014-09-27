@@ -17,6 +17,7 @@ import javax.swing.JComboBox;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
@@ -40,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * 
  */
 
-public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeListener  {
+public abstract class DrawFrame  extends jmri.util.JmriJFrame {
 	
     protected ShapeDrawer _parent;
     
@@ -51,13 +52,13 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
     int		_lineWidth;
 	Color 	_lineColor;
 	Color 	_fillColor;
-	int 	_alpha;
-//	Stroke 	_stroke;
+    int		_lineAlpha = 255;
+    int		_fillAlpha = 0;
     JColorChooser _chooser;
     JRadioButton _lineColorButon;
     JRadioButton _fillColorButon;
     JSlider 	_lineSlider;
-    JSlider		_fillSlider;
+    JSlider		_alphaSlider;
 	JTextField	_sensorName = new JTextField(30);
 	JRadioButton _hideShape;
 	JRadioButton _changeLevel;	
@@ -70,7 +71,6 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
  
         _lineWidth = 1;
         _lineColor = Color.black;
-        _alpha = 127;
       
         JPanel panel = new JPanel();
         panel.setLayout(new java.awt.BorderLayout(10,10));
@@ -151,7 +151,12 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
 //	       _chooser = new JColorChooser(_parent.getEditor().getTargetPanel().getBackground());
 	    _chooser = new JColorChooser(Color.LIGHT_GRAY);
 	    _chooser.setColor(Color.green);
-	    _chooser.getSelectionModel().addChangeListener(this);
+	    _chooser.getSelectionModel().addChangeListener(
+	    		new ChangeListener() {
+	    			public void stateChanged(ChangeEvent e) {
+	    				colorChange();
+	    			}    			
+	    		});
 	    _chooser.setPreviewPanel(new JPanel());
 	    panel.add(_chooser);
 	    p = new JPanel();
@@ -159,8 +164,20 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
 	    p.add(new JLabel(Bundle.getMessage("transparency")));
 	    pp = new JPanel();
 	    pp.add(new JLabel(Bundle.getMessage("transparent")));
-	    _fillSlider = new JSlider(SwingConstants.HORIZONTAL, 0, 255, _alpha);
-	    pp.add(_fillSlider);
+	    _alphaSlider = new JSlider(SwingConstants.HORIZONTAL, 0, 255, _lineColor.getAlpha());
+	    _alphaSlider.addChangeListener(
+	    		new ChangeListener() {
+	    			public void stateChanged(ChangeEvent e) {
+	    				alphaChange();
+	    			}    			
+	    		});
+	    pp.add(_alphaSlider);
+	    _lineColorButon.addChangeListener(
+	    		new ChangeListener() {
+	    			public void stateChanged(ChangeEvent e) {
+	    				buttonChange();
+	    			}    			
+	    		});
 	    pp.add(new JLabel(Bundle.getMessage("opaque")));
 	    p.add(pp);
 	    panel.add(p);
@@ -186,8 +203,6 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
 	    ButtonGroup bg = new ButtonGroup();
 	    bg.add(_hideShape);
 	    bg.add(_changeLevel);
-//        p1.add(Box.createHorizontalStrut(ItemPalette.STRUT_SIZE));
-//        p1.add(new JLabel(Bundle.getMessage("ChangeLevel")));
         _levelComboBox = new JComboBox();
         _levelComboBox.addItem(Bundle.getMessage("SameLevel"));
         for (int i=1; i<11; i++) {
@@ -236,12 +251,17 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
      * Set parameters on the popup that will edit the PositionableShape
      */
 	protected void setDisplayParams(PositionableShape ps) {
-		_alpha = ps.getAlpha();
-		_fillSlider.setValue(_alpha);  
 		_lineWidth = ps.getLineWidth();
 		_lineSlider.setValue(_lineWidth);
 		_lineColor = ps.getLineColor();
 		_fillColor = ps.getFillColor();
+		if (_lineColor.getAlpha() > _fillColor.getAlpha()) {
+			_alphaSlider.setValue(_lineColor.getAlpha());  
+		    _lineColorButon.setSelected(true);			
+		} else {
+			_alphaSlider.setValue(_fillColor.getAlpha());  
+		    _fillColorButon.setSelected(true);						
+		}
 		NamedBeanHandle<Sensor> handle = ps.getControlSensorHandle();
 		if (handle!=null) {
 			_sensorName.setText(handle.getName());
@@ -259,8 +279,37 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
 		}
 	}
 
+	private void buttonChange() {
+		if (_lineColorButon.isSelected()) {
+			_chooser.getSelectionModel().setSelectedColor(_lineColor);
+			_alphaSlider.setValue(_lineColor.getAlpha());  
+		} else {
+			_chooser.getSelectionModel().setSelectedColor(_fillColor);
+			_alphaSlider.setValue(_fillColor.getAlpha());  
+		}
+		_alphaSlider.validate();
+		_alphaSlider.repaint();
+	}
+	private void colorChange() {
+		int alpha = _alphaSlider.getValue();
+		if (_lineColorButon.isSelected()) {
+			Color c = _chooser.getColor();
+			_lineColor = new Color(c.getRed(), c.getGreen(), c.getBlue(), _lineColor.getAlpha());
+		} else {
+			 Color c = _chooser.getColor();
+			 _fillColor = new Color(c.getRed(), c.getGreen(), c.getBlue(), _fillColor.getAlpha());
+		}		
+	}
+	private void alphaChange() {
+		int alpha = _alphaSlider.getValue();
+		if (_lineColorButon.isSelected()) {
+			_lineColor = new Color(_lineColor.getRed(), _lineColor.getGreen(), _lineColor.getBlue(), alpha);
+		} else if (_fillColorButon.isSelected()) {
+			 _fillColor = new Color(_fillColor.getRed(), _fillColor.getGreen(), _fillColor.getBlue(), alpha);
+		}				
+	}
+
 	protected void setPositionableParams(PositionableShape ps) {
-        ps.setAlpha(_fillSlider.getValue());		//set before setting colors
         ps.setLineColor(_lineColor);
         ps.setFillColor(_fillColor);
         ps.setLineWidth(_lineSlider.getValue());
@@ -285,9 +334,6 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
 		targetPane.setSelectRectColor(Color.green);
 	}
 
-	protected void setParent(ShapeDrawer parent) {
-		_parent = parent;		
-	}
 	protected void closingEvent() {
     	if (_parent!=null) {   		
     		_parent.closeDrawFrame(this);
@@ -298,14 +344,23 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
     	dispose();
 	}
 
-	public void stateChanged(ChangeEvent e) {
-		if (_lineColorButon.isSelected()) {
-			_lineColor = _chooser.getColor();    		   
-		} else if (_fillColorButon.isSelected()) {
-			_fillColor = _chooser.getColor();    		   
-		}
-	}
-	
+    protected int getInteger(JTextField field, int value) {
+        try {
+      	  int i = Integer.parseInt(field.getText());
+      	  if (i<0) {
+      		  return value;
+      	  }
+      	  if (i<PositionableShape.SIZE) {
+      		  i = PositionableShape.SIZE;
+      	  }
+      	  return i;
+    	} catch (NumberFormatException nfe) {
+    		JOptionPane.showMessageDialog(this, nfe,
+    				Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+    		return value;
+    	}
+    }
+    
 	protected void moveTo(int x, int y) {		
 	}
 	protected void anchorPoint(int x, int y) {

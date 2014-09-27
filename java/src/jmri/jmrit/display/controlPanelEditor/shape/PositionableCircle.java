@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 1 $
  */
 
-public class PositionableCircle extends PositionableRectangle {
+public class PositionableCircle extends PositionableShape {
     
     public PositionableCircle(Editor editor) {
     	super(editor);
@@ -26,18 +26,18 @@ public class PositionableCircle extends PositionableRectangle {
 
     public PositionableCircle(Editor editor, Shape shape) {
        	super(editor, shape);
-       	_height = _width = 100;    }
-
-    public void setHeight(int h) {
-    	_width = h;
+       	_height = _width = 100;
     }
+    
     @Override
-    public int getHeight() {
-      return _width;
+    public void setHeight(int h) {
+    	super.setHeight(h);
+    	_width = _height;
     }
+
 
     public void setRadius(int r) {
-    	_width = r;
+    	setWidth(r);
     }
     public int getRadius() {
     	return _width;
@@ -65,8 +65,10 @@ public class PositionableCircle extends PositionableRectangle {
         String txt = Bundle.getMessage("editShape", Bundle.getMessage("circle"));
         popup.add(new javax.swing.AbstractAction(txt) {
                 public void actionPerformed(ActionEvent e) {
-                	_editFrame = new DrawCircle("editShape", "circle", null);
-                	setEditParams();               	
+                	if (_editFrame==null) {
+                       	_editFrame = new DrawCircle("editShape", "circle", null);
+                    	setEditParams();               	
+                	}
                 }
             });
         return true;

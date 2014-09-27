@@ -975,7 +975,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 if (event.isShiftDown() && selections.size() > 3) {
                 	if (_manualSelection) {
                 		// selection made - don't change it
-                        _selectionGroup = null;
+                        deselectSelectionGroup();
                 		return _currentSelection;
                 	}
                 	// show list
@@ -1111,7 +1111,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
         if (!event.isPopupTrigger()&& !event.isMetaDown() && !event.isAltDown() && !circuitBuilder) {
             if (_shapeDrawer.doMousePressed(event, _currentSelection)) {
-              	_selectionGroup = null;
+              	deselectSelectionGroup();
               	_currentSelection = null;
               	return;
             }
@@ -1123,7 +1123,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                         if (_pastePending) {
                             abortPasteItems();
                         }
-                        _selectionGroup = null;
+                        deselectSelectionGroup();
                     }
                 }
             } else {
@@ -1131,11 +1131,11 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 if (_pastePending) {
                     abortPasteItems();
                 }
-                _selectionGroup = null;
+                deselectSelectionGroup();
             }
         } else {
             if (_currentSelection==null || (_selectionGroup!=null && !_selectionGroup.contains(_currentSelection)) ) {
-            	_selectionGroup = null;
+            	deselectSelectionGroup();
             }
         }
 		_circuitBuilder.doMousePressed(event, _currentSelection);
@@ -1183,7 +1183,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 }
                 _currentSelection = selection;            	
             } else {
-            	_selectionGroup = null;
+            	deselectSelectionGroup();
             	_currentSelection = null;
                 _highlightcomponent = null;
             }
@@ -1237,7 +1237,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
         }
         if (!isEditable()) {
-        	_selectionGroup = null;
+        	deselectSelectionGroup();
         	_currentSelection = null;
             _highlightcomponent = null;
         }
@@ -1380,7 +1380,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             pasteItems();
         }
         if (_selectionGroup!=null && !_selectionGroup.contains(p)) {
-            _selectionGroup = null;
+            deselectSelectionGroup();
         }
         if (_selectionGroup==null) {
             _selectionGroup = new ArrayList <Positionable>();
@@ -1435,7 +1435,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 _selectionGroup.get(i).remove();
             }
         }
-        _selectionGroup = null;
+        deselectSelectionGroup();
         _pastePending = false;
     }
         
@@ -1553,6 +1553,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         }
         popup.show((Component)p, p.getWidth()/2+(int)((getPaintScale()-1.0)*p.getX()),
                     p.getHeight()/2+(int)((getPaintScale()-1.0)*p.getY()));
+        
+        _currentSelection =null;
     }
  
     private HashMap <String, NamedIcon> _portalIconMap;

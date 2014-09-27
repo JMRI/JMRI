@@ -51,8 +51,10 @@ public class PositionableRectangle extends PositionableShape {
         String txt = Bundle.getMessage("editShape", Bundle.getMessage("rectangle"));
         popup.add(new javax.swing.AbstractAction(txt) {
                 public void actionPerformed(ActionEvent e) {
-                	_editFrame = new DrawRectangle("editShape", "rectangle", null);
-                	setEditParams();               	
+                	if (_editFrame==null) {
+                    	_editFrame = new DrawRectangle("editShape", "rectangle", null);
+                    	setEditParams();               	                		
+                	}
                 }
             });
         return true;

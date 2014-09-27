@@ -1,14 +1,11 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
 import java.awt.Rectangle;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
@@ -39,17 +36,6 @@ public class DrawEllipse extends DrawFrame{
 		p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
 		JPanel pp = new JPanel();
         _widthText = new JTextField(6);
-        _widthText.addKeyListener(new KeyListener() {
-            public void keyTyped(KeyEvent E) { }
-            public void keyPressed(KeyEvent E){ }
-            public void keyReleased(KeyEvent E) { 
-              JTextField tmp = (JTextField) E.getSource();
-              String t = tmp.getText();
-              if (t!=null && t.length()>0) {
-            	  _width = Integer.parseInt(t);        	 
-              }
-            }
-        	});
     	_widthText.setText(Integer.toString(_width));
         _widthText.setHorizontalAlignment(JTextField.RIGHT);
         pp.add(_widthText);
@@ -59,17 +45,6 @@ public class DrawEllipse extends DrawFrame{
 
         pp = new JPanel();
         _heightText = new JTextField(6);
-        _heightText.addKeyListener(new KeyListener() {
-            public void keyTyped(KeyEvent E) { }
-            public void keyPressed(KeyEvent E){ }
-            public void keyReleased(KeyEvent E) { 
-              JTextField tmp = (JTextField) E.getSource();
-              String t = tmp.getText();
-              if (t!=null && t.length()>0) {
-            	  _height = Integer.parseInt(t);        	 
-              }
-            }
-        	});
     	_heightText.setText(Integer.toString(_height));
         _heightText.setHorizontalAlignment(JTextField.RIGHT);
         pp.add(_heightText);
@@ -125,14 +100,9 @@ public class DrawEllipse extends DrawFrame{
      */
     protected void updateFigure(PositionableShape p) {
     	PositionableEllipse pos = (PositionableEllipse)p;
-    	try {
-        	p._width = Integer.parseInt(_widthText.getText());
-    		p._height = Integer.parseInt(_heightText.getText());
-    		pos.makeShape();
-    	} catch (NumberFormatException nfe) {
-    		JOptionPane.showMessageDialog(this, nfe,
-    				Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
-    	}
+    	p._width = getInteger(_widthText, p._width);
+    	p._height = getInteger(_heightText, p._height);
+		pos.makeShape();
 		setPositionableParams(pos);
     }
    

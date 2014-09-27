@@ -41,8 +41,7 @@ public class PositionableShape extends PositionableJComponent
 
     private Shape	_shape;
     protected Color	_lineColor = Color.black;
-    protected Color	_fillColor;
-    protected int	_alpha = 255;
+    protected Color	_fillColor = new Color(255, 255, 255, 0);
     protected int	_lineWidth = 1;
     private int	_degrees;
     protected AffineTransform _transform;
@@ -62,7 +61,7 @@ public class PositionableShape extends PositionableJComponent
 	static final int RIGHT	=1;
 	static final int BOTTOM	=2;
 	static final int LEFT	=3;    
-    static final int SIZE = 8;
+    static final int SIZE = 4;
     
     public PositionableShape(Editor editor) {
     	super(editor);
@@ -124,30 +123,21 @@ public class PositionableShape extends PositionableJComponent
     	if (c==null) {
     		c = Color.black;
     	}
-    	_lineColor = c;
+    	_lineColor = c;;
     }
     public Color getLineColor() {
     	return _lineColor;
     }
 
     public void setFillColor(Color c) {
-    	if (c==null) {
-    		_fillColor = null;
-    	} else {
-        	_fillColor = new Color(c.getRed(), c.getGreen(), c.getBlue(), _alpha);    		
+    	if (c!=null) {
+        	_fillColor = c;    		    		
     	}
     }
     public Color getFillColor( ) {
     	return _fillColor;
     }
     
-    public void setAlpha(int a) {
-    	_alpha = a;
-    }
-    public int getAlpha() {
-    	return _alpha;
-    }
-
     public void setLineWidth(int w) {
     	_lineWidth = w;
     }
@@ -194,10 +184,12 @@ public class PositionableShape extends PositionableJComponent
             g2d.setColor(_fillColor);
             g2d.fill(_shape);
         }
-        BasicStroke stroke = new BasicStroke(_lineWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10f);
-        g2d.setColor(_lineColor);
-        g2d.setStroke(stroke);
-        g2d.draw(_shape);
+        if (_lineColor!=null) {
+            BasicStroke stroke = new BasicStroke(_lineWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10f);
+            g2d.setColor(_lineColor);
+            g2d.setStroke(stroke);
+            g2d.draw(_shape);        	
+        }
         paintHandles(g2d);
     }
     
@@ -206,10 +198,12 @@ public class PositionableShape extends PositionableJComponent
             g2d.setColor(Editor.HIGHLIGHT_COLOR);
             g2d.setStroke(new java.awt.BasicStroke(2.0f));
             Rectangle r = getBounds();
-            r.x=0;
-            r.y=0;
+            r.x = -_lineWidth/2;
+            r.y = -_lineWidth/2;
+        	r.width += _lineWidth;
+        	r.height += _lineWidth;
        		g2d.draw(r);
-       		g2d.fill(r);
+//       		g2d.fill(r);
         	for (int i=0; i<_handles.length; i++) {
         		if (_handles[i]!=null) {
             		g2d.setColor(Color.RED);
@@ -228,11 +222,9 @@ public class PositionableShape extends PositionableJComponent
 
     public Positionable finishClone(Positionable p) {
         PositionableShape pos = (PositionableShape)p;
-        pos._alpha = _alpha; 
         pos._lineWidth = _lineWidth; 
-        pos.setFillColor(_fillColor); 
-        pos._lineColor = new Color(_lineColor.getRed(), _lineColor.getGreen(), _lineColor.getBlue());
-//        pos.makeShape();
+        pos._fillColor = new Color(_fillColor.getRed(), _fillColor.getGreen(), _fillColor.getBlue(), _fillColor.getAlpha());
+        pos._lineColor = new Color(_lineColor.getRed(), _lineColor.getGreen(), _lineColor.getBlue(), _lineColor.getAlpha());
         pos.updateSize();
         return super.finishClone(pos);
     }
@@ -285,9 +277,6 @@ public class PositionableShape extends PositionableJComponent
     }
     
     DrawFrame _editFrame;    
-    public boolean setEditItemMenu(JPopupMenu popup) {
-    	return false;
-    }
 
     protected void setEditParams() {
         _editFrame.setDisplayParams(this);
@@ -313,6 +302,7 @@ public class PositionableShape extends PositionableJComponent
                 public void actionPerformed(ActionEvent a) {
                     removeHandles();
                     _editFrame.closingEvent();
+                    _editFrame = null;
                 }
         });
         panel0.add(cancelButton);
@@ -323,7 +313,8 @@ public class PositionableShape extends PositionableJComponent
 //        makeShape();
         removeHandles();
         updateSize();
-        _editFrame.closingEvent();    	
+        _editFrame.closingEvent();
+        _editFrame = null;
         repaint();
     }
     
@@ -426,22 +417,22 @@ public class PositionableShape extends PositionableJComponent
         _controlSensor = null;
     }
     
-    protected void removeHandles() {
+    public void removeHandles() {
     	_handles = null;
 //    	invalidate();
  		repaint();
    }
     
-    protected void drawHandles() {
+    public void drawHandles() {
     	_handles = new Rectangle[4];
-       	if (_width>2*SIZE) {
-        	_handles[RIGHT] = new Rectangle(_width-SIZE,_height/2-SIZE/2, SIZE, SIZE);
-        	_handles[LEFT] = new Rectangle(0, _height/2-SIZE/2, SIZE, SIZE);    		       		
-       	}
-       	if (_height>2*SIZE) {
-        	_handles[TOP] = new Rectangle(_width/2-SIZE/2, 0, SIZE, SIZE);       		
-        	_handles[BOTTOM] = new Rectangle(_width/2-SIZE/2, _height-SIZE, SIZE, SIZE);
-       	}
+    	int rectSize = 2*SIZE;
+    	if (_width<rectSize || _height<rectSize) {
+    		rectSize = Math.min(_width, _height);
+    	}
+    	_handles[RIGHT] = new Rectangle(_width-rectSize,_height/2-rectSize/2, rectSize, rectSize);
+    	_handles[LEFT] = new Rectangle(0, _height/2-rectSize/2, rectSize, rectSize);    		       		
+    	_handles[TOP] = new Rectangle(_width/2-rectSize/2, 0, rectSize, rectSize);       		
+    	_handles[BOTTOM] = new Rectangle(_width/2-rectSize/2, _height-rectSize, rectSize, rectSize);
     }
     
     public Point getInversePoint(int x, int y) throws java.awt.geom.NoninvertibleTransformException  {
