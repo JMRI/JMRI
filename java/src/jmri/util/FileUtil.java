@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * class, as (so far) all of the operations have needed no state information.
  *
  * @author Bob Jacobsen Copyright 2003, 2005, 2006
- * @author Randall Wood Copyright 2012, 2013
+ * @author Randall Wood Copyright 2012, 2013, 2014
  * @version $Revision$
  */
 public class FileUtil {
@@ -103,17 +103,54 @@ public class FileUtil {
     /**
      * Get the {@link java.io.File} that path refers to. Throws a
      * {@link java.io.FileNotFoundException} if the file cannot be found instead
-     * of returning null (as File would).
+     * of returning null (as File would). Use {@link #getURI(java.lang.String) }
+     * or {@link #getURL(java.lang.String) } instead of this method if possible.
      *
      * @param path
      * @return {@link java.io.File} at path
      * @throws java.io.FileNotFoundException
+     * @see #getURI(java.lang.String)
+     * @see #getURL(java.lang.String)
      */
     static public File getFile(String path) throws FileNotFoundException {
         try {
             return new File(FileUtil.getAbsoluteFilename(path));
         } catch (NullPointerException ex) {
             throw new FileNotFoundException("Cannot find file at " + path);
+        }
+    }
+
+    /**
+     * Get the {@link java.io.File} that path refers to. Throws a
+     * {@link java.io.FileNotFoundException} if the file cannot be found instead
+     * of returning null (as File would).
+     *
+     * @param path
+     * @return {@link java.io.File} at path
+     * @throws java.io.FileNotFoundException
+     * @see #getFile(java.lang.String)
+     * @see #getURL(java.lang.String)
+     */
+    static public URI getURI(String path) throws FileNotFoundException {
+        return FileUtil.getFile(path).toURI();
+    }
+
+    /**
+     * Get the {@link java.net.URL} that path refers to. Throws a
+     * {@link java.io.FileNotFoundException} if the URL cannot be found instead
+     * of returning null.
+     *
+     * @param path
+     * @return {@link java.net.URL} at path
+     * @throws FileNotFoundException
+     * @see #getFile(java.lang.String)
+     * @see #getURI(java.lang.String)
+     */
+    static public URL getURL(String path) throws FileNotFoundException {
+        try {
+            return FileUtil.getURI(path).toURL();
+        } catch (MalformedURLException ex) {
+            throw new FileNotFoundException("Cannot create URL for file at " + path);
         }
     }
 
@@ -299,7 +336,7 @@ public class FileUtil {
             log.debug("Using {}", path);
             return new File(path.replace(SEPARATOR, File.separatorChar)).getCanonicalPath();
         } catch (IOException ex) {
-            log.warn("Can not convert {} into a usable filename.", path, ex);
+            log.warn("Cannot convert {} into a usable filename.", path, ex);
             return null;
         }
     }
