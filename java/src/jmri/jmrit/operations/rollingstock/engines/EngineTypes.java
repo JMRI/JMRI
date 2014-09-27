@@ -4,8 +4,10 @@ package jmri.jmrit.operations.rollingstock.engines;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JComboBox;
 
 import org.jdom.Attribute;
@@ -26,6 +28,8 @@ public class EngineTypes {
 	// for property change
 	public static final String ENGINETYPES_LENGTH_CHANGED_PROPERTY = "EngineTypesLength"; // NOI18N
 	public static final String ENGINETYPES_NAME_CHANGED_PROPERTY = "EngineTypesName"; // NOI18N
+	
+	private static final int MIN_NAME_LENGTH = 4;
 
 	public EngineTypes() {
 	}
@@ -113,6 +117,26 @@ public class EngineTypes {
 		String[] types = getNames();
 		for (int i = 0; i < types.length; i++)
 			box.addItem(types[i]);
+	}
+	
+	private int _maxNameLength = 0;
+
+	/**
+	 * Get the maximum character length of a engine type when printing on a manifest or switch list.
+	 * 
+	 * @return the maximum character length of a engine type
+	 */
+	public int getCurMaxNameLength() {
+		if (_maxNameLength == 0) {
+			String[] types = getNames();
+			int length = MIN_NAME_LENGTH;
+			for (String modelName : types) {
+				if (modelName.length() > length)
+					length = modelName.length();
+			}
+			_maxNameLength = length;
+		}
+		return _maxNameLength;
 	}
 	
 	/**

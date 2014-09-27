@@ -25,13 +25,13 @@ import java.util.List;
  * 
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Dennis Miller Copyright (C) 2005
- * @author Daniel Boudreau Copyright (C) 2008, 2011
+ * @author Daniel Boudreau Copyright (C) 2008, 2011, 2014
  * @version $Revision$
  */
 public class PrintEngineRosterAction extends AbstractAction {
 
 	private static final int numberCharPerLine = 90;
-	final int ownerMaxLen = 4; // Only show the first 4 characters of the owner's name
+	final int ownerMaxLen = 5; // Only show the first 5 characters of the owner's name
 
 	EngineManager manager = EngineManager.instance();
 
@@ -51,7 +51,7 @@ public class PrintEngineRosterAction extends AbstractAction {
 	 */
 	boolean isPreview;
 	EnginesTableFrame panel;
-	
+
 	static final String NEW_LINE = "\n"; // NOI18N
 	static final String TAB = "\t"; // NOI18N
 
@@ -60,8 +60,7 @@ public class PrintEngineRosterAction extends AbstractAction {
 		// obtain a HardcopyWriter to do this
 		HardcopyWriter writer = null;
 		try {
-			writer = new HardcopyWriter(mFrame, Bundle.getMessage("TitleEngineRoster"), 10, .5, .5,
-					.5, .5, isPreview);
+			writer = new HardcopyWriter(mFrame, Bundle.getMessage("TitleEngineRoster"), 10, .5, .5, .5, .5, isPreview);
 		} catch (HardcopyWriter.PrintCanceledException ex) {
 			log.debug("Print cancelled");
 			return;
@@ -83,60 +82,49 @@ public class PrintEngineRosterAction extends AbstractAction {
 		List<RollingStock> engines = panel.getSortByList();
 		try {
 			// header
-			String s = Bundle.getMessage("Number")
-					+ TAB
-					+ Bundle.getMessage("Road")
-					+ TAB
-					+ Bundle.getMessage("Model")
-					+ TAB
-					+ "     "
-					+ Bundle.getMessage("Type")
-					+ "      "
-					+ Bundle.getMessage("Length")
-					+ " "
-					+ (panel.sortByConsist.isSelected() ? Bundle.getMessage("Consist") + "     "
-							: Bundle.getMessage("Owner"))
-					+ (panel.sortByValue.isSelected() ? " "
-							+ padAttribute(Setup.getValueLabel(), Control.max_len_string_attibute)
-							: "")
-					+ (panel.sortByRfid.isSelected() ? " "
-							+ padAttribute(Setup.getRfidLabel(), Control.max_len_string_attibute)
-							: "")
-					+ ((!panel.sortByValue.isSelected() && !panel.sortByRfid.isSelected()) ? " "
-							+ Bundle.getMessage("Built") : "") + " " + Bundle.getMessage("Location")
-					+ NEW_LINE;
-			writer.write(s);
-			for (int i = 0; i < engines.size(); i++) {
-				Engine engine = (Engine) engines.get(i);
+			String header = padAttribute(Bundle.getMessage("Number"), 7)
+					+ padAttribute(Bundle.getMessage("Road"), 7)
+					+ padAttribute(Bundle.getMessage("Model"), EngineModels.instance().getCurMaxNameLength())
+					+ padAttribute(Bundle.getMessage("Type"), EngineTypes.instance().getCurMaxNameLength())
+					+ padAttribute(Bundle.getMessage("Len"), Control.max_len_string_length_name)
+					+ (panel.sortByConsist.isSelected() ? padAttribute(Bundle.getMessage("Consist"),
+							Control.max_len_string_attibute) : padAttribute(Bundle.getMessage("Owner"), ownerMaxLen))
+					+ (panel.sortByValue.isSelected() ? padAttribute(Setup.getValueLabel(),
+							Control.max_len_string_attibute) : "")
+					+ (panel.sortByRfid.isSelected() ? padAttribute(Setup.getRfidLabel(),
+							Control.max_len_string_attibute) : "")
+					+ ((!panel.sortByValue.isSelected() && !panel.sortByRfid.isSelected()) ? padAttribute(Bundle
+							.getMessage("Built"), Control.max_len_string_built_name) : "")
+					+ Bundle.getMessage("Location") + NEW_LINE;
+			writer.write(header);
+			for (RollingStock rs : engines) {
+				Engine engine = (Engine) rs;
 
 				// loco number
-				number = padAttribute(engine.getNumber().trim(), 7);
-				road = padAttribute(engine.getRoadName().trim(), 7);
-				model = padAttribute(engine.getModel().trim(), Control.max_len_string_attibute);
-				type = padAttribute(engine.getTypeName().trim(), Control.max_len_string_attibute);
-				length = padAttribute(engine.getLength().trim(), Control.max_len_string_length_name);
+				number = padAttribute(engine.getNumber(), 7);
+				road = padAttribute(engine.getRoadName(), 7);
+				model = padAttribute(engine.getModel(), EngineModels.instance().getCurMaxNameLength());
+				type = padAttribute(engine.getTypeName(), EngineTypes.instance().getCurMaxNameLength());
+				length = padAttribute(engine.getLength(), Control.max_len_string_length_name);
 
 				if (panel.sortByConsist.isSelected())
-					consist = padAttribute(engine.getConsistName().trim(),
-							Control.max_len_string_attibute);
+					consist = padAttribute(engine.getConsistName(), Control.max_len_string_attibute);
 				else
-					owner = padAttribute(engine.getOwner().trim(), ownerMaxLen);
+					owner = padAttribute(engine.getOwner(), ownerMaxLen);
 
 				if (panel.sortByValue.isSelected())
-					value = padAttribute(engine.getValue().trim(), Control.max_len_string_attibute);
+					value = padAttribute(engine.getValue(), Control.max_len_string_attibute);
 				else if (panel.sortByRfid.isSelected())
-					rfid = padAttribute(engine.getRfid().trim(), Control.max_len_string_attibute);
+					rfid = padAttribute(engine.getRfid(), Control.max_len_string_attibute);
 				else
-					built = padAttribute(engine.getBuilt().trim(),
-							Control.max_len_string_built_name);
+					built = padAttribute(engine.getBuilt(), Control.max_len_string_built_name);
 
 				location = "";
 				if (!engine.getLocationName().equals("")) {
 					location = engine.getLocationName() + " - " + engine.getTrackName();
 				}
 
-				s = number + road + model + type + length + owner + consist + value + rfid + built
-						+ location;
+				String s = number + road + model + type + length + owner + consist + value + rfid + built + location;
 				if (s.length() > numberCharPerLine)
 					s = s.substring(0, numberCharPerLine);
 				writer.write(s + NEW_LINE);
@@ -150,6 +138,7 @@ public class PrintEngineRosterAction extends AbstractAction {
 	}
 
 	private String padAttribute(String attribute, int length) {
+		attribute = attribute.trim();
 		if (attribute.length() > length)
 			attribute = attribute.substring(0, length);
 		StringBuffer buf = new StringBuffer(attribute);
@@ -158,6 +147,5 @@ public class PrintEngineRosterAction extends AbstractAction {
 		return buf.toString();
 	}
 
-	static Logger log = LoggerFactory
-			.getLogger(PrintEngineRosterAction.class.getName());
+	static Logger log = LoggerFactory.getLogger(PrintEngineRosterAction.class.getName());
 }
