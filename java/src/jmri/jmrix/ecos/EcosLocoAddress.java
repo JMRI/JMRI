@@ -3,21 +3,24 @@ package jmri.jmrix.ecos;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import java.util.List;
+import java.util.HashMap;
 import jmri.DccThrottle;
+import jmri.LocoAddress;
 /**
  * Stores all the loco information from the Ecos into JMRI
  *
  * @author Kevin Dickerson
  * @version     $Revision$
  */
-public class EcosLocoAddress {
+public class EcosLocoAddress implements jmri.LocoAddress {
+    
     private String _ecosObject = null;
     private int _dccAddress = 0;
     private String _ecosDescription = null;
     private String _rosterId = null;
-    private String _protocol = null;
-    private String _cv8 = null;
-    private String _cv7 = null;
+    private String _ecosProtocolString = null;
+    private LocoAddress.Protocol _protocol = LocoAddress.Protocol.DCC;
+    private int _speedSteps = DccThrottle.SpeedStepMode128;
     boolean direction;
     int currentSpeed;
     private boolean doNotAddToRoster = false;
@@ -37,31 +40,36 @@ public class EcosLocoAddress {
            _rosterId = l.get(0).getId();
         }
     }
+       
+    HashMap<Integer, Integer> cvValues = new HashMap<Integer, Integer>();
     
-    public void setCV8(String cv8){
-        _cv8=cv8;
+    public void setCV(int cv, int value){
+        cvValues.put(cv, value);
     }
     
-    public String getCV8(){
-        return _cv8;
+    public int getCV(int cv){
+        if(cvValues.containsKey(cv)){
+            return cvValues.get(cv);
+        }
+        return -1;
     }
     
-    public void setCV7(String cv7){
-        _cv7=cv7;
+    public String getCVAsString(int cv){
+        int val = getCV(cv);
+        if(val==-1)
+            return null;
+        return ""+val; //Do correctly
+        
     }
     
-    public String getCV7(){
-        return _cv7;
-    }
-    
-    public void setEcosLocoAddress(int dCCAddress){
+    public void setLocoAddress(int dCCAddress){
         _dccAddress=dCCAddress;
     }
     
     /**
      * @return the loco address configured on the ECOS for this loco
      */
-    public int getEcosLocoAddress(){
+    public int getNumber(){
         return _dccAddress;
     }
     /**
@@ -149,31 +157,45 @@ public class EcosLocoAddress {
     }    
     //Protocol is here as it is a potential value from the ecos
     // We may not actually use it.
-    public String getProtocol(){
-        return _protocol;
+    public String getECOSProtocol(){
+        return _ecosProtocolString;
     }
     //@TODO Need to udate this to return the new Protocol option from LocoAddress
     public int getSpeedStepMode(){
-        if(_protocol.equals("DCC128"))
-            return DccThrottle.SpeedStepMode128;
-        if(_protocol.equals("DCC28"))
-            return DccThrottle.SpeedStepMode28;
-        if(_protocol.equals("DCC14"))
-            return DccThrottle.SpeedStepMode14;
-        if(_protocol.equals("MM14"))
-            return DccThrottle.SpeedStepMode14;
-        if(_protocol.equals("MM28"))
-            return DccThrottle.SpeedStepMode28;
-        //ESU does also support MM27, SX32, MMFKT, not sure how these shouldbe handled
-        return DccThrottle.SpeedStepMode128;
+        return _speedSteps;
     }
 
     public void setProtocol(String protocol){
-        String oldValue = _protocol;
-        _protocol = protocol;
-        firePropertyChange("protocol", oldValue, _protocol);
-        
-    }   
+        //funcexists
+        String oldValue = _ecosProtocolString;
+        _ecosProtocolString = protocol;
+        firePropertyChange("protocol", oldValue, _ecosProtocolString);
+        if(protocol.startsWith("DCC")){
+            _protocol = LocoAddress.Protocol.DCC;
+        }
+        else if (protocol.startsWith("MM")){
+            _protocol = LocoAddress.Protocol.MOTOROLA;
+        }
+        else if (protocol.startsWith("SX")){  //SX32
+            _protocol = LocoAddress.Protocol.SELECTRIX;
+        }
+        else if (protocol.startsWith("LBG")){  //LBG14
+            _protocol = LocoAddress.Protocol.SELECTRIX;
+        }
+        if(protocol.endsWith("128")){
+            _speedSteps = DccThrottle.SpeedStepMode128;
+        } else if(protocol.endsWith("28")){
+            _speedSteps = DccThrottle.SpeedStepMode28;
+        } else if(protocol.endsWith("27")){
+                _speedSteps = DccThrottle.SpeedStepMode27;
+        } else if(protocol.endsWith("14")){
+            _speedSteps = DccThrottle.SpeedStepMode14;
+        }
+    }
+    
+    public LocoAddress.Protocol getProtocol(){
+        return _protocol;
+    }
     
     /*
     The Temporary Entry Field is used to determine if JMRI has had to create the entry on an ad-hoc basis

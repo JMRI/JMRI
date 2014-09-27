@@ -467,7 +467,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
                     return (b!=null) ? b.getEcosDescription() : null;
                 case VALUECOL:  //
                     b = getByEcosObject(ecosObjectIdList.get(row));
-                    return (b!=null) ? b.getEcosLocoAddress() : null;
+                    return (b!=null) ? b.getNumber() : null;
                 case COMMENTCOL:
                     b = getByEcosObject(ecosObjectIdList.get(row));
                     RosterEntry re = null;
@@ -483,7 +483,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
                     return re;
                 case PROTOCOL:
                     b = getByEcosObject(ecosObjectIdList.get(row));
-                    return (b!=null) ? b.getProtocol() : null;
+                    return (b!=null) ? b.getECOSProtocol() : null;
                 case ADDTOROSTERCOL:  //
                     b = getByEcosObject(ecosObjectIdList.get(row));
                     if(b.getRosterId()==null || b.getRosterId().equals(""))

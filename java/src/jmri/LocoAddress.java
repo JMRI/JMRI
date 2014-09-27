@@ -39,7 +39,8 @@ public interface LocoAddress {
         MOTOROLA(   "motorola", "ProtocolMotorola"),  // NOI18N
         MFX(        "mfx",      "ProtocolMFX"),       // NOI18N
         M4(         "m4",       "ProtocolM4"),        // NOI18N
-        OPENLCB(    "openlcb",  "ProtocolOpenLCB");   // NOI18N
+        OPENLCB(    "openlcb",  "ProtocolOpenLCB"),   // NOI18N
+        LGB(    "lgb",  "ProtocolLGB");   // NOI18N
         
 
         Protocol(String shName, String peopleKey) {

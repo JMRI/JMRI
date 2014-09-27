@@ -93,7 +93,7 @@ public class RosterToEcos implements EcosListener{
                         _re.putAttribute(ep.getRosterAttribute(), EcosAddr);
                         objEcosLoco.setRosterId(_re.getId());
                         objEcosLoco.setEcosDescription(description());
-                        objEcosLoco.setEcosLocoAddress(Integer.parseInt(_re.getDccAddress()));
+                        objEcosLoco.setLocoAddress(Integer.parseInt(_re.getDccAddress()));
                         switch(_re.getProtocol()){
                             case MOTOROLA: objEcosLoco.setProtocol("MM28"); break;
                             case SELECTRIX: objEcosLoco.setProtocol("SX28"); break;

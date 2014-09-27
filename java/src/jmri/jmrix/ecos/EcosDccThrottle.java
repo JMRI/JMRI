@@ -811,8 +811,8 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                     _haveControl = true;
                 if (!_hadControl){
                     ((EcosDccThrottleManager)adapterMemo.get(jmri.ThrottleManager.class)).throttleSetup(this, this.address, true);
+                    getInitialStates();
                 }
-                getInitialStates();
             }
         }
         else if (resultCode==35){
@@ -863,6 +863,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
             case MOTOROLA: return "MM28";
             case SELECTRIX: return "SX28";
             case MFX: return "MMFKT";
+            case LGB : return "LGB";
             default: return "DCC128";
         }
     }
@@ -870,7 +871,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     private void createEcosLoco() {
         objEcosLoco.setEcosDescription("Created By JMRI");
         objEcosLoco.setProtocol(protocol(address.getProtocol()));
-        String message = "create(10, addr[" + objEcosLoco.getEcosLocoAddress() + "], name[\"Created By JMRI\"], protocol[" + objEcosLoco.getProtocol() + "], append)";
+        String message = "create(10, addr[" + objEcosLoco.getNumber() + "], name[\"Created By JMRI\"], protocol[" + objEcosLoco.getECOSProtocol() + "], append)";
         EcosMessage m = new EcosMessage(message);
         tc.sendEcosMessage(m, this);
     }
@@ -882,7 +883,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
             //It might be worth adding in a sleep/pause of discription between retries.
             ecosretry++;
 
-            String message = "request("+this.objectNumber+", control)";
+            String message = "request("+this.objectNumber+", view, control)";
             EcosMessage ms = new EcosMessage(message);
             tc.sendEcosMessage(ms, this);
             log.error("We have no control over the ecos object " + this.objectNumber + " Retrying Attempt " + ecosretry);
@@ -902,7 +903,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                     val=1;
             }
             if (val==0) {
-                String message = "request("+this.objectNumber+", control, force)";
+                String message = "request("+this.objectNumber+", view, control, force)";
                 EcosMessage ms = new EcosMessage(message);
                 tc.sendEcosMessage(ms, this);
                 log.error("We have no control over the ecos object " + this.objectNumber + "Trying a forced control");

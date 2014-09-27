@@ -187,9 +187,9 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
                 sb.append("0");
             sb.append(port);
             es=(EcosSensor)getSensor(sb.toString());
-            if (result==0)
+            if (result==0) {
                 es.setOwnState(Sensor.INACTIVE);
-            else {
+            } else {
                 es.setOwnState(Sensor.ACTIVE);
             }
             k=k*2;

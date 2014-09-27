@@ -227,7 +227,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         }
 
         oldsize = _tdcc.size();
-        int dccAddress = s.getEcosLocoAddress();
+        int dccAddress = s.getNumber();
         _tdcc.put(dccAddress, s);
         firePropertyChange("length", Integer.valueOf(oldsize), Integer.valueOf(_tdcc.size()));
         // listen for name and state changes to forward
@@ -247,7 +247,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         _tecos.remove(ecosObject);
         firePropertyChange("length", Integer.valueOf(oldsize), Integer.valueOf(_tecos.size()));
         
-        int dccAddress = s.getEcosLocoAddress();
+        int dccAddress = s.getNumber();
         oldsize = _tdcc.size();
         _tdcc.remove(dccAddress);
         firePropertyChange("length", Integer.valueOf(oldsize), Integer.valueOf(_tdcc.size()));
@@ -598,21 +598,15 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         if(line.contains("cv")){
             String cv = EcosReply.getContentDetails(line, "cv");
             int cvnum = Integer.parseInt(cv.substring(0, cv.indexOf(",")));
-            String cvval = cv.substring(cv.indexOf(", ")+2, cv.length());
-            switch(cvnum){
-                case 7 :    tmploco.setCV7(cvval);
-                            break;
-                case 8  :   tmploco.setCV8(cvval);
-                            if(processLocoToRosterQueue)
-                                locoToRoster.processQueue();
-                            break;
-                default : break;
-            }
+            int cvval = Integer.parseInt(cv.substring(cv.indexOf(", ")+2, cv.length()));
+            tmploco.setCV(cvnum, cvval);
+            if(cvnum==8 && processLocoToRosterQueue)
+                    locoToRoster.processQueue();
         }
         if (line.contains("addr")){
-            tmploco.setEcosLocoAddress(GetEcosObjectNumber.getEcosObjectNumber(line, "addr[", "]"));
-            if(tmploco.getCV7()==null){
-                tmploco.setCV7("0");
+            tmploco.setLocoAddress(GetEcosObjectNumber.getEcosObjectNumber(line, "addr[", "]"));
+            if(tmploco.getCV(7)==-1){
+                tmploco.setCV(7, 0);
                 getEcosCVs(tmploco);
             }
         }

@@ -92,6 +92,8 @@ public class DccLocoAddress implements LocoAddress {
                 return "" + number + "(MFX)";
             case OPENLCB:
                 return "" + number + "(OpenLCB)";
+            case LGB:
+                return "" + number + "(LGB)";
             default:
                 return "" + number + "(D)";
         }

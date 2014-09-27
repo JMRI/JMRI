@@ -74,14 +74,14 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
                         LocoAddress.Protocol.DCC.getPeopleName(),
                         LocoAddress.Protocol.MOTOROLA.getPeopleName(),
                         LocoAddress.Protocol.SELECTRIX.getPeopleName(),
-                        LocoAddress.Protocol.MFX.getPeopleName()};
+                        LocoAddress.Protocol.LGB.getPeopleName()};
     }
     
     public LocoAddress.Protocol[] getAddressProtocolTypes(){
         return new LocoAddress.Protocol[]{LocoAddress.Protocol.DCC, 
                                         LocoAddress.Protocol.MOTOROLA,
                                         LocoAddress.Protocol.SELECTRIX,
-                                        LocoAddress.Protocol.MFX};
+                                        LocoAddress.Protocol.LGB};
     }
         
 
