@@ -1,3 +1,14 @@
+/*============================================================================*
+ * WARNING      This class contains automatically modified code.      WARNING *
+ *                                                                            *
+ * The method initComponents() and the variable declarations between the      *
+ * "// Variables declaration - do not modify" and                             *
+ * "// End of variables declaration" comments will be overwritten if modified *
+ * by hand. Using the NetBeans IDE to edit this file is strongly recommended. *
+ *                                                                            *
+ * See http://jmri.org/help/en/html/doc/Technical/NetBeansGUIEditor.shtml for *
+ * more information.                                                          *
+ *============================================================================*/
 package jmri.profile;
 
 import java.awt.Dimension;
