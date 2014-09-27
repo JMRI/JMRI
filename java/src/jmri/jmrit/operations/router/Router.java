@@ -180,12 +180,12 @@ public class Router extends TrainCommon {
 				}
 				// now try 2 trains and a yard track
 			} else if (setCarDestinationYard(car)) {
-				log.debug("Was able to find route via yard ({}, {}) for car ({})", car.getDestinationName(), car
-						.getDestinationTrackName(), car.toString());
+				log.debug("Was able to find route via yard ({}, {}) for car ({}) using two trains", car
+						.getDestinationName(), car.getDestinationTrackName(), car.toString());
 				// now try 2 trains and a staging track
 			} else if (setCarDestinationStaging(car)) {
-				log.debug("Was able to find route via staging ({}, {}) for car ({})", car.getDestinationName(), car
-						.getDestinationTrackName(), car.toString());
+				log.debug("Was able to find route via staging ({}, {}) for car ({}) using two trains", car
+						.getDestinationName(), car.getDestinationTrackName(), car.toString());
 			// now try 3 or more trains to route car
 			} else if (setCarDestinationMultipleTrains(car)) {
 				log.debug("Was able to find multiple train route for car ({})", car.toString());
@@ -221,8 +221,10 @@ public class Router extends TrainCommon {
 		// can specific train can service car out of staging. Note that the router code will try to route the car using
 		// two or more trains just to get the car out of staging.
 		if (car.getTrack().getTrackType().equals(Track.STAGING) && _train != null && !trainServicesCar) {
-			log.debug("Car ({}) destination ({}, {}) is not serviced by train ({}) out of staging", car.toString(),
-					clone.getDestinationName(), clone.getDestinationTrackName(), _train.getName());
+			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterTrainCanNotStaging"), new Object[] {_train.getName(),
+				car.toString(), car.getLocationName(), clone.getDestinationName(), clone.getDestinationTrackName()}));
+//			log.debug("Car ({}) destination ({}, {}) is not serviced by train ({}) out of staging", car.toString(),
+//					clone.getDestinationName(), clone.getDestinationTrackName(), _train.getName());
 			if (!_train.getServiceStatus().equals(""))
 				addLine(_buildReport, SEVEN, _train.getServiceStatus());
 		} else if (!trainServicesCar) {
@@ -515,6 +517,8 @@ public class Router extends TrainCommon {
 				}
 			}
 		}
+		if (foundRoute)
+			_status = STATUS_NOT_ABLE;
 		return foundRoute;
 	}
 

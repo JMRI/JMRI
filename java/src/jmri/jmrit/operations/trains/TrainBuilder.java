@@ -2999,6 +2999,10 @@ public class TrainBuilder extends TrainCommon {
 				log.debug("Location ({}) not reachable", track.getLocation().getName());
 				continue;
 			}
+			if (_terminateStageTrack != null && track.getLocation() == _terminateStageTrack.getLocation()) {
+				log.debug("Train doesn't terminate to staging track {} at terminal {}", track.getName(), track.getLocation().getName());
+				continue;
+			}				
 			// the following method sets the load generated from staging boolean
 			if (generateLoadCarDepartingAndTerminatingIntoStaging(car, track)) {
 				// test to see if destination is reachable by this train
