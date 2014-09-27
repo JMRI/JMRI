@@ -70,6 +70,8 @@ public class DccLocoAddress implements LocoAddress {
                 return (int) (60000 + number & 0xFFFFFFFF);
             case OPENLCB:
                 return (int) (70000 + number & 0xFFFFFFFF);
+            case LGB:
+                return (int) (80000 + number & 0xFFFFFFFF);
             default:
                 return (int) (number & 0xFFFFFFFF);
         }
