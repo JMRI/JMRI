@@ -41,7 +41,7 @@ public class Dcc4PcMenu extends JMenu{
             new Item("MenuItemDcc4PcMonitor", "jmri.jmrix.dcc4pc.swing.monitor.Dcc4PcMonPane"),
             new Item("MenuItemSendPacket",    "jmri.jmrix.dcc4pc.swing.packetgen.PacketGenPanel"),
             new Item("MenuItemInfo",          "jmri.jmrix.dcc4pc.swing.StatusPanel"),
-            new Item("MenuItemBoardList",     "jmri.jmrix.dcc4pc.swing.boardlist.BoardListPanel")
+            new Item("MenuItemBoardList",     "jmri.jmrix.dcc4pc.swing.boardlists.BoardListPanel")
         
         };
 
