@@ -414,6 +414,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 				+ car.getTrackName() + ") destination (" + car.getDestinationName() + ", " // NOI18N
 				+ car.getDestinationTrackName() + ")"); // NOI18N
 		if (Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_VERY_DETAILED)) {
+			TrainCommon.addLine(buildReport, Setup.BUILD_REPORT_VERY_DETAILED, TrainCommon.BLANK_LINE);
 			TrainCommon.addLine(buildReport, Setup.BUILD_REPORT_VERY_DETAILED, MessageFormat.format(Bundle
 					.getMessage("trainFindForCar"), new Object[] { car.toString(), car.getLocationName(),
 					car.getTrackName(), car.getDestinationName(), car.getDestinationTrackName() }));
