@@ -2,14 +2,16 @@
 
 package jmri.jmrit.display.layoutEditor;
 
-import javax.swing.*;
-
-import java.util.*;
-
-import junit.framework.*;
-import junit.extensions.jfcunit.*;
-import junit.extensions.jfcunit.finder.*;
-import junit.extensions.jfcunit.eventdata.*;
+import java.util.List;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import junit.extensions.jfcunit.TestHelper;
+import junit.extensions.jfcunit.eventdata.MouseEventData;
+import junit.extensions.jfcunit.finder.AbstractButtonFinder;
+import junit.extensions.jfcunit.finder.DialogFinder;
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 /**
  * Swing jfcUnit tests for the LayoutEditor 
@@ -24,7 +26,7 @@ public class LayoutEditorWindowTest extends jmri.util.SwingTestCase {
 	    };
 	    
 	    // load and display sample file
-	    java.io.File f = new java.io.File("java/test/jmri/jmrit/display/layoutEditor/pass/SimpleLayoutEditorTest.xml");
+	    java.io.File f = new java.io.File("java/test/jmri/jmrit/display/layoutEditor/valid/SimpleLayoutEditorTest.xml");
         cm.load(f);
         sleep(100); // time for internal listeners to calm down
         
