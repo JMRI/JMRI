@@ -39,6 +39,7 @@ public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix
         option1Name = "FlowControl";
         options.put(option1Name, new Option("MXULF connection uses : ", validOption1));
         adaptermemo = new Mx1SystemConnectionMemo();
+        adaptermemo.setConnectionType(Mx1SystemConnectionMemo.MXULF);
     }
 
 	SerialPort activeSerialPort = null;

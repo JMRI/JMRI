@@ -207,12 +207,18 @@ public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
                                 offset++;
                             }
                             txt.append(" Track Control ");
-                            if ((getElement(3+offset)&0x01)==0x01) txt.append(" Turn Track Off ");
+                            if ((getElement(3+offset)&0x03)==0x03) txt.append(" Query Track Status ");
+                            else if ((getElement(3+offset)&0x01)==0x01) txt.append(" Turn Track Off ");
                             else if ((getElement(3+offset)&0x02)==0x02) txt.append(" Turn Track On ");
-                            else if ((getElement(3+offset)&0x03)==0x03) txt.append(" Query Track Status ");
                             else txt.append(" Stop All Locos ");
                             break;
-                    case 3: txt.append(" Loco Control ");
+                    case 3: txt.append(" Loco Control : ");
+                            if(getMessageType()==PRIMARY){
+                                txt.append(""+getLocoAddress(getElement((3)), getElement(4)));
+                                txt.append(((getElement(6)&0x20)==0x20) ? " Fwd " : " Rev ");
+                                txt.append(((getElement(6)&0x10)==0x10) ? " F0: On " : " F0: Off ");
+                                txt.append(decodeFunctionStates(getElement(7), getElement(8)));
+                            }
                             break;
                     case 4: txt.append(" Loco Funct ");
                             break;
@@ -287,6 +293,26 @@ public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
         return txt.toString();
     }
     
+    private String decodeFunctionStates(int cData2, int cData3){
+        StringBuilder txt = new StringBuilder();
+        
+        txt.append(((cData2&0x1)==0x1) ? " F1: On " : " F1: Off ");
+        txt.append(((cData2&0x2)==0x2) ? " F2: On " : " F2: Off ");
+        txt.append(((cData2&0x4)==0x4) ? " F3: On " : " F3: Off ");
+        txt.append(((cData2&0x8)==0x8) ? " F4: On " : " F4: Off ");
+        txt.append(((cData2&0x10)==0x10) ? " F5: On " : " F5: Off ");
+        txt.append(((cData2&0x20)==0x20) ? " F6: On " : " F6: Off ");
+        txt.append(((cData2&0x40)==0x40) ? " F7: On " : " F7: Off ");
+        txt.append(((cData2&0x80)==0x80) ? " F8: On " : " F8: Off ");
+        
+        txt.append(((cData3&0x1)==0x1) ? " F9: On " : " F9: Off ");
+        txt.append(((cData3&0x2)==0x2) ? " F10: On " : " F10: Off ");
+        txt.append(((cData3&0x4)==0x4) ? " F11: On " : " F11: Off ");
+        txt.append(((cData3&0x8)==0x8) ? " F12: On " : " F12: Off ");
+        
+        return txt.toString();
+    }
+    
     public int getLocoAddress(){
         int offset=0;
         if(getMessageType()==REPLY2){
@@ -357,7 +383,8 @@ public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
     
     final static int TRACKCTL = 0x02;
     final static int PROGCMD = 0x13;
-
+    final static int LOCOCMD = 0x03;
+    
     static public Mx1Message getCmdStnDetails() {
         Mx1Message m = new Mx1Message(4);
         m.setElement(1, 0x10);
@@ -424,9 +451,39 @@ public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
             m.setElement(7, value);
         }
         return m;
-    
     }
     
+    /**
+     * 
+     * @param locoAddress Address of the loco that we are issuing the command too.
+     * @param speed Speed Step in the actual Speed Step System
+     * @param dcc Is this a packet for a DCC or Motorola device
+     * @param cData1
+     * @param cData2 - Functions Output 0-7
+     * @param cData3 - Functions Output 9-12
+     * @return Mx1Message
+     */
+    
+    static public Mx1Message getLocoControl(int locoAddress, int speed, boolean dcc, int cData1, int cData2, int cData3){
+        Mx1Message m = new Mx1Message(9, Mx1Packetizer.BINARY);    
+        m.setElement(0, 0x00);
+        m.setElement(1, 0x10); /* PC control short message */
+        m.setElement(2, LOCOCMD);
+        //High add 80 to indicate DCC
+        int locoHi = locoAddress>>8;
+        if(dcc){
+            locoHi = locoHi+128;
+        } else {
+            locoHi = locoHi+64;
+        }
+        m.setElement(3, (locoHi));
+        m.setElement(4, (locoAddress&0xff));
+        m.setElement(5, speed);
+        m.setElement(6, cData1);
+        m.setElement(7, cData2);
+        m.setElement(8, cData3);
+        return m;
+    }
     // initialize logging
     static Logger log = LoggerFactory.getLogger(Mx1Message.class.getName());
 

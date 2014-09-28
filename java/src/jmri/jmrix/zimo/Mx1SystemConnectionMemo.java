@@ -42,6 +42,18 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
                                 jmri.jmrix.swing.ComponentFactory.class);
     }
     
+    public final static int MX1 = 0x00;
+    public final static int MXULF = 0x01;
+    public final static int MX10 = 0x02;
+    
+    int connectionType = 0x00;
+    
+    public void setConnectionType(int connection){
+        connectionType = connection;
+    }
+    
+    public int getConnectionType(){ return connectionType; }
+    
     jmri.jmrix.swing.ComponentFactory cf = null;
       
     /**
@@ -67,6 +79,8 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return true;
         if (type.equals(jmri.PowerManager.class))
             return true;
+        if (type.equals(jmri.ThrottleManager.class))
+            return true;
         /*if ((type.equals(jmri.CommandStation.class))){
             return true;
         }*/
@@ -82,6 +96,8 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return (T)getProgrammerManager();
         if (T.equals(jmri.PowerManager.class))
             return (T)getPowerManager();
+        if (T.equals(jmri.ThrottleManager.class))
+            return (T)getThrottleManager();
         /*if (T.equals(jmri.CommandStation.class))
             return (T)commandStation;*/
         return null; // nothing, by default
@@ -98,12 +114,16 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         jmri.InstanceManager.setProgrammerManager(
             getProgrammerManager());
 
-        powerManager = new jmri.jmrix.zimo.Mx1PowerManager(getMx1TrafficController());
+        powerManager = new jmri.jmrix.zimo.Mx1PowerManager(this);
         jmri.InstanceManager.setPowerManager(powerManager);
+        
+        throttleManager = new jmri.jmrix.zimo.Mx1ThrottleManager(this);
+        InstanceManager.setThrottleManager(throttleManager);
     }
 
     private ProgrammerManager programmerManager;
     private Mx1PowerManager powerManager;
+    private Mx1ThrottleManager throttleManager;
 
     public ProgrammerManager getProgrammerManager() {
         if (programmerManager == null){
@@ -126,6 +146,7 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     //private Mx1CommandStation commandStation;
 
     public Mx1PowerManager getPowerManager() { return powerManager; }
+    public Mx1ThrottleManager  getThrottleManager() { return throttleManager; }
     
     protected ResourceBundle getActionModelResourceBundle(){
         //No actions that can be loaded at startup
@@ -137,6 +158,8 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         InstanceManager.deregister(this, Mx1SystemConnectionMemo.class);
         if (cf != null) 
             InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
+        if (throttleManager != null)
+            InstanceManager.deregister(throttleManager, jmri.jmrix.zimo.Mx1ThrottleManager.class);
         super.dispose();
     }
     

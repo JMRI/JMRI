@@ -458,9 +458,10 @@ public class Mx1Packetizer extends Mx1TrafficController {
                 // input - now send
                 try {
                   if (ostream != null) {
-                    if (!controller.okToSend()) log.warn("Mx1 port not ready to receive");
+                    //if (!controller.okToSend()) log.warn("Mx1 port not ready to receive");
                     if (debug) log.debug("start write to stream");
                     ostream.write(msg);
+                    ostream.flush();
                     if(protocol){
                         //Tell the retry handler that a packet has been transmitted and to handle any retry.
                         synchronized(retryHandler) {

@@ -6,6 +6,7 @@ import jmri.JmriException;
 import jmri.PowerManager;
 import static jmri.PowerManager.OFF;
 import static jmri.PowerManager.ON;
+import static jmri.jmrix.zimo.Mx1Message.ACKREP1;
 
 /**
  * PowerManager implementation for controlling layout power.
@@ -18,14 +19,15 @@ import static jmri.PowerManager.ON;
  */
 public class Mx1PowerManager implements PowerManager, Mx1Listener {
 
-	public Mx1PowerManager(Mx1TrafficController tc) {
+	public Mx1PowerManager(Mx1SystemConnectionMemo memo) {
 		// connect to the TrafficManager
-		this.tc=tc;
+		this.tc=memo.getMx1TrafficController();
 		tc.addMx1Listener(~0, this);
+        this.memo= memo;
         }
 
     public String getUserName() { return "Mx1"; }
-
+    Mx1SystemConnectionMemo memo;
 	int power = UNKNOWN;
 
 	public void setPower(int v) throws JmriException {
@@ -56,7 +58,12 @@ public class Mx1PowerManager implements PowerManager, Mx1Listener {
             } else if (v==OFF) {
                 tc.sendMx1Message(Mx1Message.setPowerOff(), this);
             }
-            tc.sendMx1Message(Mx1Message.getTrackStatus(), this);
+            if(memo.getConnectionType()==Mx1SystemConnectionMemo.MXULF){
+                //MXULF doesn't return the correct status of the track power, so we have to assume it has been set                
+                power=v;
+            } else {
+                tc.sendMx1Message(Mx1Message.getTrackStatus(), this);
+            }
         }
 		firePropertyChange("Power", null, null);
 	}
@@ -87,15 +94,30 @@ public class Mx1PowerManager implements PowerManager, Mx1Listener {
 
         // to listen for status changes from net
 	public void message(Mx1Message m) {
-                if (m.getElement(0) == 0x5a) {
-			if((m.getElement(2)&0x02) == 0x02) {
-                        power = ON;
-			firePropertyChange("Power", null, null);
-                        }
-                        else {
+        if(tc.getProtocol()==Mx1Packetizer.ASCII){
+            if (m.getElement(0) == 0x5a) {
+                if((m.getElement(2)&0x02) == 0x02) {
+                            power = ON;
+                firePropertyChange("Power", null, null);
+                            }
+                            else {
+                            power = OFF;
+                firePropertyChange("Power", null, null);
+                }
+        } else {
+                if(m.getMessageType()==ACKREP1 && m.getPrimaryMessage()==Mx1Message.TRACKCTL){
+                    if ((m.getElement(4)&0x02)==0x02){ 
                         power = OFF;
-			firePropertyChange("Power", null, null);
-			}
+                        firePropertyChange("Power", null, null);
+                    }
+                    else {
+                        power = ON;
+                        firePropertyChange("Power", null, null);
+                    }
+                    
+                }
+                
+            }
 
 		}
 	}
