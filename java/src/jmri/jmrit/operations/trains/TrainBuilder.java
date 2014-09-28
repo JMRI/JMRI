@@ -51,7 +51,6 @@ public class TrainBuilder extends TrainCommon {
 	protected static final String FIVE = Setup.BUILD_REPORT_DETAILED;
 	protected static final String SEVEN = Setup.BUILD_REPORT_VERY_DETAILED;
 
-	protected static final String BLANK_LINE = " ";
 	private static final int DISPLAY_CAR_LIMIT = 500;
 	private static final int DISPLAY_NO_MOVE_CAR_LIMIT = 100;
 
@@ -1470,8 +1469,7 @@ public class TrainBuilder extends TrainCommon {
 					new Object[] { _departStageTrack.getLocation().getName(), _departStageTrack.getName(),
 							numCarsFromStaging }));
 			// and list them
-			for (_carIndex = 0; _carIndex < _carList.size(); _carIndex++) {
-				Car c = _carList.get(_carIndex);
+			for (Car c : _carList) {
 				if (c.getTrack() == _departStageTrack) {
 					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildStagingCarAtLoc"),
 							new Object[] { c.toString(), c.getTypeName(), c.getLoadName() }));
@@ -2038,8 +2036,7 @@ public class TrainBuilder extends TrainCommon {
 		int carCount = 0;
 		StringBuffer buf = new StringBuffer();
 		// confirm that all cars in staging are departing
-		for (_carIndex = 0; _carIndex < _carList.size(); _carIndex++) {
-			Car car = _carList.get(_carIndex);
+		for (Car car : _carList) {
 			// build failure if car departing staging without a destination and a train
 			if (car.getLocationName().equals(_departLocation.getName())
 					&& (car.getDestination() == null || car.getDestinationTrack() == null || car.getTrain() == null)) {
@@ -4078,8 +4075,8 @@ public class TrainBuilder extends TrainCommon {
 		int numberLocos = 0;
 		// determine how many locos have already been assigned to the train
 		List<RollingStock> engines = EngineManager.instance().getList(_train);
-		for (int i = 0; engines.size() > i; i++) {
-			Engine eng = (Engine) engines.get(i);
+		for (RollingStock rs : engines) {
+			Engine eng = (Engine) rs;
 			if (eng.getRouteLocation() == rl)
 				numberLocos++;
 		}

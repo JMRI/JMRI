@@ -397,7 +397,6 @@ public class PrintLocationsAction extends AbstractAction {
 		for (Location location : locations) {
 			if (_location != null && location != _location)
 				continue;
-			// get a list of spur tracks at this location
 			List<Track> tracks = location.getTrackByNameList(trackType);
 			for (Track track : tracks) {
 				if (track.acceptsTypeName(carType)) {

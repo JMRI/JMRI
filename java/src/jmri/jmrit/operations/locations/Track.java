@@ -284,13 +284,17 @@ public class Track {
 	}
 	
 	public String getTrackTypeName() {
-		if (getTrackType().equals(Track.SPUR))
+		return (getTrackTypeName(getTrackType()));
+	}
+	
+	public static String getTrackTypeName(String trackType) {
+		if (trackType.equals(Track.SPUR))
 			return Bundle.getMessage("Spur").toLowerCase();
-		if (getTrackType().equals(Track.YARD))
+		if (trackType.equals(Track.YARD))
 			return Bundle.getMessage("Yard").toLowerCase();
-		if (getTrackType().equals(Track.INTERCHANGE))
+		if (trackType.equals(Track.INTERCHANGE))
 			return Bundle.getMessage("Class/Interchange");	// this is an abbreviation
-		if (getTrackType().equals(Track.STAGING))
+		if (trackType.equals(Track.STAGING))
 			return Bundle.getMessage("Staging").toLowerCase();
 		return ("unknown");
 	}
