@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  * @author Randall Wood Copyright 2012, 2013, 2014
  * @version $Revision$
  */
-public class FileUtil {
+public final class FileUtil {
 
     /**
      * Portable reference to items in the JMRI program directory.
@@ -1016,4 +1016,7 @@ public class FileUtil {
         pw.println(text);
         pw.close();
     }
+
+    /* Private default constructor to ensure it's not documented. */
+    private FileUtil() {}
 }
