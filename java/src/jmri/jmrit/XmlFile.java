@@ -32,14 +32,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Handle common aspects of XML files. 
- * <P> JMRI needs to be able to operate
- * offline, so it needs to store resources locally. At the same time, we want XML
- * files to be transportable, and to have their schema and stylesheets accessible via the web (for
- * browser rendering). Further, our code assumes that default values for
- * attributes will be provided, and it's necessary to read the schema for that to
- * work. 
- * <p> We implement this using our own EntityResolver, the
+ * Handle common aspects of XML files.
+ * <P>
+ * JMRI needs to be able to operate offline, so it needs to store resources
+ * locally. At the same time, we want XML files to be transportable, and to have
+ * their schema and stylesheets accessible via the web (for browser rendering).
+ * Further, our code assumes that default values for attributes will be
+ * provided, and it's necessary to read the schema for that to work.
+ * <p>
+ * We implement this using our own EntityResolver, the
  * {@link jmri.util.JmriLocalEntityResolver} class.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2007, 2012, 2014
@@ -48,10 +49,13 @@ import org.slf4j.LoggerFactory;
 public abstract class XmlFile {
 
     /**
-     * Define root part of URL for XSLT style page processing instructions. <p>
+     * Define root part of URL for XSLT style page processing instructions.
+     * <p>
      * See the <A
      * HREF="http://jmri.org/help/en/html/doc/Technical/XmlUsage.shtml#xslt">XSLT
-     * versioning discussion</a>. <p> Things that have been tried here: <dl>
+     * versioning discussion</a>.
+     * <p>
+     * Things that have been tried here: <dl>
      * <dt>/xml/XSLT/ <dd>(Note leading slash) Works if there's a copy of the
      * xml directory at the root of whatever served the XML file, e.g. the JMRI
      * web site or a local computer running a server. Doesn't work for e.g.
@@ -154,6 +158,13 @@ public abstract class XmlFile {
 
     /**
      * Get the root element from an XML document in a stream.
+     *
+     * @param verify true if the XML document should be validated against its
+     * schema
+     * @param stream input containing the XML document
+     * @return the root element of the XML document
+     * @throws org.jdom.JDOMException if the XML document is invalid
+     * @throws java.io.IOException if the input cannot be read
      */
     protected Element getRoot(boolean verify, InputStream stream) throws JDOMException, IOException {
         if (log.isDebugEnabled()) {
@@ -171,6 +182,13 @@ public abstract class XmlFile {
      *
      * Runs through a BufferedReader for increased performance.
      *
+     *
+     * @param verify true if the XML document should be validated against its
+     * schema
+     * @param reader input containing the XML document
+     * @return the root element of the XML document
+     * @throws org.jdom.JDOMException if the XML document is invalid
+     * @throws java.io.IOException if the input cannot be read
      * @since 3.1.5
      */
     protected Element getRoot(boolean verify, InputStreamReader reader) throws JDOMException, IOException {
@@ -187,7 +205,6 @@ public abstract class XmlFile {
     /**
      * Write a File as XML.
      *
-     * @throws org.jdom.JDOMException
      * @throws FileNotFoundException
      * @param file File to be created.
      * @param doc Document to be written out. This should never be null.
@@ -223,11 +240,7 @@ public abstract class XmlFile {
             return true;
         } else {
             File fx = new File(xmlDir() + name);
-            if (fx.exists()) {
-                return true;
-            } else {
-                return false;
-        }
+            return fx.exists();
     }
     }
 
@@ -268,8 +281,8 @@ public abstract class XmlFile {
     @SuppressWarnings("unchecked")
     static public void dumpElement(Element name) {
         List<Element> l = name.getChildren();
-        for (int i = 0; i < l.size(); i++) {
-            System.out.println(" Element: " + l.get(i).getName() + " ns: " + l.get(i).getNamespace());
+        for (Element l1 : l) {
+            System.out.println(" Element: " + l1.getName() + " ns: " + l1.getNamespace());
         }
     }
 
@@ -538,10 +551,13 @@ public abstract class XmlFile {
     }
 
     /**
-     * Define the location of XML files within the distribution directory. <P>
+     * Define the location of XML files within the distribution directory.
+     * <p>
      * Use {@link FileUtil#getProgramPath()} since the current working directory
      * is not guaranteed to be the JMRI distribution directory if jmri.jar is
      * referenced by an external Java application.
+     *
+     * @return the XML directory that ships with JMRI.
      */
     static public String xmlDir() {
         return FileUtil.getProgramPath() + "xml" + File.separator;
@@ -565,6 +581,7 @@ public abstract class XmlFile {
      * @param suffix1 An allowed suffix, or null
      * @param suffix2 A second allowed suffix, or null. If both arguments are
      * null, no specific filtering is done.
+     * @return a file chooser
      */
     public static JFileChooser userFileChooser(
             String filter, String suffix1, String suffix2) {
@@ -618,5 +635,5 @@ public abstract class XmlFile {
         return builder;
     }
     // initialize logging
-    static private Logger log = LoggerFactory.getLogger(XmlFile.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(XmlFile.class.getName());
 }
