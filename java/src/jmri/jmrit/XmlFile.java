@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
@@ -18,8 +19,6 @@ import javax.swing.JFileChooser;
 import jmri.util.FileUtil;
 import jmri.util.JmriLocalEntityResolver;
 import jmri.util.NoArchiveFileFilter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.jdom.Comment;
 import org.jdom.DocType;
 import org.jdom.Document;
@@ -29,6 +28,8 @@ import org.jdom.ProcessingInstruction;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handle common aspects of XML files. 
@@ -226,8 +227,8 @@ public abstract class XmlFile {
                 return true;
             } else {
                 return false;
-            }
         }
+    }
     }
 
     /**
@@ -244,21 +245,17 @@ public abstract class XmlFile {
      * @return null if file found, otherwise the located File
      */
     protected File findFile(String name) {
-        File fp = new File(FileUtil.getUserFilesPath() + name);
-        if (fp.exists()) {
-            return fp;
-        }
-        fp = new File(name);
-        if (fp.exists()) {
-            return fp;
-        }
-        fp = new File(FileUtil.getProgramPath() + name);
-        if (fp.exists()) {
-            return fp;
-        }
-        fp = new File(xmlDir() + name);
-        if (fp.exists()) {
-            return fp;
+        URL url = FileUtil.findURL(name,
+                FileUtil.getUserFilesPath(),
+                ".",
+                FileUtil.getProgramPath(),
+                xmlDir());
+        if (url != null) {
+            try {
+                return new File(url.toURI());
+            } catch (URISyntaxException ex) {
+                return null;
+            }
         }
         return null;
     }
