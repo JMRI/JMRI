@@ -82,7 +82,7 @@ public abstract class XmlFile {
             }
             return rootFromFile(fp);
         }
-        URL resource = this.getClass().getClassLoader().getResource(name);
+        URL resource = FileUtil.findURL(name);
         if (resource != null) {
             return this.rootFromURL(resource);
         } else {
