@@ -18,7 +18,7 @@ import javax.swing.*;
 /**
  * Frame for user edit of track roads
  * 
- * @author Dan Boudreau Copyright (C) 2013
+ * @author Dan Boudreau Copyright (C) 2013, 2014
  * @version $Revision: 22371 $
  */
 
@@ -177,6 +177,7 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
 			return;
 		if (ae.getSource() == saveTrackButton) {
 			log.debug("track save button activated");
+			checkForErrors();
 			OperationsXml.save();
 			if (Setup.isCloseWindowOnSaveEnabled())
 				dispose();
@@ -272,6 +273,13 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
 			_track.addTypeName(b.getText());
 		} else {
 			_track.deleteTypeName(b.getText());
+		}
+	}
+
+	private void checkForErrors() {
+		if (_track.getRoadOption().equals(Track.INCLUDE_ROADS) && _track.getRoadNames().length == 0) {
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorNeedRoads"), Bundle.getMessage("ErrorNoRoads"),
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

@@ -76,8 +76,8 @@
         <LI><A HREF="#ModifyLocationByCarType">Modify Location by Car Type</A></LI>
         <LI><A HREF="#ShowCars">Show Cars</A></LI>
         <LI><A HREF="#ChangeTrackTypeLocation">Change Track Type</A></LI>
-       </UL></LI>
-      <LI><A HREF="#Yards">Yards</A></LI>
+       </UL>
+      <LI><A HREF="#Yards">Yards</A>
       <UL>
        <LI><A HREF="#RoadOptions">Road Options</A></LI>
        <LI><A HREF="#LoadOptions">Load Options</A></LI>
@@ -232,9 +232,10 @@
     HREF="#Trains">Trains</A>. Entering and requiring locomotives for your trains is completely
    optional, and locomotives are not needed for the program to operate correctly. So if you want to
    manually assign your locomotives to your trains, don't bother entering the locomotive data into
-   the program. We also recommend that when defining your locations that you first use yard and spur
-   tracks, and try staging and classification/interchange tracks when you're more comfortable with
-   how the program operates.
+   the program. We also recommend that when defining your locations that you first use
+   <A HREF="#Yards">yard</A> and <A HREF="#Sidings">spur</A> tracks, and try <A
+    HREF="#Staging">staging</A> and <A HREF="#Interchange">classification/interchange</A> tracks
+   when you're more comfortable with how the program operates.
 
    <P>
     If this is your first time using a computer generated car forwarding program, it is best to

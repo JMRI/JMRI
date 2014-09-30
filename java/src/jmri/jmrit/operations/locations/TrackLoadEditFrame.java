@@ -14,13 +14,12 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
 import java.awt.*;
-
 import javax.swing.*;
 
 /**
  * Frame for user edit of track loads
  * 
- * @author Dan Boudreau Copyright (C) 2013
+ * @author Dan Boudreau Copyright (C) 2013, 2014
  * @version $Revision: 22371 $
  */
 
@@ -28,7 +27,6 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 
 	private static boolean loadAndType = false;
 	private static boolean shipLoadAndType = false;
-
 
 	Location _location = null;
 	Track _track = null;
@@ -39,7 +37,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 	JPanel pLoadControls = new JPanel();
 	JPanel panelLoads = new JPanel();
 	JScrollPane paneLoads = new JScrollPane(panelLoads);
-	
+
 	JPanel pShipLoadControls = new JPanel();
 	JPanel panelShipLoads = new JPanel();
 	JScrollPane paneShipLoadControls;
@@ -47,11 +45,11 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 
 	// major buttons
 	JButton saveTrackButton = new JButton(Bundle.getMessage("SaveTrack"));
-	
+
 	JButton addLoadButton = new JButton(Bundle.getMessage("AddLoad"));
 	JButton deleteLoadButton = new JButton(Bundle.getMessage("DeleteLoad"));
 	JButton deleteAllLoadsButton = new JButton(Bundle.getMessage("DeleteAll"));
-	
+
 	JButton addShipLoadButton = new JButton(Bundle.getMessage("AddLoad"));
 	JButton deleteShipLoadButton = new JButton(Bundle.getMessage("DeleteLoad"));
 	JButton deleteAllShipLoadsButton = new JButton(Bundle.getMessage("DeleteAll"));
@@ -64,7 +62,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 	JRadioButton loadNameAll = new JRadioButton(Bundle.getMessage("AcceptAll"));
 	JRadioButton loadNameInclude = new JRadioButton(Bundle.getMessage("AcceptOnly"));
 	JRadioButton loadNameExclude = new JRadioButton(Bundle.getMessage("Exclude"));
-	
+
 	JRadioButton shipLoadNameAll = new JRadioButton(Bundle.getMessage("ShipAll"));
 	JRadioButton shipLoadNameInclude = new JRadioButton(Bundle.getMessage("ShipOnly"));
 	JRadioButton shipLoadNameExclude = new JRadioButton(Bundle.getMessage("Exclude"));
@@ -74,7 +72,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 	JComboBox comboBoxShipLoads = CarLoads.instance().getComboBox(null);
 	JComboBox comboBoxTypes = CarTypes.instance().getComboBox();
 	JComboBox comboBoxShipTypes = CarTypes.instance().getComboBox();
-	
+
 	// labels
 	JLabel trackName = new JLabel();
 
@@ -119,76 +117,76 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 
 		p1.add(pTrackName);
 		p1.add(pLocationName);
-		
+
 		// row 3
 		JPanel p3 = new JPanel();
 		p3.setLayout(new BoxLayout(p3, BoxLayout.Y_AXIS));
 		JScrollPane pane3 = new JScrollPane(p3);
 		pane3.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("LoadsTrack")));
 		pane3.setMaximumSize(new Dimension(2000, 400));
-		
+
 		JPanel pLoadRadioButtons = new JPanel();
 		pLoadRadioButtons.setLayout(new FlowLayout());
-		
+
 		pLoadRadioButtons.add(loadNameAll);
 		pLoadRadioButtons.add(loadNameInclude);
 		pLoadRadioButtons.add(loadNameExclude);
 		pLoadRadioButtons.add(loadAndTypeCheckBox);
-		
+
 		pLoadControls.setLayout(new FlowLayout());
-		
+
 		pLoadControls.add(comboBoxTypes);
 		pLoadControls.add(comboBoxLoads);
 		pLoadControls.add(addLoadButton);
 		pLoadControls.add(deleteLoadButton);
 		pLoadControls.add(deleteAllLoadsButton);
-		
+
 		pLoadControls.setVisible(false);
-		
+
 		p3.add(pLoadRadioButtons);
 		p3.add(pLoadControls);
 
 		// row 4
 		panelLoads.setLayout(new GridBagLayout());
 		paneLoads.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Loads")));
-		
+
 		ButtonGroup loadGroup = new ButtonGroup();
 		loadGroup.add(loadNameAll);
 		loadGroup.add(loadNameInclude);
 		loadGroup.add(loadNameExclude);
-		
+
 		// row 6
 		JPanel p6 = new JPanel();
 		p6.setLayout(new BoxLayout(p6, BoxLayout.Y_AXIS));
 		paneShipLoadControls = new JScrollPane(p6);
 		paneShipLoadControls.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ShipLoadsTrack")));
 		paneShipLoadControls.setMaximumSize(new Dimension(2000, 400));
-		
+
 		JPanel pShipLoadRadioButtons = new JPanel();
 		pShipLoadRadioButtons.setLayout(new FlowLayout());
-		
+
 		pShipLoadRadioButtons.add(shipLoadNameAll);
 		pShipLoadRadioButtons.add(shipLoadNameInclude);
 		pShipLoadRadioButtons.add(shipLoadNameExclude);
 		pShipLoadRadioButtons.add(shipLoadAndTypeCheckBox);
-		
+
 		pShipLoadControls.setLayout(new FlowLayout());
-		
+
 		pShipLoadControls.add(comboBoxShipTypes);
 		pShipLoadControls.add(comboBoxShipLoads);
 		pShipLoadControls.add(addShipLoadButton);
 		pShipLoadControls.add(deleteShipLoadButton);
 		pShipLoadControls.add(deleteAllShipLoadsButton);
-		
+
 		pShipLoadControls.setVisible(false);
-		
+
 		p6.add(pShipLoadRadioButtons);
 		p6.add(pShipLoadControls);
 
 		// row 7
 		panelShipLoads.setLayout(new GridBagLayout());
 		paneShipLoads.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Loads")));
-		
+
 		ButtonGroup shipLoadGroup = new ButtonGroup();
 		shipLoadGroup.add(shipLoadNameAll);
 		shipLoadGroup.add(shipLoadNameInclude);
@@ -199,7 +197,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 		panelButtons.setLayout(new GridBagLayout());
 		panelButtons.setBorder(BorderFactory.createTitledBorder(""));
 		panelButtons.setMaximumSize(new Dimension(2000, 200));
-		
+
 		// row 13
 		addItem(panelButtons, saveTrackButton, 0, 0);
 
@@ -216,7 +214,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 		addButtonAction(deleteLoadButton);
 		addButtonAction(deleteAllLoadsButton);
 		addButtonAction(addLoadButton);
-		
+
 		addButtonAction(deleteShipLoadButton);
 		addButtonAction(deleteAllShipLoadsButton);
 		addButtonAction(addShipLoadButton);
@@ -224,7 +222,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 		addRadioButtonAction(loadNameAll);
 		addRadioButtonAction(loadNameInclude);
 		addRadioButtonAction(loadNameExclude);
-		
+
 		addRadioButtonAction(shipLoadNameAll);
 		addRadioButtonAction(shipLoadNameInclude);
 		addRadioButtonAction(shipLoadNameExclude);
@@ -233,15 +231,15 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 		addComboBoxAction(comboBoxShipTypes);
 
 		paneShipLoadControls.setVisible(false);
-		paneShipLoads.setVisible(false);	
-		
+		paneShipLoads.setVisible(false);
+
 		// load fields and enable buttons
 		if (_track != null) {
 			_track.addPropertyChangeListener(this);
 			trackName.setText(_track.getName());
 			// only show ship loads for staging tracks
 			paneShipLoadControls.setVisible(_track.getTrackType().equals(Track.STAGING));
-			paneShipLoads.setVisible(_track.getTrackType().equals(Track.STAGING));				
+			paneShipLoads.setVisible(_track.getTrackType().equals(Track.STAGING));
 
 			updateButtons(true);
 		} else {
@@ -249,10 +247,10 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 		}
 
 		// build menu
-//		JMenuBar menuBar = new JMenuBar();
-//		_toolMenu = new JMenu(Bundle.getMessage("Tools"));
-//		menuBar.add(_toolMenu);
-//		setJMenuBar(menuBar);
+		// JMenuBar menuBar = new JMenuBar();
+		// _toolMenu = new JMenu(Bundle.getMessage("Tools"));
+		// menuBar.add(_toolMenu);
+		// setJMenuBar(menuBar);
 
 		// load
 		updateTypeComboBoxes();
@@ -262,7 +260,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 
 		loadAndTypeCheckBox.setSelected(loadAndType);
 		shipLoadAndTypeCheckBox.setSelected(shipLoadAndType);
-		
+
 		initMinimumSize(new Dimension(Control.greaterPanelWidth, Control.mediumPanelHeight));
 	}
 
@@ -272,7 +270,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 			return;
 		if (ae.getSource() == saveTrackButton) {
 			log.debug("track save button activated");
-			saveTrack(_track);
+			save();
 			if (Setup.isCloseWindowOnSaveEnabled())
 				dispose();
 		}
@@ -312,10 +310,9 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 		}
 	}
 
-
-
 	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
-	protected void saveTrack(Track track) {
+	protected void save() {
+		checkForErrors();
 		// save the last state of the "Use car type and load" checkbox
 		loadAndType = loadAndTypeCheckBox.isSelected();
 		shipLoadAndType = shipLoadAndTypeCheckBox.isSelected();
@@ -325,28 +322,28 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 
 	protected void updateButtons(boolean enabled) {
 		saveTrackButton.setEnabled(enabled);
-		
+
 		loadNameAll.setEnabled(enabled);
 		loadNameInclude.setEnabled(enabled);
 		loadNameExclude.setEnabled(enabled);
 		loadAndTypeCheckBox.setEnabled(enabled);
-		
-		boolean en = enabled && (_track.isAddCustomLoadsAnyStagingTrackEnabled()
-				|| _track.isAddCustomLoadsAnySpurEnabled()
-				|| _track.isAddCustomLoadsEnabled());
-		
+
+		boolean en = enabled
+				&& (_track.isAddCustomLoadsAnyStagingTrackEnabled() || _track.isAddCustomLoadsAnySpurEnabled() || _track
+						.isAddCustomLoadsEnabled());
+
 		shipLoadNameAll.setEnabled(en);
 		shipLoadNameInclude.setEnabled(en);
 		shipLoadNameExclude.setEnabled(en);
 		shipLoadAndTypeCheckBox.setEnabled(en);
-		
+
 		addShipLoadButton.setEnabled(en);
 		deleteShipLoadButton.setEnabled(en);
 		deleteAllShipLoadsButton.setEnabled(en);
-		
+
 		comboBoxShipLoads.setEnabled(en);
 		comboBoxShipTypes.setEnabled(en);
-		
+
 	}
 
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
@@ -391,14 +388,14 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 			loadNameAll.setSelected(_track.getLoadOption().equals(Track.ALL_LOADS));
 			loadNameInclude.setSelected(_track.getLoadOption().equals(Track.INCLUDE_LOADS));
 			loadNameExclude.setSelected(_track.getLoadOption().equals(Track.EXCLUDE_LOADS));
-			
+
 			pLoadControls.setVisible(!loadNameAll.isSelected());
 
 			if (!loadNameAll.isSelected()) {
 				int x = 0;
 				int y = 0; // vertical position in panel
 
-				int numberOfLoads = getNumberOfCheckboxes()/2 +1;
+				int numberOfLoads = getNumberOfCheckboxes() / 2 + 1;
 				String[] carLoads = _track.getLoadNames();
 				for (int i = 0; i < carLoads.length; i++) {
 					JLabel load = new JLabel();
@@ -418,7 +415,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 		panelLoads.repaint();
 		panelLoads.validate();
 	}
-	
+
 	private void updateShipLoadNames() {
 		log.debug("Update ship load names");
 		panelShipLoads.removeAll();
@@ -427,14 +424,14 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 			shipLoadNameAll.setSelected(_track.getShipLoadOption().equals(Track.ALL_LOADS));
 			shipLoadNameInclude.setSelected(_track.getShipLoadOption().equals(Track.INCLUDE_LOADS));
 			shipLoadNameExclude.setSelected(_track.getShipLoadOption().equals(Track.EXCLUDE_LOADS));
-			
+
 			pShipLoadControls.setVisible(!shipLoadNameAll.isSelected());
 
 			if (!shipLoadNameAll.isSelected()) {
 				int x = 0;
 				int y = 0; // vertical position in panel
 
-				int numberOfLoads = getNumberOfCheckboxes()/2 +1;
+				int numberOfLoads = getNumberOfCheckboxes() / 2 + 1;
 				String[] carLoads = _track.getShipLoadNames();
 				for (int i = 0; i < carLoads.length; i++) {
 					JLabel load = new JLabel();
@@ -463,7 +460,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 			}
 		}
 	}
-	
+
 	private void deleteAllShipLoads() {
 		if (_track != null) {
 			String[] trackLoads = _track.getShipLoadNames();
@@ -472,18 +469,6 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 			}
 		}
 	}
-
-//	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
-//		JCheckBox b = (JCheckBox) ae.getSource();
-//		log.debug("checkbox change " + b.getText());
-//		if (_location == null)
-//			return;
-//		if (b.isSelected()) {
-//			_track.addTypeName(b.getText());
-//		} else {
-//			_track.deleteTypeName(b.getText());
-//		}
-//	}
 
 	private void updateTypeComboBoxes() {
 		CarTypes.instance().updateComboBox(comboBoxTypes);
@@ -504,6 +489,14 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 		}
 	}
 
+	private void checkForErrors() {
+		if (_track.getLoadOption().equals(Track.INCLUDE_LOADS) && _track.getLoadNames().length == 0
+				|| _track.getShipLoadOption().equals(Track.INCLUDE_LOADS) && _track.getShipLoadNames().length == 0) {
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorNeedLoads"), Bundle.getMessage("ErrorNoLoads"),
+					JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
 	public void dispose() {
 		if (_track != null)
 			_track.removePropertyChangeListener(this);
@@ -512,11 +505,11 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 		CarTypes.instance().removePropertyChangeListener(this);
 		super.dispose();
 	}
-	
+
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-//		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue()); // NOI18N
+		if (Control.showProperty && log.isDebugEnabled())
+			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
+					+ e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY)) {
@@ -534,11 +527,9 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 		}
 		if (e.getPropertyName().equals(Track.LOAD_OPTIONS_CHANGED_PROPERTY)) {
 			if (_track != null)
-				updateButtons(true);			
+				updateButtons(true);
 		}
-		
 	}
 
-	static Logger log = LoggerFactory.getLogger(TrackLoadEditFrame.class
-			.getName());
+	static Logger log = LoggerFactory.getLogger(TrackLoadEditFrame.class.getName());
 }
