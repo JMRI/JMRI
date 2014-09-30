@@ -1389,7 +1389,8 @@
    <P>When a car is placed at a spur the car's load status is modified. The program provides two
     load names for all cars, the default empty or "E", and the default load or "L". If a car has one
     of these loads when it arrives at a spur, the load name will change to the other, i.e. "E"
-    becomes "L" and "L" becomes "E".</P>
+    becomes "L" and "L" becomes "E". If a car has a custom load, it too will be replaced by the default
+    empty "E" when the program sets a car out to a spur.</P>
 
    <P>
     You can if you wish schedule the order that cars will be delivered to a spur, or demand cars
@@ -2141,7 +2142,7 @@
    <A NAME="CarLoad"></A>
    <H3>Car Loads</H3>
 
-   You can optionally set the load state of the car. Select E for empty or L for loaded. You can
+   You can optionally set the load state of the car. Select "E" for empty or "L" for loaded. You can
    also create your own custom
    <A HREF="#EditCarLoads">car loads</A>, but there are restrictions. Normally spurs with
    <A HREF="#Schedules">Schedules</A> are used to load or unload cars with custom loads that you've
@@ -2150,7 +2151,14 @@
    is also suggested that you use a format similar to L(commodity) to describe your loads so it
    looks good on your manifests and switch lists. For example a load of tools could be entered as
    "L(Tools)" or just "Tools" if desired.
-   
+
+   <P>
+    Some folks don't want the default empty or "E" load for a car when the car's load flips from the
+    "L" load or when a car's custom load is removed. To set a custom empty load for car, see <A
+     HREF="#CarsSet">Set Car</A> and the "Return When Empty" fields. You can tell the program which
+    custom empty load you want each car to have.
+   </P>
+
    <A NAME="Kernel"></A>
    <H3>Kernel, or Group of Cars</H3>
 
@@ -2280,23 +2288,39 @@
     building new trains. Many operators have a RIP (Repair In Place) track and use this feature to
     hold the car there until repairs have been made.</P>
 
-   <P>Use the "Location and Track" set of fields to place the car on the layout. Use the "Auto" checkbox to
-    show valid tracks for a given location. You can also optionally enter the location and track
-    that you want the car to return to when the car's load status becomes empty. You can also
-    replace the car's default empty load with one from the load combo box. Only custom loads that
-    are type "Empty" are shown in the combo box.</P>
-    
-   <P>Note that manually changing the load status to empty will not cause the Return When Empty
+   <P>Use the "Location and Track" set of fields to place the car on the layout. Use the "Auto"
+    checkbox to show valid tracks for a given location.</P>
+
+   <P>Use the "Load" menu to change the car's load, or create new ones by using the "Edit"
+    button located to the right of the load menu.</P>
+
+   <P>
+    You can also place the car into a <A HREF="#Kernel">kernel</A> which is a group of cars that are
+    moved as a single unit. Select the kernel you want the car to be in using the "Kernel" menu, and
+    use the "Edit" button to create new ones.
+   </P>
+
+   <H4>Return When Empty</H4>
+
+   You can also optionally enter the location and track that you want the car to return to when the
+   car's load status becomes empty. You can also replace the car's default empty load "E" with one
+   from the return when empty (RWE) load menu. Only custom loads that are type "Empty" are shown in
+   the combo box. When you specify a custom RWE load for a car, the program will use the RWE load
+   instead of the default empty "E" in all cases where the "E" load would normally occur. Note that
+   the RWE load also overrides the generation of custom loads out of staging since the "E" load
+   isn't used by the program for this car.
+
+   <P>Note that manually changing the load status to empty "E" will not cause the Return When Empty
     (RWE) destination to become active, only when the car is set out by the program will the RWE
-    destination become active.</P>
+    destination and RWE load become active.</P>
 
-   <P>You can also change the car's load, or create new ones by using the "Edit" button.</P>
+   <H4>Optional -- Normally Set by Program</H4>
 
-   <P>The next three set of fields are normally set by the program when building trains. We'll
-    explain how they work in case you're interested in how the program works or if you want to
-    manually override the program. The first is the "Destination" set of pull down menus. By default
-    the destination fields are disabled. Under "Tools" there's an option to enable the destination
-    fields.</P>
+   The next three set of fields are normally set by the program when building trains. We'll explain
+   how they work in case you're interested in how the program works or if you want to manually
+   override the program. The first is the "Destination" set of pull down menus. By default the
+   destination fields are disabled. Under "Tools" there's an option to enable the destination
+   fields.
 
    <P>The "Destination" is the next location that the car will be delivered to. The destination
     must be reachable by only one train from the car's current location or the car will not be
