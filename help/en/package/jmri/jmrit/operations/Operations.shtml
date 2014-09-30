@@ -78,6 +78,10 @@
         <LI><A HREF="#ChangeTrackTypeLocation">Change Track Type</A></LI>
        </UL></LI>
       <LI><A HREF="#Yards">Yards</A></LI>
+      <UL>
+       <LI><A HREF="#RoadOptions">Road Options</A></LI>
+       <LI><A HREF="#LoadOptions">Load Options</A></LI>
+      </UL>
       <LI><A HREF="#Sidings">Spurs</A>
        <UL>
         <LI><A HREF="#Schedules">Schedules</A></LI>
@@ -1326,9 +1330,10 @@
    is restricted to the ones that the location can service. If the rolling stock that you wish
    doesn't appear for a yard, confirm that the location's rolling stock types are properly selected.
    If the rolling stock type you want doesn't exist for a location, you will have to create the type
-   using the <A HREF="#Cars">Cars</A> window and editing any car.
-
-   <H3>Road Names Serviced</H3>
+   using the <A HREF="#Cars">Cars</A> window and editing any car. 
+   
+   <A NAME="RoadOptions"></A>
+   <H3>Road Options</H3>
 
    You can also restrict which roads a yard can service. Under "Tools" in the menu, Select "Road
    Options". In the "Edit Track Road Options" window select "Accept only" if you want to build a
@@ -1337,8 +1342,9 @@
    road name you want, and then press the "Add Road" button. To remove a road name from the list,
    select the road name you want to remove, and press "Delete Road". "Delete All" will remove all
    road names from the road list.
-
-   <H3>Load Serviced</H3>
+   
+   <A NAME="LoadOptions"></A>
+   <H3>Load Options</H3>
 
    You can also restrict which car loads a yard can service. Under "Tools" in the menu, Select "Load
    Options". In the "Edit Track Load Options" window select "Accept only" if you want to build a
