@@ -1333,7 +1333,10 @@
    You can also restrict which roads a yard can service. Under "Tools" in the menu, Select "Road
    Options". In the "Edit Track Road Options" window select "Accept only" if you want to build a
    list of road names that the yard will accept. Select "Exclude" if you want to build a list of
-   road names that you want to exclude from the yard.
+   road names that you want to exclude from the yard. To add a road to the road list, select the
+   road name you want, and then press the "Add Road" button. To remove a road name from the list,
+   select the road name you want to remove, and press "Delete Road". "Delete All" will remove all
+   road names from the road list.
 
    <H3>Load Serviced</H3>
 
@@ -1342,16 +1345,19 @@
    list of car load names that the yard will accept. Select "Exclude" if you want to build a list of
    car load names that you want to exclude from the yard. There's also an option to associate the
    loads to a particular type of car that the track will service. Select the "Use car type and load"
-   if you want this feature.
+   if you want this feature. To add a load name or car type and load name to the load list, select
+   the load name or combo you want, and then press the "Add Load" button. To remove a load name from
+   the list, select the load name you want to remove, and press "Delete Load". "Delete All" will
+   remove all load names from the load list.
 
    <H3>Pick Up Car Order</H3>
 
    There are three options for picking up cars from the yard. "Normal" uses the car's move count to
    determine the order cars are removed from the yard, "FIFO" (First In First Out), and "LIFO" (Last
-   In First Out). FIFO would be appropriate for a double ended track where cars are spotted at one end,
-   and pulled from the other. LIFO is useful if you have a single ended yard that you use to service
-   cars. For example storing empty coal cars, it would make more sense to pull an empty coal car
-   from the front of the line rather than digging one out from the middle of the yard.
+   In First Out). FIFO would be appropriate for a double ended track where cars are spotted at one
+   end, and pulled from the other. LIFO is useful if you have a single ended yard that you use to
+   service cars. For example storing empty coal cars, it would make more sense to pull an empty coal
+   car from the front of the line rather than digging one out from the middle of the yard.
 
    <H3>Comment</H3>
 
