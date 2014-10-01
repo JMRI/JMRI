@@ -2,7 +2,6 @@
 
 package apps.SoundPro;
 
-import apps.AppConfigPanel;
 import apps.Apps;
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
@@ -46,11 +45,6 @@ public class SoundPro extends Apps {
 
     SoundPro(JFrame p) {
         super(p);
-    }
-
-    @Deprecated
-    protected AppConfigPanel newPrefs() {
-        return new AppConfigPanel(1);
     }
 
     @Override

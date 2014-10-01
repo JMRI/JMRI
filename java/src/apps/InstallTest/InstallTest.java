@@ -2,7 +2,6 @@
 
 package apps.InstallTest;
 
-import apps.AppConfigPanel;
 import apps.Apps;
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
@@ -45,11 +44,6 @@ public class InstallTest extends Apps {
 
 	InstallTest(JFrame p) {
         super(p);
-    }
-
-    @Deprecated
-    protected AppConfigPanel newPrefs() {
-        return new AppConfigPanel(1);
     }
 
     protected String logo() {

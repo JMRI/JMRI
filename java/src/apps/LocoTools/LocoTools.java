@@ -2,7 +2,6 @@
 
 package apps.LocoTools;
 
-import apps.AppConfigPanel;
 import apps.Apps;
 import java.text.MessageFormat;
 import javax.swing.JFrame;
@@ -38,10 +37,6 @@ public class LocoTools extends Apps {
 
     LocoTools(JFrame p) {
         super(p);
-    }
-    @Deprecated
-    protected AppConfigPanel newPrefs() {
-        return new AppConfigPanel(1);
     }
 
     protected void systemsMenu(JMenuBar menuBar, JFrame frame) {
