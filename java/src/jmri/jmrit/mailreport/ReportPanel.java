@@ -4,11 +4,26 @@ package jmri.jmrit.mailreport;
 
 import java.awt.FlowLayout;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import jmri.profile.Profile;
+import jmri.profile.ProfileManager;
 import jmri.util.MultipartMessage;
 import jmri.util.javaworld.GridLayout2;
 import org.slf4j.Logger;
@@ -37,7 +52,12 @@ public class ReportPanel extends JPanel {
     JCheckBox checkNetwork;
     JCheckBox checkLog;
     JCheckBox checkPanel;
+    JCheckBox checkProfile;
     JCheckBox checkCopy;
+
+    // Define which profile sub-directories to include
+    // In lowercase as I was too lazy to do a proper case-insensitive check...
+    String[] profDirs = {"networkservices", "programmers", "throttle"};
 
     public ReportPanel() {
         if (rb == null) rb = java.util.ResourceBundle.getBundle("jmri.jmrit.mailreport.ReportBundle");
@@ -74,6 +94,7 @@ public class ReportPanel extends JPanel {
         // is the same as the JTextField fields.
         // With some L&F, default font for JTextArea differs.
         descField.setFont(summaryField.getFont());
+        descField.setBorder(summaryField.getBorder());
         descField.setLineWrap(true);
         descField.setWrapStyleWord(true);
         p1.add(descField);
@@ -98,10 +119,17 @@ public class ReportPanel extends JPanel {
         checkLog = new JCheckBox(rb.getString("CheckLog"));
         checkLog.setSelected(true);
         p1.add(checkLog);
+        add(p1);
 
+        p1 = new JPanel();
+        p1.setLayout(new FlowLayout());
         checkPanel = new JCheckBox(rb.getString("CheckPanel"));
         checkPanel.setSelected(true);
         p1.add(checkPanel);
+
+        checkProfile = new JCheckBox(rb.getString("CheckProfile"));
+        checkProfile.setSelected(true);
+        p1.add(checkProfile);
 
         checkCopy = new JCheckBox(rb.getString("CheckCopy"));
         checkCopy.setSelected(true);
@@ -118,7 +146,7 @@ public class ReportPanel extends JPanel {
             });
         add(sendButton);
 
-                }
+    }
 
     @SuppressWarnings("unchecked")
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -133,8 +161,9 @@ public class ReportPanel extends JPanel {
             String requestURL = "http://jmri.org/problem-report.php";  //NOI18N
 
             MultipartMessage msg = new MultipartMessage(requestURL, charSet);
-
+            
             // add reporter email address
+            log.debug("start creating message");
             msg.addFormField("reporter", emailField.getText());
 
             // add if to Cc sender
@@ -151,8 +180,10 @@ public class ReportPanel extends JPanel {
             }
             msg.addFormField("problem", report);
 
+            log.debug("start adding attachments");
             // add panel file if OK
             if (checkPanel.isSelected()) {
+                log.debug("prepare panel attachment");
                 // Check that a panel file has been loaded
                 File file=jmri.configurexml.LoadXmlUserAction.getCurrentFile();
                 if (file!=null) {
@@ -164,8 +195,37 @@ public class ReportPanel extends JPanel {
                 }
             }
 
+            // add profile files if OK
+            if (checkProfile.isSelected()) {
+                log.debug("prepare profile attachment");
+                // Check that a profile has been loaded
+                Profile profile = ProfileManager.defaultManager().getActiveProfile();
+                File file = profile.getPath();
+                if (file!=null) {
+                    log.debug("add profile: " + file.getPath());
+                    // Now zip-up contents of profile
+                    // Create temp file that will be deleted when Java quits
+                    File temp = File.createTempFile("profile", ".zip");
+                    temp.deleteOnExit();
+
+                    FileOutputStream out = new FileOutputStream(temp);
+                    ZipOutputStream zip = new ZipOutputStream(out);
+
+                    addDirectory(zip, file);
+
+                    zip.close();
+                    out.close();
+
+                    msg.addFilePart("logfileupload[]", temp);
+                } else {
+                    // No profile loaded
+                    log.warn("No profile loaded - not sending");
+                }
+            }
+
             // add the log if OK
             if (checkLog.isSelected()) {
+                log.debug("prepare log attachments");
                 // search for an appender that stores a file
                 for (java.util.Enumeration<org.apache.log4j.Appender> en = org.apache.log4j.Logger.getRootLogger().getAllAppenders(); en.hasMoreElements() ;) {
                     // does this have a file?
@@ -179,6 +239,7 @@ public class ReportPanel extends JPanel {
                     } catch (ClassCastException ex) {}
                 }
             }
+            log.debug("done adding attachments");
 
             // finalise and get server response (if any)
             log.debug("posting report...");
@@ -202,7 +263,6 @@ public class ReportPanel extends JPanel {
                 sendButton.setEnabled(true);
             }
 
-
         } catch (IOException ex) {
             log.error("Error when attempting to send report: " + ex);
             sendButton.setEnabled(true);
@@ -210,6 +270,59 @@ public class ReportPanel extends JPanel {
             log.error("Invalid email address: " + ex);
             JOptionPane.showMessageDialog(null, rb.getString("ErrAddress"), rb.getString("ErrTitle"), JOptionPane.ERROR_MESSAGE);
             sendButton.setEnabled(true);
+        }
+    }
+
+    private void addDirectory(ZipOutputStream out, File source) {
+        log.debug("Add profile: " + source.getName());
+        addDirectory(out, source, "");
+    }
+
+    private void addDirectory(ZipOutputStream out, File source, String directory) {
+        // get directory contents
+        File[] files = source.listFiles();
+
+        log.debug("Add directory: " + directory);
+
+        for(File file : files) {
+            // if current file is a directory, call recursively
+            if(file.isDirectory()) {
+                // Only include certain sub-directories
+                if(!directory.equals("") || Arrays.asList(profDirs).contains(file.getName().toLowerCase())) {
+                    try {
+                        out.putNextEntry(new ZipEntry(directory+file.getName()+"/"));
+                    } catch (IOException ex) {
+                        log.error("Exception when adding directory: " + ex);
+                    }
+                    addDirectory(out, file, directory+file.getName()+"/");
+                } else {
+                    log.debug("Skipping: "+directory+file.getName());
+                }
+                continue;
+            }
+            // Got here - add file
+            try {
+                // Only include certain files
+                if(!directory.equals("") || file.getName().toLowerCase().matches(".*(config\\.xml|\\.properties)")) {
+                    log.debug("Add file: " + directory+file.getName());
+                    byte[] buffer = new byte[1024];
+                    FileInputStream in = new FileInputStream(file);
+                    out.putNextEntry(new ZipEntry(directory+file.getName()));
+
+                    int length;
+                    while((length = in.read(buffer))>0) {
+                        out.write(buffer, 0, length);
+                    }
+                    out.closeEntry();
+                    in.close();
+                } else {
+                    log.debug("Skip file: " + directory+file.getName());
+                }
+            } catch (FileNotFoundException ex) {
+                log.error("Exception when adding file: " + ex);
+            } catch (IOException ex) {
+                log.error("Exception when adding file: " + ex);
+            }
         }
     }
 
