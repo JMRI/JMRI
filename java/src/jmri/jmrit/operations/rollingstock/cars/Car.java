@@ -575,7 +575,7 @@ public class Car extends RollingStock {
 		return status;
 	}
 	
-	private void loadNext(Track destTrack) {
+	public void loadNext(Track destTrack) {
 		setLoadGeneratedFromStaging(false);
 		// update wait count
 		setWait(getNextWait());
@@ -642,7 +642,7 @@ public class Car extends RollingStock {
 	 */
 	private void setLoadEmpty() {
 		if (!getLoadName().equals(getReturnWhenEmptyLoadName())) {
-			setLoadName(getReturnWhenEmptyLoadName());
+			setLoadName(getReturnWhenEmptyLoadName());	// default RWE load is the "E" load
 			setReturnWhenEmpty();
 		}
 	}

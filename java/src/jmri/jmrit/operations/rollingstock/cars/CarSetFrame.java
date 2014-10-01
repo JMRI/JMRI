@@ -380,27 +380,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 					}
 					// now apply schedule to car
 					track.scheduleNext(car);
-					// change load to ship load
-					if (!car.getNextLoadName().equals("")) {
-						car.setLoadName(car.getNextLoadName());
-						car.setNextLoadName("");
-					}
-					// change next wait to wait now!
-					if (car.getNextWait() > 0) {
-						car.setWait(car.getNextWait());
-						car.setNextWait(0);
-					}
-					// change the pick up day
-					car.setPickupScheduleId(car.getNextPickupScheduleId());
-					car.setNextPickupScheduleId("");
-					// check for RWE
-					if (car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName())
-							&& car.getFinalDestination() == null
-							&& car.getReturnWhenEmptyDestination() != null) {
-						car.setFinalDestination(car.getReturnWhenEmptyDestination());
-						car.setFinalDestinationTrack(car.getReturnWhenEmptyDestTrack());
-						car.setLoadName(car.getReturnWhenEmptyLoadName());
-					}
+					car.loadNext(track);
 				}
 			}
 		}
