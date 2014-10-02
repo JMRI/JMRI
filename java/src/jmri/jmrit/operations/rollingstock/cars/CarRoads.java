@@ -106,17 +106,15 @@ public class CarRoads {
 
 	public JComboBox getComboBox() {
 		JComboBox box = new JComboBox();
-		String[] roads = getNames();
-		for (int i = 0; i < roads.length; i++)
-			box.addItem(roads[i]);
+		for (String road : getNames())
+			box.addItem(road);
 		return box;
 	}
 
 	public void updateComboBox(JComboBox box) {
 		box.removeAllItems();
-		String[] roads = getNames();
-		for (int i = 0; i < roads.length; i++)
-			box.addItem(roads[i]);
+		for (String road : getNames())
+			box.addItem(road);
 	}
 
 	private int maxNameLength = 0;

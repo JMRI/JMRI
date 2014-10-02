@@ -123,7 +123,7 @@ public class ExportCars extends XmlFile {
 			}
 			// only export value field if value has been set.
 			value = "";
-			if (!car.getValue().equals("")) {
+			if (!car.getValue().equals(Car.NONE)) {
 				value = del + ESC + car.getValue() + ESC;
 			}
 			line = car.getNumber() + del + car.getRoadName() + del + carType + del + car.getLength() + del

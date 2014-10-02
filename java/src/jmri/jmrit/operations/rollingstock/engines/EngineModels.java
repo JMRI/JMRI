@@ -127,17 +127,15 @@ public class EngineModels {
 
 	public JComboBox getComboBox() {
 		JComboBox box = new JComboBox();
-		String[] models = getNames();
-		for (int i = 0; i < models.length; i++)
-			box.addItem(models[i]);
+		for (String model : getNames())
+			box.addItem(model);
 		return box;
 	}
 
 	public void updateComboBox(JComboBox box) {
 		box.removeAllItems();
-		String[] models = getNames();
-		for (int i = 0; i < models.length; i++)
-			box.addItem(models[i]);
+		for (String model : getNames())
+			box.addItem(model);
 	}
 
 	public void setModelHorsepower(String model, String horsepower) {

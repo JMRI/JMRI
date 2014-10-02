@@ -3600,7 +3600,7 @@ public class TrainBuilder extends TrainCommon {
 					// TODO the following code isn't really needed anymore. All spurs were already checked, but
 					// this code does report why the spur wasn't used.
 					// is the destination a spur with a schedule demanding this car's custom load?
-					if (status.equals(Track.OKAY) && !testTrack.getScheduleId().equals("")
+					if (status.equals(Track.OKAY) && !testTrack.getScheduleId().equals(Track.NONE)
 							&& !car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName())
 							&& !car.getLoadName().equals(CarLoads.instance().getDefaultLoadName())) {
 						addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildSpurScheduleLoad"),
@@ -3616,7 +3616,7 @@ public class TrainBuilder extends TrainCommon {
 							&& !status.startsWith(Track.LENGTH) // can't generate load for spur that is full
 							&& !status.startsWith(Track.CAPACITY) // can't use a spur that is too short
 							&& testTrack.getTrackType().equals(Track.SPUR)
-							&& !testTrack.getScheduleId().equals("")
+							&& !testTrack.getScheduleId().equals(Track.NONE)
 							&& (car.getTrack().isAddCustomLoadsEnabled() || car.getTrack()
 									.isAddCustomLoadsAnySpurEnabled())
 							&& car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName())) {
@@ -3649,7 +3649,7 @@ public class TrainBuilder extends TrainCommon {
 					}
 					// check to see if alternate track is available if track full and no schedule
 					if (status.startsWith(Track.LENGTH) && testTrack.getAlternateTrack() != null
-							&& car.getFinalDestination() == null && testTrack.getScheduleId().equals("")
+							&& car.getFinalDestination() == null && testTrack.getScheduleId().equals(Track.NONE)
 							&& car.getTrack() != testTrack.getAlternateTrack()
 							&& car.testDestination(testDestination, testTrack.getAlternateTrack()).equals(Track.OKAY)) {
 						addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
@@ -3723,7 +3723,7 @@ public class TrainBuilder extends TrainCommon {
 						nextRatio = nextRatio * nextRatio;
 					}
 					// bias cars with default loads to a track with a schedule
-					if (!trackTemp.getScheduleId().equals("")) {
+					if (!trackTemp.getScheduleId().equals(Track.NONE)) {
 						log.debug("Track ({}) has schedule ({}) adjust nextRatio = {}", // NOI18N
 								trackTemp.getName(), trackTemp.getScheduleName(), Double.toString(nextRatio));
 						nextRatio = nextRatio * nextRatio;

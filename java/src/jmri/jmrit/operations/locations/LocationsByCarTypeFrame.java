@@ -63,12 +63,12 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 	}
 
 	public void initComponents() {
-		initComponents("");
+		initComponents(NONE);
 	}
 
 	public void initComponents(Location location) {
 		this.location = location;
-		initComponents("");
+		initComponents(NONE);
 	}
 
 	public void initComponents(Location location, String carType) {
@@ -172,18 +172,16 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 	private void save() {
 		log.debug("save " + locationCheckBoxList.size());
 		removePropertyChangeLocations();
-		for (int i = 0; i < locationCheckBoxList.size(); i++) {
-			JCheckBox cb = locationCheckBoxList.get(i);
+		for (JCheckBox cb : locationCheckBoxList) {
 			Location loc = manager.getLocationById(cb.getName());
 			if (cb.isSelected()) {
 				loc.addTypeName((String) typeComboBox.getSelectedItem());
 				// save tracks that have the same id as the location
-				for (int j = 0; j < trackCheckBoxList.size(); j++) {
-					cb = trackCheckBoxList.get(j);
-					String[] id = cb.getName().split("s");
+				for (JCheckBox cbt : trackCheckBoxList) {
+					String[] id = cbt.getName().split("s");
 					if (loc.getId().equals(id[0])) {
-						Track track = loc.getTrackById(cb.getName());
-						if (cb.isSelected()) {
+						Track track = loc.getTrackById(cbt.getName());
+						if (cbt.isSelected()) {
 							track.addTypeName((String) typeComboBox.getSelectedItem());
 						} else {
 							track.deleteTypeName((String) typeComboBox.getSelectedItem());

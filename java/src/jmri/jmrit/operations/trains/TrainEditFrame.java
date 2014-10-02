@@ -57,8 +57,6 @@ import jmri.jmrit.operations.setup.Setup;
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-	static final String NEW_LINE = "\n"; // NOI18N
-
 	TrainManager trainManager;
 	RouteManager routeManager;
 
@@ -84,7 +82,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	JLabel textEngine = new JLabel(Bundle.getMessage("Engines"));
 
 	// major buttons
-	JButton editButton = new JButton(Bundle.getMessage("Edit"));
+	JButton editButton = new JButton(Bundle.getMessage("Edit"));	// edit route
 	JButton clearButton = new JButton(Bundle.getMessage("Clear"));
 	JButton setButton = new JButton(Bundle.getMessage("Select"));
 	JButton resetButton = new JButton(Bundle.getMessage("ResetTrain"));
@@ -257,13 +255,13 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		addItem(trainReq, textEngine, 1, 1);
 		addItem(trainReq, numEnginesBox, 2, 1);
 		addItem(trainReq, textModel, 3, 1);
-		modelEngineBox.insertItemAt("", 0);
+		modelEngineBox.insertItemAt(NONE, 0);
 		modelEngineBox.setSelectedIndex(0);
 		modelEngineBox.setMinimumSize(new Dimension(120, 20));
 		modelEngineBox.setToolTipText(Bundle.getMessage("ModelEngineTip"));
 		addItem(trainReq, modelEngineBox, 4, 1);
 		addItem(trainReq, textRoad2, 5, 1);
-		roadEngineBox.insertItemAt("", 0);
+		roadEngineBox.insertItemAt(NONE, 0);
 		roadEngineBox.setSelectedIndex(0);
 		roadEngineBox.setMinimumSize(new Dimension(120, 20));
 		roadEngineBox.setToolTipText(Bundle.getMessage("RoadEngineTip"));
@@ -432,16 +430,13 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 					new Object[] { train.getName() }), Bundle.getMessage("deleteTrain"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 				return;
 			}
-			routeBox.setSelectedItem("");
+			routeBox.setSelectedItem(RouteManager.NONE);
 			trainManager.deregister(train);
-			for (int i = 0; i < children.size(); i++) {
-				Frame frame = children.get(i);
+			for (Frame frame : children) {
 				frame.dispose();
 			}
 			_train = null;
-
 			enableButtons(false);
-
 			// save train file
 			OperationsXml.save();
 		}
@@ -561,7 +556,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 	private boolean checkModel() {
 		String model = (String) modelEngineBox.getSelectedItem();
-		if (numEnginesBox.getSelectedItem().equals("0") || model.equals(""))
+		if (numEnginesBox.getSelectedItem().equals("0") || model.equals(NONE))
 			return true;
 		String type = EngineModels.instance().getModelType(model);
 		if (!_train.acceptsTypeName(type)) {
@@ -582,7 +577,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	private boolean checkEngineRoad() {
 		String road = (String) roadEngineBox.getSelectedItem();
 		String model = (String) modelEngineBox.getSelectedItem();
-		if (numEnginesBox.getSelectedItem().equals("0") || road.equals("") || !model.equals(""))
+		if (numEnginesBox.getSelectedItem().equals("0") || road.equals(NONE) || !model.equals(NONE))
 			return true;
 		for (RollingStock rs : EngineManager.instance().getList()) {
 			if (!_train.acceptsTypeName(rs.getTypeName()))
@@ -660,7 +655,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 				if (route != null)
 					route.removePropertyChangeListener(this);
 				Object selected = routeBox.getSelectedItem();
-				if (selected != null && !selected.equals("")) {
+				if (selected != null && !selected.equals(RouteManager.NONE)) {
 					route = (Route) selected;
 					_train.setRoute(route);
 					route.addPropertyChangeListener(this);
@@ -788,7 +783,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	// update caboose road box based on radio selection
 	private void updateCabooseRoadComboBox() {
 		roadCabooseBox.removeAllItems();
-		roadCabooseBox.addItem("");
+		roadCabooseBox.addItem(NONE);
 		if (noneRadioButton.isSelected()) {
 			roadCabooseBox.setEnabled(false);
 			return;
@@ -812,7 +807,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		if (engineModel == null)
 			return;
 		roadEngineBox.removeAllItems();
-		roadEngineBox.addItem("");
+		roadEngineBox.addItem(NONE);
 		List<String> roads = EngineManager.instance().getEngineRoadNames(engineModel);
 		for (String roadName : roads) {
 			roadEngineBox.addItem(roadName);
@@ -848,7 +843,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		locationPanelCheckBoxes.removeAll();
 		int y = 0; // vertical position in panel
 		Route route = null;
-		textRouteStatus.setText(""); // clear out previous status
+		textRouteStatus.setText(NONE); // clear out previous status
 		if (_train != null)
 			route = _train.getRoute();
 		if (route != null) {
@@ -901,8 +896,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		if (ref != null)
 			ref.dispose();
 		ref = new RouteEditFrame();
+		setChildFrame(ref);
 		Object selected = routeBox.getSelectedItem();
-		if (selected != null && !selected.equals("")) {
+		if (selected != null && !selected.equals(RouteManager.NONE)) {
 			Route route = (Route) selected;
 			ref.initComponents(route);
 		} else {
@@ -915,7 +911,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		minuteBox.setSelectedItem(_train.getDepartureTimeMinute());
 		// check to see if route has a departure time from the 1st location
 		RouteLocation rl = _train.getTrainDepartsRouteLocation();
-		if (rl != null && !rl.getDepartureTime().equals("")) {
+		if (rl != null && !rl.getDepartureTime().equals(NONE)) {
 			hourBox.setEnabled(false);
 			minuteBox.setEnabled(false);
 		} else {
@@ -1017,7 +1013,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		if (e.getPropertyName().equals(EngineModels.ENGINEMODELS_CHANGED_PROPERTY)) {
 			EngineModels.instance().updateComboBox(modelEngineBox);
-			modelEngineBox.insertItemAt("", 0);
+			modelEngineBox.insertItemAt(NONE, 0);
 			modelEngineBox.setSelectedIndex(0);
 			if (_train != null)
 				modelEngineBox.setSelectedItem(_train.getEngineModel());

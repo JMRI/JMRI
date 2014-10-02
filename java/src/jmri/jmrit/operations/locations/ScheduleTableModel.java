@@ -4,6 +4,7 @@ package jmri.jmrit.operations.locations;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.beans.*;
 
 import javax.swing.*;
@@ -13,9 +14,9 @@ import javax.swing.table.TableColumnModel;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainSchedule;
@@ -352,14 +353,12 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 	private JComboBox getRoadComboBox(ScheduleItem si) {
 		// log.debug("getRoadComboBox for ScheduleItem "+si.getType());
 		JComboBox cb = new JComboBox();
-		String[] roads = CarRoads.instance().getNames();
-		cb.addItem("");
-		CarManager cm = CarManager.instance();
-		for (int i = 0; i < roads.length; i++) {
-			if (_track.acceptsRoadName(roads[i])) {
-				Car car = cm.getByTypeAndRoad(si.getTypeName(), roads[i]);
+		cb.addItem(ScheduleItem.NONE);
+		for (String roadName : CarRoads.instance().getNames()) {
+			if (_track.acceptsRoadName(roadName)) {
+				Car car = CarManager.instance().getByTypeAndRoad(si.getTypeName(), roadName);
 				if (car != null)
-					cb.addItem(roads[i]);
+					cb.addItem(roadName);
 			}
 		}
 		cb.setSelectedItem(si.getRoadName());
@@ -377,7 +376,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		if (sch != null) {
 			cb.setSelectedItem(sch);
 		}
-		if (sch == null && !si.getSetoutTrainScheduleId().equals("")) {
+		if (sch == null && !si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE)) {
 			String notValid = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si
 					.getSetoutTrainScheduleId() });
 			cb.addItem(notValid);
@@ -392,7 +391,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		if (sch != null) {
 			cb.setSelectedItem(sch);
 		}
-		if (sch == null && !si.getPickupTrainScheduleId().equals("")) {
+		if (sch == null && !si.getPickupTrainScheduleId().equals(ScheduleItem.NONE)) {
 			String notValid = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si
 					.getPickupTrainScheduleId() });
 			cb.addItem(notValid);
@@ -509,8 +508,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 	private void setSetoutDay(Object value, int row) {
 		ScheduleItem si = _list.get(row);
 		Object obj = ((JComboBox) value).getSelectedItem();
-		if (obj.equals("")) {
-			si.setSetoutTrainScheduleId("");
+		if (obj.equals(TrainScheduleManager.NONE)) {
+			si.setSetoutTrainScheduleId(ScheduleItem.NONE);
 		} else if (obj.getClass().equals(TrainSchedule.class)) {
 			si.setSetoutTrainScheduleId(((TrainSchedule) obj).getId());
 		}
@@ -519,8 +518,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 	private void setPickupDay(Object value, int row) {
 		ScheduleItem si = _list.get(row);
 		Object obj = ((JComboBox) value).getSelectedItem();
-		if (obj.equals("")) {
-			si.setPickupTrainScheduleId("");
+		if (obj.equals(TrainScheduleManager.NONE)) {
+			si.setPickupTrainScheduleId(ScheduleItem.NONE);
 		} else if (obj.getClass().equals(TrainSchedule.class)) {
 			si.setPickupTrainScheduleId(((TrainSchedule) obj).getId());
 		}
@@ -567,7 +566,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 			ScheduleItem si = _list.get(row);
 			si.setDestinationTrack(null);
 			Location dest = null;
-			if (!((JComboBox) value).getSelectedItem().equals("")) {
+			if (!((JComboBox) value).getSelectedItem().equals(LocationManager.NONE)) {
 				dest = (Location) ((JComboBox) value).getSelectedItem();
 			}
 			si.setDestination(dest);
@@ -579,7 +578,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		if (((JComboBox) value).getSelectedItem() != null) {
 			ScheduleItem si = _list.get(row);
 			Track track = null;
-			if (!((JComboBox) value).getSelectedItem().equals("")) {
+			if (!((JComboBox) value).getSelectedItem().equals(Location.NONE)) {
 				track = (Track) ((JComboBox) value).getSelectedItem();
 			}
 			si.setDestinationTrack(track);
@@ -617,8 +616,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		List<Track> tracks = loc.getTrackList();
 		for (Track track : tracks) {
 			if (!track.acceptsTypeName(carType) || track.getTrackType().equals(Track.STAGING)
-					|| (!carRoad.equals("") && !track.acceptsRoadName(carRoad))
-					|| (!carLoad.equals("") && !track.acceptsLoad(carLoad, carType)))
+					|| (!carRoad.equals(ScheduleItem.NONE) && !track.acceptsRoadName(carRoad))
+					|| (!carLoad.equals(ScheduleItem.NONE) && !track.acceptsLoad(carLoad, carType)))
 				cb.removeItem(track);
 		}
 	}
@@ -627,7 +626,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 	private void filterLoads(ScheduleItem si, JComboBox cb) {
 		for (int i = cb.getItemCount() - 1; i > 0; i--) {
 			String loadName = (String) cb.getItemAt(i);
-			if (!loadName.equals("") && !_track.acceptsLoad(loadName, si.getTypeName()))
+			if (!loadName.equals(CarLoads.NONE) && !_track.acceptsLoad(loadName, si.getTypeName()))
 				cb.removeItem(loadName);
 		}
 	}
@@ -674,9 +673,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 	}
 
 	private void removePropertyChangeScheduleItems() {
-		for (int i = 0; i < _list.size(); i++) {
+		for (ScheduleItem si : _list) {
 			// if object has been deleted, it's not here; ignore it
-			ScheduleItem si = _list.get(i);
 			if (si != null)
 				si.removePropertyChangeListener(this);
 		}

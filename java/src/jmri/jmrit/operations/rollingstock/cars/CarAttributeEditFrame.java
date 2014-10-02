@@ -65,7 +65,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 	String _comboboxName; // used to determine which combo box is being edited
 
 	public void initComponents(String comboboxName) {
-		initComponents(comboboxName, "");
+		initComponents(comboboxName, NONE);
 	}
 
 	public void initComponents(String comboboxName, String select) {
@@ -133,8 +133,8 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("edit frame button activated");
 		if (ae.getSource() == addButton) {
-			String addItem = addTextBox.getText();
-			if (addItem.equals(""))
+			String addItem = addTextBox.getText().trim();
+			if (addItem.equals(NONE))
 				return;
 			String[] item = { addItem };
 			if (_comboboxName == CarEditFrame.TYPE)
@@ -151,8 +151,8 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 			deleteItemFromCombobox((String) comboBox.getSelectedItem());
 		}
 		if (ae.getSource() == replaceButton) {
-			String newItem = addTextBox.getText();
-			if (newItem.equals(""))
+			String newItem = addTextBox.getText().trim();
+			if (newItem.equals(NONE))
 				return;
 			String[] item = { newItem };
 			if (_comboboxName == CarEditFrame.TYPE)

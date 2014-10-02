@@ -7,6 +7,8 @@ package jmri.jmrit.operations.rollingstock.cars;
  * 
  */
 public class CarLoad {
+	
+	public static final String NONE = "";
 
 	public static final String PRIORITY_LOW = Bundle.getMessage("PriorityLow");
 	public static final String PRIORITY_HIGH = Bundle.getMessage("PriorityHigh");
@@ -18,8 +20,8 @@ public class CarLoad {
 
 	String _name;
 	String _priority = PRIORITY_LOW;
-	String _pickupComment = "";
-	String _dropComment = "";
+	String _pickupComment = NONE;
+	String _dropComment = NONE;
 	String _loadType = LOAD_TYPE_LOAD;
 
 	public CarLoad(String name) {

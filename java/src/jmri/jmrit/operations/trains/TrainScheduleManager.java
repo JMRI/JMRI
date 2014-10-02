@@ -24,6 +24,7 @@ import jmri.jmrit.operations.setup.Control;
  */
 public class TrainScheduleManager implements java.beans.PropertyChangeListener {
 
+	public static final String NONE = ""; // NOI18N
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "trainScheduleListLength"; // NOI18N
 
 	public TrainScheduleManager() {
@@ -192,10 +193,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
 	 */
 	public JComboBox getComboBox() {
 		JComboBox box = new JComboBox();
-		List<TrainSchedule> schs = getSchedulesByNameList();
-		for (int i = 0; i < schs.size(); i++) {
-			box.addItem(schs.get(i));
-		}
+		updateComboBox(box);
 		return box;
 	}
 
@@ -206,10 +204,9 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
 	 */
 	public JComboBox getSelectComboBox() {
 		JComboBox box = new JComboBox();
-		box.addItem("");
-		List<TrainSchedule> schs = getSchedulesByIdList();
-		for (int i = 0; i < schs.size(); i++) {
-			box.addItem(schs.get(i));
+		box.addItem(NONE);
+		for (TrainSchedule sch: getSchedulesByIdList()) {
+			box.addItem(sch);
 		}
 		return box;
 	}
@@ -222,9 +219,8 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
 	 */
 	public void updateComboBox(JComboBox box) {
 		box.removeAllItems();
-		List<TrainSchedule> schs = getSchedulesByNameList();
-		for (int i = 0; i < schs.size(); i++) {
-			box.addItem(schs.get(i));
+		for (TrainSchedule sch: getSchedulesByNameList()) {
+			box.addItem(sch);
 		}
 	}
 

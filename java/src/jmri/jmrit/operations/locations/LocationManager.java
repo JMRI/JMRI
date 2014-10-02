@@ -27,6 +27,8 @@ import jmri.jmrit.operations.trains.TrainCommon;
  * @version $Revision$
  */
 public class LocationManager implements java.beans.PropertyChangeListener {
+	
+	public static final String NONE = "";
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "locationsListLength"; // NOI18N
 
 	public LocationManager() {
@@ -251,16 +253,13 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 
 	public JComboBox getComboBox() {
 		JComboBox box = new JComboBox();
-		box.addItem("");
-		for (Location loc : getLocationsByNameList()) {
-			box.addItem(loc);
-		}
+		updateComboBox(box);
 		return box;
 	}
 
 	public void updateComboBox(JComboBox box) {
 		box.removeAllItems();
-		box.addItem("");
+		box.addItem(NONE);
 		for (Location loc : getLocationsByNameList()) {
 			box.addItem(loc);
 		}

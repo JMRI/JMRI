@@ -328,13 +328,13 @@ class PoolTrackFrame extends OperationsFrame implements
 				return;
 			}
 			if (comboBoxPools.getSelectedItem() != null
-					&& comboBoxPools.getSelectedItem().equals("")) {
+					&& comboBoxPools.getSelectedItem().equals(Location.NONE)) {
 				_track.setPool(null);
 				if (_pool != null)
 					_pool.removePropertyChangeListener(this);
 				_pool = null;
 			} else if (comboBoxPools.getSelectedItem() != null
-					&& !comboBoxPools.getSelectedItem().equals("")) {
+					&& !comboBoxPools.getSelectedItem().equals(Location.NONE)) {
 				if (_pool != null)
 					_pool.removePropertyChangeListener(this);
 				_pool = (Pool) comboBoxPools.getSelectedItem();

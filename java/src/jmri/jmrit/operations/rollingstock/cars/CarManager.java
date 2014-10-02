@@ -173,10 +173,9 @@ public class CarManager extends RollingStockManager {
 	 */
 	public JComboBox getKernelComboBox() {
 		JComboBox box = new JComboBox();
-		box.addItem("");
-		List<String> kernelNames = getKernelNameList();
-		for (int i = 0; i < kernelNames.size(); i++) {
-			box.addItem(kernelNames.get(i));
+		box.addItem(NONE);
+		for (String kernelName : getKernelNameList()) {
+			box.addItem(kernelName);
 		}
 		return box;
 	}
@@ -189,10 +188,9 @@ public class CarManager extends RollingStockManager {
 	 */
 	public void updateKernelComboBox(JComboBox box) {
 		box.removeAllItems();
-		box.addItem("");
-		List<String> kernelNames = getKernelNameList();
-		for (int i = 0; i < kernelNames.size(); i++) {
-			box.addItem(kernelNames.get(i));
+		box.addItem(NONE);
+		for (String kernelName : getKernelNameList()) {
+			box.addItem(kernelName);
 		}
 	}
 
@@ -339,21 +337,18 @@ public class CarManager extends RollingStockManager {
 					&& destination.getLocation().getLocationOps() != Location.STAGING)
 				destination = null; // include cars at destination
 		}
-		// get rolling stock by moves list
-		List<RollingStock> sortByMoves = getByMovesList();
-		List<RollingStock> sortByPriority = sortByPriority(sortByMoves);
+		// get rolling stock by priority and then by moves
+		List<RollingStock> sortByPriority = sortByPriority(getByMovesList());
 		// now build list of available RollingStock for this route
-		Car car;
-		for (int i = 0; i < sortByPriority.size(); i++) {
-			car = (Car) sortByPriority.get(i);
+		for (RollingStock rs : sortByPriority) {
 			// only use RollingStock with a location
-			if (car.getLocationName().equals(""))
+			if (rs.getLocation() == null)
 				continue;
-			RouteLocation rl = route.getLastLocationByName(car.getLocationName());
+			RouteLocation rl = route.getLastLocationByName(rs.getLocationName());
 			// get RollingStock that don't have an assigned train, or the
 			// assigned train is this one
-			if (rl != null && rl != destination && (car.getTrain() == null || train.equals(car.getTrain()))) {
-				out.add(car);
+			if (rl != null && rl != destination && (rs.getTrain() == null || train.equals(rs.getTrain()))) {
+				out.add((Car) rs);
 			}
 		}
 		return out;
@@ -362,18 +357,17 @@ public class CarManager extends RollingStockManager {
 	// sorts the high priority cars to the start of the list
 	protected List<RollingStock> sortByPriority(List<RollingStock> list) {
 		List<RollingStock> out = new ArrayList<RollingStock>();
-		RollingStock rs;
 		// move high priority cars to the start
 		for (int i = 0; i < list.size(); i++) {
-			rs = list.get(i);
+			RollingStock rs = list.get(i);
 			if (rs.getLoadPriority().equals(CarLoad.PRIORITY_HIGH)) {
 				out.add(list.get(i));
 				list.remove(i--);
 			}
 		}
 		// now load all of the remaining low priority cars
-		for (int i = 0; i < list.size(); i++) {
-			out.add(list.get(i));
+		for (RollingStock rs : list) {
+			out.add(rs);
 		}
 		return out;
 	}

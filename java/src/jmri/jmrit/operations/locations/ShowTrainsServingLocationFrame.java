@@ -47,9 +47,6 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
 	
 	private static boolean isShowAllTrains = true;
 
-	// Blank space
-	String blank = "";
-
 	public ShowTrainsServingLocationFrame() {
 		super();
 	}
@@ -92,7 +89,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
 
 		// setup combo box
 		updateComboBox();
-		typeComboBox.setSelectedItem(blank);
+		typeComboBox.setSelectedItem(NONE);
 		addComboBoxAction(typeComboBox);
 
 		// increase width of combobox so large text names display properly
@@ -135,7 +132,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
 					if (rl.isPickUpAllowed()
 							&& rl.getMaxCarMoves() > 0
 							&& !train.skipsLocation(rl.getId())
-							&& (typeComboBox.getSelectedItem() == null || typeComboBox.getSelectedItem().equals(blank) || train
+							&& (typeComboBox.getSelectedItem() == null || typeComboBox.getSelectedItem().equals(NONE) || train
 									.acceptsTypeName((String) typeComboBox.getSelectedItem()))
 							&& (train.isLocalSwitcher() || (rl.getTrainDirection() & _location.getTrainDirections()) > 0)
 							&& (train.isLocalSwitcher() || _track == null || ((rl.getTrainDirection() & _track
@@ -145,7 +142,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
 					if (rl.isDropAllowed()
 							&& rl.getMaxCarMoves() > 0
 							&& !train.skipsLocation(rl.getId())
-							&& (typeComboBox.getSelectedItem() == null || typeComboBox.getSelectedItem().equals(blank) || train
+							&& (typeComboBox.getSelectedItem() == null || typeComboBox.getSelectedItem().equals(NONE) || train
 									.acceptsTypeName((String) typeComboBox.getSelectedItem()))
 							&& (train.isLocalSwitcher() || (rl.getTrainDirection() & _location.getTrainDirections()) > 0)
 							&& (train.isLocalSwitcher() || _track == null || ((rl.getTrainDirection() & _track
@@ -203,14 +200,14 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
 				typeComboBox.removeItem(type);
 			}
 		}
-		typeComboBox.insertItemAt(blank, 0);
+		typeComboBox.insertItemAt(NONE, 0);
 
 		if (comboBoxSelect == null) {
-			typeComboBox.setSelectedItem(blank);
+			typeComboBox.setSelectedItem(NONE);
 		} else {
 			typeComboBox.setSelectedItem(comboBoxSelect);
 			if (typeComboBox.getSelectedItem() != null && !typeComboBox.getSelectedItem().equals(comboBoxSelect)) {
-				typeComboBox.setSelectedItem(blank); // selected object has been removed
+				typeComboBox.setSelectedItem(NONE); // selected object has been removed
 			}
 			updateTrainPane();
 		}

@@ -25,23 +25,24 @@ import jmri.jmrit.operations.trains.TrainManager;
  */
 public class RollingStock implements java.beans.PropertyChangeListener {
 
+	public static final String NONE = "";
 	protected static final String DEFAULT_WEIGHT = "0";
 
-	protected String _id = "";
-	protected String _number = "";
-	protected String _road = "";
-	protected String _type = "";
-	protected String _length = "";
-	protected String _color = "";
+	protected String _id = NONE;
+	protected String _number = NONE;
+	protected String _road = NONE;
+	protected String _type = NONE;
+	protected String _length = NONE;
+	protected String _color = NONE;
 	protected String _weight = DEFAULT_WEIGHT;
 	protected String _weightTons = DEFAULT_WEIGHT;
-	protected String _built = "";
-	protected String _owner = "";
-	protected String _comment = "";
-	protected String _routeId = ""; // saved route for interchange tracks
-	protected String _rfid = "";
-	protected String _value = "";
-	protected String _last = "";
+	protected String _built = NONE;
+	protected String _owner = NONE;
+	protected String _comment = NONE;
+	protected String _routeId = NONE; // saved route for interchange tracks
+	protected String _rfid = NONE;
+	protected String _value = NONE;
+	protected String _last = NONE;
 	protected boolean _locationUnknown = false;
 	protected boolean _outOfService = false;
 	protected boolean _selected = false;
@@ -312,7 +313,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 	public String getLocationName() {
 		if (_location != null)
 			return _location.getName();
-		return "";
+		return NONE;
 	}
 
 	/**
@@ -323,7 +324,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 	public String getLocationId() {
 		if (_location != null)
 			return _location.getId();
-		return "";
+		return NONE;
 	}
 
 	public Track getTrack() {
@@ -351,7 +352,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 	public String getTrackName() {
 		if (_trackLocation != null)
 			return _trackLocation.getName();
-		return "";
+		return NONE;
 	}
 
 	/**
@@ -362,7 +363,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 	public String getTrackId() {
 		if (_trackLocation != null)
 			return _trackLocation.getId();
-		return "";
+		return NONE;
 	}
 
 	/**
@@ -576,13 +577,13 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 	public String getDestinationName() {
 		if (_destination != null)
 			return _destination.getName();
-		return "";
+		return NONE;
 	}
 
 	public String getDestinationId() {
 		if (_destination != null)
 			return _destination.getId();
-		return "";
+		return NONE;
 	}
 
 	/**
@@ -604,13 +605,13 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 	public String getDestinationTrackName() {
 		if (_trackDestination != null)
 			return _trackDestination.getName();
-		return "";
+		return NONE;
 	}
 
 	public String getDestinationTrackId() {
 		if (_trackDestination != null)
 			return _trackDestination.getId();
-		return "";
+		return NONE;
 	}
 
 	/**
@@ -664,7 +665,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 	public String getTrainName() {
 		if (getTrain() != null)
 			return getTrain().getName();
-		return "";
+		return NONE;
 	}
 
 	/**
@@ -694,7 +695,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 	public String getRouteLocationId() {
 		if (_routeLocation != null)
 			return _routeLocation.getId();
-		return "";
+		return NONE;
 	}
 
 	public String getSavedRouteId() {
@@ -806,7 +807,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 	public String getRouteDestinationId() {
 		if (_routeDestination != null)
 			return _routeDestination.getId();
-		return "";
+		return NONE;
 	}
 
 	public void setOwner(String owner) {
@@ -883,7 +884,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 
 	// normally overridden
 	public String getLoadPriority() {
-		return "";
+		return NONE;
 	}
 
 	public void setComment(String comment) {
@@ -1035,27 +1036,27 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 		e.setAttribute(Xml.ROAD_NUMBER, getNumber());
 		e.setAttribute(Xml.TYPE, getTypeName());
 		e.setAttribute(Xml.LENGTH, getLength());
-		if (!getColor().equals(""))
+		if (!getColor().equals(NONE))
 			e.setAttribute(Xml.COLOR, getColor());
 		if (!getWeight().equals(DEFAULT_WEIGHT))
 			e.setAttribute(Xml.WEIGHT, getWeight());
-		if (!getWeightTons().equals(""))
+		if (!getWeightTons().equals(NONE))
 			e.setAttribute(Xml.WEIGHT_TONS, getWeightTons());
-		if (!getBuilt().equals(""))
+		if (!getBuilt().equals(NONE))
 			e.setAttribute(Xml.BUILT, getBuilt());
-		if (!getLocationId().equals(""))
+		if (!getLocationId().equals(NONE))
 			e.setAttribute(Xml.LOCATION_ID, getLocationId());
-		if (!getRouteLocationId().equals(""))
+		if (!getRouteLocationId().equals(NONE))
 			e.setAttribute(Xml.ROUTE_LOCATION_ID, getRouteLocationId());
-		if (!getTrackId().equals(""))
+		if (!getTrackId().equals(NONE))
 			e.setAttribute(Xml.SEC_LOCATION_ID, getTrackId());
-		if (!getDestinationId().equals(""))
+		if (!getDestinationId().equals(NONE))
 			e.setAttribute(Xml.DESTINATION_ID, getDestinationId());
-		if (!getRouteDestinationId().equals(""))
+		if (!getRouteDestinationId().equals(NONE))
 			e.setAttribute(Xml.ROUTE_DESTINATION_ID, getRouteDestinationId());
-		if (!getDestinationTrackId().equals(""))
+		if (!getDestinationTrackId().equals(NONE))
 			e.setAttribute(Xml.SEC_DESTINATION_ID, getDestinationTrackId());
-		if (!getSavedRouteId().equals(""))
+		if (!getSavedRouteId().equals(NONE))
 			e.setAttribute(Xml.LAST_ROUTE_ID, getSavedRouteId());
 		if (verboseStore) {
 			e.setAttribute(Xml.LOCATION, getLocationName());
@@ -1068,13 +1069,13 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 		e.setAttribute(Xml.SELECTED, isSelected() ? Xml.TRUE : Xml.FALSE);
 		if (!getLastLocationId().equals(LOCATION_UNKNOWN))
 			e.setAttribute(Xml.LAST_LOCATION_ID, getLastLocationId());
-		if (!getTrainName().equals(""))
+		if (!getTrainName().equals(NONE))
 			e.setAttribute(Xml.TRAIN, getTrainName());
-		if (!getOwner().equals(""))
+		if (!getOwner().equals(NONE))
 			e.setAttribute(Xml.OWNER, getOwner());
-		if (!getValue().equals(""))
+		if (!getValue().equals(NONE))
 			e.setAttribute(Xml.VALUE, getValue());
-		if (!getRfid().equals(""))
+		if (!getRfid().equals(NONE))
 			e.setAttribute(Xml.RFID, getRfid());
 		if (isLocationUnknown())
 			e.setAttribute(Xml.LOC_UNKNOWN, isLocationUnknown() ? Xml.TRUE : Xml.FALSE);
@@ -1083,7 +1084,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 		if (getBlocking() != 0) {
 			e.setAttribute(Xml.BLOCKING, Integer.toString(getBlocking()));
 		}
-		if (!getComment().equals(""))
+		if (!getComment().equals(NONE))
 			e.setAttribute(Xml.COMMENT, getComment());
 		return e;
 	}

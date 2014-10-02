@@ -114,9 +114,9 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 		if (_location != null) {
 			textLocationName.setText(_location.getName());
 			textLocationComment.setText(lineWrap(_location.getComment()));
-			pLocationComment.setVisible(!_location.getComment().equals("") && Setup.isPrintLocationCommentsEnabled());
+			pLocationComment.setVisible(!_location.getComment().equals(Location.NONE) && Setup.isPrintLocationCommentsEnabled());
 			textSwitchListComment.setText(lineWrap(_location.getSwitchListComment()));
-			pSwitchListComment.setVisible(!_location.getSwitchListComment().equals(""));
+			pSwitchListComment.setVisible(!_location.getSwitchListComment().equals(Location.NONE));
 			updateTrainsComboBox();
 
 			// build menu
@@ -184,7 +184,7 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 		// made the combo box not visible during updates, so ignore if not visible
 		if (ae.getSource() == trainComboBox && trainComboBox.isVisible()) {
 			_train = null;
-			if (trainComboBox.getSelectedItem() != null && !trainComboBox.getSelectedItem().equals("")) {
+			if (trainComboBox.getSelectedItem() != null && !trainComboBox.getSelectedItem().equals(TrainManager.NONE)) {
 				_train = (Train) trainComboBox.getSelectedItem();
 				_visitNumber = 1;
 			}
@@ -271,7 +271,7 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 				}
 
 				// update comment and location name
-				pTrainRouteLocationComment.setVisible(!rl.getComment().equals(""));
+				pTrainRouteLocationComment.setVisible(!rl.getComment().equals(RouteLocation.NONE));
 				textTrainRouteLocationComment.setText(lineWrap(rl.getComment()));
 				textLocationName.setText(rl.getLocation().getName()); // show name including hyphen and number
 
@@ -296,12 +296,12 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 		Object selectedItem = trainComboBox.getSelectedItem();
 		trainComboBox.setVisible(false); // used as a flag to ignore updates
 		trainComboBox.removeAllItems();
-		trainComboBox.addItem("");
+		trainComboBox.addItem(TrainManager.NONE);
 		if (_location != null) {
 			List<Train> trains = trainManager.getTrainsArrivingThisLocationList(_location);
-			for (int i = 0; i < trains.size(); i++) {
-				if (TrainCommon.isThereWorkAtLocation(trains.get(i), _location))
-					trainComboBox.addItem(trains.get(i));
+			for (Train train : trains) {
+				if (TrainCommon.isThereWorkAtLocation(train, _location))
+					trainComboBox.addItem(train);
 			}
 		}
 		if (selectedItem != null)
@@ -312,10 +312,8 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 	private void addTrainListeners() {
 		log.debug("Adding train listerners");
 		List<Train> trains = TrainManager.instance().getTrainsByIdList();
-		for (int i = 0; i < trains.size(); i++) {
-			Train train = trains.get(i);
-			if (train != null)
-				train.addPropertyChangeListener(this);
+		for (Train train : trains) {
+			train.addPropertyChangeListener(this);
 		}
 		// listen for new trains being added
 		TrainManager.instance().addPropertyChangeListener(this);
@@ -324,10 +322,8 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 	private void removeTrainListeners() {
 		log.debug("Removing train listerners");
 		List<Train> trains = TrainManager.instance().getTrainsByIdList();
-		for (int i = 0; i < trains.size(); i++) {
-			Train train = trains.get(i);
-			if (train != null)
-				train.removePropertyChangeListener(this);
+		for (Train train : trains) {
+			train.removePropertyChangeListener(this);
 		}
 		TrainManager.instance().removePropertyChangeListener(this);
 	}

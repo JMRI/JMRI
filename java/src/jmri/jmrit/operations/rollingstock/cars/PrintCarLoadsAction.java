@@ -49,7 +49,7 @@ public class PrintCarLoadsAction extends AbstractAction {
 	public class CarLoadPrintOption {
 
 		static final String TAB = "\t"; // NOI18N
-		static final String NEW_LINE = "\n";	// NOI18N
+		static final String NEW_LINE = "\n"; // NOI18N
 
 		// no frame needed for now
 		public CarLoadPrintOption() {
@@ -63,49 +63,46 @@ public class PrintCarLoadsAction extends AbstractAction {
 			HardcopyWriter writer = null;
 			Frame mFrame = new Frame();
 			try {
-				writer = new HardcopyWriter(mFrame, Bundle.getMessage("TitleCarLoads"), 10, .5, .5,
-						.5, .5, isPreview);
+				writer = new HardcopyWriter(mFrame, Bundle.getMessage("TitleCarLoads"), 10, .5, .5, .5, .5, isPreview);
 			} catch (HardcopyWriter.PrintCanceledException ex) {
 				log.debug("Print cancelled");
 				return;
 			}
 
 			// Loop through the Roster, printing as needed
-			CarLoads carLoads = CarLoads.instance();
 			String[] carTypes = CarTypes.instance().getNames();
-			Hashtable<String, List<CarLoad>> list = carLoads.getList();
+			Hashtable<String, List<CarLoad>> list = CarLoads.instance().getList();
 			try {
-				String s = Bundle.getMessage("Type") + TAB + Bundle.getMessage("Load") + "   "
-						+ Bundle.getMessage("BorderLayoutLoadType") + " "
-						+ Bundle.getMessage("BorderLayoutPriority") + "   "
-						+ Bundle.getMessage("LoadPickupMessage") + "   "
-						+ Bundle.getMessage("LoadDropMessage") + NEW_LINE;
+				String s = Bundle.getMessage("Type") + TAB
+						+ tabString(Bundle.getMessage("Load"), CarLoads.instance().getCurMaxNameLength() + 1)
+						+ Bundle.getMessage("Type") + "  " + Bundle.getMessage("Priority") + "  "
+						+ Bundle.getMessage("LoadPickupMessage") + "   " + Bundle.getMessage("LoadDropMessage")
+						+ NEW_LINE;
 				writer.write(s);
-				for (int i = 0; i < carTypes.length; i++) {
-					List<CarLoad> loads = list.get(carTypes[i]);
-					if (loads == null)
+				for (String carType : carTypes) {
+					List<CarLoad> carLoads = list.get(carType);
+					if (carLoads == null)
 						continue;
 					boolean printType = true;
-					for (int j = 0; j < loads.size(); j++) {
-						StringBuffer buf = new StringBuffer(TAB);
-						String load = loads.get(j).getName();
+					for (CarLoad carLoad : carLoads) {
 						// don't print out default load or empty
-						if ((load.equals(carLoads.getDefaultEmptyName()) || load.equals(carLoads
-								.getDefaultLoadName()))
-								&& loads.get(j).getPickupComment().equals("")
-								&& loads.get(j).getDropComment().equals("")
-								&& loads.get(j).getPriority().equals(CarLoad.PRIORITY_LOW))
+						if ((carLoad.getName().equals(CarLoads.instance().getDefaultEmptyName()) || carLoad.getName()
+								.equals(CarLoads.instance().getDefaultLoadName()))
+								&& carLoad.getPickupComment().equals(CarLoad.NONE)
+								&& carLoad.getDropComment().equals(CarLoad.NONE)
+								&& carLoad.getPriority().equals(CarLoad.PRIORITY_LOW))
 							continue;
 						// print the car type once
 						if (printType) {
-							writer.write(carTypes[i] + NEW_LINE);
+							writer.write(carType + NEW_LINE);
 							printType = false;
 						}
-						buf.append(tabString(load, carLoads.getCurMaxNameLength()+1));
-						buf.append(tabString(loads.get(j).getLoadType(), 6));
-						buf.append(tabString(loads.get(j).getPriority(), 5));
-						buf.append(tabString(loads.get(j).getPickupComment(), 27));
-						buf.append(tabString(loads.get(j).getDropComment(), 27));
+						StringBuffer buf = new StringBuffer(TAB);
+						buf.append(tabString(carLoad.getName(), CarLoads.instance().getCurMaxNameLength() + 1));
+						buf.append(tabString(carLoad.getLoadType(), 6)); // load or empty
+						buf.append(tabString(carLoad.getPriority(), 5)); // low or high
+						buf.append(tabString(carLoad.getPickupComment(), 27));
+						buf.append(tabString(carLoad.getDropComment(), 27));
 						writer.write(buf.toString() + NEW_LINE);
 					}
 				}
@@ -119,7 +116,7 @@ public class PrintCarLoadsAction extends AbstractAction {
 
 	private static String tabString(String s, int fieldSize) {
 		if (s.length() > fieldSize)
-			s = s.substring(0, fieldSize-1);
+			s = s.substring(0, fieldSize - 1);
 		StringBuffer buf = new StringBuffer(s + " ");
 		while (buf.length() < fieldSize) {
 			buf.append(" ");
@@ -127,6 +124,5 @@ public class PrintCarLoadsAction extends AbstractAction {
 		return buf.toString();
 	}
 
-	static Logger log = LoggerFactory
-			.getLogger(PrintCarLoadsAction.class.getName());
+	static Logger log = LoggerFactory.getLogger(PrintCarLoadsAction.class.getName());
 }

@@ -71,8 +71,8 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 		else
 			sysList = scheduleManager.getSchedulesByNameList();
 		// and add them back in
-		for (int i = 0; i < sysList.size(); i++) {
-			sysList.get(i).addPropertyChangeListener(this);
+		for (Schedule sch : sysList) {
+			sch.addPropertyChangeListener(this);
 		}
 		addPropertyChangeTracks();
 	}
@@ -305,7 +305,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 		for (int i = 0; i < box.getItemCount(); i++) {
 			LocationTrackPair ltp = (LocationTrackPair) box.getItemAt(i);
 			String status = ltp.getTrack().checkScheduleValid();
-			if (!status.equals(""))
+			if (!status.equals(Track.SCHEDULE_OKAY))
 				return Bundle.getMessage("Error");
 		}
 		return Bundle.getMessage("Okay");
@@ -316,7 +316,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 		if (ltp == null)
 			return "";
 		String status = ltp.getTrack().checkScheduleValid();
-		if (!status.equals(""))
+		if (!status.equals(Track.SCHEDULE_OKAY))
 			return status;
 		return Bundle.getMessage("Okay");
 	}
@@ -333,28 +333,21 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 
 	private void removePropertyChangeSchedules() {
 		if (sysList != null) {
-			for (int i = 0; i < sysList.size(); i++) {
-				// if object has been deleted, it's not here; ignore it
-				Schedule sch = sysList.get(i);
-				if (sch != null)
-					sch.removePropertyChangeListener(this);
+			for (Schedule sch : sysList) {
+				sch.removePropertyChangeListener(this);
 			}
 		}
 	}
 
 	private void addPropertyChangeTracks() {
 		// only spurs have schedules
-		List<Track> tracks = LocationManager.instance().getTracks(Track.SPUR);
-		for (int i = 0; i < tracks.size(); i++) {
-			Track track = tracks.get(i);
+		for (Track track : LocationManager.instance().getTracks(Track.SPUR)) {
 			track.addPropertyChangeListener(this);
 		}
 	}
 
 	private void removePropertyChangeTracks() {
-		List<Track> tracks = LocationManager.instance().getTracks(Track.SPUR);
-		for (int i = 0; i < tracks.size(); i++) {
-			Track track = tracks.get(i);
+		for (Track track : LocationManager.instance().getTracks(Track.SPUR)) {
 			track.removePropertyChangeListener(this);
 		}
 	}

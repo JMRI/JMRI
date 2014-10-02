@@ -33,9 +33,11 @@ import org.jdom.Element;
  * @version $Revision$
  */
 public class Location implements java.beans.PropertyChangeListener {
+	
+	public static final String NONE = "";
 
-	protected String _id = "";
-	protected String _name = "";
+	protected String _id = NONE;
+	protected String _name = NONE;
 	protected int _IdNumber = 0;
 	protected int _numberRS = 0; // number of cars and engines (total rolling stock)
 	protected int _numberCars = 0; // number of cars
@@ -46,10 +48,10 @@ public class Location implements java.beans.PropertyChangeListener {
 	protected int _trainDir = EAST + WEST + NORTH + SOUTH; // train direction served by this location
 	protected int _length = 0; // length of all tracks at this location
 	protected int _usedLength = 0; // length of track filled by cars and engines
-	protected String _comment = "";
-	protected String _switchListComment = ""; // optional switch list comment
+	protected String _comment = NONE;
+	protected String _switchListComment = NONE; // optional switch list comment
 	protected boolean _switchList = true; // when true print switchlist for this location
-	protected String _defaultPrinter = ""; // the default printer name when printing a switchlist
+	protected String _defaultPrinter = NONE; // the default printer name when printing a switchlist
 	protected String _status = UNKNOWN; // print switch list status
 	protected int _switchListState = SW_CREATE; // switch list state, saved between sessions
 	protected Point _trainIconEast = new Point(); // coordinates of east bound train icons
@@ -757,45 +759,45 @@ public class Location implements java.beans.PropertyChangeListener {
 		return out;
 	}
 
-	/**
-	 * Sort ids by track location name. Returns a list of ids of a given track type. If type is null returns all track
-	 * ids for the location.
-	 * 
-	 * @param type
-	 *            track type: Track.YARD, Track.SPUR, Track.INTERCHANGE, Track.STAGING
-	 * @return list of track ids ordered by name
-	 */
-	@Deprecated
-	public List<String> getTrackIdsByNameList(String type) {
-		// first get id list
-		List<String> sortList = getTrackIdsByIdList();
-		// now re-sort
-		List<String> out = new ArrayList<String>();
-		String locName = "";
-		boolean locAdded = false;
-		Track track;
-		Track trackOut;
-
-		for (int i = 0; i < sortList.size(); i++) {
-			locAdded = false;
-			track = getTrackById(sortList.get(i));
-			locName = track.getName();
-			for (int j = 0; j < out.size(); j++) {
-				trackOut = getTrackById(out.get(j));
-				String outLocName = trackOut.getName();
-				if (locName.compareToIgnoreCase(outLocName) < 0
-						&& (type != null && track.getTrackType().equals(type) || type == null)) {
-					out.add(j, sortList.get(i));
-					locAdded = true;
-					break;
-				}
-			}
-			if (!locAdded && (type != null && track.getTrackType().equals(type) || type == null)) {
-				out.add(sortList.get(i));
-			}
-		}
-		return out;
-	}
+//	/**
+//	 * Sort ids by track location name. Returns a list of ids of a given track type. If type is null returns all track
+//	 * ids for the location.
+//	 * 
+//	 * @param type
+//	 *            track type: Track.YARD, Track.SPUR, Track.INTERCHANGE, Track.STAGING
+//	 * @return list of track ids ordered by name
+//	 */
+//	@Deprecated
+//	public List<String> getTrackIdsByNameList(String type) {
+//		// first get id list
+//		List<String> sortList = getTrackIdsByIdList();
+//		// now re-sort
+//		List<String> out = new ArrayList<String>();
+//		String locName = "";
+//		boolean locAdded = false;
+//		Track track;
+//		Track trackOut;
+//
+//		for (int i = 0; i < sortList.size(); i++) {
+//			locAdded = false;
+//			track = getTrackById(sortList.get(i));
+//			locName = track.getName();
+//			for (int j = 0; j < out.size(); j++) {
+//				trackOut = getTrackById(out.get(j));
+//				String outLocName = trackOut.getName();
+//				if (locName.compareToIgnoreCase(outLocName) < 0
+//						&& (type != null && track.getTrackType().equals(type) || type == null)) {
+//					out.add(j, sortList.get(i));
+//					locAdded = true;
+//					break;
+//				}
+//			}
+//			if (!locAdded && (type != null && track.getTrackType().equals(type) || type == null)) {
+//				out.add(sortList.get(i));
+//			}
+//		}
+//		return out;
+//	}
 	
 	/**
 	 * Sorted list by track name. Returns a list of tracks of a given track type. If type is null returns all tracks for
@@ -858,7 +860,7 @@ public class Location implements java.beans.PropertyChangeListener {
 		List<Track> out = new ArrayList<Track>();
 		for (int i = 0; i < moveList.size(); i++) {
 			Track track = moveList.get(i);
-			if (!track.getScheduleId().equals("")) {
+			if (!track.getScheduleId().equals(NONE)) {
 				out.add(track);
 				moveList.remove(i--);
 			} else if (track.isAlternate())
@@ -894,7 +896,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	 */
 	public void updateComboBox(JComboBox box) {
 		box.removeAllItems();
-		box.addItem("");
+		box.addItem(NONE);
 		List<Track> tracks = getTrackByNameList(null);
 		for (Track track : tracks) {
 			box.addItem(track);
@@ -987,7 +989,7 @@ public class Location implements java.beans.PropertyChangeListener {
 
 	public void updatePoolComboBox(JComboBox box) {
 		box.removeAllItems();
-		box.addItem("");
+		box.addItem(NONE);
 		List<Pool> pools = getPoolsByNameList();
 		for (int i = 0; i < pools.size(); i++) {
 			box.addItem(pools.get(i));
@@ -1231,7 +1233,7 @@ public class Location implements java.beans.PropertyChangeListener {
 		e.setAttribute(Xml.SWITCH_LIST, isSwitchListEnabled() ? Xml.TRUE : Xml.FALSE);
 		if (!Setup.isSwitchListRealTime())
 			e.setAttribute(Xml.SWITCH_LIST_STATE, Integer.toString(getSwitchListState()));
-		if (!getDefaultPrinterName().equals("")) {
+		if (!getDefaultPrinterName().equals(NONE)) {
 			e.setAttribute(Xml.PRINTER_NAME, getDefaultPrinterName());
 		}
 		if (!getTrainIconEast().equals(new Point())) {

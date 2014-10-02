@@ -123,7 +123,7 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
 			if (!checkName())
 				return;
 
-			if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals("")) {
+			if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals(LocationManager.NONE)) {
 				JOptionPane.showMessageDialog(this, Bundle.getMessage("SelectLocationToCopy"), MessageFormat.format(Bundle
 						.getMessage("CanNotLocation"), new Object[] { Bundle.getMessage("Copy") }), JOptionPane.ERROR_MESSAGE);			
 				return;

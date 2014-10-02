@@ -223,7 +223,7 @@ public class PrintLocationsAction extends AbstractAction {
 						// pad out schedule name
 						s = padOutString(schedule.getName(), MAX_NAME_LENGTH) + " " + location.getName() + " - " + spur.getName();
 						String status = spur.checkScheduleValid();
-						if (!status.equals("")) {
+						if (!status.equals(Track.SCHEDULE_OKAY)) {
 							StringBuffer buf = new StringBuffer(s);
 							for (int m = s.length(); m < 63; m++) {
 								buf.append(" ");

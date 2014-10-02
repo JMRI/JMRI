@@ -207,12 +207,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 	// Save, Delete, Add
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == addTypeButton) {
-			log.debug("schedule add location button activated");
-			if (typeBox.getSelectedItem() != null) {
-				if (typeBox.getSelectedItem().equals(""))
-					return;
-				addNewScheduleItem();
-			}
+			addNewScheduleItem();
 		}
 		if (ae.getSource() == saveScheduleButton) {
 			log.debug("schedule save button activated");
@@ -242,7 +237,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 				return;
 
 			if (_track != null)
-				_track.setScheduleId("");
+				_track.setScheduleId(Track.NONE);
 
 			manager.deregister(schedule);
 			_schedule = null;
@@ -267,6 +262,8 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 	}
 
 	private void addNewScheduleItem() {
+		if (typeBox.getSelectedItem() == null)
+			return;
 		// add item to this schedule
 		if (addLocAtTop.isSelected())
 			_schedule.addItem((String) typeBox.getSelectedItem(), 0);
@@ -316,10 +313,9 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 
 	private void loadTypeComboBox() {
 		typeBox.removeAllItems();
-		String[] types = CarTypes.instance().getNames();
-		for (int i = 0; i < types.length; i++) {
-			if (_track.acceptsTypeName(types[i]))
-				typeBox.addItem(types[i]);
+		for (String typeName : CarTypes.instance().getNames()) {
+			if (_track.acceptsTypeName(typeName))
+				typeBox.addItem(typeName);
 		}
 	}
 

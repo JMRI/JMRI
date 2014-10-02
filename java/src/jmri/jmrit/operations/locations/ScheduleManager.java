@@ -4,8 +4,8 @@ package jmri.jmrit.operations.locations;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.Enumeration;
 
+import java.util.Enumeration;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -26,6 +26,8 @@ import jmri.jmrit.operations.rollingstock.cars.CarRoads;
  * @version $Revision$
  */
 public class ScheduleManager implements java.beans.PropertyChangeListener {
+	
+	public static final String NONE = ""; // NOI18N
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "scheduleListLength"; // NOI18N
 
 	public ScheduleManager() {
@@ -200,11 +202,7 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 	 */
 	public JComboBox getComboBox() {
 		JComboBox box = new JComboBox();
-		box.addItem("");
-		List<Schedule> schs = getSchedulesByNameList();
-		for (int i = 0; i < schs.size(); i++) {
-			box.addItem(schs.get(i));
-		}
+		updateComboBox(box);
 		return box;
 	}
 
@@ -216,10 +214,9 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 	 */
 	public void updateComboBox(JComboBox box) {
 		box.removeAllItems();
-		box.addItem("");
-		List<Schedule> schs = getSchedulesByNameList();
-		for (int i = 0; i < schs.size(); i++) {
-			box.addItem(schs.get(i));
+		box.addItem(NONE);
+		for (Schedule schedule : getSchedulesByNameList()) {
+			box.addItem(schedule);
 		}
 	}
 
@@ -232,12 +229,8 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 	 *            replacement car type.
 	 */
 	public void replaceType(String oldType, String newType) {
-		List<Schedule> schs = getSchedulesByIdList();
-		for (int i = 0; i < schs.size(); i++) {
-			Schedule sch = schs.get(i);
-			List<ScheduleItem> items = sch.getItemsBySequenceList();
-			for (int j = 0; j < items.size(); j++) {
-				ScheduleItem si = items.get(j);
+		for (Schedule sch : getSchedulesByIdList()) {
+			for (ScheduleItem si : sch.getItemsBySequenceList()) {
 				if (si.getTypeName().equals(oldType)) {
 					si.setTypeName(newType);
 				}
@@ -256,12 +249,8 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 	public void replaceRoad(String oldRoad, String newRoad) {
 		if (newRoad == null)
 			return;
-		List<Schedule> schs = getSchedulesByIdList();
-		for (int i = 0; i < schs.size(); i++) {
-			Schedule sch = schs.get(i);
-			List<ScheduleItem> items = sch.getItemsBySequenceList();
-			for (int j = 0; j < items.size(); j++) {
-				ScheduleItem si = items.get(j);
+		for (Schedule sch : getSchedulesByIdList()) {
+			for (ScheduleItem si : sch.getItemsBySequenceList()) {
 				if (si.getRoadName().equals(oldRoad)) {
 					si.setRoadName(newRoad);
 				}
@@ -290,13 +279,13 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 					if (newLoad != null)
 						si.setReceiveLoadName(newLoad);
 					else
-						si.setReceiveLoadName("");
+						si.setReceiveLoadName(ScheduleItem.NONE);
 				}
 				if (si.getTypeName().equals(type) && si.getShipLoadName().equals(oldLoad)) {
 					if (newLoad != null)
 						si.setShipLoadName(newLoad);
 					else
-						si.setShipLoadName("");
+						si.setShipLoadName(ScheduleItem.NONE);
 				}
 			}
 		}
@@ -312,12 +301,8 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 	public JComboBox getSpursByScheduleComboBox(Schedule schedule) {
 		JComboBox box = new JComboBox();
 		// search all spurs for that use schedule
-		LocationManager manager = LocationManager.instance();
-		List<Location> locations = manager.getLocationsByNameList();
-		for (int j = 0; j < locations.size(); j++) {
-			Location location = locations.get(j);
-			List<Track> spurs = location.getTrackByNameList(Track.SPUR);
-			for (Track spur : spurs) {
+		for (Location location : LocationManager.instance().getLocationsByNameList()) {
+			for (Track spur : location.getTrackByNameList(Track.SPUR)) {
 				if (spur.getScheduleId().equals(schedule.getId())) {
 					LocationTrackPair ltp = new LocationTrackPair(location, spur);
 					box.addItem(ltp);

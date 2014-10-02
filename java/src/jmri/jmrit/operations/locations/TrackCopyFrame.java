@@ -144,7 +144,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 
 	protected void updateTrackComboBox() {
 		log.debug("update track combobox");
-		if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals("")) {
+		if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals(LocationManager.NONE)) {
 			trackBox.removeAllItems();
 		} else {
 			log.debug("Copy Track Frame sees location: " + locationBox.getSelectedItem());
@@ -165,7 +165,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 			log.debug("copy track button activated");
 			if (!checkName())
 				return;
-			if (trackBox.getSelectedItem() == null || trackBox.getSelectedItem().equals("") || _location == null) {
+			if (trackBox.getSelectedItem() == null || trackBox.getSelectedItem().equals(Location.NONE) || _location == null) {
 				// tell user that they need to select a track to copy
 				JOptionPane.showMessageDialog(this, Bundle.getMessage("SelectLocationAndTrack"), Bundle
 						.getMessage("SelectTrackToCopy"), JOptionPane.INFORMATION_MESSAGE);

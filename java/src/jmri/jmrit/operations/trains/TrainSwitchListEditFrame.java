@@ -256,7 +256,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 			JComboBox comboBox = locationComboBoxes.get(i);
 			String printerName = (String) comboBox.getSelectedItem();
 			if (printerName.equals(TrainPrintUtilities.getDefaultPrinterName())) {
-				l.setDefaultPrinterName("");
+				l.setDefaultPrinterName(Location.NONE);
 			} else {
 				log.debug("Location " + l.getName() + " has selected printer " + printerName);
 				l.setDefaultPrinterName(printerName);

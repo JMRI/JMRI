@@ -26,6 +26,8 @@ public class CarLoads {
 	protected Hashtable<String, List<CarLoad>> list = new Hashtable<String, List<CarLoad>>();
 	protected String _emptyName = Bundle.getMessage("EmptyCar");
 	protected String _loadName = Bundle.getMessage("LoadedCar");
+	
+	public static final String NONE = ""; // NOI18N
 
 	// for property change
 	public static final String LOAD_CHANGED_PROPERTY = "CarLoads_Load"; // NOI18N
@@ -96,7 +98,7 @@ public class CarLoads {
 	 */
 	public JComboBox getSelectComboBox(String type) {
 		JComboBox box = new JComboBox();
-		box.addItem("");
+		box.addItem(NONE);
 		List<String> loads = getNames(type);
 		for (int i = 0; i < loads.size(); i++) {
 			box.addItem(loads.get(i));
@@ -360,8 +362,7 @@ public class CarLoads {
 		if (!containsName(type, name))
 			return;
 		List<CarLoad> loads = list.get(type);
-		for (int i = 0; i < loads.size(); i++) {
-			CarLoad cl = loads.get(i);
+		for (CarLoad cl : loads) {
 			if (cl.getName().equals(name))
 				cl.setPickupComment(comment);
 		}
@@ -369,22 +370,20 @@ public class CarLoads {
 
 	public String getPickupComment(String type, String name) {
 		if (!containsName(type, name))
-			return "";
+			return NONE;
 		List<CarLoad> loads = list.get(type);
-		for (int i = 0; i < loads.size(); i++) {
-			CarLoad cl = loads.get(i);
+		for (CarLoad cl : loads) {
 			if (cl.getName().equals(name))
 				return cl.getPickupComment();
 		}
-		return "";
+		return NONE;
 	}
 
 	public void setDropComment(String type, String name, String comment) {
 		if (!containsName(type, name))
 			return;
 		List<CarLoad> loads = list.get(type);
-		for (int i = 0; i < loads.size(); i++) {
-			CarLoad cl = loads.get(i);
+		for (CarLoad cl : loads) {
 			if (cl.getName().equals(name))
 				cl.setDropComment(comment);
 		}
@@ -392,14 +391,13 @@ public class CarLoads {
 
 	public String getDropComment(String type, String name) {
 		if (!containsName(type, name))
-			return "";
+			return NONE;
 		List<CarLoad> loads = list.get(type);
-		for (int i = 0; i < loads.size(); i++) {
-			CarLoad cl = loads.get(i);
+		for (CarLoad cl : loads) {
 			if (cl.getName().equals(name))
 				return cl.getDropComment();
 		}
-		return "";
+		return NONE;
 	}
 
 	private int maxNameLength = 0;
@@ -479,11 +477,11 @@ public class CarLoads {
 					xmlCarLoad.setAttribute(Xml.PRIORITY, load.getPriority());
 					mustStore = true; // must store
 				}
-				if (!load.getPickupComment().equals("")) {
+				if (!load.getPickupComment().equals(CarLoad.NONE)) {
 					xmlCarLoad.setAttribute(Xml.PICKUP_COMMENT, load.getPickupComment());
 					mustStore = true; // must store
 				}
-				if (!load.getDropComment().equals("")) {
+				if (!load.getDropComment().equals(CarLoad.NONE)) {
 					xmlCarLoad.setAttribute(Xml.DROP_COMMENT, load.getDropComment());
 					mustStore = true; // must store
 				}

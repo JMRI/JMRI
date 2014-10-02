@@ -33,6 +33,9 @@ import org.slf4j.LoggerFactory;
 
 public class OperationsFrame extends jmri.util.JmriJFrame {
 	
+	public static final String NEW_LINE = "\n"; // NOI18N
+	public static final String NONE = ""; // NOI18N
+	
 	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_CANNOT_BE_FINAL")
 
 	public OperationsFrame(String s) {
@@ -362,8 +365,6 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 	protected void storeValues(){
 		OperationsXml.save();
 	}
-		
-	protected static final String NEW_LINE = "\n"; // NOI18N
 	
 	protected String lineWrap(String s) {
 		int numberChar = 80;

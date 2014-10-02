@@ -92,7 +92,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
 			sef.dispose();
 		sef = new ScheduleEditFrame();
 		Object selected = comboBoxSchedules.getSelectedItem();
-		if (selected != null && !selected.equals("")) {
+		if (selected != null && !selected.equals(ScheduleManager.NONE)) {
 			Schedule schedule = (Schedule) selected;
 			sef.setTitle(MessageFormat.format(Bundle.getMessage("TitleScheduleEdit"),
 					new Object[] { _track.getName() }));
@@ -108,15 +108,15 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
 		editScheduleButton.setEnabled(enabled);
 		comboBoxSchedules.setEnabled(enabled);
 		if (!enabled)
-			comboBoxSchedules.setSelectedItem("");
+			comboBoxSchedules.setSelectedItem(ScheduleManager.NONE);
 		super.enableButtons(enabled);
 	}
 
 	protected void saveTrack(Track track) {
 		// save the schedule
 		Object selected = comboBoxSchedules.getSelectedItem();
-		if (selected == null || selected.equals("")) {
-			track.setScheduleId("");
+		if (selected == null || selected.equals(ScheduleManager.NONE)) {
+			track.setScheduleId(Track.NONE);
 		} else {
 			Schedule sch = (Schedule) selected;
 			// update only if the schedule has changed

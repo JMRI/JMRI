@@ -19,6 +19,8 @@ import java.util.List;
  * @version $Revision$
  */
 public class RollingStockManager {
+	
+	public static final String NONE = "";
 
 	// RollingStock
 	protected Hashtable<String, RollingStock> _hashTable = new Hashtable<String, RollingStock>(); 

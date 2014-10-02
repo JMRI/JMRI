@@ -323,7 +323,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 			return;
 		for (int i = 0; i < list.size(); i++) {
 			Car car = (Car) list.get(i);
-			if (car.getLocationName().equals("")) {
+			if (car.getLocation() == null) {
 				list.remove(i--);
 				continue;
 			}
@@ -534,19 +534,18 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 			return car.getKernelName();
 		}
 		case LOCATION_COLUMN: {
-			String s = car.getStatus();
-			if (!car.getLocationName().equals(""))
-				s = car.getStatus() + car.getLocationName() + " (" + car.getTrackName() + ")";
-			return s;
+			if (car.getLocation() != null)
+				return car.getStatus() + car.getLocationName() + " (" + car.getTrackName() + ")";
+			return car.getStatus();
 		}
 		case DESTINATION_COLUMN:
 		case FINAL_DESTINATION_COLUMN: {
 			String s = "";
-			if (!car.getDestinationName().equals(""))
+			if (car.getDestination() != null)
 				s = car.getDestinationName() + " (" + car.getDestinationTrackName() + ")";
-			if (!car.getFinalDestinationName().equals(""))
+			if (car.getFinalDestination() != null)
 				s = s + "->" + car.getFinalDestinationName(); // NOI18N
-			if (!car.getFinalDestinationTrackName().equals(""))
+			if (car.getFinalDestinationTrack() != null)
 				s = s + " (" + car.getFinalDestinationTrackName() + ")";
 			return s;
 		}

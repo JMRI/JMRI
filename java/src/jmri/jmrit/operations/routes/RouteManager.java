@@ -26,7 +26,9 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
  * @version $Revision$
  */
 public class RouteManager {
+	
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "routesListLengthChanged"; // NOI18N
+	public static final String NONE = "";  // NOI18N
 
 	public RouteManager() {
 	}
@@ -182,7 +184,7 @@ public class RouteManager {
 
 	public JComboBox getComboBox() {
 		JComboBox box = new JComboBox();
-		box.addItem("");
+		box.addItem(NONE);
 		List<Route> routes = getRoutesByNameList();
 		for (int i = 0; i < routes.size(); i++) {
 			box.addItem(routes.get(i));
@@ -192,7 +194,7 @@ public class RouteManager {
 
 	public void updateComboBox(JComboBox box) {
 		box.removeAllItems();
-		box.addItem("");
+		box.addItem(NONE);
 		List<Route> routes = getRoutesByNameList();
 		for (int i = 0; i < routes.size(); i++) {
 			box.addItem(routes.get(i));

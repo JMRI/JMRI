@@ -456,13 +456,13 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 
 	private void updateTrackLocationBox() {
 		if (locationBox.getSelectedItem() != null) {
-			if (locationBox.getSelectedItem().equals("")) {
+			if (locationBox.getSelectedItem().equals(LocationManager.NONE)) {
 				trackLocationBox.removeAllItems();
 			} else {
 				log.debug("Update tracks for location: " + locationBox.getSelectedItem());
-				Location l = ((Location) locationBox.getSelectedItem());
-				l.updateComboBox(trackLocationBox, _car, autoTrackCheckBox.isSelected(), false);
-				if (_car != null && _car.getLocation() == l)
+				Location loc = ((Location) locationBox.getSelectedItem());
+				loc.updateComboBox(trackLocationBox, _car, autoTrackCheckBox.isSelected(), false);
+				if (_car != null && _car.getLocation() == loc)
 					trackLocationBox.setSelectedItem(_car.getTrack());
 			}
 		}
@@ -491,10 +491,9 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 			// log.debug("car save button pressed");
 			if (!checkCar(_car))
 				return;
-			// if the road or number changes, the car needs a new id
+			// if the car's road or number changes, the car needs a new id
 			if (_car != null
-					&& _car.getRoadName() != null
-					&& !_car.getRoadName().equals("")
+					&& !_car.getRoadName().equals(Car.NONE)
 					&& (!_car.getRoadName().equals(roadComboBox.getSelectedItem().toString()) || !_car.getNumber()
 							.equals(roadNumberTextField.getText()))) {
 				String road = roadComboBox.getSelectedItem().toString();
@@ -627,7 +626,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 	}
 
 	private void saveCar(boolean isSave) {
-		if (roadComboBox.getSelectedItem() == null || roadComboBox.getSelectedItem().toString().equals(""))
+		if (roadComboBox.getSelectedItem() == null)
 			return;
 		if (_car == null || !_car.getRoadName().equals(roadComboBox.getSelectedItem().toString())
 				|| !_car.getNumber().equals(roadNumberTextField.getText())) {
@@ -739,7 +738,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		if (ownerComboBox.getSelectedItem() != null)
 			_car.setOwner(ownerComboBox.getSelectedItem().toString());
 		if (kernelComboBox.getSelectedItem() != null) {
-			if (kernelComboBox.getSelectedItem().equals("")) {
+			if (kernelComboBox.getSelectedItem().equals(CarManager.NONE)) {
 				_car.setKernel(null);
 			} else if (!_car.getKernelName().equals(kernelComboBox.getSelectedItem())) {
 				_car.setKernel(carManager.getKernelByName((String) kernelComboBox.getSelectedItem()));
@@ -773,8 +772,8 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		_car.setRfid(rfidTextField.getText());
 		autoTrackCheckBox.setEnabled(true);
 		if (locationBox.getSelectedItem() != null) {
-			if (!locationBox.getSelectedItem().equals("")
-					&& (trackLocationBox.getSelectedItem() == null || trackLocationBox.getSelectedItem().equals(""))) {
+			if (!locationBox.getSelectedItem().equals(LocationManager.NONE)
+					&& (trackLocationBox.getSelectedItem() == null || trackLocationBox.getSelectedItem().equals(Location.NONE))) {
 				JOptionPane.showMessageDialog(this, Bundle.getMessage("rsFullySelect"), Bundle
 						.getMessage("rsCanNotLoc"), JOptionPane.ERROR_MESSAGE);
 			} else {
@@ -808,7 +807,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 			log.debug("locationBox is null!");
 			return;
 		}
-		if (locationBox.getSelectedItem().equals("")) {
+		if (locationBox.getSelectedItem().equals(LocationManager.NONE)) {
 			car.setLocation(null, null);
 		} else {
 			String status = car.setLocation((Location) locationBox.getSelectedItem(), (Track) trackLocationBox

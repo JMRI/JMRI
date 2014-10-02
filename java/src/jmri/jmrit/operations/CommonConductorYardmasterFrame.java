@@ -329,7 +329,7 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 		// check for locos
 		List<Engine> engList = engManager.getByTrainBlockingList(_train);
 		for (Engine engine : engList) {
-			if (engine.getRouteLocation() == rl && !engine.getTrackName().equals("")) {
+			if (engine.getRouteLocation() == rl && engine.getTrack() != null) {
 				locoPane.setVisible(true);
 				pPickupLocos.setVisible(true);
 				rollingStock.add(engine);

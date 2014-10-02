@@ -5,7 +5,6 @@ package jmri.jmrit.operations.locations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.awt.GridBagLayout;
-import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
@@ -29,8 +28,7 @@ import jmri.jmrit.operations.trains.TrainScheduleManager;
  * @version $Revision: 17977 $
  */
 
-public class SchedulesByLoadFrame extends OperationsFrame implements
-		java.beans.PropertyChangeListener {
+public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
 	// combo box
 	JComboBox typesComboBox = CarTypes.instance().getComboBox();
@@ -83,8 +81,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
-		toolMenu.add(new PrintCarLoadsAction(Bundle.getMessage("MenuItemCarLoadsPreview"), true,
-				this));
+		toolMenu.add(new PrintCarLoadsAction(Bundle.getMessage("MenuItemCarLoadsPreview"), true, this));
 		toolMenu.add(new PrintCarLoadsAction(Bundle.getMessage("MenuItemCarLoadsPrint"), false, this));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
@@ -123,60 +120,49 @@ public class SchedulesByLoadFrame extends OperationsFrame implements
 		addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("receiveTypeLoad")), 2, x);
 		addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("shipLoad")), 3, x);
 		addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("destinationTrack")), 4, x++);
-		List<Location> locations = locationManager.getLocationsByNameList();
-		for (int i = 0; i < locations.size(); i++) {
-			Location l = locations.get(i);
+
+		for (Location location : locationManager.getLocationsByNameList()) {
 			// don't show staging
-			if (l.getLocationOps() == Location.NORMAL) {
-				addItemLeft(locationsPanel, new JLabel(l.getName()), 0, x++);
+			if (location.getLocationOps() == Location.NORMAL) {
+				addItemLeft(locationsPanel, new JLabel(location.getName()), 0, x++);
 				// now look for a spur with a schedule
-				List<Track> spurs = l.getTrackByNameList(Track.SPUR);
-				for (Track spur : spurs) {
+				for (Track spur : location.getTrackByNameList(Track.SPUR)) {
 					Schedule sch = spur.getSchedule();
-					if (sch != null) {
-						// listen for changes
-						sch.removePropertyChangeListener(this);
-						sch.addPropertyChangeListener(this);
-						List<ScheduleItem> items = sch.getItemsBySequenceList();
-						// determine if schedule is requesting car type and load
-						for (int k = 0; k < items.size(); k++) {
-							ScheduleItem item = items.get(k);
-							if (item.getTypeName().equals(type) && item.getReceiveLoadName().equals(load)
-									|| item.getTypeName().equals(type) && item.getReceiveLoadName().equals("")
-									|| item.getTypeName().equals(type) && item.getShipLoadName().equals(load)
-									|| item.getTypeName().equals(type) && item.getShipLoadName().equals("")) {
-								addItemLeft(locationsPanel,
-										new JLabel(spur.getName() + " (" + spur.getScheduleName()
-												+ ")"), 1, x);
-								// create string (type, timetable, road, load)
-								String s = item.getTypeName();
-								if (!item.getSetoutTrainScheduleId().equals("")
-										&& TrainScheduleManager.instance().getScheduleById(
-												item.getSetoutTrainScheduleId()) != null)
-									s = s
-											+ ", "
-											+ TrainScheduleManager.instance()
-													.getScheduleById(item.getSetoutTrainScheduleId())
-													.getName();
-								else
-									s = s + ",";
-								if (!item.getRoadName().equals(""))
-									s = s + ", " + item.getRoadName();
-								else
-									s = s + ",";
-								s = s + ", " + item.getReceiveLoadName();
-								addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Receive")
-										+ " (" + s + ")"), 2, x);
-								addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Ship")
-										+ " (" + item.getShipLoadName() + ")"), 3, x++);
-								if (item.getDestination() != null)
-									addItemLeft(
-											locationsPanel,
-											new JLabel(item.getDestinationName() + " ("
-													+ item.getDestinationTrackName() + ")"), 4,
-											x - 1);
-								// break; // done, only report first occurrence
-							}
+					if (sch == null)
+						continue;
+					// listen for changes
+					sch.removePropertyChangeListener(this);
+					sch.addPropertyChangeListener(this);
+					// determine if schedule is requesting car type and load
+					for (ScheduleItem si : sch.getItemsBySequenceList()) {
+						if (si.getTypeName().equals(type) && si.getReceiveLoadName().equals(load)
+								|| si.getTypeName().equals(type) && si.getReceiveLoadName().equals(ScheduleItem.NONE)
+								|| si.getTypeName().equals(type) && si.getShipLoadName().equals(load)
+								|| si.getTypeName().equals(type) && si.getShipLoadName().equals(ScheduleItem.NONE)) {
+							addItemLeft(locationsPanel,
+									new JLabel(spur.getName() + " (" + spur.getScheduleName() + ")"), 1, x);
+							// create string (type, timetable, road, load)
+							String s = si.getTypeName();
+							if (!si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE)
+									&& TrainScheduleManager.instance().getScheduleById(si.getSetoutTrainScheduleId()) != null)
+								s = s
+										+ ", "
+										+ TrainScheduleManager.instance().getScheduleById(
+												si.getSetoutTrainScheduleId()).getName();
+							else
+								s = s + ",";
+							if (!si.getRoadName().equals(ScheduleItem.NONE))
+								s = s + ", " + si.getRoadName();
+							else
+								s = s + ",";
+							s = s + ", " + si.getReceiveLoadName();
+							addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Receive") + " (" + s + ")"), 2, x);
+							addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Ship") + " ("
+									+ si.getShipLoadName() + ")"), 3, x++);
+							if (si.getDestination() != null)
+								addItemLeft(locationsPanel, new JLabel(si.getDestinationName() + " ("
+										+ si.getDestinationTrackName() + ")"), 4, x - 1);
+							// break; // done, only report first occurrence
 						}
 					}
 				}
@@ -196,19 +182,16 @@ public class SchedulesByLoadFrame extends OperationsFrame implements
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue()); // NOI18N
+			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
+					+ e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY))
 			CarTypes.instance().updateComboBox(typesComboBox);
 		if (e.getSource().getClass().equals(CarLoads.class))
-			CarLoads.instance().updateComboBox((String) typesComboBox.getSelectedItem(),
-					loadsComboBox);
-		if (e.getSource().getClass().equals(Schedule.class)
-				|| e.getSource().getClass().equals(LocationManager.class))
+			CarLoads.instance().updateComboBox((String) typesComboBox.getSelectedItem(), loadsComboBox);
+		if (e.getSource().getClass().equals(Schedule.class) || e.getSource().getClass().equals(LocationManager.class))
 			updateLocations();
 	}
 
-	static Logger log = LoggerFactory
-			.getLogger(LocationsByCarTypeFrame.class.getName());
+	static Logger log = LoggerFactory.getLogger(LocationsByCarTypeFrame.class.getName());
 
 }

@@ -20,10 +20,12 @@ import jmri.jmrit.operations.setup.Setup;
  * @version $Revision$
  */
 public class RouteLocation implements java.beans.PropertyChangeListener {
+	
+	public static final String NONE = "";
 
-	protected String _id = "";
+	protected String _id = NONE;
 	protected Location _location = null; // the location in the route
-	protected String _locationId = ""; // the location's id
+	protected String _locationId = NONE; // the location's id
 	protected int _trainDir = (Setup.getTrainDirection() == Setup.EAST + Setup.WEST) ? EAST : NORTH; // train direction
 	protected int _maxTrainLength = Setup.getMaxTrainLength();
 	protected int _maxCarMoves = Setup.getCarMoves();
@@ -33,10 +35,10 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	protected int _sequenceId = 0; // used to determine location order in route
 	protected double _grade = 0; // maximum grade between locations
 	protected int _wait = 0; // wait time at this location
-	protected String _departureTime = ""; // departure time from this location
+	protected String _departureTime = NONE; // departure time from this location
 	protected int _trainIconX = 0; // the x & y coordinates for the train icon
 	protected int _trainIconY = 0;
-	protected String _comment = "";
+	protected String _comment = NONE;
 
 	protected int _carMoves = 0; // number of moves at this location
 	protected int _trainWeight = 0; // total car weight departing this location

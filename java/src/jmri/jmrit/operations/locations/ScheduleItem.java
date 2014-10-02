@@ -11,21 +11,23 @@ import jmri.jmrit.operations.setup.Control;
  * @version $Revision$
  */
 public class ScheduleItem implements java.beans.PropertyChangeListener {
+	
+	public static final String NONE = ""; // NOI18N
 
-	protected String _id = "";
+	protected String _id = NONE;
 	protected int _sequenceId = 0; // used to determine order in schedule
-	protected String _setoutTrainScheduleId = ""; // which day of the week to deliver car
-	protected String _type = ""; // the type of car
-	protected String _road = ""; // the car road
-	protected String _load = ""; // the car load requested
-	protected String _ship = ""; // the car load shipped
+	protected String _setoutTrainScheduleId = NONE; // which day of the week to deliver car
+	protected String _type = NONE; // the type of car
+	protected String _road = NONE; // the car road
+	protected String _load = NONE; // the car load requested
+	protected String _ship = NONE; // the car load shipped
 	protected Location _destination = null; // car destination after load
 	protected Track _trackDestination = null;// car destination track after load
-	protected String _pickupTrainScheduleId = ""; // which day of the week to pickup car
+	protected String _pickupTrainScheduleId = NONE; // which day of the week to pickup car
 	protected int _count = 1; // the number of times this type of car must be dropped
 	protected int _wait = 0; // how many trains this car must wait before being picked up
 	protected int _hits = 0; // how many times this schedule item has been used
-	protected String _comment = "";
+	protected String _comment = NONE;
 
 	public static final String TRAIN_SCHEDULE_CHANGED_PROPERTY = "trainScheduleId"; // NOI18N
 	public static final String COUNT_CHANGED_PROPERTY = "scheduleItemCount"; // NOI18N
@@ -196,13 +198,13 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 	public String getDestinationName() {
 		if (_destination != null)
 			return _destination.getName();
-		return "";
+		return NONE;
 	}
 
 	public String getDestinationId() {
 		if (_destination != null)
 			return _destination.getId();
-		return "";
+		return NONE;
 	}
 
 	public Track getDestinationTrack() {
@@ -224,13 +226,13 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 	public String getDestinationTrackName() {
 		if (_trackDestination != null)
 			return _trackDestination.getName();
-		return "";
+		return NONE;
 	}
 
 	public String getDestinationTrackId() {
 		if (_trackDestination != null)
 			return _trackDestination.getId();
-		return "";
+		return NONE;
 	}
 	
 	public void setComment(String comment) {
@@ -305,9 +307,9 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 		e.setAttribute(Xml.ROAD, getRoadName());
 		e.setAttribute(Xml.LOAD, getReceiveLoadName());
 		e.setAttribute(Xml.SHIP, getShipLoadName());
-		if (!getDestinationId().equals(""))
+		if (!getDestinationId().equals(NONE))
 			e.setAttribute(Xml.DESTINATION_ID, getDestinationId());
-		if (!getDestinationTrackId().equals(""))
+		if (!getDestinationTrackId().equals(NONE))
 			e.setAttribute(Xml.DEST_TRACK_ID, getDestinationTrackId());
 		e.setAttribute(Xml.COMMENT, getComment());
 		e.setAttribute(Xml.HITS, Integer.toString(getHits()));

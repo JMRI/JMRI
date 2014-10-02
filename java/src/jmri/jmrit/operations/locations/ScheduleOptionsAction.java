@@ -112,7 +112,7 @@ class ScheduleOptionsFrame extends OperationsFrame {
 				return;
 			}
 			_track.setReservationFactor(Integer.parseInt(factorTextField.getText()));
-			if (trackBox.getSelectedItem() != null && !trackBox.getSelectedItem().equals(""))
+			if (trackBox.getSelectedItem() != null && !trackBox.getSelectedItem().equals(Location.NONE))
 				_track.setAlternateTrack((Track) trackBox.getSelectedItem());
 			else
 				_track.setAlternateTrack(null);

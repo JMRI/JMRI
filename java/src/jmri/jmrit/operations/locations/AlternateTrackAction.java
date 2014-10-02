@@ -86,7 +86,7 @@ class AlternateTrackFrame extends OperationsFrame{
 	
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == saveButton){
-			if (trackBox.getSelectedItem() != null && !trackBox.getSelectedItem().equals(""))
+			if (trackBox.getSelectedItem() != null && !trackBox.getSelectedItem().equals(Location.NONE))
 				_track.setAlternateTrack((Track)trackBox.getSelectedItem());
 			else 
 				_track.setAlternateTrack(null);

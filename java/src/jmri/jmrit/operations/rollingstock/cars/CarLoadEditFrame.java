@@ -39,6 +39,8 @@ import jmri.jmrit.operations.locations.ScheduleManager;
  * @version $Revision$
  */
 public class CarLoadEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
+	
+	public static final String NONE = "";
 
 	CarLoads carLoads = CarLoads.instance();
 
@@ -166,8 +168,8 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 	// add, delete, replace, and save buttons
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == addButton) {
-			String addLoad = addTextBox.getText();
-			if (addLoad.equals(""))
+			String addLoad = addTextBox.getText().trim();
+			if (addLoad.equals(NONE))
 				return;
 			if (addLoad.length() > Control.max_len_string_attibute) {
 				JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carAttribute"),
@@ -190,8 +192,8 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 			deleteLoadFromCombobox(_type, deleteLoad);
 		}
 		if (ae.getSource() == replaceButton) {
-			String newLoad = addTextBox.getText();
-			if (newLoad.equals(""))
+			String newLoad = addTextBox.getText().trim();
+			if (newLoad.equals(NONE))
 				return;
 			if (newLoad.length() > Control.max_len_string_attibute) {
 				JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carAttribute"),

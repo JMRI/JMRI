@@ -34,6 +34,8 @@ import jmri.jmrit.operations.setup.Setup;
  * @version $Revision$
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
+	
+	public static final String NONE = "";
 
 	// Train frame attributes
 	private String _trainAction = TrainsTableFrame.MOVE; // Trains frame table button action
@@ -47,7 +49,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	private int[] _tableColumnWidths = { 50, 50, 72, 100, 140, 120, 120, 120, 120, 120, 90, 70 };
 
 	private int[] _tableScheduleColumnWidths = { 50, 70, 120 };
-	private String _trainScheduleActiveId = "";
+	private String _trainScheduleActiveId = NONE;
 
 	// Scripts
 	protected List<String> _startUpScripts = new ArrayList<String>(); // list of script pathnames to run at start up
@@ -573,20 +575,18 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 
 	public JComboBox getComboBox() {
 		JComboBox box = new JComboBox();
-		box.addItem("");
-		List<Train> trains = getTrainsByNameList();
-		for (int i = 0; i < trains.size(); i++) {
-			box.addItem(trains.get(i));
+		box.addItem(NONE);
+		for (Train train : getTrainsByNameList()) {
+			box.addItem(train);
 		}
 		return box;
 	}
 
 	public void updateComboBox(JComboBox box) {
 		box.removeAllItems();
-		box.addItem("");
-		List<Train> trains = getTrainsByNameList();
-		for (int i = 0; i < trains.size(); i++) {
-			box.addItem(trains.get(i));
+		box.addItem(NONE);
+		for (Train train : getTrainsByNameList()) {
+			box.addItem(train);
 		}
 	}
 
@@ -600,10 +600,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	 */
 	public void updateComboBox(JComboBox box, Car car) {
 		box.removeAllItems();
-		box.addItem("");
-		List<Train> trains = getTrainsByNameList();
-		for (int i = 0; i < trains.size(); i++) {
-			Train train = trains.get(i);
+		box.addItem(NONE);
+		for (Train train : getTrainsByNameList()) {
 			if (train.services(car))
 				box.addItem(train);
 		}

@@ -386,7 +386,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		if (ae.getSource() == addDropButton) {
 			String id = "";
 			if (trainDrop.isSelected() || excludeTrainDrop.isSelected()) {
-				if (comboBoxDropTrains.getSelectedItem().equals(""))
+				if (comboBoxDropTrains.getSelectedItem().equals(TrainManager.NONE))
 					return;
 				Train train = ((Train) comboBoxDropTrains.getSelectedItem());
 				Route route = train.getRoute();
@@ -398,7 +398,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 				}
 				selectNextItemComboBox(comboBoxDropTrains);
 			} else {
-				if (comboBoxDropRoutes.getSelectedItem().equals(""))
+				if (comboBoxDropRoutes.getSelectedItem().equals(RouteManager.NONE))
 					return;
 				Route route = ((Route) comboBoxDropRoutes.getSelectedItem());
 				id = route.getId();
@@ -414,12 +414,12 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		if (ae.getSource() == deleteDropButton) {
 			String id = "";
 			if (trainDrop.isSelected() || excludeTrainDrop.isSelected()) {
-				if (comboBoxDropTrains.getSelectedItem().equals(""))
+				if (comboBoxDropTrains.getSelectedItem().equals(TrainManager.NONE))
 					return;
 				id = ((Train) comboBoxDropTrains.getSelectedItem()).getId();
 				selectNextItemComboBox(comboBoxDropTrains);
 			} else {
-				if (comboBoxDropRoutes.getSelectedItem().equals(""))
+				if (comboBoxDropRoutes.getSelectedItem().equals(RouteManager.NONE))
 					return;
 				id = ((Route) comboBoxDropRoutes.getSelectedItem()).getId();
 				selectNextItemComboBox(comboBoxDropRoutes);
@@ -429,7 +429,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		if (ae.getSource() == addPickupButton) {
 			String id = "";
 			if (trainPickup.isSelected() || excludeTrainPickup.isSelected()) {
-				if (comboBoxPickupTrains.getSelectedItem().equals(""))
+				if (comboBoxPickupTrains.getSelectedItem().equals(TrainManager.NONE))
 					return;
 				Train train = ((Train) comboBoxPickupTrains.getSelectedItem());
 				Route route = train.getRoute();
@@ -441,7 +441,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 				}
 				selectNextItemComboBox(comboBoxPickupTrains);
 			} else {
-				if (comboBoxPickupRoutes.getSelectedItem().equals(""))
+				if (comboBoxPickupRoutes.getSelectedItem().equals(RouteManager.NONE))
 					return;
 				Route route = ((Route) comboBoxPickupRoutes.getSelectedItem());
 				id = route.getId();
@@ -457,12 +457,12 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		if (ae.getSource() == deletePickupButton) {
 			String id = "";
 			if (trainPickup.isSelected() || excludeTrainPickup.isSelected()) {
-				if (comboBoxPickupTrains.getSelectedItem().equals(""))
+				if (comboBoxPickupTrains.getSelectedItem().equals(TrainManager.NONE))
 					return;
 				id = ((Train) comboBoxPickupTrains.getSelectedItem()).getId();
 				selectNextItemComboBox(comboBoxPickupTrains);
 			} else {
-				if (comboBoxPickupRoutes.getSelectedItem().equals(""))
+				if (comboBoxPickupRoutes.getSelectedItem().equals(RouteManager.NONE))
 					return;
 				id = ((Route) comboBoxPickupRoutes.getSelectedItem()).getId();
 				selectNextItemComboBox(comboBoxPickupRoutes);
