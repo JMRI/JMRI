@@ -106,7 +106,7 @@ public class OperationsEnginesTest extends TestCase {
 		EngineTypes et1 = new EngineTypes();
 
 		Assert.assertNotNull("exists", et1 );
-		Assert.assertEquals("EngineTypes ENGINETYPES_LENGTH_CHANGED_PROPERTY", "EngineTypesLength", EngineTypes.ENGINETYPES_LENGTH_CHANGED_PROPERTY);
+		Assert.assertEquals("EngineTypes ENGINETYPES_LENGTH_CHANGED_PROPERTY", "EngineTypesLength", EngineTypes.ENGINETYPES_CHANGED_PROPERTY);
 		Assert.assertEquals("EngineTypes ENGINETYPES_NAME_CHANGED_PROPERTY", "EngineTypesName", EngineTypes.ENGINETYPES_NAME_CHANGED_PROPERTY);
 	}
 

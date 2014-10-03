@@ -396,10 +396,9 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 				int y = 0; // vertical position in panel
 
 				int numberOfLoads = getNumberOfCheckboxes() / 2 + 1;
-				String[] carLoads = _track.getLoadNames();
-				for (int i = 0; i < carLoads.length; i++) {
+				for (String loadName : _track.getLoadNames()) {
 					JLabel load = new JLabel();
-					load.setText(carLoads[i]);
+					load.setText(loadName);
 					addItemTop(panelLoads, load, x++, y);
 					// limit the number of loads per line
 					if (x > numberOfLoads) {
@@ -432,10 +431,9 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 				int y = 0; // vertical position in panel
 
 				int numberOfLoads = getNumberOfCheckboxes() / 2 + 1;
-				String[] carLoads = _track.getShipLoadNames();
-				for (int i = 0; i < carLoads.length; i++) {
+				for (String loadName : _track.getShipLoadNames()) {
 					JLabel load = new JLabel();
-					load.setText(carLoads[i]);
+					load.setText(loadName);
 					addItemTop(panelShipLoads, load, x++, y);
 					// limit the number of loads per line
 					if (x > numberOfLoads) {
@@ -454,18 +452,16 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 
 	private void deleteAllLoads() {
 		if (_track != null) {
-			String[] trackLoads = _track.getLoadNames();
-			for (int i = 0; i < trackLoads.length; i++) {
-				_track.deleteLoadName(trackLoads[i]);
+			for (String loadName : _track.getLoadNames()) {
+				_track.deleteLoadName(loadName);
 			}
 		}
 	}
 
 	private void deleteAllShipLoads() {
 		if (_track != null) {
-			String[] trackLoads = _track.getShipLoadNames();
-			for (int i = 0; i < trackLoads.length; i++) {
-				_track.deleteShipLoadName(trackLoads[i]);
+			for (String loadName : _track.getShipLoadNames()) {
+				_track.deleteShipLoadName(loadName);
 			}
 		}
 	}
@@ -511,7 +507,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
 					+ e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY)
-				|| e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)
+				|| e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY)) {
 			updateTypeComboBoxes();
 		}

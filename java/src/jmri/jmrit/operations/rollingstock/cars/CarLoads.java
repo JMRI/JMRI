@@ -4,15 +4,18 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+
 import javax.swing.JComboBox;
 
 import org.jdom.Attribute;
 import org.jdom.Element;
 
+import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
 import jmri.jmrit.operations.setup.Control;
 
 /**
@@ -21,19 +24,20 @@ import jmri.jmrit.operations.setup.Control;
  * @author Daniel Boudreau Copyright (C) 2008, 2014
  * @version $Revision$
  */
-public class CarLoads {
+public class CarLoads extends RollingStockAttribute {
 
 	protected Hashtable<String, List<CarLoad>> list = new Hashtable<String, List<CarLoad>>();
 	protected String _emptyName = Bundle.getMessage("EmptyCar");
 	protected String _loadName = Bundle.getMessage("LoadedCar");
-	
+
 	public static final String NONE = ""; // NOI18N
 
 	// for property change
 	public static final String LOAD_CHANGED_PROPERTY = "CarLoads_Load"; // NOI18N
+	public static final String LOAD_TYPE_CHANGED_PROPERTY = "CarLoads_Load_Type"; // NOI18N
+	public static final String LOAD_PRIORITY_CHANGED_PROPERTY = "CarLoads_Load_Priority"; // NOI18N
 	public static final String LOAD_NAME_CHANGED_PROPERTY = "CarLoads_Name"; // NOI18N
-
-	private static final int MIN_NAME_LENGTH = 4;
+	public static final String LOAD_COMMENT_CHANGED_PROPERTY = "CarLoads_Load_Comment"; // NOI18N
 
 	public CarLoads() {
 	}
@@ -51,13 +55,6 @@ public class CarLoads {
 		if (Control.showInstance && log.isDebugEnabled())
 			log.debug("CarLoads returns instance " + _instance);
 		return _instance;
-	}
-
-	public synchronized void dispose() {
-		list.clear();
-		// remove all listeners
-		for (java.beans.PropertyChangeListener p : pcs.getPropertyChangeListeners())
-			pcs.removePropertyChangeListener(p);
 	}
 
 	/**
@@ -81,11 +78,11 @@ public class CarLoads {
 	public void replaceType(String oldType, String newType) {
 		List<String> names = getNames(oldType);
 		addType(newType);
-		for (int i = 0; i < names.size(); i++) {
-			addName(newType, names.get(i));
-			setPriority(newType, names.get(i), getPriority(oldType, names.get(i)));
-			setDropComment(newType, names.get(i), getDropComment(oldType, names.get(i)));
-			setPickupComment(newType, names.get(i), getPickupComment(oldType, names.get(i)));
+		for (String name : names) {
+			addName(newType, name);
+			setPriority(newType, name, getPriority(oldType, name));
+			setDropComment(newType, name, getDropComment(oldType, name));
+			setPickupComment(newType, name, getPickupComment(oldType, name));
 		}
 		list.remove(oldType);
 	}
@@ -99,9 +96,8 @@ public class CarLoads {
 	public JComboBox getSelectComboBox(String type) {
 		JComboBox box = new JComboBox();
 		box.addItem(NONE);
-		List<String> loads = getNames(type);
-		for (int i = 0; i < loads.size(); i++) {
-			box.addItem(loads.get(i));
+		for (String load : getNames(type)) {
+			box.addItem(load);
 		}
 		return box;
 	}
@@ -132,9 +128,9 @@ public class CarLoads {
 	}
 
 	/**
-	 * Gets a combobox with the available load types
+	 * Gets a combobox with the available load types: empty and load
 	 * 
-	 * @return JComboBox with load types.
+	 * @return JComboBox with load types: LOAD_TYPE_EMPTY and LOAD_TYPE_LOAD
 	 */
 	public JComboBox getLoadTypesComboBox() {
 		JComboBox box = new JComboBox();
@@ -166,8 +162,8 @@ public class CarLoads {
 			loads.add(new CarLoad(getDefaultEmptyName()));
 			loads.add(new CarLoad(getDefaultLoadName()));
 		}
-		for (int i = 0; i < loads.size(); i++) {
-			names.add(loads.get(i).getName());
+		for (CarLoad carLoad : loads) {
+			names.add(carLoad.getName());
 		}
 		return names;
 	}
@@ -200,10 +196,9 @@ public class CarLoads {
 			log.debug("car type (" + type + ") does not exist");
 			return;
 		}
-		for (int i = 0; i < loads.size(); i++) {
-			CarLoad cl = loads.get(i);
+		for (CarLoad cl : loads) {
 			if (cl.getName().equals(name)) {
-				loads.remove(i);
+				loads.remove(cl);
 				break;
 			}
 		}
@@ -236,7 +231,7 @@ public class CarLoads {
 			box.addItem(name);
 		}
 	}
-	
+
 	public void updateRweComboBox(String type, JComboBox box) {
 		box.removeAllItems();
 		List<String> loads = getNames(type);
@@ -289,7 +284,7 @@ public class CarLoads {
 				String oldType = cl.getLoadType();
 				cl.setLoadType(loadType);
 				if (!oldType.equals(loadType))
-					firePropertyChange(LOAD_CHANGED_PROPERTY, oldType, loadType);
+					firePropertyChange(LOAD_TYPE_CHANGED_PROPERTY, oldType, loadType);
 			}
 		}
 	}
@@ -332,8 +327,12 @@ public class CarLoads {
 		List<CarLoad> loads = list.get(type);
 		for (int i = 0; i < loads.size(); i++) {
 			CarLoad cl = loads.get(i);
-			if (cl.getName().equals(name))
+			if (cl.getName().equals(name)) {
+				String oldPriority = cl.getPriority();
 				cl.setPriority(priority);
+				if (!oldPriority.equals(priority))
+					firePropertyChange(LOAD_PRIORITY_CHANGED_PROPERTY, oldPriority, priority);
+			}
 		}
 	}
 
@@ -363,8 +362,12 @@ public class CarLoads {
 			return;
 		List<CarLoad> loads = list.get(type);
 		for (CarLoad cl : loads) {
-			if (cl.getName().equals(name))
+			if (cl.getName().equals(name)) {
+				String oldComment = cl.getPickupComment();
 				cl.setPickupComment(comment);
+				if (!oldComment.equals(comment))
+					firePropertyChange(LOAD_COMMENT_CHANGED_PROPERTY, oldComment, comment);
+			}
 		}
 	}
 
@@ -384,8 +387,12 @@ public class CarLoads {
 			return;
 		List<CarLoad> loads = list.get(type);
 		for (CarLoad cl : loads) {
-			if (cl.getName().equals(name))
+			if (cl.getName().equals(name)) {
+				String oldComment = cl.getDropComment();
 				cl.setDropComment(comment);
+				if (!oldComment.equals(comment))
+					firePropertyChange(LOAD_COMMENT_CHANGED_PROPERTY, oldComment, comment);
+			}
 		}
 	}
 
@@ -400,9 +407,7 @@ public class CarLoads {
 		return NONE;
 	}
 
-	private int maxNameLength = 0;
-
-	public int getCurMaxNameLength() {
+	public int getMaxNameLength() {
 		if (maxNameLength == 0) {
 			maxNameLength = MIN_NAME_LENGTH;
 			Enumeration<String> en = list.keys();
@@ -500,7 +505,7 @@ public class CarLoads {
 
 	public void load(Element e) {
 		if (e.getChild(Xml.LOADS) == null)
-		return;
+			return;
 		Attribute a;
 		Element defaults = e.getChild(Xml.LOADS).getChild(Xml.DEFAULTS);
 		if (defaults != null) {
@@ -560,23 +565,12 @@ public class CarLoads {
 		}
 	}
 
-	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-	public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-		pcs.addPropertyChangeListener(l);
-	}
-
-	public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-		pcs.removePropertyChangeListener(l);
-	}
-
 	protected void firePropertyChange(String p, Object old, Object n) {
 		// Set dirty
 		CarManagerXml.instance().setDirty(true);
-		pcs.firePropertyChange(p, old, n);
+		super.firePropertyChange(p, old, n);
 	}
 
-	static Logger log = LoggerFactory
-			.getLogger(CarLoads.class.getName());
+	static Logger log = LoggerFactory.getLogger(CarLoads.class.getName());
 
 }

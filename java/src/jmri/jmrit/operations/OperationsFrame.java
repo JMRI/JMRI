@@ -142,7 +142,7 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 		if (size== null)
 			return minCheckboxes;	// default is 6 checkboxes per row
 		StringBuilder pad = new StringBuilder("X");
-		for (int i=0; i<CarTypes.instance().getMaxNameSubTypeLength(); i++)
+		for (int i=0; i<CarTypes.instance().getMaxFullNameLength(); i++)
 			pad.append("X");
 		
 		JCheckBox box = new JCheckBox(pad.toString());

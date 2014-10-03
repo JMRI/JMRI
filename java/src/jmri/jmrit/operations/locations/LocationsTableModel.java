@@ -68,8 +68,8 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
 		else
 			locationsList = manager.getLocationsByNameList();
 		// and add them back in
-		for (int i = 0; i < locationsList.size(); i++) {
-			locationsList.get(i).addPropertyChangeListener(this);
+		for (Location loc : locationsList) {
+			loc.addPropertyChangeListener(this);
 		}
 	}
 
@@ -301,11 +301,8 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
 
 	private synchronized void removePropertyChangeLocations() {
 		if (locationsList != null) {
-			for (int i = 0; i < locationsList.size(); i++) {
-				// if object has been deleted, it's not here; ignore it
-				Location l = locationsList.get(i);
-				if (l != null)
-					l.removePropertyChangeListener(this);
+			for (Location loc : locationsList) {
+				loc.removePropertyChangeListener(this);
 			}
 		}
 	}

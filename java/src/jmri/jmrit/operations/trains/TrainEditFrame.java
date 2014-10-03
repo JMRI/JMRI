@@ -991,11 +991,11 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
 					+ e.getNewValue()); // NOI18N
-		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)
+		if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Train.TYPES_CHANGED_PROPERTY)) {
 			updateCarTypeCheckboxes();
 		}
-		if (e.getPropertyName().equals(EngineTypes.ENGINETYPES_LENGTH_CHANGED_PROPERTY)) {
+		if (e.getPropertyName().equals(EngineTypes.ENGINETYPES_CHANGED_PROPERTY)) {
 			updateEngineTypeCheckboxes();
 		}
 		if (e.getPropertyName().equals(RouteManager.LISTLENGTH_CHANGED_PROPERTY)) {
@@ -1008,7 +1008,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			updateLocationCheckboxes();
 			packFrame();
 		}
-		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY)) {
+		if (e.getPropertyName().equals(CarRoads.CARROADS_CHANGED_PROPERTY)) {
 			updateRoadComboBoxes();
 		}
 		if (e.getPropertyName().equals(EngineModels.ENGINEMODELS_CHANGED_PROPERTY)) {

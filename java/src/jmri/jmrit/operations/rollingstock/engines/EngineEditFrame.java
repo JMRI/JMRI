@@ -620,7 +620,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
 					.getNewValue());
-		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY)) {
+		if (e.getPropertyName().equals(CarRoads.CARROADS_CHANGED_PROPERTY)) {
 			CarRoads.instance().updateComboBox(roadComboBox);
 			if (_engine != null)
 				roadComboBox.setSelectedItem(_engine.getRoadName());
@@ -630,7 +630,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 			if (_engine != null)
 				modelComboBox.setSelectedItem(_engine.getModel());
 		}
-		if (e.getPropertyName().equals(EngineTypes.ENGINETYPES_LENGTH_CHANGED_PROPERTY)) {
+		if (e.getPropertyName().equals(EngineTypes.ENGINETYPES_CHANGED_PROPERTY)) {
 			engineTypes.updateComboBox(typeComboBox);
 			if (_engine != null)
 				typeComboBox.setSelectedItem(_engine.getTypeName());
@@ -645,7 +645,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 			if (_engine != null)
 				consistComboBox.setSelectedItem(_engine.getConsistName());
 		}
-		if (e.getPropertyName().equals(CarOwners.CAROWNERS_LENGTH_CHANGED_PROPERTY)) {
+		if (e.getPropertyName().equals(CarOwners.CAROWNERS_CHANGED_PROPERTY)) {
 			CarOwners.instance().updateComboBox(ownerComboBox);
 			if (_engine != null)
 				ownerComboBox.setSelectedItem(_engine.getOwner());

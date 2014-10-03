@@ -30,6 +30,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 	LocationManager manager;
 	String Empty = "            ";
 
+	// checkboxes have the location id or track id as the checkbox name
 	ArrayList<JCheckBox> locationCheckBoxList = new ArrayList<JCheckBox>();
 	ArrayList<JCheckBox> trackCheckBoxList = new ArrayList<JCheckBox>();
 	JPanel locationCheckBoxes = new JPanel();
@@ -209,8 +210,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 		if (copyCheckBox.isSelected())
 			carType = textCarType.getText();
 		List<Location> locations = manager.getLocationsByNameList();
-		for (int i = 0; i < locations.size(); i++) {
-			Location loc = locations.get(i);
+		for (Location loc : locations) {
 			// show only one location?
 			if (location != null && location != loc)
 				continue;
@@ -244,14 +244,12 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 		CarTypes.instance().updateComboBox(typeComboBox);
 	}
 
-	private void selectCheckboxes(boolean b) {
+	private void selectCheckboxes(boolean select) {
 		for (int i = 0; i < locationCheckBoxList.size(); i++) {
-			JCheckBox cb = locationCheckBoxList.get(i);
-			cb.setSelected(b);
+			locationCheckBoxList.get(i).setSelected(select);
 		}
 		for (int i = 0; i < trackCheckBoxList.size(); i++) {
-			JCheckBox cb = trackCheckBoxList.get(i);
-			cb.setSelected(b);
+			trackCheckBoxList.get(i).setSelected(select);
 		}
 	}
 
@@ -303,7 +301,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 	private void removePropertyChangeLocations() {
 		if (locationCheckBoxList != null) {
 			for (int i = 0; i < locationCheckBoxList.size(); i++) {
-				// if object has been deleted, it's not here; ignore it
+				// checkbox name is the location id
 				Location loc = manager.getLocationById(locationCheckBoxList.get(i).getName());
 				if (loc != null) {
 					loc.removePropertyChangeListener(this);
@@ -334,7 +332,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 				|| e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Track.NAME_CHANGED_PROPERTY))
 			updateLocations();
-		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)
+		if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY))
 			updateComboBox();
 	}

@@ -369,7 +369,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
 					.getNewValue());
-		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)
+		if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY)) {
 			loadTypeComboBox();

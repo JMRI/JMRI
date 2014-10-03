@@ -114,9 +114,7 @@ public class Pool extends Bean {
 		// only request enough length for the rolling stock to fit
 		int additionalLength = track.getUsedLength() + track.getReserved() + length - track.getLength();
 
-		List<Track> tracks = getTracks();
-		for (int i = 0; i < tracks.size(); i++) {
-			Track t = tracks.get(i);
+		for (Track t : getTracks()) {
 			// note that the reserved track length can be either positive or negative
 			if (t != track) {
 				if (t.getUsedLength() + t.getReserved() + additionalLength <= t.getLength()

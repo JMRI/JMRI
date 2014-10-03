@@ -340,7 +340,7 @@ public class TrainLoadOptionsFrame extends OperationsFrame implements java.beans
 			updateLoadComboBoxes();
 			updateLoadNames();
 		}
-		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)
+		if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Train.TYPES_CHANGED_PROPERTY)) {
 			updateTypeComboBoxes();
 		}

@@ -235,10 +235,9 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
 				int y = 0; // vertical position in panel
 
 				int numberOfRoads = getNumberOfCheckboxes();
-				String[] carRoads = _track.getRoadNames();
-				for (int i = 0; i < carRoads.length; i++) {
+				for (String roadName : _track.getRoadNames()) {
 					JLabel road = new JLabel();
-					road.setText(carRoads[i]);
+					road.setText(roadName);
 					addItemTop(panelRoads, road, x++, y);
 					// limit the number of roads per line
 					if (x > numberOfRoads) {
@@ -257,9 +256,8 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
 
 	private void deleteAllRoads() {
 		if (_track != null) {
-			String[] trackRoads = _track.getRoadNames();
-			for (int i = 0; i < trackRoads.length; i++) {
-				_track.deleteRoadName(trackRoads[i]);
+			for (String roadName : _track.getRoadNames()) {
+				_track.deleteRoadName(roadName);
 			}
 		}
 	}
@@ -294,7 +292,7 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
 					.getNewValue());
-		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY)) {
+		if (e.getPropertyName().equals(CarRoads.CARROADS_CHANGED_PROPERTY)) {
 			updateRoadComboBox();
 			updateRoadNames();
 		}

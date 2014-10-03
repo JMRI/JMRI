@@ -251,7 +251,7 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
 				e.getPropertyName().equals(Train.NAME_CHANGED_PROPERTY) || 
 			e.getPropertyName().equals(Train.DESCRIPTION_CHANGED_PROPERTY))
 			updateTrains();
-		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY) ||
+		if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY))
 			updateComboBox();
 	}

@@ -690,9 +690,9 @@ public class Track {
 		if (types.length == 0)
 			return;
 		jmri.util.StringUtil.sort(types);
-		for (int i = 0; i < types.length; i++)
-			if (!_typeList.contains(types[i]))
-				_typeList.add(types[i]);
+		for (String type : types)
+			if (!_typeList.contains(type))
+				_typeList.add(type);
 	}
 	
 	private void clearTypeNames() {
@@ -1089,9 +1089,9 @@ public class Track {
 	}
 
 	private void setDropIds(String[] ids) {
-		for (int i = 0; i < ids.length; i++) {
-			if (ids[i] != null)
-				_dropList.add(ids[i]);
+		for (String id : ids) {
+			if (id != null)
+				_dropList.add(id);
 		}
 	}
 
@@ -1157,9 +1157,9 @@ public class Track {
 	}
 
 	private void setPickupIds(String[] ids) {
-		for (int i = 0; i < ids.length; i++) {
-			if (ids[i] != null)
-				_pickupList.add(ids[i]);
+		for (String id : ids) {
+			if (id != null)
+				_pickupList.add(id);
 		}
 	}
 
@@ -1259,9 +1259,7 @@ public class Track {
 		// check for car in kernel
 			if (car.getKernel() != null && car.getKernel().isLead(car)) {
 				length = 0;
-				List<Car> cars = car.getKernel().getCars();
-				for (int i = 0; i < cars.size(); i++) {
-					Car c = cars.get(i);
+				for (Car c : car.getKernel().getCars()) {
 					// don't add length for cars already on this track or already going to this track
 					if (c.getTrack() != null && c.getTrack().equals(this)
 							|| c.getDestinationTrack() != null
@@ -1283,9 +1281,7 @@ public class Track {
 			Engine eng = (Engine) rs;
 			if (eng.getConsist() != null && eng.getConsist().isLead(eng)) {
 				length = 0;
-				List<Engine> engines = eng.getConsist().getEngines();
-				for (int i = 0; i < engines.size(); i++) {
-					Engine e = engines.get(i);
+				for (Engine e : eng.getConsist().getEngines()) {
 					// don't add length for locos already on this track or already going to this track
 					if (e.getTrack() != null && e.getTrack().equals(this)
 							|| e.getDestinationTrack() != null
@@ -1990,8 +1986,8 @@ public class Track {
 	}
 	
 	public void setDestinationIds(String[] ids) {
-		for (int i = 0; i < ids.length; i++)
-			_destinationIdList.add(ids[i]);
+		for (String id : ids)
+			_destinationIdList.add(id);
 	}
 	
 	public String[] getDestinationIds() {
@@ -2292,25 +2288,25 @@ public class Track {
 	       // Old way of saving car types
         if (Control.backwardCompatible) {
         	StringBuffer buf = new StringBuffer();
-        	for (int i = 0; i < types.length; i++) {
+        	for (String type : types) {
         		// remove types that have been deleted by user
-        		if (CarTypes.instance().containsName(types[i])
-        				|| EngineTypes.instance().containsName(types[i]))
-        			buf.append(types[i] + "%%"); // NOI18N
+        		if (CarTypes.instance().containsName(type)
+        				|| EngineTypes.instance().containsName(type))
+        			buf.append(type + "%%"); // NOI18N
         	}
         	e.setAttribute(Xml.CAR_TYPES, buf.toString());
         }
 		// new way of saving car types using elements
 		Element eTypes = new Element(Xml.TYPES);
-		for (int i = 0; i < types.length; i++) {
+		for (String type : types) {
 			// don't save types that have been deleted by user
-			if (EngineTypes.instance().containsName(types[i])) {
+			if (EngineTypes.instance().containsName(type)) {
 				Element eType = new Element(Xml.LOCO_TYPE);
-				eType.setAttribute(Xml.NAME, types[i]);
+				eType.setAttribute(Xml.NAME, type);
 				eTypes.addContent(eType);
-			} else if (CarTypes.instance().containsName(types[i])) {
+			} else if (CarTypes.instance().containsName(type)) {
 				Element eType = new Element(Xml.CAR_TYPE);
-				eType.setAttribute(Xml.NAME, types[i]);
+				eType.setAttribute(Xml.NAME, type);
 				eTypes.addContent(eType);
 			}
 		}
@@ -2325,16 +2321,16 @@ public class Track {
 			String[] roads = getRoadNames();
 			if (Control.backwardCompatible) {
 				StringBuffer buf = new StringBuffer();
-				for (int i = 0; i < roads.length; i++) {
-					buf.append(roads[i] + "%%"); // NOI18N
+				for (String road : roads) {
+					buf.append(road + "%%"); // NOI18N
 				}
 				e.setAttribute(Xml.CAR_ROADS, buf.toString());
 			}
 			// new way of saving road names
 			Element eRoads = new Element(Xml.CAR_ROADS);
-			for (int i = 0; i < roads.length; i++) {
+			for (String road : roads) {
 				Element eRoad = new Element(Xml.CAR_ROAD);
-				eRoad.setAttribute(Xml.NAME, roads[i]);
+				eRoad.setAttribute(Xml.NAME, road);
 				eRoads.addContent(eRoad);
 			}
 			e.addContent(eRoads);
@@ -2346,16 +2342,16 @@ public class Track {
 			String[] loads = getLoadNames();
 			if (Control.backwardCompatible) {
 				StringBuffer buf = new StringBuffer();
-				for (int i = 0; i < loads.length; i++) {
-					buf.append(loads[i] + "%%"); // NOI18N
+				for (String load : loads) {
+					buf.append(load + "%%"); // NOI18N
 				}
 				e.setAttribute(Xml.CAR_LOADS, buf.toString());
 			}
 			// new way of saving car loads using elements
 			Element eLoads = new Element(Xml.CAR_LOADS);
-			for (int i = 0; i < loads.length; i++) {
+			for (String load : loads) {
 				Element eLoad = new Element(Xml.CAR_LOAD);
-				eLoad.setAttribute(Xml.NAME, loads[i]);
+				eLoad.setAttribute(Xml.NAME, load);
 				eLoads.addContent(eLoad);
 			}
 			e.addContent(eLoads);
@@ -2367,9 +2363,9 @@ public class Track {
 			String[] loads = getShipLoadNames();
 			// new way of saving car loads using elements
 			Element eLoads = new Element(Xml.CAR_SHIP_LOADS);
-			for (int i = 0; i < loads.length; i++) {
+			for (String load : loads) {
 				Element eLoad = new Element(Xml.CAR_LOAD);
-				eLoad.setAttribute(Xml.NAME, loads[i]);
+				eLoad.setAttribute(Xml.NAME, load);
 				eLoads.addContent(eLoad);
 			}
 			e.addContent(eLoads);
@@ -2381,16 +2377,16 @@ public class Track {
 			String[] dropIds = getDropIds();		
 			if (Control.backwardCompatible) {
 				StringBuffer buf = new StringBuffer();
-				for (int i = 0; i < dropIds.length; i++) {
-					buf.append(dropIds[i] + "%%"); // NOI18N
+				for (String id : dropIds) {
+					buf.append(id + "%%"); // NOI18N
 				}
 				e.setAttribute(Xml.DROP_IDS, buf.toString());
 			}
 			// new way of saving drop ids using elements
 			Element eDropIds = new Element(Xml.DROP_IDS);
-			for (int i = 0; i < dropIds.length; i++) {
+			for (String id : dropIds) {
 				Element eDropId = new Element(Xml.DROP_ID);
-				eDropId.setAttribute(Xml.ID, dropIds[i]);
+				eDropId.setAttribute(Xml.ID, id);
 				eDropIds.addContent(eDropId);
 			}
 			e.addContent(eDropIds);
@@ -2402,16 +2398,16 @@ public class Track {
 			String[] pickupIds = getPickupIds();
 			if (Control.backwardCompatible) {
 				StringBuffer buf = new StringBuffer();
-				for (int i = 0; i < pickupIds.length; i++) {
-					buf.append(pickupIds[i] + "%%"); // NOI18N
+				for (String id : pickupIds) {
+					buf.append(id + "%%"); // NOI18N
 				}
 				e.setAttribute(Xml.PICKUP_IDS, buf.toString());
 			}
 			// new way of saving pick up ids using elements
 			Element ePickupIds = new Element(Xml.PICKUP_IDS);
-			for (int i = 0; i < pickupIds.length; i++) {
+			for (String id : pickupIds) {
 				Element ePickupId = new Element(Xml.PICKUP_ID);
-				ePickupId.setAttribute(Xml.ID, pickupIds[i]);
+				ePickupId.setAttribute(Xml.ID, id);
 				ePickupIds.addContent(ePickupId);
 			}
 			e.addContent(ePickupIds);
@@ -2447,12 +2443,11 @@ public class Track {
 			String[] destIds = getDestinationIds();
 			if (destIds.length > 0) {
 				Element destinations = new Element(Xml.DESTINATIONS);
-				for (int i = 0; i < destIds.length; i++) {
-					String locId = destIds[i];
-					Location loc = LocationManager.instance().getLocationById(locId);
+				for (String id : destIds) {
+					Location loc = LocationManager.instance().getLocationById(id);
 					if (loc != null) {
 						Element destination = new Element(Xml.DESTINATION);
-						destination.setAttribute(Xml.ID, locId);
+						destination.setAttribute(Xml.ID, id);
 						destination.setAttribute(Xml.NAME, loc.getName());
 						destinations.addContent(destination);
 					}

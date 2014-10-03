@@ -945,7 +945,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
 					.getNewValue());
-		if (e.getPropertyName().equals(CarOwners.CAROWNERS_LENGTH_CHANGED_PROPERTY)) {
+		if (e.getPropertyName().equals(CarOwners.CAROWNERS_CHANGED_PROPERTY)) {
 			updateOwnerComboBoxes();
 			updateOwnerNames();
 		}

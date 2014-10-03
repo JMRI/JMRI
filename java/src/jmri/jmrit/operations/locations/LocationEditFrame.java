@@ -64,7 +64,6 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	JButton addStagingButton = new JButton(Bundle.getMessage("AddStaging"));
 
 	// check boxes
-	JCheckBox checkBox;
 	JCheckBox northCheckBox = new JCheckBox(Bundle.getMessage("North"));
 	JCheckBox southCheckBox = new JCheckBox(Bundle.getMessage("South"));
 	JCheckBox eastCheckBox = new JCheckBox(Bundle.getMessage("East"));
@@ -268,7 +267,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		toolMenu.add(new TrackCopyAction(this));
 		toolMenu.add(new ChangeTracksTypeAction(this));
 		toolMenu.add(new ModifyLocationsAction(Bundle.getMessage("TitleModifyLocation"), _location));
-		toolMenu.add(new ShowTrainsServingLocationAction(Bundle.getMessage("MenuItemShowTrainsLocation"), _location, null));
+		toolMenu.add(new ShowTrainsServingLocationAction(Bundle.getMessage("MenuItemShowTrainsLocation"), _location,
+				null));
 		toolMenu.add(new ShowCarsByLocationAction(false, locationName, null));
 		toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPrint"), false, location));
 		toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPreview"), true, location));
@@ -517,20 +517,18 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
 	private void enableCheckboxes(boolean enable) {
 		for (int i = 0; i < checkBoxes.size(); i++) {
-			checkBox = checkBoxes.get(i);
-			checkBox.setEnabled(enable);
+			checkBoxes.get(i).setEnabled(enable);
 		}
 	}
 
 	private void selectCheckboxes(boolean select) {
 		for (int i = 0; i < checkBoxes.size(); i++) {
-			checkBox = checkBoxes.get(i);
-			checkBox.setSelected(select);
+			checkBoxes.get(i).setSelected(select);
 			if (_location != null) {
 				if (select)
-					_location.addTypeName(checkBox.getText());
+					_location.addTypeName(checkBoxes.get(i).getText());
 				else
-					_location.deleteTypeName(checkBox.getText());
+					_location.deleteTypeName(checkBoxes.get(i).getText());
 			}
 		}
 	}
@@ -559,14 +557,14 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
 	private void loadTypes(String[] types) {
 		int numberOfCheckBoxes = getNumberOfCheckboxes();
-		for (int i = 0; i < types.length; i++) {
+		for (String type : types) {
 			JCheckBox checkBox = new JCheckBox();
 			checkBoxes.add(checkBox);
-			checkBox.setText(types[i]);
+			checkBox.setText(type);
 			addCheckBoxAction(checkBox);
 			addItemLeft(panelCheckBoxes, checkBox, x++, y);
 			if (_location != null) {
-				if (_location.acceptsTypeName(types[i]))
+				if (_location.acceptsTypeName(type))
 					checkBox.setSelected(true);
 			} else {
 				checkBox.setEnabled(false);
@@ -680,8 +678,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
 					.getNewValue());
-		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)
-				|| e.getPropertyName().equals(EngineTypes.ENGINETYPES_LENGTH_CHANGED_PROPERTY)
+		if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)
+				|| e.getPropertyName().equals(EngineTypes.ENGINETYPES_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY)) {
 			updateCheckboxes();
 		}

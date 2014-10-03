@@ -74,7 +74,7 @@ public class PrintCarLoadsAction extends AbstractAction {
 			Hashtable<String, List<CarLoad>> list = CarLoads.instance().getList();
 			try {
 				String s = Bundle.getMessage("Type") + TAB
-						+ tabString(Bundle.getMessage("Load"), CarLoads.instance().getCurMaxNameLength() + 1)
+						+ tabString(Bundle.getMessage("Load"), CarLoads.instance().getMaxNameLength() + 1)
 						+ Bundle.getMessage("Type") + "  " + Bundle.getMessage("Priority") + "  "
 						+ Bundle.getMessage("LoadPickupMessage") + "   " + Bundle.getMessage("LoadDropMessage")
 						+ NEW_LINE;
@@ -98,7 +98,7 @@ public class PrintCarLoadsAction extends AbstractAction {
 							printType = false;
 						}
 						StringBuffer buf = new StringBuffer(TAB);
-						buf.append(tabString(carLoad.getName(), CarLoads.instance().getCurMaxNameLength() + 1));
+						buf.append(tabString(carLoad.getName(), CarLoads.instance().getMaxNameLength() + 1));
 						buf.append(tabString(carLoad.getLoadType(), 6)); // load or empty
 						buf.append(tabString(carLoad.getPriority(), 5)); // low or high
 						buf.append(tabString(carLoad.getPickupComment(), 27));

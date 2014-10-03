@@ -298,7 +298,7 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
 					.getNewValue());
-		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY)) {
+		if (e.getPropertyName().equals(CarRoads.CARROADS_CHANGED_PROPERTY)) {
 			updateRoadComboBoxes();
 			updateRoadNames();
 		}

@@ -5,15 +5,10 @@ package jmri.jmrit.operations.rollingstock.engines;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.List;
-
-import javax.swing.JComboBox;
-
-import org.jdom.Attribute;
 import org.jdom.Element;
 
+import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
 import jmri.jmrit.operations.setup.Control;
 
 /**
@@ -29,7 +24,7 @@ import jmri.jmrit.operations.setup.Control;
  * @author Daniel Boudreau Copyright (C) 2008
  * @version $Revision$
  */
-public class EngineModels {
+public class EngineModels extends RollingStockAttribute {
 
 	private static final String MODELS = Bundle.getMessage("engineDefaultModels");
 	// Horsepower, length, and type have a one to one correspondence with the above MODELS
@@ -41,14 +36,12 @@ public class EngineModels {
 	public static final String ENGINEMODELS_CHANGED_PROPERTY = "EngineModels"; // NOI18N
 	public static final String ENGINEMODELS_NAME_CHANGED_PROPERTY = "EngineModelsName"; // NOI18N
 
-	protected List<String> _list = new ArrayList<String>();
+	// protected List<String> _list = new ArrayList<String>();
 	protected Hashtable<String, String> _engineHorsepowerHashTable = new Hashtable<String, String>();
 	protected Hashtable<String, String> _engineLengthHashTable = new Hashtable<String, String>();
 	protected Hashtable<String, String> _engineTypeHashTable = new Hashtable<String, String>();
 	protected Hashtable<String, String> _engineWeightHashTable = new Hashtable<String, String>();
 
-	private static final int MIN_NAME_LENGTH = 4;
-	
 	public EngineModels() {
 	}
 
@@ -68,74 +61,33 @@ public class EngineModels {
 		return _instance;
 	}
 
+	protected String getDefaultNames() {
+		return MODELS;
+	}
+
 	public void dispose() {
-		_list.clear();
 		_engineHorsepowerHashTable.clear();
 		_engineLengthHashTable.clear();
 		_engineTypeHashTable.clear();
 		_engineWeightHashTable.clear();
+		super.dispose();
 		loadDefaults();
 	}
 
-	public String[] getNames() {
-		if (_list.size() == 0) {
-			String[] types = MODELS.split(","); // NOI18N
-			for (int i = 0; i < types.length; i++)
-				_list.add(types[i]);
-		}
-		String[] models = new String[_list.size()];
-		for (int i = 0; i < _list.size(); i++)
-			models[i] = _list.get(i);
-		return models;
-	}
-
-	public void setNames(String[] models) {
-		if (models.length == 0)
-			return;
-		jmri.util.StringUtil.sort(models);
-		for (int i = 0; i < models.length; i++)
-			if (!_list.contains(models[i]))
-				_list.add(models[i]);
-	}
-
 	public void addName(String model) {
-		// insert at start of list, sort later
-		if (_list.contains(model))
-			return;
-		_list.add(0, model);
-		_maxNameLength = 0; // reset maximum name length
-		firePropertyChange(ENGINEMODELS_CHANGED_PROPERTY, _list.size() - 1, _list.size());
+		super.addName(model);
+		firePropertyChange(ENGINEMODELS_CHANGED_PROPERTY, null, model);
 	}
 
 	public void deleteName(String model) {
-		if (!_list.contains(model))
-			return;
-		_list.remove(model);
-		_maxNameLength = 0; // reset maximum name length
-		firePropertyChange(ENGINEMODELS_CHANGED_PROPERTY, _list.size() + 1, _list.size());
-	}
-
-	public boolean containsName(String model) {
-		return _list.contains(model);
+		super.deleteName(model);
+		firePropertyChange(ENGINEMODELS_CHANGED_PROPERTY, model, null);
 	}
 
 	public void replaceName(String oldName, String newName) {
-		addName(newName);
+		super.addName(newName);
 		firePropertyChange(ENGINEMODELS_NAME_CHANGED_PROPERTY, oldName, newName);
-		deleteName(oldName);
-	}
-
-	public JComboBox getComboBox() {
-		JComboBox box = new JComboBox();
-		for (String model : getNames())
-			box.addItem(model);
-		return box;
-	}
-
-	public void updateComboBox(JComboBox box) {
-		box.removeAllItems();
-		for (String model : getNames())
-			box.addItem(model);
+		super.deleteName(oldName);
 	}
 
 	public void setModelHorsepower(String model, String horsepower) {
@@ -175,26 +127,6 @@ public class EngineModels {
 	public String getModelWeight(String model) {
 		return _engineWeightHashTable.get(model);
 	}
-	
-	private int _maxNameLength = 0;
-
-	/**
-	 * Get the maximum character length of a engine model when printing on a manifest or switch list.
-	 * 
-	 * @return the maximum character length of a engine model
-	 */
-	public int getCurMaxNameLength() {
-		if (_maxNameLength == 0) {
-			String[] models = getNames();
-			int length = MIN_NAME_LENGTH;
-			for (String modelName : models) {
-				if (modelName.length() > length)
-					length = modelName.length();
-			}
-			_maxNameLength = length;
-		}
-		return _maxNameLength;
-	}
 
 	private void loadDefaults() {
 		String[] models = MODELS.split(","); // NOI18N
@@ -202,10 +134,10 @@ public class EngineModels {
 		String[] lengths = ENGINELENGTHS.split(","); // NOI18N
 		String[] types = ENGINETYPES.split(","); // NOI18N
 		String[] weights = ENGINEWEIGHTS.split(","); // NOI18N
-		if (models.length != hps.length || models.length != lengths.length
-				|| models.length != types.length || models.length != weights.length) {
-			log.error("Defaults do not have the right number of items, " + "models="
-					+ models.length + " hps=" + hps.length + " lengths=" + lengths.length // NOI18N
+		if (models.length != hps.length || models.length != lengths.length || models.length != types.length
+				|| models.length != weights.length) {
+			log.error("Defaults do not have the right number of items, " + "models=" + models.length + " hps="
+					+ hps.length + " lengths=" + lengths.length // NOI18N
 					+ " types=" + types.length); // NOI18N
 			return;
 		}
@@ -217,74 +149,26 @@ public class EngineModels {
 			setModelWeight(models[i], weights[i]);
 		}
 	}
-	
+
 	/**
 	 * Create an XML element to represent this Entry. This member has to remain synchronized with the detailed DTD in
 	 * operations-engines.dtd.
 	 * 
 	 */
 	public void store(Element root) {
-		String[]names = getNames();
-		if (Control.backwardCompatible) {
-			Element values = new Element(Xml.ENGINE_MODELS);
-			for (int i=0; i<names.length; i++){
-				String typeNames = names[i]+"%%"; // NOI18N
-				values.addContent(typeNames);
-			}
-			root.addContent(values);
-		}
-		// new format using elements
-		Element types = new Element(Xml.MODELS);
-		for (int i=0; i<names.length; i++){
-			Element type = new Element(Xml.MODEL);
-			type.setAttribute(new Attribute(Xml.NAME, names[i]));
-			types.addContent(type);
-		}
-		root.addContent(types);
+		store(root, Xml.MODELS, Xml.MODEL, Xml.ENGINE_MODELS);
 	}
-	
+
 	public void load(Element root) {
-		// new format using elements starting version 3.3.1
-		if (root.getChild(Xml.MODELS)!= null){
-			@SuppressWarnings("unchecked")
-			List<Element> l = root.getChild(Xml.MODELS).getChildren(Xml.MODEL);
-			if (log.isDebugEnabled()) log.debug("Engine models sees "+l.size()+" models");
-			Attribute a;
-			String[] types = new String[l.size()];
-			for (int i=0; i<l.size(); i++) {
-				Element type = l.get(i);
-				if ((a = type.getAttribute(Xml.NAME)) != null) {
-					types[i] = a.getValue();
-				}
-			}
-			setNames(types);
-		}
-		// old format
-		else if (root.getChild(Xml.ENGINE_MODELS)!= null){
-			String names = root.getChildText(Xml.ENGINE_MODELS);
-			String[] types = names.split("%%"); // NOI18N
-			if (log.isDebugEnabled()) log.debug("engine models: "+names);
-			setNames(types);
-		}
-	}
-
-	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-	public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-		pcs.addPropertyChangeListener(l);
-	}
-
-	public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-		pcs.removePropertyChangeListener(l);
+		load(root, Xml.MODELS, Xml.MODEL, Xml.ENGINE_MODELS);
 	}
 
 	protected void firePropertyChange(String p, Object old, Object n) {
 		// Set dirty
 		EngineManagerXml.instance().setDirty(true);
-		pcs.firePropertyChange(p, old, n);
+		super.firePropertyChange(p, old, n);
 	}
 
-	static Logger log = LoggerFactory.getLogger(EngineModels.class
-			.getName());
+	static Logger log = LoggerFactory.getLogger(EngineModels.class.getName());
 
 }

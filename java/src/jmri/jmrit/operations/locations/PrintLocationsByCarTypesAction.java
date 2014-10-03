@@ -71,19 +71,18 @@ public class PrintLocationsByCarTypesAction extends AbstractAction {
 					+ Bundle.getMessage("Track") + NEW_LINE;
 			writer.write(s);
 			// car types
-			for (int t = 0; t < carTypes.length; t++) {
-				s = carTypes[t] + NEW_LINE;
+			for (String type : carTypes) {
+				s = type + NEW_LINE;
 				writer.write(s);
 				// locations
-				for (int i = 0; i < locations.size(); i++) {
-					Location location = locations.get(i);
-					if (location.acceptsTypeName(carTypes[t])) {
+				for (Location location : locations) {
+					if (location.acceptsTypeName(type)) {
 						s = TAB + location.getName() + NEW_LINE;
 						writer.write(s);
 						// tracks
 						List<Track> tracks = location.getTrackByNameList(null);
 						for (Track track : tracks) {
-							if (track.acceptsTypeName(carTypes[t])) {
+							if (track.acceptsTypeName(type)) {
 								s = TAB + TAB + TAB + track.getName() + NEW_LINE;
 								writer.write(s);
 							}

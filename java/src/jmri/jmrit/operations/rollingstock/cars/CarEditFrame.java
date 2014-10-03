@@ -650,9 +650,8 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 					new Object[] { _car.getTypeName() }), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				// go through the entire list and change the passenger setting
 				// for all cars of this type
-				List<RollingStock> cars = carManager.getList();
-				for (int i = 0; i < cars.size(); i++) {
-					Car c = (Car) cars.get(i);
+				for (RollingStock rs : carManager.getList()) {
+					Car c = (Car) rs;
 					if (c.getTypeName().equals(_car.getTypeName())) {
 						c.setPassenger(passengerCheckBox.isSelected());
 					}
@@ -675,9 +674,8 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 					.getMessage("carModifyAllType"), new Object[] { _car.getTypeName() }), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				// go through the entire list and change the passenger setting
 				// for all cars of this type
-				List<RollingStock> cars = carManager.getList();
-				for (int i = 0; i < cars.size(); i++) {
-					Car c = (Car) cars.get(i);
+				for (RollingStock rs : carManager.getList()) {
+					Car c = (Car) rs;
 					if (c.isPassenger() && c.getTypeName().equals(_car.getTypeName())) {
 						c.setBlocking(blocking);
 					}
@@ -692,9 +690,8 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 					new Object[] { _car.getTypeName() }), MessageFormat.format(Bundle.getMessage("carModifyAllType"),
 					new Object[] { _car.getTypeName() }), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				// go through the entire list and change the caboose setting for all cars of this type
-				List<RollingStock> cars = carManager.getList();
-				for (int i = 0; i < cars.size(); i++) {
-					Car c = (Car) cars.get(i);
+				for (RollingStock rs : carManager.getList()) {
+					Car c = (Car) rs;
 					if (c.getTypeName().equals(_car.getTypeName()))
 						c.setCaboose(cabooseCheckBox.isSelected());
 				}
@@ -708,9 +705,8 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 					new Object[] { _car.getTypeName() }), MessageFormat.format(Bundle.getMessage("carModifyAllType"),
 					new Object[] { _car.getTypeName() }), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				// go through the entire list and change the utility for all cars of this type
-				List<RollingStock> cars = carManager.getList();
-				for (int i = 0; i < cars.size(); i++) {
-					Car c = (Car) cars.get(i);
+				for (RollingStock rs : carManager.getList()) {
+					Car c = (Car) rs;
 					if (c.getTypeName().equals(_car.getTypeName()))
 						c.setUtility(utilityCheckBox.isSelected());
 				}
@@ -724,9 +720,8 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 					new Object[] { _car.getTypeName() }), MessageFormat.format(Bundle.getMessage("carModifyAllType"),
 					new Object[] { _car.getTypeName() }), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				// go through the entire list and change the hazardous setting for all cars of this type
-				List<RollingStock> cars = carManager.getList();
-				for (int i = 0; i < cars.size(); i++) {
-					Car c = (Car) cars.get(i);
+				for (RollingStock rs : carManager.getList()) {
+					Car c = (Car) rs;
 					if (c.getTypeName().equals(_car.getTypeName()))
 						c.setHazardous(hazardousCheckBox.isSelected());
 				}
@@ -758,8 +753,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 							new Object[] { _car.toString() }), MessageFormat.format(Bundle.getMessage("carPartKernel"),
 							new Object[] { _car.getKernelName() }), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 						// go through the entire list and change the loads for all cars
-						for (int i = 0; i < cars.size(); i++) {
-							Car car = cars.get(i);
+						for (Car car : cars) {
 							if (CarLoads.instance().containsName(car.getTypeName(), _car.getLoadName()))
 								car.setLoadName(_car.getLoadName());
 						}
@@ -888,12 +882,12 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
 					.getNewValue());
-		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY)) {
+		if (e.getPropertyName().equals(CarRoads.CARROADS_CHANGED_PROPERTY)) {
 			CarRoads.instance().updateComboBox(roadComboBox);
 			if (_car != null)
 				roadComboBox.setSelectedItem(_car.getRoadName());
 		}
-		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)) {
+		if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)) {
 			CarTypes.instance().updateComboBox(typeComboBox);
 			if (_car != null)
 				typeComboBox.setSelectedItem(_car.getTypeName());
@@ -914,7 +908,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 			if (_car != null)
 				kernelComboBox.setSelectedItem(_car.getKernelName());
 		}
-		if (e.getPropertyName().equals(CarOwners.CAROWNERS_LENGTH_CHANGED_PROPERTY)) {
+		if (e.getPropertyName().equals(CarOwners.CAROWNERS_CHANGED_PROPERTY)) {
 			CarOwners.instance().updateComboBox(ownerComboBox);
 			if (_car != null)
 				ownerComboBox.setSelectedItem(_car.getOwner());

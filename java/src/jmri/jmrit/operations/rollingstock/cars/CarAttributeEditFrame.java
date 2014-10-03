@@ -9,8 +9,6 @@ import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
-import java.util.List;
-
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -22,7 +20,6 @@ import javax.swing.JTextField;
 
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
-import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.OperationsFrame;
@@ -38,7 +35,7 @@ import jmri.jmrit.operations.trains.TrainsByCarTypeFrame;
  */
 public class CarAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-	CarManager manager = CarManager.instance();
+	CarManager carManager = CarManager.instance();
 
 	// labels
 	JLabel textAttribute = new JLabel();
@@ -112,7 +109,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 		addButtonAction(replaceButton);
 
 		addComboBoxAction(comboBox);
-		manager.addPropertyChangeListener(this);
+		carManager.addPropertyChangeListener(this);
 
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
@@ -207,7 +204,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 			CarOwners.instance().deleteName(deleteItem);
 		}
 		if (_comboboxName == CarEditFrame.KERNEL) {
-			manager.deleteKernel(deleteItem);
+			carManager.deleteKernel(deleteItem);
 		}
 	}
 
@@ -278,7 +275,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 			try {
 				int length = Integer.parseInt(addItem);
 				if (length < 0) {
-					log.error("car length has to be a positive number");
+					log.error("length ({}) has to be a positive number", addItem);
 					return;
 				}
 				if (addItem.length() > Control.max_len_string_length_name) {
@@ -288,14 +285,14 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 					return;
 				}
 			} catch (NumberFormatException e) {
-				log.error("length not an integer");
+				log.error("length ({}) is not an integer", addItem);
 				return;
 			}
 			CarLengths.instance().addName(addItem);
 			comboBox.setSelectedItem(addItem);
 		}
 		if (_comboboxName == CarEditFrame.KERNEL) {
-			manager.newKernel(addItem);
+			carManager.newKernel(addItem);
 		}
 		if (_comboboxName == CarEditFrame.OWNER) {
 			CarOwners.instance().addName(addItem);
@@ -305,7 +302,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 	private void replaceItem(String oldItem, String newItem) {
 		// replace kernel
 		if (_comboboxName == CarEditFrame.KERNEL) {
-			manager.replaceKernelName(oldItem, newItem);
+			carManager.replaceKernelName(oldItem, newItem);
 		}
 		// now adjust cars, locations and trains
 		if (_comboboxName == CarEditFrame.TYPE) {
@@ -348,7 +345,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 			CarOwners.instance().addPropertyChangeListener(this);
 		}
 		if (_comboboxName == CarEditFrame.KERNEL) {
-			comboBox = manager.getKernelComboBox();
+			comboBox = carManager.getKernelComboBox();
 		}
 	}
 
@@ -369,9 +366,8 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 		int number = 0;
 		String item = (String) comboBox.getSelectedItem();
 		log.debug("Selected item " + item);
-		List<RollingStock> cars = manager.getList();
-		for (int i = 0; i < cars.size(); i++) {
-			Car car = (Car) cars.get(i);
+		for (RollingStock rs : carManager.getList()) {
+			Car car = (Car) rs;
 
 			if (_comboboxName == CarEditFrame.ROAD) {
 				if (car.getRoadName().equals(item))
@@ -403,11 +399,9 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 		if (number == 0 && deleteUnused) {
 			// need to check if an engine is using the road name
 			if (_comboboxName == CarEditFrame.ROAD) {
-				List<RollingStock> engines = EngineManager.instance().getList();
-				for (int i = 0; i < engines.size(); i++) {
-					Engine engine = (Engine) engines.get(i);
-					if (engine.getRoadName().equals(item)) {
-						log.info("Engine (" + engine.getRoadName() + " " + engine.getNumber()
+				for (RollingStock rs : EngineManager.instance().getList()) {
+					if (rs.getRoadName().equals(item)) {
+						log.info("Engine (" + rs.getRoadName() + " " + rs.getNumber()
 								+ ") has assigned road name (" + item + ")"); // NOI18N
 						return;
 					}
@@ -451,7 +445,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 		CarColors.instance().removePropertyChangeListener(this);
 		CarLengths.instance().removePropertyChangeListener(this);
 		CarOwners.instance().removePropertyChangeListener(this);
-		manager.removePropertyChangeListener(this);
+		carManager.removePropertyChangeListener(this);
 		firePcs(DISPOSE, _comboboxName, null);
 		super.dispose();
 	}
@@ -460,18 +454,18 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
 					.getNewValue());
-		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY))
+		if (e.getPropertyName().equals(CarRoads.CARROADS_CHANGED_PROPERTY))
 			CarRoads.instance().updateComboBox(comboBox);
-		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY))
+		if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY))
 			CarTypes.instance().updateComboBox(comboBox);
 		if (e.getPropertyName().equals(CarColors.CARCOLORS_CHANGED_PROPERTY))
 			CarColors.instance().updateComboBox(comboBox);
 		if (e.getPropertyName().equals(CarLengths.CARLENGTHS_CHANGED_PROPERTY))
 			CarLengths.instance().updateComboBox(comboBox);
-		if (e.getPropertyName().equals(CarOwners.CAROWNERS_LENGTH_CHANGED_PROPERTY))
+		if (e.getPropertyName().equals(CarOwners.CAROWNERS_CHANGED_PROPERTY))
 			CarOwners.instance().updateComboBox(comboBox);
 		if (e.getPropertyName().equals(CarManager.KERNEL_LISTLENGTH_CHANGED_PROPERTY))
-			manager.updateKernelComboBox(comboBox);
+			carManager.updateKernelComboBox(comboBox);
 		if (e.getPropertyName().equals(CarManager.LISTLENGTH_CHANGED_PROPERTY))
 			updateCarQuanity();
 	}

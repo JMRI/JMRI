@@ -84,8 +84,8 @@ public class PrintEngineRosterAction extends AbstractAction {
 			// header
 			String header = padAttribute(Bundle.getMessage("Number"), 7)
 					+ padAttribute(Bundle.getMessage("Road"), 7)
-					+ padAttribute(Bundle.getMessage("Model"), EngineModels.instance().getCurMaxNameLength())
-					+ padAttribute(Bundle.getMessage("Type"), EngineTypes.instance().getCurMaxNameLength())
+					+ padAttribute(Bundle.getMessage("Model"), EngineModels.instance().getMaxNameLength())
+					+ padAttribute(Bundle.getMessage("Type"), EngineTypes.instance().getMaxNameLength())
 					+ padAttribute(Bundle.getMessage("Len"), Control.max_len_string_length_name)
 					+ (panel.sortByConsist.isSelected() ? padAttribute(Bundle.getMessage("Consist"),
 							Control.max_len_string_attibute) : padAttribute(Bundle.getMessage("Owner"), ownerMaxLen))
@@ -103,8 +103,8 @@ public class PrintEngineRosterAction extends AbstractAction {
 				// loco number
 				number = padAttribute(engine.getNumber(), 7);
 				road = padAttribute(engine.getRoadName(), 7);
-				model = padAttribute(engine.getModel(), EngineModels.instance().getCurMaxNameLength());
-				type = padAttribute(engine.getTypeName(), EngineTypes.instance().getCurMaxNameLength());
+				model = padAttribute(engine.getModel(), EngineModels.instance().getMaxNameLength());
+				type = padAttribute(engine.getTypeName(), EngineTypes.instance().getMaxNameLength());
 				length = padAttribute(engine.getLength(), Control.max_len_string_length_name);
 
 				if (panel.sortByConsist.isSelected())

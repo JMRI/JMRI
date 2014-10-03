@@ -140,15 +140,15 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 		List<Location> sortList = getList();
 		// now re-sort
 		List<Location> out = new ArrayList<Location>();
-		for (int i = 0; i < sortList.size(); i++) {
+		for (Location location : sortList) {
 			for (int j = 0; j < out.size(); j++) {
-				if (sortList.get(i).getName().compareToIgnoreCase(out.get(j).getName()) < 0) {
-					out.add(j, sortList.get(i));
+				if (location.getName().compareToIgnoreCase(out.get(j).getName()) < 0) {
+					out.add(j, location);
 					break;
 				}
 			}
-			if (!out.contains(sortList.get(i))) {
-				out.add(sortList.get(i));
+			if (!out.contains(location)) {
+				out.add(location);
 			}
 		}
 		return out;
@@ -164,19 +164,19 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 		List<Location> sortList = getList();
 		// now re-sort
 		List<Location> out = new ArrayList<Location>();
-		for (int i = 0; i < sortList.size(); i++) {
+		for (Location location : sortList) {
 			for (int j = 0; j < out.size(); j++) {
 				try {
-					if (Integer.parseInt(sortList.get(i).getId()) < Integer.parseInt(out.get(j).getId())) {
-						out.add(j, sortList.get(i));
+					if (Integer.parseInt(location.getId()) < Integer.parseInt(out.get(j).getId())) {
+						out.add(j, location);
 						break;
 					}
 				} catch (NumberFormatException e) {
 					log.debug("list id number isn't a number");
 				}
 			}
-			if (!out.contains(sortList.get(i))) {
-				out.add(sortList.get(i));
+			if (!out.contains(location)) {
+				out.add(location);
 			}
 		}
 		return out;

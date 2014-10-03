@@ -1116,7 +1116,7 @@ public class TrainCommon {
 	// @param isPickup true when rolling stock is being picked up
 	private String getEngineAttribute(Engine engine, String attribute, boolean isPickup) {
 		if (attribute.equals(Setup.MODEL))
-			return " " + padAndTruncateString(engine.getModel(), EngineModels.instance().getCurMaxNameLength());
+			return " " + padAndTruncateString(engine.getModel(), EngineModels.instance().getMaxNameLength());
 		if (attribute.equals(Setup.CONSIST))
 			return " " + padAndTruncateString(engine.getConsistName(), engineManager.getConsistMaxNameLength());
 		return getRollingStockAttribute(engine, attribute, isPickup, false);
@@ -1125,8 +1125,8 @@ public class TrainCommon {
 	private String getCarAttribute(Car car, String attribute, boolean isPickup, boolean isLocal) {
 		if (attribute.equals(Setup.LOAD))
 			return (car.isCaboose() || car.isPassenger()) ? padAndTruncateString("", CarLoads.instance()
-					.getCurMaxNameLength() + 1) : " "
-					+ padAndTruncateString(car.getLoadName(), CarLoads.instance().getCurMaxNameLength());
+					.getMaxNameLength() + 1) : " "
+					+ padAndTruncateString(car.getLoadName(), CarLoads.instance().getMaxNameLength());
 		else if (attribute.equals(Setup.HAZARDOUS))
 			return (car.isHazardous() ? " " + Setup.getHazardousMsg() : padAndTruncateString("", Setup
 					.getHazardousMsg().length() + 1));
@@ -1179,14 +1179,14 @@ public class TrainCommon {
 					+ padAndTruncateString(splitString(rs.getNumber()), Control.max_len_string_road_number
 							- trimRoadNumber);
 		else if (attribute.equals(Setup.ROAD))
-			return " " + padAndTruncateString(rs.getRoadName(), CarRoads.instance().getCurMaxNameLength());
+			return " " + padAndTruncateString(rs.getRoadName(), CarRoads.instance().getMaxNameLength());
 		else if (attribute.equals(Setup.TYPE)) {
 			String[] type = rs.getTypeName().split("-"); // second half of string can be anything
-			return " " + padAndTruncateString(type[0], CarTypes.instance().getCurMaxNameLength());
+			return " " + padAndTruncateString(type[0], CarTypes.instance().getMaxNameLength());
 		} else if (attribute.equals(Setup.LENGTH))
-			return " " + padAndTruncateString(rs.getLength() + LENGTHABV, CarLengths.instance().getCurMaxNameLength());
+			return " " + padAndTruncateString(rs.getLength() + LENGTHABV, CarLengths.instance().getMaxNameLength());
 		else if (attribute.equals(Setup.COLOR))
-			return " " + padAndTruncateString(rs.getColor(), CarColors.instance().getCurMaxNameLength());
+			return " " + padAndTruncateString(rs.getColor(), CarColors.instance().getMaxNameLength());
 		else if (((attribute.equals(Setup.LOCATION)) && (isPickup || isLocal))
 				|| (attribute.equals(Setup.TRACK) && isPickup)) {
 			if (rs.getTrack() != null)
@@ -1234,7 +1234,7 @@ public class TrainCommon {
 							locationManager.getMaxLocationAndTrackNameLength()
 									+ TrainManifestText.getStringDest().length() + 3);
 		else if (attribute.equals(Setup.OWNER))
-			return " " + padAndTruncateString(rs.getOwner(), CarOwners.instance().getCurMaxNameLength());
+			return " " + padAndTruncateString(rs.getOwner(), CarOwners.instance().getMaxNameLength());
 		else if (attribute.equals(Setup.COMMENT))
 			return " " + rs.getComment();
 		else if (attribute.equals(Setup.NONE))
@@ -1245,9 +1245,9 @@ public class TrainCommon {
 					+ padAndTruncateString("", Control.max_len_string_road_number
 							- (trimRoadNumber + utilityCarCountFieldSize + 1));
 		else if (attribute.equals(Setup.NO_ROAD))
-			return " " + padAndTruncateString("", CarRoads.instance().getCurMaxNameLength());
+			return " " + padAndTruncateString("", CarRoads.instance().getMaxNameLength());
 		else if (attribute.equals(Setup.NO_COLOR))
-			return " " + padAndTruncateString("", CarColors.instance().getCurMaxNameLength());
+			return " " + padAndTruncateString("", CarColors.instance().getMaxNameLength());
 		// there are four truncated manifest attributes
 		else if (attribute.equals(Setup.NO_DEST_TRACK))
 			return Setup.isPrintHeadersEnabled() ? padAndTruncateString("", locationManager
@@ -1397,7 +1397,7 @@ public class TrainCommon {
 				continue;
 			if (attribute.equals(Setup.ROAD))
 				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Road(), CarRoads.instance()
-						.getCurMaxNameLength())
+						.getMaxNameLength())
 						+ " ");
 			else if (attribute.equals(Setup.NUMBER) && !isEngine)
 				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Number(),
@@ -1409,11 +1409,11 @@ public class TrainCommon {
 						+ " ");
 			else if (attribute.equals(Setup.TYPE))
 				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Type(), CarTypes.instance()
-						.getCurMaxNameLength())
+						.getMaxNameLength())
 						+ " ");
 			else if (attribute.equals(Setup.MODEL))
 				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Model(), EngineModels
-						.instance().getCurMaxNameLength())
+						.instance().getMaxNameLength())
 						+ " ");
 			else if (attribute.equals(Setup.CONSIST))
 				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Consist(), engineManager
@@ -1425,15 +1425,15 @@ public class TrainCommon {
 						+ " ");
 			else if (attribute.equals(Setup.LOAD))
 				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Load(), CarLoads.instance()
-						.getCurMaxNameLength())
+						.getMaxNameLength())
 						+ " ");
 			else if (attribute.equals(Setup.COLOR))
 				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Color(), CarColors.instance()
-						.getCurMaxNameLength())
+						.getMaxNameLength())
 						+ " ");
 			else if (attribute.equals(Setup.OWNER))
 				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Owner(), CarOwners.instance()
-						.getCurMaxNameLength())
+						.getMaxNameLength())
 						+ " ");
 			else if (attribute.equals(Setup.LENGTH))
 				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Length(),

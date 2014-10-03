@@ -3799,7 +3799,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			setRoute(null);
 		}
 		if (e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY)
-				|| e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)
+				|| e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(EngineTypes.ENGINETYPES_NAME_CHANGED_PROPERTY)) {
 			replaceType((String) e.getOldValue(), (String) e.getNewValue());
 		}

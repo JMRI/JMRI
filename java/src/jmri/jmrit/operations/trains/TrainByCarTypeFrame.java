@@ -391,7 +391,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 			updateRoute();
 		if (e.getPropertyName().equals(Train.DISPOSE_CHANGED_PROPERTY))
 			dispose();
-		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)
+		if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY))
 			updateComboBox();
 		if (e.getPropertyName().equals(Location.LENGTH_CHANGED_PROPERTY)) {

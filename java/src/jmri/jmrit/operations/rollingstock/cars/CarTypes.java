@@ -4,35 +4,27 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JComboBox;
-
-import org.jdom.Attribute;
 import org.jdom.Element;
 
+import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
 /**
  * Represents the types of cars a railroad can have.
  * 
- * @author Daniel Boudreau Copyright (C) 2008
+ * @author Daniel Boudreau Copyright (C) 2008, 2014
  * @version $Revision$
  */
-public class CarTypes {
+public class CarTypes extends RollingStockAttribute {
 
 	private static final String TYPES = Bundle.getMessage("carTypeNames");
 	private static final String CONVERT_TYPES = Bundle.getMessage("carTypeConvert"); // Used to convert from ARR to
 																					// Descriptive
 	private static final String ARR_TYPES = Bundle.getMessage("carTypeARR");
 	// for property change
-	public static final String CARTYPES_LENGTH_CHANGED_PROPERTY = "CarTypes Length"; // NOI18N
+	public static final String CARTYPES_CHANGED_PROPERTY = "CarTypes Length"; // NOI18N
 	public static final String CARTYPES_NAME_CHANGED_PROPERTY = "CarTypes Name"; // NOI18N
-
-	private static final int MIN_NAME_LENGTH = 4;
 
 	public CarTypes() {
 	}
@@ -51,36 +43,11 @@ public class CarTypes {
 			log.debug("CarTypes returns instance " + _instance);
 		return _instance;
 	}
-
-	public synchronized void dispose() {
-		list.clear();
-	}
-
-	protected List<String> list = new ArrayList<String>();
-
-	public String[] getNames() {
-		if (list.size() == 0) {
-			String[] types = TYPES.split(","); // NOI18N
-			if (Setup.getCarTypes().equals(Setup.AAR))
-				types = ARR_TYPES.split(","); // NOI18N
-			for (int i = 0; i < types.length; i++)
-				list.add(types[i]);
-		}
-		String[] types = new String[list.size()];
-		for (int i = 0; i < list.size(); i++)
-			types[i] = list.get(i);
-		return types;
-	}
-
-	public void setNames(String[] types) {
-		if (types.length == 0)
-			return;
-		jmri.util.StringUtil.sort(types);
-		for (int i = 0; i < types.length; i++) {
-			if (!list.contains(types[i]) && !types[i].equals("Engine")) {  // NOI18N old code used Engine as car type remove
-				list.add(types[i]);
-			}
-		}
+	
+	protected String getDefaultNames() {
+		if (Setup.getCarTypes().equals(Setup.AAR))
+			return ARR_TYPES;
+		return TYPES;
 	}
 
 	/**
@@ -128,72 +95,47 @@ public class CarTypes {
 	}
 
 	public void addName(String type) {
-		if (type == null)
-			return;
-		// insert at start of list, sort later
-		if (list.contains(type))
-			return;
-		list.add(0, type);
-		maxNameLength = 0; // reset maximum name length
-		firePropertyChange(CARTYPES_LENGTH_CHANGED_PROPERTY, null, type);
+		super.addName(type);
+		maxNameLengthSubType = 0; // reset
+		firePropertyChange(CARTYPES_CHANGED_PROPERTY, null, type);
 	}
 
 	public void deleteName(String type) {
-		list.remove(type);
-		maxNameLength = 0; // reset maximum name length
-		firePropertyChange(CARTYPES_LENGTH_CHANGED_PROPERTY, type, null);
-	}
-
-	public boolean containsName(String type) {
-		return list.contains(type);
+		super.deleteName(type);
+		maxNameLengthSubType = 0; // reset
+		firePropertyChange(CARTYPES_CHANGED_PROPERTY, type, null);
 	}
 
 	public void replaceName(String oldName, String newName) {
-		addName(newName);
+		super.addName(newName);
+		maxNameLengthSubType = 0; // reset
 		firePropertyChange(CARTYPES_NAME_CHANGED_PROPERTY, oldName, newName);
 		// need to keep old name so location manager can replace properly
-		deleteName(oldName);
+		super.deleteName(oldName);
 	}
-
-	public JComboBox getComboBox() {
-		JComboBox box = new JComboBox();
-		String[] types = getNames();
-		for (int i = 0; i < types.length; i++)
-			box.addItem(types[i]);
-		return box;
-	}
-
-	public void updateComboBox(JComboBox box) {
-		box.removeAllItems();
-		String[] types = getNames();
-		for (int i = 0; i < types.length; i++)
-			box.addItem(types[i]);
-	}
-
-	private int maxNameLength = 0;
-
+	
 	/**
 	 * Get the maximum character length of a car type when printing on a manifest or switch list. Car subtypes or
 	 * characters after the "-" are ignored.
 	 * 
 	 * @return the maximum character length of a car type
 	 */
-	public int getCurMaxNameLength() {
-		if (maxNameLength == 0) {
+	public int getMaxNameLength() {
+		if (maxNameLengthSubType == 0) {
 			String maxName = "";
-			maxNameLength = MIN_NAME_LENGTH;
+			maxNameLengthSubType = MIN_NAME_LENGTH;
 			for (String name : getNames()) {
 				String [] subString = name.split("-");
-				if (subString[0].length() > maxNameLength) {
+				if (subString[0].length() > maxNameLengthSubType) {
 					maxName = name;
-					maxNameLength = subString[0].length();
+					maxNameLengthSubType = subString[0].length();
 				}
 			}
-			log.info("Max car type name ({}) length {}", maxName, maxNameLength);
+			log.info("Max car type name ({}) length {}", maxName, maxNameLengthSubType);
 		}
-		return maxNameLength;
+		return maxNameLengthSubType;
 	}
-
+	
 	private int maxNameLengthSubType = 0;
 
 	/**
@@ -201,15 +143,8 @@ public class CarTypes {
 	 * 
 	 * @return the maximum character length of a car type
 	 */
-	public int getMaxNameSubTypeLength() {
-		if (maxNameLengthSubType == 0) {
-			maxNameLengthSubType = MIN_NAME_LENGTH;
-			for (String name : getNames()) {
-				if (name.length() > maxNameLengthSubType)
-					maxNameLengthSubType = name.length();
-			}
-		}
-		return maxNameLengthSubType;
+	public int getMaxFullNameLength() {
+		return super.getMaxNameLength();
 	}
 	
 	/**
@@ -218,65 +153,30 @@ public class CarTypes {
 	 * 
 	 */
 	public void store(Element root) {
-		String[]names = getNames();
-		if (Control.backwardCompatible) {
-			Element values = new Element(Xml.CAR_TYPES);
-			for (int i=0; i<names.length; i++){
-				String typeNames = names[i]+"%%"; // NOI18N
-				values.addContent(typeNames);
-			}
-			root.addContent(values);
-		}
-		// new format using elements
-		Element types = new Element(Xml.TYPES);
-		for (int i=0; i<names.length; i++){
-			Element type = new Element(Xml.TYPE);
-			type.setAttribute(new Attribute(Xml.NAME, names[i]));
-			types.addContent(type);
-		}
-		root.addContent(types);
+		store(root, Xml.TYPES, Xml.TYPE, Xml.CAR_TYPES);
 	}
 	
 	public void load(Element root) {
-		// new format using elements starting version 3.3.1
-		if (root.getChild(Xml.TYPES)!= null){
-			@SuppressWarnings("unchecked")
-			List<Element> l = root.getChild(Xml.TYPES).getChildren(Xml.TYPE);
-			if (log.isDebugEnabled()) log.debug("Car types sees "+l.size()+" types");
-			Attribute a;
-			String[] types = new String[l.size()];
-			for (int i=0; i<l.size(); i++) {
-				Element type = l.get(i);
-				if ((a = type.getAttribute(Xml.NAME)) != null) {
-					types[i] = a.getValue();
-				}
-			}
-			setNames(types);
-		}
-		// old format
-		else if (root.getChild(Xml.CAR_TYPES)!= null){
-			String names = root.getChildText(Xml.CAR_TYPES);
-			String[] types = names.split("%%"); // NOI18N
-			if (log.isDebugEnabled()) log.debug("car types: "+names);
-			setNames(types);
-		}
-	}
-
-	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-	public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-		pcs.addPropertyChangeListener(l);
-	}
-
-	public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-		pcs.removePropertyChangeListener(l);
+		load(root, Xml.TYPES, Xml.TYPE, Xml.CAR_TYPES);
 	}
 
 	protected void firePropertyChange(String p, Object old, Object n) {
 		// Set dirty
 		CarManagerXml.instance().setDirty(true);
-		pcs.firePropertyChange(p, old, n);
+		super.firePropertyChange(p, old, n);
 	}
+	
+//	public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
+//		pcs.addPropertyChangeListener(l);
+//	}
+
+//	public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
+//		pcs.removePropertyChangeListener(l);
+//	}
+
+//	protected void firePropertyChange(String p, Object old, Object n) {
+//		pcs.firePropertyChange(p, old, n);
+//	}
 
 	static Logger log = LoggerFactory.getLogger(CarTypes.class.getName());
 

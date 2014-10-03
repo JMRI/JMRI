@@ -140,22 +140,22 @@ public class PrintCarRosterAction extends AbstractAction {
 				// car number
 				number = padAttribute(car.getNumber().trim(), 7);
 				// car road
-				road = padAttribute(car.getRoadName().trim(), CarRoads.instance().getCurMaxNameLength());
+				road = padAttribute(car.getRoadName().trim(), CarRoads.instance().getMaxNameLength());
 				// car type
-				type = padAttribute(car.getTypeName().trim(), CarTypes.instance().getMaxNameSubTypeLength());
+				type = padAttribute(car.getTypeName().trim(), CarTypes.instance().getMaxFullNameLength());
 
 				if (printCarLength.isSelected())
 					length = padAttribute(car.getLength().trim(), Control.max_len_string_length_name);
 				if (printCarWeight.isSelected())
 					weight = padAttribute(car.getWeight().trim(), Control.max_len_string_weight_name);
 				if (printCarColor.isSelected())
-					color = padAttribute(car.getColor().trim(), CarColors.instance().getCurMaxNameLength());
+					color = padAttribute(car.getColor().trim(), CarColors.instance().getMaxNameLength());
 				if (printCarLoad.isSelected())
-					load = padAttribute(car.getLoadName().trim(), CarLoads.instance().getCurMaxNameLength());
+					load = padAttribute(car.getLoadName().trim(), CarLoads.instance().getMaxNameLength());
 				if (printCarKernel.isSelected())
 					kernel = padAttribute(car.getKernelName().trim(), Control.max_len_string_attibute);
 				if (printCarOwner.isSelected())
-					owner = padAttribute(car.getOwner().trim(), CarOwners.instance().getCurMaxNameLength());
+					owner = padAttribute(car.getOwner().trim(), CarOwners.instance().getMaxNameLength());
 				if (printCarBuilt.isSelected())
 					built = padAttribute(car.getBuilt().trim(), Control.max_len_string_built_name);
 				if (printCarLast.isSelected())
@@ -213,16 +213,16 @@ public class PrintCarRosterAction extends AbstractAction {
 	private void printTitleLine(HardcopyWriter writer) throws IOException {
 		String s = Bundle.getMessage("Number")
 				+ "  "
-				+ padAttribute(Bundle.getMessage("Road"), CarRoads.instance().getCurMaxNameLength())
-				+ padAttribute(Bundle.getMessage("Type"), CarTypes.instance().getMaxNameSubTypeLength())
+				+ padAttribute(Bundle.getMessage("Road"), CarRoads.instance().getMaxNameLength())
+				+ padAttribute(Bundle.getMessage("Type"), CarTypes.instance().getMaxFullNameLength())
 				+ (printCarLength.isSelected() ? Bundle.getMessage("Len") + "  " : "")
 				+ (printCarWeight.isSelected() ? "     " : "")
 				+ (printCarColor.isSelected() ? padAttribute(Bundle.getMessage("Color"), CarColors.instance()
-						.getCurMaxNameLength()) : "")
+						.getMaxNameLength()) : "")
 				+ (printCarLoad.isSelected() ? padAttribute(Bundle.getMessage("Load"), CarLoads.instance()
-						.getCurMaxNameLength()) : "")
+						.getMaxNameLength()) : "")
 				+ (printCarKernel.isSelected() ? padAttribute(("Kernel"), Control.max_len_string_attibute) : "")
-				+ (printCarOwner.isSelected() ? padAttribute(Bundle.getMessage("Owner"), CarOwners.instance().getCurMaxNameLength()) : "")
+				+ (printCarOwner.isSelected() ? padAttribute(Bundle.getMessage("Owner"), CarOwners.instance().getMaxNameLength()) : "")
 				+ (printCarBuilt.isSelected() ? Bundle.getMessage("Built") + " " : "")
 				+ (printCarLast.isSelected() ? Bundle.getMessage("LastMoved") + " " : "")
 				+ (printCarWait.isSelected() ? Bundle.getMessage("Wait") + " " : "")

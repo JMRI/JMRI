@@ -71,8 +71,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		removePropertyChangeScheduleItems();
 		_list = _schedule.getItemsBySequenceList();
 		// and add them back in
-		for (int i = 0; i < _list.size(); i++) {
-			_list.get(i).addPropertyChangeListener(this);
+		for (ScheduleItem si : _list) {
+			si.addPropertyChangeListener(this);
 		}
 	}
 

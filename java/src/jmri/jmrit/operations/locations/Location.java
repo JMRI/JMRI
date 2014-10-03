@@ -600,8 +600,8 @@ public class Location implements java.beans.PropertyChangeListener {
 		if (types.length == 0)
 			return;
 		jmri.util.StringUtil.sort(types);
-		for (int i = 0; i < types.length; i++)
-			_listTypes.add(types[i]);
+		for (String type : types)
+			_listTypes.add(type);
 	}
 
 	/**
@@ -990,9 +990,8 @@ public class Location implements java.beans.PropertyChangeListener {
 	public void updatePoolComboBox(JComboBox box) {
 		box.removeAllItems();
 		box.addItem(NONE);
-		List<Pool> pools = getPoolsByNameList();
-		for (int i = 0; i < pools.size(); i++) {
-			box.addItem(pools.get(i));
+		for (Pool pool : getPoolsByNameList()) {
+			box.addItem(pool);
 		}
 	}
 
@@ -1267,15 +1266,15 @@ public class Location implements java.beans.PropertyChangeListener {
 		}
 		// new way of saving car types
 		Element eTypes = new Element(Xml.TYPES);
-		for (int i = 0; i < types.length; i++) {
+		for (String type : types) {
 			// don't save types that have been deleted by user
-			if (EngineTypes.instance().containsName(types[i])) {
+			if (EngineTypes.instance().containsName(type)) {
 				Element eType = new Element(Xml.LOCO_TYPE);
-				eType.setAttribute(Xml.NAME, types[i]);
+				eType.setAttribute(Xml.NAME, type);
 				eTypes.addContent(eType);
-			} else if (CarTypes.instance().containsName(types[i])) {
+			} else if (CarTypes.instance().containsName(type)) {
 				Element eType = new Element(Xml.CAR_TYPE);
-				eType.setAttribute(Xml.NAME, types[i]);
+				eType.setAttribute(Xml.NAME, type);
 				eTypes.addContent(eType);
 			}
 		}
@@ -1364,7 +1363,7 @@ public class Location implements java.beans.PropertyChangeListener {
 			setDirtyAndFirePropertyChange(TRACK_LISTLENGTH_CHANGED_PROPERTY, null, null);
 		}
 		if (e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY)
-				|| e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)
+				|| e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(EngineTypes.ENGINETYPES_NAME_CHANGED_PROPERTY)) {
 			replaceType((String) e.getOldValue(), (String) e.getNewValue());
 		}

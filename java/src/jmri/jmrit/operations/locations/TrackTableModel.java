@@ -367,11 +367,8 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 	}
 
 	protected void removePropertyChangeTracks() {
-		for (int i = 0; i < tracksList.size(); i++) {
-			// if object has been deleted, it's not here; ignore it
-			Track t = tracksList.get(i);
-			if (t != null)
-				t.removePropertyChangeListener(this);
+		for (Track t : tracksList) {
+			t.removePropertyChangeListener(this);
 		}
 	}
 

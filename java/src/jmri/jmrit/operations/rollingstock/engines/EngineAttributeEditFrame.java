@@ -324,15 +324,15 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
 					.getNewValue());
-		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY))
+		if (e.getPropertyName().equals(CarRoads.CARROADS_CHANGED_PROPERTY))
 			CarRoads.instance().updateComboBox(comboBox);
 		if (e.getPropertyName().equals(EngineModels.ENGINEMODELS_CHANGED_PROPERTY))
 			EngineModels.instance().updateComboBox(comboBox);
-		if (e.getPropertyName().equals(EngineTypes.ENGINETYPES_LENGTH_CHANGED_PROPERTY))
+		if (e.getPropertyName().equals(EngineTypes.ENGINETYPES_CHANGED_PROPERTY))
 			EngineTypes.instance().updateComboBox(comboBox);
 		if (e.getPropertyName().equals(EngineLengths.ENGINELENGTHS_CHANGED_PROPERTY))
 			EngineLengths.instance().updateComboBox(comboBox);
-		if (e.getPropertyName().equals(CarOwners.CAROWNERS_LENGTH_CHANGED_PROPERTY))
+		if (e.getPropertyName().equals(CarOwners.CAROWNERS_CHANGED_PROPERTY))
 			CarOwners.instance().updateComboBox(comboBox);
 		if (e.getPropertyName().equals(EngineManager.CONSISTLISTLENGTH_CHANGED_PROPERTY))
 			engineManager.updateConsistComboBox(comboBox);

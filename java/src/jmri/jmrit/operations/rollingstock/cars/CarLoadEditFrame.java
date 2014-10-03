@@ -248,11 +248,10 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 			log.debug("CarLoadEditFrame save button pressed");
 			carLoads.setLoadType(_type, (String) loadComboBox.getSelectedItem(), (String) loadTypeComboBox
 					.getSelectedItem());
-			carLoads.setPriority(_type, (String) loadComboBox.getSelectedItem(), (String) priorityComboBox
-					.getSelectedItem());
+			carLoads.setPriority(_type, (String) loadComboBox.getSelectedItem(), (String) priorityComboBox.getSelectedItem());
 			carLoads.setPickupComment(_type, (String) loadComboBox.getSelectedItem(), pickupCommentTextField.getText());
 			carLoads.setDropComment(_type, (String) loadComboBox.getSelectedItem(), dropCommentTextField.getText());
-			CarManagerXml.instance().setDirty(true); // save car files
+			//CarManagerXml.instance().setDirty(true); // save car files
 			OperationsXml.save(); // save all files that have been modified;
 			if (Setup.isCloseWindowOnSaveEnabled())
 				dispose();
@@ -269,11 +268,10 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 
 	// replace the default empty and load for all car types
 	private void replaceAllLoads(String oldLoad, String newLoad) {
-		String[] typeNames = CarTypes.instance().getNames();
-		for (int i = 0; i < typeNames.length; i++) {
-			addLoadToCombobox(typeNames[i], newLoad);
-			replaceLoad(typeNames[i], oldLoad, newLoad);
-			deleteLoadFromCombobox(typeNames[i], oldLoad);
+		for (String type : CarTypes.instance().getNames()) {
+			addLoadToCombobox(type, newLoad);
+			replaceLoad(type, oldLoad, newLoad);
+			deleteLoadFromCombobox(type, oldLoad);
 		}
 	}
 
@@ -318,10 +316,8 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 			return;
 		int number = 0;
 		String item = (String) loadComboBox.getSelectedItem();
-		CarManager manager = CarManager.instance();
-		List<RollingStock> cars = manager.getList();
-		for (int i = 0; i < cars.size(); i++) {
-			Car car = (Car) cars.get(i);
+		for (RollingStock rs : CarManager.instance().getList()) {
+			Car car = (Car) rs;
 			if (car.getLoadName().equals(item))
 				number++;
 		}
@@ -361,15 +357,15 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 			carLoads.updateComboBox(_type, loadComboBox);
 	}
 
-	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-	public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-		pcs.addPropertyChangeListener(l);
-	}
-
-	public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-		pcs.removePropertyChangeListener(l);
-	}
+//	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
+//
+//	public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
+//		pcs.addPropertyChangeListener(l);
+//	}
+//
+//	public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
+//		pcs.removePropertyChangeListener(l);
+//	}
 
 	static Logger log = LoggerFactory.getLogger(CarLoadEditFrame.class.getName());
 }

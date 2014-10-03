@@ -184,7 +184,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
 		if (log.isDebugEnabled())
 			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
 					+ e.getNewValue()); // NOI18N
-		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY))
+		if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY))
 			CarTypes.instance().updateComboBox(typesComboBox);
 		if (e.getSource().getClass().equals(CarLoads.class))
 			CarLoads.instance().updateComboBox((String) typesComboBox.getSelectedItem(), loadsComboBox);
