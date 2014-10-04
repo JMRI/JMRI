@@ -76,6 +76,21 @@
                     </dl>
                 </dd>
                 <dt><a href="FrameServlet.shtml#Preferences">Frame Server</a></dt>
+                <dd><dl>
+                        <dt>Click Delay</dt>
+                        <dd>Wait the specified number of seconds after a click
+                            on the window (frame) image before refreshing the image.</dd>
+                        <dt>Refresh Delay</dt>
+                        <dd>The number of seconds before the window image is
+                            automatically refreshed.</dd>
+                        <dt>Use Ajax?</dt>
+                        <dd>Use features that improve performance on modern
+                            browsers. Turn off to support obsolete browsers.</dd>
+                        <dt>Disallowed Frames</dt>
+                        <dd>A list of windows that will not be displayed
+                            in the browser.</dd>
+                    </dl>
+                </dd>
             </dl>
 
             <h2><a id="services">Services</a></h2>
@@ -146,7 +161,12 @@
             <p>Note that if a directory contains a file named <code>index.html</code>
                 will display the index.html file instead of listing the directory
                 contents.</p>
-
+            <h3><a id="json" href="JsonServlet.shtml">JSON Protocol</a></h3>
+            <!-- JsonServlet intro -->
+            <p>JMRI provides a JSON Protocol to access and manipulate for a
+                number of JMRI-defined entities. See the
+                <a href="JsonServlet.shtml">JMRI JSON Protocol</a> for more
+                information.</p>
         </div>
         <!--#include virtual="/Footer" -->
     </body>
