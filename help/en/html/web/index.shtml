@@ -57,8 +57,7 @@
                 Don't forget to save your changes!</p>
 
             <h2>Web Server Preferences</h2>
-            <a href="images/WebServerPreferences.png" target="_new"><img src="images/WebServerPreferences.png" alt="Web Server Preferences. Click to enlarge." height="200" style="float:right;"></a>
-            <p>Web Server Preferences are in two catagories:</p>
+            <p>Web Server Preferences are in two categories:</p>
             <dl>
                 <dt><a href="WebServer.shtml#Preferences">Web Server</a></dt>
                 <dd>
