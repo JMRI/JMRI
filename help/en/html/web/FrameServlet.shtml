@@ -46,6 +46,25 @@ You can override the defaults for individual pages by adding the following yes/n
 <li><b>protect</b> (protect the frame from user clicks, i.e. read-only image, but with refresh)</li>
 <li><b>ajax</b> (use ajax for updates)</li></ul>
 
+To display any <em>already open</em> JMRI window as a <b>clickable</b> image that periodically refreshes, use a URL like:
+
+            <code><a href="http://127.0.0.1:12080/frame/Monitor%20Slots.html">http://127.0.0.1:12080/frame/Monitor%20Slots.html</a></code>
+            <code><a href="http://127.0.0.1:12080/frame/Analog%20Clock.html">http://127.0.0.1:12080/frame/Analog%20Clock.html</a></code>
+            <code><a href="http://127.0.0.1:12080/frame/Turnout%20Table.html">http://127.0.0.1:12080/frame/Turnout%20Table.html</a></code>
+
+            <p>Note the frame title in the URL, followed by ".html".  Replace any spaces in the title with "%20".</p>
+            For current, dynamically-generated list of available windows, use this URL:
+            <code><a href="http://127.0.0.1:12080/frame">http://127.0.0.1:12080/frame</a></code>
+            <p><em>Note:</em> Adjust defaults such as refresh timing, disallowed frames and ajax usage in Web Server Preferences.</p>
+            You can override the defaults for individual pages by using the following parms in your URL:
+            <ul>
+                <li><b>plain</b> (hide the footer links)</li>
+                <li><b>protect</b> (protect the frame from user clicks, i.e. read-only image, but with refresh)</li>
+                <li><b>ajax</b> (use ajax for updates)</li>
+            </ul>
+            Example, showing no links, protected, using ajax to refresh every 12 seconds:
+            <code><a href="http://127.0.0.1:12080/frame/Power%20Control.html?ajax=true&plain=true&protect=true&retry=12">http://127.0.0.1:12080/frame/Power%20Control.html?ajax=true&plain=true&protect=true&retry=12</a></code>
+
 <p>
 The jmri/web/servlet/frameimage/JmriJFrameServlet.properties 
   <a href="https://jmri.svn.sourceforge.net/svnroot/jmri/trunk/jmri/java/src/jmri/web/servlet/frameimage/JmriJFrameServlet.properties" target=_new>
@@ -53,13 +72,6 @@ The jmri/web/servlet/frameimage/JmriJFrameServlet.properties
 file can be used to configure the HTML that's returned when
 a frame is requested.
 
-<p>
-Please note that this servlet has only been used with 
-the 
-<a href="WebServer.shtml">JMRI Web Server</a>, and may
-not work with other servlet containers.  We're committed to
-making it work, however, so just get in touch with 
-the JMRI developers if you encounter any problems.
 </div>
 
 <!--#include virtual="/Footer" -->

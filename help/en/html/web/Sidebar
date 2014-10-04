@@ -2,15 +2,14 @@
 	  <hr class="hide">
 	  <div id="mBody">
 	  <div id="side"> <!-- Block of text on left side of page -->
-	    <div style="text-align: center">JMRI web access</div>
+	    <div style="text-align: center">JMRI Web Access</div>
 	    <dl>
 
 		<dt><h3><a href="index.shtml">Basic Use</a></h3></dt>
-		<dd>JMRI has built-in support for working with your
-		layout from a web browser.
+		<dd>JMRI supports working with your layout from a web browser.
 		    <UL>
 		    <LI><dfn><a href="index.shtml#Start">Getting Started</a></dfn></li>
-		    <LI><dfn><a href="index.shtml#Configure">Configuring</a></dfn></li>
+		    <LI><dfn><a href="index.shtml#Configure">Configure</a></dfn></li>
 		    <LI><dfn><a href="index.shtml#URLs">URLs</a></dfn></li>
 		    </UL>
 		</dd>
