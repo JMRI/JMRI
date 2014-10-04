@@ -167,6 +167,21 @@
                 number of JMRI-defined entities. See the
                 <a href="JsonServlet.shtml">JMRI JSON Protocol</a> for more
                 information.</p>
+
+            <h2><a id="custom">Customizing Web Access</a></h2>
+            <p>If you create a directory <code>web</code> in your User Files
+                location, any file in that directory that has the same name and
+                directory hierarchy as a file the <code>web</code> directory in
+                the JMRI distribution directory will override the default file
+                used for that purpose. This provides the ability to replace
+                images, scripts, and other content with personal content.</p>
+            <p>The standard web services use templates in the web/servlet
+                directory. Note that these templates are tightly linked with
+                JMRI. While modifying these templates is the recommended way to
+                customize the web access, care must be taken to ensure
+                modifications do not cause the templates to break entirely. If
+                web access does not work as expected after modifying a template,
+                check the JMRI logs for the cause.</p>
         </div>
         <!--#include virtual="/Footer" -->
     </body>
