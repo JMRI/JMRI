@@ -43,7 +43,6 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 			.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
 
 	CarManager carManager = CarManager.instance();
-	CarManagerXml carManagerXml = CarManagerXml.instance();
 
 	Car _car;
 
@@ -291,7 +290,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 					finalDestTrack = (Track) finalDestTrackBox.getSelectedItem();
 				if (finalDestTrack != null && car.getFinalDestinationTrack() != finalDestTrack
 						&& finalDestTrack.getTrackType().equals(Track.STAGING)) {
-					log.debug("Destination track (" + finalDestTrack.getName() + ") is staging");
+					log.debug("Destination track ({}) is staging", finalDestTrack.getName());
 					JOptionPane.showMessageDialog(this, Bundle.getMessage("rsDoNotSelectStaging"), Bundle
 							.getMessage("rsCanNotFinal"), JOptionPane.ERROR_MESSAGE);
 					return false;
@@ -337,7 +336,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 					Track trackRWE = (Track) trackReturnWhenEmptyBox.getSelectedItem();
 					// warn user if they selected a staging track
 					if (trackRWE != null && trackRWE.getTrackType().equals(Track.STAGING)) {
-						log.debug("Return when empty track (" + trackRWE.getName() + ") is staging");
+						log.debug("Return when empty track ({}) is staging", trackRWE.getName());
 						JOptionPane.showMessageDialog(this, Bundle.getMessage("rsDoNotSelectStaging"), Bundle
 								.getMessage("rsCanNotRWE"), JOptionPane.ERROR_MESSAGE);
 						return false;
@@ -485,7 +484,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 
 	protected void updateReturnWhenEmptyComboBoxes() {
 		if (_car != null) {
-			log.debug("Updating return when empty for car (" + _car.toString() + ")");
+			log.debug("Updating return when empty for car ({})", _car.toString());
 			destReturnWhenEmptyBox.setSelectedItem(_car.getReturnWhenEmptyDestination());
 		}
 		updateReturnWhenEmpty();
@@ -496,7 +495,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 			if (destReturnWhenEmptyBox.getSelectedItem().equals(LocationManager.NONE)) {
 				trackReturnWhenEmptyBox.removeAllItems();
 			} else {
-				log.debug("CarSetFrame sees return when empty: " + destReturnWhenEmptyBox.getSelectedItem());
+				log.debug("CarSetFrame sees return when empty: {}", destReturnWhenEmptyBox.getSelectedItem());
 				Location l = (Location) destReturnWhenEmptyBox.getSelectedItem();
 				l.updateComboBox(trackReturnWhenEmptyBox, getTestCar(_car),
 						autoReturnWhenEmptyTrackCheckBox.isSelected(), true);
@@ -510,7 +509,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 	
 	protected void updateFinalDestinationComboBoxes() {
 		if (_car != null) {
-			log.debug("Updating final destinations for car (" + _car.toString() + ")");
+			log.debug("Updating final destinations for car ({})", _car.toString());
 			finalDestinationBox.setSelectedItem(_car.getFinalDestination());
 		}
 		updateFinalDestination();
@@ -520,7 +519,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		if (finalDestinationBox.getSelectedItem() == null || finalDestinationBox.getSelectedItem().equals(LocationManager.NONE)) {
 			finalDestTrackBox.removeAllItems();
 		} else {
-			log.debug("CarSetFrame sees final destination: " + finalDestinationBox.getSelectedItem());
+			log.debug("CarSetFrame sees final destination: {}", finalDestinationBox.getSelectedItem());
 			Location l = (Location) finalDestinationBox.getSelectedItem();
 			l.updateComboBox(finalDestTrackBox, _car, autoFinalDestTrackCheckBox.isSelected(), true);
 			if (_car != null && _car.getFinalDestination() != null && _car.getFinalDestination().equals(l)
@@ -531,7 +530,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 
 	protected void updateLoadComboBox() {
 		if (_car != null) {
-			log.debug("Updating load box for car (" + _car.toString() + ")");
+			log.debug("Updating load box for car ({})", _car.toString());
 			CarLoads.instance().updateComboBox(_car.getTypeName(), loadComboBox);
 			loadComboBox.setSelectedItem(_car.getLoadName());
 			CarLoads.instance().updateRweComboBox(_car.getTypeName(), loadReturnWhenEmptyBox);
@@ -582,16 +581,13 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 	}
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		log.debug("PropertyChange (" + e.getPropertyName() + ") new (" + e.getNewValue()+")");
-//		if (_disableComboBoxUpdate) {
-//			log.debug("Combobox update is disabled");
-//			return;
-//		}
+		log.debug("PropertyChange ({}) new ({})", e.getPropertyName(), e.getNewValue() );
 		super.propertyChange(e);
 		if (e.getPropertyName().equals(Car.FINAL_DESTINATION_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Car.FINAL_DESTINATION_TRACK_CHANGED_PROPERTY))
 			updateFinalDestinationComboBoxes();
 		if (e.getPropertyName().equals(CarLoads.LOAD_CHANGED_PROPERTY)
+				|| e.getPropertyName().equals(CarLoads.LOAD_TYPE_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Car.LOAD_CHANGED_PROPERTY)) {
 			updateLoadComboBox();
 		}
