@@ -572,12 +572,11 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 				p.add(deleteOwnerButton);
 				gc.gridy = y++;
 				panelOwnerNames.add(p, gc);
-
-				String[] carOwners = _train.getOwnerNames();
+				
 				int x = 0;
-				for (int i = 0; i < carOwners.length; i++) {
+				for (String ownerName : _train.getOwnerNames()) {
 					JLabel owner = new JLabel();
-					owner.setText(carOwners[i]);
+					owner.setText(ownerName);
 					addItem(panelOwnerNames, owner, x++, y);
 					if (x > 6) {
 						y++;
@@ -855,8 +854,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		box.removeAllItems();
 		box.addItem("");
 		List<String> roads = CarManager.instance().getCabooseRoadNames();
-		for (int i = 0; i < roads.size(); i++) {
-			box.addItem(roads.get(i));
+		for (String road : roads) {
+			box.addItem(road);
 		}
 	}
 
@@ -866,8 +865,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		box.removeAllItems();
 		box.addItem("");
 		List<String> roads = EngineManager.instance().getEngineRoadNames(engineModel);
-		for (int i = 0; i < roads.size(); i++) {
-			box.addItem(roads.get(i));
+		for (String road : roads) {
+			box.addItem(road);
 		}
 	}
 

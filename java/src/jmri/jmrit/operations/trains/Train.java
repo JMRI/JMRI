@@ -362,10 +362,8 @@ public class Train implements java.beans.PropertyChangeListener {
 
 		// figure out the work at this location, note that there can be consecutive locations with the same name
 		if (getRoute() != null) {
-			List<RouteLocation> routeList = getRoute().getLocationsBySequenceList();
 			boolean foundRouteLocation = false;
-			for (int i = 0; i < routeList.size(); i++) {
-				RouteLocation rl = routeList.get(i);
+			for (RouteLocation rl : getRoute().getLocationsBySequenceList()) {
 				if (rl == routeLocation) {
 					foundRouteLocation = true;
 				}
@@ -381,16 +379,13 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 
 	private int calculateWorkTimeAtLocation(RouteLocation routeLocation) {
-		CarManager carManager = CarManager.instance();
-		List<RollingStock> carList = carManager.getList(this);
 		int minutes = 0;
 		// add any work at this location
-		for (int j = 0; j < carList.size(); j++) {
-			Car car = (Car) carList.get(j);
-			if (car.getRouteLocation() == routeLocation && !car.getTrackName().equals("")) {
+		for (RollingStock rs : CarManager.instance().getList(this)) {
+			if (rs.getRouteLocation() == routeLocation && !rs.getTrackName().equals("")) {
 				minutes += Setup.getSwitchTime();
 			}
-			if (car.getRouteDestination() == routeLocation) {
+			if (rs.getRouteDestination() == routeLocation) {
 				minutes += Setup.getSwitchTime();
 			}
 		}
@@ -804,9 +799,8 @@ public class Train implements java.beans.PropertyChangeListener {
 		String departureName = TrainCommon.splitString(getTrainDepartsName());
 		Route route = getRoute();
 		if (route != null) {
-			List<RouteLocation> routeList = route.getLocationsBySequenceList();
-			for (int i = 0; i < routeList.size(); i++) {
-				String name = TrainCommon.splitString(routeList.get(i).getName());
+			for (RouteLocation rl : route.getLocationsBySequenceList()) {
+				String name = TrainCommon.splitString(rl.getName());
 				if (!departureName.equals(name))
 					return false; // not a local switcher
 			}
@@ -827,8 +821,8 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (locationIds.length == 0)
 			return;
 		jmri.util.StringUtil.sort(locationIds);
-		for (int i = 0; i < locationIds.length; i++)
-			_skipLocationsList.add(locationIds[i]);
+		for (String id : locationIds)
+			_skipLocationsList.add(id);
 	}
 
 	/**
@@ -879,9 +873,9 @@ public class Train implements java.beans.PropertyChangeListener {
 
 	protected String[] getCarTypeNames() {
 		List<String> list = new ArrayList<String>();
-		for (int i = 0; i < _typeList.size(); i++) {
-			if (CarTypes.instance().containsName(_typeList.get(i)))
-				list.add(_typeList.get(i));
+		for (String type : _typeList) {
+			if (CarTypes.instance().containsName(type))
+				list.add(type);
 		}
 		String[] types = new String[list.size()];
 		for (int i = 0; i < list.size(); i++)
@@ -891,9 +885,9 @@ public class Train implements java.beans.PropertyChangeListener {
 
 	protected String[] getLocoTypeNames() {
 		List<String> list = new ArrayList<String>();
-		for (int i = 0; i < _typeList.size(); i++) {
-			if (EngineTypes.instance().containsName(_typeList.get(i)))
-				list.add(_typeList.get(i));
+		for (String type : _typeList) {
+			if (EngineTypes.instance().containsName(type))
+				list.add(type);
 		}
 		String[] types = new String[list.size()];
 		for (int i = 0; i < list.size(); i++)
@@ -911,8 +905,8 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (types.length == 0)
 			return;
 		jmri.util.StringUtil.sort(types);
-		for (int i = 0; i < types.length; i++)
-			_typeList.add(types[i]);
+		for (String type : types)
+			_typeList.add(type);
 	}
 
 	/**
@@ -954,9 +948,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			deleteTypeName(oldType);
 			addTypeName(newType);
 			// adjust custom loads
-			String[] loadNames = getLoadNames();
-			for (int k = 0; k < loadNames.length; k++) {
-				String load = loadNames[k];
+			for (String load : getLoadNames()) {
 				String[] splitLoad = load.split(CarLoad.SPLIT_CHAR);
 				if (splitLoad.length > 1) {
 					if (splitLoad[0].equals(oldType)) {
@@ -998,9 +990,9 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (roads.length == 0)
 			return;
 		jmri.util.StringUtil.sort(roads);
-		for (int i = 0; i < roads.length; i++) {
-			if (!roads[i].equals(""))
-				_roadList.add(roads[i]);
+		for (String road : roads) {
+			if (!road.equals(""))
+				_roadList.add(road);
 		}
 	}
 
@@ -1111,9 +1103,9 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (loads.length == 0)
 			return;
 		jmri.util.StringUtil.sort(loads);
-		for (int i = 0; i < loads.length; i++) {
-			if (!loads[i].equals(""))
-				_loadList.add(loads[i]);
+		for (String load : loads) {
+			if (!load.equals(""))
+				_loadList.add(load);
 		}
 	}
 
@@ -1220,9 +1212,9 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (owners.length == 0)
 			return;
 		jmri.util.StringUtil.sort(owners);
-		for (int i = 0; i < owners.length; i++) {
-			if (!owners[i].equals(""))
-				_ownerList.add(owners[i]);
+		for (String owner : owners) {
+			if (!owner.equals(""))
+				_ownerList.add(owner);
 		}
 	}
 
@@ -1683,15 +1675,13 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @return The number of cars worked by this train
 	 */
 	public int getNumberCarsWorked() {
-		List<RollingStock> cars = CarManager.instance().getList(this);
-		// remove cars that haven't been assigned by the train builder
-		for (int i = 0; i < cars.size(); i++) {
-			Car c = (Car) cars.get(i);
-			if (c.getRouteLocation() == null) {
-				cars.remove(i--);
+		int count = 0;
+		for (RollingStock rs : CarManager.instance().getList(this)) {
+			if (rs.getRouteLocation() != null) {
+				count++;
 			}
 		}
-		return cars.size();
+		return count;
 	}
 
 	public void setNumberCarsRequested(int number) {
@@ -1728,12 +1718,9 @@ public class Train implements java.beans.PropertyChangeListener {
 		int number = 0;
 		Route route = getRoute();
 		if (route != null) {
-			List<RollingStock> cars = CarManager.instance().getList(this);
-			List<RouteLocation> routeList = route.getLocationsBySequenceList();
-			for (int i = 0; i < routeList.size(); i++) {
-				RouteLocation rl = routeList.get(i);
-				for (int j = 0; j < cars.size(); j++) {
-					Car car = (Car) cars.get(j);
+			for (RouteLocation rl : route.getLocationsBySequenceList()) {
+				for (RollingStock rs : CarManager.instance().getList(this)) {
+					Car car = (Car) rs;
 					if (car.getRouteLocation() == rl) {
 						number++;
 					}
@@ -1757,12 +1744,9 @@ public class Train implements java.beans.PropertyChangeListener {
 		int number = 0;
 		Route route = getRoute();
 		if (route != null) {
-			List<RollingStock> cars = CarManager.instance().getList(this);
-			List<RouteLocation> routeList = route.getLocationsBySequenceList();
-			for (int i = 0; i < routeList.size(); i++) {
-				RouteLocation rl = routeList.get(i);
-				for (int j = 0; j < cars.size(); j++) {
-					Car car = (Car) cars.get(j);
+			for (RouteLocation rl : route.getLocationsBySequenceList()) {
+				for (RollingStock rs : CarManager.instance().getList(this)) {
+					Car car = (Car) rs;
 					if (!CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName()).equals(
 							CarLoad.LOAD_TYPE_EMPTY))
 						continue;
@@ -1801,13 +1785,9 @@ public class Train implements java.beans.PropertyChangeListener {
 		int length = 0;
 		Route route = getRoute();
 		if (route != null) {
-			List<RollingStock> engines = EngineManager.instance().getList(this);
-			List<RollingStock> cars = CarManager.instance().getList(this);
-			List<RouteLocation> routeList = route.getLocationsBySequenceList();
-			for (int i = 0; i < routeList.size(); i++) {
-				RouteLocation rl = routeList.get(i);
-				for (int j = 0; j < engines.size(); j++) {
-					Engine eng = (Engine) engines.get(j);
+			for (RouteLocation rl : route.getLocationsBySequenceList()) {
+				for (RollingStock rs :  EngineManager.instance().getList(this)) {
+					Engine eng = (Engine) rs;
 					if (eng.getRouteLocation() == rl) {
 						length += eng.getTotalLength();
 					}
@@ -1815,8 +1795,8 @@ public class Train implements java.beans.PropertyChangeListener {
 						length += -eng.getTotalLength();
 					}
 				}
-				for (int j = 0; j < cars.size(); j++) {
-					Car car = (Car) cars.get(j);
+				for (RollingStock rs : CarManager.instance().getList(this)) {
+					Car car = (Car) rs;
 					if (car.getRouteLocation() == rl) {
 						length += car.getTotalLength();
 					}
@@ -1844,13 +1824,9 @@ public class Train implements java.beans.PropertyChangeListener {
 		int weight = 0;
 		Route route = getRoute();
 		if (route != null) {
-			List<RollingStock> engines = EngineManager.instance().getList(this);
-			List<RollingStock> cars = CarManager.instance().getList(this);
-			List<RouteLocation> routeList = route.getLocationsBySequenceList();
-			for (int i = 0; i < routeList.size(); i++) {
-				RouteLocation rl = routeList.get(i);
-				for (int j = 0; j < engines.size(); j++) {
-					Engine eng = (Engine) engines.get(j);
+			for (RouteLocation rl : route.getLocationsBySequenceList()) {
+				for (RollingStock rs : EngineManager.instance().getList(this)) {
+					Engine eng = (Engine) rs;
 					if (eng.getRouteLocation() == rl) {
 						weight += eng.getAdjustedWeightTons();
 					}
@@ -1858,8 +1834,8 @@ public class Train implements java.beans.PropertyChangeListener {
 						weight += -eng.getAdjustedWeightTons();
 					}
 				}
-				for (int j = 0; j < cars.size(); j++) {
-					Car car = (Car) cars.get(j);
+				for (RollingStock rs : CarManager.instance().getList(this)) {
+					Car car = (Car) rs;
 					if (car.getRouteLocation() == rl) {
 						weight += car.getAdjustedWeightTons();
 					}
@@ -1885,12 +1861,9 @@ public class Train implements java.beans.PropertyChangeListener {
 		int hp = 0;
 		Route route = getRoute();
 		if (route != null) {
-			List<RollingStock> engines = EngineManager.instance().getList(this);
-			List<RouteLocation> routeList = route.getLocationsBySequenceList();
-			for (int i = 0; i < routeList.size(); i++) {
-				RouteLocation rl = routeList.get(i);
-				for (int j = 0; j < engines.size(); j++) {
-					Engine eng = (Engine) engines.get(j);
+			for (RouteLocation rl : route.getLocationsBySequenceList()) {
+				for (RollingStock rs : EngineManager.instance().getList(this)) {
+					Engine eng = (Engine) rs;
 					if (eng.getRouteLocation() == rl) {
 						try {
 							hp += Integer.parseInt(eng.getHp());
@@ -1918,8 +1891,8 @@ public class Train implements java.beans.PropertyChangeListener {
 		String cabooseRoadNumber = "";
 		RouteLocation rl = getCurrentLocation();
 		List<RollingStock> cars = CarManager.instance().getByTrainList(this);
-		for (int i = 0; i < cars.size(); i++) {
-			Car car = (Car) cars.get(i);
+		for (RollingStock rs :cars) {
+			Car car = (Car) rs;
 			if (car.getRouteLocation() == rl && car.getRouteDestination() != rl && car.isCaboose())
 				cabooseRoadNumber = car.toString();
 		}
@@ -2657,8 +2630,8 @@ public class Train implements java.beans.PropertyChangeListener {
 			// find the number of active threads
 			ThreadGroup root = Thread.currentThread().getThreadGroup();
 			int numberOfThreads = root.activeCount();
-			for (int i = 0; i < scripts.size(); i++) {
-				jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(scripts.get(i)));
+			for (String scriptPathname : scripts) {
+				jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(scriptPathname));
 			}
 			// need to wait for scripts to complete or 2 seconds maximum
 			int count = 0;
@@ -3487,32 +3460,28 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (e.getChild(Xml.SCRIPTS) != null) {
 			@SuppressWarnings("unchecked")
 			List<Element> lb = e.getChild(Xml.SCRIPTS).getChildren(Xml.BUILD);
-			for (int i = 0; i < lb.size(); i++) {
-				Element es = lb.get(i);
+			for (Element es : lb) {
 				if ((a = es.getAttribute(Xml.NAME)) != null) {
 					addBuildScript(a.getValue());
 				}
 			}
 			@SuppressWarnings("unchecked")
 			List<Element> lab = e.getChild(Xml.SCRIPTS).getChildren(Xml.AFTER_BUILD);
-			for (int i = 0; i < lab.size(); i++) {
-				Element es = lab.get(i);
+			for (Element es : lab) {
 				if ((a = es.getAttribute(Xml.NAME)) != null) {
 					addAfterBuildScript(a.getValue());
 				}
 			}
 			@SuppressWarnings("unchecked")
 			List<Element> lm = e.getChild(Xml.SCRIPTS).getChildren(Xml.MOVE);
-			for (int i = 0; i < lm.size(); i++) {
-				Element es = lm.get(i);
+			for (Element es : lm) {
 				if ((a = es.getAttribute(Xml.NAME)) != null) {
 					addMoveScript(a.getValue());
 				}
 			}
 			@SuppressWarnings("unchecked")
 			List<Element> lt = e.getChild(Xml.SCRIPTS).getChildren(Xml.TERMINATE);
-			for (int i = 0; i < lt.size(); i++) {
-				Element es = lt.get(i);
+			for (Element es : lt) {
 				if ((a = es.getAttribute(Xml.NAME)) != null) {
 					addTerminationScript(a.getValue());
 				}
@@ -3569,12 +3538,12 @@ public class Train implements java.beans.PropertyChangeListener {
 			String[] locationIds = getTrainSkipsLocations();
 			if (locationIds.length > 0) {
 				Element eSkips = new Element(Xml.SKIPS);
-				for (int i = 0; i < locationIds.length; i++) {
+				for (String id : locationIds) {
 					Element eLoc = new Element(Xml.LOCATION);
-					RouteLocation rl = getRoute().getLocationById(locationIds[i]);
+					RouteLocation rl = getRoute().getLocationById(id);
 					if (rl != null) {
-						eLoc.setAttribute(Xml.NAME, getRoute().getLocationById(locationIds[i]).getName());
-						eLoc.setAttribute(Xml.ID, locationIds[i]);
+						eLoc.setAttribute(Xml.NAME, rl.getName());
+						eLoc.setAttribute(Xml.ID, id);
 						eSkips.addContent(eLoc);
 					}
 				}
@@ -3584,10 +3553,9 @@ public class Train implements java.beans.PropertyChangeListener {
 		// build list of locations that this train skips
 		// oldStatus format
 		if (Control.backwardCompatible) {
-			String[] locationIds = getTrainSkipsLocations();
 			StringBuffer buf = new StringBuffer();
-			for (int i = 0; i < locationIds.length; i++) {
-				buf.append(locationIds[i] + "%%"); // NOI18N
+			for (String id : getTrainSkipsLocations()) {
+				buf.append(id + "%%"); // NOI18N
 			}
 			e.setAttribute(Xml.SKIP, buf.toString());
 		}
@@ -3634,24 +3602,24 @@ public class Train implements java.beans.PropertyChangeListener {
 		// Old way of saving car types
 		if (Control.backwardCompatible) {
 			StringBuffer buf = new StringBuffer();
-			for (int i = 0; i < types.length; i++) {
+			for (String type : types) {
 				// remove types that have been deleted by user
-				if (CarTypes.instance().containsName(types[i]) || EngineTypes.instance().containsName(types[i]))
-					buf.append(types[i] + "%%"); // NOI18N
+				if (CarTypes.instance().containsName(type) || EngineTypes.instance().containsName(type))
+					buf.append(type + "%%"); // NOI18N
 			}
 			e.setAttribute(Xml.CAR_TYPES, buf.toString());
 		}
 		// new way of saving car types
 		Element eTypes = new Element(Xml.TYPES);
-		for (int i = 0; i < types.length; i++) {
+		for (String type : types) {
 			// don't save types that have been deleted by user
-			if (EngineTypes.instance().containsName(types[i])) {
+			if (EngineTypes.instance().containsName(type)) {
 				Element eType = new Element(Xml.LOCO_TYPE);
-				eType.setAttribute(Xml.NAME, types[i]);
+				eType.setAttribute(Xml.NAME, type);
 				eTypes.addContent(eType);
-			} else if (CarTypes.instance().containsName(types[i])) {
+			} else if (CarTypes.instance().containsName(type)) {
 				Element eType = new Element(Xml.CAR_TYPE);
-				eType.setAttribute(Xml.NAME, types[i]);
+				eType.setAttribute(Xml.NAME, type);
 				eTypes.addContent(eType);
 			}
 		}
@@ -3663,16 +3631,16 @@ public class Train implements java.beans.PropertyChangeListener {
 			// oldStatus way of saving road names
 			if (Control.backwardCompatible) {
 				StringBuffer buf = new StringBuffer();
-				for (int i = 0; i < roads.length; i++) {
-					buf.append(roads[i] + "%%"); // NOI18N
+				for (String road : roads) {
+					buf.append(road + "%%"); // NOI18N
 				}
 				e.setAttribute(Xml.CAR_ROADS, buf.toString());
 			}
 			// new way of saving road names
 			Element eRoads = new Element(Xml.CAR_ROADS);
-			for (int i = 0; i < roads.length; i++) {
+			for (String road : roads) {
 				Element eRoad = new Element(Xml.CAR_ROAD);
-				eRoad.setAttribute(Xml.NAME, roads[i]);
+				eRoad.setAttribute(Xml.NAME, road);
 				eRoads.addContent(eRoad);
 			}
 			e.addContent(eRoads);
@@ -3684,16 +3652,16 @@ public class Train implements java.beans.PropertyChangeListener {
 			// oldStatus way of saving car loads
 			if (Control.backwardCompatible) {
 				StringBuffer buf = new StringBuffer();
-				for (int i = 0; i < loads.length; i++) {
-					buf.append(loads[i] + "%%"); // NOI18N
+				for (String load : loads) {
+					buf.append(load + "%%"); // NOI18N
 				}
 				e.setAttribute(Xml.CAR_LOADS, buf.toString());
 			}
 			// new way of saving car loads
 			Element eLoads = new Element(Xml.CAR_LOADS);
-			for (int i = 0; i < loads.length; i++) {
+			for (String load : loads) {
 				Element eLoad = new Element(Xml.CAR_LOAD);
-				eLoad.setAttribute(Xml.NAME, loads[i]);
+				eLoad.setAttribute(Xml.NAME, load);
 				eLoads.addContent(eLoad);
 			}
 			e.addContent(eLoads);
@@ -3705,16 +3673,16 @@ public class Train implements java.beans.PropertyChangeListener {
 			// oldStatus way of saving car owners
 			if (Control.backwardCompatible) {
 				StringBuffer buf = new StringBuffer();
-				for (int i = 0; i < owners.length; i++) {
-					buf.append(owners[i] + "%%"); // NOI18N
+				for (String owner : owners) {
+					buf.append(owner + "%%"); // NOI18N
 				}
 				e.setAttribute(Xml.CAR_OWNERS, buf.toString());
 			}
 			// new way of saving car owners
 			Element eOwners = new Element(Xml.CAR_OWNERS);
-			for (int i = 0; i < owners.length; i++) {
+			for (String owner : owners) {
 				Element eOwner = new Element(Xml.CAR_OWNER);
-				eOwner.setAttribute(Xml.NAME, owners[i]);
+				eOwner.setAttribute(Xml.NAME, owner);
 				eOwners.addContent(eOwner);
 			}
 			e.addContent(eOwners);
@@ -3724,31 +3692,31 @@ public class Train implements java.beans.PropertyChangeListener {
 				|| getTerminationScripts().size() > 0) {
 			Element es = new Element(Xml.SCRIPTS);
 			if (getBuildScripts().size() > 0) {
-				for (int i = 0; i < getBuildScripts().size(); i++) {
+				for (String scriptPathname :  getBuildScripts()) {
 					Element em = new Element(Xml.BUILD);
-					em.setAttribute(Xml.NAME, getBuildScripts().get(i));
+					em.setAttribute(Xml.NAME, scriptPathname);
 					es.addContent(em);
 				}
 			}
 			if (getAfterBuildScripts().size() > 0) {
-				for (int i = 0; i < getAfterBuildScripts().size(); i++) {
+				for (String scriptPathname : getAfterBuildScripts()) {
 					Element em = new Element(Xml.AFTER_BUILD);
-					em.setAttribute(Xml.NAME, getAfterBuildScripts().get(i));
+					em.setAttribute(Xml.NAME, scriptPathname);
 					es.addContent(em);
 				}
 			}
 			if (getMoveScripts().size() > 0) {
-				for (int i = 0; i < getMoveScripts().size(); i++) {
+				for (String scriptPathname : getMoveScripts()) {
 					Element em = new Element(Xml.MOVE);
-					em.setAttribute(Xml.NAME, getMoveScripts().get(i));
+					em.setAttribute(Xml.NAME, scriptPathname);
 					es.addContent(em);
 				}
 			}
 			// save list of termination scripts for this train
 			if (getTerminationScripts().size() > 0) {
-				for (int i = 0; i < getTerminationScripts().size(); i++) {
+				for (String scriptPathname : getTerminationScripts()) {
 					Element et = new Element(Xml.TERMINATE);
-					et.setAttribute(Xml.NAME, getTerminationScripts().get(i));
+					et.setAttribute(Xml.NAME, scriptPathname);
 					es.addContent(et);
 				}
 			}

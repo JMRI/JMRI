@@ -322,11 +322,11 @@ public class Schedule implements java.beans.PropertyChangeListener {
 			_comment = a.getValue();
 		if (e.getChildren(Xml.ITEM) != null) {
 			@SuppressWarnings("unchecked")
-			List<Element> l = e.getChildren(Xml.ITEM);
+			List<Element> eScheduleItems = e.getChildren(Xml.ITEM);
 			if (log.isDebugEnabled())
-				log.debug("schedule: " + getName() + " has " + l.size() + " items");
-			for (int i = 0; i < l.size(); i++) {
-				register(new ScheduleItem(l.get(i)));
+				log.debug("schedule: {} has {} items", getName(), eScheduleItems.size());
+			for (Element eScheduleItem : eScheduleItems) {
+				register(new ScheduleItem(eScheduleItem));
 			}
 		}
 	}

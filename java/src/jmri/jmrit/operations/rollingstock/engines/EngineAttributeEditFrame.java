@@ -239,8 +239,8 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 
 	private void replaceItem(String oldItem, String newItem) {
 		List<RollingStock> engines = engineManager.getList();
-		for (int i = 0; i < engines.size(); i++) {
-			Engine engine = (Engine) engines.get(i);
+		for (RollingStock rs : engines) {
+			Engine engine = (Engine) rs;
 			if (_comboboxName == EngineEditFrame.MODEL) {
 				// we need to copy the old model attributes, so find an engine.
 				if (engine.getModel().equals(oldItem)) {

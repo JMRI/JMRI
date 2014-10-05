@@ -1,6 +1,7 @@
 // NceConsistEngineAction.java
 
 package jmri.jmrit.operations.rollingstock.engines;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.awt.Component;
@@ -14,7 +15,6 @@ import jmri.jmrix.nce.ActiveFlag;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
 
-
 /**
  * Starts the NceConsistEngine thread
  * 
@@ -22,37 +22,35 @@ import jmri.jmrix.nce.NceTrafficController;
  * @version $Revision$
  */
 
-
 public class NceConsistEngineAction extends AbstractAction {
-	
+
 	NceTrafficController tc;
-    
+
 	public NceConsistEngineAction(String actionName, Component frame) {
-        super(actionName);
-        // only enable if connected to an NCE system
-        setEnabled(false);
-        // disable if NCE USB selected
+		super(actionName);
+		// only enable if connected to an NCE system
+		setEnabled(false);
+		// disable if NCE USB selected
 		// get NceTrafficContoller if there's one
 		List<Object> memos = InstanceManager.getList(NceSystemConnectionMemo.class);
-		if (memos != null){
+		if (memos != null) {
 			// find NceConnection that is serial
-			for (int i=0; i<memos.size(); i++){
-				NceSystemConnectionMemo memo = (NceSystemConnectionMemo)memos.get(i);
-				if (memo.getNceUsbSystem() == NceTrafficController.USB_SYSTEM_NONE){
+			for (int i = 0; i < memos.size(); i++) {
+				NceSystemConnectionMemo memo = (NceSystemConnectionMemo) memos.get(i);
+				if (memo.getNceUsbSystem() == NceTrafficController.USB_SYSTEM_NONE) {
 					tc = memo.getNceTrafficController();
 				}
 			}
 		}
-        if(ActiveFlag.isActive() && tc != null)
+		if (ActiveFlag.isActive() && tc != null)
 			setEnabled(true);
-    }
-	
+	}
+
 	public void actionPerformed(ActionEvent ae) {
 		Thread mb = new NceConsistEngines(tc);
 		mb.setName("Nce Consist Sync Engines"); // NOI18N
 		mb.start();
 	}
 
-	static Logger log = LoggerFactory
-	.getLogger(NceConsistEngineAction.class.getName());
+	static Logger log = LoggerFactory.getLogger(NceConsistEngineAction.class.getName());
 }

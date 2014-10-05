@@ -26,7 +26,6 @@ import javax.swing.JPanel;
  */
 public class ChangeDepartureTimesFrame extends OperationsFrame {
 
-	
 	// labels
 
 	// text field
@@ -45,8 +44,8 @@ public class ChangeDepartureTimesFrame extends OperationsFrame {
 		// Set up the panels
 
 		// Layout the panel by rows
-		
-		for (int i=0; i<24; i++) {
+
+		for (int i = 0; i < 24; i++) {
 			hourBox.addItem(Integer.toString(i));
 		}
 
@@ -80,8 +79,7 @@ public class ChangeDepartureTimesFrame extends OperationsFrame {
 			log.debug("save button activated");
 			TrainManager trainManager = TrainManager.instance();
 			List<Train> trains = trainManager.getTrainsByIdList();
-			for (int i = 0; i < trains.size(); i++) {
-				Train train = trains.get(i);
+			for (Train train : trains) {
 				int hour = Integer.parseInt((String) hourBox.getSelectedItem())
 						+ Integer.parseInt(train.getDepartureTimeHour());
 				if (hour > 23)

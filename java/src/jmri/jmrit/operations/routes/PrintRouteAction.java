@@ -77,8 +77,7 @@ public class PrintRouteAction extends AbstractAction {
 					+ NEW_LINE;
 			writer.write(s);
 			List<RouteLocation> routeList = route.getLocationsBySequenceList();
-			for (int i = 0; i < routeList.size(); i++) {
-				RouteLocation rl = routeList.get(i);
+			for (RouteLocation rl : routeList) {
 				String name = rl.getName();
 				name = truncate(name);
 				String pad = " ";
@@ -98,8 +97,7 @@ public class PrintRouteAction extends AbstractAction {
 			s = NEW_LINE + Bundle.getMessage("Location") + TAB + Bundle.getMessage("DepartTime") + TAB
 					+ Bundle.getMessage("Comment") + NEW_LINE;
 			writer.write(s);
-			for (int i = 0; i < routeList.size(); i++) {
-				RouteLocation rl = routeList.get(i);
+			for (RouteLocation rl : routeList) {
 				String name = rl.getName();
 				name = truncate(name);
 				s = name + TAB + rl.getDepartureTime() + TAB + rl.getComment() + NEW_LINE;

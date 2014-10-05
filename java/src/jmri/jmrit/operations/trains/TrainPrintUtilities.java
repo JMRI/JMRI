@@ -367,9 +367,8 @@ public class TrainPrintUtilities {
 	public static JComboBox getPrinterJComboBox() {
 		JComboBox box = new JComboBox();
 		PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null);
-		for (int i = 0; i < services.length; i++) {
-			box.addItem(services[i].getName());
-			// log.debug(services[i].getName());
+		for (PrintService printService : services) {
+			box.addItem(printService.getName());
 		}
 
 		// Set to default printer

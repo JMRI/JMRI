@@ -100,11 +100,11 @@ public class TrainSchedule {
 		if ((a = e.getAttribute(Xml.TRAIN_IDS)) != null) {
 			String ids = a.getValue();
 			String[] trainIds = ids.split(",");
-			for (int i = 0; i < trainIds.length; i++) {
-				_trainIds.add(trainIds[i]);
+			for (String id : trainIds) {
+				_trainIds.add(id);
 			}
-			if (log.isDebugEnabled())
-				log.debug("Train schedule " + getName() + " trainIds: " + ids);
+//			if (log.isDebugEnabled())
+//				log.debug("Train schedule " + getName() + " trainIds: " + ids);
 		}
 	}
 
@@ -122,8 +122,8 @@ public class TrainSchedule {
 			e.setAttribute(Xml.COMMENT, getComment());
 		// store train ids
 		StringBuilder buf = new StringBuilder();
-		for (int i = 0; i < _trainIds.size(); i++) {
-			buf.append(_trainIds.get(i) + ",");
+		for (String id :_trainIds) {
+			buf.append(id + ",");
 		}
 		e.setAttribute(Xml.TRAIN_IDS, buf.toString());
 		return e;

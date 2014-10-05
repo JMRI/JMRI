@@ -101,8 +101,8 @@ public class ExportEngines extends XmlFile {
 		fileOut.println(header);
 
 		// store engine number, road, model, length, owner, built date, location and track
-		for (int i = 0; i < engineList.size(); i++) {
-			Engine engine = (Engine) engineList.get(i);
+		for (RollingStock rs : engineList) {
+			Engine engine = (Engine) rs;
 			engineModel = engine.getModel();
 			if (engineModel.contains(del)) {
 				log.debug("Engine (" + engine.getRoadName() + " " + engine.getNumber()

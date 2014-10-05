@@ -545,7 +545,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		p.add(setButton);
 		p.add(autoSelectButton);
 		GridBagConstraints gc = new GridBagConstraints();
-		gc.gridwidth = getNumberOfCheckboxes() + 1;
+		gc.gridwidth = getNumberOfCheckboxesPerLine() + 1;
 		gc.gridy = ++y;
 		panelCheckBoxes.add(p, gc);
 		panelCheckBoxes.revalidate();
@@ -556,7 +556,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	int y = 0; // vertical position in panel
 
 	private void loadTypes(String[] types) {
-		int numberOfCheckBoxes = getNumberOfCheckboxes();
+		int numberOfCheckBoxes = getNumberOfCheckboxesPerLine();
 		for (String type : types) {
 			JCheckBox checkBox = new JCheckBox();
 			checkBoxes.add(checkBox);

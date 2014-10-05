@@ -267,11 +267,10 @@ public class TrainLoadOptionsFrame extends OperationsFrame implements java.beans
 				int x = 0;
 				int y = 0; // vertical position in panel
 
-				int numberOfLoads = getNumberOfCheckboxes() / 2 + 1;
-				String[] carLoads = _train.getLoadNames();
-				for (int i = 0; i < carLoads.length; i++) {
+				int numberOfLoads = getNumberOfCheckboxesPerLine() / 2 + 1;
+				for (String loadName : _train.getLoadNames()) {
 					JLabel load = new JLabel();
-					load.setText(carLoads[i]);
+					load.setText(loadName);
 					addItemTop(panelLoads, load, x++, y);
 					// limit the number of loads per line
 					if (x > numberOfLoads) {
@@ -290,9 +289,8 @@ public class TrainLoadOptionsFrame extends OperationsFrame implements java.beans
 
 	private void deleteAllLoads() {
 		if (_train != null) {
-			String[] trainLoads = _train.getLoadNames();
-			for (int i = 0; i < trainLoads.length; i++) {
-				_train.deleteLoadName(trainLoads[i]);
+			for (String load : _train.getLoadNames()) {
+				_train.deleteLoadName(load);
 			}
 		}
 		updateLoadNames();

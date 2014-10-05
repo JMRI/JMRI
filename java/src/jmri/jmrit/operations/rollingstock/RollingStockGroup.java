@@ -62,8 +62,7 @@ public class RollingStockGroup {
 
 	public int getTotalLength() {
 		int length = 0;
-		for (int i = 0; i < _group.size(); i++) {
-			RollingStock rs = _group.get(i);
+		for (RollingStock rs : _group) {
 			length = length + rs.getTotalLength();
 		}
 		return length;
@@ -76,8 +75,7 @@ public class RollingStockGroup {
 	 */
 	public int getAdjustedWeightTons() {
 		int weightTons = 0;
-		for (int i = 0; i < _group.size(); i++) {
-			RollingStock rs = _group.get(i);
+		for (RollingStock rs : _group) {
 			weightTons = weightTons + rs.getAdjustedWeightTons();
 		}
 		return weightTons;
@@ -88,7 +86,7 @@ public class RollingStockGroup {
 			return true;
 		return false;
 	}
-	
+
 	public RollingStock getLead() {
 		return _lead;
 	}

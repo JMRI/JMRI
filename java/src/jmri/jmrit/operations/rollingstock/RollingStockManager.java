@@ -19,11 +19,11 @@ import java.util.List;
  * @version $Revision$
  */
 public class RollingStockManager {
-	
+
 	public static final String NONE = "";
 
 	// RollingStock
-	protected Hashtable<String, RollingStock> _hashTable = new Hashtable<String, RollingStock>(); 
+	protected Hashtable<String, RollingStock> _hashTable = new Hashtable<String, RollingStock>();
 
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "RollingStockListLength"; // NOI18N
 
@@ -67,8 +67,7 @@ public class RollingStockManager {
 	}
 
 	/**
-	 * Get a rolling stock by type and road. Used to test that rolling stock
-	 * with a specific type and road exists.
+	 * Get a rolling stock by type and road. Used to test that rolling stock with a specific type and road exists.
 	 * 
 	 * @param type
 	 *            RollingStock type.
@@ -210,22 +209,23 @@ public class RollingStockManager {
 		String[] number;
 		boolean rsAdded = false;
 
-		for (int i = 0; i < sortIn.size(); i++) {
+		for (RollingStock rs : sortIn) {
 			rsAdded = false;
 			try {
-				rsNumber = Integer.parseInt(sortIn.get(i).getNumber());
-				sortIn.get(i).number = rsNumber;
+				rsNumber = Integer.parseInt(rs.getNumber());
+				rs.number = rsNumber;
 			} catch (NumberFormatException e) {
 				// maybe rolling stock number in the format xxx-y
 				try {
-					number = sortIn.get(i).getNumber().split("-");
+					number = rs.getNumber().split("-");
 					rsNumber = Integer.parseInt(number[0]);
-					sortIn.get(i).number = rsNumber;
-					// two possible exceptions, ArrayIndexOutOfBoundsException on split, and NumberFormatException on parseInt
+					rs.number = rsNumber;
+					// two possible exceptions, ArrayIndexOutOfBoundsException on split, and NumberFormatException on
+					// parseInt
 				} catch (Exception e2) {
-					sortIn.get(i).number = notInteger;
+					rs.number = notInteger;
 					// sort alpha numeric numbers at the end of the out list
-					String numberIn = sortIn.get(i).getNumber();
+					String numberIn = rs.getNumber();
 					// log.debug("rolling stock in road number ("+numberIn+") isn't a number");
 					for (int k = (out.size() - 1); k >= 0; k--) {
 						String numberOut = out.get(k).getNumber();
@@ -234,19 +234,19 @@ public class RollingStockManager {
 							// done, place rolling stock with alpha numeric
 							// number after
 							// rolling stocks with real numbers.
-							out.add(k + 1, sortIn.get(i));
+							out.add(k + 1, rs);
 							rsAdded = true;
 							break;
 						} catch (NumberFormatException e3) {
 							if (numberIn.compareToIgnoreCase(numberOut) >= 0) {
-								out.add(k + 1, sortIn.get(i));
+								out.add(k + 1, rs);
 								rsAdded = true;
 								break;
 							}
 						}
 					}
 					if (!rsAdded)
-						out.add(0, sortIn.get(i));
+						out.add(0, rs);
 					continue;
 				}
 			}
@@ -279,13 +279,13 @@ public class RollingStockManager {
 					}
 				}
 				if (rsNumber < outRsNumber) {
-					out.add(j, sortIn.get(i));
+					out.add(j, rs);
 					rsAdded = true;
 					break;
 				}
 			}
 			if (!rsAdded) {
-				out.add(sortIn.get(i));
+				out.add(rs);
 			}
 		}
 		// log.debug("end rolling stock sort by number list");
@@ -311,9 +311,9 @@ public class RollingStockManager {
 	public List<RollingStock> getByTypeList(String type) {
 		List<RollingStock> typeList = getByTypeList();
 		List<RollingStock> out = new ArrayList<RollingStock>();
-		for (int i = 0; i < typeList.size(); i++) {
-			if (typeList.get(i).getTypeName().equals(type))
-				out.add(typeList.get(i));
+		for (RollingStock rs : typeList) {
+			if (rs.getTypeName().equals(type))
+				out.add(rs);
 		}
 		return out;
 	}
@@ -415,8 +415,8 @@ public class RollingStockManager {
 	protected List<RollingStock> getByList(List<RollingStock> sortIn, int attribute) {
 		List<RollingStock> out = new ArrayList<RollingStock>();
 		String rsIn;
-		for (int i = 0; i < sortIn.size(); i++) {
-			rsIn = (String) getRsAttribute(sortIn.get(i), attribute);
+		for (RollingStock rs : sortIn) {
+			rsIn = (String) getRsAttribute(rs, attribute);
 			int start = 0;
 			// page to improve performance
 			int divisor = out.size() / pageSize;
@@ -433,13 +433,14 @@ public class RollingStockManager {
 					break;
 				}
 			}
-			out.add(j, sortIn.get(i));
+			out.add(j, rs);
 		}
 		return out;
 	}
 
 	/**
 	 * Sorts by integer.
+	 * 
 	 * @param sortIn
 	 * @param attribute
 	 * @return list of rolling stock sorted by an integer
@@ -447,8 +448,8 @@ public class RollingStockManager {
 	protected List<RollingStock> getByIntList(List<RollingStock> sortIn, int attribute) {
 		List<RollingStock> out = new ArrayList<RollingStock>();
 		int rsIn;
-		for (int i = 0; i < sortIn.size(); i++) {
-			rsIn = (Integer) getRsAttribute(sortIn.get(i), attribute);
+		for (RollingStock rs : sortIn) {
+			rsIn = (Integer) getRsAttribute(rs, attribute);
 			int start = 0;
 			// page to improve performance
 			int divisor = out.size() / pageSize;
@@ -465,7 +466,7 @@ public class RollingStockManager {
 					break;
 				}
 			}
-			out.add(j, sortIn.get(i));
+			out.add(j, rs);
 		}
 		return out;
 	}
@@ -491,6 +492,7 @@ public class RollingStockManager {
 	// BY_WAIT = 16
 	protected static final int BY_LAST = 17;
 	protected static final int BY_BLOCKING = 18;
+
 	// BY_PICKUP = 19
 
 	protected Object getRsAttribute(RollingStock rs, int attribute) {
@@ -543,9 +545,8 @@ public class RollingStockManager {
 	}
 
 	/**
-	 * The input format is month/day/year time. The problem is month and day can
-	 * be a single character, and the order is all wrong so sorting doesn't work
-	 * well. This converts the format to yyyy/mm/dd time for proper sorting.
+	 * The input format is month/day/year time. The problem is month and day can be a single character, and the order is
+	 * all wrong so sorting doesn't work well. This converts the format to yyyy/mm/dd time for proper sorting.
 	 * 
 	 * @param date
 	 * @return
@@ -573,11 +574,11 @@ public class RollingStockManager {
 	 * @return List of RollingStock assigned to the train ordered by location
 	 */
 	public List<RollingStock> getByTrainList(Train train) {
-//		List<RollingStock> shuffle = shuffle(getList(train));
+		// List<RollingStock> shuffle = shuffle(getList(train));
 		List<RollingStock> out = getByList(getList(train), BY_LOCATION);
 		return out;
 	}
-	
+
 	/**
 	 * Returns a list (no order) of RollingStock in a train.
 	 * 
@@ -597,25 +598,25 @@ public class RollingStockManager {
 	// Common sort routine
 	protected List<String> sortList(List<String> list) {
 		List<String> out = new ArrayList<String>();
-		for (int i = 0; i < list.size(); i++) {
+		for (String s : list) {
 			int j;
 			for (j = 0; j < out.size(); j++) {
-				if (list.get(i).compareToIgnoreCase(out.get(j)) < 0)
+				if (s.compareToIgnoreCase(out.get(j)) < 0)
 					break;
 			}
-			out.add(j, list.get(i));
+			out.add(j, s);
 		}
 		return out;
 	}
-	
+
 	// not written!
-	protected List<RollingStock> shuffle(List<RollingStock> list) {
-		List<RollingStock> out = new ArrayList<RollingStock>();
-		for (int i = 0; i < list.size(); i++) {
-			out.add(i, list.get(i));
-		}
-		return out;
-	}
+	// protected List<RollingStock> shuffle(List<RollingStock> list) {
+	// List<RollingStock> out = new ArrayList<RollingStock>();
+	// for (int i = 0; i < list.size(); i++) {
+	// out.add(i, list.get(i));
+	// }
+	// return out;
+	// }
 
 	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 

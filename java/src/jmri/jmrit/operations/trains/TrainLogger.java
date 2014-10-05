@@ -138,10 +138,8 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
 			log.debug("Train Logger adding train listerners");
 			_trainLog = true;
 			List<Train> trains = TrainManager.instance().getTrainsByIdList();
-			for (int i = 0; i < trains.size(); i++) {
-				Train train = trains.get(i);
-				if (train != null)
-					train.addPropertyChangeListener(this);
+			for (Train train : trains) {
+				train.addPropertyChangeListener(this);
 			}
 			// listen for new trains being added
 			TrainManager.instance().addPropertyChangeListener(this);
@@ -152,10 +150,8 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
 		log.debug("Train Logger removing train listerners");
 		if (_trainLog) {
 			List<Train> trains = TrainManager.instance().getTrainsByIdList();
-			for (int i = 0; i < trains.size(); i++) {
-				Train train = trains.get(i);
-				if (train != null)
-					train.removePropertyChangeListener(this);
+			for (Train train : trains) {
+				train.removePropertyChangeListener(this);
 			}
 			TrainManager.instance().removePropertyChangeListener(this);
 		}

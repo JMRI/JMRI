@@ -234,10 +234,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	}
 
 	public void runStartUpScripts() {
-		List<String> scripts = getStartUpScripts();
-		for (int i = 0; i < scripts.size(); i++) {
-			jmri.util.PythonInterp.runScript(jmri.util.FileUtil
-					.getExternalFilename(getStartUpScripts().get(i)));
+		for (String scriptPathName : getStartUpScripts()) {
+			jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(scriptPathName));
 		}
 	}
 
@@ -267,10 +265,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	}
 
 	public void runShutDownScripts() {
-		List<String> scripts = getShutDownScripts();
-		for (int i = 0; i < scripts.size(); i++) {
-			jmri.util.PythonInterp.runScript(jmri.util.FileUtil
-					.getExternalFilename(getShutDownScripts().get(i)));
+		for (String scriptPathName : getShutDownScripts()) {
+			jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(scriptPathName));
 		}
 	}
 
@@ -358,21 +354,18 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	}
 
 	public void replaceLoad(String type, String oldLoadName, String newLoadName) {
-		List<Train> trains = getTrainsByIdList();
-		for (int i = 0; i < trains.size(); i++) {
-			Train train = trains.get(i);
-			String[] loadNames = train.getLoadNames();
-			for (int j = 0; j < loadNames.length; j++) {
-				if (loadNames[j].equals(oldLoadName)) {
+		for (Train train : getTrainsByIdList()) {
+			for (String loadName : train.getLoadNames()) {
+				if (loadName.equals(oldLoadName)) {
 					train.deleteLoadName(oldLoadName);
 					if (newLoadName != null)
 						train.addLoadName(newLoadName);
 				}
 				// adjust combination car type and load name
-   				String[] splitLoad = loadNames[j].split(CarLoad.SPLIT_CHAR);
+   				String[] splitLoad = loadName.split(CarLoad.SPLIT_CHAR);
 				if (splitLoad.length > 1) {
 					if (splitLoad[0].equals(type) && splitLoad[1].equals(oldLoadName)) {
-						train.deleteLoadName(loadNames[j]);
+						train.deleteLoadName(loadName);
 						if (newLoadName != null) {
 							train.addLoadName(type + CarLoad.SPLIT_CHAR + newLoadName);
 						}
@@ -387,9 +380,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	 * @return true if there are any trains built
 	 */
 	public boolean getAnyTrainBuilt() {
-		List<Train> trains = getTrainsByIdList();
-		for (int i = 0; i < trains.size(); i++) {
-			if (trains.get(i).isBuilt())
+		for (Train train : getTrainsByIdList()) {
+			if (train.isBuilt())
 				return true;
 		}
 		return false;
@@ -421,9 +413,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 					.getMessage("trainFindForCar"), new Object[] { car.toString(), car.getLocationName(),
 					car.getTrackName(), car.getDestinationName(), car.getDestinationTrackName() }));
 		}
-		List<Train> trains = getTrainsByIdList();
-		for (int i = 0; i < trains.size(); i++) {
-			Train train = trains.get(i);
+		for (Train train : getTrainsByIdList()) {
 			if (train == excludeTrain)
 				continue;
 			if (Setup.isOnlyActiveTrainsEnabled() && !train.isBuildEnabled())
@@ -500,16 +490,16 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 
 	private List<Train> getTrainsByList(List<Train> sortList, int attribute) {
 		List<Train> out = new ArrayList<Train>();
-		for (int i = 0; i < sortList.size(); i++) {
-			String trainAttribute = (String) getTrainAttribute(sortList.get(i), attribute);
+		for (Train train : sortList) {
+			String trainAttribute = (String) getTrainAttribute(train, attribute);
 			for (int j = 0; j < out.size(); j++) {
 				if (trainAttribute.compareToIgnoreCase((String)getTrainAttribute(out.get(j), attribute)) < 0) {
-					out.add(j, sortList.get(i));
+					out.add(j, train);
 					break;
 				}
 			}
-			if (!out.contains(sortList.get(i))) {
-				out.add(sortList.get(i));
+			if (!out.contains(train)) {
+				out.add(train);
 			}
 		}
 		return out;
@@ -517,16 +507,16 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 
 	private List<Train> getTrainsByIntList(List<Train> sortList, int attribute) {
 		List<Train> out = new ArrayList<Train>();
-		for (int i = 0; i < sortList.size(); i++) {
-			int trainAttribute = (Integer) getTrainAttribute(sortList.get(i), attribute);
+		for (Train train : sortList) {
+			int trainAttribute = (Integer) getTrainAttribute(train, attribute);
 			for (int j = 0; j < out.size(); j++) {
 				if (trainAttribute < (Integer) getTrainAttribute(out.get(j), attribute)) {
-					out.add(j, sortList.get(i));
+					out.add(j, train);
 					break;
 				}
 			}
-			if (!out.contains(sortList.get(i))) {
-				out.add(sortList.get(i));
+			if (!out.contains(train)) {
+				out.add(train);
 			}
 		}
 		return out;
@@ -664,12 +654,12 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		newTrain.setThirdLegStartLocation(train.getThirdLegStartLocation());
 		newTrain.setThirdLegEndLocation(train.getThirdLegEndLocation());
 		// scripts
-		for (int i = 0; i < train.getBuildScripts().size(); i++)
-			newTrain.addBuildScript(train.getBuildScripts().get(i));
-		for (int i = 0; i < train.getMoveScripts().size(); i++)
-			newTrain.addMoveScript(train.getMoveScripts().get(i));
-		for (int i = 0; i < train.getTerminationScripts().size(); i++)
-			newTrain.addTerminationScript(train.getTerminationScripts().get(i));
+		for (String scriptName : train.getBuildScripts())
+			newTrain.addBuildScript(scriptName);
+		for (String scriptName : train.getMoveScripts())
+			newTrain.addMoveScript(scriptName);
+		for (String scriptName : train.getTerminationScripts())
+			newTrain.addTerminationScript(scriptName);
 		// manifest options
 		newTrain.setRailroadName(train.getRailroadName());
 		newTrain.setManifestLogoURL(train.getManifestLogoURL());
@@ -699,19 +689,15 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	 */
 	public List<Train> getTrainsArrivingThisLocationList(Location location) {
 		// get a list of trains
-		List<Train> trainByTime = getTrainsByTimeList();
 		List<Train> out = new ArrayList<Train>();
 		List<Integer> arrivalTimes = new ArrayList<Integer>();
-		for (int i = 0; i < trainByTime.size(); i++) {
-			Train train = trainByTime.get(i);
+		for (Train train : getTrainsByTimeList()) {
 			if (!train.isBuilt())
 				continue; // train wasn't built so skip
 			Route route = train.getRoute();
 			if (route == null)
 				continue; // no route for this train
-			List<RouteLocation> routeList = route.getLocationsBySequenceList();
-			for (int r = 0; r < routeList.size(); r++) {
-				RouteLocation rl = routeList.get(r);
+			for (RouteLocation rl : route.getLocationsBySequenceList()) {
 				if (TrainCommon.splitString(rl.getName()).equals(TrainCommon.splitString(location.getName()))) {
 					int expectedArrivalTime = train.getExpectedTravelTimeInMinutes(rl);
 					// is already serviced then "-1"
@@ -769,9 +755,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	 * Loads train icons if needed
 	 */
 	public void loadTrainIcons() {
-		List<Train> trainList = getTrainsByIdList();
-		for (int i = 0; i < trainList.size(); i++) {
-			trainList.get(i).loadTrainIcon();
+		for (Train train : getTrainsByIdList()) {
+			train.loadTrainIcon();
 		}
 	}
 	
@@ -780,9 +765,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	 * switch lists in consolidated mode.
 	 */
 	public void setTrainsSwitchListStatus(String status) {
-		List<Train> trains = getTrainsByTimeList();
-		for (int i = 0; i < trains.size(); i++) {
-			Train train = trains.get(i);
+		for (Train train : getTrainsByTimeList()) {
 			if (!train.isBuilt())
 				continue; // train isn't built so skip
 			train.setSwitchListStatus(status);
@@ -794,9 +777,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	 * train's manifest to be recreated.
 	 */
 	public void setTrainsModified() {
-		List<Train> trains = getTrainsByTimeList();
-		for (int i = 0; i < trains.size(); i++) {
-			Train train = trains.get(i);
+		for (Train train : getTrainsByTimeList()) {
 			if (!train.isBuilt() || train.isTrainInRoute())
 				continue; // train wasn't built or in route, so skip
 			train.setModified(true);
@@ -863,16 +844,14 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 			if (options.getChild(Xml.SCRIPTS) != null) {
 				@SuppressWarnings("unchecked")
 				List<Element> lm = options.getChild(Xml.SCRIPTS).getChildren(Xml.START_UP);
-				for (int i = 0; i < lm.size(); i++) {
-					Element es = lm.get(i);
+				for (Element es : lm) {
 					if ((a = es.getAttribute(Xml.NAME)) != null) {
 						addStartUpScript(a.getValue());
 					}
 				}
 				@SuppressWarnings("unchecked")
 				List<Element> lt = options.getChild(Xml.SCRIPTS).getChildren(Xml.SHUT_DOWN);
-				for (int i = 0; i < lt.size(); i++) {
-					Element es = lt.get(i);
+				for (Element es : lt) {
 					if ((a = es.getAttribute(Xml.NAME)) != null) {
 						addShutDownScript(a.getValue());
 					}
@@ -881,11 +860,10 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		}
 		if (root.getChild(Xml.TRAINS) != null) {
 			@SuppressWarnings("unchecked")
-			List<Element> l = root.getChild(Xml.TRAINS).getChildren(Xml.TRAIN);
-			if (log.isDebugEnabled())
-				log.debug("readFile sees " + l.size() + " trains");
-			for (int i = 0; i < l.size(); i++) {
-				register(new Train(l.get(i)));
+			List<Element> eTrains = root.getChild(Xml.TRAINS).getChildren(Xml.TRAIN);
+			log.debug("readFile sees {} trains", eTrains.size());
+			for (Element eTrain : eTrains) {
+				register(new Train(eTrain));
 			}
 		}
 	}
@@ -913,15 +891,15 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		if (getStartUpScripts().size() > 0 || getShutDownScripts().size() > 0) {
 			// save list of shutdown scripts
 			Element es = new Element(Xml.SCRIPTS);
-			for (int i = 0; i < getStartUpScripts().size(); i++) {
+			for (String scriptName :  getStartUpScripts()) {
 				Element em = new Element(Xml.START_UP);
-				em.setAttribute(Xml.NAME, getStartUpScripts().get(i));
+				em.setAttribute(Xml.NAME, scriptName);
 				es.addContent(em);
 			}
 			// save list of termination scripts
-			for (int i = 0; i < getShutDownScripts().size(); i++) {
+			for (String scriptName : getShutDownScripts()) {
 				Element et = new Element(Xml.SHUT_DOWN);
-				et.setAttribute(Xml.NAME, getShutDownScripts().get(i));
+				et.setAttribute(Xml.NAME, scriptName);
 				es.addContent(et);
 			}
 			options.addContent(es);
@@ -935,9 +913,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		Element trains = new Element(Xml.TRAINS);
 		root.addContent(trains);
 		// add entries
-		List<Train> trainList = getTrainsByIdList();
-		for (int i = 0; i < trainList.size(); i++) {
-			trains.addContent( trainList.get(i).store());
+		for (Train train : getTrainsByIdList()) {
+			trains.addContent( train.store());
 		}
 	}
 

@@ -395,7 +395,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 				int x = 0;
 				int y = 0; // vertical position in panel
 
-				int numberOfLoads = getNumberOfCheckboxes() / 2 + 1;
+				int numberOfLoads = getNumberOfCheckboxesPerLine() / 2 + 1;
 				for (String loadName : _track.getLoadNames()) {
 					JLabel load = new JLabel();
 					load.setText(loadName);
@@ -430,7 +430,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 				int x = 0;
 				int y = 0; // vertical position in panel
 
-				int numberOfLoads = getNumberOfCheckboxes() / 2 + 1;
+				int numberOfLoads = getNumberOfCheckboxesPerLine() / 2 + 1;
 				for (String loadName : _track.getShipLoadNames()) {
 					JLabel load = new JLabel();
 					load.setText(loadName);

@@ -62,8 +62,8 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 		if (Setup.isPrintLocationCommentsEnabled() && !location.getComment().equals("")) {
 			// location comment can have multiple lines
 			String[] comments = location.getComment().split(NEW_LINE); // NOI18N
-			for (int i = 0; i < comments.length; i++)
-				addLine(fileOut, LC + ESC + comments[i] + ESC);
+			for (String comment : comments)
+				addLine(fileOut, LC + ESC + comment + ESC);
 		}
 		addLine(fileOut, VT + getDate(true));
 

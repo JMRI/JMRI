@@ -432,8 +432,8 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 	}
 
 	protected boolean updateGroup(List<RollingStock> list) {
-		for (int i = 0; i < list.size(); i++) {
-			Car car = (Car) list.get(i);
+		for (RollingStock rs : list) {
+			Car car = (Car) rs;
 			if (car == _car)
 				continue;
 			// make all cars in kernel the same

@@ -227,13 +227,13 @@ public class TrainsScriptFrame extends OperationsFrame {
 	}
 
 	private void runScripts(List<String> scripts) {
-		for (int i = 0; i < scripts.size(); i++) {
-			String script = jmri.util.FileUtil.getExternalFilename(scripts.get(i));
-			File file = new File(script);
+		for (String script : scripts) {
+			String scriptPathname = jmri.util.FileUtil.getExternalFilename(script);
+			File file = new File(scriptPathname);
 			if (file.exists()) {
-				jmri.util.PythonInterp.runScript(script);
+				jmri.util.PythonInterp.runScript(scriptPathname);
 			} else {
-				JOptionPane.showMessageDialog(this, scripts.get(i), Bundle.getMessage("ScriptFileNotFound"),
+				JOptionPane.showMessageDialog(this, script, Bundle.getMessage("ScriptFileNotFound"),
 						JOptionPane.ERROR_MESSAGE);
 			}
 

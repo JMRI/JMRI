@@ -254,8 +254,7 @@ public class TrainManifest extends TrainCommon {
 				// any pick ups or set outs to this track?
 				boolean pickup = false;
 				boolean setout = false;
-				for (int j = 0; j < carList.size(); j++) {
-					Car car = carList.get(j);
+				for (Car car : carList) {
 					if (car.getRouteLocation() == rl && car.getTrack() != null && car.getTrack() == track)
 						pickup = true;
 					if (car.getRouteDestination() == rl && car.getDestinationTrack() != null

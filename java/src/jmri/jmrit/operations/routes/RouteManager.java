@@ -131,15 +131,15 @@ public class RouteManager {
 		List<Route> sortList = getList();
 		// now re-sort
 		List<Route> out = new ArrayList<Route>();
-		for (int i = 0; i < sortList.size(); i++) {
+		for (Route route : sortList) {
 			for (int j = 0; j < out.size(); j++) {
-				if (sortList.get(i).getName().compareToIgnoreCase(out.get(j).getName()) < 0) {
-					out.add(j, sortList.get(i));
+				if (route.getName().compareToIgnoreCase(out.get(j).getName()) < 0) {
+					out.add(j, route);
 					break;
 				}
 			}
-			if (!out.contains(sortList.get(i))) {
-				out.add(sortList.get(i));
+			if (!out.contains(route)) {
+				out.add(route);
 			}
 		}
 		return out;
@@ -155,19 +155,19 @@ public class RouteManager {
 		List<Route> sortList = getList();
 		// now re-sort
 		List<Route> out = new ArrayList<Route>();
-		for (int i = 0; i < sortList.size(); i++) {
+		for (Route route : sortList) {
 			for (int j = 0; j < out.size(); j++) {
 				try {
-					if (Integer.parseInt(sortList.get(i).getId()) < Integer.parseInt(out.get(j).getId())) {
-						out.add(j, sortList.get(i));
+					if (Integer.parseInt(route.getId()) < Integer.parseInt(out.get(j).getId())) {
+						out.add(j, route);
 						break;
 					}
 				} catch (NumberFormatException e) {
 					log.error("list id number isn't a number");
 				}
 			}
-			if (!out.contains(sortList.get(i))) {
-				out.add(sortList.get(i));
+			if (!out.contains(route)) {
+				out.add(route);
 			}
 		}
 		return out;
@@ -186,8 +186,8 @@ public class RouteManager {
 		JComboBox box = new JComboBox();
 		box.addItem(NONE);
 		List<Route> routes = getRoutesByNameList();
-		for (int i = 0; i < routes.size(); i++) {
-			box.addItem(routes.get(i));
+		for (Route route : routes) {
+			box.addItem(route);
 		}
 		return box;
 	}
@@ -196,8 +196,8 @@ public class RouteManager {
 		box.removeAllItems();
 		box.addItem(NONE);
 		List<Route> routes = getRoutesByNameList();
-		for (int i = 0; i < routes.size(); i++) {
-			box.addItem(routes.get(i));
+		for (Route route : routes) {
+			box.addItem(route);
 		}
 	}
 
@@ -216,8 +216,8 @@ public class RouteManager {
 		Route newRoute = newRoute(routeName);
 		List<RouteLocation> routeList = route.getLocationsBySequenceList();
 		if (!invert) {
-			for (int i = 0; i < routeList.size(); i++) {
-				copyRouteLocation(newRoute, routeList.get(i), null, invert);
+			for (RouteLocation rl : routeList) {
+				copyRouteLocation(newRoute, rl, null, invert);
 			}
 			// invert route order
 		} else {
@@ -281,11 +281,11 @@ public class RouteManager {
 		// decode type, invoke proper processing routine if a decoder file
 		if (root.getChild(Xml.ROUTES) != null) {
 			@SuppressWarnings("unchecked")
-			List<Element> l = root.getChild(Xml.ROUTES).getChildren(Xml.ROUTE);
+			List<Element> eRoutes = root.getChild(Xml.ROUTES).getChildren(Xml.ROUTE);
 			if (log.isDebugEnabled())
-				log.debug("readFile sees " + l.size() + " routes");
-			for (int i = 0; i < l.size(); i++) {
-				register(new Route(l.get(i)));
+				log.debug("readFile sees " + eRoutes.size() + " routes");
+			for (Element eRoute : eRoutes) {
+				register(new Route(eRoute));
 			}
 		}
 	}
@@ -293,9 +293,8 @@ public class RouteManager {
 	public void store(Element root) {
 		Element values = new Element(Xml.ROUTES);
 		root.addContent(values);
-		List<Route> routeList = getRoutesByIdList();
-		for (int i = 0; i < routeList.size(); i++) {
-			values.addContent(routeList.get(i).store());
+		for (Route route : getRoutesByIdList()) {
+			values.addContent(route.store());
 		}
 	}
 

@@ -893,8 +893,8 @@ public class TrainCommon {
 	}
 
 	private boolean showUtilityCarAttribute(String string, String[] mFormat) {
-		for (int i = 0; i < mFormat.length; i++) {
-			if (mFormat[i].equals(string))
+		for (String s : mFormat) {
+			if (s.equals(string))
 				return true;
 		}
 		return false;
@@ -914,9 +914,9 @@ public class TrainCommon {
 		if (log.isDebugEnabled())
 			log.debug(string);
 		if (file != null) {
-			String[] msg = string.split(NEW_LINE);
-			for (int i = 0; i < msg.length; i++)
-				printLine(file, level, msg[i]);
+			String[] lines = string.split(NEW_LINE);
+			for (String line : lines)
+				printLine(file, level, line);
 		}
 	}
 

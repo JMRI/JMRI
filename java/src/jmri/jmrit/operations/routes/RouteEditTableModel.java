@@ -74,8 +74,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 		removePropertyChangeRouteLocations();
 		routeList = _route.getLocationsBySequenceList();
 		// and add them back in
-		for (int i = 0; i < routeList.size(); i++) {
-			routeList.get(i).addPropertyChangeListener(this);
+		for (RouteLocation rl : routeList) {
+			rl.addPropertyChangeListener(this);
 		}
 	}
 
@@ -589,6 +589,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 	private JComboBox getRandomControlComboBox() {
 		JComboBox cb = new JComboBox();
 		cb.addItem(RouteLocation.DISABLED);
+		// 10 to 100 by 10
 		for (int i = 10; i < 101; i = i + 10)
 			cb.addItem(Integer.toString(i));
 		return cb;
@@ -637,11 +638,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 	}
 
 	private void removePropertyChangeRouteLocations() {
-		for (int i = 0; i < routeList.size(); i++) {
-			// if object has been deleted, it's not here; ignore it
-			RouteLocation rl = routeList.get(i);
-			if (rl != null)
-				rl.removePropertyChangeListener(this);
+		for (RouteLocation rl :  routeList) {
+			rl.removePropertyChangeListener(this);
 		}
 	}
 

@@ -248,40 +248,30 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
 
 	private void removePropertyChangeTrainSchedules() {
 		List<TrainSchedule> trainSchedules = scheduleManager.getSchedulesByIdList();
-		for (int i = 0; i < trainSchedules.size(); i++) {
-			TrainSchedule ts = trainSchedules.get(i);
-			if (ts != null)
-				ts.removePropertyChangeListener(this);
+		for (TrainSchedule ts : trainSchedules) {
+			ts.removePropertyChangeListener(this);
 		}
 	}
 
 	private void addPropertyChangeTrainSchedules() {
 		List<TrainSchedule> trainSchedules = scheduleManager.getSchedulesByIdList();
-		for (int i = 0; i < trainSchedules.size(); i++) {
-			TrainSchedule ts = trainSchedules.get(i);
-			if (ts != null)
-				ts.addPropertyChangeListener(this);
+		for (TrainSchedule ts : trainSchedules) {
+			ts.addPropertyChangeListener(this);
 		}
 	}
 
 	private synchronized void removePropertyChangeTrains() {
 		if (sysList != null) {
-			for (int i = 0; i < sysList.size(); i++) {
-				// if object has been deleted, it's not here; ignore it
-				Train train = sysList.get(i);
-				if (train != null)
-					train.removePropertyChangeListener(this);
+			for (Train train : sysList) {
+				train.removePropertyChangeListener(this);
 			}
 		}
 	}
 
 	private synchronized void addPropertyChangeTrains() {
 		if (sysList != null) {
-			for (int i = 0; i < sysList.size(); i++) {
-				// if object has been deleted, it's not here; ignore it
-				Train train = sysList.get(i);
-				if (train != null)
-					train.addPropertyChangeListener(this);
+			for (Train train : sysList) {
+				train.addPropertyChangeListener(this);
 			}
 		}
 	}

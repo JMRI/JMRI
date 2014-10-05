@@ -73,13 +73,12 @@ public class PrintTrainsByCarTypesAction  extends AbstractAction {
 					+ TAB + TAB +TAB + Bundle.getMessage("Description") + NEW_LINE;
 			writer.write(s);
 			// car types
-			for (int t = 0; t < carTypes.length; t++) {
-				s = carTypes[t] + NEW_LINE;
+			for (String type : carTypes) {
+				s = type + NEW_LINE;
 				writer.write(s);
 				// trains
-				for (int i = 0; i < trains.size(); i++) {
-					Train train = trains.get(i);
-					if (train.acceptsTypeName(carTypes[t])) {
+				for (Train train : trains) {
+					if (train.acceptsTypeName(type)) {
 						StringBuilder sb = new StringBuilder();
 						String name = train.getName();
 						sb.append(TAB + name + " ");

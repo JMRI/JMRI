@@ -593,13 +593,12 @@ public class Car extends RollingStock {
 		}
 		// update load optionally when car reaches staging
 		else if (destTrack != null && destTrack.getTrackType().equals(Track.STAGING)) {
-			if (destTrack.isLoadSwapEnabled() && getLoadName().equals(carLoads.getDefaultEmptyName())) {
+			if (destTrack.isLoadSwapEnabled() && getLoadName().equals(carLoads.getDefaultEmptyName()))
 				setLoadName(carLoads.getDefaultLoadName());
-			} else if (destTrack.isLoadSwapEnabled() && getLoadName().equals(carLoads.getDefaultLoadName())) {
+			else if (destTrack.isLoadSwapEnabled() && getLoadName().equals(carLoads.getDefaultLoadName()))
 				setLoadEmpty();
-			} else if (destTrack.isLoadEmptyEnabled() && getLoadName().equals(carLoads.getDefaultLoadName())) {
+			else if (destTrack.isLoadEmptyEnabled() && getLoadName().equals(carLoads.getDefaultLoadName()))
 				setLoadEmpty();
-			}
 			// empty car if it has a custom load
 			else if (destTrack.isRemoveCustomLoadsEnabled() && !getLoadName().equals(carLoads.getDefaultEmptyName())
 					&& !getLoadName().equals(carLoads.getDefaultLoadName())) {

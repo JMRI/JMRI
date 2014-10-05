@@ -217,11 +217,7 @@ public class CarLoads extends RollingStockAttribute {
 	 */
 	public boolean containsName(String type, String name) {
 		List<String> names = getNames(type);
-		for (int i = 0; i < names.size(); i++) {
-			if (names.get(i).equals(name))
-				return true;
-		}
-		return false;
+		return names.contains(name);
 	}
 
 	public void updateComboBox(String type, JComboBox box) {
@@ -305,8 +301,7 @@ public class CarLoads extends RollingStockAttribute {
 			return CarLoad.LOAD_TYPE_LOAD;
 		}
 		List<CarLoad> loads = list.get(type);
-		for (int i = 0; i < loads.size(); i++) {
-			CarLoad cl = loads.get(i);
+		for (CarLoad cl : loads) {
 			if (cl.getName().equals(name))
 				return cl.getLoadType();
 		}
@@ -325,8 +320,7 @@ public class CarLoads extends RollingStockAttribute {
 	 */
 	public void setPriority(String type, String name, String priority) {
 		List<CarLoad> loads = list.get(type);
-		for (int i = 0; i < loads.size(); i++) {
-			CarLoad cl = loads.get(i);
+		for (CarLoad cl : loads) {
 			if (cl.getName().equals(name)) {
 				String oldPriority = cl.getPriority();
 				cl.setPriority(priority);
@@ -349,8 +343,7 @@ public class CarLoads extends RollingStockAttribute {
 		if (!containsName(type, name))
 			return CarLoad.PRIORITY_LOW;
 		List<CarLoad> loads = list.get(type);
-		for (int i = 0; i < loads.size(); i++) {
-			CarLoad cl = loads.get(i);
+		for (CarLoad cl : loads) {
 			if (cl.getName().equals(name))
 				return cl.getPriority();
 		}
@@ -517,16 +510,15 @@ public class CarLoads extends RollingStockAttribute {
 			}
 		}
 		@SuppressWarnings("unchecked")
-		List<Element> l = e.getChild(Xml.LOADS).getChildren(Xml.LOAD);
+		List<Element> eLoads = e.getChild(Xml.LOADS).getChildren(Xml.LOAD);
 		if (log.isDebugEnabled())
-			log.debug("readFile sees " + l.size() + " car loads");
-		for (int i = 0; i < l.size(); i++) {
-			Element load = l.get(i);
-			if ((a = load.getAttribute(Xml.TYPE)) != null) {
+			log.debug("readFile sees {} car loads", eLoads.size());
+		for (Element eLoad : eLoads) {
+			if ((a = eLoad.getAttribute(Xml.TYPE)) != null) {
 				String type = a.getValue();
 				addType(type);
 				// old style had a list of names
-				if ((a = load.getAttribute(Xml.NAMES)) != null) {
+				if ((a = eLoad.getAttribute(Xml.NAMES)) != null) {
 					String names = a.getValue();
 					String[] loadNames = names.split("%%");// NOI18N
 					jmri.util.StringUtil.sort(loadNames);
@@ -539,24 +531,23 @@ public class CarLoads extends RollingStockAttribute {
 				}
 				// new style load and comments
 				@SuppressWarnings("unchecked")
-				List<Element> loads = load.getChildren(Xml.CAR_LOAD);
+				List<Element> eCarLoads = eLoad.getChildren(Xml.CAR_LOAD);
 				if (log.isDebugEnabled())
-					log.debug(loads.size() + " car loads for type: " + type);
-				for (int j = 0; j < loads.size(); j++) {
-					Element carLoad = loads.get(j);
-					if ((a = carLoad.getAttribute(Xml.NAME)) != null) {
+					log.debug(eCarLoads.size() + " car loads for type: " + type);
+				for (Element eCarLoad : eCarLoads) {
+					if ((a = eCarLoad.getAttribute(Xml.NAME)) != null) {
 						String name = a.getValue();
 						addName(type, name);
-						if ((a = carLoad.getAttribute(Xml.PRIORITY)) != null) {
+						if ((a = eCarLoad.getAttribute(Xml.PRIORITY)) != null) {
 							setPriority(type, name, a.getValue());
 						}
-						if ((a = carLoad.getAttribute(Xml.PICKUP_COMMENT)) != null) {
+						if ((a = eCarLoad.getAttribute(Xml.PICKUP_COMMENT)) != null) {
 							setPickupComment(type, name, a.getValue());
 						}
-						if ((a = carLoad.getAttribute(Xml.DROP_COMMENT)) != null) {
+						if ((a = eCarLoad.getAttribute(Xml.DROP_COMMENT)) != null) {
 							setDropComment(type, name, a.getValue());
 						}
-						if ((a = carLoad.getAttribute(Xml.LOAD_TYPE)) != null) {
+						if ((a = eCarLoad.getAttribute(Xml.LOAD_TYPE)) != null) {
 							setLoadType(type, name, a.getValue());
 						}
 					}

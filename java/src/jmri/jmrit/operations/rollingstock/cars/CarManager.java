@@ -384,8 +384,8 @@ public class CarManager extends RollingStockManager {
 		// now sort by track destination
 		List<Car> out = new ArrayList<Car>();
 		int lastCarsIndex = 0; // incremented each time a car is added to the end of the list
-		for (int i = 0; i < inTrain.size(); i++) {
-			Car car = (Car) inTrain.get(i);
+		for (RollingStock rs : inTrain) {
+			Car car = (Car) rs;
 			if (car.getKernel() != null && !car.getKernel().isLead(car)) {
 				continue; // not the lead car, skip for now.
 			}
@@ -486,8 +486,8 @@ public class CarManager extends RollingStockManager {
 	 */
 	public void replaceLoad(String type, String oldLoadName, String newLoadName) {
 		List<RollingStock> cars = getList();
-		for (int i = 0; i < cars.size(); i++) {
-			Car car = (Car) cars.get(i);
+		for (RollingStock rs : cars) {
+			Car car = (Car) rs;
 			if (car.getTypeName().equals(type) && car.getLoadName().equals(oldLoadName))
 				if (newLoadName != null)
 					car.setLoadName(newLoadName);
@@ -499,8 +499,8 @@ public class CarManager extends RollingStockManager {
 	public List<Car> getCarsLocationUnknown() {
 		List<Car> mias = new ArrayList<Car>();
 		List<RollingStock> cars = getByIdList();
-		for (int i = 0; i < cars.size(); i++) {
-			Car car = (Car) cars.get(i);
+		for (RollingStock rs : cars) {
+			Car car = (Car) rs;
 			if (car.isLocationUnknown())
 				mias.add(car); // return unknown location car
 		}
@@ -511,13 +511,12 @@ public class CarManager extends RollingStockManager {
 		// new format using elements starting version 3.3.1
 		if (root.getChild(Xml.NEW_KERNELS) != null) {
 			@SuppressWarnings("unchecked")
-			List<Element> l = root.getChild(Xml.NEW_KERNELS).getChildren(Xml.KERNEL);
+			List<Element> eKernels = root.getChild(Xml.NEW_KERNELS).getChildren(Xml.KERNEL);
 			if (log.isDebugEnabled())
-				log.debug("Car manager sees " + l.size() + " kernels");
+				log.debug("Car manager sees {} kernels", eKernels.size());
 			Attribute a;
-			for (int i = 0; i < l.size(); i++) {
-				Element kernel = l.get(i);
-				if ((a = kernel.getAttribute(Xml.NAME)) != null) {
+			for (Element eKernel : eKernels) {
+				if ((a = eKernel.getAttribute(Xml.NAME)) != null) {
 					newKernel(a.getValue());
 				}
 			}
@@ -529,8 +528,8 @@ public class CarManager extends RollingStockManager {
 				String[] kernelNames = names.split("%%"); // NOI18N
 				if (log.isDebugEnabled())
 					log.debug("kernels: " + names);
-				for (int i = 0; i < kernelNames.length; i++) {
-					newKernel(kernelNames[i]);
+				for (String name : kernelNames) {
+					newKernel(name);
 				}
 			}
 		}
@@ -543,11 +542,11 @@ public class CarManager extends RollingStockManager {
 
 		if (root.getChild(Xml.CARS) != null) {
 			@SuppressWarnings("unchecked")
-			List<Element> l = root.getChild(Xml.CARS).getChildren(Xml.CAR);
+			List<Element> eCars = root.getChild(Xml.CARS).getChildren(Xml.CAR);
 			if (log.isDebugEnabled())
-				log.debug("readFile sees " + l.size() + " cars");
-			for (int i = 0; i < l.size(); i++) {
-				register(new Car(l.get(i)));
+				log.debug("readFile sees {} cars", eCars.size());
+			for (Element eCar : eCars) {
+				register(new Car(eCar));
 			}
 		}
 	}
@@ -564,24 +563,24 @@ public class CarManager extends RollingStockManager {
 		List<String> names = getKernelNameList();
 		if (Control.backwardCompatible) {
 			root.addContent(values = new Element(Xml.KERNELS));
-			for (int i = 0; i < names.size(); i++) {
-				String kernelNames = names.get(i) + "%%"; // NOI18N
+			for (String name : names) {
+				String kernelNames = name + "%%"; // NOI18N
 				values.addContent(kernelNames);
 			}
 		}
 		// new format using elements
 		Element kernels = new Element(Xml.NEW_KERNELS);
-		for (int i = 0; i < names.size(); i++) {
+		for (String name : names) {
 			Element kernel = new Element(Xml.KERNEL);
-			kernel.setAttribute(new Attribute(Xml.NAME, names.get(i)));
+			kernel.setAttribute(new Attribute(Xml.NAME, name));
 			kernels.addContent(kernel);
 		}
 		root.addContent(kernels);
 		root.addContent(values = new Element(Xml.CARS));
 		// add entries
 		List<RollingStock> carList = getByIdList();
-		for (int i = 0; i < carList.size(); i++) {
-			Car car = (Car) carList.get(i);
+		for (RollingStock rs : carList) {
+			Car car = (Car) rs;
 			values.addContent(car.store());
 		}
 	}

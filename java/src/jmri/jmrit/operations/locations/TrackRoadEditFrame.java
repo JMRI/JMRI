@@ -234,7 +234,7 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
 				int x = 0;
 				int y = 0; // vertical position in panel
 
-				int numberOfRoads = getNumberOfCheckboxes();
+				int numberOfRoads = getNumberOfCheckboxesPerLine();
 				for (String roadName : _track.getRoadNames()) {
 					JLabel road = new JLabel();
 					road.setText(roadName);

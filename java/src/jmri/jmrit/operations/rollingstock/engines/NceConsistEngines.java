@@ -131,8 +131,8 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
 				if (engNum != 0) {
 					log.debug("NCE consist " + consistNum + " has lead engine " + engNum);
 					boolean engMatch = false;
-					for (int indexEng = 0; indexEng < engineList.size(); indexEng++) {
-						Engine engine = (Engine) engineList.get(indexEng);
+					for (RollingStock rs : engineList) {
+						Engine engine = (Engine) rs;
 						if (engine.getNumber().equals(Integer.toString(engNum))) {
 							log.debug("found lead engine match " + engine.getNumber());
 							Consist engConsist = engineManager.newConsist(NCE + consistNum);
@@ -173,8 +173,8 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
 			if (engNum != 0) {
 				log.debug("NCE consist " + consistNum + " has engine " + engNum);
 				boolean engMatch = false;
-				for (int indexEng = 0; indexEng < engineList.size(); indexEng++) {
-					Engine engine = (Engine) engineList.get(indexEng);
+				for (RollingStock rs : engineList) {
+					Engine engine = (Engine) rs;
 					if (engine.getNumber().equals(Integer.toString(engNum))) {
 						log.debug("found engine match " + engine.getNumber());
 						engMatch = true;

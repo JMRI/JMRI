@@ -670,12 +670,10 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 	private void enableCheckboxes(boolean enable) {
 		for (int i = 0; i < typeCarCheckBoxes.size(); i++) {
-			JCheckBox checkBox = typeCarCheckBoxes.get(i);
-			checkBox.setEnabled(enable);
+			typeCarCheckBoxes.get(i).setEnabled(enable);
 		}
 		for (int i = 0; i < typeEngineCheckBoxes.size(); i++) {
-			JCheckBox checkBox = typeEngineCheckBoxes.get(i);
-			checkBox.setEnabled(enable);
+			typeEngineCheckBoxes.get(i).setEnabled(enable);
 		}
 	}
 
@@ -718,17 +716,16 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	}
 
 	private void loadCarTypes() {
-		String[] types = CarTypes.instance().getNames();
-		int numberOfCheckboxes = getNumberOfCheckboxes();
+		int numberOfCheckboxes = getNumberOfCheckboxesPerLine();	// number per line
 		int x = 0;
 		int y = 1; // vertical position in panel
-		for (int i = 0; i < types.length; i++) {
+		for (String type : CarTypes.instance().getNames()) {
 			JCheckBox checkBox = new javax.swing.JCheckBox();
 			typeCarCheckBoxes.add(checkBox);
-			checkBox.setText(types[i]);
+			checkBox.setText(type);
 			addTypeCheckBoxAction(checkBox);
 			addItemLeft(typeCarPanelCheckBoxes, checkBox, x++, y);
-			if (_train != null && _train.acceptsTypeName(types[i]))
+			if (_train != null && _train.acceptsTypeName(type))
 				checkBox.setSelected(true);
 			if (x > numberOfCheckboxes) {
 				y++;
@@ -740,7 +737,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		p.add(clearButton);
 		p.add(setButton);
 		GridBagConstraints gc = new GridBagConstraints();
-		gc.gridwidth = getNumberOfCheckboxes() + 1;
+		gc.gridwidth = getNumberOfCheckboxesPerLine() + 1;
 		gc.gridy = ++y;
 		typeCarPanelCheckBoxes.add(p, gc);
 
@@ -756,17 +753,16 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	}
 
 	private void loadEngineTypes() {
-		String[] types = EngineTypes.instance().getNames();
-		int numberOfCheckboxes = getNumberOfCheckboxes();
+		int numberOfCheckboxes = getNumberOfCheckboxesPerLine();	// number per line
 		int x = 0;
 		int y = 1;
-		for (int i = 0; i < types.length; i++) {
+		for (String type : EngineTypes.instance().getNames()) {
 			JCheckBox checkBox = new javax.swing.JCheckBox();
 			typeEngineCheckBoxes.add(checkBox);
-			checkBox.setText(types[i]);
+			checkBox.setText(type);
 			addTypeCheckBoxAction(checkBox);
 			addItemLeft(typeEnginePanelCheckBoxes, checkBox, x++, y);
-			if (_train != null && _train.acceptsTypeName(types[i]))
+			if (_train != null && _train.acceptsTypeName(type))
 				checkBox.setSelected(true);
 			if (x > numberOfCheckboxes) {
 				y++;
@@ -794,8 +790,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			roads = CarManager.instance().getCabooseRoadNames();
 		else
 			roads = CarManager.instance().getFredRoadNames();
-		for (int i = 0; i < roads.size(); i++) {
-			roadCabooseBox.addItem(roads.get(i));
+		for (String road : roads) {
+			roadCabooseBox.addItem(road);
 		}
 		if (_train != null) {
 			roadCabooseBox.setSelectedItem(_train.getCabooseRoad());
@@ -967,8 +963,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		CarTypes.instance().removePropertyChangeListener(this);
 		CarRoads.instance().removePropertyChangeListener(this);
 		routeManager.removePropertyChangeListener(this);
-		for (int i = 0; i < children.size(); i++) {
-			Frame frame = children.get(i);
+		for (Frame frame : children) {
 			frame.dispose();
 		}
 		if (_train != null) {

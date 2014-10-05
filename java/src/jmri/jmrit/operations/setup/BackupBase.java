@@ -346,8 +346,8 @@ public abstract class BackupBase {
 			fullName = String.format("%s_%02d", baseName, i); // NOI18N
 					
 			boolean foundFileNameMatch = false;		
-			for (int j = 0; j < dirNames.length; j++) {
-				if (dirNames[j].equals(fullName)) {
+			for (String name : dirNames) {
+				if (name.equals(fullName)) {
 					foundFileNameMatch = true;
 					break;
 				}
@@ -379,7 +379,7 @@ public abstract class BackupBase {
 	 * files in place.
 	 */
 	public void deleteOperationsFiles() {
-		// Maybe this should also only delete specific files used by Operations,
+		// TODO Maybe this should also only delete specific files used by Operations,
 		// and not just all XML files.
 		File files = _operationsRoot;
 
@@ -387,17 +387,16 @@ public abstract class BackupBase {
 			return;
 
 		String[] operationFileNames = files.list();
-		for (int i = 0; i < operationFileNames.length; i++) {
+		for (String fileName : operationFileNames) {
 			// skip non-xml files
-			if (!operationFileNames[i].toUpperCase().endsWith(".XML")) // NOI18N
+			if (!fileName.toUpperCase().endsWith(".XML")) // NOI18N
 				continue;
 			//
-			log.debug("deleting file: " + operationFileNames[i]);
-			File file = new File(_operationsRoot + File.separator
-					+ operationFileNames[i]);
+			log.debug("deleting file: {}", fileName);
+			File file = new File(_operationsRoot + File.separator + fileName);
 			if (!file.delete())
 				log.debug("file not deleted");
-			// This should probably throw an exception if a delete fails.
+			// TODO This should probably throw an exception if a delete fails.
 		}
 	}
 

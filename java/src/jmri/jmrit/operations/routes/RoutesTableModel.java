@@ -66,8 +66,8 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 		else
 			sysList = manager.getRoutesByNameList();
 		// and add them back in
-		for (int i = 0; i < sysList.size(); i++) {
-			sysList.get(i).addPropertyChangeListener(this);
+		for (Route route : sysList) {
+			route.addPropertyChangeListener(this);
 		}
 	}
 
@@ -215,11 +215,8 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 
 	private synchronized void removePropertyChangeRoutes() {
 		if (sysList != null) {
-			for (int i = 0; i < sysList.size(); i++) {
-				// if object has been deleted, it's not here; ignore it
-				Route route = sysList.get(i);
-				if (route != null)
-					route.removePropertyChangeListener(this);
+			for (Route route : sysList) {
+				route.removePropertyChangeListener(this);
 			}
 		}
 	}

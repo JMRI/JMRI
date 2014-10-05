@@ -661,9 +661,9 @@ public class PrintOptionFrame extends OperationsFrame {
 		pEngPickup.add(pickupEngPrefix);
 		pickupEngPrefix.setText(Setup.getPickupEnginePrefix());
 		String[] format = Setup.getPickupEngineMessageFormat();
-		for (int i = 0; i < format.length; i++) {
+		for (String f : format) {
 			JComboBox b = Setup.getEngineMessageComboBox();
-			b.setSelectedItem(format[i]);
+			b.setSelectedItem(f);
 			pEngPickup.add(b);
 			enginePickupMessageList.add(b);
 		}
@@ -678,9 +678,9 @@ public class PrintOptionFrame extends OperationsFrame {
 		pEngDrop.add(dropEngPrefix);
 		dropEngPrefix.setText(Setup.getDropEnginePrefix());
 		format = Setup.getDropEngineMessageFormat();
-		for (int i = 0; i < format.length; i++) {
+		for (String f : format) {
 			JComboBox b = Setup.getEngineMessageComboBox();
-			b.setSelectedItem(format[i]);
+			b.setSelectedItem(f);
 			pEngDrop.add(b);
 			engineDropMessageList.add(b);
 		}
@@ -695,9 +695,9 @@ public class PrintOptionFrame extends OperationsFrame {
 		pPickup.add(pickupCarPrefix);
 		pickupCarPrefix.setText(Setup.getPickupCarPrefix());
 		String[] pickFormat = Setup.getPickupCarMessageFormat();
-		for (int i = 0; i < pickFormat.length; i++) {
+		for (String pf : pickFormat) {
 			JComboBox b = Setup.getCarMessageComboBox();
-			b.setSelectedItem(pickFormat[i]);
+			b.setSelectedItem(pf);
 			pPickup.add(b);
 			carPickupMessageList.add(b);
 		}
@@ -712,9 +712,9 @@ public class PrintOptionFrame extends OperationsFrame {
 		pDrop.add(dropCarPrefix);
 		dropCarPrefix.setText(Setup.getDropCarPrefix());
 		String[] dropFormat = Setup.getDropCarMessageFormat();
-		for (int i = 0; i < dropFormat.length; i++) {
+		for (String lf : dropFormat) {
 			JComboBox b = Setup.getCarMessageComboBox();
-			b.setSelectedItem(dropFormat[i]);
+			b.setSelectedItem(lf);
 			pDrop.add(b);
 			carDropMessageList.add(b);
 		}
@@ -729,9 +729,9 @@ public class PrintOptionFrame extends OperationsFrame {
 		pLocal.add(localPrefix);
 		localPrefix.setText(Setup.getLocalPrefix());
 		String[] localFormat = Setup.getLocalMessageFormat();
-		for (int i = 0; i < localFormat.length; i++) {
+		for (String lf : localFormat) {
 			JComboBox b = Setup.getCarMessageComboBox();
-			b.setSelectedItem(localFormat[i]);
+			b.setSelectedItem(lf);
 			pLocal.add(b);
 			localMessageList.add(b);
 		}
@@ -747,9 +747,9 @@ public class PrintOptionFrame extends OperationsFrame {
 		pSwPickup.add(switchListPickupCarPrefix);
 		switchListPickupCarPrefix.setText(Setup.getSwitchListPickupCarPrefix());
 		pickFormat = Setup.getSwitchListPickupCarMessageFormat();
-		for (int i = 0; i < pickFormat.length; i++) {
+		for (String pf : pickFormat) {
 			JComboBox b = Setup.getCarMessageComboBox();
-			b.setSelectedItem(pickFormat[i]);
+			b.setSelectedItem(pf);
 			pSwPickup.add(b);
 			switchListCarPickupMessageList.add(b);
 		}
@@ -764,9 +764,9 @@ public class PrintOptionFrame extends OperationsFrame {
 		pSwDrop.add(switchListDropCarPrefix);
 		switchListDropCarPrefix.setText(Setup.getSwitchListDropCarPrefix());
 		dropFormat = Setup.getSwitchListDropCarMessageFormat();
-		for (int i = 0; i < dropFormat.length; i++) {
+		for (String df : dropFormat) {
 			JComboBox b = Setup.getCarMessageComboBox();
-			b.setSelectedItem(dropFormat[i]);
+			b.setSelectedItem(df);
 			pSwDrop.add(b);
 			switchListCarDropMessageList.add(b);
 		}
@@ -781,9 +781,9 @@ public class PrintOptionFrame extends OperationsFrame {
 		pSwLocal.add(switchListLocalPrefix);
 		switchListLocalPrefix.setText(Setup.getSwitchListLocalPrefix());
 		localFormat = Setup.getSwitchListLocalMessageFormat();
-		for (int i = 0; i < localFormat.length; i++) {
+		for (String lf : localFormat) {
 			JComboBox b = Setup.getCarMessageComboBox();
-			b.setSelectedItem(localFormat[i]);
+			b.setSelectedItem(lf);
 			pSwLocal.add(b);
 			switchListLocalMessageList.add(b);
 		}

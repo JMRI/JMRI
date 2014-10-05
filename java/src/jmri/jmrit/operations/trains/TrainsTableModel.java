@@ -32,7 +32,7 @@ import jmri.util.table.ButtonRenderer;
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
-	TrainManager manager = TrainManager.instance(); // There is only one manager
+	TrainManager trainManager = TrainManager.instance(); // There is only one manager
 
 	// Defines the columns
 	private static final int IDCOLUMN = 0;
@@ -52,7 +52,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
 	public TrainsTableModel() {
 		super();
-		manager.addPropertyChangeListener(this);
+		trainManager.addPropertyChangeListener(this);
 		updateList();
 	}
 
@@ -93,9 +93,9 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		removePropertyChangeTrains();
 
 		if (_sort == SORTBYID)
-			sysList = manager.getTrainsByIdList();
+			sysList = trainManager.getTrainsByIdList();
 		else
-			sysList = manager.getTrainsByTimeList();
+			sysList = trainManager.getTrainsByTimeList();
 		/*
 		 * else if (_sort == SORTBYNAME) sysList = manager.getTrainsByNameList(); else if (_sort == SORTBYTIME) sysList
 		 * = manager.getTrainsByTimeList(); else if (_sort == SORTBYDEPARTS) sysList =
@@ -143,7 +143,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		// set column preferred widths
 		if (!_frame.loadTableDetails(_table)) {
 			// load defaults, xml file data not found
-			int[] tableColumnWidths = manager.getTrainsFrameTableColumnWidths();
+			int[] tableColumnWidths = trainManager.getTrainsFrameTableColumnWidths();
 			for (int i = 0; i < tcm.getColumnCount(); i++)
 				tcm.getColumn(i).setPreferredWidth(tableColumnWidths[i]);
 		}
@@ -309,11 +309,11 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 			return train.getStatus();
 		case BUILDCOLUMN: {
 			if (train.isBuilt()) {
-				if (Setup.isGenerateCsvManifestEnabled() && manager.isOpenFileEnabled())
+				if (Setup.isGenerateCsvManifestEnabled() && trainManager.isOpenFileEnabled())
 					return Bundle.getMessage("OpenFile");
-				else if (Setup.isGenerateCsvManifestEnabled() && manager.isRunFileEnabled())
+				else if (Setup.isGenerateCsvManifestEnabled() && trainManager.isRunFileEnabled())
 					return Bundle.getMessage("RunFile");
-				else if (manager.isPrintPreviewEnabled())
+				else if (trainManager.isPrintPreviewEnabled())
 					return Bundle.getMessage("Preview");
 				else if (train.isPrinted())
 					return Bundle.getMessage("Printed");
@@ -325,7 +325,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		case ACTIONCOLUMN: {
 			if (train.getBuildFailed())
 				return Bundle.getMessage("Report");
-			return manager.getTrainsFrameTrainAction();
+			return trainManager.getTrainsFrameTrainAction();
 		}
 		case EDITCOLUMN:
 			return Bundle.getMessage("Edit");
@@ -402,11 +402,11 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 			build.start();
 			// print build report, print manifest, run or open file
 		} else {
-			if (manager.isBuildReportEnabled())
+			if (trainManager.isBuildReportEnabled())
 				train.printBuildReport();
-			if (Setup.isGenerateCsvManifestEnabled() && manager.isOpenFileEnabled())
+			if (Setup.isGenerateCsvManifestEnabled() && trainManager.isOpenFileEnabled())
 				train.openFile();
-			else if (Setup.isGenerateCsvManifestEnabled() && manager.isRunFileEnabled())
+			else if (Setup.isGenerateCsvManifestEnabled() && trainManager.isRunFileEnabled())
 				train.runFile();
 			else
 				train.printManifestIfBuilt();
@@ -422,7 +422,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		// move button becomes report if failure
 		if (train.getBuildFailed()) {
 			train.printBuildReport();
-		} else if (manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.RESET)) {
+		} else if (trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.RESET)) {
 			if (log.isDebugEnabled())
 				log.debug("Reset train (" + train.getName() + ")");
 			// check to see if departure track was reused
@@ -439,11 +439,11 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 			JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("TrainNeedsBuild"),
 					new Object[] { train.getName() }), Bundle.getMessage("CanNotPerformAction"),
 					JOptionPane.INFORMATION_MESSAGE);
-		} else if (train.isBuilt() && manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE)) {
+		} else if (train.isBuilt() && trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE)) {
 			if (log.isDebugEnabled())
 				log.debug("Move train (" + train.getName() + ")");
 			train.move();
-		} else if (train.isBuilt() && manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.TERMINATE)) {
+		} else if (train.isBuilt() && trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.TERMINATE)) {
 			if (log.isDebugEnabled())
 				log.debug("Terminate train (" + train.getName() + ")");
 			int status = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("TerminateTrain"),
@@ -451,7 +451,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 					.getMessage("DoYouWantToTermiate"), new Object[] { train.getName() }), JOptionPane.YES_NO_OPTION);
 			if (status == JOptionPane.YES_OPTION)
 				train.terminate();
-		} else if (train.isBuilt() && manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.CONDUCTOR)) {
+		} else if (train.isBuilt() && trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.CONDUCTOR)) {
 			if (log.isDebugEnabled())
 				log.debug("Enable conductor for train (" + train.getName() + ")");
 			launchConductor(train);
@@ -516,16 +516,14 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 	}
 
 	private synchronized void removePropertyChangeTrains() {
-		List<Train> trains = manager.getTrainsByIdList();
-		for (int i = 0; i < trains.size(); i++) {
-			trains.get(i).removePropertyChangeListener(this);
+		for (Train train : trainManager.getTrainsByIdList()) {
+			train.removePropertyChangeListener(this);
 		}
 	}
 
 	private synchronized void addPropertyChangeTrains() {
-		List<Train> trains = manager.getTrainsByIdList();
-		for (int i = 0; i < trains.size(); i++) {
-			trains.get(i).addPropertyChangeListener(this);
+		for (Train train : trainManager.getTrainsByIdList()) {
+			train.addPropertyChangeListener(this);
 		}
 	}
 
@@ -534,7 +532,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 			log.debug("dispose");
 		if (tef != null)
 			tef.dispose();
-		manager.removePropertyChangeListener(this);
+		trainManager.removePropertyChangeListener(this);
 		removePropertyChangeTrains();
 	}
 

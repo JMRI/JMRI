@@ -593,17 +593,13 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		}
 		if (maxLength < Setup.getMaxTrainLength()) {
 			StringBuffer sb = new StringBuffer();
-			RouteManager rm = RouteManager.instance();
-			List<Route> routes = rm.getRoutesByNameList();
+			List<Route> routes = RouteManager.instance().getRoutesByNameList();
 			int count = 0;
-			for (int i = 0; i < routes.size(); i++) {
-				Route r = routes.get(i);
-				List<RouteLocation> routeList = r.getLocationsBySequenceList();
-				for (int j = 0; j < routeList.size(); j++) {
-					RouteLocation rl = routeList.get(j);
+			for (Route route : routes) {
+				for (RouteLocation rl : route.getLocationsBySequenceList()) {
 					if (rl.getMaxTrainLength() > maxLength) {
 						String s = MessageFormat.format(Bundle.getMessage("RouteMaxLengthExceeds"),
-								new Object[] { r.getName(), rl.getName(), rl.getMaxTrainLength(),
+								new Object[] { route.getName(), rl.getName(), rl.getMaxTrainLength(),
 										maxLength });
 						log.info(s);
 						sb.append(s + NEW_LINE);
@@ -618,18 +614,16 @@ public class OperationsSetupFrame extends OperationsFrame implements
 				}
 			}
 			if (sb.length() > 0) {
-				JOptionPane.showMessageDialog(this, sb.toString(),
-						Bundle.getMessage("YouNeedToAdjustRoutes"), JOptionPane.WARNING_MESSAGE);
-				if (JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("ChangeMaximumTrainDepartureLength"),
-						new Object[] { maxLength }), Bundle.getMessage("ModifyAllRoutes"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-					for (int i = 0; i < routes.size(); i++) {
-						Route r = routes.get(i);
-						List<RouteLocation> routeList = r.getLocationsBySequenceList();
-						for (int j = 0; j < routeList.size(); j++) {
-							RouteLocation rl = routeList.get(j);
+				JOptionPane.showMessageDialog(this, sb.toString(), Bundle.getMessage("YouNeedToAdjustRoutes"),
+						JOptionPane.WARNING_MESSAGE);
+				if (JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
+						.getMessage("ChangeMaximumTrainDepartureLength"), new Object[] { maxLength }), Bundle
+						.getMessage("ModifyAllRoutes"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					for (Route route : routes) {
+						for (RouteLocation rl : route.getLocationsBySequenceList()) {
 							if (rl.getMaxTrainLength() > maxLength) {
-								log.debug("Setting route (" + r.getName() + ") routeLocation ("
-										+ rl.getName() + ") max traim length to " + maxLength); // NOI18N
+								log.debug("Setting route ({}) routeLocation ({}) max traim length to {}", route
+										.getName(), rl.getName(), maxLength); // NOI18N
 								rl.setMaxTrainLength(maxLength);
 							}
 						}
@@ -728,9 +722,8 @@ public class OperationsSetupFrame extends OperationsFrame implements
 	}
 
 	private void loadIconComboBox(JComboBox comboBox) {
-		String[] colors = LocoIcon.getLocoColors();
-		for (int i = 0; i < colors.length; i++) {
-			comboBox.addItem(colors[i]);
+		for (String color : LocoIcon.getLocoColors()) {
+			comboBox.addItem(color);
 		}
 	}
 

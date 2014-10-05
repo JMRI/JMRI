@@ -252,14 +252,14 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 	private void save() {
 		for (int i = 0; i < locationCheckBoxes.size(); i++) {
 			String locationName = locationCheckBoxes.get(i).getName();
-			Location l = locationManager.getLocationByName(locationName);
+			Location location = locationManager.getLocationByName(locationName);
 			JComboBox comboBox = locationComboBoxes.get(i);
 			String printerName = (String) comboBox.getSelectedItem();
 			if (printerName.equals(TrainPrintUtilities.getDefaultPrinterName())) {
-				l.setDefaultPrinterName(Location.NONE);
+				location.setDefaultPrinterName(Location.NONE);
 			} else {
-				log.debug("Location " + l.getName() + " has selected printer " + printerName);
-				l.setDefaultPrinterName(printerName);
+				log.debug("Location " + location.getName() + " has selected printer " + printerName);
+				location.setDefaultPrinterName(printerName);
 			}
 		}
 		Setup.setSwitchListRealTime(switchListRealTimeCheckBox.isSelected());
@@ -318,8 +318,8 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 	private void updateLocationCheckboxes() {
 		List<Location> locations = locationManager.getLocationsByNameList();
 		synchronized (this) {
-			for (int i = 0; i < locations.size(); i++) {
-				locations.get(i).removePropertyChangeListener(this);
+			for (Location location : locations) {
+				location.removePropertyChangeListener(this);
 			}
 		}
 
@@ -340,46 +340,45 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 
 		Location previousLocation = null;
 
-		for (int i = 0; i < locations.size(); i++) {
-			Location l = locations.get(i);
-			if (l.getStatus().equals(Location.MODIFIED) && l.isSwitchListEnabled()) {
+		for (Location location : locations) {
+			if (location.getStatus().equals(Location.MODIFIED) && location.isSwitchListEnabled()) {
 				changeButton.setEnabled(true);
 				csvChangeButton.setEnabled(true);
 			}
-			String name = TrainCommon.splitString(l.getName());
+			String name = TrainCommon.splitString(location.getName());
 			if (previousLocation != null
 					&& TrainCommon.splitString(previousLocation.getName()).equals(name)) {
-				l.setSwitchListEnabled(previousLocation.isSwitchListEnabled());
+				location.setSwitchListEnabled(previousLocation.isSwitchListEnabled());
 				if (previousLocation.isSwitchListEnabled()
-						&& l.getStatus().equals(Location.MODIFIED)) {
+						&& location.getStatus().equals(Location.MODIFIED)) {
 					previousLocation.setStatusModified(); // we need to update the primary location
-					l.setStatus(Location.UPDATED); // and clear the secondaries
+					location.setStatus(Location.UPDATED); // and clear the secondaries
 				}
 				continue;
 			}
-			previousLocation = l;
+			previousLocation = location;
 
 			JCheckBox checkBox = new JCheckBox();
 			locationCheckBoxes.add(checkBox);
-			checkBox.setSelected(l.isSwitchListEnabled());
+			checkBox.setSelected(location.isSwitchListEnabled());
 			checkBox.setText(name);
-			checkBox.setName(l.getName());
+			checkBox.setName(location.getName());
 			addLocationCheckBoxAction(checkBox);
 			addItemLeft(locationPanelCheckBoxes, checkBox, 0, y);
 
-			JLabel status = new JLabel(l.getStatus());
+			JLabel status = new JLabel(location.getStatus());
 			addItem(locationPanelCheckBoxes, status, 2, y);
 
 			JButton button = new JButton(Bundle.getMessage("Add"));
-			if (!l.getSwitchListComment().equals(""))
+			if (!location.getSwitchListComment().equals(""))
 				button.setText(Bundle.getMessage("Edit"));
-			button.setName(l.getName());
+			button.setName(location.getName());
 			addCommentButtonAction(button);
 			addItem(locationPanelCheckBoxes, button, 4, y);
 
 			JComboBox comboBox = TrainPrintUtilities.getPrinterJComboBox();
 			locationComboBoxes.add(comboBox);
-			comboBox.setSelectedItem(l.getDefaultPrinterName());
+			comboBox.setSelectedItem(location.getDefaultPrinterName());
 			addComboBoxAction(comboBox);
 			addItem(locationPanelCheckBoxes, comboBox, 6, y++);
 
@@ -387,8 +386,8 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 
 		// restore listeners
 		synchronized (this) {
-			for (int i = 0; i < locations.size(); i++) {
-				locations.get(i).addPropertyChangeListener(this);
+			for (Location location : locations) {
+				location.addPropertyChangeListener(this);
 			}
 		}
 
@@ -442,10 +441,8 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 	private void enableChangeButtons() {
 		changeButton.setEnabled(false);
 		csvChangeButton.setEnabled(false);
-		List<Location> locations = locationManager.getLocationsByNameList();
-		for (int i = 0; i < locations.size(); i++) {
-			Location l = locations.get(i);
-			if (l.getStatus().equals(Location.MODIFIED) && l.isSwitchListEnabled()) {
+		for (Location location : locationManager.getLocationsByNameList()) {
+			if (location.getStatus().equals(Location.MODIFIED) && location.isSwitchListEnabled()) {
 				changeButton.setEnabled(true);
 				csvChangeButton.setEnabled(true);
 			}
@@ -503,9 +500,8 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 
 	public void dispose() {
 		locationManager.removePropertyChangeListener(this);
-		List<Location> locations = locationManager.getLocationsByNameList();
-		for (int i = 0; i < locations.size(); i++) {
-			locations.get(i).removePropertyChangeListener(this);
+		for (Location location : locationManager.getLocationsByNameList()) {
+			location.removePropertyChangeListener(this);
 		}
 		super.dispose();
 	}

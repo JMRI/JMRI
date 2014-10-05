@@ -698,10 +698,11 @@ public class TrainBuilder extends TrainCommon {
 				validTracks.add(track);
 		}
 		if (validTracks.size() > 1) {
+			// need an object array for dialog window
 			Object[] tracks = new Object[validTracks.size()];
 			for (int i = 0; i < validTracks.size(); i++)
 				tracks[i] = validTracks.get(i);
-			// need an object array for dialog window
+
 			Track selected = (Track) JOptionPane.showInputDialog(null, MessageFormat.format(Bundle
 					.getMessage("TrainTerminatingStaging"), new Object[] { _train.getName(),
 					_terminateLocation.getName() }), Bundle.getMessage("SelectArrivalTrack"),
@@ -2358,9 +2359,8 @@ public class TrainBuilder extends TrainCommon {
 			return false;
 		}
 		if (departStageTrack.getNumberEngines() > 0) {
-			List<RollingStock> engs = engineManager.getList();
-			for (int i = 0; i < engs.size(); i++) {
-				Engine eng = (Engine) engs.get(i);
+			for (RollingStock rs : engineManager.getList()) {
+				Engine eng = (Engine) rs;
 				if (eng.getTrack() == departStageTrack) {
 					// has engine been assigned to another train?
 					if (eng.getRouteLocation() != null) {

@@ -311,11 +311,10 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 	public void load(Element root) {
 		if (root.getChild(Xml.SCHEDULES) != null) {
 			@SuppressWarnings("unchecked")
-			List<Element> l = root.getChild(Xml.SCHEDULES).getChildren(Xml.SCHEDULE);
-			if (log.isDebugEnabled())
-				log.debug("readFile sees " + l.size() + " schedules");
-			for (int i = 0; i < l.size(); i++) {
-				register(new Schedule(l.get(i)));
+			List<Element> eSchedules = root.getChild(Xml.SCHEDULES).getChildren(Xml.SCHEDULE);
+			log.debug("readFile sees {} schedules", eSchedules.size());
+			for (Element eSchedule : eSchedules) {
+				register(new Schedule(eSchedule));
 			}
 		}
 	}

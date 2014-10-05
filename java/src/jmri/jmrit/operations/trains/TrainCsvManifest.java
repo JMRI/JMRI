@@ -68,8 +68,8 @@ public class TrainCsvManifest extends TrainCsvCommon {
 		// train comment can have multiple lines
 		if (!train.getComment().equals("")) {
 			String[] comments = train.getComment().split(NEW_LINE); // NOI18N
-			for (int i = 0; i < comments.length; i++)
-				addLine(fileOut, TC + ESC + comments[i] + ESC);
+			for (String comment : comments)
+				addLine(fileOut, TC + ESC + comment + ESC);
 		}
 		if (Setup.isPrintRouteCommentsEnabled())
 			addLine(fileOut, RC + ESC + train.getRoute().getComment() + ESC);

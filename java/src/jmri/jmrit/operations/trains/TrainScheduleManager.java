@@ -233,8 +233,8 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
 		Element values = new Element(Xml.SCHEDULES);
 		// add entries
 		List<TrainSchedule> schedules = getSchedulesByIdList();
-		for (int i = 0; i < schedules.size(); i++) {
-			values.addContent(schedules.get(i).store());
+		for (TrainSchedule schedule : schedules) {
+			values.addContent(schedule.store());
 		}
 		root.addContent(values);
 	}
@@ -243,11 +243,11 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
 		Element e = root.getChild(Xml.SCHEDULES);
 		if (e != null) {
 			@SuppressWarnings("unchecked")
-			List<Element> schedules = root.getChild(Xml.SCHEDULES).getChildren(Xml.SCHEDULE);
+			List<Element> eSchedules = root.getChild(Xml.SCHEDULES).getChildren(Xml.SCHEDULE);
 			if (log.isDebugEnabled())
-				log.debug("TrainScheduleManager sees " + schedules.size() + " train schedules");
-			for (int i = 0; i < schedules.size(); i++) {
-				register(new TrainSchedule(schedules.get(i)));
+				log.debug("TrainScheduleManager sees " + eSchedules.size() + " train schedules");
+			for (Element eSchedule : eSchedules) {
+				register(new TrainSchedule(eSchedule));
 			}
 		}
 	}

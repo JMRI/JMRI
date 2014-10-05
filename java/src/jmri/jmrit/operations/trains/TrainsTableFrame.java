@@ -343,8 +343,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		}
 		if (ae.getSource() == printButton) {
 			List<Train> trains = getSortByList();
-			for (int i = 0; i < trains.size(); i++) {
-				Train train = trains.get(i);
+			for (Train train : trains) {
 				if (train.isBuildEnabled() && !train.printManifestIfBuilt() && trainManager.isBuildMessagesEnabled()) {
 					JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
 							.getMessage("NeedToBuildBeforePrinting"), new Object[] {
@@ -360,8 +359,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		if (ae.getSource() == openFileButton) {
 			// open the csv files
 			List<Train> trains = getSortByList();
-			for (int i = 0; i < trains.size(); i++) {
-				Train train = trains.get(i);
+			for (Train train : trains) {
 				if (train.isBuildEnabled()) {
 					if (!train.isBuilt() && trainManager.isBuildMessagesEnabled()) {
 						JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
@@ -390,8 +388,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 				return;
 			}
 			List<Train> trains = getSortByList();
-			for (int i = 0; i < trains.size(); i++) {
-				Train train = trains.get(i);
+			for (Train train : trains) {
 				if (train.isBuildEnabled()) {
 					if (!train.isBuilt() && trainManager.isBuildMessagesEnabled()) {
 						JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
@@ -422,8 +419,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		}
 		if (ae.getSource() == terminateButton) {
 			List<Train> trains = getSortByList();
-			for (int i = 0; i < trains.size(); i++) {
-				Train train = trains.get(i);
+			for (Train train : trains) {
 				if (train.isBuildEnabled() && train.isBuilt() && train.isPrinted()) {
 					train.terminate();
 				} else if (train.isBuildEnabled() && train.isBuilt() && !train.isPrinted()) {
@@ -449,8 +445,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 	 */
 	private void buildTrains() {
 		List<Train> trains = getSortByList();
-		for (int i = 0; i < trains.size(); i++) {
-			trains.get(i).buildIfSelected();
+		for (Train train : trains) {
+			train.buildIfSelected();
 		}
 	}
 

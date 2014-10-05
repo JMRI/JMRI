@@ -227,6 +227,8 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
 		roadNameInclude.setEnabled(enabled);
 		roadNameExclude.setEnabled(enabled);
 	}
+	
+	private static final int NUMBER_ROADS_PER_LINE = 6;
 
 	private void updateRoadNames() {
 		log.debug("Update road names");
@@ -243,14 +245,12 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
 				int x = 0;
 				int y = 0; // vertical position in panel
 
-				int numberOfRoads = 6;
-				String[] carRoads = _train.getRoadNames();
-				for (int i = 0; i < carRoads.length; i++) {
+				for (String roadName : _train.getRoadNames()) {
 					JLabel road = new JLabel();
-					road.setText(carRoads[i]);
+					road.setText(roadName);
 					addItemTop(panelRoads, road, x++, y);
 					// limit the number of roads per line
-					if (x > numberOfRoads) {
+					if (x > NUMBER_ROADS_PER_LINE) {
 						y++;
 						x = 0;
 					}
@@ -266,9 +266,8 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
 
 	private void deleteAllRoads() {
 		if (_train != null) {
-			String[] trainRoads = _train.getRoadNames();
-			for (int i = 0; i < trainRoads.length; i++) {
-				_train.deleteRoadName(trainRoads[i]);
+			for (String road : _train.getRoadNames()) {
+				_train.deleteRoadName(road);
 			}
 		}
 		updateRoadNames();

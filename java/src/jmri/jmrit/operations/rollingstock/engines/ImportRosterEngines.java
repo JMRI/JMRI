@@ -50,8 +50,7 @@ public class ImportRosterEngines extends Thread {
 		
 		List<RosterEntry> engines = Roster.instance().matchingList(null, null, null, null, null, null, null);
 		
-		for (int i=0; i<engines.size(); i++){
-			RosterEntry re = engines.get(i);
+		for (RosterEntry re : engines){
 			// add engines that have a road name and number
 			if (!re.getRoadName().equals("") && !re.getRoadNumber().equals("") ){
 				String road = re.getRoadName();

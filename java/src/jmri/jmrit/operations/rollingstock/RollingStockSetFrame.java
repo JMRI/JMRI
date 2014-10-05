@@ -389,8 +389,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 						List<RouteLocation> routeSequence = route.getLocationsBySequenceList();
 						boolean foundLoc = false; // when true, found the rs's location in the route
 						boolean foundDes = false;
-						for (int i = 0; i < routeSequence.size(); i++) {
-							RouteLocation rlocation = routeSequence.get(i);
+						for (RouteLocation rlocation : routeSequence) {
 							if (rs.getLocationName().equals(rlocation.getName())) {
 								rl = rlocation;
 								foundLoc = true;
@@ -565,8 +564,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	}
 	
 	protected boolean updateGroup(List<RollingStock> list) {
-		for (int i = 0; i < list.size(); i++) {
-			RollingStock rs = list.get(i);
+		for (RollingStock rs : list) {
 			if (rs == _rs)
 				continue;
 			// Location status and out of service

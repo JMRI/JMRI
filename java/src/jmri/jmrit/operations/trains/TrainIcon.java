@@ -116,18 +116,15 @@ public class TrainIcon extends LocoIcon {
 		Route route = _train.getRoute();
 		if (route == null)
 			return routeMenu;
-		List<RouteLocation> routeList = route.getLocationsBySequenceList();
-		CarManager carManager = CarManager.instance();
-		List<RollingStock> carList = carManager.getByTrainList(_train);
-		for (int r = 0; r < routeList.size(); r++) {
+		List<RollingStock> carList = CarManager.instance().getByTrainList(_train);
+		for (RouteLocation rl : route.getLocationsBySequenceList()) {
 			int pickupCars = 0;
 			int dropCars = 0;
 			String current = "     ";
-			RouteLocation rl = routeList.get(r);
 			if (_train.getCurrentLocation() == rl)
 				current = "-> "; // NOI18N
-			for (int j = 0; j < carList.size(); j++) {
-				Car car = (Car) carList.get(j);
+			for (RollingStock rs : carList) {
+				Car car = (Car) rs;
 				if (car.getRouteLocation() == rl && !car.getTrackName().equals("")) {
 					pickupCars++;
 				}

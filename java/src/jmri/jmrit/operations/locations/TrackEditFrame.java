@@ -756,7 +756,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	// TODO only update comboBox when train or route list changes.
 	private void updateDropOptions() {
 		dropPanel.removeAll();
-		int numberOfCheckboxes = getNumberOfCheckboxes();
+		int numberOfCheckboxes = getNumberOfCheckboxesPerLine();
 
 		JPanel p = new JPanel();
 		p.setLayout(new GridBagLayout());
@@ -829,7 +829,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	private void updatePickupOptions() {
 		log.debug("update pick up options");
 		pickupPanel.removeAll();
-		int numberOfCheckboxes = getNumberOfCheckboxes();
+		int numberOfCheckboxes = getNumberOfCheckboxesPerLine();
 
 		JPanel p = new JPanel();
 		p.setLayout(new GridBagLayout());
@@ -969,7 +969,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		p.add(clearButton);
 		p.add(setButton);
 		GridBagConstraints gc = new GridBagConstraints();
-		gc.gridwidth = getNumberOfCheckboxes() + 1;
+		gc.gridwidth = getNumberOfCheckboxesPerLine() + 1;
 		gc.gridy = ++y;
 		panelCheckBoxes.add(p, gc);
 
@@ -983,7 +983,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	int y = 0; // vertical position in panel
 
 	private void loadTypes(String[] types) {
-		int numberOfCheckboxes = getNumberOfCheckboxes();
+		int numberOfCheckboxes = getNumberOfCheckboxesPerLine();
 		for (String type : types) {
 			if (_location.acceptsTypeName(type)) {
 				JCheckBox checkBox = new JCheckBox();

@@ -164,8 +164,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 		removePropertyChangeEngines();
 		sysList = getSelectedEngineList();
 		// and add listeners back in
-		for (int i = 0; i < sysList.size(); i++)
-			sysList.get(i).addPropertyChangeListener(this);
+		for (RollingStock rs : sysList)
+			rs.addPropertyChangeListener(this);
 	}
 
 	public List<RollingStock> getSelectedEngineList() {
@@ -467,11 +467,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 
 	private void removePropertyChangeEngines() {
 		if (sysList != null) {
-			for (int i = 0; i < sysList.size(); i++) {
-				// if object has been deleted, it's not here; ignore it
-				RollingStock engine = sysList.get(i);
-				if (engine != null)
-					engine.removePropertyChangeListener(this);
+			for (RollingStock rs : sysList) {
+				rs.removePropertyChangeListener(this);
 			}
 		}
 	}

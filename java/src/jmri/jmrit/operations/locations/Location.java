@@ -1199,19 +1199,17 @@ public class Location implements java.beans.PropertyChangeListener {
 		// early version of operations called tracks "secondary"
 		if (e.getChildren(Xml.SECONDARY) != null) {
 			@SuppressWarnings("unchecked")
-			List<Element> l = e.getChildren(Xml.SECONDARY);
-			// if (log.isDebugEnabled()) log.debug("location ("+getName()+") has "+l.size()+" secondary locations");
-			for (int i = 0; i < l.size(); i++) {
-				register(new Track(l.get(i), this));
+			List<Element> eTracks = e.getChildren(Xml.SECONDARY);
+			for (Element eTrack : eTracks) {
+				register(new Track(eTrack, this));
 			}
 		}
 		if (e.getChildren(Xml.TRACK) != null) {
 			@SuppressWarnings("unchecked")
-			List<Element> l = e.getChildren(Xml.TRACK);
-			if (log.isDebugEnabled())
-				log.debug("location (" + getName() + ") has " + l.size() + " tracks");
-			for (int i = 0; i < l.size(); i++) {
-				register(new Track(l.get(i), this));
+			List<Element> eTracks = e.getChildren(Xml.TRACK);
+			log.debug("location ({}) has {} tracks", getName(), eTracks.size());
+			for (Element eTrack : eTracks) {
+				register(new Track(eTrack, this));
 			}
 		}
 		addPropertyChangeListeners();
@@ -1256,11 +1254,11 @@ public class Location implements java.beans.PropertyChangeListener {
 		// Old way of saving car types
 		if (Control.backwardCompatible) {
 			StringBuffer buf = new StringBuffer();
-			for (int i = 0; i < types.length; i++) {
+			for (String type : types) {
 				// remove types that have been deleted by user
-				if (CarTypes.instance().containsName(types[i])
-						|| EngineTypes.instance().containsName(types[i]))
-					buf.append(types[i] + "%%"); // NOI18N
+				if (CarTypes.instance().containsName(type)
+						|| EngineTypes.instance().containsName(type))
+					buf.append(type + "%%"); // NOI18N
 			}
 			e.setAttribute(Xml.CAR_TYPES, buf.toString());
 		}

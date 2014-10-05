@@ -20,8 +20,6 @@ import java.awt.GridBagLayout;
 import java.awt.Point;
 import java.awt.event.ComponentListener;
 import java.text.MessageFormat;
-import java.util.List;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -348,14 +346,10 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
 	}
 	
 	public void updateTrainIconCoordinates(Location l){
-		List<Route> routes = RouteManager.instance().getRoutesByIdList();
-		for (int i=0; i<routes.size(); i++){
-			Route route = routes.get(i);
-			List<RouteLocation> routeLocs = route.getLocationsBySequenceList();
-			for (int j=0; j<routeLocs.size(); j++){
-				RouteLocation rl = routeLocs.get(j);
+		for (Route route : RouteManager.instance().getRoutesByIdList()){
+			for (RouteLocation rl : route.getLocationsBySequenceList()){
 				if (rl.getName().equals(l.getName())){
-					log.debug("Updating train icon for route location "+rl.getName()+" in route "+route.getName());
+					log.debug("Updating train icon for route location {} in route {}", rl.getName(), route.getName());
 					rl.setTrainIconCoordinates();
 				}
 			}

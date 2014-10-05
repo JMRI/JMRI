@@ -2240,10 +2240,9 @@ public class Track {
 		}
 		if (e.getChild(Xml.DESTINATIONS) != null) {
 			@SuppressWarnings("unchecked")
-			List<Element> destinations = e.getChild(Xml.DESTINATIONS).getChildren(Xml.DESTINATION);
-			for (int i = 0; i < destinations.size(); i++) {
-				Element destination = destinations.get(i);
-				if ((a = destination.getAttribute(Xml.ID)) != null) {
+			List<Element> eDestinations = e.getChild(Xml.DESTINATIONS).getChildren(Xml.DESTINATION);
+			for (Element eDestination : eDestinations) {
+				if ((a = eDestination.getAttribute(Xml.ID)) != null) {
 					_destinationIdList.add(a.getValue());
 				}
 			}
