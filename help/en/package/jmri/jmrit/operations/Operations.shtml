@@ -2820,7 +2820,8 @@
 
    The "Reset Train" button allows you to remove locomotives and cars that have been assigned to a
    train. Useful when you want to try various build options and don't what to physically move
-   locomotives and cars on the railroad.
+   locomotives and cars on the railroad. Note that you can only reset a train that hasn't been
+   moved.
 
    <H3>Save Train</H3>
 
