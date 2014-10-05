@@ -39,6 +39,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import jmri.jmrit.roster.Roster;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
@@ -63,9 +64,6 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
         if (index != -1) {
             this.profilesTbl.setRowSelectionInterval(index, index);
         }
-        // Hide until I can figure out good way to export a profile
-        // Should I include items in external user/roster/etc directories?
-        this.btnExportProfile.setVisible(false);
     }
 
     /**
@@ -330,7 +328,9 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
             } catch (IOException ex) {
                 log.warn("Unable to write profiles while adding search path {}", chooser.getSelectedFile().getPath(), ex);
                 JOptionPane.showMessageDialog(this,
-                        Bundle.getMessage("ProfilePreferencesPanel.btnAddSearchPath.errorMessage", chooser.getSelectedFile().getPath(), ex.getLocalizedMessage()),
+                        Bundle.getMessage("ProfilePreferencesPanel.btnAddSearchPath.errorMessage",
+                                chooser.getSelectedFile().getPath(),
+                                ex.getLocalizedMessage()),
                         Bundle.getMessage("ProfilePreferencesPanel.btnAddSearchPath.errorTitle"),
                         JOptionPane.ERROR_MESSAGE);
             }
@@ -361,12 +361,82 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
     }//GEN-LAST:event_searchPathsValueChanged
 
     private void btnExportProfileActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnExportProfileActionPerformed
+        Profile p = ProfileManager.defaultManager().getProfiles(profilesTbl.getSelectedRow());
         JFileChooser chooser = new JFileChooser();
         chooser.setFileFilter(new FileNameExtensionFilter("ZIP Archives", "zip"));
         chooser.setFileView(new ProfileFileView());
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        chooser.setSelectedFile(new File(p.getName() + ".zip"));
         if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-            // TODO: make ZIP archive of Profile
+            try {
+                if (chooser.getSelectedFile().exists()) {
+                    int result = JOptionPane.showConfirmDialog(this,
+                            Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.overwriteMessage",
+                                    chooser.getSelectedFile().getName(),
+                                    chooser.getSelectedFile().getParentFile().getName()),
+                            Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.overwriteTitle"),
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.WARNING_MESSAGE);
+                    if (result == JOptionPane.YES_OPTION) {
+                        chooser.getSelectedFile().delete();
+                    } else {
+                        this.btnExportProfileActionPerformed(evt);
+                        return;
+                    }
+                }
+                boolean exportExternalUserFiles = false;
+                boolean exportExternalRoster = false;
+                if (!(new File(FileUtil.getUserFilesPath())).getCanonicalPath().startsWith(p.getPath().getCanonicalPath())) {
+                    int result = JOptionPane.showConfirmDialog(this,
+                            Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.externalUserFilesMessage"),
+                            Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.externalUserFilesTitle"),
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE);
+                    if (result == JOptionPane.YES_OPTION) {
+                        exportExternalUserFiles = true;
+                    }
+                }
+                if (!(new File(Roster.getFileLocation())).getCanonicalPath().startsWith(p.getPath().getCanonicalPath())
+                        && !Roster.getFileLocation().startsWith(FileUtil.getUserFilesPath())) {
+                    int result = JOptionPane.showConfirmDialog(this,
+                            Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.externalRosterMessage"),
+                            Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.externalRosterTitle"),
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE);
+                    if (result == JOptionPane.YES_OPTION) {
+                        exportExternalRoster = true;
+                    }
+                }
+                if (ProfileManager.defaultManager().getActiveProfile() == p) {
+                    // TODO: save roster, panels, operations if needed and safe to do so
+                }
+                ProfileManager.defaultManager().export(p, chooser.getSelectedFile(), exportExternalUserFiles, exportExternalRoster);
+                log.info("Profile \"{}\" exported to \"{}\"", p.getName(), chooser.getSelectedFile().getName());
+                JOptionPane.showMessageDialog(this,
+                        Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.successMessage",
+                                p.getName(), chooser.getSelectedFile().getName()),
+                        Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.successTitle"),
+                        JOptionPane.OK_OPTION,
+                        JOptionPane.INFORMATION_MESSAGE);
+            } catch (IOException ex) {
+                log.warn("Unable to export profile \"{}\" to {}", p.getName(), chooser.getSelectedFile().getPath(), ex);
+                JOptionPane.showMessageDialog(this,
+                        Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.errorMessage",
+                                p.getName(),
+                                chooser.getSelectedFile().getPath(),
+                                ex.getLocalizedMessage()),
+                        Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.errorTitle"),
+                        JOptionPane.ERROR_MESSAGE);
+            } catch (JDOMException ex) {
+                log.warn("Unable to export profile \"{}\" to {}", p.getName(), chooser.getSelectedFile().getPath(), ex);
+                JOptionPane.showMessageDialog(this,
+                        Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.errorMessage",
+                                p.getName(),
+                                chooser.getSelectedFile().getPath(),
+                                ex.getLocalizedMessage()),
+                        Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.errorTitle"),
+                        JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btnExportProfileActionPerformed
 

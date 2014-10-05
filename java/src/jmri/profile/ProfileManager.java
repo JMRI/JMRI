@@ -13,7 +13,10 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 import jmri.beans.Bean;
+import jmri.jmrit.roster.Roster;
 import jmri.util.FileUtil;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -608,6 +611,98 @@ public class ProfileManager extends Bean {
             didMigrate = true;
         } // all other cases need no prep
         return didMigrate;
+    }
+
+    /**
+     * Export the {@link jmri.profile.Profile} to a JAR file.
+     *
+     * @param profile The profile to export
+     * @param target The file to export the profile into
+     * @param exportExternalUserFiles If the User Files are not within the
+     * profile directory, should they be included?
+     * @param exportExternalRoster It the roster is not within the profile
+     * directory, should it be included?
+     * @throws IOException
+     * @throws org.jdom.JDOMException
+     */
+    public void export(Profile profile, File target, boolean exportExternalUserFiles, boolean exportExternalRoster) throws IOException, JDOMException {
+        if (!target.exists()) {
+            target.createNewFile();
+        }
+        String tempDirPath = System.getProperty("java.io.tmpdir") + File.separator + "JMRI" + System.currentTimeMillis(); // NOI18N
+        FileUtil.createDirectory(tempDirPath);
+        File tempDir = new File(tempDirPath);
+        File tempProfilePath = new File(tempDir, profile.getPath().getName());
+        FileUtil.copy(profile.getPath(), tempProfilePath);
+        File config = new File(tempProfilePath, "ProfileConfig.xml"); // NOI18N
+        Document doc = (new SAXBuilder()).build(config);
+        if (exportExternalUserFiles) {
+            FileUtil.copy(new File(FileUtil.getUserFilesPath()), tempProfilePath);
+            Element fileLocations = doc.getRootElement().getChild("fileLocations"); // NOI18N
+            for (Object fl : fileLocations.getChildren()) {
+                if (((Element) fl).getAttribute("defaultUserLocation") != null) { // NOI18N
+                    ((Element) fl).setAttribute("defaultUserLocation", "profile:"); // NOI18N
+                }
+            }
+        }
+        if (exportExternalRoster) {
+            FileUtil.copy(new File(Roster.defaultRosterFilename()), new File(tempProfilePath, "roster.xml")); // NOI18N
+            FileUtil.copy(new File(Roster.getFileLocation(), "roster"), new File(tempProfilePath, "roster")); // NOI18N
+            Element roster = doc.getRootElement().getChild("roster"); // NOI18N
+            roster.removeAttribute("directory"); // NOI18N
+        }
+        if (exportExternalUserFiles || exportExternalRoster) {
+            FileWriter fw = new FileWriter(config);
+            (new XMLOutputter(Format.getPrettyFormat())).output(doc, fw);
+            fw.close();
+        }
+        FileOutputStream out = new FileOutputStream(target);
+        ZipOutputStream zip = new ZipOutputStream(out);
+        this.exportDirectory(zip, tempProfilePath, tempProfilePath.getPath());
+        zip.close();
+        out.close();
+        FileUtil.delete(tempDir);
+    }
+
+    private void exportDirectory(ZipOutputStream zip, File source, String root) throws IOException {
+        for (File file : source.listFiles()) {
+            if (file.isDirectory()) {
+                if (!Profile.isProfile(file)) {
+                    ZipEntry entry = new ZipEntry(this.relativeName(file, root));
+                    entry.setTime(file.lastModified());
+                    zip.putNextEntry(entry);
+                    this.exportDirectory(zip, file, root);
+                }
+                continue;
+            }
+            this.exportFile(zip, file, root);
+        }
+    }
+
+    private void exportFile(ZipOutputStream zip, File source, String root) throws IOException {
+        byte[] buffer = new byte[1024];
+        int length;
+
+        FileInputStream input = new FileInputStream(source);
+        ZipEntry entry = new ZipEntry(this.relativeName(source, root));
+        entry.setTime(source.lastModified());
+        zip.putNextEntry(entry);
+        while ((length = input.read(buffer)) > 0) {
+            zip.write(buffer, 0, length);
+        }
+        zip.closeEntry();
+        input.close();
+    }
+
+    private String relativeName(File file, String root) {
+        String path = file.getPath();
+        if (path.startsWith(root)) {
+            path = path.substring(root.length());
+        }
+        if (file.isDirectory() && !path.endsWith("/")) {
+            path = path + "/";
+        }
+        return path.replaceAll(File.separator, "/");
     }
 
     /**
