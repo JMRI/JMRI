@@ -427,6 +427,8 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 		}
 		// Now run the user specified custom Switch List processor program
 		TrainCustomSwitchList.process();
+		// set trains switch lists printed
+		TrainManager.instance().setTrainsSwitchListStatus(Train.PRINTED);
 	}
 
 	private void enableSaveButton(boolean enable) {
