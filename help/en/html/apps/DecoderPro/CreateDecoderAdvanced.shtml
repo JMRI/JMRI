@@ -313,6 +313,36 @@ should be listed second.
 For an example of where to position it etc., see the 
 <a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/xml/decoders/ESU_LokSoundV4_0.xml" target="_blank">
     xml/decoders/ESU_LokSoundV4_0.xml</a> file.
+    
+<h4>Split Variables - "long" addresses over 2 CVs</h4>
+
+<p>Some decoders, mostly accessory decoders, are using "long" addresses that are split over 2 CVs, contiguous or not.</p>
+<p>CV1 and CV9 are standardized by NMRA for accessory decoders primary address. See <a href="http://www.nmra.org/sites/default/files/standards/sandrp/pdf/s-9.2.2_decoder_cvs_2012.07.pdf">NMRA standard</a></p>
+
+<p>Long addresses can be accessed via "splitVal" type, as in the following example:</p>
+
+<code><pre>
+    &lt;variable CV="1" item="Accessory Address" default="1" minOut="1"&gt;
+        &lt;splitVal highCV="9" upperMask="XXXXXVVV"/&gt;
+        &lt;label&gt;Accessory Address&lt;/label&gt;
+    &lt;/variable&gt;
+</pre></code>
+
+<p>The first declared CV is the LSB (Least Significant Bit) whereas the "high CV" is the MSB (Most Significant Bit).</p>
+
+<p>splitVal actually has two parameters, a "Factor" and an "Offset":</p>
+<ul>
+    <li>Value to put in CVs = ((value in text field) - Offset)/Factor</li>
+    <li>Value to put in text field = ((value in CVs) * Factor) + Offset</li>
+</ul>
+<code><pre>
+    &lt;splitVal highCV="9" factor="4" offset="-3"/&gt;
+</pre></code>
+
+<p>For an example, see the <a href="https://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/xml/decoders/SPROG_DCC_Servo6.xml?format=raw">xml/decoders/SPROG_DCC_Servo6.xml</a> file.</p>
+
+<p>For details and more advanced features, see this <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html" target="_blank">JavaDoc page</a></p>
+    
 
 <h3 id="conditional">Conditional Decoder Definitions</h3>
 
