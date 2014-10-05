@@ -37,28 +37,41 @@
     same profile.</p>
 
 <p>By default, when a JMRI application starts up, it prompts the user 
-for which configuration profile to use:
-<p><img src="Set_Active_Profile.png"/>
+    for which configuration profile to use: <img src="Set_Active_Profile.png"></p>
 <p>If the user doesn't select a new profile and click OK, the program will
 continue with the default profile after a short delay. You can check a box in the
-preferences to bypass this step and go directly to the last-used profile.
+preferences to bypass this step and go directly to the last-used profile.</p>
 
 <h2>Profile Management</h2>
 
 <p>Configuration profiles can be managed in the application preferences, under
     the Profile Configuration tab.</p>
 
-<img src="Profile_Preferences_prompt.png"/>
+<img src="Profile_Preferences_prompt.png">
 
 <p>The "Currently active profile" is being used by this run of the JMRI application, 
-and is also where preferences changes will be saved.
+    and is also where preferences changes will be saved.</p>
 
 <p>To use or configure a different profile, select it, click "Activate", and restart
-the program.
+    the program.</p>
 
 <p>For more information on how to configure JMRI to share its
 configuration files between multiple computers, see the
 <a href="Dropbox.shtml">page on using Dropbox with JMRI</a>.
+
+<h2>Sharing Profiles</h2>
+<h3>Exporting</h3>
+<p>Profiles can be exported from the application preferences Config Profile
+    section. An exported profile is a compressed archive containing the profile's
+    contents, and will optionally contain the user files and roster if they are
+    stored outside the profile.</p>
+<h3>Importing</h3>
+<p>JMRI does not yet directly support importing profiles.</p>
+<p>A profile can be imported by uncompressing it a native archive management
+    utility into a new directory and then opening while launching JMRI or from
+    the application preferences by clicking the "Add Existing..." button.</p>
+<p>Note that using the profile Import/Export capability to copy JMRI data back
+    and forth between two computers is neither supported or recommended.</p>
 
 <h2>Upgrading from Earlier Versions of JMRI</h2>
 
