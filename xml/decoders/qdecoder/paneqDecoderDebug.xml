@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2014 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- 																																				-->
+<!-- version 1 - Initial creation- Specific for Qdecoder accessory decoder	-->
+<!-- 					Alain Le Marchand (2014-09-28)																-->
+<!-- 																																				-->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+  <name>Qdecoder debug</name>
+		<column>
+			<label>
+				<text>Undocumented CVs - Use with caution</text>
+				<text xml:lang="de">Undokumentierte CVs - Mit Vorsicht benutzen</text>
+			</label>
+			<label><text> </text></label>
+			<display item="Anti-Noise"/>
+			<label><text> </text></label>
+			<separator/>
+			<label><text>         </text></label>
+			<row>
+				<column>
+					<display item="Sniffer Debug CV1.0" format="checkbox"/>
+					<display item="Sniffer Debug CV1.1" format="checkbox"/>
+					<display item="Sniffer Debug CV1.2" format="checkbox"/>
+					<display item="Sniffer Debug CV1.3" format="checkbox"/>
+					<display item="Sniffer Debug CV1.4" format="checkbox"/>
+					<display item="Sniffer Debug CV1.5" format="checkbox"/>
+					<display item="Sniffer Debug CV1.6" format="checkbox"/>
+					<display item="Sniffer Debug CV1.7" format="checkbox"/>
+				</column>
+				<label><text>         </text></label>
+				<separator/>
+				<label><text>         </text></label>
+				<column>
+					<display item="Sniffer Debug CV2.0" format="checkbox"/>
+					<display item="Sniffer Debug CV2.1" format="checkbox"/>
+					<display item="Sniffer Debug CV2.2" format="checkbox"/>
+					<display item="Sniffer Debug CV2.3" format="checkbox"/>
+					<display item="Sniffer Debug CV2.4" format="checkbox"/>
+					<display item="Sniffer Debug CV2.5" format="checkbox"/>
+					<display item="Sniffer Debug CV2.6" format="checkbox"/>
+					<display item="Sniffer Debug CV2.7" format="checkbox"/>
+				</column>
+				<label><text>         </text></label>
+				<separator/>
+				<label><text>         </text></label>
+				<column>
+					<display item="Sniffer Debug CV3.0" format="checkbox"/>
+					<display item="Sniffer Debug CV3.1" format="checkbox"/>
+					<display item="Sniffer Debug CV3.2" format="checkbox"/>
+					<display item="Sniffer Debug CV3.3" format="checkbox"/>
+				</column>
+			</row>
+		</column>
+</pane>

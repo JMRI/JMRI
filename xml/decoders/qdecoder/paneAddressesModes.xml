@@ -1,0 +1,1132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2014 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- 																																				-->
+<!-- version 1 - Initial creation- Specific for Qdecoder accessory decoder	-->
+<!-- 					Alain Le Marchand (2014-08-30)																-->
+<!-- 																																				-->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Addresses &amp; Modes</name>
+  <name xml:lang="de">Adressen &amp; Mode</name>
+  <column>
+		<row>
+		<column>
+			<label>
+				<text>&lt;html&gt;&lt;i&gt;Note: Please read the manual before using this pane.&lt;/i&gt;&lt;/html&gt;</text>
+				<text xml:lang="de">&lt;html&gt;&lt;i&gt;Hinweis: Bitte lesen Sie das Handbuch vor der Verwendung dieses Fenster.&lt;/i&gt;&lt;/html&gt;</text>
+			</label>
+			<label><text>  </text></label>
+			<label>
+				<text>This interface does not check the proper assignment of modes.</text>
+				<text xml:lang="de">Diese Schnittstelle ist nicht die richtige Zuordnung der Modi zu prüfen.</text>
+			</label>
+			<label>
+				<text>Some modes require the subsequent modes to be zeroed.</text>
+				<text xml:lang="de">Einige Modi erfordern die nachfolgenden Modi, um auf Null gesetzt werden.</text>
+			</label>
+			<label><text> </text></label>
+		</column>
+		<label><text>                              </text></label>
+		<separator/>
+		<label><text>                              </text></label>
+		<column>
+			<label>
+				<text>&lt;html&gt;&lt;i&gt;Fast Mode Reset (Use with caution)&lt;/i&gt;&lt;/html&gt;</text>
+				<text xml:lang="de">&lt;html&gt;&lt;i&gt;Schnell Mode Reset (mit Vorsicht verwenden)&lt;/i&gt;&lt;/html&gt;</text>
+			</label>
+			<label>
+				<text>&lt;html&gt;Input the accessory address of the first article in first address (A0).&lt;br&gt;Then write the Mode value in CV7 (from JMRI Single CV Programmer).&lt;br&gt;The Reset menu contains Fast Mode Reset for the most commonly used Modes.&lt;/html&gt;</text>
+				<text xml:lang="de">&lt;html&gt;Legen Sie die Zubehöradresse des ersten Artikels in der ersten Adresse (A0).&lt;br&gt;Schreiben Sie anschließend den Wert für den Mode auf die CV7 (JMRI Prog. eines einzelnen CV's).&lt;br&gt;Die Zurücksetzen-Menü enthält Schnell Mode Reset für die am häufigsten verwendeten Modi.&lt;/html&gt;</text>
+			</label>
+			<label><text> </text></label>
+		</column>
+		</row>
+		<separator/>
+		<row>
+		<grid ipadx="2" ipady="5" weightx="1">
+			<griditem gridx="0" gridy="0" anchor="LINE_START">
+				<column>
+					<label>
+						<text>            Address</text>
+						<text xml:lang="de">            Adresse</text>
+					</label>
+					<label><text>    </text></label>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Accessory Address A0" label="A0     "/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Accessory Address A1" label="A1     "/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Accessory Address A2" label="A2     "/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Accessory Address A3" label="A3     "/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Accessory Address A4" label="A4     "/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Accessory Address A5" label="A5     "/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Accessory Address A6" label="A6     "/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Accessory Address A7" label="A7     "/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Accessory Address A8" label="A8     "/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Accessory Address A9" label="A9     "/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Accessory Address A10" label="A10    "/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Accessory Address A11" label="A11    "/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Accessory Address A12" label="A12    "/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Accessory Address A13" label="A13    "/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Accessory Address A14" label="A14    "/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Accessory Address A15" label="A15    "/>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label>
+						<text>Mode</text>
+						<text xml:lang="de">Mode</text>
+					</label>
+					<label><text>    </text></label>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching Mode A0" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching Mode A1" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching Mode A2" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching Mode A3" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching Mode A4" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching Mode A5" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching Mode A6" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching Mode A7" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching Mode A8" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching Mode A9" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching Mode A10" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching Mode A11" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching Mode A12" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching Mode A13" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching Mode A14" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching Mode A15" label=""/>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label>
+						<text>Dimming</text>
+						<text xml:lang="de">Dimmung</text>
+					</label>
+					<label>
+						<text>    Off</text>
+						<text xml:lang="de">    Aus</text>
+					</label>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off A0" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off A1" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off A2" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off A3" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off A4" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off A5" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off A6" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off A7" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off A8" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off A9" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off A10" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off A11" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off A12" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off A13" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off A14" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off A15" label=""/>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label>
+						<text>Off</text>
+						<text xml:lang="de">Aus</text>
+					</label>
+					<label><text>    </text></label>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off inactive A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off inactive A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off inactive A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off inactive A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off inactive A4" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off inactive A5" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off inactive A6" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off inactive A7" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off inactive A8" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off inactive A9" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off inactive A10" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off inactive A11" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off inactive A12" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off inactive A13" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off inactive A14" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming Off inactive A15" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label>
+						<text>Dimming</text>
+						<text xml:lang="de">Dimmung</text>
+					</label>
+					<label>
+						<text>    On</text>
+						<text xml:lang="de">    Ein</text>
+					</label>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming On A0" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming On A1" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming On A2" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming On A3" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming On A4" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming On A5" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming On A6" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming On A7" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming On A8" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming On A9" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming On A10" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming On A11" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming On A12" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming On A13" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming On A14" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Dimming On A15" label=""/>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label>
+						<text>Switch On</text>
+						<text xml:lang="de">  Schalt-</text>
+					</label>
+					<label>
+						<text>  delay</text>
+						<text xml:lang="de">verzögerung</text>
+					</label>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching On delay A0" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching On delay A1" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching On delay A2" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching On delay A3" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching On delay A4" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching On delay A5" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching On delay A6" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching On delay A7" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching On delay A8" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching On delay A9" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching On delay A10" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching On delay A11" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching On delay A12" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching On delay A13" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching On delay A14" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching On delay A15" label=""/>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label>
+						<text>On/</text>
+						<text xml:lang="de">Ein/</text>
+					</label>
+					<label>
+						<text>Off</text>
+						<text xml:lang="de"> Aus</text>
+					</label>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching delay A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching delay A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching delay A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching delay A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching delay A4" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching delay A5" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching delay A6" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching delay A7" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching delay A8" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching delay A9" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching delay A10" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching delay A11" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching delay A12" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching delay A13" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching delay A14" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Switching delay A15" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label>
+						<text>Fading in</text>
+						<text xml:lang="de">Aufblend</text>
+					</label>
+					<label>
+						<text>    time</text>
+						<text xml:lang="de">    -zeit</text>
+					</label>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in A0" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in A1" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in A2" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in A3" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in A4" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in A5" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in A6" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in A7" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in A8" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in A9" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in A10" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in A11" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in A12" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in A13" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in A14" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in A15" label=""/>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label>
+						<text>  in</text>
+						<text xml:lang="de">  in</text>
+					</label>
+					<label>
+						<text>Sec.</text>
+						<text xml:lang="de">Sek.</text>
+					</label>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in unit A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in unit A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in unit A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in unit A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in unit A4" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in unit A5" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in unit A6" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in unit A7" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in unit A8" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in unit A9" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in unit A10" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in unit A11" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in unit A12" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in unit A13" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in unit A14" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading in unit A15" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+		<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label>
+						<text>Fading out</text>
+						<text xml:lang="de">Abblend</text>
+					</label>
+					<label>
+						<text>    time</text>
+						<text xml:lang="de">    -zeit</text>
+					</label>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out A0" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out A1" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out A2" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out A3" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out A4" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out A5" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out A6" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out A7" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out A8" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out A9" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out A10" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out A11" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out A12" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out A13" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out A14" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out A15" label=""/>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label>
+						<text>  in</text>
+						<text xml:lang="de">  in</text>
+					</label>
+					<label>
+						<text>Sec.</text>
+						<text xml:lang="de">Sek.</text>
+					</label>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out unit A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out unit A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out unit A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out unit A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out unit A4" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out unit A5" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out unit A6" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out unit A7" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out unit A8" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out unit A9" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out unit A10" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out unit A11" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out unit A12" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out unit A13" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out unit A14" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Fading out unit A15" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label>
+						<text> On</text>
+						<text xml:lang="de"> An-</text>
+					</label>
+					<label>
+						<text>time</text>
+						<text xml:lang="de">zeit</text>
+					</label>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="On Time A0" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="On Time A1" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="On Time A2" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="On Time A3" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="On Time A4" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="On Time A5" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="On Time A6" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="On Time A7" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="On Time A8" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="On Time A9" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="On Time A10" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="On Time A11" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="On Time A12" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="On Time A13" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="On Time A14" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="On Time A15" label=""/>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label>
+						<text> Off</text>
+						<text xml:lang="de"> Ab-</text>
+					</label>
+					<label>
+						<text>time</text>
+						<text xml:lang="de">zeit</text>
+					</label>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Off Time A0" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Off Time A1" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Off Time A2" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Off Time A3" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Off Time A4" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Off Time A5" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Off Time A6" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Off Time A7" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Off Time A8" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Off Time A9" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Off Time A10" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Off Time A11" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Off Time A12" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Off Time A13" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Off Time A14" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Off Time A15" label=""/>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label>
+						<text>Number</text>
+						<text xml:lang="de">Anzahl</text>
+					</label>
+					<label>
+						<text>Pulses</text>
+						<text xml:lang="de">Pulse</text>
+					</label>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Number Pulses A0" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Number Pulses A1" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Number Pulses A2" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Number Pulses A3" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Number Pulses A4" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Number Pulses A5" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Number Pulses A6" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Number Pulses A7" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Number Pulses A8" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Number Pulses A9" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Number Pulses A10" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Number Pulses A11" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Number Pulses A12" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Number Pulses A13" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Number Pulses A14" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Number Pulses A15" label=""/>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label>
+						<text>Alter.</text>
+						<text xml:lang="de">wechsel-</text>
+					</label>
+					<label>
+						<text>flash.</text>
+						<text xml:lang="de">blinken</text>
+					</label>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Pulse type A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Pulse type A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Pulse type A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Pulse type A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Pulse type A4" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Pulse type A5" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Pulse type A6" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Pulse type A7" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Pulse type A8" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Pulse type A9" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Pulse type A10" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Pulse type A11" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Pulse type A12" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Pulse type A13" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Pulse type A14" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Pulse type A15" label="" format="checkbox"/>
+			</griditem>
+			<!-- Following items only for all-in-one decoders -->
+			<group include="Z1-16plus,function-4plus,function-8plus">
+				<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+					<column>
+						<label><text>    </text></label>
+					</column>
+				</griditem>
+				<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+					<column>
+						<label>
+							<text>Light</text>
+							<text xml:lang="de">Licht-</text>
+						</label>
+						<label>
+							<text>Effect</text>
+							<text xml:lang="de">effekt</text>
+						</label>
+						<label><text>    </text></label>
+					</column>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Effect A0" label=""/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Effect A1" label=""/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Effect A2" label=""/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Effect A3" label=""/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Effect A4" label=""/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Effect A5" label=""/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Effect A6" label=""/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Effect A7" label=""/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Effect A8" label=""/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Effect A9" label=""/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Effect A10" label=""/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Effect A11" label=""/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Effect A12" label=""/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Effect A13" label=""/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Effect A14" label=""/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Effect A15" label=""/>
+				</griditem>
+				<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+					<column>
+						<label>
+							<text>Light</text>
+							<text xml:lang="de">Licht-</text>
+						</label>
+						<label>
+							<text>Param.</text>
+							<text xml:lang="de">param.</text>
+						</label>
+						<label><text>    </text></label>
+					</column>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Parameter A0" label=""/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Parameter A1" label=""/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Parameter A2" label=""/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Parameter A3" label=""/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Parameter A4" label=""/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Parameter A5" label=""/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Parameter A6" label=""/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Parameter A7" label=""/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Parameter A8" label=""/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Parameter A9" label=""/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Parameter A10" label=""/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Parameter A11" label=""/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Parameter A12" label=""/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Parameter A13" label=""/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Parameter A14" label=""/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="Light Parameter A15" label=""/>
+				</griditem>
+			</group>
+			<!-- end of items only for all-in-one decoders -->
+		</grid>
+		</row>
+  </column>
+</pane>
