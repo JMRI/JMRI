@@ -42,6 +42,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import jmri.jmrit.roster.Roster;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
+import org.jdom.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -416,7 +417,6 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                         Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.successMessage",
                                 p.getName(), chooser.getSelectedFile().getName()),
                         Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.successTitle"),
-                        JOptionPane.OK_OPTION,
                         JOptionPane.INFORMATION_MESSAGE);
             } catch (IOException ex) {
                 log.warn("Unable to export profile \"{}\" to {}", p.getName(), chooser.getSelectedFile().getPath(), ex);
