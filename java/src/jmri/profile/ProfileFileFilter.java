@@ -1,15 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.profile;
 
 import java.io.File;
 import javax.swing.filechooser.FileFilter;
 
 /**
+ * FileFilter for use in a JFileChooser.
  *
- * @author rhwood
+ * @author Randall Wood Copyright (C) 2013, 2014
  */
 public class ProfileFileFilter extends FileFilter {
 

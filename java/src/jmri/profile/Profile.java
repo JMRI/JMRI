@@ -216,11 +216,11 @@ public class Profile {
      */
     public static boolean containsProfile(File path) {
         if (path.isDirectory()) {
-            if ((new File(path, PROPERTIES)).canRead()) {
+            if (Profile.isProfile(path)) {
                 return true;
             } else {
-                for (String filename : path.list()) {
-                    if (Profile.containsProfile(new File(path, filename))) {
+                for (File file : path.listFiles()) {
+                    if (Profile.containsProfile(file)) {
                         return true;
                     }
                 }
@@ -238,10 +238,26 @@ public class Profile {
      */
     public static boolean inProfile(File path) {
         if (path.getParentFile() != null) {
-            if ((new File(path.getParentFile(), PROPERTIES)).canRead()) {
+            if (Profile.isProfile(path.getParentFile())) {
                 return true;
             }
             return Profile.inProfile(path.getParentFile());
+        }
+        return false;
+    }
+
+    /**
+     * Test if the given path is a Profile.
+     *
+     * @param path
+     * @return true if path is a Profile.
+     * @since 3.9.4
+     */
+    public static boolean isProfile(File path) {
+        if (path.isDirectory()) {
+            if ((new File(path, PROPERTIES)).canRead()) {
+                return true;
+            }
         }
         return false;
     }

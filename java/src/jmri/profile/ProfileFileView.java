@@ -1,7 +1,6 @@
 package jmri.profile;
 
 import java.io.File;
-import java.util.Arrays;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.filechooser.FileView;
@@ -10,8 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * FileView for use in a JFileChooser.
  *
- * @author rhwood
+ * @author Randall Wood Copyright (C) 2013, 2014
  */
 public class ProfileFileView extends FileView {
 
@@ -29,7 +29,7 @@ public class ProfileFileView extends FileView {
     @Override
     public Boolean isTraversable(File f) {
         try {
-            if (f.isDirectory() && f.canRead() && Arrays.asList(f.list()).contains(Profile.PROPERTIES)) {
+            if (Profile.isProfile(f)) {
                 return false;
             }
         } catch (NullPointerException ex) {
