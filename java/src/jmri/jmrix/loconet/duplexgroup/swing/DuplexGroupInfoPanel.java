@@ -19,6 +19,10 @@ import javax.swing.*;
  * Provides a JPanel for querying and configuring Digitrax Duplex (radio)
  * network identification.  Provides useful function if one or more UR92
  * devices are connected to LocoNet.
+ * 
+ * This tool works equally well with UR92 and UR92CE devices.  The UR92 and 
+ * UR92CE behave identically with respect to this tool.  For the purpose of 
+ * clarity, only the term UR92 is used herein.
  *
  * This tool makes use of LocoNet messages which have not been publicly
  * documented by Digitrax.  This tool is made possible by the reverse-
@@ -61,8 +65,7 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
         swingPasswordValueField.addPropertyChangeListener(ValidatedTextField.VTF_PC_STAT_LN_UPDATE,this);
         swingIdValueField.addPropertyChangeListener(ValidatedTextField.VTF_PC_STAT_LN_UPDATE,this);
 
-        duplexGroupImplementation = new LnDplxGrpInfoImpl();
-        duplexGroupImplementation.addPropertyChangeListener(this);
+        duplexGroupImplementation = null;
 
     }
 
@@ -183,6 +186,9 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     @Override public void initComponents(LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
+        duplexGroupImplementation = new LnDplxGrpInfoImpl(memo);
+        duplexGroupImplementation.addPropertyChangeListener(this);
+
         scanButtonActionPerformed();    // begin a query for UR92s
     }
 
