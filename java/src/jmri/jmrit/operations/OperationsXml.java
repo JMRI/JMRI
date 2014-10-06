@@ -100,7 +100,7 @@ public class OperationsXml extends XmlFile {
 
 	public String getDefaultOperationsFilename() {
 		return getFileLocation() + getOperationsDirectoryName() + File.separator + getOperationsFileName();
-		//return OperationsManager.getInstance().getPath(getOperationsFileName());
+		// return OperationsManager.getInstance().getPath(getOperationsFileName());
 	}
 
 	public static void setOperationsDirectoryName(String name) {
@@ -127,7 +127,7 @@ public class OperationsXml extends XmlFile {
 	 * Absolute path to location of Operations files.
 	 * <P>
 	 * Default is in the user's files path, but can be set to anything.
-	 *
+	 * 
 	 * @see jmri.util.FileUtil#getUserFilesPath()
 	 */
 	public static String getFileLocation() {

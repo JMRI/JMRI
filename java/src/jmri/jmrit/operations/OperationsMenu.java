@@ -16,7 +16,7 @@ import javax.swing.*;
  * @version $Revision$
  */
 public class OperationsMenu extends JMenu {
-	
+
 	public OperationsMenu(String name) {
 		this();
 		setText(name);

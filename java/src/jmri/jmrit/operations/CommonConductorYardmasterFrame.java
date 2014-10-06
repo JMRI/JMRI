@@ -187,7 +187,7 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 			pLocos.setLayout(new BoxLayout(pLocos, BoxLayout.Y_AXIS));
 			pWorkPanes.setLayout(new BoxLayout(pWorkPanes, BoxLayout.Y_AXIS));
 		}
-		
+
 		pLocos.add(pPickupLocos);
 		pLocos.add(pSetoutLocos);
 		pWorkPanes.add(pickupPane);
@@ -348,7 +348,7 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 				pSetoutLocos.add(checkBox);
 			}
 		}
-		// pad the panels in case the horizontal scroll bar appears 
+		// pad the panels in case the horizontal scroll bar appears
 		pPickupLocos.add(new JLabel(Space));
 		pSetoutLocos.add(new JLabel(Space));
 	}
@@ -485,7 +485,7 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 			if (!Setup.isSortByTrackEnabled())
 				break;
 		}
-		// pad the panels in case the horizontal scroll bar appears 
+		// pad the panels in case the horizontal scroll bar appears
 		pPickups.add(new JLabel(Space));
 		pSetouts.add(new JLabel(Space));
 		pMoves.add(new JLabel(Space));
