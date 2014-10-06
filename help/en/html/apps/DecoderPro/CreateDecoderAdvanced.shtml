@@ -328,7 +328,7 @@ For an example of where to position it etc., see the
     &lt;/variable&gt;
 </pre></code>
 
-<p>The first declared CV is the LSB (Least Significant Bit) whereas the "high CV" is the MSB (Most Significant Bit).</p>
+<p>The first declared CV is the LSB (Least Significant Byte) whereas the "high CV" is the MSB (Most Significant Byte).</p>
 
 <p>splitVal actually has two parameters, a "Factor" and an "Offset":</p>
 <ul>
