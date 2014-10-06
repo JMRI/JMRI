@@ -56,6 +56,19 @@
         </UL>
         </LI>
         <LI><A href="#pseudoground">BDL16x connection to a DCC system without a "Ground" terminal</A></li>
+        <LI><A href="#multipleconnections">Multiple active LocoNet connections</A>
+        <ul>
+            <li><a href="#routeconnprefix">Routing LocoNet messages to a LocoNet 
+                connection based on "Connection Prefix"</a></li>
+            <li><a href="#routeConName">Routing LocoNet messages to a LocoNet 
+                    connection based on "Connection Name"</a></li>
+            <li><a href="#routedefault">Routing LocoNet messages to a LocoNet 
+                connection based on "Default" settings</a></li>
+            <li><A href="#multconsingle">Multiple active LocoNet connections to a 
+                single LocoNet</A></li>
+        </ul></li>
+        
+        
         <LI><A href="#sneakpaths">"Sneak paths" and Computer Interfaces</A></LI>
     </UL></LI>
     <LI><A href="#examples">Examples</A>
@@ -185,7 +198,7 @@ useful.</p>
     <tr align="center"><td>Digitrax SE8C</td><td></td><td></td>
         <td>Required</td><td></td>
     </tr>
-    <tr align="center"><td>UR90/UR91/UR92</td><td>Required</td><td></td>
+    <tr align="center"><td>UR90/UR91/UR92/UR92CE</td><td>Required</td><td></td>
         <td>Required</td><td></td>
     </tr>
     <tr align="center"><td>(DIY)LocoIO/LocoServo</td><td></td><td></td>
@@ -534,6 +547,92 @@ useful.</p>
            alt="Image showing circuit to generate a pseudo-ground from a command station without a 'ground' connection">
         <p>Note that this "pseudo-ground" should only be connected to BDL16x 
             devices.</p>
+    <H2><A name="multipleconnections">Multiple active LocoNet connections</A></H2>
+        <p>When a JMRI profile is configured for more than one active LocoNet 
+            connection, JMRI treats each active LocoNet connection as if it 
+            is connected to an independent LocoNet.  When JMRI sends a message
+            to LocoNet, it will send only to one of those LocoNet connections,
+            depending on how that LocoNet traffic is generated within JMRI.</p>
+        <h3><a name="routeconnprefix">Routing LocoNet messages to a LocoNet 
+                connection based on "Connection Prefix"</a></h3>
+        <p>Each active LocoNet connection within a given JMRI profile has a 
+            unique "Connection Prefix" as well as a unique "Connection Name".  
+            For each active LocoNet connection, the main window of the JMRI
+            tool will show one pull-down menu for each active LocoNet connection, 
+            where each pull-down menu item, and each is named for the 
+            "Connection Name" assigned in the connection.</p>
+        <p>When using a tool from a given LocoNet pull-down menu, the tool will
+            direct its LocoNet messages to the hardware interface associated 
+            with the "Connection Name" shown as the pull-down menu name.</p>
+        <p>For example, consider a JMRI profile with three active LocoNet 
+            connections, named "LocoNet", "LocoNet2", and "LocoNet3".  If one 
+            opens up the "Configure Command Station" tool in the "LocoNet2" menu,
+            the LocoNet messages related to that tool window will be sent to and 
+            received from the hardware connection which is configured with the 
+            connection name "LocoNet2".  The tool will not send its messages to
+            the hardware connections related to the connections with Connection
+            Names "LocoNet" and "LocoNet3", and the tool will not pay attention
+            to traffic received by JMRI via the hardware connections associated 
+            with the "LocoNet" and "LocoNet3" connections.</p>
+        <h3><a name="routeConName">Routing LocoNet messages to a LocoNet 
+                connection based on "Connection Name"</a></h3>
+        <p>Similarly, when JMRI works with a resource that is defined using a 
+            "Connection Prefix", it will work with the hardware connection 
+            associated with that "Connection Prefix", and it will not attempt to 
+            work with a resource which has the same resource number but with a 
+            different "Connection Prefix".</p>
+        <p>As an example, if JMRI attempts to control L3T45, it will send its
+            turnout control message to the hardware interface associated with
+            the connection prefix "L3", but will not send control messages to 
+            the hardware associated with connection prefix "L" or to the hardware
+            associated with connection prefix "L2".  Similarly, messages on the 
+            hardware connection associated with connection prefix L3 will have
+            an effect on JMRI's interpretation of the state of L3S512, while 
+            LocoNet messages on the hardware connections associated with 
+            connection prefix L and connection prefix L2 will not affect JMRI's
+            interpretation of the state of L3S512.</p>
+        <h3><a name="routedefault">Routing LocoNet messages to a LocoNet 
+                connection based on "Default" settings</a></h3>
+        <p>JMRI allows the user to to configure how some of the JMRI tools route 
+            their messages to the various connections by default.  This 
+            configuration is done via the profile's "Preferences", in the 
+            "Defaults" configuration tab.  These settings force the JMRI tools
+            to <strong>assume</strong> that certain operations will be directed
+            to certain hardware connections, unless the tool allows a specific 
+            interface to be selected using a "Connection Prefix" or some other
+            tool-specific mechanism.</p>
+        <p>For example, some JMRI users will have a PR3 connection for mobile
+            decoder programming, and another LocoNet connection for 
+            communicating with the command station, turnouts, throttles, etc.  
+            In this case, the "Defaults" settings would configure the hardware
+            connection associated with the PR3 programming track as the 
+            "Programmer" connection, while the other LocoNet connection would be
+            configured as the communications path for "Throttles", "Power 
+            Control", and "Command Station".</p>             
+        <h3><A name="multconsingle">Multiple active LocoNet connections to a 
+                single LocoNet</A></h3>
+        <p>JMRI is designed upon the assumption that each of JMRI's LocoNet 
+            hardware connections are connected to <strong>independent</strong> 
+            LocoNet busses.  If the user has connected the LocoNet cabling so 
+            that more than one JMRI LocoNet hardware interface connects to the 
+            same LocoNet, then LocoNet traffic seen on one connection will be 
+            seen on the other connected LocoNet hardware connection(s).</p>
+        <p>As an example of this, consider a JMRI profile which configures three 
+            active LocoNet connections, with connection names "LocoNet", "LocoNet2", 
+            and "LocoNet3".  Assume that the first and second of these are 
+            connected to the same LocoNet, while "LocoNet3" is connected to an
+            independent LocoNet.  If JMRI sends a Switch control message to LT604,
+            JMRI will "see" that switch control message as a change to L2T604 
+            when the second LocoNet hardware interface sees the message sent by
+            the first LocoNet hardware interface.  But L3T604 will not be 
+            changed, because LocoNet3 is an independent LocoNet implementation 
+            in this example, so it would not see the traffic generated by JMRI 
+            when controlling LT604.</p>
+        <p>Note that this type of connectivity can cause difficulty with the 
+            JMRI turnout retry mechanism for any active LocoNet which is 
+            connected to a LocoNet-based command station, as described in         
+            <a href="Digitrax.shtml#TurnoutCmdHandling">Command Station Turnout 
+                Command Rejection and JMRI Turnout Command Handling</a>.</p>
     <H2><A name="sneakpaths">"Sneak paths" and Computer Interfaces</A></H2>
         <P>When multiple devices share different types of electrical connections, 
             unexpected current paths can be present that can cause malfunction or

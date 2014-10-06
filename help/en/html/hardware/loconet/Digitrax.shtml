@@ -36,8 +36,19 @@
   <ul>
       <li><a href="#ErraticReadback">Erratic or Non-Functioning CV Readback</a></li>
       <li><a href="#TurnoutCmdHandling">Command Station Turnout Command Rejection 
-              and JMRI Turnout Command Handling</a></li>
+              and JMRI Turnout Command Handling</a>
+          <ul>
+            <li><a href="#turncmdhandsettings">Turnout Command Handling Settings</a></li>
+            <li><a href="#alternatives">Avoidance strategies</a></li>
+            <li><a href="#cmdStationTrkPwrOff">Turnout command rejection when 
+                track power is off</a></li>
+            <li><a href="#multConnTurnoutReject">Turnout command rejection and multiple 
+                active LocoNet connections</a></li>
+
+          </ul></li>
+              
   </ul></li>
+  <li><a href="#Support">Support</a></li>
   <li><a href="#SeeAlso">See Also</a></li>
 </ul>
 </div>
@@ -387,6 +398,8 @@ PR3 instead.<br>
             on the DCC track signal.  Note that this can include devices which 
             connect to LocoNet and which monitor the DCC track signal which 
             is available on the LocoNet cable "RailSync" wires.</p>
+        <h4><a name="turncmdhandsettings">Turnout Command Handling Settings</a></h4>
+        
         <p>JMRI has various mechanisms to help handle these temporary LocoNet switch
             command buffer overloads.  These mechanisms are controlled by the "Turnout 
             Command Handling" option for each LocoNet-based connection.  The four 
@@ -419,6 +432,7 @@ PR3 instead.<br>
         <p>None of these options can <i>guarantee</i> that
             <i>all</i> LocoNet switch messages <i>will</i> be passed to the DCC 
             track signal.</p>
+        <h4><a name="alternatives">Avoidance strategies</a></h4>
         <p>Some users may be able to reduce the liklihood of this problem occurring by allowing
             signal hardware to generate blinking signal aspects instead of programming 
             JMRI to sequentially send "on" and "off" messages to the signal hardware.</p>
@@ -441,11 +455,31 @@ PR3 instead.<br>
             <a href="StandaloneLocoNet.shtml">Standalone LocoNet&reg;</a> for 
             background, ideas, and suggestions for implementing a standalone 
             LocoNet.</p>
+        <h4><a name="cmdStationTrkPwrOff">Turnout command rejection when track 
+                power is off</a></h4>
         <p>Some more recent Digitrax command stations will refuse to accept switch
             commands when track power is turned off.  This can result in a "storm" 
             of repeated switch messages on LocoNet if track power is off when switch
             messages are sent.  This problem can be avoided by ensuring that track
             power is on when switch messages can be sent.</p>
+        <h4><a name="multConnTurnoutReject">Turnout command rejection and multiple 
+                active LocoNet connections</a></h4>
+        <p>When JMRI has multiple active connections to a single LocoNet, it may 
+            be necessary to configure all but one of the active LocoNet 
+            connections for "Turnout Command Handling" type of "Only One", with 
+            one active LocoNet connection configured for one of the other 
+            "Turnout Command Handling" types.  Failure to do this could cause 
+            the various JMRI LocoNet connection instances to independently 
+            attempt to resolve any turnout messages which have been rejected by 
+            the command station.  This could result in a storm of turnout 
+            command retries on LocoNet.</p>
+        <p>Similarly, when multiple JMRI instances are working with the same 
+            LocoNet, only one JMRI connection to the LocoNet should be configured
+            for a "Turnout Command Handling" type other than "Only One".  Failure 
+            to do this could cause the various JMRI LocoNet connection instances 
+            to independently attempt to resolve any turnout messages which have 
+            been rejected by the command station.  This could result in a storm 
+            of turnout command retries on LocoNet.</p>
 </ul>
 
 <h2><a name="Support">Support</a></h2>
