@@ -54,7 +54,7 @@ public class TrainCustomSwitchList {
 	 */
 	public static void addCVSFile(File csvFile) {
 		// Ignore null files...
-		if (csvFile == null)
+		if (csvFile == null || !manifestCreatorFileExists())
 			return;
 
 		File workingDir = OperationsManager.getInstance().getFile(getDirectoryName());

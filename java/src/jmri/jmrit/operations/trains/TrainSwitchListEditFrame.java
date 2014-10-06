@@ -282,21 +282,20 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 	 * @param isUpdate true if only updating switch lists
 	 */
 	private void buildSwitchList(boolean isPreview, boolean isChanged, boolean isCsv, boolean isUpdate) {
-		TrainSwitchLists ts = new TrainSwitchLists();
+		TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
 		for (int i = 0; i < locationCheckBoxes.size(); i++) {
 			String locationName = locationCheckBoxes.get(i).getName();
 			Location location = locationManager.getLocationByName(locationName);
 			if (location.isSwitchListEnabled()) {
 				if (!isCsv) {
-					ts.buildSwitchList(location);
+					trainSwitchLists.buildSwitchList(location);
 					// print or print changes
 					if (!isUpdate && !isChanged
 							|| (!isUpdate && isChanged && !location.getStatus().equals(Location.PRINTED)))
-						ts.printSwitchList(location, isPreview);
+						trainSwitchLists.printSwitchList(location, isPreview);
 				} else if (Setup.isGenerateCsvSwitchListEnabled()) {
-					TrainCsvSwitchLists tCSVs = new TrainCsvSwitchLists();
-					tCSVs.buildSwitchList(location);
-					location.setStatus(Location.CSV_GENERATED);
+					TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
+					trainCsvSwitchLists.buildSwitchList(location);
 				}
 			}
 		}
@@ -356,6 +355,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 				}
 				continue;
 			}
+			// TODO this only works if there are two locations with the same name
 			previousLocation = location;
 
 			JCheckBox checkBox = new JCheckBox();
@@ -400,19 +400,22 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 		if (!Setup.isGenerateCsvSwitchListEnabled())
 			return;
 		log.debug("run custom switch lists");
-		TrainCsvSwitchLists tCSVs = new TrainCsvSwitchLists();
+		TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
+		TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
 		for (int i = 0; i < locationCheckBoxes.size(); i++) {
 			String locationName = locationCheckBoxes.get(i).getName();
 			Location location = locationManager.getLocationByName(locationName);
 			if (location.isSwitchListEnabled()) {
-				File csvFile = tCSVs.buildSwitchList(location);
-				location.setStatus(Location.CSV_GENERATED);
+				// also build the regular switch lists so they can be used
+				if (!switchListRealTimeCheckBox.isSelected())
+					trainSwitchLists.buildSwitchList(location);
+				File csvFile = trainCsvSwitchLists.buildSwitchList(location);
 				if (csvFile == null || !csvFile.exists()) {
-					log.warn("CSV switch list file was not created for location " + locationName);
+					log.error("CSV switch list file was not created for location {}", locationName);
 					return;
 				}
-				if (TrainCustomSwitchList.manifestCreatorFileExists())
-					TrainCustomSwitchList.addCVSFile(csvFile);
+				
+				TrainCustomSwitchList.addCVSFile(csvFile);
 			}
 		}
 		// Processes the CSV Manifest files using an external custom program.

@@ -38,7 +38,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 	 * @return File
 	 */
 	public File buildSwitchList(Location location) {
-		boolean newTrainsOnly = !Setup.isSwitchListRealTime();
+		
 		// create csv switch list file
 		File file = TrainManagerXml.instance().createCsvSwitchListFile(location.getName());
 		PrintWriter fileOut = null;
@@ -67,29 +67,25 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 		}
 		addLine(fileOut, VT + getDate(true));
 
-		// get a list of trains
-		List<Train> trains = trainManager.getTrainsByTimeList();
-		CarManager carManager = CarManager.instance();
-		EngineManager engineManager = EngineManager.instance();
-		for (Train train : trains) {
+		for (Train train : trainManager.getTrainsByTimeList()) {
+			if (!train.isBuilt())
+				continue; // train wasn't built so skip
+			if (!Setup.isSwitchListRealTime() && train.getSwitchListStatus().equals(Train.PRINTED))
+				continue; // already printed this train
 			int pickupCars = 0;
 			int dropCars = 0;
 			int stops = 1;
 			boolean trainDone = false;
-			if (!train.isBuilt())
-				continue; // train wasn't built so skip
-			if (newTrainsOnly && train.getSwitchListStatus().equals(Train.PRINTED))
-				continue; // already printed this train
-			List<Car> carList = carManager.getByTrainDestinationList(train);
-			List<Engine> enginesList = engineManager.getByTrainBlockingList(train);
+			List<Car> carList = CarManager.instance().getByTrainDestinationList(train);
+			List<Engine> enginesList = EngineManager.instance().getByTrainBlockingList(train);
 			// does the train stop once or more at this location?
 			Route route = train.getRoute();
 			if (route == null)
 				continue; // no route for this train
 			List<RouteLocation> routeList = route.getLocationsBySequenceList();
 			// need to know where in the route we are for the various comments
-			for (int r = 0; r < routeList.size(); r++) {
-				RouteLocation rl = routeList.get(r);
+			for (int routeIndex = 0; routeIndex < routeList.size(); routeIndex++) {
+				RouteLocation rl = routeList.get(routeIndex);
 				if (splitString(rl.getName()).equals(splitString(location.getName()))) {
 					String expectedArrivalTime = train.getExpectedArrivalTime(rl);
 					if (expectedArrivalTime.equals("-1")) { // NOI18N
@@ -115,19 +111,19 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 						} else {
 							addLine(fileOut, DL + splitString(splitString(train.getTrainDepartsName())));
 							addLine(fileOut, DT + train.getDepartureTime());
-							if (r == 0 && routeList.size() > 1)
+							if (routeIndex == 0 && routeList.size() > 1)
 								addLine(fileOut, TD + splitString(rl.getName()) + DEL + rl.getTrainDirectionString());
-							if (r != 0) {
+							if (routeIndex != 0) {
 								addLine(fileOut, ETA + expectedArrivalTime);
 								addLine(fileOut, TA + splitString(rl.getName()) + DEL + rl.getTrainDirectionString());
 							}
 						}
-						if (r == routeList.size() - 1)
+						if (routeIndex == routeList.size() - 1)
 							addLine(fileOut, TT + splitString(rl.getName()));
 					}
 					if (stops > 1) {
 						// Print visit number, etc. only if previous location wasn't the same
-						RouteLocation rlPrevious = routeList.get(r - 1);
+						RouteLocation rlPrevious = routeList.get(routeIndex - 1);
 						if (!splitString(rl.getName()).equals(splitString(rlPrevious.getName()))) {
 							// After the first time a train stops at a location provide:
 							// if the train has started its route
@@ -142,7 +138,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 								addLine(fileOut, ETA + expectedArrivalTime);
 							}
 							addLine(fileOut, TA + splitString(rl.getName()) + DEL + rl.getTrainDirectionString());
-							if (r == routeList.size() - 1)
+							if (routeIndex == routeList.size() - 1)
 								addLine(fileOut, TT + splitString(rl.getName()));
 						} else {
 							stops--; // don't bump stop count, same location
@@ -218,6 +214,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 		addLine(fileOut, END); // done with switch list
 		fileOut.flush();
 		fileOut.close();
+		location.setStatus(Location.CSV_GENERATED);
 		return file;
 	}
 
