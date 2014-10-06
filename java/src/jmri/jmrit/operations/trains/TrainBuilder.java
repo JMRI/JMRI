@@ -290,6 +290,13 @@ public class TrainBuilder extends TrainCommon {
 		addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildRouteRequest"), new Object[] {
 				_train.getRoute().getName(), Integer.toString(requested), Integer.toString(numMoves) }));
 		_train.setNumberCarsRequested(requested); // save number of car requested
+		
+		// is this train a switcher?
+		if (_train.isLocalSwitcher()) {
+			addLine(_buildReport, THREE, BLANK_LINE); // add line when in detailed report mode
+			addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildTrainIsSwitcher"),
+					new Object[] { _train.getName(), TrainCommon.splitString(_train.getTrainDepartsName()) }));
+		}
 
 		// get engine requirements for this train
 		if (_train.getNumberEngines().equals(Train.AUTO)) {
@@ -3670,7 +3677,7 @@ public class TrainBuilder extends TrainCommon {
 					if (_train.isLocalSwitcher() && !Setup.isLocalSpurMovesEnabled()
 							&& testTrack.getTrackType().equals(Track.SPUR)
 							&& car.getTrack().getTrackType().equals(Track.SPUR)) {
-						addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildNoSpurToSpurMove"),
+						addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildNoSpurToSpurMove"),
 								new Object[] { car.getTrackName(), testTrack.getName() }));
 						continue;
 					}
@@ -3678,7 +3685,7 @@ public class TrainBuilder extends TrainCommon {
 					if (_train.isLocalSwitcher() && !Setup.isLocalYardMovesEnabled()
 							&& testTrack.getTrackType().equals(Track.YARD)
 							&& car.getTrack().getTrackType().equals(Track.YARD)) {
-						addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildNoYardToYardMove"),
+						addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildNoYardToYardMove"),
 								new Object[] { car.getTrackName(), testTrack.getName() }));
 						continue;
 					}
@@ -3686,7 +3693,7 @@ public class TrainBuilder extends TrainCommon {
 					if (_train.isLocalSwitcher() && !Setup.isLocalInterchangeMovesEnabled()
 							&& testTrack.getTrackType().equals(Track.INTERCHANGE)
 							&& car.getTrack().getTrackType().equals(Track.INTERCHANGE)) {
-						addLine(_buildReport, FIVE, MessageFormat.format(Bundle
+						addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
 								.getMessage("buildNoInterchangeToInterchangeMove"), new Object[] { car.getTrackName(),
 								testTrack.getName() }));
 						continue;
@@ -3702,8 +3709,8 @@ public class TrainBuilder extends TrainCommon {
 			// did we find a new destination?
 			if (trackTemp != null) {
 				addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildCarCanDropMoves"),
-						new Object[] { car.toString(),
-								(trackTemp.getLocation().getName() + ", " + trackTemp.getName()), +rld.getCarMoves(),
+						new Object[] { car.toString(), trackTemp.getTrackTypeName(),
+								trackTemp.getLocation().getName(), trackTemp.getName(), +rld.getCarMoves(),
 								rld.getMaxCarMoves() }));
 				if (rldSave == null && multiplePickup) {
 					addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildCarHasSecond"),
