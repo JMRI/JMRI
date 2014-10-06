@@ -44,8 +44,7 @@ import java.io.File;
  * @version $Revision$
  */
 
-public class TrainSwitchListEditFrame extends OperationsFrame implements
-		java.beans.PropertyChangeListener {
+public class TrainSwitchListEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
 	JScrollPane switchPane;
 
@@ -115,8 +114,8 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 		// options
 		JPanel pSwitchListOptions = new JPanel();
 		pSwitchListOptions.setLayout(new GridBagLayout());
-		pSwitchListOptions.setBorder(BorderFactory
-				.createTitledBorder(Bundle.getMessage("BorderLayoutSwitchListOptions")));
+		pSwitchListOptions.setBorder(BorderFactory.createTitledBorder(Bundle
+				.getMessage("BorderLayoutSwitchListOptions")));
 		addItem(pSwitchListOptions, switchListAllTrainsCheckBox, 1, 0);
 		addItem(pSwitchListOptions, switchListPageCheckBox, 2, 0);
 		addItem(pSwitchListOptions, switchListRealTimeCheckBox, 3, 0);
@@ -171,7 +170,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 		addCheckBoxAction(switchListRealTimeCheckBox);
 		addCheckBoxAction(switchListAllTrainsCheckBox);
 		addCheckBoxAction(switchListPageCheckBox);
-		
+
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
@@ -232,7 +231,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 		// enable the save button whenever a checkbox is changed
 		enableSaveButton(true);
 	}
-	
+
 	// Remove all terminated or reset trains from the switch lists for selected locations
 	private void reset() {
 		for (int i = 0; i < locationCheckBoxes.size(); i++) {
@@ -276,10 +275,15 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 
 	/**
 	 * Print = all false;
-	 * @param isPreview true if print preview
-	 * @param isChanged true if print changes was requested
-	 * @param isCsv true if building a CSV switch list files
-	 * @param isUpdate true if only updating switch lists
+	 * 
+	 * @param isPreview
+	 *            true if print preview
+	 * @param isChanged
+	 *            true if print changes was requested
+	 * @param isCsv
+	 *            true if building a CSV switch list files
+	 * @param isUpdate
+	 *            true if only updating switch lists
 	 */
 	private void buildSwitchList(boolean isPreview, boolean isChanged, boolean isCsv, boolean isUpdate) {
 		TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
@@ -337,7 +341,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 
 		int y = 1; // vertical position in panel
 
-		Location previousLocation = null;
+		Location mainLocation = null; // user can have multiple locations with the "same" name.
 
 		for (Location location : locations) {
 			if (location.getStatus().equals(Location.MODIFIED) && location.isSwitchListEnabled()) {
@@ -345,18 +349,15 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 				csvChangeButton.setEnabled(true);
 			}
 			String name = TrainCommon.splitString(location.getName());
-			if (previousLocation != null
-					&& TrainCommon.splitString(previousLocation.getName()).equals(name)) {
-				location.setSwitchListEnabled(previousLocation.isSwitchListEnabled());
-				if (previousLocation.isSwitchListEnabled()
-						&& location.getStatus().equals(Location.MODIFIED)) {
-					previousLocation.setStatusModified(); // we need to update the primary location
+			if (mainLocation != null && TrainCommon.splitString(mainLocation.getName()).equals(name)) {
+				location.setSwitchListEnabled(mainLocation.isSwitchListEnabled());
+				if (mainLocation.isSwitchListEnabled() && location.getStatus().equals(Location.MODIFIED)) {
+					mainLocation.setStatusModified(); // we need to update the primary location
 					location.setStatus(Location.UPDATED); // and clear the secondaries
 				}
 				continue;
 			}
-			// TODO this only works if there are two locations with the same name
-			previousLocation = location;
+			mainLocation = location;
 
 			JCheckBox checkBox = new JCheckBox();
 			locationCheckBoxes.add(checkBox);
@@ -395,7 +396,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 		pack();
 		repaint();
 	}
-	
+
 	private void runCustomSwitchLists() {
 		if (!Setup.isGenerateCsvSwitchListEnabled())
 			return;
@@ -414,7 +415,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 					log.error("CSV switch list file was not created for location {}", locationName);
 					return;
 				}
-				
+
 				TrainCustomSwitchList.addCVSFile(csvFile);
 			}
 		}
@@ -422,10 +423,9 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 		if (!TrainCustomSwitchList.manifestCreatorFileExists()) {
 			log.warn("Manifest creator file not found!, directory name: " + TrainCustomSwitchList.getDirectoryName()
 					+ ", file name: " + TrainCustomSwitchList.getFileName()); // NOI18N
-			JOptionPane.showMessageDialog(this, MessageFormat.format(
-					Bundle.getMessage("LoadDirectoryNameFileName"), new Object[] {
-						TrainCustomSwitchList.getDirectoryName(), TrainCustomSwitchList.getFileName() }), Bundle
-					.getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("LoadDirectoryNameFileName"),
+					new Object[] { TrainCustomSwitchList.getDirectoryName(), TrainCustomSwitchList.getFileName() }),
+					Bundle.getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		// Now run the user specified custom Switch List processor program
@@ -497,7 +497,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 		Location l = locationManager.getLocationByName(b.getName());
 		new TrainSwitchListCommentFrame(l);
 	}
-	
+
 	protected void comboBoxActionPerformed(ActionEvent ae) {
 		log.debug("combo box action");
 		saveButton.setEnabled(true);
@@ -532,8 +532,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 
 		// text area
 		JTextArea commentTextArea = new JTextArea(10, 90);
-		JScrollPane commentScroller = new JScrollPane(commentTextArea,
-				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+		JScrollPane commentScroller = new JScrollPane(commentTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		Dimension minScrollerDim = new Dimension(1200, 500);
 		JButton saveButton = new JButton(Bundle.getMessage("Save"));
@@ -584,6 +583,5 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 		}
 	}
 
-	static Logger log = LoggerFactory
-			.getLogger(TrainSwitchListEditFrame.class.getName());
+	static Logger log = LoggerFactory.getLogger(TrainSwitchListEditFrame.class.getName());
 }
