@@ -16,22 +16,7 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 public class LnIPLImplementation extends javax.swing.JComponent implements jmri.jmrix.loconet.LocoNetListener {
 
     /**
-     * Creator for LnIPMImplementation which finds a LocoNetSystemConnectionMemo
-     * and uses it.
-     */
-    public LnIPLImplementation() {
-        super();
-        thisone = this;
-        java.util.List<Object> listOfLocoNetSystemConnectionMemos = jmri.InstanceManager.getList(LocoNetSystemConnectionMemo.class);
-        for (Object listObj : listOfLocoNetSystemConnectionMemos) {
-            LocoNetSystemConnectionMemo thisMemo = (LocoNetSystemConnectionMemo)listObj;
-            memo = thisMemo;
-        }
-
-        moreInit();
-    }
-    /**
-     * Creator for LnIPMImplementation which uses a LocoNetSystemConnectionMemo
+     * Constructor for LnIPMImplementation which uses a LocoNetSystemConnectionMemo
      * which is provided by the instantiating method.
      * @param lnMemo - LocoNetSystemConnectionMemo for the LocoNet communication interface
      */
@@ -47,7 +32,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
         // connect to the LnTrafficController
         connect(memo.getLnTrafficController());
 
-        swingTmrIplQuery = new javax.swing.Timer(250*LnDplxGrpInfoImplConstants.IPL_QUERY_DELAY, new java.awt.event.ActionListener() {
+        swingTmrIplQuery = new javax.swing.Timer(LnDplxGrpInfoImplConstants.IPL_QUERY_DELAY, new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 swingTmrIplQuery.stop();
                 waitingForIplReply = false;
@@ -904,22 +889,5 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
     }
 
     private boolean waitingForIplReply;
-
-//    private void sendUr92IplQuery() {
-//        waitingForIplReply = true;
-//        memo.getLnTrafficController().sendLocoNetMessage(
-//                LnIPLImplementation.createIplSpecificHostQueryPacket(
-//                        LnConstants.RE_IPL_DIGITRAX_HOST_ALL,
-//                        LnConstants.RE_IPL_DIGITRAX_HOST_UR92));
-//        int oldvalue = 9999;
-//        int newvalue = 0;
-//        thisone.firePropertyChange("NumberOfUr92sUpdate", oldvalue, newvalue);
-//        if (swingTmrIplQuery != null) {
-//            if (swingTmrIplQuery.isRunning()) {
-//                swingTmrIplQuery.restart();
-//            }
-//            else swingTmrIplQuery.start();
-//        }
-//    }
 
 }

@@ -62,6 +62,10 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  *      DPLX_PC_RCD_DPLX_IDENTITY_REPORT   - Indicates that a LocoNet message
  *              which reports the Duplex Group identity has been received.
  *
+ * This tool works equally well with UR92 and UR92CE devices.  The UR92 and 
+ * UR92CE behave identically with respect to this tool.  For the purpose of 
+ * clarity, only the term UR92 is used herein.
+ *
  * @author B. Milhaupt Copyright 2011
  */
 public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jmrix.loconet.LocoNetListener {
@@ -75,30 +79,6 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
     private boolean gotQueryReply;
 
     LnDplxGrpInfoImpl thisone;
-
-    public LnDplxGrpInfoImpl() {
-        super();
-        thisone = this;
-
-        // figure out a LnConnectionMemo to use - get the first  one available in the list...
-        java.util.List<Object> listOfLocoNetSystemConnectionMemos;
-        listOfLocoNetSystemConnectionMemos = jmri.InstanceManager.getList(LocoNetSystemConnectionMemo.class);
-        boolean foundMemo = false;
-        LocoNetSystemConnectionMemo thisMemo = null;
-        for (Object listObj : listOfLocoNetSystemConnectionMemos) {
-            if (foundMemo == false) {
-                thisMemo = (LocoNetSystemConnectionMemo)listObj;
-                foundMemo = true;
-            }
-        }
-        if (foundMemo == false) {
-            // did not find a connection memo.  Abort.
-            log.error("No LocoNet Connection Memo available - cannot initialize DuplexGropuIdentityImplementation class.");
-            return;
-        }
-
-        finishInitialization(thisMemo);
-    }
 
     public LnDplxGrpInfoImpl(LocoNetSystemConnectionMemo LNCMemo) {
         super();
