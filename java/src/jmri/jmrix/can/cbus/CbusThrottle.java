@@ -21,8 +21,8 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  */
 public class CbusThrottle extends AbstractThrottle {
     private CbusCommandStation cs = null;
-    private int address;
     private int _handle = -1;
+    private DccLocoAddress dccAddress = null;
 
     /**
      * Constructor
@@ -32,7 +32,6 @@ public class CbusThrottle extends AbstractThrottle {
         super(memo);
 
         log.debug("Throttle created");
-        DccLocoAddress dccAddress = (DccLocoAddress)address;
         cs = (CbusCommandStation) adapterMemo.get(jmri.CommandStation.class);
         _handle = handle;
 
@@ -71,7 +70,7 @@ public class CbusThrottle extends AbstractThrottle {
         this.f27          = false;
         this.f28          = false;
 
-        this.address      = dccAddress.getNumber();
+        this.dccAddress = (DccLocoAddress)address;
         this.isForward    = true;
 
 //        switch(slot.decoderType())
@@ -502,7 +501,7 @@ public class CbusThrottle extends AbstractThrottle {
 
     @Override
     public LocoAddress getLocoAddress() {
-        return new DccLocoAddress(address, CbusThrottleManager.isLongAddress(address));
+        return dccAddress;
     }
 
     // initialize logging

@@ -314,7 +314,8 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
      **/
     @Override
     public boolean canBeLongAddress(int address) {
-        return true;
+        if (address > 0) { return true; }
+        return false;
     }
     
     /**
