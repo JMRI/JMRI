@@ -26,12 +26,12 @@
 
 <H1>Configure LocoNet ID Tool</H1>
 <h2>What is LocoNet ID?</h2>
-<p>The "LocoNet ID" is a number which is used by throttles and UR90, UR91, and UR92
-devices when a throttle is operating in a tetherless mode using infrared or simplex
-radio communications.  When receiving infrared signals, the UR90, UR91, and UR92
-will only pay attention to throttles which are using the same LocoNet ID number.  
-When receiving simplex radio signals, the UR91 will only pay attention to throttles
-which are using the same LocoNet ID number.</p>
+<p>The "LocoNet ID" is a number which is used by throttles and UR90, UR91, UR92, 
+and UR92CE devices when a throttle is operating in a tetherless mode using 
+infrared or simplex radio communications.  When receiving infrared signals, the 
+UR90, UR91, UR92 will only pay attention to throttles which are 
+using the same LocoNet ID number.  When receiving simplex radio signals, the 
+UR91 will only pay attention to throttles which are using the same LocoNet ID number.</p>
 <p>The LocoNet ID number is intended to allow multiple Digitrax layouts 
 to operate independently when in close proximity.  In this case, each each layout 
 must use a different LocoNet ID number.</p>
@@ -54,6 +54,9 @@ must use a different LocoNet ID number.</p>
     accept the new LocoNet ID number. <i>Failure to acquire this updated LocoNet ID
     number on a throttle will prevent the throttle from communicating with the
     UR9x device via infrared and/or Simplex radio</i>.</p>
+<h2>Note</h2>
+<p>For the purposes of this discussion, the UR92CE is equivalent to the UR92.  
+    For clarity, this discussion only shows the term "UR92".</p>
 <h2>See Also</h2>
 <p>For more information on the UR90 and its infrared tetherless operation, see 
     the appropriate UR90 link at the <a href="http://digitrax.com/menu_wireless.php">Digitrax "Wireless" page</a>.</p>

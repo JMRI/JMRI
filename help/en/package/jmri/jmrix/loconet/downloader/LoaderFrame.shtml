@@ -337,12 +337,12 @@ To use this tool to update a LocoNet device's firmware:
         
     <table border="2">
         <thead><td align="center"><strong>Manufacturer</strong></td><td align="center"><strong>Product</strong></td></thead>
-        <tr><td rowspan="6" align="center">Digitrax</td><td>UR92</td></tr>
+        <tr><td rowspan="6" align="center">Digitrax</td><td>UR92, UR92CE</td></tr>
         <tr><td>DCS51</td></tr>
         <tr><td>DT402-series throttles</td></tr>
         <tr><td>LNRP</td></tr>
         <tr><td>PR3</td></tr>
-        <tr><td>RF24 (the radio module found in Duplex devices like UR92 and DT402D)</td></tr>
+        <tr><td>RF24 (the radio module found in Duplex devices like UR92, UR92CE and DT402D)</td></tr>
         <tr><td rowspan="6" align="center">RR-CirKits</td><td>LocoBuffer-USB</td></tr>
         <tr><td>LNCP</td></tr>
         <tr><td>Tower Controller 64</td></tr>
@@ -353,8 +353,6 @@ To use this tool to update a LocoNet device's firmware:
         <tr><td align="center">Tam Valley Depot</td><td>Quad-LN</td></tr>
         <tr><td colspan="2" align="center"><strong>Table updated June, 2014</strong></td></tr>
         </table>
-    </li>
-    </ul>
 <H2 id="Notes">Other Notes</H2>
 <ul>
     <li>The LocoNet Firmware Download tool is similar to the "DigiIPL.exe" which 
