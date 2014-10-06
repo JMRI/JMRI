@@ -205,7 +205,7 @@ public class AddSignalMastPanel extends JPanel {
         signalMastDriver.setEnabled(false);
         userName.setText(mast.getUserName());
         userName.setEnabled(false);
-        sigSysBox.setSelectedItem(mast.getSignalSystem().getSystemName());
+        sigSysBox.setSelectedItem(mast.getSignalSystem().getUserName());
         loadMastDefinitions();
         allowUnLit.setSelected(mast.allowUnLit());
         String mastType = "appearance-" + extractMastTypeFromMast(((jmri.implementation.AbstractSignalMast)mast).getSystemName())+".xml";
@@ -330,7 +330,7 @@ public class AddSignalMastPanel extends JPanel {
             }
         });
     }
-    
+       
     String extractMastTypeFromMast(String name){
         String[] parts = name.split(":");
         return parts[2].substring(0, parts[2].indexOf("("));
@@ -427,7 +427,6 @@ public class AddSignalMastPanel extends JPanel {
             // get the signals system name from the user name in combo box
             String u = (String) sigSysBox.getSelectedItem();
             sigsysname = man.getByUserName(u).getSystemName();
-
             map = new HashMap<String, Integer>();
             
             // do file IO to get all the appearances
