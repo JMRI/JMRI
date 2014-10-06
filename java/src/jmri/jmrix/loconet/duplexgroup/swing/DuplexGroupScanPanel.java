@@ -15,6 +15,10 @@ import jmri.jmrix.loconet.duplexgroup.LnDplxGrpInfoImplConstants;
  * Defines a GUI and associated logic to perform energy scan operations on
  * Duplex radio channels.  Displays energy scan data in a graphical form.
  *
+ * This tool works equally well with UR92 and UR92CE devices.  The UR92 and 
+ * UR92CE behave identically with respect to this tool.  For the purpose of 
+ * clarity, only the term UR92 is used herein.
+ *
  * @author B. Milhaupt Copyright 2010, 2011
  * @version			$Revision: 1.0 $
  */

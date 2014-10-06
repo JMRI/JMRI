@@ -12,6 +12,10 @@ import jmri.util.JmriJFrame;
  *      . configuration of Duplex Group identity information and
  *      . scanning of Duplex channels for interfering signal sources
  *
+ * This tool works equally well with UR92 and UR92CE devices.  The UR92 and 
+ * UR92CE behave identically with respect to this tool.  For the purpose of 
+ * clarity, only the term UR92 is used herein.
+ *
  * @author B. Milhaupt, Copyright 2011
  * @version			$Revision: 1.0 $
  */
