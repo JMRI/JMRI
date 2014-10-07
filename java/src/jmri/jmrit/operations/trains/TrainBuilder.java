@@ -1494,7 +1494,7 @@ public class TrainBuilder extends TrainCommon {
 		}
 
 		// show how many cars were found
-		addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+		addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
 		addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildFoundCars"), new Object[] {
 				Integer.toString(_carList.size()), _train.getName() }));
 
@@ -1504,21 +1504,21 @@ public class TrainBuilder extends TrainCommon {
 			// only print out the first DISPLAY_CAR_LIMIT cars
 			if (_carIndex < DISPLAY_CAR_LIMIT) {
 				if (c.getLoadPriority().equals(CarLoad.PRIORITY_LOW))
-					addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCarAtLocWithMoves"),
+					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarAtLocWithMoves"),
 							new Object[] { c.toString(), c.getTypeName(),
 									(c.getLocationName() + ", " + c.getTrackName()), c.getMoves() }));
 				else
-					addLine(_buildReport, FIVE, MessageFormat.format(Bundle
+					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
 							.getMessage("buildCarAtLocWithMovesPriority"), new Object[] { c.toString(),
 							c.getTypeName(), (c.getLocationName() + ", " + c.getTrackName()), c.getMoves(),
 							c.getLoadPriority() }));
 			}
 			if (_carIndex == DISPLAY_CAR_LIMIT)
-				addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildOnlyFirstXXXCars"),
+				addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildOnlyFirstXXXCars"),
 						new Object[] { _carIndex }));
 			// use only the lead car in a kernel for building trains
 			if (c.getKernel() != null) {
-				addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCarPartOfKernel"),
+				addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarPartOfKernel"),
 						new Object[] { c.toString(), c.getKernelName(), c.getKernel().getSize(),
 								c.getKernel().getTotalLength(), Setup.getLengthUnit().toLowerCase() }));
 				checkKernel(c);
@@ -1529,7 +1529,7 @@ public class TrainBuilder extends TrainCommon {
 				}
 			}
 			if (_train.equals(c.getTrain())) {
-				addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildCarAlreadyAssigned"),
+				addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCarAlreadyAssigned"),
 						new Object[] { c.toString() }));
 			}
 			// does car have a destination that is part of this train's route?
@@ -1538,7 +1538,7 @@ public class TrainBuilder extends TrainCommon {
 						new Object[] { c.toString(), (c.getDestinationName() + ", " + c.getDestinationTrackName()) }));
 				RouteLocation rld = _train.getRoute().getLastLocationByName(c.getDestinationName());
 				if (rld == null) {
-					addLine(_buildReport, FIVE, MessageFormat.format(Bundle
+					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
 							.getMessage("buildExcludeCarDestNotPartRoute"), new Object[] { c.toString(),
 							c.getDestinationName(), _train.getRoute().getName() }));
 					// build failure if car departing staging
@@ -1810,6 +1810,7 @@ public class TrainBuilder extends TrainCommon {
 			addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildLocReqMoves"), new Object[] {
 					rl.getName(), rl.getId(), _reqNumOfMoves, saveReqMoves, rl.getMaxCarMoves() }));
 			addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
+			_carIndex = 0; // see reportCarsNotMoved(rl, percent) below
 			findDestinationsForCarsFromLocation(rl, routeIndex, false);
 			// perform a another pass if aggressive and there are requested moves
 			// this will perform local moves at this location, services off spot tracks
@@ -1853,7 +1854,6 @@ public class TrainBuilder extends TrainCommon {
 	private void findDestinationsForCarsFromLocation(RouteLocation rl, int routeIndex, boolean isSecondPass)
 			throws BuildFailedException {
 		if (_reqNumOfMoves <= 0) {
-			_carIndex = 0; // see reportCarsNotMoved(rl, percent)
 			return;
 		}
 		boolean messageFlag = true;
