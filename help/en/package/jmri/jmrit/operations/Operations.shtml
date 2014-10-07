@@ -1159,7 +1159,7 @@
     train won't build, the "Minimal" setting might provide you with this information. The "Normal"
     setting shows the train's route and requirements, along with the choices the program makes for
     setting out locomotives and cars. The "Detailed" provides additional comments about the build
-    and shows all of the available cars for the train. The "Very Detailed" setting produces the most
+    and shows which cars were added to the train. The "Very Detailed" setting produces the most
     pages, and will show why cars are excluded from the train, and why they are not picked up or set
     out. Be sure and press "Save" after changing the build report selection.</p>
 

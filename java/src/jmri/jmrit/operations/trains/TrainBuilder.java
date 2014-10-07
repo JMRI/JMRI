@@ -3244,7 +3244,7 @@ public class TrainBuilder extends TrainCommon {
 				continue;
 			}
 			if (rld.getCarMoves() >= rld.getMaxCarMoves()) {
-				addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildNoAvailableMovesStop"),
+				addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildNoAvailableMovesStop"),
 						new Object[] { _train.getRoute().getName(), rld.getId(), rld.getName(), locCount }));
 				continue;
 			}
@@ -3260,7 +3260,7 @@ public class TrainBuilder extends TrainCommon {
 				if (rld == _train.getTrainTerminatesRouteLocation() && _terminateStageTrack != null) {
 					String status = car.testDestination(car.getDestination(), _terminateStageTrack);
 					if (status.equals(Track.OKAY)) {
-						addLine(_buildReport, THREE, MessageFormat.format(Bundle
+						addLine(_buildReport, FIVE, MessageFormat.format(Bundle
 								.getMessage("buildCarAssignedToStaging"), new Object[] { car.toString(),
 								_terminateStageTrack.getName() }));
 						addCarToTrain(car, rl, rld, _terminateStageTrack);
@@ -3373,7 +3373,7 @@ public class TrainBuilder extends TrainCommon {
 									car.getDestinationName(), car.getDestinationTrackName() }));
 				}
 			}
-			addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildCanNotDropCar"), new Object[] {
+			addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCanNotDropCar"), new Object[] {
 					car.toString(), car.getDestinationName(), rld.getId(), locCount }));
 			if (car.getDestinationTrack() == null) {
 				log.debug("Could not find a destination track for location ({})", car.getDestinationName());
@@ -3708,12 +3708,12 @@ public class TrainBuilder extends TrainCommon {
 			}
 			// did we find a new destination?
 			if (trackTemp != null) {
-				addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildCarCanDropMoves"),
+				addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCarCanDropMoves"),
 						new Object[] { car.toString(), trackTemp.getTrackTypeName(),
 								trackTemp.getLocation().getName(), trackTemp.getName(), +rld.getCarMoves(),
 								rld.getMaxCarMoves() }));
 				if (rldSave == null && multiplePickup) {
-					addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildCarHasSecond"),
+					addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCarHasSecond"),
 							new Object[] { car.toString(), car.getLocationName() }));
 					trackSave = null;
 					break; // done
@@ -3757,7 +3757,7 @@ public class TrainBuilder extends TrainCommon {
 						trackTemp = trackSave;
 						finalDestinationTrackTemp = finalDestinationTrackSave;
 					} else if (multiplePickup) {
-						addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildCarHasSecond"),
+						addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCarHasSecond"),
 								new Object[] { car.toString(), car.getLocationName() }));
 						trackSave = null;
 						break; // done
