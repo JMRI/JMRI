@@ -1,13 +1,13 @@
 // PackageTest.java
 
-package jmri.jmrix.sprog;
+package jmri.jmrix.rfid;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * tests for the jmri.jmrix.sprog package
+ * tests for the jmri.jmrix.rfid package
  * @author			Bob Jacobsen
  * @version   $Revision$
  */
@@ -33,10 +33,9 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         apps.tests.AllTest.initLogging();
-        TestSuite suite = new TestSuite("jmri.jmrix.sprog.PackageTest");
+        TestSuite suite = new TestSuite("jmri.jmrix.rfid.PackageTest");
 
-        suite.addTest(jmri.jmrix.sprog.SprogMessageTest.suite());
-        suite.addTest(jmri.jmrix.sprog.SprogCSStreamPortControllerTest.suite());
+        suite.addTest(jmri.jmrix.rfid.RfidStreamPortControllerTest.suite());
         
         return suite;
     }
