@@ -10,15 +10,18 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * Abstract base for classes representing a RFID communications port
+ * Abstract base for classes representing an SPROG Command Station 
+ *  communications port
  * <p>
- * NOTE: This currently only supports the standalone RFID interfaces.
+ * NOTE: This currently only supports the SPROG Command Station  interfaces.
  * <p>
  *
  * @author			Paul Bender    Copyright (C) 2014
  * @version			$Revision$
  */
 public class SprogCSStreamPortController extends AbstractStreamPortController implements SprogInterface {
+
+    private Thread rcvNotice = null;
 
     public SprogCSStreamPortController(DataInputStream in,DataOutputStream out,String pname){
         super(in,out,pname);
@@ -37,6 +40,10 @@ public class SprogCSStreamPortController extends AbstractStreamPortController im
        ((SprogSystemConnectionMemo)adaptermemo).configureCommandStation();
        ((SprogSystemConnectionMemo)adaptermemo).configureManagers();
        control.connectPort(this);
+
+       // start thread to notify controller when data is available
+       rcvNotice = new Thread(new rcvCheck(input,control));
+       rcvNotice.start();
 
        // declare up
        ActiveFlag.setActive(); 
@@ -60,7 +67,7 @@ public class SprogCSStreamPortController extends AbstractStreamPortController im
                 return(true);
     }
 
-    // RFID Interface methods.
+    // SPROG Interface methods.
 
     @Override
     public void addSprogListener( SprogListener l){
@@ -94,7 +101,7 @@ public class SprogCSStreamPortController extends AbstractStreamPortController im
              do {
                 try {
                    if(in.available()>0){
-                      control.serialEvent(new gnu.io.SerialPortEvent(null,gnu.io.SerialPortEvent.DATA_AVAILABLE,false,true));
+                     control.handleOneIncomingReply();
                    }
                 } catch(java.io.IOException ioe) {
                     log.error("Error reading data from stream");

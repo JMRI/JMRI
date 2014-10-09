@@ -263,6 +263,15 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 	      case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
 	         break;
 	      case SerialPortEvent.DATA_AVAILABLE:
+                 handleOneIncomingReply();
+	         break;
+	      }
+	}
+       
+        /**
+         * Handle an incoming reply
+         */
+        void handleOneIncomingReply(){
 	          // we get here if data has been received
 	    	  //fill the current reply with any data received
 	    	  int replyCurrentSize = this.reply.getNumDataElements();
@@ -281,11 +290,10 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 	            	break;
 	            }
 	          }
-	 
 
-	         break;
-	      }
-	}
+        }
+
+
 	/**
 	 * Send the current reply - built using data from serialEvent
 	 */
