@@ -76,6 +76,34 @@ public class SprogCSStreamPortController extends AbstractStreamPortController im
     public void sendSprogMessage(SprogMessage m, SprogListener l){
       SprogTrafficController.instance().sendSprogMessage(m,l);
     }
+
+    // internal thread to check to see if the stream has data and
+    // notify the Traffic Controller.
+
+    protected class rcvCheck implements Runnable {
+        
+        private SprogTrafficController control;
+        private DataInputStream in;
+
+        public rcvCheck(DataInputStream in, SprogTrafficController control) {
+		this.in = in;
+                this.control = control;
+        }
+
+        public void run() {
+             do {
+                try {
+                   if(in.available()>0){
+                      control.serialEvent(new gnu.io.SerialPortEvent(null,gnu.io.SerialPortEvent.DATA_AVAILABLE,false,true));
+                   }
+                } catch(java.io.IOException ioe) {
+                    log.error("Error reading data from stream");
+                }
+                // need to sleep here?
+             } while(true);
+        }
+    }
+
     
     static Logger log = LoggerFactory.getLogger(SprogCSStreamPortController.class.getName());
 
