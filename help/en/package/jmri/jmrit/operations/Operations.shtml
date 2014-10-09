@@ -840,6 +840,21 @@
      <td>See below</td>
     </tr>
     <tr>
+     <td>TKCB</td>
+     <td>Track Comment</td>
+     <td>Comment</td>
+    </tr>
+    <tr>
+     <td>TKCP</td>
+     <td>Train Comment Pick up</td>
+     <td>Comment</td>
+    </tr>
+    <tr>
+     <td>TKCS</td>
+     <td>Train Comment Set out</td>
+     <td>Comment</td>
+    </tr>
+    <tr>
      <td>TC</td>
      <td>Train Comment</td>
      <td>Comment</td>
