@@ -33,7 +33,6 @@ public class FileLocationPaneXml extends jmri.configurexml.AbstractXmlAdapter {
          e.setAttribute("defaultThrottleLocation", jmri.jmrit.throttle.ThrottleFrame.getDefaultThrottleFolder());*/
         storeLocation(e, "defaultScriptLocation", FileUtil.getScriptsPath());
         storeUserFilesLocation(e, FileUtil.getUserFilesPath());
-        storeLocation(e, "defaultThrottleLocation", jmri.jmrit.throttle.ThrottleFrame.getDefaultThrottleFolder());
         e.setAttribute("class", this.getClass().getName());
         return e;
     }
@@ -72,13 +71,6 @@ public class FileLocationPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         value = loadUserLocations(e, "defaultScriptLocation");
         if (value != null) {
             FileUtil.setScriptsPath(value);
-        }
-        /*Attribute throttleLocation = e.getAttribute("defaultThrottleLocation");
-         if (throttleLocation!=null)
-         jmri.jmrit.throttle.ThrottleFrame.setDefaultThrottleLocation(userLocation.getValue());*/
-        value = loadUserLocations(e, "defaultThrottleLocation");
-        if (value != null) {
-            jmri.jmrit.throttle.ThrottleFrame.setDefaultThrottleLocation(value);
         }
         jmri.InstanceManager.configureManagerInstance().registerPref(new FileLocationPane());
         return result;

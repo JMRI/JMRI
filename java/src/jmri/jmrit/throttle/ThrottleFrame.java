@@ -1,7 +1,5 @@
 package jmri.jmrit.throttle;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -19,7 +17,6 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
-
 import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
@@ -28,7 +25,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
-
 import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.configurexml.LoadXmlConfigAction;
@@ -40,9 +36,10 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
 import jmri.util.iharder.dnd.FileDrop;
 import jmri.util.iharder.dnd.FileDrop.Listener;
-
 import org.jdom.Document;
 import org.jdom.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Should be named ThrottlePanel but was already existing with that name 
@@ -81,22 +78,14 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
     private String lastUsedSaveFile = null;
     private static String DefaultThrottleFileName = "JMRI_ThrottlePreference.xml";
     
-    private static String ThrottleFileLocation = null;
-
     public static String getDefaultThrottleFolder() {
-        if (ThrottleFileLocation == null)
-            return FileUtil.getUserFilesPath()+"throttle"+File.separator ;
-        return ThrottleFileLocation;
+        return FileUtil.getUserFilesPath() + "throttle" + File.separator;
     }
 
-    public static String getDefaultThrottleFilename() { 
-    	return getDefaultThrottleFolder()+DefaultThrottleFileName;
+    public static String getDefaultThrottleFilename() {
+        return getDefaultThrottleFolder() + DefaultThrottleFileName;
     }
     
-    public static void setDefaultThrottleLocation(String location){
-        ThrottleFileLocation = location;
-    }
-                
     public ThrottleFrame(ThrottleWindow tw)
     {
         super();
