@@ -12,12 +12,18 @@ package jmri.implementation;
  *
  * @version     $Revision$
  */
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import jmri.InstanceManager;
+import jmri.JmriException;
+import jmri.NamedBean;
+import jmri.NamedBeanHandle;
+import jmri.Route;
+import jmri.Sensor;
+import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
-import java.util.ArrayList;
-import jmri.*;
 
 public class DefaultRoute extends AbstractNamedBean
     implements Route, java.io.Serializable, java.beans.VetoableChangeListener {
@@ -1143,95 +1149,94 @@ public class DefaultRoute extends AbstractNamedBean
 
     static final Logger log = LoggerFactory.getLogger(DefaultRoute.class.getName());
     
-}
+    /**
+     * Class providing a thread to set route turnouts
+     */
+    static class SetRouteThread extends Thread {
+            /**
+             * Constructs the thread
+             */
+        public SetRouteThread(DefaultRoute aRoute) {
+                    r = aRoute;
+            }
 
-/**
- * Class providing a thread to set route turnouts
- */
-class SetRouteThread extends Thread {
-	/**
-	 * Constructs the thread
-	 */
-    public SetRouteThread(DefaultRoute aRoute) {
-		r = aRoute;
-	}
-	
-	/** 
-	 * Runs the thread - performs operations in the order:
-	 * <ul>
-	 * <li>Run script (can run in parallel)
-	 * <li>Play Sound (runs in parallel)
-	 * <li>Set Turnouts
-	 * <li>Set Sensors
-	 * </UL>
-	 */
-    public void run() {
-	
-        // run script defined for start of route set
-	    if ((r.getOutputScriptName() != null) && (!r.getOutputScriptName().equals(""))) {
-	        jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(r.getOutputScriptName()));
-	    }
-	    
-        // play sound defined for start of route set
-	    if ((r.getOutputSoundName() != null) && (!r.getOutputSoundName().equals(""))) {
-	        jmri.jmrit.Sound snd = new jmri.jmrit.Sound(jmri.util.FileUtil.getExternalFilename(r.getOutputSoundName()));
-	        snd.play();
-	    }
-	    
-        // set sensors at
-        for (int k = 0; k < r.getNumOutputSensors(); k++) {
-            Sensor t = r.getOutputSensor(k);
-            int state = r.getOutputSensorState(k);
-            if (state==Route.TOGGLE) {
-                int st = t.getKnownState();
-                if (st==Sensor.ACTIVE) {
-                    state = Sensor.INACTIVE;
-                } else {
-                    state = Sensor.ACTIVE;
+            /**
+             * Runs the thread - performs operations in the order:
+             * <ul>
+             * <li>Run script (can run in parallel)
+             * <li>Play Sound (runs in parallel)
+             * <li>Set Turnouts
+             * <li>Set Sensors
+             * </UL>
+             */
+        public void run() {
+
+            // run script defined for start of route set
+                if ((r.getOutputScriptName() != null) && (!r.getOutputScriptName().equals(""))) {
+                    jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(r.getOutputScriptName()));
+                }
+
+            // play sound defined for start of route set
+                if ((r.getOutputSoundName() != null) && (!r.getOutputSoundName().equals(""))) {
+                    jmri.jmrit.Sound snd = new jmri.jmrit.Sound(jmri.util.FileUtil.getExternalFilename(r.getOutputSoundName()));
+                    snd.play();
+                }
+
+            // set sensors at
+            for (int k = 0; k < r.getNumOutputSensors(); k++) {
+                Sensor t = r.getOutputSensor(k);
+                int state = r.getOutputSensorState(k);
+                if (state==Route.TOGGLE) {
+                    int st = t.getKnownState();
+                    if (st==Sensor.ACTIVE) {
+                        state = Sensor.INACTIVE;
+                    } else {
+                        state = Sensor.ACTIVE;
+                    }
+                }
+                try {
+                    t.setKnownState(state);
+                } catch (JmriException e) {
+                    log.warn("Exception setting sensor "+t.getSystemName()+" in route");
+                }
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt(); // retain if needed later
+                }
+                    }
+
+            // set turnouts
+            int delay = r.getRouteCommandDelay();
+
+            for (int k=0; k<r.getNumOutputTurnouts(); k++) {
+                Turnout t = r.getOutputTurnout(k);
+                int state = r.getOutputTurnoutState(k);
+                if (state==Route.TOGGLE) {
+                    int st = t.getKnownState();
+                    if (st==Turnout.CLOSED) {
+                        state = Turnout.THROWN;
+                    } else {
+                        state = Turnout.CLOSED;
+                    }
+                }
+                t.setCommandedState(state);
+                try {
+                    Thread.sleep(250 + delay);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt(); // retain if needed later
                 }
             }
-            try {
-                t.setKnownState(state);
-            } catch (JmriException e) {
-                log.warn("Exception setting sensor "+t.getSystemName()+" in route");
+            //set route not busy
+                    r.setRouteNotBusy();
+            //check turnout alignment
+            r.checkTurnoutAlignment();
             }
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt(); // retain if needed later
-            }
-		}
-		
-        // set turnouts
-        int delay = r.getRouteCommandDelay();
 
-        for (int k=0; k<r.getNumOutputTurnouts(); k++) {
-            Turnout t = r.getOutputTurnout(k);
-            int state = r.getOutputTurnoutState(k);
-            if (state==Route.TOGGLE) {
-                int st = t.getKnownState();
-                if (st==Turnout.CLOSED) {
-                    state = Turnout.THROWN;
-                } else {
-                    state = Turnout.CLOSED;
-                }
-            }
-            t.setCommandedState(state);
-            try {
-                Thread.sleep(250 + delay);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt(); // retain if needed later
-            }
-        }
-        //set route not busy
-		r.setRouteNotBusy();
-        //check turnout alignment
-        r.checkTurnoutAlignment();
-	}
-	
-	private DefaultRoute r;
-    
-    static final Logger log = LoggerFactory.getLogger(SetRouteThread.class.getName());
+            private DefaultRoute r;
+
+        static final Logger log = LoggerFactory.getLogger(SetRouteThread.class.getName());
+    }
 }
 
 /* @(#)DefaultRoute.java */
