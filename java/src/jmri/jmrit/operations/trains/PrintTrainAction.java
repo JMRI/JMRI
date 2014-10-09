@@ -13,7 +13,6 @@ import java.text.MessageFormat;
 
 import javax.swing.*;
 
-import java.util.List;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 

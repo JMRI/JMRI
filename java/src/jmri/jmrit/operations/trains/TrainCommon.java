@@ -12,7 +12,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 import javax.swing.JLabel;
+
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -32,6 +34,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineModels;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -675,7 +678,7 @@ public class TrainCommon {
 	}
 
 	List<String> utilityCarTypes = new ArrayList<String>();
-	private static final int utilityCarCountFieldSize = 3;
+	private static final int UTILITY_CAR_COUNT_FIELD_SIZE = 3;
 
 	/**
 	 * Add a list of utility cars scheduled for pick up from the route location to the output file. The cars are blocked
@@ -697,9 +700,9 @@ public class TrainCommon {
 		int count = countUtilityCars(format, carList, car, rl, rld, PICKUP);
 		if (count == 0)
 			return; // already printed out this car type
-		pickUpCar(file, car, new StringBuffer(padAndTruncateString(Setup.getPickupCarPrefix(), Setup
-				.getManifestPrefixLength())
-				+ " " + padString(Integer.toString(count), utilityCarCountFieldSize)), format, isManifest);
+		pickUpCar(file, car, new StringBuffer(padAndTruncateString(Setup.getPickupCarPrefix(), isManifest ? Setup
+				.getManifestPrefixLength() : Setup.getSwitchListPrefixLength())
+				+ " " + padString(Integer.toString(count), UTILITY_CAR_COUNT_FIELD_SIZE)), format, isManifest);
 	}
 
 	/**
@@ -731,7 +734,7 @@ public class TrainCommon {
 		int count = countUtilityCars(format, carList, car, rl, null, !PICKUP);
 		if (count == 0)
 			return; // already printed out this car type
-		buf.append(" " + padString(Integer.toString(count), utilityCarCountFieldSize));
+		buf.append(" " + padString(Integer.toString(count), UTILITY_CAR_COUNT_FIELD_SIZE));
 		dropCar(file, car, buf, format, isLocal, isManifest);
 	}
 
@@ -742,7 +745,7 @@ public class TrainCommon {
 		String[] format = Setup.getPickupUtilityCarMessageFormat();
 		if (!isManifest)
 			format = Setup.getSwitchListPickupUtilityCarMessageFormat();
-		StringBuffer buf = new StringBuffer(" " + padString(Integer.toString(count), utilityCarCountFieldSize));
+		StringBuffer buf = new StringBuffer(" " + padString(Integer.toString(count), UTILITY_CAR_COUNT_FIELD_SIZE));
 		for (String attribute : format) {
 			String s = getCarAttribute(car, attribute, PICKUP, !LOCAL);
 			buf.append(s);
@@ -772,7 +775,7 @@ public class TrainCommon {
 		int count = countUtilityCars(format, carList, car, rl, null, !PICKUP);
 		if (count == 0)
 			return null;
-		StringBuffer buf = new StringBuffer(" " + padString(Integer.toString(count), utilityCarCountFieldSize));
+		StringBuffer buf = new StringBuffer(" " + padString(Integer.toString(count), UTILITY_CAR_COUNT_FIELD_SIZE));
 		for (String attribute : format) {
 			// TODO the Setup.Location doesn't work correctly for the conductor
 			// window, therefore we use the local true to disable it.
@@ -1243,7 +1246,7 @@ public class TrainCommon {
 		else if (attribute.equals(Setup.NO_NUMBER))
 			return " "
 					+ padAndTruncateString("", Control.max_len_string_road_number
-							- (trimRoadNumber + utilityCarCountFieldSize + 1));
+							- (trimRoadNumber + UTILITY_CAR_COUNT_FIELD_SIZE + 1));
 		else if (attribute.equals(Setup.NO_ROAD))
 			return " " + padAndTruncateString("", CarRoads.instance().getMaxNameLength());
 		else if (attribute.equals(Setup.NO_COLOR))

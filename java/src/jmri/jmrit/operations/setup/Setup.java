@@ -1084,7 +1084,11 @@ public class Setup {
 	}
 
 	public static int getSwitchListPrefixLength() {
-		int maxLength = getSwitchListPickupCarPrefix().length();
+		int maxLength = getPickupEnginePrefix().length();
+		if (getDropEnginePrefix().length() > maxLength)
+			maxLength = getDropEnginePrefix().length();
+		if (getSwitchListPickupCarPrefix().length() > maxLength)
+			maxLength = getSwitchListPickupCarPrefix().length();
 		if (getSwitchListDropCarPrefix().length() > maxLength)
 			maxLength = getSwitchListDropCarPrefix().length();
 		if (getSwitchListLocalPrefix().length() > maxLength)

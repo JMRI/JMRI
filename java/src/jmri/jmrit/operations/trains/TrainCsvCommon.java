@@ -3,9 +3,14 @@
 package jmri.jmrit.operations.trains;
 
 import java.io.PrintWriter;
+import java.util.List;
+
+import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.RouteLocation;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,6 +48,9 @@ public class TrainCsvCommon extends TrainCommon {
 	protected final static String RN = "RN"+DEL+Bundle.getMessage("csvRailroadName")+DEL; // NOI18N
 	protected final static String SC = "SC"+DEL+Bundle.getMessage("csvSetOutCar"); // NOI18N
 	protected final static String SL = "SL"+DEL+Bundle.getMessage("csvSetOutLoco"); // NOI18N
+	protected final static String TKCB = "TKCB"+DEL+Bundle.getMessage("csvTrackCommentBoth"); // NOI18N
+	protected final static String TKCP = "TKCP"+DEL+Bundle.getMessage("csvTrackCommentPickUp"); // NOI18N
+	protected final static String TKCS = "TKCS"+DEL+Bundle.getMessage("csvTrackCommentSetOut"); // NOI18N
 	protected final static String TC = "TC"+DEL+Bundle.getMessage("csvTrainComment")+DEL; // NOI18N
 	protected final static String TD = "TD"+DEL+Bundle.getMessage("csvTrainDeparts")+DEL; // NOI18N
 	protected final static String TL = "TL"+DEL+Bundle.getMessage("csvTrainLengthEmptiesCars")+DEL; // NOI18N
@@ -247,6 +255,40 @@ public class TrainCsvCommon extends TrainCommon {
 			addLine(fileOut, CC);
 		else if ((legOptions & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES)
 			addLine(fileOut, CL);
+	}
+	
+	protected void printTrackComments(PrintWriter fileOut, RouteLocation rl, List<Car> carList) {
+		Location location = rl.getLocation();
+		if (location != null) {
+			List<Track> tracks = location.getTrackByNameList(null);
+			for (Track track : tracks) {
+				// any pick ups or set outs to this track?
+				boolean pickup = false;
+				boolean setout = false;
+				for (Car car : carList) {
+					if (car.getRouteLocation() == rl && car.getTrack() != null && car.getTrack() == track)
+						pickup = true;
+					if (car.getRouteDestination() == rl && car.getDestinationTrack() != null
+							&& car.getDestinationTrack() == track)
+						setout = true;
+				}
+				// print the appropriate comment if there's one
+				// each comment can have multiple lines
+				if (pickup && setout && !track.getCommentBoth().equals("")) {
+					String[] comments = track.getCommentBoth().split(NEW_LINE);
+					for (String comment : comments)
+						addLine(fileOut, TKCB + DEL + comment);
+				} else if (pickup && !setout && !track.getCommentPickup().equals("")) {
+					String[] comments = track.getCommentPickup().split(NEW_LINE);
+					for (String comment : comments)
+						addLine(fileOut, TKCP + DEL + comment);
+				} else if (!pickup && setout && !track.getCommentSetout().equals("")) {
+					String[] comments = track.getCommentSetout().split(NEW_LINE);
+					for (String comment : comments)
+						addLine(fileOut, TKCS + DEL + comment);
+				}
+			}
+		}
 	}
 	
 }

@@ -118,6 +118,9 @@ public class TrainCsvManifest extends TrainCsvCommon {
 			if (!rl.getComment().equals("")) {
 				addLine(fileOut, RLC + ESC + rl.getComment() + ESC);
 			}
+			
+			printTrackComments(fileOut, rl, carList);
+			
 			// engine change or helper service?
 			if (train.getSecondLegOptions() != Train.NONE) {
 				if (rl == train.getSecondLegStartLocation()) {
