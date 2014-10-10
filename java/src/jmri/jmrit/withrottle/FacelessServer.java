@@ -14,13 +14,11 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.util.zeroconf.ZeroConfService;
 import jmri.util.zeroconf.ZeroConfServiceEvent;
 import jmri.util.zeroconf.ZeroConfServiceListener;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -192,22 +190,21 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
 	public void serviceUnpublished(ZeroConfServiceEvent se) {
 	}
 
-}
+    //  listen() has to run in a separate thread.
+    static class FacelessThread extends Thread {
 
-//  listen() has to run in a separate thread.
-class FacelessThread extends Thread {
+        FacelessServer fs;
 
-    FacelessServer fs;
+        FacelessThread(FacelessServer _fs) {
+            fs = _fs;
+        }
 
-    FacelessThread(FacelessServer _fs) {
-        fs = _fs;
+        @Override
+        public void run() {
+            fs.listen();
+            log.debug("Leaving ThreadNoUI.run()");
+        }
+
+        static Logger log = LoggerFactory.getLogger(FacelessThread.class.getName());
     }
-
-    @Override
-    public void run() {
-        fs.listen();
-        log.debug("Leaving ThreadNoUI.run()");
-    }
-
-    static Logger log = LoggerFactory.getLogger(FacelessThread.class.getName());
 }

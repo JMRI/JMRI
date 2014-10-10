@@ -434,22 +434,21 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         this.manualPortLabel.setText(null);
     }
 
-}
+    //  listen() has to run in a separate thread.
+    static class ServerThread extends Thread {
 
-//  listen() has to run in a separate thread.
-class ServerThread extends Thread {
+        UserInterface UI;
 
-    UserInterface UI;
+        ServerThread(UserInterface _UI) {
+            UI = _UI;
+        }
 
-    ServerThread(UserInterface _UI) {
-        UI = _UI;
+        @Override
+        public void run() {
+            UI.listen();
+            log.debug("Leaving serverThread.run()");
+        }
+
+        static Logger log = LoggerFactory.getLogger(ServerThread.class.getName());
     }
-
-    @Override
-    public void run() {
-        UI.listen();
-        log.debug("Leaving serverThread.run()");
-    }
-
-    static Logger log = LoggerFactory.getLogger(ServerThread.class.getName());
 }

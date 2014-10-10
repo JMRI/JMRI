@@ -1,37 +1,35 @@
 // CombinedLocoSelTreePane.java
 package jmri.jmrit.symbolicprog;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrit.decoderdefn.DecoderFile;
-import jmri.jmrit.decoderdefn.DecoderIndexFile;
-import jmri.jmrit.roster.Roster;
-import jmri.jmrit.roster.RosterEntry;
-import java.util.Enumeration;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
-
+import java.util.List;
+import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.TreeNode;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultTreeSelectionModel;
+import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JRadioButton;
-import javax.swing.ButtonGroup;
-
-import java.util.List;
+import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.decoderdefn.DecoderIndexFile;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provide GUI controls to select a known loco and/or new decoder. <P> This is
@@ -533,150 +531,150 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
         return !dTree.isSelectionEmpty();
     }
     static Logger log = LoggerFactory.getLogger(CombinedLocoSelTreePane.class.getName());
-}
 
-/**
- * The following has been taken from an example given in..
- * http://www.java2s.com/Code/Java/Swing-Components/DecoderTreeNodeTreeExample.htm
- * with extracts from http://www.codeguru.com/java/articles/143.shtml
- * 
-*/
-class InvisibleTreeModel extends DefaultTreeModel {
+    /**
+     * The following has been taken from an example given in..
+     * http://www.java2s.com/Code/Java/Swing-Components/DecoderTreeNodeTreeExample.htm
+     * with extracts from http://www.codeguru.com/java/articles/143.shtml
+     *
+    */
+    class InvisibleTreeModel extends DefaultTreeModel {
 
-    protected boolean filterIsActive;
+        protected boolean filterIsActive;
 
-    public InvisibleTreeModel(TreeNode root) {
-        this(root, false);
-    }
-
-    public InvisibleTreeModel(TreeNode root, boolean asksAllowsChildren) {
-        this(root, false, false);
-    }
-
-    public InvisibleTreeModel(TreeNode root, boolean asksAllowsChildren,
-            boolean filterIsActive) {
-        super(root, asksAllowsChildren);
-        this.filterIsActive = filterIsActive;
-    }
-
-    public void activateFilter(boolean newValue) {
-        filterIsActive = newValue;
-    }
-
-    public boolean isActivatedFilter() {
-        return filterIsActive;
-    }
-
-    public Object getChild(Object parent, int index) {
-        if (parent instanceof DecoderTreeNode) {
-            return ((DecoderTreeNode) parent).getChildAt(index,
-                    filterIsActive);
-        }
-        return ((TreeNode) parent).getChildAt(index);
-    }
-
-    public int getChildCount(Object parent) {
-        if (parent instanceof DecoderTreeNode) {
-            return ((DecoderTreeNode) parent).getChildCount(filterIsActive);
-        }
-        return ((TreeNode) parent).getChildCount();
-    }
-}
-
-class DecoderTreeNode extends DefaultMutableTreeNode {
-
-    protected boolean isIdentified;
-    private String toolTipText;
-    private String title;
-    DecoderFile.Showable showable = DecoderFile.Showable.YES;  // default
-
-    public DecoderTreeNode(String str, String toolTipText, String title) {
-        this(str);
-        this.toolTipText = toolTipText;
-        this.title = title;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getToolTipText() {
-        return toolTipText;
-    }
-
-    public DecoderTreeNode(Object userObject) {
-        this(userObject, true, false, DecoderFile.Showable.YES);
-    }
-
-    public DecoderTreeNode(Object userObject, boolean allowsChildren,
-            boolean isIdentified, DecoderFile.Showable showable) {
-        super(userObject, allowsChildren);
-        this.isIdentified = isIdentified;
-        this.showable = showable;
-    }
-
-    public TreeNode getChildAt(int index, boolean filterIsActive) {
-        if (children == null) {
-            throw new ArrayIndexOutOfBoundsException("node has no children");
+        public InvisibleTreeModel(TreeNode root) {
+            this(root, false);
         }
 
-        int realIndex = -1;
-        int visibleIndex = -1;
-        Enumeration<?> e = children.elements();
-        while (e.hasMoreElements()) {
-            DecoderTreeNode node = (DecoderTreeNode) e.nextElement();
-            if (node.isVisible(filterIsActive)) {
-                visibleIndex++;
+        public InvisibleTreeModel(TreeNode root, boolean asksAllowsChildren) {
+            this(root, false, false);
+        }
+
+        public InvisibleTreeModel(TreeNode root, boolean asksAllowsChildren,
+                boolean filterIsActive) {
+            super(root, asksAllowsChildren);
+            this.filterIsActive = filterIsActive;
+        }
+
+        public void activateFilter(boolean newValue) {
+            filterIsActive = newValue;
+        }
+
+        public boolean isActivatedFilter() {
+            return filterIsActive;
+        }
+
+        public Object getChild(Object parent, int index) {
+            if (parent instanceof DecoderTreeNode) {
+                return ((DecoderTreeNode) parent).getChildAt(index,
+                        filterIsActive);
             }
-            realIndex++;
-            if (visibleIndex == index) {
-                return (TreeNode) children.elementAt(realIndex);
+            return ((TreeNode) parent).getChildAt(index);
+        }
+
+        public int getChildCount(Object parent) {
+            if (parent instanceof DecoderTreeNode) {
+                return ((DecoderTreeNode) parent).getChildCount(filterIsActive);
             }
+            return ((TreeNode) parent).getChildCount();
         }
-
-        throw new ArrayIndexOutOfBoundsException("index unmatched");
-        //return (TreeNode)children.elementAt(index);
     }
 
-    public int getChildCount(boolean filterIsActive) {
-        if (children == null) {
-            return 0;
+    class DecoderTreeNode extends DefaultMutableTreeNode {
+
+        protected boolean isIdentified;
+        private String toolTipText;
+        private String title;
+        DecoderFile.Showable showable = DecoderFile.Showable.YES;  // default
+
+        public DecoderTreeNode(String str, String toolTipText, String title) {
+            this(str);
+            this.toolTipText = toolTipText;
+            this.title = title;
         }
 
-        int count = 0;
-        Enumeration<?> e = children.elements();
-        while (e.hasMoreElements()) {
-            DecoderTreeNode node = (DecoderTreeNode) e.nextElement();
-            if (node.isVisible(filterIsActive)) {
-                count++;
+        public String getTitle() {
+            return title;
+        }
+
+        public String getToolTipText() {
+            return toolTipText;
+        }
+
+        public DecoderTreeNode(Object userObject) {
+            this(userObject, true, false, DecoderFile.Showable.YES);
+        }
+
+        public DecoderTreeNode(Object userObject, boolean allowsChildren,
+                boolean isIdentified, DecoderFile.Showable showable) {
+            super(userObject, allowsChildren);
+            this.isIdentified = isIdentified;
+            this.showable = showable;
+        }
+
+        public TreeNode getChildAt(int index, boolean filterIsActive) {
+            if (children == null) {
+                throw new ArrayIndexOutOfBoundsException("node has no children");
             }
-        }
 
-        return count;
-    }
-
-    public void setIdentified(boolean isIdentified) {
-        this.isIdentified = isIdentified;
-    }
-
-    public void setShowable(DecoderFile.Showable showable) {
-        this.showable = showable;
-    }
-    public DecoderFile.Showable getShowable() {
-        return this.showable;
-    }
-
-    private boolean isVisible(boolean filterIsActive) {
-        // if there are children, are any visible?
-        if (children != null) {
+            int realIndex = -1;
+            int visibleIndex = -1;
             Enumeration<?> e = children.elements();
             while (e.hasMoreElements()) {
                 DecoderTreeNode node = (DecoderTreeNode) e.nextElement();
-                if (node.isVisible(filterIsActive)) return true;
+                if (node.isVisible(filterIsActive)) {
+                    visibleIndex++;
+                }
+                realIndex++;
+                if (visibleIndex == index) {
+                    return (TreeNode) children.elementAt(realIndex);
+                }
             }
-            return false;
+
+            throw new ArrayIndexOutOfBoundsException("index unmatched");
+            //return (TreeNode)children.elementAt(index);
         }
-        // no children
-        return isIdentified || (!filterIsActive && (showable == DecoderFile.Showable.YES));
+
+        public int getChildCount(boolean filterIsActive) {
+            if (children == null) {
+                return 0;
+            }
+
+            int count = 0;
+            Enumeration<?> e = children.elements();
+            while (e.hasMoreElements()) {
+                DecoderTreeNode node = (DecoderTreeNode) e.nextElement();
+                if (node.isVisible(filterIsActive)) {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
+        public void setIdentified(boolean isIdentified) {
+            this.isIdentified = isIdentified;
+        }
+
+        public void setShowable(DecoderFile.Showable showable) {
+            this.showable = showable;
+        }
+        public DecoderFile.Showable getShowable() {
+            return this.showable;
+        }
+
+        private boolean isVisible(boolean filterIsActive) {
+            // if there are children, are any visible?
+            if (children != null) {
+                Enumeration<?> e = children.elements();
+                while (e.hasMoreElements()) {
+                    DecoderTreeNode node = (DecoderTreeNode) e.nextElement();
+                    if (node.isVisible(filterIsActive)) return true;
+                }
+                return false;
+            }
+            // no children
+            return isIdentified || (!filterIsActive && (showable == DecoderFile.Showable.YES));
+        }
     }
 }

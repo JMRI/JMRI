@@ -2,10 +2,10 @@
 
 package jmri.jmrix.loconet;
 
+import jmri.JmriException;
+import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.Sensor;
-import jmri.JmriException;
 
 /**
  * Manage the LocoNet-specific Sensor implementation.
@@ -181,50 +181,49 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     
     static Logger log = LoggerFactory.getLogger(LnSensorManager.class.getName());
 
-}
+    /**
+     * Class providing a thread to update sensor states
+     */
+    class LnSensorUpdateThread extends Thread
+    {
+            /**
+             * Constructs the thread
+             */
+            public LnSensorUpdateThread (LnSensorManager sm, LnTrafficController tc) {
+                    this.sm = sm;
+                    this.tc = tc;
+            }
 
-/**
- * Class providing a thread to update sensor states
- */
-class LnSensorUpdateThread extends Thread
-{
-	/**
-	 * Constructs the thread
-	 */
-	public LnSensorUpdateThread (LnSensorManager sm, LnTrafficController tc) {
-		this.sm = sm;
-		this.tc = tc;
-	}
-	
-	/** 
-	 * Runs the thread - sends 8 commands to query status of all stationary sensors
-	 *     per LocoNet PE Specs, page 12-13
-	 * Thread waits 500 msec between commands.
-	 */
-	public void run () {
-	    sm.setUpdateBusy();
-		byte sw1[] = {0x78,0x79,0x7a,0x7b,0x78,0x79,0x7a,0x7b};
-		byte sw2[] = {0x27,0x27,0x27,0x27,0x07,0x07,0x07,0x07};
-		// create and initialize loconet message
-        LocoNetMessage m = new LocoNetMessage(4);
-        m.setOpCode(LnConstants.OPC_SW_REQ);
-		for (int k = 0; k < 8; k++) {
-			try {
-				Thread.sleep(500);
-			}
-			catch (InterruptedException e) {
-			    Thread.currentThread().interrupt(); // retain if needed later
-			}
-			m.setElement(1,sw1[k]);
-			m.setElement(2,sw2[k]);
-			tc.sendLocoNetMessage(m);
-		}
-		sm.setUpdateNotBusy();
-	}
-	
-	private LnSensorManager sm = null;
-	private LnTrafficController tc = null;
-    
-}
+            /**
+             * Runs the thread - sends 8 commands to query status of all stationary sensors
+             *     per LocoNet PE Specs, page 12-13
+             * Thread waits 500 msec between commands.
+             */
+            public void run () {
+                sm.setUpdateBusy();
+                    byte sw1[] = {0x78,0x79,0x7a,0x7b,0x78,0x79,0x7a,0x7b};
+                    byte sw2[] = {0x27,0x27,0x27,0x27,0x07,0x07,0x07,0x07};
+                    // create and initialize loconet message
+            LocoNetMessage m = new LocoNetMessage(4);
+            m.setOpCode(LnConstants.OPC_SW_REQ);
+                    for (int k = 0; k < 8; k++) {
+                            try {
+                                    Thread.sleep(500);
+                            }
+                            catch (InterruptedException e) {
+                                Thread.currentThread().interrupt(); // retain if needed later
+                            }
+                            m.setElement(1,sw1[k]);
+                            m.setElement(2,sw2[k]);
+                            tc.sendLocoNetMessage(m);
+                    }
+                    sm.setUpdateNotBusy();
+            }
 
+            private LnSensorManager sm = null;
+            private LnTrafficController tc = null;
+
+    }
+
+}
 /* @(#)LnSensorManager.java */

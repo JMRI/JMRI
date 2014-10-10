@@ -1,18 +1,18 @@
 package jmri.jmrit.display;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.InstanceManager;
-import jmri.Turnout;
-import jmri.jmrit.catalog.NamedIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.AbstractAction;
-import javax.swing.JPopupMenu;
-import javax.swing.JMenuItem;
-import jmri.NamedBeanHandle;
 import java.util.HashMap;
 import java.util.Iterator;
+import javax.swing.AbstractAction;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+import jmri.InstanceManager;
+import jmri.NamedBeanHandle;
+import jmri.Turnout;
+import jmri.jmrit.catalog.NamedIcon;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An icon to display a status of a Slip, either Single or Double.<P>
@@ -1099,39 +1099,38 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
 			}
     }
     static Logger log = LoggerFactory.getLogger(SlipTurnoutIcon.class.getName());
-}
 
-class SetSlipThread extends Thread {
-	/**
-	 * Constructs the thread
-	 */
-    public SetSlipThread(SlipTurnoutIcon aSlip) {
-		s = aSlip;
-	}    
-    //This is used to set the two turnouts, with a delay of 250ms between each one.
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="WMI_WRONG_MAP_ITERATOR", justification="iterator really short, efficiency not as important as clarity here")
-    public void run() {
-		
-        HashMap <Turnout, Integer> _turnoutSetting = s.getTurnoutSettings();
-        
-        Iterator<Turnout> itr = _turnoutSetting.keySet().iterator();
-        while(itr.hasNext()) {
-            Turnout t = itr.next();
-            int state = _turnoutSetting.get(t);
-            t.setCommandedState(state);
-            try {
-                Thread.sleep(250);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt(); // retain if needed later
+    static class SetSlipThread extends Thread {
+            /**
+             * Constructs the thread
+             */
+        public SetSlipThread(SlipTurnoutIcon aSlip) {
+                    s = aSlip;
             }
-        }
-        
-        //set Slip not busy
-		s.setSlipNotBusy();   
-	}
-    
-    private SlipTurnoutIcon s;
-    static final Logger log = LoggerFactory.getLogger(SetSlipThread.class.getName());
+        //This is used to set the two turnouts, with a delay of 250ms between each one.
+        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="WMI_WRONG_MAP_ITERATOR", justification="iterator really short, efficiency not as important as clarity here")
+        public void run() {
 
-    
+            HashMap <Turnout, Integer> _turnoutSetting = s.getTurnoutSettings();
+
+            Iterator<Turnout> itr = _turnoutSetting.keySet().iterator();
+            while(itr.hasNext()) {
+                Turnout t = itr.next();
+                int state = _turnoutSetting.get(t);
+                t.setCommandedState(state);
+                try {
+                    Thread.sleep(250);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt(); // retain if needed later
+                }
+            }
+
+            //set Slip not busy
+                    s.setSlipNotBusy();
+            }
+
+        private SlipTurnoutIcon s;
+        static final Logger log = LoggerFactory.getLogger(SetSlipThread.class.getName());
+
+    }
 }
