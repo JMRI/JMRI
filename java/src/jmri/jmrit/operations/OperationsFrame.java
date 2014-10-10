@@ -248,12 +248,25 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 			log.debug("Sort column count: " + sorter.getColumnCount() + " table column count: "
 					+ table.getColumnCount() + " XTableColumnModel in use");
 			XTableColumnModel tcm = (XTableColumnModel) table.getColumnModel();
+			// need to have all columns visible so we can get the proper column order
+			boolean[] columnVisible = new boolean[sorter.getColumnCount()];
+			for (int i = 0; i < sorter.getColumnCount(); i++) {
+				columnVisible[i] = tcm.isColumnVisible(tcm.getColumnByModelIndex(i));
+				tcm.setColumnVisible(tcm.getColumnByModelIndex(i), true);
+			}
+			// now save with the correct column order
 			for (int i = 0; i < sorter.getColumnCount(); i++) {
 				int sortStatus = sorter.getSortingStatus(i);
 				int width = tcm.getColumnByModelIndex(i).getPreferredWidth();
-				boolean visible = tcm.isColumnVisible(tcm.getColumnByModelIndex(i));
-				p.setTableColumnPreferences(tableref, sorter.getColumnName(i), i, width, sortStatus, !visible);
+				int order = table.convertColumnIndexToView(i);
+				// must save with column not hidden
+				p.setTableColumnPreferences(tableref, sorter.getColumnName(i), order, width, sortStatus, false);
 			}
+			// now restore
+			for (int i = 0; i < sorter.getColumnCount(); i++) {
+				tcm.setColumnVisible(tcm.getColumnByModelIndex(i), columnVisible[i]);
+			}
+
 		}
 		// standard table
 		else
@@ -288,6 +301,7 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 		int count = 0;
 		while (!sortTable(table, p, tableref) && count < 10) {
 			count++;
+			log.debug("bubble sort pass {}:", count);
 		}
 		// Some tables have more than one name, so use the current one for size
 		for (int i = 0; i < table.getColumnCount(); i++) {
@@ -315,14 +329,13 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 		for (int i = 0; i < table.getColumnCount(); i++) {
 			String columnName = table.getColumnName(i);
 			int order = p.getTableColumnOrder(tableref, columnName);
-			// log.debug("Column number " + i + " name " +columnName+" order "+order);
 			if (order == -1) {
-				log.debug("Column name " + columnName + " not found in user preference file");
+				log.debug("Column name {} not found in user preference file", columnName);
 				break; // table structure has changed quit sort
 			}
 			if (i != order && order < table.getColumnCount()) {
 				table.moveColumn(i, order);
-				log.debug("Move column number " + i + " name " + columnName + " to " + order);
+				log.debug("Move column number: {} name: {} to: {}", i, columnName, order);
 				sortDone = false;
 			}
 		}
