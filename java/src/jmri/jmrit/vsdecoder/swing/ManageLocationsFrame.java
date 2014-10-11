@@ -19,36 +19,48 @@ package jmri.jmrit.vsdecoder.swing;
  * @version			$Revision: 21510 $
  */
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Collections;
-import javax.swing.event.EventListenerList;
-import jmri.util.JmriJFrame;
-import javax.swing.*;
-import java.awt.*;
-import javax.swing.table.AbstractTableModel;
+import java.awt.Dimension;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.event.EventListenerList;
+import javax.swing.table.AbstractTableModel;
+import jmri.Block;
+import jmri.BlockManager;
+import jmri.Reporter;
+import jmri.ReporterManager;
+import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.vsdecoder.LoadVSDFileAction;
+import jmri.jmrit.vsdecoder.LoadXmlVSDecoderAction;
+import jmri.jmrit.vsdecoder.StoreXmlVSDecoderAction;
+import jmri.jmrit.vsdecoder.VSDecoderManager;
+import jmri.jmrit.vsdecoder.listener.ListeningSpot;
+import jmri.util.JmriJFrame;
 import jmri.util.PhysicalLocation;
 import jmri.util.WindowMenu;
-import jmri.jmrit.vsdecoder.VSDecoderManager;
-import jmri.jmrit.vsdecoder.LoadVSDFileAction;
-import jmri.jmrit.vsdecoder.StoreXmlVSDecoderAction;
-import jmri.jmrit.vsdecoder.LoadXmlVSDecoderAction;
-import jmri.jmrit.vsdecoder.listener.ListeningSpot;
-import jmri.ReporterManager;
-import jmri.Reporter;
-import jmri.BlockManager;
-import jmri.Block;
-import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Location;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class ManageLocationsFrame extends JmriJFrame {
@@ -353,136 +365,134 @@ public class ManageLocationsFrame extends JmriJFrame {
 
     static private Logger log = LoggerFactory.getLogger(ManageLocationsFrame.class.getName());
 
-}
+    /** Private class to serve as TableModel for Reporters and Ops Locations */
+    private static class LocationTableModel extends AbstractTableModel {
 
-/** Private class to serve as TableModel for Reporters and Ops Locations */
-class LocationTableModel extends AbstractTableModel {
+        // These get internationalized at runtime in the constructor below.
+        private String[] columnNames = new String[6];
+        private Object[][]rowData;
 
-    // These get internationalized at runtime in the constructor below.
-    private String[] columnNames = new String[6];
-    private Object[][]rowData;
+        public LocationTableModel(Object[][] dataMap) {
+            super();
+            // Use i18n-ized column titles.
+            columnNames[0] = Bundle.getMessage("FieldTableNameColumn");
+            columnNames[1] = Bundle.getMessage("FieldTableUseColumn");
+            columnNames[2] = Bundle.getMessage("FieldTableXColumn");
+            columnNames[3] = Bundle.getMessage("FieldTableYColumn");
+            columnNames[4] = Bundle.getMessage("FieldTableZColumn");
+            columnNames[5] = Bundle.getMessage("FieldTableIsTunnelColumn");
+            rowData = dataMap;
+        }
 
-    public LocationTableModel(Object[][] dataMap) {
-	super();
-	// Use i18n-ized column titles.
-	columnNames[0] = Bundle.getMessage("FieldTableNameColumn");
-	columnNames[1] = Bundle.getMessage("FieldTableUseColumn");
-	columnNames[2] = Bundle.getMessage("FieldTableXColumn");
-	columnNames[3] = Bundle.getMessage("FieldTableYColumn");
-	columnNames[4] = Bundle.getMessage("FieldTableZColumn");
-	columnNames[5] = Bundle.getMessage("FieldTableIsTunnelColumn");
-	rowData = dataMap;
+        public HashMap<String, PhysicalLocation> getDataMap() {
+            // Includes only the ones with the checkbox made
+            HashMap<String, PhysicalLocation> retv = new HashMap<String, PhysicalLocation>();
+            for (Object[] row : rowData) {
+                if ((Boolean)row[1]) {
+                    retv.put((String)row[0],
+                             new PhysicalLocation((Float)row[2], (Float)row[3], (Float)row[4], (Boolean)row[5]));
+                }
+            }
+            return(retv);
+        }
+
+        public String getColumnName(int col) {
+            return columnNames[col].toString();
+        }
+
+        public int getRowCount() { return rowData.length; }
+        public int getColumnCount() { return columnNames.length; }
+        public Object getValueAt(int row, int col) {
+            return rowData[row][col];
+        }
+        public boolean isCellEditable(int row, int col) { return true; }
+        public void setValueAt(Object value, int row, int col) {
+            rowData[row][col] = value;
+            fireTableCellUpdated(row, col);
+        }
+
+        public Class<?> getColumnClass(int columnIndex) {
+            switch(columnIndex) {
+            case 1:
+            case 5:
+                return Boolean.class;
+            case 4:
+            case 3:
+            case 2:
+                return Float.class;
+            case 0:
+            default:
+                return super.getColumnClass(columnIndex);
+            }
+        }
     }
 
-    public HashMap<String, PhysicalLocation> getDataMap() {
-	// Includes only the ones with the checkbox made
-	HashMap<String, PhysicalLocation> retv = new HashMap<String, PhysicalLocation>();
-	for (Object[] row : rowData) {
-	    if ((Boolean)row[1]) {
-		retv.put((String)row[0], 
-			 new PhysicalLocation((Float)row[2], (Float)row[3], (Float)row[4], (Boolean)row[5]));
-	    }
-	}
-	return(retv);
+    /** Private class for use as TableModel for Listener Locations */
+    private class ListenerTableModel extends AbstractTableModel {
+
+        // These get internationalized at runtime in the constructor below.
+        private String[] columnNames = new String[7];
+        private Object[][]rowData = null;
+
+        public ListenerTableModel(Object[][] dataMap) {
+            super();
+            // Use i18n-ized column titles.
+            columnNames[0] = Bundle.getMessage("FieldTableNameColumn");
+            columnNames[1] = Bundle.getMessage("FieldTableUseColumn");
+            columnNames[2] = Bundle.getMessage("FieldTableXColumn");
+            columnNames[3] = Bundle.getMessage("FieldTableYColumn");
+            columnNames[4] = Bundle.getMessage("FieldTableZColumn");
+            columnNames[5] = Bundle.getMessage("FieldTableBearingColumn");
+            columnNames[6] = Bundle.getMessage("FieldTableAzimuthColumn");
+            rowData = dataMap;
+        }
+
+        public HashMap<String, ListeningSpot> getDataMap() {
+            // Includes only the ones with the checkbox made
+            HashMap<String, ListeningSpot> retv = new HashMap<String, ListeningSpot>();
+            ListeningSpot spot = null;
+            for (Object[] row : rowData) {
+                if ((Boolean)row[1]) {
+                    spot = new ListeningSpot();
+                    spot.setName((String)row[0]);
+                    spot.setLocation((Double)row[2], (Double)row[3], (Double)row[4]);
+                    spot.setOrientation((Double)row[5], (Double)row[6]);
+                    retv.put((String)row[0], spot);
+                }
+            }
+            return(retv);
+        }
+
+        public String getColumnName(int col) {
+            return columnNames[col].toString();
+        }
+
+        public int getRowCount() { return rowData.length; }
+        public int getColumnCount() { return columnNames.length; }
+        public Object getValueAt(int row, int col) {
+            return rowData[row][col];
+        }
+        public boolean isCellEditable(int row, int col) { return true; }
+        public void setValueAt(Object value, int row, int col) {
+            rowData[row][col] = value;
+            fireTableCellUpdated(row, col);
+        }
+
+        public Class<?> getColumnClass(int columnIndex) {
+            switch(columnIndex) {
+            case 1:
+                return Boolean.class;
+            case 6:
+            case 5:
+            case 4:
+            case 3:
+            case 2:
+                return Double.class;
+            case 0:
+            default:
+                return super.getColumnClass(columnIndex);
+            }
+        }
+
     }
-
-    public String getColumnName(int col) {
-	return columnNames[col].toString();
-    }
-
-    public int getRowCount() { return rowData.length; }
-    public int getColumnCount() { return columnNames.length; }
-    public Object getValueAt(int row, int col) {
-	return rowData[row][col];
-    }
-    public boolean isCellEditable(int row, int col) { return true; }
-    public void setValueAt(Object value, int row, int col) {
-	rowData[row][col] = value;
-	fireTableCellUpdated(row, col);
-    }
-
-    public Class<?> getColumnClass(int columnIndex) {
-	switch(columnIndex) {
-	case 1:
-	case 5:
-	    return Boolean.class;
-	case 4:
-	case 3:
-	case 2:
-	    return Float.class;
-	case 0:
-	default:
-	    return super.getColumnClass(columnIndex);
-	}
-    }
-
-}
-
-/** Private class for use as TableModel for Listener Locations */
-class ListenerTableModel extends AbstractTableModel {
-
-    // These get internationalized at runtime in the constructor below.
-    private String[] columnNames = new String[7];
-    private Object[][]rowData = null;
-
-    public ListenerTableModel(Object[][] dataMap) {
-	super();
-	// Use i18n-ized column titles.
-	columnNames[0] = Bundle.getMessage("FieldTableNameColumn");
-	columnNames[1] = Bundle.getMessage("FieldTableUseColumn");
-	columnNames[2] = Bundle.getMessage("FieldTableXColumn");
-	columnNames[3] = Bundle.getMessage("FieldTableYColumn");
-	columnNames[4] = Bundle.getMessage("FieldTableZColumn");
-	columnNames[5] = Bundle.getMessage("FieldTableBearingColumn");
-	columnNames[6] = Bundle.getMessage("FieldTableAzimuthColumn");
-	rowData = dataMap;
-    }
-
-    public HashMap<String, ListeningSpot> getDataMap() {
-	// Includes only the ones with the checkbox made
-	HashMap<String, ListeningSpot> retv = new HashMap<String, ListeningSpot>();
-	ListeningSpot spot = null;
-	for (Object[] row : rowData) {
-	    if ((Boolean)row[1]) {
-		spot = new ListeningSpot();
-		spot.setName((String)row[0]);
-		spot.setLocation((Double)row[2], (Double)row[3], (Double)row[4]);
-		spot.setOrientation((Double)row[5], (Double)row[6]);
-		retv.put((String)row[0], spot);
-	    }
-	}
-	return(retv);
-    }
-
-    public String getColumnName(int col) {
-	return columnNames[col].toString();
-    }
-
-    public int getRowCount() { return rowData.length; }
-    public int getColumnCount() { return columnNames.length; }
-    public Object getValueAt(int row, int col) {
-	return rowData[row][col];
-    }
-    public boolean isCellEditable(int row, int col) { return true; }
-    public void setValueAt(Object value, int row, int col) {
-	rowData[row][col] = value;
-	fireTableCellUpdated(row, col);
-    }
-
-    public Class<?> getColumnClass(int columnIndex) {
-	switch(columnIndex) {
-	case 1:
-	    return Boolean.class;
-	case 6:
-	case 5:
-	case 4:
-	case 3:
-	case 2:
-	    return Double.class;
-	case 0:
-	default:
-	    return super.getColumnClass(columnIndex);
-	}
-    }
-
 }

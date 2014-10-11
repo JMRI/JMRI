@@ -1,35 +1,44 @@
 package jmri.jmrit.picker;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.*;
-import jmri.jmrit.logix.OBlockManager;
-import jmri.jmrit.logix.WarrantManager;
-import jmri.jmrit.signalling.EntryExitPairs;
-
 import java.beans.PropertyChangeListener;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import jmri.util.NamedBeanComparator;
 import java.util.ResourceBundle;
 import java.util.TreeSet;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
-
-import jmri.util.com.sun.TableSorter;
-import jmri.util.swing.XTableColumnModel;
-
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+import jmri.BlockManager;
+import jmri.ConditionalManager;
+import jmri.InstanceManager;
+import jmri.LightManager;
+import jmri.Manager;
+import jmri.MemoryManager;
+import jmri.NamedBean;
+import jmri.ReporterManager;
+import jmri.SensorManager;
+import jmri.SignalHead;
+import jmri.SignalHeadManager;
+import jmri.SignalMast;
+import jmri.SignalMastManager;
+import jmri.TurnoutManager;
+import jmri.jmrit.logix.OBlockManager;
+import jmri.jmrit.logix.WarrantManager;
+import jmri.jmrit.signalling.EntryExitPairs;
+import jmri.util.NamedBeanComparator;
+import jmri.util.com.sun.TableSorter;
+import jmri.util.swing.XTableColumnModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract class to make pick lists for NamedBeans.
  * <P>
- * Concrete pick list classe for many beans are include at the end of
+ * Concrete pick list class for many beans are include at the end of
  * this file.  This class also has instantiation methods serve as a factory
  * for those classes.
  * <P>
@@ -427,9 +436,8 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     }
 
     static final Logger log = LoggerFactory.getLogger(PickListModel.class.getName());
-}
 
-    class TurnoutPickModel extends PickListModel {
+    static class TurnoutPickModel extends PickListModel {
         TurnoutManager manager;
         TurnoutPickModel () {
              _name = rb.getString("TitleTurnoutTable");
@@ -449,7 +457,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
     }
 
-    class SensorPickModel extends PickListModel {
+    static class SensorPickModel extends PickListModel {
         SensorManager manager;
         SensorPickModel () {
             _name = rb.getString("TitleSensorTable");
@@ -469,7 +477,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
     }
 
-    class MultiSensorPickModel extends SensorPickModel {
+    static class MultiSensorPickModel extends SensorPickModel {
         private HashMap <Integer, String> _position = new HashMap <Integer, String> ();
         MultiSensorPickModel () {
             super();
@@ -487,7 +495,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
     }
 
-    class SignalHeadPickModel extends PickListModel {
+    static class SignalHeadPickModel extends PickListModel {
         SignalHeadManager manager;
         SignalHeadPickModel () {
              _name = rb.getString("TitleSignalTable");
@@ -511,7 +519,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
     }
 
-    class SignalMastPickModel extends PickListModel {
+    static class SignalMastPickModel extends PickListModel {
         SignalMastManager manager;
         SignalMastPickModel () {
             _name = rb.getString("TitleSignalMastTable");
@@ -535,7 +543,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
     }
 
-    class MemoryPickModel extends PickListModel {
+    static class MemoryPickModel extends PickListModel {
         MemoryManager manager;
         MemoryPickModel () {
             _name = rb.getString("TitleMemoryTable");
@@ -555,7 +563,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
     }
     
-    class BlockPickModel extends PickListModel {
+    static class BlockPickModel extends PickListModel {
         BlockManager manager;
         BlockPickModel () {
             _name = rb.getString("TitleBlockTable");
@@ -575,7 +583,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
     }
 
-    class ReporterPickModel extends PickListModel {
+    static class ReporterPickModel extends PickListModel {
         ReporterManager manager;
         ReporterPickModel () {
             _name = rb.getString("TitleReporterTable");
@@ -595,7 +603,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
     }
 
-    class LightPickModel extends PickListModel {
+    static class LightPickModel extends PickListModel {
         LightManager manager;
         LightPickModel () {
             _name = rb.getString("TitleLightTable");
@@ -615,7 +623,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
     }
 
-    class OBlockPickModel extends PickListModel {
+    static class OBlockPickModel extends PickListModel {
         OBlockManager manager;
         OBlockPickModel () {
             _name = rb.getString("TitleBlockTable");
@@ -635,7 +643,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
     }
 
-    class WarrantPickModel extends PickListModel {
+    static class WarrantPickModel extends PickListModel {
         WarrantManager manager;
         WarrantPickModel () {
             _name = rb.getString("TitleWarrantTable");
@@ -654,7 +662,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             return false;
         }
     }
-    class ConditionalPickModel extends PickListModel {
+    static class ConditionalPickModel extends PickListModel {
         ConditionalManager manager;
         ConditionalPickModel () {
             _name = rb.getString("TitleConditionalTable");
@@ -694,7 +702,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
     }
     
-    class EntryExitPickModel extends PickListModel {
+    static class EntryExitPickModel extends PickListModel {
         
         EntryExitPairs manager;
         EntryExitPickModel () {
@@ -723,4 +731,5 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             return "";
         }
     }
+}
 

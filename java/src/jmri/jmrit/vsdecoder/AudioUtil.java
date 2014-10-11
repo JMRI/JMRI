@@ -21,20 +21,20 @@ package jmri.jmrit.vsdecoder;
  * @version $Revision$
  */
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.nio.ByteBuffer;
-import net.java.games.joal.AL;
-import net.java.games.joal.ALException;
-import net.java.games.joal.util.ALut;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.ArrayList;
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.jmrit.audio.AudioBuffer;
+import net.java.games.joal.AL;
+import net.java.games.joal.ALException;
+import net.java.games.joal.util.ALut;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AudioUtil {
         //------------------------
@@ -319,22 +319,20 @@ public class AudioUtil {
 
     private static final Logger log = LoggerFactory.getLogger(AudioUtil.class.getName());
 
-}
+    /** Private class used to associate audio information (frequency, format, etc.)
+     *  with a ByteBuffer.
+     */
+    private static class AudioByteBuffer {
+        public ByteBuffer data;
+        public int format;
+        public int frequency;
+        public int loop;
 
-/** Private class used to associate audio information (frequency, format, etc.)
- *  with a ByteBuffer.
- */
-class AudioByteBuffer {
-    public ByteBuffer data;
-    public int format;
-    public int frequency;
-    public int loop;
-    
-    public AudioByteBuffer(ByteBuffer d, int fmt, int freq, int lp) {
-	data = d;
-	format = fmt;
-	frequency = freq;
-	loop = lp;
+        public AudioByteBuffer(ByteBuffer d, int fmt, int freq, int lp) {
+            data = d;
+            format = fmt;
+            frequency = freq;
+            loop = lp;
+        }
     }
 }
-

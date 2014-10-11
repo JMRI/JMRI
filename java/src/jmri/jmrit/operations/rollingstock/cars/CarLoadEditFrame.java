@@ -2,33 +2,29 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
-import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.ScheduleManager;
+import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.TrainManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Frame for adding and editing the car roster for operations.
@@ -366,20 +362,4 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 //	}
 
 	static Logger log = LoggerFactory.getLogger(CarLoadEditFrame.class.getName());
-}
-
-final class CarLoadAttributeAction extends AbstractAction {
-	public CarLoadAttributeAction(String actionName, CarLoadEditFrame clef) {
-		super(actionName);
-		this.clef = clef;
-	}
-
-	CarLoadEditFrame clef;
-
-	public void actionPerformed(ActionEvent ae) {
-		log.debug("Show attribute quanity");
-		clef.toggleShowQuanity();
-	}
-
-	static Logger log = LoggerFactory.getLogger(CarAttributeEditFrame.class.getName());
 }

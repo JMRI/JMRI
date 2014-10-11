@@ -2,30 +2,26 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
-import javax.swing.AbstractAction;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-
-import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.engines.EngineManager;
-import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.LocationsByCarTypeFrame;
+import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.jmrit.operations.rollingstock.engines.EngineManager;
+import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainsByCarTypeFrame;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Frame for adding and editing the car roster for operations.
@@ -484,38 +480,6 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 	private void firePcs(String p, Object old, Object n) {
 		log.debug("CarAttribute firePropertyChange " + p + " ");
 		pcs.firePropertyChange(p, old, n);
-	}
-
-	static Logger log = LoggerFactory.getLogger(CarAttributeEditFrame.class.getName());
-}
-
-final class CarAttributeAction extends AbstractAction {
-	public CarAttributeAction(String actionName, CarAttributeEditFrame caef) {
-		super(actionName);
-		this.caef = caef;
-	}
-
-	CarAttributeEditFrame caef;
-
-	public void actionPerformed(ActionEvent ae) {
-		log.debug("Show attribute quanity");
-		caef.toggleShowQuanity();
-	}
-
-	static Logger log = LoggerFactory.getLogger(CarAttributeEditFrame.class.getName());
-}
-
-final class CarDeleteAttributeAction extends AbstractAction {
-	public CarDeleteAttributeAction(String actionName, CarAttributeEditFrame caef) {
-		super(actionName);
-		this.caef = caef;
-	}
-
-	CarAttributeEditFrame caef;
-
-	public void actionPerformed(ActionEvent ae) {
-		log.debug("Delete unused attributes");
-		caef.deleteUnusedAttribures();
 	}
 
 	static Logger log = LoggerFactory.getLogger(CarAttributeEditFrame.class.getName());

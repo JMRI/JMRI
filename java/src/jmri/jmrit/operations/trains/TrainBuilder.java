@@ -12,9 +12,7 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
-
 import javax.swing.JOptionPane;
-
 import jmri.Version;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -33,7 +31,6 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -4189,30 +4186,5 @@ public class TrainBuilder extends TrainCommon {
 	}
 
 	static Logger log = LoggerFactory.getLogger(TrainBuilder.class.getName());
-
-}
-
-class BuildFailedException extends Exception {
-
-	public final static String NORMAL = "normal"; // NOI18N
-	public final static String STAGING = "staging"; // NOI18N
-	private String type = NORMAL;
-
-	public BuildFailedException(String s, String type) {
-		super(s);
-		this.type = type;
-	}
-
-	public BuildFailedException(String s) {
-		super(s);
-	}
-
-	public BuildFailedException(Exception ex) {
-		super(ex);
-	}
-
-	public String getExceptionType() {
-		return type;
-	}
 
 }
