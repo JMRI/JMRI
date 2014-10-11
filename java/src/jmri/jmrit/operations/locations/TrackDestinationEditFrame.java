@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -240,7 +241,6 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 						continue;
 					}
 					// now determine if there's a track willing to service car type
-					// TODO check to see if destination tracks are willing to accept the car's load
 					for (Track track : destination.getTrackList()) {
 						if (track.acceptsTypeName(type))
 							continue checkTypes; // yes there's a track
@@ -251,6 +251,23 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 							JOptionPane.WARNING_MESSAGE);
 
 				}
+				// now check road names
+				checkRoads: for (String road : CarRoads.instance().getNames()) {
+					if (!_track.acceptsRoadName(road)) {
+						continue;
+					}
+					// now determine if there's a track willing to service this road
+					for (Track track : destination.getTrackList()) {
+						if (track.acceptsRoadName(road))
+							continue checkRoads; // yes there's a track
+					}
+					JOptionPane.showMessageDialog(this, MessageFormat
+							.format(Bundle.getMessage("WarningDestinationTrackCarRoad"), new Object[] {
+									destination.getName(), road }), Bundle.getMessage("WarningCarMayNotMove"),
+							JOptionPane.WARNING_MESSAGE);
+
+				}
+				// TODO check to see if destination tracks are willing to accept the car's load
 			}
 		}
 	}
