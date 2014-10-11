@@ -235,10 +235,12 @@
     <xs:annotation>
         <xs:documentation>
           CV names can currently be numbers n or the n.n, n.n.n etc indexed forms.
+          As a special case, when there's more than one group, the 1st can be alpha numeric to indicate the type
+          of formatting, e.g. "T2CV.12.34" for TCS.
         </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:normalizedString">
-      <xs:pattern value="([0-9]*)|(([0-9]*\.)*[0-9]*)"/>
+      <xs:pattern value="([0-9]*)|(([0-9]*\.)*[0-9]*)|[a-zA-Z0-9]*\.(([0-9]*\.)*[0-9]*)"/>
     </xs:restriction>
   </xs:simpleType>
 
