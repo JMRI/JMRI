@@ -41,6 +41,7 @@ public class PackageTest extends TestCase {
         suite.addTest(ResettingOffsetHighCvProgrammerFacadeTest.suite());
         suite.addTest(AddressedHighCvProgrammerFacadeTest.suite());
         suite.addTest(MultiIndexProgrammerFacadeTest.suite());
+        suite.addTest(TwoIndexTcsProgrammerFacadeTest.suite());
         suite.addTest(SingleTurnoutSignalHeadTest.suite());
         suite.addTest(SignalSystemFileCheckTest.suite());
 
