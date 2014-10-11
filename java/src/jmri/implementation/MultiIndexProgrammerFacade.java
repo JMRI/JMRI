@@ -25,6 +25,8 @@ import jmri.jmrix.AbstractProgrammerFacade;
  *</ul>
  *</ul>
  *
+ * @see jmri.implementation.ProgrammerFacadeSelector
+ *
  * @author      Bob Jacobsen  Copyright (C) 2013
  * @version	$Revision: 24246 $
  */

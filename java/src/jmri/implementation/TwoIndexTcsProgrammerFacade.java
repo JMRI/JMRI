@@ -19,6 +19,8 @@ import jmri.jmrix.AbstractProgrammerFacade;
  * All others pass through to the next facade or programmer. E.g. 123 will do a write/read/confirm to 123,
  * or some other facade can provide "normal" indexed addressing.
  *
+ * @see jmri.implementation.ProgrammerFacadeSelector
+ *
  * @author      Bob Jacobsen  Copyright (C) 2013
  * @version	$Revision: 24246 $
  */
