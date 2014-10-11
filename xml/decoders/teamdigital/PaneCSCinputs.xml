@@ -156,7 +156,7 @@
 		<column> <display item="Inv 9" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
 		<display item="Transition 9" tooltip="Configures the input simulas" />
-		<label label=" "/>
+		<display item="Delay 9" tooltip="Value X 256ms = Time between actual low to hi transition to indicated transition"/>
  		<label label=" "/>
  		<label label="------  Input 10  ------ "/>
  		<label label=" "/>
@@ -171,7 +171,7 @@
 		<column> <display item="Inv 10" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
 		<display item="Transition 10" tooltip="Configures the input for specfic use" />
-		<label label=" "/>
+		<display item="Delay 10" tooltip="Value X 256ms = Time between actual low to hi transition to indicated transition"/>
 		<label label=" "/>
 		<label label="------  Input 11  ------ "/>
 		<label label=" "/>
@@ -186,7 +186,7 @@
 		<column> <display item="Inv 11" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
 		<display item="Transition 11" tooltip="Configures the input for specfic use" />
-		<label label=" "/>
+		<display item="Delay 11" tooltip="Value X 256ms = Time between actual low to hi transition to indicated transition"/>
 		<label label=" "/>
 		<label label="------  Input 12  ------ "/>
 		<label label=" "/>
@@ -201,8 +201,7 @@
 		<column> <display item="Inv 12" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
 		<display item="Transition 12" tooltip="Configures the input for specfic use" />
-		<label label=" "/>
-		<label label=" "/>
+		<display item="Delay 12" tooltip="Value X 256ms = Time between actual low to hi transition to indicated transition"/>
 		<label label=" "/>
 		<label label="------  Input 13  ------ "/>
 		<label label=" "/>
@@ -218,8 +217,8 @@
 		<column> <display item="Inv 13" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
 		<display item="Transition 13" tooltip="Configures the input simulas" />
+		<display item="Delay 13" tooltip="Value X 256ms = Time between actual low to hi transition to indicated transition"/>
 		<label label=" "/>
- 		<label label=" "/>
  		<label label="------  Input 14  ------ "/>
  		<label label=" "/>
 		<row>
@@ -233,7 +232,7 @@
 		<column> <display item="Inv 14" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
 		<display item="Transition 14" tooltip="Configures the input for specfic use" />
-		<label label=" "/>
+		<display item="Delay 14" tooltip="Value X 256ms = Time between actual low to hi transition to indicated transition"/>
 		<label label=" "/>
 		<label label="------  Input 15  ------ "/>
 		<label label=" "/>
@@ -248,7 +247,7 @@
 		<column> <display item="Inv 15" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
 		<display item="Transition 15" tooltip="Configures the input for specfic use" />
-		<label label=" "/>
+		<display item="Delay 15" tooltip="Value X 256ms = Time between actual low to hi transition to indicated transition"/>
 		<label label=" "/>
 		<label label="------  Input 16  ------ "/>
 		<label label=" "/>
@@ -263,7 +262,7 @@
 		<column> <display item="Inv 16" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
 		<display item="Transition 16" tooltip="Configures the input for specfic use" />
-		<label label=" "/>
+		<display item="Delay 16" tooltip="Value X 256ms = Time between actual low to hi transition to indicated transition"/>
 		<label label=" "/>		
 	</column>
 </pane>

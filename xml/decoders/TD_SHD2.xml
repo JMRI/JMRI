@@ -16,6 +16,7 @@
   <version author="td@teamdigital1.com" version="2.0" lastUpdated="20140407"/>
   <!-- Version 1 inital release -->
   <!-- Version 2 4/7/14 release add turnout control option-->
+  <!-- Version 2.1 10/10/14 release added aspect memory option-->
   <decoder>
     <family name="Stationary Decoder" mfg="Team Digital" type="stationary">
       <model model="SHD2" lowVersionID="1" comment="SHD2 is a DCC Signal decoder"/>
@@ -135,6 +136,17 @@
         </enumVal>
         <label>Option 3</label>
       </variable>
+      <variable CV="29" mask="XXXXVXXX" item="Opt4" default="0">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Option 4</label>
+      </variable>      
     </variables>
   </decoder>
   <pane>
@@ -262,8 +274,15 @@
             <text>Turnout close/throw commands control the aspects</text>
           </label>
           <label>
-            <text>*** Option 3 only available in version 2 of the SHD2 ****</text>
+            <text>*** Option 3 only available in version 2 or later of the SHD2 ****</text>
           </label>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Opt4" format="checkbox"/>
+          <label>
+            <text>Aspect memory, aspect at power on same as power off</text>
+          </label>          
         </column>
       </row>
     </column>

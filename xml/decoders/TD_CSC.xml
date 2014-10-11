@@ -15,6 +15,7 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="td@teamdigital1.com" version="1.0" lastUpdated="20130520"/>
   <!-- Version 1 initial release 10/27/13-->
+  <!-- Version 1.1 added delay for inputs 9-16 release 10/27/13-->  
   <decoder>
     <family name="CSC" mfg="Team Digital" type="stationary" comment="The CSC can be programmed in the usual way">
       <model model="CSC" lowVersionID="10"/>
@@ -4469,37 +4470,37 @@
         <label>Delay 8</label>
       </variable>
       <!-- Begin Logic Cell 57-64 Delay variable definition -->
-      <variable CV="226" mask="XVVVVVVV" item="LC Delay 1" default="0">
+      <variable CV="226" mask="XVVVVVVV" item="Delay 9" default="0">
         <decVal min="0" max="127"/>
-        <label>LC Delay 57</label>
+        <label>LC Delay 9</label>
       </variable>
-      <variable CV="227" mask="XVVVVVVV" item="LC Delay 2" default="0">
+      <variable CV="227" mask="XVVVVVVV" item="Delay 10" default="0">
         <decVal min="0" max="127"/>
-        <label>LC Delay 58</label>
+        <label>Delay 10</label>
       </variable>
-      <variable CV="228" mask="XVVVVVVV" item="LC Delay 3" default="0">
+      <variable CV="228" mask="XVVVVVVV" item="Delay 11" default="0">
         <decVal min="0" max="127"/>
-        <label>LC Delay 59</label>
+        <label>Delay 11</label>
       </variable>
-      <variable CV="229" mask="XVVVVVVV" item="LC Delay 4" default="0">
+      <variable CV="229" mask="XVVVVVVV" item="Delay 12" default="0">
         <decVal min="0" max="127"/>
-        <label>LC Delay 60</label>
+        <label>Delay 12</label>
       </variable>
-      <variable CV="230" mask="XVVVVVVV" item="LC Delay 5" default="0">
+      <variable CV="230" mask="XVVVVVVV" item="Delay 13" default="0">
         <decVal min="0" max="127"/>
-        <label>LC Delay 61</label>
+        <label>Delay 13</label>
       </variable>
-      <variable CV="231" mask="XVVVVVVV" item="LC Delay 6" default="0">
+      <variable CV="231" mask="XVVVVVVV" item="Delay 14" default="0">
         <decVal min="0" max="127"/>
-        <label>LC Delay 62</label>
+        <label>Delay 14</label>
       </variable>
-      <variable CV="232" mask="XVVVVVVV" item="LC Delay 7" default="0">
+      <variable CV="232" mask="XVVVVVVV" item="Delay 15" default="0">
         <decVal min="0" max="127"/>
-        <label>LC Delay 63</label>
+        <label>Delay 15</label>
       </variable>
-      <variable CV="233" mask="XVVVVVVV" item="LC Delay 8" default="0">
+      <variable CV="233" mask="XVVVVVVV" item="Delay 16" default="0">
         <decVal min="0" max="127"/>
-        <label>LC Delay 64</label>
+        <label>Delay 16</label>
       </variable>
       <!-- Setup Variables -->
       <variable CV="234" mask="XXXXXVVV" item="Setups">
@@ -13024,6 +13025,41 @@
         </qualifier>
         <label>Aspect</label>
       </variable>
+      
+       <!-- Begin Logic Cell 57-64 Delay variable definition -->
+      <variable CV="657" mask="XVVVVVVV" item="LC Delay 1" default="0">
+        <decVal min="0" max="127"/>
+        <label>LC Delay 57</label>
+      </variable>
+      <variable CV="658" mask="XVVVVVVV" item="LC Delay 2" default="0">
+        <decVal min="0" max="127"/>
+        <label>LC Delay 58</label>
+      </variable>
+      <variable CV="659" mask="XVVVVVVV" item="LC Delay 3" default="0">
+        <decVal min="0" max="127"/>
+        <label>LC Delay 59</label>
+      </variable>
+      <variable CV="660" mask="XVVVVVVV" item="LC Delay 4" default="0">
+        <decVal min="0" max="127"/>
+        <label>LC Delay 60</label>
+      </variable>
+      <variable CV="661" mask="XVVVVVVV" item="LC Delay 5" default="0">
+        <decVal min="0" max="127"/>
+        <label>LC Delay 61</label>
+      </variable>
+      <variable CV="662" mask="XVVVVVVV" item="LC Delay 6" default="0">
+        <decVal min="0" max="127"/>
+        <label>LC Delay 62</label>
+      </variable>
+      <variable CV="663" mask="XVVVVVVV" item="LC Delay 7" default="0">
+        <decVal min="0" max="127"/>
+        <label>LC Delay 63</label>
+      </variable>
+      <variable CV="664" mask="XVVVVVVV" item="LC Delay 8" default="0">
+        <decVal min="0" max="127"/>
+        <label>LC Delay 64</label>
+      </variable>     
+      
     </variables>
   </decoder>
   <pane>
