@@ -35,8 +35,20 @@
         <size length="2.860" width="0.680" height="0.145" units="inches"/>
       </model>
     </family>
-    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <programming direct="yes" paged="yes" register="yes" ops="yes">
+      <capability>
+        <name>TCS 4 CV access</name>
+      </capability>
+    </programming>
     <variables>
+    
+      <!-- this is a dummy for testing the "TCS 4 CV Sound Programming" support -->
+      <variable item="Sound Option 20" CV="T2CV.1.3">
+        <decVal/>
+        <label>Sound Option 20 for Sound Button 3</label>
+      </variable>
+      
+      
       <xi:include href="http://jmri.org/xml/decoders/tcs/CV1_CV99_FW86.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/CV100_CV157_FW86.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/CV249_CV252_FW86.xml"/>
