@@ -50,6 +50,10 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.21.3
+; - Updated "-CleanUp" so that any previous slf4j .jar files are removed 
+; -   before installation.
+; -------------------------------------------------------------------------
 ; - Version 0.1.21.2
 ; - Updated "-CleanUp" so that any previous desktop icons are removed before
 ; -   installation.
@@ -227,7 +231,7 @@
   ; -- usually, this will be determined by the build.xml ant script
   !define JRE_VER   "1.6"                       ; Required JRE version
 !endif
-!define INST_VER  "0.1.21.2"                    ; Installer version
+!define INST_VER  "0.1.21.3"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -407,6 +411,12 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\lib\crimson.jar"
     Delete "$OUTDIR\lib\comm.jar"
     Delete "$OUTDIR\lib\servlet.jar"
+    Delete "$OUTDIR\lib\slf4j-api-1.6.4.jar"
+    Delete "$OUTDIR\lib\slf4j-log4j12-1.6.4.jar"
+    Delete "$OUTDIR\lib\slf4j-api-1.7.2.jar"
+    Delete "$OUTDIR\lib\slf4j-log4j12-1.7.2.jar"
+    Delete "$OUTDIR\lib\slf4j-api-1.7.5.jar"
+    Delete "$OUTDIR\lib\slf4j-log4j12-1.7.5.jar"
 
     ; -- Delete .jar & support files installed using previous layout
     Delete "$OUTDIR\activation.jar"
