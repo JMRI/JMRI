@@ -258,7 +258,7 @@ public class PositionableLabel extends JLabel implements Positionable {
      */
     public void updateSize() {
         if (debug) {
-            log.debug("updateSize() w= "+maxWidth()+", h= "+maxHeight()+" _namedIcon= "+_namedIcon);
+            log.trace("updateSize() w= "+maxWidth()+", h= "+maxHeight()+" _namedIcon= "+_namedIcon);
         }
         
         setSize(maxWidth(), maxHeight());
@@ -333,7 +333,7 @@ public class PositionableLabel extends JLabel implements Positionable {
                 max = PositionablePopupUtil.MIN_SIZE;
             }
         }
-        if (debug) log.debug("maxWidth= "+max+" preferred width= "+getPreferredSize().width);
+        if (debug) log.trace("maxWidth= "+max+" preferred width= "+getPreferredSize().width);
         return max;
     }
 
@@ -361,7 +361,7 @@ public class PositionableLabel extends JLabel implements Positionable {
                 max = PositionablePopupUtil.MIN_SIZE;
             }
         }
-        if (debug) log.debug("maxHeight= "+max+" preferred height= "+getPreferredSize().height);
+        if (debug) log.trace("maxHeight= "+max+" preferred height= "+getPreferredSize().height);
         return max;
     }
 

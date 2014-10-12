@@ -126,7 +126,7 @@ public class InstanceManager {
      */
     @SuppressWarnings("unchecked")   // checked by construction
     static public <T> T getDefault(Class<T> type) {
-        log.debug("getDefault {}", type.getName());
+        log.trace("getDefault {}", type.getName());
         ArrayList<Object> l = managerLists.get(type);
         if (l == null || l.size()<1) {
             // see if can autocreate
