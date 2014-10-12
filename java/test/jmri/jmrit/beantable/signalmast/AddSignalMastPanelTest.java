@@ -20,7 +20,6 @@ public class AddSignalMastPanelTest extends TestCase {
         AddSignalMastPanel  a = new AddSignalMastPanel();
         
         jmri.util.JUnitAppender.assertWarnMessage("Won't protect preferences at shutdown without registered ShutDownManager");
-        jmri.util.JUnitAppender.assertWarnMessage("No Configuration file set, unable to save or load user preferences");
         
         // check that "Basic Model Signals" (basic directory) system is present
         boolean found = false;
@@ -40,7 +39,6 @@ public class AddSignalMastPanelTest extends TestCase {
             AddSignalMastPanel  a = new AddSignalMastPanel();
         
             jmri.util.JUnitAppender.assertWarnMessage("Won't protect preferences at shutdown without registered ShutDownManager");
-            jmri.util.JUnitAppender.assertWarnMessage("No Configuration file set, unable to save or load user preferences");
         
             // check that mock (test) system is present
             boolean found = false;
