@@ -8,7 +8,7 @@
 # For the general syntax of property based configuration files see the
 # documentation of org.apache.log4j.PropertyConfigurator.
 
-# Valid priority names are FATAL, ERROR, WARN, INFO and DEBUG. 
+# Valid priority names are FATAL, ERROR, WARN, INFO, DEBUG, and TRACE. 
 
 # The root category is set to log priority INFO and above
 # to the console (A1), to rolling log files (T), and to a single file (R).

@@ -9,7 +9,7 @@
 # For the general syntax of property based configuration files see the
 # documenation of org.apache.log4j.PropertyConfigurator.
 
-# Valid priority names are FATAL, ERROR, WARN, INFO and DEBUG. 
+# Valid priority names are FATAL, ERROR, WARN, INFO, DEBUG, and TRACE. 
 
 # The root category uses the appender called A1, which is set to log 
 # priority WARN and above. This is what's expected by the default
