@@ -3448,6 +3448,8 @@ public class TrainBuilder extends TrainCommon {
 			if (rld == _routeList.get(index))
 				break;
 		}
+		if (_routeList.size() == 1)
+			return findDestinationAndTrack(car, rl, index, index + 1);
 		return findDestinationAndTrack(car, rl, index - 1, index + 1);
 	}
 
