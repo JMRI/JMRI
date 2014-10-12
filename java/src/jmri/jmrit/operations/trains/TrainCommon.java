@@ -53,7 +53,7 @@ public class TrainCommon {
 	protected static final String BLANK_LINE = " ";
 	protected static final String HORIZONTAL_LINE_CHAR = "-";
 	protected static final String VERTICAL_LINE_CHAR = "|";
-//	protected static final String ARROW = ">";
+	// protected static final String ARROW = ">";
 
 	protected static final boolean PICKUP = true;
 	protected static final boolean LOCAL = true;
@@ -79,7 +79,7 @@ public class TrainCommon {
 		for (Engine engine : engineList) {
 			if (engine.getRouteLocation() == rl && !engine.getTrackName().equals("")) {
 				String s = padAndTruncateString(pickupEngine(engine).trim(), lineLength / 2, true);
-				s = padAndTruncateString(s + VERTICAL_LINE_CHAR, lineLength, true);	
+				s = padAndTruncateString(s + VERTICAL_LINE_CHAR, lineLength, true);
 				addLine(file, s);
 			}
 			if (engine.getRouteDestination() == rl) {
@@ -96,7 +96,7 @@ public class TrainCommon {
 	 * @param file
 	 * @param engineList
 	 * @param rl
-         * @param isManifest
+	 * @param isManifest
 	 */
 	protected void pickupEngines(PrintWriter file, List<Engine> engineList, RouteLocation rl, boolean isManifest) {
 		boolean printHeader = Setup.isPrintHeadersEnabled();
@@ -132,7 +132,7 @@ public class TrainCommon {
 	 * @param file
 	 * @param engineList
 	 * @param rl
-         * @param isManifest
+	 * @param isManifest
 	 */
 	protected void dropEngines(PrintWriter file, List<Engine> engineList, RouteLocation rl, boolean isManifest) {
 		boolean printHeader = Setup.isPrintHeadersEnabled();
@@ -148,7 +148,7 @@ public class TrainCommon {
 	}
 
 	private void dropEngine(PrintWriter file, Engine engine, boolean isManifest) {
-		StringBuffer buf = new StringBuffer(padAndTruncateString(Setup.getDropEnginePrefix(), isManifest? Setup
+		StringBuffer buf = new StringBuffer(padAndTruncateString(Setup.getDropEnginePrefix(), isManifest ? Setup
 				.getManifestPrefixLength() : Setup.getSwitchListPrefixLength()));
 		String[] format = Setup.getDropEngineMessageFormat();
 		for (String attribute : format) {
@@ -189,7 +189,7 @@ public class TrainCommon {
 		}
 		return builder.toString();
 	}
-	
+
 	boolean printPickupHeader = true;
 	boolean printSetoutHeader = true;
 	boolean printLocalMoveHeader = true;
@@ -250,7 +250,7 @@ public class TrainCommon {
 			// now do set outs and local moves
 			for (Car car : carList) {
 				if (Setup.isSortByTrackEnabled() && car.getRouteLocation() != null && car.getRouteDestination() == rl) {
-				// sort local moves by the car's current track name
+					// sort local moves by the car's current track name
 					if (isLocalMove(car)) {
 						if (!splitString(track.getName()).equals(splitString(car.getTrackName())))
 							continue;
@@ -366,11 +366,12 @@ public class TrainCommon {
 				addLine(file, s);
 		}
 	}
-	
+
 	List<Car> doneCars = new ArrayList<Car>();
+
 	/**
-	 * Produces a two column format for car pick ups and set outs. Sorted by track and then by destination.
-	 * Track name in header format.
+	 * Produces a two column format for car pick ups and set outs. Sorted by track and then by destination. Track name
+	 * in header format.
 	 */
 	protected void blockCarsByTrackNameTwoColumn(PrintWriter file, Train train, List<Car> carList,
 			List<RouteLocation> routeList, RouteLocation rl, int r, boolean printHeader, boolean isManifest) {
@@ -391,8 +392,7 @@ public class TrainCommon {
 				RouteLocation rld = routeList.get(j);
 				for (Car car : carList) {
 					if (car.getRouteLocation() == rl && !car.getTrackName().equals("")
-							&& car.getRouteDestination() == rld
-							&& trackName.equals(splitString(car.getTrackName()))) {
+							&& car.getRouteDestination() == rld && trackName.equals(splitString(car.getTrackName()))) {
 						if (!trackNames.contains(trackName)) {
 							printTrackNameHeader(file, trackName, isManifest);
 						}
@@ -419,7 +419,8 @@ public class TrainCommon {
 				}
 			}
 			for (Car car : carList) {
-				if (!doneCars.contains(car) && car.getRouteDestination() == rl && trackName.equals(splitString(car.getDestinationTrackName()))) {
+				if (!doneCars.contains(car) && car.getRouteDestination() == rl
+						&& trackName.equals(splitString(car.getDestinationTrackName()))) {
 					if (!trackNames.contains(trackName)) {
 						printTrackNameHeader(file, trackName, isManifest);
 					}
@@ -440,7 +441,7 @@ public class TrainCommon {
 	int index = 0;
 
 	/*
-	 * Used by two column format.  Local moves (pulls and spots) are lined up when using this format,
+	 * Used by two column format. Local moves (pulls and spots) are lined up when using this format,
 	 */
 	private String appendSetoutString(String s, List<Car> carList, RouteLocation rl, boolean local, boolean isManifest) {
 		while (index < carList.size()) {
@@ -455,9 +456,9 @@ public class TrainCommon {
 					return so;
 			}
 		}
-		return  padAndTruncateString(s + VERTICAL_LINE_CHAR, getLineLength(isManifest), true);
+		return padAndTruncateString(s + VERTICAL_LINE_CHAR, getLineLength(isManifest), true);
 	}
-	
+
 	/*
 	 * Used by two column and track format.
 	 */
@@ -477,7 +478,7 @@ public class TrainCommon {
 	}
 
 	/*
-	 * Appends to string the vertical line character, and the car set out string.  Used in two column format.
+	 * Appends to string the vertical line character, and the car set out string. Used in two column format.
 	 */
 	private String appendSetoutString(String s, List<Car> carList, RouteLocation rl, Car car, boolean isManifest) {
 		dropCars = true;
@@ -490,10 +491,10 @@ public class TrainCommon {
 		// else if (Setup.isTruncateManifestEnabled() && rl.getLocation().isSwitchListEnabled())
 		// truncatedDropCar(file, car);
 
-//		if (isLocalMove(car))
-//			newString = s + ARROW; // NOI18N
-//		else
-			newString = s + VERTICAL_LINE_CHAR;
+		// if (isLocalMove(car))
+		// newString = s + ARROW; // NOI18N
+		// else
+		newString = s + VERTICAL_LINE_CHAR;
 
 		if (car.isUtility()) {
 			String so = setoutUtilityCars(carList, car, rl, false, isManifest);
@@ -1275,7 +1276,8 @@ public class TrainCommon {
 	}
 
 	/**
-	 * Two column header format.  Left side pick ups, right side set outs
+	 * Two column header format. Left side pick ups, right side set outs
+	 * 
 	 * @param file
 	 * @param isManifest
 	 */
@@ -1289,7 +1291,7 @@ public class TrainCommon {
 		addLine(file, s);
 		printHorizontalLine(file, 0, lineLength);
 	}
-	
+
 	public void printPickupEngineHeader(PrintWriter file, boolean isManifest) {
 		int lineLength = getLineLength(isManifest);
 		printHorizontalLine(file, 0, lineLength);
@@ -1298,7 +1300,7 @@ public class TrainCommon {
 		addLine(file, s);
 		printHorizontalLine(file, 0, lineLength);
 	}
-	
+
 	public void printDropEngineHeader(PrintWriter file, boolean isManifest) {
 		int lineLength = getLineLength(isManifest);
 		printHorizontalLine(file, 0, lineLength);
@@ -1322,9 +1324,9 @@ public class TrainCommon {
 		// center pick up and set out text
 		String s = padAndTruncateString(tabString(Setup.getPickupCarPrefix(), lineLength / 4
 				- Setup.getPickupCarPrefix().length() / 2, true), lineLength / 2, true)
-				+ VERTICAL_LINE_CHAR + tabString(Setup.getDropCarPrefix(), lineLength / 4
-						- Setup.getDropCarPrefix().length() / 2, true);
-		s = padAndTruncateString (s, lineLength, true);
+				+ VERTICAL_LINE_CHAR
+				+ tabString(Setup.getDropCarPrefix(), lineLength / 4 - Setup.getDropCarPrefix().length() / 2, true);
+		s = padAndTruncateString(s, lineLength, true);
 		addLine(file, s);
 		printHorizontalLine(file, 0, lineLength);
 
@@ -1493,15 +1495,15 @@ public class TrainCommon {
 		}
 		return buf.toString();
 	}
-	
+
 	protected void printTrackNameHeader(PrintWriter file, String trackName, boolean isManifest) {
 		printHorizontalLine(file, isManifest);
 		int lineLength = getLineLength(isManifest);
-		String s = padAndTruncateString(tabString(trackName.trim(), lineLength / 4
-				- trackName.trim().length() / 2, true), lineLength / 2, true)
-				+ VERTICAL_LINE_CHAR + tabString(trackName.trim(), lineLength / 4
-						- trackName.trim().length() / 2, true);
-		s = padAndTruncateString (s, lineLength, true);
+		String s = padAndTruncateString(tabString(trackName.trim(), lineLength / 4 - trackName.trim().length() / 2,
+				true), lineLength / 2, true)
+				+ VERTICAL_LINE_CHAR
+				+ tabString(trackName.trim(), lineLength / 4 - trackName.trim().length() / 2, true);
+		s = padAndTruncateString(s, lineLength, true);
 		addLine(file, s);
 		printHorizontalLine(file, isManifest);
 	}
@@ -1524,17 +1526,21 @@ public class TrainCommon {
 		addLine(file, sb.toString());
 	}
 
-        public static String getISO8601Date(boolean isModelYear) {
-            Calendar calendar = Calendar.getInstance();
-            if (isModelYear && !Setup.getYearModeled().isEmpty()) {
-                calendar.set(Calendar.YEAR, Integer.parseInt(Setup.getYearModeled().trim()));
-            }
-            return (new ISO8601DateFormat()).format(calendar.getTime());
-        }
-
-        public static String getDate(Date date) {
+	public static String getISO8601Date(boolean isModelYear) {
 		Calendar calendar = Calendar.getInstance();
-                calendar.setTime(date);
+		if (isModelYear && !Setup.getYearModeled().isEmpty()) {
+			try {
+				calendar.set(Calendar.YEAR, Integer.parseInt(Setup.getYearModeled().trim()));
+			} catch (NumberFormatException e) {
+				return Setup.getYearModeled();
+			}
+		}
+		return (new ISO8601DateFormat()).format(calendar.getTime());
+	}
+
+	public static String getDate(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
 
 		String year = Integer.toString(calendar.get(Calendar.YEAR));
 		year = year.trim();
@@ -1567,16 +1573,20 @@ public class TrainCommon {
 		// Calendar.LONG, Locale.getDefault()
 		// Java 1.6 methods calendar.getDisplayName(Calendar.AM_PM,
 		// Calendar.LONG, Locale.getDefault())
-		return calendar.get(Calendar.MONTH) + 1 + "/" + calendar.get(Calendar.DAY_OF_MONTH) + "/" + year + " "
-				+ h + ":" + m + " " + AM_PM;
-        }
+		return calendar.get(Calendar.MONTH) + 1 + "/" + calendar.get(Calendar.DAY_OF_MONTH) + "/" + year + " " + h
+				+ ":" + m + " " + AM_PM;
+	}
 
 	public static String getDate(boolean isModelYear) {
 		Calendar calendar = Calendar.getInstance();
-                if (isModelYear && !Setup.getYearModeled().equals("")) {
-                    calendar.set(Calendar.YEAR, Integer.parseInt(Setup.getYearModeled().trim()));
-                }
-                return TrainCommon.getDate(calendar.getTime());
+		if (isModelYear && !Setup.getYearModeled().equals("")) {
+			try {
+				calendar.set(Calendar.YEAR, Integer.parseInt(Setup.getYearModeled().trim()));
+			} catch (NumberFormatException e) {
+				return Setup.getYearModeled();
+			}
+		}
+		return TrainCommon.getDate(calendar.getTime());
 	}
 
 	/**
@@ -1713,7 +1723,7 @@ public class TrainCommon {
 		int stringWidth = metrics.stringWidth(string);
 		return stringWidth <= getPageSize(orientation).width;
 	}
-	
+
 	private static Dimension getPageSize(String orientation) {
 		// page size has been adjusted to account for margins of .5
 		Dimension pagesize = new Dimension(523, 720); // Portrait 8.5 x 11

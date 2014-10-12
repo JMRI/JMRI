@@ -41,8 +41,7 @@ import jmri.web.server.WebServerManager;
  * @version $Revision$
  */
 
-public class OperationsSetupFrame extends OperationsFrame implements
-		java.beans.PropertyChangeListener {
+public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
 	// labels
 
@@ -268,8 +267,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 
 		// row 4c
 		JPanel pYearModeled = new JPanel();
-		pYearModeled.setBorder(BorderFactory.createTitledBorder(Bundle
-				.getMessage("BorderLayoutYearModeled")));
+		pYearModeled.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutYearModeled")));
 		pYearModeled.add(yearTextField);
 
 		p9.add(pYearModeled);
@@ -295,8 +293,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		JPanel pIcon = new JPanel();
 		pIcon.setLayout(new BoxLayout(pIcon, BoxLayout.Y_AXIS));
 		JScrollPane pIconPane = new JScrollPane(pIcon);
-		pIconPane.setBorder(BorderFactory.createTitledBorder(Bundle
-				.getMessage("BorderLayoutPanelOptions")));
+		pIconPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutPanelOptions")));
 
 		// row 1 Icon panel
 		JPanel p1Icon = new JPanel();
@@ -304,15 +301,13 @@ public class OperationsSetupFrame extends OperationsFrame implements
 
 		JPanel pPanelName = new JPanel();
 		pPanelName.setLayout(new GridBagLayout());
-		pPanelName
-				.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutPanelName")));
+		pPanelName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutPanelName")));
 		addItem(pPanelName, panelTextField, 0, 0);
 		p1Icon.add(pPanelName);
 
 		JPanel pIconControl = new JPanel();
 		pIconControl.setLayout(new GridBagLayout());
-		pIconControl.setBorder(BorderFactory.createTitledBorder(Bundle
-				.getMessage("BorderLayoutIconOptions")));
+		pIconControl.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutIconOptions")));
 		addItem(pIconControl, appendCheckBox, 0, 0);
 		addItem(pIconControl, iconCheckBox, 1, 0);
 		p1Icon.add(pIconControl);
@@ -321,8 +316,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 
 		JPanel pIconColors = new JPanel();
 		pIconColors.setLayout(new GridBagLayout());
-		pIconColors.setBorder(BorderFactory.createTitledBorder(Bundle
-				.getMessage("BorderLayoutIconColors")));
+		pIconColors.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutIconColors")));
 
 		addItem(pIconColors, textIconNorth, 0, 4);
 		addItemLeft(pIconColors, northComboBox, 1, 4);
@@ -390,21 +384,21 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Settings", true); // NOI18N
 
 		initMinimumSize(new Dimension(Control.tablePanelWidth, Control.panelHeight));
-		
+
 		// now provide the railroad name
 		railroadNameTextField.setText(Setup.getRailroadName()); // default
 		if (Setup.getRailroadName().equals(WebServerManager.getWebServerPreferences().getRailRoadName())) {
 			railroadNameTextField.setEnabled(false);
-// not a good idea to have a pop during initialization
-//		} else if (!WebServerManager.getWebServerPreferences().isDefaultRailroadName()) {
-//			int results = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
-//					.getMessage("ChangeRailroadName"), new Object[] { Setup.getRailroadName(),
-//					WebServerManager.getWebServerPreferences().getRailRoadName() }), Bundle
-//					.getMessage("ChangeOperationsRailroadName"), JOptionPane.YES_NO_OPTION);
-//			if (results == JOptionPane.OK_OPTION) {
-//				railroadNameTextField.setText(WebServerManager.getWebServerPreferences().getRailRoadName());
-//				railroadNameTextField.setEnabled(false);
-//			}
+			// not a good idea to have a pop during initialization
+			// } else if (!WebServerManager.getWebServerPreferences().isDefaultRailroadName()) {
+			// int results = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
+			// .getMessage("ChangeRailroadName"), new Object[] { Setup.getRailroadName(),
+			// WebServerManager.getWebServerPreferences().getRailRoadName() }), Bundle
+			// .getMessage("ChangeOperationsRailroadName"), JOptionPane.YES_NO_OPTION);
+			// if (results == JOptionPane.OK_OPTION) {
+			// railroadNameTextField.setText(WebServerManager.getWebServerPreferences().getRailRoadName());
+			// railroadNameTextField.setEnabled(false);
+			// }
 		}
 		createShutDownTask();
 	}
@@ -450,18 +444,34 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		}
 
 		try {
+			Integer.parseInt(hptTextField.getText());
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("HPT"), Bundle.getMessage("CanNotAcceptNumber"),
+					JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+
+		try {
 			Integer.parseInt(switchTimeTextField.getText());
 		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, Bundle.getMessage("MoveTime"),
-					Bundle.getMessage("CanNotAcceptNumber"), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("MoveTime"), Bundle.getMessage("CanNotAcceptNumber"),
+					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
 		try {
 			Integer.parseInt(travelTimeTextField.getText());
 		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, Bundle.getMessage("TravelTime"),
-					Bundle.getMessage("CanNotAcceptNumber"), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("TravelTime"), Bundle
+					.getMessage("CanNotAcceptNumber"), JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+
+		try {
+			Integer.parseInt(yearTextField.getText());
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("BorderLayoutYearModeled"), Bundle
+					.getMessage("CanNotAcceptNumber"), JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
@@ -469,8 +479,8 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		checkRoutes();
 
 		// set car types
-		if (typeDesc.isSelected() && !Setup.getCarTypes().equals(Setup.DESCRIPTIVE)
-				|| typeAAR.isSelected() && !Setup.getCarTypes().equals(Setup.AAR)) {
+		if (typeDesc.isSelected() && !Setup.getCarTypes().equals(Setup.DESCRIPTIVE) || typeAAR.isSelected()
+				&& !Setup.getCarTypes().equals(Setup.AAR)) {
 
 			// backup files before changing car type descriptions
 			AutoBackup backup = new AutoBackup();
@@ -501,11 +511,11 @@ public class OperationsSetupFrame extends OperationsFrame implements
 
 		// add panel name to setup
 		Setup.setPanelName(panelTextField.getText());
-		
+
 		// train Icon X&Y
 		Setup.setTrainIconCordEnabled(iconCheckBox.isSelected());
 		Setup.setTrainIconAppendEnabled(appendCheckBox.isSelected());
-		
+
 		// save train icon colors
 		Setup.setTrainIconColorNorth((String) northComboBox.getSelectedItem());
 		Setup.setTrainIconColorSouth((String) southComboBox.getSelectedItem());
@@ -551,10 +561,10 @@ public class OperationsSetupFrame extends OperationsFrame implements
 			Setup.setScale(Setup.G_SCALE);
 		Setup.setRailroadName(railroadNameTextField.getText());
 		if (!Setup.getRailroadName().equals(WebServerManager.getWebServerPreferences().getRailRoadName())) {
-			int results = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("ChangeRailroadName"),
-					new Object[] { WebServerManager.getWebServerPreferences().getRailRoadName(),
-							Setup.getRailroadName() }), Bundle.getMessage("ChangeJMRIRailroadName"),
-					JOptionPane.YES_NO_OPTION);
+			int results = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
+					.getMessage("ChangeRailroadName"), new Object[] {
+					WebServerManager.getWebServerPreferences().getRailRoadName(), Setup.getRailroadName() }), Bundle
+					.getMessage("ChangeJMRIRailroadName"), JOptionPane.YES_NO_OPTION);
 			if (results == JOptionPane.OK_OPTION) {
 				WebServerManager.getWebServerPreferences().setRailRoadName(Setup.getRailroadName());
 				WebServerManager.getWebServerPreferences().save();
@@ -570,10 +580,9 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		if (maxTrainLength != Setup.getMaxTrainLength()) {
 			if (maxTrainLength < 500 && Setup.getLengthUnit().equals(Setup.FEET) || maxTrainLength < 160
 					&& Setup.getLengthUnit().equals(Setup.METER)) {
-				JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
-						.getMessage("LimitTrainLength"), new Object[] { maxTrainLength,
-						Setup.getLengthUnit().toLowerCase() }), Bundle.getMessage("WarningTooShort"),
-						JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("LimitTrainLength"),
+						new Object[] { maxTrainLength, Setup.getLengthUnit().toLowerCase() }), Bundle
+						.getMessage("WarningTooShort"), JOptionPane.WARNING_MESSAGE);
 			}
 		}
 		// set max train length
@@ -588,8 +597,8 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		int maxLength = Integer.parseInt(maxLengthTextField.getText());
 		if (maxLength > Setup.getMaxTrainLength()) {
 			JOptionPane.showMessageDialog(this, Bundle.getMessage("RouteLengthNotModified"), MessageFormat.format(
-					Bundle.getMessage("MaxTrainLengthIncreased"), new Object[] { maxLength, Setup.getLengthUnit().toLowerCase() }),
-					JOptionPane.INFORMATION_MESSAGE);
+					Bundle.getMessage("MaxTrainLengthIncreased"), new Object[] { maxLength,
+							Setup.getLengthUnit().toLowerCase() }), JOptionPane.INFORMATION_MESSAGE);
 		}
 		if (maxLength < Setup.getMaxTrainLength()) {
 			StringBuffer sb = new StringBuffer();
@@ -598,9 +607,8 @@ public class OperationsSetupFrame extends OperationsFrame implements
 			for (Route route : routes) {
 				for (RouteLocation rl : route.getLocationsBySequenceList()) {
 					if (rl.getMaxTrainLength() > maxLength) {
-						String s = MessageFormat.format(Bundle.getMessage("RouteMaxLengthExceeds"),
-								new Object[] { route.getName(), rl.getName(), rl.getMaxTrainLength(),
-										maxLength });
+						String s = MessageFormat.format(Bundle.getMessage("RouteMaxLengthExceeds"), new Object[] {
+								route.getName(), rl.getName(), rl.getMaxTrainLength(), maxLength });
 						log.info(s);
 						sb.append(s + NEW_LINE);
 						count++;
@@ -737,11 +745,9 @@ public class OperationsSetupFrame extends OperationsFrame implements
 	}
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		log.debug("OperationsSetupFrame sees propertyChange " + e.getPropertyName() + " "
-				+ e.getNewValue());
+		log.debug("OperationsSetupFrame sees propertyChange " + e.getPropertyName() + " " + e.getNewValue());
 
 	}
 
-	static Logger log = LoggerFactory
-			.getLogger(OperationsSetupFrame.class.getName());
+	static Logger log = LoggerFactory.getLogger(OperationsSetupFrame.class.getName());
 }
