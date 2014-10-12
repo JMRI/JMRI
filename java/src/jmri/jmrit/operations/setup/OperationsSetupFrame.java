@@ -389,16 +389,6 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		railroadNameTextField.setText(Setup.getRailroadName()); // default
 		if (Setup.getRailroadName().equals(WebServerManager.getWebServerPreferences().getRailRoadName())) {
 			railroadNameTextField.setEnabled(false);
-			// not a good idea to have a pop during initialization
-			// } else if (!WebServerManager.getWebServerPreferences().isDefaultRailroadName()) {
-			// int results = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
-			// .getMessage("ChangeRailroadName"), new Object[] { Setup.getRailroadName(),
-			// WebServerManager.getWebServerPreferences().getRailRoadName() }), Bundle
-			// .getMessage("ChangeOperationsRailroadName"), JOptionPane.YES_NO_OPTION);
-			// if (results == JOptionPane.OK_OPTION) {
-			// railroadNameTextField.setText(WebServerManager.getWebServerPreferences().getRailRoadName());
-			// railroadNameTextField.setEnabled(false);
-			// }
 		}
 		createShutDownTask();
 	}
@@ -424,7 +414,6 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 	}
 
 	private void save() {
-
 		// check input fields
 		int maxTrainLength;
 		try {
@@ -662,7 +651,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 			direction += Setup.NORTH;
 		}
 		setDirectionCheckBox(direction);
-		packFrame();
+		pack();
 	}
 
 	private void setScale() {
@@ -735,18 +724,8 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		}
 	}
 
-	private void packFrame() {
-		pack();
-		/*
-		 * all JMRI window position and size are now saved if (Setup.getOperationsSetupFrameSize()!= null)
-		 * setSize(Setup.getOperationsSetupFrameSize()); /* else { setSize(getWidth(), getHeight()+20); // made the
-		 * panel a bit larger to eliminate scroll bars }
-		 */
-	}
-
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		log.debug("OperationsSetupFrame sees propertyChange " + e.getPropertyName() + " " + e.getNewValue());
-
 	}
 
 	static Logger log = LoggerFactory.getLogger(OperationsSetupFrame.class.getName());
