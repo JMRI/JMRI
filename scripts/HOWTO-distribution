@@ -212,7 +212,7 @@ Actual release steps:
 
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net
-    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.9.1/ws/jmri/dist/release/*zip*/release.zip"
+    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.9.4/ws/jmri/dist/release/*zip*/release.zip"
     rm release/JMRI*
     unzip release.zip
     cd release
@@ -261,7 +261,7 @@ Actual release steps:
 ( ) Wait for update on JMRI web server
 
 ( ) Mail announcement to jmriusers@yahoogroups.com
-    Subject is "Test version 3.9.2 of JMRI/DecoderPro is available for download"
+    Subject is "Test version 3.9.4 of JMRI/DecoderPro is available for download"
     or "JMRI 3.8 is available for download"
 
 ( ) If a production version, update the SF automatic download icon by selecting default in SF.net FRS (3 times)

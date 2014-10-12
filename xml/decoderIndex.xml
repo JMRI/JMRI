@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="/xml/XSLT/DecoderID.xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 20140911-0224-jake on Wed Sep 10 19:24:25 PDT 2014 $Id$-->
-  <decoderIndex version="457">
-    <mfgList nmraListDate="2014-06-04" updated="2014-08-24" lastadd="107">
+  <!--Written by JMRI version 20141012-0336-jake on Sat Oct 11 20:36:53 PDT 2014 $Id$-->
+  <decoderIndex version="460">
+    <mfgList nmraListDate="2014-09-22" updated="2014-10-11" lastadd="107,124">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
       <manufacturer mfg="AMW" mfgID="19" />
@@ -17,6 +17,8 @@
       <manufacturer mfg="Auvidel" mfgID="76" />
       <manufacturer mfg="BRAWA Modellspielwaren GmbH" mfgID="186" />
       <manufacturer mfg="Bachmann Trains" mfgID="101" />
+      <manufacturer mfg="Benezan Electronics" mfgID="114" />
+      <manufacturer mfg="Berros" mfgID="122" />
       <manufacturer mfg="Bluecher-Electronic" mfgID="60" />
       <manufacturer mfg="Brelec" mfgID="31" />
       <manufacturer mfg="Broadway Limited Imports, LLC" mfgID="38" />
@@ -27,6 +29,7 @@
       <manufacturer mfg="Computer Dialysis France" mfgID="105" />
       <manufacturer mfg="Con-Com GmbH" mfgID="204" />
       <manufacturer mfg="DCC Supplies, Ltd" mfgID="51" />
+      <manufacturer mfg="DCC-Gaspar-Electronic" mfgID="124" />
       <manufacturer mfg="DCCconcepts" mfgID="36" />
       <manufacturer mfg="Dietz Modellbahntechnik" mfgID="115" />
       <manufacturer mfg="Digirails" mfgID="42" />
@@ -763,6 +766,19 @@
           <output name="Ditch" />
           <output name="Motor" />
           <output name="BEMF" />
+        </model>
+      </family>
+      <family name="Locomotive lighting" mfg="Digirails" file="Digirails_DR80010.xml">
+        <model model="DR80010" lowVersionID="10" highVersionID="10" maxInputVolts="6.5-18V" maxMotorCurrent="0.0A, peak=0A for 5 sec." maxTotalCurrent="1.0A" formFactor="HO" numOuts="8" numFns="18">
+          <output name="1" label="FO 0 Headlight" connection="solder" maxcurrent="500 mA" />
+          <output name="2" label="FO 0 Taillight" connection="solder" maxcurrent="500 mA" />
+          <output name="3" label="FO 1 AUX 1" connection="solder" maxcurrent="500 mA" />
+          <output name="4" label="FO 2 AUX 2" connection="solder" maxcurrent="500 mA" />
+          <output name="5" label="FO 5 LED group 1" connection="other" />
+          <output name="6" label="FO 6 LED group 2" connection="other" />
+          <output name="7" label="FO 7 LED group 3" connection="other" />
+          <output name="8" label="FO 8 LED group 4" connection="other" />
+          <size length="280" width="6" height="1.5" units="mm" />
         </model>
       </family>
       <family name="Series 3 with FX3, silent, readback" mfg="Digitrax" lowVersionID="49" highVersionID="51" file="Digitrax_01x3.xml">
@@ -3372,6 +3388,13 @@
       </family>
       <family name="Digital" mfg="Hornby" file="HornbyDigitalFnOnly.xml">
         <model model="DCC-Fitted Function Only (Unmotored trailers)" options="unmotored" numOuts="2" numFns="1" nmraWarrant="no" formFactor="DCC Fitted" comment="Pendolino trailer" />
+      </family>
+      <family name="Hornby TTS Sound Decoder" mfg="Hornby" highVersionID="99" lowVersionID="1" comment="" file="HornbyTTS_version1.xml">
+        <model model="Hornby TTS Duke of Gloucester" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
+          <output name="Headlight" label="Wh" maxcurrent="0.1A" />
+          <output name="Rear Light" label="Ye" maxcurrent="0.1A" />
+          <output name="Aux" label="Gr" maxcurrent="0.1A" />
+        </model>
       </family>
       <family name="Ditch Light Decoder" mfg="Kato" lowVersionID="49" highVersionID="51" file="Kato_Ditch.xml">
         <model model="Ditch Light Decoder" numOuts="2" numFns="5" formFactor="HO" connector="unspecified">
@@ -6480,6 +6503,143 @@
           <functionlabel num="27" lockable="true">Maintenance</functionlabel>
           <functionlabel num="28" lockable="true">Water Loading</functionlabel>
         </functionlabels>
+      </family>
+      <family name="Function decoders" mfg="QElectronics GmbH" type="mobile" comment="Mobile function decoders" file="Qdecoder_FStandard.xml">
+        <model model="F0-4" numOuts="4" numFns="14" productID="function-4" comment="Mobile Function Decoder - 4 outputs">
+          <versionCV lowVersionID="8" highVersionID="8" />
+          <output name="1" label="A0" />
+          <output name="2" label="A1" />
+          <output name="3" label="A2" />
+          <output name="4" label="A3" />
+        </model>
+        <model model="F0-8" numOuts="8" numFns="14" productID="function-8" comment="Mobile Function Decoder - 8 outputs">
+          <versionCV lowVersionID="8" highVersionID="8" />
+          <output name="1" label="A0" />
+          <output name="2" label="A1" />
+          <output name="3" label="A2" />
+          <output name="4" label="A3" />
+          <output name="5" label="A4" />
+          <output name="6" label="A5" />
+          <output name="7" label="A6" />
+          <output name="8" label="A7" />
+        </model>
+      </family>
+      <family name="Function decoders" mfg="QElectronics GmbH" type="mobile" comment="Mobile function decoders" file="Qdecoder_Fplus.xml">
+        <model model="F0-4+" numOuts="4" numFns="14" productID="function-4plus" comment="Mobile Function Decoder with light effects and sequence &amp; function generator - 4 outputs">
+          <versionCV lowVersionID="8" highVersionID="8" />
+          <output name="1" label="A0" />
+          <output name="2" label="A1" />
+          <output name="3" label="A2" />
+          <output name="4" label="A3" />
+        </model>
+        <model model="F0-8+" numOuts="8" numFns="14" productID="function-8plus" comment="Mobile Function Decoder with light effects and sequence &amp; function generator - 8 outputs">
+          <versionCV lowVersionID="8" highVersionID="8" />
+          <output name="1" label="A0" />
+          <output name="2" label="A1" />
+          <output name="3" label="A2" />
+          <output name="4" label="A3" />
+          <output name="5" label="A4" />
+          <output name="6" label="A5" />
+          <output name="7" label="A6" />
+          <output name="8" label="A7" />
+        </model>
+      </family>
+      <family name="All-In-One accessory decoders" mfg="QElectronics GmbH" type="stationary" comment="die Alleskönner Zubehördecoder - with sequence &amp; function generator" file="Qdecoder_Z1-16plus.xml">
+        <model model="Z1-16+" numOuts="16" numFns="14" productID="Z1-16plus" comment="Accessory Decoder (motors, turnouts, signals) with light effects - 16 outputs">
+          <versionCV lowVersionID="8" highVersionID="8" />
+          <output name="1" label="A0" />
+          <output name="2" label="A1" />
+          <output name="3" label="A2" />
+          <output name="4" label="A3" />
+          <output name="5" label="A4" />
+          <output name="6" label="A5" />
+          <output name="7" label="A6" />
+          <output name="8" label="A7" />
+          <output name="9" label="A8" />
+          <output name="10" label="A9" />
+          <output name="11" label="A10" />
+          <output name="12" label="A11" />
+          <output name="13" label="A12" />
+          <output name="14" label="A13" />
+          <output name="15" label="A14" />
+          <output name="16" label="A15" />
+        </model>
+      </family>
+      <family name="All-In-One accessory decoders" mfg="QElectronics GmbH" type="stationary" comment="die Alleskönner Zubehördecoder - with sequence &amp; function generator" file="Qdecoder_Z2-8plus.xml">
+        <model model="Z2-8+" numOuts="8" numFns="14" productID="Z2-8plus" comment="Accessory Decoder (motors, turnouts, signals) - 8 outputs">
+          <versionCV lowVersionID="8" highVersionID="8" />
+          <output name="1" label="A0" />
+          <output name="2" label="A1" />
+          <output name="3" label="A2" />
+          <output name="4" label="A3" />
+          <output name="5" label="A4" />
+          <output name="6" label="A5" />
+          <output name="7" label="A6" />
+          <output name="8" label="A7" />
+        </model>
+      </family>
+      <family name="Standard accessory decoders" mfg="QElectronics GmbH" type="stationary" comment="Standard decoders" file="Qdecoder_ZStandard.xml">
+        <model model="Z1-16" numOuts="16" numFns="14" productID="Standard" comment="Accessory Decoder (motors, turnouts, signals) - 16 outputs">
+          <versionCV lowVersionID="8" highVersionID="8" />
+          <output name="1" label="A0" />
+          <output name="2" label="A1" />
+          <output name="3" label="A2" />
+          <output name="4" label="A3" />
+          <output name="5" label="A4" />
+          <output name="6" label="A5" />
+          <output name="7" label="A6" />
+          <output name="8" label="A7" />
+          <output name="9" label="A8" />
+          <output name="10" label="A9" />
+          <output name="11" label="A10" />
+          <output name="12" label="A11" />
+          <output name="13" label="A12" />
+          <output name="14" label="A13" />
+          <output name="15" label="A14" />
+          <output name="16" label="A15" />
+        </model>
+        <model model="Z2-8" numOuts="8" numFns="14" productID="Standard" comment="Accessory Decoder (motors, turnouts, signals) - 8 outputs">
+          <versionCV lowVersionID="8" highVersionID="8" />
+          <output name="1" label="A0" />
+          <output name="2" label="A1" />
+          <output name="3" label="A2" />
+          <output name="4" label="A3" />
+          <output name="5" label="A4" />
+          <output name="6" label="A5" />
+          <output name="7" label="A6" />
+        </model>
+      </family>
+      <family name="Basic accessory decoders" mfg="QElectronics GmbH" type="stationary" comment="for turnouts" file="Qdecoder_Zbasic.xml">
+        <model model="Z1-16N" numOuts="16" numFns="14" productID="Basic" comment="Accessory Decoder (turnouts) - 16 outputs">
+          <versionCV lowVersionID="8" highVersionID="8" />
+          <output name="1" label="A0" />
+          <output name="2" label="A1" />
+          <output name="3" label="A2" />
+          <output name="4" label="A3" />
+          <output name="5" label="A4" />
+          <output name="6" label="A5" />
+          <output name="7" label="A6" />
+          <output name="8" label="A7" />
+          <output name="9" label="A8" />
+          <output name="10" label="A9" />
+          <output name="11" label="A10" />
+          <output name="12" label="A11" />
+          <output name="13" label="A12" />
+          <output name="14" label="A13" />
+          <output name="15" label="A14" />
+          <output name="16" label="A15" />
+        </model>
+        <model model="Z2-8N" numOuts="8" numFns="14" productID="Basic" comment="Accessory Decoder (turnouts) - 8 outputs">
+          <versionCV lowVersionID="8" highVersionID="8" />
+          <output name="1" label="A0" />
+          <output name="2" label="A1" />
+          <output name="3" label="A2" />
+          <output name="4" label="A3" />
+          <output name="5" label="A4" />
+          <output name="6" label="A5" />
+          <output name="7" label="A6" />
+          <output name="8" label="A7" />
+        </model>
       </family>
       <family name="Control Point" mfg="RR-CirKits" type="stationary" comment="The Control Point is normally programmed in OPs mode" file="RR-CirKits-LNCP-basic.xml">
         <model model="LNCP" comment="LocoNet Control Point" lowVersionID="01" />
@@ -14838,6 +14998,29 @@
       </family>
       <family name="Minitrix" mfg="Trix Modelleisenbahn" highVersionID="65" lowVersionID="65" comment="Trix Selectrix &amp; DCC decoder" file="Trix_66838.xml">
         <model model="66838" numOuts="0" numFns="0" lowVersionID="65" />
+      </family>
+      <family name="Trix_Sound_HO" mfg="Trix Modelleisenbahn" type="locomotive" file="Trix_BB12000_Snd.xml">
+        <model model="Trix_Sound_BB12000" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Lights</functionlabel>
+          <functionlabel num="1" lockable="true">Sound</functionlabel>
+          <functionlabel num="2" lockable="false">Horn1</functionlabel>
+          <functionlabel num="4" lockable="false">ABV</functionlabel>
+          <functionlabel num="5" lockable="false">Horn2</functionlabel>
+          <functionlabel num="6" lockable="true">Red Cab2</functionlabel>
+          <functionlabel num="8" lockable="true">Red Cab1</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="Trix_Sound_HO" mfg="Trix Modelleisenbahn" type="locomotive" file="Trix_Glasscar_Snd.xml">
+        <model model="Glasscar" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Lights</functionlabel>
+          <functionlabel num="1" lockable="true">Passengers Lights</functionlabel>
+          <functionlabel num="2" lockable="false">Announcement</functionlabel>
+          <functionlabel num="3" lockable="true">Horn</functionlabel>
+          <functionlabel num="4" lockable="false">ABV</functionlabel>
+          <functionlabel num="5" lockable="true">Dimming lights</functionlabel>
+        </functionlabels>
       </family>
       <family name="Version 1" mfg="Trix Modelleisenbahn" highVersionID="65" lowVersionID="65" comment="Trx Selectrix &amp; DCC decoder" file="Trix_Modelleisenbahn_version_1.xml">
         <model model="Version 1" numOuts="0" numFns="0" lowVersionID="65" />
