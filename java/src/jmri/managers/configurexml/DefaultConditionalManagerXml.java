@@ -36,7 +36,6 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
      * @return Element containing the complete info
      */
     public Element store(Object o) {
-    	long time = System.currentTimeMillis();
 //    	long numCond = 0;
 //    	long numStateVars = 0;
         Element conditionals = new Element("conditionals");
@@ -70,7 +69,6 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 }
                 
 				// save child state variables
-                long partTime = System.currentTimeMillis();
                 // Creating StateVariables gets very slow when more than c10,000 exist.
                 // creation time goes from less than 1ms to more than 5000ms.
                 // Don't need a clone for read-only use.
@@ -107,7 +105,6 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                     elem.addContent(vElem);
                 }
 				// save action information
-                partTime = System.currentTimeMillis();
                 ArrayList<ConditionalAction> actionList = c.getCopyOfActions();
 /*               	if (numCond>1190) {
                		partTime = System.currentTimeMillis() - partTime;
