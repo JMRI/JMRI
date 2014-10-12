@@ -123,7 +123,7 @@ public class PositionableShape extends PositionableJComponent
     	if (c==null) {
     		c = Color.black;
     	}
-    	_lineColor = c;;
+    	_lineColor = c;
     }
     public Color getLineColor() {
     	return _lineColor;
