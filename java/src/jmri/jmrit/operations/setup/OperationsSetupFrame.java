@@ -457,7 +457,8 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		}
 
 		try {
-			Integer.parseInt(yearTextField.getText());
+			if (!yearTextField.getText().trim().equals(""))
+				Integer.parseInt(yearTextField.getText().trim());
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(this, Bundle.getMessage("BorderLayoutYearModeled"), Bundle
 					.getMessage("CanNotAcceptNumber"), JOptionPane.ERROR_MESSAGE);
@@ -564,7 +565,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 			Setup.setLengthUnit(Setup.FEET);
 		if (meterUnit.isSelected())
 			Setup.setLengthUnit(Setup.METER);
-		Setup.setYearModeled(yearTextField.getText());
+		Setup.setYearModeled(yearTextField.getText().trim());
 		// warn about train length being too short
 		if (maxTrainLength != Setup.getMaxTrainLength()) {
 			if (maxTrainLength < 500 && Setup.getLengthUnit().equals(Setup.FEET) || maxTrainLength < 160

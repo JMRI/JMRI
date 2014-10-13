@@ -809,8 +809,10 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 			return false;
 		}
 		try {
-			Integer.parseInt(builtAfterTextField.getText().trim());
-			Integer.parseInt(builtBeforeTextField.getText().trim());
+			if (!builtAfterTextField.getText().trim().equals(""))
+				Integer.parseInt(builtAfterTextField.getText().trim());
+			if (!builtBeforeTextField.getText().trim().equals(""))
+				Integer.parseInt(builtBeforeTextField.getText().trim());
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(this, Bundle.getMessage("EnterFourDigitYear"), Bundle
 					.getMessage("CanNotSave"), JOptionPane.ERROR_MESSAGE);
