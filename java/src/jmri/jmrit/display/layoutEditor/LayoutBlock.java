@@ -3350,13 +3350,13 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         
         boolean advertiseRouteToNeighbour(Routes routeToAdd){
             if(!isMutual()){
-                log.debug("neighbour is not mutual so will not advertise it");
+                log.debug("In block "+blockName+": Neighbour is not mutual so will not advertise it (Routes "+routeToAdd+")");
                 return false;
             }
         //Just wonder if this should forward on the new packet to the neighbour?
             Block dest = routeToAdd.getDestBlock();
             if(!adjDestRoutes.containsKey(dest)){
-                log.debug("We are not currently advertising a route to the destination to this neighbour");
+                log.debug("In block "+blockName+": We are not currently advertising a route to the destination to neighbour: "+dest.getSystemName());
                 return true;
             }
             if (routeToAdd.getHopCount()>255){
