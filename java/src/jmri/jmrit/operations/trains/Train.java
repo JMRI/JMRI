@@ -1325,21 +1325,21 @@ public class Train implements java.beans.PropertyChangeListener {
 	public boolean acceptsBuiltDate(String date) {
 		if (getBuiltStartYear().equals("") && getBuiltEndYear().equals(""))
 			return true; // range dates not defined
-		int s = 0; // default start year;
-		int e = 99999; // default end year;
+		int startYear = 0; // default start year;
+		int endYear = 99999; // default end year;
 		try {
-			s = Integer.parseInt(getBuiltStartYear());
+			startYear = Integer.parseInt(getBuiltStartYear());
 		} catch (NumberFormatException e1) {
 			log.debug("Train (" + getName() + ") built start date not initialized, start: " + getBuiltStartYear());
 		}
 		try {
-			e = Integer.parseInt(getBuiltEndYear());
+			endYear = Integer.parseInt(getBuiltEndYear());
 		} catch (NumberFormatException e1) {
 			log.debug("Train (" + getName() + ") built end date not initialized, end: " + getBuiltEndYear());
 		}
 		try {
-			int d = Integer.parseInt(date);
-			if (s < d && d < e)
+			int builtYear = Integer.parseInt(date);
+			if (startYear < builtYear && builtYear < endYear)
 				return true;
 			else
 				return false;
@@ -1349,10 +1349,10 @@ public class Train implements java.beans.PropertyChangeListener {
 			String[] built = date.split("-");
 			if (built.length > 1)
 				try {
-					int d = Integer.parseInt(built[1]);
-					if (d < 100)
-						d = d + 1900;
-					if (s < d && d < e)
+					int builtYear = Integer.parseInt(built[1]);
+					if (builtYear < 100)
+						builtYear = builtYear + 1900;
+					if (startYear < builtYear && builtYear < endYear)
 						return true;
 					else
 						return false;

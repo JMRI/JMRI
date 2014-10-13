@@ -4,11 +4,14 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -585,8 +588,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		}
 		// check car's weight has proper format
 		try {
-			NumberFormat nf = NumberFormat.getNumberInstance();
-			Number number = nf.parse(weightTextField.getText());
+			Number number = NumberFormat.getNumberInstance().parse(weightTextField.getText());
 			log.debug("Car weight in oz: {}", number);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, Bundle.getMessage("carWeightFormat"), Bundle
@@ -639,7 +641,11 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 			_car.setLength(lengthComboBox.getSelectedItem().toString());
 		if (colorComboBox.getSelectedItem() != null)
 			_car.setColor(colorComboBox.getSelectedItem().toString());
-		_car.setWeight(weightTextField.getText());
+		try {
+			_car.setWeight(NumberFormat.getNumberInstance().parse(weightTextField.getText()).toString());
+		} catch (ParseException e1) {
+
+		}
 		_car.setWeightTons(weightTonsTextField.getText());
 
 		// ask if all cars of this type should be passenger
@@ -767,7 +773,8 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		autoTrackCheckBox.setEnabled(true);
 		if (locationBox.getSelectedItem() != null) {
 			if (!locationBox.getSelectedItem().equals(LocationManager.NONE)
-					&& (trackLocationBox.getSelectedItem() == null || trackLocationBox.getSelectedItem().equals(Location.NONE))) {
+					&& (trackLocationBox.getSelectedItem() == null || trackLocationBox.getSelectedItem().equals(
+							Location.NONE))) {
 				JOptionPane.showMessageDialog(this, Bundle.getMessage("rsFullySelect"), Bundle
 						.getMessage("rsCanNotLoc"), JOptionPane.ERROR_MESSAGE);
 			} else {

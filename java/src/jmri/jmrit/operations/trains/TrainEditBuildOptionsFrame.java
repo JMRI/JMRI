@@ -808,6 +808,14 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 					.getMessage("CanNotSave"), JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
+		try {
+			Integer.parseInt(builtAfterTextField.getText().trim());
+			Integer.parseInt(builtBeforeTextField.getText().trim());
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("EnterFourDigitYear"), Bundle
+					.getMessage("CanNotSave"), JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
 		return true;
 	}
 
