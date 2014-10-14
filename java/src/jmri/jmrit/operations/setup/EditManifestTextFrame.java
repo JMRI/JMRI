@@ -80,6 +80,7 @@ public class EditManifestTextFrame extends OperationsFrame {
 		pManifestForTrainTextField.setBorder(BorderFactory.createTitledBorder(rb.getString("ManifestForTrain")));
 		pManifestForTrainTextField.add(manifestForTrainTextField);
 		manifestForTrainTextField.setText(TrainManifestText.getStringManifestForTrain());
+		manifestForTrainTextField.setToolTipText(rb.getString("ToolTipManifestForTrain"));
 		pManifest.add(pManifestForTrainTextField);
 
 		JPanel pValidTextField = new JPanel();
@@ -92,24 +93,28 @@ public class EditManifestTextFrame extends OperationsFrame {
 		pScheduledWorkAtTextField.setBorder(BorderFactory.createTitledBorder(rb.getString("ScheduledWorkAt")));
 		pScheduledWorkAtTextField.add(scheduledWorkAtTextField);
 		scheduledWorkAtTextField.setText(TrainManifestText.getStringScheduledWork());
+		scheduledWorkAtTextField.setToolTipText(rb.getString("ToolTipScheduledWorkAt"));
 		pManifest.add(pScheduledWorkAtTextField);
 
 		JPanel pScheduledWorkDepartureTextField = new JPanel();
 		pScheduledWorkDepartureTextField.setBorder(BorderFactory.createTitledBorder(rb.getString("WorkDepartureTime")));
 		pScheduledWorkDepartureTextField.add(scheduledWorkDepartureTextField);
 		scheduledWorkDepartureTextField.setText(TrainManifestText.getStringWorkDepartureTime());
+		scheduledWorkDepartureTextField.setToolTipText(rb.getString("ToolTipWorkDepartureTime"));
 		pManifest.add(pScheduledWorkDepartureTextField);
 
 		JPanel pScheduledWorkArrivalTextField = new JPanel();
 		pScheduledWorkArrivalTextField.setBorder(BorderFactory.createTitledBorder(rb.getString("WorkArrivalTime")));
 		pScheduledWorkArrivalTextField.add(scheduledWorkArrivalTextField);
 		scheduledWorkArrivalTextField.setText(TrainManifestText.getStringWorkArrivalTime());
+		scheduledWorkArrivalTextField.setToolTipText(rb.getString("ToolTipWorkDepartureTime"));
 		pManifest.add(pScheduledWorkArrivalTextField);
 
 		JPanel pNoScheduledWorkAt = new JPanel();
 		pNoScheduledWorkAt.setBorder(BorderFactory.createTitledBorder(rb.getString("NoScheduledWorkAt")));
 		pNoScheduledWorkAt.add(noScheduledWorkAtTextField);
 		noScheduledWorkAtTextField.setText(TrainManifestText.getStringNoScheduledWork());
+		noScheduledWorkAtTextField.setToolTipText(rb.getString("ToolTipScheduledWorkAt"));
 		pManifest.add(pNoScheduledWorkAt);
 
 		JPanel pNoScheduledWorkAtWithRouteComment = new JPanel();
@@ -118,39 +123,36 @@ public class EditManifestTextFrame extends OperationsFrame {
 		pNoScheduledWorkAtWithRouteComment.add(noScheduledWorkAtWithRouteCommentTextField);
 		noScheduledWorkAtWithRouteCommentTextField
 				.setText(TrainManifestText.getStringNoScheduledWorkWithRouteComment());
-		pManifest.add(pNoScheduledWorkAtWithRouteComment);
-
 		noScheduledWorkAtWithRouteCommentTextField.setToolTipText(rb
 				.getString("ToolTipNoScheduledWorkAtWithRouteComment"));
+		pManifest.add(pNoScheduledWorkAtWithRouteComment);
 
 		JPanel pDepartTime = new JPanel();
 		pDepartTime.setBorder(BorderFactory.createTitledBorder(rb.getString("departureTime")));
 		pDepartTime.add(departTimeTextField);
 		departTimeTextField.setText(TrainManifestText.getStringDepartTime());
-		pManifest.add(pDepartTime);
-
 		departTimeTextField.setToolTipText(rb.getString("ToolTipNoScheduledWorkShowTime"));
+		pManifest.add(pDepartTime);		
 
 		JPanel pTrainDepartsCars = new JPanel();
 		pTrainDepartsCars.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainDepartsCars")));
 		pTrainDepartsCars.add(trainDepartsCarsTextField);
 		trainDepartsCarsTextField.setText(TrainManifestText.getStringTrainDepartsCars());
-		pManifest.add(pTrainDepartsCars);
-
 		trainDepartsCarsTextField.setToolTipText(rb.getString("ToolTipTrainDepartsCars"));
+		pManifest.add(pTrainDepartsCars);
 
 		JPanel pTrainDepartsLoadsTextField = new JPanel();
 		pTrainDepartsLoadsTextField.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainDepartsLoads")));
 		pTrainDepartsLoadsTextField.add(trainDepartsLoadsTextField);
 		trainDepartsLoadsTextField.setText(TrainManifestText.getStringTrainDepartsLoads());
-		pManifest.add(pTrainDepartsLoadsTextField);
-
 		trainDepartsLoadsTextField.setToolTipText(rb.getString("ToolTipTrainDepartsLoads"));
+		pManifest.add(pTrainDepartsLoadsTextField);
 
 		JPanel pTrainTerminatesIn = new JPanel();
 		pTrainTerminatesIn.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainTerminatesIn")));
 		pTrainTerminatesIn.add(trainTerminatesInTextField);
 		trainTerminatesInTextField.setText(TrainManifestText.getStringTrainTerminates());
+		trainTerminatesInTextField.setToolTipText(rb.getString("ToolTipScheduledWorkAt"));
 		pManifest.add(pTrainTerminatesIn);
 
 		JPanel pDestination = new JPanel();

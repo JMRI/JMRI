@@ -97,22 +97,26 @@ public class TrainManifest extends TrainCommon {
 					newWork = true;
 					printHeader = true;
 					String expectedArrivalTime = train.getExpectedArrivalTime(rl);
-					String workAt = MessageFormat.format(TrainManifestText.getStringScheduledWork(),
-							new Object[] { routeLocationName });
+					String workAt = MessageFormat.format(TrainManifestText.getStringScheduledWork(), new Object[] {
+							routeLocationName, train.getName(), train.getDescription() });
 					if (!train.isShowArrivalAndDepartureTimesEnabled()) {
 						newLine(fileOut, workAt);
 					} else if (r == 0) {
 						newLine(fileOut, MessageFormat.format(TrainManifestText.getStringWorkDepartureTime(),
-								new Object[] { routeLocationName, train.getFormatedDepartureTime() }));
+								new Object[] { routeLocationName, train.getFormatedDepartureTime(), train.getName(),
+										train.getDescription() }));
 					} else if (!rl.getDepartureTime().equals("")) {
 						newLine(fileOut, MessageFormat.format(TrainManifestText.getStringWorkDepartureTime(),
-								new Object[] { routeLocationName, rl.getFormatedDepartureTime() }));
+								new Object[] { routeLocationName, rl.getFormatedDepartureTime(), train.getName(),
+										train.getDescription() }));
 					} else if (Setup.isUseDepartureTimeEnabled() && r != routeList.size() - 1) {
 						newLine(fileOut, MessageFormat.format(TrainManifestText.getStringWorkDepartureTime(),
-								new Object[] { routeLocationName, train.getExpectedDepartureTime(rl) }));
+								new Object[] { routeLocationName, train.getExpectedDepartureTime(rl), train.getName(),
+										train.getDescription() }));
 					} else if (!expectedArrivalTime.equals("-1")) {// NOI18N
 						newLine(fileOut, MessageFormat.format(TrainManifestText.getStringWorkArrivalTime(),
-								new Object[] { routeLocationName, expectedArrivalTime }));
+								new Object[] { routeLocationName, expectedArrivalTime, train.getName(),
+										train.getDescription() }));
 					} else {
 						newLine(fileOut, workAt);
 					}
@@ -143,19 +147,18 @@ public class TrainManifest extends TrainCommon {
 					newLine(fileOut, MessageFormat.format(TrainManifestText.getStringRemoveHelpers(),
 							new Object[] { splitString(rl.getName()) }));
 			}
-			
+
 			if (Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {
 				pickupEngines(fileOut, engineList, rl, isManifest);
 				dropEngines(fileOut, engineList, rl, isManifest);
 				blockCarsByTrack(fileOut, train, carList, routeList, rl, r, printHeader, isManifest);
-			}
-			else if (Setup.getManifestFormat().equals(Setup.TWO_COLUMN_FORMAT)) {
+			} else if (Setup.getManifestFormat().equals(Setup.TWO_COLUMN_FORMAT)) {
 				blockLocosTwoColumn(fileOut, engineList, rl, isManifest);
 				blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, r, printHeader, isManifest);
 			} else {
 				blockLocosTwoColumn(fileOut, engineList, rl, isManifest);
 				blockCarsByTrackNameTwoColumn(fileOut, train, carList, routeList, rl, r, printHeader, isManifest);
-			}			
+			}
 
 			if (r != routeList.size() - 1) {
 				// Is the next location the same as the previous?
@@ -180,15 +183,16 @@ public class TrainManifest extends TrainCommon {
 						newLine(fileOut);
 					} else {
 						// no work at this location
-						String s = MessageFormat.format(TrainManifestText.getStringNoScheduledWork(),
-								new Object[] { routeLocationName });
+						String s = MessageFormat.format(TrainManifestText.getStringNoScheduledWork(), new Object[] {
+								routeLocationName, train.getName(), train.getDescription() });
 						// if a route comment, then only use location name and route comment, useful for passenger
 						// trains
 						if (!rl.getComment().equals("")) {
 							s = routeLocationName;
 							if (rl.getComment().trim().length() > 0)
 								s = MessageFormat.format(TrainManifestText.getStringNoScheduledWorkWithRouteComment(),
-										new Object[] { routeLocationName, rl.getComment() });
+										new Object[] { routeLocationName, rl.getComment(), train.getName(),
+												train.getDescription() });
 						}
 						if (train.isShowArrivalAndDepartureTimesEnabled()) {
 							if (r == 0)
@@ -216,7 +220,7 @@ public class TrainManifest extends TrainCommon {
 				if (Setup.isPrintHeadersEnabled() || !Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT))
 					printHorizontalLine(fileOut, isManifest);
 				newLine(fileOut, MessageFormat.format(TrainManifestText.getStringTrainTerminates(),
-						new Object[] { routeLocationName }));
+						new Object[] { routeLocationName, train.getName(), train.getDescription() }));
 			}
 			previousRouteLocationName = routeLocationName;
 		}
