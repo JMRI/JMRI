@@ -3,7 +3,6 @@ package jmri.jmrit.display.controlPanelEditor.shape;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Stroke;
 import java.awt.event.ActionListener;
@@ -44,6 +43,7 @@ import org.slf4j.LoggerFactory;
 public abstract class DrawFrame  extends jmri.util.JmriJFrame {
 	
     protected ShapeDrawer _parent;
+    protected boolean _editing;
     
     static int STRUT_SIZE = 10;
     static Point _loc = new Point(100,100);
@@ -67,6 +67,7 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame {
 	public DrawFrame(String which, String title, ShapeDrawer parent) {
 		super(title, false, false);
         _parent = parent;
+		_editing = (_parent==null);		// i.e. constructor called from editItem popup
         setTitle(Bundle.getMessage(which, Bundle.getMessage(title)));       
  
         _lineWidth = 1;
@@ -291,7 +292,6 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame {
 		_alphaSlider.repaint();
 	}
 	private void colorChange() {
-		int alpha = _alphaSlider.getValue();
 		if (_lineColorButon.isSelected()) {
 			Color c = _chooser.getColor();
 			_lineColor = new Color(c.getRed(), c.getGreen(), c.getBlue(), _lineColor.getAlpha());
@@ -360,17 +360,7 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame {
     		return value;
     	}
     }
-    
-	protected void moveTo(int x, int y) {		
-	}
-	protected void anchorPoint(int x, int y) {
-	}
-	protected void drawShape(Graphics g) {		
-	}
-    protected boolean doHandleMove(MouseEvent event) {
-    	return false;
-    }
-	
+
 	abstract protected boolean makeFigure(MouseEvent event);
 	abstract protected void updateFigure(PositionableShape pos);
  

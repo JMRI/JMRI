@@ -51,7 +51,6 @@ public class PositionableEllipseXml extends PositionableShapeXml {
      * @param element Top level Element to unpack.
      * @param o  Editor as an Object
      */
-    @SuppressWarnings("unchecked")
     public void load(Element element, Object o) {
         // create the objects
         Editor ed = (Editor)o;
@@ -61,9 +60,7 @@ public class PositionableEllipseXml extends PositionableShapeXml {
         ps.setWidth(getInt(elem, "width"));
         ps.setHeight(getInt(elem, "height"));
        
-        // get object class and determine editor being used
-		Editor editor = (Editor)o;
-        editor.putItem(ps);
+        ed.putItem(ps);
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(ps, Editor.MARKERS, element);
     }

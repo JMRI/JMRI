@@ -9,11 +9,14 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.PathIterator;
-
 import java.util.ArrayList;
+
+
+
 
 //import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.display.Editor;
+
 import org.slf4j.LoggerFactory;
 
 /**
@@ -29,22 +32,21 @@ public class DrawPolygon extends DrawFrame{
 	int 	_curX;
 	int 	_curY;
 	int		_curVertexIdx = -1;
-	boolean _editing;
     private static final int NEAR = PositionableShape.SIZE;
 	PositionablePolygon _pShape;
 	
 	public DrawPolygon(String which, String title, ShapeDrawer parent) {
 		super(which, title, parent);
 		_vertices = new ArrayList <Point>();
-		_editing = false;
 	}
 	
 	public DrawPolygon(Editor ed, String title, PositionablePolygon ps) {
 		super("editShape", title, null);
 		_vertices = new ArrayList <Point>();
-		_editing = true;
 		_pShape = ps;
     	_pShape.editing(true);
+    	_parent = ((jmri.jmrit.display.controlPanelEditor.ControlPanelEditor)ed).getShapeDrawer();
+    	_parent.setDrawFrame(this);
 		int x = getX();
 		int y = getY();
     	PathIterator iter = ps.getPathIterator(null);
@@ -56,9 +58,11 @@ public class DrawPolygon extends DrawFrame{
     	}
     	_pShape.drawHandles();
 	}
-	
+
+	@Override
 	protected void closingEvent() {
 		if (_pShape!=null) {
+	    	_parent.setDrawFrame(null);
 			_pShape.editing(false);			
 		}
 		super.closingEvent();
@@ -77,6 +81,7 @@ public class DrawPolygon extends DrawFrame{
 	}
 
 	protected void anchorPoint(int x, int y) {
+		_curVertexIdx = -1;
 		Point anchorPt = new Point(x, y);
 		for (int i=0; i<_vertices.size(); i++) {
 			if (near(_vertices.get(i), anchorPt)) {
@@ -86,7 +91,6 @@ public class DrawPolygon extends DrawFrame{
 				return;
 			}
 		}
-		_curVertexIdx = -1;
 	}
 	
 	protected void drawShape(Graphics g) {
@@ -104,9 +108,10 @@ public class DrawPolygon extends DrawFrame{
             g2d.draw(path);
     	}
 	}
-/*	
+
+/*	@Override
     public void paint(Graphics g) {
-    	supper.paint(g);
+    	super.paint(g);
     	if (_editing) {
     		int hitIndex = _pShape.getHitIndex();
     		if (hitIndex>=0) {
@@ -139,6 +144,7 @@ public class DrawPolygon extends DrawFrame{
     /**
      * Create a new PositionableShape 
      */
+    @Override
     protected boolean makeFigure(MouseEvent event) {
     	if (_editing) {
     		int hitIndex = _pShape.getHitIndex();
@@ -222,7 +228,7 @@ public class DrawPolygon extends DrawFrame{
     	return false;
     }
     
-    private boolean near(Point p1, Point p2) {
+    static private boolean near(Point p1, Point p2) {
     	if (Math.abs(p1.x-p2.x)< NEAR && Math.abs(p1.y-p2.y)<NEAR) {
     		return true;
     	}
@@ -232,12 +238,57 @@ public class DrawPolygon extends DrawFrame{
     /**
      * Editing is done.  Update the existing PositionableShape
      */
+    @Override
     protected void updateFigure(PositionableShape p) {
     	PositionablePolygon pos = (PositionablePolygon)p;
     	_editing = false;
     	_pShape.editing(false);
 		setPositionableParams(pos);
     }
+    protected void addVertex(boolean up) {
+        if (_editing) {
+    		int hitIndex = _pShape.getHitIndex();
+			Point r1 = _vertices.get(hitIndex);
+			Point newVertex;
+			if (up) {
+				if (hitIndex==_vertices.size()-1) {
+					newVertex =  new Point(r1.x+20, r1.y+20);
+				} else if (hitIndex>=0) {
+					Point r2 = _vertices.get(hitIndex+1);
+					newVertex = new Point((r1.x+r2.x)/2, (r1.y+r2.y)/2);
+				} else {
+					return;
+				}
+				_pShape._hitIndex++;
+			} else {
+				if (hitIndex>0) {
+					Point r2 = _vertices.get(hitIndex-1);
+					newVertex = new Point((r1.x+r2.x)/2, (r1.y+r2.y)/2);
+				} else if (hitIndex==0) {
+					newVertex = new Point(r1.x+20, r1.y+20);
+				} else {
+					return;
+				}
+			}
+			_vertices.add(_pShape.getHitIndex(), newVertex);
+	        _pShape.setShape(makePath(getStartPoint()));
+	    	_pShape.drawHandles();
+        }    	
+    }
+    
+    protected void deleteVertex() {
+        if (_editing) {
+    		int hitIndex = _pShape.getHitIndex();
+    		if (hitIndex<0) {
+    			return;
+    		}
+			_vertices.remove(hitIndex);
+			_pShape._hitIndex--;
+	        _pShape.setShape(makePath(getStartPoint()));
+	    	_pShape.drawHandles();
+        }    	
+    }
+
    
     static Logger log = LoggerFactory.getLogger(DrawPolygon.class.getName());
 }

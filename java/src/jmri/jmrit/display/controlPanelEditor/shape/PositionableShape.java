@@ -51,7 +51,7 @@ public class PositionableShape extends PositionableJComponent
     private boolean _doHide;		// whether sensor controls show/hide or change level
     // GUI resizing params
     private Rectangle[] _handles;
-    protected int _hitIndex = -1;
+    protected int _hitIndex = -1;	// dual use! also is index of polygon's vertices
     protected int _lastX;
     protected int _lastY;
     // params for shape's bounding box
@@ -145,9 +145,7 @@ public class PositionableShape extends PositionableJComponent
     	return _lineWidth;
     }
 
-    /**
-     * Rotate shape 
-     */
+    @Override
     public void rotate(int deg) {
     	_degrees = deg%360;
     	if (_degrees==0) {
@@ -161,6 +159,7 @@ public class PositionableShape extends PositionableJComponent
     	updateSize();
     }
 
+    @Override
     public void paint(Graphics g) {
     	if (!getEditor().isEditable() && !isVisible()) {
     		return;
@@ -215,11 +214,13 @@ public class PositionableShape extends PositionableJComponent
         }
     }
 
+    @Override
     public Positionable deepClone() {
         PositionableShape pos = new PositionableShape(_editor);
         return finishClone(pos);
     }
 
+    @Override
     public Positionable finishClone(Positionable p) {
         PositionableShape pos = (PositionableShape)p;
         pos._lineWidth = _lineWidth; 
@@ -229,10 +230,12 @@ public class PositionableShape extends PositionableJComponent
         return super.finishClone(pos);
     }
     
+    @Override
     public Dimension getSize(Dimension rv) {
     	return new Dimension(maxWidth(), maxHeight());	
     }
     
+    @Override
     public void updateSize() {
     	Rectangle r;
     	if (_shape!=null) {
@@ -245,14 +248,17 @@ public class PositionableShape extends PositionableJComponent
         setSize(r.width, r.height);
     }
     
+    @Override
     public int maxWidth() {
        	return getSize().width;
     }
       
+    @Override
     public int maxHeight() {
     	return getSize().height;
     }
 
+    @Override
     public boolean showPopUp(JPopupMenu popup) {
         return false;
     }
@@ -260,6 +266,7 @@ public class PositionableShape extends PositionableJComponent
     /**
     * return true if popup is set
     */
+    @Override
     public boolean setRotateMenu(JPopupMenu popup) {
         if (getDisplayLevel() > Editor.BKG) {
             popup.add(CoordinateEdit.getRotateEditAction(this));
@@ -268,10 +275,12 @@ public class PositionableShape extends PositionableJComponent
         return false;
     }
 
+    @Override
     public boolean setScaleMenu(JPopupMenu popup) {
         return false;
     }
     
+    @Override
     public int getDegrees() {
         return _degrees;
     }

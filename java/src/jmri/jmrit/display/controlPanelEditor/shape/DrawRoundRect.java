@@ -25,7 +25,8 @@ public class DrawRoundRect extends DrawRectangle {
 		super(which, title, parent);
 		_radius = 40;
 	}
-	
+
+	@Override
 	protected JPanel makeParamsPanel() {
 	   JPanel panel = super.makeParamsPanel();
        JPanel p = new JPanel();
@@ -45,6 +46,7 @@ public class DrawRoundRect extends DrawRectangle {
 	/**
     * Create a new PositionableShape 
     */
+	@Override
 	protected boolean makeFigure(MouseEvent event) {
 		ControlPanelEditor ed = _parent.getEditor();
 		Rectangle r = ed.getSelectRect();
@@ -63,6 +65,7 @@ public class DrawRoundRect extends DrawRectangle {
 	}
    
    
+	@Override
 	protected void setPositionableParams(PositionableShape p) {
 		super.setPositionableParams(p);
 	       ((PositionableRoundRect) p).setCornerRadius(_radius);    		
@@ -71,6 +74,7 @@ public class DrawRoundRect extends DrawRectangle {
     /**
      * Set parameters on the popup that will edit the PositionableShape
      */
+	@Override
     protected void setDisplayParams(PositionableShape p) {
     	super.setDisplayParams(p);
     	PositionableRoundRect pos = (PositionableRoundRect)p;
@@ -80,6 +84,7 @@ public class DrawRoundRect extends DrawRectangle {
 	/**
 	 * Editing is done.  Update the existing PositionableShape
 	 */
+	@Override
 	protected void updateFigure(PositionableShape p) {
 	   PositionableRoundRect pos = (PositionableRoundRect)p;
 	   _radius = getInteger(_radiusText, _radius);

@@ -15,7 +15,9 @@ import java.awt.Rectangle;
 import java.awt.Shape;
 import java.util.ArrayList;
 import java.util.Iterator;
+
 import javax.swing.JPopupMenu;
+
 import org.slf4j.LoggerFactory;
 
 /**
@@ -27,8 +29,8 @@ import org.slf4j.LoggerFactory;
 
 public class PositionablePolygon extends PositionableShape {
 	
-	ArrayList<Rectangle>	_vertexHandles;
-	boolean _editing = false;
+	private ArrayList<Rectangle>	_vertexHandles;
+	private boolean _editing = false;
 
     public PositionablePolygon(Editor editor) {
     	super(editor);
@@ -38,11 +40,13 @@ public class PositionablePolygon extends PositionableShape {
        	super(editor, shape);
     }
 
+    @Override
     public Positionable deepClone() {
     	PositionablePolygon pos = new PositionablePolygon(_editor);
         return finishClone(pos);
     }
     
+    @Override
     public Positionable finishClone(Positionable pg) {
     	PositionablePolygon pos = (PositionablePolygon)pg;
         GeneralPath path = new GeneralPath(GeneralPath.WIND_EVEN_ODD);
@@ -74,11 +78,13 @@ public class PositionablePolygon extends PositionableShape {
     	pos.setShape(path);
         return super.finishClone(pos);
     }
-    
+
+    @Override
     public boolean setEditItemMenu(JPopupMenu popup) {
         String txt = Bundle.getMessage("editShape", Bundle.getMessage("polygon"));
         popup.add(new javax.swing.AbstractAction(txt) {
         	PositionablePolygon ps;
+            @Override
                 public void actionPerformed(ActionEvent e) {
                 	if (_editFrame==null) {
                     	_editFrame = new DrawPolygon(getEditor(), "polygon", ps);
@@ -151,7 +157,7 @@ public class PositionablePolygon extends PositionableShape {
           	   	 }
         	}
     	} else {
-    		super.doMousePressed(event);
+    		super.doMousePressed(event);    		
     	}
     }
     
@@ -181,7 +187,7 @@ public class PositionablePolygon extends PositionableShape {
         				_editor.moveItem(this, 0, event.getY()-_lastY);        					
     				}
     				  				
-        			((DrawPolygon)_editFrame).doHandleMove(_hitIndex, pt);
+    				((DrawPolygon)_editFrame).doHandleMove(_hitIndex, pt);
         		}
     	        _lastX = event.getX();
     	        _lastY = event.getY();
@@ -228,8 +234,8 @@ public class PositionablePolygon extends PositionableShape {
             repaint();
             updateSize();
             _lastX = event.getX();
-            _lastY = event.getY();   	 
-        	return true;
+            _lastY = event.getY();
+            return true;
     	}
         return false;
     }
@@ -295,6 +301,12 @@ public class PositionablePolygon extends PositionableShape {
             		g2d.setColor(Color.BLUE);
             		g2d.fill(rect);
                     g2d.setColor(Editor.HIGHLIGHT_COLOR);
+               		g2d.draw(rect);
+                }
+                if (_hitIndex>=0) {
+                	Rectangle rect = _vertexHandles.get(_hitIndex);
+                	g2d.setColor(Color.RED);
+            		g2d.fill(rect);
                		g2d.draw(rect);
                 }
             }    		

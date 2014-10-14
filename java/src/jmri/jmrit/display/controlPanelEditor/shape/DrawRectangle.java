@@ -3,12 +3,15 @@ package jmri.jmrit.display.controlPanelEditor.shape;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +34,7 @@ public class DrawRectangle extends DrawFrame{
         _lineWidth = 3;
 	}
     
+	@Override
     protected JPanel makeParamsPanel() {
     	JPanel panel = super.makeParamsPanel(); 	   
         JPanel p = new JPanel();
@@ -60,6 +64,7 @@ public class DrawRectangle extends DrawFrame{
     /**
      * Create a new PositionableShape 
      */
+	@Override
     protected boolean makeFigure(MouseEvent event) {
     	ControlPanelEditor ed = _parent.getEditor();
     	Rectangle r = ed.getSelectRect();
@@ -80,6 +85,7 @@ public class DrawRectangle extends DrawFrame{
     /**
      * Set parameters on a new or updated PositionableShape
      */
+	@Override
     protected void setPositionableParams(PositionableShape p) {
     	super.setPositionableParams(p);
     	PositionableRectangle pos = (PositionableRectangle)p;
@@ -90,6 +96,7 @@ public class DrawRectangle extends DrawFrame{
     /**
      * Set parameters on the popup that will edit the PositionableShape
      */
+	@Override
     protected void setDisplayParams(PositionableShape p) {
     	super.setDisplayParams(p);
     	PositionableRectangle pos = (PositionableRectangle)p;
@@ -100,6 +107,7 @@ public class DrawRectangle extends DrawFrame{
     /**
      * Editing is done.  Update the existing PositionableShape
      */
+	@Override
     protected void updateFigure(PositionableShape p) {
     	PositionableRectangle pos = (PositionableRectangle)p;
     	p._width = getInteger(_widthText, p._width);

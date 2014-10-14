@@ -105,15 +105,12 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
      * @param element Top level Element to unpack.
      * @param o  Editor as an Object
      */
-    @SuppressWarnings("unchecked")
     public void load(Element element, Object o) {
         // create the objects
         Editor ed = (Editor)o;
         PositionableShape ps = new PositionableShape(ed);
         
-        // get object class and determine editor being used
-		Editor editor = (Editor)o;
-        editor.putItem(ps);
+        ed.putItem(ps);
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(ps, Editor.MARKERS, element);
     }

@@ -2,27 +2,24 @@ package jmri.jmrit.display.controlPanelEditor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.ImageIndexEditor;
-
 import jmri.jmrit.display.*;
 
 import java.awt.*;
 import java.awt.event.*;
-//import java.awt.event.KeyEvent;
-
 import java.awt.geom.Rectangle2D;
-
 import java.awt.datatransfer.*;
 import java.awt.dnd.*;
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.HashMap;
+
 import javax.swing.*;
 
 import jmri.jmrit.display.Editor;
@@ -59,7 +56,7 @@ import jmri.util.HelpUtil;
  * 
  */
 
-public class ControlPanelEditor extends Editor implements DropTargetListener, ClipboardOwner/*, KeyListener*/ {
+public class ControlPanelEditor extends Editor implements DropTargetListener, ClipboardOwner {
 
     public boolean _debug;
     protected JMenuBar _menuBar;
@@ -100,6 +97,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         init(name);
     }
 
+    @Override
     protected void init(String name) {
         setVisible(false);
         _debug = log.isDebugEnabled();
@@ -138,7 +136,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         InstanceManager.configureManagerInstance().registerUser(this);
         pack();
         setVisible(true);
- //       addKeyListener(this);
         class makeCatalog extends SwingWorker<CatalogPanel, Object> {
             @Override
             public CatalogPanel doInBackground() {
@@ -195,6 +192,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     public void setShapeSelect(boolean set) {
     	_disableShapeSelection = !set;
     	disableShapeSelect.setSelected(_disableShapeSelection);
+    }
+    public ShapeDrawer getShapeDrawer() {
+    	return _shapeDrawer;
     }
 
     protected void makeZoomMenu() {
@@ -552,13 +552,13 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private JRadioButtonMenuItem makeSelectTypeButton(String label, String className) {
         JRadioButtonMenuItem button = new JRadioButtonMenuItem(Bundle.getMessage(label));
         button.addActionListener(new ActionListener() {
-        	String className;
+        	String cName;
         	ActionListener init(String name) {
-        		className = name;
+        		cName = name;
         		return this;
         	}
         	public void actionPerformed(ActionEvent event) {
-        		selectType(className);
+        		selectType(cName);
         	}
         }.init(className));
         return button;
@@ -588,13 +588,13 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             levelGroup.add(button);
             menu.add(button);
             button.addActionListener(new ActionListener() {
-            	int i;
+            	int j;
             	ActionListener init(int k) {
-            		i=k;
+            		j=k;
             		return this;
             	}
                     public void actionPerformed(ActionEvent event) {
-                        selectLevel(i);
+                        selectLevel(j);
                     }
                 }.init(i));
     	}
@@ -721,7 +721,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         if (_debug) log.debug("lostOwnership: content flavor[0] = "+contents.getTransferDataFlavors()[0]);
     }
 
-    // override
+    @Override
     public void setAllEditable(boolean edit) {
         if (edit) {
             if (_editorMenu!=null) {
@@ -815,7 +815,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         setTitle();
         _menuBar.validate();
     }
-    // override
+    @Override
     public void setUseGlobalFlag(boolean set) {
         positionableBox.setEnabled(set);
         controllingBox.setEnabled(set);
@@ -903,6 +903,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                               ", frameWidth= "+frame.getWidth()+", frameHeight= "+frame.getHeight());
     }
 
+    @Override
     public void setTitle() {
         String name = getName();
         if (name==null || name.length()==0) {
@@ -923,6 +924,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     /**
      * After construction, initialize all the widgets to their saved config settings.
      */
+    @Override
     public void initView() {
         positionableBox.setSelected(allPositionable());
         controllingBox.setSelected(allControlling());
@@ -1057,14 +1059,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         return null;
     }
     
-    /*********** KeyListener *********
-    public void keyTyped(KeyEvent e) {
-    }*/
-    // override
+    /*********** KeyListener of Editor *********/
+    @Override
     public void keyPressed(KeyEvent e) {
-    	if (_selectionGroup==null) {
-    		return;
-    	}
         int x = 0;
         int y = 0;
         switch (e.getKeyCode()){
@@ -1088,6 +1085,20 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         	case KeyEvent.VK_NUMPAD6:
             	x=1;
                 break;
+        	case KeyEvent.VK_D:
+        	case KeyEvent.VK_DELETE:
+        	case KeyEvent.VK_MINUS:
+        		_shapeDrawer.delete();
+        		break;
+        	case KeyEvent.VK_A:
+        	case KeyEvent.VK_INSERT:
+        	case KeyEvent.VK_PLUS:
+        		_shapeDrawer.add(e.isShiftDown());
+        		break;
+        }
+        if (e.isShiftDown()) {
+        	x*=5;
+        	y*=5;
         }
         for (int i=0; i<_selectionGroup.size(); i++){
             moveItem(_selectionGroup.get(i), x, y);
@@ -1097,6 +1108,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
     /*********** Mouse ***************/
 
+    @Override
     public void mousePressed(MouseEvent event) {
     	setToolTip(null); // ends tooltip if displayed
         if (_debug) log.debug("mousePressed at ("+event.getX()+","+event.getY()+") _dragging="+_dragging);
@@ -1142,6 +1154,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _targetPanel.repaint(); // needed for ToolTip
     }
 
+    @Override
     public void mouseReleased(MouseEvent event) {
         setToolTip(null); // ends tooltip if displayed
         if (_debug) log.debug("mouseReleased at ("+event.getX()+","+event.getY()+") dragging= "+_dragging
@@ -1204,6 +1217,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
 
     private long _clickTime;
+    @Override
     public void mouseClicked(MouseEvent event) {
         if (jmri.util.swing.SwingSettings.getNonStandardMouseEvent()) {
             long time = System.currentTimeMillis();
@@ -1244,6 +1258,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _targetPanel.repaint(); // needed for ToolTip
     }
 
+    @Override
     public void mouseDragged(MouseEvent event) {
         //if (_debug) log.debug("mouseDragged at ("+event.getX()+","+event.getY()+")"); 
         setToolTip(null); // ends tooltip if displayed
@@ -1251,10 +1266,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         if (_circuitBuilder.doMouseDragged(_currentSelection, event) ) {
         	return;
         }
-        if (_shapeDrawer.doMouseDragged(event) ) {
-        	return;
-        }
-        if (!event.isPopupTrigger() && !event.isMetaDown() && !event.isAltDown() && (isEditable() || _currentSelection instanceof LocoIcon)) {
+       
+       if (!event.isPopupTrigger() && !event.isMetaDown() && !event.isAltDown() && !_shapeDrawer.doMouseDragged(event) &&
+    		   (isEditable() || _currentSelection instanceof LocoIcon)) {
             moveIt:
             if (_currentSelection!=null && getFlag(OPTION_POSITION, _currentSelection.isPositionable())) {
                 int deltaX = event.getX() - _lastX;
@@ -1305,6 +1319,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _targetPanel.repaint(); // needed for ToolTip
     }
 
+    @Override
     public void mouseMoved(MouseEvent event) {
         //if (_debug) log.debug("mouseMoved at ("+event.getX()+","+event.getY()+")"); 
         if (_dragging || event.isPopupTrigger() || event.isMetaDown() || event.isAltDown()) { return; }
@@ -1320,9 +1335,11 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _targetPanel.repaint();
     }
     
+    @Override
     public void mouseEntered(MouseEvent event) {
     }
 
+    @Override
     public void mouseExited(MouseEvent event) {
         setToolTip(null);
         _targetPanel.repaint();  // needed for ToolTip
@@ -1335,6 +1352,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
      * The target window has been requested to close, don't delete it at this
 	 *   time.  Deletion must be accomplished via the Delete this panel menu item.
      */
+    @Override
     protected void targetWindowClosingEvent(java.awt.event.WindowEvent e) {
         jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex();
         targetWindowClosing(true);
@@ -1343,6 +1361,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     protected void setSecondSelectionGroup(ArrayList <Positionable> list) {
     	_secondSelectionGroup = list;
     }
+    @Override
     protected void paintTargetPanel(Graphics g) {
     	// needed to create PositionablePolygon
     	_shapeDrawer.paint(g);
@@ -1362,6 +1381,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     /**
      * Set an object's location when it is created.
      */
+    @Override
     public void setNextLocation(Positionable obj) {
         obj.setLocation(0, 0);
     }    
@@ -1372,6 +1392,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     * when (if) a paste is made.  The disconnected _selectionGroup can be dragged to
     * a new location.
     */
+    @Override
     protected void copyItem(Positionable p) {
         if (_debug) log.debug("Enter copyItem: _selectionGroup "+(_selectionGroup!=null ?
                                                   "size= "+_selectionGroup.size() : "null"));
@@ -1456,7 +1477,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         }.init(p));
         popup.add(edit);
     }
-    
+
+    @Override
     protected void setSelectionsScale(double s, Positionable p) {
     	if (_circuitBuilder.saveSelectionGroup(_selectionGroup)) {
             p.setScale(s);    		
@@ -1465,6 +1487,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     	}
     }
         
+    @Override
     protected void setSelectionsRotation(int k, Positionable p) { 
     	if (_circuitBuilder.saveSelectionGroup(_selectionGroup)) {
             p.rotate(k);    		
@@ -1479,6 +1502,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     * and after the items that pertain only to specific Positionable
     * types.
     */
+    @Override
     protected void showPopUp(Positionable p, MouseEvent event) {
         if (!((JComponent)p).isVisible()) {
             return;     // component must be showing on the screen to determine its location

@@ -110,6 +110,10 @@ public class ShapeDrawer  {
     	}
     }
     
+    protected void setDrawFrame(DrawFrame f) {
+    	_drawFrame = f;
+    }
+    
     protected void closeDrawFrame(DrawFrame f) {
 		_drawFrame = null;   	
     }
@@ -119,42 +123,41 @@ public class ShapeDrawer  {
     }
 
     public void paint(Graphics g) {
-    	if (_drawFrame!=null) {
-    		_drawFrame.drawShape(g);
+    	if (_drawFrame instanceof DrawPolygon) {
+    		((DrawPolygon)_drawFrame).drawShape(g);
     	}
     }
     
     /**************************** Mouse *************************/
 
     public boolean doMousePressed(MouseEvent event, Positionable pos) {
-    	if (_drawFrame!=null) {
-    		_drawFrame.anchorPoint(event.getX(), event.getY());
-            return true;
-    	} else {
-    		if (pos instanceof PositionableShape) {
-    			if (!pos.equals(_currentSelection)) {
-    				if (_currentSelection!= null) {
-    					_currentSelection.removeHandles();
-    				}
-    				if (_editor.isEditable()) {
-    	    			_currentSelection = (PositionableShape)pos;
-    	    			_currentSelection.drawHandles();    					
-    				} else {
-    					_currentSelection =null;
-    				}
-    			}    			
-    		} else {
+    	if (_drawFrame instanceof DrawPolygon) {
+    		DrawPolygon f = (DrawPolygon)_drawFrame;
+    		f.anchorPoint(event.getX(), event.getY());
+    	}
+		if (pos instanceof PositionableShape) {
+			if (!pos.equals(_currentSelection)) {
 				if (_currentSelection!= null) {
 					_currentSelection.removeHandles();
-					_currentSelection = null;    			
 				}
-    		}
-    	}
-    	return false;
+				if (_editor.isEditable()) {
+	    			_currentSelection = (PositionableShape)pos;
+	    			_currentSelection.drawHandles();    					
+				} else {
+					_currentSelection =null;
+				}
+			}    			
+		} else {
+			if (_currentSelection!= null) {
+				_currentSelection.removeHandles();
+				_currentSelection = null;    			
+			}
+		}
+    	return (_currentSelection == null);
     }
    
     public boolean doMouseReleased(Positionable selection, MouseEvent event) {
-        if (_drawFrame!=null) {
+        if (_drawFrame!=null && !_drawFrame._editing) {
         	if (_drawFrame.makeFigure(event)) {
             	_drawFrame.closingEvent();
                 _editor.resetEditor();        		
@@ -172,7 +175,10 @@ public class ShapeDrawer  {
     }
 
     public boolean doMouseDragged(MouseEvent event) {
-        if (_currentSelection!=null) {
+        if (_drawFrame instanceof DrawPolygon &&  _currentSelection==null) {
+        	((DrawPolygon)_drawFrame).moveTo(event.getX(), event.getY());
+        	return true;		// no select rect
+        } else if (_currentSelection!=null) {
         	return _currentSelection.doHandleMove(event);
         }
         return false;
@@ -182,11 +188,23 @@ public class ShapeDrawer  {
      * Make rubber band line
      */
     public boolean doMouseMoved(MouseEvent event) {
-        if (_drawFrame!=null) {
-        	_drawFrame.moveTo(event.getX(), event.getY());
+        if (_drawFrame instanceof DrawPolygon) {
+        	((DrawPolygon)_drawFrame).moveTo(event.getX(), event.getY());
             return true;     // no dragging when editing
         }
         return false;
+    }
+    
+    public void add(boolean up) {
+        if (_drawFrame instanceof DrawPolygon) {
+        	((DrawPolygon)_drawFrame).addVertex(up);
+        }
+    }
+
+    public void delete() {
+        if (_drawFrame instanceof DrawPolygon) {
+        	((DrawPolygon)_drawFrame).deleteVertex();
+        }
     }
 
     static Logger log = LoggerFactory.getLogger(ShapeDrawer.class.getName());
