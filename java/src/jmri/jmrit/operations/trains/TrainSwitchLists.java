@@ -34,6 +34,8 @@ public class TrainSwitchLists extends TrainCommon {
 	private static final char FORM_FEED = '\f';
 	private static final boolean isManifest = false;
 
+	String messageFormatText = ""; // the text being formated in case there's an exception
+
 	/**
 	 * builds a switch list for a location
 	 * 
@@ -70,13 +72,14 @@ public class TrainSwitchLists extends TrainCommon {
 			if (!append) {
 				newLine(fileOut, Setup.getRailroadName());
 				newLine(fileOut);
-				newLine(fileOut, MessageFormat.format(TrainSwitchListText.getStringSwitchListFor(),
+				newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText.getStringSwitchListFor(),
 						new Object[] { splitString(location.getName()) }));
 				if (!location.getSwitchListComment().equals(""))
 					newLine(fileOut, location.getSwitchListComment());
 			}
 
-			String valid = MessageFormat.format(TrainManifestText.getStringValid(), new Object[] { getDate(true) });
+			String valid = MessageFormat.format(messageFormatText = TrainManifestText.getStringValid(),
+					new Object[] { getDate(true) });
 			if (Setup.isPrintTimetableNameEnabled()) {
 				TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(
 						trainManager.getTrainScheduleActiveId());
@@ -132,21 +135,22 @@ public class TrainSwitchLists extends TrainCommon {
 					// first time at this location?
 					if (stops == 1) {
 						newLine(fileOut);
-						newLine(fileOut, MessageFormat.format(TrainSwitchListText.getStringScheduledWork(),
-								new Object[] { train.getName(), train.getDescription() }));
+						newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
+								.getStringScheduledWork(), new Object[] { train.getName(), train.getDescription() }));
 						if (train.isTrainInRoute()) {
 							if (!trainDone) {
-								newLine(fileOut, MessageFormat.format(TrainSwitchListText.getStringDepartedExpected(),
-										new Object[] { splitString(train.getTrainDepartsName()), expectedArrivalTime,
-												rl.getTrainDirectionString() }));
+								newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
+										.getStringDepartedExpected(), new Object[] {
+										splitString(train.getTrainDepartsName()), expectedArrivalTime,
+										rl.getTrainDirectionString() }));
 							}
 						} else {
 							if (r == 0 && routeList.size() > 1)
-								newLine(fileOut, MessageFormat.format(TrainSwitchListText.getStringDepartsAt(),
-										new Object[] { splitString(train.getTrainDepartsName()),
-												rl.getTrainDirectionString(), train.getFormatedDepartureTime() }));
+								newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
+										.getStringDepartsAt(), new Object[] { splitString(train.getTrainDepartsName()),
+										rl.getTrainDirectionString(), train.getFormatedDepartureTime() }));
 							else if (routeList.size() > 1)
-								newLine(fileOut, MessageFormat.format(TrainSwitchListText
+								newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
 										.getStringDepartsAtExpectedArrival(), new Object[] {
 										splitString(train.getTrainDepartsName()), train.getFormatedDepartureTime(),
 										expectedArrivalTime, rl.getTrainDirectionString() }));
@@ -159,26 +163,28 @@ public class TrainSwitchLists extends TrainCommon {
 							newLine(fileOut);
 							if (train.isTrainInRoute()) {
 								if (expectedArrivalTime.equals("-1")) // NOI18N
-									newLine(fileOut, MessageFormat.format(TrainSwitchListText
+									newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
 											.getStringVisitNumberDone(), new Object[] { stops, train.getName(),
 											train.getDescription() }));
 								else if (r != routeList.size() - 1)
 									newLine(fileOut, MessageFormat
-											.format(TrainSwitchListText.getStringVisitNumberDeparted(), new Object[] {
-													stops, train.getName(), expectedArrivalTime,
-													rl.getTrainDirectionString(), train.getDescription() }));
+											.format(messageFormatText = TrainSwitchListText
+													.getStringVisitNumberDeparted(), new Object[] { stops,
+													train.getName(), expectedArrivalTime, rl.getTrainDirectionString(),
+													train.getDescription() }));
 								else
-									newLine(fileOut, MessageFormat.format(TrainSwitchListText
+									newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
 											.getStringVisitNumberTerminatesDeparted(), new Object[] { stops,
 											train.getName(), expectedArrivalTime, splitString(rl.getName()),
 											train.getDescription() }));
 							} else {
 								if (r != routeList.size() - 1)
-									newLine(fileOut, MessageFormat.format(TrainSwitchListText.getStringVisitNumber(),
-											new Object[] { stops, train.getName(), expectedArrivalTime,
-													rl.getTrainDirectionString(), train.getDescription() }));
+									newLine(fileOut, MessageFormat
+											.format(messageFormatText = TrainSwitchListText.getStringVisitNumber(),
+													new Object[] { stops, train.getName(), expectedArrivalTime,
+															rl.getTrainDirectionString(), train.getDescription() }));
 								else
-									newLine(fileOut, MessageFormat.format(TrainSwitchListText
+									newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
 											.getStringVisitNumberTerminates(), new Object[] { stops, train.getName(),
 											expectedArrivalTime, splitString(rl.getName()), train.getDescription() }));
 							}
@@ -186,7 +192,7 @@ public class TrainSwitchLists extends TrainCommon {
 							stops--; // don't bump stop count, same location
 							// Does the train reverse direction?
 							if (rl.getTrainDirection() != rlPrevious.getTrainDirection())
-								newLine(fileOut, MessageFormat.format(TrainSwitchListText
+								newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
 										.getStringTrainDirectionChange(), new Object[] { train.getName(),
 										rl.getTrainDirectionString(), train.getDescription() }));
 						}
@@ -213,16 +219,18 @@ public class TrainSwitchLists extends TrainCommon {
 					stops++;
 				}
 				if (trainDone && !pickupCars && !dropCars) {
-					newLine(fileOut, MessageFormat.format(TrainSwitchListText.getStringTrainDone(), new Object[] {
-							train.getName(), train.getDescription(), splitString(location.getName()) }));
+					newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText.getStringTrainDone(),
+							new Object[] { train.getName(), train.getDescription(), splitString(location.getName()) }));
 				} else {
 					if (stops > 1 && !pickupCars) {
-						newLine(fileOut, MessageFormat.format(TrainSwitchListText.getStringNoCarPickUps(),
-								new Object[] { train.getName(), train.getDescription(), splitString(location.getName()) }));
+						newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
+								.getStringNoCarPickUps(), new Object[] { train.getName(), train.getDescription(),
+								splitString(location.getName()) }));
 					}
 					if (stops > 1 && !dropCars) {
-						newLine(fileOut, MessageFormat.format(TrainSwitchListText.getStringNoCarDrops(), new Object[] {
-								train.getName(), train.getDescription(), splitString(location.getName()) }));
+						newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
+								.getStringNoCarDrops(), new Object[] { train.getName(), train.getDescription(),
+								splitString(location.getName()) }));
 					}
 				}
 			}
@@ -230,6 +238,7 @@ public class TrainSwitchLists extends TrainCommon {
 		} catch (IllegalArgumentException e) {
 			newLine(fileOut, MessageFormat.format(Bundle.getMessage("ErrorIllegalArgument"), new Object[] {
 					Bundle.getMessage("TitleSwitchListText"), e.getLocalizedMessage() }));
+			newLine(fileOut, messageFormatText);
 			e.printStackTrace();
 		}
 
