@@ -124,7 +124,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
     @Override
     public Element immediateRequest(Element e) throws JmriException {
 
-        // process panels and frames as the same elements through 2.14.
+        // process panels and editors as the same elements through 2.14.
         // after 2.14, process panels as XML definitions of panels so that
         // iPads or Android tablet apps could directly render the panels.
         // first, process any list elements
@@ -351,7 +351,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
 
             } else if (type.equals(FRAME)) {
 
-                // list frames, (open JMRI windows)
+                // list editors, (open JMRI windows)
                 List<JmriJFrame> frames = JmriJFrame.getFrameList();
                 for (JmriJFrame frame : frames) { //add all non-blank titles to list
                     if (frame.getAllowInFrameServlet()) {
@@ -375,10 +375,10 @@ public class DefaultXmlIOServer implements XmlIOServer {
             } else if (type.equals(PANEL_ELEMENT)) {
 
                 // list loaded Panels (ControlPanelEditor, PanelEditor, LayoutEditor)
-                List<JmriJFrame> frames = JmriJFrame.getFrameList(ControlPanelEditor.class);
-                for (JmriJFrame frame : frames) {
+                List<Editor> editors = Editor.getEditors(ControlPanelEditor.class);
+                for (Editor frame : editors) {
                     if (frame.getAllowInFrameServlet()) {
-                        String title = ((JmriJFrame) ((Editor) frame).getTargetPanel().getTopLevelAncestor()).getTitle();
+                        String title = ((JmriJFrame) frame.getTargetPanel().getTopLevelAncestor()).getTitle();
                         if (!title.equals("") && !disallowedFrames.contains(title)) {
                             String escapedTitle = StringUtil.escapeString(title);
                             Element n = new Element((useAttributes) ? PANEL_ELEMENT : ITEM);
@@ -395,10 +395,10 @@ public class DefaultXmlIOServer implements XmlIOServer {
                         }
                     }
                 }
-                frames = JmriJFrame.getFrameList(PanelEditor.class);
-                for (JmriJFrame frame : frames) {
+                editors = Editor.getEditors(PanelEditor.class);
+                for (Editor frame : editors) {
                     if (frame.getAllowInFrameServlet() && !(LayoutEditor.class.isInstance(frame))) {  //skip LayoutEditor panels, as they will be added next
-                        String title = ((JmriJFrame) ((Editor) frame).getTargetPanel().getTopLevelAncestor()).getTitle();
+                        String title = ((JmriJFrame) frame.getTargetPanel().getTopLevelAncestor()).getTitle();
                         if (!title.equals("") && !disallowedFrames.contains(title)) {
                             String escapedTitle = StringUtil.escapeString(title);
                             Element n = new Element((useAttributes) ? PANEL_ELEMENT : ITEM);
@@ -415,8 +415,8 @@ public class DefaultXmlIOServer implements XmlIOServer {
                         }
                     }
                 }
-                frames = JmriJFrame.getFrameList(LayoutEditor.class);
-                for (JmriJFrame frame : frames) {
+                editors = Editor.getEditors(LayoutEditor.class);
+                for (Editor frame : editors) {
                     if (frame.getAllowInFrameServlet()) {
                         String title = ((JmriJFrame) ((Editor) frame).getTargetPanel().getTopLevelAncestor()).getTitle();
                         if (!title.equals("") && !disallowedFrames.contains(title)) {

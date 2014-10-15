@@ -201,6 +201,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     // map of icon editor frames (incl, icon editor) keyed by name
     protected HashMap<String, JFrameItem> _iconEditorFrame = new HashMap<String, JFrameItem>();
 
+    private static volatile ArrayList<Editor> editors = new ArrayList<Editor>();
+
     public Editor() {
     }
 
@@ -3174,6 +3176,59 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * @param p
      */
     abstract protected void copyItem(Positionable p);
+
+    /**
+     * Get a List of the currently-existing Editor objects. The returned list is
+     * a copy made at the time of the call, so it can be manipulated as needed
+     * by the caller.
+     *
+     * @return a List of Editors
+     */
+    public static List<Editor> getEditors() {
+        return new ArrayList<Editor>(editors);
+    }
+
+    /**
+     * Get a list of currently-existing Editor objects that are specific
+     * sub-classes of Editor.
+     *
+     * The returned list is a copy made at the time of the call, so it can be
+     * manipulated as needed by the caller.
+     *
+     * If subClass is null, returns a list of all Editors.
+     *
+     * @param type the Class the list should be limited to.
+     * @return a List of Editors.
+     */
+    // this probably should use and return a generic type
+    public static List<Editor> getEditors(Class<?> type) {
+        if (type == null) {
+            return Editor.getEditors();
+        }
+        List<Editor> result = new ArrayList<Editor>();
+        for (Editor e : Editor.getEditors()) {
+            if (type.isInstance(e)) {
+                result.add(e);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Get an Editor of a particular name. If more than one exists, there's no
+     * guarantee as to which is returned.
+     *
+     * @param name
+     * @return an Editor or null if no matching Editor could be found
+     */
+    public static Editor getEditor(String name) {
+        for (Editor e : Editor.getEditors()) {
+            if (e.getTitle().equals(name)) {
+                return e;
+            }
+        }
+        return null;
+    }
 
     // initialize logging
     static Logger log = LoggerFactory.getLogger(Editor.class.getName());

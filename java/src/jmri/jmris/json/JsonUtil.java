@@ -591,10 +591,10 @@ public class JsonUtil {
         List<String> disallowedFrames = WebServerManager.getWebServerPreferences().getDisallowedFrames();
         ArrayNode root = mapper.createArrayNode();
         // list loaded Panels (ControlPanelEditor, PanelEditor, LayoutEditor)
-        List<JmriJFrame> frames = JmriJFrame.getFrameList(ControlPanelEditor.class);
-        for (JmriJFrame frame : frames) {
-            if (frame.getAllowInFrameServlet()) {
-                String title = ((JmriJFrame) ((Editor) frame).getTargetPanel().getTopLevelAncestor()).getTitle();
+        List<Editor> editors = Editor.getEditors(ControlPanelEditor.class);
+        for (Editor editor : editors) {
+            if (editor.getAllowInFrameServlet()) {
+                String title = ((JmriJFrame) editor.getTargetPanel().getTopLevelAncestor()).getTitle();
                 if (!title.equals("") && !disallowedFrames.contains(title)) {
                     ObjectNode panel = mapper.createObjectNode();
                     panel.put(TYPE, PANEL);
@@ -607,10 +607,10 @@ public class JsonUtil {
                 }
             }
         }
-        frames = JmriJFrame.getFrameList(PanelEditor.class);
-        for (JmriJFrame frame : frames) {
-            if (frame.getAllowInFrameServlet() && !(LayoutEditor.class.isInstance(frame))) {  //skip LayoutEditor panels, as they will be added next
-                String title = ((JmriJFrame) ((Editor) frame).getTargetPanel().getTopLevelAncestor()).getTitle();
+        editors = Editor.getEditors(PanelEditor.class);
+        for (Editor editor : editors) {
+            if (editor.getAllowInFrameServlet() && !(LayoutEditor.class.isInstance(editor))) {  //skip LayoutEditor panels, as they will be added next
+                String title = ((JmriJFrame) editor.getTargetPanel().getTopLevelAncestor()).getTitle();
                 if (!title.equals("") && !disallowedFrames.contains(title)) {
                     ObjectNode panel = mapper.createObjectNode();
                     panel.put(TYPE, PANEL);
@@ -623,10 +623,10 @@ public class JsonUtil {
                 }
             }
         }
-        frames = JmriJFrame.getFrameList(LayoutEditor.class);
-        for (JmriJFrame frame : frames) {
-            if (frame.getAllowInFrameServlet()) {
-                String title = ((JmriJFrame) ((Editor) frame).getTargetPanel().getTopLevelAncestor()).getTitle();
+        editors = Editor.getEditors(LayoutEditor.class);
+        for (Editor editor : editors) {
+            if (editor.getAllowInFrameServlet()) {
+                String title = ((JmriJFrame) editor.getTargetPanel().getTopLevelAncestor()).getTitle();
                 if (!title.equals("") && !disallowedFrames.contains(title)) {
                     ObjectNode panel = mapper.createObjectNode();
                     panel.put(TYPE, PANEL);
