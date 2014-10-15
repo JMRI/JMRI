@@ -84,6 +84,40 @@ public class TwoIndexTcsProgrammerFacadeTest extends TestCase {
                                                                          // and the test Programmer remembers that
     }
         
+    public void testWriteReadTripleIndexed() throws jmri.ProgrammerException, InterruptedException {
+        
+        ProgDebugger dp = new ProgDebugger();
+        Programmer p = new TwoIndexTcsProgrammerFacade(dp);
+        ProgListener l = new ProgListener(){
+                public void programmingOpReply(int value, int status) {
+                    log.debug("callback value="+value+" status="+status);
+                    replied = true;
+                    readValue = value;
+                }
+            };
+
+        p.writeCV("T3CV.10.20.30", 13, l);
+        waitReply();
+        Assert.assertEquals("index 1 written", 10, dp.getCvVal(201));
+        Assert.assertEquals("value written", 13, dp.getCvVal(202));
+        Assert.assertEquals("index written to MSB", 20, dp.getCvVal(203));
+        Assert.assertEquals("index written to LSB", 30, dp.getCvVal(204));
+
+        dp.clearHasBeenWritten(201);
+        dp.resetCv(202,13);
+        dp.clearHasBeenWritten(203);
+        dp.clearHasBeenWritten(204);
+        
+        p.readCV("T3CV.10.20.30", l);
+        waitReply();
+        Assert.assertEquals("index 1 written", 100+10, dp.getCvVal(201));
+        Assert.assertEquals("SI not written, left at start value", 13, dp.getCvVal(202));
+        Assert.assertEquals("index written to MSB", 20, dp.getCvVal(203));
+        Assert.assertEquals("index written to LSB", 30, dp.getCvVal(204));
+                                                                         
+        Assert.assertEquals("read back", 13, readValue);
+    }
+
     public void testCvLimit() {
         ProgDebugger dp = new ProgDebugger();
         dp.setTestReadLimit(1024);
