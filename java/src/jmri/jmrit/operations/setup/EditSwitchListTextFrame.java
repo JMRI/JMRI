@@ -73,12 +73,14 @@ public class EditSwitchListTextFrame extends OperationsFrame {
 				.getString("SwitchListFor")));
 		pSwitchListForTextField.add(switchListForTextField);
 		switchListForTextField.setText(TrainSwitchListText.getStringSwitchListFor());
+		switchListForTextField.setToolTipText(rb.getString("ToolTipSwitchListFor"));
 		pSwitchList.add(pSwitchListForTextField);
 
 		JPanel pScheduledWorkTextField = new JPanel();
 		pScheduledWorkTextField.setBorder(BorderFactory.createTitledBorder(rb.getString("ScheduledWork")));
 		pScheduledWorkTextField.add(scheduledWorkTextField);
 		scheduledWorkTextField.setText(TrainSwitchListText.getStringScheduledWork());
+		scheduledWorkTextField.setToolTipText(rb.getString("ToolTipManifestForTrain"));
 		pSwitchList.add(pScheduledWorkTextField);
 		
 		JPanel pDepartsAtTextField = new JPanel();
@@ -143,12 +145,14 @@ public class EditSwitchListTextFrame extends OperationsFrame {
 		pNoCarPickUps.setBorder(BorderFactory.createTitledBorder(rb.getString("NoCarPickUps")));
 		pNoCarPickUps.add(noCarPickUpsTextField);
 		noCarPickUpsTextField.setText(TrainSwitchListText.getStringNoCarPickUps());
+		noCarPickUpsTextField.setToolTipText(rb.getString("ToolTipManifestForTrain"));
 		pSwitchList.add(pNoCarPickUps);
 
 		JPanel pNoCarDrops = new JPanel();
 		pNoCarDrops.setBorder(BorderFactory.createTitledBorder(rb.getString("NoCarDrops")));
 		pNoCarDrops.add(noCarDropsTextField);
 		noCarDropsTextField.setText(TrainSwitchListText.getStringNoCarDrops());
+		noCarDropsTextField.setToolTipText(rb.getString("ToolTipManifestForTrain"));
 		pSwitchList.add(pNoCarDrops);
 
 		JPanel pTrainDone = new JPanel();
