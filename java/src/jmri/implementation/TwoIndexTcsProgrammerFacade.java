@@ -15,6 +15,8 @@ import jmri.jmrix.AbstractProgrammerFacade;
  *<ul>
  *<li> T2CV.11.12 Writes 11 to the first index CV (201), 12 to the 2nd index CV (202), 
  *      then does write/read/confirm operations on CV 203 and 204
+ *<li> T3CV.11.12.13 Writes 11 to the first index CV (201), the data to the 2nd index CV (202), 
+ *      then writes 12 to CV203 and 13 to CV204.
   *</ul>
  * All others pass through to the next facade or programmer. E.g. 123 will do a write/read/confirm to 123,
  * or some other facade can provide "normal" indexed addressing.
@@ -39,26 +41,32 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
     static final String valMSB  = "203";
     static final String valLSB  = "204";
     static final String readStrobe = "204";  // CV that has to be written before read
-    static final String formatFlag = "T2CV"; // flag to indicate this type of CV
+    static final String format2Flag = "T2CV"; // flag to indicate this type of CV
+    static final String format3Flag = "T3CV"; // flag to indicate this type of CV
     static final int readOffset = 100;
 
     // members for handling the programmer interface
 
     int _val;	// remember the value being read/written for confirmative reply
     String _cv;	// remember the cv number being read/written
-    int valuePI;  //  value to write to PI or -1
-    int valueSI;  //  value to write to SI or -1
+    int valuePI;   //  value to write to PI or -1
+    int valueSI;   //  value to write to SI or -1
+    int valueMSB;  //  value to write to MSB or -1
+    int valueLSB;  //  value to write to LSB or -1
 
     void parseCV(String cv) throws IllegalArgumentException {
         valuePI = -1;
         valueSI = -1;
         if (cv.contains(".")) {
             String[] splits = cv.split("\\.");
-            if (splits.length == 3 && splits[0].equals(formatFlag)) {
+            if (splits.length == 3 && splits[0].equals(format2Flag)) {
                 valuePI = Integer.parseInt(splits[1]);
                 valueSI = Integer.parseInt(splits[2]);
+            } else if (splits.length == 4 && splits[0].equals(format3Flag)) {
+                valuePI = Integer.parseInt(splits[1]);
+                valueMSB = Integer.parseInt(splits[2]);
+                valueLSB = Integer.parseInt(splits[3]);
             } else {
-                log.error("Invalid CV name: \""+cv+"\"");
                 _cv = cv;  // this is a pass through operation
             }
         } else {
@@ -94,8 +102,11 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
             state = ProgState.PROGRAMMING;
             prog.readCV(_cv, this);
         } else {
-            // write index first
-            state = ProgState.DOSIFORREAD;
+            // write index first; 2nd operation depends on type
+            if (valueSI==-1)
+                state = ProgState.DOMSBFORREAD;
+            else
+                state = ProgState.DOSIFORREAD;
             prog.writeCV(indexPI, valuePI+readOffset, this);
         }
     }
@@ -118,11 +129,13 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
     enum ProgState { 
         PROGRAMMING,    // doing last read/write, next reply is end
         DOSIFORREAD,    // reading, write to SI next
-        DOSTROBEFORREAD, // reading, write to strobe CV next
+        DOSTROBEFORREAD,// reading, write to strobe CV next
+        DOMSBFORREAD,   // reading, write to MSB next
+        DOLSBFORREAD,   // reading, write to LSB next
         DOREADFIRST,    // reading, get MSB next
         FINISHREAD,     // reading, read CV (LSB) next
         DOSIFORWRITE,   // writing, write to SI next
-        DOWRITEFIRST,   // writing, write MSB next
+        DOWRITEFIRST,   // writing, write CV (MSB) next
         FINISHWRITE,    // writing, write CV (LSB) next
         NOTPROGRAMMING  // idle, doing nothing, no reply expected
     }
@@ -139,14 +152,6 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
         if (_usingProgrammer == null) log.error("No listener to notify");
 
         switch (state) {
-            case PROGRAMMING:
-                // the programmingOpReply handler might send an immediate reply, so
-                // clear the current listener _first_
-                jmri.ProgListener temp = _usingProgrammer;
-                _usingProgrammer = null; // done
-                state = ProgState.NOTPROGRAMMING;
-                temp.programmingOpReply(upperByte*256+value, status);
-                break;
             case DOSIFORREAD:
                 try {
                     state = ProgState.DOSTROBEFORREAD;
@@ -172,45 +177,108 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
                 }
                 break;
             case FINISHREAD:
-                upperByte = value;
                 try {
                     state = ProgState.PROGRAMMING;
-                    prog.readCV(valLSB, this);
+                    if (valuePI != -1 && valueSI == -1) {
+                        upperByte = 0;
+                        prog.readCV(indexSI, this);
+                    } else {
+                        upperByte = value;
+                        prog.readCV(valLSB, this);  
+                    }                  
                 } catch (jmri.ProgrammerException e) {
                     log.error("Exception doing final read", e);
                 }
                 break;
+
+            case DOMSBFORREAD:
+                try {
+                    state = ProgState.DOLSBFORREAD;
+                    prog.writeCV(valMSB, valueMSB, this);
+                } catch (jmri.ProgrammerException e) {
+                    log.error("Exception doing write strobe for read", e);
+                }
+                break;
+            case DOLSBFORREAD:
+                try {
+                    state = ProgState.FINISHREAD;
+                    prog.writeCV(valLSB, valueLSB, this);
+                } catch (jmri.ProgrammerException e) {
+                    log.error("Exception doing write strobe for read", e);
+                }
+                break;
                 
             case DOSIFORWRITE:
-                try {
-                    state = ProgState.DOWRITEFIRST;
-                    prog.writeCV(indexSI, valueSI, this);
-                } catch (jmri.ProgrammerException e) {
-                    log.error("Exception doing write SI for write", e);
+                if (valueSI != -1) {
+                    // writing SI index after PI
+                    try {
+                        state = ProgState.DOWRITEFIRST;
+                        prog.writeCV(indexSI, valueSI, this);
+                    } catch (jmri.ProgrammerException e) {
+                        log.error("Exception doing write SI for write", e);
+                    }
+                } else {
+                    // writing data after PI
+                    try {
+                        state = ProgState.DOWRITEFIRST;
+                        prog.writeCV(indexSI, _val, this);
+                    } catch (jmri.ProgrammerException e) {
+                        log.error("Exception doing write SI for write", e);
+                    }
                 }
                 break;
             case DOWRITEFIRST:
-                try {
-                    state = ProgState.FINISHWRITE;
-                    prog.writeCV(valMSB, _val/256, this);
-                } catch (jmri.ProgrammerException e) {
-                    log.error("Exception doing write MSB for write", e);
+                if (valueSI != -1) {
+                    // write upper data
+                    try {
+                        state = ProgState.FINISHWRITE;
+                        prog.writeCV(valMSB, _val/256, this);
+                    } catch (jmri.ProgrammerException e) {
+                        log.error("Exception doing write MSB for write", e);
+                    }
+                } else {
+                    // write 2nd index
+                    try {
+                        state = ProgState.FINISHWRITE;
+                        prog.writeCV(valMSB, valueMSB, this);
+                    } catch (jmri.ProgrammerException e) {
+                        log.error("Exception doing write MSB for write", e);
+                    }
                 }
                 break;
             case FINISHWRITE:
-                try {
-                    state = ProgState.PROGRAMMING;
-                    prog.writeCV(valLSB, _val&255, this);
-                } catch (jmri.ProgrammerException e) {
-                    log.error("Exception doing final write", e);
+                if (valueSI != -1) {
+                    try {
+                        state = ProgState.PROGRAMMING;
+                        prog.writeCV(valLSB, _val&255, this);
+                    } catch (jmri.ProgrammerException e) {
+                        log.error("Exception doing final write", e);
+                    }
+                } else {
+                    try {
+                        state = ProgState.PROGRAMMING;
+                        prog.writeCV(valLSB, valueLSB, this);
+                    } catch (jmri.ProgrammerException e) {
+                        log.error("Exception doing final write", e);
+                    }
                 }
                 break;
+
+            case PROGRAMMING:
+                // the programmingOpReply handler might send an immediate reply, so
+                // clear the current listener _first_
+                jmri.ProgListener temp = _usingProgrammer;
+                _usingProgrammer = null; // done
+                state = ProgState.NOTPROGRAMMING;
+                temp.programmingOpReply(upperByte*256+value, status);
+                break;
+
             default:
                 log.error("Unexpected state on reply: "+state);
                 // clean up as much as possible
                 _usingProgrammer = null;
                 state = ProgState.NOTPROGRAMMING;
-                
+                break;
         }
     }
 
