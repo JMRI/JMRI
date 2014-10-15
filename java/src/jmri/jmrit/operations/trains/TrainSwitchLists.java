@@ -123,107 +123,106 @@ public class TrainSwitchLists extends TrainCommon {
 				// does the train stop once or more at this location?
 				for (int r = 0; r < routeList.size(); r++) {
 					RouteLocation rl = routeList.get(r);
-					if (splitString(rl.getName()).equals(splitString(location.getName()))) {
-						String expectedArrivalTime = train.getExpectedArrivalTime(rl);
-						if (expectedArrivalTime.equals("-1")) { // NOI18N
-							trainDone = true;
-						}
-						if (stops > 1) {
-							// Print visit number only if previous location wasn't the same
-							RouteLocation rlPrevious = routeList.get(r - 1);
-							if (!splitString(rl.getName()).equals(splitString(rlPrevious.getName()))) {
-								newLine(fileOut);
-								if (train.isTrainInRoute()) {
-									if (expectedArrivalTime.equals("-1")) // NOI18N
-										newLine(fileOut, MessageFormat.format(TrainSwitchListText
-												.getStringVisitNumberDone(), new Object[] { stops, train.getName(),
-												train.getDescription() }));
-									else if (r != routeList.size() - 1)
-										newLine(fileOut, MessageFormat.format(TrainSwitchListText
-												.getStringVisitNumberDeparted(), new Object[] { stops,
-												train.getName(), expectedArrivalTime, rl.getTrainDirectionString(),
-												train.getDescription() }));
-									else
-										newLine(fileOut, MessageFormat.format(TrainSwitchListText
-												.getStringVisitNumberTerminatesDeparted(), new Object[] { stops,
-												train.getName(), expectedArrivalTime, splitString(rl.getName()),
-												train.getDescription() }));
-								} else {
-									if (r != routeList.size() - 1)
-										newLine(fileOut, MessageFormat.format(TrainSwitchListText
-												.getStringVisitNumber(), new Object[] { stops, train.getName(),
-												expectedArrivalTime, rl.getTrainDirectionString(),
-												train.getDescription() }));
-									else
-										newLine(fileOut, MessageFormat.format(TrainSwitchListText
-												.getStringVisitNumberTerminates(), new Object[] { stops,
-												train.getName(), expectedArrivalTime, splitString(rl.getName()),
-												train.getDescription() }));
-								}
-							} else {
-								stops--; // don't bump stop count, same location
-								// Does the train reverse direction?
-								if (rl.getTrainDirection() != rlPrevious.getTrainDirection())
-									newLine(fileOut, MessageFormat.format(TrainSwitchListText
-											.getStringTrainDirectionChange(), new Object[] { train.getName(),
-											rl.getTrainDirectionString(), train.getDescription() }));
-							}
-						} else {
-							newLine(fileOut);
-							newLine(fileOut, MessageFormat.format(TrainSwitchListText.getStringScheduledWork(),
-									new Object[] { train.getName(), train.getDescription() }));
-							if (train.isTrainInRoute()) {
-								if (!trainDone) {
-									newLine(fileOut, MessageFormat.format(TrainSwitchListText
-											.getStringDepartedExpected(), new Object[] {
-											splitString(train.getTrainDepartsName()), expectedArrivalTime,
-											rl.getTrainDirectionString() }));
-								}
-							} else {
-								if (r == 0 && routeList.size() > 1)
-									newLine(fileOut, MessageFormat.format(TrainSwitchListText.getStringDepartsAt(),
-											new Object[] { splitString(train.getTrainDepartsName()),
-													rl.getTrainDirectionString(), train.getFormatedDepartureTime() }));
-								else if (routeList.size() > 1)
-									newLine(fileOut, MessageFormat.format(TrainSwitchListText
-											.getStringDepartsAtExpectedArrival(), new Object[] {
-											splitString(train.getTrainDepartsName()), train.getFormatedDepartureTime(),
-											expectedArrivalTime, rl.getTrainDirectionString() }));
-							}
-						}
-
-						// add route comment
-						if (Setup.isSwitchListRouteLocationCommentEnabled() && !rl.getComment().trim().equals(""))
-							newLine(fileOut, rl.getComment());
-
-						if (Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {
-							pickupEngines(fileOut, engineList, rl, isManifest);
-							dropEngines(fileOut, engineList, rl, isManifest);
-							blockCarsByTrack(fileOut, train, carList, routeList, rl, r, true, isManifest);
-						} else if (Setup.getManifestFormat().equals(Setup.TWO_COLUMN_FORMAT)) {
-							blockLocosTwoColumn(fileOut, engineList, rl, isManifest);
-							blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, r, true, isManifest);
-						} else {
-							blockLocosTwoColumn(fileOut, engineList, rl, isManifest);
-							blockCarsByTrackNameTwoColumn(fileOut, train, carList, routeList, rl, r, true, isManifest);
-						}
-						if (Setup.isPrintHeadersEnabled() || !Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT))
-							printHorizontalLine(fileOut, isManifest);
-
-						stops++;
+					if (!splitString(rl.getName()).equals(splitString(location.getName())))
+						continue;
+					String expectedArrivalTime = train.getExpectedArrivalTime(rl);
+					if (expectedArrivalTime.equals("-1")) { // NOI18N
+						trainDone = true;
 					}
+					// first time at this location?
+					if (stops == 1) {
+						newLine(fileOut);
+						newLine(fileOut, MessageFormat.format(TrainSwitchListText.getStringScheduledWork(),
+								new Object[] { train.getName(), train.getDescription() }));
+						if (train.isTrainInRoute()) {
+							if (!trainDone) {
+								newLine(fileOut, MessageFormat.format(TrainSwitchListText.getStringDepartedExpected(),
+										new Object[] { splitString(train.getTrainDepartsName()), expectedArrivalTime,
+												rl.getTrainDirectionString() }));
+							}
+						} else {
+							if (r == 0 && routeList.size() > 1)
+								newLine(fileOut, MessageFormat.format(TrainSwitchListText.getStringDepartsAt(),
+										new Object[] { splitString(train.getTrainDepartsName()),
+												rl.getTrainDirectionString(), train.getFormatedDepartureTime() }));
+							else if (routeList.size() > 1)
+								newLine(fileOut, MessageFormat.format(TrainSwitchListText
+										.getStringDepartsAtExpectedArrival(), new Object[] {
+										splitString(train.getTrainDepartsName()), train.getFormatedDepartureTime(),
+										expectedArrivalTime, rl.getTrainDirectionString() }));
+						}
+					} else {
+						// multiple visits to this location
+						// Print visit number only if previous location wasn't the same
+						RouteLocation rlPrevious = routeList.get(r - 1);
+						if (!splitString(rl.getName()).equals(splitString(rlPrevious.getName()))) {
+							newLine(fileOut);
+							if (train.isTrainInRoute()) {
+								if (expectedArrivalTime.equals("-1")) // NOI18N
+									newLine(fileOut, MessageFormat.format(TrainSwitchListText
+											.getStringVisitNumberDone(), new Object[] { stops, train.getName(),
+											train.getDescription() }));
+								else if (r != routeList.size() - 1)
+									newLine(fileOut, MessageFormat
+											.format(TrainSwitchListText.getStringVisitNumberDeparted(), new Object[] {
+													stops, train.getName(), expectedArrivalTime,
+													rl.getTrainDirectionString(), train.getDescription() }));
+								else
+									newLine(fileOut, MessageFormat.format(TrainSwitchListText
+											.getStringVisitNumberTerminatesDeparted(), new Object[] { stops,
+											train.getName(), expectedArrivalTime, splitString(rl.getName()),
+											train.getDescription() }));
+							} else {
+								if (r != routeList.size() - 1)
+									newLine(fileOut, MessageFormat.format(TrainSwitchListText.getStringVisitNumber(),
+											new Object[] { stops, train.getName(), expectedArrivalTime,
+													rl.getTrainDirectionString(), train.getDescription() }));
+								else
+									newLine(fileOut, MessageFormat.format(TrainSwitchListText
+											.getStringVisitNumberTerminates(), new Object[] { stops, train.getName(),
+											expectedArrivalTime, splitString(rl.getName()), train.getDescription() }));
+							}
+						} else {
+							stops--; // don't bump stop count, same location
+							// Does the train reverse direction?
+							if (rl.getTrainDirection() != rlPrevious.getTrainDirection())
+								newLine(fileOut, MessageFormat.format(TrainSwitchListText
+										.getStringTrainDirectionChange(), new Object[] { train.getName(),
+										rl.getTrainDirectionString(), train.getDescription() }));
+						}
+					}
+
+					// add route comment
+					if (Setup.isSwitchListRouteLocationCommentEnabled() && !rl.getComment().trim().equals(""))
+						newLine(fileOut, rl.getComment());
+
+					if (Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {
+						pickupEngines(fileOut, engineList, rl, isManifest);
+						dropEngines(fileOut, engineList, rl, isManifest);
+						blockCarsByTrack(fileOut, train, carList, routeList, rl, r, true, isManifest);
+					} else if (Setup.getManifestFormat().equals(Setup.TWO_COLUMN_FORMAT)) {
+						blockLocosTwoColumn(fileOut, engineList, rl, isManifest);
+						blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, r, true, isManifest);
+					} else {
+						blockLocosTwoColumn(fileOut, engineList, rl, isManifest);
+						blockCarsByTrackNameTwoColumn(fileOut, train, carList, routeList, rl, r, true, isManifest);
+					}
+					if (Setup.isPrintHeadersEnabled() || !Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT))
+						printHorizontalLine(fileOut, isManifest);
+
+					stops++;
 				}
 				if (trainDone && !pickupCars && !dropCars) {
 					newLine(fileOut, MessageFormat.format(TrainSwitchListText.getStringTrainDone(), new Object[] {
-							train.getName(), train.getDescription() }));
+							train.getName(), train.getDescription(), splitString(location.getName()) }));
 				} else {
 					if (stops > 1 && !pickupCars) {
 						newLine(fileOut, MessageFormat.format(TrainSwitchListText.getStringNoCarPickUps(),
-								new Object[] { train.getName(), train.getDescription() }));
+								new Object[] { train.getName(), train.getDescription(), splitString(location.getName()) }));
 					}
 					if (stops > 1 && !dropCars) {
 						newLine(fileOut, MessageFormat.format(TrainSwitchListText.getStringNoCarDrops(), new Object[] {
-								train.getName(), train.getDescription() }));
+								train.getName(), train.getDescription(), splitString(location.getName()) }));
 					}
 				}
 			}

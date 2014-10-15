@@ -145,20 +145,21 @@ public class EditSwitchListTextFrame extends OperationsFrame {
 		pNoCarPickUps.setBorder(BorderFactory.createTitledBorder(rb.getString("NoCarPickUps")));
 		pNoCarPickUps.add(noCarPickUpsTextField);
 		noCarPickUpsTextField.setText(TrainSwitchListText.getStringNoCarPickUps());
-		noCarPickUpsTextField.setToolTipText(rb.getString("ToolTipManifestForTrain"));
+		noCarPickUpsTextField.setToolTipText(rb.getString("ToolTipTrainDone"));
 		pSwitchList.add(pNoCarPickUps);
 
 		JPanel pNoCarDrops = new JPanel();
 		pNoCarDrops.setBorder(BorderFactory.createTitledBorder(rb.getString("NoCarDrops")));
 		pNoCarDrops.add(noCarDropsTextField);
 		noCarDropsTextField.setText(TrainSwitchListText.getStringNoCarDrops());
-		noCarDropsTextField.setToolTipText(rb.getString("ToolTipManifestForTrain"));
+		noCarDropsTextField.setToolTipText(rb.getString("ToolTipTrainDone"));
 		pSwitchList.add(pNoCarDrops);
 
 		JPanel pTrainDone = new JPanel();
 		pTrainDone.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainDone")));
 		pTrainDone.add(trainDoneTextField);
 		trainDoneTextField.setText(TrainSwitchListText.getStringTrainDone());
+		trainDoneTextField.setToolTipText(rb.getString("ToolTipTrainDone"));
 		pSwitchList.add(pTrainDone);
 
 		// add tool tips
