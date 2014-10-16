@@ -10,6 +10,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import jmri.Sensor;
 
 /**
  * Concrete implementation of the {@link jmri.RailCom} interface.
@@ -53,7 +54,7 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom{
         return this._currentState;
     }
     
-    int orientation;
+    int orientation = Sensor.UNKNOWN;
     
     public void setOrientation(int type){
         if(type==orientation)
@@ -238,6 +239,34 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom{
     }
 
     Hashtable <Integer, Integer> cvValues = new Hashtable <Integer, Integer>();
+    
+    public String toString(){
+        String comment = "";
+        if(getOrientation()==jmri.RailCom.ORIENTA){
+            comment = "Orientation A ";
+        } else if (getOrientation()==jmri.RailCom.ORIENTB){
+            comment = "Orientation B ";
+        } else if (getOrientation()==Sensor.UNKNOWN){
+            comment = "Unknown Orientation ";
+        }
+        comment  = comment + "Address " + getDccLocoAddress() + " ";
+        
+        if(getWaterLevel()!=-1)
+            comment = "Water " + getWaterLevel() + " ";
+        if(getFuelLevel()!=-1)
+            comment = "Fuel " + getFuelLevel() + " ";
+        if((getLocation()!=-1))
+            comment = comment + "Location : " + getLocation() + " ";
+        if((getRoutingNo()!=-1))
+            comment = comment + "Routing No : " + getRoutingNo() + " ";
+        if((getActualTemperature()!=-1))
+            comment = comment + "Temperature : " + getActualTemperature() + " ";
+        if((getActualLoad()!=-1))
+            comment = comment + "Load : " + getActualLoad() + " ";
+        if((getActualSpeed()!=-1))
+            comment = comment + "Speed : " + getActualSpeed();
+        return comment;
+    }
     
     static Logger log = LoggerFactory.getLogger(DefaultRailCom.class.getName());
 }

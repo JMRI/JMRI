@@ -11,6 +11,9 @@ import java.util.Enumeration;
 import jmri.Sensor;
 import jmri.JmriException;
 import java.util.Arrays;
+import jmri.InstanceManager;
+import jmri.ShutDownTask;
+import jmri.implementation.QuietShutDownTask;
 
 /**
  * Implement sensor manager for Dcc4Pc systems.
@@ -31,9 +34,20 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         this.reportManager = memo.get(jmri.ReporterManager.class);
         jmri.InstanceManager.store(this, Dcc4PcSensorManager.class);
         startBuildOfReaders();
+                    // Finally, create and register a shutdown task to ensure clean exit
+        if (pollShutDownTask==null) {
+            pollShutDownTask = new QuietShutDownTask("DCC4PC Board Poll Shutdown") {
+                @Override
+                public boolean doAction(){
+                    stopPolling=true;
+                    return true;
+                }
+            };
+        }
     }
     
     Dcc4PcReporterManager reportManager;
+    ShutDownTask pollShutDownTask;
     
     int lastInstruction = -1;
 
@@ -66,7 +80,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             systemName = systemName.substring(indexOfSplit);
             int board = 0;
             try {
-                board = Integer.valueOf(systemName).intValue();
+                board = Integer.valueOf(systemName);
             } catch (NumberFormatException ex) { 
                 log.error("Unable to find the board address from system name " + systemName);
                 return;
@@ -95,14 +109,14 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             //Address format passed is in the form of board:channel or T:turnout address
             int seperator = curAddress.indexOf(":");
             try {
-                board = Integer.valueOf(curAddress.substring(0,seperator)).intValue();
+                board = Integer.valueOf(curAddress.substring(0,seperator));
             } catch (NumberFormatException ex) { 
                 log.error("Unable to convert " + curAddress + " into the cab and channel format of nn:xx");
                 throw new JmriException("Hardware Address passed should be a number");
             }
             
             try {
-                channel = Integer.valueOf(curAddress.substring(seperator+1)).intValue();
+                channel = Integer.valueOf(curAddress.substring(seperator+1));
                 if((channel>16)||(channel<1)){
                     log.error("Channel number is out of range");
                     throw new JmriException("Channel number should be in the range of 1 to 16");
@@ -706,12 +720,14 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         }
         
         synchronized void processInputPacket(Dcc4PcReply r){
-            if(log.isDebugEnabled())
+            if(log.isDebugEnabled()){
+                log.debug("==== Process Packet ====");
                 log.debug(r.toHexString());
+            }
             int packetTypeCmd = 0x00;
             int currentByteLocation = 0;
             while(currentByteLocation<r.getNumDataElements()){
-                log.debug("=== Start " + currentByteLocation + " ===");
+                log.debug("--- Start " + currentByteLocation + " ---");
                 int oldstart = currentByteLocation;
                 if((r.getElement(currentByteLocation)& 0x80)==0x80){
                     log.debug("Error at head");
@@ -727,13 +743,14 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                 if(log.isDebugEnabled()){
                     StringBuilder buf = new StringBuilder();
                     for (int i = oldstart; i<currentByteLocation; i++) {
-                        buf.append(Integer.toHexString(r.getElement(i)) + ",");
+                        buf.append(Integer.toHexString(r.getElement(i)&0xff) + ",");
                     }
                     //String s = buf.toString();
                     log.debug(buf.toString());
-                    log.debug("=== finish packet " + currentByteLocation + " ===");
+                    log.debug("--- finish packet " + (currentByteLocation-1) + " ---");
                 }
             }
+            log.debug("==== Finish Processing Packet ====");
         }
         
        public int processPacket(Dcc4PcReply r, int packetType, int packetTypeCmd, int currentByteLocation) {

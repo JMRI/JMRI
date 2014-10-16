@@ -67,7 +67,8 @@ import java.util.regex.Matcher;
         rcPacket[2] = rcPacket[1];
         rcPacket[1] = rcPacket[0];
         rcPacket[0] = rc;
-        log.debug("Packets Seen " + packetseen + " ine error " + packetsinerror);
+        if(log.isDebugEnabled())
+            log.debug("Packets Seen " + packetseen + " in error " + packetsinerror);
     }
     
     static class RailComPacket{
@@ -128,14 +129,16 @@ import java.util.regex.Matcher;
             default : break;
         }
     }
-    
-    final public static int ORIENTA = 0x10;
-    final public static int ORIENTB = 0x20;
-    
-    int state;
+      
+    int state = Sensor.UNKNOWN;
     
     public void setRailComState(int ori){
-        if((ori==Sensor.INACTIVE) || (ori==Sensor.ACTIVE)){
+        if(state==ori){
+            return;
+        }
+        state = ori;
+        if(ori==Sensor.INACTIVE || ori==Sensor.UNKNOWN){
+            //We reset everything as the associated sensor has gone inactive
             synchronized(this){
                 addr = 0;
                 address_part_1 = 0x100;
@@ -152,8 +155,12 @@ import java.util.regex.Matcher;
             cvNumber = -1;
             cvValues = new Hashtable<Integer, Integer>();
             setReport(null);
-        }
-        state = ori;
+        } else if (ori==RailCom.ORIENTA || ori==RailCom.ORIENTB) {
+            if(super.getCurrentReport()!=null && super.getCurrentReport() instanceof RailCom){
+                ((RailCom)super.getCurrentReport()).setOrientation(state);
+            }
+            firePropertyChange("currentReport", null, null);
+        }   
     }
     
     public int getRailComState(){
@@ -164,7 +171,7 @@ import java.util.regex.Matcher;
         if(super.getCurrentReport()!=null && super.getCurrentReport() instanceof RailCom){
             return ((RailCom)super.getCurrentReport()).getTagID();
         }
-        if((getRailComState()<ORIENTA) || (rcPacket[0]==null) || rcPacket[0].getPacket()==null){
+        if((getRailComState()<RailCom.ORIENTA) || (rcPacket[0]==null) || rcPacket[0].getPacket()==null){
             return "";
         }
         return "";
@@ -180,38 +187,6 @@ import java.util.regex.Matcher;
     int getPacketLength(){
         return packetLength;
     }
-    
-    public Object getCurrentReport() {
-        if(!(super.getCurrentReport() instanceof RailCom))
-            return super.getCurrentReport();
-        RailCom rc = (RailCom) super.getCurrentReport();
-        String comment = "";
-        if(getRailComState()==ORIENTA){
-            comment = "Orient A ";
-        } else if (getRailComState()==ORIENTB){
-            comment = "Orient B ";
-        } else {
-            comment = "Unknown state ";
-        }
-        comment  = comment + "Address " + rc.getDccLocoAddress() + " ";
-        
-        if(rc.getWaterLevel()!=-1)
-            comment = "Water " + rc.getWaterLevel() + " ";
-        if(rc.getFuelLevel()!=-1)
-            comment = "Fuel " + rc.getFuelLevel() + " ";
-        if((rc.getLocation()!=-1))
-            comment = comment + "Location : " + rc.getLocation() + " ";
-        if((rc.getRoutingNo()!=-1))
-            comment = comment + "Routing No : " + rc.getRoutingNo() + " ";
-        if((rc.getActualTemperature()!=-1))
-            comment = comment + "Temperature : " + rc.getActualTemperature() + " ";
-        if((rc.getActualLoad()!=-1))
-            comment = comment + "Load : " + rc.getActualLoad() + " ";
-        if((rc.getActualSpeed()!=-1))
-            comment = comment + "Speed : " + rc.getActualSpeed();
-        return comment;
-    }
-
     
     int addr = 0;
     int address_part_1 = 0x100;
@@ -263,7 +238,7 @@ import java.util.regex.Matcher;
             chbyte = decode[chbyte];
             if(chbyte==ERROR){
                 if(log.isDebugEnabled())
-                    log.error(this.getDisplayName() + " Error packet stage 1: " + Integer.toHexString(packet[i]));
+                    log.debug(this.getDisplayName() + " Error packet stage 1: " + Integer.toHexString(packet[i]));
                 packetsinerror++;
                 return;
             }
@@ -426,7 +401,7 @@ import java.util.regex.Matcher;
         }
         rcTag = jmri.InstanceManager.getDefault(jmri.RailComManager.class).provideIdTag(""+addr);
         rcTag.setWhereLastSeen(this);
-        setReport(rcTag);
+        
         rcTag.setAddressType(addr_type);
         
         if((fuelLevel!=-1))
@@ -451,10 +426,12 @@ import java.util.regex.Matcher;
         
         address_part_1 = 0;
         address_part_2 = -1;
+        setReport(rcTag);
         return rcTag;
     }
     
     RailCom provideTag(int address, int addr_type){
+        log.debug("provide Tag");
         RailCom rcTag = jmri.InstanceManager.getDefault(jmri.RailComManager.class).provideIdTag(""+address);
         rcTag.setWhereLastSeen(this);
         rcTag.setAddressType(addr_type);

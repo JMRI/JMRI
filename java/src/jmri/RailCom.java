@@ -53,6 +53,9 @@ public interface RailCom extends IdTag{
      */
     public final static int CONSIST_ADDRESS = 0x08;
     
+    final public static int ORIENTA = 0x10;
+    final public static int ORIENTB = 0x20;
+    
     /**
     * Method for a RailCom Reader to set the orientation reported back from a device
     */
