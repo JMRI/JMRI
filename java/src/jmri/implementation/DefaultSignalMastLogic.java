@@ -1218,10 +1218,13 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
             
             LayoutBlock proDestLBlock = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getProtectedBlockByNamedBean(destination, destinationBlock.getMaxConnectedPanel());
             if(proDestLBlock!=null){
+                if(log.isDebugEnabled()) log.debug("Add protecting Block " + proDestLBlock.getDisplayName());
                 dir = jmri.Path.decodeDirection(proDestLBlock.getNeighbourDirection(destinationBlock));
                 ep = new jmri.EntryPoint(destinationBlock.getBlock(), proDestLBlock.getBlock(), dir);
                 ep.setTypeReverse();
                 getAssociatedSection().addToReverseList(ep);
+            } else if(log.isDebugEnabled()){
+                log.debug(" ### Protecting Block not found ### ");
             }
         }
         
@@ -1877,8 +1880,10 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
                     } else {
                         if(key.getState()==Block.OCCUPIED && key.getPermissiveWorking()){
                             permissiveBlock=true;
+                        }  else if(key.getState()==Block.UNKNOWN && key.getSensor()==null) {
+                            if(log.isDebugEnabled()) log.debug("Block " + key.getDisplayName() + " has no sensor assigned so treat as unoccupied");
                         } else {
-                            state = false;
+                            state=false;
                         }
                     }
                }
@@ -2036,6 +2041,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
                     } else {
                         if(key.getState()==Block.OCCUPIED && key.getPermissiveWorking()){
                             permissiveBlock=true;
+                        } else if(key.getState()==Block.UNKNOWN && key.getSensor()==null) {
+                            if(log.isDebugEnabled()) log.debug("Block " + key.getDisplayName() + " has no sensor assigned so treat as unoccupied");
                         } else {
                             routeclear = false;
                         }
