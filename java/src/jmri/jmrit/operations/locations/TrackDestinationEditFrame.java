@@ -41,6 +41,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 
 	// major buttons
 	JButton saveTrackButton = new JButton(Bundle.getMessage("SaveTrack"));
+	JButton checkDestinationsButton = new JButton(Bundle.getMessage("CheckDestinations"));
 
 	// radio buttons
 	JRadioButton destinationsAll = new JRadioButton(Bundle.getMessage("AcceptAll"));
@@ -118,7 +119,8 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 		panelButtons.setMaximumSize(new Dimension(2000, 200));
 
 		// row 13
-		addItem(panelButtons, saveTrackButton, 0, 0);
+		addItem(panelButtons, checkDestinationsButton, 0, 0);
+		addItem(panelButtons, saveTrackButton, 1, 0);
 
 		getContentPane().add(p1);
 		getContentPane().add(pane3);
@@ -126,6 +128,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 		getContentPane().add(panelButtons);
 
 		// setup buttons
+		addButtonAction(checkDestinationsButton);
 		addButtonAction(saveTrackButton);
 
 		addRadioButtonAction(destinationsAll);
@@ -160,15 +163,18 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 			return;
 		if (ae.getSource() == saveTrackButton) {
 			log.debug("track save button activated");
-			checkDestinationsValid();
 			OperationsXml.save();
 			if (Setup.isCloseWindowOnSaveEnabled())
 				dispose();
+		}
+		if (ae.getSource() == checkDestinationsButton) {
+			checkDestinationsValid();
 		}
 	}
 
 	protected void enableButtons(boolean enabled) {
 		saveTrackButton.setEnabled(enabled);
+		checkDestinationsButton.setEnabled(enabled);
 		destinationsAll.setEnabled(enabled);
 		destinationsInclude.setEnabled(enabled);
 		destinationsExclude.setEnabled(enabled);
