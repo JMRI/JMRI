@@ -78,11 +78,8 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
 
         // include contents
         List<Positionable> contents = p.getContents();
-        if (log.isDebugEnabled()) {
-            log.debug("N elements: " + contents.size());
-        }
-        for (int i = 0; i < contents.size(); i++) {
-            Positionable sub = contents.get(i);
+        log.debug("N elements: {}", contents.size());
+        for (Positionable sub : contents) {
             if (sub != null && sub.storeItem()) {
                 try {
                     Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
@@ -90,8 +87,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
                         panel.addContent(e);
                     }
                 } catch (Exception e) {
-                    log.error("Error storing panel element: " + e);
-                    e.printStackTrace();
+                    log.error("Error storing panel element: {}", e.getMessage(), e);
                 }
             }
         }
@@ -144,7 +140,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         }
         // confirm that panel hasn't already been loaded
         if (jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(name)) {
-            log.warn("File contains a panel with the same name (" + name + ") as an existing panel");
+            log.warn("File contains a panel with the same name ({}) as an existing panel", name);
             result = false;
         }
         ControlPanelEditor panel = new ControlPanelEditor(name);
@@ -245,11 +241,9 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
 
         // load the contents
         List<Element> items = element.getChildren();
-        for (int i = 0; i < items.size(); i++) {
-            // get the class, hence the adapter object to do loading
-            Element item = items.get(i);
+        for (Element item : items) {
             String adapterName = item.getAttribute("class").getValue();
-            log.debug("load via " + adapterName);
+            log.debug("load via {}", adapterName);
             try {
                 XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).newInstance();
                 // and do it
@@ -258,9 +252,8 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
                     result = false;
                 }
             } catch (Exception e) {
-                log.error("Exception while loading " + item.getName() + ":" + e);
+                log.error("Exception while loading {}: {}", item.getName(), e.getMessage(), e);
                 result = false;
-                e.printStackTrace();
             }
         }
         if (icons != null) {
@@ -306,7 +299,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
             if (icon == null) {
                 icon = ed.loadFailed(key, iconName);
                 if (icon == null) {
-                    log.info(key + " removed for url= " + iconName);
+                    log.info("{} removed for url= {}", key, iconName);
                 }
             }
         }
@@ -318,6 +311,6 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         return jmri.Manager.PANELFILES;
     }
 
-    static Logger log = LoggerFactory.getLogger(ControlPanelEditorXml.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ControlPanelEditorXml.class.getName());
 
 }
