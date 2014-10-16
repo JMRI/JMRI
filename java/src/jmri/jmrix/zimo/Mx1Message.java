@@ -7,13 +7,13 @@ import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 
 /**
- * Represents a single command or response on the XpressNet.
+ * Represents a single command or response to the Zimo Binary Protocol.
  *<P>
  * Content is represented with ints to avoid the problems with
  * sign-extension that bytes have, and because a Java char is
  * actually a variable number of bytes in Unicode.
  *
- * @author			Bob Jacobsen  Copyright (C) 2002
+ * @author			Kevin Dickerson  Copyright (C) 2014
  * @version			$Revision$
  *
  * Adapted by Sip Bosch for use with zimo MX-1
@@ -227,6 +227,10 @@ public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
                     case 6: txt.append(" Shuttle ");
                             break;
                     case 7: txt.append(" Accessory ");
+                            if(getMessageType()==PRIMARY){
+                                txt.append(""+getLocoAddress(getElement((3)), getElement(4)));
+                                txt.append(((getElement(5)&0x04)==0x04) ? " Thrown " : " Closed ");
+                            }
                             break;
                     case 8: txt.append(" Loco Status ");
                             break;
@@ -249,6 +253,10 @@ public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
                             }
                             if(getMessageType()==REPLY2){
                                 offset++;
+                            }
+                            if(getMessageType()==ACK2){
+                                txt.append("Ack to CS Message");
+                                break;
                             }
                             if(getNumDataElements()==7 && getMessageType()==ACKREP1){
                                 txt.append(" Error Occured ");
@@ -384,6 +392,7 @@ public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
     final static int TRACKCTL = 0x02;
     final static int PROGCMD = 0x13;
     final static int LOCOCMD = 0x03;
+    final static int ACCCMD = 0x07;
     
     static public Mx1Message getCmdStnDetails() {
         Mx1Message m = new Mx1Message(4);
@@ -482,6 +491,27 @@ public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
         m.setElement(6, cData1);
         m.setElement(7, cData2);
         m.setElement(8, cData3);
+        return m;
+    }
+    
+    static public Mx1Message getSwitchMsg(int accAddress, int setting, boolean dcc){
+        Mx1Message m = new Mx1Message(6, Mx1Packetizer.BINARY);    
+        m.setElement(0, 0x00);
+        m.setElement(1, 0x10); /* PC control short message */
+        m.setElement(2, ACCCMD);
+        //High add 80 to indicate DCC
+        int accHi = accAddress>>8;
+        if(dcc){
+            accHi = accHi+128;
+        } else {
+            accHi = accHi+64;
+        }
+        m.setElement(3, (accHi));
+        m.setElement(4, (accAddress&0xff));
+        m.setElement(5,0x00);
+        if(setting==jmri.Turnout.THROWN){
+            m.setElement(5, 0x04);
+        }
         return m;
     }
     // initialize logging

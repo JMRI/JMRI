@@ -34,7 +34,6 @@ public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix
 
     public SerialDriverAdapter(){
         super();
-        log.info("This called");
         setManufacturer(jmri.jmrix.DCCManufacturerList.ZIMO);
         option1Name = "FlowControl";
         options.put(option1Name, new Option("MXULF connection uses : ", validOption1));

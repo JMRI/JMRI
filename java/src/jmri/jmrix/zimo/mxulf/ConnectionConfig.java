@@ -2,6 +2,7 @@
 
 package jmri.jmrix.zimo.mxulf;
 import java.util.ResourceBundle;
+import jmri.util.SystemType;
 
 /**
  * Definition of objects to handle configuring an 
@@ -43,6 +44,13 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
     protected void setInstance() {
         if (adapter == null)
             adapter = new SerialDriverAdapter(); 
+    }
+    
+    protected String[] getPortFriendlyNames() {
+        if(SystemType.isWindows()){
+            return new String[]{"MX31ZL"};
+        }
+        return new String[]{};
     }
 }
 

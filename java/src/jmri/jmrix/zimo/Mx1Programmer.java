@@ -106,7 +106,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
 		boolean  _progRead = false;
 	int _val;	// remember the value being read/written for confirmative reply
 	int _cv;	// remember the cv being read/written
-
+    protected int SHORT_TIMEOUT=4000;
 	// programming interface
 	synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
 		if (log.isDebugEnabled()) log.debug("writeCV "+CV+" listens "+p);

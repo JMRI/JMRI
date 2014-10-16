@@ -81,9 +81,11 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return true;
         if (type.equals(jmri.ThrottleManager.class))
             return true;
-        /*if ((type.equals(jmri.CommandStation.class))){
-            return true;
-        }*/
+        if(getProtocol()==Mx1Packetizer.BINARY){
+            if (type.equals(jmri.TurnoutManager.class))
+                return true;
+            
+        }
         return false; // nothing, by default
     }
 
@@ -98,6 +100,10 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return (T)getPowerManager();
         if (T.equals(jmri.ThrottleManager.class))
             return (T)getThrottleManager();
+        if(getProtocol()==Mx1Packetizer.BINARY){
+            if (T.equals(jmri.TurnoutManager.class))
+                return (T)getTurnoutManager();
+        }
         /*if (T.equals(jmri.CommandStation.class))
             return (T)commandStation;*/
         return null; // nothing, by default
@@ -119,12 +125,23 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         
         throttleManager = new jmri.jmrix.zimo.Mx1ThrottleManager(this);
         InstanceManager.setThrottleManager(throttleManager);
+        if(st.getProtocol()==Mx1Packetizer.BINARY){
+            turnoutManager = new Mx1TurnoutManager(getMx1TrafficController(), getSystemPrefix());
+            InstanceManager.setTurnoutManager(turnoutManager);
+        }
+    }
+    
+    boolean getProtocol(){
+        if (getMx1TrafficController() != null)
+    		return getMx1TrafficController().getProtocol(); 
+    	return Mx1Packetizer.ASCII;
     }
 
     private ProgrammerManager programmerManager;
     private Mx1PowerManager powerManager;
     private Mx1ThrottleManager throttleManager;
-
+    private Mx1TurnoutManager turnoutManager;
+    
     public ProgrammerManager getProgrammerManager() {
         if (programmerManager == null){
             if(st.getProtocol()==Mx1Packetizer.BINARY){
@@ -135,9 +152,12 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
         return programmerManager;
     }
+    
     public void setProgrammerManager(ProgrammerManager p) {
         programmerManager = p;
     }
+    
+    public Mx1TurnoutManager  getTurnoutManager() { return turnoutManager; }
     
     public void setCommandStation(Mx1CommandStation cs){
         //commandStation=cs;

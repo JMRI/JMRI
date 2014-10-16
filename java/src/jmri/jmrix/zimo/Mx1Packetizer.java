@@ -12,8 +12,7 @@ import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.HashMap;
-import java.util.Enumeration;
+import static jmri.jmrix.zimo.Mx1Message.PROGCMD;
   
 /** 
  * Access to Zimo Mx1 messages
@@ -116,7 +115,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
         if((lastSequence&0xff)==0xff){
             lastSequence=0x00;
         }
-        lastSequenceSent = (byte)(lastSequence&0xff);
+        //lastSequenceSent = (byte)(lastSequence&0xff);
         return lastSequence;
     }
     
@@ -217,7 +216,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
     private byte[] rcvBuffer = new byte[1];
 
     byte lastSequence =0x00;
-    byte lastSequenceSent = 0x00;
+    //byte lastSequenceSent = 0x00;
     
     final static int SOH = 0x01;
     final static int EOT = 0x17;
@@ -318,10 +317,10 @@ public class Mx1Packetizer extends Mx1TrafficController {
                         disconnectPort(controller);
                         return;
                     }
-                    /*catch (Exception e) {
+                    catch (Exception e) {
                         log.warn("run: unexpected exception: "+e);
                         e.printStackTrace();
-                    }*/                    
+                    }
                 }
             } else {
                 //Original version
@@ -399,37 +398,70 @@ public class Mx1Packetizer extends Mx1TrafficController {
         log.debug("schedule notify of incoming packet");
         javax.swing.SwingUtilities.invokeLater(r);
     }
-
     
     void isAckReplyRequired(Mx1Message m){
         if(m.isCRCError()){
             //Send a NAK message
+            Mx1Message nack = new Mx1Message(3, BINARY);
+            //ack.setElement(0, getNextSequenceNo()&0xff);
+            nack.setElement(1, 0x10);
+            nack.setElement(2, 0x00);
+            //ack.setElement(2, 3);
+            processPacketForSending(nack);
+            byte msg[] = nack.getRawPacket();
+            notify(nack, null);
+            //notifyLater(ack, null);
+            synchronized(xmtHandler) {
+               xmtList.addFirst(msg);
+               xmtHandler.notify();
+            }
+            return;
         }
         if((m.getElement(1)&0x80) == 0x80){ //Long Packet
         
         
         } else { //Short Packet
-            if((m.getElement(1)&0x20) == 0x20){//Level 2 Reply, will need to send back ack L2
+            if(((m.getElement(1)&0x40)==0x40) || ((m.getElement(1)&0x60)==0x60)){
+                //Message is a reply/Ack so no need to acknowledge
+                return;
+            }
+            if((m.getElement(2)&PROGCMD)==PROGCMD){
+                //log.info("Send L1 reply");
+                l1AckPacket(m);
+            } else if((m.getElement(1)&0x20) == 0x20){//Level 2 Reply, will need to send back ack L2
+                //log.info("Send L2 reply");
                 l2AckPacket(m);
             }
         
         }
-        /*notify(m, null);
+    }
+    
+    void l1AckPacket(Mx1Message m) {
+        Mx1Message ack = new Mx1Message(5, BINARY);
+        //ack.setElement(0, getNextSequenceNo()&0xff);
+        ack.setElement(1, 0x50);
+        ack.setElement(2, m.getElement(2)&0xff);
+        //ack.setElement(2, 3);
+        ack.setElement(3, m.getElement(0)&0xff);
+        processPacketForSending(ack);
+        byte msg[] = ack.getRawPacket();
+        notify(ack, null);
+        //notifyLater(ack, null);
         synchronized(xmtHandler) {
            xmtList.addFirst(msg);
            xmtHandler.notify();
-        }*/
+        }
     }
     
     void l2AckPacket(Mx1Message m) {
         Mx1Message ack = new Mx1Message(5, BINARY);
-        ack.setElement(0, getNextSequenceNo());
-        ack.setElement(1, 0xb0);
-        ack.setElement(2, m.getElement(2));
-        ack.setElement(2, 3);
-        ack.setElement(3, m.getElement(0));
-        processPacketForSending(m);
-        byte msg[] = m.getRawPacket();
+        //ack.setElement(0, getNextSequenceNo()&0xff);
+        ack.setElement(1, 0x70);//was b0
+        ack.setElement(2, m.getElement(2)&0xff);
+        //ack.setElement(2, 3);
+        ack.setElement(3, m.getElement(0)&0xff);
+        processPacketForSending(ack);
+        byte msg[] = ack.getRawPacket();
         notify(ack, null);
         //notifyLater(ack, null);
         synchronized(xmtHandler) {
@@ -530,6 +562,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                                 m.setTimeStamp(System.currentTimeMillis());
                                 trafficController.notify(m, mq.getListener());
                                 synchronized(xmtHandler) {
+                                    log.warn("Packet not replied to so will retry");
                                     xmtList.addFirst(m.getRawPacket());
                                     xmtHandler.notify();
                                  }
@@ -598,9 +631,6 @@ public class Mx1Packetizer extends Mx1TrafficController {
 		Thread rcvThread = new Thread(rcvHandler, "MX1 receive handler");
 		rcvThread.setPriority(Thread.MAX_PRIORITY);
 		rcvThread.start();
-        
-
-
 	}
     
     public int get16BitCRC(Mx1Message m) {
