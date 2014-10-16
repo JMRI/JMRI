@@ -57,7 +57,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("showtooltips", "" + (p.showTooltip() ? "yes" : "no"));
         panel.setAttribute("controlling", "" + (p.allControlling() ? "yes" : "no"));
         panel.setAttribute("hide", p.isVisible() ? "no" : "yes");
-        panel.setAttribute("panelmenu", frame.getJMenuBar().isVisible() ? "yes" : "no");
+        panel.setAttribute("panelmenu", p.isPanelMenuVisible() ? "yes" : "no");
         panel.setAttribute("scrollable", p.getScrollable());
         if (p.getBackgroundColor() != null) {
             panel.setAttribute("redBackground", "" + p.getBackgroundColor().getRed());
@@ -191,7 +191,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         if ((a = element.getAttribute("panelmenu")) != null && a.getValue().equals("no")) {
             value = false;
         }
-        panel.setPanelMenu(value);
+        panel.setPanelMenuVisible(value);
 
         value = true;
         if ((a = element.getAttribute("shapeSelect")) != null && a.getValue().equals("no")) {

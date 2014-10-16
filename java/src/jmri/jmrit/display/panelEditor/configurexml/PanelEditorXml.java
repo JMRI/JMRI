@@ -1,19 +1,19 @@
 package jmri.jmrit.display.panelEditor.configurexml;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.util.List;
+import javax.swing.JFrame;
 import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.configurexml.XmlAdapter;
-import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.display.Positionable;
-import java.awt.Dimension;
-import java.awt.Point;
-import javax.swing.JFrame;
-import java.awt.Color;
-
-import java.util.List;
-import org.jdom.*;
+import jmri.jmrit.display.panelEditor.PanelEditor;
+import org.jdom.Attribute;
+import org.jdom.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handle configuration for {@link PanelEditor} panes.
@@ -51,7 +51,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("showtooltips", ""+(p.showTooltip()?"yes":"no"));
         panel.setAttribute("controlling", ""+(p.allControlling()?"yes":"no"));
         panel.setAttribute("hide", p.isVisible()?"no":"yes");
-        panel.setAttribute("panelmenu", frame.getJMenuBar().isVisible()?"yes":"no");
+        panel.setAttribute("panelmenu", p.isPanelMenuVisible()?"yes":"no");
         panel.setAttribute("scrollable", p.getScrollable());
         if (p.getBackgroundColor()!=null){
             panel.setAttribute("redBackground", ""+p.getBackgroundColor().getRed());
@@ -161,7 +161,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         value = true;
         if ((a = element.getAttribute("panelmenu"))!=null && a.getValue().equals("no"))
             value = false;
-        panel.setPanelMenu(value);
+        panel.setPanelMenuVisible(value);
 
         String state = "both";
         if ((a = element.getAttribute("scrollable"))!=null)

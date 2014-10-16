@@ -347,7 +347,7 @@ public class PanelEditor extends Editor implements ItemListener {
             contentPane.add(menuBox);
             menuBox.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    setPanelMenu(menuBox.isSelected());
+                    setPanelMenuVisible(menuBox.isSelected());
                 }
             });
             menuBox.setSelected(true);

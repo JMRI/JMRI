@@ -9,6 +9,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Stroke;
@@ -202,6 +203,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     protected HashMap<String, JFrameItem> _iconEditorFrame = new HashMap<String, JFrameItem>();
 
     private static volatile ArrayList<Editor> editors = new ArrayList<Editor>();
+    // store panelMenu state so preference is retained on headless systems
+    private boolean panelMenuIsVisible = true;
 
     public Editor() {
     }
@@ -217,6 +220,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
         jmri.InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
         jmri.InstanceManager.blockManagerInstance().addVetoableChangeListener(this);
+        editors.add(this);
     }
 
     public Editor(String name) {
@@ -369,6 +373,13 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             _targetPanel = new TargetPane();
         } else {
             _targetPanel = targetPanel;
+        }
+        // If on a headless system, set heavyweight components to null
+        // and don't attach mouse and keyboard listeners to the panel
+        if (GraphicsEnvironment.isHeadless()) {
+            _panelScrollPane = null;
+            _targetFrame = null;
+            return;
         }
         if (frame == null) {
             _targetFrame = this;
@@ -854,14 +865,44 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      return _showCoordinates;
      }
      */
+
     /**
      * Control whether target panel shows a menu
      *
      * @param state true for controlling.
+     * @deprecated 3.9.5
+     * @see #setPanelMenuVisible(boolean)
      */
     public void setPanelMenu(boolean state) {
         _targetFrame.getJMenuBar().setVisible(state);
         validate();
+    }
+
+    /**
+     * Hide or show menus on the target panel.
+     *
+     * @param state
+     * @since 3.9.5
+     */
+    public void setPanelMenuVisible(boolean state) {
+        this.panelMenuIsVisible = state;
+        if (!GraphicsEnvironment.isHeadless() && this._targetFrame != null) {
+            _targetFrame.getJMenuBar().setVisible(state);
+            this.validate();
+        }
+    }
+
+    /**
+     * Is the menu on the target panel shown?
+     *
+     * @return true if menu is visible
+     * @since 3.9.5
+     */
+    public boolean isPanelMenuVisible() {
+        if (!GraphicsEnvironment.isHeadless() && this._targetFrame != null) {
+            this.panelMenuIsVisible = _targetFrame.getJMenuBar().isVisible();
+        }
+        return this.panelMenuIsVisible;
     }
 
     protected void setScroll(int state) {
@@ -1001,7 +1042,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             ed.setAllShowTooltip(showTooltip());
             ed.setAllControlling(allControlling());
             ed.setShowHidden(isVisible());
-            ed.setPanelMenu(frame.getJMenuBar().isVisible());
+            ed.setPanelMenuVisible(frame.getJMenuBar().isVisible());
             ed.setScroll(getScrollable());
             ed.setTitle();
             ed.setBackgroundColor(getBackgroundColor());
@@ -2511,6 +2552,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         // delete panel - deregister the panel for saving
         InstanceManager.configureManagerInstance().deregister(this);
         jmri.jmrit.display.PanelMenu.instance().deletePanel(this);
+        Editor.editors.remove(this);
         setVisible(false);
         if (clear) {
             _contents.clear();
