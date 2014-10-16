@@ -39,6 +39,7 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
      * Provide a general method for updating the report.
      */
     public void setReport(Object r) {
+        if(r==_currentReport)  return;
     	Object old = _currentReport;
         Object oldLast = _lastReport;
     	_currentReport = r;
@@ -47,8 +48,8 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
             // notify
             firePropertyChange("lastReport", oldLast, _lastReport);
         }
-    	// notify
-    	firePropertyChange("currentReport", old, _currentReport);
+        // notify
+        firePropertyChange("currentReport", old, _currentReport);
     }
     
     // internal data members
