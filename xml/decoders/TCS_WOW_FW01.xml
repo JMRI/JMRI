@@ -43,9 +43,15 @@
     <variables>
     
       <!-- this is a dummy for testing the "TCS 4 CV Sound Programming" support -->
-      <variable item="Sound Option 20" CV="T2CV.1.3">
-        <decVal/>
-        <label>Sound Option 20 for Sound Button 3</label>
+      <variable item="Sound Option 20" CV="T2CV.1.3" mask="VVVVVVVVVVVVVVVV">
+        <decVal max="63999" />
+        <label>Sound Option 20 for T2CV.1.3</label>
+      </variable>
+      
+      <!-- this is a dummy for testing the "TCS 4 CV Sound Programming" support -->
+      <variable item="Sound Option 21" CV="T3CV.1.2.3" mask="VVVVVVVVVVVVVVVV">
+        <decVal max="63999" />
+        <label>Sound Option 21 for T3CV.1.2.3</label>
       </variable>
       
       

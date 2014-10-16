@@ -38,7 +38,7 @@ public class DecVariableValue extends VariableValue
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
-        _value = new JTextField("0",3);
+        _value = new JTextField("0",fieldLength());
         _defaultColor = _value.getBackground();
         _value.setBackground(COLOR_UNKNOWN);
         // connect to the JTextField value, cv
@@ -57,6 +57,11 @@ public class DecVariableValue extends VariableValue
     int _maxVal;
     int _minVal;
 
+    int fieldLength() {
+        if (_maxVal <= 255) return 3;
+        return (int) Math.ceil(Math.log10(_maxVal))+1;
+    }
+    
     public CvValue[] usesCVs() {
         return new CvValue[]{_cvMap.get(getCvNum())};
     }
@@ -216,7 +221,7 @@ public class DecVariableValue extends VariableValue
             return b;
         }
         else {
-            JTextField value = new VarTextField(_value.getDocument(),_value.getText(), 3, this);
+            JTextField value = new VarTextField(_value.getDocument(),_value.getText(), fieldLength(), this);
             if (getReadOnly() || getInfoOnly()) {
                 value.setEditable(false);
             }

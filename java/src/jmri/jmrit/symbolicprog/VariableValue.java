@@ -308,7 +308,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     protected int maskVal(String maskString) {
         // convert String mask to int
         int mask = 0;
-        for (int i=0; i<8; i++) {
+        for (int i=0; i<maskString.length(); i++) {
             mask = mask << 1;
             try {
                 if (maskString.charAt(i) == 'V') {
