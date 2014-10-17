@@ -60,6 +60,10 @@ public class LongAddrVariableValueTest extends VariableValueTest {
     // some of the premade tests don't quite make sense; override them here.
 
     public void testVariableValueCreate() {}// mask is ignored by LongAddr
+    public void testVariableValueCreateLargeValue() {} // mask is ignored 
+    public void testVariableValueCreateLargeMaskValue() {} // mask is ignored 
+    public void testVariableValueCreateLargeMaskValue256() {} // mask is ignored 
+    public void testVariableValueCreateLargeMaskValue2up16() {} // mask is ignored 
     public void testVariableFromCV() {}     // low CV is upper part of address
     public void testVariableValueRead() {}	// due to multi-cv nature of LongAddr
     public void testVariableValueWrite() {} // due to multi-cv nature of LongAddr
