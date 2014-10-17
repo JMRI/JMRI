@@ -28,7 +28,7 @@ public class EnumVariableValueTest extends VariableValueTest {
         EnumVariableValue v1 = new EnumVariableValue(label, comment, "", readOnly, infoOnly, writeOnly, opsOnly,
                                                      cvNum, mask, minVal, maxVal,
                                                      v, status, item);
-        v1.nItems(9);
+        v1.nItems(10);
         v1.addItem("0");
         v1.addItem("1");
         v1.addItem("2");
@@ -38,6 +38,9 @@ public class EnumVariableValueTest extends VariableValueTest {
         v1.addItem("6");
         v1.addItem("7");
         v1.addItem("9", 9);
+        // values needed for specific tests
+        v1.addItem("40000", 40000);
+
         v1.lastItem();
 
         return v1;

@@ -67,6 +67,86 @@ public abstract class VariableValueTest extends TestCase {
         Assert.assertEquals("cv value", 5*4+3, cv.getValue());
     }
 
+    //  check create&manipulate for large values
+    public void testVariableValueCreateLargeValue() {
+        HashMap<String, CvValue> v = createCvMap();
+        CvValue cv = new CvValue("81", p);
+        cv.setValue(3);
+        v.put("81",cv);
+        // create a variable pointed at CV 81, check name
+        VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "VVVVVVVVVVVVVVVV", 0, 60000, v, null, null);
+        Assert.assertEquals("label", "label", variable.label() );
+        checkValue(variable, "value object initially contains ", "0");
+
+        // pretend you've edited the value & manually notify
+        setValue(variable, "40000");
+
+        // check value
+        checkValue(variable, "value object contains ", "40000");
+
+        // see if the CV was updated
+        Assert.assertEquals("cv value", 40000, cv.getValue());
+    }
+
+    //  check create&manipulate for large mask values
+    public void testVariableValueCreateLargeMaskValue() {
+        HashMap<String, CvValue> v = createCvMap();
+        CvValue cv = new CvValue("81", p);
+        cv.setValue(32768+3);
+        v.put("81",cv);
+        // create a variable pointed at CV 81, check name
+        VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "XXXVVXXXXXXXXXXX", 0, 60000, v, null, null);
+        Assert.assertEquals("label", "label", variable.label() );
+        checkValue(variable, "value object initially contains ", "0");
+
+        // pretend you've edited the value & manually notify
+        setValue(variable, "2");
+
+        // check value
+        checkValue(variable, "value object contains ", "2");
+
+        // see if the CV was updated
+        Assert.assertEquals("cv value", 2*8*256+32768+3, cv.getValue());
+    }
+    public void testVariableValueCreateLargeMaskValue256() {
+        HashMap<String, CvValue> v = createCvMap();
+        CvValue cv = new CvValue("81", p);
+        cv.setValue(32768+3);
+        v.put("81",cv);
+        // create a variable pointed at CV 81, check name
+        VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "XXXXXXXVXXXXXXXX", 0, 60000, v, null, null);
+        Assert.assertEquals("label", "label", variable.label() );
+        checkValue(variable, "value object initially contains ", "0");
+
+        // pretend you've edited the value & manually notify
+        setValue(variable, "1");
+
+        // check value
+        checkValue(variable, "value object contains ", "1");
+
+        // see if the CV was updated
+        Assert.assertEquals("cv value", 256+32768+3, cv.getValue());
+    }
+    public void testVariableValueCreateLargeMaskValue2up16() {
+        HashMap<String, CvValue> v = createCvMap();
+        CvValue cv = new CvValue("81", p);
+        cv.setValue(3);
+        v.put("81",cv);
+        // create a variable pointed at CV 81, check name
+        VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "VXXXXXXXXXXXXXXX", 0, 60000, v, null, null);
+        Assert.assertEquals("label", "label", variable.label() );
+        checkValue(variable, "value object initially contains ", "0");
+
+        // pretend you've edited the value & manually notify
+        setValue(variable, "1");
+
+        // check value
+        checkValue(variable, "value object contains ", "1");
+
+        // see if the CV was updated
+        Assert.assertEquals("cv value", 256*128+3, cv.getValue());
+    }
+
     // can we change the CV and see the result in the Variable?
     public void testVariableFromCV() {
         HashMap<String, CvValue> v = createCvMap();
