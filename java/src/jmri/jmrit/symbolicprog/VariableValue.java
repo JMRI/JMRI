@@ -312,7 +312,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
             mask = mask << 1;
             try {
                 if (maskString.charAt(i) == 'V') {
-                    mask = mask+1;
+                    mask = mask|1;
                 }
             } catch (StringIndexOutOfBoundsException e) {
                 log.error("mask /"+maskString+"/ could not be handled for variable "+label());
@@ -330,9 +330,9 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     protected int offsetVal(String maskString) {
         // convert String mask to int
         int offset = 0;
-        for (int i=0; i<8; i++) {
+        for (int i=0; i<maskString.length(); i++) {
             if (maskString.charAt(i) == 'V') {
-                offset = 7-i;  // number of places to shift left
+                offset = maskString.length()-1-i;  // number of places to shift left
             }
         }
         return offset;
