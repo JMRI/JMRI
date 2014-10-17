@@ -28,7 +28,8 @@ public class HexVariableValueTest extends VariableValueTest {
 
 
     void setValue(VariableValue var, String val) {
-        ((JTextField)var.getCommonRep()).setText(val);
+        String hexval = Integer.toHexString(Integer.valueOf(val).intValue());
+        ((JTextField)var.getCommonRep()).setText(hexval);
         ((JTextField)var.getCommonRep()).postActionEvent();
     }
 
