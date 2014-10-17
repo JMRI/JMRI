@@ -171,7 +171,6 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * @param value
      */
     protected void selectValue(int value) {
-        if (value>256) log.error("Saw unreasonable internal value: "+value);
         for (int i = 0; i<_valueArray.length; i++)
             if (_valueArray[i]==value) {
                 //found it, select it
