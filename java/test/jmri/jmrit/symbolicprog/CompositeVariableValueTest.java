@@ -55,8 +55,12 @@ public class CompositeVariableValueTest extends VariableValueTest {
     // end of abstract members
 
     // some of the premade tests don't quite make sense; override them here.
-    // (This is removing 13 of 18 tests, which seems rather much)
+    // (This is removing the majority of the tests, which seems rather much)
     public void testVariableValueCreate() {}// mask is ignored 
+    public void testVariableValueCreateLargeValue() {} // mask is ignored 
+    public void testVariableValueCreateLargeMaskValue() {} // mask is ignored 
+    public void testVariableValueCreateLargeMaskValue256() {} // mask is ignored 
+    public void testVariableValueCreateLargeMaskValue2up16() {} // mask is ignored 
     public void testVariableSynch() {}     // low CV is upper part of address
     public void testVariableReadOnly() {}     // low CV is upper part of address
     public void testVariableFromCV() {}     // low CV is upper part of address
