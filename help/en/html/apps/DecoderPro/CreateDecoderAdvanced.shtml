@@ -314,6 +314,26 @@ For an example of where to position it etc., see the
 <a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/xml/decoders/ESU_LokSoundV4_0.xml" target="_blank">
     xml/decoders/ESU_LokSoundV4_0.xml</a> file.
     
+<a name="tcsaccess"/>
+<h4>TCS WOW decoder access</h4>
+The TCS WOW decoders use several unique (to say the least) CV access methods.
+JMRI accommodates them via a special capability element:
+
+<code><pre>
+        &lt;capability&gt;
+            &lt;name&gt;TCS 4 CV access&lt;/name&gt;
+        &lt;/capability&gt;
+</pre></code>
+
+This provides two custom CV formats:
+<ul>
+<li> T2CV.11.12 Writes 11 to the first index CV (201), 12 to the 2nd index CV (202), 
+      then does write/read/confirm operations on CV 203 and 204
+<li> T3CV.11.12.13 Writes 11 to the first index CV (201), the data to the 2nd index CV (202), 
+      then writes 12 to CV203 and 13 to CV204.
+</ul>
+For examples of how to use these, see the TCS WOW decoder definition.
+
 <h4>Split Variables - "long" addresses over 2 CVs</h4>
 
 <p>Some decoders, mostly accessory decoders, are using "long" addresses that are split over 2 CVs, contiguous or not.</p>
@@ -342,7 +362,8 @@ For an example of where to position it etc., see the
 <p>For an example, see the <a href="https://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/xml/decoders/SPROG_DCC_Servo6.xml?format=raw">xml/decoders/SPROG_DCC_Servo6.xml</a> file.</p>
 
 <p>For details and more advanced features, see this <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html" target="_blank">JavaDoc page</a></p>
-    
+
+
 
 <h3 id="conditional">Conditional Decoder Definitions</h3>
 
