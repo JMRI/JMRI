@@ -17,6 +17,8 @@ import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.Path;
 import jmri.Sensor;
+import jmri.SignalMast;
+
 
 import jmri.util.JUnitUtil;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
@@ -369,6 +371,57 @@ public class BlockManagerXmlTest extends TestCase {
         
     }
 
+    public void testBlockAndSignalMastTest() throws Exception {
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initMemoryManager();
+        JUnitUtil.initLayoutBlockManager();
+        // load file
+    	InstanceManager.configureManagerInstance()
+            .load(new java.io.File("java/test/jmri/configurexml/loadref/BlockAndSignalMastTest.xml"));
+                // in loadref because comparison not working right
+
+        Assert.assertNotNull(InstanceManager.blockManagerInstance().getBlock("IB1"));
+
+        SignalMast m1 = InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0001)"); Assert.assertNotNull(m1);
+        SignalMast m2 = InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0002)"); Assert.assertNotNull(m2);
+        SignalMast m3 = InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0003)"); Assert.assertNotNull(m3);
+        SignalMast m4 = InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0004)"); Assert.assertNotNull(m4);
+        SignalMast m5 = InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0005)"); Assert.assertNotNull(m5);
+        SignalMast m6 = InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0006)"); Assert.assertNotNull(m6);
+        SignalMast m7 = InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0007)"); Assert.assertNotNull(m7);
+        
+        // allow listeners to process, but keep it quick by looking for desired result
+        for (int i = 0; i< 25; i++ ) {
+            JUnitUtil.releaseThread(this, 20);
+            if ( 
+                    m1.getAspect().equals("Advance Approach") &&
+                    m2.getAspect().equals("Clear") &&
+                    m3.getAspect().equals("Clear") &&
+                    m4.getAspect().equals("Clear") &&
+                    m5.getAspect().equals("Approach") &&
+                    m6.getAspect().equals("Stop") &&
+                    m7.getAspect().equals("Stops")
+                ) break;
+        }
+        JUnitUtil.releaseThread(this, 20);
+        JUnitUtil.releaseThread(this, 20);
+        JUnitUtil.releaseThread(this, 20);
+        
+        // check for expected mast state 
+        Assert.assertEquals("Signal 1","Advance Approach", InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0001)").getAspect());
+        Assert.assertEquals("Signal 2","Clear", InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0002)").getAspect());
+        Assert.assertEquals("Signal 3","Clear", InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0003)").getAspect());
+        Assert.assertEquals("Signal 4","Clear", InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0004)").getAspect());
+        Assert.assertEquals("Signal 5","Approach", InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0005)").getAspect());
+        Assert.assertEquals("Signal 6","Stop", InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0006)").getAspect());
+        Assert.assertEquals("Signal 7","Stop", InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0007)").getAspect());
+                
+    }
+    
     // from here down is testing infrastructure
 
     public BlockManagerXmlTest(String s) {
