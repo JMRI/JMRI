@@ -10,14 +10,24 @@ import jmri.util.PhysicalLocation;
 
 /**
  * Represents a particular piece of track, more informally a "Block".
- * As trains move around the layout, a set of Block objects interact to
+ * <P>
+ * A Block (at least in this implementation) corresponds exactly to the
+ * track covered by at most one sensor. That could be generalized in the future.
+ *
+ * <p>
+ * As trains move around the layout, a set of Block objects 
+ * that are attached to sensors can interact to
  * keep track of which train is where, going in which direction.
  * As a result of this, the set of Block objects pass around  "token" (value)
  * Objects representing the trains.  This could be e.g. a Throttle to
  * control the train, or something else.
- * <P>
- * A Block (at least in this implementation) corresponds exactly to the
- * track covered by a single sensor. That should be generalized in the future.
+ *
+ *<p>A block maintains a "direction" flag that is set from the direction of 
+ * the incoming train. When an arriving train is detected via the connected sensor
+ * and the Block's status information is sufficient to determine that it is
+ * arriving via a particular Path, that
+ * Path's getFromBlockDirection becomes the direction of the train in this Block.
+ * This only works
  *
  * <p>
  * Optionally, a Block can be associated with a Reporter. In this case, the
@@ -25,6 +35,7 @@ import jmri.util.PhysicalLocation;
  * an RFID reader reading an ID tag attached to a locomotive. Depending on the
  * specific Reporter implementation, either the current reported value or the
  * last reported value will be relevant - this can be configured
+ *
  *<p>
  * Objects of this class are Named Beans, so can be manipulated through tables,
  * have listeners, etc.
@@ -35,13 +46,9 @@ import jmri.util.PhysicalLocation;
  * system-specific, so a system letter of 'I' is appropriate.  This leads to 
  * system names like "IB201".
  *
- *<p>The direction of a Block is set from the direction of the incoming
- * train. When a train is found to be coming in on a particular Path, that
- * Path's getFromBlockDirection becomes the direction of the train in this Block.
- *
  * <P>Issues:
  * <UL>
- * <LI> Doesn't handle a train pulling in behind another well:
+ * <LI>The tracking doesn't handle a train pulling in behind another well:
  *      <UL>
  *      <LI>When the 2nd train arrives, the Sensor is already active, so the value is unchanged (but the value can only
  *          be a single object anyway)
@@ -72,6 +79,7 @@ import jmri.util.PhysicalLocation;
  * <li>OCCUPIED - This sensor went active. Note that OCCUPIED will be set
  *              even if the logic is unable to figure out which value to take.
  * <li>UNOCCUPIED - No content, because the sensor has determined this block is unoccupied.
+ * <li>UNDETECTED - No sensor configured.
  *</ul>
  *
  *<P>
@@ -91,11 +99,8 @@ import jmri.util.PhysicalLocation;
  *		always stored here in millimeter units. A length of 0.0 indicates no entry of 
  *		length by the user.
  *
- * @author	Bob Jacobsen  Copyright (C) 2006, 2008
+ * @author	Bob Jacobsen  Copyright (C) 2006, 2008, 2014
  * @author  Dave Duchamp Copywright (C) 2009
- * @version	$Revision$
- * GT 10-Aug-2008 - Fixed problem in goingActive() that resulted in a 
- * NULL pointer exception when no sensor was associated with the block
  */
 public class Block extends jmri.implementation.AbstractNamedBean implements PhysicalLocationReporter {
 
@@ -109,6 +114,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
 
     static final public int OCCUPIED = Sensor.ACTIVE;
     static final public int UNOCCUPIED = Sensor.INACTIVE;
+    static final public int UNDETECTED = UNOCCUPIED*8;  // bit coded, just in case; really should be enum
 	
 	// Curvature attributes
 	static final public int NONE = 0x00;
@@ -154,7 +160,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
             }, s.getName(), "Block Sensor " + getDisplayName());
             _current = getSensor().getState();
         } else {
-            _current = UNKNOWN;
+            _current = UNDETECTED;
         }
     }
     
@@ -410,7 +416,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
 	public float getLengthIn() { return (_length/25.4f); }  // return length in inches
     
     // internal data members
-    private int _current = UNKNOWN; // state
+    private int _current = UNDETECTED; // state until sensor is set
     //private Sensor _sensor = null;
     private NamedBeanHandle<Sensor> _namedSensor = null;
 	private java.beans.PropertyChangeListener _sensorListener = null;

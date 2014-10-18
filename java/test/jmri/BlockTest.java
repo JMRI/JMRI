@@ -65,6 +65,18 @@ public class BlockTest extends TestCase {
 	    Assert.assertEquals("State with sensor inactive", Block.UNOCCUPIED, s.getState());
 	}
 
+	public void testCoding() {
+	    Assert.assertTrue("Block.OCCUPIED != Block.UNOCCUPIED", Block.OCCUPIED != Block.UNOCCUPIED);
+	    Assert.assertTrue("Block.OCCUPIED != Block.UNDETECTED", Block.OCCUPIED != Block.UNDETECTED);
+	    Assert.assertTrue("Block.OCCUPIED != Block.UNKNOWN", Block.OCCUPIED != Block.UNKNOWN);
+	    Assert.assertTrue("Block.OCCUPIED != Block.INCONSISTENT", Block.OCCUPIED != Block.INCONSISTENT);
+	    Assert.assertTrue("Block.UNOCCUPIED != Block.UNDETECTED", Block.UNOCCUPIED != Block.UNDETECTED);
+	    Assert.assertTrue("Block.UNOCCUPIED != Block.UNKNOWN", Block.UNOCCUPIED != Block.UNKNOWN);
+	    Assert.assertTrue("Block.UNOCCUPIED != Block.INCONSISTENT", Block.UNOCCUPIED != Block.INCONSISTENT);
+	    Assert.assertTrue("Block.UNDETECTED != Block.UNKNOWN", Block.UNDETECTED != Block.UNKNOWN);
+	    Assert.assertTrue("Block.UNDETECTED != Block.INCONSISTENT", Block.UNDETECTED != Block.INCONSISTENT);
+	    Assert.assertTrue("Block.UNKNOWN != Block.INCONSISTENT", Block.UNKNOWN != Block.INCONSISTENT);
+	}
 
     // test going active with only one neighbor
 	public void testFirstGoActive() throws JmriException {
@@ -260,9 +272,8 @@ public class BlockTest extends TestCase {
     // The minimal setup for log4J
     protected void setUp() throws Exception { 
         super.setUp();
-        JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.setUp();
-        InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
+        JUnitUtil.resetInstanceManager();
     }
     
     protected void tearDown() throws Exception { 
