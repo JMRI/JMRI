@@ -130,30 +130,27 @@ public class ShapeDrawer  {
     
     /**************************** Mouse *************************/
 
+    /***** return true if creating or editing ***/
     public boolean doMousePressed(MouseEvent event, Positionable pos) {
     	if (_drawFrame instanceof DrawPolygon) {
     		DrawPolygon f = (DrawPolygon)_drawFrame;
     		f.anchorPoint(event.getX(), event.getY());
     	}
-		if (pos instanceof PositionableShape) {
+		if (pos instanceof PositionableShape && _editor.isEditable()) {
 			if (!pos.equals(_currentSelection)) {
 				if (_currentSelection!= null) {
 					_currentSelection.removeHandles();
 				}
-				if (_editor.isEditable()) {
-	    			_currentSelection = (PositionableShape)pos;
-	    			_currentSelection.drawHandles();    					
-				} else {
-					_currentSelection =null;
-				}
-			}    			
-		} else {
-			if (_currentSelection!= null) {
-				_currentSelection.removeHandles();
-				_currentSelection = null;    			
+    			_currentSelection = (PositionableShape)pos;
+    			_currentSelection.drawHandles();    					
 			}
+			return true;
 		}
-    	return (_currentSelection == null);
+		if (_currentSelection!= null) {
+			_currentSelection.removeHandles();
+			_currentSelection = null;    			
+		}
+    	return false;
     }
    
     public boolean doMouseReleased(Positionable selection, MouseEvent event) {

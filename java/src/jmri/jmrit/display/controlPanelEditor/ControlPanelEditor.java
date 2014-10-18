@@ -1122,11 +1122,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _currentSelection = getCurrentSelection(event);
 
         if (!event.isPopupTrigger()&& !event.isMetaDown() && !event.isAltDown() && !circuitBuilder) {
-            if (_shapeDrawer.doMousePressed(event, _currentSelection)) {
-              	deselectSelectionGroup();
-              	_currentSelection = null;
-              	return;
-            }
+            _shapeDrawer.doMousePressed(event, _currentSelection);
             if (_currentSelection!=null) {
                 _currentSelection.doMousePressed(event);
                 if (isEditable()) {

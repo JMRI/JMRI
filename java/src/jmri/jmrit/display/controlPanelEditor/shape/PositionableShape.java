@@ -292,7 +292,8 @@ public class PositionableShape extends PositionableJComponent
         java.awt.Container contentPane = _editFrame.getContentPane();
         contentPane.add(_editFrame.makeParamsPanel());
         contentPane.add(makeDoneButtonPanel());
-        _editFrame.pack();    	
+        _editFrame.pack();
+        drawHandles();
     }
     
     protected JPanel makeDoneButtonPanel() {
