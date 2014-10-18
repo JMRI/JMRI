@@ -219,7 +219,7 @@ public class InstanceManager {
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
                     justification="Only used during system initialization")
     protected void init() {
-        log.debug("running default init", new Exception());
+        log.trace("running default init");
         managerLists.clear();
     }
 
