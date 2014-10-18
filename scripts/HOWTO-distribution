@@ -116,7 +116,7 @@ Second, we build the release branch:
     
     This will do (more or less) the following actions:
 
-    svn cp -m"start release" ${SVNREPO}/trunk/jmri ${SVNREPO}/branches/jmri/releases/3.7.6
+    svn cp -m"start release" ${SVNREPO}/trunk/jmri ${SVNREPO}/branches/jmri/releases/3.9.4
     <check in an update of the version number of trunk/HEAD>
     <check in an update of the version number of the new release>
 
@@ -135,9 +135,9 @@ Second, we build the release branch:
     and update to get the release copy:
 
     cd ../../branches/jmri/releases
-    svn update 3.7.6
+    svn update 3.9.4
 
-    ( if you don't have this, check out the specific section with "svn co ${SVNREPO}/branches/jmri/releases/3.7.6")
+    ( if you don't have this, check out the specific section with "svn co ${SVNREPO}/branches/jmri/releases/3.9.4")
 
     ( to merge everything to date: svn merge ^/trunk/jmri
       If you do this, beware, the first time you'll also merge in the new release.properties file, 
@@ -166,7 +166,7 @@ Third, we do any necessary release-specific updates.
 
 ( ) Announce the file set to jmri-developers with a download URL like:
 
-    http://builds.jmri.org/jenkins/job/Test%20Release%203.7.6/ws/jmri/dist/release/
+    http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.9.4/
 
 ( ) WAIT FOR SOME REPLIES, then skip to "Actual release steps" below.
 
