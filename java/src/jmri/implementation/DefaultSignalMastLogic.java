@@ -1880,8 +1880,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
                     } else {
                         if(key.getState()==Block.OCCUPIED && key.getPermissiveWorking()){
                             permissiveBlock=true;
-                        }  else if(key.getState()==Block.UNKNOWN && key.getSensor()==null) {
-                            if(log.isDebugEnabled()) log.debug("Block " + key.getDisplayName() + " has no sensor assigned so treat as unoccupied");
+                        }  else if(key.getState()==Block.UNDETECTED) {
+                            if(log.isDebugEnabled()) log.debug("Block " + key.getDisplayName() + " is UNDETECTED so treat as unoccupied");
                         } else {
                             state=false;
                         }
@@ -2041,8 +2041,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
                     } else {
                         if(key.getState()==Block.OCCUPIED && key.getPermissiveWorking()){
                             permissiveBlock=true;
-                        } else if(key.getState()==Block.UNKNOWN && key.getSensor()==null) {
-                            if(log.isDebugEnabled()) log.debug("Block " + key.getDisplayName() + " has no sensor assigned so treat as unoccupied");
+                        } else if(key.getState()==Block.UNDETECTED) {
+                            if(log.isDebugEnabled()) log.debug("Block " + key.getDisplayName() + " is UNDETECTED so treat as unoccupied");
                         } else {
                             routeclear = false;
                         }
