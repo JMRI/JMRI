@@ -25,6 +25,7 @@ import static jmri.jmris.json.JSON.F;
 import static jmri.jmris.json.JSON.FORWARD;
 import static jmri.jmris.json.JSON.ID;
 import static jmri.jmris.json.JSON.IDLE;
+import static jmri.jmris.json.JSON.IS_LONG_ADDRESS;
 import static jmri.jmris.json.JSON.RELEASE;
 import static jmri.jmris.json.JSON.ROSTER_ENTRY;
 import static jmri.jmris.json.JSON.SPEED;
@@ -48,13 +49,32 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
         this.servers.add(server);
     }
 
+    /**
+     * Creates a new JsonThrottle or returns an existing one if the request is
+     * for an existing throttle.
+     *
+     * data can contain either a string {@link JSON#ID} node containing the ID
+     * of a {@link jmri.jmrit.roster.RosterEntry} or an integer
+     * {@link JSON#ADDRESS} node. If data contains an ADDRESS, the ID node is
+     * ignored. The ADDRESS may be accompanied by a boolean
+     * {@link JSON#IS_LONG_ADDRESS} node specifying the type of address, if
+     * IS_LONG_ADDRESS is not specified, the inverse of {@link jmri.ThrottleManager#canBeShortAddress(int)
+     * } is used as the "best guess" of the address length.
+     *
+     * @param throttleId The client's identity token for this throttle
+     * @param data JSON object containing either an ADDRESS or an ID
+     * @param server The server requesting this throttle on behalf of a client
+     * @return The throttle
+     * @throws JmriException
+     * @throws IOException
+     */
     public static JsonThrottle getThrottle(String throttleId, JsonNode data, JsonThrottleServer server) throws JmriException, IOException {
         DccLocoAddress address = null;
         if (!data.path(ADDRESS).isMissingNode()) {
             if (InstanceManager.throttleManagerInstance().canBeLongAddress(data.path(ADDRESS).asInt())
                     || InstanceManager.throttleManagerInstance().canBeShortAddress(data.path(ADDRESS).asInt())) {
                 address = new DccLocoAddress(data.path(ADDRESS).asInt(),
-                        !InstanceManager.throttleManagerInstance().canBeShortAddress(data.path(ADDRESS).asInt()));
+                        data.path(IS_LONG_ADDRESS).asBoolean(!InstanceManager.throttleManagerInstance().canBeShortAddress(data.path(ADDRESS).asInt())));
             } else {
                 server.sendErrorMessage(-103, Bundle.getMessage(server.connection.getLocale(), "ErrorThrottleInvalidAddress", data.path(ADDRESS).asInt()));
                 throw new JmriException("Address " + data.path(ADDRESS).asInt() + " is not a valid address."); // NOI18N
@@ -272,14 +292,14 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     }
 
     private void sendStatus() {
-        if (this.throttle != null) { 
-        	this.sendMessage(this.getStatus());
+        if (this.throttle != null) {
+            this.sendMessage(this.getStatus());
         }
     }
 
     protected void sendStatus(JsonThrottleServer server) {
-        if (this.throttle != null) {    	
-        	this.sendMessage(this.getStatus(), server);
+        if (this.throttle != null) {
+            this.sendMessage(this.getStatus(), server);
         }
     }
 
