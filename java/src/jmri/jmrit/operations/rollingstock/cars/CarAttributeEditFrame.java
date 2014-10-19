@@ -182,7 +182,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 	}
 
 	private void deleteItemFromCombobox(String deleteItem) {
-		log.debug("delete attribute " + deleteItem);
+		log.debug("delete attribute {}", deleteItem);
 		if (_comboboxName == CarEditFrame.ROAD) {
 			// purge train and locations by using replace
 			CarRoads.instance().replaceName(deleteItem, null);
@@ -361,7 +361,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 			return;
 		int number = 0;
 		String item = (String) comboBox.getSelectedItem();
-		log.debug("Selected item " + item);
+		log.debug("Selected item {}", item);
 		for (RollingStock rs : carManager.getList()) {
 			Car car = (Car) rs;
 
@@ -478,7 +478,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 
 	// note firePropertyChange occurs during frame creation
 	private void firePcs(String p, Object old, Object n) {
-		log.debug("CarAttribute firePropertyChange " + p + " ");
+		log.debug("CarAttribute firePropertyChange {}", p);
 		pcs.firePropertyChange(p, old, n);
 	}
 

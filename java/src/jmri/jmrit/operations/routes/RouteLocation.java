@@ -418,12 +418,12 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 			// early releases had text for train direction
 			if (Setup.getList().contains(a.getValue())) {
 				_trainDir = Setup.getDirectionInt(a.getValue());
-				log.debug("found old train direction " + a.getValue() + " new direction " + _trainDir);
+				log.debug("found old train direction {} new direction {}", a.getValue(), _trainDir);
 			} else {
 				try {
 					_trainDir = Integer.parseInt(a.getValue());
 				} catch (NumberFormatException ee) {
-					log.error("Route location (" + getName() + ") direction (" + a.getValue() + ") is unknown");
+					log.error("Route location ({}) direction ({}) is unknown", getName(), a.getValue());
 				}
 			}
 		}

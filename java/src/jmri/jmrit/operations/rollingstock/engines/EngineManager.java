@@ -48,7 +48,7 @@ public class EngineManager extends RollingStockManager{
 	    	// create manager to load engines and their attributes
 	    	EngineManagerXml.instance();
 		}
-		if (Control.showInstance && log.isDebugEnabled()) log.debug("EngineManager returns instance "+_instance);
+		if (Control.showInstance && log.isDebugEnabled()) log.debug("EngineManager returns instance {}", _instance);
 		return _instance;
 	}
 
@@ -251,7 +251,7 @@ public class EngineManager extends RollingStockManager{
 		if (root.getChild(Xml.NEW_CONSISTS)!= null) {
 			@SuppressWarnings("unchecked")
 			List<Element> consists = root.getChild(Xml.NEW_CONSISTS).getChildren(Xml.CONSIST);
-			if (log.isDebugEnabled()) log.debug("Engine manager sees "+consists.size()+" consists");
+			if (log.isDebugEnabled()) log.debug("Engine manager sees {} consists", consists.size());
 			Attribute a;
 			for (Element consist : consists) {
 				if ((a = consist.getAttribute(Xml.NAME)) != null) {
@@ -264,7 +264,7 @@ public class EngineManager extends RollingStockManager{
         	String names = root.getChildText(Xml.CONSISTS);
         	if(!names.equals("")){
         		String[] consistNames = names.split("%%"); // NOI18N
-        		if (log.isDebugEnabled()) log.debug("consists: "+names);
+        		if (log.isDebugEnabled()) log.debug("consists: {}", names);
         		for (String name : consistNames){
         			newConsist(name);
         		}
@@ -274,7 +274,7 @@ public class EngineManager extends RollingStockManager{
         if (root.getChild(Xml.ENGINES) != null) {
         	@SuppressWarnings("unchecked")
             List<Element> engines = root.getChild(Xml.ENGINES).getChildren(Xml.ENGINE);
-            if (log.isDebugEnabled()) log.debug("readFile sees "+engines.size()+" engines");
+            if (log.isDebugEnabled()) log.debug("readFile sees {} engines", engines.size());
             for (Element e : engines) {
                 register(new Engine(e));
             }

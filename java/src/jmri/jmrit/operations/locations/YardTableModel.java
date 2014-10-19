@@ -58,7 +58,7 @@ public class YardTableModel extends TrackTableModel {
 			if (track.getTrackType().equals(Track.YARD)) {
 				int row = tracksList.indexOf(track);
 				if (Control.showProperty && log.isDebugEnabled())
-					log.debug("Update yard table row: " + row + " track: " + track.getName());
+					log.debug("Update yard table row: {} track: ({})", row, track.getName());
 				if (row >= 0)
 					fireTableRowsUpdated(row, row);
 			}

@@ -207,7 +207,7 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 	}
 
 	private void update() {
-		log.debug("update, setMode " + isSetMode);
+		log.debug("update, setMode: {}", isSetMode);
 		initialize();
 
 		// turn everything off and re-enable if needed
@@ -347,7 +347,7 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 				carCheckBoxes.remove("p" + car.getId());
 				carCheckBoxes.remove("s" + car.getId());
 				carCheckBoxes.remove("m" + car.getId());
-				log.debug("Car " + car.toString() + " removed from list");
+				log.debug("Car ({}) removed from list",  car.toString());
 			}
 			update();
 		}

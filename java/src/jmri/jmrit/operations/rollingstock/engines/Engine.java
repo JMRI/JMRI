@@ -284,16 +284,16 @@ public class Engine extends RollingStock {
 		if (e.getPropertyName().equals(EngineTypes.ENGINETYPES_NAME_CHANGED_PROPERTY)) {
 			if (e.getOldValue().equals(getTypeName())) {
 				if (log.isDebugEnabled())
-					log.debug("Loco (" + toString() + ") sees type name change old: "
-							+ e.getOldValue() + " new: " + e.getNewValue()); // NOI18N
+					log.debug("Loco ({} {}) sees type name change old: ({}) new: ({})", toString(), e.getOldValue(), e
+							.getNewValue()); // NOI18N
 				setTypeName((String) e.getNewValue());
 			}
 		}
 		if (e.getPropertyName().equals(EngineLengths.ENGINELENGTHS_NAME_CHANGED_PROPERTY)) {
 			if (e.getOldValue().equals(getLength())) {
 				if (log.isDebugEnabled())
-					log.debug("Loco (" + toString() + ") sees length name change old: "
-							+ e.getOldValue() + " new: " + e.getNewValue()); // NOI18N
+					log.debug("Loco ({}) sees length name change old: {} new: {}", toString(), e.getOldValue(), e
+							.getNewValue()); // NOI18N
 				setLength((String) e.getNewValue());
 			}
 		}

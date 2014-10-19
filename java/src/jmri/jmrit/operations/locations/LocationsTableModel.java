@@ -293,7 +293,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
 			Location loc = (Location) e.getSource();
 			int row = locationsList.indexOf(loc);
 			if (Control.showProperty && log.isDebugEnabled())
-				log.debug("Update location table row: " + row + " name: " + loc.getName());
+				log.debug("Update location table row: {} name: {}", row, loc.getName());
 			if (row >= 0)
 				fireTableRowsUpdated(row, row);
 		}

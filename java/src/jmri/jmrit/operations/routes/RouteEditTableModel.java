@@ -322,7 +322,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 
 	public void setValueAt(Object value, int row, int col) {
 		if (value == null) {
-			log.debug("Warning route table row " + row + " still in edit");
+			log.debug("Warning route table row {} still in edit", row);
 			return;
 		}
 		switch (col) {
@@ -540,7 +540,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 	}
 
 	private void setComment(int row) {
-		log.debug("Set comment for row " + row);
+		log.debug("Set comment for row {}", row);
 		final RouteLocation rl = routeList.get(row);
 		// Create comment panel
 		final JDialog dialog = new JDialog();
@@ -631,7 +631,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 			RouteLocation rl = (RouteLocation) e.getSource();
 			int row = routeList.indexOf(rl);
 			if (Control.showProperty && log.isDebugEnabled())
-				log.debug("Update route table row: " + row + " id: " + rl.getId());
+				log.debug("Update route table row: {} id: {}", row, rl.getId());
 			if (row >= 0)
 				fireTableRowsUpdated(row, row);
 		}

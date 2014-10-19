@@ -97,7 +97,7 @@ class ChangeTrackFrame extends OperationsFrame{
 	}
 	
 	private void changeTrack(String type){
-		log.debug("change track to "+type);
+		log.debug("change track to {}", type);
 		_tef._track.setTrackType(type);
 		OperationsXml.save();
 		_tef.dispose();

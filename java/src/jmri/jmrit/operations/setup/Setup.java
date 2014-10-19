@@ -1807,44 +1807,44 @@ public class Setup {
 				&& (a = operations.getChild(Xml.RAIL_ROAD).getAttribute(Xml.NAME)) != null) {
 			String name = a.getValue();
 			if (log.isDebugEnabled())
-				log.debug("railroadName: " + name);
+				log.debug("railroadName: {}", name);
 			railroadName = name; // don't set the dirty bit
 		}
 		if (operations.getChild(Xml.SETTINGS) != null) {
 			if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.MAIN_MENU)) != null) {
 				String enabled = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("mainMenu: " + enabled);
+					log.debug("mainMenu: {}", enabled);
 				setMainMenuEnabled(enabled.equals(Xml.TRUE));
 			}
 			if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.CLOSE_ON_SAVE)) != null) {
 				String enabled = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("closeOnSave: " + enabled);
+					log.debug("closeOnSave: {}", enabled);
 				setCloseWindowOnSaveEnabled(enabled.equals(Xml.TRUE));
 			}
 			if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.TRAIN_DIRECTION)) != null) {
 				String dir = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("direction: " + dir);
+					log.debug("direction: {}", dir);
 				setTrainDirection(Integer.parseInt(dir));
 			}
 			if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.TRAIN_LENGTH)) != null) {
 				String length = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("Max train length: " + length);
+					log.debug("Max train length: {}", length);
 				setMaxTrainLength(Integer.parseInt(length));
 			}
 			if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.MAX_ENGINES)) != null) {
 				String size = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("Max number of engines: " + size);
+					log.debug("Max number of engines: {}", size);
 				setMaxNumberEngines(Integer.parseInt(size));
 			}
 			if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.HPT)) != null) {
 				String value = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("HPT: " + value);
+					log.debug("HPT: {}", value);
 				setHorsePowerPerTon(Integer.parseInt(value));
 			}
 			if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.SCALE)) != null) {
@@ -1862,98 +1862,98 @@ public class Setup {
 			if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.SWITCH_TIME)) != null) {
 				String minutes = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("switchTime: " + minutes);
+					log.debug("switchTime: {}", minutes);
 				setSwitchTime(Integer.parseInt(minutes));
 			}
 			if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.TRAVEL_TIME)) != null) {
 				String minutes = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("travelTime: " + minutes);
+					log.debug("travelTime: {}", minutes);
 				setTravelTime(Integer.parseInt(minutes));
 			}
 			if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.SHOW_VALUE)) != null) {
 				String enable = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("showValue: " + enable);
+					log.debug("showValue: {}", enable);
 				setValueEnabled(enable.equals(Xml.TRUE));
 			}
 			if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.VALUE_LABEL)) != null) {
 				String label = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("valueLabel: " + label);
+					log.debug("valueLabel: {}", label);
 				setValueLabel(label);
 			}
 			if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.SHOW_RFID)) != null) {
 				String enable = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("showRfid: " + enable);
+					log.debug("showRfid: {}", enable);
 				setRfidEnabled(enable.equals(Xml.TRUE));
 			}
 			if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.RFID_LABEL)) != null) {
 				String label = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("rfidLabel: " + label);
+					log.debug("rfidLabel: {}", label);
 				setRfidLabel(label);
 			}
 			if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.LENGTH_UNIT)) != null) {
 				String unit = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("lengthUnit: " + unit);
+					log.debug("lengthUnit: {}", unit);
 				setLengthUnit(unit);
 			}
 			if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.YEAR_MODELED)) != null) {
 				String year = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("yearModeled: " + year);
+					log.debug("yearModeled: {}", year);
 				setYearModeled(year);
 			}
 			// next seven attributes are for backward compatibility
 			if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.PRINT_LOC_COMMENTS)) != null) {
 				String enable = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("printLocComments: " + enable);
+					log.debug("printLocComments: {}", enable);
 				setPrintLocationCommentsEnabled(enable.equals(Xml.TRUE));
 			}
 			if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.PRINT_ROUTE_COMMENTS)) != null) {
 				String enable = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("printRouteComments: " + enable);
+					log.debug("printRouteComments: {}", enable);
 				setPrintRouteCommentsEnabled(enable.equals(Xml.TRUE));
 			}
 			if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.PRINT_LOADS_EMPTIES)) != null) {
 				String enable = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("printLoadsEmpties: " + enable);
+					log.debug("printLoadsEmpties: {}", enable);
 				setPrintLoadsAndEmptiesEnabled(enable.equals(Xml.TRUE));
 			}
 			if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.PRINT_TIMETABLE)) != null) {
 				String enable = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("printTimetable: " + enable);
+					log.debug("printTimetable: {}", enable);
 				setPrintTimetableNameEnabled(enable.equals(Xml.TRUE));
 			}
 			if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.USE12HR_FORMAT)) != null) {
 				String enable = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("use12hrFormat: " + enable);
+					log.debug("use12hrFormat: {}", enable);
 				set12hrFormatEnabled(enable.equals(Xml.TRUE));
 			}
 			if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.PRINT_VALID)) != null) {
 				String enable = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("printValid: " + enable);
+					log.debug("printValid: {}", enable);
 				setPrintValidEnabled(enable.equals(Xml.TRUE));
 			}
 			if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.SORT_BY_TRACK)) != null) {
 				String enable = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("sortByTrack: " + enable);
+					log.debug("sortByTrack: {}", enable);
 				setSortByTrackEnabled(enable.equals(Xml.TRUE));
 			}
 			if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.PRINT_HEADERS)) != null) {
 				String enable = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("printHeaders: " + enable);
+					log.debug("printHeaders: {}", enable);
 				setPrintHeadersEnabled(enable.equals(Xml.TRUE));
 			}
 		}
@@ -1963,7 +1963,7 @@ public class Setup {
 			if ((a = operations.getChild(Xml.PICKUP_ENG_FORMAT).getAttribute(Xml.SETTING)) != null) {
 				String setting = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("pickupEngFormat: " + setting);
+					log.debug("pickupEngFormat: {}", setting);
 				String[] keys = setting.split(",");
 				keyToStringConversion(keys);
 				setPickupEngineMessageFormat(keys);
@@ -1975,7 +1975,7 @@ public class Setup {
 			if ((a = operations.getChild(Xml.DROP_ENG_FORMAT).getAttribute(Xml.SETTING)) != null) {
 				String setting = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("dropEngFormat: " + setting);
+					log.debug("dropEngFormat: {}", setting);
 				String[] keys = setting.split(",");
 				keyToStringConversion(keys);
 				setDropEngineMessageFormat(keys);
@@ -1987,7 +1987,7 @@ public class Setup {
 			if ((a = operations.getChild(Xml.PICKUP_CAR_FORMAT).getAttribute(Xml.SETTING)) != null) {
 				String setting = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("pickupCarFormat: " + setting);
+					log.debug("pickupCarFormat: {}", setting);
 				String[] keys = setting.split(",");
 				replaceOldFormat(keys);
 				keyToStringConversion(keys);
@@ -2000,7 +2000,7 @@ public class Setup {
 			if ((a = operations.getChild(Xml.DROP_CAR_FORMAT).getAttribute(Xml.SETTING)) != null) {
 				String setting = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("dropCarFormat: " + setting);
+					log.debug("dropCarFormat: {}", setting);
 				String[] keys = setting.split(",");
 				replaceOldFormat(keys);
 				keyToStringConversion(keys);
@@ -2013,7 +2013,7 @@ public class Setup {
 			if ((a = operations.getChild(Xml.LOCAL_FORMAT).getAttribute(Xml.SETTING)) != null) {
 				String setting = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("localFormat: " + setting);
+					log.debug("localFormat: {}", setting);
 				String[] keys = setting.split(",");
 				replaceOldFormat(keys);
 				keyToStringConversion(keys);
@@ -2024,7 +2024,7 @@ public class Setup {
 			if ((a = operations.getChild(Xml.MISSING_CAR_FORMAT).getAttribute(Xml.SETTING)) != null) {
 				String setting = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("missingCarFormat: " + setting);
+					log.debug("missingCarFormat: {}", setting);
 				String[] keys = setting.split(",");
 				keyToStringConversion(keys);
 				setMissingCarMessageFormat(keys);
@@ -2034,31 +2034,31 @@ public class Setup {
 			if ((a = operations.getChild(Xml.SWITCH_LIST).getAttribute(Xml.SAME_AS_MANIFEST)) != null) {
 				String b = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("sameAsManifest: " + b);
+					log.debug("sameAsManifest: {}", b);
 				setSwitchListFormatSameAsManifest(b.equals(Xml.TRUE));
 			}
 			if ((a = operations.getChild(Xml.SWITCH_LIST).getAttribute(Xml.REAL_TIME)) != null) {
 				String b = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("realTime: " + b);
+					log.debug("realTime: {}", b);
 				setSwitchListRealTime(b.equals(Xml.TRUE));
 			}
 			if ((a = operations.getChild(Xml.SWITCH_LIST).getAttribute(Xml.ALL_TRAINS)) != null) {
 				String b = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("allTrains: " + b);
+					log.debug("allTrains: {}", b);
 				setSwitchListAllTrainsEnabled(b.equals(Xml.TRUE));
 			}
 			if ((a = operations.getChild(Xml.SWITCH_LIST).getAttribute(Xml.PAGE_MODE)) != null) {
 				String b = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("pageMode: " + b);
+					log.debug("pageMode: {}", b);
 				setSwitchListPagePerTrainEnabled(b.equals(Xml.TRUE));
 			}
 			if ((a = operations.getChild(Xml.SWITCH_LIST).getAttribute(Xml.PRINT_ROUTE_LOCATION)) != null) {
 				String b = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("print route location comment: " + b);
+					log.debug("print route location comment: {}", b);
 				setSwitchListRouteLocationCommentEnabled(b.equals(Xml.TRUE));
 			}
 		}
@@ -2081,7 +2081,7 @@ public class Setup {
 			if ((a = operations.getChild(Xml.SWITCH_LIST_DROP_CAR_FORMAT).getAttribute(Xml.SETTING)) != null) {
 				String setting = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("switchListDropCarFormat: " + setting);
+					log.debug("switchListDropCarFormat: {}", setting);
 				String[] keys = setting.split(",");
 				replaceOldFormat(keys);
 				keyToStringConversion(keys);
@@ -2094,7 +2094,7 @@ public class Setup {
 			if ((a = operations.getChild(Xml.SWITCH_LIST_LOCAL_FORMAT).getAttribute(Xml.SETTING)) != null) {
 				String setting = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("switchListLocalFormat: " + setting);
+					log.debug("switchListLocalFormat: {}", setting);
 				String[] keys = setting.split(",");
 				replaceOldFormat(keys);
 				keyToStringConversion(keys);
@@ -2105,7 +2105,7 @@ public class Setup {
 			if ((a = operations.getChild(Xml.PANEL).getAttribute(Xml.NAME)) != null) {
 				String panel = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("panel: " + panel);
+					log.debug("panel: {}", panel);
 				setPanelName(panel);
 			}
 			if ((a = operations.getChild(Xml.PANEL).getAttribute(Xml.TRAIN_ICONXY)) != null) {

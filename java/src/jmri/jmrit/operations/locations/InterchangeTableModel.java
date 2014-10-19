@@ -58,7 +58,7 @@ public class InterchangeTableModel extends TrackTableModel {
 			if (track.getTrackType().equals(Track.INTERCHANGE)) {
 				int row = tracksList.indexOf(track);
 				if (Control.showProperty && log.isDebugEnabled())
-					log.debug("Update interchange table row: " + row + " track: " + track.getName());
+					log.debug("Update interchange table row: {} track: {}", row, track.getName());
 				if (row >= 0)
 					fireTableRowsUpdated(row, row);
 			}

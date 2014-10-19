@@ -288,7 +288,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
 	public void setValueAt(Object value, int row, int col) {
 		if (value == null) {
-			log.debug("Warning schedule table row " + row + " still in edit");
+			log.debug("Warning schedule table row {} still in edit", row);
 			return;
 		}
 		switch (col) {
@@ -666,7 +666,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 			ScheduleItem item = (ScheduleItem) e.getSource();
 			int row = _list.indexOf(item);
 			if (Control.showProperty && log.isDebugEnabled())
-				log.debug("Update schedule item table row: " + row);
+				log.debug("Update schedule item table row: {}", row);
 			if (row >= 0)
 				fireTableRowsUpdated(row, row);
 		}

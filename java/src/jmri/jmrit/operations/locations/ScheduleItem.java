@@ -318,8 +318,8 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("ScheduleItem (" + getTypeName() + ") id (" + getId() + ") sees property change "
-					+ e.getPropertyName() + " old: " + e.getOldValue() + " new: " + e.getNewValue());	// NOI18N
+			log.debug("ScheduleItem ({}) id ({}) sees property change: ({}) old: ({}) new: ({})", getTypeName(),
+					getId(), e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
 	}
 
 	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);

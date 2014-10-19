@@ -194,8 +194,7 @@ public abstract class BackupBase {
 	 * @throws Exception
 	 */
 	public void restoreFilesFromDirectory(File directory) throws IOException {
-		log.debug("restoring files from directory "
-				+ directory.getAbsolutePath());
+		log.debug("restoring files from directory {}",  directory.getAbsolutePath());
 
 		copyBackupSet(directory, _operationsRoot);
 	}
@@ -213,7 +212,7 @@ public abstract class BackupBase {
 	 * @throws SetupException
 	 */
 	public void copyBackupSet(File sourceDir, File destDir) throws IOException {
-		log.debug("copying backup set from: " + sourceDir + " to: " + destDir);
+		log.debug("copying backup set from: {} to: {}", sourceDir, destDir);
 
 		if (!sourceDir.exists())
 			// This throws an exception, as the dir should
@@ -231,15 +230,12 @@ public abstract class BackupBase {
 		int sourceCount = getSourceFileCount(sourceDir);
 
 		if (sourceCount == 0) {
-			log.debug("No source files found in " + sourceDir.getAbsolutePath()
-					+ ", so skipping copy."); // NOI18N
+			log.debug("No source files found in {} so skipping copy.", sourceDir.getAbsolutePath()); // NOI18N
 			return;
 		}
 
 		if (sourceCount != _backupSetFileNames.length) {
-			log.warn("Only " + sourceCount
-					+ " file(s) found in directory " // NOI18N
-					+ sourceDir.getAbsolutePath());
+			log.warn("Only {} file(s) found in directory {}", sourceCount, sourceDir.getAbsolutePath());
 			// throw new IOException("Only " + sourceCount
 			// + " file(s) found in directory "
 			// + sourceDir.getAbsolutePath());
@@ -262,7 +258,7 @@ public abstract class BackupBase {
 		// Just copy the specific Operations files, now that we know they are
 		// all there.
 		for (String name : _backupSetFileNames) {
-			log.debug("copying file: " + name);
+			log.debug("copying file: {}", name);
 
 			File src = new File(sourceDir, name);
 
@@ -272,7 +268,7 @@ public abstract class BackupBase {
 				FileHelper.copy(src.getAbsolutePath(), dst.getAbsolutePath(), true);
 			}
 			else{
-				log.debug("Source file: " + src.getAbsolutePath() + " does not exist, and is not copied.");
+				log.debug("Source file: {} does not exist, and is not copied.", src.getAbsolutePath());
 			}
 		
 		}
@@ -314,7 +310,7 @@ public abstract class BackupBase {
 		copyBackupSet(fromDir, _operationsRoot);
 
 		// and the demo panel file
-		log.debug("copying file: " + _demoPanelFileName);
+		log.debug("copying file: {}", _demoPanelFileName);
 
 		File src = new File(fromDir, _demoPanelFileName);
 		File dst = new File(_operationsRoot, _demoPanelFileName);
@@ -364,8 +360,7 @@ public abstract class BackupBase {
 //				return fullName; // Found an unused name
 
 			// Otherwise complain and keep trying...
-			log.debug("Operations backup directory: " + fullName
-					+ " already exists"); // NOI18N
+			log.debug("Operations backup directory: {} already exists", fullName); // NOI18N
 		}
 
 		// If we get here, we have tried all 100 variants without success. This

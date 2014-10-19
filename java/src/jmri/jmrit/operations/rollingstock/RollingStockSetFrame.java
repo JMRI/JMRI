@@ -268,9 +268,9 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		// has the program generated a pick up and set out for this rolling stock?
 		if (_rs.getRouteLocation() != null || _rs.getRouteDestination() != null) {
 			if (_rs.getRouteLocation() != null)
-				log.debug("rs has a pick up location " + _rs.getRouteLocation().getName());
+				log.debug("rs has a pick up location {}", _rs.getRouteLocation().getName());
 			if (_rs.getRouteDestination() != null)
-				log.debug("rs has a destination " + _rs.getRouteDestination().getName());
+				log.debug("rs has a destination {}", _rs.getRouteDestination().getName());
 			JOptionPane.showMessageDialog(this, getRb().getString("rsPressSaveWill"), getRb().getString(
 					"rsInRoute"), JOptionPane.WARNING_MESSAGE);
 		}
@@ -431,7 +431,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 					String status = rs.setLocation((Location) locationBox.getSelectedItem(),
 							(Track) trackLocationBox.getSelectedItem());
 					if (!status.equals(Track.OKAY)) {
-						log.debug("Can't set rs's location because of " + status);
+						log.debug("Can't set rs's location because of {}", status);
 						JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
 								"rsCanNotLocMsg"), new Object[] { rs.toString(), status }), getRb()
 								.getString("rsCanNotLoc"), JOptionPane.ERROR_MESSAGE);
@@ -486,14 +486,14 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 				if (destTrack != null && rs.getDestinationTrack() != destTrack
 						&& destTrack.getTrackType().equals(Track.STAGING)
 						&& (rs.getTrain() == null || !rs.getTrain().isBuilt())) {
-					log.debug("Destination track (" + destTrack.getName() + ") is staging");
+					log.debug("Destination track ({}) is staging", destTrack.getName());
 					JOptionPane.showMessageDialog(this, getRb().getString("rsDoNotSelectStaging"), getRb()
 							.getString("rsCanNotDest"), JOptionPane.ERROR_MESSAGE);
 					return false;
 				}
 				String status = rs.setDestination((Location) destinationBox.getSelectedItem(), destTrack);
 				if (!status.equals(Track.OKAY)) {
-					log.debug("Can't set rs's destination because of " + status);
+					log.debug("Can't set rs's destination because of {}", status);
 					JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
 							"rsCanNotDestMsg"), new Object[] { rs.toString(), status }), getRb().getString(
 							"rsCanNotDest"), JOptionPane.ERROR_MESSAGE);
@@ -538,8 +538,8 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 						.getString("rsAddManuallyToTrain"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					// set new pick up and set out locations
 					setRouteLocationAndDestination(rs, train, rl, rd);
-					log.debug("Add rolling stock (" + rs.toString() + ") to train " + train.getName()
-							+ " route pick up " + rl.getId() + " drop " + rd.getId()); // NOI18N
+					log.debug("Add rolling stock ({}) to train ({}) route pick up {} drop {}", rs.toString(), train
+							.getName(), rl.getId(), rd.getId()); // NOI18N
 				}
 			}
 		}
@@ -675,7 +675,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals("")) {
 			trackLocationBox.removeAllItems();
 		} else {
-			log.debug("RollingStockFrame sees location: " + locationBox.getSelectedItem());
+			log.debug("RollingStockFrame sees location: {}", locationBox.getSelectedItem());
 			Location l = (Location) locationBox.getSelectedItem();
 			l.updateComboBox(trackLocationBox, _rs, autoTrackCheckBox.isSelected(), false);
 			if (_rs != null && _rs.getLocation() != null && _rs.getLocation().equals(l)
@@ -697,7 +697,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		if (destinationBox.getSelectedItem() == null || destinationBox.getSelectedItem().equals("")) {
 			trackDestinationBox.removeAllItems();
 		} else {
-			log.debug("RollingStockFrame sees destination: " + destinationBox.getSelectedItem());
+			log.debug("RollingStockFrame sees destination: {}", destinationBox.getSelectedItem());
 			Location loc = (Location) destinationBox.getSelectedItem();
 			Track track = null;
 			if (trackDestinationBox.getSelectedItem() != null && !trackDestinationBox.getSelectedItem().equals(""))
@@ -741,7 +741,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	}
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		log.debug("PropertyChange (" + e.getPropertyName() + ") new (" + e.getNewValue() +")");
+		log.debug("PropertyChange ({}) new: ({})", e.getPropertyName(), e.getNewValue());
 		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY))
 			updateComboBoxes();
 		if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY))

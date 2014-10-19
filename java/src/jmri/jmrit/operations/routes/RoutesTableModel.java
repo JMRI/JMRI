@@ -207,7 +207,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 			Route route = (Route) e.getSource();
 			int row = sysList.indexOf(route);
 			if (Control.showProperty && log.isDebugEnabled())
-				log.debug("Update route table row: " + row + " id: " + route.getId());
+				log.debug("Update route table row: {} id: {}", row, route.getId());
 			if (row >= 0)
 				fireTableRowsUpdated(row, row);
 		}

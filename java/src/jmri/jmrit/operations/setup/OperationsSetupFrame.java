@@ -726,7 +726,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 	}
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		log.debug("OperationsSetupFrame sees propertyChange " + e.getPropertyName() + " " + e.getNewValue());
+		log.debug("propertyChange ({}), new: ({})", e.getPropertyName(), e.getNewValue());
 	}
 
 	static Logger log = LoggerFactory.getLogger(OperationsSetupFrame.class.getName());

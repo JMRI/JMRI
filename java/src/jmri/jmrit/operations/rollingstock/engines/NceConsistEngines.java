@@ -129,12 +129,12 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
 				engineManager.deleteConsist(NCE + consistNum);
 				int engNum = getEngineNumberFromArray(consistNum, 0, 2);
 				if (engNum != 0) {
-					log.debug("NCE consist " + consistNum + " has lead engine " + engNum);
+					log.debug("NCE consist {} has lead engine {}", consistNum, engNum);
 					boolean engMatch = false;
 					for (RollingStock rs : engineList) {
 						Engine engine = (Engine) rs;
 						if (engine.getNumber().equals(Integer.toString(engNum))) {
-							log.debug("found lead engine match " + engine.getNumber());
+							log.debug("found lead engine match {}", engine.getNumber());
 							Consist engConsist = engineManager.newConsist(NCE + consistNum);
 							engConsist.setConsistNumber(consistNum); // load the consist number
 							engine.setConsist(engConsist);
@@ -176,16 +176,15 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
 				for (RollingStock rs : engineList) {
 					Engine engine = (Engine) rs;
 					if (engine.getNumber().equals(Integer.toString(engNum))) {
-						log.debug("found engine match " + engine.getNumber());
+						log.debug("found engine match {}", engine.getNumber());
 						engMatch = true;
 						Consist engConsist = engineManager.getConsistByName(NCE + consistNum);
 						if (engConsist != null) {
 							engine.setConsist(engConsist);
 							break;
 						}
-						log.warn("Engine " + engNum + " needs lead engine "
-								+ getEngineNumberFromArray(consistNum, 0, 2) + " for consist " // NOI18N
-								+ consistNum);
+						log.warn("Engine ({}) needs lead engine {} for consist {}", engNum, getEngineNumberFromArray(
+								consistNum, 0, 2), consistNum);
 						JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("NceConsistNeedsLeadEngine"),
 								new Object[] {engNum, getEngineNumberFromArray(consistNum, 0, 2), consistNum}),
 								Bundle.getMessage("NceConsist"), JOptionPane.ERROR_MESSAGE);

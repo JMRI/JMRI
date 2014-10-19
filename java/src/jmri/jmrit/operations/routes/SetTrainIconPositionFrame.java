@@ -262,7 +262,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
 	}
 	
 	private void loadSpinners(Location l){
-		log.debug("Load spinners location "+l.getName());
+		log.debug("Load spinners location {}", l.getName());
 		spinnersEnable(true);
 		spinTrainIconEastX.setValue(l.getTrainIconEast().x); 
 		spinTrainIconEastY.setValue(l.getTrainIconEast().y);
@@ -286,7 +286,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
 	}
 	
 	private void saveSpinnerValues(Location l){
-		log.debug("Save train icons coordinates for location "+l.getName());
+		log.debug("Save train icons coordinates for location {}", l.getName());
 		l.setTrainIconEast(new Point((Integer)spinTrainIconEastX.getValue(), (Integer)spinTrainIconEastY.getValue()));
 		l.setTrainIconWest(new Point((Integer)spinTrainIconWestX.getValue(), (Integer)spinTrainIconWestY.getValue()));
 		l.setTrainIconNorth(new Point((Integer)spinTrainIconNorthX.getValue(), (Integer)spinTrainIconNorthY.getValue()));
@@ -380,22 +380,22 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
 	
 	protected void trainIconMoved(java.awt.event.ComponentEvent ae) {
 		if (ae.getSource() == _tIonEast){
-			log.debug("East train icon X: "+_tIonEast.getLocation().x+" Y: "+_tIonEast.getLocation().y );	
+			log.debug("East train icon X: {} Y: {}", _tIonEast.getLocation().x, _tIonEast.getLocation().y );	
 			spinTrainIconEastX.setValue(_tIonEast.getLocation().x);
 			spinTrainIconEastY.setValue(_tIonEast.getLocation().y);
 		}
 		if (ae.getSource() == _tIonWest){
-			log.debug("West train icon X: "+_tIonWest.getLocation().x+" Y: "+_tIonWest.getLocation().y );
+			log.debug("West train icon X: {} Y: {}", _tIonWest.getLocation().x, _tIonWest.getLocation().y );
 			spinTrainIconWestX.setValue(_tIonWest.getLocation().x);
 			spinTrainIconWestY.setValue(_tIonWest.getLocation().y);
 		}
 		if (ae.getSource() == _tIonNorth){
-			log.debug("North train icon X: "+_tIonNorth.getLocation().x+" Y: "+_tIonNorth.getLocation().y );
+			log.debug("North train icon X: {} Y: {}", _tIonNorth.getLocation().x, _tIonNorth.getLocation().y );
 			spinTrainIconNorthX.setValue(_tIonNorth.getLocation().x);
 			spinTrainIconNorthY.setValue(_tIonNorth.getLocation().y);
 		}
 		if (ae.getSource() == _tIonSouth){
-			log.debug("South train icon X: "+_tIonSouth.getLocation().x+" Y: "+_tIonSouth.getLocation().y );
+			log.debug("South train icon X: {} Y: {}", _tIonSouth.getLocation().x, _tIonSouth.getLocation().y );
 			spinTrainIconSouthX.setValue(_tIonSouth.getLocation().x);
 			spinTrainIconSouthY.setValue(_tIonSouth.getLocation().y);
 		}

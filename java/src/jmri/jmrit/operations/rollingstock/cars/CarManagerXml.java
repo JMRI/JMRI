@@ -40,13 +40,13 @@ public class CarManagerXml extends OperationsXml {
 			_instance = new CarManagerXml();
 			_instance.load();
 		}
-		if (Control.showInstance && log.isDebugEnabled()) log.debug("CarManagerXml returns instance "+_instance);
+		if (Control.showInstance && log.isDebugEnabled()) log.debug("CarManagerXml returns instance {}", _instance);
 		return _instance;
 	}
 	
 
 	public void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
-	        if (log.isDebugEnabled()) log.debug("writeFile "+name);
+	        if (log.isDebugEnabled()) log.debug("writeFile {}", name);
 	        // This is taken in large part from "Java and XML" page 368
 	        File file = findFile(name);
 	        if (file == null) {
@@ -85,13 +85,13 @@ public class CarManagerXml extends OperationsXml {
     public void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
     	// suppress rootFromName(name) warning message by checking to see if file exists
     	if (findFile(name) == null) {
-    		log.debug(name + " file could not be found");
+    		log.debug("{} file could not be found", name);
     		return;
     	}
     	// find root
         Element root = rootFromName(name);
         if (root==null) {
-            log.debug(name + " file could not be read");
+            log.debug("{} file could not be read", name);
             return;
         }
         

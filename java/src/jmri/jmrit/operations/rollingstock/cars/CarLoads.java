@@ -53,7 +53,7 @@ public class CarLoads extends RollingStockAttribute {
 			_instance = new CarLoads();
 		}
 		if (Control.showInstance && log.isDebugEnabled())
-			log.debug("CarLoads returns instance " + _instance);
+			log.debug("CarLoads returns instance {}", _instance);
 		return _instance;
 	}
 
@@ -182,7 +182,7 @@ public class CarLoads extends RollingStockAttribute {
 			return;
 		List<CarLoad> loads = list.get(type);
 		if (loads == null) {
-			log.debug("car type (" + type + ") does not exist");
+			log.debug("car type ({}) does not exist", type);
 			return;
 		}
 		loads.add(0, new CarLoad(name));
@@ -193,7 +193,7 @@ public class CarLoads extends RollingStockAttribute {
 	public void deleteName(String type, String name) {
 		List<CarLoad> loads = list.get(type);
 		if (loads == null) {
-			log.debug("car type (" + type + ") does not exist");
+			log.debug("car type ({}) does not exist", type);
 			return;
 		}
 		for (CarLoad cl : loads) {
@@ -523,7 +523,7 @@ public class CarLoads extends RollingStockAttribute {
 					String[] loadNames = names.split("%%");// NOI18N
 					jmri.util.StringUtil.sort(loadNames);
 					if (log.isDebugEnabled())
-						log.debug("Car load type: " + type + " loads: " + names);
+						log.debug("Car load type: {} loads: {}", type, names);
 					// addName puts new items at the start, so reverse load
 					for (int j = loadNames.length; j > 0;) {
 						addName(type, loadNames[--j]);
@@ -533,7 +533,7 @@ public class CarLoads extends RollingStockAttribute {
 				@SuppressWarnings("unchecked")
 				List<Element> eCarLoads = eLoad.getChildren(Xml.CAR_LOAD);
 				if (log.isDebugEnabled())
-					log.debug(eCarLoads.size() + " car loads for type: " + type);
+					log.debug("{} car loads for type: {}", eCarLoads.size(), type);
 				for (Element eCarLoad : eCarLoads) {
 					if ((a = eCarLoad.getAttribute(Xml.NAME)) != null) {
 						String name = a.getValue();

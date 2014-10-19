@@ -100,7 +100,7 @@ public class Route implements java.beans.PropertyChangeListener {
 		_IdNumber++;
 		_sequenceNum++;
 		String id = _id + "r" + Integer.toString(_IdNumber);
-		log.debug("adding new location to (" + getName() + ") id: " + id);
+		log.debug("adding new location to ({}) id: {}", getName(), id);
 		RouteLocation rl = new RouteLocation(id, location);
 		rl.setSequenceId(_sequenceNum);
 		Integer old = Integer.valueOf(_routeHashTable.size());

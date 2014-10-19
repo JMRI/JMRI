@@ -53,7 +53,7 @@ public class CarManager extends RollingStockManager {
 			CarManagerXml.instance();
 		}
 		if (Control.showInstance && log.isDebugEnabled())
-			log.debug("CarManager returns instance " + _instance);
+			log.debug("CarManager returns instance {}", _instance);
 		return _instance;
 	}
 
@@ -407,7 +407,7 @@ public class CarManager extends RollingStockManager {
 				int index;
 				for (index = 0; index < lastCarsIndex; index++) {
 					Car carTest = out.get(out.size() - 1 - index);
-					log.debug("Car (" + carTest.toString() + ") has blocking number: " + carTest.getBlocking());
+					log.debug("Car ({}) has blocking number: {}", carTest.toString(), carTest.getBlocking());
 					if (carTest.isPassenger() && !carTest.isCaboose() && !carTest.hasFred()
 							&& carTest.getBlocking() < car.getBlocking())
 						break;
@@ -527,7 +527,7 @@ public class CarManager extends RollingStockManager {
 			if (!names.equals("")) {
 				String[] kernelNames = names.split("%%"); // NOI18N
 				if (log.isDebugEnabled())
-					log.debug("kernels: " + names);
+					log.debug("kernels: {}", names);
 				for (String name : kernelNames) {
 					newKernel(name);
 				}

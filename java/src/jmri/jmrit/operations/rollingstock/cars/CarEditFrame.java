@@ -473,7 +473,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
 		JCheckBox b = (JCheckBox) ae.getSource();
-		log.debug("checkbox change " + b.getText());
+		log.debug("checkbox change {}", b.getText());
 		if (ae.getSource() == cabooseCheckBox && cabooseCheckBox.isSelected()) {
 			fredCheckBox.setSelected(false);
 		}
@@ -814,7 +814,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 			String status = car.setLocation((Location) locationBox.getSelectedItem(), (Track) trackLocationBox
 					.getSelectedItem());
 			if (!status.equals(Track.OKAY)) {
-				log.debug("Can't set car's location because of " + status);
+				log.debug("Can't set car's location because of {}", status);
 				JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("rsCanNotLocMsg"),
 						new Object[] { car.toString(), status }), Bundle.getMessage("rsCanNotLoc"),
 						JOptionPane.ERROR_MESSAGE);

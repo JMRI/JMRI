@@ -47,7 +47,7 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 			_instance = new ScheduleManager();
 		}
 		if (Control.showInstance && log.isDebugEnabled())
-			log.debug("ScheduleManager returns instance " + _instance);
+			log.debug("ScheduleManager returns instance {}", _instance);
 		return _instance;
 	}
 

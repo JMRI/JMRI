@@ -221,7 +221,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
 		JCheckBox b = (JCheckBox) ae.getSource();
-		log.debug("checkbox change " + b.getText());
+		log.debug("checkbox change {}", b.getText());
 		if (_track == null)
 			return;
 		Location loc = locationManager.getLocationByName(b.getText());

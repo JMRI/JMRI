@@ -48,7 +48,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 			LocationManagerXml.instance(); // load locations
 		}
 		if (Control.showInstance && log.isDebugEnabled())
-			log.debug("LocationManager returns instance " + _instance);
+			log.debug("LocationManager returns instance {}", _instance);
 		return _instance;
 	}
 
@@ -363,7 +363,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 			@SuppressWarnings("unchecked")
 			List<Element> locs = root.getChild(Xml.LOCATIONS).getChildren(Xml.LOCATION);
 			if (log.isDebugEnabled())
-				log.debug("readFile sees " + locs.size() + " locations");
+				log.debug("readFile sees {} locations", locs.size());
 			for (Element loc : locs) {
 				register(new Location(loc));
 			}
@@ -385,8 +385,8 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 	 * 
 	 */
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		log.debug("LocationManager sees property change: " + e.getPropertyName() + " old: " + e.getOldValue()
-				+ " new: " + e.getNewValue()); // NOI18N
+		log.debug("LocationManager sees property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e
+				.getOldValue(), e.getNewValue()); // NOI18N
 	}
 
 	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);

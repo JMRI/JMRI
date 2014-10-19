@@ -1063,7 +1063,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			return;
 		}
 		JCheckBox b = (JCheckBox) ae.getSource();
-		log.debug("checkbox change " + b.getText());
+		log.debug("checkbox change {}", b.getText());
 		if (_location == null)
 			return;
 		if (b.isSelected()) {

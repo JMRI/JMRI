@@ -697,7 +697,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 			Car car = (Car) e.getSource();
 			int row = sysList.indexOf(car);
 			if (Control.showProperty && log.isDebugEnabled())
-				log.debug("Update car table row: " + row);
+				log.debug("Update car table row: {}", row);
 			if (row >= 0)
 				fireTableRowsUpdated(row, row);
 		}

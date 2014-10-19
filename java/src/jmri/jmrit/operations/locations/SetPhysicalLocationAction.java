@@ -184,7 +184,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
 		}
 
 		private void loadSpinners(Location l) {
-			log.debug("Load spinners location " + l.getName());
+			log.debug("Load spinners location {}", l.getName());
 			physicalLocation.setValue(l.getPhysicalLocation());
 		}
 
@@ -195,7 +195,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
 		 */
 
 		private void saveSpinnerValues(Location l) {
-			log.debug("Save train icons coordinates for location " + l.getName());
+			log.debug("Save train icons coordinates for location {}", l.getName());
 			l.setPhysicalLocation(physicalLocation.getValue());
 		}
 

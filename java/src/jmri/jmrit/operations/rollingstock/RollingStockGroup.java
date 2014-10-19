@@ -33,7 +33,7 @@ public class RollingStockGroup {
 
 	public void add(RollingStock rs) {
 		if (_group.contains(rs)) {
-			log.debug("rs " + rs.getId() + " alreay part of group " + getName());
+			log.debug("rs ({}) alreay part of group ({})",  rs.getId(),  getName());
 			return;
 		}
 		if (_group.size() <= 0) {
@@ -46,7 +46,7 @@ public class RollingStockGroup {
 
 	public void delete(RollingStock rs) {
 		if (!_group.contains(rs)) {
-			log.debug("rs " + rs.getId() + " not part of group " + getName());
+			log.debug("rs ({}) not part of group ({})", rs.getId(), getName());
 			return;
 		}
 		int oldSize = _group.size();

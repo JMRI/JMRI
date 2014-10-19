@@ -66,7 +66,7 @@ public class ExportCars extends XmlFile {
 
 	public void writeFile(String name) {
 		if (log.isDebugEnabled())
-			log.debug("writeFile " + name);
+			log.debug("writeFile {}", name);
 		// This is taken in large part from "Java and XML" page 368
 		File file = findFile(name);
 		if (file == null) {
@@ -105,20 +105,20 @@ public class ExportCars extends XmlFile {
 			Car car = (Car) rs;
 			carType = car.getTypeName();
 			if (carType.contains(del)) {
-				log.debug("Car (" + car.getRoadName() + " " + car.getNumber() + ") has delimiter in type field: "
-						+ carType); // NOI18N
+//				log.debug("Car (" + car.getRoadName() + " " + car.getNumber() + ") has delimiter in type field: "
+//						+ carType); // NOI18N
 				carType = ESC + car.getTypeName() + ESC;
 			}
 			carLocationName = car.getLocationName();
 			if (carLocationName.contains(del)) {
-				log.debug("Car (" + car.getRoadName() + " " + car.getNumber() + ") has delimiter in location field: "
-						+ carLocationName); // NOI18N
+//				log.debug("Car (" + car.getRoadName() + " " + car.getNumber() + ") has delimiter in location field: "
+//						+ carLocationName); // NOI18N
 				carLocationName = ESC + car.getLocationName() + ESC;
 			}
 			carTrackName = car.getTrackName();
 			if (carTrackName.contains(del)) {
-				log.debug("Car (" + car.getRoadName() + " " + car.getNumber() + ") has delimiter in track field: "
-						+ carTrackName); // NOI18N
+//				log.debug("Car (" + car.getRoadName() + " " + car.getNumber() + ") has delimiter in track field: "
+//						+ carTrackName); // NOI18N
 				carTrackName = ESC + car.getTrackName() + ESC;
 			}
 			// only export value field if value has been set.

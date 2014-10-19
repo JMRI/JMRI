@@ -92,7 +92,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 		_IdNumber++;
 		_sequenceNum++;
 		String id = _id + "c" + Integer.toString(_IdNumber);
-		log.debug("Adding new item to (" + getName() + ") id: " + id);
+		log.debug("Adding new item to ({}) id: {}", getName(), id);
 		ScheduleItem si = new ScheduleItem(id, type);
 		si.setSequenceId(_sequenceNum);
 		Integer old = Integer.valueOf(_scheduleHashTable.size());

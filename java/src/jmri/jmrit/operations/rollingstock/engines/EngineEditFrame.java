@@ -533,7 +533,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 						String status = _engine.setLocation((Location) locationBox.getSelectedItem(),
 								(Track) trackLocationBox.getSelectedItem());
 						if (!status.equals(Track.OKAY)) {
-							log.debug("Can't set engine's location because of " + status);
+							log.debug("Can't set engine's location because of {}", status);
 							JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
 									.getMessage("rsCanNotLocMsg"), new Object[] { _engine.toString(), status }), Bundle
 									.getMessage("rsCanNotLoc"), JOptionPane.ERROR_MESSAGE);

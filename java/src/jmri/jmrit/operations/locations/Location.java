@@ -929,7 +929,7 @@ public class Location implements java.beans.PropertyChangeListener {
 			}
 			if (status.equals(Track.OKAY) && (!destination || !track.getTrackType().equals(Track.STAGING))) {
 				box.setSelectedItem(track);
-				log.debug("Available track: " + track.getName() + " for location: " + getName());
+				log.debug("Available track: {} for location: {}", track.getName(), getName());
 			} else {
 				box.removeItem(track);
 			}
@@ -949,7 +949,7 @@ public class Location implements java.beans.PropertyChangeListener {
 		if (pool == null) {
 			_idPoolNumber++;
 			String id = _id + "p" + Integer.toString(_idPoolNumber);
-			log.debug("creating new pool (" + name + ") id: " + id);
+			log.debug("creating new pool ({}) id: {}", name, id);
 			pool = new Pool(id, name);
 			register(pool);
 		}

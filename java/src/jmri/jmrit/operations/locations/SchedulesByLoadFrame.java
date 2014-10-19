@@ -113,7 +113,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
 	private void updateLocations() {
 		String type = (String) typesComboBox.getSelectedItem();
 		String load = (String) loadsComboBox.getSelectedItem();
-		log.debug("Update locations for type " + type + " load " + load);
+		log.debug("Update locations for type ({}) load ({})", type, load);
 		locationsPanel.removeAll();
 		int x = 0;
 		addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("trackSchedule")), 1, x);
@@ -182,8 +182,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
-					+ e.getNewValue()); // NOI18N
+			log.debug("Property change ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY))
 			CarTypes.instance().updateComboBox(typesComboBox);
 		if (e.getSource().getClass().equals(CarLoads.class))

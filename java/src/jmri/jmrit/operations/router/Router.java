@@ -62,7 +62,7 @@ public class Router extends TrainCommon {
 			_instance = new Router();
 		}
 		if (Control.showInstance && log.isDebugEnabled())
-			log.debug("Router returns instance " + _instance);
+			log.debug("Router returns instance {}",  _instance);
 		return _instance;
 	}
 

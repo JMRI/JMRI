@@ -40,7 +40,7 @@ public class CarTypes extends RollingStockAttribute {
 			_instance = new CarTypes();
 		}
 		if (Control.showInstance && log.isDebugEnabled())
-			log.debug("CarTypes returns instance " + _instance);
+			log.debug("CarTypes returns instance {}", _instance);
 		return _instance;
 	}
 	

@@ -178,7 +178,7 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
 	}
 
 	private void loadSpinners(RouteLocation rl) {
-		log.debug("Load spinners route location " + rl.getName());
+		log.debug("Load spinners route location {}", rl.getName());
 		spinTrainIconX.setValue(rl.getTrainIconX());
 		spinTrainIconY.setValue(rl.getTrainIconY());
 	}
@@ -281,7 +281,7 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
 
 	protected void trainIconMoved(java.awt.event.ComponentEvent ae) {
 		if (ae.getSource() == _tIon) {
-			log.debug("train icon X: " + _tIon.getLocation().x + " Y: " + _tIon.getLocation().y);
+			log.debug("train icon X: {} Y: {}", _tIon.getLocation().x, _tIon.getLocation().y);
 			spinTrainIconX.setValue(_tIon.getLocation().x);
 			spinTrainIconY.setValue(_tIon.getLocation().y);
 		}
@@ -302,8 +302,7 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
 
 	public void propertyChange(PropertyChangeEvent e) {
 		if (log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
-					+ e.getNewValue());
+			log.debug("Property change ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e.getNewValue());
 		if (e.getSource().equals(_route)) {
 			updateRoute();
 		}

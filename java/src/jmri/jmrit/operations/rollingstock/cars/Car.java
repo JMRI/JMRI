@@ -209,7 +209,7 @@ public class Car extends RollingStock {
 		try {
 			weight = Integer.toString((int) (Double.parseDouble(getLength()) * .9));
 		} catch (Exception e) {
-			log.debug("Car (" + toString() + ") length not set for caboose or passenger car");
+			log.debug("Car ({}) length not set for caboose or passenger car", toString());
 		}
 		return weight;
 	}
@@ -227,7 +227,7 @@ public class Car extends RollingStock {
 					&& CarLoads.instance().getLoadType(getTypeName(), getLoadName()).equals(CarLoad.LOAD_TYPE_EMPTY))
 				weightTons = weightTons / 3;
 		} catch (Exception e) {
-			log.debug("Car (" + toString() + ") weight not set");
+			log.debug("Car ({}) weight not set", toString());
 		}
 		return weightTons;
 	}
@@ -865,30 +865,30 @@ public class Car extends RollingStock {
 		if (e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY)) {
 			if (e.getOldValue().equals(getTypeName())) {
 				if (log.isDebugEnabled())
-					log.debug("Car (" + toString() + ") sees type name change old: " + e.getOldValue() + " new: "
-							+ e.getNewValue()); // NOI18N
+					log.debug("Car ({}) sees type name change old: ({}) new: ({})", toString(), e.getOldValue(), e
+							.getNewValue()); // NOI18N
 				setTypeName((String) e.getNewValue());
 			}
 		}
 		if (e.getPropertyName().equals(CarLengths.CARLENGTHS_NAME_CHANGED_PROPERTY)) {
 			if (e.getOldValue().equals(getLength())) {
 				if (log.isDebugEnabled())
-					log.debug("Car (" + toString() + ") sees length name change old: " + e.getOldValue() + " new: "
-							+ e.getNewValue()); // NOI18N
+					log.debug("Car ({}) sees length name change old: ({}) new: ({})", toString(), e.getOldValue(), e
+							.getNewValue()); // NOI18N
 				setLength((String) e.getNewValue());
 			}
 		}
 		if (e.getPropertyName().equals(Location.DISPOSE_CHANGED_PROPERTY)) {
 			if (e.getSource() == _finalDestination) {
 				if (log.isDebugEnabled())
-					log.debug("delete final destination for car: " + toString());
+					log.debug("delete final destination for car: ({})", toString());
 				setFinalDestination(null);
 			}
 		}
 		if (e.getPropertyName().equals(Track.DISPOSE_CHANGED_PROPERTY)) {
 			if (e.getSource() == _finalDestTrack) {
 				if (log.isDebugEnabled())
-					log.debug("delete final destination for car: " + toString());
+					log.debug("delete final destination for car: ({})",  toString());
 				setFinalDestinationTrack(null);
 			}
 		}

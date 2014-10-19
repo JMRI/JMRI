@@ -58,7 +58,7 @@ public class SpurTableModel extends TrackTableModel {
 			if (track.getTrackType().equals(Track.SPUR)) {
 				int row = tracksList.indexOf(track);
 				if (Control.showProperty && log.isDebugEnabled())
-					log.debug("Update spur table row: " + row + " track: " + track.getName());
+					log.debug("Update spur table row: {} track: {}", row, track.getName());
 				if (row >= 0)
 					fireTableRowsUpdated(row, row);
 			}

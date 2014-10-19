@@ -47,7 +47,7 @@ public class RouteManager {
 			RouteManagerXml.instance(); // load routes
 		}
 		if (Control.showInstance && log.isDebugEnabled())
-			log.debug("RouteManager returns instance " + _instance);
+			log.debug("RouteManager returns instance {}", _instance);
 		return _instance;
 	}
 
@@ -283,7 +283,7 @@ public class RouteManager {
 			@SuppressWarnings("unchecked")
 			List<Element> eRoutes = root.getChild(Xml.ROUTES).getChildren(Xml.ROUTE);
 			if (log.isDebugEnabled())
-				log.debug("readFile sees " + eRoutes.size() + " routes");
+				log.debug("readFile sees {} routes", eRoutes.size());
 			for (Element eRoute : eRoutes) {
 				register(new Route(eRoute));
 			}

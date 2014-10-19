@@ -548,7 +548,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 	protected void updateTrainComboBox() {
 		log.debug("update train combo box");
 		if (_car != null && autoTrainCheckBox.isSelected()) {
-			log.debug("Updating train box for car (" + _car.toString() + ")");
+			log.debug("Updating train box for car ({})", _car.toString());
 			trainManager.updateComboBox(trainBox, _car);
 		} else {
 			trainManager.updateComboBox(trainBox);

@@ -264,7 +264,7 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
 
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
 		JCheckBox b = (JCheckBox) ae.getSource();
-		log.debug("checkbox change " + b.getText());
+		log.debug("checkbox change {}", b.getText());
 		if (_location == null)
 			return;
 		if (b.isSelected()) {

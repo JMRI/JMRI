@@ -55,7 +55,7 @@ public class StagingTableModel extends TrackTableModel {
 			if (track.getTrackType().equals(Track.STAGING)) {
 				int row = tracksList.indexOf(track);
 				if (Control.showProperty && log.isDebugEnabled())
-					log.debug("Update staging table row: " + row + " track: " + track.getName());
+					log.debug("Update staging table row: {} track: {}", row, track.getName());
 				if (row >= 0)
 					fireTableRowsUpdated(row, row);
 			}

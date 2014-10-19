@@ -600,7 +600,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
 		JCheckBox b = (JCheckBox) ae.getSource();
-		log.debug("checkbox change " + b.getText());
+		log.debug("checkbox change {}", b.getText());
 		if (_location == null)
 			return;
 		_location.removePropertyChangeListener(this);

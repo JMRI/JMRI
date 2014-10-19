@@ -374,7 +374,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 			Schedule schedule = (Schedule) e.getSource();
 			int row = sysList.indexOf(schedule);
 			if (Control.showProperty && log.isDebugEnabled())
-				log.debug("Update schedule table row: " + row + " name: " + schedule.getName());
+				log.debug("Update schedule table row: {} name: {}", row, schedule.getName());
 			if (row >= 0)
 				fireTableRowsUpdated(row, row);
 		}

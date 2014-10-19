@@ -230,7 +230,7 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
 	}
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		log.debug("PropertyChange (" + e.getPropertyName() + ") new (" + e.getNewValue() + ")");
+		log.debug("PropertyChange ({}) new: ({})", e.getPropertyName(), e.getNewValue() );
 		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY))
 			updateComboBoxes();
 	}

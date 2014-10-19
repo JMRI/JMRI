@@ -350,7 +350,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 
 	// note firePropertyChange occurs during frame creation
 	private void firePcs(String p, Object old, Object n) {
-		log.debug("EngineAttribute firePropertyChange " + p + " ");
+		log.debug("EngineAttribute firePropertyChange {}", p);
 		pcs.firePropertyChange(p, old, n);
 	}
 

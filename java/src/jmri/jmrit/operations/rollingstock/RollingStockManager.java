@@ -539,7 +539,7 @@ public class RollingStockManager {
 					d = d + 1900;
 				return Integer.toString(d);
 			} catch (NumberFormatException e2) {
-				log.debug("Unable to parse car built date " + date);
+				log.debug("Unable to parse car built date {}", date);
 			}
 		return date;
 	}

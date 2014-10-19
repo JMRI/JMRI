@@ -66,7 +66,7 @@ public class ExportEngines extends XmlFile {
 
 	public void writeFile(String name) {
 		if (log.isDebugEnabled())
-			log.debug("writeFile " + name);
+			log.debug("writeFile {}", name);
 		// This is taken in large part from "Java and XML" page 368
 		File file = findFile(name);
 		if (file == null) {
@@ -105,20 +105,20 @@ public class ExportEngines extends XmlFile {
 			Engine engine = (Engine) rs;
 			engineModel = engine.getModel();
 			if (engineModel.contains(del)) {
-				log.debug("Engine (" + engine.getRoadName() + " " + engine.getNumber()
-						+ ") has delimiter in model field: " + engineModel); // NOI18N
+//				log.debug("Engine (" + engine.getRoadName() + " " + engine.getNumber()
+//						+ ") has delimiter in model field: " + engineModel); // NOI18N
 				engineModel = ESC + engine.getModel() + ESC;
 			}
 			engineLocationName = engine.getLocationName();
 			if (engineLocationName.contains(del)) {
-				log.debug("Engine (" + engine.getRoadName() + " " + engine.getNumber()
-						+ ") has delimiter in location field: " + engineLocationName); // NOI18N
+//				log.debug("Engine (" + engine.getRoadName() + " " + engine.getNumber()
+//						+ ") has delimiter in location field: " + engineLocationName); // NOI18N
 				engineLocationName = ESC + engine.getLocationName() + ESC;
 			}
 			engineTrackName = engine.getTrackName();
 			if (engineTrackName.contains(del)) {
-				log.debug("Engine (" + engine.getRoadName() + " " + engine.getNumber()
-						+ ") has delimiter in track field: " + engineTrackName); // NOI18N
+//				log.debug("Engine (" + engine.getRoadName() + " " + engine.getNumber()
+//						+ ") has delimiter in track field: " + engineTrackName); // NOI18N
 				engineTrackName = ESC + engine.getTrackName() + ESC;
 			}
 			// only export value field if value has been set.

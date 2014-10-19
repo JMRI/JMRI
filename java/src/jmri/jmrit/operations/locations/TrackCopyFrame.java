@@ -147,7 +147,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 		if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals(LocationManager.NONE)) {
 			trackBox.removeAllItems();
 		} else {
-			log.debug("Copy Track Frame sees location: " + locationBox.getSelectedItem());
+			log.debug("Copy Track Frame sees location: {}", locationBox.getSelectedItem());
 			Location l = (Location) locationBox.getSelectedItem();
 			l.updateComboBox(trackBox);
 		}
@@ -277,7 +277,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 	}
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		log.debug("PropertyChange (" + e.getPropertyName() + ") new (" + e.getNewValue() + ")");
+		log.debug("PropertyChange ({}) new ({})", e.getPropertyName(), e.getNewValue());
 		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY))
 			updateComboBoxes();
 		if (e.getPropertyName().equals(Location.DISPOSE_CHANGED_PROPERTY))

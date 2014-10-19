@@ -84,7 +84,7 @@ public class ImportEngines extends ImportRollingStock {
 
 			line = line.trim();
 			if (log.isDebugEnabled()) {
-				log.debug("Import: " + line);
+				log.debug("Import: {}", line);
 			}
 			importLine.setText(line);
 
@@ -121,8 +121,8 @@ public class ImportEngines extends ImportRollingStock {
 				engineLocation = "";
 				engineTrack = "";
 
-				log.debug("Checking engine number (" + engineNumber + ") road (" + engineRoad + ") model ("
-						+ engineModel + ") length (" + engineLength + ")"); // NOI18N
+				log.debug("Checking engine number ({}) road ({}) model ({}) length ({})", engineNumber, engineRoad,
+						engineModel, engineLength); // NOI18N
 				if (engineNumber.length() > Control.max_len_string_road_number) {
 					JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
 							.getMessage("EngineRoadNumberTooLong"), new Object[] { (engineRoad + " " + engineNumber),
@@ -228,7 +228,7 @@ public class ImportEngines extends ImportRollingStock {
 						}
 						if (engineTrack == null)
 							engineTrack = "";
-						log.debug("Engine (" + engineRoad + " " + engineNumber + ") has track (" + engineTrack + ")");
+						log.debug("Engine ({} {}) has track ({})", engineRoad, engineNumber, engineTrack);
 					}
 
 					if (engineLocation.length() > Control.max_len_string_location_name) {
@@ -258,7 +258,7 @@ public class ImportEngines extends ImportRollingStock {
 								.getMessage("DoYouWantToCreateLoc"), new Object[] { engineLocation }), Bundle
 								.getMessage("engineLocation"), JOptionPane.YES_NO_OPTION);
 						if (results == JOptionPane.YES_OPTION) {
-							log.debug("Create location (" + engineLocation + ")");
+							log.debug("Create location ({})", engineLocation);
 							location = LocationManager.instance().newLocation(engineLocation);
 						} else {
 							break;
@@ -277,10 +277,10 @@ public class ImportEngines extends ImportRollingStock {
 									JOptionPane.YES_NO_OPTION);
 							if (results == JOptionPane.YES_OPTION) {
 								if (location.getLocationOps() == Location.NORMAL) {
-									log.debug("Create 1000 foot yard track (" + engineTrack + ")");
+									log.debug("Create 1000 foot yard track ({})", engineTrack);
 									track = location.addTrack(engineTrack, Track.YARD);
 								} else {
-									log.debug("Create 1000 foot staging track (" + engineTrack + ")");
+									log.debug("Create 1000 foot staging track ({})", engineTrack);
 									track = location.addTrack(engineTrack, Track.STAGING);
 								}
 								track.setLength(1000);
@@ -289,9 +289,8 @@ public class ImportEngines extends ImportRollingStock {
 							}
 						}
 					}
-					log.debug("Add engine (" + engineRoad + " " + engineNumber + ") owner (" + engineOwner
-							+ ") built (" + engineBuilt + ") location (" // NOI18N
-							+ engineLocation + ", " + engineTrack + ")");
+					log.debug("Add engine ({} {}) owner ({}) built ({}) location ({}, {})", engineRoad, engineNumber,
+							engineOwner, engineBuilt, engineLocation, engineTrack);
 					Engine engine = manager.newEngine(engineRoad, engineNumber);
 					engine.setModel(engineModel);
 					engine.setLength(engineLength);
@@ -308,7 +307,7 @@ public class ImportEngines extends ImportRollingStock {
 					if (location != null && track != null) {
 						String status = engine.setLocation(location, track);
 						if (!status.equals(Track.OKAY)) {
-							log.debug("Can't set engine's location because of " + status);
+							log.debug("Can't set engine's location because of {}", status);
 							JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
 									.getMessage("CanNotSetEngineAtLocation"),
 									new Object[] { (engineRoad + " " + engineNumber), engineModel, engineLocation,

@@ -50,7 +50,7 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 			_instance = new RollingStockLogger();
 		}
 		if (Control.showInstance && log.isDebugEnabled())
-			log.debug("RollingStockLogger returns instance " + _instance);
+			log.debug("RollingStockLogger returns instance {}", _instance);
 		return _instance;
 	}
 
@@ -119,27 +119,27 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 
 		String rsRoad = rs.getRoadName();
 		if (rsRoad.contains(DEL)) {
-			log.debug("RS (" + rs.toString() + ") has delimiter in road field: " + rsRoad);
+//			log.debug("RS (" + rs.toString() + ") has delimiter in road field: " + rsRoad);
 			rsRoad = ESC + rs.getRoadName() + ESC;
 		}
 		String rsType = rs.getTypeName();
 		if (rsType.contains(DEL)) {
-			log.debug("RS (" + rs.toString() + ") has delimiter in type field: " + rsType);
+//			log.debug("RS (" + rs.toString() + ") has delimiter in type field: " + rsType);
 			rsType = ESC + rs.getTypeName() + ESC;
 		}
 		String rsLocationName = rs.getLocationName();
 		if (rsLocationName.contains(DEL)) {
-			log.debug("RS (" + rs.toString() + ") has delimiter in location field: " + rsLocationName);
+//			log.debug("RS (" + rs.toString() + ") has delimiter in location field: " + rsLocationName);
 			rsLocationName = ESC + rs.getLocationName() + ESC;
 		}
 		String rsTrackName = rs.getTrackName();
 		if (rsTrackName.contains(DEL)) {
-			log.debug("RS (" + rs.toString() + ") has delimiter in track field: " + rsTrackName);
+//			log.debug("RS (" + rs.toString() + ") has delimiter in track field: " + rsTrackName);
 			rsTrackName = ESC + rs.getTrackName() + ESC;
 		}
 		String rsTrainName = rs.getTrainName();
 		if (rsTrainName.contains(DEL)) {
-			log.debug("RS (" + rs.toString() + ") has delimiter in train field: " + rsTrainName);
+//			log.debug("RS (" + rs.toString() + ") has delimiter in train field: " + rsTrainName);
 			rsTrainName = ESC + rs.getTrainName() + ESC;
 		}
 		String carLoad = " ";
@@ -149,18 +149,18 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 			Car car = (Car) rs;
 			carLoad = car.getLoadName();
 			if (carLoad.contains(DEL)) {
-				log.debug("RS (" + rs.toString() + ") has delimiter in car load field: " + carLoad);
+//				log.debug("RS (" + rs.toString() + ") has delimiter in car load field: " + carLoad);
 				carLoad = ESC + car.getLoadName() + ESC;
 			}
 			carFinalDest = car.getFinalDestinationName();
 			if (carFinalDest.contains(DEL)) {
-				log.debug("RS (" + rs.toString() + ") has delimiter in car final destination field: " + carFinalDest); // NOI18N
+//				log.debug("RS (" + rs.toString() + ") has delimiter in car final destination field: " + carFinalDest); // NOI18N
 				carFinalDest = ESC + car.getFinalDestinationName() + ESC;
 			}
 			carFinalDestTrack = car.getFinalDestinationTrackName();
 			if (carFinalDestTrack.contains(DEL)) {
-				log.debug("RS (" + rs.toString() + ") has delimiter in car final destination track field: " // NOI18N
-						+ carFinalDestTrack);
+//				log.debug("RS (" + rs.toString() + ") has delimiter in car final destination track field: " // NOI18N
+//						+ carFinalDestTrack);
 				carFinalDestTrack = ESC + car.getFinalDestinationTrackName() + ESC;
 			}
 		}
@@ -193,7 +193,7 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 			return;
 		}
 
-		log.debug("Log: " + line);
+		log.debug("Log: {}", line);
 
 		fileOut.println(line);
 		fileOut.flush();
@@ -259,7 +259,7 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 	public void propertyChange(PropertyChangeEvent e) {
 		if (e.getPropertyName().equals(RollingStock.TRACK_CHANGED_PROPERTY)) {
 			if (Control.showProperty && log.isDebugEnabled())
-				log.debug("Logger sees property change for car " + e.getSource());
+				log.debug("Logger sees property change for car {}", e.getSource());
 			store((RollingStock) e.getSource());
 		}
 		if (e.getPropertyName().equals(RollingStockManager.LISTLENGTH_CHANGED_PROPERTY)) {

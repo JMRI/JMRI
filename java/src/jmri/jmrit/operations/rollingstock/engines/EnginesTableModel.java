@@ -492,7 +492,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 			Engine engine = (Engine) e.getSource();
 			int row = sysList.indexOf(engine);
 			if (Control.showProperty && log.isDebugEnabled())
-				log.debug("Update engine table row: " + row);
+				log.debug("Update engine table row: {}", row);
 			if (row >= 0)
 				fireTableRowsUpdated(row, row);
 		}

@@ -171,7 +171,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 	 * track.
 	 */
 	private void save() {
-		log.debug("save " + locationCheckBoxList.size());
+		log.debug("save {}", locationCheckBoxList.size());
 		removePropertyChangeLocations();
 		for (JCheckBox cb : locationCheckBoxList) {
 			Location loc = manager.getLocationById(cb.getName());
@@ -264,9 +264,9 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 			}
 		} else {
 			JCheckBox cb = (JCheckBox) ae.getSource();
-			log.debug("Checkbox " + cb.getName() + " text: " + cb.getText());
+			log.debug("Checkbox {} text: {}", cb.getName(), cb.getText());
 			if (locationCheckBoxList.contains(cb)) {
-				log.debug("Checkbox location " + cb.getText());
+				log.debug("Checkbox location {}", cb.getText());
 				// must deselect tracks if location is deselect
 				if (!cb.isSelected()) {
 					String locId = cb.getName();
@@ -280,7 +280,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 				}
 
 			} else if (trackCheckBoxList.contains(cb)) {
-				log.debug("Checkbox track " + cb.getText());
+				log.debug("Checkbox track {}", cb.getText());
 				// Must select location if track is selected
 				if (cb.isSelected()) {
 					String[] loc = cb.getName().split("s");
@@ -323,8 +323,8 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
-					+ e.getNewValue());
+			log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+					.getNewValue());
 		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Location.NAME_CHANGED_PROPERTY)
