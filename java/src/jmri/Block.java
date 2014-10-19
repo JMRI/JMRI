@@ -114,7 +114,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
 
     static final public int OCCUPIED = Sensor.ACTIVE;
     static final public int UNOCCUPIED = Sensor.INACTIVE;
-    static final public int UNDETECTED = UNOCCUPIED*8;  // bit coded, just in case; really should be enum
+    static final public int UNDETECTED = 0x100;  // bit coded, just in case; really should be enum
 	
 	// Curvature attributes
 	static final public int NONE = 0x00;
