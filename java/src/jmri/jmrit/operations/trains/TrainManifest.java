@@ -141,17 +141,19 @@ public class TrainManifest extends TrainCommon {
 				// engine change or helper service?
 				if (train.getSecondLegOptions() != Train.NONE) {
 					if (rl == train.getSecondLegStartLocation())
-						printChange(fileOut, rl, train.getSecondLegOptions());
+						printChange(fileOut, rl, train, train.getSecondLegOptions());
 					if (rl == train.getSecondLegEndLocation() && train.getSecondLegOptions() == Train.HELPER_ENGINES)
 						newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText
-								.getStringRemoveHelpers(), new Object[] { splitString(rl.getName()) }));
+								.getStringRemoveHelpers(), new Object[] { splitString(rl.getName()), train.getName(),
+								train.getDescription() }));
 				}
 				if (train.getThirdLegOptions() != Train.NONE) {
 					if (rl == train.getThirdLegStartLocation())
-						printChange(fileOut, rl, train.getThirdLegOptions());
+						printChange(fileOut, rl, train, train.getThirdLegOptions());
 					if (rl == train.getThirdLegEndLocation() && train.getThirdLegOptions() == Train.HELPER_ENGINES)
 						newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText
-								.getStringRemoveHelpers(), new Object[] { splitString(rl.getName()) }));
+								.getStringRemoveHelpers(), new Object[] { splitString(rl.getName()), train.getName(),
+								train.getDescription() }));
 				}
 
 				if (Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {
@@ -254,22 +256,23 @@ public class TrainManifest extends TrainCommon {
 		train.setModified(false);
 	}
 
-	private void printChange(PrintWriter fileOut, RouteLocation rl, int legOptions) throws IllegalArgumentException {
+	private void printChange(PrintWriter fileOut, RouteLocation rl, Train train, int legOptions)
+			throws IllegalArgumentException {
 		if ((legOptions & Train.HELPER_ENGINES) == Train.HELPER_ENGINES)
 			newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText.getStringAddHelpers(),
-					new Object[] { splitString(rl.getName()) }));
+					new Object[] { splitString(rl.getName()), train.getName(), train.getDescription() }));
 		else if ((legOptions & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES
 				&& ((legOptions & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE || (legOptions & Train.ADD_CABOOSE) == Train.ADD_CABOOSE))
 			newLine(fileOut, MessageFormat.format(
-					messageFormatText = TrainManifestText.getStringLocoAndCabooseChange(),
-					new Object[] { splitString(rl.getName()) }));
+					messageFormatText = TrainManifestText.getStringLocoAndCabooseChange(), new Object[] {
+							splitString(rl.getName()), train.getName(), train.getDescription() }));
 		else if ((legOptions & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES)
 			newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText.getStringLocoChange(),
-					new Object[] { splitString(rl.getName()) }));
+					new Object[] { splitString(rl.getName()), train.getName(), train.getDescription() }));
 		else if ((legOptions & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE
 				|| (legOptions & Train.ADD_CABOOSE) == Train.ADD_CABOOSE)
 			newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText.getStringCabooseChange(),
-					new Object[] { splitString(rl.getName()) }));
+					new Object[] { splitString(rl.getName()), train.getName(), train.getDescription() }));
 	}
 
 	private void printTrackComments(PrintWriter fileOut, RouteLocation rl, List<Car> carList) {

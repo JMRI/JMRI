@@ -200,30 +200,35 @@ public class EditManifestTextFrame extends OperationsFrame {
 		pAddHelpersAt.setBorder(BorderFactory.createTitledBorder(rb.getString("AddHelpersAt")));
 		pAddHelpersAt.add(addHelpersAtTextField);
 		addHelpersAtTextField.setText(TrainManifestText.getStringAddHelpers());
+		addHelpersAtTextField.setToolTipText(rb.getString("ToolTipScheduledWorkAt"));
 		pManifest.add(pAddHelpersAt);
 
 		JPanel pRemoveHelpersAt = new JPanel();
 		pRemoveHelpersAt.setBorder(BorderFactory.createTitledBorder(rb.getString("RemoveHelpersAt")));
 		pRemoveHelpersAt.add(removeHelpersAtTextField);
 		removeHelpersAtTextField.setText(TrainManifestText.getStringRemoveHelpers());
+		removeHelpersAtTextField.setToolTipText(rb.getString("ToolTipScheduledWorkAt"));
 		pManifest.add(pRemoveHelpersAt);
 
 		JPanel pLocoChangeAt = new JPanel();
 		pLocoChangeAt.setBorder(BorderFactory.createTitledBorder(rb.getString("LocoChangeAt")));
 		pLocoChangeAt.add(locoChangeAtTextField);
 		locoChangeAtTextField.setText(TrainManifestText.getStringLocoChange());
+		locoChangeAtTextField.setToolTipText(rb.getString("ToolTipScheduledWorkAt"));
 		pManifest.add(pLocoChangeAt);
 
 		JPanel pCabooseChangeAt = new JPanel();
 		pCabooseChangeAt.setBorder(BorderFactory.createTitledBorder(rb.getString("CabooseChangeAt")));
 		pCabooseChangeAt.add(cabooseChangeAtTextField);
 		cabooseChangeAtTextField.setText(TrainManifestText.getStringCabooseChange());
+		cabooseChangeAtTextField.setToolTipText(rb.getString("ToolTipScheduledWorkAt"));
 		pManifest.add(pCabooseChangeAt);
 
 		JPanel pLocoAndCabooseChangeAt = new JPanel();
 		pLocoAndCabooseChangeAt.setBorder(BorderFactory.createTitledBorder(rb.getString("LocoAndCabooseChangeAt")));
 		pLocoAndCabooseChangeAt.add(locoAndCabooseChangeAtTextField);
 		locoAndCabooseChangeAtTextField.setText(TrainManifestText.getStringLocoAndCabooseChange());
+		locoAndCabooseChangeAtTextField.setToolTipText(rb.getString("ToolTipScheduledWorkAt"));
 		pManifest.add(pLocoAndCabooseChangeAt);
 
 		// add tool tips
