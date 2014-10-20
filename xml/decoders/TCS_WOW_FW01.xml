@@ -49,9 +49,42 @@
       </variable>
       
       <!-- this is a dummy for testing the "TCS 4 CV Sound Programming" support -->
-      <variable item="Sound Option 21" CV="T3CV.1.2.3" mask="VVVVVVVVVVVVVVVV">
+      <variable item="Sound Option 21" CV="T3CV.11.2.3" mask="VVVVVVVVVVVVVVVV">
         <decVal max="63999" />
-        <label>Sound Option 21 for T3CV.1.2.3</label>
+        <label>Sound Option 21 for T3CV.11.2.3</label>
+      </variable>
+      
+      <!-- this is a dummy for testing very large enum variables  -->
+      <!-- should show a choice, then a group of two, then a group of 3 -->
+      <variable item="Sound Option 22" CV="400" mask="VVVVVVVVVVVVVVVV">
+        <enumVal>
+          <enumChoice>
+            <choice>Choice 1</choice>
+          </enumChoice>
+          <enumChoiceGroup>
+            <name>Group A</name>
+            <enumChoice>
+              <choice>Choice 2</choice>
+            </enumChoice>
+            <enumChoice>
+              <choice>Choice 3</choice>
+            </enumChoice>
+          </enumChoiceGroup>
+          <enumChoiceGroup>
+            <name>Group B</name>
+            <name xml:lang="it">Group B</name>
+            <enumChoice>
+              <choice>Choice 4</choice>
+            </enumChoice>
+            <enumChoice>
+              <choice>Choice 5</choice>
+            </enumChoice>
+            <enumChoice>
+              <choice>Choice 6</choice>
+            </enumChoice>
+          </enumChoiceGroup>
+        </enumVal>
+        <label>Sound Option 22 for CV400</label>
       </variable>
       
       
