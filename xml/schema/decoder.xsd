@@ -839,12 +839,17 @@
     Allows grouping of enumChoice elements within an enumVal element.
     This can be used for e.g. defining individual XML documents to be included.
     </xs:documentation></xs:annotation>
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element ref="docbook:copyright" minOccurs="0" maxOccurs="1" />
-      <xs:element ref="docbook:authorgroup" minOccurs="0" maxOccurs="unbounded" />
-      <xs:element ref="docbook:revhistory" minOccurs="0" maxOccurs="unbounded" />
-      <xs:element type="EnumChoiceType" name="enumChoice" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element type="EnumChoiceGroupType" name="enumChoiceGroup" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:sequence minOccurs="1" maxOccurs="1">
+        <xs:element ref="docbook:copyright" minOccurs="0" maxOccurs="1" />
+        <xs:element ref="docbook:authorgroup" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="docbook:revhistory" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="name" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation><xs:documentation>User-visible name for this group, can be repeated for I18N</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+          <xs:element type="EnumChoiceType" name="enumChoice" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element type="EnumChoiceGroupType" name="enumChoiceGroup" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
     </xs:sequence>
     <xs:attribute ref="xml:base" />
     <xs:attribute name="comment" type="xs:string"/>
