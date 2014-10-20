@@ -827,7 +827,9 @@
             <xs:element name="choice" minOccurs="1" maxOccurs="unbounded" />
             <xs:element name="comment" minOccurs="0" maxOccurs="unbounded" />
           </xs:sequence>
-          <xs:attribute name="choice" type="xs:string" use="required"/>
+          <xs:attribute name="choice" type="xs:string">
+            <xs:annotation><xs:documentation>Deprecated in favor of the choice sub-element</xs:documentation></xs:annotation>
+          </xs:attribute>
           <xs:attribute name="value" type="xs:int" />
           <xs:attribute name="comment" type="xs:string"/>
   </xs:complexType>
