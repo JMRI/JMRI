@@ -369,6 +369,7 @@
                 <xs:enumeration value="checkbox" />
                 <xs:enumeration value="onradiobutton" />
                 <xs:enumeration value="offradiobutton" />
+                <xs:enumeration value="tree" />
             </xs:restriction>
         </xs:simpleType>
     </xs:attribute>
