@@ -23,6 +23,18 @@ import jmri.*;
  * it's commanded to change appearance, and updates its internal state
  * when it hears commands from other places.
  * <p>
+ * System name specifies the creation information:
+<pre>
+IF$dsm:basic:one-searchlight:(123)
+</pre>
+ * The name is a colon-separated series of terms:
+ * <ul>
+ * <li>IF$dsm - defines signal masts of this type
+ * <li>basic - name of the signaling system
+ * <li>one-searchlight - name of the particular aspect map
+ * <li>(123) - DCC address for the decoder
+ * </ul>
+ * <p>
  * Based upon {@link jmri.implementation.DccSignalHead} by Alex Shepherd
  * @author Kevin Dickerson Copyright (c) 2012
  * @version $Revision: 19173 $

@@ -12,8 +12,19 @@ import jmri.NamedBeanHandle;
  * <p>
  * A Signalmast that is built up using turnouts to control
  * a specific appearance.
+ * System name specifies the creation information:
+<pre>
+IF$tsm:basic:one-searchlight:(IT1)(IT2)
+</pre>
+ * The name is a colon-separated series of terms:
+ * <ul>
+ * <li>IF$tsm - defines signal masts of this type
+ * <li>basic - name of the signaling system
+ * <li>one-searchlight - name of the particular aspect map
+ * <li>(IT1)(IT2) - colon-separated list of names for Turnouts
+ * </ul>
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author	Bob Jacobsen Copyright (C) 2009, 2014
  * @version     $Revision: 19027 $
  */
 public class TurnoutSignalMast extends AbstractSignalMast {
