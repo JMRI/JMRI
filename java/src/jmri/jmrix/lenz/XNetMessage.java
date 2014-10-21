@@ -150,6 +150,26 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         XNetMessageTimeout = t;
      }
 
+
+     /*
+      * Most messages are sent with a reply expected, but
+      * we have a few that we treat as though the reply is always
+      * a broadcast message, because the reply usually comes to us 
+      * that way.
+      */
+     @Override
+     public boolean replyExpected() {
+        return !broadcastReply;
+     }
+
+     private boolean broadcastReply = false;
+
+     // Tell the traffic controller we expect this
+     // message to have a broadcast reply.
+     void setBroadcastReply() {
+        broadcastReply=true;
+     }
+
     // decode messages of a particular form
 
     // create messages of a particular form
@@ -189,7 +209,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
      */
     public static XNetMessage getTurnoutCommandMsg(int pNumber, boolean pClose,
                                             boolean pThrow, boolean pOn) {
-        XNetMessage l = new XNetMessage(4);
+        XNetMessage l = new XNetMessage(4); 
         l.setElement(0, XNetConstants.ACC_OPER_REQ);
         
         // compute address byte fields
@@ -223,6 +243,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     public static XNetMessage getFeedbackRequestMsg(int pNumber, 
                                              boolean pLowerNibble) {
         XNetMessage l = new XNetMessage(4);
+        l.setBroadcastReply();  // we the message reply as a broadcast message.
         l.setElement(0, XNetConstants.ACC_INFO_REQ);
         
         // compute address byte field
