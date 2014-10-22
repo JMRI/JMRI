@@ -9,9 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-
 import java.awt.datatransfer.DataFlavor;
-
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -58,6 +56,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     /**
     * Init for creation
     */
+    @Override
     public void init() {
        	if (!_initialized) {
        		Thread.yield();
@@ -307,13 +306,13 @@ public abstract class FamilyItemPanel extends ItemPanel {
             count++;
             button = new JRadioButton(ItemPalette.convertText(family));
             button.addActionListener(new ActionListener() {
-                    String family;
+                    String fam;
                     public void actionPerformed(ActionEvent e) {
-                        setFamily(family);
+                        setFamily(fam);
                     }
                     ActionListener init(String f) {
-                        family = f;
-                        if (log.isDebugEnabled()) log.debug("ActionListener.init : for type \""+_itemType+"\", family \""+family+"\"");
+                        fam = f;
+                        if (log.isDebugEnabled()) log.debug("ActionListener.init : for type \""+_itemType+"\", family \""+fam+"\"");
                         return this;
                     }
                 }.init(family));
@@ -553,11 +552,21 @@ public abstract class FamilyItemPanel extends ItemPanel {
                 return false;
         	}
         }
-        _dialog = new IconDialog(_itemType, family, this, null);
-        _dialog.sizeLocate();
+        _dialog = openDialog(_itemType, family, null);
        return true;
     }
     
+    private void openEditDialog() {
+        _dialog = openDialog(_itemType, _family, _currentIconMap);
+    }
+    
+    protected IconDialog openDialog(String type, String family, HashMap <String, NamedIcon> iconMap) {
+    	IconDialog dialog = new IconDialog(type, family, this, iconMap);
+        dialog.sizeLocate();
+    	return dialog;
+    }
+
+    @Override
     protected void closeDialogs() {
     	if (_dialog!=null) {
     		_dialog.closeDialogs();
@@ -572,12 +581,6 @@ public abstract class FamilyItemPanel extends ItemPanel {
         remove(_iconFamilyPanel);
     }
  
-    private void openEditDialog() {
-        if (log.isDebugEnabled()) log.debug("openEditDialog for family \""+_family+"\"");
-        _dialog = new IconDialog(_itemType, _family, this, _currentIconMap);
-        _dialog.sizeLocate();
-    }
-
     /**
     * Action of family radio button
     * MultisensorItemPanel & IndicatorTOItem must overides

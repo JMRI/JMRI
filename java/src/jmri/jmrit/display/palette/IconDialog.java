@@ -60,13 +60,17 @@ public class IconDialog extends ItemDialog {
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         if (iconMap != null) {
             _iconMap = clone(iconMap);
-            makeAddIconButtonPanel(buttonPanel, "ToolTipAddPosition", "ToolTipDeletePosition");
             makeDoneButtonPanel(buttonPanel, "doneButton");
         } else {
         	_iconMap = ItemPanel.makeNewIconMap(type);
         	makeDoneButtonPanel(buttonPanel, "addNewFamily");
         }
+        // null method for all except multisensor.
+        makeAddIconButtonPanel(buttonPanel, "ToolTipAddPosition", "ToolTipDeletePosition");
 
+        if (!(type.equals("IndicatorTO") || type.equals("MultiSensor"))) {
+            ItemPanel.checkIconMap(type, _iconMap);
+        }
         _iconPanel = makeIconPanel(_iconMap);
         panel.add(_iconPanel);	// put icons above buttons
         panel.add(buttonPanel);
@@ -82,7 +86,6 @@ public class IconDialog extends ItemDialog {
         setContentPane(p);
         pack();
     }
-
 
     // Only multiSensor adds and deletes icons 
     protected void makeAddIconButtonPanel(JPanel buttonPanel, String addTip, String deleteTip) {
@@ -189,7 +192,6 @@ public class IconDialog extends ItemDialog {
     			   c.gridx = 0;
     			   c.gridwidth = 1;
     			   gridbag.setConstraints(p, c);
-    			   //if (log.isDebugEnabled()) log.debug("makeIconPanel: gridx= "+c.gridx+" gridy= "+c.gridy);
     			   iconPanel.add(p);
     			   c.gridx = numCol-cnt;
     			   c.gridwidth = gridwidth;
@@ -200,8 +202,6 @@ public class IconDialog extends ItemDialog {
     	   }
     	   cnt--;
 
-//    	   if (log.isDebugEnabled()) log.debug("makeIconPanel: icon width= "+icon.getIconWidth()+" height= "+icon.getIconHeight());
-//    	   if (log.isDebugEnabled()) log.debug("makeIconPanel: gridx= "+c.gridx+" gridy= "+c.gridy);
     	   panel.add(iPanel);
     	   JLabel label = new JLabel(java.text.MessageFormat.format(Bundle.getMessage("scale"),
     			   new Object[] {CatalogPanel.printDbl(scale,2)}));
@@ -219,7 +219,6 @@ public class IconDialog extends ItemDialog {
     	   c.gridx = numCol*gridwidth-1;
     	   c.gridwidth = 1;
     	   gridbag.setConstraints(p, c);
-    	   //if (log.isDebugEnabled()) log.debug("makeIconPanel: gridx= "+c.gridx+" gridy= "+c.gridy);
     	   iconPanel.add(p);
        }
        return iconPanel;

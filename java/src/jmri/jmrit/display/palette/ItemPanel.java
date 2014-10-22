@@ -98,42 +98,56 @@ public abstract class ItemPanel extends JPanel {
     static final String[] PORTAL = {PortalIcon.HIDDEN, PortalIcon.VISIBLE, PortalIcon.PATH, 
     								PortalIcon.TO_ARROW, PortalIcon.FROM_ARROW};
 
-    static protected HashMap<String, NamedIcon> makeNewIconMap(String type) {
-        HashMap <String, NamedIcon> newMap = new HashMap <String, NamedIcon>();
-        String[] names = null;
+    static private  String[] getNames(String type) {
         if (type.equals("Turnout")) {
-            names = TURNOUT;
+            return TURNOUT;
         } else if (type.equals("Sensor")) {
-            names = SENSOR;
+            return SENSOR;
         } else if (type.equals("SignalHead")) {
-            names = SIGNAL;
+            return SIGNAL;
         } else if (type.equals("Light")) {
-            names = LIGHT;
+            return LIGHT;
         } else if (type.equals("MultiSensor")) {
-            names = MULTISENSOR;
+            return MULTISENSOR;
         } else if (type.equals("Icon")) {
-            names = ICON;
+            return ICON;
         } else if (type.equals("Background")) {
-            names = BACKGROUND;
+            return BACKGROUND;
         } else if (type.equals("RPSReporter")) {
-            names = RPSREPORTER;
+            return RPSREPORTER;
         } else if (type.equals("IndicatorTrack")) {
-            names = INDICATOR_TRACK;
+            return INDICATOR_TRACK;
         } else if (type.equals("IndicatorTO")) {
-            names = INDICATOR_TRACK;
+            return INDICATOR_TRACK;
         } else if (type.equals("Portal")) {
-            names = PORTAL;
+            return PORTAL;
         } else {
             log.error("Item type \""+type+"\" cannot create icon sets!");
             return null;
-        }
+        }    	
+    }
+    static String redX = "resources/icons/misc/X-red.gif";
+    
+    static protected HashMap<String, NamedIcon> makeNewIconMap(String type) {
+        HashMap <String, NamedIcon> newMap = new HashMap <String, NamedIcon>();
+        String[] names = getNames(type);
         for (int i=0; i<names.length; i++) {
-           String fileName = "resources/icons/misc/X-red.gif";
-           NamedIcon icon = new jmri.jmrit.catalog.NamedIcon(fileName, fileName);
+           NamedIcon icon = new jmri.jmrit.catalog.NamedIcon(redX, redX);
            newMap.put(names[i], icon);
         }
         return newMap;
     }
+    
+    static protected void checkIconMap(String type, HashMap<String, NamedIcon> map) {
+    	String[] names = getNames(type);
+        for (int i=0; i<names.length; i++) {
+        	if (map.get(names[i])==null) {
+                NamedIcon icon = new jmri.jmrit.catalog.NamedIcon(redX, redX);
+                map.put(names[i], icon);        		
+        	}
+         }
+    }
+    
     
     static Logger log = LoggerFactory.getLogger(ItemPanel.class.getName());
 }

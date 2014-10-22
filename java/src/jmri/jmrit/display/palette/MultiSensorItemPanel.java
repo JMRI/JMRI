@@ -2,14 +2,13 @@ package jmri.jmrit.display.palette;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -18,7 +17,6 @@ import javax.swing.*;
 
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.picker.PickListModel;
-
 import jmri.util.JmriJFrame;
 import jmri.NamedBean;
 import jmri.jmrit.catalog.DragJLabel;
@@ -36,6 +34,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
         setToolTipText(Bundle.getMessage("ToolTipDragSelection"));
     }
 
+    @Override
     protected JPanel initTablePanel(PickListModel model, Editor editor) {
         _table = model.makePickTable();
         ROW_HEIGHT = _table.getRowHeight();
@@ -96,10 +95,12 @@ public class MultiSensorItemPanel extends TableItemPanel {
         _selectionModel.setPositionRange(size-3);
     }
 
+    @Override
     protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
         super.makeDndIconPanel(iconMap, "second");
     }
 
+    @Override
     protected void initIconFamiliesPanel() {
         super.initIconFamiliesPanel();
         makeMultiSensorPanel();
@@ -132,6 +133,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
         _multiSensorPanel.repaint();
     }
 
+    @Override
     protected void setFamily(String family) {
         super.setFamily(family);
         if (_multiSensorPanel!=null) {
@@ -154,9 +156,11 @@ public class MultiSensorItemPanel extends TableItemPanel {
         }    	
     }
 
-    protected void openEditDialog() {
-    	_dialog = new MultiSensorIconDialog(_itemType, _family, this, _currentIconMap);
-    	_dialog.sizeLocate();
+    @Override
+    protected IconDialog openDialog(String type, String family, HashMap <String, NamedIcon> iconMap) {
+    	IconDialog dialog = new MultiSensorIconDialog(type, family, this, iconMap);
+    	dialog.sizeLocate();
+    	return dialog;
     }
 
 /*    protected void createNewFamily(String type) {
@@ -180,6 +184,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
     	return _upDown;
     }
     
+    @Override
     public void setSelection(NamedBean bean) {
         int row = _model.getIndexOf(bean);
         if (row>=0) {       	
@@ -246,6 +251,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
 
         /*************** DefaultListSelectionModel overrides ********************/
 
+        @Override
         public boolean isSelectedIndex(int index) {
             for (int i=0; i<_positions.length; i++) {
                 if (_positions[i] == index) {
@@ -257,6 +263,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
             return false;
         }
 
+        @Override
         public void clearSelection() {
             if (log.isDebugEnabled()) log.debug("clearSelection()");
             for (int i=0; i<_positions.length; i++) {
@@ -271,11 +278,13 @@ public class MultiSensorItemPanel extends TableItemPanel {
             _nextPosition = 0;
         }
 
+        @Override
         public void addSelectionInterval(int index0, int index1) {
             if (log.isDebugEnabled()) log.debug("addSelectionInterval("+index0+", "+index1+") - stubbed");
 //            super.addSelectionInterval(index0, index1);
         }
 
+        @Override
         public void setSelectionInterval(int row, int index1) {
             if (_nextPosition>=_positions.length) {
                 JOptionPane.showMessageDialog(_paletteFrame, 
@@ -301,6 +310,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
         }
     }
 
+    @Override
     protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map) {
         return new IconDragJLabel(flavor, map);
     }
@@ -313,9 +323,11 @@ public class MultiSensorItemPanel extends TableItemPanel {
             super(flavor);
             iconMap = map;
         }
+        @Override
         public boolean isDataFlavorSupported(DataFlavor flavor) {
             return super.isDataFlavorSupported(flavor);
         }
+        @Override
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException,IOException {
             if (!isDataFlavorSupported(flavor)) {
                 return null;

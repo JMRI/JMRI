@@ -29,7 +29,7 @@
 panels.  The palette is a tabbed window with tabs for each item type.  The common method 
 all items use to add an item to a panel is "Drag and Drop".  Each tab has a bordered 
 panel labeled <b>Drag to Panel</b>.  Drag the item inside this border over to the panel.  In the
-cases where the icon represents a layout device (e.g. a turnout, a sensoe, etc.), you 
+cases where the icon represents a layout device (e.g. a turnout, a sensor, etc.), you 
 must select a row from a table to associate that particular device with the icon - and then
 drag the icon to the panel.</p>
 
@@ -40,15 +40,20 @@ are used to select an icon set.</p>  For example, under the sensor tab you may h
 large jewels, small jewels, each size with several sets with different colors for active and 
 inactive - e.g. red-green, yellow-dark, etc.  
 <p>
-The <b>Show Icons</b>
-button displays all the icons in the selected set.  The <b>Edit Icons</b> button opens a dialog
-where the icons may be changed by dragging new icons from the icon catalog.</p>
+The <b>Show Icons</b> button displays all the icons in the selected set.
    
-<H3>New Icon Sets</H3>
-Icon sets may 
-be added or deleted from the <b>Edit Icons</b> dialog.  There is no limit on the 
-number of additional icon sets that
-can be added to an item tab.  When the Item Palette is customized with other icon
+<H3>Editing and Creating New Icon Sets</H3>
+The <b>Edit Icons</b> button opens a dialog
+where the icons may be changed by dragging new icons from the icon catalog.</p>
+<p>
+Additional icon sets may be added with <b>New Icon Set</b> button.  After giving a name to the
+new icon set, the edit dialog is displayed. 
+Replace the red X icons with icons you drag from the catalogs. There is no limit 
+on the number of additional icon sets that can be added to an item tab.
+<p>
+The <b>Delete Icon Set</b> button deletes the selected icon set.   
+<p.
+When the Item Palette is customized with other icon
 sets, closing the Palette with the close button of in the title bar will open a
 dialog box asking whether you want to save your changes. 
 When changes are saved the Item Palette is stored in the CatalogTrees.xml file in the preferences 
@@ -97,9 +102,10 @@ represent it.
                         default case, three rows must be slected from the table to place
                         the multisensor icon in a panel.  The table selections are labeled "first",
                         "second", etc. and these labels correspond to the labels shown when 
-                        the full icon set is displayed.  When editing an icon set, level positions 
-                        can be added and deleted.  That is, you may make a two sensor multisensor
-                        or a four or five multisensor icon set.</li>
+                        the full icon set is displayed.  When editing or creating a Multisensor icon set, 
+                        lever positions can be added and deleted.  That is, you may make a two sensor
+                        multisensor or a four or five sensor icon set. Use the <b>Add Icon</b>
+                        or <b>Delete Icon</b> button to add or delete lever positions.</li>
         <li> <b>Icon</b> The bordered icons displayed  (labeled with their names) can be dragged
                         directly to a panel.  Icons can also be dragged directly from the Icon
                         Catalog.</li>
@@ -165,36 +171,39 @@ field. The <b>Open Detector Picklist</b> button opens a picklist showing the def
 Drag or copy the name to the Occupancy Circuit field.  <i><b>Do Not use</b> the "Sensor Table" tab of the picklist
 <b>unless</b> there are no OBlocks configured and you only want to use the "Occupied/Unoccupied" status.</i></p>
 <p>
-(Obsolete)When a valid OBlock name is entered in the Occupancy Circuit field, a <b>CircuitPath</b> panel is added to 
-the tab.  If paths have been defined for the block they are shown in this panel.  Check the paths of the track circuit that pass over this icon.  When these paths are part of 
+When a valid OBlock name is entered in the Occupancy Circuit field, a <b>CircuitPath</b> panel is added to 
+the tab showing all the paths that have been defined for the OBlock.
+Check the paths of the track circuit that pass over this icon.  When these paths are part of 
 an allocated route or are occupied by a warranted train, they show that status by color.</p>
 <p>
 If the paths were created or edited by CircuitBuilder, the above function is done automatically.  In the future
 the above "sub"panel will be made read only.</p>
 <p>
-Below the Occupancy Circuit field is a checkbox labeled <b>Display Train Name when occupied by warranted train</b>.
+Below the Occupancy Circuit field is a checkbox labeled <b>Display Train Name when occupied</b>.
 When a warranted train occupies the track circuit, circuit icons having this box checked, show
 a marker with the occupying train's id.  Most likely, you will only want one of the icons in the
 track circuit to display the train id.</p>
 <p>
-The <b>Icon Sets</b> radio buttons, the <b>Drag to Panel</b> area and <b>Show Icons</b> and <b>Edit Icons</b> buttons function as described 
-before.</p>
+The <b>Icon Sets</b> radio buttons, the <b>Drag to Panel</b> area the <b>Show Icons</b>, <b>Edit Icons</b>
+<b>New Icon Set</b>, <b>Delete Icon Set</b> buttons function as described before.</p>
 
 <H3>Indicator Turnout Tab</H3>
 
 This tab has the same functions as the Indicator Track tab with the addition of a turnout table.
 A turnout must be selected from the Turnout Table to be able to drag an icon to a control panel.</p>
 <p>
-A slight variation are 
-the <b>Add New Icon Set</b> and <b>Delete Icon Set</b> buttons at the bottom of the tab.  Also, the <b>Show Icons></b>
-button displays the icon set in a matrix where the rows show the status icon for each state of the turnout - Closed, 
+A slight variation is there is no <b>Edit Icons</b> button.
+The <b>Add New Icon Set</b> and <b>Delete Icon Set</b>function as described before.</p>.  
+<p>
+The <b>Show Icons></b> button displays the icon set in a matrix where the rows show 
+the status icons for each state of the turnout - Closed, 
 Thrown, Inconsistent, and Unknown.  To the right of each row in the matrix is a <b>Edit Icons</b> button. 
-button.  These buttons open an Edit Icons dialog for each row of the matrix.  dialog also. The 
+button.  These buttons open an Edit Icons dialog for each row of the matrix. The 
 <b>Hide Icons</b> button closes the icon matrix and returns the tab to its original view.</p>
 <p>
 When an <b>Edit Icons</b> button is pressed on a row of the icon display, an edit dialog for the row
 is opened.  The icons can be changed by dragging icons from the Icon Catalog.  Also the entire status
-can be removed by the <b>Delete Status</b> button - or restored by the <b>Add Missing Status</b>
+row can be removed by the <b>Delete Status</b> button - or restored by the <b>Add Missing Status</b>
 button.</p>
 <p>
 

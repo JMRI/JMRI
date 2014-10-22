@@ -2,17 +2,16 @@ package jmri.jmrit.display.palette;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -54,6 +53,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     * whether icon families exist.  They are made first because they are referenced in
     * initIconFamiliesPanel()
     */
+    @Override
     public void init() {
     	if (!_initialized) {
             super.init();
@@ -68,6 +68,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     /**
     * Init for conversion of plain track to indicator track
     */
+    @Override
     public void init(ActionListener doneAction) {
         super.init(doneAction);
         add(_iconFamilyPanel, 0);
@@ -149,11 +150,13 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     /*
     * Get a handle in order to change visibility
     */
+    @Override
     protected JPanel initTablePanel(PickListModel model, Editor editor) {
         _tablePanel = super.initTablePanel(model, editor);
         return _tablePanel;
     }
 
+    @Override
     public void dispose() {
         if (_detectPanel!=null) {
             _detectPanel.dispose();
@@ -163,6 +166,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     /**
     *  CENTER Panel
     */
+    @Override
     protected void initIconFamiliesPanel() {
         _iconFamilyPanel = new JPanel();
         _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
@@ -234,6 +238,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             _iconPanel.add(panel);
             c.gridx++;
             HashMap<String, NamedIcon> iconMap = entry.getValue();
+            ItemPanel.checkIconMap("Turnout", iconMap);
             Iterator<Entry<String, NamedIcon>> iter = iconMap.entrySet().iterator();
             while (iter.hasNext()) {
                 Entry<String, NamedIcon> ent = iter.next();
@@ -317,6 +322,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         }       
         return bottomPanel;
     }
+    @Override
     protected boolean newFamilyDialog() {
         String family = JOptionPane.showInputDialog(_paletteFrame, Bundle.getMessage("EnterFamilyName"), 
         		Bundle.getMessage("createNewIconSet", _itemType), JOptionPane.QUESTION_MESSAGE);
@@ -339,6 +345,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
        return true;
     }
     
+    @Override
     protected void hideIcons() {
         if (_tablePanel!=null) {
             _tablePanel.setVisible(true);
@@ -349,6 +356,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         super.hideIcons();
     }
 
+    @Override
     protected void showIcons() {
         if (_detectPanel!=null) {
             _detectPanel.setVisible(false);
@@ -361,6 +369,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     /**
     * Action item for delete family
     */
+    @Override
     protected void deleteFamilySet() {
         ItemPalette.removeLevel4IconMap(_itemType, _family, null);
         _family = null;
@@ -386,6 +395,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         _iconGroupsMap.put(key, iconMap);
     }
 
+    @Override
     protected void setFamily(String family) {
         _family = family;
         if (log.isDebugEnabled()) log.debug("setFamily: for type \""+_itemType+"\", family \""+family+"\"");
@@ -403,6 +413,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         hideIcons();
     }
     
+    @Override
     protected void updateFamiliesPanel() {
         if (log.isDebugEnabled()) log.debug("updateFamiliesPanel for "+_itemType);
         if (_iconFamilyPanel!=null) {
@@ -459,6 +470,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         return _iconGroupsMap;
     }
 
+    @Override
     protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map) {
         return new IconDragJLabel(flavor);
     }
@@ -468,9 +480,11 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         public IconDragJLabel(DataFlavor flavor) {
             super(flavor);
         }
+        @Override
         public boolean isDataFlavorSupported(DataFlavor flavor) {
             return super.isDataFlavorSupported(flavor);
         }
+    @Override
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException,IOException {
             if (!isDataFlavorSupported(flavor)) {
                 return null;

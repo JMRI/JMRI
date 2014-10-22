@@ -11,9 +11,11 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
+
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
 import jmri.jmrit.catalog.NamedIcon;
 
 /**
@@ -67,19 +69,6 @@ public class IndicatorTOIconDialog extends IconDialog {
     }
 
     /**
-    * NOT add a new family.  Create a status family when previous status was deleted
-    */
-    private void createNewStatusSet() {
-    	if (log.isDebugEnabled()) log.debug("createNewFamily: type= \""+
-    				_type+"\", family= \""+_family+"\" key= "+_key);
-        //check text        
-        HashMap<String, NamedIcon> iconMap = ItemPanel.makeNewIconMap("Turnout");
-        ItemPalette.addLevel4FamilyMap(_type, _parent._family, _key, iconMap);
-        addFamilySet(_parent._family, iconMap, _key);
-        dispose();
-    }
-
-    /**
     * Action item for add new status set in makeAddIconButtonPanel
     */
     private void addFamilySet() {
@@ -110,7 +99,18 @@ public class IndicatorTOIconDialog extends IconDialog {
                     Bundle.getMessage("infoTitle"), JOptionPane.INFORMATION_MESSAGE);
         }
     }
-
+    /**
+    * NOT add a new family.  Create a status family when previous status was deleted
+    */
+    private void createNewStatusSet() {
+    	if (log.isDebugEnabled()) log.debug("createNewFamily: type= \""+
+    				_type+"\", family= \""+_family+"\" key= "+_key);
+        //check text        
+        HashMap<String, NamedIcon> iconMap = ItemPanel.makeNewIconMap("Turnout");
+        ItemPalette.addLevel4FamilyMap(_type, _parent._family, _key, iconMap);
+        addFamilySet(_parent._family, iconMap, _key);
+        dispose();
+    }    
     /**
     * Action item for add delete status set in makeAddIconButtonPanel
     */
@@ -123,6 +123,7 @@ public class IndicatorTOIconDialog extends IconDialog {
     /**
     * Action item for makeDoneButtonPanel
     */
+    @Override
     protected boolean doDoneAction() {
         //check text
         String subFamily = _key;  // actually the key to status icon
@@ -135,9 +136,9 @@ public class IndicatorTOIconDialog extends IconDialog {
 
     private boolean addFamilySet(String family, HashMap<String, NamedIcon> iconMap, String subFamily) {
     	if (log.isDebugEnabled()) log.debug("addFamily _type= \""+_type+"\", family= \""+family+"\""+
-    			", key= \""+_key+"\", _iconMap.size= "+_iconMap.size());
+    			", key= \""+_key+"\", _iconMap.size= "+iconMap.size());
         IndicatorTOItemPanel parent = (IndicatorTOItemPanel)_parent;
-        parent.updateIconGroupsMap(subFamily, _iconMap);
+        parent.updateIconGroupsMap(subFamily, iconMap);
         _parent.updateFamiliesPanel();
         _parent._family = family;
         return true;

@@ -37,6 +37,7 @@ public class MultiSensorIconDialog extends IconDialog {
     /**
     * add/delete icon. For Multisensor, it adds another sensor position.
     */
+    @Override
     protected void makeAddIconButtonPanel(JPanel buttonPanel, String addTip, String deleteTip) {
         JPanel panel2 = new JPanel();
         panel2.setLayout(new FlowLayout());
@@ -45,9 +46,10 @@ public class MultiSensorIconDialog extends IconDialog {
                 public void actionPerformed(ActionEvent a) {
                     if (addNewIcon(getIconName())) {
                         ImageIndexEditor.indexChanged(true);
-                        getContentPane().remove(_iconPanel);
+                        JPanel p = (JPanel)(getContentPane().getComponent(0));
+                        p.remove(_iconPanel);
                         _iconPanel = makeIconPanel(_iconMap); 
-                        getContentPane().add(_iconPanel, 1);
+                        p.add(_iconPanel, 1);
                         pack();
                     }
                 }
@@ -60,9 +62,10 @@ public class MultiSensorIconDialog extends IconDialog {
                 public void actionPerformed(ActionEvent a) {
                     if (deleteIcon()) {
                         ImageIndexEditor.indexChanged(true);
-                        getContentPane().remove(_iconPanel);
+                        JPanel p = (JPanel)(getContentPane().getComponent(0));
+                        p.remove(_iconPanel);
                         _iconPanel = makeIconPanel(_iconMap); 
-                        getContentPane().add(_iconPanel, 1);
+                        p.add(_iconPanel, 1);
                         pack();
                     }
                 }
@@ -71,7 +74,8 @@ public class MultiSensorIconDialog extends IconDialog {
         panel2.add(deleteSensor);
         buttonPanel.add(panel2);
     }
-    
+
+    @Override
     protected boolean doDoneAction() {
     	MultiSensorItemPanel parent = (MultiSensorItemPanel)_parent;
     	if(_iconMap.size()!= parent._currentIconMap.size()) {
