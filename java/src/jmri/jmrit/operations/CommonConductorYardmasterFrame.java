@@ -302,7 +302,7 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 			}
 		}
 		// all selected, work done!
-		moveButton.setEnabled(true);
+		moveButton.setEnabled(_train != null && _train.isBuilt());
 		setButton.setEnabled(false);
 		isSetMode = false;
 		setButtonText();
