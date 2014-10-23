@@ -91,6 +91,7 @@
        </UL></LI>
       <LI><A HREF="#Interchange">Classification/Interchange Tracks</A>
        <UL>
+        <LI><A HREF="#TrackDestinations">Track Destinations</A></LI>
         <LI><A HREF="#CreateClassificationYard">How to Create a Classification Yard</A></LI>
        </UL></LI>
       <LI><A HREF="#Staging">Staging Tracks</A>
@@ -1662,7 +1663,7 @@
    <H3>Classification/Interchange Tracks</H3>
 
    The easiest way to create the exchange of cars between trains is to use a
-   classification/interchange track. A classification/interchange track can be used for
+   classification/interchange track. A classification/interchange (C/I) track can be used for
    classification, the movement of cars within the same railroad, and an interchange, the movement
    of cars between railroads. Cars dropped off to a classification/interchange track by a train on a
    given route will not be picked up by any train using that same route. Another train with a
@@ -1679,14 +1680,33 @@
     the track's car types to the same ones that the train services, otherwise you can have cars
     stranded on the classification/interchange track.</P>
 
-   <P>You can also control which destinations the interchange track will service. Under "Tools"
-    in the edit track window for a classification/interchange track, the menu item "Track
-    Destinations" allows you to select which destinations are valid for the track.</P>
-
    <P>Given the complexity of this type of track, it is strongly recommended that you not use
     classification/interchange tracks until you get comfortable with how the program builds trains
     and you've read and can understand the train build reports.</P>
-    
+
+   <A NAME="TrackDestinations"></A>
+   <H3>Track Destinations</H3>
+
+   You can also control which destinations the classification/interchange track will service. Under
+   "Tools" in the edit track window for a classification/interchange (C/I) track, the menu item
+   "Track Destinations" allows you to select which destinations are valid for the track.
+
+   <P>After you've selected the destinations that you want the C/I track to service, you can use
+    the "Check Destinations" button to verify that all of the destinations you've selected can also
+    service the same car types, roads, and loads as the C/I track. The program will only report the
+    first problem it encounters. So you have to fix each issue when it is reported in order to get
+    all issues resolved. The "Check Destinations" can take awhile to complete as it will test all
+    combinations of car types, roads, and loads that the C/I track can service. The program also
+    checks to see if there's a train or trains that can carry the car from the C/I track to the
+    selected destinations.</P>
+
+   <P>
+    Note that if you want your C/I track to service several car types, but have destinations that
+    can only service a subset of the car types, it is best to break the C/I track into several
+    tracks each servicing the types that the destinations can also service, and then
+    <A HREF="#Pools">pool</A> the C/I tracks together if you want to use the same track space.
+   </P>
+
    <A NAME="CreateClassificationYard"></A>
    <H3>How to Create a Classification Yard</H3>
 
@@ -1701,17 +1721,19 @@
     out cars, but assign only one train to pick them up. You should configure the classification
     track to service the same car types, loads and roads that the train services, otherwise you
     could end up with stranded cars. When sorting cars in a yard by train, some use the label "Cars
-    for train xyz" as the track name.
+    for train XYZ" as the track name.
    </P>
 
-   <P>You can also create a classification yard that sorts cars by destinations. Again using the
-    C/I track type, there's an option under tools in the edit track window to set "Track
-    Destinations". So for example if your classification yard serviced four destinations, you could
-    create four "virtual" tracks, one for each destination, and the program would sort cars in your
-    yard to each of those destinations for you. With regards to the track name, some folks would use
-    a track name similar to "Cars to Boston" for cars going to Boston. You can if you wish break
-    down any destination to trains that serve that destination, really up to you how you want to
-    sort your cars.</P>
+   <P>
+    You can also create a classification yard that sorts cars by destinations. Again using the C/I
+    track type, there's an option under tools in the edit track window to set <A
+     HREF="#TrackDestinations">Track Destinations</A>. So for example if your classification yard
+    serviced four destinations, you could create four tracks, one for each destination,
+    and the program would sort cars in your yard to each of those destinations for you. With regards
+    to the track name, some folks would use a track name similar to "Cars to Boston" for cars going
+    to Boston. You can if you wish break down any destination to trains that serve that destination,
+    really up to you how you want to sort your cars.
+   </P>
 
    <P>
     Note that it is okay to create more classification tracks or "virtual tracks" then there are
