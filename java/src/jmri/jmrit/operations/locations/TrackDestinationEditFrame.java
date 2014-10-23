@@ -170,7 +170,9 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 				dispose();
 		}
 		if (ae.getSource() == checkDestinationsButton) {
+			checkDestinationsButton.setEnabled(false); // testing can take awhile, so disable
 			checkDestinationsValid();
+			checkDestinationsButton.setEnabled(true);
 		}
 	}
 
