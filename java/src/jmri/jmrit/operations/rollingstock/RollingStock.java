@@ -481,7 +481,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 	public String setDestination(Location destination, Track track, boolean force) {
 		// first determine if rolling stock can be move to the new destination
 		if (!force) {
-			String status = RsTestDestination(destination, track);
+			String status = rsTestDestination(destination, track);
 			if (!status.equals(Track.OKAY))
 				return status;
 		}
@@ -545,10 +545,10 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 	 * @return status OKAY, TYPE, ROAD, LENGTH, ERROR_TRACK
 	 */
 	public String testDestination(Location destination, Track track) {
-		return RsTestDestination(destination, track);
+		return rsTestDestination(destination, track);
 	}
 
-	private String RsTestDestination(Location destination, Track track) {
+	private String rsTestDestination(Location destination, Track track) {
 		// first perform a code check
 		if (destination != null && !destination.isTrackAtLocation(track))
 			return ERROR_TRACK;
