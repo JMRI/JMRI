@@ -15,17 +15,17 @@ import javax.swing.AbstractAction;
  */
 public class TrainByCarTypeAction extends AbstractAction {
 
-	public TrainByCarTypeAction(String s, TrainEditFrame frame) {
+	public TrainByCarTypeAction(String s, Train train) {
 		super(s);
-		this.frame = frame;
+		_train = train;
 	}
 
-	TrainEditFrame frame;
+	Train _train;
 
 	public void actionPerformed(ActionEvent e) {
 		// create frame
 		TrainByCarTypeFrame f = new TrainByCarTypeFrame();
-		f.initComponents(frame._train);
+		f.initComponents(_train);
 	}
 }
 

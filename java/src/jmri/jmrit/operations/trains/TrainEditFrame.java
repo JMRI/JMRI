@@ -356,9 +356,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		toolMenu.add(new TrainRoadOptionsAction(Bundle.getMessage("MenuItemRoadOptions"), this));
 		toolMenu.add(new TrainManifestOptionAction(Bundle.getMessage("MenuItemOptions"), this));
 		if (_train != null)
-			toolMenu.add(new TrainCopyAction(Bundle.getMessage("TitleTrainCopy"), _train.getName()));
+			toolMenu.add(new TrainCopyAction(Bundle.getMessage("TitleTrainCopy"), _train));
 		toolMenu.add(new TrainScriptAction(Bundle.getMessage("MenuItemScripts"), this));
-		toolMenu.add(new TrainByCarTypeAction(Bundle.getMessage("MenuItemShowCarTypes"), this));
+		toolMenu.add(new TrainByCarTypeAction(Bundle.getMessage("MenuItemShowCarTypes"), _train));
 		if (_train != null)
 			toolMenu.add(new TrainConductorAction(Bundle.getMessage("TitleTrainConductor"), _train));
 		toolMenu.add(new PrintTrainAction(Bundle.getMessage("MenuItemPrint"), new Frame(), false, this));
@@ -984,8 +984,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
-					+ e.getNewValue()); // NOI18N
+			log.debug("Property change ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Train.TYPES_CHANGED_PROPERTY)) {
 			updateCarTypeCheckboxes();

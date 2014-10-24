@@ -29,7 +29,6 @@ public class TrainCopyFrame extends OperationsFrame {
 	TrainManager trainManager = TrainManager.instance();
 
 	// labels
-	javax.swing.JLabel textCopyTrain = new javax.swing.JLabel(Bundle.getMessage("SelectTrain"));
 
 	// text field
 	javax.swing.JTextField trainNameTextField = new javax.swing.JTextField(Control.max_len_string_train_name);
@@ -40,7 +39,7 @@ public class TrainCopyFrame extends OperationsFrame {
 	// combo boxes
 	javax.swing.JComboBox trainBox = TrainManager.instance().getComboBox();
 
-	public TrainCopyFrame() {
+	public TrainCopyFrame(Train train) {
 		// general GUI config
 
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -59,6 +58,8 @@ public class TrainCopyFrame extends OperationsFrame {
 		pCopy.setLayout(new GridBagLayout());
 		pCopy.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SelectTrain")));
 		addItem(pCopy, trainBox, 0, 0);
+		
+		trainBox.setSelectedItem(train);
 
 		// row 4
 		JPanel pButton = new JPanel();
@@ -78,10 +79,6 @@ public class TrainCopyFrame extends OperationsFrame {
 
 		// setup buttons
 		addButtonAction(copyButton);
-	}
-
-	public void setTrainName(String trainName) {
-		trainBox.setSelectedItem(trainManager.getTrainByName(trainName));
 	}
 
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {

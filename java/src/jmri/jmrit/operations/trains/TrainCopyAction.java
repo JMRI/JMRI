@@ -16,28 +16,27 @@ import javax.swing.AbstractAction;
  */
 public class TrainCopyAction extends AbstractAction {
 
-    public TrainCopyAction(String s) {
-    	super(s);
-    }
-    
-    String trainName;
-    public TrainCopyAction(String s, String trainName) {
-    	super(s);
-    	this.trainName = trainName;
-    }
+	public TrainCopyAction(String s) {
+		super(s);
+	}
 
+	Train _train = null;
 
-    TrainCopyFrame f = null;
-    public void actionPerformed(ActionEvent e) {
-        // create a copy train frame
-    	if (f == null || !f.isVisible()){
-    		f = new TrainCopyFrame();
-    	}
-    	if (trainName != null)
-    		f.setTrainName(trainName);
-    	f.setExtendedState(Frame.NORMAL);
-	   	f.setVisible(true);	// this also brings the frame into focus
-    }
+	public TrainCopyAction(String s, Train train) {
+		super(s);
+		_train = train;
+	}
+
+	TrainCopyFrame f = null;
+
+	public void actionPerformed(ActionEvent e) {
+		// create a copy train frame
+		if (f == null || !f.isVisible()) {
+			f = new TrainCopyFrame(_train);
+		}
+		f.setExtendedState(Frame.NORMAL);
+		f.setVisible(true); // this also brings the frame into focus
+	}
 }
 
 /* @(#)TrainCopyAction.java */
