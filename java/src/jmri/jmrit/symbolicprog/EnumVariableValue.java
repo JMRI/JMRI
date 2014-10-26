@@ -9,15 +9,17 @@ import java.awt.event.*;
 import java.beans.*;
 
 import javax.swing.*;
+import javax.swing.tree.*;
+import javax.swing.event.*;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
 import java.util.HashMap;
 
 /**
  * Extends VariableValue to represent a enumerated variable.
  *
- * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2013
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2013, 2014
  * @version	$Revision$
  *
  */
@@ -30,6 +32,8 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
+        
+        treeModels.addLast(new DefaultMutableTreeNode("")); // root
     }
 
     /**
@@ -69,8 +73,21 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     public void addItem(String s, int value) {
         _valueArray[_nstored] = value;
         _itemArray[_nstored++] = s;
+        
+        treeModels.getLast().add(new DefaultMutableTreeNode(s));
     }
 
+    public void startGroup(String name) {
+        DefaultMutableTreeNode next = new DefaultMutableTreeNode(name);
+        treeModels.getLast().add(next);
+        treeModels.addLast(next);
+    }
+    
+    
+    public void endGroup() {
+        treeModels.removeLast();
+    }
+    
     public void lastItem() {
         _value = new JComboBox(_itemArray);
         // finish initialization
@@ -98,6 +115,8 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     private int[] _valueArray = null;
     private int _nstored;
 
+    Deque<DefaultMutableTreeNode>  treeModels = new ArrayDeque<DefaultMutableTreeNode>();
+    
     int _maxVal;
     int _minVal;
     Color _defaultColor;
@@ -240,6 +259,56 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
             updateRepresentation(b);
             return b;
         }
+        else if (format.equals("tree")) {
+            DefaultTreeModel dModel = new DefaultTreeModel(treeModels.getFirst());
+            JTree dTree = new JTree(dModel);
+            trees.add(dTree);
+            JScrollPane dScroll = new JScrollPane(dTree);
+            dTree.setRootVisible(false);
+            dTree.setShowsRootHandles(true);
+            dTree.setScrollsOnExpand(true);
+            dTree.setExpandsSelectedPaths(true);
+            dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
+            dTree.addTreeSelectionListener(new TreeSelectionListener() {
+                @Override
+                public void valueChanged(TreeSelectionEvent e) {
+                    //if (!dTree.isSelectionEmpty() && dTree.getSelectionPath()!=null ) {
+                            // somebody has been selected
+                           //preview.setIcon(getSelectedIcon());
+                    //    }
+                    //else {
+                        // nobody selected
+                    //}
+                }
+            });
+            
+            // arrange for only leaf nodes can be selected
+            dTree.addTreeSelectionListener(new TreeSelectionListener() { 
+                public void valueChanged(TreeSelectionEvent e) { 
+                    TreePath [] paths = e.getPaths(); 
+                    for (int i=0; i<paths.length; i++) { 
+                        DefaultMutableTreeNode o = 
+                            (DefaultMutableTreeNode)paths[i].getLastPathComponent(); 
+                        if ( o.getChildCount() > 0 ) 
+                            ((JTree)e.getSource()).removeSelectionPath(paths[i]); 
+                    } 
+                } 
+            });
+            
+            // Arrange for coloring when changed
+            
+            // Arrange for value to update when changed in VariableTable
+            
+            // Arrange for value to be written/read OK
+            
+            // Arrange for adding a new node at end if an unexpected value is found
+            
+            if (getReadOnly()) {
+                log.error("read only variables cannot use tree format: {}", item());
+            }
+            updateRepresentation(dScroll);
+            return dScroll;
+        }
         else {
             // return a new JComboBox representing the same model
             VarComboBox b = new VarComboBox(_value.getModel(), this);
@@ -253,6 +322,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     private List<ComboCheckBox> comboCBs = new ArrayList<ComboCheckBox>();
     private List<VarComboBox> comboVars = new ArrayList<VarComboBox>();
     private List<ComboRadioButtons> comboRBs = new ArrayList<ComboRadioButtons>();
+    private List<JTree> trees = new ArrayList<JTree>();
 
     // implement an abstract member to set colors
     void setColor(Color c) {

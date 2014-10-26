@@ -496,50 +496,51 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     }
 
     protected VariableValue processEnumVal(Element child, String name, String comment, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String CV, String mask, String item) throws NumberFormatException {
-        VariableValue v;
-        List<Element> l = findENumValChildren(child);
-        EnumVariableValue v1 = new EnumVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, 0, l.size() - 1, _cvModel.allCvMap(), _status, item);
-        v = v1; // v1 is of EnunVariableValue type, so doesn't need casts
-        v1.nItems(l.size());
-        for (int k = 0; k < l.size(); k++) {
-            // is a value specified?
-            Element enumChElement = l.get(k);
-            Attribute valAttr = enumChElement.getAttribute("value");
-            if (valAttr == null) {
-                v1.addItem(LocaleSelector.getAttribute(enumChElement, "choice"));
-            } else {
-                v1.addItem(LocaleSelector.getAttribute(enumChElement, "choice"), 
-                            Integer.parseInt(valAttr.getValue()));
+        
+        int count = 0;
+        java.util.Iterator iterator = child.getDescendants();
+        while (iterator.hasNext()) {
+            Object ex = iterator.next();
+            if (ex instanceof Element) {
+                if (((Element)ex).getName().equals("enumChoice")) count++;
             }
         }
+        
+        VariableValue v;
+        EnumVariableValue v1 = new EnumVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, 0, count, _cvModel.allCvMap(), _status, item);
+        v = v1; // v1 is of EnunVariableValue type, so doesn't need casts
+
+        v1.nItems(count);  
+        handleENumValChildren(child, v1);  
         v1.lastItem();
         return v;
     }
     
     /**
-     * Recursively creates a depth-first list of child enumChoice
+     * Recursively walk the child enumChoice
      * elements, working through the enumChoiceGroup elements as
      * needed.
-     *
-     * These lists never get very long. If they do, a tail-iteration
-     * algorithm working on a single list would be better.
      */
-    protected List<Element> findENumValChildren(Element e) {
-        List<Element> retval = new ArrayList<Element>();
+    protected void handleENumValChildren(Element e, EnumVariableValue var) {
         @SuppressWarnings("unchecked")
         List<Element> local = e.getChildren();
         for (int k = 0; k < local.size(); k++) {
             Element el = local.get(k);
             if (el.getName().equals("enumChoice")) {
-                retval.add(el);
+                Attribute valAttr = el.getAttribute("value");
+                if (valAttr == null) {
+                    var.addItem(LocaleSelector.getAttribute(el, "choice"));
+                } else {
+                    var.addItem(LocaleSelector.getAttribute(el, "choice"), 
+                                Integer.parseInt(valAttr.getValue()));
+                }
             } else if (el.getName().equals("enumChoiceGroup")) {   
-                List<Element> inner = findENumValChildren(el);
-                for (int i = 0; i < inner.size(); i++)
-                    retval.add(inner.get(i));
+                var.startGroup(LocaleSelector.getAttribute(el, "name"));                
+                handleENumValChildren(el, var);
+                var.endGroup();
             }
 
         }        
-        return retval;
     }
 
     protected VariableValue processHexVal(Element child, String name, String comment, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String CV, String mask, String item) throws NumberFormatException {
