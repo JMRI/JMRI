@@ -30,20 +30,20 @@ import org.xml.sax.InputSource;
  */
 public class JmriLocalEntityResolver implements EntityResolver {
     public InputSource resolveEntity (String publicId, String systemId) {
-        log.debug("-- got entity request {}", systemId);
+        log.trace("-- got entity request {}", systemId);
         
         // find local file first
         try {
             URI uri = new URI(systemId);
             InputStream stream;
-            log.debug("systemId: {}", systemId);
+            log.trace("systemId: {}", systemId);
             String scheme = uri.getScheme();
             String source = uri.getSchemeSpecificPart();
             String path = uri.getPath();
 
-            log.debug("scheme: {}", scheme);
-            log.debug("source: {}", source);
-            log.debug("path: {}", path);
+            log.trace("scheme: {}", scheme);
+            log.trace("source: {}", source);
+            log.trace("path: {}", path);
 
             // figure out which form we have
             if (scheme.equals("http")) {
@@ -52,7 +52,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
                 }
                 // type 3 - find local file if we can
                 String filename = path.substring(1);  // drop leading slash
-                log.debug("http finds filename: {}", filename);
+                log.trace("http finds filename: {}", filename);
                 stream = FileUtil.findInputStream(filename);
                 if (stream != null) {
                     return new InputSource(stream);
@@ -64,7 +64,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
             } else if (path != null && path.startsWith("../DTD")) {
                 // type 1
                 String filename = "xml"+File.separator+"DTD"+File.separator+path;
-                log.debug("starts with ../DTD finds filename: {}", filename);
+                log.trace("starts with ../DTD finds filename: {}", filename);
                 stream = FileUtil.findInputStream(filename);
                 if (stream != null) {
                     return new InputSource(stream);
@@ -75,7 +75,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
             } else if (path != null && path.indexOf("/")==-1) {  // path doesn't contain "/", so is just name
                 // type 2
                 String filename = "xml"+File.separator+"DTD"+File.separator+path;
-                log.debug("doesn't contain / finds filename: {}", filename);
+                log.trace("doesn't contain / finds filename: {}", filename);
                 stream = FileUtil.findInputStream(filename);
                 if (stream != null) {
                     return new InputSource(stream);
@@ -86,13 +86,11 @@ public class JmriLocalEntityResolver implements EntityResolver {
             } else if (scheme.equals("file")) {
                 if (path != null ) {
                     // still looking for a local file, this must be absolute or full relative path
-                    log.debug("scheme file finds path: {}", path);
+                    log.trace("scheme file finds path: {}", path);
                     // now we see if we've got a valid path
                     stream = FileUtil.findInputStream(path);
                     if (stream != null) {
-                        if (log.isDebugEnabled()) {
-                            log.debug("file exists, used");
-                        }
+                        log.trace("file exists, used");
                         return new InputSource(stream);
                     } else { // file not exist
                         // now do special case for Windows, which might use "/" or "\"
@@ -111,27 +109,23 @@ public class JmriLocalEntityResolver implements EntityResolver {
                             } else if (backIndex > 0 && forIndex >= backIndex) {
                                 realSeparator = "/";
                             }
-                            log.debug(" forIndex {} backIndex {}", forIndex, backIndex);
+                            log.trace(" forIndex {} backIndex {}", forIndex, backIndex);
                         }
-                        log.debug("File.separator {} realSeparator {}", File.separator, realSeparator);
+                        log.trace("File.separator {} realSeparator {}", File.separator, realSeparator);
                         // end special case
                         if (path.lastIndexOf(realSeparator + "DTD" + realSeparator) >= 0) {
-                            if (log.isDebugEnabled()) {
-                                log.debug("file not exist, DTD in name, insert xml directory");
-                            }
+                            log.trace("file not exist, DTD in name, insert xml directory");
                             String modifiedPath = realSeparator + "xml"
                                     + path.substring(path.lastIndexOf(realSeparator + "DTD" + realSeparator), path.length());
                             path = modifiedPath;
                         } else {
-                            if (log.isDebugEnabled()) {
-                                log.debug("file not exist, no DTD, insert xml/DTD directory");
-                            }
+                            log.trace("file not exist, no DTD, insert xml/DTD directory");
                             String modifiedPath = realSeparator + "xml" + realSeparator + "DTD"
                                     + path.substring(path.lastIndexOf(realSeparator), path.length());
                             path = modifiedPath;
                         }
                         stream = FileUtil.findInputStream(path);
-                        log.debug("attempting : {}", path);
+                        log.trace("attempting : {}", path);
                         if (stream != null) {
                             return new InputSource(stream);
                         } else {
@@ -140,9 +134,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
                         }
                     }
                 } else {
-                    if (log.isDebugEnabled()) {
-                        log.debug("schema file with null path");
-                    }
+                    log.trace("schema file with null path");
                     try {
                         return new InputSource(new FileReader(new File(source)));
                     } catch (FileNotFoundException e2) {

@@ -245,40 +245,40 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
 		Dimension dim = getMaximumSize();
 		int width = this.getPreferredSize().width;
 		int height = this.getPreferredSize().height;
-		log.debug("reSizeToFitOnScreen of \"{}\" starts with maximum size ", getTitle(), dim);
-		log.debug("reSizeToFitOnScreen starts with preferred height {} width {}", height, width);
-		log.debug("reSizeToFitOnScreen starts with location {},{}", getX(), getY());
+		log.trace("reSizeToFitOnScreen of \"{}\" starts with maximum size ", getTitle(), dim);
+		log.trace("reSizeToFitOnScreen starts with preferred height {} width {}", height, width);
+		log.trace("reSizeToFitOnScreen starts with location {},{}", getX(), getY());
 
 		if ((width + this.getX()) >= dim.getWidth()) {
 			// not fit in width, try to move position left
 			int offsetX = (width + this.getX()) - (int) dim.getWidth(); // pixels too large
-			log.debug("reSizeToFitScreen moves \"{}\" left {} pixels", getTitle(), offsetX);
+			log.trace("reSizeToFitScreen moves \"{}\" left {} pixels", getTitle(), offsetX);
 			int positionX = this.getX() - offsetX;
 			if (positionX < 0) {
-				log.debug("reSizeToFitScreen sets \"{}\" X to zero", getTitle());
+				log.trace("reSizeToFitScreen sets \"{}\" X to zero", getTitle());
 				positionX = 0;
 			}
 			this.setLocation(positionX, this.getY());
 			// try again to see if it doesn't fit
 			if ((width + this.getX()) >= dim.getWidth()) {
 				width = width - (int) ((width + this.getX()) - dim.getWidth());
-				log.debug("reSizeToFitScreen sets \"{}\" width to {}", getTitle(), width);
+				log.trace("reSizeToFitScreen sets \"{}\" width to {}", getTitle(), width);
 			}
 		}
 		if ((height + this.getY()) >= dim.getHeight()) {
 			// not fit in height, try to move position up
 			int offsetY = (height + this.getY()) - (int) dim.getHeight(); // pixels too large
-			log.debug("reSizeToFitScreen moves \"{}\" up {} pixels", getTitle(), offsetY);
+			log.trace("reSizeToFitScreen moves \"{}\" up {} pixels", getTitle(), offsetY);
 			int positionY = this.getY() - offsetY;
 			if (positionY < 0) {
-				log.debug("reSizeToFitScreen sets \"{}\" Y to zero", getTitle());
+				log.trace("reSizeToFitScreen sets \"{}\" Y to zero", getTitle());
 				positionY = 0;
 			}
 			this.setLocation(this.getX(), positionY);
 			// try again to see if it doesn't fit
 			if ((height + this.getY()) >= dim.getHeight()) {
 				height = height - (int) ((height + this.getY()) - dim.getHeight());
-				log.debug("reSizeToFitScreen sets \"{}\" height to {}", getTitle(), height);
+				log.trace("reSizeToFitScreen sets \"{}\" height to {}", getTitle(), height);
 			}
 		}
 		this.setSize(width, height);

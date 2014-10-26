@@ -355,7 +355,7 @@ public class DecoderIndexFile extends XmlFile {
         if (familyList != null) {
 
             List<Element> l = familyList.getChildren("family");
-            if (log.isDebugEnabled()) log.debug("readFamilySection sees "+l.size()+" children");
+            log.trace("readFamilySection sees {} children", l.size());
             for (int i=0; i<l.size(); i++) {
                 // handle each entry
                 Element el = l.get(i);
