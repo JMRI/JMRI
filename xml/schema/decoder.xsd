@@ -838,6 +838,8 @@
     <xs:annotation><xs:documentation>
     Allows grouping of enumChoice elements within an enumVal element.
     This can be used for e.g. defining individual XML documents to be included.
+    The optional name element(s), if and only if present, is used in a tree display to
+    indicate the presence of intermediate tree nodes.
     </xs:documentation></xs:annotation>
       <xs:sequence minOccurs="1" maxOccurs="1">
         <xs:element ref="docbook:copyright" minOccurs="0" maxOccurs="1" />
