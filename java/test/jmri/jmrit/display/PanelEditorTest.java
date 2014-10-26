@@ -1,8 +1,11 @@
 package jmri.jmrit.display;
 
 import java.io.File;
-
-import junit.framework.*;
+import jmri.ConfigureManager;
+import jmri.InstanceManager;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * PanelEditorTest.java
@@ -16,32 +19,29 @@ public class PanelEditorTest extends TestCase {
     TurnoutIcon to = null;
 
 	public void testShow() throws Exception {
-	    jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager(){
-	    };
+            jmri.util.JUnitUtil.initConfigureManager();
 	    
 	    // load and display
-	    File f = new File("java"+File.separator+"test"+File.separator+"jmri"+File.separator+"jmrit"+File.separator+"display"+File.separator+"PanelEditorTest1.xml");
-        cm.load(f);
+	    File f = new File("java/test/jmri/jmrit/display/verify/PanelEditorTest1.xml");
+            InstanceManager.getDefault(ConfigureManager.class).load(f);
         
 	}
 
 	public void testShow2() throws Exception {
-	    jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager(){
-	    };
+            jmri.util.JUnitUtil.initConfigureManager();
 	    
 	    // load and display
-	    File f = new File("java/test/jmri/jmrit/display/configurexml/OneOfEach.xml");
-        cm.load(f);
+	    File f = new File("java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml");
+            InstanceManager.getDefault(ConfigureManager.class).load(f);
         
 	}
 
 	public void testShow3() throws Exception {
-	    jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager(){
-	    };
+            jmri.util.JUnitUtil.initConfigureManager();
 	    
 	    // load and display
-	    File f = new File("java/test/jmri/jmrit/display/configurexml/OneOfEach.3.3.3.xml");
-        cm.load(f);
+	    File f = new File("java/test/jmri/jmrit/display/configurexml/load/OneOfEach.3.3.3.xml");
+            InstanceManager.getDefault(ConfigureManager.class).load(f);
         
 	}
 
