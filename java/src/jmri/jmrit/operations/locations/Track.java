@@ -1300,7 +1300,8 @@ public class Track {
 			// Note that a lot of the code checks for track length being an issue, therefore it has to be the last
 			// check.
 			// Is rolling stock too long for this track?
-			if (getLength() < length)
+			if ((getLength() < length && getPool() == null)
+					|| (getPool() != null && getPool().getTotalLengthTracks() < length))
 				return CAPACITY + " " + getLength() + " " + Setup.getLengthUnit().toLowerCase();// NOI18N
 			log.debug("Rolling stock ({}) not accepted at location ({}, {}) no room!", rs.toString(), getLocation()
 					.getName(), getName()); // NOI18N

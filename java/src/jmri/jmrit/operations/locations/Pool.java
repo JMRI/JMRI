@@ -42,6 +42,11 @@ public class Pool extends Bean {
 		firePropertyChange("Name", old, name);
 	}
 
+	/**
+	 * The number of tracks in this pool.
+	 * 
+	 * @return the number of tracks in this pool.
+	 */
 	public int getSize() {
 		return _tracks.size();
 	}
@@ -73,8 +78,7 @@ public class Pool extends Bean {
 			int oldSize = _tracks.size();
 			_tracks.add(track);
 
-			firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, Integer.valueOf(oldSize),
-					Integer.valueOf(_tracks.size()));
+			firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, Integer.valueOf(oldSize), Integer.valueOf(_tracks.size()));
 		}
 	}
 
@@ -90,14 +94,21 @@ public class Pool extends Bean {
 			int oldSize = _tracks.size();
 			_tracks.remove(track);
 
-			firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, Integer.valueOf(oldSize),
-					Integer.valueOf(_tracks.size()));
+			firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, Integer.valueOf(oldSize), Integer.valueOf(_tracks.size()));
 		}
 	}
 
 	public List<Track> getTracks() {
 		// Return a copy to protect the internal list
 		return new ArrayList<Track>(_tracks);
+	}
+
+	public int getTotalLengthTracks() {
+		int total = 0;
+		for (Track track : getTracks()) {
+			total += track.getLength();
+		}
+		return total;
 	}
 
 	/**

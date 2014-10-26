@@ -45,6 +45,10 @@ public class TrackEditCommentsFrame extends OperationsFrame {
 	}
 
 	private void initComponents(Track track) {
+		if (track == null) {
+			log.debug("Track is null can't edit track comments");
+			return;
+		}
 		_track = track;
 		// the following code sets the frame's initial state
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));

@@ -26,7 +26,7 @@ public class PoolTrackAction extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		if (_ptf != null)
 			_ptf.dispose();
-		_ptf = new PoolTrackFrame(_tef);
+		_ptf = new PoolTrackFrame(_tef._track);
 		_ptf.initComponents();
 	}
 }

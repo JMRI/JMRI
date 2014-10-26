@@ -147,22 +147,22 @@ public class PoolTrackGuiTest extends jmri.util.SwingTestCase {
 		f.dispose();
 	}
 
-	public void testOpenWithNullTrack() throws Exception {
-		// See what happens when a null track is passed in.
-		try {
-			PoolTrackFrame f = new PoolTrackFrame((Track) null);
-			Assert.fail("NullPointerException not thrown");
-
-			f.initComponents();
-			f.setVisible(true);
-
-			// close windows
-			f.dispose();
-		} catch (NullPointerException e) {
-			// Here we don't do anything, as this was expected.
-		}
-
-	}
+//	public void testOpenWithNullTrack() throws Exception {
+//		// See what happens when a null track is passed in.
+//		try {
+//			PoolTrackFrame f = new PoolTrackFrame((Track) null);
+//			Assert.fail("NullPointerException not thrown");
+//
+//			f.initComponents();
+//			f.setVisible(true);
+//
+//			// close windows
+//			f.dispose();
+//		} catch (NullPointerException e) {
+//			// Here we don't do anything, as this was expected.
+//		}
+//
+//	}
 
 	public void testAddNewPoolName() throws Exception {
 		// Enter a new Pool name and click Add, check that the Pool list count
