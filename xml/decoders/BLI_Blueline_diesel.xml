@@ -60,232 +60,289 @@
       <variable item="Consist Address Active For F1" CV="21" mask="XXXXXXXV" default="0" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F1</label>
+        <label xml:lang="it">Indirizzo Consist attivo con F1</label>
       </variable>
       <variable item="Consist Address Active For F2" CV="21" mask="XXXXXXVX" default="0" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F2</label>
+        <label xml:lang="it">Indirizzo Consist attivo con F2</label>
       </variable>
       <variable item="Consist Address Active For F3" CV="21" mask="XXXXXVXX" default="0" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F3</label>
+        <label xml:lang="it">Indirizzo Consist attivo con F3</label>
       </variable>
       <variable item="Consist Address Active For F4" CV="21" mask="XXXXVXXX" default="0" minFn="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F4</label>
+        <label xml:lang="it">Indirizzo Consist attivo con F4</label>
       </variable>
       <variable item="Consist Address Active For F5" CV="21" mask="XXXVXXXX" default="0" minFn="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F5</label>
+        <label xml:lang="it">Indirizzo Consist attivo con F5</label>
       </variable>
       <variable item="Consist Address Active For F6" CV="21" mask="XXVXXXXX" default="0" minFn="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F6</label>
+        <label xml:lang="it">Indirizzo Consist attivo con F6</label>
       </variable>
       <variable item="Consist Address Active For F7" CV="21" mask="XVXXXXXX" default="0" minFn="7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F7</label>
+        <label xml:lang="it">Indirizzo Consist attivo con F7</label>
       </variable>
       <variable item="Consist Address Active For F8" CV="21" mask="VXXXXXXX" default="0" minFn="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F8</label>
+        <label xml:lang="it">Indirizzo Consist attivo con F8</label>
       </variable>
       <variable CV="22" mask="XXXXXXXV" default="0" item="Consist Address Active For FL in Reverse">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F0</label>
+        <label xml:lang="it">Indirizzo Consist attivo con F0</label>
       </variable>
       <variable item="Consist Address Active For F9" CV="22" mask="XXXXXVXX" default="0" minFn="9">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F9</label>
+        <label xml:lang="it">Indirizzo Consist attivo con F9</label>
       </variable>
       <variable item="Consist Address Active For F10" CV="22" mask="XXXXVXXX" default="0" minFn="10">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F10</label>
+        <label xml:lang="it">Indirizzo Consist attivo con F10</label>
       </variable>
       <variable item="Consist Address Active For F11" CV="22" mask="XXXVXXXX" default="0" minFn="11">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F11</label>
+        <label xml:lang="it">Indirizzo Consist attivo con F11</label>
       </variable>
       <variable item="Consist Address Active For F12" CV="22" mask="XXVXXXXX" default="0" minFn="12">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F12</label>
+        <label xml:lang="it">Indirizzo Consist attivo con F12</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
       <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output 1</label>
+        <label xml:lang="it">Luci (avanti) controlla uscita 1</label>
       </variable>
       <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output 2</label>
+        <label xml:lang="it">Luci (avanti) controlla uscita 2</label>
       </variable>
       <variable item="FL(f) controls output Horn1" CV="33" mask="XXXXXVXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output Horn1</label>
+        <label xml:lang="it">Luci (avanti) controlla uscita Tromba-1</label>
       </variable>
       <variable item="FL(f) controls output Horn2" CV="33" mask="XXXXVXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output Horn2</label>
+        <label xml:lang="it">Luci (avanti) controlla uscita Tromba-2</label>
       </variable>
       <variable item="FL(f) controls output Bell" CV="33" mask="XXXVXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output Bell</label>
+        <label xml:lang="it">Luci (avanti) controlla uscita Campana</label>
       </variable>
       <variable item="FL(f) controls output Coupler" CV="33" mask="XXVXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output Coupler</label>
+        <label xml:lang="it">Luci (avanti) controlla uscita Gancio</label>
       </variable>
       <variable item="FL(f) controls output Blower/Comp" CV="33" mask="XVXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output Blower/Comp</label>
+        <label xml:lang="it">Luci (avanti) controlla uscita Turbina/Compressore</label>
       </variable>
       <variable item="FL(f) controls output Rev Up" CV="33" mask="VXXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output Rev Up</label>
+        <label xml:lang="it">Luci (avanti) controlla uscita Rev Up</label>
       </variable>
       <variable item="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output 1</label>
+        <label xml:lang="it">Luci (retro) controlla uscita 1</label>
       </variable>
       <variable item="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output 2</label>
+        <label xml:lang="it">Luci (retro) controlla uscita 2</label>
       </variable>
       <variable item="FL(r) controls output Horn1" CV="34" mask="XXXXXVXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output Horn1</label>
+        <label xml:lang="it">Luci (retro) controlla uscita Tromba-1</label>
       </variable>
       <variable item="FL(r) controls output Horn2" CV="34" mask="XXXXVXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output Horn2</label>
+        <label xml:lang="it">Luci (retro) controlla uscita Tromba-2</label>
       </variable>
       <variable item="FL(r) controls output Bell" CV="34" mask="XXXVXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output Bell</label>
+        <label xml:lang="it">Luci (retro) controlla uscita Campana</label>
       </variable>
       <variable item="FL(r) controls output Coupler" CV="34" mask="XXVXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output Coupler</label>
+        <label xml:lang="it">Luci (retro) controlla uscita Gancio</label>
       </variable>
       <variable item="FL(r) controls output Blower/Comp" CV="34" mask="XVXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output Blower/Comp</label>
+        <label xml:lang="it">Luci (retro) controlla uscita Turbina/Compressore</label>
       </variable>
       <variable item="FL(r) controls output Rev Up" CV="34" mask="VXXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output Rev Up</label>
+        <label xml:lang="it">Luci (avanti) controlla uscita Rev Up</label>
       </variable>
       <variable item="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output 1</label>
+        <label xml:lang="it">F1 controlla uscita 1</label>
       </variable>
       <variable item="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output 2</label>
+        <label xml:lang="it">F1 controlla uscita 2</label>
       </variable>
       <variable item="F1 controls output Horn1" CV="35" mask="XXXXXVXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output Horn1</label>
+        <label xml:lang="it">F1 controlla uscita Tromba-1</label>
       </variable>
       <variable item="F1 controls output Horn2" CV="35" mask="XXXXVXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output Horn2</label>
+        <label xml:lang="it">F1 controlla uscita Tromba-2</label>
       </variable>
       <variable item="F1 controls output Bell" CV="35" mask="XXXVXXXX" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output Bell</label>
+        <label xml:lang="it">F1 controlla uscita Campana</label>
       </variable>
       <variable item="F1 controls output Coupler" CV="35" mask="XXVXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output Coupler</label>
+        <label xml:lang="it">F1 controlla uscita Gancio</label>
       </variable>
       <variable item="F1 controls output Blower/Comp" CV="35" mask="XVXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output Blower/Comp</label>
+        <label xml:lang="it">F1 controlla uscita Turbina/Compressore</label>
       </variable>
       <variable item="F1 controls output Rev Up" CV="35" mask="VXXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output Rev Up</label>
+        <label xml:lang="it">F1 controlla uscita Rev Up</label>
       </variable>
       <variable item="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output 1</label>
+        <label xml:lang="it">F2 controlla uscita 1</label>
       </variable>
       <variable item="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output 2</label>
+        <label xml:lang="it">F2 controlla uscita 2</label>
       </variable>
       <variable item="F2 controls output Horn1" CV="36" mask="XXXXXVXX" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output Horn1</label>
+        <label xml:lang="it">F2 controlla uscita Tromba-1</label>
       </variable>
       <variable item="F2 controls output Horn2" CV="36" mask="XXXXVXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output Horn2</label>
+        <label xml:lang="it">F2 controlla uscita Tromba-2</label>
       </variable>
       <variable item="F2 controls output Bell" CV="36" mask="XXXVXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output Bell</label>
+        <label xml:lang="it">F2 controlla uscita Campana</label>
       </variable>
       <variable item="F2 controls output Coupler" CV="36" mask="XXVXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output Coupler</label>
+        <label xml:lang="it">F2 controlla uscita Gancio</label>
       </variable>
       <variable item="F2 controls output Blower/Comp" CV="36" mask="XVXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output Blower/Comp</label>
+        <label xml:lang="it">F2 controlla uscita Turbina/Compressore</label>
       </variable>
       <variable item="F2 controls output Rev Up" CV="36" mask="VXXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output Rev Up</label>
+        <label xml:lang="it">F2 controlla uscita Rev Up</label>
       </variable>
       <variable item="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output 1</label>
+        <label xml:lang="it">F3 controlla uscita 1</label>
       </variable>
       <variable item="F3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output 2</label>
+        <label xml:lang="it">F3 controlla uscita 2</label>
       </variable>
       <variable item="F3 controls output Horn1" CV="37" mask="XXXXXVXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output Horn1</label>
+        <label xml:lang="it">F3 controlla uscita Tromba-1</label>
       </variable>
       <variable item="F3 controls output Horn2" CV="37" mask="XXXXVXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output Horn2</label>
+        <label xml:lang="it">F3 controlla uscita Tromba-2</label>
       </variable>
       <variable item="F3 controls output Bell" CV="37" mask="XXXVXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output Bell</label>
+        <label xml:lang="it">F3 controlla uscita Campana</label>
       </variable>
       <variable item="F3 controls output Coupler" CV="37" mask="XXVXXXXX" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output Coupler</label>
+        <label xml:lang="it">F3 controlla uscita Gancio</label>
       </variable>
       <variable item="F3 controls output Blower/Comp" CV="37" mask="XVXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output Blower/Comp</label>
+        <label xml:lang="it">F3 controlla uscita Turbina/Compressore</label>
       </variable>
       <variable item="F3 controls output Rev Up" CV="37" mask="VXXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output Rev Up</label>
+        <label xml:lang="it">F3 controlla uscita Rev Up</label>
       </variable>
       <variable item="F4 controls output Horn2" CV="38" mask="XXXXXXXV" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Horn2</label>
+        <label xml:lang="it">F4 controlla uscita Tromba-2</label>
       </variable>
       <variable item="F4 controls output Bell" CV="38" mask="XXXXXXVX" minOut="2" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Bell</label>
+        <label xml:lang="it">F4 controlla uscita Campana</label>
       </variable>
       <variable item="F4 controls output Coupler" CV="38" mask="XXXXXVXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Coupler</label>
+        <label xml:lang="it">F4 controlla uscita Gancio</label>
       </variable>
       <variable item="F4 controls output Blower/Comp" CV="38" mask="XXXXVXXX" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Blower/Comp</label>
+        <label xml:lang="it">F4 controlla uscita Turbina/Compressore</label>
       </variable>
       <variable item="F4 controls output Rev Up" CV="38" mask="XXXVXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -294,46 +351,57 @@
       <variable item="F4 controls output Rev Down" CV="38" mask="XXVXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Rev Down</label>
+        <label xml:lang="it">F4 controlla uscita Rev Up</label>
       </variable>
       <variable item="F4 controls output 3" CV="38" mask="XVXXXXXX" minOut="3" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output 3</label>
+        <label xml:lang="it">F4 controlla uscita 3</label>
       </variable>
       <variable item="F4 controls output Volume" CV="38" mask="VXXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Volume</label>
+        <label xml:lang="it">F4 controlla uscita Volume</label>
       </variable>
       <variable item="F5 controls output Horn2" CV="39" mask="XXXXXXXV" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output Horn2</label>
+        <label xml:lang="it">F5 controlla uscita Tromba-2</label>
       </variable>
       <variable item="F5 controls output Bell" CV="39" mask="XXXXXXVX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output Bell</label>
+        <label xml:lang="it">F5 controlla uscita Campana</label>
       </variable>
       <variable item="F5 controls output Coupler" CV="39" mask="XXXXXVXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output Coupler</label>
+        <label xml:lang="it">F5 controlla uscita Gancio</label>
       </variable>
       <variable item="F5 controls output Blower/Comp" CV="39" mask="XXXXVXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output Blower/Comp</label>
+        <label xml:lang="it">F5 controlla uscita Turbina/Compressore</label>
       </variable>
       <variable item="F5 controls output Rev Up" CV="39" mask="XXXVXXXX" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output Rev Up</label>
+        <label xml:lang="it">F5 controlla uscita Rev Up</label>
       </variable>
       <variable item="F5 controls output Rev Down" CV="39" mask="XXVXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output Rev Down</label>
+        <label xml:lang="it">F5 controlla uscita Rev Down</label>
       </variable>
       <variable item="F5 controls output 3" CV="39" mask="XVXXXXXX" minOut="3" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output 3</label>
+        <label xml:lang="it">F5 controlla uscita 3</label>
       </variable>
       <variable item="F5 controls output Volume" CV="39" mask="VXXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output Volume</label>
+        <label xml:lang="it">F4 controlla uscita Volume</label>
       </variable>
       <variable item="F6 controls output Horn2" CV="40" mask="XXXXXXXV" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
