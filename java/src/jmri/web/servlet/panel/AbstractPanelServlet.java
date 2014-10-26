@@ -86,7 +86,7 @@ abstract class AbstractPanelServlet extends HttpServlet {
                 } else {
                     response.setStatus(HttpServletResponse.SC_OK);
                     response.setContentLength(panel.length());
-                    response.getWriter().print(panel);
+                    response.getOutputStream().print(panel);
                 }
             }
         }
