@@ -110,8 +110,6 @@ public class CatalogPane extends JPanel {
                 }
                 String name = buf.toString();
                 log.debug("attempt to load resource from "+name);
-                // return new NamedIcon(ClassLoader.getSystemResource(name), "resource:"+name);
-                //return new NamedIcon(name, "resource:"+name);
                 return NamedIcon.getIconByName(name);
             } else if (((DefaultMutableTreeNode)path.getPathComponent(1)).getUserObject().equals("files")) {
                 // process a file
