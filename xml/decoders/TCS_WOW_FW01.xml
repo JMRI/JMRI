@@ -56,7 +56,7 @@
       
       <!-- this is a dummy for testing very large enum variables  -->
       <!-- should show a choice, then a group of two, then a group of 3 -->
-      <variable item="Sound Option 22" CV="400" mask="VVVVVVVVVVVVVVVV">
+      <variable CV="400" mask="VVVVVVVVVVVVVVVV">
         <enumVal>
           <enumChoice>
             <choice>Choice 1</choice>
@@ -72,7 +72,7 @@
           </enumChoiceGroup>
           <enumChoiceGroup>
             <name>Group B</name>
-            <name xml:lang="it">Group B</name>
+            <name xml:lang="it">Groupo B</name>
             <enumChoice>
               <choice>Choice 4</choice>
             </enumChoice>
@@ -83,8 +83,11 @@
               <choice>Choice 6</choice>
             </enumChoice>
           </enumChoiceGroup>
+          <enumChoice>
+            <choice>Choice 7</choice>
+          </enumChoice>
         </enumVal>
-        <label>Sound Option 22 for CV400</label>
+        <label>Test Tree Enum</label>
       </variable>
       
       
@@ -2279,6 +2282,18 @@
       <ifactReset label="Sound type volumes" CVname="204.5" CV="204" PI="5" default="8" item="CV204.5"/>
     </resets>
   </decoder>
+  
+  <!-- test of tree display. ComboBox form is present to check coupling. -->
+  <pane>
+    <name>Tree</name>
+    <column>
+      <row>
+        <display item="Test Tree Enum"/>
+        <display item="Test Tree Enum" format="tree"/>
+      </row>
+    </column>
+  </pane>
+  
   <pane>
     <name>Indexed CVs</name>
     <name xml:lang="it">CV Indicicizzate</name>
