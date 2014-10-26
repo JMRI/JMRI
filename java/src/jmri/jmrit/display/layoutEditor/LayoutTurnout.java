@@ -142,15 +142,15 @@ public class LayoutTurnout
 	public String blockCName = "";  // Xover - name for third block, if there is one
 	public String blockDName = "";  // Xover - name for fourth block, if there is one
     
-	public String signalA1Name = ""; // signal 1 (continuing) (throat for RH, LH, WYE)
-	public String signalA2Name = ""; // signal 2 (diverging) (throat for RH, LH, WYE)
-	public String signalA3Name = ""; // signal 3 (second diverging) (3-way turnouts only)
-	public String signalB1Name = ""; // continuing (RH, LH, WYE) signal 1 (double crossover)
-	public String signalB2Name = ""; // LH_Xover and double crossover only
-	public String signalC1Name = ""; // diverging (RH, LH, WYE) signal 1 (double crossover)
-	public String signalC2Name = ""; // RH_Xover and double crossover only
-	public String signalD1Name = ""; // single or double crossover only
-	public String signalD2Name = ""; // LH_Xover and double crossover only
+	//public String signalA1Name = ""; // signal 1 (continuing) (throat for RH, LH, WYE)
+	//public String signalA2Name = ""; // signal 2 (diverging) (throat for RH, LH, WYE)
+	//public String signalA3Name = ""; // signal 3 (second diverging) (3-way turnouts only)
+	//public String signalB1Name = ""; // continuing (RH, LH, WYE) signal 1 (double crossover)
+	//public String signalB2Name = ""; // LH_Xover and double crossover only
+	//public String signalC1Name = ""; // diverging (RH, LH, WYE) signal 1 (double crossover)
+	//public String signalC2Name = ""; // RH_Xover and double crossover only
+	//public String signalD1Name = ""; // single or double crossover only
+	//public String signalD2Name = ""; // LH_Xover and double crossover only
     protected NamedBeanHandle<SignalHead> signalA1HeadNamed = null; // signal 1 (continuing) (throat for RH, LH, WYE)
     protected NamedBeanHandle<SignalHead> signalA2HeadNamed = null; // signal 2 (diverging) (throat for RH, LH, WYE)
     protected NamedBeanHandle<SignalHead> signalA3HeadNamed = null; // signal 3 (second diverging) (3-way turnouts only)

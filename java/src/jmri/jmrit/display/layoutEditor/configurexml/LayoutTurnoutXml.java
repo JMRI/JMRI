@@ -239,39 +239,39 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
 		}
 		a = element.getAttribute("signala1name");
 		if (a != null) {
-			l.signalA1Name = a.getValue();
+			l.setSignalA1Name(a.getValue());
 		}		
 		a = element.getAttribute("signala2name");
 		if (a != null) {
-			l.signalA2Name = a.getValue();
+			l.setSignalA2Name(a.getValue());
 		}		
 		a = element.getAttribute("signala3name");
 		if (a != null) {
-			l.signalA3Name = a.getValue();
+			l.setSignalA3Name(a.getValue());
 		}		
 		a = element.getAttribute("signalb1name");
 		if (a != null) {
-			l.signalB1Name = a.getValue();
+			l.setSignalB1Name(a.getValue());
 		}		
 		a = element.getAttribute("signalb2name");
 		if (a != null) {
-			l.signalB2Name = a.getValue();
+			l.setSignalB2Name(a.getValue());
 		}		
 		a = element.getAttribute("signalc1name");
 		if (a != null) {
-			l.signalC1Name = a.getValue();
+			l.setSignalC1Name(a.getValue());
 		}		
 		a = element.getAttribute("signalc2name");
 		if (a != null) {
-			l.signalC2Name = a.getValue();
+			l.setSignalC2Name(a.getValue());
 		}		
 		a = element.getAttribute("signald1name");
 		if (a != null) {
-			l.signalD1Name = a.getValue();
+			l.setSignalD1Name(a.getValue());
 		}		
 		a = element.getAttribute("signald2name");
 		if (a != null) {
-			l.signalD2Name = a.getValue();
+			l.setSignalD2Name(a.getValue());
 		}		
 		a = element.getAttribute("linkedturnoutname");
 		if (a != null) {
