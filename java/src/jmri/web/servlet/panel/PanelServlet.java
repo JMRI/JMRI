@@ -61,7 +61,7 @@ public class PanelServlet extends AbstractPanelServlet {
 
             // include contents
             List<Positionable> contents = editor.getContents();
-            log.debug("N elements: {}", contents.size());
+            log.debug("Panel has {} elements", contents.size());
             for (Positionable sub : contents) {
                 if (sub != null) {
                     try {
@@ -83,7 +83,7 @@ public class PanelServlet extends AbstractPanelServlet {
                             panel.addContent(e);
                         }
                     } catch (Exception ex) {
-                        log.error("Error storing panel element: " + ex, ex);
+                        log.error("Error storing panel element: {}", ex.getMessage(), ex);
                     }
                 }
             }
