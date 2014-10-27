@@ -93,6 +93,7 @@ public class LocationsTableFrame extends OperationsFrame {
 		toolMenu.add(new LocationCopyAction());
 		toolMenu.add(new SchedulesTableAction(Bundle.getMessage("Schedules")));
 		toolMenu.add(new ModifyLocationsAction(Bundle.getMessage("TitleModifyLocations")));
+		toolMenu.add(new ModifyLocationsCarLoadsAction());
 		toolMenu.add(new ShowCarsByLocationAction(false, null, null));
 		if (Setup.isVsdPhysicalLocationEnabled())
 			toolMenu.add(new SetPhysicalLocationAction(Bundle.getMessage("MenuSetPhysicalLocation"), null));
