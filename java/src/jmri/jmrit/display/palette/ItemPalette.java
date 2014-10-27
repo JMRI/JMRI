@@ -200,6 +200,8 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
                     icon = ed.loadFailed(iconName, path);
                     if (icon==null) {
                         log.info(iconName+" removed for url= "+path);
+                    } else {                    	
+                        ImageIndexEditor.indexChanged(true);
                     }
                 }
                 if (icon!=null) {
