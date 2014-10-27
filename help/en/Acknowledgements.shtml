@@ -74,6 +74,7 @@
 	<LI>Thomas Beutel, who helped with the early EasyDCC tests
 	<Li>John Bicknell, who worked with Ian Birchenough to update ZTC decoder definitions
 	<Li>Leo Bicknell, who updated the LocoNet monitor
+	<li>Lolke Bijlsma provided a decoder definition for the Shine Plus decoder series from Train-O-Rama.
 	<li>Pierre Billon, who translated decoder files to German and French
 	    and provided decoder definitions for Doehler and Haass.
 	<LI>Ian Birchenough, who contributed (with Phil Grainger) six
