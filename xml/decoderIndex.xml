@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="/xml/XSLT/DecoderID.xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 20141012-0336-jake on Sat Oct 11 20:36:53 PDT 2014 $Id$-->
-  <decoderIndex version="460">
+  <!--Written by JMRI version 20141027-0620-jake on Sun Oct 26 23:20:11 PDT 2014 $Id$-->
+  <decoderIndex version="462">
     <mfgList nmraListDate="2014-09-22" updated="2014-10-11" lastadd="107,124">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -14995,6 +14995,42 @@
       </family>
       <family name="Quad-LN_S" mfg="Tam Valley Depot" type="stationary" comment="The Quad-LN_S is programmed in OPs mode except for the device address." file="TamValleyDepot_QuadLn_S_11.xml">
         <model model="Quad-LN_S_v1" comment="4 Servo Driver with Signaling or 4 additonal Servos" lowVersionID="6" />
+      </family>
+      <family name="Shine Plus" mfg="Tehnologistic (train-O-matic)" file="TrainOMatic_ShinePlus.xml">
+        <model model="Shine Plus Midi Digi" lowVersionID="0" highVersionID="255" numOuts="12" numFns="15">
+          <output name="1" label="Out 1" />
+          <output name="2" label="Out 2" />
+          <output name="3" label="Out 3" />
+          <output name="4" label="Out 4" />
+          <output name="5" label="Out 5" />
+          <output name="6" label="Out 6" />
+          <output name="7" label="Out 7" />
+          <output name="8" label="Out 8" />
+          <output name="9" label="Out 9" />
+          <output name="10" label="Out 10" />
+          <output name="11" label="Out 11" />
+          <output name="12" label="Out 12" />
+          <size length="210" width="11" height="3" units="mm" />
+        </model>
+        <model model="Shine Plus Maxi Digi" lowVersionID="0" highVersionID="255" numOuts="16" numFns="19">
+          <output name="1" label="Out 1" />
+          <output name="2" label="Out 2" />
+          <output name="3" label="Out 3" />
+          <output name="4" label="Out 4" />
+          <output name="5" label="Out 5" />
+          <output name="6" label="Out 6" />
+          <output name="7" label="Out 7" />
+          <output name="8" label="Out 8" />
+          <output name="9" label="Out 9" />
+          <output name="10" label="Out 10" />
+          <output name="11" label="Out 11" />
+          <output name="12" label="Out 12" />
+          <output name="13" label="Out 13" />
+          <output name="14" label="Out 14" />
+          <output name="15" label="Out 15" />
+          <output name="16" label="Out 16" />
+          <size length="275" width="11" height="3" units="mm" />
+        </model>
       </family>
       <family name="Minitrix" mfg="Trix Modelleisenbahn" highVersionID="65" lowVersionID="65" comment="Trix Selectrix &amp; DCC decoder" file="Trix_66838.xml">
         <model model="66838" numOuts="0" numFns="0" lowVersionID="65" />
