@@ -375,8 +375,8 @@ public class DefaultXmlIOServer implements XmlIOServer {
             } else if (type.equals(PANEL_ELEMENT)) {
 
                 // list loaded Panels (ControlPanelEditor, PanelEditor, LayoutEditor)
-                List<Editor> editors = Editor.getEditors(ControlPanelEditor.class);
-                for (Editor frame : editors) {
+                List<ControlPanelEditor> controlPanels = Editor.getEditors(ControlPanelEditor.class);
+                for (Editor frame : controlPanels) {
                     if (frame.getAllowInFrameServlet()) {
                         String title = ((JmriJFrame) frame.getTargetPanel().getTopLevelAncestor()).getTitle();
                         if (!title.equals("") && !disallowedFrames.contains(title)) {
@@ -395,8 +395,8 @@ public class DefaultXmlIOServer implements XmlIOServer {
                         }
                     }
                 }
-                editors = Editor.getEditors(PanelEditor.class);
-                for (Editor frame : editors) {
+                List<PanelEditor> panels = Editor.getEditors(PanelEditor.class);
+                for (Editor frame : panels) {
                     if (frame.getAllowInFrameServlet() && !(LayoutEditor.class.isInstance(frame))) {  //skip LayoutEditor panels, as they will be added next
                         String title = ((JmriJFrame) frame.getTargetPanel().getTopLevelAncestor()).getTitle();
                         if (!title.equals("") && !disallowedFrames.contains(title)) {
@@ -415,8 +415,8 @@ public class DefaultXmlIOServer implements XmlIOServer {
                         }
                     }
                 }
-                editors = Editor.getEditors(LayoutEditor.class);
-                for (Editor frame : editors) {
+                List<LayoutEditor> layouts = Editor.getEditors(LayoutEditor.class);
+                for (Editor frame : layouts) {
                     if (frame.getAllowInFrameServlet()) {
                         String title = ((JmriJFrame) ((Editor) frame).getTargetPanel().getTopLevelAncestor()).getTitle();
                         if (!title.equals("") && !disallowedFrames.contains(title)) {

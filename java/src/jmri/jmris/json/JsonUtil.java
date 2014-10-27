@@ -591,8 +591,8 @@ public class JsonUtil {
         List<String> disallowedFrames = WebServerManager.getWebServerPreferences().getDisallowedFrames();
         ArrayNode root = mapper.createArrayNode();
         // list loaded Panels (ControlPanelEditor, PanelEditor, LayoutEditor)
-        List<Editor> editors = Editor.getEditors(ControlPanelEditor.class);
-        for (Editor editor : editors) {
+        List<ControlPanelEditor> controlPanels = Editor.getEditors(ControlPanelEditor.class);
+        for (Editor editor : controlPanels) {
             if (editor.getAllowInFrameServlet()) {
                 String title = ((JmriJFrame) editor.getTargetPanel().getTopLevelAncestor()).getTitle();
                 if (!title.equals("") && !disallowedFrames.contains(title)) {
@@ -607,8 +607,8 @@ public class JsonUtil {
                 }
             }
         }
-        editors = Editor.getEditors(PanelEditor.class);
-        for (Editor editor : editors) {
+        List<PanelEditor> panels = Editor.getEditors(PanelEditor.class);
+        for (Editor editor : panels) {
             if (editor.getAllowInFrameServlet() && !(LayoutEditor.class.isInstance(editor))) {  //skip LayoutEditor panels, as they will be added next
                 String title = ((JmriJFrame) editor.getTargetPanel().getTopLevelAncestor()).getTitle();
                 if (!title.equals("") && !disallowedFrames.contains(title)) {
@@ -623,8 +623,8 @@ public class JsonUtil {
                 }
             }
         }
-        editors = Editor.getEditors(LayoutEditor.class);
-        for (Editor editor : editors) {
+        List<LayoutEditor> layouts = Editor.getEditors(LayoutEditor.class);
+        for (Editor editor : layouts) {
             if (editor.getAllowInFrameServlet()) {
                 String title = ((JmriJFrame) editor.getTargetPanel().getTopLevelAncestor()).getTitle();
                 if (!title.equals("") && !disallowedFrames.contains(title)) {

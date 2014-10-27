@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -848,7 +849,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         return _showTooltip;
     }
 
-    /**
+    /*
      * Control whether target panel items will show their coordinates in their
      * popup memu.
      *
@@ -3226,7 +3227,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      *
      * @return a List of Editors
      */
-    public static List<Editor> getEditors() {
+    synchronized public static List<Editor> getEditors() {
         return new ArrayList<Editor>(editors);
     }
 
@@ -3237,20 +3238,15 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * The returned list is a copy made at the time of the call, so it can be
      * manipulated as needed by the caller.
      *
-     * If subClass is null, returns a list of all Editors.
-     *
+     * @param <T> the Class the list should be limited to.
      * @param type the Class the list should be limited to.
      * @return a List of Editors.
      */
-    // this probably should use and return a generic type
-    public static List<Editor> getEditors(Class<?> type) {
-        if (type == null) {
-            return Editor.getEditors();
-        }
-        List<Editor> result = new ArrayList<Editor>();
+    synchronized public static <T extends Editor> List<T> getEditors(@NonNull Class<T> type) {
+        List<T> result = new ArrayList<T>();
         for (Editor e : Editor.getEditors()) {
             if (type.isInstance(e)) {
-                result.add(e);
+                result.add((T) e);
             }
         }
         return result;
