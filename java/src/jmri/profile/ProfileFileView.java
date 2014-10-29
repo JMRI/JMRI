@@ -42,7 +42,7 @@ public class ProfileFileView extends FileView {
     @Override
     public Icon getIcon(File f) {
         if (!isTraversable(f)) {
-            return new ImageIcon(FileUtil.getExternalFilename(FileUtil.PROGRAM + "resources/jmri16x16.gif")); // NOI18N
+            return new ImageIcon(FileUtil.findURL("resources/jmri16x16.gif")); // NOI18N
         }
         return null;
     }
