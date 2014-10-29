@@ -457,19 +457,32 @@ public final class FileUtil {
      */
     static public String getPortableFilename(String filename, boolean ignoreUserFilesPath, boolean ignoreProfilePath) {
         // if this already contains prefix, run through conversion to normalize
-        if (filename.startsWith(FILE)
+        if (FileUtil.isPortableFilename(filename)) {
+            return getPortableFilename(getExternalFilename(filename), ignoreUserFilesPath, ignoreProfilePath);
+        } else {
+            // treat as pure filename
+            return getPortableFilename(new File(filename), ignoreUserFilesPath, ignoreProfilePath);
+        }
+    }
+
+    /**
+     * Test if the given filename is a portable filename.
+     *
+     * Note that this method may return a false positive if the filename is a
+     * file: URL.
+     *
+     * @param filename
+     * @return true if filename is portable
+     */
+    static public boolean isPortableFilename(String filename) {
+        return (filename.startsWith(FILE)
                 || filename.startsWith(RESOURCE)
                 || filename.startsWith(PROGRAM)
                 || filename.startsWith(HOME)
                 || filename.startsWith(PREFERENCES)
                 || filename.startsWith(PROFILE)
                 || filename.startsWith(SCRIPTS)
-                || filename.startsWith(SETTINGS)) {
-            return getPortableFilename(getExternalFilename(filename), ignoreUserFilesPath, ignoreProfilePath);
-        } else {
-            // treat as pure filename
-            return getPortableFilename(new File(filename), ignoreUserFilesPath, ignoreProfilePath);
-        }
+                || filename.startsWith(SETTINGS));
     }
 
     /**
@@ -712,6 +725,9 @@ public final class FileUtil {
     static public URL findURL(String path, @NonNull String... searchPaths) {
         if (log.isDebugEnabled()) { // avoid the Arrays.toString call unless debugging
             log.debug("Attempting to find {} in {}", path, Arrays.toString(searchPaths));
+        }
+        if (FileUtil.isPortableFilename(path)) {
+            return FileUtil.findExternalFilename(path);
         }
         URL resource;
         for (String searchPath : searchPaths) {
@@ -1018,5 +1034,6 @@ public final class FileUtil {
     }
 
     /* Private default constructor to ensure it's not documented. */
-    private FileUtil() {}
+    private FileUtil() {
+    }
 }
