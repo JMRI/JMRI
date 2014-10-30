@@ -363,7 +363,7 @@ public class ProfileManager extends Bean {
             profiles.clear();
 
             for (Element e : (List<Element>) doc.getRootElement().getChild(PROFILES).getChildren()) {
-                File pp = FileUtil.getFile(FileUtil.getExternalFilename(e.getAttributeValue(Profile.PATH)));
+                File pp = FileUtil.getFile(e.getAttributeValue(Profile.PATH));
                 try {
                     Profile p = new Profile(pp);
                     this.addProfile(p);
@@ -375,7 +375,7 @@ public class ProfileManager extends Bean {
             }
             searchPaths.clear();
             for (Element e : (List<Element>) doc.getRootElement().getChild(SEARCH_PATHS).getChildren()) {
-                File path = FileUtil.getFile(FileUtil.getExternalFilename(e.getAttributeValue(Profile.PATH)));
+                File path = FileUtil.getFile(e.getAttributeValue(Profile.PATH));
                 if (!searchPaths.contains(path)) {
                     this.addSearchPath(path);
                 }
