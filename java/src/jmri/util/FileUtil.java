@@ -114,7 +114,7 @@ public final class FileUtil {
      */
     static public File getFile(String path) throws FileNotFoundException {
         try {
-            return new File(FileUtil.getAbsoluteFilename(path));
+            return new File(FileUtil.pathFromPortablePath(path));
         } catch (NullPointerException ex) {
             throw new FileNotFoundException("Cannot find file at " + path);
         }
@@ -151,6 +151,99 @@ public final class FileUtil {
             return FileUtil.getURI(path).toURL();
         } catch (MalformedURLException ex) {
             throw new FileNotFoundException("Cannot create URL for file at " + path);
+        }
+    }
+
+    /*
+     * Get the canonical path for a portable path. There are nine cases:
+     * <ul>
+     * <li>Starts with "resource:", treat the rest as a pathname relative to the
+     * program directory (deprecated; see "program:" below)</li>
+     * <li>Starts with "program:", treat the rest as a relative pathname below
+     * the program directory</li>
+     * <li>Starts with "preference:", treat the rest as a relative path below
+     * the user's files directory</li>
+     * <li>Starts with "settings:", treat the rest as a relative path below the
+     * JMRI system preferences directory</li>
+     * <li>Starts with "home:", treat the rest as a relative path below the
+     * user.home directory</li>
+     * <li>Starts with "file:", treat the rest as a relative path below the
+     * resource directory in the preferences directory (deprecated; see
+     * "preference:" above)</li>
+     * <li>Starts with "profile:", treat the rest as a relative path below the
+     * profile directory as specified in the
+     * active{@link jmri.profile.Profile}</li>
+     * <li>Starts with "scripts:", treat the rest as a relative path below the
+     * scripts directory</li>
+     * <li>Otherwise, treat the name as a relative path below the program
+     * directory</li>
+     * </ul>
+     * In any case, absolute pathnames will work.
+     *
+     * @param path The name string, possibly starting with file:, home:,
+     * profile:, program:, preference:, scripts:, settings, or resource:
+     * @return Canonical path to use, or null if one cannot be found.
+     * @since 2.7.2
+     */
+    static private String pathFromPortablePath(@NonNull String path) {
+        if (path.startsWith(PROGRAM)) {
+            if (new File(path.substring(PROGRAM.length())).isAbsolute()) {
+                path = path.substring(PROGRAM.length());
+            } else {
+                path = path.replaceFirst(PROGRAM, Matcher.quoteReplacement(FileUtil.getProgramPath()));
+            }
+        } else if (path.startsWith(PREFERENCES)) {
+            if (new File(path.substring(PREFERENCES.length())).isAbsolute()) {
+                path = path.substring(PREFERENCES.length());
+            } else {
+                path = path.replaceFirst(PREFERENCES, Matcher.quoteReplacement(FileUtil.getUserFilesPath()));
+            }
+        } else if (path.startsWith(PROFILE)) {
+            if (new File(path.substring(PROFILE.length())).isAbsolute()) {
+                path = path.substring(PROFILE.length());
+            } else {
+                path = path.replaceFirst(PROFILE, Matcher.quoteReplacement(FileUtil.getProfilePath()));
+            }
+        } else if (path.startsWith(SCRIPTS)) {
+            if (new File(path.substring(SCRIPTS.length())).isAbsolute()) {
+                path = path.substring(SCRIPTS.length());
+            } else {
+                path = path.replaceFirst(SCRIPTS, Matcher.quoteReplacement(FileUtil.getScriptsPath()));
+            }
+        } else if (path.startsWith(SETTINGS)) {
+            if (new File(path.substring(SETTINGS.length())).isAbsolute()) {
+                path = path.substring(SETTINGS.length());
+            } else {
+                path = path.replaceFirst(SETTINGS, Matcher.quoteReplacement(FileUtil.getPreferencesPath()));
+            }
+        } else if (path.startsWith(HOME)) {
+            if (new File(path.substring(HOME.length())).isAbsolute()) {
+                path = path.substring(HOME.length());
+            } else {
+                path = path.replaceFirst(HOME, Matcher.quoteReplacement(FileUtil.getHomePath()));
+            }
+        } else if (path.startsWith(RESOURCE)) {
+            if (new File(path.substring(RESOURCE.length())).isAbsolute()) {
+                path = path.substring(RESOURCE.length());
+            } else {
+                path = path.replaceFirst(RESOURCE, Matcher.quoteReplacement(FileUtil.getProgramPath()));
+            }
+        } else if (path.startsWith(FILE)) {
+            if (new File(path.substring(FILE.length())).isAbsolute()) {
+                path = path.substring(FILE.length());
+            } else {
+                path = path.replaceFirst(FILE, Matcher.quoteReplacement(FileUtil.getUserFilesPath()));
+            }
+        } else if (!new File(path).isAbsolute()) {
+            return null;
+        }
+        try {
+            // if path cannot be converted into a canonical path, return null
+            log.debug("Using {}", path);
+            return new File(path.replace(SEPARATOR, File.separatorChar)).getCanonicalPath();
+        } catch (IOException ex) {
+            log.warn("Cannot convert {} into a usable filename.", path, ex);
+            return null;
         }
     }
 
@@ -287,65 +380,14 @@ public final class FileUtil {
      * @return An absolute filename
      */
     static public String getAbsoluteFilename(String path) {
-        if (path == null || path.length() == 0) {
-            return null;
-        }
-        if (path.startsWith(PROGRAM)) {
-            if (new File(path.substring(PROGRAM.length())).isAbsolute()) {
-                path = path.substring(PROGRAM.length());
-            } else {
-                path = path.replaceFirst(PROGRAM, Matcher.quoteReplacement(FileUtil.getProgramPath()));
-            }
-        } else if (path.startsWith(PREFERENCES)) {
-            if (new File(path.substring(PREFERENCES.length())).isAbsolute()) {
-                path = path.substring(PREFERENCES.length());
-            } else {
-                path = path.replaceFirst(PREFERENCES, Matcher.quoteReplacement(FileUtil.getUserFilesPath()));
-            }
-        } else if (path.startsWith(PROFILE)) {
-            if (new File(path.substring(PROFILE.length())).isAbsolute()) {
-                path = path.substring(PROFILE.length());
-            } else {
-                path = path.replaceFirst(PROFILE, Matcher.quoteReplacement(FileUtil.getProfilePath()));
-            }
-        } else if (path.startsWith(SCRIPTS)) {
-            if (new File(path.substring(SCRIPTS.length())).isAbsolute()) {
-                path = path.substring(SCRIPTS.length());
-            } else {
-                path = path.replaceFirst(SCRIPTS, Matcher.quoteReplacement(FileUtil.getScriptsPath()));
-            }
-        } else if (path.startsWith(SETTINGS)) {
-            if (new File(path.substring(SETTINGS.length())).isAbsolute()) {
-                path = path.substring(SETTINGS.length());
-            } else {
-                path = path.replaceFirst(SETTINGS, Matcher.quoteReplacement(FileUtil.getPreferencesPath()));
-            }
-        } else if (path.startsWith(HOME)) {
-            if (new File(path.substring(HOME.length())).isAbsolute()) {
-                path = path.substring(HOME.length());
-            } else {
-                path = path.replaceFirst(HOME, Matcher.quoteReplacement(FileUtil.getHomePath()));
-            }
-        } else if (path.startsWith(RESOURCE) || path.startsWith(FILE)) {
-            return getAbsoluteFilename(getPortableFilename(getExternalFilename(path)));
-        } else if (!new File(path).isAbsolute()) {
-            return null;
-        }
-        try {
-            // if path cannot be converted into a canonical path, return null
-            log.debug("Using {}", path);
-            return new File(path.replace(SEPARATOR, File.separatorChar)).getCanonicalPath();
-        } catch (IOException ex) {
-            log.warn("Cannot convert {} into a usable filename.", path, ex);
-            return null;
-        }
+        return FileUtil.pathFromPortablePath(path);
     }
 
     /**
      * Convert a File object's path to our preferred storage form.
      *
-     * This is the inverse of {@link #getExternalFilename(String pName)}.
-     * Deprecated forms are not created.
+     * This is the inverse of {@link #getFile(String pName)}. Deprecated forms
+     * are not created.
      *
      * @param file File at path to be represented
      * @return Filename for storage in a portable manner
@@ -358,10 +400,10 @@ public final class FileUtil {
     /**
      * Convert a File object's path to our preferred storage form.
      *
-     * This is the inverse of {@link #getExternalFilename(String pName)}.
-     * Deprecated forms are not created.
+     * This is the inverse of {@link #getFile(String pName)}. Deprecated forms
+     * are not created.
      *
-     * This form supports a specific use case concerning profiles that are
+     * This method supports a specific use case concerning profiles that are
      * stored within the User files directory, which will cause the
      * {@link jmri.profile.ProfileManager} to write an incorrect path for the
      * current profile. In most cases {@link #getPortableFilename(java.io.File)}
@@ -412,6 +454,7 @@ public final class FileUtil {
         if (filename.startsWith(getProgramPath())) {
             return PROGRAM + filename.substring(getProgramPath().length(), filename.length()).replace(File.separatorChar, SEPARATOR);
         }
+
         // compare full path name to see if same as home directory
         // do this last, in case preferences or program dir are in home directory
         if (filename.startsWith(getHomePath())) {
@@ -456,8 +499,8 @@ public final class FileUtil {
      * @since 3.5.5
      */
     static public String getPortableFilename(String filename, boolean ignoreUserFilesPath, boolean ignoreProfilePath) {
-        // if this already contains prefix, run through conversion to normalize
         if (FileUtil.isPortableFilename(filename)) {
+            // if this already contains prefix, run through conversion to normalize
             return getPortableFilename(getExternalFilename(filename), ignoreUserFilesPath, ignoreProfilePath);
         } else {
             // treat as pure filename
@@ -475,14 +518,14 @@ public final class FileUtil {
      * @return true if filename is portable
      */
     static public boolean isPortableFilename(String filename) {
-        return (filename.startsWith(FILE)
-                || filename.startsWith(RESOURCE)
-                || filename.startsWith(PROGRAM)
+        return (filename.startsWith(PROGRAM)
                 || filename.startsWith(HOME)
                 || filename.startsWith(PREFERENCES)
-                || filename.startsWith(PROFILE)
                 || filename.startsWith(SCRIPTS)
-                || filename.startsWith(SETTINGS));
+                || filename.startsWith(PROFILE)
+                || filename.startsWith(SETTINGS)
+                || filename.startsWith(FILE)
+                || filename.startsWith(RESOURCE));
     }
 
     /**
