@@ -246,21 +246,21 @@ public class RosterServlet extends HttpServlet {
                 // this should be an entirely different format than the table
                 this.doRoster(request, response, this.mapper.createObjectNode().put(ID, id), false);
             } else if (type.equals(JSON.IMAGE)) {
-                this.doImage(request, response, new File(FileUtil.getAbsoluteFilename(re.getImagePath())));
+                this.doImage(request, response, FileUtil.getFile(re.getImagePath()));
             } else if (type.equals(JSON.ICON)) {
                 int function = -1;
                 if (pathInfo.length != (2 + idOffset)) {
                     function = Integer.parseInt(pathInfo[pathInfo.length - 2].substring(1));
                 }
                 if (function == -1) {
-                    this.doImage(request, response, new File(FileUtil.getAbsoluteFilename(re.getIconPath())));
+                    this.doImage(request, response, FileUtil.getFile(re.getIconPath()));
                 } else {
-                    this.doImage(request, response, new File(FileUtil.getAbsoluteFilename(re.getFunctionImage(function))));
+                    this.doImage(request, response, FileUtil.getFile(re.getFunctionImage(function)));
                 }
             } else if (type.equals(JSON.SELECTED_ICON)) {
                 if (pathInfo.length != (2 + idOffset)) {
                     int function = Integer.parseInt(pathInfo[pathInfo.length - 2].substring(1));
-                    this.doImage(request, response, new File(FileUtil.getAbsoluteFilename(re.getFunctionSelectedImage(function))));
+                    this.doImage(request, response, FileUtil.getFile(re.getFunctionSelectedImage(function)));
                 }
             } else if (type.equals("file")) {
                 ServletUtil.getInstance().writeFile(response, new File(Roster.getFileLocation(), "roster" + File.separator + re.getFileName()), ServletUtil.UTF8_APPLICATION_XML); // NOI18N
