@@ -206,7 +206,7 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
 			for (Track track : tracks) {
 				track.addPropertyChangeListener(this);
 				JCheckBox cb = new JCheckBox(track.getName());
-				cb.setName(track.getId());
+				cb.setName(track.getId() + "-" + "r");
 				addCheckBoxAction(cb);
 				trackCheckBoxList.add(cb);
 				cb.setEnabled(track.acceptsTypeName(type));
@@ -217,6 +217,26 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
 				else
 					cb.setToolTipText(MessageFormat.format(Bundle.getMessage("TipTrackNotThisType"),
 							new Object[] { type }));
+			}
+			if (location.getLocationOps() == Location.STAGING) {
+				JLabel ships = new JLabel(location.getName() + " (" + Bundle.getMessage("Ships") + ")");
+				addItemLeft(pLocations, ships, 0, x++);
+				for (Track track : tracks) {
+					JCheckBox cb = new JCheckBox(track.getName());
+					cb.setName(track.getId() + "-" + "s");
+					addCheckBoxAction(cb);
+					trackCheckBoxList.add(cb);
+					cb.setEnabled(track.acceptsTypeName(type));
+					cb.setSelected(track.shipsLoad(load, type));
+					addItemLeft(pLocations, cb, 1, x++);
+					if (cb.isEnabled())
+						cb.setToolTipText(MessageFormat.format(Bundle.getMessage("TipTrackCarShipsLoad"),
+								new Object[] { load }));
+					else
+						cb.setToolTipText(MessageFormat.format(Bundle.getMessage("TipTrackNotThisType"),
+								new Object[] { type }));
+				}
+
 			}
 		}
 		pLocations.revalidate();
@@ -249,7 +269,7 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
 				cb.setSelected(select);
 		}
 	}
-	
+
 	TrackLoadEditFrame tlef; // if there's an issue bring up the load edit window
 
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
@@ -258,10 +278,11 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
 			return;
 		}
 		JCheckBox cb = (JCheckBox) ae.getSource();
-		String[] id = cb.getName().split("s");
+		String[] locId = cb.getName().split("-");
+		String[] id = locId[0].split("s");
 		Location loc = locationManager.getLocationById(id[0]);
 		if (loc != null) {
-			Track track = loc.getTrackById(cb.getName());
+			Track track = loc.getTrackById(locId[0]);
 			// if enabled track services this car type
 			log.debug("CheckBox : {} track: ({}) isEnabled: {} isSelected: {}", cb.getName(), track.getName(), cb
 					.isEnabled(), cb.isSelected());
@@ -273,47 +294,96 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
 				log.debug("Selected load ({})", loadName);
 				if (loadAndTypeCheckBox.isSelected())
 					loadName = type + CarLoad.SPLIT_CHAR + loadName;
-				if (cb.isSelected()) {
-					if (track.getLoadOption().equals(Track.ALL_LOADS))
-						log.debug("All loads selected for track ({})", track.getName());
-					else if (track.getLoadOption().equals(Track.INCLUDE_LOADS))
-						track.addLoadName(loadName);
-					else if (track.getLoadOption().equals(Track.EXCLUDE_LOADS)) {
-						track.deleteLoadName(loadName);
-						// need to check if load configuration is to exclude all car types using this load
-						if (!track.acceptsLoadName(load)) {
-							JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
-									.getMessage("WarningExcludeTrackLoad"), new Object[] { track.getName(), load }),
-									Bundle.getMessage("Error"), JOptionPane.WARNING_MESSAGE);
-							needLoadTrackEditFrame = true;
-						} else if (!track.acceptsLoad(load, type)) {
-							JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
-									.getMessage("WarningExcludeTrackTypeAndLoad"), new Object[] { track.getName(),
-									type, load }), Bundle.getMessage("Error"), JOptionPane.WARNING_MESSAGE);
-							needLoadTrackEditFrame = true;
+				if (locId[1].equals("r")) {
+					if (cb.isSelected()) {
+						if (track.getLoadOption().equals(Track.ALL_LOADS))
+							log.debug("All loads selected for track ({})", track.getName());
+						else if (track.getLoadOption().equals(Track.INCLUDE_LOADS))
+							track.addLoadName(loadName);
+						else if (track.getLoadOption().equals(Track.EXCLUDE_LOADS)) {
+							track.deleteLoadName(loadName);
+							// need to check if load configuration is to exclude all car types using this load
+							if (!track.acceptsLoadName(load)) {
+								JOptionPane.showMessageDialog(this,
+										MessageFormat.format(Bundle.getMessage("WarningExcludeTrackLoad"),
+												new Object[] { track.getName(), load }), Bundle.getMessage("Error"),
+										JOptionPane.WARNING_MESSAGE);
+								needLoadTrackEditFrame = true;
+							} else if (!track.acceptsLoad(load, type)) {
+								JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
+										.getMessage("WarningExcludeTrackTypeAndLoad"), new Object[] { track.getName(),
+										type, load }), Bundle.getMessage("Error"), JOptionPane.WARNING_MESSAGE);
+								needLoadTrackEditFrame = true;
+							}
+						}
+					} else {
+						if (track.getLoadOption().equals(Track.INCLUDE_LOADS)) {
+							track.deleteLoadName(loadName);
+							// need to check if load configuration is to accept all car types using this load
+							if (track.acceptsLoadName(load)) {
+								JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
+										.getMessage("WarningAcceptTrackLoad"), new Object[] { track.getName(), load }),
+										Bundle.getMessage("Error"), JOptionPane.WARNING_MESSAGE);
+								needLoadTrackEditFrame = true;
+							} else if (track.acceptsLoad(load, type)) {
+								JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
+										.getMessage("WarningAcceptTrackTypeAndLoad"), new Object[] { track.getName(),
+										type, load }), Bundle.getMessage("Error"), JOptionPane.WARNING_MESSAGE);
+								needLoadTrackEditFrame = true;
+							}
+						} else if (track.getLoadOption().equals(Track.EXCLUDE_LOADS)) {
+							track.addLoadName(loadName);
+						} else if (track.getLoadOption().equals(Track.ALL_LOADS)) {
+							// need to exclude this load
+							track.setLoadOption(Track.EXCLUDE_LOADS);
+							track.addLoadName(loadName);
 						}
 					}
-				} else {
-					if (track.getLoadOption().equals(Track.INCLUDE_LOADS)) {
-						track.deleteLoadName(loadName);
-						// need to check if load configuration is to accept all car types using this load
-						if (track.acceptsLoadName(load)) {
-							JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
-									.getMessage("WarningAcceptTrackLoad"), new Object[] { track.getName(), load }),
-									Bundle.getMessage("Error"), JOptionPane.WARNING_MESSAGE);
-							needLoadTrackEditFrame = true;
-						} else if (track.acceptsLoad(load, type)) {
-							JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
-									.getMessage("WarningAcceptTrackTypeAndLoad"), new Object[] { track.getName(),
-									type, load }), Bundle.getMessage("Error"), JOptionPane.WARNING_MESSAGE);
-							needLoadTrackEditFrame = true;
+				}
+				if (locId[1].equals("s")) {
+					if (cb.isSelected()) {
+						if (track.getShipLoadOption().equals(Track.ALL_LOADS))
+							log.debug("Ship all loads selected for track ({})", track.getName());
+						else if (track.getShipLoadOption().equals(Track.INCLUDE_LOADS))
+							track.addShipLoadName(loadName);
+						else if (track.getShipLoadOption().equals(Track.EXCLUDE_LOADS)) {
+							track.deleteShipLoadName(loadName);
+							// need to check if load configuration is to exclude all car types using this load
+							if (!track.shipsLoadName(load)) {
+								JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
+										.getMessage("WarningExcludeTrackShipLoad"), new Object[] { track.getName(),
+										load }), Bundle.getMessage("Error"), JOptionPane.WARNING_MESSAGE);
+								needLoadTrackEditFrame = true;
+							} else if (!track.shipsLoad(load, type)) {
+								JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
+										.getMessage("WarningExcludeTrackShipTypeAndLoad"), new Object[] {
+										track.getName(), type, load }), Bundle.getMessage("Error"),
+										JOptionPane.WARNING_MESSAGE);
+								needLoadTrackEditFrame = true;
+							}
 						}
-					} else if (track.getLoadOption().equals(Track.EXCLUDE_LOADS)) {
-						track.addLoadName(loadName);
-					} else if (track.getLoadOption().equals(Track.ALL_LOADS)) {
-						// need to exclude this load
-						track.setLoadOption(Track.EXCLUDE_LOADS);
-						track.addLoadName(loadName);
+					} else {
+						if (track.getShipLoadOption().equals(Track.INCLUDE_LOADS)) {
+							track.deleteShipLoadName(loadName);
+							// need to check if load configuration is to accept all car types using this load
+							if (track.shipsLoadName(load)) {
+								JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
+										.getMessage("WarningShipTrackLoad"), new Object[] { track.getName(), load }),
+										Bundle.getMessage("Error"), JOptionPane.WARNING_MESSAGE);
+								needLoadTrackEditFrame = true;
+							} else if (track.shipsLoad(load, type)) {
+								JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
+										.getMessage("WarningShipTrackTypeAndLoad"), new Object[] { track.getName(),
+										type, load }), Bundle.getMessage("Error"), JOptionPane.WARNING_MESSAGE);
+								needLoadTrackEditFrame = true;
+							}
+						} else if (track.getShipLoadOption().equals(Track.EXCLUDE_LOADS)) {
+							track.addShipLoadName(loadName);
+						} else if (track.getShipLoadOption().equals(Track.ALL_LOADS)) {
+							// need to exclude this load
+							track.setShipLoadOption(Track.EXCLUDE_LOADS);
+							track.addShipLoadName(loadName);
+						}
 					}
 				}
 				if (needLoadTrackEditFrame) {
