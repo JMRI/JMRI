@@ -27,6 +27,8 @@
             "
         >
 
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://jmri.org/xml/schema/docbook/xml.xsd"/>
+
   <xs:annotation>
     <xs:documentation>
       General types used across many JMRI XML Schema.
@@ -79,6 +81,21 @@
     </xs:attribute>
   </xs:complexType>
 
+  <xs:complexType name="PreservedTextType">
+    <xs:annotation>
+        <xs:documentation>
+          Element (perhaps in an I18N language) with user-provided text where
+          whitespace must be preserved.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute ref="xml:space" default="preserve" />
+        <xs:attribute ref="xml:lang"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  
   <xs:simpleType name="systemNameType">
     <xs:annotation>
         <xs:documentation>
@@ -327,5 +344,6 @@
     </xs:annotation>
     <xs:restriction base="xs:string" />
   </xs:simpleType>
+  
   
 </xs:schema>
