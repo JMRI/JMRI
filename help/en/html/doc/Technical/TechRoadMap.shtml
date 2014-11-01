@@ -89,7 +89,9 @@ Planned removal of XmlIO web service.
 <p>
 New Java and library features
 (subject to verification):
-
+<ul>
+<li>Update to JDOM 2 for efficiency and coding convenience
+</ul>
 <UL>
 <LI>
 </UL>
