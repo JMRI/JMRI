@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2006 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version version="1" author="PB, pierre.bln@me.com" lastUpdated="20130731"/>
+  <!-- 1 2014/10/14 Creation 
+		First decoder template for the Doehler & Haass SD18A combo sound decoder
+		for the Next18 digital interface.
+		Requires variables and panes as defined in the doehler_hass/ folder.
+  -->
+  <decoder>
+    <family name="Combo sound decoders" mfg="Doehler und Haass">
+	  <model model="SD18A (firmware 1.00+)" lowVersionID="1" highVersionID="1" numOuts="4" numFns="14" productID="SD18A_1.00" comment="SD18A with original firmware" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Next18">
+        <output name="1" label="Front Light" maxcurrent="150mA"/>
+		<output name="2" label="Rear Light" maxcurrent="150mA"/>
+		<output name="3" label="AUX 1" maxcurrent="300mA"/>
+		<output name="4" label="AUX 2" maxcurrent="300mA"/>
+        <size length="25.0" width="9.5" height="2.8" units="mm"/>
+		<protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+        </protocols>
+      </model>
+      <model model="SD18A (firmware 1.01+)" lowVersionID="1" highVersionID="1" numOuts="4" numFns="14" productID="SD18A_1.01" comment="SD18A with firmware 1.01" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Next18">
+        <output name="1" label="Front Light" maxcurrent="150mA"/>
+		<output name="2" label="Rear Light" maxcurrent="150mA"/>
+		<output name="3" label="AUX 1" maxcurrent="300mA"/>
+		<output name="4" label="AUX 2" maxcurrent="300mA"/>
+        <size length="25.0" width="9.5" height="2.8" units="mm"/>
+		<protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+        </protocols>
+      </model>
+      <model model="SD18A (firmware 1.02+)" lowVersionID="74" highVersionID="74" numOuts="4" numFns="14" productID="SD18A_1.02" comment="SD18A with July 2014 firmware" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Next18">
+        <output name="1" label="Front Light" maxcurrent="150mA"/>
+		<output name="2" label="Rear Light" maxcurrent="150mA"/>
+		<output name="3" label="AUX 1" maxcurrent="300mA"/>
+		<output name="4" label="AUX 2" maxcurrent="300mA"/>
+        <size length="25.0" width="9.5" height="2.8" units="mm"/>
+		<protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+        </protocols>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+		<!-- START Common D&H variable files -->
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common.xml"/>
+			<!-- Standard variables with defaults for regular decoders  -->
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common_pwr_normal.xml"/>
+			<!-- Standard variables for decoders released after around 2012  -->
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_base.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_dc.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
+			<!-- Analog functions  -->
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv29_analog.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv14_analogModeFunction.xml"/>
+			<!-- Railcom feedback  -->
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv28-29_railcom_base.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv135-136_railcom_fw3.03.xml"/>
+			<!-- Motorola support -->
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv12_motorola.xml"/>
+		<!-- END Common D&H variable files -->
+		<!-- START combo sound variable files -->
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv311-348.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv350.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv353-359.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv360-362.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv364-373.xml"/>
+		<!-- END combo sound variable files -->
+    </variables>
+	<resets>
+      <factReset label="Reset All CVs" CV="8" default="8"/>
+    </resets>
+  </decoder>
+	<!-- Common pane(s)  -->
+	<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_map_adv.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_common.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_firmware.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_railcom.xml"/>
+	<!-- Pane(s) valid for some decoders only  -->
+	<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_motorola.xml"/>
+</decoder-config>

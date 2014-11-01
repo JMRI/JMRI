@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <!--                                                                        -->
@@ -27,41 +27,26 @@
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
       <revnumber>1</revnumber>
-      <date>2014-02-20</date>
-      <authorinitials>PB</authorinitials>
-      <revremark>
-        This file containts only variables that are common to ALL normal D&amp;H decoders,
-		EXCEPT the low current DH06A that has different default values.
-      </revremark>
-    </revision>
-    <revision>
-      <revnumber>2</revnumber>
       <date>2014-10-13</date>
       <authorinitials>PB</authorinitials>
-      <revremark>CV49 exclude for combo sound decoders</revremark>
+      <revremark>Creation</revremark>
     </revision>
-  </revhistory>
-  <!-- MOTOR SETTINGS -->
-  <variable item="Vhigh" CV="5" default="92">
-    <!-- Dif. Default for DH06A -->
-    <decVal min="0" max="127"/>
-    <label>Vhigh</label>
-    <label xml:lang="it">Volt Massimi</label>
-    <label xml:lang="fr">Vmax</label>
-    <label xml:lang="de">Höchstgeschwindigkeit (Vmax)</label>
+   </revhistory>
+<!-- Using JMRI item "Advanced Group 2 Option 1" --> 
+  <variable label="Flash-ROM protection" CV="360" mask="XXXXXXXV" default="0" item="Advanced Group 2 Option 1" readOnly="yes">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+	<label xml:lang="fr">Protection mémoire flash</label>
+	<label xml:lang="de">Schreibschutz Flash-ROM</label>
   </variable>
-  <variable CV="49" default="1" item="Motor Option 2" tooltip="0=1ms, 1=2ms, 2=4ms, 3=8ms" exclude="Combo sound decoders">
-    <decVal min="0" max="3"/>
-    <label>Impulse width</label>
-    <label xml:lang="it">Largh.Impulsi</label>
-    <label xml:lang="fr">Largeur d'impulsion</label>
-    <label xml:lang="de">Impulsbreite</label>
-  </variable>
-  <variable CV="61" default="63" item="Advanced Group 1 Option 8" tooltip="CV61 (0-127)">
-    <decVal min="0" max="127"/>
-    <label>Speed in shunting mode</label>
-    <label xml:lang="it">Velocità in Manovra</label>
-    <label xml:lang="fr">Vitesse en mode manoeuvre</label>
-    <label xml:lang="de">Rangiergang Geschwindigkeit</label>
-  </variable>
+<!-- Using JMRI items "Sound options" 13,14,21,22 (see "Sound_cv950.xml", "Sound_cv951-925.xml", "Sound_cv964-965.xml" for other items) --> 
+  <variable label="Threshold ZVS" CV="361" tooltip="CV361 (0-14)" default="9" item="Sound Option 21">
+	<decVal min="0" max="14"/>
+	<label xml:lang="fr">Seuil ZVS</label>
+	<label xml:lang="de">Schwellenwert ZVS</label>
+   </variable>
+   <variable label="Smoke puffs at speed 127" CV="362" tooltip="CV362 (0-255)" default="0" item="Sound Option 22">
+	<decVal min="0" max="255"/>
+	<label xml:lang="fr">Poussée de fumée en vitesse 127</label>
+	<label xml:lang="de">Dampfstöße bei Fahrstufe 127</label>
+   </variable>
 </variables>
