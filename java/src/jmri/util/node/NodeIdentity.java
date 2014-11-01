@@ -222,7 +222,11 @@ public class NodeIdentity {
         doc.getRootElement().addContent(formerIdentitiesElement);
         try {
             fw = new FileWriter(this.identityFile());
-            (new XMLOutputter(Format.getPrettyFormat())).output(doc, fw);
+            XMLOutputter fmt = new XMLOutputter();
+            fmt.setFormat(Format.getPrettyFormat()
+                                .setLineSeparator(System.getProperty("line.separator"))
+                                .setTextMode(Format.TextMode.PRESERVE));
+            fmt.output(doc, fw);
             fw.close();
         } catch (IOException ex) {
             // close fw if possible

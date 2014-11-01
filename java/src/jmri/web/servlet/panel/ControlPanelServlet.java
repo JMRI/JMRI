@@ -85,7 +85,10 @@ public class ControlPanelServlet extends AbstractPanelServlet {
             }
 
             Document doc = new Document(panel);
-            XMLOutputter out = new XMLOutputter(Format.getPrettyFormat());
+            XMLOutputter out = new XMLOutputter();
+            out.setFormat(Format.getPrettyFormat()
+                                .setLineSeparator(System.getProperty("line.separator"))
+                                .setTextMode(Format.TextMode.PRESERVE));
 
             return out.outputString(doc);
         } catch (NullPointerException ex) {

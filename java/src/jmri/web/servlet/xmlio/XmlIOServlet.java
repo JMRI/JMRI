@@ -21,6 +21,7 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
+import org.jdom.output.Format;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,7 +65,7 @@ public class XmlIOServlet extends HttpServlet implements XmlIORequestor {
     }
 
     protected void doXmlIO(HttpServletRequest request, HttpServletResponse response, Document doc) throws ServletException, IOException {
-        XMLOutputter fmt = new XMLOutputter(org.jdom.output.Format.getCompactFormat());
+        XMLOutputter fmt = new XMLOutputter(Format.getCompactFormat().setTextMode(Format.TextMode.PRESERVE));
 
         String client = request.getRemoteHost() + ":" + request.getRemotePort(); // NOI18N
 

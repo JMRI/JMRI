@@ -417,7 +417,11 @@ public class ProfileManager extends Bean {
         doc.getRootElement().addContent(pathsElement);
         try {
             fw = new FileWriter(catalog);
-            (new XMLOutputter(Format.getPrettyFormat())).output(doc, fw);
+            XMLOutputter fmt = new XMLOutputter();
+            fmt.setFormat(Format.getPrettyFormat()
+                                .setLineSeparator(System.getProperty("line.separator"))
+                                .setTextMode(Format.TextMode.PRESERVE));
+            fmt.output(doc, fw);
             fw.close();
         } catch (IOException ex) {
             // close fw if possible
@@ -653,7 +657,11 @@ public class ProfileManager extends Bean {
         }
         if (exportExternalUserFiles || exportExternalRoster) {
             FileWriter fw = new FileWriter(config);
-            (new XMLOutputter(Format.getPrettyFormat())).output(doc, fw);
+            XMLOutputter fmt = new XMLOutputter();
+            fmt.setFormat(Format.getPrettyFormat()
+                                .setLineSeparator(System.getProperty("line.separator"))
+                                .setTextMode(Format.TextMode.PRESERVE));
+            fmt.output(doc, fw);
             fw.close();
         }
         FileOutputStream out = new FileOutputStream(target);

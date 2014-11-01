@@ -235,9 +235,12 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
 
             //write out formatted document
             Document doc = new Document(panel);
-            XMLOutputter out = new XMLOutputter(Format.getPrettyFormat());
+            XMLOutputter fmt = new XMLOutputter();
+            fmt.setFormat(Format.getPrettyFormat()
+                                .setLineSeparator(System.getProperty("line.separator"))
+                                .setTextMode(Format.TextMode.PRESERVE));
 
-            return out.outputString(doc);
+            return fmt.outputString(doc);
         } catch (NullPointerException ex) {
             log.warn("Requested Layout panel [" + name + "] does not exist.");
             return "ERROR Requested panel [" + name + "] does not exist.";

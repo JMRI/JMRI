@@ -83,8 +83,10 @@ public class StoreXmlThrottlesLayoutAction extends AbstractAction {
 
 			FileOutputStream o = new java.io.FileOutputStream(f);
 			try {
-			    XMLOutputter fmt = new XMLOutputter();
-			    fmt.setFormat(org.jdom.output.Format.getPrettyFormat());
+                XMLOutputter fmt = new XMLOutputter();
+                fmt.setFormat(Format.getPrettyFormat()
+                                .setLineSeparator(System.getProperty("line.separator"))
+                                .setTextMode(Format.TextMode.PRESERVE));
 			    fmt.output(doc, o);
 		    } catch (IOException ex) {
 			    log.warn("Exception in storing throttle xml: " + ex);

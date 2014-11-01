@@ -69,6 +69,9 @@ public class XmlFileValidateAction extends AbstractAction {
                     return;
                 }
                 XMLOutputter outputter = new XMLOutputter();
+                outputter.setFormat(Format.getPrettyFormat()
+                                    .setLineSeparator(System.getProperty("line.separator"))
+                                    .setTextMode(Format.TextMode.PRESERVE));
                 StringWriter out = new StringWriter();
                 try {
                     outputter.output(doc, out); 
