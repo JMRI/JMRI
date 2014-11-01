@@ -430,6 +430,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 						|| rs.getTrack() == null || !rs.getTrack().equals(trackLocationBox.getSelectedItem())) {
 					String status = rs.setLocation((Location) locationBox.getSelectedItem(),
 							(Track) trackLocationBox.getSelectedItem());
+					rs.setSavedRouteId(RollingStock.NONE); // clear last route id
 					if (!status.equals(Track.OKAY)) {
 						log.debug("Can't set rs's location because of {}", status);
 						JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
