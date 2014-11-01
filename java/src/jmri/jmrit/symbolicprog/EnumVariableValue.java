@@ -33,7 +33,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         _maxVal = maxVal;
         _minVal = minVal;
         
-        treeModels.addLast(new DefaultMutableTreeNode("")); // root
+        treeNodes.addLast(new DefaultMutableTreeNode("")); // root
     }
 
     /**
@@ -47,6 +47,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 
     public void nItems(int n) {
         _itemArray = new String[n];
+        _pathArray = new TreePath[n];
         _valueArray = new int[n];
         _nstored = 0;
     }
@@ -72,20 +73,21 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      */
     public void addItem(String s, int value) {
         _valueArray[_nstored] = value;
+        TreeLeafNode node = new TreeLeafNode(s, _nstored);
+        treeNodes.getLast().add(node);
+        _pathArray[_nstored] = new TreePath( node.getPath() );
         _itemArray[_nstored++] = s;
-        
-        treeModels.getLast().add(new DefaultMutableTreeNode(s));
     }
 
     public void startGroup(String name) {
         DefaultMutableTreeNode next = new DefaultMutableTreeNode(name);
-        treeModels.getLast().add(next);
-        treeModels.addLast(next);
+        treeNodes.getLast().add(next);
+        treeNodes.addLast(next);
     }
     
     
     public void endGroup() {
-        treeModels.removeLast();
+        treeNodes.removeLast();
     }
     
     public void lastItem() {
@@ -112,10 +114,11 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 
     // place to keep the items & associated numbers
     private String[] _itemArray = null;
+    private TreePath[] _pathArray = null;
     private int[] _valueArray = null;
     private int _nstored;
 
-    Deque<DefaultMutableTreeNode>  treeModels = new ArrayDeque<DefaultMutableTreeNode>();
+    Deque<DefaultMutableTreeNode>  treeNodes = new ArrayDeque<DefaultMutableTreeNode>();
     
     int _maxVal;
     int _minVal;
@@ -194,6 +197,13 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
             if (_valueArray[i]==value) {
                 //found it, select it
                 _value.setSelectedIndex(i);
+                
+                // now select in the tree
+                TreePath path = _pathArray[i];
+                
+                for (JTree tree : trees) {
+                    tree.setSelectionPath(path);
+                }
                 return;
             }
 
@@ -260,7 +270,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
             return b;
         }
         else if (format.equals("tree")) {
-            DefaultTreeModel dModel = new DefaultTreeModel(treeModels.getFirst());
+            DefaultTreeModel dModel = new DefaultTreeModel(treeNodes.getFirst());
             JTree dTree = new JTree(dModel);
             trees.add(dTree);
             JScrollPane dScroll = new JScrollPane(dTree);
@@ -269,37 +279,35 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
             dTree.setScrollsOnExpand(true);
             dTree.setExpandsSelectedPaths(true);
             dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
-            dTree.addTreeSelectionListener(new TreeSelectionListener() {
-                @Override
-                public void valueChanged(TreeSelectionEvent e) {
-                    //if (!dTree.isSelectionEmpty() && dTree.getSelectionPath()!=null ) {
-                            // somebody has been selected
-                           //preview.setIcon(getSelectedIcon());
-                    //    }
-                    //else {
-                        // nobody selected
-                    //}
-                }
-            });
-            
             // arrange for only leaf nodes can be selected
             dTree.addTreeSelectionListener(new TreeSelectionListener() { 
                 public void valueChanged(TreeSelectionEvent e) { 
                     TreePath [] paths = e.getPaths(); 
+                    System.out.println("paths "+paths.length);
                     for (int i=0; i<paths.length; i++) { 
                         DefaultMutableTreeNode o = 
                             (DefaultMutableTreeNode)paths[i].getLastPathComponent(); 
+                        System.out.println("    "+o);
                         if ( o.getChildCount() > 0 ) 
                             ((JTree)e.getSource()).removeSelectionPath(paths[i]); 
                     } 
+                    // now record selection
+                    if (paths.length >= 1) {
+                        if (paths[0].getLastPathComponent() instanceof TreeLeafNode) {
+                            System.out.println("Selected index "
+                                            +((TreeLeafNode)paths[0].getLastPathComponent()).index
+                                            +" value "+_valueArray[((TreeLeafNode)paths[0].getLastPathComponent()).index]);
+                                            
+                            // update value of Variable
+                            setValue(_valueArray[((TreeLeafNode)paths[0].getLastPathComponent()).index]);
+                        }
+                    }
                 } 
             });
             
             // Arrange for coloring when changed
             
             // Arrange for value to update when changed in VariableTable
-            
-            // Arrange for value to be written/read OK
             
             // Arrange for adding a new node at end if an unexpected value is found
             
@@ -463,6 +471,15 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         for (int i = 0; i<comboRBs.size(); i++) {
             comboRBs.get(i).dispose();
         }
+    }
+    
+    class TreeLeafNode extends DefaultMutableTreeNode {
+        TreeLeafNode(String name, int index) {
+            super(name);
+            this.index = index;
+        }
+        
+        int index;
     }
     
     // initialize logging
