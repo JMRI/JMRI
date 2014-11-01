@@ -1822,12 +1822,11 @@
       <label>
         <text/>
       </label>
-      <display item="Decoder Lock control number" label="Decoder Lock control, CV15">
+      <display item="Decoder Lock control number" label="Decoder Lock control, CV15"/>
       <label>
         <text>Decoder Lock control, CV15</text>
         <text xml:lang="it">Controllo blocco decoder CV15</text>
       </label>
-      </display>
       <label>
         <text/>
       </label>
