@@ -1216,7 +1216,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
             Element e = (elemList.get(i));
             String name = e.getName();
-            if (log.isDebugEnabled()) log.debug("newGroup processing "+name+" element");
+            log.trace("newGroup processing {} element",name);
             // decode the type
             if (name.equals("display")) { // its a variable
                                 // load the variable
@@ -1355,7 +1355,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
             Element e = (elemList.get(i));
             String name = e.getName();
-            if (log.isDebugEnabled()) log.debug("newGroup processing "+name+" element");
+            log.trace("newGroup processing {} element", name);
             // decode the type
             if (name.equals("griditem")) {                    
                 final JPanel l = newGridItem(e, showStdName, modelElem, globs);
@@ -1416,7 +1416,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
             Element e = (elemList.get(i));
             String name = e.getName();
-            if (log.isDebugEnabled()) log.debug("newColumn processing "+name+" element");
+            log.trace("newColumn processing {} element", name);
             // decode the type
             if (name.equals("display")) { // its a variable
                                 // load the variable
@@ -1561,7 +1561,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
             Element e = elemList.get(i);
             String name = e.getName();
-            if (log.isDebugEnabled()) log.debug("newRow processing "+name+" element");
+            log.trace("newRow processing {} element", name);
             // decode the type
             if (name.equals("display")) { // its a variable
                 // load the variable
@@ -1704,7 +1704,7 @@ public class PaneProgPane extends javax.swing.JPanel
             globs.gridConstraints = new GridBagConstraints();
             Element e = elemList.get(i);
             String name = e.getName();
-            if (log.isDebugEnabled()) log.debug("newGrid processing "+name+" element");
+            log.trace("newGrid processing {} element", name);
             // decode the type
             if (name.equals("griditem")) {                    
                 JPanel l = newGridItem(e, showStdName, modelElem, globs);
@@ -1893,7 +1893,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
             Element e = elemList.get(i);
             String name = e.getName();
-            if (log.isDebugEnabled()) log.debug("newGridItem processing "+name+" element");
+            log.trace("newGridItem processing {} element", name);
             // decode the type
             if (name.equals("display")) { // its a variable
                 // load the variable
