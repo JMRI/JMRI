@@ -445,8 +445,9 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
             java.io.FileOutputStream o = new java.io.FileOutputStream(file);
             try {
                 XMLOutputter fmt = new XMLOutputter();
-                // fmt.setNewlines(true);   // pretty printing
-                // fmt.setIndent(true);
+                fmt.setFormat(Format.getPrettyFormat()
+                                .setLineSeparator(System.getProperty("line.separator"))
+                                .setTextMode(Format.TextMode.PRESERVE));
                 fmt.output(doc, o);
             } finally {
                 o.close();
