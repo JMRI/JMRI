@@ -144,6 +144,17 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
             // is from alternate rep
             _value.setSelectedItem(e.getActionCommand());
             if (log.isDebugEnabled()) log.debug(label()+" action event was from alternate rep");
+            // match and select in tree
+            for (int i = 0; i < _valueArray.length; i++) {
+                if (e.getActionCommand().toString().equals(_itemArray[i])) {
+                    // now select in the tree
+                    TreePath path = _pathArray[i];
+                    for (JTree tree : trees) {
+                        tree.setSelectionPath(path);
+                    }
+                    break; // first one is enough
+                }
+            }
         }
 
         int oldVal = getIntValue();
@@ -200,7 +211,6 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
                 
                 // now select in the tree
                 TreePath path = _pathArray[i];
-                
                 for (JTree tree : trees) {
                     tree.setSelectionPath(path);
                 }
@@ -211,14 +221,26 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         // But that's OK for certain applications.  Instead, we add them as needed
         log.debug("Create new item with value "+value+" count was "+_value.getItemCount()
                         +" in "+label());
-        _value.addItem("Reserved value "+value);
-        // and value array is too short
-        int[] oldArray = _valueArray;
-        _valueArray = new int[oldArray.length+1];
-        for (int i = 0; i<oldArray.length; i++) _valueArray[i] = oldArray[i];
-        _valueArray[oldArray.length] = value;
+        // lengthen arrays
+        _valueArray = java.util.Arrays.copyOf(_valueArray, _valueArray.length+1);
+        _valueArray[_valueArray.length-1] = value;
 
-        _value.setSelectedItem("Reserved value "+value);
+        _itemArray = java.util.Arrays.copyOf(_itemArray, _itemArray.length+1);
+        _itemArray[_itemArray.length-1] = "Reserved value "+value;
+
+        _pathArray = java.util.Arrays.copyOf(_pathArray, _pathArray.length+1);
+        TreeLeafNode node = new TreeLeafNode(_itemArray[_itemArray.length-1], _itemArray.length-1);
+        treeNodes.getLast().add(node);
+        _pathArray[_itemArray.length-1] = new TreePath( node.getPath() );
+
+        _value.addItem(_itemArray[_itemArray.length-1]);        
+        _value.setSelectedItem(_itemArray[_itemArray.length-1]);
+        
+        // tell trees to redisplay & select
+        for (JTree tree : trees ) {
+            ((DefaultTreeModel)tree.getModel()).reload();
+            tree.setSelectionPath(_pathArray[_itemArray.length-1]);
+        }
     }
 
     public int getIntValue() {
@@ -283,33 +305,24 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
             dTree.addTreeSelectionListener(new TreeSelectionListener() { 
                 public void valueChanged(TreeSelectionEvent e) { 
                     TreePath [] paths = e.getPaths(); 
-                    System.out.println("paths "+paths.length);
                     for (int i=0; i<paths.length; i++) { 
                         DefaultMutableTreeNode o = 
                             (DefaultMutableTreeNode)paths[i].getLastPathComponent(); 
-                        System.out.println("    "+o);
                         if ( o.getChildCount() > 0 ) 
                             ((JTree)e.getSource()).removeSelectionPath(paths[i]); 
                     } 
                     // now record selection
                     if (paths.length >= 1) {
                         if (paths[0].getLastPathComponent() instanceof TreeLeafNode) {
-                            System.out.println("Selected index "
-                                            +((TreeLeafNode)paths[0].getLastPathComponent()).index
-                                            +" value "+_valueArray[((TreeLeafNode)paths[0].getLastPathComponent()).index]);
-                                            
                             // update value of Variable
                             setValue(_valueArray[((TreeLeafNode)paths[0].getLastPathComponent()).index]);
                         }
                     }
                 } 
             });
-            
-            // Arrange for coloring when changed
-            
-            // Arrange for value to update when changed in VariableTable
-            
-            // Arrange for adding a new node at end if an unexpected value is found
+            // select initial value
+            TreePath path = _pathArray[_value.getSelectedIndex()];
+            dTree.setSelectionPath(path);
             
             if (getReadOnly()) {
                 log.error("read only variables cannot use tree format: {}", item());
@@ -394,6 +407,11 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
             if (cv.getState() == STORED) setToWrite(false);
             if (cv.getState() == READ) setToRead(false);
             setState(cv.getState());
+            for (JTree tree : trees) {
+                tree.setBackground(_value.getBackground());
+                //tree.setOpaque(true);
+            }
+
         } else if (e.getPropertyName().equals("Value")) {
             // update value of Variable
             CvValue cv = _cvMap.get(getCvNum());
