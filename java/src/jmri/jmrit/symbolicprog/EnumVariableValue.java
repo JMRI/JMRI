@@ -151,6 +151,8 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
                     TreePath path = _pathArray[i];
                     for (JTree tree : trees) {
                         tree.setSelectionPath(path);
+                        // ensure selection is in visible portion of JScrollPane
+                        tree.scrollPathToVisible(path);
                     }
                     break; // first one is enough
                 }
@@ -213,6 +215,8 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
                 TreePath path = _pathArray[i];
                 for (JTree tree : trees) {
                     tree.setSelectionPath(path);
+                    // ensure selection is in visible portion of JScrollPane
+                    tree.scrollPathToVisible(path);
                 }
                 return;
             }
@@ -240,6 +244,8 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         for (JTree tree : trees ) {
             ((DefaultTreeModel)tree.getModel()).reload();
             tree.setSelectionPath(_pathArray[_itemArray.length-1]);
+            // ensure selection is in visible portion of JScrollPane
+            tree.scrollPathToVisible(_pathArray[_itemArray.length-1]);
         }
     }
 
@@ -323,6 +329,8 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
             // select initial value
             TreePath path = _pathArray[_value.getSelectedIndex()];
             dTree.setSelectionPath(path);
+            // ensure selection is in visible portion of JScrollPane
+            dTree.scrollPathToVisible(path);
             
             if (getReadOnly()) {
                 log.error("read only variables cannot use tree format: {}", item());
