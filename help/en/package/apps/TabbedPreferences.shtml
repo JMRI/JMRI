@@ -30,8 +30,8 @@ configure the basic operation of your JMRI application.
 <p>
 The screen is split into two sections, on the left hand side is a list of the preference groups that can be set. 
 Clicking on each preference will then populate the right hand side, with the various options that can be configured.
-<a href="../../manual/3-4_DecoderPro/images/Preferences.png">
-<img src="../../manual/3-4_DecoderPro/images/Preferences.png" height="156" width="256" align="right"></a>
+<a href="../../manual/DecoderPro/images/Preferences.png">
+<img src="../../manual/DecoderPro/images/Preferences.png" height="156" width="256" align="right"></a>
 <p>
 <a href="#Connection">Connections</a><br>
 <a href="#Defaults">Defaults</a><br>
@@ -51,13 +51,6 @@ The "Save" button!
 Be sure to click "Save" when leaving this window.  Your changes to the preferences
 don't take effect until the program is stopped and restarted, so the
 program will prompt you to do that after saving the preferences.
-
-<p>
-<img src="../../images/bangdesk.gif" align="right" height="45" width="45" alt="Cute image of work">
-This page is under construction. 
-In the meantime, there's some more information on preferences
-on some 
-<a href="../../manual/Getting_Started.shtml#Preferences">tutorial pages</a>.
 
 <a name="Connection">
 <h2>Connections</h2></a>
