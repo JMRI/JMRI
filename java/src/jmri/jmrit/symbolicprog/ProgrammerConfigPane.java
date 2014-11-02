@@ -33,18 +33,18 @@ public class ProgrammerConfigPane extends JPanel {
         showEmptyTabs.setSelected(jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame.getShowEmptyPanes());
         advancedPanel.add(ShowCvNums = new JCheckBox("Show CV numbers in tool tips"));
         ShowCvNums.setSelected(jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame.getShowCvNumbers());
+        this.add(advancedPanel);
+        this.add(javax.swing.Box.createVerticalGlue());
     }
     JComboBox programmerBox;
 
     /**
-     * Combined ctor to get both parts in one pane
+     * This constructor does nothing different than the default constructor.
+     *
+     * @deprecated since 3.9.5
      */
     public ProgrammerConfigPane(boolean include) {
         this();
-        if (include) {
-            this.add(advancedPanel);
-            this.add(javax.swing.Box.createVerticalGlue());
-        }
     }
     
     public String getSelectedItem() {
