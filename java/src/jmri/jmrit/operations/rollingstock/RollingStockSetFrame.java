@@ -394,11 +394,14 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 								rl = rlocation;
 								foundLoc = true;
 							}
-							if (rs.getDestinationName().equals(rlocation.getName()) && foundLoc) {
+							if (rs.getDestinationName().equals(rlocation.getName())
+									&& foundLoc) {
+								rd = rlocation;
 								foundDes = true;
+								if (rs.getDestinationTrack() != null && (rlocation.getTrainDirection() & rs.getDestinationTrack().getTrainDirections()) == 0)
+									continue; // destination track isn't serviced by the train's direction
 								break;
 							}
-
 						}
 						if (!foundDes) {
 							JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
