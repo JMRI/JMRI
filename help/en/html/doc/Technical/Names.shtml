@@ -117,7 +117,7 @@ Note that some of these are placeholders, and have no underlying implementation.
 (Links are to JMRI pages with more information)
 <ul>
 <LI>A CTI <a href="../../hardware/acela/index.shtml">Acela</a>
-<LI>B (reserved for CTI Train-Brain)
+<LI>B Direct DCC control
 <LI>C <a href="../../hardware/cmri/CMRI.shtml">C/MRI serial</a>
 <LI>D <a href="../../hardware/SRCP/index.shtml">SRCP</a>
 <LI>E <a href="../../hardware/easydcc/EasyDCC.shtml">EasyDCC</a>
