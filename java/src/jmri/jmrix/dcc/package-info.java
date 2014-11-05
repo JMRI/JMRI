@@ -17,4 +17,4 @@
  * @since 3.9.6
 */
 
-package jmri;
+package jmri.jmrix.dcc;
