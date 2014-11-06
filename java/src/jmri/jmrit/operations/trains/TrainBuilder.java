@@ -561,10 +561,16 @@ public class TrainBuilder extends TrainCommon {
 				_train.getName(), _carList.size() }));
 
 		if (Setup.isBuildAggressive() && !_train.isBuildTrainNormalEnabled()) {
-			// perform a two pass build for this train
-			placeCars(50); // find destination for 50% of the available moves
+			// perform a multiple pass build for this train, default is two passes
+			int passes = 0;
+			boolean firstPass = true;
+			while (passes++ < Setup.getNumberPasses()) {
+				placeCars(100 * passes / Setup.getNumberPasses(), firstPass);
+				firstPass = false;
+			}
+		} else {
+			placeCars(100, false);
 		}
-		placeCars(100); // done finding cars for this train!
 
 		_train.setCurrentLocation(_train.getTrainDepartsRouteLocation());
 		if (_numberCars < requested) {
@@ -1755,7 +1761,7 @@ public class TrainBuilder extends TrainCommon {
 	 * Main routine to place cars into the train. Can be called multiple times, percent controls how many cars are
 	 * placed in any given pass.
 	 */
-	private void placeCars(int percent) throws BuildFailedException {
+	private void placeCars(int percent, boolean firstPass) throws BuildFailedException {
 		if (percent < 100) {
 			addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildMultiplePass"),
 					new Object[] { percent }));
@@ -1790,10 +1796,10 @@ public class TrainBuilder extends TrainCommon {
 			_completedMoves = 0; // the number of moves completed for this location
 			_success = true; // true when done with this location
 			_reqNumOfMoves = rl.getMaxCarMoves() - rl.getCarMoves(); // the number of moves requested
+			_reqNumOfMoves = _reqNumOfMoves * percent / 100;
 			int saveReqMoves = _reqNumOfMoves; // save a copy for status message
 			// multiple pass build?
-			if (percent < 100) {
-				_reqNumOfMoves = _reqNumOfMoves * percent / 100;
+			if (firstPass) {			
 				// Departing staging?
 				if (routeIndex == 0 && _departStageTrack != null) {
 					_reqNumOfMoves = 0; // Move cars out of staging after working other locations
@@ -3469,6 +3475,8 @@ public class TrainBuilder extends TrainCommon {
 	 */
 	private boolean findDestinationAndTrack(Car car, RouteLocation rl, int routeIndex, int routeEnd)
 			throws BuildFailedException {
+		if (routeIndex + 1 == routeEnd)
+			log.debug("Car ({}) is at the last location in the train's route", car.toString());
 		addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildFindDestinationForCar"), new Object[] {
 				car.toString(), car.getTypeName(), car.getLoadName(),
 				(car.getLocationName() + ", " + car.getTrackName()) }));
@@ -3805,7 +3813,7 @@ public class TrainBuilder extends TrainCommon {
 		if (car.getTrack() != null && !car.getTrack().getServiceOrder().equals(Track.NORMAL)) {
 			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildBypassCarServiceOrder"),
 					new Object[] { car.toString(), car.getTrackName(), car.getTrack().getServiceOrder() }));
-			// move car id in front of current pointer so car is no longer used on this pass
+			// move car in front of current pointer so car is no longer used on this pass
 			_carList.remove(car);
 			_carList.add(_carIndex, car);
 		}

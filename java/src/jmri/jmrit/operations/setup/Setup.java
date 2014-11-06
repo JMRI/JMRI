@@ -281,6 +281,7 @@ public class Setup {
 	private static boolean trainLogger = false; // when true train logger is enabled
 
 	private static boolean aggressiveBuild = false; // when true subtract car length from track reserve length
+	private static int numberPasses = 2;		// the number of passes in train builder
 	private static boolean allowLocalInterchangeMoves = false; // when true local interchange to interchange moves are
 																// allowed
 	private static boolean allowLocalYardMoves = false; // when true local yard to yard moves are allowed
@@ -441,6 +442,14 @@ public class Setup {
 
 	public static void setBuildAggressive(boolean enabled) {
 		aggressiveBuild = enabled;
+	}
+	
+	public static int getNumberPasses() {
+		return numberPasses;
+	}
+	
+	public static void setNumberPasses(int number) {
+		numberPasses = number;
 	}
 
 	public static boolean isLocalInterchangeMovesEnabled() {
@@ -1722,6 +1731,7 @@ public class Setup {
 
 		e.addContent(values = new Element(Xml.BUILD_OPTIONS));
 		values.setAttribute(Xml.AGGRESSIVE, isBuildAggressive() ? Xml.TRUE : Xml.FALSE);
+		values.setAttribute(Xml.NUMBER_PASSES, Integer.toString(getNumberPasses()));
 
 		values.setAttribute(Xml.ALLOW_LOCAL_INTERCHANGE, isLocalInterchangeMovesEnabled() ? Xml.TRUE : Xml.FALSE);
 		values.setAttribute(Xml.ALLOW_LOCAL_SPUR, isLocalSpurMovesEnabled() ? Xml.TRUE : Xml.FALSE);
@@ -2306,6 +2316,16 @@ public class Setup {
 				if (log.isDebugEnabled())
 					log.debug("aggressive: " + enable);
 				setBuildAggressive(enable.equals(Xml.TRUE));
+			}
+			if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.NUMBER_PASSES)) != null) {
+				String number = a.getValue();
+				if (log.isDebugEnabled())
+					log.debug("number of passes: {}", number);
+				try {
+					setNumberPasses(Integer.parseInt(number));
+				} catch (NumberFormatException ne) {
+					log.debug("Number of passes isn't a number");
+				}
 			}
 			if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.ALLOW_LOCAL_INTERCHANGE)) != null) {
 				String enable = a.getValue();
