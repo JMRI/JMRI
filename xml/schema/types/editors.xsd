@@ -631,6 +631,7 @@
       <xs:attribute name="x" type="xs:int" use="required" />
       <xs:attribute name="y" type="xs:int" use="required" />
       <xs:attribute name="scale" type="xs:float" use="required" />
+      <xs:attribute name="color" type="screenColorType" />
  
     </xs:complexType>
 

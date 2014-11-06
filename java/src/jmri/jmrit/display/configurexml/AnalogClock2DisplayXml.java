@@ -2,12 +2,13 @@
 
 package jmri.jmrit.display.configurexml;
 
+import jmri.configurexml.AbstractXmlAdapter;
+import jmri.jmrit.display.AnalogClock2Display;
+import jmri.jmrit.display.AnalogClock2Display.Colors;
+import jmri.jmrit.display.Editor;
+import org.jdom.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.jdom.*;
-import jmri.configurexml.*;
-import jmri.jmrit.display.AnalogClock2Display;
-import jmri.jmrit.display.Editor;
 /**
  * Handle configuration for display.AnalogClock2Display objects.
  *
@@ -26,6 +27,7 @@ public class AnalogClock2DisplayXml
      * @param o Object to store, of type TurnoutIcon
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         AnalogClock2Display p = (AnalogClock2Display) o;
@@ -39,6 +41,7 @@ public class AnalogClock2DisplayXml
         element.setAttribute("x", "" + p.getX());
         element.setAttribute("y", "" + p.getY());
         element.setAttribute("scale", "" + p.getScale());
+        element.setAttribute("color", "" + p.getColor().name());
         String link = p.getUrl();
         if (link!=null && link.trim().length()>0) {
             element.setAttribute("link", link);        	
@@ -50,6 +53,7 @@ public class AnalogClock2DisplayXml
         return element;
     }
 
+    @Override
     public boolean load(Element element) {
         log.error("Invalid method called");
         return false;
@@ -60,20 +64,25 @@ public class AnalogClock2DisplayXml
      * @param element Top level Element to unpack.
      * @param o an Editor as an Object
      */
-	public void load(Element element, Object o) {
-		// get object class and create the clock object
+    @Override
+    public void load(Element element, Object o) {
+        // get object class and create the clock object
         Editor ed = (Editor)o;
-		AnalogClock2Display l = new AnalogClock2Display(ed);
+        AnalogClock2Display l = new AnalogClock2Display(ed);
 
         // find coordinates
         int x = 0;
         int y = 0;
         double scale = 1.0;
+        Colors color = Colors.Black;
         try {
             x = element.getAttribute("x").getIntValue();
             y = element.getAttribute("y").getIntValue();
             if (element.getAttribute("scale")!=null) {
                 scale = element.getAttribute("scale").getDoubleValue();
+            }
+            if (element.getAttribute("color")!=null) {
+                color = Colors.valueOf(element.getAttribute("color").getValue());
             }
         }
         catch (org.jdom.DataConversionException e) {
@@ -86,12 +95,12 @@ public class AnalogClock2DisplayXml
         l.update();
         l.setLocation(x, y);
         if (scale != 1.0 && 10.0>scale && scale>0.1) { l.setScale(scale);  }
-           	
-		// add the clock to the panel
+        l.setColor(color);
+
+        // add the clock to the panel
         l.setDisplayLevel(Editor.CLOCK);
         ed.putItem(l);
     }
 
-    static Logger log = LoggerFactory
-    .getLogger(AnalogClock2DisplayXml.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AnalogClock2DisplayXml.class.getName());
 }
