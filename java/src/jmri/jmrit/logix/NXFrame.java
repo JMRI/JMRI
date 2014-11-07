@@ -4,16 +4,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
@@ -81,7 +81,9 @@ public class NXFrame extends WarrantRoute {
 	static float _minSpeed = 0.075f;
 	static float _intervalTime = 2000f;
 	static int _numSteps = 15;
-
+    static boolean _firstInstance = true;
+    static Point _loc = null;
+    static Dimension _dim = null;
 
     private static NXFrame _instance;
     
@@ -219,8 +221,7 @@ public class NXFrame extends WarrantRoute {
         button = new JButton(Bundle.getMessage("ButtonCancel"));
         button.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                    	dispose();
-                    	_parent.closeNXFrame();
+                    	closeFrame();
                     }
                 });
         p.add(button);
@@ -230,11 +231,16 @@ public class NXFrame extends WarrantRoute {
         addWindowListener(new java.awt.event.WindowAdapter() {
         	@Override
             public void windowClosing(java.awt.event.WindowEvent e) {
-                dispose();
-                _parent.closeNXFrame();
+            	closeFrame();
             }
         });
-        setLocation(_parent.getLocation().x+200, _parent.getLocation().y+100);
+        if (_firstInstance) {
+            setLocation(_parent.getLocation().x+200, _parent.getLocation().y+100);
+            _firstInstance = false;
+        } else {
+            setLocation(_loc);
+            setSize(_dim);
+        }
         setAlwaysOnTop(true);
         pack();
 //        setVisible(false);      		
@@ -394,10 +400,10 @@ public class NXFrame extends WarrantRoute {
         		_haltStart = false;         		
          	}
         	_parent.scrollTable();
-        	dispose();
-        	_parent.closeNXFrame();           	
+        	closeFrame();
         }
     }
+	
     private void runManual() {
     	String name =_nameBox.getText();
     	if (name==null || name.trim().length()==0) {
@@ -412,8 +418,14 @@ public class NXFrame extends WarrantRoute {
     	_parent.getModel().addNXWarrant(warrant);
     	warrant.setRunMode(Warrant.MODE_MANUAL, null, null, null, false);
     	_parent.scrollTable();
+    	closeFrame();
+    }
+    
+    private void closeFrame() {
+        _loc = getLocation(_loc);
+        _dim = getSize(_dim);
     	dispose();
-    	_parent.closeNXFrame();           	
+    	_parent.closeNXFrame();           	    	
     }
 
     private void scaleDialog() {
