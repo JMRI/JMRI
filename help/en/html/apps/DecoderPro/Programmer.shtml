@@ -26,7 +26,24 @@
 
 <p>The answer starts with the creation of an xml file in the
 "programmers" subdirectory of the JMRI distribution.  The
-contents of the file are described below.</p>
+contents of the file are described here.</p>
+
+<p>After some initial parts (which you can just copy from 
+an existing file), the rest of the file is a series of
+"pane" definition elements.
+Each one become a pane in the DecoderPro window.
+<p>The panes in the programmer file appear when you select that
+programmer in DecoderPro.  Note that panes can also be defined
+in the decoder definition, in which case those panes appear after
+the ones in the programmer definitions.
+<ul>
+<li>There is an option to present/hide panes from the decoder file.  If
+you're writing a very basic programmer, you might want to hide them
+to keep the interface simple. 
+<li>If a pane is defined in the decoder file and programmer file with the
+same name, the one from the decoder file (the more specific one) appears.
+</ul></p>
+
 
 <dl>
 <dt class=left>Specifying items to display</dt>
@@ -214,8 +231,6 @@ Decoder Pro.  To use your new file, just put it in the
 select it.  You don't have to restart the program, as the
 list is remade each time you open a new programmer window.
 
-<p> There is an option to present/hide panes from the decoder file.  If
-you're writing a very basic programmer, you might want to hide them.</p>
 </dd>
 
 </dl>
