@@ -13,11 +13,11 @@ function getPanels() {
     $.ajax({
         url: "/panel?format=json",
         data: {},
-        success: function(data) {
+        success: function (data) {
             $(".navbar-panel-item").remove();
             if (data.length !== 0) {
                 $("#empty-panel-list").addClass("hidden").removeClass("show");
-                $.each(data, function(index, value) {
+                $.each(data, function (index, value) {
                     $("#navbar-panels").append("<li class=\"navbar-panel-item\"><a href=\"/panel/" + value.name + "\">" + value.userName + "</a></li>");
                 });
             } else {
@@ -31,10 +31,10 @@ function getRosterGroups() {
     $.ajax({
         url: "/json/rosterGroups",
         data: {},
-        success: function(data) {
+        success: function (data) {
             $(".navbar-roster-group-item").remove();
             if (data.length !== 0) {
-                $.each(data, function(index, value) {
+                $.each(data, function (index, value) {
                     $("#navbar-roster-groups").append("<li class=\"navbar-roster-group-item\"><a href=\"/roster/group/" + encodeURIComponent(value.data.name) + "\"><span class=\"badge pull-right\">" + value.data.length + "</span>" + value.data.name + "</a></li>");
                 });
             }
@@ -49,7 +49,7 @@ function getNetworkServices() {
     $.ajax({
         url: "/json/networkServices",
         data: {},
-        success: function(data) {
+        success: function (data) {
             // show all hidden when service is available elements 
             $(".hidden-jmri_jmri-json").addClass("show").removeClass("hidden");
             $(".hidden-jmri_jmri-locormi").addClass("show").removeClass("hidden");
@@ -63,7 +63,7 @@ function getNetworkServices() {
             $(".visible-jmri_srcp").addClass("hidden").removeClass("show");
             $(".visible-jmri_withrottle").addClass("hidden").removeClass("show");
             if (data.length !== 0) {
-                $.each(data, function(index, value) {
+                $.each(data, function (index, value) {
                     var service = value.data.type.split(".")[0];
                     $(".visible-jmri" + service).addClass("show").removeClass("hidden");
                     $(".hidden-jmri" + service).addClass("hidden").removeClass("show");
@@ -99,13 +99,13 @@ function setTitle(value) {
  */
 function equalHeight(selector) {
     tallest = 0;
-    selector.each(function() {
+    selector.each(function () {
         thisHeight = $(this).height();
         if (thisHeight > tallest) {
             tallest = thisHeight;
         }
     });
-    selector.each(function() {
+    selector.each(function () {
         $(this).height(tallest);
     });
 }
@@ -120,11 +120,11 @@ function setFontSize(change) {
         if (window.localStorage.getItem("jmri.css.font-size.body")) {
             size = parseInt(window.localStorage.getItem("jmri.css.font-size.body"));
         }
-        $("#font-size-smaller").click(function() {
+        $("#font-size-smaller").click(function () {
             setFontSize(-1);
             return false;
         });
-        $("#font-size-larger").click(function() {
+        $("#font-size-larger").click(function () {
             setFontSize(1);
             return false;
         });
@@ -149,15 +149,44 @@ function setFontSize(change) {
     }
 }
 
+function setNavbarFixed(fixed) {
+    if (fixed === null) {
+        if (window.localStorage.getItem("jmri.css.navbar.fixed") !== null) {
+            fixed = (parseInt(window.localStorage.getItem("jmri.css.navbar.fixed")) === 1) ? true : false;
+            if (window.console) {
+                console.log("Getting navbar " + ((fixed === true) ? "fixed" : "floating") + " from localStorage");
+            }
+        }
+        $("#navbar-fixed-position").change(function () {
+            setNavbarFixed($(this).prop("checked"));
+        });
+    }
+    if (fixed === null) {
+        fixed = true;
+    }
+    if (fixed === true) {
+        $(".navbar").removeClass("navbar-static-top").addClass("navbar-fixed-top");
+        $("body").css("padding-top", "50px");
+    } else {
+        $(".navbar").removeClass("navbar-fixed-top").addClass("navbar-static-top");
+        $("body").css("padding-top", "0px");
+    }
+    $("#navbar-fixed-position").prop("checked", (fixed === true) ? "checked" : "");
+    window.localStorage.setItem("jmri.css.navbar.fixed", ((fixed === true) ? 1 : 0));
+    if (window.console) {
+        console.log("Navbar is " + ((fixed === true) ? "fixed" : "floating"));
+    }
+}
+
 /*
  * Define localStorage for the retention of data if not already defined.
  * From https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM/Storage#localStorage
  */
 if (!window.localStorage) {
-    Object.defineProperty(window, "localStorage", new (function() {
+    Object.defineProperty(window, "localStorage", new (function () {
         var aKeys = [], oStorage = {};
         Object.defineProperty(oStorage, "getItem", {
-            value: function(sKey) {
+            value: function (sKey) {
                 return sKey ? this[sKey] : null;
             },
             writable: false,
@@ -165,7 +194,7 @@ if (!window.localStorage) {
             enumerable: false
         });
         Object.defineProperty(oStorage, "key", {
-            value: function(nKeyId) {
+            value: function (nKeyId) {
                 return aKeys[nKeyId];
             },
             writable: false,
@@ -173,7 +202,7 @@ if (!window.localStorage) {
             enumerable: false
         });
         Object.defineProperty(oStorage, "setItem", {
-            value: function(sKey, sValue) {
+            value: function (sKey, sValue) {
                 if (!sKey) {
                     return;
                 }
@@ -184,14 +213,14 @@ if (!window.localStorage) {
             enumerable: false
         });
         Object.defineProperty(oStorage, "length", {
-            get: function() {
+            get: function () {
                 return aKeys.length;
             },
             configurable: false,
             enumerable: false
         });
         Object.defineProperty(oStorage, "removeItem", {
-            value: function(sKey) {
+            value: function (sKey) {
                 if (!sKey) {
                     return;
                 }
@@ -201,7 +230,7 @@ if (!window.localStorage) {
             configurable: false,
             enumerable: false
         });
-        this.get = function() {
+        this.get = function () {
             var iThisIndx;
             for (var sKey in oStorage) {
                 iThisIndx = aKeys.indexOf(sKey);
@@ -231,16 +260,17 @@ if (!window.localStorage) {
 }
 //-----------------------------------------javascript processing starts here (main) ---------------------------------------------
 // perform tasks that all BootStrap-based servlets need
-$(document).ready(function() {
+$(document).ready(function () {
     getNetworkServices(); // hide or show and network service specific elements
     getPanels(); // complete the panels menu
     getRosterGroups(); // list roster groups in menu
     setFontSize(0); // get the user's prefered font size
+    setNavbarFixed(null); // make the navbar floating or fixed
     nbJmri = $.JMRI({
-        open: function() {
+        open: function () {
             nbJmri.getPower();
         },
-        power: function(state) {
+        power: function (state) {
             $('#navbar-power').data('power', state);
             disabled = ($('#navbar-power button').hasClass('disabled')) ? " - Setting power disabled" : "";
             switch (state) {
@@ -267,21 +297,21 @@ $(document).ready(function() {
     if ($('#navbar-power').data('power') === 'readwrite') {
         $('#navbar-power').removeClass('disabled');
         $('#navbar-power button').removeClass('disabled');
-        $('#navbar-power button').click(function(event) {
+        $('#navbar-power button').click(function (event) {
             $('#navbar-power-modal').modal('show');
         });
-        $('#navbar-power-modal-on').click(function(event) {
+        $('#navbar-power-modal-on').click(function (event) {
             nbJmri.setPower(nbJmri.POWER_ON);
             $('#navbar-power-modal').modal('hide');
         });
-        $('#navbar-power-modal-off').click(function(event) {
+        $('#navbar-power-modal-off').click(function (event) {
             nbJmri.setPower(nbJmri.POWER_OFF);
             $('#navbar-power-modal').modal('hide');
         });
-        $('#navbar-power a').click(function(event) {
+        $('#navbar-power a').click(function (event) {
             $('#navbar-power-modal').modal('show');
         });
-        $('#navbar-power-modal').on('show.bs.modal', function() {
+        $('#navbar-power-modal').on('show.bs.modal', function () {
             $('#navbar-power-modal-label').text($('#navbar-power a').text());
             $('.navbar-collapse').collapse('hide');
             $('#navbar-power-modal').css("z-index", "1500");

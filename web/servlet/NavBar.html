@@ -3,7 +3,7 @@ Navigation bar fragment for JMRI Servlets
 Comments containing Java Formatter syntax (http://docs.oracle.com/javase/6/docs/api/java/util/Formatter.html)
 should not be changed. See JavaDoc for jmri.web.servlet.ServletHelper#getNavBar(String) for details
 -->
-<div class="navbar navbar-inverse navbar-fixed-top">
+<div class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -52,6 +52,9 @@ should not be changed. See JavaDoc for jmri.web.servlet.ServletHelper#getNavBar(
                         <li class="dropdown-header"><span id="font-size-value" class="pull-right"></span>Font size</li>
                         <li><a href="#" id="font-size-smaller" style="font-size: smaller">Smaller</a></li>
                         <li><a href="#" id="font-size-larger" style="font-size: larger">Larger</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">Navigation Bar</li>
+                        <li><div class="navbar-form checkbox"><label><input id="navbar-fixed-position" type="checkbox" checked="checked"> Fixed Position</label></div></li>
                         <!-- divider and header for system preferences, should personal preferences be supported
                         <li class="divider"></li>
                         <li class="dropdown-header">System Preferences</li>
