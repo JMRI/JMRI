@@ -261,4 +261,36 @@
       <display item="Sound Group 4 Option 8" layout="above" format="hslider"/>
     </row>
   </column>
+  <column>
+    <display item="Sound Group 5 Checkbox 1" format="checkbox"/>
+    <display item="Sound Group 5 Checkbox 2" format="checkbox"/>
+    <display item="Sound Group 5 Checkbox 3" format="checkbox"/>
+    <display item="Sound Group 5 Checkbox 4" format="checkbox"/>
+    <display item="Sound Group 5 Checkbox 5" format="checkbox"/>
+    <display item="Sound Group 5 Checkbox 6" format="checkbox"/>
+    <display item="Sound Group 5 Checkbox 7" format="checkbox"/>
+    <display item="Sound Group 5 Checkbox 8" format="checkbox"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Sound Group 6 Checkbox 1" format="checkbox"/>
+    <display item="Sound Group 6 Checkbox 2" format="checkbox"/>
+    <display item="Sound Group 6 Checkbox 3" format="checkbox"/>
+    <display item="Sound Group 6 Checkbox 4" format="checkbox"/>
+    <display item="Sound Group 6 Checkbox 5" format="checkbox"/>
+    <display item="Sound Group 6 Checkbox 6" format="checkbox"/>
+    <display item="Sound Group 6 Checkbox 7" format="checkbox"/>
+    <display item="Sound Group 6 Checkbox 8" format="checkbox"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Sound Group 7 Checkbox 1" format="checkbox"/>
+    <display item="Sound Group 7 Checkbox 2" format="checkbox"/>
+    <display item="Sound Group 7 Checkbox 3" format="checkbox"/>
+    <display item="Sound Group 7 Checkbox 4" format="checkbox"/>
+    <display item="Sound Group 7 Checkbox 5" format="checkbox"/>
+    <display item="Sound Group 7 Checkbox 6" format="checkbox"/>
+    <display item="Sound Group 7 Checkbox 7" format="checkbox"/>
+    <display item="Sound Group 7 Checkbox 8" format="checkbox"/>
+  </column>
 </pane>

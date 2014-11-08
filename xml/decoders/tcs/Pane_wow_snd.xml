@@ -22,21 +22,8 @@
           <text>   </text>
         </label>
         <label>
-          <text>Must have JMRI 3.3.6 or later.</text>
-          <text xml:lang="it">Dovete avere JMRI 3.3.6 o successivo.</text>
-        </label>
-        <label>
-          <text>   </text>
-        </label>
-        <label>
-          <text>******************************************************************</text>
-        </label>
-        <label>
-          <text>* Programming order is critical, must write full sheet only, do NOT write changes. *</text>
-          <text xml:lang="it">* L'ordine di programmazione è critico, occorre Scrivere sempre tutto il foglio, NON scrivere solo le modifiche. *</text>
-        </label>
-        <label>
-          <text>******************************************************************</text>
+          <text>Must have JMRI 3.9.5 or later.</text>
+          <text xml:lang="it">Dovete avere JMRI 3.9.5 o successivo.</text>
         </label>
         <label>
           <text>   </text>
@@ -44,374 +31,69 @@
       </column>
     </row>
     <row>
-      <column>
-        <label>
-          <text>Pick sound group (high byte) first then from list of sounds of just that group</text>
-          <text xml:lang="it">Prima seleziona Gruppo Suono (byte alto) poi scegli dalla lista dei suoni solo di quel gruppo</text>
-        </label>
-        <label>
-          <text>   </text>
-        </label>
-        <row>
-          <column>
-            <display item="Button 0 Sound"/>
-          </column>
-          <column>
-            <display item="Button 0 0" label=""/>
-            <display item="Button 0 1" label=""/>
-            <display item="Button 0 255" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="Button 1 Sound"/>
-          </column>
-          <column>
-            <display item="Button 1 0" label=""/>
-            <display item="Button 1 1" label=""/>
-            <display item="Button 1 255" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="Button 2 Sound"/>
-          </column>
-          <column>
-            <display item="Button 2 0" label=""/>
-            <display item="Button 2 1" label=""/>
-            <display item="Button 2 255" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="Button 3 Sound"/>
-          </column>
-          <column>
-            <display item="Button 3 0" label=""/>
-            <display item="Button 3 1" label=""/>
-            <display item="Button 3 255" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="Button 4 Sound"/>
-          </column>
-          <column>
-            <display item="Button 4 0" label=""/>
-            <display item="Button 4 1" label=""/>
-            <display item="Button 4 255" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="Button 5 Sound"/>
-          </column>
-          <column>
-            <display item="Button 5 0" label=""/>
-            <display item="Button 5 1" label=""/>
-            <display item="Button 5 255" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="Button 6 Sound"/>
-          </column>
-          <column>
-            <display item="Button 6 0" label=""/>
-            <display item="Button 6 1" label=""/>
-            <display item="Button 6 255" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="Button 7 Sound"/>
-          </column>
-          <column>
-            <display item="Button 7 0" label=""/>
-            <display item="Button 7 1" label=""/>
-            <display item="Button 7 255" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="Button 8 Sound"/>
-          </column>
-          <column>
-            <display item="Button 8 0" label=""/>
-            <display item="Button 8 1" label=""/>
-            <display item="Button 8 255" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="Button 9 Sound"/>
-          </column>
-          <column>
-            <display item="Button 9 0" label=""/>
-            <display item="Button 9 1" label=""/>
-            <display item="Button 9 255" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="Button 10 Sound"/>
-          </column>
-          <column>
-            <display item="Button 10 0" label=""/>
-            <display item="Button 10 1" label=""/>
-            <display item="Button 10 255" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="Button 11 Sound"/>
-          </column>
-          <column>
-            <display item="Button 11 0" label=""/>
-            <display item="Button 11 1" label=""/>
-            <display item="Button 11 255" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="Button 12 Sound"/>
-          </column>
-          <column>
-            <display item="Button 12 0" label=""/>
-            <display item="Button 12 1" label=""/>
-            <display item="Button 12 255" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="Button 13 Sound"/>
-          </column>
-          <column>
-            <display item="Button 13 0" label=""/>
-            <display item="Button 13 1" label=""/>
-            <display item="Button 13 255" label=""/>
-          </column>
-        </row>
-      </column>
-      <column>
-        <row>
-          <column>
-            <display item="Button 14 Sound"/>
-          </column>
-          <column>
-            <display item="Button 14 0" label=""/>
-            <display item="Button 14 1" label=""/>
-            <display item="Button 14 255" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="Button 15 Sound"/>
-          </column>
-          <column>
-            <display item="Button 15 0" label=""/>
-            <display item="Button 15 1" label=""/>
-            <display item="Button 15 255" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="Button 16 Sound"/>
-          </column>
-          <column>
-            <display item="Button 16 0" label=""/>
-            <display item="Button 16 1" label=""/>
-            <display item="Button 16 255" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="Button 17 Sound"/>
-          </column>
-          <column>
-            <display item="Button 17 0" label=""/>
-            <display item="Button 17 1" label=""/>
-            <display item="Button 17 255" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="Button 18 Sound"/>
-          </column>
-          <column>
-            <display item="Button 18 0" label=""/>
-            <display item="Button 18 1" label=""/>
-            <display item="Button 18 255" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="Button 19 Sound"/>
-          </column>
-          <column>
-            <display item="Button 19 0" label=""/>
-            <display item="Button 19 1" label=""/>
-            <display item="Button 19 255" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="Button 20 Sound"/>
-          </column>
-          <column>
-            <display item="Button 20 0" label=""/>
-            <display item="Button 20 1" label=""/>
-            <display item="Button 20 255" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="Button 21 Sound"/>
-          </column>
-          <column>
-            <display item="Button 21 0" label=""/>
-            <display item="Button 21 1" label=""/>
-            <display item="Button 21 255" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="Button 22 Sound"/>
-          </column>
-          <column>
-            <display item="Button 22 0" label=""/>
-            <display item="Button 22 1" label=""/>
-            <display item="Button 22 255" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="Button 23 Sound"/>
-          </column>
-          <column>
-            <display item="Button 23 0" label=""/>
-            <display item="Button 23 1" label=""/>
-            <display item="Button 23 255" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="Button 24 Sound"/>
-          </column>
-          <column>
-            <display item="Button 24 0" label=""/>
-            <display item="Button 24 1" label=""/>
-            <display item="Button 24 255" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="Button 25 Sound"/>
-          </column>
-          <column>
-            <display item="Button 25 0" label=""/>
-            <display item="Button 25 1" label=""/>
-            <display item="Button 25 255" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="Button 26 Sound"/>
-          </column>
-          <column>
-            <display item="Button 26 0" label=""/>
-            <display item="Button 26 1" label=""/>
-            <display item="Button 26 255" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="Button 27 Sound"/>
-          </column>
-          <column>
-            <display item="Button 27 0" label=""/>
-            <display item="Button 27 1" label=""/>
-            <display item="Button 27 255" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="Button 28 Sound"/>
-          </column>
-          <column>
-            <display item="Button 28 0" label=""/>
-            <display item="Button 28 1" label=""/>
-            <display item="Button 28 255" label=""/>
-          </column>
-        </row>
-      </column>
-      <column>
-        <row>
-          <column>
-            <display item="Random 1 Sound"/>
-          </column>
-          <column>
-            <display item="Random 1 0" label=""/>
-            <display item="Random 1 1" label=""/>
-            <display item="Random 1 255" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="Random 2 Sound"/>
-          </column>
-          <column>
-            <display item="Random 2 0" label=""/>
-            <display item="Random 2 1" label=""/>
-            <display item="Random 2 255" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="Random 3 Sound"/>
-          </column>
-          <column>
-            <display item="Random 3 0" label=""/>
-            <display item="Random 3 1" label=""/>
-            <display item="Random 3 255" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="Random 4 Sound"/>
-          </column>
-          <column>
-            <display item="Random 4 0" label=""/>
-            <display item="Random 4 1" label=""/>
-            <display item="Random 4 255" label=""/>
-          </column>
-        </row>
-      </column>
+		<display item="Button 0 Sound" layout="above" format="tree"/>
+		<display item="Button 1 Sound" layout="above" format="tree"/>
+		<display item="Button 2 Sound" layout="above" format="tree"/>
+		<display item="Button 3 Sound" layout="above" format="tree"/>
+		<display item="Button 4 Sound" layout="above" format="tree"/>
+		<display item="Button 5 Sound" layout="above" format="tree"/>
+		<display item="Button 6 Sound" layout="above" format="tree"/>
+		<display item="Button 7 Sound" layout="above" format="tree"/>
+		<display item="Button 8 Sound" layout="above" format="tree"/>
+		<display item="Button 9 Sound" layout="above" format="tree"/>
+		<display item="Button 10 Sound" layout="above" format="tree"/>
+		<display item="Button 11 Sound" layout="above" format="tree"/>
+		<display item="Button 12 Sound" layout="above" format="tree"/>
+		<display item="Button 13 Sound" layout="above" format="tree"/>
+		<display item="Button 14 Sound" layout="above" format="tree"/>
+		<display item="Button 15 Sound" layout="above" format="tree"/>
+		<display item="Button 16 Sound" layout="above" format="tree"/>
     </row>
-    <label>
-      <text>   </text>
-    </label>
+	<label>
+		<text>   </text>
+	</label>
     <row>
-      <column>
-        <display item="Dual function F7" format="checkbox"/>
-        <display item="Dual function F8" format="checkbox"/>
-        <display item="Dual function F9" format="checkbox"/>
-        <display item="Dual function F10" format="checkbox"/>
-        <display item="Dual function F11" format="checkbox"/>
-        <display item="Dual function F12" format="checkbox"/>
-        <display item="Dual function F13" format="checkbox"/>
-        <display item="Dual function F14" format="checkbox"/>
-      </column>
-      <column>
-        <display item="Dual function F0F" format="checkbox"/>
-        <display item="Dual function F0R" format="checkbox"/>
-        <display item="Dual function F1" format="checkbox"/>
-        <display item="Dual function F2" format="checkbox"/>
-        <display item="Dual function F3" format="checkbox"/>
-        <display item="Dual function F4" format="checkbox"/>
-        <display item="Dual function F5" format="checkbox"/>
-        <display item="Dual function F6" format="checkbox"/>
-      </column>
+		<display item="Button 17 Sound" layout="above" format="tree"/>
+		<display item="Button 18 Sound" layout="above" format="tree"/>
+		<display item="Button 19 Sound" layout="above" format="tree"/>
+		<display item="Button 20 Sound" layout="above" format="tree"/>
+		<display item="Button 21 Sound" layout="above" format="tree"/>
+		<display item="Button 22 Sound" layout="above" format="tree"/>
+		<display item="Button 23 Sound" layout="above" format="tree"/>
+		<display item="Button 24 Sound" layout="above" format="tree"/>
+		<display item="Button 25 Sound" layout="above" format="tree"/>
+		<display item="Button 26 Sound" layout="above" format="tree"/>
+		<display item="Button 27 Sound" layout="above" format="tree"/>
+		<display item="Button 28 Sound" layout="above" format="tree"/>
+		<display item="Random 1 Sound" layout="above" format="tree"/>
+		<display item="Random 2 Sound" layout="above" format="tree"/>
+		<display item="Random 3 Sound" layout="above" format="tree"/>
+		<display item="Random 4 Sound" layout="above" format="tree"/>
+    </row>
+	<label>
+		<text>   </text>
+	</label>
+    <row>
+		<column>
+			<display item="Dual function F0F" format="checkbox"/>
+			<display item="Dual function F0R" format="checkbox"/>
+			<display item="Dual function F1" format="checkbox"/>
+			<display item="Dual function F2" format="checkbox"/>
+			<display item="Dual function F3" format="checkbox"/>
+			<display item="Dual function F4" format="checkbox"/>
+			<display item="Dual function F5" format="checkbox"/>
+			<display item="Dual function F6" format="checkbox"/>
+		</column>
+		<column>
+			<display item="Dual function F7" format="checkbox"/>
+			<display item="Dual function F8" format="checkbox"/>
+			<display item="Dual function F9" format="checkbox"/>
+			<display item="Dual function F10" format="checkbox"/>
+			<display item="Dual function F11" format="checkbox"/>
+			<display item="Dual function F12" format="checkbox"/>
+			<display item="Dual function F13" format="checkbox"/>
+			<display item="Dual function F14" format="checkbox"/>
+		</column>
     </row>
   </column>
   <name xml:lang="it">Funzioni Suono</name>
