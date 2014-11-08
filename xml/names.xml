@@ -858,7 +858,34 @@
 		<definition item="Sound Group 4 Option 6" />
 		<definition item="Sound Group 4 Option 7" />
 		<definition item="Sound Group 4 Option 8" />
-		
+
+        <definition item="Sound Group 5 Checkbox 1" />
+        <definition item="Sound Group 5 Checkbox 2" />
+        <definition item="Sound Group 5 Checkbox 3" />
+        <definition item="Sound Group 5 Checkbox 4" />
+        <definition item="Sound Group 5 Checkbox 5" />
+        <definition item="Sound Group 5 Checkbox 6" />
+        <definition item="Sound Group 5 Checkbox 7" />
+        <definition item="Sound Group 5 Checkbox 8" />
+
+        <definition item="Sound Group 6 Checkbox 1" />
+        <definition item="Sound Group 6 Checkbox 2" />
+        <definition item="Sound Group 6 Checkbox 3" />
+        <definition item="Sound Group 6 Checkbox 4" />
+        <definition item="Sound Group 6 Checkbox 5" />
+        <definition item="Sound Group 6 Checkbox 6" />
+        <definition item="Sound Group 6 Checkbox 7" />
+        <definition item="Sound Group 6 Checkbox 8" />
+
+        <definition item="Sound Group 7 Checkbox 1" />
+        <definition item="Sound Group 7 Checkbox 2" />
+        <definition item="Sound Group 7 Checkbox 3" />
+        <definition item="Sound Group 7 Checkbox 4" />
+        <definition item="Sound Group 7 Checkbox 5" />
+        <definition item="Sound Group 7 Checkbox 6" />
+        <definition item="Sound Group 7 Checkbox 7" />
+        <definition item="Sound Group 7 Checkbox 8" />
+
 		<!-- Volumes and other analog settings -->
 		<definition item="Sound Setting 1" />
 		<definition item="Sound Setting 2" />
