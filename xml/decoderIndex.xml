@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="/xml/XSLT/DecoderID.xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 20141107-1807-jake on Fri Nov 07 10:07:32 PST 2014 $Id$-->
-  <decoderIndex version="466">
+  <!--Written by JMRI version 20141108-0040-jake on Fri Nov 07 16:40:27 PST 2014 $Id$-->
+  <decoderIndex version="468">
     <mfgList nmraListDate="2014-09-22" updated="2014-10-11" lastadd="107,124">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -42117,49 +42117,225 @@
       </family>
       <family name="WOW Sound" mfg="Train Control Systems" comment="TCS FW Starting Jan 2012" file="TCS_WOW_FW01.xml">
         
-      
-        <model model="WOWSound Steam" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="TBD" lowVersionID="1" highVersionID="1" productID="61">
+				
+        <model show="no" model="WOWSound Steam" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="TBD" lowVersionID="1" highVersionID="1" productID="61" replacementModel="WOW Sound 100" replacementFamily="WOW Sound">
           
-        
+					
           <output name="1" label="White" connection="solder" maxcurrent="100 mA" />
           
-        
+					
           <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
           
-        
+					
           <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
           
-        
+					
           <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
           
-        
+					
           <output name="5" label="Brown" connection="solder" maxcurrent="100 mA" />
           
-        
+					
           <output name="6" label="Pink" connection="solder" maxcurrent="100 mA" />
           
-        
+					
           <output name="Dim" />
           
-        
+					
           <output name="Ditch" />
           
-        
+					
           <output name="Motor" />
           
-        
+					
           <output name="BEMF" />
           
-        
+					
           <output name="Brake" />
           
-        
+					
           <size length="2.860" width="0.680" height="0.145" units="inches" />
           
-      
+				
         </model>
         
-    
+				
+        <model model="WOW Sound 100" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="TBD" lowVersionID="1" highVersionID="1" productID="61">
+          
+					
+          <output name="1" label="White" connection="solder" maxcurrent="100 mA" />
+          
+					
+          <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
+          
+					
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          
+					
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          
+					
+          <output name="5" label="Brown" connection="solder" maxcurrent="100 mA" />
+          
+					
+          <output name="6" label="Pink" connection="solder" maxcurrent="100 mA" />
+          
+					
+          <output name="Dim" />
+          
+					
+          <output name="Ditch" />
+          
+					
+          <output name="Motor" />
+          
+					
+          <output name="BEMF" />
+          
+					
+          <output name="Brake" />
+          
+					
+          <size length="2.860" width="0.680" height="0.145" units="inches" />
+          
+				
+        </model>
+        
+		
+      </family>
+      <family name="WOW Sound Set 2" mfg="Train Control Systems" comment="TCS FW Starting Jan 2012" file="TCS_WOW_FW02.xml">
+        
+				
+        <model model="WOW Sound 101" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="TBD" lowVersionID="2" highVersionID="2" productID="61">
+          
+					
+          <output name="1" label="White" connection="solder" maxcurrent="100 mA" />
+          
+					
+          <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
+          
+					
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          
+					
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          
+					
+          <output name="5" label="Brown" connection="solder" maxcurrent="100 mA" />
+          
+					
+          <output name="6" label="Pink" connection="solder" maxcurrent="100 mA" />
+          
+					
+          <output name="Dim" />
+          
+					
+          <output name="Ditch" />
+          
+					
+          <output name="Motor" />
+          
+					
+          <output name="BEMF" />
+          
+					
+          <output name="Brake" />
+          
+					
+          <size length="2.860" width="0.680" height="0.145" units="inches" />
+          
+				
+        </model>
+        
+		
+      </family>
+      <family name="WOW Sound Set 3" mfg="Train Control Systems" comment="TCS FW Starting Jan 2012" file="TCS_WOW_FW03.xml">
+        
+				
+        <model model="WOW Sound 101" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="TBD" lowVersionID="3" highVersionID="3" productID="61">
+          
+					
+          <output name="1" label="White" connection="solder" maxcurrent="100 mA" />
+          
+					
+          <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
+          
+					
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          
+					
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          
+					
+          <output name="5" label="Brown" connection="solder" maxcurrent="100 mA" />
+          
+					
+          <output name="6" label="Pink" connection="solder" maxcurrent="100 mA" />
+          
+					
+          <output name="Dim" />
+          
+					
+          <output name="Ditch" />
+          
+					
+          <output name="Motor" />
+          
+					
+          <output name="BEMF" />
+          
+					
+          <output name="Brake" />
+          
+					
+          <size length="2.860" width="0.680" height="0.145" units="inches" />
+          
+				
+        </model>
+        
+				
+        <model model="WOW Sound 121" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="TBD" lowVersionID="3" highVersionID="3" productID="61">
+          
+					
+          <output name="1" label="White" connection="solder" maxcurrent="100 mA" />
+          
+					
+          <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
+          
+					
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          
+					
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          
+					
+          <output name="5" label="Brown" connection="solder" maxcurrent="100 mA" />
+          
+					
+          <output name="6" label="Pink" connection="solder" maxcurrent="100 mA" />
+          
+					
+          <output name="Dim" />
+          
+					
+          <output name="Ditch" />
+          
+					
+          <output name="Motor" />
+          
+					
+          <output name="BEMF" />
+          
+					
+          <output name="Brake" />
+          
+					
+          <size length="1.28" width="0.69" height="0.22" units="inches" />
+          
+				
+        </model>
+        
+		
       </family>
       <family name="TCS X Series Decoders" mfg="Train Control Systems" file="TCS_X.xml">
         
