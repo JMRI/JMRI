@@ -55,7 +55,7 @@
 
 			<xi:include href="http://jmri.org/xml/decoders/qdecoder/mfgVersionId.xml"/>
 
-			<xi:include href="http://jmri.org/xml/decoders/qdecoder/modesZbasic.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/qdecoder/modesZBasic.xml"/>
 
 			<xi:include href="http://jmri.org/xml/decoders/qdecoder/qDecoderInfo.xml"/>
     </variables>
