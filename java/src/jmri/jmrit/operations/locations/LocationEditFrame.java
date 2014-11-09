@@ -265,11 +265,12 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
 		toolMenu.add(new TrackCopyAction(this));
-		toolMenu.add(new ChangeTracksTypeAction(this));
+		toolMenu.add(new ChangeTracksTypeAction(this));		
 		toolMenu.add(new ModifyLocationsAction(Bundle.getMessage("TitleModifyLocation"), _location));
 		toolMenu.add(new ModifyLocationsCarLoadsAction(_location));
 		toolMenu.add(new ShowTrainsServingLocationAction(Bundle.getMessage("MenuItemShowTrainsLocation"), _location,
 				null));
+		toolMenu.add(new EditCarTypeAction());
 		toolMenu.add(new ShowCarsByLocationAction(false, locationName, null));
 		toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPrint"), false, location));
 		toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPreview"), true, location));
