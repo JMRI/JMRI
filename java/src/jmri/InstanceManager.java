@@ -583,12 +583,21 @@ public class InstanceManager {
     //
     static public void setCommandStation(CommandStation p) {
         store(p, CommandStation.class);
-	    if(consistManagerInstance() == null || 
+
+        // since there is a command station available, use
+        // the NMRA consist manager instead of the generic consist
+        // manager.
+	    if (consistManagerInstance() == null || 
             (consistManagerInstance()).getClass()==DccConsistManager.class){
-                // if there is a command station available, use
-                // the NMRA consist manager instead of the generic consist
-                // manager.
 		    setConsistManager(new NmraConsistManager());
+	    }
+	    
+	    // since there is a command station available, 
+	    // create a DCC turnout manager and make available
+	    if (getList(jmri.jmrix.dcc.DccTurnoutManager.class) == null || getList(jmri.jmrix.dcc.DccTurnoutManager.class).size() == 0) {
+	        jmri.jmrix.dcc.DccTurnoutManager m = new jmri.jmrix.dcc.DccTurnoutManager();
+	        store(m, jmri.jmrix.dcc.DccTurnoutManager.class);
+	        setTurnoutManager(m);
 	    }
     }
 

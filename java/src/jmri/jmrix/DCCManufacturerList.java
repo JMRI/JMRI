@@ -150,6 +150,7 @@ public class DCCManufacturerList {
     public static String getDCCSystemFromType(char a) {
         if (a=='I') return "Internal";
         else if (a=='A') return "Acela";
+        else if (a=='B') return "DCC Direct";
         else if (a=='C') return "C/MRI";
         else if (a=='D') return "SRCP";
         else if (a=='E') return "EasyDCC";
@@ -178,6 +179,7 @@ public class DCCManufacturerList {
     public static char getTypeFromDCCSystem(String a){
         if (a.equals("Internal")) return 'I';
         else if (a.equals("Acela")) return 'A';
+        else if (a.equals("DCC Direct")) return 'B';
         else if (a.equals("C/MRI")) return 'C';
         else if (a.equals("SRCP")) return 'D';
         else if (a.equals("EasyDCC")) return 'E';

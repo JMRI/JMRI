@@ -26,7 +26,8 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.dcc.PackageTest");  // no tests in this class itself
-//        suite.addTest(new TestSuite(FooTest.class));
+        suite.addTest(new TestSuite(DccTurnoutTest.class));
+        suite.addTest(new TestSuite(DccTurnoutManagerTest.class));
         return suite;
     }
 
