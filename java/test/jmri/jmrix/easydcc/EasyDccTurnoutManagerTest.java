@@ -35,7 +35,7 @@ public class EasyDccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrT
 		assertTrue( null != (EasyDccTurnout)o);
 
 		// make sure loaded into tables
-		if (log.isDebugEnabled()) log.debug("by system name: "+l.getBySystemName("NT21"));
+		if (log.isDebugEnabled()) log.debug("by system name: "+l.getBySystemName("ET21"));
 		if (log.isDebugEnabled()) log.debug("by user name:   "+l.getByUserName("my name"));
 
 		assertTrue(null != l.getBySystemName("ET21"));
