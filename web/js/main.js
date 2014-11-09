@@ -134,6 +134,10 @@ function setFontSize(change) {
     } else if (change === -1 && size > minFontSize) {
         size--;
         $("#font-size-larger").parent().removeClass("disabled");
+    } else if (change === 14) {
+        size = 14;
+        $("#font-size-smaller").parent().removeClass("disabled");
+        $("#font-size-larger").parent().removeClass("disabled");
     }
     $("body").css("fontSize", size + "px");
     window.localStorage.setItem("jmri.css.font-size.body", size);
@@ -149,20 +153,32 @@ function setFontSize(change) {
     }
 }
 
+/*
+ * Allow users to fix the navbar to the browser window. First use after page
+ * loads should pass a null value as its parameter to read either localStorage
+ * or page parameters.
+ *
+ * The parameter jmri.css.navbar.fixed=0 can be appended to the URL to set the
+ * default value to false if it has not already been set in localStorage.
+ *
+ * @param {type} fixed true if navbar should be fixed
+ * @returns {undefined}
+ */
 function setNavbarFixed(fixed) {
     if (fixed === null) {
         if (window.localStorage.getItem("jmri.css.navbar.fixed") !== null) {
-            fixed = (parseInt(window.localStorage.getItem("jmri.css.navbar.fixed")) === 1) ? true : false;
-            if (window.console) {
-                console.log("Getting navbar " + ((fixed === true) ? "fixed" : "floating") + " from localStorage");
-            }
+            fixed = (parseInt(window.localStorage.getItem("jmri.css.navbar.fixed")) === 1);
         }
         $("#navbar-fixed-position").change(function () {
             setNavbarFixed($(this).prop("checked"));
         });
     }
     if (fixed === null) {
-        fixed = true;
+        if (getParameterByName("jmri.css.navbar.fixed") !== null) {
+            fixed = (parseInt(getParameterByName("jmri.css.navbar.fixed")) === 1);
+        } else {
+            fixed = true;
+        }
     }
     if (fixed === true) {
         $(".navbar").removeClass("navbar-static-top").addClass("navbar-fixed-top");
@@ -266,6 +282,12 @@ $(document).ready(function () {
     getRosterGroups(); // list roster groups in menu
     setFontSize(0); // get the user's prefered font size
     setNavbarFixed(null); // make the navbar floating or fixed
+    $("#reset-local-preferences").click(function () {
+        window.localStorage.removeItem("jmri.css.navbar.fixed"); // remove user preference
+        setNavbarFixed(null); // reset to default or passed in parameter
+        setFontSize(14); // reset to default
+        return false;
+    });
     nbJmri = $.JMRI({
         open: function () {
             nbJmri.getPower();
