@@ -55,9 +55,9 @@ public abstract class AbstractTurnoutMgrTest extends TestCase {
 		// create
 		Turnout t = l.newTurnout(getSystemName(getNumToTest1()), "mine");
 		// check
-		Assert.assertTrue("real object returned ", t != null);
-		Assert.assertTrue("user name correct ", t == l.getByUserName("mine"));
-		Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+		Assert.assertNotNull("real object returned ", t);
+		Assert.assertEquals("user name correct ", t, l.getByUserName("mine"));
+		Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
 	}
 
 	public void testDefaultSystemName() {
