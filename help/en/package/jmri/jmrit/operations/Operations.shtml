@@ -1276,7 +1276,9 @@
    deselect all types, or "Select All" to select all types, then select or deselect the rolling
    stock you wish the location to accept. After configuring the tracks for a location, you can use
    the "Auto Select" button to have the location reflect the rolling stock serviced by the various
-   tracks.
+   tracks. See
+   <A HREF="#EditCarAttributes">Edit Car Attributes</A> to add or delete car types that a location
+   can service.
 
    <H3>Location Comment</H3>
 
@@ -1347,7 +1349,7 @@
    is restricted to the ones that the location can service. If the rolling stock that you wish
    doesn't appear for a yard, confirm that the location's rolling stock types are properly selected.
    If the rolling stock type you want doesn't exist for a location, you will have to create the type
-   using the <A HREF="#Cars">Cars</A> window and editing any car. 
+   using the <A HREF="#EditCarAttributes">Edit Car Attributes</A> window. 
    
    <A NAME="RoadOptions"></A>
    <H3>Road Options</H3>
@@ -2101,7 +2103,8 @@
    <H3>Adding Cars to your Roster</H3>
 
    To manually add a car to your roster, press the "Add" button located at the bottom of the
-   "Tools-&gt;Operations-&gt;Cars" window.
+   "Tools-&gt;Operations-&gt;Cars" window.  Once a car has been created, you can use the "Edit"
+   button for a car in the "Cars" window to modify the car's attributes.
 
    <P>
     <img src="images/EditCar.png">
@@ -2237,8 +2240,10 @@
    <A NAME="EditCarAttributes"></A>
    <H3>Edit Car Attributes</H3>
 
-   To the right of each of the car attributes (Road, Type, Length, Color, Kernel, Load, Owner) is an
-   "Edit" button. Use this to add, delete, or replace the available attributes for a car.
+   To the right of each of the car attributes (Road, Type, Length, Color, Kernel, Load, Owner) in
+   the <A HREF="#CarsEdit">Edit Car</A> or
+   <A HREF="#CarsEdit">Add Car</A> window is an "Edit" button. Use this to add, delete, or replace
+   the various attributes for a car.
 
    <P>
     <img src="images/EditCarAttribute.png">
@@ -2249,18 +2254,18 @@
    of'cars that have this particular attribute. The delete option will prompt you to delete any
    attribute that hasn't been assigned to a car.
 
-   <H3>Add Button</H3>
+   <H4>Add Button</H4>
 
    To add a new car attribute, enter the desired text in the text box and press the "Add" button.
    When you first enter a new car attribute it will show up at the start of the list. Later when
    your restart the program it will be sorted in the correct order.
 
-   <H3>Delete Button</H3>
+   <H4>Delete Button</H4>
 
    To delete a car attribute, select the attribute you want to delete in the menu box and press the
    "Delete" button.
 
-   <H3>Replace Button</H3>
+   <H4>Replace Button</H4>
 
    If you need to change a specific car attribute (road, type, color, etc) in your entire car
    roster, you can use the "Replace" button found at the bottom right of the edit car attribute
