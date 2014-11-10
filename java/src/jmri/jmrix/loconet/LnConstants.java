@@ -460,6 +460,20 @@ public final static int RE_DPLX_SCAN_QUERY_B4              = 0x00 ;
 public final static int RE_DPLX_SCAN_REPORT_B2             = 0x10 ;
 public final static int RE_DPLX_SCAN_REPORT_B3             = 0x10 ;
 
+// Intellibox-II mobile decoder function control
+public final static int RE_OPC_IB2_F9_F12                  = 0xA3;
+public final static int RE_IB2_F9_MASK                     = 0x01;
+public final static int RE_IB2_F10_MASK                    = 0x02;
+public final static int RE_IB2_F11_MASK                    = 0x04;
+public final static int RE_IB2_F12_MASK                    = 0x08;
+public final static int RE_OPC_IB2_SPECIAL                 = 0xD4;
+public final static int PE_IB2_SPECIAL_FUNCS_TOKEN         = 0x20;
+public final static int RE_IB2_SPECIAL_F13_F19_TOKEN       = 0x08;
+public final static int RE_IB2_SPECIAL_F21_F27_TOKEN       = 0x09;
+public final static int RE_IB2_SPECIAL_F20_F28_TOKEN       = 0x05;
+public final static int RE_IB2_SPECIAL_F20_MASK            = 0x20;
+public final static int RE_IB2_SPECIAL_F28_MASK            = 0x40;
+
 }
 
 
