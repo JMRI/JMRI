@@ -343,10 +343,13 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
             		if (str.equals("Off")) {
             			t.setInhibitOperation(true);
             		} else if (!str.equals("Default")) {
+            			t.setInhibitOperation(false);
             			TurnoutOperation toper =
             				TurnoutOperationManager.getInstance().getOperation(str);
             			t.setTurnoutOperation(toper);
-            		}
+            		} else {
+            			t.setInhibitOperation(false);
+                        }
             	}
             }
 			

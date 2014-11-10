@@ -749,8 +749,8 @@ public class TurnoutTableAction extends AbstractTableAction {
     	}
     	java.util.Collections.sort(strings);
     	java.util.Collections.sort(defStrings);
-    	strings.insertElementAt("Off",0);
-    	strings.insertElementAt("Use Global Default",1);
+    	strings.insertElementAt(rbean.getString("TurnoutOperationOff"),0);
+    	strings.insertElementAt(rbean.getString("TurnoutOperationDefault"),1);
     	for (int i=0; i<defStrings.size(); ++i) {
             try {
                 strings.insertElementAt(defStrings.elementAt(i),i+2);
@@ -764,7 +764,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     	if (t.getInhibitOperation()) {
             cb.setSelectedIndex(0);
     	} else if (t.getTurnoutOperation() == null) {
-            cb.setSelectedIndex(0);
+            cb.setSelectedIndex(1);
     	} else if (t.getTurnoutOperation().isNonce()) {
             cb.setSelectedIndex(2);
     	} else {

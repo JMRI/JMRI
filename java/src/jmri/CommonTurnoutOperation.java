@@ -6,6 +6,7 @@ package jmri;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.implementation.AbstractTurnout;
+import java.util.ResourceBundle;
 
 /**
  * CommonTurnoutOperation class - specialization of TurnoutOperation to contain
@@ -30,6 +31,8 @@ public abstract class CommonTurnoutOperation extends TurnoutOperation {
 	static public final int intervalStepSize = 50;
 	static public final int minMaxTries = 1;
 	static public final int maxMaxTries = 10;
+
+        static protected final ResourceBundle rb = ResourceBundle.getBundle("jmri.NamedBeanBundle");
 	
 	public CommonTurnoutOperation(String n, int i, int mt) {
 		super(n);

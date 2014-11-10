@@ -440,7 +440,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
 	protected TurnoutOperation myTurnoutOperation;
 
-	protected boolean inhibitOperation = false; // do not automate this turnout, even if globally operations are on
+	protected boolean inhibitOperation = true; // do not automate this turnout, even if globally operations are on
 
 	public TurnoutOperator getCurrentOperator() {
 		return myOperator;
@@ -451,6 +451,9 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 	}
 
 	public void setTurnoutOperation(TurnoutOperation toper) {
+                if(log.isDebugEnabled()){
+                   log.debug("setTurnoutOperation Called for turnout {}.  Operation type {}",this.getSystemName(),toper);
+                }
 		TurnoutOperation oldOp = myTurnoutOperation;
 		if (myTurnoutOperation != null) {
 			myTurnoutOperation.removePropertyChangeListener(this);
