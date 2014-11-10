@@ -191,19 +191,19 @@ public class SE8Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
     JCheckBox fullmode            = new JCheckBox("Reserved (OpSw 1)");  // opsw 01
     JCheckBox twoaspects          = new JCheckBox("Two aspects (one turnout address) per head");  // opsw 02
-    JComboBox section1to4mode     = new JComboBox(new String[] {
+    JComboBox section1to4mode     = new JComboBox<String>(new String[] {
                                               "3 LEDs common anode","3 LEDs common cathode",
                                               "3-wire searchlight common anode","3-wire searchlight common cathode",
                                               "Reserved (4)", "Reserved (5)",
                                               "2-wire searchlight common anode","2-wire searchlight common cathode"
                                               });  // opsw 3, 4, 5
-    JComboBox section5to8mode     = new JComboBox(new String[] {
+    JComboBox section5to8mode     = new JComboBox<String>(new String[] {
                                               "3 LEDs common anode","3 LEDs common cathode",
                                               "3-wire searchlight common anode","3-wire searchlight common cathode",
                                               "Reserved (4)", "Reserved (5)",
                                               "2-wire searchlight common anode","2-wire searchlight common cathode"
                                               });  // opsw 6, 7, 8
-    JComboBox fourthAspect        = new JComboBox(new String[] {
+    JComboBox fourthAspect        = new JComboBox<String>(new String[] {
                                               "flashing yellow", "flashing red",
                                               "dark","flashing green"
                                               });  // opsw 9, 10

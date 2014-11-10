@@ -3212,6 +3212,7 @@ public class Llnmon {
             // Because the usage of other tokens in message element(3) are not yet 
             // understood, let execution fall thru to the "default" case
         }// case LnConstants.RE_OPC_IB2_F8_F12
+            //$FALL-THROUGH$
 
 
 

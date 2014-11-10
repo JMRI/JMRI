@@ -36,7 +36,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
 		// Create our UI elements, two buttons and a drop-down.
 		setButton = new javax.swing.JButton(rb.getString("ButtonSet"));
 		readButton = new javax.swing.JButton(rb.getString("ButtonRead"));
-		idBox = new javax.swing.JComboBox(IDValues);
+		idBox = new javax.swing.JComboBox<String>(IDValues);
 
 		// Do our layout, two buttons side by side, drop down below.
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
