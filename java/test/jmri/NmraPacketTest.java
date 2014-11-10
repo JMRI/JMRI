@@ -325,6 +325,36 @@ public class NmraPacketTest extends TestCase {
 		Assert.assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
 	}
 
+	public void testAccDecoderPktOpsModeLegacy1() {
+	    int address = 12;
+	    int cv = 556;
+	    int data = 34;
+		byte[] ba = NmraPacket.accDecoderPktOpsMode(address, cv, data);
+		
+		// the following values have not been independently validated
+		Assert.assertEquals("length", 6, ba.length);
+		Assert.assertEquals("byte 0", 0x83, ba[0]&0xFF);
+		Assert.assertEquals("byte 1", 0xFE, ba[1]&0xFF);
+		Assert.assertEquals("byte 2", 0xEE, ba[2]&0xFF);
+		Assert.assertEquals("byte 3", 0x2B, ba[3]&0xFF);
+		Assert.assertEquals("byte 4", data, ba[4]&0xFF);
+	}
+
+	public void testAccDecoderPktOpsModeLegacy2() {
+	    int address = 13;
+	    int cv = 557;
+	    int data = 34;
+		byte[] ba = NmraPacket.accDecoderPktOpsMode(address, cv, data);
+		
+		// the following values have not been independently validated
+		Assert.assertEquals("length", 6, ba.length);
+		Assert.assertEquals("byte 0", 0x84, ba[0]&0xFF);
+		Assert.assertEquals("byte 1", 0xF8, ba[1]&0xFF);
+		Assert.assertEquals("byte 2", 0xEE, ba[2]&0xFF);
+		Assert.assertEquals("byte 3", 0x2C, ba[3]&0xFF);
+		Assert.assertEquals("byte 4", data, ba[4]&0xFF);
+	}
+
         
 	// from here down is testing infrastructure
 	public NmraPacketTest(String s) {
