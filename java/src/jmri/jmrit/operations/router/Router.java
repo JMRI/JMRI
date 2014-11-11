@@ -227,8 +227,6 @@ public class Router extends TrainCommon {
 			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterTrainCanNotStaging"),
 					new Object[] { _train.getName(), car.toString(), car.getLocationName(), clone.getDestinationName(),
 							clone.getDestinationTrackName() }));
-			// log.debug("Car ({}) destination ({}, {}) is not serviced by train ({}) out of staging", car.toString(),
-			// clone.getDestinationName(), clone.getDestinationTrackName(), _train.getName());
 			if (!_train.getServiceStatus().equals(""))
 				addLine(_buildReport, SEVEN, _train.getServiceStatus());
 		} else if (!trainServicesCar) {
@@ -265,6 +263,8 @@ public class Router extends TrainCommon {
 			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("TrainDoesNotServiceCar"),
 					new Object[] { _train.getName(), car.toString(), clone.getDestinationName(),
 							clone.getDestinationTrackName() }));
+			if (!_train.getServiceStatus().equals(""))
+				addLine(_buildReport, SEVEN, _train.getServiceStatus());
 			_status = STATUS_NOT_THIS_TRAIN;
 			return true; // car can be routed, but not by this train!
 		}
