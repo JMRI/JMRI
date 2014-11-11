@@ -30,7 +30,7 @@ public class MonTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.lenz.swing.mon.MonTest");  // no tests in this class itself
-        suite.addTest(new TestSuite(XNetMonFrameTest.class));
+        suite.addTest(new TestSuite(XNetMonPaneTest.class));
         return suite;
     }
 

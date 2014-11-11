@@ -29,7 +29,7 @@ public class XNetMenu extends JMenu {
         else
           setText(rb.getString("MenuXPressNet"));
 
-        add(new jmri.jmrix.lenz.swing.mon.XNetMonAction(rb.getString("MenuItemXNetCommandMonitor"),memo));
+        add(new jmri.jmrix.lenz.swing.mon.XNetMonAction());
         add(new jmri.jmrix.lenz.swing.systeminfo.SystemInfoAction(rb.getString("MenuItemXNetSystemInformation"),memo));
         add(new jmri.jmrix.lenz.swing.packetgen.PacketGenAction(rb.getString("MenuItemSendXNetCommand"),memo));
 	add(new javax.swing.JSeparator());
