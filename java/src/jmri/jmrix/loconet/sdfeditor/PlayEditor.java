@@ -66,7 +66,7 @@ class PlayEditor extends SdfMacroEditor {
     
     SpinnerNumberModel handleModel = new SpinnerNumberModel(0, 0, 63, 1);
     JSpinner handle = new JSpinner(handleModel);
-    JComboBox loop = new JComboBox<String>(SdfConstants.loopNames);
+    JComboBox loop = new JComboBox(SdfConstants.loopNames);
     JCheckBox wavbrk1 = new JCheckBox("Invert Loop Reason");
     JCheckBox wavbrk2 = new JCheckBox("Global Loop Reason");
     

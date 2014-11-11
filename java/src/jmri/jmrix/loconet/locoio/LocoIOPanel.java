@@ -55,7 +55,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
 
         TableColumnModel tcm = table.getColumnModel();
         // install a ComboBox editor on the OnMode column
-        JComboBox comboOnBox = new JComboBox<String>(data.getLocoIOModeList().getValidModes());
+        JComboBox comboOnBox = new JComboBox(data.getLocoIOModeList().getValidModes());
         comboOnBox.setEditable(true);
         DefaultCellEditor modeEditor = new DefaultCellEditor(comboOnBox);
         tcm.getColumn(LocoIOTableModel.MODECOLUMN).setCellEditor(modeEditor);

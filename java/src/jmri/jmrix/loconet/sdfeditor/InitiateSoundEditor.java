@@ -29,7 +29,7 @@ class InitiateSoundEditor extends SdfMacroEditor {
         p.setLayout(new FlowLayout());
         
         p.add(new JLabel("Start sequence when: "));
-        box = new JComboBox<String>(SdfConstants.editorTriggerNames);
+        box = new JComboBox(SdfConstants.editorTriggerNames);
 
         // find & set index of selected value
         update();
