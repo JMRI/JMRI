@@ -98,6 +98,14 @@ public class ProgrammerFacadeSelector  {
                 log.debug("new programmer "+pf);
                 programmer = pf; // to go around and see if there are more
             
+            } else if (fname.equals("Ops Mode Accessory Programming")) {
+
+                jmri.implementation.AccessoryOpsModeProgrammerFacade pf =
+                    new jmri.implementation.AccessoryOpsModeProgrammerFacade(programmer);
+            
+                log.debug("new programmer "+pf);
+                programmer = pf; // to go around and see if there are more
+            
             } else {
                 log.error("Cannot create programmer capability named: "+fname);
             }
