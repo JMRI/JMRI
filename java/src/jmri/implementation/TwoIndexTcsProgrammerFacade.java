@@ -13,10 +13,16 @@ import jmri.jmrix.AbstractProgrammerFacade;
  * <p>
  * Used through the String write/read/confirm interface.  Accepts address formats:
  *<ul>
- *<li> T2CV.11.12 Writes 11 to the first index CV (201), 12 to the 2nd index CV (202), 
- *      then does write/read/confirm operations on CV 203 and 204
- *<li> T3CV.11.12.13 Writes 11 to the first index CV (201), the data to the 2nd index CV (202), 
- *      then writes 12 to CV203 and 13 to CV204.
+ *<li> T2CV.11.12 <BR>
+ *      The write operation writes 11 to the first index CV (201), 12 to the 2nd index CV (202), 
+ *      then writes the data to CV 203 (MSB) and 204 (LSB).<BR>
+ *      The read operation is slightly different, writing 111 (100+11) to CV201, then 
+ *      then 12 to the 2nd index CV (202), then writes 100 to CV204, then reads the two values
+ *      from CV203 and CV204.
+ *<li> T3CV.11.12.13 <BR>
+ *      The write operation writes 11 to the first index CV (201), the data to the 2nd index CV (202), 
+ *      then writes 12 to CV203 and 13 to CV204.<BR>
+ *      The read operation writes 11 to CV201, then 12 to CV203, then 13 to CV204, then reads from CV202.
   *</ul>
  * All others pass through to the next facade or programmer. E.g. 123 will do a write/read/confirm to 123,
  * or some other facade can provide "normal" indexed addressing.
