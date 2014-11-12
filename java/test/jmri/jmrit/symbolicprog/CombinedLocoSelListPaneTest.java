@@ -32,7 +32,7 @@ public class CombinedLocoSelListPaneTest extends TestCase {
     jmri.jmrit.decoderdefn.DecoderIndexFile.resetInstance();
 
     CombinedLocoSelListPane combinedlocosellistpane = new CombinedLocoSelListPane(val1);
-    combinedlocosellistpane.mDecoderList.setSelectedIndex(2);
+    combinedlocosellistpane.mDecoderList.setSelectedIndex(4);
     Assert.assertEquals("after update", true, combinedlocosellistpane.isDecoderSelected());
     String stringRet = combinedlocosellistpane.selectedDecoderType();
     Assert.assertEquals("selected item", "NMRA standard register definitions (NMRA standard register definitions)",
