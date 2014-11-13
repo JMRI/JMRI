@@ -21,7 +21,7 @@ from org.apache.log4j import Logger
 
 # Define turnout state file
 # Default is 'TurnoutState.csv' stored in the preferences directory
-turnoutFile = jmri.InstanceManager.configureManagerInstance().userFileLocationDefault() + "TurnoutState.csv"
+turnoutFile = jmri.util.FileUtil.getUserFilesPath() + "TurnoutState.csv"
 
 # Define task to persist turnout state at shutdown
 class PersistTurnoutStateTask(jmri.implementation.AbstractShutDownTask):
