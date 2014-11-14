@@ -678,7 +678,7 @@ public class JsonServlet extends WebSocketServlet {
                 log.debug("Sending hello");
                 this.handler.sendHello(this.wsConnection.getMaxIdleTime());
             } catch (IOException e) {
-                log.warn("Error openning WebSocket:\n{}", e.getMessage(), e);
+                log.warn("Error opening WebSocket:\n{}", e.getMessage());
                 this.wsConnection.close();
                 sockets.remove(this);
             }
@@ -696,7 +696,7 @@ public class JsonServlet extends WebSocketServlet {
             try {
                 this.handler.onMessage(string);
             } catch (IOException e) {
-                log.error("Error on WebSocket message:\n{}", e.getMessage(), e);
+                log.error("Error on WebSocket message:\n{}", e.getMessage());
                 this.wsConnection.close();
                 sockets.remove(this);
             }
