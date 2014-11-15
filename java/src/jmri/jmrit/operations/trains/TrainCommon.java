@@ -1698,7 +1698,7 @@ public class TrainCommon {
 		int charwidth = metrics.charWidth('m');
 		if (charwidth == 0) {
 			log.error("Line length charater width equal to zero. font size: {}, fontName: {}", fontSize, fontName);
-			return 80; // use 80 characters per line.
+			charwidth = fontSize/2; // create a reasonable character width
 		}
 		// compute lines and columns within margins
 		return getPageSize(orientation).width / charwidth;
