@@ -1612,8 +1612,7 @@ public class Track {
 				return OKAY; // no
 			return MessageFormat.format(Bundle.getMessage("carHasA"), new Object[] { CUSTOM, LOAD, car.getLoadName() });
 		}
-		log.debug(
-				"Track ({}) has schedule ({}) mode {}" + (getScheduleMode() == SEQUENTIAL ? " Sequential" : " Match"),
+		log.debug("Track ({}) has schedule ({}) mode {}" + (getScheduleMode() == SEQUENTIAL ? " Sequential" : " Match"),
 				getName(), getScheduleName(), getScheduleMode()); // NOI18N
 
 		ScheduleItem si = getCurrentScheduleItem();

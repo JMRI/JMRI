@@ -277,7 +277,7 @@ public class Car extends RollingStock {
 		String old = _pickupScheduleId;
 		_pickupScheduleId = id;
 		if (!old.equals(id))
-			firePropertyChange("car pickup schedule chnages", old, id);
+			firePropertyChange("car pickup schedule changes", old, id); // NOI18N
 	}
 
 	public String getPickupScheduleId() {
@@ -288,7 +288,7 @@ public class Car extends RollingStock {
 		String old = _nextPickupScheduleId;
 		_nextPickupScheduleId = id;
 		if (!old.equals(id))
-			firePropertyChange("next car pickup schedule chnages", old, id);
+			firePropertyChange("next car pickup schedule changes", old, id); // NOI18N
 	}
 
 	public String getNextPickupScheduleId() {

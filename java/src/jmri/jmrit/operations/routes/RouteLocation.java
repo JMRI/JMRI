@@ -209,7 +209,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 		String old = _randomControl;
 		_randomControl = value;
 		if (!old.equals(value))
-			setDirtyAndFirePropertyChange("randomControl", old, value);
+			setDirtyAndFirePropertyChange("randomControl", old, value); // NOI18N
 	}
 	
 	public String getRandomControl() {

@@ -19,7 +19,7 @@ public class CarsTableAction extends AbstractAction {
 	}
 
 	public CarsTableAction() {
-		this(Bundle.getMessage("MenuCars"));
+		this(Bundle.getMessage("MenuCars")); // NOI18N
 	}
 
 	public void actionPerformed(ActionEvent e) {

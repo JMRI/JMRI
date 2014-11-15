@@ -19,7 +19,7 @@ public class EnginesTableAction extends AbstractAction {
 	}
 
 	public EnginesTableAction() {
-		this(Bundle.getMessage("MenuEngines"));
+		this(Bundle.getMessage("MenuEngines")); // NOI18N
 	}
 
 	public void actionPerformed(ActionEvent e) {

@@ -245,8 +245,8 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 
 		// is the table using XTableColumnModel?
 		if (sorter != null && sorter.getColumnCount() != table.getColumnCount()) {
-			log.debug("Sort column count: " + sorter.getColumnCount() + " table column count: "
-					+ table.getColumnCount() + " XTableColumnModel in use");
+			log.debug("Sort column count: {} table column count: {} XTableColumnModel in use", sorter.getColumnCount(),
+					table.getColumnCount());
 			XTableColumnModel tcm = (XTableColumnModel) table.getColumnModel();
 			// need to have all columns visible so we can get the proper column order
 			boolean[] columnVisible = new boolean[sorter.getColumnCount()];

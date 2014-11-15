@@ -1265,7 +1265,7 @@ public class TrainBuilder extends TrainCommon {
 						new Object[] { car.toString(), car.getTypeName(),
 								(car.getLocationName() + ", " + car.getTrackName()) }));
 				if (car.getTrack() == _departStageTrack)
-					throw new BuildFailedException("ERROR: Attempt to removed car with FRED or Caboose from staging");
+					throw new BuildFailedException("ERROR: Attempt to removed car with FRED or Caboose from staging"); // NOI18N
 				_carList.remove(car); // remove this car from the list
 				_carIndex--;
 			}
