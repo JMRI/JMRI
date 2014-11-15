@@ -55,6 +55,8 @@ public class TrainSwitchLists extends TrainCommon {
 				location.setSwitchListState(Location.SW_APPEND);
 			location.setStatus(Location.UPDATED);
 		}
+		
+		log.debug("Append: {} for location ({})", append, location.getName());
 
 		// create switch list file
 		File file = TrainManagerXml.instance().createSwitchListFile(location.getName());

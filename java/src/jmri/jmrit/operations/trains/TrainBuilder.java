@@ -1338,7 +1338,7 @@ public class TrainBuilder extends TrainCommon {
 
 			// is car at interchange?
 			if (car.getTrack().getTrackType().equals(Track.INTERCHANGE)) {
-				// don't service a car at interchange and has been dropped of by this train
+				// don't service a car at interchange and has been dropped off by this train
 				if (car.getTrack().getPickupOption().equals(Track.ANY)
 						&& car.getSavedRouteId().equals(_train.getRoute().getId())) {
 					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeCarDropByTrain"),
@@ -1357,7 +1357,8 @@ public class TrainBuilder extends TrainCommon {
 						log.debug("Car ({}) can be picked up by this train", car.toString());
 					} else {
 						addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeCarByTrain"),
-								new Object[] { car.toString(), car.getLocationName(), car.getTrackName() }));
+								new Object[] { car.toString(), car.getTrack().getTrackTypeName(),
+										car.getLocationName(), car.getTrackName() }));
 						_carList.remove(car);
 						_carIndex--;
 						continue;
@@ -1368,7 +1369,8 @@ public class TrainBuilder extends TrainCommon {
 						log.debug("Car ({}) can be picked up by this route", car.toString());
 					} else {
 						addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeCarByRoute"),
-								new Object[] { car.toString(), car.getLocationName(), car.getTrackName() }));
+								new Object[] { car.toString(), car.getTrack().getTrackTypeName(),
+										car.getLocationName(), car.getTrackName() }));
 						_carList.remove(car);
 						_carIndex--;
 						continue;
@@ -2343,7 +2345,7 @@ public class TrainBuilder extends TrainCommon {
 					log.debug("Car ({}) can be droped by train to track ({})", car.toString(), track.getName());
 				} else {
 					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCanNotDropCarTrain"),
-							new Object[] { car.toString(), _train.getName(), track.getName() }));
+							new Object[] { car.toString(), _train.getName(), track.getTrackTypeName(), track.getName() }));
 					return false;
 				}
 			}
@@ -2352,7 +2354,8 @@ public class TrainBuilder extends TrainCommon {
 					log.debug("Car ({}) can be droped by route to track ({})", car.toString(), track.getName());
 				} else {
 					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCanNotDropCarRoute"),
-							new Object[] { car.toString(), _train.getRoute().getName(), track.getName() }));
+							new Object[] { car.toString(), _train.getRoute().getName(), track.getTrackTypeName(),
+									track.getName() }));
 					return false;
 				}
 			}

@@ -1485,7 +1485,8 @@ public class Train implements java.beans.PropertyChangeListener {
 									if (addToReport)
 										TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 												.getMessage("buildCanNotDropCarTrain"), new Object[] { car.toString(),
-												getName(), car.getDestinationTrackName() }));
+												getName(), car.getDestinationTrack().getTrackTypeName(),
+												car.getDestinationTrackName() }));
 									continue;
 								}
 							} else if (rldest.getLocation().getLocationOps() == Location.STAGING
@@ -1529,7 +1530,8 @@ public class Train implements java.beans.PropertyChangeListener {
 										if (addToReport)
 											TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 													.getMessage("buildCanNotDropCarTrain"), new Object[] {
-													car.toString(), getName(), track.getName() }));
+													car.toString(), getName(), track.getTrackTypeName(),
+													track.getName() }));
 										continue;
 									}
 									// will the track accept this car?
