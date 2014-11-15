@@ -78,8 +78,11 @@ public class PrintLocationsAction extends AbstractAction {
 
 	public void printLocations() {
 		// obtain a HardcopyWriter
+		String title = Bundle.getMessage("TitleLocationsTable");
+		if (_location != null)
+			title = _location.getName();
 		try {
-			writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleLocationsTable"), 10, .5, .5, .5, .5,
+			writer = new HardcopyWriter(new Frame(), title, 10, .5, .5, .5, .5,
 					_isPreview);
 		} catch (HardcopyWriter.PrintCanceledException ex) {
 			log.debug("Print cancelled");
@@ -98,8 +101,10 @@ public class PrintLocationsAction extends AbstractAction {
 			// print analysis?
 			if (printAnalysis.isSelected())
 				printAnalysisSelected();
-			// force completion of the printing
-			writer.close();
+			if (printLocations.isSelected() || printSchedules.isSelected() || printDetails.isSelected()
+					|| printAnalysis.isSelected()) // prevents NPE on close
+				// force completion of the printing
+				writer.close();
 		} catch (IOException we) {
 			log.error("Error printing PrintLocationAction: " + we);
 		}
