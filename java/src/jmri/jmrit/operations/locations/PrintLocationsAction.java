@@ -794,12 +794,12 @@ public class PrintLocationsAction extends AbstractAction {
 			this.pla = pla;
 			// create panel
 			JPanel pPanel = new JPanel();
-			pPanel.setLayout(new BoxLayout(pPanel, BoxLayout.Y_AXIS));
+			pPanel.setLayout(new GridBagLayout());
 			pPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("PrintOptions")));
-			pPanel.add(printLocations);
-			pPanel.add(printSchedules);
-			pPanel.add(printDetails);
-			pPanel.add(printAnalysis);
+			addItemLeft(pPanel, printLocations, 0, 0);
+			addItemLeft(pPanel, printSchedules, 0, 1);
+			addItemLeft(pPanel, printDetails, 0, 2);
+			addItemLeft(pPanel, printAnalysis, 0, 3);
 			// set defaults
 			printLocations.setSelected(true);
 			printSchedules.setSelected(true);
@@ -817,8 +817,11 @@ public class PrintLocationsAction extends AbstractAction {
 			getContentPane().add(pPanel);
 			getContentPane().add(pButtons);
 			setPreferredSize(null);
-			pack();
-			setVisible(true);
+			if (_isPreview)
+				setTitle(Bundle.getMessage("MenuItemPreview"));
+			else
+				setTitle(Bundle.getMessage("MenuItemPrint"));
+			initMinimumSize(new Dimension(Control.smallPanelWidth, Control.minPanelHeight));
 		}
 
 		public void initComponents() {
