@@ -2751,9 +2751,8 @@ public class Train implements java.beans.PropertyChangeListener {
 			logoURL = Setup.getManifestLogoURL();
 		Location departs = LocationManager.instance().getLocationByName(getTrainDepartsName());
 		String printerName = departs.getDefaultPrinterName();
-		TrainPrintUtilities.printReport(file, Bundle.getMessage("TrainManifest") + " " + getDescription(), isPreview,
-				Setup.getFontName(), false, logoURL, printerName, Setup.getManifestOrientation(), Setup
-						.getManifestFontSize());
+		TrainPrintUtilities.printReport(file, getDescription(), isPreview, Setup.getFontName(), false, logoURL,
+				printerName, Setup.getManifestOrientation(), Setup.getManifestFontSize());
 		if (!isPreview)
 			setPrinted(true);
 		return true;
