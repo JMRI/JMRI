@@ -79,6 +79,7 @@ including the needed JVM and library support.
 <tr><td>NIO improves .zip file access</td> <td>1.7</td><td>1.7</td></tr>
 <tr><td>I18N I/O improvements</td> <td>1.7</td><td>1.7</td></tr>
 <tr><td>Memory use and GC improvements<br/>(better performance)</td> <td>1.7</td><td>1.7</td></tr>
+<tr><td>Jetty Version 9</td> <td>1.7</td><td>1.7</td></tr>
 </table>
 (* indicates that a compatibility library is used in the early version)
 
@@ -110,7 +111,7 @@ Google finds numerous pages that show how to install Java 1.7 on XP or XP SP2.
 </table>
 <P>
 See the 
-<A HREF="http://java.sun.com/getjava">Sun Java site</a>
+<A HREF="http://java.com/en/download/manual.jsp">Get Java web page</a>
 for additional information.
 
 <!--#include virtual="/Footer" -->
