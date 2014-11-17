@@ -3,7 +3,7 @@
 package jmri.jmrix.lenz;
 
 import jmri.managers.DefaultProgrammerManager;
-import jmri.Programmer;
+import jmri.*;
 
 /**
  * Extend DefaultProgrammerManager to provide ops mode programmers on XPressNet
@@ -30,11 +30,11 @@ public class XNetProgrammerManager  extends DefaultProgrammerManager {
         return tc.getCommandStation().isOpsModePossible();
     }
 
-    public Programmer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new XNetOpsModeProgrammer(pAddress,tc);
     }
 
-    public Programmer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 }

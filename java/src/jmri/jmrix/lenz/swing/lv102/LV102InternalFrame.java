@@ -8,10 +8,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.ResourceBundle;
-import jmri.Programmer;
-import jmri.ProgListener;
-import jmri.ProgrammerException;
-
+import jmri.*;
 /**
  * Internal Frame displaying the LV102 configuration utility
  *
@@ -288,7 +285,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
     void writeLV102Settings() {
 
 	// Obtain an ops mode programmer instance
-        Programmer opsProg = jmri.InstanceManager.programmerManagerInstance()
+        AddressedProgrammer opsProg = jmri.InstanceManager.programmerManagerInstance()
                                     .getAddressedProgrammer(false,00);
 
 	// write the values to the power station.

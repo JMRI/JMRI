@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.managers.DefaultProgrammerManager;
-import jmri.Programmer;
+import jmri.*;
 
 /**
  * Extend DefaultProgrammerManager to provide programmers for CBUS systems
@@ -42,11 +42,11 @@ public class CbusDccProgrammerManager  extends DefaultProgrammerManager {
         return true;
     }
 
-    public Programmer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new CbusDccOpsModeProgrammer(pAddress, pLongAddress, tc);
     }
 
-    public Programmer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 

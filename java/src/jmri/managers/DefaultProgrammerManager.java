@@ -35,7 +35,7 @@ public class DefaultProgrammerManager implements ProgrammerManager {
         if (log.isDebugEnabled()) log.debug("return default service-mode programmer");
         return mProgrammer;
     }
-    public Programmer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 
@@ -44,10 +44,10 @@ public class DefaultProgrammerManager implements ProgrammerManager {
     }
     public void releaseGlobalProgrammer(Programmer p) {}
 
-    public Programmer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
-    public void releaseAddressedProgrammer(Programmer p) {}
+    public void releaseAddressedProgrammer(AddressedProgrammer p) {}
 
     /**
      * Default programmer does not provide Ops Mode

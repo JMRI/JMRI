@@ -15,7 +15,7 @@ import jmri.*;
  * @author			Bob Jacobsen Copyright (C) 2002
  * @version			$Revision$
  */
-public class LnOpsModeProgrammer implements Programmer  {
+public class LnOpsModeProgrammer implements AddressedProgrammer  {
 
     SlotManager mSlotMgr;
     int mAddress;
@@ -109,6 +109,13 @@ public class LnOpsModeProgrammer implements Programmer  {
     public String decodeErrorCode(int i) {
         return mSlotMgr.decodeErrorCode(i);
     }
+    
+    public boolean getLongAddress() {return mLongAddr;}
+    
+    public int getAddressNumber() { return mAddress; }
+    
+    public String getAddress() { return ""+getAddressNumber()+" "+getLongAddress(); }
+
     // initialize logging
     static Logger log = LoggerFactory.getLogger(LnOpsModeProgrammer.class.getName());
 

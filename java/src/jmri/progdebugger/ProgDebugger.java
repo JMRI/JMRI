@@ -8,9 +8,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Hashtable;
 import java.util.Vector;
-import jmri.ProgListener;
-import jmri.Programmer;
-import jmri.ProgrammerException;
+import jmri.*;
 
 /**
  * Debugging implementation of Programmer interface.
@@ -23,7 +21,7 @@ import jmri.ProgrammerException;
  * @author			Bob Jacobsen Copyright (C) 2001, 2007, 2013
  * @version         $Revision$
  */
-public class ProgDebugger implements Programmer  {
+public class ProgDebugger implements AddressedProgrammer  {
 
     // write CV is recorded for later use
     private int _lastWriteVal = -1;
@@ -267,6 +265,12 @@ public class ProgDebugger implements Programmer  {
             client.propertyChange(new PropertyChangeEvent(this, name, Integer.valueOf(oldval), Integer.valueOf(newval)));
         }
     }
+
+    public boolean getLongAddress() {return true;}
+    
+    public int getAddressNumber() { return 123; }
+    
+    public String getAddress() { return ""+getAddressNumber()+" "+getLongAddress(); }
 
     static final boolean IMMEDIATERETURN = false;
     static final int DELAY = 10;

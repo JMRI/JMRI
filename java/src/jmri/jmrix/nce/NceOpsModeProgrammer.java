@@ -13,11 +13,11 @@ import jmri.*;
  * Functionally, this just creates packets to send via the command station.
  *
  * @see             jmri.Programmer
- * @author			Bob Jacobsen Copyright (C) 2002
+ * @author			Bob Jacobsen Copyright (C) 2002, 2014
  * @author kcameron Copyright (C) 2014
  * @version			$Revision$
  */
-public class NceOpsModeProgrammer extends NceProgrammer  {
+public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProgrammer {
 
     int mAddress;
     boolean mLongAddr;
@@ -124,6 +124,13 @@ public class NceOpsModeProgrammer extends NceProgrammer  {
      */
     void cleanup() {
     }
+
+    public boolean getLongAddress() {return mLongAddr;}
+    
+    public int getAddressNumber() { return mAddress; }
+    
+    public String getAddress() { return ""+getAddressNumber()+" "+getLongAddress(); }
+
 
     // initialize logging
     static Logger log = LoggerFactory.getLogger(NceOpsModeProgrammer.class.getName());

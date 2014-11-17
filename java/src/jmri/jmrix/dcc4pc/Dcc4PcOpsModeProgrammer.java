@@ -4,9 +4,7 @@ package jmri.jmrix.dcc4pc;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.ProgListener;
-import jmri.Programmer;
-import jmri.ProgrammerException;
+import jmri.*;
 import java.beans.PropertyChangeListener;
 
 /**
@@ -19,10 +17,11 @@ import java.beans.PropertyChangeListener;
  * @version        $Revision: 17977 $
 */
 
-public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implements PropertyChangeListener
+public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implements PropertyChangeListener, AddressedProgrammer
 {
 
     int pAddress=0;
+    boolean pLongAddress;
     int progState=0;
     jmri.RailCom rcTag;
     int value;
@@ -38,6 +37,7 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
         defaultManager = dp;
         defaultProgrammer = defaultManager.getAddressedProgrammer(pLongAddress, pAddress);
         this.pAddress=pAddress;
+        this.pLongAddress = pLongAddress;
         rcTag = jmri.InstanceManager.getDefault(jmri.RailComManager.class).provideIdTag(""+pAddress);
     }
 
@@ -119,6 +119,11 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
         }
     }
 
+    public boolean getLongAddress() {return pLongAddress;}
+    
+    public int getAddressNumber() { return pAddress; }
+    
+    public String getAddress() { return ""+getAddressNumber()+" "+getLongAddress(); }
 
 
     // initialize logging

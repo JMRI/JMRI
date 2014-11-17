@@ -16,7 +16,7 @@ import jmri.*;
  * @author			Bob Jacobsen Copyright (C) 2002
  * @version			$Revision$
  */
-public class EasyDccOpsModeProgrammer extends EasyDccProgrammer  {
+public class EasyDccOpsModeProgrammer extends EasyDccProgrammer implements AddressedProgrammer {
 
     int mAddress;
     boolean mLongAddr;
@@ -93,6 +93,12 @@ public class EasyDccOpsModeProgrammer extends EasyDccProgrammer  {
     public boolean getCanRead() {
         return false;
     }
+
+    public boolean getLongAddress() {return mLongAddr;}
+    
+    public int getAddressNumber() { return mAddress; }
+    
+    public String getAddress() { return ""+getAddressNumber()+" "+getLongAddress(); }
 
 
     /**

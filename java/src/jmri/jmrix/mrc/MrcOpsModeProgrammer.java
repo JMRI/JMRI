@@ -21,7 +21,7 @@ import jmri.*;
  * @author  Kevin Dickerson Copyright (C) 2014
  * @version			$Revision: 24270 $
  */
-public class MrcOpsModeProgrammer extends MrcProgrammer  {
+public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.AddressedProgrammer {
 
     int mAddress;
     boolean mLongAddr;
@@ -106,6 +106,11 @@ public class MrcOpsModeProgrammer extends MrcProgrammer  {
         return false;
     }
 
+    public boolean getLongAddress() {return mLongAddr;}
+    
+    public int getAddressNumber() { return mAddress; }
+    
+    public String getAddress() { return ""+getAddressNumber()+" "+getLongAddress(); }
 
     /**
      * Ops-mode programming doesn't put the command station in programming

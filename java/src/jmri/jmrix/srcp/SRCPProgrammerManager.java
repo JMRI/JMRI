@@ -3,7 +3,7 @@
 package jmri.jmrix.srcp;
 
 import jmri.managers.DefaultProgrammerManager;
-import jmri.Programmer;
+import jmri.*;
 
 /**
  * Extend DefaultProgrammerManager to provide ops mode programmers for SRCP systems
@@ -31,11 +31,11 @@ public class SRCPProgrammerManager  extends DefaultProgrammerManager {
      */
     //public boolean isAddressedModePossible() {return true;}
 
-    //public Programmer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    //public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
     //    return new SRCPOpsModeProgrammer(pAddress, pLongAddress,_memo);
     //}
 
-    public Programmer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 }

@@ -10,7 +10,7 @@ import jmri.Consist;
 import jmri.ConsistManager;
 import jmri.DccLocoAddress;
 import jmri.ProgListener;
-import jmri.Programmer;
+import jmri.AddressedProgrammer;
 import jmri.ProgrammerException;
 import jmri.jmrit.consisttool.ConsistFile;
 //import jmri.jmrix.nce.consist.NceConsistRoster;
@@ -396,7 +396,7 @@ public class ConsistController extends AbstractController implements ProgListene
 
             return;
         }
-        Programmer pom = jmri.InstanceManager.programmerManagerInstance()
+        AddressedProgrammer pom = jmri.InstanceManager.programmerManagerInstance()
                 .getAddressedProgrammer(loco.isLongAddress(),loco.getNumber());
 
         // loco done, now get CVs

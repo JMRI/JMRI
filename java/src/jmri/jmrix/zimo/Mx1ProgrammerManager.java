@@ -3,7 +3,7 @@
 package jmri.jmrix.zimo;
 
 import jmri.managers.DefaultProgrammerManager;
-import jmri.Programmer;
+import jmri.*;
 
 /**
  * Extend DefaultProgrammerManager to provide ops mode programmers for MRC systems
@@ -34,12 +34,12 @@ public class Mx1ProgrammerManager  extends DefaultProgrammerManager {
 	}
 
 
-    public Programmer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         //return new MrcOpsModeProgrammer(tc, pAddress, pLongAddress);
         return null;
     }
 
-    public Programmer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 }

@@ -106,7 +106,7 @@ public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
         status.setText(rb.getString("StatusOK"));
     }
 
-    private Programmer p = null;
+    private AddressedProgrammer p = null;
     
     private void getProgrammer() {
         p = memo.getProgrammerManager().getAddressedProgrammer(true, 0);

@@ -4,7 +4,7 @@ package jmri.jmrix.sprog;
 
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
 import jmri.managers.DefaultProgrammerManager;
-import jmri.Programmer;
+import jmri.*;
 
 /**
  * Extend DefaultProgrammerManager to provide programmers for SPROG systems
@@ -44,11 +44,11 @@ public class SprogProgrammerManager  extends DefaultProgrammerManager {
       else return false;
     }
 
-    public Programmer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new SprogOpsModeProgrammer(pAddress, pLongAddress);
     }
 
-    public Programmer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 }

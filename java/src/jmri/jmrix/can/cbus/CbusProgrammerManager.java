@@ -3,7 +3,7 @@
 package jmri.jmrix.can.cbus;
 
 import jmri.managers.DefaultProgrammerManager;
-import jmri.Programmer;
+import jmri.*;
 import jmri.jmrix.can.TrafficController;
 
 /**
@@ -32,11 +32,11 @@ public class CbusProgrammerManager  extends DefaultProgrammerManager {
 
     public boolean isAddressedModePossible() {return true;}
 
-    public Programmer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new CbusProgrammer(pAddress, tc);
     }
 
-    public Programmer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 }

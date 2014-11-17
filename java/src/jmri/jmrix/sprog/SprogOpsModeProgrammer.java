@@ -17,7 +17,7 @@ import jmri.jmrix.sprog.SprogCommandStation;
  * @author			Andrew Crosland Copyright (C) 2006
  * @version			$Revision$
  */
-public class SprogOpsModeProgrammer extends SprogProgrammer  {
+public class SprogOpsModeProgrammer extends SprogProgrammer implements AddressedProgrammer {
 
     int mAddress;
     boolean mLongAddr;
@@ -84,6 +84,11 @@ public class SprogOpsModeProgrammer extends SprogProgrammer  {
         return false;
     }
 
+    public boolean getLongAddress() {return mLongAddr;}
+    
+    public int getAddressNumber() { return mAddress; }
+    
+    public String getAddress() { return ""+getAddressNumber()+" "+getLongAddress(); }
 
     /**
      * Ops-mode programming doesn't put the command station in programming

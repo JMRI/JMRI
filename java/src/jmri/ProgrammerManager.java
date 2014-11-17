@@ -49,7 +49,7 @@ public interface ProgrammerManager  {
      * @param pAddress Specific decoder address to use.
      * @return null only if there isn't an Ops Mode Programmer in the system
      */
-    public Programmer getAddressedProgrammer(boolean pLongAddress, int pAddress);
+    public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress);
     
     /**
      * Gain access to the Global Mode Programmer, in the process reserving it
@@ -71,13 +71,13 @@ public interface ProgrammerManager  {
      * @param pAddress Specific decoder address to use.
      * @return null if the address is in use by a reserved programmer
      */
-    public Programmer reserveAddressedProgrammer(boolean pLongAddress, int pAddress);
+    public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress);
     
     /**
      * Return access to the Global Mode Programmer, so that it can
      * be used elsewhere.
      */
-    public void releaseAddressedProgrammer(Programmer p);
+    public void releaseAddressedProgrammer(AddressedProgrammer p);
 
     /**
      * Convenience method to check whether you'll be able to get

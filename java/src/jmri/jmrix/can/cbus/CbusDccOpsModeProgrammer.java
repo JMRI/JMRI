@@ -2,7 +2,7 @@
 
 package jmri.jmrix.can.cbus;
 
-import jmri.Programmer;
+import jmri.*;
 import jmri.ProgListener;
 import jmri.ProgrammerException;
 
@@ -18,7 +18,7 @@ import jmri.jmrix.can.CanReply;
  * @author			Andrew Crosland Copyright (C) 2009
  * @version			$Revision$
  */
-public class CbusDccOpsModeProgrammer extends CbusDccProgrammer  {
+public class CbusDccOpsModeProgrammer extends CbusDccProgrammer implements AddressedProgrammer {
 
     int mAddress;
     boolean mLongAddr;
@@ -85,6 +85,12 @@ public class CbusDccOpsModeProgrammer extends CbusDccProgrammer  {
     public boolean getCanRead() {
         return false;
     }
+
+    public boolean getLongAddress() {return mLongAddr;}
+    
+    public int getAddressNumber() { return mAddress; }
+    
+    public String getAddress() { return ""+getAddressNumber()+" "+getLongAddress(); }
 
 
     /**

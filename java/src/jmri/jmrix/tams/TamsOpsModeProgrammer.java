@@ -17,7 +17,7 @@ import jmri.*;
  * @author	Kevin Dickerson  Copyright (C) 2012
  * @version			$Revision: 19990 $
  */
-public class TamsOpsModeProgrammer extends TamsProgrammer  {
+public class TamsOpsModeProgrammer extends TamsProgrammer implements AddressedProgrammer {
 
     int mAddress;
     boolean mLongAddr;
@@ -94,6 +94,11 @@ public class TamsOpsModeProgrammer extends TamsProgrammer  {
         return false;
     }
 
+    public boolean getLongAddress() {return mLongAddr;}
+    
+    public int getAddressNumber() { return mAddress; }
+    
+    public String getAddress() { return ""+getAddressNumber()+" "+getLongAddress(); }
 
     /**
      * Ops-mode programming doesn't put the command station in programming

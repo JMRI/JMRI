@@ -4,7 +4,7 @@ package jmri.jmrix.can.cbus;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.Programmer;
+import jmri.*;
 import jmri.jmrix.AbstractProgrammer;
 
 import java.util.Vector;
@@ -22,7 +22,7 @@ import jmri.jmrix.can.TrafficController;
  * @author			Bob Jacobsen  Copyright (C) 2008
  * @version			$Revision$
  */
-public class CbusProgrammer extends AbstractProgrammer implements CanListener {
+public class CbusProgrammer extends AbstractProgrammer implements CanListener, AddressedProgrammer {
 
     public CbusProgrammer() { 
         Exception e = new Exception("Dummy method called");
@@ -194,6 +194,12 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener {
             notifyProgListenerEnd(operationValue, jmri.ProgListener.FailedTimeout);
         }
     }
+
+    public boolean getLongAddress() {return false;}
+    
+    public int getAddressNumber() { return nodenumber; }
+    
+    public String getAddress() { return ""+getAddressNumber()+" "+getLongAddress(); }
 
     /**
      * Internal method to send a cleanup message (if needed) on timeout.

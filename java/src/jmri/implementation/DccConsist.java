@@ -8,7 +8,7 @@ import jmri.ConsistListener;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.ProgListener;
-import jmri.Programmer;
+import jmri.AddressedProgrammer;
 import jmri.ProgrammerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -232,7 +232,7 @@ public class DccConsist implements Consist, ProgListener {
      *        the same direction as the consist, or false otherwise.
      */
     protected void addToAdvancedConsist(DccLocoAddress LocoAddress, boolean directionNormal) {
-        Programmer opsProg = InstanceManager.programmerManagerInstance()
+        AddressedProgrammer opsProg = InstanceManager.programmerManagerInstance()
                 .getAddressedProgrammer(LocoAddress.isLongAddress(),
                 LocoAddress.getNumber());
         if (directionNormal) {
@@ -258,7 +258,7 @@ public class DccConsist implements Consist, ProgListener {
      *  @param address is the Locomotive address to remove from the consist
      */
     protected void removeFromAdvancedConsist(DccLocoAddress LocoAddress) {
-        Programmer opsProg = InstanceManager.programmerManagerInstance()
+        AddressedProgrammer opsProg = InstanceManager.programmerManagerInstance()
                 .getAddressedProgrammer(LocoAddress.isLongAddress(),
                 LocoAddress.getNumber());
         try {

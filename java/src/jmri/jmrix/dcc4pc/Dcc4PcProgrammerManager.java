@@ -3,8 +3,7 @@
 package jmri.jmrix.dcc4pc;
 
 import jmri.managers.DefaultProgrammerManager;
-import jmri.Programmer;
-import jmri.ProgrammerManager;
+import jmri.*;
 
 /**
  * DCC4PC Programmer acts as a proxy for ops mode programming.
@@ -48,19 +47,19 @@ public class Dcc4PcProgrammerManager extends DefaultProgrammerManager {
         return defaultManager.isGlobalProgrammerAvailable();
     }
 
-    public Programmer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         if(defaultManager==null)
             return null;
         return new Dcc4PcOpsModeProgrammer(pLongAddress, pAddress, defaultManager);
     }
 
-    public Programmer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         if(defaultManager==null)
             return null;
         return defaultManager.reserveAddressedProgrammer(pLongAddress, pAddress);
     }
     
-    public void releaseAddressedProgrammer(Programmer p) {
+    public void releaseAddressedProgrammer(AddressedProgrammer p) {
         if(defaultManager==null)
             return;
         defaultManager.releaseAddressedProgrammer(p);

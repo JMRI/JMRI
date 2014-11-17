@@ -4,9 +4,7 @@ package jmri.jmrix.lenz;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.ProgListener;
-import jmri.Programmer;
-import jmri.ProgrammerException;
+import jmri.*;
 
 /**
  * Provides an Ops mode programing interface for XPressNet
@@ -19,23 +17,25 @@ import jmri.ProgrammerException;
  * @version        $Revision$
 */
 
-public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implements XNetListener 
+public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implements XNetListener, AddressedProgrammer 
 {
 
     private int _mode;
     int mAddressHigh;
     int mAddressLow;
+    int mAddress;
     int progState=0;
     int value;
     jmri.ProgListener progListener = null;
 
     protected XNetTrafficController tc = null;
 
-    public XNetOpsModeProgrammer(int pAddress,XNetTrafficController controller) {
+    public XNetOpsModeProgrammer(int pAddress, XNetTrafficController controller) {
         tc=controller;
 	if(log.isDebugEnabled()) log.debug("Creating Ops Mode Programmer for Address " + pAddress);
 	mAddressLow=LenzCommandStation.getDCCAddressLow(pAddress);
 	mAddressHigh=LenzCommandStation.getDCCAddressHigh(pAddress);
+	mAddress = pAddress;
 	if(log.isDebugEnabled()) log.debug("High Address: " + mAddressHigh +" Low Address: " +mAddressLow);
         // register as a listener
         tc.addXNetListener(XNetInterface.COMMINFO|XNetInterface.CS_INFO,this);
@@ -145,6 +145,12 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
             }
 	}
     }
+
+    public boolean getLongAddress() {return true;}
+    
+    public int getAddressNumber() { return mAddress; }
+    
+    public String getAddress() { return ""+getAddressNumber()+" "+getLongAddress(); }
 
     // listen for the messages to the LI100/LI101
     public synchronized void message(XNetMessage l) {
