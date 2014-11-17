@@ -382,7 +382,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     protected Object updateIconFromRosterVal(RosterEntry roster){
         re=roster;
         javax.swing.ImageIcon icon = jmri.InstanceManager.rosterIconFactoryInstance().getIcon(roster);
-        if(icon.getIconWidth()==-1 || icon.getIconHeight()==-1){
+        if(icon== null || icon.getIconWidth()==-1 || icon.getIconHeight()==-1){
             //the IconPath is still at default so no icon set
             return roster.titleString();
         } else {
