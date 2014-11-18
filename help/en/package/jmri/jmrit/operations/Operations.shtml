@@ -109,13 +109,17 @@
      <UL>
       <LI><A HREF="#ImportingCars">Importing Cars from a File</A></LI>
       <LI><A HREF="#CarsEdit">Adding Cars to your Roster</A></LI>
-      <LI><A HREF=#CabooseFredHazardous>Passenger, Caboose, Car with FRED, Utility, and Hazardous Options</A>
+      <LI><A HREF=#CabooseFredHazardous>Passenger, Caboose, Car with FRED, Utility, and
+        Hazardous Options</A>
       <LI><A HREF="#CarLoad">Car Loads</A></LI>
       <LI><A HREF="#Kernel">Kernel, or Group of Cars</A></LI>
       <LI><A HREF="#EditCarAttributes">Edit Car Attributes (Road, Type, Length, Color,
         Kernel, Owner)</A></LI>
       <LI><A HREF="#EditCarLoads">Edit Car Loads</A></LI>
-      <LI><A HREF="#CarsSet">Set Car</A></LI>
+      <LI><A HREF="#CarsSet">Set Car</A>
+      <UL>
+       <LI><A HREF="#ReturnWhenEmpty">Return When Empty</A></LI>
+      </UL></LI>
       <LI><A HREF="#SetCars">Set Cars</A></LI>
      </UL></LI>
     <LI><A HREF="#Locomotives">Locomotives</A>
@@ -1405,11 +1409,15 @@
    length in this case is 100' plus 8' for the couplers (4' for each car), for a total of 108'. You
    could optionally round up the length to 110' or more.
 
-   <P>When a car is placed at a spur the car's load status is modified. The program provides two
-    load names for all cars, the default empty or "E", and the default load or "L". If a car has one
-    of these loads when it arrives at a spur, the load name will change to the other, i.e. "E"
-    becomes "L" and "L" becomes "E". If a car has a custom load, it too will be replaced by the default
-    empty "E" when the program sets a car out to a spur.</P>
+   <P>
+    When a car is placed at a spur the car's load status is modified. The program provides two load
+    names for all cars, the default empty or "E", and the default load or "L". If a car has one of
+    these loads when it arrives at a spur, the load name will change to the other, i.e. "E" becomes
+    "L" and "L" becomes "E". If a car has a custom load, it too will be replaced by the default
+    empty "E" when the program sets a car out to a spur. You can also configure your car to return
+    to a specific location or track when the car's load is removed. See <A HREF="#ReturnWhenEmpty">Return
+     When Empty</A> for more details.
+   </P>
 
    <P>
     You can if you wish schedule the order that cars will be delivered to a spur, or demand cars
@@ -2195,9 +2203,9 @@
 
    <P>
     Some folks don't want the default empty or "E" load for a car when the car's load flips from the
-    "L" load or when a car's custom load is removed. To set a custom empty load for car, see <A
-     HREF="#CarsSet">Set Car</A> and the "Return When Empty" fields. You can tell the program which
-    custom empty load you want each car to have.
+    "L" load or when a car's custom load is removed. To set a custom empty load for car, see
+    <A HREF="#CarsSet">Set Car</A> and the <A HREF="#ReturnWhenEmpty">Return When Empty</A> fields.
+    You can tell the program which custom empty load you want each car to have.
    </P>
 
    <A NAME="Kernel"></A>
@@ -2343,6 +2351,7 @@
     use the "Edit" button to create new ones.
    </P>
 
+   <A NAME="ReturnWhenEmpty"></A>
    <H4>Return When Empty</H4>
 
    You can also optionally enter the location and track that you want the car to return to when the
