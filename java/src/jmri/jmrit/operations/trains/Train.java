@@ -744,6 +744,9 @@ public class Train implements java.beans.PropertyChangeListener {
 	private void updateTrainTableRowColor() {
 		if (!TrainManager.instance().isRowColorManual()) {
 			switch (_statusCode) {
+			case CODE_TRAIN_RESET :
+				setTableRowColorName(NONE);
+				break;
 			case CODE_BUILT:
 			case CODE_PARTIAL_BUILT:
 				setTableRowColorName(TrainManager.instance().getRowColorNameForBuilt());
@@ -3199,8 +3202,6 @@ public class Train implements java.beans.PropertyChangeListener {
 		setPrinted(false);
 		// remove cars and engines from this train via property change
 		setStatus(CODE_TRAIN_RESET);
-		if (!TrainManager.instance().isRowColorManual())
-			setTableRowColorName(NONE);
 		// remove train icon
 		if (_trainIcon != null && _trainIcon.isActive()) {
 			_trainIcon.remove();
