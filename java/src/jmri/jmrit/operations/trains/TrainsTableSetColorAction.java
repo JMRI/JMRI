@@ -14,24 +14,24 @@ import javax.swing.AbstractAction;
  * @author Daniel Boudreau Copyright (C) 2014
  * @version $Revision: 17977 $
  */
-public class TrainSetColorAction extends AbstractAction {
+public class TrainsTableSetColorAction extends AbstractAction {
 
-	public TrainSetColorAction() {
+	public TrainsTableSetColorAction() {
 		super(Bundle.getMessage("MenuItemSetTrainColor"));
 	}
 
 	Train _train = null;
 
-	public TrainSetColorAction(String s, Train train) {
+	public TrainsTableSetColorAction(String s, Train train) {
 		super(s);
 		_train = train;
 	}
 
-	TrainSetColorFrame f = null;
+	TrainsTableSetColorFrame f = null;
 
 	public void actionPerformed(ActionEvent e) {
 		if (f == null || !f.isVisible()) {
-			f = new TrainSetColorFrame(_train);
+			f = new TrainsTableSetColorFrame(_train);
 		}
 		f.setExtendedState(Frame.NORMAL);
 		f.setVisible(true); // this also brings the frame into focus

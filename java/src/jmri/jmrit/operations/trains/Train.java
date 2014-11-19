@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Represents a train on the layout
  * 
- * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013
+ * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013, 2014
  * @author Rodney Black Copyright (C) 2011
  * @version $Revision$
  */
@@ -725,7 +725,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 
 	/**
-	 * Set the train's status
+	 * Set the train's machine readable status. Calls update train table row color.
 	 * 
 	 * @param status
 	 *            machine readable stringCode
@@ -735,8 +735,26 @@ public class Train implements java.beans.PropertyChangeListener {
 		int oldCode = _statusCode;
 		_statusCode = status;
 		// always fire property change for train in route
-		if (oldCode != this._statusCode || status == Train.CODE_TRAIN_IN_ROUTE) {
+		if (oldCode != this._statusCode || status == CODE_TRAIN_IN_ROUTE) {
 			setDirtyAndFirePropertyChange(STATUS_CHANGED_PROPERTY, oldStatus, this.getStatus());
+		}
+		updateTrainTableRowColor();
+	}
+	
+	private void updateTrainTableRowColor() {
+		if (!TrainManager.instance().isRowColorManual()) {
+			switch (_statusCode) {
+			case CODE_BUILT:
+			case CODE_PARTIAL_BUILT:
+				setTableRowColorName(TrainManager.instance().getRowColorNameForBuilt());
+				break;
+			case CODE_BUILD_FAILED:
+				setTableRowColorName(TrainManager.instance().getRowColorNameForBuildFailed());
+				break;
+			case CODE_TERMINATED:
+				setTableRowColorName(TrainManager.instance().getRowColorNameForTerminated());
+				break;
+			}
 		}
 	}
 
@@ -769,35 +787,35 @@ public class Train implements java.beans.PropertyChangeListener {
 	 */
 	public String getStatus(Locale locale, int code) {
 		switch (code) {
-		case Train.CODE_BUILDING:
-			return Train.BUILDING;
-		case Train.CODE_BUILD_FAILED:
-			return Train.BUILD_FAILED;
-		case Train.CODE_BUILT:
+		case CODE_BUILDING:
+			return BUILDING;
+		case CODE_BUILD_FAILED:
+			return BUILD_FAILED;
+		case CODE_BUILT:
 			// getNumberCarsWorked() is assumed to be constant if status is "built" or "partially built"
 			return Bundle.getMessage(locale, "StatusBuilt", this.getNumberCarsWorked()); // NOI18N
-		case Train.CODE_PARTIAL_BUILT:
+		case CODE_PARTIAL_BUILT:
 			// 0 should be number of cars requested to be worked
 			return Bundle.getMessage(locale, "StatusPartialBuilt", this.getNumberCarsWorked(), this
 					.getNumberCarsRequested()); // NOI18N
-		case Train.CODE_TERMINATED:
+		case CODE_TERMINATED:
 			return Bundle.getMessage(locale, "StatusTerminated", this.getTerminationDate()); // NOI18N
-		case Train.CODE_TRAIN_IN_ROUTE:
+		case CODE_TRAIN_IN_ROUTE:
 			return Bundle.getMessage(locale, "StatusEnRoute", this.getNumberCarsInTrain(), this.getTrainLength(), Setup
 					.getLengthUnit().toLowerCase(), this.getTrainWeight()); // NOI18N
-		case Train.CODE_TRAIN_RESET:
-			return Train.TRAIN_RESET;
-		case Train.CODE_UNKNOWN:
+		case CODE_TRAIN_RESET:
+			return TRAIN_RESET;
+		case CODE_UNKNOWN:
 		default:
-			return Train.UNKNOWN;
+			return UNKNOWN;
 		}
 	}
 
 	public String getMRStatus() {
 		switch (this._statusCode) {
-		case Train.CODE_PARTIAL_BUILT:
+		case CODE_PARTIAL_BUILT:
 			return this._statusCode + "||" + this.getNumberCarsRequested(); // NOI18N
-		case Train.CODE_TERMINATED:
+		case CODE_TERMINATED:
 			return this._statusCode + "||" + this.getTerminationDate(); // NOI18N
 		default:
 			return Integer.toString(this._statusCode);
@@ -1689,14 +1707,16 @@ public class Train implements java.beans.PropertyChangeListener {
 		return false;
 	}
 
-	/**
-	 * Returns the statusCode of the "services(Car)" routine. There are two statusCodes that need special consideration
-	 * when the train is being built, the moves in a train's route and the maximum train length.
-	 */
 	protected void setServiceStatus(String status) {
 		_serviceStatus = status;
 	}
 
+	/**
+	 * Returns the statusCode of the "services(Car)" routine. There are two statusCodes that need special consideration
+	 * when the train is being built, the moves in a train's route and the maximum train length. NOTE: The code using
+	 * getServiceStatus() currently assumes that if there's a service status that the issue is either route moves or
+	 * maximum train length.
+	 */
 	public String getServiceStatus() {
 		return _serviceStatus;
 	}
@@ -2539,8 +2559,6 @@ public class Train implements java.beans.PropertyChangeListener {
 		boolean old = _built;
 		_built = built;
 		if (old != built) {
-			if (built && !TrainManager.instance().isRowColorManual())
-				setTableRowColorName(TrainManager.instance().getRowColorNameForBuilt());
 			setDirtyAndFirePropertyChange(BUILT_CHANGED_PROPERTY, old ? "true" : "false", built ? "true" // NOI18N
 					: "false"); // NOI18N
 		}
@@ -2709,8 +2727,6 @@ public class Train implements java.beans.PropertyChangeListener {
 		boolean old = _buildFailed;
 		_buildFailed = status;
 		if (old != status) {
-			if (_buildFailed && !TrainManager.instance().isRowColorManual())
-				setTableRowColorName(TrainManager.instance().getRowColorNameForBuildFailed());
 			setDirtyAndFirePropertyChange("buildFailed", old ? "true" : "false", status ? "true" : "false"); // NOI18N
 		}
 	}
@@ -3141,8 +3157,6 @@ public class Train implements java.beans.PropertyChangeListener {
 			setTerminationDate(TrainCommon.getDate(false));
 			setStatus(CODE_TERMINATED);
 			setBuilt(false);
-			if (!TrainManager.instance().isRowColorManual())
-				setTableRowColorName(TrainManager.instance().getRowColorNameForTerminated());
 			// run termination scripts
 			runScripts(getTerminationScripts());
 		}
@@ -3450,23 +3464,23 @@ public class Train implements java.beans.PropertyChangeListener {
 			_statusCarsRequested = Integer.parseInt(a.getValue());
 		if ((a = e.getAttribute(Xml.STATUS)) != null && e.getAttribute(Xml.STATUS_CODE) == null) {
 			String status = a.getValue();
-			if (status.startsWith(Train.BUILD_FAILED)) {
-				_statusCode = Train.CODE_BUILD_FAILED;
-			} else if (status.startsWith(Train.BUILT)) {
-				_statusCode = Train.CODE_BUILT;
-			} else if (status.startsWith(Train.PARTIAL_BUILT)) {
-				_statusCode = Train.CODE_PARTIAL_BUILT;
-			} else if (status.startsWith(Train.TERMINATED)) {
+			if (status.startsWith(BUILD_FAILED)) {
+				_statusCode = CODE_BUILD_FAILED;
+			} else if (status.startsWith(BUILT)) {
+				_statusCode = CODE_BUILT;
+			} else if (status.startsWith(PARTIAL_BUILT)) {
+				_statusCode = CODE_PARTIAL_BUILT;
+			} else if (status.startsWith(TERMINATED)) {
 				String[] splitStatus = status.split(" ");
 				if (splitStatus.length > 1)
 					_statusTerminatedDate = splitStatus[1];
-				_statusCode = Train.CODE_TERMINATED;
-			} else if (status.startsWith(Train.TRAIN_IN_ROUTE)) {
-				_statusCode = Train.CODE_TRAIN_IN_ROUTE;
-			} else if (status.startsWith(Train.TRAIN_RESET)) {
-				_statusCode = Train.CODE_TRAIN_RESET;
+				_statusCode = CODE_TERMINATED;
+			} else if (status.startsWith(TRAIN_IN_ROUTE)) {
+				_statusCode = CODE_TRAIN_IN_ROUTE;
+			} else if (status.startsWith(TRAIN_RESET)) {
+				_statusCode = CODE_TRAIN_RESET;
 			} else {
-				_statusCode = Train.CODE_UNKNOWN;
+				_statusCode = CODE_UNKNOWN;
 			}
 		}
 		if ((a = e.getAttribute(Xml.STATUS_CODE)) != null) {
@@ -3785,7 +3799,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			e.addContent(l);
 		}
 
-		if (getSecondLegOptions() != Train.NO_CABOOSE_OR_FRED) {
+		if (getSecondLegOptions() != NO_CABOOSE_OR_FRED) {
 			e.setAttribute(Xml.LEG2_OPTIONS, Integer.toString(getSecondLegOptions()));
 			e.setAttribute(Xml.LEG2_ENGINES, getSecondLegNumberEngines());
 			e.setAttribute(Xml.LEG2_ROAD, getSecondLegEngineRoad());
@@ -3796,7 +3810,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			if (getSecondLegEndLocation() != null)
 				e.setAttribute(Xml.LEG2_END, getSecondLegEndLocation().getId());
 		}
-		if (getThirdLegOptions() != Train.NO_CABOOSE_OR_FRED) {
+		if (getThirdLegOptions() != NO_CABOOSE_OR_FRED) {
 			e.setAttribute(Xml.LEG3_OPTIONS, Integer.toString(getThirdLegOptions()));
 			e.setAttribute(Xml.LEG3_ENGINES, getThirdLegNumberEngines());
 			e.setAttribute(Xml.LEG3_ROAD, getThirdLegEngineRoad());

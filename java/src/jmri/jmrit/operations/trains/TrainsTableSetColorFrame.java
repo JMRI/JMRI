@@ -28,7 +28,7 @@ import javax.swing.JRadioButton;
  * @author Daniel Boudreau Copyright (C) 2014
  * @version $Revision: 17977 $
  */
-public class TrainSetColorFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
+public class TrainsTableSetColorFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
 	TrainManager trainManager = TrainManager.instance();
 
@@ -60,7 +60,7 @@ public class TrainSetColorFrame extends OperationsFrame implements java.beans.Pr
 	JPanel pColorBuildFailed;
 	JPanel pColorTerminated;
 
-	public TrainSetColorFrame(Train train) {
+	public TrainsTableSetColorFrame(Train train) {
 		// general GUI config
 
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -189,7 +189,7 @@ public class TrainSetColorFrame extends OperationsFrame implements java.beans.Pr
 	}
 	
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		if (Control.showProperty && log.isDebugEnabled())
+//		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("Property change ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY))
 			trainManager.updateTrainComboBox(trainBox);
@@ -200,5 +200,5 @@ public class TrainSetColorFrame extends OperationsFrame implements java.beans.Pr
 		super.dispose();
 	}
 
-	static Logger log = LoggerFactory.getLogger(TrainSetColorFrame.class.getName());
+	static Logger log = LoggerFactory.getLogger(TrainsTableSetColorFrame.class.getName());
 }

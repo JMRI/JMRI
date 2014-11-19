@@ -623,7 +623,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	}
 	
 	public void setRowColorNameForBuilt(String colorName) {
-		String old = colorName;
+		String old = _rowColorBuilt;
 		_rowColorBuilt = colorName;
 		firePropertyChange(ROW_COLOR_NAME_CHANGED_PROPERTY, old, colorName);
 	}
@@ -633,7 +633,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	}
 	
 	public void setRowColorNameForBuildFailed(String colorName) {
-		String old = colorName;
+		String old = _rowColorBuildFailed;
 		_rowColorBuildFailed = colorName;
 		firePropertyChange(ROW_COLOR_NAME_CHANGED_PROPERTY, old, colorName);
 	}
@@ -643,7 +643,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	}
 	
 	public void setRowColorNameForTerminated(String colorName) {
-		String old = colorName;
+		String old = _rowColorTerminated;
 		_rowColorTerminated = colorName;
 		firePropertyChange(ROW_COLOR_NAME_CHANGED_PROPERTY, old, colorName);
 	}
