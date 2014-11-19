@@ -44,6 +44,12 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	private boolean _printPreview = false; // when true, preview train manifest
 	private boolean _openFile = false; // when true, open CSV file manifest
 	private boolean _runFile = false; // when true, run CSV file manifest
+	
+	// Trains window row colors
+	private boolean _rowColorManual = true; // when true train colors are manually assigned
+	private String _rowColorBuilt = NONE; // row color when train is built
+	private String _rowColorBuildFailed = NONE; // row color when train build failed
+	private String _rowColorTerminated = NONE; // row color when train is terminated
 
 	// Train frame table column widths (12), starts with Time column and ends with Edit
 	private int[] _tableColumnWidths = { 50, 50, 72, 100, 140, 120, 120, 120, 120, 120, 90, 70 };
@@ -63,6 +69,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	public static final String TRAIN_ACTION_CHANGED_PROPERTY = "TrainsAction"; // NOI18N
 	public static final String GENERATE_CSV_CHANGED_PROPERTY = "TrainsGenerateCSV"; // NOI18N
 	public static final String ACTIVE_TRAIN_SCHEDULE_ID = "ActiveTrainScheduleId"; // NOI18N
+	public static final String ROW_COLOR_NAME_CHANGED_PROPERTY = "TrainsRowColorChange"; // NOI18N
 	
 
 	public TrainManager() {
@@ -563,16 +570,13 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		return out;
 	}
 
-	public JComboBox getComboBox() {
+	public JComboBox getTrainComboBox() {
 		JComboBox box = new JComboBox();
-		box.addItem(NONE);
-		for (Train train : getTrainsByNameList()) {
-			box.addItem(train);
-		}
+		updateTrainComboBox(box);
 		return box;
 	}
 
-	public void updateComboBox(JComboBox box) {
+	public void updateTrainComboBox(JComboBox box) {
 		box.removeAllItems();
 		box.addItem(NONE);
 		for (Train train : getTrainsByNameList()) {
@@ -588,7 +592,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	 * @param car
 	 *            the car to be serviced
 	 */
-	public void updateComboBox(JComboBox box, Car car) {
+	public void updateTrainComboBox(JComboBox box, Car car) {
 		box.removeAllItems();
 		box.addItem(NONE);
 		for (Train train : getTrainsByNameList()) {
@@ -602,6 +606,63 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	 */
 	public int numEntries() {
 		return _trainHashTable.size();
+	}
+	
+	public boolean isRowColorManual() {
+		return _rowColorManual;
+	}
+	
+	public void setRowColorsManual(boolean manual) {
+		boolean old = _rowColorManual;
+		_rowColorManual = manual;
+		firePropertyChange(ROW_COLOR_NAME_CHANGED_PROPERTY, old, manual);
+	}
+	
+	public String getRowColorNameForBuilt() {
+		return _rowColorBuilt;
+	}
+	
+	public void setRowColorNameForBuilt(String colorName) {
+		String old = colorName;
+		_rowColorBuilt = colorName;
+		firePropertyChange(ROW_COLOR_NAME_CHANGED_PROPERTY, old, colorName);
+	}
+	
+	public String getRowColorNameForBuildFailed() {
+		return _rowColorBuildFailed;
+	}
+	
+	public void setRowColorNameForBuildFailed(String colorName) {
+		String old = colorName;
+		_rowColorBuildFailed = colorName;
+		firePropertyChange(ROW_COLOR_NAME_CHANGED_PROPERTY, old, colorName);
+	}
+	
+	public String getRowColorNameForTerminated() {
+		return _rowColorTerminated;
+	}
+	
+	public void setRowColorNameForTerminated(String colorName) {
+		String old = colorName;
+		_rowColorTerminated = colorName;
+		firePropertyChange(ROW_COLOR_NAME_CHANGED_PROPERTY, old, colorName);
+	}
+	
+	/**
+	 * 
+	 * @return the available text colors used for printing
+	 */
+	public JComboBox getRowColorComboBox() {
+		JComboBox box = new JComboBox();
+		box.addItem(NONE);
+		box.addItem(Setup.BLACK);
+		box.addItem(Setup.RED);
+		box.addItem(Setup.ORANGE);
+		box.addItem(Setup.YELLOW);
+		box.addItem(Setup.GREEN);
+		box.addItem(Setup.BLUE);
+		box.addItem(Setup.GRAY);
+		return box;
 	}
 
 	/**
@@ -821,6 +882,19 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 					}
 				}
 			}
+			
+			// Row color options
+			Element eRowColorOptions = options.getChild(Xml.ROW_COLOR_OPTIONS);
+			if (eRowColorOptions != null) {
+				if ((a = eRowColorOptions.getAttribute(Xml.ROW_COLOR_MANUAL)) != null)
+					_rowColorManual = a.getValue().equals(Xml.TRUE);
+				if ((a = eRowColorOptions.getAttribute(Xml.ROW_COLOR_BUILD_FAILED)) != null)
+					_rowColorBuildFailed = a.getValue();
+				if ((a = eRowColorOptions.getAttribute(Xml.ROW_COLOR_BUILT)) != null)
+					_rowColorBuilt = a.getValue();
+				if ((a = eRowColorOptions.getAttribute(Xml.ROW_COLOR_TERMINATED)) != null)
+					_rowColorTerminated = a.getValue();
+			}
 
 			e = options.getChild(Xml.TRAIN_SCHEDULE_OPTIONS);
 			if (e != null) {
@@ -883,6 +957,15 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		e.setAttribute(Xml.RUN_FILE, isRunFileEnabled() ? Xml.TRUE : Xml.FALSE);
 		e.setAttribute(Xml.TRAIN_ACTION, getTrainsFrameTrainAction());
 		options.addContent(e);
+		
+		// Trains table row color options
+		e = new Element(Xml.ROW_COLOR_OPTIONS);
+		e.setAttribute(Xml.ROW_COLOR_MANUAL, isRowColorManual() ? Xml.TRUE : Xml.FALSE);
+		e.setAttribute(Xml.ROW_COLOR_BUILD_FAILED, getRowColorNameForBuildFailed());
+		e.setAttribute(Xml.ROW_COLOR_BUILT, getRowColorNameForBuilt());
+		e.setAttribute(Xml.ROW_COLOR_TERMINATED, getRowColorNameForTerminated());
+		options.addContent(e);
+		
 		// now save train schedule options
 		e = new Element(Xml.TRAIN_SCHEDULE_OPTIONS);
 		e.setAttribute(Xml.ACTIVE_ID, getTrainScheduleActiveId());

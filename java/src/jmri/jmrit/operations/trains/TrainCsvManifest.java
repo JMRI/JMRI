@@ -122,14 +122,14 @@ public class TrainCsvManifest extends TrainCsvCommon {
 			printTrackComments(fileOut, rl, carList);
 			
 			// engine change or helper service?
-			if (train.getSecondLegOptions() != Train.NONE) {
+			if (train.getSecondLegOptions() != Train.NO_CABOOSE_OR_FRED) {
 				if (rl == train.getSecondLegStartLocation()) {
 					engineCsvChange(fileOut, rl, train.getSecondLegOptions());
 				}
 				if (rl == train.getSecondLegEndLocation())
 					addLine(fileOut, RH);
 			}
-			if (train.getThirdLegOptions() != Train.NONE) {
+			if (train.getThirdLegOptions() != Train.NO_CABOOSE_OR_FRED) {
 				if (rl == train.getThirdLegStartLocation()) {
 					engineCsvChange(fileOut, rl, train.getThirdLegOptions());
 				}

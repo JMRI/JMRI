@@ -65,7 +65,7 @@ public class VSDOptionPanel extends JmriPanel {
 	JLabel x = new JLabel();
 	x.setText("Operations Train: ");
 	this.add(x);
-	opsTrainComboBox = TrainManager.instance().getComboBox();
+	opsTrainComboBox = TrainManager.instance().getTrainComboBox();
 	this.add(opsTrainComboBox);
 	opsTrainComboBox.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {

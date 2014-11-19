@@ -102,9 +102,9 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JRadioButton excludeTrainPickup = new JRadioButton(Bundle.getMessage("ExcludeTrains"));
 	JRadioButton excludeRoutePickup = new JRadioButton(Bundle.getMessage("ExcludeRoutes"));
 
-	JComboBox comboBoxDropTrains = trainManager.getComboBox();
+	JComboBox comboBoxDropTrains = trainManager.getTrainComboBox();
 	JComboBox comboBoxDropRoutes = routeManager.getComboBox();
-	JComboBox comboBoxPickupTrains = trainManager.getComboBox();
+	JComboBox comboBoxPickupTrains = trainManager.getTrainComboBox();
 	JComboBox comboBoxPickupRoutes = routeManager.getComboBox();
 
 	// text field
@@ -899,10 +899,10 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	}
 
 	private void updateTrainComboBox() {
-		trainManager.updateComboBox(comboBoxPickupTrains);
+		trainManager.updateTrainComboBox(comboBoxPickupTrains);
 		if (autoPickupCheckBox.isSelected())
 			autoTrainComboBox(comboBoxPickupTrains);
-		trainManager.updateComboBox(comboBoxDropTrains);
+		trainManager.updateTrainComboBox(comboBoxDropTrains);
 		if (autoDropCheckBox.isSelected())
 			autoTrainComboBox(comboBoxDropTrains);
 	}

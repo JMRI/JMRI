@@ -12,6 +12,7 @@ public class Xml {
 	// Common to operation xml files
 	static final String ID = "id"; // NOI18N
 	static final String NAME = "name"; // NOI18N
+	static final String ROW_COLOR ="rowColor";  // NOI18N
 	static final String COMMENT = "comment"; // NOI18N
 	
 	static final String TRUE = "true"; // NOI18N
@@ -118,6 +119,12 @@ public class Xml {
 	static final String ACTIVE_ID = "activeId"; // NOI18N
 	static final String START_UP = "startUp"; // NOI18N
 	static final String SHUT_DOWN = "shutDown"; // NOI18N
+	
+	static final String ROW_COLOR_OPTIONS = "rowColorOptions"; // NOI18N
+	static final String ROW_COLOR_MANUAL = "rowColorManual"; // NOI18N
+	static final String ROW_COLOR_BUILT = "rowColorBuilt"; // NOI18N
+	static final String ROW_COLOR_BUILD_FAILED = "rowColorBuidFailed"; // NOI18N
+	static final String ROW_COLOR_TERMINATED = "rowColorTerminated"; // NOI18N
 
 	// TrainManagerXml.java
 	static final String TRAINS = "trains"; // NOI18N

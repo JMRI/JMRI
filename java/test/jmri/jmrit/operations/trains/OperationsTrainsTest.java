@@ -120,7 +120,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Train Id", "TESTTRAINID", train1.getId());
 		Assert.assertEquals("Train Name", "TESTTRAINNAME", train1.getName());
 
-		Assert.assertEquals("Train Constant NONE", 0, Train.NONE);
+		Assert.assertEquals("Train Constant NONE", 0, Train.NO_CABOOSE_OR_FRED);
 		Assert.assertEquals("Train Constant CABOOSE", 1, Train.CABOOSE);
 		Assert.assertEquals("Train Constant FRED", 2, Train.FRED);
 
@@ -182,7 +182,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Train Requirements CABOOSE", 1, train1.getRequirements());
 		train1.setRequirements(Train.FRED);
 		Assert.assertEquals("Train Requirements FRED", 2, train1.getRequirements());
-		train1.setRequirements(Train.NONE);
+		train1.setRequirements(Train.NO_CABOOSE_OR_FRED);
 		Assert.assertEquals("Train Requirements NONE", 0, train1.getRequirements());
 		train1.setDepartureTime("12", "55");
 		Assert.assertEquals("Train departure hour", "12", train1.getDepartureTimeHour());
@@ -2298,7 +2298,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertFalse("Train 2 built", train2.isBuilt());
 		Assert.assertEquals("Car X10001 assigned to train 2", null, c3.getTrain());
 
-		train2.setRequirements(Train.NONE);
+		train2.setRequirements(Train.NO_CABOOSE_OR_FRED);
 		train2.reset();
 
 		ct.addName("BOXCAR");
@@ -4936,7 +4936,7 @@ public class OperationsTrainsTest extends TestCase {
 		// Don't allow boxcars, should also cause build failure
 		loc3.addTypeName("Caboose");
 		loc3.deleteTypeName("Boxcar");
-		train1.setRequirements(Train.NONE);
+		train1.setRequirements(Train.NO_CABOOSE_OR_FRED);
 		train1.build();
 		Assert.assertEquals("Train 1 After Build 17", false, train1.isBuilt());
 
@@ -6000,7 +6000,7 @@ public class OperationsTrainsTest extends TestCase {
 		t1.setNumberEngines("1");
 		t1.setOwnerOption("t1 owner option");
 		t1.setRailroadName("t1 railroad name");
-		t1.setRequirements(Train.NONE);
+		t1.setRequirements(Train.NO_CABOOSE_OR_FRED);
 		t1.setRoadOption("t1 raod option");
 		t1.setRoute(C);
 		t1.setSecondLegCabooseRoad("t1 second leg caboose road");
@@ -6041,7 +6041,7 @@ public class OperationsTrainsTest extends TestCase {
 		t3.setNumberEngines("1");
 		t3.setOwnerOption("t3 owner option");
 		t3.setRailroadName("t3 railroad name");
-		t3.setRequirements(Train.NONE);
+		t3.setRequirements(Train.NO_CABOOSE_OR_FRED);
 		t3.setRoadOption("t3 raod option");
 		t3.setRoute(A);
 		t3.setStatus(Train.CODE_UNKNOWN);
@@ -6065,7 +6065,7 @@ public class OperationsTrainsTest extends TestCase {
 		t5.setNumberEngines("1");
 		t5.setOwnerOption("t5 owner option");
 		t5.setRailroadName("t5 railroad name");
-		t5.setRequirements(Train.NONE);
+		t5.setRequirements(Train.NO_CABOOSE_OR_FRED);
 		t5.setRoadOption("t5 raod option");
 		t5.setRoute(B);
 		t5.setStatus(Train.CODE_UNKNOWN);
@@ -6132,7 +6132,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("t1 number of engines", "1", t1.getNumberEngines());
 		Assert.assertEquals("t1 Owner option", "t1 owner option", t1.getOwnerOption());
 		Assert.assertEquals("t1 railroad name", "t1 railroad name", t1.getRailroadName());
-		Assert.assertEquals("t1 requirements", Train.NONE, t1.getRequirements());
+		Assert.assertEquals("t1 requirements", Train.NO_CABOOSE_OR_FRED, t1.getRequirements());
 		Assert.assertEquals("t1 road option", "t1 raod option", t1.getRoadOption());
 		Assert.assertEquals("t1 route", C, t1.getRoute());
 		Assert.assertEquals("t1 second leg caboose road", "t1 second leg caboose road", t1
@@ -6181,7 +6181,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("t3 number of engines", "1", t3.getNumberEngines());
 		Assert.assertEquals("t3 Owner option", "t3 owner option", t3.getOwnerOption());
 		Assert.assertEquals("t3 railroad name", "t3 railroad name", t3.getRailroadName());
-		Assert.assertEquals("t3 requirements", Train.NONE, t3.getRequirements());
+		Assert.assertEquals("t3 requirements", Train.NO_CABOOSE_OR_FRED, t3.getRequirements());
 		Assert.assertEquals("t3 road option", "t3 raod option", t3.getRoadOption());
 		Assert.assertEquals("t3 route", A, t3.getRoute());
 		// test second leg defaults
@@ -6190,7 +6190,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("t3 second leg engine model", "", t3.getSecondLegEngineModel());
 		Assert.assertEquals("t3 second leg engine road", "", t3.getSecondLegEngineRoad());
 		Assert.assertEquals("t3 second leg number of engines", "0", t3.getSecondLegNumberEngines());
-		Assert.assertEquals("t3 second leg options", Train.NONE, t3.getSecondLegOptions());
+		Assert.assertEquals("t3 second leg options", Train.NO_CABOOSE_OR_FRED, t3.getSecondLegOptions());
 		Assert.assertEquals("t3 second leg start location", null, t3.getSecondLegStartLocation());
 		Assert.assertEquals("t3 send cars to terminal", false, t3.isSendCarsToTerminalEnabled());
 		Assert.assertEquals("t3 status", Train.UNKNOWN, t3.getStatus());
@@ -6201,7 +6201,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("t3 third leg engine model", "", t3.getThirdLegEngineModel());
 		Assert.assertEquals("t3 third leg engine road", "", t3.getThirdLegEngineRoad());
 		Assert.assertEquals("t3 third leg number of engines", "0", t3.getThirdLegNumberEngines());
-		Assert.assertEquals("t3 third leg options", Train.NONE, t3.getThirdLegOptions());
+		Assert.assertEquals("t3 third leg options", Train.NO_CABOOSE_OR_FRED, t3.getThirdLegOptions());
 		Assert.assertEquals("t3 third leg start location", null, t3.getThirdLegStartLocation());
 
 		Assert.assertEquals("t5 build", true, t5.isBuildEnabled());
@@ -6222,7 +6222,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("t5 number of engines", "1", t5.getNumberEngines());
 		Assert.assertEquals("t5 Owner option", "t5 owner option", t5.getOwnerOption());
 		Assert.assertEquals("t5 railroad name", "t5 railroad name", t5.getRailroadName());
-		Assert.assertEquals("t5 requirements", Train.NONE, t5.getRequirements());
+		Assert.assertEquals("t5 requirements", Train.NO_CABOOSE_OR_FRED, t5.getRequirements());
 		Assert.assertEquals("t5 road option", "t5 raod option", t5.getRoadOption());
 		Assert.assertEquals("t5 route", B, t5.getRoute());
 		Assert.assertEquals("t5 status", Train.UNKNOWN, t5.getStatus());

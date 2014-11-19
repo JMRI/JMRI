@@ -4,15 +4,20 @@ package jmri.jmrit.operations.trains;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Frame;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
 import java.util.Hashtable;
 import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 
@@ -21,6 +26,7 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.routes.RouteEditFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.com.sun.TableSorter;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -124,6 +130,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 	void initTable(JTable table, TrainsTableFrame frame) {
 		_table = table;
 		_frame = frame;
+		// allow row color to be controlled
+		table.setDefaultRenderer(Object.class, new MyTableCellRenderer());
 		initTable();
 	}
 
@@ -357,6 +365,12 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 			break;
 		}
 	}
+	
+	public Color getRowColor(int row) {
+		Train train = sysList.get(row);
+//		log.debug("Row: {} train: {} color: {}", row, train.getName(), train.getTableRowColorName());
+		return train.getTableRowColor();
+	}
 
 	boolean focusTef = false;
 	TrainEditFrame tef = null;
@@ -366,7 +380,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 			tef.dispose();
 		tef = new TrainEditFrame();
 		Train train = sysList.get(row);
-		log.debug("Edit train (" + train.getName() + ")");
+		log.debug("Edit train ({})", train.getName());
 		tef.initComponents(train);
 		focusTef = true;
 	}
@@ -534,6 +548,39 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 			tef.dispose();
 		trainManager.removePropertyChangeListener(this);
 		removePropertyChangeTrains();
+	}
+	
+	class MyTableCellRenderer extends DefaultTableCellRenderer {
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+				boolean hasFocus, int row, int column) {
+			Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+			if (!isSelected) {
+				TableSorter sorter = (TableSorter) table.getModel();
+				int modelRow = sorter.modelIndex(row);
+//				log.debug("View row: {} Column: {} Model row: {}", row, column, modelRow);
+				Color background = getRowColor(modelRow);
+				c.setBackground(background);
+				c.setForeground(getForegroundColor(background));
+			}
+			return c;
+		}
+		
+		Color[] darkColors = {Color.BLACK, Color.BLUE, Color.GRAY, Color.RED};	    
+	    /**
+	     * Dark colors need white lettering
+	     * @param row
+	     * @return
+	     */
+	    private Color getForegroundColor(Color background) {
+	    	if (background == null)
+	    		return null;
+	    	for (Color color : darkColors) {
+	    		if (background == color)
+	    			return Color.WHITE;
+	    	}
+	    	return Color.BLACK;	// all others get black lettering
+	    }
 	}
 
 	static Logger log = LoggerFactory.getLogger(TrainsTableModel.class.getName());

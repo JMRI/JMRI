@@ -139,7 +139,7 @@ public class TrainManifest extends TrainCommon {
 				}
 
 				// engine change or helper service?
-				if (train.getSecondLegOptions() != Train.NONE) {
+				if (train.getSecondLegOptions() != Train.NO_CABOOSE_OR_FRED) {
 					if (rl == train.getSecondLegStartLocation())
 						printChange(fileOut, rl, train, train.getSecondLegOptions());
 					if (rl == train.getSecondLegEndLocation() && train.getSecondLegOptions() == Train.HELPER_ENGINES)
@@ -147,7 +147,7 @@ public class TrainManifest extends TrainCommon {
 								.getStringRemoveHelpers(), new Object[] { splitString(rl.getName()), train.getName(),
 								train.getDescription() }));
 				}
-				if (train.getThirdLegOptions() != Train.NONE) {
+				if (train.getThirdLegOptions() != Train.NO_CABOOSE_OR_FRED) {
 					if (rl == train.getThirdLegStartLocation())
 						printChange(fileOut, rl, train, train.getThirdLegOptions());
 					if (rl == train.getThirdLegEndLocation() && train.getThirdLegOptions() == Train.HELPER_ENGINES)

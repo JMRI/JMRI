@@ -101,7 +101,7 @@ public class HtmlConductor extends HtmlTrainCommon {
     // needed for location comments, not yet in formatter
     private String getEngineChanges(RouteLocation location) {
         // engine change or helper service?
-        if (train.getSecondLegOptions() != Train.NONE) {
+        if (train.getSecondLegOptions() != Train.NO_CABOOSE_OR_FRED) {
             if (location == train.getSecondLegStartLocation()) {
                 return engineChange(location, train.getSecondLegOptions());
             }
@@ -109,7 +109,7 @@ public class HtmlConductor extends HtmlTrainCommon {
                 return String.format(strings.getProperty("RemoveHelpersAt"), splitString(location.getName())); // NOI18N
             }
         }
-        if (train.getThirdLegOptions() != Train.NONE) {
+        if (train.getThirdLegOptions() != Train.NO_CABOOSE_OR_FRED) {
             if (location == train.getThirdLegStartLocation()) {
                 return engineChange(location, train.getSecondLegOptions());
             }

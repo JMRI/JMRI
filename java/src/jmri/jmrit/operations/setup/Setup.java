@@ -1304,20 +1304,22 @@ public class Setup {
 		return getColor(localColor);
 	}
 
-	private static Color getColor(String color) {
-		if (color.equals(BLUE))
+	public static Color getColor(String colorName) {
+		if (colorName.equals(BLACK))
+			return Color.black;
+		if (colorName.equals(BLUE))
 			return Color.blue;
-		if (color.equals(GREEN))
+		if (colorName.equals(GREEN))
 			return Color.green;
-		if (color.equals(RED))
+		if (colorName.equals(RED))
 			return Color.red;
-		if (color.equals(ORANGE))
+		if (colorName.equals(ORANGE))
 			return Color.orange;
-		if (color.equals(GRAY))
+		if (colorName.equals(GRAY))
 			return Color.gray;
-		if (color.equals(YELLOW))
+		if (colorName.equals(YELLOW))
 			return Color.yellow;
-		return Color.black; // default
+		return null; // default
 	}
 
 	public static String getManifestLogoURL() {

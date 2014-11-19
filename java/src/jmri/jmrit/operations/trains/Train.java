@@ -58,6 +58,8 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * SEE EXAMPLES BELOW CarManager carManager = CarManager.instance(); EngineManager engineManager =
 	 * EngineManager.instance();
 	 */
+	
+	public static final String NONE = "";
 
 	protected String _id = "";
 	protected String _name = "";
@@ -110,6 +112,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected int _statusCode = CODE_UNKNOWN;
 	protected String _statusTerminatedDate = "";
 	protected int _statusCarsRequested = 0;
+	protected String _tableRowColorName = NONE;	//color of row in Trains table
 
 	// Engine change and helper engines
 	protected int _leg2Options = 0; // options
@@ -152,6 +155,8 @@ public class Train implements java.beans.PropertyChangeListener {
 	public static final String TRAIN_ROUTE_CHANGED_PROPERTY = "TrainRoute"; // NOI18N
 	public static final String TRAIN_REQUIREMENTS_CHANGED_PROPERTY = "TrainRequirements"; // NOI18N
 	public static final String TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY = "TrainMoveComplete"; // NOI18N
+	public static final String TRAIN_ROW_COLOR_CHANGED_PROPERTY = "TrianRowColor"; // NOI18N
+	
 
 	// Train status
 	public static final String TRAIN_RESET = Bundle.getMessage("TrainReset");
@@ -173,7 +178,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	public static final int CODE_UNKNOWN = 0xFFFF;
 
 	// train requirements
-	public static final int NONE = 0; // default
+	public static final int NO_CABOOSE_OR_FRED = 0; // default
 	public static final int CABOOSE = 1;
 	public static final int FRED = 2;
 
@@ -211,7 +216,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	public String getId() {
 		return _id;
 	}
-
+	
 	/**
 	 * Sets the name of this train, normally a short name that can fit within the train icon.
 	 * 
@@ -243,6 +248,30 @@ public class Train implements java.beans.PropertyChangeListener {
 	 */
 	public String getName() {
 		return _name;
+	}
+	
+	/**
+	 * 
+	 * @return The name of the color when highlighting the train's row
+	 */
+	public String getTableRowColorName() {
+		return _tableRowColorName;
+	}
+	
+	public void setTableRowColorName(String colorName) {
+		String old = _tableRowColorName;
+		_tableRowColorName = colorName;
+		if (!old.equals(colorName)) {
+			setDirtyAndFirePropertyChange(TRAIN_ROW_COLOR_CHANGED_PROPERTY, old, colorName);
+		}
+	}
+	
+	/**
+	 * 
+	 * @return The color when highlighting the train's row
+	 */
+	public Color getTableRowColor() {
+		return Setup.getColor(getTableRowColorName());
 	}
 
 	/**
@@ -782,7 +811,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	/**
 	 * Used to determine if train has departed the first location in the train's route
 	 * 
-	 * @return true if train is in route
+	 * @return true if train has departed
 	 */
 	public boolean isTrainInRoute() {
 		return !getCurrentLocationName().equals("") && getTrainDepartsRouteLocation() != getCurrentLocation();
@@ -2510,6 +2539,8 @@ public class Train implements java.beans.PropertyChangeListener {
 		boolean old = _built;
 		_built = built;
 		if (old != built) {
+			if (built && !TrainManager.instance().isRowColorManual())
+				setTableRowColorName(TrainManager.instance().getRowColorNameForBuilt());
 			setDirtyAndFirePropertyChange(BUILT_CHANGED_PROPERTY, old ? "true" : "false", built ? "true" // NOI18N
 					: "false"); // NOI18N
 		}
@@ -2678,6 +2709,8 @@ public class Train implements java.beans.PropertyChangeListener {
 		boolean old = _buildFailed;
 		_buildFailed = status;
 		if (old != status) {
+			if (_buildFailed && !TrainManager.instance().isRowColorManual())
+				setTableRowColorName(TrainManager.instance().getRowColorNameForBuildFailed());
 			setDirtyAndFirePropertyChange("buildFailed", old ? "true" : "false", status ? "true" : "false"); // NOI18N
 		}
 	}
@@ -3108,6 +3141,8 @@ public class Train implements java.beans.PropertyChangeListener {
 			setTerminationDate(TrainCommon.getDate(false));
 			setStatus(CODE_TERMINATED);
 			setBuilt(false);
+			if (!TrainManager.instance().isRowColorManual())
+				setTableRowColorName(TrainManager.instance().getRowColorNameForTerminated());
 			// run termination scripts
 			runScripts(getTerminationScripts());
 		}
@@ -3150,6 +3185,8 @@ public class Train implements java.beans.PropertyChangeListener {
 		setPrinted(false);
 		// remove cars and engines from this train via property change
 		setStatus(CODE_TRAIN_RESET);
+		if (!TrainManager.instance().isRowColorManual())
+			setTableRowColorName(NONE);
 		// remove train icon
 		if (_trainIcon != null && _trainIcon.isActive()) {
 			_trainIcon.remove();
@@ -3197,15 +3234,22 @@ public class Train implements java.beans.PropertyChangeListener {
 				setDepartureTime(hour, minute);
 			}
 		}
+		
+		// Trains table row color
+		Element eRowColor = e.getChild(Xml.ROW_COLOR);
+		if (eRowColor != null && (a = eRowColor.getAttribute(Xml.NAME)) != null) {
+			_tableRowColorName = a.getValue();
+		}
+		
 		// new format for train's route added in 2.99.7
-		Element route = e.getChild(Xml.ROUTE);
-		if (route != null) {
-			if ((a = route.getAttribute(Xml.ID)) != null) {
+		Element eRoute = e.getChild(Xml.ROUTE);
+		if (eRoute != null) {
+			if ((a = eRoute.getAttribute(Xml.ID)) != null) {
 				setRoute(RouteManager.instance().getRouteById(a.getValue()));
 			}
-			if (route.getChild(Xml.SKIPS) != null) {
+			if (eRoute.getChild(Xml.SKIPS) != null) {
 				@SuppressWarnings("unchecked")
-				List<Element> skips = route.getChild(Xml.SKIPS).getChildren(Xml.LOCATION);
+				List<Element> skips = eRoute.getChild(Xml.SKIPS).getChildren(Xml.LOCATION);
 				String[] locs = new String[skips.size()];
 				for (int i = 0; i < skips.size(); i++) {
 					Element loc = skips.get(i);
@@ -3216,7 +3260,7 @@ public class Train implements java.beans.PropertyChangeListener {
 				setTrainSkipsLocations(locs);
 			}
 		} else {
-			// oldStatus format
+			// old format
 			// try and first get the route by id then by name
 			if ((a = e.getAttribute(Xml.ROUTE_ID)) != null) {
 				setRoute(RouteManager.instance().getRouteById(a.getValue()));
@@ -3253,14 +3297,14 @@ public class Train implements java.beans.PropertyChangeListener {
 			}
 			setTypeNames(types);
 		}
-		// oldStatus way of reading car types up to version 2.99.6
+		// old way of reading car types up to version 2.99.6
 		else if ((a = e.getAttribute(Xml.CAR_TYPES)) != null) {
 			String names = a.getValue();
 			String[] types = names.split("%%"); // NOI18N
 			// if (log.isDebugEnabled()) log.debug("Car types: "+names);
 			setTypeNames(types);
 		}
-		// oldStatus misspelled format
+		// old misspelled format
 		if ((a = e.getAttribute(Xml.CAR_ROAD_OPERATION)) != null)
 			_roadOption = a.getValue();
 		if ((a = e.getAttribute(Xml.CAR_ROAD_OPTION)) != null)
@@ -3278,7 +3322,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			}
 			setRoadNames(roads);
 		}
-		// oldStatus way of reading car roads up to version 2.99.6
+		// old way of reading car roads up to version 2.99.6
 		else if ((a = e.getAttribute(Xml.CAR_ROADS)) != null) {
 			String names = a.getValue();
 			String[] roads = names.split("%%"); // NOI18N
@@ -3308,7 +3352,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			}
 			setLoadNames(loads);
 		}
-		// oldStatus way of reading car loads up to version 2.99.6
+		// old way of reading car loads up to version 2.99.6
 		else if ((a = e.getAttribute(Xml.CAR_LOADS)) != null) {
 			String names = a.getValue();
 			String[] loads = names.split("%%"); // NOI18N
@@ -3329,7 +3373,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			}
 			setOwnerNames(owners);
 		}
-		// oldStatus way of reading car owners up to version 2.99.6
+		// old way of reading car owners up to version 2.99.6
 		else if ((a = e.getAttribute(Xml.CAR_OWNERS)) != null) {
 			String names = a.getValue();
 			String[] owners = names.split("%%"); // NOI18N
@@ -3525,11 +3569,18 @@ public class Train implements java.beans.PropertyChangeListener {
 		e.setAttribute(Xml.DESCRIPTION, getRawDescription());
 		e.setAttribute(Xml.DEPART_HOUR, getDepartureTimeHour());
 		e.setAttribute(Xml.DEPART_MINUTE, getDepartureTimeMinute());
+		
+		Element eRowColor = new Element(Xml.ROW_COLOR);
+		eRowColor.setAttribute(Xml.NAME, getTableRowColorName());
+		e.addContent(eRowColor);
+		
 		Element eRoute = new Element(Xml.ROUTE);
 		if (getRoute() != null) {
-			// oldStatus format
-			e.setAttribute(Xml.ROUTE, getRoute().getName());
-			e.setAttribute(Xml.ROUTE_ID, getRoute().getId());
+			// old format
+			if (Control.backwardCompatible) {
+				e.setAttribute(Xml.ROUTE, getRoute().getName());
+				e.setAttribute(Xml.ROUTE_ID, getRoute().getId());
+			}
 			// new format
 			eRoute.setAttribute(Xml.NAME, getRoute().getName());
 			eRoute.setAttribute(Xml.ID, getRoute().getId());
@@ -3552,7 +3603,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			}
 		}
 		// build list of locations that this train skips
-		// oldStatus format
+		// old format
 		if (Control.backwardCompatible) {
 			StringBuffer buf = new StringBuffer();
 			for (String id : getTrainSkipsLocations()) {
@@ -3629,7 +3680,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (!getRoadOption().equals(ALL_ROADS)) {
 			e.setAttribute(Xml.CAR_ROAD_OPTION, getRoadOption());
 			String[] roads = getRoadNames();
-			// oldStatus way of saving road names
+			// old way of saving road names
 			if (Control.backwardCompatible) {
 				StringBuffer buf = new StringBuffer();
 				for (String road : roads) {
@@ -3650,7 +3701,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (!getLoadOption().equals(ALL_LOADS)) {
 			e.setAttribute(Xml.CAR_LOAD_OPTION, getLoadOption());
 			String[] loads = getLoadNames();
-			// oldStatus way of saving car loads
+			// old way of saving car loads
 			if (Control.backwardCompatible) {
 				StringBuffer buf = new StringBuffer();
 				for (String load : loads) {
@@ -3671,7 +3722,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (!getOwnerOption().equals(ALL_OWNERS)) {
 			e.setAttribute(Xml.CAR_OWNER_OPTION, getOwnerOption());
 			String[] owners = getOwnerNames();
-			// oldStatus way of saving car owners
+			// old way of saving car owners
 			if (Control.backwardCompatible) {
 				StringBuffer buf = new StringBuffer();
 				for (String owner : owners) {
@@ -3734,7 +3785,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			e.addContent(l);
 		}
 
-		if (getSecondLegOptions() != Train.NONE) {
+		if (getSecondLegOptions() != Train.NO_CABOOSE_OR_FRED) {
 			e.setAttribute(Xml.LEG2_OPTIONS, Integer.toString(getSecondLegOptions()));
 			e.setAttribute(Xml.LEG2_ENGINES, getSecondLegNumberEngines());
 			e.setAttribute(Xml.LEG2_ROAD, getSecondLegEngineRoad());
@@ -3745,7 +3796,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			if (getSecondLegEndLocation() != null)
 				e.setAttribute(Xml.LEG2_END, getSecondLegEndLocation().getId());
 		}
-		if (getThirdLegOptions() != Train.NONE) {
+		if (getThirdLegOptions() != Train.NO_CABOOSE_OR_FRED) {
 			e.setAttribute(Xml.LEG3_OPTIONS, Integer.toString(getThirdLegOptions()));
 			e.setAttribute(Xml.LEG3_ENGINES, getThirdLegNumberEngines());
 			e.setAttribute(Xml.LEG3_ROAD, getThirdLegEngineRoad());

@@ -121,7 +121,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("train route", null, t.getRoute());
 		Assert.assertTrue("train accepts car type Boxcar", t.acceptsTypeName("Boxcar"));
 		Assert.assertEquals("train roads", Train.ALL_ROADS, t.getRoadOption());
-		Assert.assertEquals("train requirements", Train.NONE, t.getRequirements());
+		Assert.assertEquals("train requirements", Train.NO_CABOOSE_OR_FRED, t.getRequirements());
 
 		// test departure time fields
 		trainEditFrame.hourBox.setSelectedItem("15");
@@ -181,7 +181,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		getHelper().enterClickAndLeave(new MouseEventData(this, trainEditFrame.fredRadioButton));
 		jmri.util.JUnitUtil.releaseThread(trainEditFrame, 1); // compensate for race between GUI and test thread
 		// shouldn't change until Save
-		Assert.assertEquals("train requirements 1", Train.NONE, t.getRequirements());
+		Assert.assertEquals("train requirements 1", Train.NO_CABOOSE_OR_FRED, t.getRequirements());
 		getHelper().enterClickAndLeave(new MouseEventData(this, trainEditFrame.saveTrainButton));
 		jmri.util.JUnitUtil.releaseThread(trainEditFrame, 1); // compensate for race between GUI and test thread
 		Assert.assertEquals("train requirements 2", Train.FRED, t.getRequirements());
@@ -199,7 +199,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		getHelper().enterClickAndLeave(new MouseEventData(this, trainEditFrame.noneRadioButton));
 		getHelper().enterClickAndLeave(new MouseEventData(this, trainEditFrame.saveTrainButton));
 		jmri.util.JUnitUtil.releaseThread(trainEditFrame, 1); // compensate for race between GUI and test thread
-		Assert.assertEquals("train requirements 4", Train.NONE, t.getRequirements());
+		Assert.assertEquals("train requirements 4", Train.NO_CABOOSE_OR_FRED, t.getRequirements());
 
 		// test frame size and location
 		trainEditFrame.setSize(650, 600);

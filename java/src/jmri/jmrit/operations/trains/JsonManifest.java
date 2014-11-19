@@ -109,7 +109,7 @@ public class JsonManifest extends TrainCommon {
             }
             jsonLocation.put(JSON.COMMENT, routeLocation.getComment());
             // engine change or helper service?
-            if (train.getSecondLegOptions() != Train.NONE) {
+            if (train.getSecondLegOptions() != Train.NO_CABOOSE_OR_FRED) {
                 ArrayNode options = this.mapper.createArrayNode();
                 if (routeLocation == train.getSecondLegStartLocation()) {
                     if ((train.getSecondLegOptions() & Train.HELPER_ENGINES) == Train.HELPER_ENGINES) {
@@ -126,7 +126,7 @@ public class JsonManifest extends TrainCommon {
                 }
                 jsonLocation.put(JSON.OPTIONS, options);
             }
-            if (train.getThirdLegOptions() != Train.NONE) {
+            if (train.getThirdLegOptions() != Train.NO_CABOOSE_OR_FRED) {
                 ArrayNode options = this.mapper.createArrayNode();
                 if (routeLocation == train.getThirdLegStartLocation()) {
                     if ((train.getThirdLegOptions() & Train.HELPER_ENGINES) == Train.HELPER_ENGINES) {

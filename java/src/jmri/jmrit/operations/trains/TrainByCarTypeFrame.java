@@ -45,7 +45,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 	// radio buttons
 
 	// combo boxes
-	JComboBox trainsComboBox = TrainManager.instance().getComboBox();
+	JComboBox trainsComboBox = TrainManager.instance().getTrainComboBox();
 	JComboBox typeComboBox = CarTypes.instance().getComboBox();
 	JComboBox carsComboBox = new JComboBox();
 

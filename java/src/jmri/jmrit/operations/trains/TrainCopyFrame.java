@@ -37,7 +37,7 @@ public class TrainCopyFrame extends OperationsFrame {
 	javax.swing.JButton copyButton = new javax.swing.JButton(Bundle.getMessage("Copy"));
 
 	// combo boxes
-	javax.swing.JComboBox trainBox = TrainManager.instance().getComboBox();
+	javax.swing.JComboBox trainBox = TrainManager.instance().getTrainComboBox();
 
 	public TrainCopyFrame(Train train) {
 		// general GUI config

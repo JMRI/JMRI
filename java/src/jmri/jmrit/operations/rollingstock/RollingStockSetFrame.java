@@ -67,7 +67,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	protected JComboBox trackDestinationBox = new JComboBox();
 	protected JComboBox finalDestinationBox = LocationManager.instance().getComboBox();
 	protected JComboBox finalDestTrackBox = new JComboBox();
-	protected JComboBox trainBox = TrainManager.instance().getComboBox();
+	protected JComboBox trainBox = TrainManager.instance().getTrainComboBox();
 
 	// check boxes
 	protected JCheckBox autoTrackCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
@@ -726,7 +726,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	
 	protected void updateTrainComboBox() {
 		log.debug("update train combo box");
-		trainManager.updateComboBox(trainBox);
+		trainManager.updateTrainComboBox(trainBox);
 		if (_rs != null)
 			trainBox.setSelectedItem(_rs.getTrain());
 	}

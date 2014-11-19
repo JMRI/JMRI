@@ -476,7 +476,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 				updateBuilt();
 			}
 			if (ae.getSource() == none1) {
-				_train.setSecondLegOptions(Train.NONE);
+				_train.setSecondLegOptions(Train.NO_CABOOSE_OR_FRED);
 				updateTrainRequires1Option();
 				updateTrainRequires2Option();
 			}
@@ -500,7 +500,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 				updateTrainRequires2Option();
 			}
 			if (ae.getSource() == none2) {
-				_train.setThirdLegOptions(Train.NONE);
+				_train.setThirdLegOptions(Train.NO_CABOOSE_OR_FRED);
 				updateTrainRequires2Option();
 			}
 			if (ae.getSource() == change2Engine) {
@@ -740,7 +740,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		_train.setBuiltStartYear(builtAfterTextField.getText().trim());
 		_train.setBuiltEndYear(builtBeforeTextField.getText().trim());
 
-		int options1 = Train.NONE;
+		int options1 = Train.NO_CABOOSE_OR_FRED;
 		if (change1Engine.isSelected())
 			options1 = options1 | Train.CHANGE_ENGINES;
 		if (remove1Caboose.isSelected())
@@ -763,7 +763,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		_train.setSecondLegEngineRoad((String) roadEngine1Box.getSelectedItem());
 		_train.setSecondLegCabooseRoad((String) roadCaboose1Box.getSelectedItem());
 
-		int options2 = Train.NONE;
+		int options2 = Train.NO_CABOOSE_OR_FRED;
 		if (change2Engine.isSelected())
 			options2 = options2 | Train.CHANGE_ENGINES;
 		if (remove2Caboose.isSelected())

@@ -1328,7 +1328,7 @@ public class TrainBuilder extends TrainCommon {
 
 			// remove cabooses that have a destination that isn't the terminal, no caboose changes in the train's route
 			if (car.isCaboose() && car.getDestination() != null && car.getDestination() != _terminateLocation
-					&& _train.getSecondLegOptions() == Train.NONE && _train.getThirdLegOptions() == Train.NONE) {
+					&& _train.getSecondLegOptions() == Train.NO_CABOOSE_OR_FRED && _train.getThirdLegOptions() == Train.NO_CABOOSE_OR_FRED) {
 				addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildExcludeCarWrongDest"),
 						new Object[] { car.toString(), car.getTypeName(), car.getDestinationName() }));
 				_carList.remove(car);

@@ -45,7 +45,7 @@ public class VSDOptionsDialog extends JDialog {
 	JLabel x = new JLabel();
 	x.setText(Bundle.getMessage("FieldSelectTrain"));
 	this.add(x);
-	opsTrainComboBox = TrainManager.instance().getComboBox();
+	opsTrainComboBox = TrainManager.instance().getTrainComboBox();
 	this.add(opsTrainComboBox);
 
 	JButton closeButton = new JButton(Bundle.getMessage("ButtonOK"));
