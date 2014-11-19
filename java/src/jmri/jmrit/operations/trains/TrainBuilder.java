@@ -158,10 +158,13 @@ public class TrainBuilder extends TrainCommon {
 		// show train build options in detailed mode
 		addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
 		addLine(_buildReport, FIVE, Bundle.getMessage("MenuItemBuildOptions") + ":");
-		if (Setup.isBuildAggressive())
+		if (Setup.isBuildAggressive()) {
 			addLine(_buildReport, FIVE, Bundle.getMessage("BuildModeAggressive"));
-		else
+			addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("BuildNumberPasses"),
+					new Object[] { Setup.getNumberPasses() }));
+		} else {
 			addLine(_buildReport, FIVE, Bundle.getMessage("BuildModeNormal"));
+		}
 		// warn if car routing is disabled
 		if (!Setup.isCarRoutingEnabled()) {
 			addLine(_buildReport, FIVE, Bundle.getMessage("RoutingDisabled"));

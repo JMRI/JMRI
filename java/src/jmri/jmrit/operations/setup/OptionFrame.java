@@ -4,12 +4,15 @@ package jmri.jmrit.operations.setup;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.awt.GridBagLayout;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -69,6 +72,7 @@ public class OptionFrame extends OperationsFrame {
 	JTextField valueTextField = new JTextField(10);
 
 	// combo boxes
+	JComboBox numberPassesComboBox = new JComboBox();
 
 	public OptionFrame() {
 		super(Bundle.getMessage("TitleOptions"));
@@ -111,6 +115,13 @@ public class OptionFrame extends OperationsFrame {
 		rfidTextField.setToolTipText(Bundle.getMessage("EnterNameRfidTip"));
 		valueTextField.setToolTipText(Bundle.getMessage("EnterNameValueTip"));
 		stagingTurnCheckBox.setToolTipText(Bundle.getMessage("AlsoAvailablePerTrain"));
+		
+		// load combobox, allow 2 to 4 passes
+		for (int x = 2; x < 5; x++) {
+			numberPassesComboBox.addItem(x);
+		}
+		
+		numberPassesComboBox.setSelectedItem(Setup.getNumberPasses());
 
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
@@ -129,6 +140,12 @@ public class OptionFrame extends OperationsFrame {
 		addItem(pOpt, buildNormal, 1, 0);
 		addItem(pOpt, buildAggressive, 2, 0);
 		addItem(pBuild, pOpt, 1, 0);
+		
+		JPanel pPasses = new JPanel();
+		pPasses.setLayout(new GridBagLayout());
+		pPasses.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutNumberPasses")));
+		addItem(pPasses, numberPassesComboBox, 0, 0);
+		addItem(pBuild, pPasses, 1, 1);
 
 		// Switcher Service
 		JPanel pSwitcher = new JPanel();
@@ -139,7 +156,7 @@ public class OptionFrame extends OperationsFrame {
 		addItemLeft(pSwitcher, localInterchangeCheckBox, 1, 1);
 		addItemLeft(pSwitcher, localSpurCheckBox, 1, 2);
 		addItemLeft(pSwitcher, localYardCheckBox, 1, 3);
-		addItemLeft(pBuild, pSwitcher, 1, 1);
+		addItemLeft(pBuild, pSwitcher, 1, 2);
 
 		// Staging
 		JPanel pStaging = new JPanel();
@@ -151,7 +168,7 @@ public class OptionFrame extends OperationsFrame {
 		addItemLeft(pStaging, stagingTurnCheckBox, 1, 6);
 		addItemLeft(pStaging, promptFromTrackStagingCheckBox, 1, 7);
 		addItemLeft(pStaging, promptToTrackStagingCheckBox, 1, 8);
-		addItemLeft(pBuild, pStaging, 1, 2);
+		addItemLeft(pBuild, pStaging, 1, 3);
 
 		// Router panel
 		JPanel pRouter = new JPanel();
@@ -212,6 +229,7 @@ public class OptionFrame extends OperationsFrame {
 
 		// disable staging option if normal mode
 		stagingAvailCheckBox.setEnabled(buildAggressive.isSelected());
+		numberPassesComboBox.setEnabled(buildAggressive.isSelected());
 
 		// build menu
 		addHelpMenu("package.jmri.jmrit.operations.Operations_SettingsOptions", true); // NOI18N
@@ -234,6 +252,7 @@ public class OptionFrame extends OperationsFrame {
 		}
 		// disable staging option if normal mode
 		stagingAvailCheckBox.setEnabled(buildAggressive.isSelected());
+		numberPassesComboBox.setEnabled(buildAggressive.isSelected());
 	}
 
 	// Save button
@@ -241,6 +260,7 @@ public class OptionFrame extends OperationsFrame {
 		if (ae.getSource() == saveButton) {
 			// build option
 			Setup.setBuildAggressive(buildAggressive.isSelected());
+			Setup.setNumberPasses((Integer) numberPassesComboBox.getSelectedItem());
 			// Local moves?
 			Setup.setLocalInterchangeMovesEnabled(localInterchangeCheckBox.isSelected());
 			Setup.setLocalSpurMovesEnabled(localSpurCheckBox.isSelected());
