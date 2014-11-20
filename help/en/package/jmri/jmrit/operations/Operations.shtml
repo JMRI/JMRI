@@ -572,7 +572,7 @@
    normal when you first begin using the program. Normal builds guarantee that when a car is
    delivered (set out) by a train that there will be track space available for the car. Normal mode
    will not fill every track to capacity which is more prototypical. However, normal mode won't swap
-   a set of cars, car are picked up or set out based on the available track space. Normal mode
+   a set of cars, cars are picked up or set out based on the available track space. Normal mode
    prevents track overloading. In aggressive mode you can "accidentally" create track overloading
    by the order you build and run your trains or by using the the train reset function.
 
@@ -580,7 +580,7 @@
     a pick up. Therefore there can be instances where a train was to pick up a car to vacate the
     track, but a "later" train arrives early with a set out to that track and the car hasn't been
     picked up. However, more often than not the same train will perform the pick up and set out thus
-    minimizing the number of conflicts. Aggressive also performs a two pass determination of car
+    minimizing the number of conflicts. Aggressive also performs a multiple pass determination of car
     movements. The net effect is that more cars are moved within a given train, and complete car
     swaps can occur. Aggressive also tends to deliver cars to all of the available spurs. The
     smaller the spur, yard, or interchange the more likely that the program will assign cars to that
@@ -613,7 +613,18 @@
 
    <P>Note that once you've built a train, the build option can not be changed until all trains
     are terminated or reset.</P>
+    
+    <H3>Number of Passes During Build</H3>
 
+   When building trains in aggressive mode, you can control the number of passes the program
+   performs. Two passes is the default, and for most users is the correct value. The program works
+   best when less than 50% of your tracks are full, and two passes should provide good car movement.
+   If your layout to more towards the full side of the equation, increasing the number of passes
+   could increase car movement. In most cases, three passes is more than adequate, and if your
+   layout is jammed with cars, four passes might provide you with good car movement. The
+   one major drawback to increasing the number of passes, is that your train build reports will be
+   longer since each pass by the program is documented.
+   
    <A NAME="AllowLocalCarMovements"></A>
    <H3>Switcher Service</H3>
 
@@ -633,13 +644,13 @@
    <A NAME="TypeRoadLoadRestrictionsStaging"></A>
    <H4>Enable Type, Road and Load Restrictions into Staging</H4>
 
-   The next option restricts trains to staging tracks that only accept the train's rolling
+   This option restricts trains to staging tracks that only accept the train's rolling
    stock type, road and load names. When "Enable Type, Road and Load Restrictions into Staging" is
    selected, the program will only deliver a train to a staging track has the same rolling stock,
    road and load name restrictions. This is useful when you want trains delivered to staging tracks
-   based on the train's rolling stock restrictions. However, if you want certain car types, car
+   based on the train's rolling stock preferences. However, if you want certain car types, car
    loads, or road names to be transported by a train, but not delivered to staging, deselect this
-   feature.
+   option.
 
    <P>If you specify a certain train or route to be accepted by a staging track, this option is
     ignored, and you can then control which car types, loads, and road are to be accepted by the
@@ -691,7 +702,7 @@
    <A NAME="CarRouting"></A>
    <H3>Car Routing</H3>
 
-   When car routing is enabled, the program will use multiple trains to deliver a car to it final
+   When car routing is enabled, the program will use multiple trains to deliver a car to its final
    destination. It is recommended that you leave this option enabled. With car routing enabled, you
    can use a
    <A HREF="#Schedules">Schedule</A> to deliver a car to a specific location. The car routing
@@ -741,7 +752,7 @@
     manifest</A> using a comma separated value (.csv) file, select this option. You can use a
    program like Excel to create a manifest to your liking. You can find the manifest files in the
    operations directory in a directory called "csvManifests". Each line of the file starts with a
-   two or three letter code, followed by the code's description, and then any parameters associated
+   two to five letter code, followed by the code's description, and then any parameters associated
    with the code. Here's a list of the current codes and descriptions:
    <P></P>
    <table>
@@ -915,7 +926,7 @@
     name. Where C = Caboose, F = FRED, H = Hazardous, and U = Utility.</P>
    <P>The loco parameters for pick up loco (PL) and set out loco (SL) are: road, number, model,
     length, type, hp, location name, track name, destination name, destination track name, owner
-    name, consist name, is lead loco in consist, car comment, RFID.</P>
+    name, consist name, is lead loco in consist, loco comment, RFID.</P>
 
    <P>
     You can find some examples of custom manifests at <A
@@ -1183,6 +1194,12 @@
     and shows which cars were added to the train. The "Very Detailed" setting produces the most
     pages, and will show why cars are excluded from the train, and why they are not picked up or set
     out. Be sure and press "Save" after changing the build report selection.</p>
+    
+      <p>
+    For most users, the "Very Detailed" setting is the most appropriate when reading a train's build
+    report. For information on the content of the build report please see <A
+     HREF="#TroubleShootingBuildingTrains">Problems Building Trains How to Fix</A>.
+   </p>
 
    <P>You also have the option of using a text editor to view your build report. A text editor
     can make trouble shooting a problem much easier for you. For example, say you have a car that
@@ -1190,12 +1207,6 @@
     road number and quickly find why the car isn't being picked up by the train. One of the tricks
     when using a text editor is to increase the number of characters per line by reducing the font
     size specified in the Build Report Options window.</P>
-
-   <p>
-    For most users, the "Very Detailed" setting is the most appropriate when reading a train's build
-    report. For information on the content of the build report please see <A
-     HREF="#TroubleShootingBuildingTrains">Problems Building Trains How to Fix</A>.
-   </p>
 
    <P>The build report options window can also control the amount of information provided with
     regards to routing a car with a custom load or final destination. If you're not using schedules,
@@ -2301,7 +2312,7 @@
     empty as to only use 1/3 of the car's maximum weight when calculating the train's total weight.
     If you use the <A HREF="#ManifestComments">Loads and Empties</A> option when printing your
     manifest, you will want to use the correct load type so that the program prints out the correct
-    number of load and empties in the train.
+    number of loads and empties in the train.
    </P>
 
    <P>The default load priority is low and you can change the priority to high for a given car
@@ -3470,11 +3481,13 @@
 
    <P>
     In <A HREF="#SettingsOptions">aggressive mode</A> , the program when figuring out destinations
-    for cars, will do two passes when determining where to place cars. The first pass does 50% of
-    the available moves for each location, and the second pass does the remainder. By doing two
-    passes, the program can "free" up some tracks that already have cars there, thus increasing the
-    number of cars that the train can service. Once a car has been given a destination in aggressive
-    mode, the car's current track space is available for other trains to use.
+    for cars, will perform multiple passes when determining where to place cars. Using the default
+    value of two passes, the first pass uses 50% of the available moves for each location when
+    determining the number of cars to pick up, and the second pass does the remainder. By doing
+    multiple passes, the program can "free" up some tracks that already have cars there, thus
+    increasing the number of cars that the train can service. Once a car has been given a
+    destination in aggressive mode, the car's current track space is available for other trains to
+    use.
    </P>
 
    <P>
