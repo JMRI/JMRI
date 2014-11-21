@@ -36,7 +36,7 @@
    Trains are assigned routes that define locations or stations where cars can be picked up or set
    out. Features include the ability to control what car types, road names, and car loads a location
    or industry can service, the available track space for a location, and the maximum length the
-   train can be between any two locations on the train's route.
+   train can be between any two locations in the train's route.
    <P>
     Locations can have spurs, yards, staging and classification/interchange tracks. Spurs are used
     to service industries, and can optionally have <A HREF="#Schedules">schedules</A> assigned to
@@ -73,21 +73,23 @@
       <LI><A HREF="#LocationTools">Location Tools</A>
        <UL>
         <LI><A HREF="#CopyTrack">Copy Track</A></LI>
-        <LI><A HREF="#ModifyLocationByCarType">Modify Location by Car Type</A></LI>
-        <LI><A HREF="#ShowCars">Show Cars</A></LI>
         <LI><A HREF="#ChangeTrackTypeLocation">Change Track Type</A></LI>
-       </UL>
+        <LI><A HREF="#ModifyLocationByCarType">Modify Location by Car Type</A></LI>
+        <LI><A HREF="#ModifyLocationByCarLoad">Modify Location by Car Load</A></LI>
+        <LI><A HREF="#ShowTrainsServicingThisLocation">Show Trains Servicing this Location</A></LI>
+        <LI><A HREF="#EditCarType">Edit Car Type</A></LI>
+        <LI><A HREF="#ShowCars">Show Cars</A></LI>
+       </UL></LI>
       <LI><A HREF="#Yards">Yards</A>
        <UL>
-        <LI><A HREF="#RoadOptions">Road Options</A></LI>
-        <LI><A HREF="#LoadOptions">Load Options</A></LI>
-       </UL>
-      <LI><A HREF="#Sidings">Spurs</A>
+        <LI><A HREF="#PickUpCarOrder">Pick Up Car Order</A></LI>
+       </UL></LI>
+       <LI><A HREF="#Sidings">Spurs</A>
        <UL>
         <LI><A HREF="#Schedules">Schedules</A></LI>
-        <LI><A HREF="#AlternateTrack">Alternate Track</A></LI>
         <LI><A HREF="#SchedulesAndLoads">Schedules and Loads</A></LI>
         <LI><A HREF="#ShowSchedulesByCarTypeAndLoad">Show Schedules by Car Type and Load</A></LI>
+        <LI><A HREF="#AlternateTrack">Alternate Track</A></LI>
        </UL></LI>
       <LI><A HREF="#Interchange">Classification/Interchange Tracks</A>
        <UL>
@@ -100,18 +102,36 @@
         <LI><A HREF="#BlockingCarsFromStaging">Blocking Cars from Staging</A></LI>
         <LI><A HREF="#LoopingTrainsThroughStaging">Looping Trains through Staging</A></LI>
        </UL></LI>
-      <LI><A HREF="#ChangeTrackType">Change Track Type</A></LI>
-      <LI><A HREF="#Pools">Track Pools</A></LI>
-      <LI><A HREF="#PlannedPickUps">Planned Pick Ups</A></LI>
-      <LI><A HREF="#ModifyLocationsByCarType">Modify Locations and Tracks by Car Type</A></LI>
-     </UL></LI>
+      <LI><A HREF="#TrackTools">Track Tools</A>
+       <UL>
+       <LI><A HREF="#LoadOptions">Load Options</A></LI>
+        <LI><A HREF="#RoadOptions">Road Options</A></LI>
+        <LI><A HREF="#Pools">Track Pools</A></LI>
+        <LI><A HREF="#AlternateTrack">Alternate Track</A></LI>
+        <LI><A HREF="#PlannedPickUps">Planned Pick Ups</A>
+        <LI><A HREF="#TrackDestinations">Track Destinations</A></LI>
+        <LI><A HREF="#ChangeTrackType">Change Track Type</A></LI>
+       </UL></LI>
+      <LI><A HREF="#LocationsTools">Locations Tools</A>
+       <UL>
+       <LI><A HREF="#CopyLocation">Copy Location</A>
+       
+        <LI><A HREF="#LocationSchedules">Schedules</A>
+        
+        <LI><A HREF="#ModifyLocationsByCarType">Modify Locations and Tracks by Car Type</A>
+       
+       </UL></LI>
+     
+   </UL>
+   </LI>
     <LI><A HREF="#Cars">Cars</A>
      <UL>
       <LI><A HREF="#ImportingCars">Importing Cars from a File</A></LI>
       <LI><A HREF="#CarsEdit">Adding Cars to your Roster</A></LI>
       <LI><A HREF=#CabooseFredHazardous>Passenger, Caboose, Car with FRED, Utility, and
         Hazardous Options</A>
-      <LI><A HREF="#CarLoad">Car Loads</A></LI>
+      
+     <LI><A HREF="#CarLoad">Car Loads</A></LI>
       <LI><A HREF="#Kernel">Kernel, or Group of Cars</A></LI>
       <LI><A HREF="#EditCarAttributes">Edit Car Attributes (Road, Type, Length, Color,
         Kernel, Owner)</A></LI>
@@ -158,7 +178,8 @@
         <LI><A HREF="#Timetable">Timetable</A></LI>
         <LI><A HREF="#SetupExcelProgram">Setup Excel Program (Manifest Creator)</A></LI>
        </UL>
-      <LI><A HREF="#SwitcherService">Switcher Service</A></LI>
+      
+     <LI><A HREF="#SwitcherService">Switcher Service</A></LI>
       <LI><A HREF="#BuildingTrains">Building Trains</A></LI>
       <LI><A HREF="#TrainStatus">Train Status</A></LI>
       <LI><A HREF="#TroubleShootingBuildingTrains">Problems Building Trains How to Fix</A></LI>
@@ -558,7 +579,7 @@
     JMRI restarts, the "Operations" menu item on the main menu will no longer be visible, as there
     are no operations files to load. If you want to once again use the operations feature, you can
     either load the demo files or restore a previous backup. To do this, open the Operations
-    Settings page by selecting the "Settings" option on the Tools-&gt;Operations menu of the main
+    Settings page by selecting the "Settings" option in the Tools-&gt;Operations menu of the main
     page. From there you can do either a restore or a load of the demo files in the usual way.</p>
 
    <A NAME="SettingsOptions"></A>
@@ -1246,7 +1267,7 @@
    <A NAME="AddLocation"></A>
    <H3>Add or Edit Location</H3>
 
-   <P>To add a location, press the "Add" button located on the bottom of the "Locations" window.
+   <P>To add a location, press the "Add" button located at the bottom of the "Locations" window.
     A new window should appear. To edit an existing location, press the "Edit" button for the location.</P>
    <P>
     <img src="images/EditLocation.png">
@@ -1324,28 +1345,47 @@
     trains as the copy track will not transfer rolling stock from a track that has a scheduled pick
     up or set out from a built train. This restriction also applies to deleting the original track.</P>
 
-   <A NAME="ModifyLocationByCarType"></A>
-   <H4>Modify Location by Car Type</H4>
-
-   The next tool feature is "Modify Location by Car Type" which allows you to select a car type and
-   decide which tracks will service that car type for this location. See
-   <A HREF="#ModifyLocationsByCarType">Modify Locations by Car Type</A> for more info.
-   
-   <A NAME="ShowCars"></A>
-   <H4>Show Cars</H4>
-
-   <P>If you only want to see cars for this location, select "Show Cars" from the "Tools" menu.
-    This tool is also useful when you want to print out cars for a specific location.</P>
-
    <A NAME="ChangeTrackTypeLocation"></A>
    <H4>Change Track Type</H4>
 
    <P>
-    The last tool is "Change Track Type". This tool allows you to change all of the tracks at this
+    The next tool is "Change Track Type". This tool allows you to change all of the tracks at this
     location to the same type. Available track types are spur, yard, classification/interchange or
     staging. You can also change the track type for a specific track, see <A HREF="#ChangeTrackType">Change
      Track Type</A> for a track.
    </P>
+
+   <A NAME="ModifyLocationByCarType"></A>
+   <H4>Modify Location by Car Type</H4>
+
+   The tool "Modify Location by Car Type" allows you to select a car type and
+   decide which tracks will service the car type for a location. See
+   <A HREF="#ModifyLocationsByCarType">Modify Locations by Car Type</A> for more info.
+   
+   <A NAME="ModifyLocationByCarLoad"></A>
+   <H4>Modify Location by Car Load</H4>
+
+   The tool "Modify Location by Car Load" allows you to quickly select a car type and decide which
+   tracks will service the car's load. Only tracks that can service the car's type are enabled.
+   
+   <A NAME="ShowTrainsServicingThisLocation"></A>
+   <H4>Show Trains Servicing this Location</H4>
+
+   This tool can show you which trains can service a location. If you only want to see trains that
+   can can actually work the location, deselect the "Show all Trains" checkbox. 
+   
+   <A NAME="EditCarType"></A>
+   <H4>Edit Car Type</H4>
+
+   This tool opens the car attribute window for car types. This allows you the add, delete, or
+   replace a car type.  See <A HREF="#EditCarAttributes">Edit Car Attributes</A> for more info.
+   
+   
+   <A NAME="ShowCars"></A>
+   <H4>Show Cars</H4>
+
+   If you only want to see cars for this location, select "Show Cars" from the "Tools" menu.
+    This tool is also useful when you want to print out cars for a specific location.
 
    <A NAME="Yards"></A>
    <H3>Yards</H3>
@@ -1370,32 +1410,19 @@
    is restricted to the ones that the location can service. If the rolling stock that you wish
    doesn't appear for a yard, confirm that the location's rolling stock types are properly selected.
    If the rolling stock type you want doesn't exist for a location, you will have to create the type
-   using the <A HREF="#EditCarAttributes">Edit Car Attributes</A> window. 
+   using the
+   <A HREF="#EditCarAttributes">Edit Car Attributes</A> window which is also available from the edit
+   location "Tools" menu <A
+    HREF="#EditCarType">Edit Car Type</A>. 
+    
+    <A NAME="RoadAndLoadOptions"></A>
+    <H3>Road and Load Options</H3>
+
+   You can control which car roads and loads your yard can service from the "Tools" menu. See
+   <A HREF="#RoadOptions">Road Options</A> and <A HREF="#LoadOptions">Load Options</A> for more
+   info. 
    
-   <A NAME="RoadOptions"></A>
-   <H3>Road Options</H3>
-
-   You can also restrict which roads a yard can service. Under "Tools" in the menu, Select "Road
-   Options". In the "Edit Track Road Options" window select "Accept only" if you want to build a
-   list of road names that the yard will accept. Select "Exclude" if you want to build a list of
-   road names that you want to exclude from the yard. To add a road to the road list, select the
-   road name you want, and then press the "Add Road" button. To remove a road name from the list,
-   select the road name you want to remove, and press "Delete Road". "Delete All" will remove all
-   road names from the road list.
-   
-   <A NAME="LoadOptions"></A>
-   <H3>Load Options</H3>
-
-   You can also restrict which car loads a yard can service. Under "Tools" in the menu, Select "Load
-   Options". In the "Edit Track Load Options" window select "Accept only" if you want to build a
-   list of car load names that the yard will accept. Select "Exclude" if you want to build a list of
-   car load names that you want to exclude from the yard. There's also an option to associate the
-   loads to a particular type of car that the track will service. Select the "Use car type and load"
-   if you want this feature. To add a load name or car type and load name to the load list, select
-   the load name or combo you want, and then press the "Add Load" button. To remove a load name from
-   the list, select the load name you want to remove, and press "Delete Load". "Delete All" will
-   remove all load names from the load list.
-
+   <A NAME="PickUpCarOrder"></A>
    <H3>Pick Up Car Order</H3>
 
    There are three options for picking up cars from the yard. "Normal" uses the car's move count to
@@ -1435,6 +1462,11 @@
      When Empty</A> for more details.
    </P>
 
+   <P>You can if you want, control which trains or routes can pick up or set out cars to your
+    spurs. If you do restrict which trains or routes can pull cars from a track, you must also
+    restrict the track's car types, loads, and roads to the same ones that your trains can service,
+    otherwise you can have cars stranded on the track.</P>
+
    <P>
     You can if you wish schedule the order that cars will be delivered to a spur, or demand cars
     with certain loads. See <A HREF="#Schedules">Schedules</A> below for more information.
@@ -1459,7 +1491,7 @@
     <img src="images/EditSchedule.png">
    </P>
    <P>
-    Enter a name for your schedule and press the "Add Schedule" button on the bottom of the window.
+    Enter a name for your schedule and press the "Add Schedule" button at the bottom of the window.
     Now add your first delivery for this spur by selecting a car type in the menu box found in the
     lower left corner of the window and pressing the "Add car type" button. A new item should appear
     in your schedule containing the type of car, pull down menus for delivery, road names, loads,
@@ -1571,40 +1603,6 @@
     receive cars with those loads.
    </P>
 
-   <A NAME="AlternateTrack"></A>
-   <H3>Alternate Track</H3>
-
-   You can add an alternate track to a spur from the "Tools" menu accessed from either the edit spur
-   or the edit schedule windows. The program when it finds a spur full will send cars to the track
-   you specify as the alternate track. The alternate track feature can be used to create an
-   "Off Spot" track for your cars. Once you specify a track as an alternate, only cars destined for
-   the spur will be placed on the alternate track. You can also use the same alternate track for
-   several spurs.
-
-   <P>Specifying an alternate track for a schedule also changes the behavior of cars with custom
-    loads but without a final destination. When the program finds a car with a custom load, it will
-    search all spurs for a schedule that is demanding that car's type and load, and if found will
-    route the car there. However, if the track was full, the program will continue to search for a
-    track/schedule that can accept the car. If all tracks are full and no alternate track is
-    specified for any of the track/schedules, the program will attempt to move the car to another
-    location, which can be staging. However, if there's an alternate track specified, the program will only
-    move the car when one of the spurs can accept a new car, i.e. the track is no longer full.</P>
-
-   <P>
-    You can have the program ignore the alternate track car holding feature described above by
-    enabling the <A HREF="#SendCustomToStaging">Send cars with custom load to staging</A> option for
-    a train.
-   </P>
-
-   <P>Another feature of using an alternate track for cars with custom loads but without a final
-    destination, is that the program will try and forward some number of cars to the spur demanding
-    that car type and load. The program refers to these cars as "inbound" to the spur/industry. For
-    a car to be "inbound" is has to be transported by trains that don't directly service the
-    spur/industry. The maximum number of inbound cars to a spur with an alternate track is
-    determined by the length of the spur and the alternate track. So if the spur could hold 6 cars,
-    and the alternate track 5, then the program would allow a maximum of 11 cars to be sent to
-    the spur.</P>
-
    <A NAME="SchedulesAndLoads"></A>
    <H3>Schedules and Loads</H3>
 
@@ -1704,35 +1702,17 @@
    <P>If you want more control on how your classification/interchange track will operate, you
     can optionally specify which trains or routes can pick up or set out cars. If you restrict which
     trains or routes can pull cars from a classification/interchange track, you must also restrict
-    the track's car types to the same ones that the train services, otherwise you can have cars
-    stranded on the classification/interchange track.</P>
+    the track's car types, loads, and roads to the same ones that the train services, otherwise you
+    can have cars stranded on the classification/interchange track.</P>
+    
+   <P>
+    You can if you wish control which destinations your C/I track can service. You can access <A
+     HREF="#TrackDestinations">Track Destinations</A> from the "Tools" menu.
+   </P>
 
    <P>Given the complexity of this type of track, it is strongly recommended that you not use
     classification/interchange tracks until you get comfortable with how the program builds trains
     and you've read and can understand the train build reports.</P>
-
-   <A NAME="TrackDestinations"></A>
-   <H3>Track Destinations</H3>
-
-   You can also control which destinations the classification/interchange track will service. Under
-   "Tools" in the edit track window for a classification/interchange (C/I) track, the menu item
-   "Track Destinations" allows you to select which destinations are valid for the track.
-
-   <P>After you've selected the destinations that you want the C/I track to service, you can use
-    the "Check Destinations" button to verify that all of the destinations you've selected can also
-    service the same car types, roads, and loads as the C/I track. The program will only report the
-    first problem it encounters. So you have to fix each issue when it is reported in order to get
-    all issues resolved. The "Check Destinations" can take awhile to complete as it will test all
-    combinations of car types, roads, and loads that the C/I track can service. The program also
-    checks to see if there's a train or trains that can carry the car from the C/I track to the
-    selected destinations.</P>
-
-   <P>
-    Note that if you want your C/I track to service several car types, but have destinations that
-    can only service a subset of the car types, it is best to break the C/I track into several
-    tracks each servicing the types that the destinations can also service, and then
-    <A HREF="#Pools">pool</A> the C/I tracks together if you want to use the same track space.
-   </P>
 
    <A NAME="CreateClassificationYard"></A>
    <H3>How to Create a Classification Yard</H3>
@@ -1897,9 +1877,9 @@
     staging track resides.</P>
 
    <P>To control which loads the program will generate for you when departing staging, use the
-    "Load Options" under "Tools" in the "Edit Staging Track" window, and adjust the "loads shipped
+    "Load Options" under "Tools" in the "Edit Staging Track" window, and adjust the "Select loads shipped
     from this track" to your liking. You can also control which loads your staging tracks will
-    accept. Use the "Load Options" for each staging track, and adjust the "loads serviced by this
+    accept. Again use the "Load Options" for a staging track, and adjust the "Select loads serviced by this
     track" to control which car loads are allowed into staging.</P>
 
    <A NAME="BlockingCarsFromStaging"></A>
@@ -1941,15 +1921,38 @@
     You can automate the restaging of a train by creating a <A HREF="#TrainScripts">script</A> that
     is activated when the train is terminated into staging.
    </P>
+   
+   <A NAME="TrackTools"></A>
+   <H3>Track Tools</H3>
 
-   <A NAME="ChangeTrackType"></A>
-   <H3>Change Track Type</H3>
+   You can access some very useful tools for your tracks from the tools menu when editing a track.
+   
+   <A NAME="LoadOptions"></A>
+   <H4>Load Options</H4>
 
-   If you want to change the track type to a spur, interchange or yard, in the edit track window,
-   select Tools-&gt;Change Track Type. Select the desired track type and press "Save". 
+   You can restrict which car loads a track can service. Under "Tools" in the menu, Select "Load
+   Options". In the "Edit Track Load Options" window select "Accept only" if you want to build a
+   list of car load names that the track will accept. Select "Exclude" if you want to build a list of
+   car load names that you want to exclude from the track. There's also an option to associate the
+   loads to a particular type of car that the track will service. Select the "Use car type and load"
+   if you want this feature. To add a load name or car type and load name to the load list, select
+   the load name or combo you want, and then press the "Add Load" button. To remove a load name from
+   the list, select the load name you want to remove, and press "Delete Load". "Delete All" will
+   remove all load names from the load list. 
+   
+   <A NAME="RoadOptions"></A>
+   <H4>Road Options</H4>
+
+   You can also restrict which roads a track can service. Under "Tools" in the menu, Select "Road
+   Options". In the "Edit Track Road Options" window select "Accept only" if you want to build a
+   list of road names that the track will accept. Select "Exclude" if you want to build a list of
+   road names that you want to exclude from the track. To add a road to the road list, select the
+   road name you want, and then press the "Add Road" button. To remove a road name from the list,
+   select the road name you want to remove, and press "Delete Road". "Delete All" will remove all
+   road names from the road list.
    
    <A NAME="Pools"></A>
-   <H3>Track Pools</H3>
+   <H4>Track Pools</H4>
 
    The program allows you to "pool" a set of tracks at a location. Tracks in a pool share their
    track lengths with each other. This is useful if you've divided a location into track segments
@@ -1981,9 +1984,44 @@
     that a single schedule assigned to a spur doesn't quite do what you want. But if the track could
     have several schedules, it would do what is needed. By entering multiple spurs with schedules
     shared via a pool, you can create any car sequence imaginable for your industry.</p>
+    
+   <A NAME="AlternateTrack"></A>
+   <H4>Alternate Track</H4>
+
+   You can add an alternate track to a spur from the "Tools" menu accessed from either the edit spur
+   or the edit schedule windows. The program when it finds a spur full will send cars to the track
+   you specify as the alternate track. The alternate track feature can be used to create an
+   "Off Spot" track for your cars. Once you specify a track as an alternate, only cars destined for
+   the spur will be placed on the alternate track. You can also use the same alternate track for
+   several spurs.
+
+   <P>Specifying an alternate track for a schedule also changes the behavior of cars with custom
+    loads but without a final destination. When the program finds a car with a custom load, it will
+    search all spurs for a schedule that is demanding that car's type and load, and if found will
+    route the car there. However, if the track was full, the program will continue to search for a
+    track/schedule that can accept the car. If all tracks are full and no alternate track is
+    specified for any of the track/schedules, the program will attempt to move the car to another
+    location, which can be staging. However, if there's an alternate track specified, the program will only
+    move the car when one of the spurs can accept a new car, i.e. the track is no longer full.</P>
+
+   <P>
+    You can have the program ignore the alternate track car holding feature described above by
+    enabling the <A HREF="#SendCustomToStaging">Send cars with custom load to staging</A> option for
+    a train.
+   </P>
+
+   <P>Another feature of using an alternate track for cars with custom loads but without a final
+    destination, is that the program will try and forward some number of cars to the spur demanding
+    that car type and load. The program refers to these cars as "inbound" to the spur/industry. For
+    a car to be "inbound" is has to be transported by trains that don't directly service the
+    spur/industry. The maximum number of inbound cars to a spur with an alternate track is
+    determined by the length of the spur and the alternate track. So if the spur could hold 6 cars,
+    and the alternate track 5, then the program would allow a maximum of 11 cars to be sent to
+    the spur.</P>
+
 
    <A NAME="PlannedPickUps"></A>
-   <H3>Planned Pick Ups</H3>
+   <H4>Planned Pick Ups</H4>
 
    The program when searching for tracks to set out cars, checks to see if there's space available
    for new cars. Sometimes due to the order that you're building your trains, you know better than
@@ -2008,9 +2046,58 @@
    <P>Guaranteeing that cars will be picked up from a track can be a bit tricky, so it is
     recommended that you not use this feature until you become an expert with regards to using this
     program, otherwise you will most likely overload your tracks when using this feature.</P>
+    
+   <A NAME="TrackDestinations"></A>
+   <H3>Track Destinations</H3>
 
+   You can control which destinations a classification/interchange track will service. Under
+   "Tools" in the edit track window for a classification/interchange (C/I) track, the menu item
+   "Track Destinations" allows you to select which destinations are valid for the track.
+
+   <P>After you've selected the destinations that you want the C/I track to service, you can use
+    the "Check Destinations" button to verify that all of the destinations you've selected can also
+    service the same car types, roads, and loads as the C/I track. The program will only report the
+    first problem it encounters. So you have to fix each issue when it is reported in order to get
+    all issues resolved. The "Check Destinations" can take awhile to complete as it will test all
+    combinations of car types, roads, and loads that the C/I track can service. The program also
+    checks to see if there's a train or trains that can carry the car from the C/I track to the
+    selected destinations.</P>
+
+   <P>
+    Note that if you want your C/I track to service several car types, but have destinations that
+    can only service a subset of the car types, it is best to break the C/I track into several
+    tracks each servicing the types that the destinations can also service, and then
+    <A HREF="#Pools">pool</A> the C/I tracks together if you want to use the same track space.
+   </P>
+    
+   <A NAME="ChangeTrackType"></A>
+   <H4>Change Track Type</H4>
+
+   If you want to change the track type to a spur, interchange or yard, in the edit track window,
+   select Tools-&gt;Change Track Type. Select the desired track type and press "Save". 
+    
+   <A NAME="LocationsTools"></A>
+   <H3>Locations Tools</H3>
+
+   The program provides several tools that can be accessed from the "Locations" tools menu.
+   
+   <A NAME="CopyLocation"></A>
+   <H4>Copy Location</H4>
+
+   This tool allows you to make a copy of an existing location and all of the tracks at that
+   location. Enter a new location name, select the location to be copied, and then press the "Copy"
+   button. If you want to move all of the rolling stock at the location being copied to your new
+   location's tracks, select the checkbox "Move Rolling Stock to New Track". You can also delete all
+   of the tracks at the location being copied, but you must also select the "Move Rolling Stock to
+   New Track" option. 
+   
+   <A NAME="LocationSchedules"></A>
+   <H4>Schedules</H4>
+   
+   You can access all of your schedules directly from the "Locations" tools menu.
+   
    <A NAME="ModifyLocationsByCarType"></A>
-   <H3>Modify Locations by Car Type</H3>
+   <H4>Modify Locations by Car Type</H4>
 
    This feature can be found under the "Tools" menu in the Locations window. Use this tool to quickly
    modify the type of cars your locations and tracks will service. Very useful when adding a new car
@@ -2700,7 +2787,7 @@
    </P>
 
    <A NAME="RouteComment"></A>
-   <p>Each location in the route can also have an optional comment that will appear on the train
+   <p>Each location in the route can also have an optional comment that will appear in the train's
     manifests. Press the "Add" button under the table heading "Comment" to add a comment to a
     location.</p>
 
@@ -2835,7 +2922,7 @@
    </P>
    <P>
     Enter the train's name and optional description, and then press the "Add Train" button. Both
-    will show up on the train's manifest. The train's name will also appear on the
+    will show up in the train's manifest. The train's name will also appear on the
     <A HREF="#PanelOptionsTrainIcons">train icon</A>, so short names work best. If you want the
     train's lead locomotive number and departure direction as part of the train's description when
     printing, enter {0} and {1} respectively for the number and direction. This allows you to
