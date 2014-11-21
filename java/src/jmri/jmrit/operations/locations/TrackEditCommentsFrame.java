@@ -2,6 +2,7 @@ package jmri.jmrit.operations.locations;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 
@@ -14,6 +15,7 @@ import javax.swing.JTextArea;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainSwitchListEditFrame;
 
@@ -86,9 +88,8 @@ public class TrackEditCommentsFrame extends OperationsFrame {
 
 		addButtonAction(saveButton);
 
-		pack();
 		setTitle(track.getName());
-		setVisible(true);
+		initMinimumSize(new Dimension(Control.mediumPanelHeight, Control.greaterPanelWidth));
 	}
 
 	// Buttons
