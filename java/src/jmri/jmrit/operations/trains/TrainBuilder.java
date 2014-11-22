@@ -1800,8 +1800,7 @@ public class TrainBuilder extends TrainCommon {
 			}
 			_completedMoves = 0; // the number of moves completed for this location
 			_success = true; // true when done with this location
-			_reqNumOfMoves = rl.getMaxCarMoves() - rl.getCarMoves(); // the number of moves requested
-			_reqNumOfMoves = _reqNumOfMoves * percent / 100;
+			_reqNumOfMoves = (rl.getMaxCarMoves() - rl.getCarMoves()) * percent / 100; // the number of moves requested
 			int saveReqMoves = _reqNumOfMoves; // save a copy for status message
 			// multiple pass build?
 			if (firstPass) {			
@@ -1834,7 +1833,8 @@ public class TrainBuilder extends TrainCommon {
 				}
 			}
 			addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildLocReqMoves"), new Object[] {
-					rl.getName(), rl.getId(), _reqNumOfMoves, saveReqMoves, rl.getMaxCarMoves() }));
+					rl.getName(), rl.getId(), _reqNumOfMoves, rl.getMaxCarMoves() - rl.getCarMoves(),
+					rl.getMaxCarMoves() }));
 			addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
 			_carIndex = 0; // see reportCarsNotMoved(rl, percent) below
 			findDestinationsForCarsFromLocation(rl, routeIndex, false);
@@ -1844,8 +1844,8 @@ public class TrainBuilder extends TrainCommon {
 			if (Setup.isBuildAggressive() && saveReqMoves != _reqNumOfMoves) {
 				log.debug("Perform extra pass at location ({})", rl.getName());
 				// use up to half of the available moves left for this location
-				if (_reqNumOfMoves < (rl.getMaxCarMoves() - rl.getCarMoves()) / 2)
-					_reqNumOfMoves = (rl.getMaxCarMoves() - rl.getCarMoves()) / 2;
+				if (_reqNumOfMoves < (rl.getMaxCarMoves() - rl.getCarMoves()) * percent / 200)
+					_reqNumOfMoves = (rl.getMaxCarMoves() - rl.getCarMoves()) * percent / 200;
 				findDestinationsForCarsFromLocation(rl, routeIndex, true);
 			}
 
@@ -1857,9 +1857,9 @@ public class TrainBuilder extends TrainCommon {
 
 			addLine(_buildReport, ONE, MessageFormat
 					.format(Bundle.getMessage("buildStatusMsg"), new Object[] {
-							(_success ? Bundle.getMessage("Success") : Bundle.getMessage("Partial")),
-							Integer.toString(_completedMoves), Integer.toString(saveReqMoves), rl.getName(),
-							_train.getName() }));
+							(saveReqMoves <= _completedMoves ? Bundle.getMessage("Success") : Bundle
+									.getMessage("Partial")), Integer.toString(_completedMoves),
+							Integer.toString(saveReqMoves), rl.getName(), _train.getName() }));
 
 			reportCarsNotMoved(rl, percent);
 		}
