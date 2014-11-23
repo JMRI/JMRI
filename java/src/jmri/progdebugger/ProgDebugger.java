@@ -23,6 +23,13 @@ import jmri.*;
  */
 public class ProgDebugger implements AddressedProgrammer  {
 
+    public ProgDebugger() {}
+
+    public ProgDebugger(boolean pLongAddress, int pAddress) {
+        longAddr = pLongAddress;
+        address = pAddress;
+    }
+    
     // write CV is recorded for later use
     private int _lastWriteVal = -1;
     private int _lastWriteCv = -1;
@@ -266,9 +273,11 @@ public class ProgDebugger implements AddressedProgrammer  {
         }
     }
 
+    boolean longAddr = true; 
     public boolean getLongAddress() {return true;}
     
-    public int getAddressNumber() { return 123; }
+    int address = -1;
+    public int getAddressNumber() { return address; }
     
     public String getAddress() { return ""+getAddressNumber()+" "+getLongAddress(); }
 

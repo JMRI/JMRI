@@ -5,7 +5,7 @@ package jmri.implementation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.Programmer;
+import jmri.*;
 
 import org.jdom.Element;
 
@@ -98,10 +98,10 @@ public class ProgrammerFacadeSelector  {
                 log.debug("new programmer "+pf);
                 programmer = pf; // to go around and see if there are more
             
-            } else if (fname.equals("Ops Mode Accessory Programming")) {
+            } else if (programmer instanceof AddressedProgrammer && fname.equals("Ops Mode Accessory Programming")) {
 
                 jmri.implementation.AccessoryOpsModeProgrammerFacade pf =
-                    new jmri.implementation.AccessoryOpsModeProgrammerFacade(programmer);
+                    new jmri.implementation.AccessoryOpsModeProgrammerFacade((AddressedProgrammer)programmer);
             
                 log.debug("new programmer "+pf);
                 programmer = pf; // to go around and see if there are more

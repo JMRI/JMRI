@@ -293,6 +293,20 @@ The parameters must appear in the order shown. They mean:<ul>
     to tell the decoder to use this mode.
 </ul>
 
+<a name="accessoryops"/>
+<h4>Accessory Decoder Ops Mode</h4>
+Special programming packets are used by certain accessory decoders
+to configure their CVs from the DCC track signal.
+The capability to do that is written:
+<code><pre>
+        &lt;capability&gt;
+            &lt;name&gt;Ops Mode Accessory Programming&lt;/name&gt;
+        &lt;/capability&gt;
+</pre></code>
+There are no parameters.  Note that this only works for ops-mode writes; these
+particular NMRA DCC packets do not perform read operations, nor do they work
+in the service mode (programming track).
+
 <h4>Indexed CV Access</h4>
 
 To access indexed CVs via regular variables (not iVariables), include this capability element:

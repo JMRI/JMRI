@@ -35,9 +35,10 @@ import jmri.jmrix.AbstractProgrammerFacade;
 
 public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
-    public AccessoryOpsModeProgrammerFacade(Programmer prog) {
+    public AccessoryOpsModeProgrammerFacade(AddressedProgrammer prog) {
         super(prog);
         this.mode = prog.getMode();
+        this.aprog = prog;
     }
     
     // ops accessory mode can't read locally
@@ -53,6 +54,8 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
                 return false;
         }
     }
+    
+    AddressedProgrammer aprog;
     
     public boolean hasMode(int mode) {
         if (checkMode(mode)) return true;
@@ -90,7 +93,7 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
         state = ProgState.PROGRAMMING;
         
         // send DCC command to implement prog.writeCV(cv, val, this);
-        byte[] b = NmraPacket.accDecoderPktOpsMode(333, Integer.parseInt(cv), val);
+        byte[] b = NmraPacket.accDecoderPktOpsMode(aprog.getAddressNumber(), Integer.parseInt(cv), val);
         InstanceManager.getDefault(CommandStation.class).sendPacket(b,1);
         
         // and reply done

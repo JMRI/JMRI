@@ -26,7 +26,7 @@ public class AccessoryOpsModeProgrammerFacadeTest extends TestCase {
 
     public void testWriteDirect() throws jmri.ProgrammerException, InterruptedException {
 
-        ProgDebugger dp = new ProgDebugger();
+        ProgDebugger dp = new ProgDebugger(true, 123);
         Programmer p = new AccessoryOpsModeProgrammerFacade(dp);
         ProgListener l = new ProgListener(){
                 public void programmingOpReply(int value, int status) {
@@ -44,7 +44,7 @@ public class AccessoryOpsModeProgrammerFacadeTest extends TestCase {
     }
     
     public void testCvLimit() {
-        ProgDebugger dp = new ProgDebugger();
+        ProgDebugger dp = new ProgDebugger(true, 123);
         dp.setTestReadLimit(1024);
         dp.setTestWriteLimit(1024);
 
@@ -65,7 +65,6 @@ public class AccessoryOpsModeProgrammerFacadeTest extends TestCase {
     class MockCommandStation implements CommandStation {
         public void sendPacket(byte[] packet, int repeats) {
             lastPacket = packet;
-            System.out.println("called");
         }
     
         public String getUserName() { return "I"; }

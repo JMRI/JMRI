@@ -49,7 +49,7 @@ public class DebugProgrammerManager extends DefaultProgrammerManager {
             return saw;
         }
         // if not, save a new one & return it
-        opsProgrammers.put(Integer.valueOf(address), saw = new ProgDebugger());
+        opsProgrammers.put(Integer.valueOf(address), saw = new ProgDebugger(pLongAddress, pAddress));
         if (log.isDebugEnabled()) log.debug("return new ops-mode programmer "
                                                 +pAddress+" "+pLongAddress);
         return saw;
