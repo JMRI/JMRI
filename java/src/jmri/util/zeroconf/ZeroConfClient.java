@@ -57,6 +57,7 @@ public class ZeroConfClient {
      * @param service
      * @return A list of servers or an empty list.
      */
+    @SuppressWarnings("unchecked")
     public List<ServiceInfo> getServices(String service) {
         ArrayList<ServiceInfo> services = new ArrayList();
         for (JmDNS server : ZeroConfService.netServices().values()) {

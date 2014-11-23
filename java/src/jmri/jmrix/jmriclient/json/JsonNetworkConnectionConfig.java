@@ -140,6 +140,7 @@ public class JsonNetworkConnectionConfig extends AbstractNetworkConnectionConfig
         }
     }
 
+    @SuppressWarnings("unchecked")
     public Object[] getServices() {
         ArrayList<String> services = new ArrayList();
         for (ServiceInfo service : this.zeroConfClient.getServices(JSON.ZEROCONF_SERVICE_TYPE)) {

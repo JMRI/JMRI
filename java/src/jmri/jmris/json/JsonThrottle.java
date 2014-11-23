@@ -225,6 +225,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public void sendMessage(ObjectNode data) {
         for (JsonThrottleServer server : (ArrayList<JsonThrottleServer>) this.servers.clone()) {
             this.sendMessage(data, server);
@@ -271,6 +272,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
         for (JsonThrottleServer server : (ArrayList<JsonThrottleServer>) this.servers.clone()) {
             this.sendErrorMessage(-102, Bundle.getMessage(server.connection.getLocale(), "ErrorThrottleRequestFailed", address, reason), server);

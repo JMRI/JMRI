@@ -97,6 +97,7 @@ public class JsonClientSystemConnectionMemo extends SystemConnectionMemo {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;

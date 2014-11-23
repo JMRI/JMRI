@@ -3242,6 +3242,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * @param type the Class the list should be limited to.
      * @return a List of Editors.
      */
+    @SuppressWarnings("unchecked")
     synchronized public static <T extends Editor> List<T> getEditors(@NonNull Class<T> type) {
         List<T> result = new ArrayList<T>();
         for (Editor e : Editor.getEditors()) {
