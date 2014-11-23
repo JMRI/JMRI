@@ -180,19 +180,40 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 		Assert.assertEquals("CommandedState after 2nd set THROWN is THROWN", jmri.Turnout.THROWN, t.getCommandedState());
 		Assert.assertEquals("KnownState after 2nd set THROWN is CLOSED", jmri.Turnout.CLOSED, t.getKnownState());
         
-		// notify the Ln of first feedback - SWITCH is thrown, so moved off 
-		m = new LocoNetMessage(4);
-		m.setOpCode(0xb1);m.setElement(1, 0x14);m.setElement(2, 0x60);m.setElement(3, 0x3A);     // AUX reports THROWN
-		lnis.sendTestMessage(m);
-		Assert.assertEquals("CommandedState after SWITCH report THROWN is THROWN", jmri.Turnout.THROWN, t.getCommandedState());
-		Assert.assertEquals("KnownState after SWITCH report THROWN is INCONSISTENT", jmri.Turnout.INCONSISTENT, t.getKnownState());
-
-		// notify the Ln of second feedback - AUX is closed, so moved on
+		// notify the Ln of second feedback (out of order) - AUX is closed, so moved on
 		m = new LocoNetMessage(4);
 		m.setOpCode(0xb1);m.setElement(1, 0x14);m.setElement(2, 0x50);m.setElement(3, 0x0A);     // SWITCH reports CLOSED
 		lnis.sendTestMessage(m);
 		Assert.assertEquals("CommandedState after AUX report CLOSED is THROWN", jmri.Turnout.THROWN, t.getCommandedState());
 		Assert.assertEquals("KnownState after AUX report CLOSED is THROWN", jmri.Turnout.THROWN, t.getKnownState());
+
+		// notify the Ln of first feedback (out of order) - SWITCH is thrown, so moved off - ignored
+		m = new LocoNetMessage(4);
+		m.setOpCode(0xb1);m.setElement(1, 0x14);m.setElement(2, 0x60);m.setElement(3, 0x3A);     // AUX reports THROWN
+		lnis.sendTestMessage(m);
+		Assert.assertEquals("CommandedState after SWITCH report THROWN is THROWN", jmri.Turnout.THROWN, t.getCommandedState());
+		Assert.assertEquals("KnownState after SWITCH report THROWN is THROWN", jmri.Turnout.THROWN, t.getKnownState());
+
+
+        // test transition back to CLOSED in wrong order
+	    t.setCommandedState(jmri.Turnout.CLOSED);
+		Assert.assertEquals("CommandedState after 2nd set CLOSED is CLOSED", jmri.Turnout.CLOSED, t.getCommandedState());
+		Assert.assertEquals("KnownState after 2nd set CLOSED is THROWN", jmri.Turnout.THROWN, t.getKnownState());
+        
+		// notify the Ln of second feedback (out of order) - SWITCH is closed, so moved on
+		m = new LocoNetMessage(4);
+		m.setOpCode(0xb1);m.setElement(1, 0x14);m.setElement(2, 0x70);m.setElement(3, 0x2A);     // SWITCH reports CLOSED
+		lnis.sendTestMessage(m);
+		Assert.assertEquals("CommandedState after SWITCH report CLOSED is CLOSED", jmri.Turnout.CLOSED, t.getCommandedState());
+		Assert.assertEquals("KnownState after SWITCH report CLOSED is CLOSED", jmri.Turnout.CLOSED, t.getKnownState());
+
+		// notify the Ln of first feedback (out of order) - AUX is thrown, so moved off 
+		m = new LocoNetMessage(4);
+		m.setOpCode(0xb1);m.setElement(1, 0x14);m.setElement(2, 0x40);m.setElement(3, 0x1A);     // AUX reports THROWN
+		lnis.sendTestMessage(m);
+		Assert.assertEquals("CommandedState after AUX report THROWN is CLOSED", jmri.Turnout.CLOSED, t.getCommandedState());
+		Assert.assertEquals("KnownState after AUX report THROWN is CLOSED", jmri.Turnout.CLOSED, t.getKnownState());
+
 
 	}
 

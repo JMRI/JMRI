@@ -238,8 +238,8 @@ import jmri.implementation.AbstractTurnout;
     	        	    } else {
     	        	        // switch input thrown (input on)
     	        	        if (getFeedbackMode()==EXACT) {
-    	        	            // leaving CLOSED on way to THROWN, go INCONSISTENT
-                                newKnownState(INCONSISTENT);
+    	        	            // leaving CLOSED on way to THROWN, go INCONSISTENT if not already THROWN
+                                if (getKnownState()!=THROWN) newKnownState(INCONSISTENT);
     	        	        } else if (getFeedbackMode()==INDIRECT) {
     	        	            // reached thrown state
                                      newKnownState(adjustStateForInversion(THROWN));
@@ -256,8 +256,8 @@ import jmri.implementation.AbstractTurnout;
     	        	    } else {
     	        	        // aux input thrown (input on)
     	        	        if (getFeedbackMode()==EXACT) {
-    	        	            // leaving THROWN on the way to CLOSED
-                                newKnownState(INCONSISTENT);
+    	        	            // leaving THROWN on the way to CLOSED, go INCONSISTENT if not already CLOSED
+                                if (getKnownState()!=CLOSED) newKnownState(INCONSISTENT);
     	        	        }
     	        	    }
     	        	}
