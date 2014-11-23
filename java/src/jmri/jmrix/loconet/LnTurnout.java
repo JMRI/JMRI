@@ -25,10 +25,7 @@ import jmri.implementation.AbstractTurnout;
  *DS54 that has a microswitch attached to its Switch input.
  *<LI>EXACT - listen to the LocoNet for messages back from a 
  * DS54 that has two microswitches, one connected to the Switch input
- * and one to the Aux input.  Note that this implementation does not
- * pass through the "UNKNOWN" or "INCONSISTENT" states while moving from 
- * "THROWN" to "CLOSED" or vice versa. To do that, one would have to
- * add input state tracking information.
+ * and one to the Aux input. 
  *</UL>
  * <P>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
@@ -227,7 +224,6 @@ import jmri.implementation.AbstractTurnout;
                  } else {
                     // LnConstants.OPC_SW_REP_INPUTS set, these are feedback messages from inputs
     	        		// sort out states
-                        // see EXACT feedback note at top    	  
     	        	if ((sw2 & LnConstants.OPC_SW_REP_SW) !=0) {
     	        	    // Switch input report
     	        	    if ((sw2 & LnConstants.OPC_SW_REP_HI)!=0) {
@@ -242,7 +238,8 @@ import jmri.implementation.AbstractTurnout;
     	        	    } else {
     	        	        // switch input thrown (input on)
     	        	        if (getFeedbackMode()==EXACT) {
-    	        	            // leaving CLOSED on way to THROWN, but ignoring that for now
+    	        	            // leaving CLOSED on way to THROWN, go INCONSISTENT
+                                newKnownState(INCONSISTENT);
     	        	        } else if (getFeedbackMode()==INDIRECT) {
     	        	            // reached thrown state
                                      newKnownState(adjustStateForInversion(THROWN));
@@ -259,7 +256,8 @@ import jmri.implementation.AbstractTurnout;
     	        	    } else {
     	        	        // aux input thrown (input on)
     	        	        if (getFeedbackMode()==EXACT) {
-    	        	            // leaving THROWN on the way to CLOSED, but ignoring that for now
+    	        	            // leaving THROWN on the way to CLOSED
+                                newKnownState(INCONSISTENT);
     	        	        }
     	        	    }
     	        	}
