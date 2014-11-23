@@ -132,6 +132,39 @@ public class SE8cSignalHeadTest extends TestCase {
         
     }
     
+	public void testStateFollowing() {
+        Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
+        Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
+        SE8cSignalHead s1 = new SE8cSignalHead(
+            new NamedBeanHandle<Turnout>("11", it11),
+            new NamedBeanHandle<Turnout>("12", it12),
+            "user name"
+            );
+
+        SE8cSignalHead s2 = new SE8cSignalHead(
+            new NamedBeanHandle<Turnout>("11", it11),
+            new NamedBeanHandle<Turnout>("12", it12),
+            "user name"
+            );
+
+        s1.setAppearance(SignalHead.DARK);
+        Assert.assertEquals("s2 after DARK", SignalHead.DARK, s2.getAppearance());
+        
+        s1.setAppearance(SignalHead.RED);
+        Assert.assertEquals("s2 after RED", SignalHead.RED, s2.getAppearance());
+        
+        s1.setAppearance(SignalHead.GREEN);
+        Assert.assertEquals("s2 after GREEN", SignalHead.GREEN, s2.getAppearance());
+        
+        s1.setAppearance(SignalHead.YELLOW);
+        Assert.assertEquals("s2 after YELLOW", SignalHead.YELLOW, s2.getAppearance());
+        
+        s1.setAppearance(SignalHead.DARK);
+        Assert.assertEquals("s2 after DARK", SignalHead.DARK, s2.getAppearance());
+        
+    }
+
+
 	// from here down is testing infrastructure
     
 	public SE8cSignalHeadTest(String s) {
