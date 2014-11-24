@@ -59,6 +59,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 	public TrainsTableModel() {
 		super();
 		trainManager.addPropertyChangeListener(this);
+		Setup.addPropertyChangeListener(this);
 		updateList();
 	}
 
@@ -511,7 +512,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 				|| e.getPropertyName().equals(TrainManager.PRINTPREVIEW_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(TrainManager.OPEN_FILE_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(TrainManager.RUN_FILE_CHANGED_PROPERTY)
-				|| e.getPropertyName().equals(TrainManager.GENERATE_CSV_CHANGED_PROPERTY)
+				|| e.getPropertyName().equals(Setup.MANIFEST_CSV_PROPERTY_CHANGE)
 				|| e.getPropertyName().equals(TrainManager.TRAIN_ACTION_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Train.DEPARTURETIME_CHANGED_PROPERTY)
 				|| (e.getPropertyName().equals(Train.BUILD_CHANGED_PROPERTY) && !isShowAll())) {
@@ -547,6 +548,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		if (tef != null)
 			tef.dispose();
 		trainManager.removePropertyChangeListener(this);
+		Setup.removePropertyChangeListener(this);
 		removePropertyChangeTrains();
 	}
 	

@@ -296,6 +296,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 
 		// listen for timetable changes
 		trainManager.addPropertyChangeListener(this);
+		Setup.addPropertyChangeListener(this);
 		// listen for location switch list changes
 		addPropertyChangeLocations();
 
@@ -590,6 +591,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		trainsModel.dispose();
 		trainManager.runShutDownScripts();
 		trainManager.removePropertyChangeListener(this);
+		Setup.removePropertyChangeListener(this);
 		removePropertyChangeLocations();
 		super.dispose();
 	}
@@ -624,7 +626,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		if (e.getPropertyName().equals(Location.STATUS_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Location.SWITCHLIST_CHANGED_PROPERTY))
 			updateSwitchListButton();
-		if (e.getPropertyName().equals(TrainManager.GENERATE_CSV_CHANGED_PROPERTY))
+		if (e.getPropertyName().equals(Setup.MANIFEST_CSV_PROPERTY_CHANGE))
 			updateRunAndOpenButtons();
 		if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY)) {
 			numTrains.setText(Integer.toString(trainManager.getNumEntries()));

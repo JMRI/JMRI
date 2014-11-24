@@ -310,6 +310,10 @@ public class Setup {
 	private static boolean printValid = true; // when true print out the valid time and date
 	private static boolean sortByTrack = false; // when true manifest work is sorted by track names
 	private static boolean printHeaders = false; // when true add headers to manifest and switch lists
+	
+	// property changes
+	public static final String SWITCH_LIST_CSV_PROPERTY_CHANGE = "setupSwitchListCSVChange";
+	public static final String MANIFEST_CSV_PROPERTY_CHANGE = "setupManifestCSVChange";
 
 	public static boolean isMainMenuEnabled() {
 		OperationsSetupXml.instance(); // load file
@@ -521,7 +525,9 @@ public class Setup {
 	}
 
 	public static void setGenerateCsvManifestEnabled(boolean enabled) {
+		boolean old = generateCsvManifest;
 		generateCsvManifest = enabled;
+		firePropertyChange(MANIFEST_CSV_PROPERTY_CHANGE, old, enabled);
 	}
 
 	public static boolean isGenerateCsvSwitchListEnabled() {
@@ -529,7 +535,9 @@ public class Setup {
 	}
 
 	public static void setGenerateCsvSwitchListEnabled(boolean enabled) {
+		boolean old = generateCsvSwitchList;
 		generateCsvSwitchList = enabled;
+		firePropertyChange(SWITCH_LIST_CSV_PROPERTY_CHANGE, old, enabled);
 	}
 
 	public static boolean isVsdPhysicalLocationEnabled() {
@@ -2678,6 +2686,20 @@ public class Setup {
 			}
 			// log.debug("Converted {} to {}", old, strings[i]);
 		}
+	}
+	
+	static java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(Setup.class);
+
+	public static synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
+		pcs.addPropertyChangeListener(l);
+	}
+
+	public static synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
+		pcs.removePropertyChangeListener(l);
+	}
+
+	protected static void firePropertyChange(String p, Object old, Object n) {
+		pcs.firePropertyChange(p, old, n);
 	}
 
 	static Logger log = LoggerFactory.getLogger(Setup.class.getName());

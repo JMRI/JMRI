@@ -67,7 +67,6 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	public static final String OPEN_FILE_CHANGED_PROPERTY = "TrainsOpenFile"; // NOI18N
 	public static final String RUN_FILE_CHANGED_PROPERTY = "TrainsRunFile"; // NOI18N
 	public static final String TRAIN_ACTION_CHANGED_PROPERTY = "TrainsAction"; // NOI18N
-	public static final String GENERATE_CSV_CHANGED_PROPERTY = "TrainsGenerateCSV"; // NOI18N
 	public static final String ACTIVE_TRAIN_SCHEDULE_ID = "ActiveTrainScheduleId"; // NOI18N
 	public static final String ROW_COLOR_NAME_CHANGED_PROPERTY = "TrainsRowColorChange"; // NOI18N
 	
@@ -804,13 +803,6 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		}
 		return out;
 	}
-	
-	public void setGenerateCsvManifestEnabled(boolean enabled) {
-		boolean old = Setup.isGenerateCsvManifestEnabled();
-		Setup.setGenerateCsvManifestEnabled(enabled);
-		firePropertyChange(GENERATE_CSV_CHANGED_PROPERTY, old, enabled);
-	}
-
 	
 	/**
 	 * Loads train icons if needed

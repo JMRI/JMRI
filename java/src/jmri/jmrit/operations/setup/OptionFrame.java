@@ -277,7 +277,7 @@ public class OptionFrame extends OperationsFrame {
 			Setup.setOnlyActiveTrainsEnabled(!routerAllTrainsBox.isSelected());
 			Setup.setCheckCarDestinationEnabled(routerRestrictBox.isSelected());
 			// Options
-			TrainManager.instance().setGenerateCsvManifestEnabled(generateCvsManifestCheckBox.isSelected());
+			Setup.setGenerateCsvManifestEnabled(generateCvsManifestCheckBox.isSelected());
 			Setup.setGenerateCsvSwitchListEnabled(generateCvsSwitchListCheckBox.isSelected());
 			Setup.setValueEnabled(valueCheckBox.isSelected());
 			Setup.setValueLabel(valueTextField.getText());

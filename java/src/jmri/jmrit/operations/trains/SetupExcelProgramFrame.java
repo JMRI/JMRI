@@ -5,17 +5,22 @@ package jmri.jmrit.operations.trains;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
+import java.util.ResourceBundle;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +32,11 @@ import org.slf4j.LoggerFactory;
  */
 
 public class SetupExcelProgramFrame extends OperationsFrame {
+	
+	// checkboxes
+	protected static final ResourceBundle rb = ResourceBundle
+			.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
+	JCheckBox generateCvsManifestCheckBox = new JCheckBox(rb.getString("GenerateCsvManifest")); 
 
 	// text windows
 	JTextField fileName = new JTextField(30);
@@ -42,6 +52,13 @@ public class SetupExcelProgramFrame extends OperationsFrame {
 		// Layout the panel by rows
 
 		// row 1
+		JPanel pOptions = new JPanel();
+		pOptions.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Options")));
+		pOptions.add(generateCvsManifestCheckBox);
+		
+		generateCvsManifestCheckBox.setSelected(Setup.isGenerateCsvManifestEnabled());
+		
+		// row 2
 		JPanel pDirectoryName = new JPanel();
 		pDirectoryName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Directory")));
 		pDirectoryName.add(new JLabel(OperationsManager.getInstance().getFile(TrainCustomManifest.getDirectoryName()).getPath()));
@@ -58,6 +75,7 @@ public class SetupExcelProgramFrame extends OperationsFrame {
 		addItem(pB, testButton, 1, 0);
 		addItem(pB, saveButton, 3, 0);
 
+		getContentPane().add(pOptions);
 		getContentPane().add(pDirectoryName);
 		getContentPane().add(pFileName);
 		getContentPane().add(pB);
@@ -69,9 +87,7 @@ public class SetupExcelProgramFrame extends OperationsFrame {
 		addHelpMenu("package.jmri.jmrit.operations.Operations_SetupExcelProgram", true); // NOI18N
 		setTitle(Bundle.getMessage("MenuItemSetupExcelProgram"));
 
-		setMinimumSize(new Dimension(Control.smallPanelWidth, Control.smallPanelHeight));
-		pack();
-		setVisible(true);
+		initMinimumSize(new Dimension(Control.mediumPanelWidth, Control.panelHeight300));
 	}
 
 	// Save and Test
@@ -93,6 +109,7 @@ public class SetupExcelProgramFrame extends OperationsFrame {
 		}
 		if (ae.getSource() == saveButton) {
 			log.debug("Save button activated");
+			Setup.setGenerateCsvManifestEnabled(generateCvsManifestCheckBox.isSelected());
 			TrainManagerXml.instance().writeOperationsFile();
 			if (Setup.isCloseWindowOnSaveEnabled())
 				dispose();
