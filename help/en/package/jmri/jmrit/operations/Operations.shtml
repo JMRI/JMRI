@@ -158,7 +158,11 @@
       <LI><A HREF="#EditRoute">Edit Route</A></LI>
       <LI><A HREF="#PassengerTrainRoute">Passenger Train Route</A></LI>
       <LI><A HREF="#RouteFeatures">Route Features</A></LI>
-      <LI><A HREF="#SetTrainIconCoordinates">Set Train Icon Coordinates</A></LI>
+      <LI><A HREF="#RouteTools">Route Tools</A>
+       <UL>
+        <LI><A HREF="#CopyRoute">Copy Route</A></LI>
+        <LI><A HREF="#SetTrainIconCoordinates">Set Train Icon Coordinates</A></LI>
+       </UL>
      </UL></LI>
     <LI><A HREF="#Trains">Trains</A>
      <UL>
@@ -1320,7 +1324,9 @@
    the "Auto Select" button to have the location reflect the rolling stock serviced by the various
    tracks. See
    <A HREF="#EditCarAttributes">Edit Car Attributes</A> to add or delete car types that a location
-   can service.
+   can service. You can also access the "Edit Car Attributes" window from the edit location "Tools" menu
+   by selecting
+   <A HREF="#EditCarType">Edit Car Type</A>.
 
    <H3>Location Comment</H3>
 
@@ -2797,13 +2803,6 @@
    in your JMRI directory in a folder called "operations". A backup file with the last settings for
    all of your routes is also created each time the "Save Route" button is pressed. 
    
-   <A NAME="CopyRoute"></A>
-   <H3>Copy Route</H3>
-
-   In the Route window select "Tools-&gt;Copy Route" to make a copy of your route. Enter the name of
-   the new route and select the route that you want to copy. If you want the route reversed check
-   the "Invert" box. 
-   
    <A NAME="PassengerTrainRoute"></A>
    <H3>Passenger Train Route</H3>
 
@@ -2854,9 +2853,20 @@
 
    <P>Another solution is to simply use the spur's ability to select which trains can service
     the track.</P>
+    
+    <A NAME="RouteTools"></A>
+    <H3>Route Tools</H3>
+    
+    <A NAME="CopyRoute"></A>
+    <H4>Copy Route</H4>
 
+   You can copy an existing route using this tool that can be found under "Tools" in both the
+   "Routes" window and "Edit Route" window. Enter the name of the new route and select the route
+   that you want to copy. If you want to reverse the order of your route, select the "Invert"
+   checkbox before pressing the "Copy" button. 
+   
    <A NAME="SetTrainIconCoordinates"></A>
-   <H3>Set Train Icon Coordinates</H3>
+   <H4>Set Train Icon Coordinates</H4>
 
    Use this tool to set the default X and Y coordinates of your train icons for each location. The
    tool allows you to specify the icon coordinates based on the train's direction. You can also
