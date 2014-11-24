@@ -193,7 +193,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		// add help menu to window
 		addHelpMenu("package.jmri.jmrit.operations.Operations_SwitchList", true); // NOI18N
 		// set frame size and train for display
-		initMinimumSize(new Dimension(Control.panelWidth, Control.panelHeight));
+		initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));
 	}
 
 	// Buttons

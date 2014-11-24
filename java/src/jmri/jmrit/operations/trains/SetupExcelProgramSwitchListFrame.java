@@ -87,7 +87,7 @@ public class SetupExcelProgramSwitchListFrame extends OperationsFrame {
 		addHelpMenu("package.jmri.jmrit.operations.Operations_SetupExcelProgram", true); // NOI18N
 		setTitle(Bundle.getMessage("MenuItemSetupExcelProgram"));
 
-		initMinimumSize(new Dimension(Control.mediumPanelWidth, Control.panelHeight300));
+		initMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight300));
 	}
 
 	// Save and Test

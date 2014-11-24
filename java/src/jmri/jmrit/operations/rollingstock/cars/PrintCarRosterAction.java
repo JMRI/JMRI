@@ -367,7 +367,7 @@ public class PrintCarRosterAction extends AbstractAction {
 			getContentPane().add(panePanel);
 			getContentPane().add(pButtons);
 			
-			initMinimumSize(new Dimension(Control.smallPanelWidth, Control.panelHeight));
+			initMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight500));
 		}
 
 		public void initComponents() {

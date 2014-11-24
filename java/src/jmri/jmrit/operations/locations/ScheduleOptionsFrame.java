@@ -79,7 +79,7 @@ class ScheduleOptionsFrame extends OperationsFrame {
 
 		setTitle(Bundle.getMessage("MenuItemScheduleOptions"));
 		pack();
-		setMinimumSize(new Dimension(Control.smallPanelWidth, Control.smallPanelHeight));
+		setMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight200));
 		setVisible(true);
 	}
 

@@ -144,7 +144,7 @@ public class BuildReportOptionFrame extends OperationsFrame {
 		// build menu
 		addHelpMenu("package.jmri.jmrit.operations.Operations_BuildReportDetails", true); // NOI18N
 
-		initMinimumSize(new Dimension(Control.panelWidth, Control.panelHeight));
+		initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));
 	}
 
 	// Save button

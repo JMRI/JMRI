@@ -170,7 +170,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
 		addSpinnerChangeListerner(spinTrainIconSouthX);
 		addSpinnerChangeListerner(spinTrainIconSouthY);
 		
-    	initMinimumSize(new Dimension(Control.panelWidth, Control.mediumPanelHeight));
+    	initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight400));
     	
     }
      

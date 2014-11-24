@@ -123,7 +123,7 @@ public class TrainManifestOptionFrame extends OperationsFrame {
 		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainManifestOptions", true);// NOI18N
 
 		pack();
-		setMinimumSize(new Dimension(Control.mediumPanelWidth, Control.minPanelHeight));
+		setMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight250));
 		setVisible(true);
 	}
 

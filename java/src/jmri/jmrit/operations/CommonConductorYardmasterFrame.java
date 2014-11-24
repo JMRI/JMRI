@@ -179,8 +179,8 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 		textTrainRouteLocationComment.setBackground(null);
 
 		// row 12
-		if ((getPreferredSize().width > Control.widePanelWidth && Setup.isTabEnabled())
-				|| (getPreferredSize().width > Control.widePanelWidth - 200 && !Setup.isTabEnabled())) {
+		if ((getPreferredSize().width > Control.panelWidth1025 && Setup.isTabEnabled())
+				|| (getPreferredSize().width > Control.panelWidth1025 - 200 && !Setup.isTabEnabled())) {
 			pLocos.setLayout(new BoxLayout(pLocos, BoxLayout.X_AXIS));
 			pWorkPanes.setLayout(new BoxLayout(pWorkPanes, BoxLayout.X_AXIS));
 		} else {
@@ -210,7 +210,7 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 		addButtonAction(clearButton);
 		addButtonAction(setButton);
 
-		setMinimumSize(new Dimension(Control.panelWidth, Control.panelHeight));
+		setMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));
 	}
 
 	// Select, Clear, and Set Buttons

@@ -47,7 +47,7 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 	}
 
 	public void initMinimumSize() {
-		initMinimumSize(new Dimension(Control.panelWidth, Control.minPanelHeight));
+		initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight250));
 	}
 
 	public void initMinimumSize(Dimension dimension) {

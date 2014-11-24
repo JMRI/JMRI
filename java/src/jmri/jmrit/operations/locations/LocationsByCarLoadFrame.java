@@ -139,7 +139,7 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
 
 		setPreferredSize(null); // we need to resize this frame
 		pack();
-		setMinimumSize(new Dimension(Control.smallPanelWidth, Control.minPanelHeight));
+		setMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight250));
 		setSize(getWidth() + 25, getHeight()); // make a bit wider to eliminate scroll bar
 		if (_location != null)
 			setTitle(Bundle.getMessage("TitleModifyLocationLoad"));

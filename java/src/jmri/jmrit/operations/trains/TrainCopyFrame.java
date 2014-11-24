@@ -73,7 +73,7 @@ public class TrainCopyFrame extends OperationsFrame {
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true); // NOI18N
 
 		pack();
-		setMinimumSize(new Dimension(Control.mediumPanelWidth, Control.smallPanelHeight));
+		setMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight200));
 
 		setTitle(Bundle.getMessage("TitleTrainCopy"));
 

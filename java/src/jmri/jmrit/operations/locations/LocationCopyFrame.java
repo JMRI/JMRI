@@ -105,7 +105,7 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true); // NOI18N
 
 		pack();
-		setMinimumSize(new Dimension(Control.mediumPanelWidth, Control.mediumPanelHeight));
+		setMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight400));
 
 		// setup buttons
 		addButtonAction(copyButton);

@@ -89,7 +89,7 @@ public class TrackEditCommentsFrame extends OperationsFrame {
 		addButtonAction(saveButton);
 
 		setTitle(track.getName());
-		initMinimumSize(new Dimension(Control.mediumPanelHeight, Control.greaterPanelWidth));
+		initMinimumSize(new Dimension(Control.panelHeight400, Control.panelWidth600));
 	}
 
 	// Buttons

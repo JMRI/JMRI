@@ -72,7 +72,7 @@ public class SchedulesTableFrame extends OperationsFrame {
 		// addButton.setText(Bundle.getMessage("Add"));
 		// addButton.setVisible(true);
 		// controlPanel.add (addButton);
-		controlPanel.setMaximumSize(new Dimension(Control.widePanelWidth, 50));
+		controlPanel.setMaximumSize(new Dimension(Control.panelWidth1025, 50));
 		getContentPane().add(controlPanel);
 
 		// setup buttons
@@ -94,8 +94,8 @@ public class SchedulesTableFrame extends OperationsFrame {
 
 		initMinimumSize();
 		// make panel a bit wider than minimum if the very first time opened
-		if (getWidth() == Control.panelWidth)
-			setSize(Control.widePanelWidth, getHeight());
+		if (getWidth() == Control.panelWidth500)
+			setSize(Control.panelWidth1025, getHeight());
 	}
 
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {

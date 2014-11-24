@@ -826,7 +826,7 @@ public class PrintLocationsAction extends AbstractAction {
 				setTitle(Bundle.getMessage("MenuItemPreview"));
 			else
 				setTitle(Bundle.getMessage("MenuItemPrint"));
-			initMinimumSize(new Dimension(Control.smallPanelWidth, Control.minPanelHeight));
+			initMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight250));
 		}
 
 		public void initComponents() {

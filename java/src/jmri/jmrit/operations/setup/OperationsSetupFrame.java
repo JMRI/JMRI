@@ -383,7 +383,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Settings", true); // NOI18N
 
-		initMinimumSize(new Dimension(Control.tablePanelWidth, Control.panelHeight));
+		initMinimumSize(new Dimension(Control.panelWidth700, Control.panelHeight500));
 
 		// now provide the railroad name
 		railroadNameTextField.setText(Setup.getRailroadName()); // default

@@ -75,7 +75,7 @@ class ChangeTracksFrame extends OperationsFrame {
 		getContentPane().add(p1);
 		setTitle(Bundle.getMessage("MenuItemChangeTrackType"));
 		pack();
-		setMinimumSize(new Dimension(Control.smallPanelWidth, Control.tinyPanelHeight));
+		setMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight100));
 		setVisible(true);
 	}
 

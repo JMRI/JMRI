@@ -67,7 +67,7 @@ public class ImportRollingStock extends Thread {
 		ps.setLayout(new BoxLayout(ps, BoxLayout.Y_AXIS));
 		fstatus = new jmri.util.JmriJFrame(title);
 		fstatus.setLocation(10, 10);
-		fstatus.setSize(Control.tablePanelWidth, 100);
+		fstatus.setSize(Control.panelWidth700, 100);
 
 		ps.add(lineNumber);
 		ps.add(importLine);

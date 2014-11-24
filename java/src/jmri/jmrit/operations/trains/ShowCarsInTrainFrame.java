@@ -212,9 +212,9 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
 		pack();
 		if (getWidth() < 300)
 			setSize(300, getHeight());
-		if (getHeight() < Control.panelHeight)
-			setSize(getWidth(), Control.panelHeight);
-		setMinimumSize(new Dimension(Control.smallPanelWidth, Control.panelHeight));
+		if (getHeight() < Control.panelHeight500)
+			setSize(getWidth(), Control.panelHeight500);
+		setMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight500));
 		setVisible(true);
 	}
 

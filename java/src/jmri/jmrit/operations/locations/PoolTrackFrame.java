@@ -150,7 +150,7 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
 		addButtonAction(addButton);
 		addButtonAction(saveButton);
 
-		setMinimumSize(new Dimension(Control.smallPanelWidth, Control.minPanelHeight));
+		setMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight250));
 		setVisible(true);
 
 	}

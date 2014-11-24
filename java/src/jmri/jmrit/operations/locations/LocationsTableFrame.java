@@ -74,7 +74,7 @@ public class LocationsTableFrame extends OperationsFrame {
     	controlPanel.add(textSep);
 		controlPanel.add (addButton);
 //		controlPanel.add (printTableButton);
-		controlPanel.setMaximumSize(new Dimension(Control.widePanelWidth, 50));
+		controlPanel.setMaximumSize(new Dimension(Control.panelWidth1025, 50));
 	   	
 		getContentPane().add(controlPanel);
 	   	
@@ -106,7 +106,7 @@ public class LocationsTableFrame extends OperationsFrame {
     	
     	initMinimumSize();
 		// make panel a bit wider than minimum if the very first time opened
-		if (getWidth() == Control.panelWidth)
+		if (getWidth() == Control.panelWidth500)
 			setSize(850, getHeight());
     	
      	// now load the cars and engines

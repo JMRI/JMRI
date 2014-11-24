@@ -115,7 +115,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true); // NOI18N
 
 		pack();
-		setMinimumSize(new Dimension(Control.mediumPanelWidth, Control.mediumPanelHeight));
+		setMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight400));
 
 		if (_location != null) {
 			setTitle(MessageFormat.format(Bundle.getMessage("TitleCopyTrack"), new Object[] { _location.getName() }));

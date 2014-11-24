@@ -117,7 +117,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 		// add help menu to window
 		addHelpMenu("package.jmri.jmrit.operations.Operations_EditCarAttributes", true); // NOI18N
 		
-		initMinimumSize(new Dimension(Control.mediumPanelWidth, Control.minPanelHeight));
+		initMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight250));
 
 	}
 

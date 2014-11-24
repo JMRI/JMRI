@@ -64,7 +64,7 @@ class AlternateTrackFrame extends OperationsFrame{
     	
     	setTitle(Bundle.getMessage("AlternateTrack"));
     	pack();
-    	setMinimumSize(new Dimension(Control.smallPanelWidth, Control.tinyPanelHeight));
+    	setMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight100));
     	setVisible(true); 	
 	}
 	

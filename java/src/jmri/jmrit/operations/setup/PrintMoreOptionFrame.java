@@ -94,7 +94,7 @@ public class PrintMoreOptionFrame extends OperationsFrame {
 		// build menu
 		addHelpMenu("package.jmri.jmrit.operations.Operations_ManifestPrintOptionsTools", true); // NOI18N
 
-		initMinimumSize(new Dimension(Control.smallPanelWidth, Control.mediumPanelHeight));
+		initMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight400));
 	}
 
 	// Save buttons
