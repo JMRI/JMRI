@@ -66,6 +66,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 	JButton previewButton = new JButton(Bundle.getMessage("PreviewSwitchLists"));
 	JButton changeButton = new JButton(Bundle.getMessage("PrintChanges"));
 	JButton runButton = new JButton(Bundle.getMessage("RunFile"));
+	JButton runChangeButton = new JButton(Bundle.getMessage("RunFileChanges"));
 	JButton csvGenerateButton = new JButton(Bundle.getMessage("CsvGenerate"));
 	JButton csvChangeButton = new JButton(Bundle.getMessage("CsvChanges"));
 	JButton updateButton = new JButton(Bundle.getMessage("Update"));
@@ -134,9 +135,10 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		addItem(controlpanel, resetButton, 2, 3);
 		// row 5
 		if (Setup.isGenerateCsvSwitchListEnabled()) {
-			addItem(controlpanel, runButton, 0, 4);
 			addItem(controlpanel, csvGenerateButton, 1, 4);
 			addItem(controlpanel, csvChangeButton, 2, 4);
+			addItem(controlpanel, runButton, 1, 5);
+			addItem(controlpanel, runChangeButton, 2, 5);
 		}
 
 		getContentPane().add(switchPane);
@@ -160,6 +162,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		addButtonAction(previewButton);
 		addButtonAction(changeButton);
 		addButtonAction(runButton);
+		addButtonAction(runChangeButton);
 		addButtonAction(csvGenerateButton);
 		addButtonAction(csvChangeButton);
 		addButtonAction(updateButton);
@@ -211,7 +214,10 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 			buildSwitchList(true, false, false, true);
 		}
 		if (ae.getSource() == runButton) {
-			runCustomSwitchLists();
+			runCustomSwitchLists(false);
+		}
+		if (ae.getSource() == runChangeButton) {
+			runCustomSwitchLists(true);
 		}
 		if (ae.getSource() == resetButton) {
 			reset();
@@ -344,10 +350,12 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		Location mainLocation = null; // user can have multiple locations with the "same" name.
 
 		for (Location location : locations) {
-			if (location.getStatus().equals(Location.MODIFIED) && location.isSwitchListEnabled()) {
-				changeButton.setEnabled(true);
-				csvChangeButton.setEnabled(true);
-			}
+			//TODO not sure this is needed, see enableChangeButtons
+//			if (location.getStatus().equals(Location.MODIFIED) && location.isSwitchListEnabled()) {
+//				changeButton.setEnabled(true);
+//				csvChangeButton.setEnabled(true);
+//				runChangeButton.setEnabled(true);
+//			}
 			String name = TrainCommon.splitString(location.getName());
 			if (mainLocation != null && TrainCommon.splitString(mainLocation.getName()).equals(name)) {
 				location.setSwitchListEnabled(mainLocation.isSwitchListEnabled());
@@ -397,7 +405,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		repaint();
 	}
 
-	private void runCustomSwitchLists() {
+	private void runCustomSwitchLists(boolean isChanged) {
 		if (!Setup.isGenerateCsvSwitchListEnabled())
 			return;
 		log.debug("run custom switch lists");
@@ -406,7 +414,8 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		for (int i = 0; i < locationCheckBoxes.size(); i++) {
 			String locationName = locationCheckBoxes.get(i).getName();
 			Location location = locationManager.getLocationByName(locationName);
-			if (location.isSwitchListEnabled()) {
+			if (location.isSwitchListEnabled()
+					&& (!isChanged || isChanged && location.getStatus().equals(Location.MODIFIED))) {
 				// also build the regular switch lists so they can be used
 				if (!switchListRealTimeCheckBox.isSelected())
 					trainSwitchLists.buildSwitchList(location);
@@ -421,8 +430,8 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		}
 		// Processes the CSV Manifest files using an external custom program.
 		if (!TrainCustomSwitchList.manifestCreatorFileExists()) {
-			log.warn("Manifest creator file not found!, directory name: " + TrainCustomSwitchList.getDirectoryName()
-					+ ", file name: " + TrainCustomSwitchList.getFileName()); // NOI18N
+			log.warn("Manifest creator file not found!, directory name: {}, file name: {}", TrainCustomSwitchList
+					.getDirectoryName(), TrainCustomSwitchList.getFileName());
 			JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("LoadDirectoryNameFileName"),
 					new Object[] { TrainCustomSwitchList.getDirectoryName(), TrainCustomSwitchList.getFileName() }),
 					Bundle.getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
@@ -446,10 +455,12 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 	private void enableChangeButtons() {
 		changeButton.setEnabled(false);
 		csvChangeButton.setEnabled(false);
+		runChangeButton.setEnabled(false);
 		for (Location location : locationManager.getLocationsByNameList()) {
 			if (location.getStatus().equals(Location.MODIFIED) && location.isSwitchListEnabled()) {
 				changeButton.setEnabled(true);
 				csvChangeButton.setEnabled(true);
+				runChangeButton.setEnabled(true);
 			}
 		}
 	}
