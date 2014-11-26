@@ -591,14 +591,6 @@ public class InstanceManager {
             (consistManagerInstance()).getClass()==DccConsistManager.class){
 		    setConsistManager(new NmraConsistManager());
 	    }
-	    
-	    // since there is a command station available, 
-	    // create a DCC turnout manager and make available
-	    if (getList(jmri.jmrix.dcc.DccTurnoutManager.class) == null || getList(jmri.jmrix.dcc.DccTurnoutManager.class).size() == 0) {
-	        jmri.jmrix.dcc.DccTurnoutManager m = new jmri.jmrix.dcc.DccTurnoutManager();
-	        store(m, jmri.jmrix.dcc.DccTurnoutManager.class);
-	        setTurnoutManager(m);
-	    }
     }
 
     /**
