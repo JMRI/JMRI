@@ -98,6 +98,7 @@
     <aspectMapping>
      <advancedAspect>Approach</advancedAspect>
      <ourAspect>Clear</ourAspect>
+     <ourAspect>Diverging Clear</ourAspect> 
     </aspectMapping>
 
 
