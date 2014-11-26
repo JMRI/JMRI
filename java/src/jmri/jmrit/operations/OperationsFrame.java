@@ -4,6 +4,7 @@ package jmri.jmrit.operations;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
+
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -11,8 +12,13 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
+
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.implementation.swing.SwingShutDownTask;
@@ -20,6 +26,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.swing.XTableColumnModel;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision$
  */
 
-public class OperationsFrame extends jmri.util.JmriJFrame {
+public class OperationsFrame extends jmri.util.JmriJFrame implements AncestorListener {
 
 	public static final String NEW_LINE = "\n"; // NOI18N
 	public static final String NONE = ""; // NOI18N
@@ -405,6 +412,41 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 			so.append(sb);
 		}
 		return so.toString();
+	}
+	
+	// Kludge fix for horizontal scrollbar encroaching buttons at bottom of a scrollable window.
+	
+	protected JPanel pad; // used to pad out lower part of window to fix horizontal scrollbar issue
+	
+	protected void addHorizontalScrollBarKludgeFix(JScrollPane pane, JPanel panel) {
+		pad = new JPanel();	// kludge fix for horizontal scrollbar
+		pad.add(new JLabel(" "));
+		panel.add(pad);
+		
+		// make sure control panel is the right size
+		pane.setMinimumSize(new Dimension(500, 130));
+		pane.setMaximumSize(new Dimension(2000, 170));
+		pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+
+		pane.addAncestorListener(this); // used to determine if scrollbar is showing
+	}
+	
+	@Override
+	public void ancestorAdded(AncestorEvent event) {
+		// do nothing
+	}
+
+	@Override
+	public void ancestorRemoved(AncestorEvent event) {
+		// do nothing	
+	}
+
+	@Override
+	public void ancestorMoved(AncestorEvent event) {
+		if (pad != null) {
+			pad.setVisible(((JScrollPane)event.getSource()).getHorizontalScrollBar().isShowing());
+//			log.debug("Scrollbar visible: {}", pad.isVisible());
+		}
 	}
 
 	static Logger log = LoggerFactory.getLogger(OperationsFrame.class.getName());

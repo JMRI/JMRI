@@ -5,7 +5,6 @@ package jmri.jmrit.operations.rollingstock.engines;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
@@ -158,10 +157,6 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		sortByLast.setToolTipText(Bundle.getMessage("LastMoved"));
 
 		JScrollPane controlPane = new JScrollPane(controlPanel);
-		// make sure control panel is the right size
-		controlPane.setMinimumSize(new Dimension(500, 130));
-		controlPane.setMaximumSize(new Dimension(2000, 200));
-		controlPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
 		getContentPane().add(enginesPane);
 		getContentPane().add(controlPane);
@@ -211,6 +206,8 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Locomotives", true); // NOI18N
 
 		initMinimumSize();
+		
+		addHorizontalScrollBarKludgeFix(controlPane, controlPanel);
 
 		// create ShutDownTasks
 		createShutDownTask();

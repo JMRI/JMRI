@@ -5,8 +5,6 @@ package jmri.jmrit.operations.rollingstock.cars;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.Dimension;
-
 import javax.swing.event.TableModelListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.TableColumnModel;
@@ -190,10 +188,6 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 		sortByLast.setToolTipText(Bundle.getMessage("LastMoved"));
 
 		JScrollPane controlPane = new JScrollPane(controlPanel);
-		// make sure control panel is the right size
-		controlPane.setMinimumSize(new Dimension(500, 130));
-		controlPane.setMaximumSize(new Dimension(2000, 200));
-		controlPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
 		getContentPane().add(carsPane);
 		getContentPane().add(controlPane);
@@ -271,6 +265,8 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Cars", true); // NOI18N
 
 		initMinimumSize();
+		
+		addHorizontalScrollBarKludgeFix(controlPane, controlPanel);
 
 		// create ShutDownTasks
 		createShutDownTask();
@@ -415,4 +411,5 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 	}
 
 	static Logger log = LoggerFactory.getLogger(CarsTableFrame.class.getName());
+
 }
