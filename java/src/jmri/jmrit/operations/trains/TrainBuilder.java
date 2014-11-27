@@ -3665,7 +3665,23 @@ public class TrainBuilder extends TrainCommon {
 					// drop to interchange or spur?
 					if (!checkTrainCanDrop(car, testTrack))
 						continue;
-					String status = car.testDestination(testDestination, testTrack);
+					// report if track has planned pickups
+					if (testTrack.getIgnoreUsedLengthPercentage() > 0) {
+						// calculate the available space
+						int available = testTrack.getLength() - (testTrack.getUsedLength() + testTrack.getReserved());
+						int available2 = testTrack.getLength()
+								- (testTrack.getUsedLength() * (100 - testTrack.getIgnoreUsedLengthPercentage()) / 100 + testTrack
+										.getReservedLengthDrops());
+						if (available2 > available)
+							available = available2;
+						addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
+								.getMessage("buildTrackHasPlannedPickups"), new Object[] { testTrack.getName(),
+								testTrack.getIgnoreUsedLengthPercentage(), testTrack.getLength(),
+								Setup.getLengthUnit().toLowerCase(), testTrack.getUsedLength(),
+								testTrack.getReserved(), testTrack.getReservedLengthDrops(),
+								testTrack.getReservedLengthDrops() - testTrack.getReserved(), available }));
+					}
+		String status = car.testDestination(testDestination, testTrack);
 					// TODO the following code isn't really needed anymore. All spurs were already checked, but
 					// this code does report why the spur wasn't used.
 					// is the destination a spur with a schedule demanding this car's custom load?

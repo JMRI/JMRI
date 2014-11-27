@@ -433,19 +433,23 @@ public class OperationsFrame extends jmri.util.JmriJFrame implements AncestorLis
 	
 	@Override
 	public void ancestorAdded(AncestorEvent event) {
+//		log.debug("Ancestor Added");
 		// do nothing
 	}
 
 	@Override
 	public void ancestorRemoved(AncestorEvent event) {
-		// do nothing	
+//		log.debug("Ancestor Removed");	
+		// do nothing
 	}
 
 	@Override
 	public void ancestorMoved(AncestorEvent event) {
 		if (pad != null) {
-			pad.setVisible(((JScrollPane)event.getSource()).getHorizontalScrollBar().isShowing());
-//			log.debug("Scrollbar visible: {}", pad.isVisible());
+			if (pad.isVisible() ^ ((JScrollPane) event.getSource()).getHorizontalScrollBar().isShowing()) {
+				pad.setVisible(((JScrollPane) event.getSource()).getHorizontalScrollBar().isShowing());
+//				log.debug("Scrollbar visible: {}", pad.isVisible());
+			}
 		}
 	}
 
