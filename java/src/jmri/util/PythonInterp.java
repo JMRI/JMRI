@@ -44,7 +44,7 @@ public class PythonInterp {
         execFile(filename);
     }
 
-     static public void execFile(String filename) {
+    static public void execFile(String filename) {
         // if windows, need to process backslashes in filename
         if (SystemType.isWindows())
             filename = filename.replaceAll("\\\\", "\\\\\\\\");
@@ -124,7 +124,7 @@ public class PythonInterp {
 
             // have jython execute the default setup
             log.debug("load defaults from {}", defaultContextFile);
-            execFile(defaultContextFile);
+            execFile(FileUtil.getExternalFilename(defaultContextFile));
 
             return interp;
 
@@ -185,7 +185,7 @@ public class PythonInterp {
     /**
      * Name of the file containing the Python code defining JMRI defaults
      */
-    static String defaultContextFile = "jython/jmri_defaults.py";
+    static String defaultContextFile = "program:jython/jmri_defaults.py";
 
     // initialize logging
     static Logger log = LoggerFactory.getLogger(PythonInterp.class.getName());
