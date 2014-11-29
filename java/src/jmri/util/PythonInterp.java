@@ -4,7 +4,9 @@ package jmri.util;
 
 import java.io.PipedReader;
 import java.io.PipedWriter;
-import java.io.Writer;
+import javax.swing.JTextArea;
+import org.python.core.PySystemState;
+import org.python.util.PythonInterpreter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +33,7 @@ public class PythonInterp {
 
     /**
      * Run a script file from it's filename.
+     * @param filename
      */
     static public void runScript(String filename) {
         // get a Python interpreter context, make sure it's ok
@@ -45,11 +48,17 @@ public class PythonInterp {
     }
 
     static public void execFile(String filename) {
+        // get a Python interpreter context, make sure it's ok
+        getPythonInterpreter();
+        if (interp == null) {
+            log.error("Can't contine to execute command, could not create interpreter");
+            return;
+        }
         // if windows, need to process backslashes in filename
         if (SystemType.isWindows())
             filename = filename.replaceAll("\\\\", "\\\\\\\\");
-        
-        execCommand("execfile(\""+filename+"\")");
+
+        interp.execfile(filename);
     }
 
     static public void execCommand(String command) {
@@ -60,39 +69,13 @@ public class PythonInterp {
             return;
         }
 
-        // interp.execfile(command);
-        try {
-            // set up the method to exec python functions
-            java.lang.reflect.Method exec
-                = interp.getClass().getMethod("exec", new Class[]{String.class});
-
-            exec.invoke(interp, new Object[]{command});
-        } catch (java.lang.reflect.InvocationTargetException e2) {
-            try {
-                log.error("InvocationTargetException while invoking command "+command
-                    +": "+e2.getCause());
-                // Send error message to script output window if open
-                if (outputlog != null)
-                	getOutputArea().append("Error: "+e2.getCause());
-            } catch (java.lang.NoSuchMethodError e3) {
-                // most likely, this is 1.1.8 JVM
-                log.error("InvocationTargetException while invoking command "+command
-                    +": "+e2.getTargetException());
-                // Send error message to script output window if open
-                if (outputlog != null)
-                	getOutputArea().append("Error: "+e2.getTargetException());
-            }
-        } catch (NoSuchMethodException e1) {
-            log.error("NoSuchMethod error while invoking command "+command);
-        } catch (IllegalAccessException e) {
-            log.error("IllegalAccessException error while invoking command "+command);
-        }
+        interp.exec(command);
     }
 
     /**
      * All instance of this class share a single interpreter.
      */
-    static private Object interp;
+    static private PythonInterpreter interp;
 
     /**
      * Provide an initialized Python interpreter.
@@ -105,6 +88,7 @@ public class PythonInterp {
      * <P>
      * Interpreter is returned as an Object, which is to
      * be invoked via reflection.
+     * @return the Python interpreter for this session
      */
     synchronized static public Object getPythonInterpreter() {
 
@@ -113,14 +97,9 @@ public class PythonInterp {
         // must create one.
         try {
             log.debug("create interpreter");
-            // PySystemState.initialize();
-            Class<?> cs = Class.forName("org.python.core.PySystemState");
-            java.lang.reflect.Method initialize =
-                        cs.getMethod("initialize",(Class[])null);
-            initialize.invoke(null, (Object[])null);
-
-            // interp = new PythonInterpreter();
-            interp = Class.forName("org.python.util.PythonInterpreter").newInstance();
+            PySystemState.initialize();
+            
+            interp = new PythonInterpreter();
 
             // have jython execute the default setup
             log.debug("load defaults from {}", defaultContextFile);
@@ -129,8 +108,7 @@ public class PythonInterp {
             return interp;
 
         } catch (Exception e) {
-            log.error("Exception creating jython system objects: "+e);
-            e.printStackTrace();
+            log.error("Exception creating jython system objects", e);
             return null;
         }
     }
@@ -142,26 +120,21 @@ public class PythonInterp {
      * The output JTextArea is not created until this is invoked,
      * so that code that doesn't use this feature can run
      * on GUI-less machines.
+     * @return component containing python output
      */
-    static public javax.swing.JTextArea getOutputArea() {
+    static public JTextArea getOutputArea() {
         if (outputlog == null) {
             // convert to stored output
             
             try {
                 // create the output area
-                outputlog = new javax.swing.JTextArea();
+                outputlog = new JTextArea();
 
                 // Add the I/O pipes
                 PipedWriter pw = new PipedWriter();
 
-                // interp.setErr(pw);
-                java.lang.reflect.Method method
-                    = interp.getClass().getMethod("setErr", new Class[]{Writer.class});
-                method.invoke(interp, new Object[]{pw});
-                // interpreter.setOut(pw);
-                method
-                    = interp.getClass().getMethod("setOut", new Class[]{Writer.class});
-                method.invoke(interp, new Object[]{pw});
+                interp.setErr(pw);
+                interp.setOut(pw);
 
                 // ensure the output pipe is read and stored into a
                 // Swing TextArea data model
@@ -169,8 +142,7 @@ public class PythonInterp {
                 PipeListener pl = new PipeListener(pr, outputlog);
                 pl.start();
             } catch (Exception e) {
-                log.error("Exception creating jython output area: "+e);
-                e.printStackTrace();
+                log.error("Exception creating jython output area", e);
                 return null;
             }
         }
@@ -180,7 +152,7 @@ public class PythonInterp {
     /**
      * JTextArea containing the output
      */
-    static private javax.swing.JTextArea outputlog = null;
+    static private JTextArea outputlog = null;
 
     /**
      * Name of the file containing the Python code defining JMRI defaults
