@@ -35,14 +35,6 @@ public class PythonInterp {
      * @param filename
      */
     static public void runScript(String filename) {
-        // get a Python interpreter context, make sure it's ok
-        getPythonInterpreter();
-        if (interp == null) {
-            log.error("Can't contine to execute script, could not create interpreter");
-            return;
-        }
-
-        // execute the file
         execFile(filename);
     }
 
