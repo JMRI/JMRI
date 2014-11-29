@@ -1,5 +1,4 @@
 // PythonInterp.java
-
 package jmri.util;
 
 import java.io.PipedReader;
@@ -13,26 +12,26 @@ import org.slf4j.LoggerFactory;
 /**
  * Support a single Jython interpreter for JMRI.
  * <P>
- * A standard JMRI-Jython dialog is defined by
- * invoking the "jython/jmri-defaults.py" file before starting the
- * user code.
+ * A standard JMRI-Jython dialog is defined by invoking the
+ * "jython/jmri-defaults.py" file before starting the user code.
  * <P>
  * Access is via Java reflection so that both users and developers can work
- * without the jython.jar file in the classpath. To make it easier to
- * read the code, the "non-reflection" statements are in the comments.
+ * without the jython.jar file in the classpath. To make it easier to read the
+ * code, the "non-reflection" statements are in the comments.
  *
- * Note that there is Windows-specific handling of filenames in the 
- * execFile routine. Since Java will occasionally treat the backslash
- * character as a character escape, we have to double it (to quote it)
- * on Windows machines where it might normally appear in a filename.
+ * Note that there is Windows-specific handling of filenames in the execFile
+ * routine. Since Java will occasionally treat the backslash character as a
+ * character escape, we have to double it (to quote it) on Windows machines
+ * where it might normally appear in a filename.
  *
- * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision$
+ * @author	Bob Jacobsen Copyright (C) 2004
+ * @version $Revision$
  */
 public class PythonInterp {
 
     /**
      * Run a script file from it's filename.
+     *
      * @param filename
      */
     static public void runScript(String filename) {
@@ -55,8 +54,9 @@ public class PythonInterp {
             return;
         }
         // if windows, need to process backslashes in filename
-        if (SystemType.isWindows())
+        if (SystemType.isWindows()) {
             filename = filename.replaceAll("\\\\", "\\\\\\\\");
+        }
 
         interp.execfile(filename);
     }
@@ -86,19 +86,22 @@ public class PythonInterp {
      * <LI>Read the default-setting file
      * </UL>
      * <P>
-     * Interpreter is returned as an Object, which is to
-     * be invoked via reflection.
+     * Interpreter is returned as an Object, which is to be invoked via
+     * reflection.
+     *
      * @return the Python interpreter for this session
      */
     synchronized static public Object getPythonInterpreter() {
 
-        if (interp!=null) return interp;
+        if (interp != null) {
+            return interp;
+        }
 
         // must create one.
         try {
             log.debug("create interpreter");
             PySystemState.initialize();
-            
+
             interp = new PythonInterpreter();
 
             // have jython execute the default setup
@@ -114,18 +117,17 @@ public class PythonInterp {
     }
 
     /**
-     * Provide access to the JTextArea containing the Jython VM 
-     * output.
+     * Provide access to the JTextArea containing the Jython VM output.
      * <P>
-     * The output JTextArea is not created until this is invoked,
-     * so that code that doesn't use this feature can run
-     * on GUI-less machines.
+     * The output JTextArea is not created until this is invoked, so that code
+     * that doesn't use this feature can run on GUI-less machines.
+     *
      * @return component containing python output
      */
     static public JTextArea getOutputArea() {
         if (outputlog == null) {
             // convert to stored output
-            
+
             try {
                 // create the output area
                 outputlog = new JTextArea();
@@ -148,7 +150,7 @@ public class PythonInterp {
         }
         return outputlog;
     }
-    
+
     /**
      * JTextArea containing the output
      */
