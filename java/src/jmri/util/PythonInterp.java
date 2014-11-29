@@ -1,8 +1,11 @@
 // PythonInterp.java
 package jmri.util;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.PipedReader;
 import java.io.PipedWriter;
+import java.util.Properties;
 import javax.swing.JTextArea;
 import org.python.core.PySystemState;
 import org.python.util.PythonInterpreter;
@@ -83,16 +86,34 @@ public class PythonInterp {
      *
      * @return the Python interpreter for this session
      */
-    synchronized static public Object getPythonInterpreter() {
+    synchronized static public PythonInterpreter getPythonInterpreter() {
 
         if (interp != null) {
             return interp;
         }
 
+        Properties properties = new Properties();
+        // Get properties for interpreter
+        // Search in user files, the settings directory, and in the program path
+        InputStream is = FileUtil.findInputStream("python.properties", new String[]{
+            FileUtil.getUserFilesPath(),
+            FileUtil.getPreferencesPath(),
+            FileUtil.getProgramPath()
+        });
+        if (is != null) {
+            try {
+                properties = new Properties(System.getProperties());
+                properties.load(is);
+            } catch (IOException ex) {
+                log.error("Found, but unable to read python.properties: {}", ex.getMessage());
+                properties = null;
+            }
+        }
+
         // must create one.
         try {
             log.debug("create interpreter");
-            PySystemState.initialize();
+            PySystemState.initialize(null, properties);
 
             interp = new PythonInterpreter();
 
