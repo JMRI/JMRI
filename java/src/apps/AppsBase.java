@@ -88,7 +88,7 @@ public abstract class AppsBase {
         }
 
         Log4JUtil.initLog4J();
-        
+
         configureProfile();
 
         installConfigurationManager();
@@ -110,7 +110,7 @@ public abstract class AppsBase {
          * work in the background if the file doesn't exist then we do not
          * initialize it
          */
-        if (preferenceFileExists && System.getProperty("java.awt.headless","false").equals("true")) {
+        if (preferenceFileExists && Boolean.getBoolean("java.awt.headless")) {
             r = new Runnable() {
 
                 public void run() {
@@ -125,18 +125,20 @@ public abstract class AppsBase {
             thr.start();
         }
 
-        r = new Runnable() {
+        if (Boolean.getBoolean("org.jmri.python.preload")) {
+            r = new Runnable() {
 
-            public void run() {
-                try {
-                    PythonInterp.getPythonInterpreter();
-                } catch (Exception ex) {
-                    log.error("Error in trying to initialize python interpreter " + ex.toString());
+                public void run() {
+                    try {
+                        PythonInterp.getPythonInterpreter();
+                    } catch (Exception ex) {
+                        log.error("Error in trying to initialize python interpreter " + ex.toString());
+                    }
                 }
-            }
-        };
-        Thread thr2 = new Thread(r, "initialize python interpreter");
-        thr2.start();
+            };
+            Thread thr2 = new Thread(r, "initialize python interpreter");
+            thr2.start();
+        }
     }
 
     /**
@@ -317,12 +319,13 @@ public abstract class AppsBase {
         // can be forced by the two step process:
         // `kill -s 15 pid`
         // `kill -s 9 pid`
-        jmri.util.RuntimeUtil.addShutdownHook( new Thread(new Runnable(){
-               public void run() {
-                  if(log.isDebugEnabled()) 
-                     log.debug("Shutdown hook called");
-                  handleQuit();
-               }
+        jmri.util.RuntimeUtil.addShutdownHook(new Thread(new Runnable() {
+            public void run() {
+                if (log.isDebugEnabled()) {
+                    log.debug("Shutdown hook called");
+                }
+                handleQuit();
+            }
         }));
     }
 
