@@ -25,10 +25,11 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements RfidLis
     public SerialMonPane() {
         super();
     }
-    
+
     @Override
     public String getHelpTarget() { return null; }
 
+    @Override
     public String getTitle() { 
         return "RFID Device Command Monitor";
     }
@@ -40,45 +41,52 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements RfidLis
         // and unwind swing
         super.dispose();
     }
-    
+
+    @Override
     public void init() {}
-    
+
     RfidSystemConnectionMemo memo;
-    
+
     @Override
     public void initContext(Object context) {
         if (context instanceof RfidSystemConnectionMemo ) {
             initComponents((RfidSystemConnectionMemo) context);
         }
     }
-    
+
+    @Override
     public void initComponents(RfidSystemConnectionMemo memo) {
         this.memo = memo;
         // connect to the RfidTrafficController
         memo.getTrafficController().addRfidListener(this);
     }
 
+    @Override
     public synchronized void message(RfidMessage l) {  // receive a message and log it
-        if (l.isBinary())
-          	nextLine("binary cmd: "+l.toMonitorString()+"\n", null);
-        else
+        if (l.isBinary()) {
+            nextLine("binary cmd: "+l.toMonitorString()+"\n", null);
+        } else {
             nextLine("cmd: \""+l.toMonitorString()+"\"\n", null);
-	}
-    
-	public synchronized void reply(RfidReply l) {  // receive a reply message and log it
-	    String raw = "";
-	    for (int i=0;i<l.getNumDataElements(); i++) {
-	        if (i>0) raw+=" ";
+        }
+    }
+
+    @Override
+    public synchronized void reply(RfidReply l) {  // receive a reply message and log it
+        String raw = "";
+        for (int i=0;i<l.getNumDataElements(); i++) {
+            if (i>0) {
+                raw+=" ";
+            }
             raw = jmri.util.StringUtil.appendTwoHexFromInt(l.getElement(i)&0xFF, raw);
         }
-	        
-	    if (l.isUnsolicited()) {    
+
+        if (l.isUnsolicited()) {
             nextLine("msg: \""+l.toMonitorString()+"\"\n", raw);
         } else {
             nextLine("rep: \""+l.toMonitorString()+"\"\n", raw);
         }
-	}
-    
+    }
+
     /**
      * Nested class to create one of these using old-style defaults
      */
@@ -90,8 +98,7 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements RfidLis
                 InstanceManager.getDefault(RfidSystemConnectionMemo.class));
         }
     }
-    
-}
 
+}
 
 /* @(#)SerialMonPane.java */
