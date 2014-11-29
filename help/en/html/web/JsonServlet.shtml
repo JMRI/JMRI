@@ -57,8 +57,8 @@
 
             <p>The <b>WebSocket</b> feature of this servlet currently handles JSON strings in four different forms:
             <ul>
-                <li>list requests in the form: <code>{"type":"list","list":"trains"}</code>
-                    that are passed to the JsonLister for handling.</li>
+                <li>list requests in the form: <code>{"list":"trains"}</code> or <code>{"type":"list","list":"trains"}</code>
+                    that return an array of items, or an empty array (<code>[]</code>).</li>
                 <li>individual item state requests in the form: <code>{"type":"turnout","data":{"name":"LT14"}}</code>
                     that are passed to type-specific handlers. These requests will initiate "listeners", which will send
                     updated responses every time the item's state changes.
@@ -84,15 +84,18 @@
                 <tr><td><code>{"type":"turnout","data":{"name":"IT99","state":0}}</code></td><td><code>{"type":"turnout","data":{"name":"IT99","state":4}}</code></td><td>sending state=0 is also treated as request for current state</td></tr>
                 <tr><td><code>{"type":"power","data":{}}</code></td><td><code>{"type":"power","data":{"state":2}}</code></td><td>power does not need a name</td></tr>
                 <tr><td><code>{"type":"ping"}</code></td><td><code>{"type":"pong"}</code></td><td>ping request and response</td></tr>
-                <tr><td><code>{"type":"list","list":"panels"}</code></td><td><code>[{"name":"Layout/MainSouth","URL":"/panel/Layout/MainSouth?format=xml","userName":"MainSouth","type":"Layout"},{"name":"Layout/Parking%20MainSouth","URL":"/panel/Layout/Parking%20MainSouth?format=xml","userName":"Parking MainSouth","type":"Layout"}]</code></td>
+                <tr><td><code>{"list":"panels"}</code></td><td><code>[{"name":"Layout/MainSouth","URL":"/panel/Layout/MainSouth?format=xml","userName":"MainSouth","type":"Layout"},{"name":"Layout/Parking%20MainSouth","URL":"/panel/Layout/Parking%20MainSouth?format=xml","userName":"Parking MainSouth","type":"Layout"}]</code></td>
                     <td>request a list of panels, respond with array, example shows two panels</td></tr>
                 <tr><td><code>{"type":"throttle","data":{"throttle":"CSX754","address":754}}</code></td>
                     <td><code>{"type":"throttle","data":{"address":754,"speed":0.0,"forward":true, "F0":false,"F1":false,"F2":false,"F3":false,"F4":false,"F5":false,"F6":false,"F7":false, "F8":false,"F9":false,"F10":false,"F11":false,"F12":false,"F13":false,"F14":false, "F15":false,"F16":false,"F17":false,"F18":false,"F19":false,"F20":false,"F21":false, "F22":false,"F23":false,"F24":false,"F25":false,"F26":false,"F27":false,"F28":false, "throttle":"CSX754"}}</code></td>
                     <td>request throttle for address 754, refer to it as "CSX754"</td></tr>
                 <tr><td><code>{"type":"throttle","data":{"throttle":"CSX754","speed":0.25}}</code></td><td><code>{"type":"throttle","data":{"speed":0.25,"throttle":"CSX754"}}</code></td><td>request speed of throttle "CSX754" to 25%</td></tr>
                 <tr><td><code>{"type":"throttle","data":{"throttle":"CSX754","release":null}}</code></td><td><code>{"type":"throttle","data":{"release":null,"throttle":"CSX754"}}</code></td><td>release the throttle "CSX754"</td></tr>
+                <tr><td><code>{"list":"trains"}</code></td><td><em>If list is empty:</em><code>[]</code></td><td>Example showing list response if there are no objects of that type.</td></tr>
             </table>
         </div>
+        <h2>JMRI JSON Server<h2>
+        <p>The JMRI JSON server is functionally identical to the JSON WebSocket, but running over a standard network socket.</p>
         <h2>jquery-json</h2>
         <p><em>jquery-json</em> is a JavaScript library that ships with JMRI and
             makes the JSON protocol support just work on most current browsers.</p>
