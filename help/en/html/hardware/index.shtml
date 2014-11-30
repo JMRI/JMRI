@@ -217,6 +217,7 @@
 	    <dt>MERG CBUS</dt>
 	    <dd><p class="dl">Configure: <a href="can/cbus/index.shtml">MERG CBUS networks</a></p></dd>
 
+        <dt class="im">
 	    <img src="http://www.modbus.org/images/logo_new.jpg" alt="Modbus logo" height="27" width="96"></a></dt>
 	    <dt>Modbus</dt>
 	    <dd><p class="dl">Configure: <a href="modbus/index.shtml">Modbus networks</a></p></dd>
@@ -274,7 +275,7 @@
 	    <dd><p class="dl">Configure: <a href="grapevine/index.shtml">Grapevine nodes</a></p></dd>
 
 	    <dt class="im"><a href="http://www.qsisolutions.com/products/q-programmer.html">
-	    <img src="http://www.qsisolutions.com/image/qsi-solutions-logo.gif" height="57" width="67" alt="QSI"></a></dt>
+	    <img src="http://static.wixstatic.com/media/0f7119_14d3842619a14f52862954b9151cf131.png_srz_361_120_75_22_0.50_1.20_0.00_png_srz" height="40" width="120" alt="QSI"></a></dt>
 	    <dt>QSI Solutions</dt>
 	    <dd>
 		<p>Connection: Quantum Programmer</p>
