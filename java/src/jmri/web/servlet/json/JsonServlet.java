@@ -140,17 +140,13 @@ public class JsonServlet extends WebSocketServlet {
         }
     };
 
-    public JsonServlet() {
-        super();
+    @Override
+    public void init() throws ServletException {
+        super.init();
         if (InstanceManager.getDefault(jmri.ConsistManager.class) != null) {
             InstanceManager.getDefault(jmri.ConsistManager.class).requestUpdateFromLayout();
         }
         InstanceManager.addPropertyChangeListener(this.instanceManagerListener);
-    }
-
-    @Override
-    public void init() throws ServletException {
-        super.init();
         this.mapper = new ObjectMapper();
         InstanceManager.shutDownManagerInstance().register(new QuietShutDownTask("Close JSON web sockets") { // NOI18N
             @Override

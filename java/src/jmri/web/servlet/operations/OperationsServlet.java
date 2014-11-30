@@ -45,7 +45,7 @@ public class OperationsServlet extends HttpServlet {
     public void init() throws ServletException {
         super.init();
         this.mapper = new ObjectMapper();
-        // ensure all operations managers are functional before receiving first request
+        // ensure all operations managers are functional before handling first request
         OperationsManager.getInstance();
     }
 
