@@ -128,8 +128,10 @@ Note that some of these are placeholders, and have no underlying implementation.
 <LI>J
 <LI>K <a href="../../hardware/maple/index.shtml">Maple Systems</a>
 <LI>L <a href="../../hardware/loconet/Digitrax.shtml">LocoNet</a>
-<LI>M Model railroad layout control buses, of which the first is 
-      <a href="../../hardware/can/cbus/index.shtml">MERG CBUS</a>
+<LI>M Model railroad layout control buses, including 
+      <a href="../../hardware/openlcb/index.shtml">OpenLCB</a> and 
+      <a href="../../hardware/can/cbus/index.shtml">MERG CBUS</a>.
+      Also used for the <a href="../../hardware/modbus/index.shtml">Modbus</a> master and slave implementation.
 <LI>N <a href="../../hardware/nce/NCE.shtml">NCE</a> (also <a href="../../hardware/nce/Wangrow.shtml">Wangrow</a> currently)
 <LI>O <a href="../../hardware/oaktree/OakTree.shtml">Oak Tree Systems</a>
 <LI>P <a href="../../hardware/powerline/index.shtml">Powerline transmission</a>, e.g. X10 and Insteon

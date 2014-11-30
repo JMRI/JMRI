@@ -217,6 +217,10 @@
 	    <dt>MERG CBUS</dt>
 	    <dd><p class="dl">Configure: <a href="can/cbus/index.shtml">MERG CBUS networks</a></p></dd>
 
+	    <img src="http://www.modbus.org/images/logo_new.jpg" alt="Modbus logo" height="27" width="96"></a></dt>
+	    <dt>Modbus</dt>
+	    <dd><p class="dl">Configure: <a href="modbus/index.shtml">Modbus networks</a></p></dd>
+
 	    <dt class="im"><a href="http://www.modelrec.com">
 	    <img src="http://www.modelrec.com/images/interface/MRCLogo.gif" alt="MRC logo" height="48" width="96"></a></dt>
 	    <dt>Model Rectifier Corp (MRC)</dt>
