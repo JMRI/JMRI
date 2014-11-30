@@ -21,6 +21,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
+<img src="http://www.modbus.org/images/logo_new.jpg" alt="Modbus logo" height="40" width="145" align="right">
 <h1> 
 JMRI: Modbus Support
 </h1>
@@ -46,7 +47,8 @@ By reading and writing these in a node,
 a Modbus master can sense the condition of the layout (through discrete inputs)
 and control it (through coils).</p>
 
-<p>Modbus is an industrial control system that's usually used with pretty tough, 
+<p><a href="http://www.modbus.org">Modbus is an industrial control system</a>
+that's usually used with pretty tough, 
 highly-engineering equipment.  
 The Modbus nodes are often "programmable logic controllers" (PLCs)
 which can do their own calculations of how to control devices.
@@ -55,7 +57,7 @@ which can do their own calculations of how to control devices.
 
 JMRI will eventually support operation as either the master node, or as one of the slave nodes.
 
-<h3>JMRI as Master Node</h3>
+<h2>JMRI as Master Node</h2>
 
 <em>(There is no code support for this yet)</em>
 <p>
@@ -73,7 +75,7 @@ There are multiple ways to configure this connection:
 TCP/IP vs RS485, ASCII vs RTU protocol, etc.
 Each of these requires separate code.
 
-<h3>JMRI as Slave Node</h3>
+<h2>JMRI as Slave Node</h2>
 
 It's also possible for JMRI to be a slave node.  In that case a PLC
 or other unit is the master node, and reads/writes JMRI when it needs to.
@@ -118,15 +120,31 @@ We therefore provide the following mapping:
 
 The master node can read from either the coil or discrete input for either Turnout or Sensor.
 It can write to the coil number to change the status of the Turnout or Sensor within JMRI.
-A "1" is CLOSED or ACTIVE, respectively; a "0" is THROWN or INACTIVE.
+A "1" is THROWN or ACTIVE, respectively; a "0" is CLOSED or INACTIVE.
 
 <p>
-Until each coil is first written, the state of the associated Turnout or Sensor will be "UNKNOWN".
+Until each coil is first written or set within JMRI, the state of the associated Turnout or Sensor will be "UNKNOWN"
+and it will be read back as zero on Modbus.
 
 <p>
 With this convention, you can put Turnouts and Sensors on your JMRI panel, and then
 connect them to PLC code that will tell them what to display.  If desired, local changes,
 e.g. clicking on the screen, can be read back and used to control the railroad.
+
+<h3>Configuring as a Slave Node</h3>
+
+In the Preferences pane for Connections, select "Modbus" and "RS485 ASCII Slave".  
+Then select the communications (serial) port your interface is connected on, 
+the baud rate, and 
+enter the node number your master node will use to refer to JMRI.  
+Click "Save", quit and restart.
+
+<p>
+Next, use the Turnout and Sensor tables to define your sensors, 
+which will in the process define the coils and discrete inputs
+that Modbus will read and write. Save this configuration to a panel file
+so that it can be reloaded when you start JMRI again in the future.
+
 
 
 <h2>Naming</h2>
@@ -135,13 +153,6 @@ The default <a href="../../../html/doc/Technical/Names.shtml">system letter</a>
 for Modbus connections is "M". It can be configured to another letter if desired.
 
 
-
-
-
-<h2>Sensors</h2>
-
-
-<h2>Turnouts</h2>
 
 
 <!--#include virtual="/Footer" -->
