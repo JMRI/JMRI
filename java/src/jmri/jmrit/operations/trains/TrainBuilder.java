@@ -1809,9 +1809,10 @@ public class TrainBuilder extends TrainCommon {
 						_train.getRoute().getName(), rl.getId(), rl.getName() }));
 				continue;
 			}
-			// no pick ups from staging if at the end of the train's route
+			// no pick ups from staging unless at the start of the train's route
 			if (routeIndex > 0 && rl.getLocation().getLocationOps() == Location.STAGING) {
-				log.debug("No pick ups from terminus staging");
+				addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildNoPickupsFromStaging"), new Object[] {
+					rl.getName() }));
 				continue;
 			}
 			// the next check provides a build report message if there's an issue with the train direction
