@@ -7,6 +7,7 @@
  </TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
+    <META content="B.Milhaupt" name=Author>
     <META name="keywords" content="JMRI help monitor loconet traffic message packet">
 
 <!-- Style -->
@@ -23,8 +24,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Monitor LocoNet Traffic
-</H1>
+<H1>Monitor LocoNet Traffic</H1>
     
 <a href="../../../../../html/apps/LocoTools/images/LocoMonFrame.gif">
     <img src="../../../../../html/apps/LocoTools/images/LocoMonFrame.gif"
@@ -33,14 +33,82 @@
 <br>
 The LocoNet Monitor tool displays LocoNet traffic in a
 human-readable form. The most recent messages are available
-in a scrolling window. You can filter unwanted messages from 
-the display.  Optionally, you can include the
+in a scrolling window.  Optionally, you can include the
 time the message was received, and/or the raw packet
 bytes. The log information can also be stored in a text file.  
-<p>
+<h2>LocoNet Monitor "Controls"</h2>
 For more information on the 
 various controls and options, please see the
 <a href="../../AbstractMonFrame.shtml">Communications Monitor Window page</a>.
+<h2>LocoNet Monitor "Raw Data"</h2>
+<p>When the LocoNet Monitor is configured to include "raw data" in its output, 
+    it differentiates between messages sent by JMRI to the interface hardware 
+    and those messages coming back from the LocoNet interface hardware.  The 
+    "Raw data" for those messages which JMRI sends to the LocoNet interface 
+    hardware are prefixed with "Tx - ".  The "Raw data" for those messages 
+    which the LocoNet interface hardware provides to JMRI are prefixed with 
+    "Rx - ". </p>
+<h2>LocoNet Monitor Timestamps</h2>
+<p>When Timestamps are enabled, each message is preceeded by the computer time when 
+    JMRI sees the message.  For a variety of technical reasons, these timestamps 
+    cannot reflect the actual time when the message is on the LocoNet data wires.</p>
+<p>Because of this, a wide range of odd effects can be seen.  Two different messages
+    can be shown with the same timestamp.  A transmit message and a receive message
+    can have the same timestamp.  And a "Rx" message show up in the display before
+    the "Tx" message is shown.</p>
+<p>These behaviors are normal and expected, even though they can be annoying.  
+    These behaviors result from a combination of the implementations of JMRI, 
+    Java, the computer operating system, the computer hardware and the LocoNet 
+    interface hardware.  As such, the JMRI implementation has very little control
+    over these odd behaviors, although the JMRI developers have attempted to 
+    minimize the influence of these odd behaviors upon JMRI.</p>
+<h2>Filtering LocoNet Messages</h2>
+<p>Users may specify LocoNet "OpCode" values which should be filtered (ignored) 
+    by LocoNet Monitor.  Filtering messages in LocoNet monitor does <strong>not
+    </strong> prevent messages from getting to other JMRI components, and does 
+    <strong> not</strong> prevent messages from being sent to the LocoNet 
+    interface hardware; filtering only affects the display of LocoNet messages.</p>
+<p>The "Filter Bytes:" text entry area on the LocoNet monitor window may be used 
+    to specify one or more LocoNet message "OpCode(s)".  When the LocoNet monitor
+    is notified of a LocoNet message, the message's OpCode value is compared to
+    the hexadecimal value(s) in the "Filter Bytes:" text entry area.  If the 
+    message's OpCode value is specified in the text entry area, then the LocoNet 
+    monitor will ignore the message.</p>
+<p>A LocoNet OpCode value is entered as a two character hexadecimal value, such 
+    as "81", "A0" and "E5", without quotes.  When multiple OpCode values are to 
+    be filtered, provide a space between each value, such as "81 E5 A0" (without 
+    quotes).</p>
+<p>The filtering mechanism checks only the first byte of the LocoNet message.  
+    This means that the filtering mechanism cannot specifically ignore those 
+    LocoNet messages which rely on more than the OpCode value to define the 
+    specific LocoNet message.  This is a known limitation of the message 
+    filtering mechanism.</p>
+<p>Specific information on many LocoNet OpCode values can be found in documentation
+    provided by Digitrax, while others are not publicly documented.  Below is 
+    a short list of some OpCode values and the associated LocoNet functionality.</p>
+<table border='2'>
+    <tr><td align="center" colspan="2">
+            <strong>Some LocoNet OpCode values and their functionality</strong></td></tr>
+    <tr><td align="center"><strong>OpCode Value (Hexadecimal)<strong></td>
+                    <td align="center"><strong>Functionality</strong></td></tr>
+    <tr><td align="center">81</td><td>Master (command station) is busy</td></tr>
+    <tr><td align="center">B0</td><td>Control switch position (without acknowledgment)</td></tr>
+    <tr><td align="center">B1</td><td>Switch position report</td></tr>
+    <tr><td align="center">B2</td><td>General sensor state report</td></tr>
+    <tr><td align="center">B4</td><td>Long acknowledge - sent by command station in response to a large variety of LocoNet messages</td></tr>
+    <tr><td align="center">B8</td><td>Unlink (de-consist) two slots</td></tr>
+    <tr><td align="center">B9</td><td>Link (consist) two slots</td></tr>
+    <tr><td align="center">BC</td><td>Request current position of Switch</td></tr>
+    <tr><td align="center">BD</td><td>Control switch position</td></tr>
+    <tr><td align="center">E7</td><td>Slot data report - locomotive control, programming track, fast clock, etc.</td></tr>
+    <tr><td align="center">ED</td><td>Mobile decoder function control (F9-F28), control of some stationary decoders, etc.</td></tr>
+    <tr><td align="center">EF</td><td>Write slot - locomotive control, programming track, fast clock, etc.</td></tr>
+</table>
+<p>Detailed descriptions of LocoNet message OpCodes are beyond the scope of this 
+    document.</p>
+    
+    </div>
+  </div>
 
 <!--#include virtual="/Footer" -->
 </body>
