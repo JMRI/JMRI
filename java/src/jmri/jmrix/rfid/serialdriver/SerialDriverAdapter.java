@@ -39,7 +39,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         option3Name = "Protocol";
         options.put(option1Name, new Option("Adapter:", new String[]{"Generic Stand-alone", "MERG Concentrator"}, false));
         options.put(option2Name, new Option("Concentrator range:", new String[]{"A-H","I-P"}, false));
-        options.put(option3Name, new Option("Protocol:", new String[]{"CORE-ID", "Olimex", "Parallax"}, false));
+        options.put(option3Name, new Option("Protocol:", new String[]{"CORE-ID", "Olimex", "Parallax", "SeeedStudio"}, false));
     }
 
     @Override
@@ -48,6 +48,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
     }
 
     @Override
+    @SuppressWarnings("CallToPrintStackTrace")
     public String openPort(String portName, String appName)  {
         try {
             // get and open the primary port
@@ -235,6 +236,9 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
             } else if (opt3.equals("Parallax")) {
                 log.info("set protocol to Parallax");
                 protocol = new jmri.jmrix.rfid.protocol.parallax.ParallaxRfidProtocol();
+            } else if (opt3.equals("SeeedStudio")) {
+                log.info("set protocol to SeeedStudio");
+                protocol = new jmri.jmrix.rfid.protocol.seeedstudio.SeeedStudioRfidProtocol();
             } else {
             // no protocol at all - warn
             log.warn("protocol option "+opt3+" defaults to CORE-ID");

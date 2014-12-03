@@ -60,7 +60,11 @@ public class OlimexRfidProtocol extends RfidProtocol {
 
     @Override
     public boolean isValid(AbstractMRReply msg) {
-        return msg.getElement(SPECIFICMAXSIZE-1)==0x3E;
+        return ((!isConcentrator && msg.getElement(2)==0x2D) ||
+                (isConcentrator &&
+                    msg.getElement(portPosition)>=concentratorFirst && 
+                    msg.getElement(portPosition)<=concentratorLast)) &&
+                msg.getElement(SPECIFICMAXSIZE-1)==0x3E;
     }
 
     @Override
@@ -83,6 +87,10 @@ public class OlimexRfidProtocol extends RfidProtocol {
         if (isValid(msg)) {
             StringBuilder sb = new StringBuilder();
             sb.append("Reply from Olimex reader.");
+            if (isConcentrator) {
+                sb.append(" Reply from port ");
+                sb.append(getReaderPort(msg));
+            }
             sb.append(" Tag read ");
             sb.append(getTag(msg));
             return sb.toString();

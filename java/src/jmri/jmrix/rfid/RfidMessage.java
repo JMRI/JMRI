@@ -42,7 +42,8 @@ abstract public class RfidMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * This ctor interprets the String as the exact
      * sequence to send, byte-for-byte.
-     * @param m
+     * @param m String to send
+     * @param l length of expected response
      */
     public RfidMessage(String m,int l) {
         super(m);
@@ -59,6 +60,7 @@ abstract public class RfidMessage extends jmri.jmrix.AbstractMRMessage {
      * This ctor interprets the byte array as
      * a sequence of characters to send.
      * @param a Array of bytes to send
+     * @param l length of expected response
      */
     public RfidMessage(byte[] a, int l) {
         super(String.valueOf(a));
@@ -68,9 +70,23 @@ abstract public class RfidMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     int responseLength = -1;  // -1 is an invalid value, indicating it hasn't been set
+
+    /**
+     * Sets the length of an expected response
+     * @param l length of expected response
+     */
     public final void setResponseLength(int l) { responseLength = l; }
+
+    /**
+     * Returns the length of an expected response
+     * @return length of expected response
+     */
     public int getResponseLength() { return responseLength; }
-        
+
+    /**
+     * Returns a string representation of this message to use in a monitor
+     * @return monitor string
+     */
     abstract public String toMonitorString();
     
 }

@@ -1,6 +1,6 @@
-// CoreIdRfidProtocol.java
+// SeeedStudioRfidProtocol.java
 
-package jmri.jmrix.rfid.protocol.coreid;
+package jmri.jmrix.rfid.protocol.seeedstudio;
 
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.rfid.RfidProtocol;
@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Common routines to extract the Tag information and validate checksum for
- * implementations that use the CORE-ID / ID-Innovations protocol.
+ * implementations that use the SeeedStudio protocol.
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -27,21 +27,21 @@ import org.slf4j.LoggerFactory;
  * @author      Matthew Harris  Copyright (C) 2014
  * @version     $Revision$
  */
-public class CoreIdRfidProtocol extends RfidProtocol {
+public class SeeedStudioRfidProtocol extends RfidProtocol {
 
-    private static final int SPECIFICMAXSIZE = 16;
+    private static final int SPECIFICMAXSIZE = 14;
 
     /**
-     * Constructor for CORE-ID RFID Protocol.
+     * Constructor for SeeedStudio RFID Protocol.
      * Used when a single reader is connected directly to a port, not via a
      * concentrator.
      */
-    public CoreIdRfidProtocol() {
+    public SeeedStudioRfidProtocol() {
         super();
     }
 
     /**
-     * Constructor for CORE-ID RFID Protocol.
+     * Constructor for SeeedStudio RFID Protocol.
      * Supports the use of concentrators where a character range is used to
      * determine the specific reader port.
      * 
@@ -49,7 +49,7 @@ public class CoreIdRfidProtocol extends RfidProtocol {
      * @param concentratorLast - character representing last concentrator port
      * @param portPosition - position of port character in reply string
      */
-    public CoreIdRfidProtocol(char concentratorFirst, char concentratorLast, int portPosition) {
+    public SeeedStudioRfidProtocol(char concentratorFirst, char concentratorLast, int portPosition) {
         super(concentratorFirst, concentratorLast, portPosition);
     }
 
@@ -59,7 +59,7 @@ public class CoreIdRfidProtocol extends RfidProtocol {
 
     @Override
     public String initString() {
-        // None required for CORE-ID
+        // None required for SeeedStudio
         return "";
     }
 
@@ -97,9 +97,7 @@ public class CoreIdRfidProtocol extends RfidProtocol {
                  (isConcentrator && 
                     msg.getElement(portPosition)>=concentratorFirst && 
                     msg.getElement(portPosition)<=concentratorLast &&
-                    (msg.getElement(SPECIFICMAXSIZE-1)&0xFF)==0x3E ) &&
-                (msg.getElement(SPECIFICMAXSIZE-2)&0xFF)==0x0A &&
-                (msg.getElement(SPECIFICMAXSIZE-3)&0xFF)==0x0D);
+                    (msg.getElement(SPECIFICMAXSIZE-1)&0xFF)==0x3E));
     }
 
     public boolean isCheckSumValid(AbstractMRReply msg) {
@@ -133,7 +131,7 @@ public class CoreIdRfidProtocol extends RfidProtocol {
         // check for valid message
         if (isValid(msg)) {
             StringBuilder sb = new StringBuilder();
-            sb.append("Reply from CORE-ID reader.");
+            sb.append("Reply from SeeedStudio reader.");
             if (isConcentrator) {
                 sb.append(" Reply from port ");
                 sb.append(getReaderPort(msg));
@@ -150,8 +148,8 @@ public class CoreIdRfidProtocol extends RfidProtocol {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(CoreIdRfidProtocol.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(SeeedStudioRfidProtocol.class.getName());
 
 }
 
-/* @(#)CoreIdRfidProtocol.java */
+/* @(#)SeeedStudioRfidProtocol.java */

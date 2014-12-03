@@ -16,6 +16,36 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class RfidProtocol {
 
+    protected boolean isConcentrator;
+    protected char concentratorFirst;
+    protected char concentratorLast;
+    protected int portPosition;
+
+    /**
+     * Constructor for an RFID Protocol.
+     * Used when a single reader is connected directly to a port, not via a
+     * concentrator.
+     */
+    public RfidProtocol() {
+        this('\u0000' , '\u0000' , 0);
+    }
+
+    /**
+     * Constructor for an RFID Protocol.
+     * Supports the use of concentrators where a character range is used to
+     * determine the specific reader port.
+     * 
+     * @param concentratorFirst - character representing first concentrator port
+     * @param concentratorLast - character representing last concentrator port
+     * @param portPosition - position of port character in reply string
+     */
+    public RfidProtocol(char concentratorFirst, char concentratorLast, int portPosition) {
+        isConcentrator = concentratorFirst!='\u0000' && concentratorLast !='\u0000' && portPosition != 0;
+        this.concentratorFirst = concentratorFirst;
+        this.concentratorLast = concentratorLast;
+        this.portPosition = portPosition;
+    }
+
     /**
      * Retrieves RFID Tag information from message
      * 
@@ -66,6 +96,30 @@ abstract public class RfidProtocol {
      * @return initialisation string
      */
     abstract public String initString();
+
+    /**
+     * Sets this protocol to use a concentrator.
+     * @param enabled true to use a concentrator
+     * @param start character representing the first port - ignored if disabled
+     * @param end character representing the last port - ignored if disabled
+     * @param position position of port character in message; 1 for first character
+     */
+    public void setAsConcentrator(boolean enabled, char start, char end, int position) {
+        this.isConcentrator = enabled;
+        this.concentratorFirst = start;
+        this.concentratorLast = end;
+        this.portPosition = position - 1; // needs to be zero-based
+    }
+
+    public char getReaderPort(AbstractMRReply msg) {
+        if (isConcentrator) {
+            Character p = (char) msg.getElement(portPosition);
+            if (p.toString().matches(this.concentratorFirst+"-"+this.concentratorLast)) {
+                return p;
+            }
+        }
+        return 0x00;
+    }
 
     /**
      * Provides a textual representation of this message for the monitor
