@@ -115,7 +115,7 @@ Google finds numerous pages that show how to install Java 1.7 on XP or XP SP2.
 <tr><td>Win Web Server 2008 R2 (64-bit)     </td><td>1.6</td></tr>
 <tr><td>Win Vista (64-bit)                  </td><td>1.8</td></tr>
 <tr><td>Win 2003 (64-bit)                   </td><td>1.6</td></tr>
-<tr><td>Windows XP                          </td><td>1.8<br>Unofficial<br>Support</td></tr>
+<tr><td>Windows XP                          </td><td>1.8<br><a href="https://www.java.com/en/download/faq/winxp.xml">Unofficial<br>Support</a></td></tr>
 <tr><td>Windows 98 (2nd Ed)                 </td><td>1.5-11</td></tr>
 <tr><td>Windows 98                          </td><td>1.4.2_14</td></tr>
 <tr><td>Windows 95                          </td><td>1.3.1_20</td></tr>
