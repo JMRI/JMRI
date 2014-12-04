@@ -78,8 +78,9 @@ including the needed JVM and library support.
 <tr><td>Generics for Swing classes</td> <td>1.7</td><td>1.7</td></tr>
 <tr><td>NIO improves .zip file access</td> <td>1.7</td><td>1.7</td></tr>
 <tr><td>I18N I/O improvements</td> <td>1.7</td><td>1.7</td></tr>
-<tr><td>Memory use and GC improvements<br/>(better performance)</td> <td>1.7</td><td>1.7</td></tr>
+<tr><td>Memory use and <br/>GC improvements<br/>(better performance)</td> <td>1.7</td><td>1.7</td></tr>
 <tr><td>Jetty Version 9</td> <td>1.7</td><td>1.7</td></tr>
+<tr><td>JUnit 4 and the <br/><code>assert</code> keyword</td> <td>1.7</td><td>1.7</td></tr>
 </table>
 (* indicates that a compatibility library is used in the early version)
 
@@ -96,18 +97,36 @@ Google finds numerous pages that show how to install Java 1.7 on XP or XP SP2.
 <P>
 <table border="1">
 <tr><th>OS and platform</th><th>Last JRE</th></tr>
-<tr><td>Linux</td><td>(1.6?)</td></tr>
-<tr><td>Windows Vista</td><td>1.7</td></tr>
-<tr><td>Windows XP</td><td>1.6</td></tr>
+<tr><td>Linux</td><td>(depends?)</td></tr>
+
+<tr><td>Win 8 (32-bit)                      </td><td>1.8</td></tr>
+<tr><td>Win 7 (32-bit)                      </td><td>1.8</td></tr>
+<tr><td>Win Vista (32-bit)                  </td><td>1.8</td></tr>
+<tr><td>Win Server 2008 (32-bit)            </td><td>1.8</td></tr>
+<tr><td>Win Web Server 2008 (32-bit)        </td><td>1.6</td></tr>
+<tr><td>Win 2000 (32-bit)                   </td><td>1.6</td></tr>
+<tr><td>Win Server 2003 (32-bit)            </td><td>1.6</td></tr>
+<tr><td>Win 8 (64-bit)                      </td><td>1.8</td></tr>
+<tr><td>Win Server 2012 (64-bit)            </td><td>1.8</td></tr>
+<tr><td>Win Server 2012 R2 (64-bit)         </td><td>1.8</td></tr>
+<tr><td>Win 7 (64-bit)                      </td><td>1.8</td></tr>
+<tr><td>Win Server 2008 R2 (64-bit)         </td><td>1.8</td></tr>
+<tr><td>Win Server 2008 (64-bit)            </td><td>1.7</td></tr>
+<tr><td>Win Web Server 2008 R2 (64-bit)     </td><td>1.6</td></tr>
+<tr><td>Win Vista (64-bit)                  </td><td>1.8</td></tr>
+<tr><td>Win 2003 (64-bit)                   </td><td>1.6</td></tr>
+<tr><td>Windows XP                          </td><td>1.8<br>Unofficial<br>Support</td></tr>
+<tr><td>Windows 98 (2nd Ed)                 </td><td>1.5-11</td></tr>
+<tr><td>Windows 98                          </td><td>1.4.2_14</td></tr>
+<tr><td>Windows 95                          </td><td>1.3.1_20</td></tr>
+
+
 <tr><td>Mac OS X 10.7.3 and later on Intel</td><td>1.7</td></tr>
-<tr><td>Mac OS X 10.5.8 and later on Intel</td><td>1.6</td></tr>
-<tr><td>Mac OS X 10.5.7 and earlier on Intel</td><td>1.5</td></tr>
-<tr><td>Mac OS X 10.3 and later on PowerPC</td><td>1.5</td></tr>
-<tr><td>Windows 98 (2nd Ed)</td><td>1.5-11</td></tr>
-<tr><td>Windows 98</td><td>1.4.2_14</td></tr>
-<tr><td>Windows 95</td><td>1.3.1_20</td></tr>
-<tr><td>OS/2</td><td>1.3</td></tr>
+<tr><td>Mac OS X 10.5.8 and later on Intel</td><td>1.6 (Apple JVM)</td></tr>
+<tr><td>Mac OS X 10.5.7 and earlier on Intel</td><td>1.5 (Apple JVM)</td></tr>
+<tr><td>Mac OS X 10.3 and later on PowerPC</td><td>1.5 (Apple JVM)</td></tr>
 <tr><td>MacOS "Classic"</td><td>1.1.8</td></tr>
+<tr><td>OS/2</td><td>1.3</td></tr>
 </table>
 <P>
 See the 
