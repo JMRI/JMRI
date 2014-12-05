@@ -49,6 +49,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	private boolean _rowColorManual = true; // when true train colors are manually assigned
 	private String _rowColorBuilt = NONE; // row color when train is built
 	private String _rowColorBuildFailed = NONE; // row color when train build failed
+	private String _rowColorTrainEnRoute = NONE; // row color when train is en route
 	private String _rowColorTerminated = NONE; // row color when train is terminated
 
 	// Train frame table column widths (12), starts with Time column and ends with Edit
@@ -637,6 +638,16 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		firePropertyChange(ROW_COLOR_NAME_CHANGED_PROPERTY, old, colorName);
 	}
 	
+	public String getRowColorNameForTrainEnRoute() {
+		return _rowColorTrainEnRoute;
+	}
+	
+	public void setRowColorNameForTrainEnRoute(String colorName) {
+		String old = _rowColorTrainEnRoute;
+		_rowColorTrainEnRoute = colorName;
+		firePropertyChange(ROW_COLOR_NAME_CHANGED_PROPERTY, old, colorName);
+	}
+	
 	public String getRowColorNameForTerminated() {
 		return _rowColorTerminated;
 	}
@@ -884,6 +895,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 					_rowColorBuildFailed = a.getValue();
 				if ((a = eRowColorOptions.getAttribute(Xml.ROW_COLOR_BUILT)) != null)
 					_rowColorBuilt = a.getValue();
+				if ((a = eRowColorOptions.getAttribute(Xml.ROW_COLOR_TRAIN_EN_ROUTE)) != null)
+					_rowColorTrainEnRoute = a.getValue();
 				if ((a = eRowColorOptions.getAttribute(Xml.ROW_COLOR_TERMINATED)) != null)
 					_rowColorTerminated = a.getValue();
 			}
@@ -955,6 +968,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		e.setAttribute(Xml.ROW_COLOR_MANUAL, isRowColorManual() ? Xml.TRUE : Xml.FALSE);
 		e.setAttribute(Xml.ROW_COLOR_BUILD_FAILED, getRowColorNameForBuildFailed());
 		e.setAttribute(Xml.ROW_COLOR_BUILT, getRowColorNameForBuilt());
+		e.setAttribute(Xml.ROW_COLOR_TRAIN_EN_ROUTE, getRowColorNameForTrainEnRoute());
 		e.setAttribute(Xml.ROW_COLOR_TERMINATED, getRowColorNameForTerminated());
 		options.addContent(e);
 		

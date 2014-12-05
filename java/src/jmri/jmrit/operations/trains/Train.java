@@ -173,7 +173,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	public static final int CODE_BUILD_FAILED = 0x02;
 	public static final int CODE_BUILT = 0x10;
 	public static final int CODE_PARTIAL_BUILT = CODE_BUILT + 0x04;
-	public static final int CODE_TRAIN_IN_ROUTE = CODE_BUILT + 0x08;
+	public static final int CODE_TRAIN_EN_ROUTE = CODE_BUILT + 0x08;
 	public static final int CODE_TERMINATED = 0x80;
 	public static final int CODE_UNKNOWN = 0xFFFF;
 
@@ -735,7 +735,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		int oldCode = _statusCode;
 		_statusCode = status;
 		// always fire property change for train in route
-		if (oldCode != this._statusCode || status == CODE_TRAIN_IN_ROUTE) {
+		if (oldCode != this._statusCode || status == CODE_TRAIN_EN_ROUTE) {
 			setDirtyAndFirePropertyChange(STATUS_CHANGED_PROPERTY, oldStatus, this.getStatus());
 		}
 		updateTrainTableRowColor();
@@ -753,6 +753,9 @@ public class Train implements java.beans.PropertyChangeListener {
 				break;
 			case CODE_BUILD_FAILED:
 				setTableRowColorName(TrainManager.instance().getRowColorNameForBuildFailed());
+				break;
+			case CODE_TRAIN_EN_ROUTE:
+				setTableRowColorName(TrainManager.instance().getRowColorNameForTrainEnRoute());
 				break;
 			case CODE_TERMINATED:
 				setTableRowColorName(TrainManager.instance().getRowColorNameForTerminated());
@@ -803,7 +806,7 @@ public class Train implements java.beans.PropertyChangeListener {
 					.getNumberCarsRequested()); // NOI18N
 		case CODE_TERMINATED:
 			return Bundle.getMessage(locale, "StatusTerminated", this.getTerminationDate()); // NOI18N
-		case CODE_TRAIN_IN_ROUTE:
+		case CODE_TRAIN_EN_ROUTE:
 			return Bundle.getMessage(locale, "StatusEnRoute", this.getNumberCarsInTrain(), this.getTrainLength(), Setup
 					.getLengthUnit().toLowerCase(), this.getTrainWeight()); // NOI18N
 		case CODE_TRAIN_RESET:
@@ -3152,7 +3155,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
 	private void updateStatus(RouteLocation old, RouteLocation next) {
 		if (next != null) {
-			setStatus(CODE_TRAIN_IN_ROUTE);
+			setStatus(CODE_TRAIN_EN_ROUTE);
 			// run move scripts
 			runScripts(getMoveScripts());
 		} else {
@@ -3477,7 +3480,7 @@ public class Train implements java.beans.PropertyChangeListener {
 					_statusTerminatedDate = splitStatus[1];
 				_statusCode = CODE_TERMINATED;
 			} else if (status.startsWith(TRAIN_IN_ROUTE)) {
-				_statusCode = CODE_TRAIN_IN_ROUTE;
+				_statusCode = CODE_TRAIN_EN_ROUTE;
 			} else if (status.startsWith(TRAIN_RESET)) {
 				_statusCode = CODE_TRAIN_RESET;
 			} else {

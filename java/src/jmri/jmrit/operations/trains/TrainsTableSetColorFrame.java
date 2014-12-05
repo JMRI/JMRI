@@ -35,7 +35,6 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
 	// labels
 
 	// text field
-//	javax.swing.JTextField trainNameTextField = new javax.swing.JTextField(Control.max_len_string_train_name);
 	
 	// radio buttons
 	JRadioButton manualRadioButton = new JRadioButton(Bundle.getMessage("Manual"));
@@ -50,6 +49,7 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
 	
 	JComboBox colorBuiltBox = TrainManager.instance().getRowColorComboBox();
 	JComboBox colorBuildFailedBox = TrainManager.instance().getRowColorComboBox();
+	JComboBox colorTrainEnRouteBox = TrainManager.instance().getRowColorComboBox();
 	JComboBox colorTerminatedBox = TrainManager.instance().getRowColorComboBox();
 	
 	// display panels based on which option is selected
@@ -58,6 +58,7 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
 	
 	JPanel pColorBuilt;
 	JPanel pColorBuildFailed;
+	JPanel pColorTrainEnRoute;
 	JPanel pColorTerminated;
 
 	public TrainsTableSetColorFrame(Train train) {
@@ -81,7 +82,6 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
 		manualRadioButton.setSelected(trainManager.isRowColorManual());
 		autoRadioButton.setSelected(!trainManager.isRowColorManual());
 
-		// row 2
 		pTrains = new JPanel();
 		pTrains.setLayout(new GridBagLayout());
 		pTrains.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Train")));
@@ -89,13 +89,11 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
 		
 		trainBox.setSelectedItem(train);
 		
-		// row 3
 		pColor = new JPanel();
 		pColor.setLayout(new GridBagLayout());
 		pColor.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SelectRowColor")));
 		addItem(pColor, colorBox, 0, 0);
 		
-		// row 4
 		pColorBuilt = new JPanel();
 		pColorBuilt.setLayout(new GridBagLayout());
 		pColorBuilt.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SelectRowColorBuilt")));
@@ -103,13 +101,19 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
 		
 		colorBuiltBox.setSelectedItem(trainManager.getRowColorNameForBuilt());
 		
-		// row 5
 		pColorBuildFailed = new JPanel();
 		pColorBuildFailed.setLayout(new GridBagLayout());
 		pColorBuildFailed.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SelectRowColorBuildFailed")));
 		addItem(pColorBuildFailed, colorBuildFailedBox, 0, 0);
 		
 		colorBuildFailedBox.setSelectedItem(trainManager.getRowColorNameForBuildFailed());
+		
+		pColorTrainEnRoute = new JPanel();
+		pColorTrainEnRoute.setLayout(new GridBagLayout());
+		pColorTrainEnRoute.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SelectRowColorTrainEnRoute")));
+		addItem(pColorTrainEnRoute, colorTrainEnRouteBox, 0, 0);
+		
+		colorTrainEnRouteBox.setSelectedItem(trainManager.getRowColorNameForTrainEnRoute());
 		
 		// row 5
 		pColorTerminated = new JPanel();
@@ -128,6 +132,7 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
 		getContentPane().add(pColor);
 		getContentPane().add(pColorBuilt);
 		getContentPane().add(pColorBuildFailed);
+		getContentPane().add(pColorTrainEnRoute);
 		getContentPane().add(pColorTerminated);
 		getContentPane().add(pButton);
 
@@ -161,6 +166,7 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
 			} else {
 				trainManager.setRowColorNameForBuildFailed((String) colorBuildFailedBox.getSelectedItem());
 				trainManager.setRowColorNameForBuilt((String) colorBuiltBox.getSelectedItem());
+				trainManager.setRowColorNameForTrainEnRoute((String) colorTrainEnRouteBox.getSelectedItem());
 				trainManager.setRowColorNameForTerminated((String) colorTerminatedBox.getSelectedItem());
 			}
 			// save train file
@@ -185,6 +191,7 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
 		// the inverse
 		pColorBuildFailed.setVisible(!manualRadioButton.isSelected());
 		pColorBuilt.setVisible(!manualRadioButton.isSelected());
+		pColorTrainEnRoute.setVisible(!manualRadioButton.isSelected());
 		pColorTerminated.setVisible(!manualRadioButton.isSelected());
 	}
 	

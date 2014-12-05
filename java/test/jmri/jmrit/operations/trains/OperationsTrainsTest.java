@@ -954,13 +954,13 @@ public class OperationsTrainsTest extends TestCase {
 
 		// move and terminate the train
 		t1.move(); // to Acton
-		Assert.assertEquals("Train en route", Train.CODE_TRAIN_IN_ROUTE, t1.getStatusCode());
+		Assert.assertEquals("Train en route", Train.CODE_TRAIN_EN_ROUTE, t1.getStatusCode());
 		t1.move(); // to Nashua
-		Assert.assertEquals("Train en route", Train.CODE_TRAIN_IN_ROUTE, t1.getStatusCode());
+		Assert.assertEquals("Train en route", Train.CODE_TRAIN_EN_ROUTE, t1.getStatusCode());
 		t1.move(); // to Acton
-		Assert.assertEquals("Train en route", Train.CODE_TRAIN_IN_ROUTE, t1.getStatusCode());
+		Assert.assertEquals("Train en route", Train.CODE_TRAIN_EN_ROUTE, t1.getStatusCode());
 		t1.move(); // to Foxboro
-		Assert.assertEquals("Train en route", Train.CODE_TRAIN_IN_ROUTE, t1.getStatusCode());
+		Assert.assertEquals("Train en route", Train.CODE_TRAIN_EN_ROUTE, t1.getStatusCode());
 		t1.move(); // terminate
 		Assert.assertEquals("Train Terminated", Train.CODE_TERMINATED, t1.getStatusCode());
 
@@ -3282,7 +3282,7 @@ public class OperationsTrainsTest extends TestCase {
 		train1.move();
 		// Train in route since there's two locations
 		Assert.assertEquals("Train 1 in route to Chelmsford", true, train1.isTrainInRoute());
-		Assert.assertEquals("Train 1 in route to Chelmsford", Train.CODE_TRAIN_IN_ROUTE, train1.getStatusCode());
+		Assert.assertEquals("Train 1 in route to Chelmsford", Train.CODE_TRAIN_EN_ROUTE, train1.getStatusCode());
 		train1.move();
 		// 7 cars should in Chelmsford, the other 2 in Westford
 		Assert.assertEquals("Car c1 After Move 4 location", "Chelmsford Yard 1", c1.getTrackName());

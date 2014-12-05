@@ -1331,7 +1331,8 @@ public class TrainBuilder extends TrainCommon {
 
 			// remove cabooses that have a destination that isn't the terminal, no caboose changes in the train's route
 			if (car.isCaboose() && car.getDestination() != null && car.getDestination() != _terminateLocation
-					&& _train.getSecondLegOptions() == Train.NO_CABOOSE_OR_FRED && _train.getThirdLegOptions() == Train.NO_CABOOSE_OR_FRED) {
+					&& _train.getSecondLegOptions() == Train.NO_CABOOSE_OR_FRED
+					&& _train.getThirdLegOptions() == Train.NO_CABOOSE_OR_FRED) {
 				addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildExcludeCarWrongDest"),
 						new Object[] { car.toString(), car.getTypeName(), car.getDestinationName() }));
 				_carList.remove(car);
@@ -1572,8 +1573,8 @@ public class TrainBuilder extends TrainCommon {
 				}
 				// does car have a destination that is part of this train's route?
 				if (car.getDestination() != null) {
-					addLine(_buildReport, SEVEN, MessageFormat
-							.format(Bundle.getMessage("buildCarHasAssignedDest"), new Object[] { car.toString(),
+					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarHasAssignedDest"),
+							new Object[] { car.toString(),
 									(car.getDestinationName() + ", " + car.getDestinationTrackName()) }));
 					RouteLocation rld = _train.getRoute().getLastLocationByName(car.getDestinationName());
 					if (rld == null) {
@@ -1594,7 +1595,7 @@ public class TrainBuilder extends TrainCommon {
 				}
 			}
 			addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
-		}		
+		}
 		return;
 	}
 
@@ -1811,8 +1812,8 @@ public class TrainBuilder extends TrainCommon {
 			}
 			// no pick ups from staging unless at the start of the train's route
 			if (routeIndex > 0 && rl.getLocation().getLocationOps() == Location.STAGING) {
-				addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildNoPickupsFromStaging"), new Object[] {
-					rl.getName() }));
+				addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildNoPickupsFromStaging"),
+						new Object[] { rl.getName() }));
 				continue;
 			}
 			// the next check provides a build report message if there's an issue with the train direction
@@ -1824,7 +1825,7 @@ public class TrainBuilder extends TrainCommon {
 			_reqNumOfMoves = (rl.getMaxCarMoves() - rl.getCarMoves()) * percent / 100; // the number of moves requested
 			int saveReqMoves = _reqNumOfMoves; // save a copy for status message
 			// multiple pass build?
-			if (firstPass) {			
+			if (firstPass) {
 				// Departing staging?
 				if (routeIndex == 0 && _departStageTrack != null) {
 					_reqNumOfMoves = 0; // Move cars out of staging after working other locations
@@ -2368,8 +2369,9 @@ public class TrainBuilder extends TrainCommon {
 				if (track.acceptsDropTrain(_train)) {
 					log.debug("Car ({}) can be droped by train to track ({})", car.toString(), track.getName());
 				} else {
-					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCanNotDropCarTrain"),
-							new Object[] { car.toString(), _train.getName(), track.getTrackTypeName(), track.getName() }));
+					addLine(_buildReport, SEVEN, MessageFormat
+							.format(Bundle.getMessage("buildCanNotDropCarTrain"), new Object[] { car.toString(),
+									_train.getName(), track.getTrackTypeName(), track.getName() }));
 					return false;
 				}
 			}
@@ -3682,7 +3684,7 @@ public class TrainBuilder extends TrainCommon {
 								testTrack.getReserved(), testTrack.getReservedLengthDrops(),
 								testTrack.getReservedLengthDrops() - testTrack.getReserved(), available }));
 					}
-		String status = car.testDestination(testDestination, testTrack);
+					String status = car.testDestination(testDestination, testTrack);
 					// TODO the following code isn't really needed anymore. All spurs were already checked, but
 					// this code does report why the spur wasn't used.
 					// is the destination a spur with a schedule demanding this car's custom load?
