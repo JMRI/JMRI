@@ -613,7 +613,7 @@ public class AbstractAutomaton implements Runnable {
             }
         };
         ok = InstanceManager.getDefault(ThrottleManager.class)
-                .requestThrottle(address, throttleListener);
+                .requestThrottle(address, longAddress, throttleListener);
                 
         // check if reply is coming
         if (!ok) {
