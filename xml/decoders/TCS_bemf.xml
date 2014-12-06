@@ -491,10 +491,10 @@
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
-    <variables>
+ <variables>
     <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV1-6.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV7-8.xml"/>
-<variable CV="10" default="0" item="EMF Control Reference" tooltip="turn off BEMF above this speed step, range 0(default-128)">
+  <variable CV="10" default="0" item="EMF Control Reference" tooltip="turn off BEMF above this speed step, range 0(default-128)">
     <decVal/>
     <label>BEMF Cut Out</label>
     <label xml:lang="it">Liv.Taglio BEMF</label>
@@ -602,6 +602,7 @@
     <tooltip xml:lang="it">Valori oltre 128 incrementano correzzione, minori di 128 decrementano</tooltip>
   </variable>
  <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
