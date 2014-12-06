@@ -1052,7 +1052,7 @@
       <factReset label="Save Recorded Macro" CV="8" default="16"/>
       <factReset label="Set F0-F12 To Match Blue Line" CV="8" default="38"/>
       <factReset label="Set F0-F12 To Match QSI" CV="8" default="113"/>
-      <factReset label="Set F0-F12 To Match SoundtTraxx" CV="8" default="141"/>
+      <factReset label="Set F0-F12 To Match SoundTraxx" CV="8" default="141"/>
       <factReset label="Reset All CVs Even If Decoder Locked" CV="8" default="254"/>
     </resets>
   </decoder>
