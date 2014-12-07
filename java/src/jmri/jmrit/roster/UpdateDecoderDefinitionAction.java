@@ -43,19 +43,21 @@ public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
             
             // check if replaced
             List<DecoderFile> decoders = DecoderIndexFile.instance().matchingDecoderList(null, family, null, null, null, model);
-            System.out.println("Found "+decoders.size()+" of "+family+" "+model+" for "+entry.getId());
+            log.info("Found "+decoders.size()+" decoders matching family \""+family+"\" model \""+model+"\" from roster entry \""+entry.getId()+"\"");
             
             String replacementFamily = null;
             String replacementModel = null;
             
             for (DecoderFile decoder : decoders) {
-                System.out.println("   Replacements: "+decoder.getReplacementFamily()+" "+decoder.getReplacementModel());
+                
+                if (decoder.getReplacementFamily()!=null || decoder.getReplacementModel() != null)
+                    log.info("   Recommended replacement is family \""+decoder.getReplacementFamily()+"\" model \""+decoder.getReplacementModel()+"\"");
                 replacementFamily = (decoder.getReplacementFamily() != null) ? decoder.getReplacementFamily() : replacementFamily;
                 replacementModel = (decoder.getReplacementModel() != null) ? decoder.getReplacementModel() : replacementModel;
             }
             
             if (replacementModel != null && replacementFamily != null) {
-                System.out.println("   *** Will update");
+                log.info("   *** Will update");
         
                 // change the roster entry
                 entry.setDecoderFamily(replacementFamily);
