@@ -111,7 +111,12 @@ public class NXFrame extends WarrantRoute {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(Box.createVerticalGlue());
         panel.add(makeBlockPanels());
-        panel.add(Box.createVerticalStrut(STRUT_SIZE));
+        JPanel pp = new JPanel();
+        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
+        pp.add(WarrantFrame.makeTextBoxPanel(false, _searchDepth, "SearchDepth", true));
+        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
+        panel.add(pp);
+//        panel.add(Box.createVerticalStrut(STRUT_SIZE));
         ButtonGroup bg = new ButtonGroup();
         bg.add(_runAuto);
         bg.add(_runManual);
@@ -126,7 +131,7 @@ public class NXFrame extends WarrantRoute {
             }
         });
         _runAuto.setSelected(true);
-        JPanel pp = new JPanel();
+        pp = new JPanel();
         pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
         pp.add(Box.createHorizontalStrut(STRUT_SIZE));
         pp.add(_runAuto);
@@ -196,11 +201,6 @@ public class NXFrame extends WarrantRoute {
 		_manualPanel.setVisible(false);
         panel.add(Box.createVerticalStrut(STRUT_SIZE));
         
-        pp = new JPanel();
-        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        pp.add(WarrantFrame.makeTextBoxPanel(false, _searchDepth, "SearchDepth", true));
-        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        panel.add(pp);
         _forward.setSelected(true);
         _stageEStop.setSelected(_eStop);
         _haltStartBox.setSelected(_haltStart);

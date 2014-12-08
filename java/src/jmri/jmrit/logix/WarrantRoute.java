@@ -122,19 +122,19 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     protected JPanel makeBlockPanels() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(Box.createVerticalStrut(STRUT_SIZE));
+        //panel.add(Box.createVerticalStrut(STRUT_SIZE));
 
         JPanel oPanel = _origin.makePanel("OriginBlock", "OriginToolTip", "PathName", "ExitPortalName", this);
         panel.add(oPanel);
-        panel.add(Box.createVerticalStrut(STRUT_SIZE));
+        //panel.add(Box.createVerticalStrut(STRUT_SIZE));
 
-        oPanel = _destination.makePanel("DestBlock", "DestToolTip", "EntryPortalName", "PathName", this);
+        oPanel = _destination.makePanel("DestBlock", "DestToolTip", "PathName", "EntryPortalName", this);
         panel.add(oPanel);
-        panel.add(Box.createVerticalStrut(STRUT_SIZE));
+        //panel.add(Box.createVerticalStrut(STRUT_SIZE));
 
         oPanel = _via.makePanel("ViaBlock", "ViaToolTip", "PathName", null, this);
         panel.add(oPanel);
-        panel.add(Box.createVerticalStrut(STRUT_SIZE));
+        //panel.add(Box.createVerticalStrut(STRUT_SIZE));
 
         oPanel = _avoid.makePanel("AvoidBlock", "AvoidToolTip", "PathName", null, this);
         panel.add(oPanel);
@@ -206,18 +206,21 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             hPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
             JPanel pPanel = new JPanel();
             pPanel.setLayout(new BoxLayout(pPanel, BoxLayout.X_AXIS));
-            if (location==Location.DEST) {
+/*            if (location==Location.DEST) {
                 pPanel.add(makeLabelCombo(box1Name, portalBox, tooltip));           	
             } else {
                 pPanel.add(makeLabelCombo(box1Name, pathBox, tooltip));            	
-            }
+            }*/
+            pPanel.add(makeLabelCombo(box1Name, pathBox, tooltip));
             pPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
+            
             if (box2Name != null) {
-            	if (location==Location.DEST) {
+/*            	if (location==Location.DEST) {
                     pPanel.add(makeLabelCombo(box2Name, pathBox, tooltip));             		
             	} else {
                     pPanel.add(makeLabelCombo(box2Name, portalBox, tooltip)); 
-            	}
+            	}*/
+                pPanel.add(makeLabelCombo(box2Name, portalBox, tooltip)); 
                 pPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
             }
             hPanel.add(pPanel);
@@ -225,7 +228,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             pPanel.setToolTipText(Bundle.getMessage(tooltip));
             hPanel.setToolTipText(Bundle.getMessage(tooltip));
             oPanel.setToolTipText(Bundle.getMessage(tooltip));
-            oPanel.add(Box.createVerticalStrut(STRUT_SIZE));
+            //oPanel.add(Box.createVerticalStrut(STRUT_SIZE));
             blockBox.addActionListener(parent);
             blockBox.addPropertyChangeListener(parent);
             blockBox.addMouseListener(this);

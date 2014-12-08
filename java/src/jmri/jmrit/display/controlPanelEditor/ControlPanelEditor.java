@@ -1204,13 +1204,18 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             case KeyEvent.VK_PLUS:
                 _shapeDrawer.add(e.isShiftDown());
                 break;
+            default:
+            	return;
+                	
         }
         if (e.isShiftDown()) {
             x *= 5;
             y *= 5;
         }
-        for (Positionable comp : _selectionGroup) {
-            moveItem(comp, x, y);
+        if (_selectionGroup!=null) {
+            for (Positionable comp : _selectionGroup) {
+                moveItem(comp, x, y);
+            }        	
         }
         repaint();
     }
