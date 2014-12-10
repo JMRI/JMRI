@@ -37,6 +37,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
 
     // we're doing a manual allocation of position for
     // now, based on 28 labels
+    // The references to maxfunction + 1 are due to F0
     private final int maxfunction = 28;
 
     public FunctionLabelPane(RosterEntry r) {
@@ -305,7 +306,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
             w.setFontStyle(Font.PLAIN);
 
             // index over variables
-            for (int i = 0; i < maxfunction; i++) {
+            for (int i = 0; i <= maxfunction; i++) {
                 String name = "" + i;
                 if (re.getFunctionLockable(i)) {
                     name = name + " (locked)";
