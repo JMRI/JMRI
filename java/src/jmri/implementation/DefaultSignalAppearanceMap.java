@@ -46,7 +46,17 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
         }
         return map;
     }
-    
+
+    // added 3.9.7 so CATS can create own implementations
+    protected void registerMap() {
+        maps.put(getSystemName(), this);
+    }
+
+    // added 3.9.7 so CATS can create own implementations
+    static public DefaultSignalAppearanceMap findMap(String systemName) {
+        return maps.get(systemName);
+    }
+
     static DefaultSignalAppearanceMap loadMap(String signalSystemName, String aspectMapName) {
         DefaultSignalAppearanceMap map = 
             new DefaultSignalAppearanceMap("map:"+signalSystemName+":"+aspectMapName);
