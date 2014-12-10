@@ -664,7 +664,7 @@
    at the same location when using a switcher. This type of move can be very unrealistic, picture
    moving a boxcar from a shoe manufacture directly to an auto manufacture. Also moving a car from
    one yard track to another can have your operators wondering what kind of busy work is being
-   generated! We recommend that you leave all of the checkboxes unselected, but if you need these
+   generated! We recommend that you leave all of the checkboxes deselected, but if you need these
    types of moves, select the appropriate checkbox.
    <P>
    You should note that schedules can override the switcher options.  So if you need certain car movements
@@ -3467,7 +3467,7 @@
     
     
    <P>You can also control which trains are shown in the Trains window. When the "Show All"
-    checkbox is unselected, only trains that have the "Build" checkbox selected are shown.</P>
+    checkbox is deselected, only trains that have the "Build" checkbox selected are shown.</P>
 
    <A NAME="TrainStatus"></A>
    <H2>Train Status</H2>
