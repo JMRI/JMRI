@@ -1015,7 +1015,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
             d = new Element("functionlabels");
 
             // loop to copy non-null elements
-            for (int i = 0; i < MAXFNNUM; i++) {
+            for (int i = 0; i <= MAXFNNUM; i++) {
                 if (functionLabels[i] != null && !functionLabels[i].equals("")) {
                     Element fne = new Element("functionlabel");
                     fne.setAttribute("num", "" + i);
