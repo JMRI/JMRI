@@ -535,7 +535,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
      * What to do on click? 0 means 
      * sequence through aspects; 1 means 
      * alternate the "lit" aspect; 2 means
-     * alternate the DefaultSignalAppearanceMap.HELD aspect.
+     * alternate the {@link jmri.SignalAppearanceMap#HELD} aspect.
      */
     protected int clickMode = 0;
     
@@ -550,7 +550,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
      * How to handle lit vs not lit?
      * <P>
      * False means ignore (always show R/Y/G/etc appearance on screen);
-     * True means show DefaultSignalAppearanceMap.DARK if lit is set false.
+     * True means show {@link jmri.SignalAppearanceMap#DARK} if lit is set false.
      */
     protected boolean litMode = false;
     
