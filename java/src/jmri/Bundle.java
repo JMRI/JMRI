@@ -206,7 +206,7 @@ public class Bundle {
     }
 
     // Can get pathname of ctor class (to auto-generate BundleName) via getClass().getPackage()
-    // This code was used in DefaultSignalAppearanceMap to cache a local bundle name via weak reference
+    // E.g. to cache a local bundle name via weak reference
     //        if (rbr == null) rbr = new java.lang.ref.SoftReference<ResourceBundle>(
     //                                   ResourceBundle.getBundle("jmri.NamedBeanBundle"));
     //        ResourceBundle rb = rbr.get();
