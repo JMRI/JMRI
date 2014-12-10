@@ -21,6 +21,8 @@
   <!--             add CV 121,122,203,204,205,206,207,211,234,235,236,237 -->
   <version author="Marc Fournier" version="3" lastUpdated="20110304"/>
   <!-- Version 3 correct wording of CV8 = 254 reset -->
+  <version author="Michael Mosher" version="4" lastUpdated="20141208"/>
+  <!-- Version 4 fix CV246 bit 7 label -->
   <decoder>
     <family name="Paragon 2" mfg="Broadway Limited Imports, LLC">
       <model model="Steam" numOuts="3" numFns="30" connector="9pin">
@@ -1011,7 +1013,7 @@
       </variable>
       <variable item="GSC2 bit 7" CV="246" mask="VXXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Motor loading</label>
+        <label>Smoke unit power up</label>
       </variable>
       <variable item="GSC2 bit 1" CV="246" mask="XXXXXXVX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
