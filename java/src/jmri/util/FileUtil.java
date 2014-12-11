@@ -458,7 +458,7 @@ public final class FileUtil {
              * Preferences tests.
              */
             // check for relative to scripts dir
-            if (filename.startsWith(getScriptsPath())) {
+            if (filename.startsWith(getScriptsPath()) && !filename.equals(getScriptsPath())) {
                 return SCRIPTS + filename.substring(getScriptsPath().length(), filename.length()).replace(File.separatorChar, SEPARATOR);
             }
         }
