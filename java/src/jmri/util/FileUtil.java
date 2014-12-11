@@ -445,9 +445,20 @@ public final class FileUtil {
             return SETTINGS + filename.substring(getPreferencesPath().length(), filename.length()).replace(File.separatorChar, SEPARATOR);
         }
 
-        // check for relative to scripts dir, done before program dir due to default location
-        if (filename.startsWith(getScriptsPath())) {
-            return SCRIPTS + filename.substring(getScriptsPath().length(), filename.length()).replace(File.separatorChar, SEPARATOR);
+        if (ignoreUserFilesPath || ignoreProfilePath) {
+            /*
+             * The tests for any portatable path that could be within the
+             * UserFiles or Profile path locations needs to be within this
+             * block. This prevents the UserFiles or Profile path from being
+             * set to another portable path that is user settable.
+             *
+             * Note that these tests should be after the UserFiles, Profile, and
+             * Preferences tests.
+             */
+            // check for relative to scripts dir
+            if (filename.startsWith(getScriptsPath())) {
+                return SCRIPTS + filename.substring(getScriptsPath().length(), filename.length()).replace(File.separatorChar, SEPARATOR);
+            }
         }
 
         // now check for relative to program dir
