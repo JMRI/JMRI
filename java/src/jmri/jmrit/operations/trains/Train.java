@@ -759,6 +759,8 @@ public class Train implements java.beans.PropertyChangeListener {
 			case CODE_TERMINATED:
 				setTableRowColorName(TrainManager.instance().getRowColorNameForTerminated());
 				break;
+			default: // all other cases do nothing
+				break;
 			}
 		}
 	}
