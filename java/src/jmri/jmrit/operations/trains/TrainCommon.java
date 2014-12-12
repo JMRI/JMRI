@@ -241,8 +241,7 @@ public class TrainCommon {
 						pickupCars = true;
 						cars++;
 						newWork = true;
-						if (CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName()).equals(
-								CarLoad.LOAD_TYPE_EMPTY))
+						if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY))
 							emptyCars++;
 					}
 				}
@@ -325,8 +324,7 @@ public class TrainCommon {
 						pickupCars = true;
 						cars++;
 						newWork = true;
-						if (CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName()).equals(
-								CarLoad.LOAD_TYPE_EMPTY))
+						if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY))
 							emptyCars++;
 						String s;
 						if (car.isUtility()) {
@@ -400,8 +398,7 @@ public class TrainCommon {
 						pickupCars = true;
 						cars++;
 						newWork = true;
-						if (CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName()).equals(
-								CarLoad.LOAD_TYPE_EMPTY))
+						if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY))
 							emptyCars++;
 						String s;
 						if (car.isUtility()) {
@@ -484,7 +481,7 @@ public class TrainCommon {
 		dropCars = true;
 		cars--;
 		newWork = true;
-		if (CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName()).equals(CarLoad.LOAD_TYPE_EMPTY))
+		if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY))
 			emptyCars--;
 		String newString;
 		// use truncated format if there's a switch list

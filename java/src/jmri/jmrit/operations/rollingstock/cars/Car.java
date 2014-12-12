@@ -29,24 +29,24 @@ public class Car extends RollingStock {
 	protected boolean _utility = false;
 	protected boolean _loadGeneratedByStaging = false;
 	protected Kernel _kernel = null;
-	protected String _load = carLoads.getDefaultEmptyName();
+	protected String _loadName = carLoads.getDefaultEmptyName();
 	protected int _wait = 0;
 	protected String _pickupScheduleId = NONE;
 
 	protected Location _rweDestination = null; // return when empty destination
 	protected Track _rweDestTrack = null; // return when empty track
-	protected String _rweLoad = carLoads.getDefaultEmptyName();
+	protected String _rweLoadName = carLoads.getDefaultEmptyName();
 
 	// schedule items
 	protected String _scheduleId = NONE; // the schedule id assigned to this car
-	protected String _nextLoad = NONE; // next load by schedule
+	protected String _nextLoadName = NONE; // next load by schedule
 	protected int _nextWait = 0; // next wait by schedule
 	protected Location _finalDestination = null; // final destination by schedule or router
 	protected Track _finalDestTrack = null; // final track by schedule or router
 	protected Location _previousFinalDestination = null; // previous final destination (for train resets)
 	protected Track _previousFinalDestTrack = null; // previous final track (for train resets)
 	protected String _previousScheduleId = NONE; // previous schedule id (for train resets)
-	protected String _nextPickupScheduleId = NONE;
+	protected String _nextPickupScheduleId = NONE; // when the car needs to be pulled
 
 	public static final String LOAD_CHANGED_PROPERTY = "Car load changed"; // NOI18N property change descriptions
 	public static final String WAIT_CHANGED_PROPERTY = "Car wait changed"; // NOI18N
@@ -72,8 +72,8 @@ public class Car extends RollingStock {
 		car.setBuilt(_built);
 		car.setColor(_color);
 		car.setLength(_length);
-		car.setLoadName(_load);
-		car.setReturnWhenEmptyLoadName(_rweLoad);
+		car.setLoadName(_loadName);
+		car.setReturnWhenEmptyLoadName(_rweLoadName);
 		car.setNumber(_number);
 		car.setOwner(_owner);
 		car.setRoadName(_road);
@@ -115,14 +115,14 @@ public class Car extends RollingStock {
 	}
 
 	public void setLoadName(String load) {
-		String old = _load;
-		_load = load;
+		String old = _loadName;
+		_loadName = load;
 		if (!old.equals(load))
 			firePropertyChange(LOAD_CHANGED_PROPERTY, old, load);
 	}
 
 	public String getLoadName() {
-		return _load;
+		return _loadName;
 	}
 
 	@Deprecated
@@ -138,21 +138,29 @@ public class Car extends RollingStock {
 	}
 
 	public void setReturnWhenEmptyLoadName(String load) {
-		String old = _rweLoad;
-		_rweLoad = load;
+		String old = _rweLoadName;
+		_rweLoadName = load;
 		if (!old.equals(load))
 			firePropertyChange(LOAD_CHANGED_PROPERTY, old, load);
 	}
 
 	public String getReturnWhenEmptyLoadName() {
-		return _rweLoad;
+		return _rweLoadName;
 	}
 
 	/**
 	 * Gets the car load's priority.
 	 */
 	public String getLoadPriority() {
-		return (carLoads.getPriority(_type, _load));
+		return (carLoads.getPriority(_type, _loadName));
+	}
+	
+	/**
+	 * Gets the car load's type, empty or load.
+	 * @return type empty or type load
+	 */
+	public String getLoadType() {
+		return (carLoads.getLoadType(_type, _loadName));
 	}
 
 	public String getPickupComment() {
@@ -189,14 +197,14 @@ public class Car extends RollingStock {
 	}
 
 	public void setNextLoadName(String load) {
-		String old = _nextLoad;
-		_nextLoad = load;
+		String old = _nextLoadName;
+		_nextLoadName = load;
 		if (!old.equals(load))
 			firePropertyChange(LOAD_CHANGED_PROPERTY, old, load);
 	}
 
 	public String getNextLoadName() {
-		return _nextLoad;
+		return _nextLoadName;
 	}
 
 	public String getWeightTons() {
@@ -223,8 +231,7 @@ public class Car extends RollingStock {
 			// get loaded weight
 			weightTons = Integer.parseInt(getWeightTons());
 			// adjust for empty weight if car is empty, 1/3 of loaded weight
-			if (!isCaboose() && !isPassenger()
-					&& CarLoads.instance().getLoadType(getTypeName(), getLoadName()).equals(CarLoad.LOAD_TYPE_EMPTY))
+			if (!isCaboose() && !isPassenger() && getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY))
 				weightTons = weightTons / 3;
 		} catch (Exception e) {
 			log.debug("Car ({}) weight not set", toString());
@@ -242,25 +249,6 @@ public class Car extends RollingStock {
 	public int getWait() {
 		return _wait;
 	}
-
-	// /**
-	// * This car's service order when placed at a track that considers car order. There are two track orders, FIFO and
-	// * LIFO. Car's with the lowest numbers are serviced first when placed on a track in FIFO mode. Car's with the
-	// * highest numbers are serviced first when placed on a track in LIFO mode.
-	// *
-	// * @param number
-	// * The assigned service order for this car.
-	// */
-	// public void setOrder(int number) {
-	// int old = _order;
-	// _order = number;
-	// if (old != number)
-	// firePropertyChange("car order changed", old, number); // NOI18N
-	// }
-	//
-	// public int getOrder() {
-	// return _order;
-	// }
 
 	public void setNextWait(int count) {
 		int old = _nextWait;
@@ -718,7 +706,7 @@ public class Car extends RollingStock {
 			}
 		}
 		if ((a = e.getAttribute(Xml.LOAD)) != null) {
-			_load = a.getValue();
+			_loadName = a.getValue();
 		}
 		if ((a = e.getAttribute(Xml.LOAD_FROM_STAGING)) != null && a.getValue().equals(Xml.TRUE)) {
 			setLoadGeneratedFromStaging(true);
@@ -734,7 +722,7 @@ public class Car extends RollingStock {
 			_scheduleId = a.getValue();
 		}
 		if ((a = e.getAttribute(Xml.NEXT_LOAD)) != null) {
-			_nextLoad = a.getValue();
+			_nextLoadName = a.getValue();
 		}
 		if ((a = e.getAttribute(Xml.NEXT_WAIT)) != null) {
 			_nextWait = Integer.parseInt(a.getValue());
@@ -764,7 +752,7 @@ public class Car extends RollingStock {
 			_rweDestTrack = _rweDestination.getTrackById(a.getValue());
 		}
 		if ((a = e.getAttribute(Xml.RWE_LOAD)) != null) {
-			_rweLoad = a.getValue();
+			_rweLoadName = a.getValue();
 		}
 		addPropertyChangeListeners();
 	}
@@ -888,7 +876,7 @@ public class Car extends RollingStock {
 		if (e.getPropertyName().equals(Track.DISPOSE_CHANGED_PROPERTY)) {
 			if (e.getSource() == _finalDestTrack) {
 				if (log.isDebugEnabled())
-					log.debug("delete final destination for car: ({})",  toString());
+					log.debug("delete final destination for car: ({})", toString());
 				setFinalDestinationTrack(null);
 			}
 		}

@@ -153,8 +153,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
 					if (car.getRouteLocation() == rl && car.getRouteDestination() == rld) {
 						cars++;
 						newWork = true;
-						if (CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName()).equals(
-								CarLoad.LOAD_TYPE_EMPTY))
+						if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY))
 							emptyCars++;
 						int count = 0;
 						if (car.isUtility()) {

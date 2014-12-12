@@ -23,7 +23,6 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
-import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
@@ -1804,8 +1803,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			for (RouteLocation rl : route.getLocationsBySequenceList()) {
 				for (RollingStock rs : CarManager.instance().getList(this)) {
 					Car car = (Car) rs;
-					if (!CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName()).equals(
-							CarLoad.LOAD_TYPE_EMPTY))
+					if (!car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY))
 						continue;
 					if (car.getRouteLocation() == rl) {
 						number++;

@@ -158,7 +158,7 @@ public class JsonManifest extends TrainCommon {
                             && car.getRouteDestination() == destination) {
                         cars++;
                         newWork = true;
-                        if (CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName()).equals(CarLoad.LOAD_TYPE_EMPTY)) {
+                        if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
                             emptyCars++;
                         }
                         if (car.isUtility()) {
