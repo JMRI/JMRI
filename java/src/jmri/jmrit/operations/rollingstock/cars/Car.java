@@ -597,8 +597,7 @@ public class Car extends RollingStock {
 				if (getLoadName().equals(getReturnWhenEmptyLoadName()))
 					setLoadName(carLoads.getDefaultEmptyName());
 				else
-					// note that RWE sets the car's final destination
-					setLoadEmpty();
+					setLoadEmpty(); // note that RWE sets the car's final destination
 			}
 		}
 	}
@@ -618,8 +617,8 @@ public class Car extends RollingStock {
 				setReturnWhenEmpty();
 			return;
 		}
-		// if car doesn't have a custom load, flip load status
-		if (getLoadName().equals(carLoads.getDefaultEmptyName()))
+		// flip load names
+		if (getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY))
 			setLoadName(carLoads.getDefaultLoadName());
 		else
 			setLoadEmpty();
