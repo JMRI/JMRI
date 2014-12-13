@@ -25,8 +25,7 @@ public class PackageTest extends TestCase {
     public void testXCreation() {
     	JFrame f = jmri.util.JmriJFrame.getFrame("Memory Table");
     	Assert.assertTrue("found frame", f !=null );
-    	if (f != null)
-    		f.dispose();
+    	f.dispose();
     }
 
     // from here down is testing infrastructure

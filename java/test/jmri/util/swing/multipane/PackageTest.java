@@ -25,8 +25,7 @@ public class PackageTest extends TestCase {
         
     	JFrame f = jmri.util.JmriJFrame.getFrame("Test of empty Multi Pane Window");
     	Assert.assertTrue("found frame", f !=null );
-    	if (f != null)
-    		f.dispose();
+    	f.dispose();
     }
     
     public void testAction() {
@@ -52,8 +51,7 @@ public class PackageTest extends TestCase {
         
     	JFrame f = jmri.util.JmriJFrame.getFrame("Test of Multi Pane Window function");
     	Assert.assertTrue("found frame", f !=null );
-    	if (f != null)
-    		f.dispose();
+    	f.dispose();
     }
     
     // from here down is testing infrastructure

@@ -48,8 +48,7 @@ public class PaneProgFrameTest extends TestCase {
         
     	JFrame f = jmri.util.JmriJFrame.getFrame("test frame");
     	Assert.assertTrue("found frame", f !=null );
-    	if (f != null)
-    		f.dispose();
+    	f.dispose();
     }
 
 
@@ -76,8 +75,7 @@ public class PaneProgFrameTest extends TestCase {
         
     	JFrame f = jmri.util.JmriJFrame.getFrame("test frame");
     	Assert.assertTrue("found frame", f !=null );
-    	if (f != null)
-    		f.dispose();
+    	f.dispose();
     }
 
     // static variables for internal classes to report their interpretations

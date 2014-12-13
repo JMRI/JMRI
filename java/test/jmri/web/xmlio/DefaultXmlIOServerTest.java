@@ -125,19 +125,19 @@ public class DefaultXmlIOServerTest extends TestCase {
         
         item = e.getChild("address");
         Assert.assertTrue("address exists", item != null);
-        if (item!=null) Assert.assertEquals("address correct", "3", item.getText());
+        Assert.assertEquals("address correct", "3", item.getText());
 
         item = e.getChild("speed");
         Assert.assertTrue("speed exists", item != null);
-        if (item!=null) Assert.assertEquals("speed correct", "0.0", item.getText());
+        Assert.assertEquals("speed correct", "0.0", item.getText());
 
         item = e.getChild("forward");
         Assert.assertTrue("forward exists", item != null);
-        if (item!=null) Assert.assertEquals("forward correct", "true", item.getText());
+        Assert.assertEquals("forward correct", "true", item.getText());
 
         item = e.getChild(Throttle.F0);
         Assert.assertTrue("F0 exists", item != null);
-        if (item!=null) Assert.assertEquals("F0 correct", "false", item.getText());
+        Assert.assertEquals("F0 correct", "false", item.getText());
 
     }
 
@@ -151,15 +151,15 @@ public class DefaultXmlIOServerTest extends TestCase {
         
         item = e.getChild("type");
         Assert.assertTrue("type exists", item != null);
-        if (item!=null) Assert.assertEquals("type correct", "power", item.getText());
+        Assert.assertEquals("type correct", "power", item.getText());
 
         item = e.getChild("name");
         Assert.assertTrue("name exists", item != null);
-        if (item!=null) Assert.assertEquals("name correct", "power", item.getText());
+        Assert.assertEquals("name correct", "power", item.getText());
 
         item = e.getChild("value");
         Assert.assertTrue("value exists", item != null);
-        if (item!=null) Assert.assertEquals("value correct", "2", item.getText());
+        Assert.assertEquals("value correct", "2", item.getText());
 
     }
 

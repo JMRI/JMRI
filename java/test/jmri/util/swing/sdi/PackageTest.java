@@ -27,8 +27,7 @@ public class PackageTest extends TestCase {
     public void testFrameCreation() {
     	JFrame f = jmri.util.JmriJFrame.getFrame("SDI test");
     	Assert.assertTrue("found frame", f !=null );
-    	if (f != null)
-    		f.dispose();    	
+    	f.dispose();    	
     }
     
     // from here down is testing infrastructure

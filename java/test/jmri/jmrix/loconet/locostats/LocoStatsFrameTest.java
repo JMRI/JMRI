@@ -37,8 +37,7 @@ public class LocoStatsFrameTest extends TestCase {
         getFrame("Default LocoStats Window",0);
     	JFrame f = jmri.util.JmriJFrame.getFrame("Default LocoStats Window");
     	Assert.assertTrue("found frame", f !=null );
-    	if (f != null)
-    		f.dispose();
+    	f.dispose();
     }
     
     public void testLocoBufferFormat()throws Exception {
@@ -50,8 +49,7 @@ public class LocoStatsFrameTest extends TestCase {
         ));
         JFrame f = jmri.util.JmriJFrame.getFrame("LocoBuffer Stats Window");
     	Assert.assertTrue("found frame", f !=null );
-    	if (f != null)
-    		f.dispose();
+    	f.dispose();
     }
     
     public void testPR2Format() throws Exception {
@@ -65,8 +63,7 @@ public class LocoStatsFrameTest extends TestCase {
         ));
     	JFrame f = jmri.util.JmriJFrame.getFrame("PR2 Stats Window");
     	Assert.assertTrue("found frame", f !=null );
-    	if (f != null)
-    		f.dispose();
+    	f.dispose();
     }
     
     public void testMS100Format() throws Exception {
@@ -80,8 +77,7 @@ public class LocoStatsFrameTest extends TestCase {
         ));
         JFrame f = jmri.util.JmriJFrame.getFrame("MS100 Stats Window");
     	Assert.assertTrue("found frame", f !=null );
-    	if (f != null)
-    		f.dispose();
+    	f.dispose();
     }   
     
     // from here down is testing infrastructure
