@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsManager;
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
@@ -110,7 +111,7 @@ public class SetupExcelProgramSwitchListFrame extends OperationsFrame {
 		if (ae.getSource() == saveButton) {
 			log.debug("Save button activated");
 			Setup.setGenerateCsvSwitchListEnabled(generateCvsSwitchListCheckBox.isSelected());
-			TrainManagerXml.instance().writeOperationsFile();
+			OperationsXml.save();
 			if (Setup.isCloseWindowOnSaveEnabled())
 				dispose();
 		}

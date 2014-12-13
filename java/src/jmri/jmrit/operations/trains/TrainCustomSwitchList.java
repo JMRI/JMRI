@@ -29,6 +29,7 @@ public class TrainCustomSwitchList {
 
 	public static void setFileName(String name) {
 		mcAppName = name;
+		TrainManagerXml.instance().setDirty(true);
 	}
 
 	public static String getCommonFileName() {

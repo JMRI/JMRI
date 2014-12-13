@@ -2,9 +2,11 @@ package jmri.jmrit.operations.trains;
 
 import java.io.File;
 import java.io.IOException;
+
 import jmri.jmrit.operations.OperationsManager;
 import jmri.util.FileUtil;
 import jmri.util.SystemType;
+
 import org.jdom.Attribute;
 import org.jdom.Element;
 import org.slf4j.Logger;
@@ -29,6 +31,7 @@ public class TrainCustomManifest {
 
 	public static void setFileName(String name) {
 		mcAppName = name;
+		TrainManagerXml.instance().setDirty(true);
 	}
 
 	public static String getCommonFileName() {
