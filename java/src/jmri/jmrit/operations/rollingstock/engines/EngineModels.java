@@ -76,17 +76,17 @@ public class EngineModels extends RollingStockAttribute {
 
 	public void addName(String model) {
 		super.addName(model);
-		firePropertyChange(ENGINEMODELS_CHANGED_PROPERTY, null, model);
+		setDirtyAndFirePropertyChange(ENGINEMODELS_CHANGED_PROPERTY, null, model);
 	}
 
 	public void deleteName(String model) {
 		super.deleteName(model);
-		firePropertyChange(ENGINEMODELS_CHANGED_PROPERTY, model, null);
+		setDirtyAndFirePropertyChange(ENGINEMODELS_CHANGED_PROPERTY, model, null);
 	}
 
 	public void replaceName(String oldName, String newName) {
 		super.addName(newName);
-		firePropertyChange(ENGINEMODELS_NAME_CHANGED_PROPERTY, oldName, newName);
+		setDirtyAndFirePropertyChange(ENGINEMODELS_NAME_CHANGED_PROPERTY, oldName, newName);
 		super.deleteName(oldName);
 	}
 
@@ -163,7 +163,7 @@ public class EngineModels extends RollingStockAttribute {
 		load(root, Xml.MODELS, Xml.MODEL, Xml.ENGINE_MODELS);
 	}
 
-	protected void firePropertyChange(String p, Object old, Object n) {
+	protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
 		// Set dirty
 		EngineManagerXml.instance().setDirty(true);
 		super.firePropertyChange(p, old, n);

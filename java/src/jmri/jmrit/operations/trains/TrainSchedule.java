@@ -39,7 +39,7 @@ public class TrainSchedule {
 		String old = _name;
 		_name = name;
 		if (!old.equals(name)) {
-			firePropertyChange(NAME_CHANGED_PROPERTY, old, name);
+			setDirtyAndFirePropertyChange(NAME_CHANGED_PROPERTY, old, name);
 		}
 	}
 
@@ -56,7 +56,7 @@ public class TrainSchedule {
 		String old = _comment;
 		_comment = comment;
 		if (!old.equals(comment))
-			firePropertyChange("AddTrainScheduleComment", old, comment); // NOI18N
+			setDirtyAndFirePropertyChange("AddTrainScheduleComment", old, comment); // NOI18N
 	}
 
 	public String getComment() {
@@ -66,13 +66,13 @@ public class TrainSchedule {
 	public void addTrainId(String id) {
 		if (!_trainIds.contains(id)) {
 			_trainIds.add(id);
-			firePropertyChange(SCHEDULE_CHANGED_PROPERTY, null, id);
+			setDirtyAndFirePropertyChange(SCHEDULE_CHANGED_PROPERTY, null, id);
 		}
 	}
 
 	public void removeTrainId(String id) {
 		_trainIds.remove(id);
-		firePropertyChange(SCHEDULE_CHANGED_PROPERTY, id, null);
+		setDirtyAndFirePropertyChange(SCHEDULE_CHANGED_PROPERTY, id, null);
 	}
 
 	public boolean containsTrainId(String id) {
@@ -145,7 +145,7 @@ public class TrainSchedule {
 		pcs.removePropertyChangeListener(l);
 	}
 
-	protected void firePropertyChange(String p, Object old, Object n) {
+	protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
 		TrainManagerXml.instance().setDirty(true);
 		pcs.firePropertyChange(p, old, n);
 	}

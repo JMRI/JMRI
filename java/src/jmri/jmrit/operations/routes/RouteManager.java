@@ -91,7 +91,7 @@ public class RouteManager {
 			route = new Route(Integer.toString(_id), name);
 			Integer oldSize = Integer.valueOf(_routeHashTable.size());
 			_routeHashTable.put(route.getId(), route);
-			firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_routeHashTable.size()));
+			setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_routeHashTable.size()));
 		}
 		return route;
 	}
@@ -106,7 +106,7 @@ public class RouteManager {
 		int id = Integer.parseInt(route.getId());
 		if (id > _id)
 			_id = id;
-		firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_routeHashTable.size()));
+		setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_routeHashTable.size()));
 		// listen for name and state changes to forward
 	}
 
@@ -119,7 +119,7 @@ public class RouteManager {
 		route.dispose();
 		Integer oldSize = Integer.valueOf(_routeHashTable.size());
 		_routeHashTable.remove(route.getId());
-		firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_routeHashTable.size()));
+		setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_routeHashTable.size()));
 	}
 
 	/**
@@ -308,7 +308,7 @@ public class RouteManager {
 		pcs.removePropertyChangeListener(l);
 	}
 
-	protected void firePropertyChange(String p, Object old, Object n) {
+	protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
 		RouteManagerXml.instance().setDirty(true);
 		pcs.firePropertyChange(p, old, n);
 	}

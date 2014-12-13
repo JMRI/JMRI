@@ -45,17 +45,17 @@ public class CarOwners extends RollingStockAttribute {
 
 	public void addName(String owner) {
 		super.addName(owner);
-		firePropertyChange(CAROWNERS_CHANGED_PROPERTY, null, owner);
+		setDirtyAndFirePropertyChange(CAROWNERS_CHANGED_PROPERTY, null, owner);
 	}
 
 	public void deleteName(String owner) {
 		super.deleteName(owner);
-		firePropertyChange(CAROWNERS_CHANGED_PROPERTY, owner, null);
+		setDirtyAndFirePropertyChange(CAROWNERS_CHANGED_PROPERTY, owner, null);
 	}
 
 	public void replaceName(String oldName, String newName) {
 		super.addName(newName);
-		firePropertyChange(CAROWNERS_NAME_CHANGED_PROPERTY, oldName, newName);
+		setDirtyAndFirePropertyChange(CAROWNERS_NAME_CHANGED_PROPERTY, oldName, newName);
 		super.deleteName(newName);
 	}
 
@@ -72,7 +72,7 @@ public class CarOwners extends RollingStockAttribute {
 		load(root, Xml.OWNERS, Xml.OWNER, Xml.CAR_OWNERS);
 	}
 
-	protected void firePropertyChange(String p, Object old, Object n) {
+	protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
 		// Set dirty
 		CarManagerXml.instance().setDirty(true);
 		super.firePropertyChange(p, old, n);

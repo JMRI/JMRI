@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Operations settings.
  * 
- * @author Daniel Boudreau Copyright (C) 2008, 2010, 2012
+ * @author Daniel Boudreau Copyright (C) 2008, 2010, 2012, 2014
  * @version $Revision$
  */
 public class Setup {
@@ -167,6 +167,9 @@ public class Setup {
 	public static final String GREEN = Bundle.getMessage("Green");
 	public static final String BLUE = Bundle.getMessage("Blue");
 	public static final String GRAY = Bundle.getMessage("Gray");
+	public static final String PINK = Bundle.getMessage("Pink");
+	public static final String CYAN = Bundle.getMessage("Cyan");
+	public static final String MAGENTA = Bundle.getMessage("Magenta");
 
 	// Unit of Length
 	public static final String FEET = Bundle.getMessage("Feet");
@@ -527,7 +530,7 @@ public class Setup {
 	public static void setGenerateCsvManifestEnabled(boolean enabled) {
 		boolean old = generateCsvManifest;
 		generateCsvManifest = enabled;
-		firePropertyChange(MANIFEST_CSV_PROPERTY_CHANGE, old, enabled);
+		setDirtyAndFirePropertyChange(MANIFEST_CSV_PROPERTY_CHANGE, old, enabled);
 	}
 
 	public static boolean isGenerateCsvSwitchListEnabled() {
@@ -537,7 +540,7 @@ public class Setup {
 	public static void setGenerateCsvSwitchListEnabled(boolean enabled) {
 		boolean old = generateCsvSwitchList;
 		generateCsvSwitchList = enabled;
-		firePropertyChange(SWITCH_LIST_CSV_PROPERTY_CHANGE, old, enabled);
+		setDirtyAndFirePropertyChange(SWITCH_LIST_CSV_PROPERTY_CHANGE, old, enabled);
 	}
 
 	public static boolean isVsdPhysicalLocationEnabled() {
@@ -555,9 +558,9 @@ public class Setup {
 	}
 
 	public static void setRailroadName(String name) {
-		if (!railroadName.equals(name))
-			OperationsSetupXml.instance().setDirty(true);
+		String old = railroadName;
 		railroadName = name;
+		setDirtyAndFirePropertyChange("Railroad Name Change", old, name); // NOI18N
 	}
 
 	public static String getHazardousMsg() {
@@ -729,7 +732,9 @@ public class Setup {
 	}
 
 	public static void setSwitchListRealTime(boolean b) {
+		boolean old = switchListRealTime;
 		switchListRealTime = b;
+		setDirtyAndFirePropertyChange("Switch List Real Time", old, b); // NOI18N
 	}
 
 	public static boolean isSwitchListRealTime() {
@@ -737,7 +742,9 @@ public class Setup {
 	}
 
 	public static void setSwitchListAllTrainsEnabled(boolean b) {
+		boolean old = switchListAllTrains;
 		switchListAllTrains = b;
+		setDirtyAndFirePropertyChange("Switch List All Trains", old, b); // NOI18N
 	}
 
 	public static boolean isSwitchListAllTrainsEnabled() {
@@ -1327,6 +1334,12 @@ public class Setup {
 			return Color.gray;
 		if (colorName.equals(YELLOW))
 			return Color.yellow;
+		if (colorName.equals(PINK))
+			return Color.pink;
+		if (colorName.equals(CYAN))
+			return Color.cyan;
+		if (colorName.equals(MAGENTA))
+			return Color.magenta;
 		return null; // default
 	}
 
@@ -2698,7 +2711,8 @@ public class Setup {
 		pcs.removePropertyChangeListener(l);
 	}
 
-	protected static void firePropertyChange(String p, Object old, Object n) {
+	protected static void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
+		OperationsSetupXml.instance().setDirty(true);
 		pcs.firePropertyChange(p, old, n);
 	}
 

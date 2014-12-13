@@ -48,17 +48,17 @@ public class EngineTypes extends RollingStockAttribute {
 
 	public void addName(String type) {
 		super.addName(type);
-		firePropertyChange(ENGINETYPES_CHANGED_PROPERTY, null, type);
+		setDirtyAndFirePropertyChange(ENGINETYPES_CHANGED_PROPERTY, null, type);
 	}
 
 	public void deleteName(String type) {
 		super.deleteName(type);
-		firePropertyChange(ENGINETYPES_CHANGED_PROPERTY, type, null);
+		setDirtyAndFirePropertyChange(ENGINETYPES_CHANGED_PROPERTY, type, null);
 	}
 
 	public void replaceName(String oldName, String newName) {
 		super.addName(newName);
-		firePropertyChange(ENGINETYPES_NAME_CHANGED_PROPERTY, oldName, newName);
+		setDirtyAndFirePropertyChange(ENGINETYPES_NAME_CHANGED_PROPERTY, oldName, newName);
 		// need to keep old name so location manager can replace properly
 		super.deleteName(oldName);
 	}
@@ -76,7 +76,7 @@ public class EngineTypes extends RollingStockAttribute {
 		load(root, Xml.TYPES, Xml.TYPE, Xml.ENGINE_TYPES);
 	}
 
-	protected void firePropertyChange(String p, Object old, Object n) {
+	protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
 		// Set dirty
 		EngineManagerXml.instance().setDirty(true);
 		super.firePropertyChange(p, old, n);

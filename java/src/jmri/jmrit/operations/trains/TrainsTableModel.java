@@ -568,7 +568,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 			return c;
 		}
 		
-		Color[] darkColors = {Color.BLACK, Color.BLUE, Color.GRAY, Color.RED};	    
+		Color[] darkColors = {Color.BLACK, Color.BLUE, Color.GRAY, Color.RED, Color.MAGENTA};	    
 	    /**
 	     * Dark colors need white lettering
 	     * @param row

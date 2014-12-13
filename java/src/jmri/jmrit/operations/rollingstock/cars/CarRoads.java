@@ -46,20 +46,20 @@ public class CarRoads extends RollingStockAttribute {
 
 	public void addName(String road) {
 		super.addName(road);
-		firePropertyChange(CARROADS_CHANGED_PROPERTY, null, road);
+		setDirtyAndFirePropertyChange(CARROADS_CHANGED_PROPERTY, null, road);
 	}
 
 	public void deleteName(String road) {
 		super.deleteName(road);
-		firePropertyChange(CARROADS_CHANGED_PROPERTY, road, null);
+		setDirtyAndFirePropertyChange(CARROADS_CHANGED_PROPERTY, road, null);
 	}
 
 	public void replaceName(String oldName, String newName) {
 		super.addName(newName);
-		firePropertyChange(CARROADS_NAME_CHANGED_PROPERTY, oldName, newName);
+		setDirtyAndFirePropertyChange(CARROADS_NAME_CHANGED_PROPERTY, oldName, newName);
 		super.deleteName(oldName);
 		if (newName == null)
-			firePropertyChange(CARROADS_CHANGED_PROPERTY, list.size() + 1, list.size());
+			setDirtyAndFirePropertyChange(CARROADS_CHANGED_PROPERTY, list.size() + 1, list.size());
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class CarRoads extends RollingStockAttribute {
 		load(root, Xml.ROADS, Xml.ROAD, Xml.ROAD_NAMES);
 	}
 
-	protected void firePropertyChange(String p, Object old, Object n) {
+	protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
 		// Set dirty
 		CarManagerXml.instance().setDirty(true);
 		super.firePropertyChange(p, old, n);

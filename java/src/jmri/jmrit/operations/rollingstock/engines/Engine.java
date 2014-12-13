@@ -37,7 +37,7 @@ public class Engine extends RollingStock {
 		String old = _model;
 		_model = model;
 		if (!old.equals(model))
-			firePropertyChange("engine model", old, model); // NOI18N
+			setDirtyAndFirePropertyChange("engine model", old, model); // NOI18N
 	}
 
 	public String getModel() {
@@ -56,7 +56,7 @@ public class Engine extends RollingStock {
 		String old = getTypeName();
 		engineModels.setModelType(getModel(), type);
 		if (!old.equals(type))
-			firePropertyChange(TYPE_CHANGED_PROPERTY, old, type);
+			setDirtyAndFirePropertyChange(TYPE_CHANGED_PROPERTY, old, type);
 	}
 
 	public String getTypeName() {
@@ -78,7 +78,7 @@ public class Engine extends RollingStock {
 		String old = getHp();
 		engineModels.setModelHorsepower(getModel(), hp);
 		if (!old.equals(hp))
-			firePropertyChange("hp", old, hp); // NOI18N
+			setDirtyAndFirePropertyChange("hp", old, hp); // NOI18N
 	}
 
 	public String getHp() {
@@ -126,7 +126,7 @@ public class Engine extends RollingStock {
 		String old = getWeightTons();
 		engineModels.setModelWeight(getModel(), weight);
 		if (!old.equals(weight))
-			firePropertyChange("Engine Weight Tons", old, weight); // NOI18N
+			setDirtyAndFirePropertyChange("Engine Weight Tons", old, weight); // NOI18N
 	}
 
 	public String getWeightTons() {
@@ -157,7 +157,7 @@ public class Engine extends RollingStock {
 		}
 
 		if (!old.equals(newName))
-			firePropertyChange("consist", old, newName); // NOI18N
+			setDirtyAndFirePropertyChange("consist", old, newName); // NOI18N
 	}
 
 	/**
@@ -268,7 +268,7 @@ public class Engine extends RollingStock {
 		return e;
 	}
 
-	protected void firePropertyChange(String p, Object old, Object n) {
+	protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
 		// Set dirty
 		EngineManagerXml.instance().setDirty(true);
 		super.firePropertyChange(p, old, n);

@@ -97,19 +97,19 @@ public class CarTypes extends RollingStockAttribute {
 	public void addName(String type) {
 		super.addName(type);
 		maxNameLengthSubType = 0; // reset
-		firePropertyChange(CARTYPES_CHANGED_PROPERTY, null, type);
+		setDirtyAndFirePropertyChange(CARTYPES_CHANGED_PROPERTY, null, type);
 	}
 
 	public void deleteName(String type) {
 		super.deleteName(type);
 		maxNameLengthSubType = 0; // reset
-		firePropertyChange(CARTYPES_CHANGED_PROPERTY, type, null);
+		setDirtyAndFirePropertyChange(CARTYPES_CHANGED_PROPERTY, type, null);
 	}
 
 	public void replaceName(String oldName, String newName) {
 		super.addName(newName);
 		maxNameLengthSubType = 0; // reset
-		firePropertyChange(CARTYPES_NAME_CHANGED_PROPERTY, oldName, newName);
+		setDirtyAndFirePropertyChange(CARTYPES_NAME_CHANGED_PROPERTY, oldName, newName);
 		// need to keep old name so location manager can replace properly
 		super.deleteName(oldName);
 	}
@@ -160,23 +160,11 @@ public class CarTypes extends RollingStockAttribute {
 		load(root, Xml.TYPES, Xml.TYPE, Xml.CAR_TYPES);
 	}
 
-	protected void firePropertyChange(String p, Object old, Object n) {
+	protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
 		// Set dirty
 		CarManagerXml.instance().setDirty(true);
 		super.firePropertyChange(p, old, n);
 	}
-	
-//	public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-//		pcs.addPropertyChangeListener(l);
-//	}
-
-//	public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-//		pcs.removePropertyChangeListener(l);
-//	}
-
-//	protected void firePropertyChange(String p, Object old, Object n) {
-//		pcs.firePropertyChange(p, old, n);
-//	}
 
 	static Logger log = LoggerFactory.getLogger(CarTypes.class.getName());
 

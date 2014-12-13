@@ -91,7 +91,7 @@ public class EngineManager extends RollingStockManager{
     		consist = new Consist(name);
     		Integer oldSize = Integer.valueOf(_consistHashTable.size());
     		_consistHashTable.put(name, consist);
-    		firePropertyChange(CONSISTLISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_consistHashTable.size()));
+    		setDirtyAndFirePropertyChange(CONSISTLISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_consistHashTable.size()));
     	}
     	return consist;
     }
@@ -102,7 +102,7 @@ public class EngineManager extends RollingStockManager{
     		consist.dispose();
     		Integer oldSize = Integer.valueOf(_consistHashTable.size());
     		_consistHashTable.remove(name);
-    		firePropertyChange(CONSISTLISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_consistHashTable.size()));
+    		setDirtyAndFirePropertyChange(CONSISTLISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_consistHashTable.size()));
     	}
     }
     
@@ -315,7 +315,7 @@ public class EngineManager extends RollingStockManager{
 		}		
     }
     
-    protected void firePropertyChange(String p, Object old, Object n){
+    protected void setDirtyAndFirePropertyChange(String p, Object old, Object n){
 		// Set dirty
 		EngineManagerXml.instance().setDirty(true);
     	super.firePropertyChange(p, old, n);

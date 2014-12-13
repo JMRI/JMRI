@@ -122,7 +122,7 @@ public class CarManager extends RollingStockManager {
 			kernel = new Kernel(name);
 			Integer oldSize = Integer.valueOf(_kernelHashTable.size());
 			_kernelHashTable.put(name, kernel);
-			firePropertyChange(KERNEL_LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_kernelHashTable.size()));
+			setDirtyAndFirePropertyChange(KERNEL_LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_kernelHashTable.size()));
 		}
 		return kernel;
 	}
@@ -138,7 +138,7 @@ public class CarManager extends RollingStockManager {
 			kernel.dispose();
 			Integer oldSize = Integer.valueOf(_kernelHashTable.size());
 			_kernelHashTable.remove(name);
-			firePropertyChange(KERNEL_LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_kernelHashTable.size()));
+			setDirtyAndFirePropertyChange(KERNEL_LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_kernelHashTable.size()));
 		}
 	}
 
@@ -585,7 +585,7 @@ public class CarManager extends RollingStockManager {
 		}
 	}
 
-	protected void firePropertyChange(String p, Object old, Object n) {
+	protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
 		// Set dirty
 		CarManagerXml.instance().setDirty(true);
 		super.firePropertyChange(p, old, n);

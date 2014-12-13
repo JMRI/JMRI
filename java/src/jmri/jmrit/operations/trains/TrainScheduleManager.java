@@ -95,7 +95,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
 			schedule = new TrainSchedule(Integer.toString(_id), name);
 			Integer oldSize = Integer.valueOf(_scheduleHashTable.size());
 			_scheduleHashTable.put(schedule.getId(), schedule);
-			firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_scheduleHashTable.size()));
+			setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_scheduleHashTable.size()));
 		}
 		return schedule;
 	}
@@ -110,7 +110,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
 		int id = Integer.parseInt(schedule.getId());
 		if (id > _id)
 			_id = id;
-		firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_scheduleHashTable.size()));
+		setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_scheduleHashTable.size()));
 	}
 
 	/**
@@ -121,7 +121,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
 			return;
 		Integer oldSize = Integer.valueOf(_scheduleHashTable.size());
 		_scheduleHashTable.remove(schedule.getId());
-		firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_scheduleHashTable.size()));
+		setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_scheduleHashTable.size()));
 	}
 
 	/**
@@ -278,7 +278,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
 		pcs.removePropertyChangeListener(l);
 	}
 
-	protected void firePropertyChange(String p, Object old, Object n) {
+	protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
 		TrainManagerXml.instance().setDirty(true);
 		pcs.firePropertyChange(p, old, n);
 	}

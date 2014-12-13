@@ -31,7 +31,6 @@ import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 
 import java.beans.PropertyChangeEvent;
@@ -279,8 +278,6 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		Setup.setSwitchListRealTime(switchListRealTimeCheckBox.isSelected());
 		Setup.setSwitchListAllTrainsEnabled(switchListAllTrainsCheckBox.isSelected());
 		Setup.setSwitchListPagePerTrainEnabled(switchListPageCheckBox.isSelected());
-		// save setup file
-		OperationsSetupXml.instance().setDirty(true);
 		// save location file
 		OperationsXml.save();
 		enableSaveButton(false);

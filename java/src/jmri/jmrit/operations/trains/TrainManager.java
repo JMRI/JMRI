@@ -113,7 +113,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	public void setBuildMessagesEnabled(boolean enable) {
 		boolean old = _buildMessages;
 		_buildMessages = enable;
-		firePropertyChange("BuildMessagesEnabled", enable, old); // NOI18N
+		setDirtyAndFirePropertyChange("BuildMessagesEnabled", enable, old); // NOI18N
 	}
 
 	/**
@@ -127,7 +127,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	public void setBuildReportEnabled(boolean enable) {
 		boolean old = _buildReport;
 		_buildReport = enable;
-		firePropertyChange("BuildReportEnabled", enable, old); // NOI18N
+		setDirtyAndFirePropertyChange("BuildReportEnabled", enable, old); // NOI18N
 	}
 
 	/**
@@ -141,7 +141,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	public void setOpenFileEnabled(boolean enable) {
 		boolean old = _openFile;
 		_openFile = enable;
-		firePropertyChange(OPEN_FILE_CHANGED_PROPERTY, old ? "true" : "false", enable ? "true" // NOI18N
+		setDirtyAndFirePropertyChange(OPEN_FILE_CHANGED_PROPERTY, old ? "true" : "false", enable ? "true" // NOI18N
 				: "false"); // NOI18N
 	}
 	
@@ -156,7 +156,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	public void setRunFileEnabled(boolean enable) {
 		boolean old = _runFile;
 		_runFile = enable;
-		firePropertyChange(RUN_FILE_CHANGED_PROPERTY, old ? "true" : "false", enable ? "true" // NOI18N
+		setDirtyAndFirePropertyChange(RUN_FILE_CHANGED_PROPERTY, old ? "true" : "false", enable ? "true" // NOI18N
 				: "false"); // NOI18N
 	}
 
@@ -171,7 +171,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	public void setPrintPreviewEnabled(boolean enable) {
 		boolean old = _printPreview;
 		_printPreview = enable;
-		firePropertyChange(PRINTPREVIEW_CHANGED_PROPERTY, old ? "Preview" : "Print", // NOI18N
+		setDirtyAndFirePropertyChange(PRINTPREVIEW_CHANGED_PROPERTY, old ? "Preview" : "Print", // NOI18N
 				enable ? "Preview" : "Print"); // NOI18N
 	}
 
@@ -183,7 +183,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		String old = _trainAction;
 		_trainAction = action;
 		if (!old.equals(action))
-			firePropertyChange(TRAIN_ACTION_CHANGED_PROPERTY, old, action);
+			setDirtyAndFirePropertyChange(TRAIN_ACTION_CHANGED_PROPERTY, old, action);
 	}
 
 	/**
@@ -208,7 +208,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		String old = _trainScheduleActiveId;
 		_trainScheduleActiveId = id;
 		if (!old.equals(id))
-			firePropertyChange(ACTIVE_TRAIN_SCHEDULE_ID, old, id);
+			setDirtyAndFirePropertyChange(ACTIVE_TRAIN_SCHEDULE_ID, old, id);
 	}
 
 	public String getTrainScheduleActiveId() {
@@ -223,12 +223,12 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	 */
 	public void addStartUpScript(String pathname) {
 		_startUpScripts.add(pathname);
-		firePropertyChange("addStartUpScript", pathname, null); // NOI18N
+		setDirtyAndFirePropertyChange("addStartUpScript", pathname, null); // NOI18N
 	}
 
 	public void deleteStartUpScript(String pathname) {
 		_startUpScripts.remove(pathname);
-		firePropertyChange("deleteStartUpScript", null, pathname); // NOI18N
+		setDirtyAndFirePropertyChange("deleteStartUpScript", null, pathname); // NOI18N
 	}
 
 	/**
@@ -254,12 +254,12 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	 */
 	public void addShutDownScript(String pathname) {
 		_shutDownScripts.add(pathname);
-		firePropertyChange("addShutDownScript", pathname, null); // NOI18N
+		setDirtyAndFirePropertyChange("addShutDownScript", pathname, null); // NOI18N
 	}
 
 	public void deleteShutDownScript(String pathname) {
 		_shutDownScripts.remove(pathname);
-		firePropertyChange("deleteShutDownScript", null, pathname); // NOI18N
+		setDirtyAndFirePropertyChange("deleteShutDownScript", null, pathname); // NOI18N
 	}
 
 	/**
@@ -326,7 +326,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 			train = new Train(Integer.toString(_id), name);
 			Integer oldSize = Integer.valueOf(_trainHashTable.size());
 			_trainHashTable.put(train.getId(), train);
-			firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
+			setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
 					Integer.valueOf(_trainHashTable.size()));
 		}
 		return train;
@@ -342,7 +342,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		int id = Integer.parseInt(train.getId());
 		if (id > _id)
 			_id = id;
-		firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
+		setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
 				Integer.valueOf(_trainHashTable.size()));
 		// listen for name and state changes to forward
 	}
@@ -356,7 +356,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		train.dispose();
 		Integer oldSize = Integer.valueOf(_trainHashTable.size());
 		_trainHashTable.remove(train.getId());
-		firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
+		setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
 				Integer.valueOf(_trainHashTable.size()));
 	}
 
@@ -615,7 +615,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	public void setRowColorsManual(boolean manual) {
 		boolean old = _rowColorManual;
 		_rowColorManual = manual;
-		firePropertyChange(ROW_COLOR_NAME_CHANGED_PROPERTY, old, manual);
+		setDirtyAndFirePropertyChange(ROW_COLOR_NAME_CHANGED_PROPERTY, old, manual);
 	}
 	
 	public String getRowColorNameForBuilt() {
@@ -625,7 +625,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	public void setRowColorNameForBuilt(String colorName) {
 		String old = _rowColorBuilt;
 		_rowColorBuilt = colorName;
-		firePropertyChange(ROW_COLOR_NAME_CHANGED_PROPERTY, old, colorName);
+		setDirtyAndFirePropertyChange(ROW_COLOR_NAME_CHANGED_PROPERTY, old, colorName);
 	}
 	
 	public String getRowColorNameForBuildFailed() {
@@ -635,7 +635,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	public void setRowColorNameForBuildFailed(String colorName) {
 		String old = _rowColorBuildFailed;
 		_rowColorBuildFailed = colorName;
-		firePropertyChange(ROW_COLOR_NAME_CHANGED_PROPERTY, old, colorName);
+		setDirtyAndFirePropertyChange(ROW_COLOR_NAME_CHANGED_PROPERTY, old, colorName);
 	}
 	
 	public String getRowColorNameForTrainEnRoute() {
@@ -645,7 +645,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	public void setRowColorNameForTrainEnRoute(String colorName) {
 		String old = _rowColorTrainEnRoute;
 		_rowColorTrainEnRoute = colorName;
-		firePropertyChange(ROW_COLOR_NAME_CHANGED_PROPERTY, old, colorName);
+		setDirtyAndFirePropertyChange(ROW_COLOR_NAME_CHANGED_PROPERTY, old, colorName);
 	}
 	
 	public String getRowColorNameForTerminated() {
@@ -655,7 +655,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	public void setRowColorNameForTerminated(String colorName) {
 		String old = _rowColorTerminated;
 		_rowColorTerminated = colorName;
-		firePropertyChange(ROW_COLOR_NAME_CHANGED_PROPERTY, old, colorName);
+		setDirtyAndFirePropertyChange(ROW_COLOR_NAME_CHANGED_PROPERTY, old, colorName);
 	}
 	
 	/**
@@ -667,9 +667,12 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		box.addItem(NONE);
 		box.addItem(Setup.BLACK);
 		box.addItem(Setup.RED);
+		box.addItem(Setup.PINK);
 		box.addItem(Setup.ORANGE);
 		box.addItem(Setup.YELLOW);
 		box.addItem(Setup.GREEN);
+		box.addItem(Setup.MAGENTA);
+		box.addItem(Setup.CYAN);
 		box.addItem(Setup.BLUE);
 		box.addItem(Setup.GRAY);
 		return box;
@@ -1030,7 +1033,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		pcs.removePropertyChangeListener(l);
 	}
 
-	private void firePropertyChange(String p, Object old, Object n) {
+	private void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
 		TrainManagerXml.instance().setDirty(true);
 		pcs.firePropertyChange(p, old, n);
 	}

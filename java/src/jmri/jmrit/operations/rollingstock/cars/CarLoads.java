@@ -187,7 +187,7 @@ public class CarLoads extends RollingStockAttribute {
 		}
 		loads.add(0, new CarLoad(name));
 		maxNameLength = 0; // reset maximum name length
-		firePropertyChange(LOAD_CHANGED_PROPERTY, null, name);
+		setDirtyAndFirePropertyChange(LOAD_CHANGED_PROPERTY, null, name);
 	}
 
 	public void deleteName(String type, String name) {
@@ -203,7 +203,7 @@ public class CarLoads extends RollingStockAttribute {
 			}
 		}
 		maxNameLength = 0; // reset maximum name length
-		firePropertyChange(LOAD_CHANGED_PROPERTY, name, null);
+		setDirtyAndFirePropertyChange(LOAD_CHANGED_PROPERTY, name, null);
 	}
 
 	/**
@@ -240,7 +240,7 @@ public class CarLoads extends RollingStockAttribute {
 	public void replaceName(String type, String oldName, String newName) {
 		addName(type, newName);
 		deleteName(type, oldName);
-		firePropertyChange(LOAD_NAME_CHANGED_PROPERTY, oldName, newName);
+		setDirtyAndFirePropertyChange(LOAD_NAME_CHANGED_PROPERTY, oldName, newName);
 	}
 
 	public String getDefaultLoadName() {
@@ -250,7 +250,7 @@ public class CarLoads extends RollingStockAttribute {
 	public void setDefaultLoadName(String name) {
 		String old = _loadName;
 		_loadName = name;
-		firePropertyChange(LOAD_NAME_CHANGED_PROPERTY, old, name);
+		setDirtyAndFirePropertyChange(LOAD_NAME_CHANGED_PROPERTY, old, name);
 	}
 
 	public String getDefaultEmptyName() {
@@ -260,7 +260,7 @@ public class CarLoads extends RollingStockAttribute {
 	public void setDefaultEmptyName(String name) {
 		String old = _emptyName;
 		_emptyName = name;
-		firePropertyChange(LOAD_NAME_CHANGED_PROPERTY, old, name);
+		setDirtyAndFirePropertyChange(LOAD_NAME_CHANGED_PROPERTY, old, name);
 	}
 
 	/**
@@ -280,7 +280,7 @@ public class CarLoads extends RollingStockAttribute {
 				String oldType = cl.getLoadType();
 				cl.setLoadType(loadType);
 				if (!oldType.equals(loadType))
-					firePropertyChange(LOAD_TYPE_CHANGED_PROPERTY, oldType, loadType);
+					setDirtyAndFirePropertyChange(LOAD_TYPE_CHANGED_PROPERTY, oldType, loadType);
 			}
 		}
 	}
@@ -325,7 +325,7 @@ public class CarLoads extends RollingStockAttribute {
 				String oldPriority = cl.getPriority();
 				cl.setPriority(priority);
 				if (!oldPriority.equals(priority))
-					firePropertyChange(LOAD_PRIORITY_CHANGED_PROPERTY, oldPriority, priority);
+					setDirtyAndFirePropertyChange(LOAD_PRIORITY_CHANGED_PROPERTY, oldPriority, priority);
 			}
 		}
 	}
@@ -359,7 +359,7 @@ public class CarLoads extends RollingStockAttribute {
 				String oldComment = cl.getPickupComment();
 				cl.setPickupComment(comment);
 				if (!oldComment.equals(comment))
-					firePropertyChange(LOAD_COMMENT_CHANGED_PROPERTY, oldComment, comment);
+					setDirtyAndFirePropertyChange(LOAD_COMMENT_CHANGED_PROPERTY, oldComment, comment);
 			}
 		}
 	}
@@ -384,7 +384,7 @@ public class CarLoads extends RollingStockAttribute {
 				String oldComment = cl.getDropComment();
 				cl.setDropComment(comment);
 				if (!oldComment.equals(comment))
-					firePropertyChange(LOAD_COMMENT_CHANGED_PROPERTY, oldComment, comment);
+					setDirtyAndFirePropertyChange(LOAD_COMMENT_CHANGED_PROPERTY, oldComment, comment);
 			}
 		}
 	}
@@ -556,7 +556,7 @@ public class CarLoads extends RollingStockAttribute {
 		}
 	}
 
-	protected void firePropertyChange(String p, Object old, Object n) {
+	protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
 		// Set dirty
 		CarManagerXml.instance().setDirty(true);
 		super.firePropertyChange(p, old, n);

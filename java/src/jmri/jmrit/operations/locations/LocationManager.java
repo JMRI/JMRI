@@ -100,7 +100,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 			location = new Location(Integer.toString(_id), name);
 			Integer oldSize = Integer.valueOf(_locationHashTable.size());
 			_locationHashTable.put(location.getId(), location);
-			firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_locationHashTable.size()));
+			setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_locationHashTable.size()));
 		}
 		return location;
 	}
@@ -115,7 +115,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 		int id = Integer.parseInt(location.getId());
 		if (id > _id)
 			_id = id;
-		firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_locationHashTable.size()));
+		setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_locationHashTable.size()));
 	}
 
 	/**
@@ -127,7 +127,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 		location.dispose();
 		Integer oldSize = Integer.valueOf(_locationHashTable.size());
 		_locationHashTable.remove(location.getId());
-		firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_locationHashTable.size()));
+		setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_locationHashTable.size()));
 	}
 
 	/**
@@ -399,7 +399,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 		pcs.removePropertyChangeListener(l);
 	}
 
-	protected void firePropertyChange(String p, Object old, Object n) {
+	protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
 		// set dirty
 		LocationManagerXml.instance().setDirty(true);
 		pcs.firePropertyChange(p, old, n);

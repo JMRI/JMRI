@@ -34,7 +34,6 @@ import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
-import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.roster.Roster;
@@ -2901,7 +2900,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (Setup.isTrainIconCordEnabled()) {
 			_trainIconRl.setTrainIconX(_trainIcon.getX());
 			_trainIconRl.setTrainIconY(_trainIcon.getY());
-			RouteManagerXml.instance().setDirty(true);
+//			RouteManagerXml.instance().setDirty(true);
 			return true;
 		}
 		return false;
