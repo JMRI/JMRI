@@ -2074,13 +2074,13 @@ public class Setup {
 				String b = a.getValue();
 				if (log.isDebugEnabled())
 					log.debug("realTime: {}", b);
-				setSwitchListRealTime(b.equals(Xml.TRUE));
+				switchListRealTime = b.equals(Xml.TRUE);
 			}
 			if ((a = operations.getChild(Xml.SWITCH_LIST).getAttribute(Xml.ALL_TRAINS)) != null) {
 				String b = a.getValue();
 				if (log.isDebugEnabled())
 					log.debug("allTrains: {}", b);
-				setSwitchListAllTrainsEnabled(b.equals(Xml.TRUE));
+				switchListAllTrains = b.equals(Xml.TRUE);
 			}
 			if ((a = operations.getChild(Xml.SWITCH_LIST).getAttribute(Xml.PAGE_MODE)) != null) {
 				String b = a.getValue();
@@ -2402,13 +2402,13 @@ public class Setup {
 				String enable = a.getValue();
 				if (log.isDebugEnabled())
 					log.debug("generateCvsManifest: " + enable);
-				setGenerateCsvManifestEnabled(enable.equals(Xml.TRUE));
+				generateCsvManifest = enable.equals(Xml.TRUE);
 			}
 			if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.GENERATE_CSV_SWITCH_LIST)) != null) {
 				String enable = a.getValue();
 				if (log.isDebugEnabled())
 					log.debug("generateCvsSwitchList: " + enable);
-				setGenerateCsvSwitchListEnabled(enable.equals(Xml.TRUE));
+				generateCsvSwitchList = enable.equals(Xml.TRUE);
 			}
 		}
 		if (operations.getChild(Xml.BUILD_REPORT) != null) {
