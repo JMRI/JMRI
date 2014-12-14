@@ -11,6 +11,7 @@ import javax.swing.JComboBox;
 import jmri.jmris.AbstractOperationsServer;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
 import jmri.jmrit.operations.trains.TrainLogger;
+import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.web.server.WebServerManager;
 
 import org.jdom.Element;
@@ -530,6 +531,8 @@ public class Setup {
 	public static void setGenerateCsvManifestEnabled(boolean enabled) {
 		boolean old = generateCsvManifest;
 		generateCsvManifest = enabled;
+		if (enabled && !old)
+			TrainManagerXml.instance().createDefaultCsvManifestDirectory();
 		setDirtyAndFirePropertyChange(MANIFEST_CSV_PROPERTY_CHANGE, old, enabled);
 	}
 
@@ -540,6 +543,8 @@ public class Setup {
 	public static void setGenerateCsvSwitchListEnabled(boolean enabled) {
 		boolean old = generateCsvSwitchList;
 		generateCsvSwitchList = enabled;
+		if (enabled && !old)
+			TrainManagerXml.instance().createDefaultCsvSwitchListDirectory();
 		setDirtyAndFirePropertyChange(SWITCH_LIST_CSV_PROPERTY_CHANGE, old, enabled);
 	}
 

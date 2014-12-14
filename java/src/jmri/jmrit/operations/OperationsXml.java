@@ -100,7 +100,6 @@ public class OperationsXml extends XmlFile {
 
 	public String getDefaultOperationsFilename() {
 		return getFileLocation() + getOperationsDirectoryName() + File.separator + getOperationsFileName();
-		// return OperationsManager.getInstance().getPath(getOperationsFileName());
 	}
 
 	public static void setOperationsDirectoryName(String name) {

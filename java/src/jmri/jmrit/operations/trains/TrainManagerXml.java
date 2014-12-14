@@ -43,7 +43,7 @@ public class TrainManagerXml extends OperationsXml {
 		return _instance;
 	}
 
-        @Override
+	@Override
 	public void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
 		if (log.isDebugEnabled())
 			log.debug("writeFile " + name);
@@ -75,7 +75,7 @@ public class TrainManagerXml extends OperationsXml {
 	/**
 	 * Read the contents of a roster XML file into this object. Note that this does not clear any existing entries.
 	 */
-        @Override
+	@Override
 	public void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
 
 		// suppress rootFromName(name) warning message by checking to see if file exists
@@ -95,7 +95,7 @@ public class TrainManagerXml extends OperationsXml {
 		TrainScheduleManager.instance().load(root);
 
 		fileLoaded = true; // set flag trains are loaded
-		
+
 		// now load train icons on panels
 		TrainManager.instance().loadTrainIcons();
 
@@ -125,114 +125,125 @@ public class TrainManagerXml extends OperationsXml {
 
 	public String defaultBuildReportFilename(String name) {
 		return FileUtil.getUserFilesPath() + OperationsXml.getOperationsDirectoryName() + File.separator
-				+ "buildstatus" + File.separator + BuildReportFileName + name + fileType;	// NOI18N
+				+ "buildstatus" + File.separator + BuildReportFileName + name + fileType; // NOI18N
 	}
 
 	public void setBuildReportName(String name) {
 		BuildReportFileName = name;
 	}
 
-	private String BuildReportFileName = Bundle.getMessage("train")+" (";
-	private String ManifestFileName = Bundle.getMessage("train")+" (";
-	private String fileType = ").txt";	// NOI18N
-	private String fileTypeCsv = ").csv";	// NOI18N
+	private String BuildReportFileName = Bundle.getMessage("train") + " (";
+	private String ManifestFileName = Bundle.getMessage("train") + " (";
+	private String fileType = ").txt"; // NOI18N
+	private String fileTypeCsv = ").csv"; // NOI18N
 
 	/**
 	 * Store the train's manifest
 	 */
 	public File createTrainManifestFile(String name) {
-		return createFile(defaultManifestFilename(name), false); // don't backup
+		return createFile(getDefaultManifestFilename(name), false); // don't backup
 	}
 
 	public File getTrainManifestFile(String name) {
-		File file = new File(defaultManifestFilename(name));
+		File file = new File(getDefaultManifestFilename(name));
 		return file;
 	}
 
-	public String defaultManifestFilename(String name) {
-		return FileUtil.getUserFilesPath() + OperationsXml.getOperationsDirectoryName() + File.separator
-				+ "manifests" + File.separator + ManifestFileName + name + fileType;// NOI18N
+	private String getDefaultManifestFilename(String name) {
+		return FileUtil.getUserFilesPath() + OperationsXml.getOperationsDirectoryName() + File.separator + "manifests"
+				+ File.separator + ManifestFileName + name + fileType;// NOI18N
 	}
 
 	public File getTrainCsvManifestFile(String name) {
-		File file = new File(defaultCsvManifestFilename(name));
+		File file = new File(getDefaultCsvManifestFilename(name));
 		return file;
 	}
 
 	public File createTrainCsvManifestFile(String name) {
-		return createFile(defaultCsvManifestFilename(name), false); // don't backup
+		return createFile(getDefaultCsvManifestFilename(name), false); // don't backup
 	}
 
-	public String defaultCsvManifestFilename(String name) {
-		return FileUtil.getUserFilesPath() + OperationsXml.getOperationsDirectoryName() + File.separator
-				+ "csvManifests" + File.separator + ManifestFileName + name + fileTypeCsv; // NOI18N
+	private String getDefaultCsvManifestFilename(String name) {
+		return defaultCsvManifestDirectory + ManifestFileName + name + fileTypeCsv; // NOI18N
 	}
 
-        public File getManifestFile(String name, String ext) {
-            return new File(defaultManifestFilename(name, ext));
-        }
+	private String defaultCsvManifestDirectory = FileUtil.getUserFilesPath()
+			+ OperationsXml.getOperationsDirectoryName() + File.separator + "csvManifests" + File.separator;
 
-        public File createManifestFile(String name, String ext) {
-            return createFile(defaultManifestFilename(name, ext), false); // don't backup
-        }
+	public void createDefaultCsvManifestDirectory() {
+		createFile(defaultCsvManifestDirectory + " ", false); // don't backup
+	}
 
-        private String defaultManifestFilename(String name, String ext) {
-            return OperationsManager.getInstance().getPath("manifests") + File.separator + "train-" + name + "." + ext; // NOI18N
-        }
+	public File getManifestFile(String name, String ext) {
+		return new File(getDefaultManifestFilename(name, ext));
+	}
 
-        /**
+	public File createManifestFile(String name, String ext) {
+		return createFile(getDefaultManifestFilename(name, ext), false); // don't backup
+	}
+
+	private String getDefaultManifestFilename(String name, String ext) {
+		return OperationsManager.getInstance().getPath("manifests") + File.separator + "train-" + name + "." + ext; // NOI18N
+	}
+
+	/**
 	 * Store the switch list for a location
 	 */
 	public File createSwitchListFile(String name) {
-		return createFile(defaultSwitchListName(name), false); // don't backup
+		return createFile(getDefaultSwitchListName(name), false); // don't backup
 	}
 
 	public File getSwitchListFile(String name) {
-		File file = new File(defaultSwitchListName(name));
+		File file = new File(getDefaultSwitchListName(name));
 		return file;
 	}
 
-	public String defaultSwitchListName(String name) {
+	private String getDefaultSwitchListName(String name) {
 		return FileUtil.getUserFilesPath() + OperationsXml.getOperationsDirectoryName() + File.separator
 				+ "switchLists" + File.separator + SwitchListFileName + name + fileType; // NOI18N
 	}
 
 	/**
-	 * Store the csv switch list for a location
+	 * Store the CSV switch list for a location
 	 */
 	public File createCsvSwitchListFile(String name) {
-		return createFile(defaultCsvSwitchListName(name), false); // don't backup
+		return createFile(getDefaultCsvSwitchListName(name), false); // don't backup
 	}
 
 	public File getCsvSwitchListFile(String name) {
-		File file = new File(defaultCsvSwitchListName(name));
+		File file = new File(getDefaultCsvSwitchListName(name));
 		return file;
 	}
 
-	public String defaultCsvSwitchListName(String name) {
-		return FileUtil.getUserFilesPath() + OperationsXml.getOperationsDirectoryName() + File.separator
-				+ "csvSwitchLists" + File.separator + SwitchListFileName + name + fileTypeCsv;// NOI18N
+	private String getDefaultCsvSwitchListName(String name) {
+		return defaultCsvSwitchListDirectory + SwitchListFileName + name + fileTypeCsv;// NOI18N
+	}
+
+	private String defaultCsvSwitchListDirectory = FileUtil.getUserFilesPath()
+			+ OperationsXml.getOperationsDirectoryName() + File.separator + "csvSwitchLists" + File.separator;
+
+	public void createDefaultCsvSwitchListDirectory() {
+		createFile(defaultCsvSwitchListDirectory + " ", false); // don't backup
 	}
 
 	public void setTrainSwitchListName(String name) {
 		SwitchListFileName = name;
 	}
 
-	private String SwitchListFileName = Bundle.getMessage("location")+" (";
+	private String SwitchListFileName = Bundle.getMessage("location") + " (";
 
-        @Override
+	@Override
 	public void setOperationsFileName(String name) {
 		operationsFileName = name;
 	}
 
-        @Override
+	@Override
 	public String getOperationsFileName() {
 		return operationsFileName;
 	}
 
 	private String operationsFileName = "OperationsTrainRoster.xml";// NOI18N
 
-	static Logger log = LoggerFactory.getLogger(TrainManagerXml.class
-			.getName());
+	static Logger log = LoggerFactory.getLogger(TrainManagerXml.class.getName());
 
 }

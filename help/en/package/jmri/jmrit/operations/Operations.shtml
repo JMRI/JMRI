@@ -3389,31 +3389,31 @@
    under the Trains-&gt;Tools. For each day of the week, select which trains you want to build. Then
    select which day you want by selecting the appropriate radio button. Then press the "Apply"
    button to update the Trains build checkboxes. Use the "Save" button to store any changes you made
-   to the timetable. 
-   
+   to the timetable.
    <A NAME="SetupExcelProgram"></A>
    <H4>Setup Excel Program (Manifest Creator)</H4>
 
    The ability to configure an Excel program to create custom manifests can be found under
-   Trains-&gt;Tools. Dan Foltz who is a JMRI user/programmer has developed the "Manifest Creator".
-   You can find a copy of the program at the
+   Trains-&gt;Tools. Dan Foltz who is a JMRI user/programmer has developed the "Manifest Creator"
+   and "Switch List Creator". You can find a copies of the programs at the
    <a HREF="http://groups.yahoo.com/neo/groups/jmriusers/files/Operations">Yahoo.com JMRI users
-    files Operations</a> Install the program "MC4JMRI.xls" in the JMRI/operations/csvManifest
-   directory. You can of course create your own program and also place it in the csvManifest
-   directory.
+    files Operations.</a> Place the program "MC4JMRI.xls" or "SWC4JMRI.xlsm" along with any other
+   files needed in the JMRI/operations/csvManifest directory. You can of course create your own
+   program and also install it in the csvManifest directory.
 
    <P>
-    To enable the creation of the comma separated value (CSV) files needed for an external Excel program
-    see <a HREF="#ManifestOptions">Options</a> "Generate CSV Manifests".
+    You can enable the creation of the comma separated value (CSV) files needed for an external Excel program from
+    the Train's "Tools" menu "Setup Excel Program" or from the
+    <a HREF="#ManifestOptions">Options</a> "Generate CSV Manifests".
    </P>
 
    <P>
-    You can also create custom switch lists. Install the program "MC4JMRI.xls" in the
+    You can also create custom switch lists. Place the programs in the
     JMRI/operations/csvSwitchList directory. You can configure the name of the Excel program by
     opening the "Switch List by Location" window using the "Switch List" button at the bottom of the
     "Trains" window. Then under "Tools" in the "Switch List by Location" window, select "Setup Excel
     Program (Manifest Creator)". You must also enable the creation of CSV switch list files, see
-    <a HREF="#ManifestOptions">Options</a> "Generate CSV Switch Lists".
+    <a HREF="#ManifestOptions">Options</a> "Generate CSV Switch Lists" for more information.
    </P>
 
    <A NAME="SwitcherService"></A>
@@ -3683,7 +3683,7 @@
      HREF="#ManifestOptions">custom manifest</A>. Shown below is a train manifest (LS) and switch
     list for locations Lakeview and Bakersfield using <A
      HREF=http://groups.yahoo.com/group/jmriusers/files/Operations>Dan Foltz's Switch List
-     Creator version 1.2 (SLC4JMRI.xls)</A>. This particular custom format allows you to use a half sheet of
+     Creator version 1.2 (SLC4JMRI.xlsm)</A>. This particular custom format allows you to use a half sheet of
     paper for your operators. Note that the <A HREF="#CarTypes">Car Types</A> was changed in the <A
      HREF="#Settings">Settings</A> window from "Descriptive" to "AAR Codes" before using Dan's Excel
     program.
@@ -3757,7 +3757,7 @@
    <P>If you only want to print out work for new trains, then deselect the real time option.
     Once you've printed out the switch list for a location, when new work is created by building
     trains, the old work for older trains is deleted. Note that you can use preview to see what work
-    a location has, but until you print it, new work will be added to the whatever work is currently
+    a location has, but until you print it, new work will be added to whatever work is currently
     scheduled. So please understand that preview and print work differently in consolidation mode.</P>
    <P>Another use for consolidation mode is to create large switch lists for a location by
     building and terminating several trains. For example, if you have a small layout, you might have
@@ -3798,19 +3798,23 @@
     
     <A NAME="CustomSwitchLists"></A>
     <H3>Custom Switch Lists</H3>
-    
-    You can if you wish create custom switch lists using an Excel program. See <A HREF="#SettingsOptions">Options</A>
-    and select the "Generate CSV Switch List" to enable this feature. To configure where to find the Excel program
-    see <A HREF="#SetupExcelProgram">Setup Excel Program (Manifest Creator)</A>.
 
-   <P>Three new buttons will appear at the bottom of the "Switch Lists by Location" window,
-    "Run", "Generate csv Switch Lists", and "Generate csv Switch Lists Changes". The "Run" button is
-    used to create custom switch lists for all of the selected locations by executing an Excel
-    program. The csv files are first created for a location, and then the custom Excel program is
-    called to create and print the custom switch list. The "Generate csv Switch Lists" will create a
-    csv file for each of the selected locations. And the "Generate csv Switch Lists Changes" will
-    only create new csv files for locations that have have been modified by a new train build. You
-    can find the csv files in the csvSwitchList directory.</P>
+   You can if you wish create custom switch lists using an Excel program. You can configure where to
+   find the Excel program for custom switch lists from the "Switch Lists by Location" window "Tools"
+   menu. Or go to
+   <A HREF="#SettingsOptions">Options</A> and select the "Generate CSV Switch List" to enable this
+   feature. For more information see
+   <A HREF="#SetupExcelProgram">Setup Excel Program (Manifest Creator)</A>.
+
+   <P>Four new buttons will appear at the bottom of the "Switch Lists by Location" window,
+    "Generate csv Switch Lists", "Generate csv Switch Lists Changes", "Run", and "Run Changes". The
+    "Generate csv Switch Lists" will create a csv file for each of the selected locations. And the
+    "Generate csv Switch Lists Changes" will only create new csv files for locations that have have
+    been modified by a new train build. You can find the csv files in the csvSwitchList directory.
+    The "Run" button is used to create custom switch lists for all of the selected locations by
+    executing an Excel program. The "Run" button will create the csv files needed before asking the
+    Excel program to create and print a custom switch list. The "Run Changes" will only create new
+    switch lists for locations that have new work.</P>
 
    <A NAME="TrainMove"></A>
    <H3>Moving Trains</H3>
