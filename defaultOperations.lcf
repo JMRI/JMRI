@@ -20,6 +20,8 @@
 # control this at a finer level.
 
 log4j.rootCategory= INFO, A1, T, R
+#log4j.category.jmri.util=DEBUG
+#log4j.category.jmri.managers=DEBUG
 log4j.category.jmri.jmrit.operations=DEBUG
 
 # A1 is set to be a ConsoleAppender which outputs to System.err. 
