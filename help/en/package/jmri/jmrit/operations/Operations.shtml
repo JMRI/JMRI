@@ -451,11 +451,12 @@
    railroad. Then enter the average amount of time in minutes it takes to travel from one location
    to the another. Later when you create a <A HREF="#EditRoute">route</A> you will be able to
    increase or decrease the train's travel time between any two locations.
-
+   
+   <A NAME="CarTypes"></A>
    <H3>Car Types</H3>
 
    The program has two sets of car types for you to use. Descriptive provides type names like
-   "Boxcar" and "Tankcar", and AAR provides type names like "XM" and "T" for boxcars and tank cars
+   "Boxcar" and "Tankcar", and AAR Codes provides type names like "XM" and "T" for boxcars and tank cars
    respectively. Select the one that you prefer. You can add or delete car types by using the <A
     HREF="#CarTypeLengthWeight">car type edit</A> window. 
     
@@ -3675,6 +3676,29 @@
 
    <P>
     <img src="images/ManifestTwoColumnTrack.png">
+   </P>
+
+   <P>
+    An alternative to using the manifests provided by the JMRI program is to create a <A
+     HREF="#ManifestOptions">custom manifest</A>. Shown below is a train manifest (LS) and switch
+    list for locations Lakeview and Bakersfield using <A
+     HREF=http://groups.yahoo.com/group/jmriusers/files/Operations>Dan Foltz's Switch List
+     Creator version 1.2 (SLC4JMRI.xls)</A>. This particular custom format allows you to use a half sheet of
+    paper for your operators. Note that the <A HREF="#CarTypes">Car Types</A> was changed in the <A
+     HREF="#Settings">Settings</A> window from "Descriptive" to "AAR Codes" before using Dan's Excel
+    program.
+   </P>
+
+   <P>
+    <img src="images/SLC4JMRI_LS.png">
+   </P>
+
+   <P>
+    <img src="images/SLC4JMRI_LS_LV.png">
+   </P>
+   
+      <P>
+    <img src="images/SLC4JMRI_LS_BF.png">
    </P>
 
 
