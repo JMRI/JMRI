@@ -69,12 +69,12 @@ public final class FileUtil {
      */
     @Deprecated
     static public final String RESOURCE = "resource:"; // NOI18N
-    @Deprecated
     /**
      * Replaced with {@link #PREFERENCES}.
      *
      * @see #PREFERENCES
      */
+    @Deprecated
     static public final String FILE = "file:"; // NOI18N
     /**
      * The portable file path component separator.
@@ -403,11 +403,13 @@ public final class FileUtil {
      * This is the inverse of {@link #getFile(String pName)}. Deprecated forms
      * are not created.
      *
-     * This method supports a specific use case concerning profiles that are
-     * stored within the User files directory, which will cause the
-     * {@link jmri.profile.ProfileManager} to write an incorrect path for the
-     * current profile. In most cases {@link #getPortableFilename(java.io.File)}
-     * is preferable.
+     * This method supports a specific use case concerning profiles and other
+     * portable paths that are stored within the User files directory, which
+     * will cause the {@link jmri.profile.ProfileManager} to write an incorrect
+     * path for the current profile or
+     * {@link apps.configurexml.FileLocationPaneXml} to write an incorrect path
+     * for the Users file directory. In most cases, the use of
+     * {@link #getPortableFilename(java.io.File)} is preferable.
      *
      * @param file File at path to be represented
      * @param ignoreUserFilesPath true if paths in the User files path should be
@@ -445,9 +447,20 @@ public final class FileUtil {
             return SETTINGS + filename.substring(getPreferencesPath().length(), filename.length()).replace(File.separatorChar, SEPARATOR);
         }
 
-        // check for relative to scripts dir, done before program dir due to default location
-        if (filename.startsWith(getScriptsPath())) {
-            return SCRIPTS + filename.substring(getScriptsPath().length(), filename.length()).replace(File.separatorChar, SEPARATOR);
+        if (!ignoreUserFilesPath) {
+            /*
+             * The tests for any portatable path that could be within the
+             * UserFiles locations needs to be within this block. This prevents
+             * the UserFiles or Profile path from being set to another portable
+             * path that is user settable.
+             *
+             * Note that this test should be after the UserFiles, Profile, and
+             * Preferences tests.
+             */
+            // check for relative to scripts dir
+            if (filename.startsWith(getScriptsPath()) && !filename.equals(getScriptsPath())) {
+                return SCRIPTS + filename.substring(getScriptsPath().length(), filename.length()).replace(File.separatorChar, SEPARATOR);
+            }
         }
 
         // now check for relative to program dir
@@ -484,11 +497,13 @@ public final class FileUtil {
      * This is the inverse of {@link #getExternalFilename(String pName)}.
      * Deprecated forms are not created.
      *
-     * This form supports a specific use case concerning profiles that are
-     * stored within the User files directory, which will cause the
-     * {@link jmri.profile.ProfileManager} to write an incorrect path for the
-     * current profile. In most cases
-     * {@link #getPortableFilename(java.lang.String)} is preferable.
+     * This method supports a specific use case concerning profiles and other
+     * portable paths that are stored within the User files directory, which
+     * will cause the {@link jmri.profile.ProfileManager} to write an incorrect
+     * path for the current profile or
+     * {@link apps.configurexml.FileLocationPaneXml} to write an incorrect path
+     * for the Users file directory. In most cases, the use of
+     * {@link #getPortableFilename(java.io.File)} is preferable.
      *
      * @param filename Filename to be represented
      * @param ignoreUserFilesPath true if paths in the User files path should be
