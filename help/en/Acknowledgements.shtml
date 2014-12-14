@@ -218,6 +218,7 @@
     <LI>Don Fiehmann provided MRC decoders for testing
 	<LI>Marco Forcone, who sacrified two turnouts motors to the cause of
 	debugging XPressNet turnout support
+   <LI>Dan Foltz created the Manifest Creator and Switch List Creator for operations</LI>
     <li>Enzo Fortuna, who created the Italian translation
 	<li>Marc Fournier, who improved the TCS decoder definition
 	<LI>Paul Fraker, who wrote the documentation for the Throttles
