@@ -278,7 +278,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 			toolMenu.add(new SetPhysicalLocationAction(Bundle.getMessage("MenuSetPhysicalLocation"), _location));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true); // NOI18N
+		addHelpMenu("package.jmri.jmrit.operations.Operations_AddLocation", true); // NOI18N
 
 		pack();
 		setMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));

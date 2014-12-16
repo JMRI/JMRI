@@ -109,6 +109,8 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 		CarTypes.instance().addPropertyChangeListener(this);
 		// listen to all tracks and locations
 		addLocationAndTrackPropertyChange();
+		
+		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainShowCarTypesServiced", true); // NOI18N
 
 		setPreferredSize(null);
 		initMinimumSize();

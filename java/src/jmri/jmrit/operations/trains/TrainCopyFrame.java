@@ -70,7 +70,7 @@ public class TrainCopyFrame extends OperationsFrame {
 		getContentPane().add(pButton);
 
 		// add help menu to window
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true); // NOI18N
+		addHelpMenu("package.jmri.jmrit.operations.Operations_CopyTrain", true); // NOI18N
 
 		pack();
 		setMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight200));

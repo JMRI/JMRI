@@ -370,7 +370,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true); // NOI18N
+		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainEdit", true); // NOI18N
 
 		// load route location checkboxes
 		updateLocationCheckboxes();

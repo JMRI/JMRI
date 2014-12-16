@@ -46,6 +46,7 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 		super.initComponents();
 
 		setTitle(Bundle.getMessage("TitleSetCars"));
+		addHelpMenu("package.jmri.jmrit.operations.Operations_SetCars", true); // NOI18N
 		// modify Save button text to "Change"
 		saveButton.setText(Bundle.getMessage("Change"));
 		// disable edit load button if no cars selected

@@ -86,7 +86,7 @@
        </UL></LI>
        <LI><A HREF="#Sidings">Spurs</A>
        <UL>
-        <LI><A HREF="#Schedules">Schedules</A></LI>
+        <LI><A HREF="#Schedule">Schedules</A></LI>
         <LI><A HREF="#SchedulesAndLoads">Schedules and Loads</A></LI>
         <LI><A HREF="#ShowSchedulesByCarTypeAndLoad">Show Schedules by Car Type and Load</A></LI>
         <LI><A HREF="#AlternateTrack">Alternate Track</A></LI>
@@ -114,15 +114,11 @@
        </UL></LI>
       <LI><A HREF="#LocationsTools">Locations Tools</A>
        <UL>
-       <LI><A HREF="#CopyLocation">Copy Location</A>
-       
+        <LI><A HREF="#CopyLocation">Copy Location</A>
         <LI><A HREF="#LocationSchedules">Schedules</A>
-        
         <LI><A HREF="#ModifyLocationsByCarType">Modify Locations and Tracks by Car Type</A>
-       
        </UL></LI>
-     
-   </UL>
+     </UL>
    </LI>
     <LI><A HREF="#Cars">Cars</A>
      <UL>
@@ -1480,7 +1476,7 @@
    </P>
 
    <A NAME="Schedules"></A>
-   <H3>Schedules</H3>
+   <H3>Schedule</H3>
 
    If you would like to see cars delivered in a particular sequence, or with a specific load for
    delivery or shipping, the program allows you to apply a schedule to a spur. This is an optional
@@ -1596,12 +1592,14 @@
     the next car type when adding a car type. This makes it easy to quickly add car types to the
     table.</P>
 
-   <P>Multiple spurs can use the same schedule to perform the identical function, i.e. the spurs
-    request exactly the same car types, roads, loads, and shipments. You can also access your
-    schedules from the Locations "Tools" menu. The Schedules table provides status for each
-    schedule. Since you can assign a schedule to multiple spurs, the table also provides additional
-    status for each of the spurs that use that particular schedule. The table also allows you the
-    edit a schedule once its been assigned to a spur.</P>
+   <P>
+    Multiple spurs can use the same schedule to perform the identical function, i.e. the spurs
+    request exactly the same car types, roads, loads, and shipments. You can also access your <A
+     HREF="#LocationSchedules">schedules</A> from the Locations "Tools" menu. The Schedules table
+    provides status for each schedule. Since you can assign a schedule to multiple spurs, the table
+    also provides additional status for each of the spurs that use that particular schedule. The
+    table also allows you the edit a schedule once its been assigned to a spur.
+   </P>
 
    <P>
     A very useful tool is the <A HREF="#ShowSchedulesByCarTypeAndLoad">show schedules by car
@@ -2100,8 +2098,13 @@
    
    <A NAME="LocationSchedules"></A>
    <H4>Schedules</H4>
-   
-   You can access all of your schedules directly from the "Locations" tools menu.
+
+   You can access all of your schedules directly from the "Locations" tools menu. The "Schedules"
+   window lists all of the available schedules by name. The table includes the status of the
+   <A HREF="#Schedules">schedule</A>, the number of spurs the schedule is assigned to, a drop down
+   menu showing each spur that is using the schedule, the schedule's status and the mode for the
+   spur selected. If everything is fine you should only see "Okay" as the statuses. If there's an
+   error, you should investigate and correct the problem. 
    
    <A NAME="ModifyLocationsByCarType"></A>
    <H4>Modify Locations by Car Type</H4>
@@ -3203,7 +3206,8 @@
    will bring up a new window with several script options.
    <p>
     Included in the <a HREF="http://jmri.org/jython/operations">jython directory</a> are several
-    examples of operation oriented scripts.
+    examples of operation oriented scripts. These scripts were included in the JMRI download
+    and can be found in the jmri-&gt;jython-&gt;operations directory.
    </P>
    
    <A NAME="TrainShowCarTypesServiced"></A>

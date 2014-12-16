@@ -242,7 +242,11 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 
 	public void runStartUpScripts() {
 		for (String scriptPathName : getStartUpScripts()) {
-			jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(scriptPathName));
+			try {
+				jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(scriptPathName));
+			} catch (Exception e) {
+				log.error("Problem with script: {}", scriptPathName);
+			}
 		}
 	}
 
@@ -273,7 +277,11 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 
 	public void runShutDownScripts() {
 		for (String scriptPathName : getShutDownScripts()) {
-			jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(scriptPathName));
+			try {
+				jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(scriptPathName));
+			} catch (Exception e) {
+				log.error("Problem with script: {}", scriptPathName);
+			}
 		}
 	}
 
