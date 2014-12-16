@@ -1,6 +1,9 @@
 // PythonInterp.java
 package jmri.util;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PipedReader;
@@ -35,25 +38,52 @@ public class PythonInterp {
     /**
      * Run a script file from it's filename.
      *
+     * This method calls {@link #execFile(java.lang.String) }, but traps the
+     * {@link java.io.FileNotFoundException } generated if filename does not
+     * refer to an existing file.
+     *
      * @param filename
      */
     static public void runScript(String filename) {
-        execFile(filename);
+        try {
+            execFile(filename);
+        } catch (FileNotFoundException ex) {
+            log.error("File {} not found.", filename);
+        }
     }
 
-    static public void execFile(String filename) {
+    /**
+     * Run a script file by name.
+     *
+     * Unlike {@link #runScript(java.lang.String) }, this method throws a
+     * {@link java.io.FileNotFoundException} when the file does not exist,
+     * allowing calling code to deal with that issue.
+     *
+     * @param filename
+     * @throws FileNotFoundException if the named file does not exist.
+     */
+    static public void execFile(String filename) throws FileNotFoundException {
+        execFile(new File(filename));
+    }
+
+    /**
+     * Run a script file.
+     *
+     * @param file
+     * @throws FileNotFoundException if the file does not exist.
+     */
+    static public void execFile(File file) throws FileNotFoundException {
         // get a Python interpreter context, make sure it's ok
         getPythonInterpreter();
         if (interp == null) {
             log.error("Can't contine to execute command, could not create interpreter");
             return;
         }
-        // if windows, need to process backslashes in filename
-        if (SystemType.isWindows()) {
-            filename = filename.replaceAll("\\\\", "\\\\\\\\");
+        if (!file.exists()) {
+            throw new FileNotFoundException();
         }
 
-        interp.execfile(filename);
+        interp.execfile(new FileInputStream(file));
     }
 
     static public void execCommand(String command) {
@@ -122,11 +152,12 @@ public class PythonInterp {
             execFile(FileUtil.getExternalFilename(defaultContextFile));
 
             return interp;
-
+        } catch (FileNotFoundException ex) {
+            log.error("Python is not using the default JMRI context, since {} could not be found to provide it.", defaultContextFile);
         } catch (Exception e) {
             log.error("Exception creating jython system objects", e);
-            return null;
         }
+        return null;
     }
 
     /**
