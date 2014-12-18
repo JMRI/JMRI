@@ -15,6 +15,7 @@ import java.util.Vector;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import jmri.BasicRosterEntry;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.jmrit.symbolicprog.CvTableModel;
@@ -57,7 +58,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrit.roster.LocoFile
  *
  */
-public class RosterEntry implements jmri.BasicRosterEntry {
+public class RosterEntry extends RosterObject implements BasicRosterEntry {
 
     // identifiers for property change events
     public static final String ID = "id"; // NOI18N
@@ -324,7 +325,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
     }
 
     public void setLongAddress(boolean b) {
-        Boolean old = false;
+        boolean old = false;
         if (_protocol == LocoAddress.Protocol.DCC_LONG) {
             old = true;
         }
@@ -1517,31 +1518,6 @@ public class RosterEntry implements jmri.BasicRosterEntry {
         } catch (IOException e) {
             log.error("Exception while loading loco XML file: " + getFileName() + " exception: " + e);
         }
-    }
-
-    java.beans.PropertyChangeSupport pcs;
-
-    @Override
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        if (pcs == null) {
-            pcs = new java.beans.PropertyChangeSupport(this);
-        }
-        pcs.addPropertyChangeListener(l);
-    }
-
-    protected synchronized void firePropertyChange(String p, Object old, Object n) {
-        if (pcs == null) {
-            pcs = new java.beans.PropertyChangeSupport(this);
-        }
-        pcs.firePropertyChange(p, old, n);
-    }
-
-    @Override
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        if (pcs == null) {
-            pcs = new java.beans.PropertyChangeSupport(this);
-        }
-        pcs.removePropertyChangeListener(l);
     }
 
     // initialize logging
