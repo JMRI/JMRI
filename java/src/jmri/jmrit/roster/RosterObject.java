@@ -8,6 +8,13 @@ import jmri.beans.Bean;
  *
  * @author Randall Wood <randall.h.wood@alexandriasoftware.com>
  */
-public class RosterObject extends Bean {
+public abstract class RosterObject extends Bean {
+
+    /**
+     * Get the formatted single-line String for displaying the object.
+     *
+     * @return a formatted name
+     */
+    abstract public String getDisplayName();
 
 }

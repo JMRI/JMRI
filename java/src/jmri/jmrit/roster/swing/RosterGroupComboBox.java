@@ -5,7 +5,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.ResourceBundle;
+import java.util.Locale;
 import javax.swing.JComboBox;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
@@ -13,15 +13,14 @@ import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 /**
  * A JComboBox of Roster Groups.
  *
- * @author  Randall Wood Copyright (C) 2011
+ * @author Randall Wood Copyright (C) 2011, 2014
  * @version	$Revision: $
- * @see         jmri.jmrit.roster.Roster
+ * @see jmri.jmrit.roster.Roster
  */
 public class RosterGroupComboBox extends JComboBox implements RosterGroupSelector {
 
     private Roster _roster;
     private boolean allEntriesEnabled = true;
-    private static ResourceBundle resources = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
 
     /**
      * Create a RosterGroupComboBox with an arbitrary Roster instead of the
@@ -45,24 +44,24 @@ public class RosterGroupComboBox extends JComboBox implements RosterGroupSelecto
 
     /**
      * Create a RosterGroupComboBox with arbitrary selection and Roster.
-     * 
+     *
      * @param roster
-     * @param selection 
+     * @param selection
      */
     public RosterGroupComboBox(Roster roster, String selection) {
         super();
         _roster = roster;
         update(selection);
-        roster.addPropertyChangeListener(new PropertyChangeListener(){
+        roster.addPropertyChangeListener(new PropertyChangeListener() {
 
             @Override
             public void propertyChange(PropertyChangeEvent pce) {
                 if (pce.getPropertyName().equals("RosterGroupAdded")) {
                     update();
                 } else if (pce.getPropertyName().equals("RosterGroupRemoved")
-                    || pce.getPropertyName().equals("RosterGroupRenamed")) {
+                        || pce.getPropertyName().equals("RosterGroupRenamed")) {
                     if (getSelectedItem().equals(pce.getOldValue())) {
-                        update((String)pce.getNewValue());
+                        update((String) pce.getNewValue());
                     } else {
                         update();
                     }
@@ -99,15 +98,15 @@ public class RosterGroupComboBox extends JComboBox implements RosterGroupSelecto
             addItem(g);
         }
         if (allEntriesEnabled) {
-            insertItemAt(Roster.ALLENTRIES, 0);
+            insertItemAt(Roster.AllEntries(Locale.getDefault()), 0);
             if (selection == null) {
                 selection = Roster.ALLENTRIES;
             }
             this.setToolTipText(null);
         } else {
             if (this.getItemCount() == 0) {
-                this.addItem(resources.getString("RosterGroupComboBoxNoGroups"));
-                this.setToolTipText(resources.getString("RosterGroupComboBoxNoGroupsToolTip"));
+                this.addItem(Bundle.getMessage("RosterGroupComboBoxNoGroups"));
+                this.setToolTipText(Bundle.getMessage("RosterGroupComboBoxNoGroupsToolTip"));
             } else {
                 this.setToolTipText(null);
             }
@@ -125,7 +124,8 @@ public class RosterGroupComboBox extends JComboBox implements RosterGroupSelecto
     public String getSelectedRosterGroup() {
         if (getSelectedItem() == null) {
             return null;
-        } else if (getSelectedItem().equals(Roster.ALLENTRIES)) {
+        } else if (getSelectedItem().equals(Roster.ALLENTRIES)
+                || getSelectedItem().equals(Roster.AllEntries(Locale.getDefault()))) {
             return null;
         } else {
             return getSelectedItem().toString();

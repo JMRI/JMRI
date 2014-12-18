@@ -1,7 +1,5 @@
 package jmri.jmrit.roster.rostergroup;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.List;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -17,15 +15,6 @@ public class RosterGroup extends RosterObject {
 
     public RosterGroup(String aName) {
         this.name = aName;
-        Roster.instance().addPropertyChangeListener(Roster.ROSTER_GROUP_RENAMED, new PropertyChangeListener() {
-
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                if (evt.getOldValue().equals(name)) {
-                    name = evt.getNewValue().toString();
-                }
-            }
-        });
     }
 
     public List<RosterEntry> getEntries() {
@@ -43,8 +32,18 @@ public class RosterGroup extends RosterObject {
      * @param name the name to set
      */
     public void setName(String name) {
-        Roster.instance().renameRosterGroupList(this.name, name);
+        String oldGroup = Roster.getRosterGroupProperty(this.name);
+        String newGroup = Roster.getRosterGroupProperty(name);
+        for (RosterEntry re : this.getEntries()) {
+            re.putAttribute(newGroup, "yes"); // NOI18N
+            re.deleteAttribute(oldGroup);
+        }
         this.name = name;
+    }
+
+    @Override
+    public String getDisplayName() {
+        return this.getName();
     }
 
 }

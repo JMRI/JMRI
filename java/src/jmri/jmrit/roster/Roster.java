@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -16,6 +17,7 @@ import javax.swing.JOptionPane;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.roster.rostergroup.RosterGroup;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.jmrit.symbolicprog.SymbolicProgBundle;
 import jmri.util.FileUtil;
@@ -27,23 +29,31 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Roster manages and manipulates a roster of locomotives. <P> It works with the
- * "roster-config" XML schema to load and store its information. <P> This is an
- * in-memory representation of the roster xml file (see below for constants
- * defining name and location). As such, this class is also responsible for the
- * "dirty bit" handling to ensure it gets written. As a temporary reliability
- * enhancement, all changes to this structure are now being written to a backup
- * file, and a copy is made when the file is opened. <P> Multiple Roster objects
- * don't make sense, so we use an "instance" member to navigate to a single one.
- * <P> The only bound property is the list of RosterEntrys; a
- * PropertyChangedEvent is fired every time that changes. <P> The entries are
- * stored in an ArrayList, sorted alphabetically. That sort is done manually
- * each time an entry is added. <P> The roster is stored in a "Roster Index",
- * which can be read or written. Each individual entry (once stored) contains a
- * filename which can be used to retrieve the locomotive information for that
- * roster entry. Note that the RosterEntry information is duplicated in both the
- * Roster (stored in the roster.xml file) and in the specific file for the
- * entry.
+ * Roster manages and manipulates a roster of locomotives.
+ * <P>
+ * It works with the "roster-config" XML schema to load and store its
+ * information.
+ * <P>
+ * This is an in-memory representation of the roster xml file (see below for
+ * constants defining name and location). As such, this class is also
+ * responsible for the "dirty bit" handling to ensure it gets written. As a
+ * temporary reliability enhancement, all changes to this structure are now
+ * being written to a backup file, and a copy is made when the file is opened.
+ * <P>
+ * Multiple Roster objects don't make sense, so we use an "instance" member to
+ * navigate to a single one.
+ * <P>
+ * The only bound property is the list of RosterEntrys; a PropertyChangedEvent
+ * is fired every time that changes.
+ * <P>
+ * The entries are stored in an ArrayList, sorted alphabetically. That sort is
+ * done manually each time an entry is added.
+ * <P>
+ * The roster is stored in a "Roster Index", which can be read or written. Each
+ * individual entry (once stored) contains a filename which can be used to
+ * retrieve the locomotive information for that roster entry. Note that the
+ * RosterEntry information is duplicated in both the Roster (stored in the
+ * roster.xml file) and in the specific file for the entry.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2010
  * @author Dennis Miller Copyright 2004
@@ -62,6 +72,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     private static PropertyChangeListener[] listeners = null;
     private UserPreferencesManager preferences;
     private String defaultRosterGroup = null;
+    private final HashMap<String, RosterGroup> rosterGroups = new HashMap<String, RosterGroup>();
 
     /**
      * Name for the property change fired when adding a roster entry
@@ -91,7 +102,11 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      * Property change fired when renaming a roster group
      */
     public static final String ROSTER_GROUP_RENAMED = "RosterGroupRenamed"; // NOI18N
-    
+    /**
+     * String prefixed to roster group names in the roster entry XML
+     */
+    public static final String ROSTER_GROUP_PREFIX = "RosterGroup:"; // NOI18N
+
     // should be private except that JUnit testing creates multiple Roster objects
     public Roster() {
         super();
@@ -207,21 +222,13 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      * @return The Number of roster entries that are in the specified group.
      */
     public int numGroupEntries(String group) {
-        List<RosterEntry> l = matchingList(null, null, null, null, null, null, null);
-        int num = 0;
-        for (int i = 0; i < l.size(); i++) {
-            RosterEntry r = l.get(i);
-            if (group != null) {
-                if (r.getAttribute(getRosterGroupProperty(group)) != null) {
-                    if (r.getAttribute(getRosterGroupProperty(group)).equals("yes")) { // NOI18N
-                        num++;
-                    }
-                }
-            } else {
-                num++;
-            }
+        if (group != null
+                && !group.equals(Roster.ALLENTRIES)
+                && !group.equals(Roster.AllEntries(Locale.getDefault()))) {
+            return this.rosterGroups.get(group).getEntries().size();
+        } else {
+            return this.numEntries();
         }
-        return num;
     }
 
     /**
@@ -404,9 +411,10 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     }
 
     /**
-     * Check if an entry is consistent with specific properties. <P> A null
-     * String entry always matches. Strings are used for convenience in GUI
-     * building.
+     * Check if an entry is consistent with specific properties.
+     * <P>
+     * A null String entry always matches. Strings are used for convenience in
+     * GUI building.
      *
      */
     public boolean checkEntry(int i, String roadName, String roadNumber, String dccAddress,
@@ -416,9 +424,10 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     }
 
     /**
-     * Check if an entry is consistent with specific properties. <P> A null
-     * String entry always matches. Strings are used for convenience in GUI
-     * building.
+     * Check if an entry is consistent with specific properties.
+     * <P>
+     * A null String entry always matches. Strings are used for convenience in
+     * GUI building.
      *
      */
     public boolean checkEntry(List<RosterEntry> list, int i, String roadName, String roadNumber, String dccAddress,
@@ -496,7 +505,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         root.setAttribute("noNamespaceSchemaLocation", // NOI18N
                 "http://jmri.org/xml/schema/roster" + schemaVersion + ".xsd", // NOI18N
                 org.jdom.Namespace.getNamespace("xsi", // NOI18N
-                "http://www.w3.org/2001/XMLSchema-instance")); // NOI18N
+                        "http://www.w3.org/2001/XMLSchema-instance")); // NOI18N
         Document doc = newDocument(root);
 
         // add XSLT processing instruction
@@ -557,7 +566,6 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         }
         //All Comments and Decoder Comment line feeds have been changed to processor directives
 
-
         // add top-level elements
         Element values;
         root.addContent(values = new Element("roster")); // NOI18N
@@ -570,12 +578,12 @@ public class Roster extends XmlFile implements RosterGroupSelector {
             }
         }
 
-        if (_rosterGroupList.size() >= 1) {
+        if (!this.rosterGroups.isEmpty()) {
             Element rosterGroup = new Element("rosterGroup"); // NOI18N
-            for (int i = 0; i < _rosterGroupList.size(); i++) {
+            for (String name : getRosterGroups().keySet()) {
                 Element group = new Element("group"); // NOI18N
-                if (!_rosterGroupList.get(i).toString().equals(ALLENTRIES)) {
-                    group.addContent(_rosterGroupList.get(i).toString());
+                if (!name.equals(Roster.ALLENTRIES)) {
+                    group.addContent(name);
                     rosterGroup.addContent(group);
                 }
             }
@@ -628,7 +636,9 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     }
 
     /**
-     * Name a valid roster entry filename from an entry name. <p> <ul>
+     * Name a valid roster entry filename from an entry name.
+     * <p>
+     * <ul>
      * <li>Replaces all problematic characters with "_". <li>Append .xml suffix
      * </ul> Does not check for duplicates.
      *
@@ -653,8 +663,9 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     }
 
     /**
-     * Read the contents of a roster XML file into this object. <P> Note that
-     * this does not clear any existing entries.
+     * Read the contents of a roster XML file into this object.
+     * <P>
+     * Note that this does not clear any existing entries.
      *
      * @param name filename of roster file
      */
@@ -757,8 +768,10 @@ public class Roster extends XmlFile implements RosterGroupSelector {
 
     /**
      * Store the roster in the default place, including making a backup if
-     * needed. <p> Uses writeFile(String), a protected method that can write to
-     * a specific location.
+     * needed.
+     * <p>
+     * Uses writeFile(String), a protected method that can write to a specific
+     * location.
      */
     public static void writeRosterFile() {
         Roster.instance().makeBackupFile(defaultRosterFilename());
@@ -827,8 +840,9 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     }
 
     /**
-     * Absolute path to roster file location. <P> Default is in the user's files
-     * directory, but can be set to anything.
+     * Absolute path to roster file location.
+     * <P>
+     * Default is in the user's files directory, but can be set to anything.
      *
      * @see jmri.util.FileUtil#getUserFilesPath()
      */
@@ -904,144 +918,126 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      * @return The full property string
      */
     public static String getRosterGroupProperty(String name) {
-        return _rosterGroupPrefix + name;
+        return ROSTER_GROUP_PREFIX + name;
     }
-    protected ArrayList<String> _rosterGroupList = new ArrayList<String>();
-    static String _rosterGroupPrefix = "RosterGroup:"; // NOI18N
 
     public String getRosterGroupPrefix() {
-        return _rosterGroupPrefix;
+        return ROSTER_GROUP_PREFIX;
     }
 
     /**
-     * Add a roster group, notifying all listeners of the change <p> This method
-     * fires the property change notification "RosterGroupAdded"
+     * Add a roster group, notifying all listeners of the change.
+     *
+     * This method fires the property change notification
+     * "{@value #ROSTER_GROUP_ADDED}".
+     *
+     * @param rg The group to be added
+     */
+    public void addRosterGroup(RosterGroup rg) {
+        if (this.rosterGroups.containsKey(rg.getName())) {
+            return;
+        }
+        this.getRosterGroups().put(rg.getName(), rg);
+        firePropertyChange(ROSTER_GROUP_ADDED, null, rg.getName());
+    }
+
+    /**
+     * Add a roster group, notifying all listeners of the change
+     * <p>
+     * This method fires the property change notification "RosterGroupAdded"
      *
      * @param str The group to be added
      */
     public void addRosterGroupList(String str) {
-        addRosterGroupList(str, true);
+        this.addRosterGroup(new RosterGroup(str));
+    }
+
+    public void removeRosterGroup(RosterGroup rg) {
+        this.delRosterGroupList(rg.getName());
     }
 
     /**
-     * Add a roster group and optionally notify all listeners
+     * Delete a roster group, notifying all listeners of the change.
+     * <p>
+     * This method fires the property change notification
+     * "{@value #ROSTER_GROUP_REMOVED}".
      *
-     * renameRosterGroupList(old, new) calls this method with notify=false The
-     * public version of this method calls this method with notify=true This
-     * method fires the property change notification "RosterGroupAdded"
-     *
-     * @param str The group to be added
-     * @param notify Flag to fire a property change
+     * @param rg The group to be deleted
      */
-    private void addRosterGroupList(String str, boolean notify) {
-        if (_rosterGroupList.contains(str)) {
-            return;
+    public void delRosterGroupList(String rg) {
+        RosterGroup group = this.getRosterGroups().remove(rg);
+        String str = Roster.getRosterGroupProperty(rg);
+        for (RosterEntry re : group.getEntries()) {
+            re.deleteAttribute(str);
         }
-        _rosterGroupList.add(str);
-        Collections.sort(_rosterGroupList);
-        if (notify) {
-            firePropertyChange(ROSTER_GROUP_ADDED, null, str);
-        }
-    }
-
-    /**
-     * Delete a roster group, notifying all listeners of the change <p> This
-     * method fires the property change notification "RosterGroupDeleted"
-     *
-     * @param str The group to be deleted
-     */
-    public void delRosterGroupList(String str) {
-        delRosterGroupList(str, true);
-    }
-
-    /**
-     * Delete a roster group and optionally notify all listeners <p>
-     * renameRosterGroupList(old, new) calls this method with notify=false The
-     * public version of this method calls this method with notify=true This
-     * method fires the property change notification "RosterGroupDeleted"
-     *
-     * @param str The group to be deleted
-     * @param notify Flag to fire a property change
-     */
-    private void delRosterGroupList(String rg, boolean notify) {
-        _rosterGroupList.remove(rg);
-        String str = _rosterGroupPrefix + rg;
-        List<RosterEntry> groupentries = getEntriesWithAttributeKey(str);
-        for (int i = 0; i < groupentries.size(); i++) {
-            groupentries.get(i).deleteAttribute(str);
-        }
-        if (notify) {
-            firePropertyChange(ROSTER_GROUP_REMOVED, rg, null);
-        }
+        firePropertyChange(ROSTER_GROUP_REMOVED, rg, null);
     }
 
     /**
      * Copy a roster group, adding every entry in the roster group to the new
-     * group. <p> If a roster group with the target name already exists, this
-     * method silently fails to rename the roster group. The GUI method
+     * group.
+     * <p>
+     * If a roster group with the target name already exists, this method
+     * silently fails to rename the roster group. The GUI method
      * CopyRosterGroupAction.performAction() catches this error and informs the
-     * user. This method fires the property change "RosterGroupAdded".
+     * user. This method fires the property change
+     * "{@value #ROSTER_GROUP_ADDED}".
      *
      * @param oldName Name of the roster group to be copied
      * @param newName Name of the new roster group
      * @see jmri.jmrit.roster.swing.RenameRosterGroupAction
      */
     public void copyRosterGroupList(String oldName, String newName) {
-        if (_rosterGroupList.contains(newName)) {
+        if (this.getRosterGroups().containsKey(newName)) {
             return;
         }
-        String oldGroup = _rosterGroupPrefix + oldName;
-        String newGroup = _rosterGroupPrefix + newName;
-        List<RosterEntry> groupEntries = getEntriesWithAttributeKey(oldGroup);
-        for (RosterEntry re : groupEntries) {
+        this.getRosterGroups().put(newName, new RosterGroup(newName));
+        String newGroup = Roster.getRosterGroupProperty(newName);
+        for (RosterEntry re : this.getRosterGroups().get(oldName).getEntries()) {
             re.putAttribute(newGroup, "yes"); // NOI18N
         }
-        addRosterGroupList(newName, true);
+        this.addRosterGroup(new RosterGroup(newName));
     }
 
     /**
-     * Rename a roster group, while keeping every entry in the roster group <p>
+     * Rename a roster group, while keeping every entry in the roster group.
+     *
      * If a roster group with the target name already exists, this method
      * silently fails to rename the roster group. The GUI method
      * RenameRosterGroupAction.performAction() catches this error and informs
-     * the user. This method fires the property change "RosterGroupRenamed".
+     * the user. This method fires the property change
+     * "{@value #ROSTER_GROUP_RENAMED}".
      *
      * @param oldName Name of the roster group to be renamed
      * @param newName New name for the roster group
      * @see jmri.jmrit.roster.swing.RenameRosterGroupAction
      */
     public void renameRosterGroupList(String oldName, String newName) {
-        if (_rosterGroupList.contains(newName)) {
+        if (this.getRosterGroups().containsKey(newName)) {
             return;
         }
-        String oldGroup = _rosterGroupPrefix + oldName;
-        String newGroup = _rosterGroupPrefix + newName;
-        List<RosterEntry> groupEntries = getEntriesWithAttributeKey(oldGroup);
-        for (RosterEntry re : groupEntries) {
-            re.putAttribute(newGroup, "yes"); // NOI18N
-            re.deleteAttribute(oldGroup);
-        }
-        addRosterGroupList(newName, false); // do not fire property change
-        delRosterGroupList(oldName, false); // do not fire property change
+        this.getRosterGroups().get(oldName).setName(newName);
         firePropertyChange(ROSTER_GROUP_RENAMED, oldName, newName);
     }
 
-    // What does this do? Should this return the group at i?
+    // What does this do? Should this return the group at i? It's not used as fas as I can tell
+    @Deprecated
     public void getRosterGroupList(int i) {
-        _rosterGroupList.get(i);
+        this.getRosterGroupList().get(i);
     }
 
     /**
-     * Get a list of the user defined roster groups.
+     * Get a list of the user defined roster group names.
      *
-     * This list is a shallow copy of the system-wide list of roster groups.
      * Strings are immutable, so deleting an item from the copy should not
      * affect the system-wide list of roster groups.
      *
-     * @return ArrayList<String>
+     * @return A list of the roster group names.
      */
     public ArrayList<String> getRosterGroupList() {
-        return new ArrayList<String>(_rosterGroupList);
+        ArrayList<String> list = new ArrayList<String>(this.getRosterGroups().keySet());
+        Collections.sort(list);
+        return list;
     }
     public final static String ALLENTRIES = Bundle.getMessage("ALLENTRIES");
     // initialize logging
@@ -1085,8 +1081,8 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     }
 
     /**
-     * Get an array of all the RosterEntry-containing files in the 
-     * target directory
+     * Get an array of all the RosterEntry-containing files in the target
+     * directory
      */
     static String[] getAllFileNames() {
         // ensure preferences will be found for read
@@ -1096,38 +1092,51 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         int i;
         int np = 0;
         String[] sp = null;
-        if (log.isDebugEnabled()) log.debug("search directory "+LocoFile.getFileLocation());
+        if (log.isDebugEnabled()) {
+            log.debug("search directory " + LocoFile.getFileLocation());
+        }
         File fp = new File(LocoFile.getFileLocation());
         if (fp.exists()) {
             sp = fp.list();
-            for (i=0; i<sp.length; i++) {
+            for (i = 0; i < sp.length; i++) {
                 if (sp[i].endsWith(".xml") || sp[i].endsWith(".XML")) {
                     np++;
                 }
             }
         } else {
-            log.warn(FileUtil.getUserFilesPath()+"roster directory was missing, though tried to create it");
+            log.warn(FileUtil.getUserFilesPath() + "roster directory was missing, though tried to create it");
         }
 
         // Copy the entries to the final array
         String sbox[] = new String[np];
-        int n=0;
-        if (sp != null && np> 0)
-            for (i=0; i<sp.length; i++) {
+        int n = 0;
+        if (sp != null && np > 0) {
+            for (i = 0; i < sp.length; i++) {
                 if (sp[i].endsWith(".xml") || sp[i].endsWith(".XML")) {
                     sbox[n++] = sp[i];
                 }
             }
+        }
         // The resulting array is now sorted on file-name to make it easier
         // for humans to read
         jmri.util.StringUtil.sort(sbox);
 
         if (log.isDebugEnabled()) {
             log.debug("filename list:");
-            for (i=0; i<sbox.length; i++)
-                log.debug("      "+sbox[i]);
+            for (i = 0; i < sbox.length; i++) {
+                log.debug("      " + sbox[i]);
+            }
         }
         return sbox;
+    }
+
+    /**
+     * Get the groups known to the roster itself.
+     *
+     * @return the rosterGroups
+     */
+    public HashMap<String, RosterGroup> getRosterGroups() {
+        return rosterGroups;
     }
 
 }

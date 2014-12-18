@@ -1523,4 +1523,13 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
     // initialize logging
     static Logger log = LoggerFactory.getLogger(RosterEntry.class.getName());
 
+    @Override
+    public String getDisplayName() {
+        if (this.getRoadName() != null && !this.getRoadName().equals("")) { // NOI18N
+            return Bundle.getMessage("RosterEntryDisplayName", this.getId(), this.getRoadName(), this.getRoadNumber()); // NOI18N
+        } else {
+            return this.getId();
+        }
+    }
+
 }
