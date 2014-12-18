@@ -55,8 +55,8 @@
     <!-- should compiler warn of use of deprecated APIs? (on/off) -->
     <property name="deprecation" value="off"/>
 
-    <!-- SDK version (1.6 as of JMRI 2.99.1 [3.0 pre-releases]) -->
-    <property name="sdk_version"    value="1.6"/>
+    <!-- SDK version (1.8 as of JMRI 3.11.1 [4.0 pre-releases]) -->
+    <property name="sdk_version"    value="1.8"/>
     <property name="source_version" value="${sdk_version}"/>
     <property name="jre_version"    value="${sdk_version}"/>
 
