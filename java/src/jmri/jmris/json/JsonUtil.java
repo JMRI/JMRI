@@ -169,6 +169,7 @@ import static jmri.jmrit.operations.trains.TrainCommon.splitString;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.roster.rostergroup.RosterGroup;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.util.ConnectionNameFromSystemName;
@@ -799,8 +800,8 @@ public class JsonUtil {
             labels.add(label);
         }
         ArrayNode rga = entry.putArray(ROSTER_GROUPS);
-        for (int i = 0; i < re.getGroups().size(); i++) {
-            rga.add(re.getGroups().get(i));
+        for (RosterGroup group : re.getGroups()) {
+            rga.add(group.getName());
         }
         return root;
     }

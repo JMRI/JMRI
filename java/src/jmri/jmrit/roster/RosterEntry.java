@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import jmri.BasicRosterEntry;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
+import jmri.jmrit.roster.rostergroup.RosterGroup;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
@@ -935,18 +936,21 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
     }
 
     /**
-     * Provide access to the set of roster groups
+     * List the roster groups this entry is a member of.
      *
      * @return list of roster groups
      */
-    public List<String> getGroups() {
-        String[] attributes = getAttributeList();
-        List<String> groups = new ArrayList<String>();
-        if (attributes != null) {
+    public List<RosterGroup> getGroups() {
+        List<RosterGroup> groups = new ArrayList<RosterGroup>();
+        if (!this.getAttributes().isEmpty()) {
             Roster roster = Roster.instance();
-            for (String attribute : attributes) {
+            for (String attribute : this.getAttributes()) {
                 if (attribute.startsWith(roster.getRosterGroupPrefix())) {
-                    groups.add(attribute.substring(roster.getRosterGroupPrefix().length()));
+                    String name = attribute.substring(roster.getRosterGroupPrefix().length());
+                    if (!roster.getRosterGroups().containsKey(name)) {
+                        roster.addRosterGroup(new RosterGroup(name));
+                    }
+                    groups.add(roster.getRosterGroups().get(name));
                 }
             }
         }
