@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -19,7 +20,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
 import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.operations.ExceptionDisplayFrame;
 import jmri.jmrit.operations.OperationsFrame;
@@ -30,8 +33,10 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.routes.RouteManagerXml;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.web.server.WebServerManager;
 
 /**
@@ -106,6 +111,11 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 	JComboBox westComboBox = new JComboBox();
 	JComboBox localComboBox = new JComboBox();
 	JComboBox terminateComboBox = new JComboBox();
+	
+	// text area
+	JTextArea commentTextArea = new JTextArea(2, 60);
+	JScrollPane commentScroller = new JScrollPane(commentTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+			JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
 	public OperationsSetupFrame() {
 		super(Bundle.getMessage("TitleOperationsSetup"));
@@ -125,9 +135,9 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		switchTimeTextField.setText(Integer.toString(Setup.getSwitchTime()));
 		travelTimeTextField.setText(Integer.toString(Setup.getTravelTime()));
 		panelTextField.setText(Setup.getPanelName());
-		// ownerTextField.setText(Setup.getOwnerName());
 		yearTextField.setText(Setup.getYearModeled());
-
+		commentTextArea.setText(Setup.getComment());
+		
 		// load checkboxes
 		mainMenuCheckBox.setSelected(Setup.isMainMenuEnabled());
 		closeOnSaveCheckBox.setSelected(Setup.isCloseWindowOnSaveEnabled());
@@ -150,6 +160,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		switchTimeTextField.setToolTipText(Bundle.getMessage("SwitchTimeTip"));
 		travelTimeTextField.setToolTipText(Bundle.getMessage("TravelTimeTip"));
 		railroadNameTextField.setToolTipText(Bundle.getMessage("RailroadNameTip"));
+		commentTextArea.setToolTipText(Bundle.getMessage("CommentTip"));
 
 		// Layout the panel by rows
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -345,18 +356,27 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		westComboBox.setSelectedItem(Setup.getTrainIconColorWest());
 		localComboBox.setSelectedItem(Setup.getTrainIconColorLocal());
 		terminateComboBox.setSelectedItem(Setup.getTrainIconColorTerminate());
+		
+		// comment
+		JPanel pC = new JPanel();
+		pC.setLayout(new GridBagLayout());
+		pC.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Comment")));
+		addItem(pC, commentScroller, 0, 0);
+		
+		// adjust text area width based on window size
+		adjustTextAreaColumnWidth(commentScroller, commentTextArea);
 
 		// row 15
 		JPanel pControl = new JPanel();
 		pControl.setLayout(new GridBagLayout());
 		addItem(pControl, restoreButton, 0, 9);
 		addItem(pControl, backupButton, 1, 9);
-
 		addItem(pControl, saveButton, 3, 9);
 
 		getContentPane().add(panelPane);
 		getContentPane().add(options);
 		getContentPane().add(pIconPane);
+		getContentPane().add(pC);
 		getContentPane().add(pControl);
 
 		// setup buttons
@@ -577,6 +597,8 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		}
 		// set max train length
 		Setup.setMaxTrainLength(Integer.parseInt(maxLengthTextField.getText()));
+		Setup.setComment(commentTextArea.getText());
+		
 		OperationsSetupXml.instance().writeOperationsFile();
 		if (Setup.isCloseWindowOnSaveEnabled())
 			dispose();

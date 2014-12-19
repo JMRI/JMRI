@@ -263,6 +263,7 @@ public class Setup {
 
 	private static boolean enableTrainIconXY = true;
 	private static boolean appendTrainIcon = false; // when true, append engine number to train name
+	private static String setupComment = "";
 
 	private static boolean mainMenuEnabled = false; // when true add operations menu to main menu bar
 	private static boolean closeWindowOnSave = false; // when true, close window when save button is activated
@@ -670,6 +671,14 @@ public class Setup {
 
 	public static boolean isTrainIconAppendEnabled() {
 		return appendTrainIcon;
+	}
+	
+	public static void setComment(String comment) {
+		setupComment = comment;
+	}
+	
+	public static String getComment() {
+		return setupComment;
 	}
 
 	public static void setBuildReportLevel(String level) {
@@ -1632,6 +1641,9 @@ public class Setup {
 		Element e = new Element(Xml.OPERATIONS);
 		e.addContent(values = new Element(Xml.RAIL_ROAD));
 		values.setAttribute(Xml.NAME, getRailroadName());
+		
+		e.addContent(values = new Element(Xml.SETUP));
+		values.setAttribute(Xml.COMMENT, getComment());
 
 		e.addContent(values = new Element(Xml.SETTINGS));
 		values.setAttribute(Xml.MAIN_MENU, isMainMenuEnabled() ? Xml.TRUE : Xml.FALSE);
@@ -1848,6 +1860,15 @@ public class Setup {
 				log.debug("railroadName: {}", name);
 			railroadName = name; // don't set the dirty bit
 		}
+		
+		if ((operations.getChild(Xml.SETUP) != null)
+				&& (a = operations.getChild(Xml.SETUP).getAttribute(Xml.COMMENT)) != null) {
+			String comment = a.getValue();
+			if (log.isDebugEnabled())
+				log.debug("setup comment: {}", comment);
+			setupComment = comment;
+		}
+		
 		if (operations.getChild(Xml.SETTINGS) != null) {
 			if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.MAIN_MENU)) != null) {
 				String enabled = a.getValue();

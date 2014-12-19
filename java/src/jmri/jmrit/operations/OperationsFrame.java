@@ -3,6 +3,7 @@
 package jmri.jmrit.operations;
 
 import java.awt.Dimension;
+import java.awt.FontMetrics;
 import java.awt.GridBagConstraints;
 
 import javax.swing.JButton;
@@ -15,6 +16,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
@@ -230,6 +232,24 @@ public class OperationsFrame extends jmri.util.JmriJFrame implements AncestorLis
 		int newIndex = b.getSelectedIndex() + 1;
 		if (newIndex < b.getItemCount())
 			b.setSelectedIndex(newIndex);
+	}
+	
+	/**
+	 * Will modify the character column width of a TextArea box to 90% of a panels width. ScrollPane is set to 95% of
+	 * panel width.
+	 * 
+	 * @param textArea
+	 */
+	protected void adjustTextAreaColumnWidth(JScrollPane scrollPane, JTextArea textArea) {
+		FontMetrics metrics = getFontMetrics(textArea.getFont());
+		int columnWidth = metrics.charWidth('m');
+		int width = getPreferredSize().width;
+		int columns = width / columnWidth * 90 / 100; // make text area 90% of the panel width
+		if (columns > textArea.getColumns()) {
+			log.debug("Increasing text area character width to {} columns", columns);
+			textArea.setColumns(columns);
+		}
+		scrollPane.setMinimumSize(new Dimension(width * 95 / 100, 60));
 	}
 
 	/**

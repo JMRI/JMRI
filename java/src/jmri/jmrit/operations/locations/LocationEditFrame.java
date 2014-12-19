@@ -82,7 +82,6 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	JTextArea commentTextArea = new JTextArea(2, 60);
 	JScrollPane commentScroller = new JScrollPane(commentTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 			JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-	Dimension minScrollerDim = new Dimension(800, 42);
 
 	public static final String NAME = Bundle.getMessage("Name");
 	public static final int MAX_NAME_LENGTH = Control.max_len_string_location_name;
@@ -208,9 +207,11 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		JPanel pC = new JPanel();
 		pC.setLayout(new GridBagLayout());
 		pC.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Comment")));
-		commentScroller.setMinimumSize(minScrollerDim);
 		addItem(pC, commentScroller, 0, 0);
-
+		
+		// adjust text area width based on window size
+		adjustTextAreaColumnWidth(commentScroller, commentTextArea);
+		
 		// row 12
 		JPanel pB = new JPanel();
 		pB.setLayout(new GridBagLayout());

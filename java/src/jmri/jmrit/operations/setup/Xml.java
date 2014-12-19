@@ -56,6 +56,7 @@ public class Xml {
 	static final String VALUE_LABEL = "valueLabel"; // NOI18N
 	static final String SHOW_RFID = "showRfid"; // NOI18N
 	static final String RFID_LABEL = "rfidLabel"; // NOI18N
+	static final String SETUP = "setup"; // NOI18N
 	
 	static final String ROUTER = "router"; // NOI18N
 	static final String CAR_ROUTING_ENABLED = "carRoutingEnabled"; // NOI18N

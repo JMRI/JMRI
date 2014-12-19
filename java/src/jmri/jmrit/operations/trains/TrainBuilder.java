@@ -131,6 +131,11 @@ public class TrainBuilder extends TrainCommon {
 			addLine(_buildReport, SEVEN, Bundle.getMessage("buildRouterReportLevelDetailed"));
 		else if (Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_VERY_DETAILED))
 			addLine(_buildReport, SEVEN, Bundle.getMessage("buildRouterReportLevelVeryDetailed"));
+		
+		if (!Setup.getComment().equals("")) {
+			addLine(_buildReport, ONE, BLANK_LINE);
+			addLine(_buildReport, ONE, Setup.getComment());
+		}
 
 		if (_train.getRoute() == null) {
 			throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorRoute"),
@@ -1859,6 +1864,24 @@ public class TrainBuilder extends TrainCommon {
 					rl.getMaxCarMoves() }));
 			addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
 			_carIndex = 0; // see reportCarsNotMoved(rl, percent) below
+			
+			if (routeIndex == 0
+					&& _departStageTrack != null
+					&& _reqNumOfMoves > 0
+					&& (_departStageTrack.isAddCustomLoadsEnabled()
+							|| _departStageTrack.isAddCustomLoadsAnySpurEnabled() || _departStageTrack
+								.isAddCustomLoadsAnyStagingTrackEnabled())) {
+				addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCustomLoadOptions"),
+						new Object[] { _departStageTrack.getName() }));
+				if (_departStageTrack.isAddCustomLoadsEnabled())
+					addLine(_buildReport, FIVE, Bundle.getMessage("buildLoadCarLoads"));
+				if (_departStageTrack.isAddCustomLoadsAnySpurEnabled())
+					addLine(_buildReport, FIVE, Bundle.getMessage("buildLoadAnyCarLoads"));
+				if (_departStageTrack.isAddCustomLoadsAnyStagingTrackEnabled())
+					addLine(_buildReport, FIVE, Bundle.getMessage("buildLoadsStaging"));
+				addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
+			}
+			
 			findDestinationsForCarsFromLocation(rl, routeIndex, false);
 			// perform a another pass if aggressive and there are requested moves
 			// this will perform local moves at this location, services off spot tracks
