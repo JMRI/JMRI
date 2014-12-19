@@ -96,17 +96,7 @@ public class ImportRosterItemAction extends AbstractRosterItemAction  {
         File fout = new File(LocoFile.getFileLocation()+mToEntry.getFileName());
         newLocoFile.writeFile(fout, lroot, mToEntry);
         
-        String[] attributes = mToEntry.getAttributeList();
-        if (attributes!=null){
-            Roster roster = Roster.instance();
-            for(int x=0; x<attributes.length; x++){
-                if(attributes[x].startsWith(roster.getRosterGroupPrefix())){
-                    //We don't bother checking to see if the group already exists as this is done by the addRosterGroupList.
-                    roster.addRosterGroupList(attributes[x].substring(roster.getRosterGroupPrefix().length()));
-                }
-            }
-        }
-
+        mToEntry.getGroups();
         return true;
     }
     

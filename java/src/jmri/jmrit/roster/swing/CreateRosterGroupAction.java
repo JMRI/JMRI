@@ -2,19 +2,18 @@
 
 package jmri.jmrit.roster.swing;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import jmri.util.swing.JmriAbstractAction;
-import jmri.util.swing.WindowInterface;
-import javax.swing.Icon;
 import java.util.ResourceBundle;
-
+import javax.swing.Icon;
 import javax.swing.JOptionPane;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.WindowInterface;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Create a roster group.
@@ -78,7 +77,7 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
                 re.updateFile();
             }
         }
-        Roster.instance().addRosterGroupList(entry);
+        Roster.instance().addRosterGroup(entry);
         Roster.writeRosterFile();
     }
     

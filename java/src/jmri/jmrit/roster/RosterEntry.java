@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.StringTokenizer;
+import java.util.TreeMap;
 import java.util.Vector;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -131,7 +132,7 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
     protected boolean[] functionLockables;
     protected String _isShuntingOn = "";
 
-    java.util.TreeMap<String, String> attributePairs;
+    protected final TreeMap<String, String> attributePairs = new TreeMap<String, String>();
 
     protected String _imageFilePath = null;
     protected String _iconFilePath = null;
@@ -890,24 +891,18 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
     @Override
     public void putAttribute(String key, String value) {
         String oldValue = getAttribute(key);
-        if (attributePairs == null) {
-            attributePairs = new java.util.TreeMap<String, String>();
-        }
         attributePairs.put(key, value);
         firePropertyChange(RosterEntry.ATTRIBUTE_UPDATED + key, oldValue, value);
     }
 
     @Override
     public String getAttribute(String key) {
-        if (attributePairs == null) {
-            return null;
-        }
         return attributePairs.get(key);
     }
 
     @Override
     public void deleteAttribute(String key) {
-        if (attributePairs != null) {
+        if (attributePairs.containsKey(key)) {
             attributePairs.remove(key);
             firePropertyChange(RosterEntry.ATTRIBUTE_DELETED, key, null);
         }
@@ -921,17 +916,11 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
      * @return a set of attribute keys
      */
     public java.util.Set<String> getAttributes() {
-        if (attributePairs == null) {
-            return null;
-        }
         return attributePairs.keySet();
     }
 
     @Override
     public String[] getAttributeList() {
-        if (attributePairs == null) {
-            return null;
-        }
         return attributePairs.keySet().toArray(new String[attributePairs.size()]);
     }
 
@@ -1057,25 +1046,19 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
             e.addContent(d);
         }
 
-        java.util.Set<String> keyset = getAttributes();
-        if (keyset != null) {
-            java.util.Iterator<String> keys = keyset.iterator();
-            if (keys.hasNext()) {
-                d = new Element("attributepairs");
-                while (keys.hasNext()) {
-                    String key = keys.next();
-                    String value = getAttribute(key);
-                    d.addContent(new Element("keyvaluepair")
-                            .addContent(new Element("key")
-                                    .addContent(key)
-                            )
-                            .addContent(new Element("value")
-                                    .addContent(value)
-                            )
-                    );
-                }
-                e.addContent(d);
+        if (!getAttributes().isEmpty()) {
+            d = new Element("attributepairs");
+            for (String key : getAttributes()) {
+                d.addContent(new Element("keyvaluepair")
+                        .addContent(new Element("key")
+                                .addContent(key)
+                        )
+                        .addContent(new Element("value")
+                                .addContent(getAttribute(key))
+                        )
+                );
             }
+            e.addContent(d);
         }
         if (_sp != null) {
             _sp.store(e);

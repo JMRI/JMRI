@@ -358,10 +358,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         java.util.Iterator<RosterEntry> i = _list.iterator();
         while (i.hasNext()) {
             RosterEntry r = i.next();
-            Set<String> s = r.getAttributes();
-            if (s != null) {
-                result.addAll(s);
-            }
+            result.addAll(r.getAttributes());
         }
         return result;
     }
@@ -741,9 +738,9 @@ public class Roster extends XmlFile implements RosterGroupSelector {
             log.error("Unrecognized roster file contents in file: " + name);
         }
         if (root.getChild("rosterGroup") != null) { // NOI18N
-            List<Element> g = root.getChild("rosterGroup").getChildren("group"); // NOI18N
-            for (int i = 0; i < g.size(); i++) {
-                addRosterGroupList(g.get(i).getText().toString());
+            List<Element> groups = root.getChild("rosterGroup").getChildren("group"); // NOI18N
+            for (Element group : groups) {
+                addRosterGroup(group.getText());
             }
         }
     }
@@ -942,12 +939,34 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     }
 
     /**
+     * Add a roster group, notifying all listeners of the change.
+     *
+     * This method creates a {@link jmri.jmrit.roster.rostergroup.RosterGroup}.
+     * Use {@link #addRosterGroup(jmri.jmrit.roster.rostergroup.RosterGroup) }
+     * if you need to add a subclass of RosterGroup. This method fires the
+     * property change notification "{@value #ROSTER_GROUP_ADDED}".
+     *
+     * @param rg The group to be added
+     */
+    public void addRosterGroup(String rg) {
+        // do a quick return without creating a new RosterGroup object
+        // if the roster group aleady exists
+        if (this.rosterGroups.containsKey(rg)) {
+            return;
+        }
+        this.addRosterGroup(new RosterGroup(rg));
+    }
+
+    /**
      * Add a roster group, notifying all listeners of the change
      * <p>
      * This method fires the property change notification "RosterGroupAdded"
      *
      * @param str The group to be added
+     * @deprecated Use {@link #addRosterGroup(java.lang.String) } instead.
      */
+    @Deprecated
+    // All internal JMRI use has been removed.
     public void addRosterGroupList(String str) {
         this.addRosterGroup(new RosterGroup(str));
     }

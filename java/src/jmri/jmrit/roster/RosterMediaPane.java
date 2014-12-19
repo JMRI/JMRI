@@ -188,16 +188,9 @@ public class RosterMediaPane extends JPanel {
         }
 
         public void setModel(RosterEntry r) {
-            if (r.getAttributes() != null) {
-                attributes = new Vector<KeyValueModel>(r.getAttributes().size());
-                Iterator<String> ite = r.getAttributes().iterator();
-                while (ite.hasNext()) {
-                    String key = ite.next();
-                    KeyValueModel kv = new KeyValueModel(key, r.getAttribute(key));
-                    attributes.add(kv);
-                }
-            } else {
-                attributes = new Vector<KeyValueModel>(0);
+            attributes = new Vector<KeyValueModel>(r.getAttributes().size());
+            for (String key : r.getAttributes()) {
+                attributes.add(new KeyValueModel(key, r.getAttribute(key)));
             }
             wasModified = false;
         }
@@ -205,18 +198,16 @@ public class RosterMediaPane extends JPanel {
         public void updateModel(RosterEntry r) {
             for (KeyValueModel kv : attributes) {
                 if ((kv.key.length() > 0) && // only update if key value defined, will do the remove to
-                        ((r.getAttributes() == null) || (r.getAttribute(kv.key) == null) || (kv.value.compareTo(r.getAttribute(kv.key)) != 0))) {
+                        ((r.getAttribute(kv.key) == null) || (kv.value.compareTo(r.getAttribute(kv.key)) != 0))) {
                     r.putAttribute(kv.key, kv.value);
                 }
             }
             //remove undefined keys
-            if (r.getAttributes() != null) {
-                Iterator<String> ite = r.getAttributes().iterator();
-                while (ite.hasNext()) {
-                    if (!keyExist(ite.next())) // not very efficient algorithm!
-                    {
-                        ite.remove();
-                    }
+            Iterator<String> ite = r.getAttributes().iterator();
+            while (ite.hasNext()) {
+                if (!keyExist(ite.next())) // not very efficient algorithm!
+                {
+                    ite.remove();
                 }
             }
             wasModified = false;
