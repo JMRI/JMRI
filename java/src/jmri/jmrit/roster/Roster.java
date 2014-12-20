@@ -1018,6 +1018,10 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         this.addRosterGroup(new RosterGroup(newName));
     }
 
+    public void rosterGroupRenamed(String oldName, String newName) {
+        this.firePropertyChange(Roster.ROSTER_GROUP_RENAMED, oldName, newName);
+    }
+
     /**
      * Rename a roster group, while keeping every entry in the roster group.
      *
@@ -1036,7 +1040,6 @@ public class Roster extends XmlFile implements RosterGroupSelector {
             return;
         }
         this.getRosterGroups().get(oldName).setName(newName);
-        firePropertyChange(ROSTER_GROUP_RENAMED, oldName, newName);
     }
 
     // What does this do? Should this return the group at i? It's not used as fas as I can tell

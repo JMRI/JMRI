@@ -53,16 +53,22 @@ public class RosterGroup extends RosterObject {
      * Set the RosterGroup's name, changing it in every entry associated with
      * the roster.
      *
-     * @param name the name to set
+     * @param newName the new name
      */
-    public void setName(String name) {
-        String oldGroup = Roster.getRosterGroupProperty(this.name);
-        String newGroup = Roster.getRosterGroupProperty(name);
+    public void setName(String newName) {
+        if (Roster.instance().getRosterGroups().containsKey(newName)) {
+            return;
+        }
+        String oldName = this.name;
+        String oldGroup = Roster.getRosterGroupProperty(oldName);
+        String newGroup = Roster.getRosterGroupProperty(newName);
+        Roster.instance().getRosterGroups().put(newName, Roster.instance().getRosterGroups().remove(oldName));
         for (RosterEntry re : this.getEntries()) {
             re.putAttribute(newGroup, "yes"); // NOI18N
             re.deleteAttribute(oldGroup);
         }
-        this.name = name;
+        this.name = newName;
+        Roster.instance().rosterGroupRenamed(oldName, newName);
     }
 
     @Override
