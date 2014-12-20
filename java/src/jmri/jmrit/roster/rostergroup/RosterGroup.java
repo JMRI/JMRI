@@ -6,6 +6,10 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterObject;
 
 /**
+ * A RosterGroup object contains information about groupings of entries within
+ * the {@link jmri.jmrit.roster.Roster}.
+ *
+ * This object allows groups to be manipulated as Java beans.
  *
  * @author Randall Wood <randall.h.wood@alexandriasoftware.com>
  */
@@ -13,22 +17,42 @@ public class RosterGroup extends RosterObject {
 
     private String name;
 
-    public RosterGroup(String aName) {
-        this.name = aName;
+    /**
+     * Create a roster group.
+     *
+     * This sets the name without calling {@link #setName(java.lang.String) }.
+     *
+     * @param name
+     */
+    public RosterGroup(String name) {
+        this.name = name;
     }
 
+    /**
+     * Get the list of entries associated with this group.
+     *
+     * @return the list of entries or an empty list.
+     */
     public List<RosterEntry> getEntries() {
         return Roster.instance().getEntriesInGroup(this.getName());
     }
 
     /**
+     * Get the RosterGroup's name.
+     *
+     * Use {@link #getDisplayName() } to get the name to be displayed to a user.
+     *
      * @return the name
+     * @see #getDisplayName()
      */
     public String getName() {
         return this.name;
     }
 
     /**
+     * Set the RosterGroup's name, changing it in every entry associated with
+     * the roster.
+     *
      * @param name the name to set
      */
     public void setName(String name) {
@@ -46,4 +70,48 @@ public class RosterGroup extends RosterObject {
         return this.getName();
     }
 
+    /**
+     * Flag indicating that this RosterGroup can be edited by the user.
+     *
+     * The default implementation always returns true.
+     *
+     * @return true if the group can be edited.
+     */
+    public boolean canEdit() {
+        return true;
+    }
+
+    /**
+     * Flag indicating that this RosterGroup can be deleted by the user.
+     *
+     * The default implementation always returns true.
+     *
+     * @return true if the group can be deleted.
+     */
+    public boolean canDelete() {
+        return true;
+    }
+
+    /**
+     * Flag indicating that this RosterGroup can be duplicated by the user.
+     *
+     * The default implementation always returns true.
+     *
+     * @return true if the group can be copied.
+     */
+    public boolean canCopy() {
+        return true;
+    }
+
+    /**
+     * Flag indicating that the contents of this RosterGroup can be changed by
+     * the user.
+     *
+     * The default implementation always returns true.
+     *
+     * @return true if entries in this group can be changed.
+     */
+    public boolean canChangeContents() {
+        return true;
+    }
 }
