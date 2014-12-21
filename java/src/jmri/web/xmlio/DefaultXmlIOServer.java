@@ -132,7 +132,6 @@ public class DefaultXmlIOServer implements XmlIOServer {
         // power, turnout, sensor, signalhead, signalmast, memory and route 
         // can be monitored for changes, pass current values to begin
         // throttle accepts changes
-        @SuppressWarnings("unchecked")
         List<Element> lists = new ArrayList<Element>(e.getChildren(LIST));
         for (Element list : lists) {
             e.removeContent(list);
@@ -470,7 +469,6 @@ public class DefaultXmlIOServer implements XmlIOServer {
         }
 
         // handle everything else
-        @SuppressWarnings("unchecked")
         List<Element> items = e.getChildren();
         for (Element item : items) {
             String type = item.getName();
@@ -544,7 +542,6 @@ public class DefaultXmlIOServer implements XmlIOServer {
         dr.client = client;
         dr.thread = thread;
 
-        @SuppressWarnings("unchecked")
         List<Element> items = e.getChildren();
 
         for (Element item : items) {
@@ -583,7 +580,6 @@ public class DefaultXmlIOServer implements XmlIOServer {
     }
 
     void sendMonitorReply(Element e, XmlIORequestor r, String client, Thread thread) {
-        @SuppressWarnings("unchecked")
         List<Element> items = e.getChildren();
 
         for (Element item : items) {
@@ -624,7 +620,6 @@ public class DefaultXmlIOServer implements XmlIOServer {
     }
 
     boolean checkValues(Element e) {
-        @SuppressWarnings("unchecked")
         List<Element> items = e.getChildren();
 
         boolean changed = false;
@@ -1870,7 +1865,6 @@ public class DefaultXmlIOServer implements XmlIOServer {
             }
 
             // found change, pull listeners and return
-            @SuppressWarnings("unchecked")
             List<Element> items = request.getChildren();
             for (Element item : items) {
                 String type = item.getName();

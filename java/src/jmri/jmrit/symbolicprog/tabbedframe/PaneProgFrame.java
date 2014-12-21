@@ -347,7 +347,6 @@ abstract public class PaneProgFrame extends JmriJFrame
      * @param pProgrammerFile   Name of the programmer file to use
      * @param pProg             Programmer object to be used to access CVs
      */
-    @SuppressWarnings("unchecked")
 	public PaneProgFrame(DecoderFile pDecoderFile, @NonNull RosterEntry pRosterEntry,
                         String pFrameTitle, String pProgrammerFile, Programmer pProg, boolean opsMode) {
         super(pFrameTitle);
@@ -618,7 +617,6 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     }
 
-    @SuppressWarnings("unchecked")
     protected void loadProgrammerFile(RosterEntry r) {
         // Open and parse programmer file
         XmlFile pf = new XmlFile(){};  // XmlFile is abstract
@@ -738,7 +736,6 @@ abstract public class PaneProgFrame extends JmriJFrame
         super.windowClosing(e);
     }
 
-    @SuppressWarnings("unchecked")
 	void readConfig(Element root, RosterEntry r) {
         // check for "programmer" element at start
         Element base;

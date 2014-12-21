@@ -162,7 +162,6 @@ public class DefaultSignalSystemManager extends AbstractManager
     }
 
     void loadBean(DefaultSignalSystem s, Element root) {
-        @SuppressWarnings("unchecked")
         List<Element> l = root.getChild("aspects").getChildren("aspect");
         
         // set user name from system name element
@@ -174,7 +173,6 @@ public class DefaultSignalSystemManager extends AbstractManager
             String name = l.get(i).getChild("name").getText();
             if (log.isDebugEnabled()) log.debug("aspect name "+name);
  
-            @SuppressWarnings("unchecked")
             List<Element> c = l.get(i).getChildren();
 
             for (int j = 0; j < c.size(); j++) {
@@ -184,7 +182,6 @@ public class DefaultSignalSystemManager extends AbstractManager
         }
         
         if(root.getChild("imagetypes")!=null){
-            @SuppressWarnings("unchecked")
             List<Element> t = root.getChild("imagetypes").getChildren("imagetype");
             for(int i = 0;i<t.size();i++){
                 String type = t.get(i).getAttribute("type").getValue();

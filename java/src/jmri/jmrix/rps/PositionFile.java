@@ -119,7 +119,6 @@ public class PositionFile extends XmlFile {
         return e;
     }
     
-    @SuppressWarnings("unchecked")
 	public Reading readingFromElement(Element reading) {
         String id = reading.getChild("id").getText();
         List<Element> kids = reading.getChildren("time");
@@ -173,7 +172,6 @@ public class PositionFile extends XmlFile {
     /**
      * FInd the highest numbered receiver in the file
      */
-    @SuppressWarnings("unchecked")
 	public int maxReceiver() {
         List<Element> kids = root.getChildren("receiver");
         int max = -1;
@@ -192,7 +190,6 @@ public class PositionFile extends XmlFile {
      * Get the nth receiver position in the file.
      * @return null if not present
      */
-    @SuppressWarnings("unchecked")
 	public Point3d getReceiverPosition(int n) {
         List<Element> kids = root.getChildren("receiver");
         for (int i = 0; i<kids.size(); i++) {
@@ -211,7 +208,6 @@ public class PositionFile extends XmlFile {
      * Get the nth receiver active state in the file.
      * @return true if not present
      */
-    @SuppressWarnings("unchecked")
 	public boolean getReceiverActive(int n) {
         List<Element> kids = root.getChildren("receiver");
         for (int i = 0; i<kids.size(); i++) {
@@ -234,7 +230,6 @@ public class PositionFile extends XmlFile {
      * Get the nth receiver min time.
      * @return 0 if not present
      */
-    @SuppressWarnings("unchecked")
 	public int getReceiverMin(int n) {
         List<Element> kids = root.getChildren("receiver");
         for (int i = 0; i<kids.size(); i++) {
@@ -260,7 +255,6 @@ public class PositionFile extends XmlFile {
      * Get the nth receiver max time.
      * @return 0 if not present
      */
-    @SuppressWarnings("unchecked")
 	public int getReceiverMax(int n) {
         List<Element> kids = root.getChildren("receiver");
         for (int i = 0; i<kids.size(); i++) {
@@ -286,7 +280,6 @@ public class PositionFile extends XmlFile {
      * Get the nth calibration position in the file.
      * @return null if not present
      */
-    @SuppressWarnings("unchecked")
 	public Point3d getCalibrationPosition(int n) {
         List<Element> kids = root.getChildren("calibrationpoint");
         if (n>= kids.size()) return null;
@@ -298,7 +291,6 @@ public class PositionFile extends XmlFile {
      * Get the nth calibration reading in the file.
      * @return null if not present
      */
-    @SuppressWarnings("unchecked")
 	public Reading getCalibrationReading(int n) {
         List<Element> kids = root.getChildren("calibrationpoint");
         if (n>= kids.size()) return null;

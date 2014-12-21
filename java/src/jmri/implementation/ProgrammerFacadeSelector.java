@@ -20,7 +20,6 @@ import java.util.List;
  */
 public class ProgrammerFacadeSelector  {
 
-    @SuppressWarnings("unchecked") // needed because JDOM getChildren returns plain List, not List<Element>
     public static Programmer loadFacadeElements(Element element, Programmer programmer) {
         // iterate over any facades and add them
         List<Element> facades = element.getChildren("capability");
