@@ -198,7 +198,6 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
      * @param blocks Element containing the block elements to load.
      * @return true if successful
      */
-    @SuppressWarnings("unchecked")
 	public boolean load(Element blocks) throws jmri.configurexml.JmriConfigureXmlException {
     	boolean result = true;
         try {
@@ -228,7 +227,6 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
      * 
      * @param element Element holding one block
      */
-    @SuppressWarnings("unchecked")
 	public void loadBlock(Element element) throws jmri.configurexml.JmriConfigureXmlException {
             if (element.getAttribute("systemName") == null) {
                 log.warn("unexpected null in systemName "+element+" "+element.getAttributes());
@@ -327,7 +325,6 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
      * @param block Block to receive path
      * @param element Element containing path information
      */
-    @SuppressWarnings("unchecked")
 	public void loadPath(Block block, Element element) throws jmri.configurexml.JmriConfigureXmlException {
         // load individual path
         int toDir = 0;
@@ -364,7 +361,6 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
      * @param path Path to receive BeanSetting
      * @param element Element containing beansetting information
      */
-    @SuppressWarnings("unchecked")
 	public void loadBeanSetting(Path path, Element element) {
         int setting = 0;
         try {

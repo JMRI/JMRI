@@ -666,7 +666,6 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      *
      * @param name filename of roster file
      */
-    @SuppressWarnings("unchecked")
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area

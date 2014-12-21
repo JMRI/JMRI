@@ -645,7 +645,6 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
      *
      * @param e3
      */
-    @SuppressWarnings("unchecked")
     public void loadFunctions(Element e3) {
         this.loadFunctions(e3, "family");
     }
@@ -657,7 +656,6 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
      * @param e3
      * @param source
      */
-    @SuppressWarnings("unchecked")
     public void loadFunctions(Element e3, String source) {
         /*Load flag once, means that when the roster entry is edited only the first set of function labels are displayed 
          ie those saved in the roster file, rather than those being left blank
@@ -723,7 +721,6 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
      * @param e3
      * @param source
      */
-    @SuppressWarnings("unchecked")
     public void loadSounds(Element e3, String source) {
         /*Load flag once, means that when the roster entry is edited only the first set of sound labels are displayed 
          ie those saved in the roster file, rather than those being left blank
@@ -752,7 +749,6 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
      *
      * @param e3
      */
-    @SuppressWarnings("unchecked")
     public void loadAttributes(Element e3) {
         if (e3 != null) {
             List<Element> l = e3.getChildren("keyvaluepair");
