@@ -41,6 +41,10 @@ import org.slf4j.LoggerFactory;
 // loop() : starts extended sustain horn
 // stop() : ends extended sustain horn (plays end sound)
 
+// Suppressing "unused" warnings throughout. There are a dozen 
+// methods, ctors and values that aren't used and don't have
+// outside access.
+@SuppressWarnings("unused")
 class Diesel3Sound extends EngineSound {
 
     // Engine Sounds
