@@ -13,8 +13,8 @@ import jmri.configurexml.TurnoutOperationManagerXml;
 import jmri.NamedBeanHandle;
 
 import java.util.List;
-import org.jdom.Element;
-import org.jdom.Attribute;
+import org.jdom2.Element;
+import org.jdom2.Attribute;
 
 /**
  * Provides the abstract base and store functionality for

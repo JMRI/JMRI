@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterConfigPane;
 import jmri.jmrit.roster.RosterEntry;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Handle XML persistance of Roster default values.

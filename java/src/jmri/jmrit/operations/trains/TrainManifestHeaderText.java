@@ -1,7 +1,7 @@
 package jmri.jmrit.operations.trains;
 
-import org.jdom.Attribute;
-import org.jdom.Element;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
 
 /**
  * Loads and stores the manifest header text strings.

@@ -31,8 +31,8 @@ import java.util.Collections;
 import jmri.util.PhysicalLocation;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
 
-import org.jdom.Document;
-import org.jdom.Element;
+import org.jdom2.Document;
+import org.jdom2.Element;
 
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
@@ -95,11 +95,11 @@ public class VSDecoderPreferences {
     
     public VSDecoderPreferences() {   }
     
-    public void load(org.jdom.Element e)
+    public void load(org.jdom2.Element e)
     {
     	if (e==null) return;
-    	org.jdom.Attribute a;
-	org.jdom.Element c;
+    	org.jdom2.Attribute a;
+	org.jdom2.Element c;
     	if ((a = e.getAttribute("isAutoStartingEngine")) != null )  setAutoStartEngine( a.getValue().compareTo("true") == 0 );
     	if ((a = e.getAttribute("isAutoLoadingDefaultVSDFile")) != null )  setAutoLoadDefaultVSDFile( a.getValue().compareTo("true") == 0 );
 	if ((c = e.getChild("DefaultVSDFilePath")) != null) setDefaultVSDFilePath(c.getValue());
@@ -117,9 +117,9 @@ public class VSDecoderPreferences {
 	 */
 	static class VSDecoderPrefsXml extends XmlFile { }
 	
-    private org.jdom.Element store() {
-	org.jdom.Element ec;
-    	org.jdom.Element e = new org.jdom.Element("VSDecoderPreferences");
+    private org.jdom2.Element store() {
+	org.jdom2.Element ec;
+    	org.jdom2.Element e = new org.jdom2.Element("VSDecoderPreferences");
 	e.setAttribute("isAutoStartingEngine", ""+isAutoStartingEngine());
 	e.setAttribute("isAutoLoadingDefaultVSDFile", ""+isAutoLoadingDefaultVSDFile());
 	ec = new Element("DefaultVSDFilePath");

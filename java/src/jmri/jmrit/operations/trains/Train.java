@@ -39,7 +39,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -3244,7 +3244,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	 *            Consist XML element
 	 */
 	public Train(Element e) {
-		org.jdom.Attribute a;
+		org.jdom2.Attribute a;
 		if ((a = e.getAttribute(Xml.ID)) != null)
 			_id = a.getValue();
 		else

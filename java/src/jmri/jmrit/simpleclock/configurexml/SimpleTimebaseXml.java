@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.util.Locale;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Handle XML persistance of SimpleTimebase objects
@@ -108,7 +108,7 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
                     log.error("Cannot restore rate: "+r+" "+e1);
                     result = false;
                 }
-            } catch (org.jdom.DataConversionException e2) {
+            } catch (org.jdom2.DataConversionException e2) {
                 log.error("Cannot convert rate: "+e2);
                 result = false;
             }

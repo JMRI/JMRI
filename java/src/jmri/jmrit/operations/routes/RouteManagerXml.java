@@ -8,9 +8,9 @@ import java.io.File;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.OperationsXml;
 
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.ProcessingInstruction;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.ProcessingInstruction;
 
 /**
  * Loads and stores routes using xml files. 
@@ -69,7 +69,7 @@ public class RouteManagerXml extends OperationsXml {
      * Read the contents of a roster XML file into this object. Note that this does not
      * clear any existing entries.
      */
-    public void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
+    public void readFile(String name) throws org.jdom2.JDOMException, java.io.IOException {
     	// suppress rootFromName(name) warning message by checking to see if file exists
     	if (findFile(name) == null) {
     		log.debug("{} file could not be found", name);

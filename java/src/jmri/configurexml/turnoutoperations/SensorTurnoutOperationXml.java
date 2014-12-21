@@ -5,7 +5,7 @@ package jmri.configurexml.turnoutoperations;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 //import java.lang.reflect.Constructor;
 

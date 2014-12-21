@@ -7,7 +7,7 @@ import java.awt.Container;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * A Jynstrument is a Jython script and associated

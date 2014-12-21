@@ -16,10 +16,10 @@ import jmri.util.FileUtil;
 
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 
-//import org.jdom.DocType;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.ProcessingInstruction;
+//import org.jdom2.DocType;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.ProcessingInstruction;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -224,7 +224,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         Element root = new Element("layout-config");
         root.setAttribute("noNamespaceSchemaLocation",
                     "http://jmri.org/xml/schema/layout"+schemaVersion+".xsd",
-                    org.jdom.Namespace.getNamespace("xsi",
+                    org.jdom2.Namespace.getNamespace("xsi",
                       "http://www.w3.org/2001/XMLSchema-instance"));
         return root;
     }
@@ -620,7 +620,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             creationErrorEncountered(null, "opening file " + url.getFile(),
                     "File not found", null, null, e1);
             result = false;
-        } catch (org.jdom.JDOMException e) {
+        } catch (org.jdom2.JDOMException e) {
             creationErrorEncountered(null, "parsing file " + url.getFile(),
                     "Parse error", null, null, e);
             result = false;
@@ -688,7 +688,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             creationErrorEncountered (null, "opening file "+fi.getName(), Level.ERROR,
                                       "File not found", null,null,e1);
             result = false;
-        } catch (org.jdom.JDOMException e) {
+        } catch (org.jdom2.JDOMException e) {
             creationErrorEncountered (null, "parsing file "+fi.getName(), Level.ERROR,
                                       "Parse error", null,null,e);
             result = false;

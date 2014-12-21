@@ -9,7 +9,7 @@ import java.util.Locale;
 
 import javax.swing.JComboBox;
 
-import org.jdom.JDOMException;
+import org.jdom2.JDOMException;
 
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.locations.Location;

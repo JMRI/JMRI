@@ -9,7 +9,7 @@ import jmri.SignalGroupManager;
 
 import java.util.List;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Handle XML configuration for a DefaultSignalGroupManager objects.
@@ -190,7 +190,7 @@ public class DefaultSignalGroupManagerXml
                             state = 0;
                             try {
                                 state = signalTurnoutList.get(k).getAttribute("state").getIntValue();
-                            } catch (org.jdom.DataConversionException ex) {
+                            } catch (org.jdom2.DataConversionException ex) {
                                 log.warn("invalid state attribute value");
                             }
                             m.setSignalHeadAlignTurnout(sigHead, turnout, state);
@@ -204,7 +204,7 @@ public class DefaultSignalGroupManagerXml
                             state = 0;
                             try {
                                 state = signalSensorList.get(k).getAttribute("state").getIntValue();
-                            } catch (org.jdom.DataConversionException ex) {
+                            } catch (org.jdom2.DataConversionException ex) {
                                 log.warn("invalid style attribute value");
                             }
                             m.setSignalHeadAlignSensor(sigHead, sensor, state);

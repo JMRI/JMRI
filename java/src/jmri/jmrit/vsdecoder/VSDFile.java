@@ -36,7 +36,7 @@ import java.util.zip.ZipInputStream;
 import jmri.jmrit.XmlFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 public class VSDFile extends ZipFile {
     
@@ -109,7 +109,7 @@ public class VSDFile extends ZipFile {
 	    _statusMsg = "NP Error auto-loading VSD File: path = " + VSDXmlFileName + " " + npe.toString();
 	    log.warn(_statusMsg);
 	    return(false);
-	} catch (org.jdom.JDOMException ex) {
+	} catch (org.jdom2.JDOMException ex) {
 	    _statusMsg = "JDOM Exception loading VSDecoder from path " + VSDXmlFileName + " " + ex.toString();
 	    log.error(_statusMsg);
 	    return(false);

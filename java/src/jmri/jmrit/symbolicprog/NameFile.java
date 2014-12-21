@@ -8,7 +8,7 @@ import jmri.jmrit.XmlFile;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Set;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 // try to limit the JDOM to this class, so that others can manipulate...
 
@@ -72,7 +72,7 @@ public class NameFile extends XmlFile {
 	 * Read the contents of a NameFile XML file into this object. Note that this does not
 	 * clear any existing entries.
 	 */
-	void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
+	void readFile(String name) throws org.jdom2.JDOMException, java.io.IOException {
 		if (log.isDebugEnabled()) log.debug("readFile "+name);
 
 		// read file, find root

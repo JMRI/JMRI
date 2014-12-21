@@ -9,7 +9,7 @@ import junit.framework.Test;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.jdom.*;
+import org.jdom2.*;
 
 import jmri.progdebugger.*;
 import jmri.jmrit.symbolicprog.*;

@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import jmri.configurexml.*;
 import jmri.jmrit.display.configurexml.*;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Dummy class, just present so files that refer to this 

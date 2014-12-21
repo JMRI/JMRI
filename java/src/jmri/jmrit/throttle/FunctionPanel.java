@@ -17,7 +17,7 @@ import jmri.LocoAddress;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 
 /**

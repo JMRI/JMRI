@@ -19,7 +19,7 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
-import org.jdom.Element;
+import org.jdom2.Element;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
 import jmri.util.PhysicalLocation;

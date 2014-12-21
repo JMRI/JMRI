@@ -9,8 +9,8 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.MemoryComboIcon;
 import javax.swing.DefaultComboBoxModel;
 import jmri.Memory;
-import org.jdom.Element;
-import org.jdom.Attribute;
+import org.jdom2.Element;
+import org.jdom2.Attribute;
 
 /**
  * Handle configuration for display.MemorySpinnerIcon objects.
@@ -80,7 +80,7 @@ public class MemoryComboIconXml extends PositionableLabelXml {
 //            int idx = 0;
 //            try {
 //                idx = e.getAttribute("index").getIntValue();
-//            } catch ( org.jdom.DataConversionException ex) {
+//            } catch ( org.jdom2.DataConversionException ex) {
 //                log.error("failed to convert ComboBoxIcon index attribute");
 //                idx = i;
 //            }

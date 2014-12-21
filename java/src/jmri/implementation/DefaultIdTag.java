@@ -12,7 +12,7 @@ import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Reporter;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Concrete implementation of the {@link jmri.IdTag} interface

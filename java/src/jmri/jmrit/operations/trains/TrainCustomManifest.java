@@ -7,8 +7,8 @@ import jmri.jmrit.operations.OperationsManager;
 import jmri.util.FileUtil;
 import jmri.util.SystemType;
 
-import org.jdom.Attribute;
-import org.jdom.Element;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

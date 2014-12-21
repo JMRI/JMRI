@@ -212,8 +212,8 @@ public class Engine extends RollingStock {
 	 * @param e
 	 *            Engine XML element
 	 */
-	public Engine(org.jdom.Element e) {
-		org.jdom.Attribute a;
+	public Engine(org.jdom2.Element e) {
+		org.jdom2.Attribute a;
 		// must set _model first so locomotive hp, length, type and weight is set properly
 		if ((a = e.getAttribute(Xml.MODEL)) != null)
 			_model = a.getValue();
@@ -251,8 +251,8 @@ public class Engine extends RollingStock {
 	 * 
 	 * @return Contents in a JDOM Element
 	 */
-	public org.jdom.Element store() {
-		org.jdom.Element e = new org.jdom.Element(Xml.ENGINE);
+	public org.jdom2.Element store() {
+		org.jdom2.Element e = new org.jdom2.Element(Xml.ENGINE);
 		super.store(e);
 		e.setAttribute(Xml.MODEL, getModel());
 		e.setAttribute(Xml.HP, getHp());

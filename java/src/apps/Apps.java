@@ -146,7 +146,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                         log.debug("Start writing block info");
                         try {
                             new BlockValueFile().writeBlockValues();
-                        } //catch (org.jdom.JDOMException jde) { log.error("Exception writing blocks: {}", jde); }
+                        } //catch (org.jdom2.JDOMException jde) { log.error("Exception writing blocks: {}", jde); }
                         catch (IOException ioe) {
                             log.error("Exception writing blocks: {}", ioe);
                         }

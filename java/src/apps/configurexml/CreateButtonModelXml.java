@@ -9,7 +9,7 @@ import apps.CreateButtonModel;
 import javax.swing.Action;
 import javax.swing.JButton;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Handle XML persistance of CreateButtonModel objects.

@@ -1,6 +1,6 @@
 package jmri.managers.configurexml;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 import java.util.*;
 
 import jmri.configurexml.*;

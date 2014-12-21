@@ -6,8 +6,8 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.MemoryInputIcon;
 import jmri.Memory;
-import org.jdom.Element;
-import org.jdom.Attribute;
+import org.jdom2.Element;
+import org.jdom2.Attribute;
 
 /**
  * Handle configuration for display.MemorySpinnerIcon objects.
@@ -61,7 +61,7 @@ public class MemoryInputIconXml extends PositionableLabelXml {
         int nCol = 2;
         try {
             nCol = element.getAttribute("colWidth").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
+        } catch ( org.jdom2.DataConversionException e) {
             log.error("failed to convert colWidth attribute");
         }
 

@@ -4,7 +4,7 @@ package jmri.jmrit.roster;
 
 import java.awt.Component;
 import jmri.util.FileUtil;
-import org.jdom.Element;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

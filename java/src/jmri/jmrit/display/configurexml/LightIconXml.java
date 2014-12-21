@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.LightIcon;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Handle configuration for display.LightIcon objects.

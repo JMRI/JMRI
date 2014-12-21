@@ -13,9 +13,9 @@ import java.io.File;
 
 import java.util.List;
 import jmri.util.FileUtil;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.ProcessingInstruction;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.ProcessingInstruction;
 
 /**
  * Represents and manipulates a locomotive definition, both as a file and
@@ -179,7 +179,7 @@ class LocoFile extends XmlFile {
             Element root = new Element("locomotive-config");
             root.setAttribute("noNamespaceSchemaLocation",
                 "http://jmri.org/xml/schema/locomotive-config"+Roster.schemaVersion+".xsd",
-                org.jdom.Namespace.getNamespace("xsi",
+                org.jdom2.Namespace.getNamespace("xsi",
                     "http://www.w3.org/2001/XMLSchema-instance"));
             
             Document doc = newDocument(root);

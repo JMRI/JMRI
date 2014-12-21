@@ -160,7 +160,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 		try {
 			OptionsFile.instance().readDispatcherOptions(this);
 		} 
-		catch (org.jdom.JDOMException jde) {
+		catch (org.jdom2.JDOMException jde) {
 			log.error("JDOM Exception when retreiving dispatcher options "+jde);
 		}				
 		catch (java.io.IOException ioe) {

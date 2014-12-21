@@ -28,7 +28,7 @@ import java.util.Iterator;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 import jmri.util.JmriJFrame;
 import jmri.util.PhysicalLocation;

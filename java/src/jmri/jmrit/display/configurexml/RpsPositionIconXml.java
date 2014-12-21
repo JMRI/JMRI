@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.RpsPositionIcon;
-import org.jdom.Attribute;
-import org.jdom.Element;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
 
 /**
  * Handle configuration for rps.RpsPositionIcon objects
@@ -100,7 +100,7 @@ public class RpsPositionIconXml extends PositionableLabelXml {
                 active.setRotation(rotation, l);
                 error.setRotation(rotation, l);
             }
-        } catch (org.jdom.DataConversionException e) {}
+        } catch (org.jdom2.DataConversionException e) {}
 
         Attribute a = element.getAttribute("momentary");
         if ( (a!=null) && a.getValue().equals("true"))
@@ -130,7 +130,7 @@ public class RpsPositionIconXml extends PositionableLabelXml {
             syOrigin = element.getAttribute("syorigin").getIntValue();
         } catch ( NullPointerException e1) {
             log.error("missing transform attribute");
-        } catch ( org.jdom.DataConversionException e2) {
+        } catch ( org.jdom2.DataConversionException e2) {
             log.error("failed to convert transform attributes");
         }
         l.setTransform(sxScale, syScale, sxOrigin, syOrigin);

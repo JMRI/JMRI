@@ -1,7 +1,7 @@
 package jmri.managers.configurexml;
 
 import jmri.configurexml.*;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Handle XML persistance of ProxyTurnoutManager

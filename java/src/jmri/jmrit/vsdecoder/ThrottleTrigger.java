@@ -25,7 +25,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 // XML stuff
-import org.jdom.Element;
+import org.jdom2.Element;
 
 
 class ThrottleTrigger extends Trigger implements PropertyChangeListener {

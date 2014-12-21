@@ -9,9 +9,9 @@ import jmri.jmrit.roster.RosterEntry;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import org.jdom.DocType;
-import org.jdom.Document;
-import org.jdom.Element;
+import org.jdom2.DocType;
+import org.jdom2.Document;
+import org.jdom2.Element;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;

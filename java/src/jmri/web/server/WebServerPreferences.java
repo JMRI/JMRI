@@ -7,10 +7,10 @@ import java.util.Arrays;
 import java.util.List;
 import jmri.beans.Bean;
 import jmri.jmrit.XmlFile;
-import org.jdom.Attribute;
-import org.jdom.DataConversionException;
-import org.jdom.Element;
-import org.jdom.JDOMException;
+import org.jdom2.Attribute;
+import org.jdom2.DataConversionException;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

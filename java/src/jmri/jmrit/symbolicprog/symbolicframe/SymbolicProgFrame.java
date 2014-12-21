@@ -12,8 +12,8 @@ import java.io.*;
 import javax.swing.*;
 
 import java.util.List;   // resolve ambiguity with java.awt.List
-import org.jdom.*;
-import org.jdom.output.*;
+import org.jdom2.*;
+import org.jdom2.output.*;
 
 /**
  * Frame providing a table-organized command station programmer from decoder definition files

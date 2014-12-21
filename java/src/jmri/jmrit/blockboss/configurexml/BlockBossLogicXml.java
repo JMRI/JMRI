@@ -6,7 +6,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
 import java.util.Enumeration;
 
 import java.util.List;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Handle XML persistance of Simple Signal Logic objects.
@@ -301,7 +301,7 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
                         bb.setComment(c);
                     }
 
-                } catch (org.jdom.DataConversionException e) {
+                } catch (org.jdom2.DataConversionException e) {
                     log.warn("error reading blocks from file"+e);
                     result = false;
                 } catch (java.lang.IllegalArgumentException e) {

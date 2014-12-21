@@ -1,6 +1,6 @@
 package jmri.jmrit.revhistory.configurexml;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 import java.util.ArrayList;
 
 import jmri.jmrit.revhistory.FileHistory;

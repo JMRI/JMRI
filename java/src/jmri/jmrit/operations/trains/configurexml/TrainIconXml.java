@@ -6,7 +6,7 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.configurexml.LocoIconXml;
 import jmri.jmrit.operations.trains.TrainIcon;
 import jmri.jmrit.roster.RosterEntry;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Handle configuration for display.TrainIcon objects.

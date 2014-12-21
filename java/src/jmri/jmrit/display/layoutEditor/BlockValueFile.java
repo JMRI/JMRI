@@ -11,9 +11,9 @@ import jmri.Block;
 
 import java.util.List;
 import jmri.util.FileUtil;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.Attribute;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.Attribute;
 
 /**
  * Handle saving/restoring block value information to XML files.
@@ -42,7 +42,7 @@ public class BlockValueFile extends XmlFile {
 	 *  If a Block named in the file does not exist currently, that entry is quietly ignored.
 	 */
 	@SuppressWarnings("unchecked")
-	public void readBlockValues() throws org.jdom.JDOMException, java.io.IOException {
+	public void readBlockValues() throws org.jdom2.JDOMException, java.io.IOException {
 		log.debug("entered readBlockValues");
 		List<String> blocks = blockManager.getSystemNameList();
 		// check if file exists
@@ -85,7 +85,7 @@ public class BlockValueFile extends XmlFile {
 								try {
 									dd = a.getIntValue();
 								}
-								catch (org.jdom.DataConversionException e) {
+								catch (org.jdom2.DataConversionException e) {
 									log.error("failed to convert direction attribute");
 								}
 							}
@@ -116,7 +116,7 @@ public class BlockValueFile extends XmlFile {
 			java.util.Map<String,String> m = new java.util.HashMap<String,String>();
 			m.put("type", "text/xsl");
 			m.put("href", xsltLocation+"blockValues.xsl");
-			org.jdom.ProcessingInstruction p = new org.jdom.ProcessingInstruction("xml-stylesheet", m);
+			org.jdom2.ProcessingInstruction p = new org.jdom2.ProcessingInstruction("xml-stylesheet", m);
 			doc.addContent(0,p);
 			
 			// save block values in xml format

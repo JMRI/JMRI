@@ -8,8 +8,8 @@ import java.util.Iterator;
 
 import javax.swing.JOptionPane;
 
-import org.jdom.Element;
-import org.jdom.Attribute;
+import org.jdom2.Element;
+import org.jdom2.Attribute;
 
 import jmri.InstanceManager;
 import jmri.BeanSetting;
@@ -456,7 +456,7 @@ public class OBlockManagerXml // extends XmlFile
                 if (attr != null){
                     time = attr.getLongValue();
                 }
-            } catch (org.jdom.DataConversionException e) {
+            } catch (org.jdom2.DataConversionException e) {
                 log.error("Could not parse signalDelay for signal ("+name+") in portal ("+userName+")");
             }
             portal.setProtectSignal(Portal.getSignal(name), time, toBlock);
@@ -470,7 +470,7 @@ public class OBlockManagerXml // extends XmlFile
                 if (attr != null){
                     time = attr.getLongValue();
                 }
-            } catch (org.jdom.DataConversionException e) {
+            } catch (org.jdom2.DataConversionException e) {
                 log.error("Could not parse signalDelay for signal ("+name+") in portal ("+userName+")");
             }
             portal.setProtectSignal(Portal.getSignal(name), time, fromBlock);
@@ -493,7 +493,7 @@ public class OBlockManagerXml // extends XmlFile
             if (attr != null){
                 path.setToBlockDirection(attr.getIntValue());
             }
-        } catch (org.jdom.DataConversionException e) {
+        } catch (org.jdom2.DataConversionException e) {
             log.error("Could not parse path ("+pName+") block ("+block.getSystemName()+") attribute");
         }
 
@@ -523,7 +523,7 @@ public class OBlockManagerXml // extends XmlFile
             int setting = 0;
             try {
                 setting = setElem.getAttribute("set").getIntValue();
-            } catch (org.jdom.DataConversionException e) {
+            } catch (org.jdom2.DataConversionException e) {
                 log.error("Could not parse 'set' attribute for path ("+pName+
                           ") block ("+block.getSystemName()+")");
             }

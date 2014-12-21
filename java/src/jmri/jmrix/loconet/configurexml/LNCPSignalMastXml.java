@@ -4,13 +4,13 @@ package jmri.jmrix.loconet.configurexml;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrix.loconet.LNCPSignalMast;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 //import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
 
 /*import java.util.List;
-import org.jdom.DataConversionException;
-import org.jdom.Element;*/
+import org.jdom2.DataConversionException;
+import org.jdom2.Element;*/
 
 /**
  * Handle XML configuration for loconet.LNCPSignalMast objects.

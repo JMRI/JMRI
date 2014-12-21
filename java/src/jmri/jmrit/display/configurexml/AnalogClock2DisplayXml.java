@@ -6,7 +6,7 @@ import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.AnalogClock2Display;
 import jmri.jmrit.display.AnalogClock2Display.Colors;
 import jmri.jmrit.display.Editor;
-import org.jdom.Element;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 /**
@@ -85,7 +85,7 @@ public class AnalogClock2DisplayXml
                 color = Colors.valueOf(element.getAttribute("color").getValue());
             }
         }
-        catch (org.jdom.DataConversionException e) {
+        catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert positional attribute");
         }
         if (element.getAttribute("link")!=null) {

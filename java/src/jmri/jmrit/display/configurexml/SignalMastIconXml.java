@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory;
 import jmri.SignalMast;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SignalMastIcon;
-import org.jdom.Attribute;
-import org.jdom.Element;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
 
 /**
  * Handle configuration for display.SignalMastIcon objects.
@@ -89,7 +89,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
             l.setScale(scale);
             if (log.isDebugEnabled()) log.debug("Load SignalMast rotation= "+rotation+
                                                 " scale= "+scale+" attr text= "+text);
-        } catch ( org.jdom.DataConversionException e) {
+        } catch ( org.jdom2.DataConversionException e) {
             log.error("failed to convert rotation or scale attribute");
         }
         attr = element.getAttribute("signalmast"); 
@@ -125,7 +125,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
             if (attr!=null) {
                 l.setClickMode(attr.getIntValue());
             }
-        } catch (org.jdom.DataConversionException e) {
+        } catch (org.jdom2.DataConversionException e) {
             log.error("Failed on clickmode attribute: "+e);
         }
         
@@ -134,7 +134,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
             if (attr!=null) {
                 l.setLitMode(attr.getBooleanValue());
             }
-        } catch (org.jdom.DataConversionException e) {
+        } catch (org.jdom2.DataConversionException e) {
             log.error("Failed on litmode attribute: "+e);
         }
                         

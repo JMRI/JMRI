@@ -22,9 +22,9 @@ import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.jmrit.symbolicprog.SymbolicProgBundle;
 import jmri.util.FileUtil;
 import jmri.util.StringUtil;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.ProcessingInstruction;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.ProcessingInstruction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -501,7 +501,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         Element root = new Element("roster-config"); // NOI18N
         root.setAttribute("noNamespaceSchemaLocation", // NOI18N
                 "http://jmri.org/xml/schema/roster" + schemaVersion + ".xsd", // NOI18N
-                org.jdom.Namespace.getNamespace("xsi", // NOI18N
+                org.jdom2.Namespace.getNamespace("xsi", // NOI18N
                         "http://www.w3.org/2001/XMLSchema-instance")); // NOI18N
         Document doc = newDocument(root);
 
@@ -670,7 +670,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
-    void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
+    void readFile(String name) throws org.jdom2.JDOMException, java.io.IOException {
         // roster exists?  
         if (!(new File(name)).exists()) {
             log.debug("no roster file found; this is normal if you haven't put decoders in your roster yet");

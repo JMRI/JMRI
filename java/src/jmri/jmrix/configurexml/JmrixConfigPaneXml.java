@@ -6,7 +6,7 @@ import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.*;
 import jmri.jmrix.JmrixConfigPane;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;

@@ -7,7 +7,7 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SecurityElementIcon;
 import jmri.jmrix.loconet.SecurityElement;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Handle configuration for display.SecurityElementIcon objects
@@ -73,7 +73,7 @@ public class SecurityElementIconXml extends AbstractXmlAdapter {
         try {
             x = element.getAttribute("x").getIntValue();
             y = element.getAttribute("y").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
+        } catch ( org.jdom2.DataConversionException e) {
             log.error("failed to convert positional attribute");
         }
         l.setLocation(x,y);

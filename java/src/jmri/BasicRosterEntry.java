@@ -6,7 +6,7 @@ with users scripts etc */
 package jmri;
 
 import jmri.DccLocoAddress;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * RosterEntry represents a single element in a locomotive roster, including

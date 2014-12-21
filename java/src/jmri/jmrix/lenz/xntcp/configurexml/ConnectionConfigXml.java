@@ -37,7 +37,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     }
 
    @Override
-   public boolean load(org.jdom.Element e) throws Exception {
+   public boolean load(org.jdom2.Element e) throws Exception {
       boolean result=true; 
       try {
           result = super.load(e);
@@ -73,7 +73,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 	 try {
 	     portNumber=e.getAttribute("option2").getIntValue();
 	     adapter.setPort(portNumber);
-         } catch (org.jdom.DataConversionException e2) {
+         } catch (org.jdom2.DataConversionException e2) {
              log.warn("Could not parse port attribute");
          } catch (NullPointerException e1) {
              // it is considered normal if this fails when the 

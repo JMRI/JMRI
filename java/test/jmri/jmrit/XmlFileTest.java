@@ -11,8 +11,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jdom.*;
-import org.jdom.input.*;
+import org.jdom2.*;
+import org.jdom2.input.*;
 
 /**
  * Tests for the XmlFile class.
@@ -86,7 +86,7 @@ public class XmlFileTest extends TestCase {
         Assert.assertTrue("non-existing file ", !x.checkFile("dummy file not expected to exist"));
     }
 
-    public void testNotVoid() throws org.jdom.JDOMException, java.io.IOException {
+    public void testNotVoid() throws org.jdom2.JDOMException, java.io.IOException {
         // XmlFile is abstract, so can't check ctor directly; use local class
         XmlFile x = new XmlFile() {
             };
@@ -115,7 +115,7 @@ public class XmlFileTest extends TestCase {
         Assert.assertTrue("File expected to be present", f.exists());
     }
 
-    public void testReadFile() throws org.jdom.JDOMException, java.io.IOException {
+    public void testReadFile() throws org.jdom2.JDOMException, java.io.IOException {
         // ensure file present
         testWriteFile();
         
@@ -126,7 +126,7 @@ public class XmlFileTest extends TestCase {
         Assert.assertTrue("Element found", e!=null);
     }
     
-    public void testProcessPI() throws org.jdom.JDOMException, java.io.IOException {
+    public void testProcessPI() throws org.jdom2.JDOMException, java.io.IOException {
         // Document from test file
         Document doc;
         Element e;
@@ -152,7 +152,7 @@ public class XmlFileTest extends TestCase {
 
         } catch (java.io.IOException ex) {
             throw ex;
-        } catch (org.jdom.JDOMException ex) {
+        } catch (org.jdom2.JDOMException ex) {
             throw ex;
         } finally {
             fs.close();

@@ -28,7 +28,7 @@ import jmri.util.PhysicalLocation;
 
 
 // XML stuff
-import org.jdom.Element;
+import org.jdom2.Element;
 
 // Usage:
 // HornSound() : constructor

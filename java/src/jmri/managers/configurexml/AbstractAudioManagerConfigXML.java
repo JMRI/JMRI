@@ -14,8 +14,8 @@ import jmri.jmrit.audio.AudioBuffer;
 import jmri.jmrit.audio.AudioListener;
 import jmri.jmrit.audio.AudioSource;
 import jmri.util.FileUtil;
-import org.jdom.Attribute;
-import org.jdom.Element;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
 
 /**
  * Provides the abstract base and store functionality for

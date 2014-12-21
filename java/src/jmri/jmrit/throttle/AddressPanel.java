@@ -31,7 +31,7 @@ import jmri.jmrit.symbolicprog.ProgDefault;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgFrame;
 import jmri.jmrix.nce.consist.NceConsistRoster;
 import jmri.jmrix.nce.consist.NceConsistRosterEntry;
-import org.jdom.Element;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -548,7 +548,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	 * <li> Address value
 	 * </ul>
 	 * 
-	 * @return org.jdom.Element for this objects preferences. Defined in
+	 * @return org.jdom2.Element for this objects preferences. Defined in
 	 *         DTD/throttle-config
 	 */
 	public Element getXml() {

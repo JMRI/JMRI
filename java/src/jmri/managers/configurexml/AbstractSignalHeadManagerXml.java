@@ -9,7 +9,7 @@ import jmri.SignalHeadManager;
 import jmri.configurexml.XmlAdapter;
 
 import java.util.List;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Provides the abstract base and store functionality for

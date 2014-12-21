@@ -2,7 +2,7 @@
 
 package jmri.web.xmlio;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Interface received a delayed response to a monitoring request.

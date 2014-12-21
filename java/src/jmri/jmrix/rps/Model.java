@@ -62,7 +62,7 @@ public class Model {
     }
     
     // Store model info
-    public void storeModel(File file){ //throws org.jdom.JDOMException, IOException {
+    public void storeModel(File file){ //throws org.jdom2.JDOMException, IOException {
 /*         PositionFile pf = new PositionFile(); */
 /*         pf.prepare(); */
 /*         pf.setConstants(getVSound(), getOffset()); */
@@ -74,7 +74,7 @@ public class Model {
 /*         pf.store(file); */
     }
     
-    public void loadModel(File file){ // throws org.jdom.JDOMException, IOException {
+    public void loadModel(File file){ // throws org.jdom2.JDOMException, IOException {
 /*         // start by getting the file */
 /*         PositionFile pf = new PositionFile(); */
 /*         pf.loadFile(file); */

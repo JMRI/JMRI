@@ -5,7 +5,7 @@ package jmri.jmrix.rps;
 import java.io.*;
 import javax.vecmath.Point3d;
 import jmri.util.FileUtil;
-import org.jdom.*;
+import org.jdom2.*;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -63,7 +63,7 @@ public class PositionFileTest extends TestCase {
         }
     }
     
-    public void testRW() throws IOException, org.jdom.JDOMException {
+    public void testRW() throws IOException, org.jdom2.JDOMException {
         PositionFile fout = new PositionFile();
         fout.prepare();
         fout.setReceiver(2,new Point3d(1.0f,2.0f,3.0f), true);

@@ -10,7 +10,7 @@ import jmri.util.FileUtil;
 
 import java.io.File;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Handle XML persistance of PerformFileModel objects

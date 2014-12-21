@@ -11,8 +11,8 @@ import java.io.*;
 import javax.swing.*;
 
 import java.util.*;
-import org.jdom.*;
-import org.jdom.filter.*;
+import org.jdom2.*;
+import org.jdom2.filter.*;
 
 /**
  * Check the names in an XML decoder file against the names.xml definitions
@@ -106,7 +106,7 @@ public class NameCheckAction extends AbstractAction {
     /**
      * Ask SAX to read and verify a file
      */
-    Element readFile(File file) throws org.jdom.JDOMException, java.io.IOException {
+    Element readFile(File file) throws org.jdom2.JDOMException, java.io.IOException {
         XmlFile xf = new XmlFile(){};   // odd syntax is due to XmlFile being abstract
         
         return xf.rootFromFile(file);

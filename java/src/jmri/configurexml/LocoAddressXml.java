@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.LocoAddress;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Handle XML configuration for LocoAddress objects.

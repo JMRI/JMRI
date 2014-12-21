@@ -21,7 +21,7 @@ package jmri.jmrit.vsdecoder;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.jdom.Element;
+import org.jdom2.Element;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Iterator;

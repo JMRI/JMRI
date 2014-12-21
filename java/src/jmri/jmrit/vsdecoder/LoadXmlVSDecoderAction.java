@@ -30,7 +30,7 @@ import javax.swing.JFileChooser;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 
 /**
@@ -117,7 +117,7 @@ public class LoadXmlVSDecoderAction extends AbstractAction {
 		}
 	    }
 
-	} catch (org.jdom.JDOMException ex) {
+	} catch (org.jdom2.JDOMException ex) {
 	    log.warn("Loading VSDecoder Profile exception",ex);
 	    return false;
 	}

@@ -941,8 +941,8 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 	 * @param e
 	 *            RollingStock XML element
 	 */
-	public void rollingStock(org.jdom.Element e) {
-		org.jdom.Attribute a;
+	public void rollingStock(org.jdom2.Element e) {
+		org.jdom2.Attribute a;
 		if ((a = e.getAttribute(Xml.ID)) != null)
 			_id = a.getValue();
 		else
@@ -1026,7 +1026,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 	 * 
 	 * @return Contents in a JDOM Element
 	 */
-	protected org.jdom.Element store(org.jdom.Element e) {
+	protected org.jdom2.Element store(org.jdom2.Element e) {
 		e.setAttribute(Xml.ID, getId());
 		e.setAttribute(Xml.ROAD_NAME, getRoadName());
 		e.setAttribute(Xml.ROAD_NUMBER, getNumber());

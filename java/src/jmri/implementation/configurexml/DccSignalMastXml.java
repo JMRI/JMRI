@@ -6,7 +6,7 @@ import jmri.InstanceManager;
 import jmri.implementation.DccSignalMast;
 import jmri.SignalAppearanceMap;
 import java.util.List;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Handle XML configuration for a DefaultSignalMastManager objects.

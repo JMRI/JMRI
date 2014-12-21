@@ -9,7 +9,7 @@ import jmri.Logix;
 import jmri.LogixManager;
 import jmri.managers.DefaultLogixManager;
 import java.util.List;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Provides the functionality for

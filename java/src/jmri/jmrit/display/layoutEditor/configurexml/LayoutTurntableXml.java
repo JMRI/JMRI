@@ -8,8 +8,8 @@ import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutTurntable;
 import jmri.jmrit.display.layoutEditor.TrackSegment;
-import org.jdom.Attribute;
-import org.jdom.Element;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
 import java.util.List;
 import java.awt.geom.*;
 import jmri.Turnout;
@@ -91,7 +91,7 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
 			x = element.getAttribute("xcen").getFloatValue();
 			y = element.getAttribute("ycen").getFloatValue();
 			radius = element.getAttribute("radius").getFloatValue();
-		} catch (org.jdom.DataConversionException e) {
+		} catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert layoutturntable center or radius attributes");
         }
 		// create the new LayoutTurntable
@@ -116,7 +116,7 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
 					angle = (relem.getAttribute("angle")).getFloatValue();
 					index = (relem.getAttribute("index")).getIntValue();
 				} 
-				catch (org.jdom.DataConversionException e) {
+				catch (org.jdom2.DataConversionException e) {
 					log.error("failed to convert ray track angle or index attributes");
 				}
 				String connectName = "";

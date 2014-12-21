@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import jmri.configurexml.*;
 import jmri.jmrix.NetworkPortAdapter;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Abstract base (and partial implementation) for
@@ -151,7 +151,7 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
            try {
                int port = e.getAttribute("port").getIntValue();
                adapter.setPort(port);
-           } catch (org.jdom.DataConversionException ex) {
+           } catch (org.jdom2.DataConversionException ex) {
                log.warn("Could not parse port attribute");
            } catch ( NullPointerException ex) {  // considered normal if the attributes are not present
            }

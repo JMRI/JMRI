@@ -8,8 +8,8 @@ import jmri.jmrix.loconet.LnSecurityElementManager;
 import jmri.jmrix.loconet.SecurityElement;
 
 import java.util.List;
-import org.jdom.Attribute;
-import org.jdom.Element;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
 
 /**
  * Provides load and store functionality for
@@ -231,7 +231,7 @@ public class LnSecurityElementManagerXml extends jmri.configurexml.AbstractXmlAd
     int getIntValue(Attribute a) {
         try {
             return a.getIntValue();
-        } catch (org.jdom.DataConversionException e) {
+        } catch (org.jdom2.DataConversionException e) {
             log.error("improper formatted int "+a.getValue()+" in Attribute "+a.getName());
             return -1;
         }

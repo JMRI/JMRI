@@ -11,9 +11,9 @@ import jmri.jmrit.display.PositionablePopupUtil;
 import jmri.jmrit.display.ToolTip;
 import java.awt.Color;
 
-import org.jdom.Attribute;
-import org.jdom.DataConversionException;
-import org.jdom.Element;
+import org.jdom2.Attribute;
+import org.jdom2.DataConversionException;
+import org.jdom2.Element;
 
 /**
  * Handle configuration for display.PositionableLabel objects
@@ -198,7 +198,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                     int rotation = element.getAttribute("rotate").getIntValue();
                     icon.setRotation(rotation, l);
                 }
-            } catch (org.jdom.DataConversionException e) {}
+            } catch (org.jdom2.DataConversionException e) {}
 
             if (name.equals("yes")) {
                 NamedIcon nIcon = loadIcon(l,"icon", element, "PositionableLabel ", editor); 
@@ -282,7 +282,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             int blue = element.getAttribute("blue").getIntValue();
             int green = element.getAttribute("green").getIntValue();
             util.setForeground(new Color(red, green, blue));
-        } catch ( org.jdom.DataConversionException e) {
+        } catch ( org.jdom2.DataConversionException e) {
             log.warn("Could not parse color attributes!");
         } catch ( NullPointerException e) {  // considered normal if the attributes are not present
         }
@@ -292,7 +292,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             int blue = element.getAttribute("blueBack").getIntValue();
             int green = element.getAttribute("greenBack").getIntValue();
             util.setBackgroundColor(new Color(red, green, blue));
-         } catch ( org.jdom.DataConversionException e) {
+         } catch ( org.jdom2.DataConversionException e) {
             log.warn("Could not parse background color attributes!");
         } catch ( NullPointerException e) {  
             util.setBackgroundColor(null);// if the attributes are not listed, we consider the background as clear.
@@ -302,14 +302,14 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         int fixedHeight=0;
         try {
             fixedHeight=element.getAttribute("fixedHeight").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
+        } catch ( org.jdom2.DataConversionException e) {
             log.warn("Could not parse fixed Height attributes!");
         } catch ( NullPointerException e) {  // considered normal if the attributes are not present
         }
         
         try {
             fixedWidth=element.getAttribute("fixedWidth").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
+        } catch ( org.jdom2.DataConversionException e) {
             log.warn("Could not parse fixed Width attribute!");
         } catch ( NullPointerException e) {  // considered normal if the attributes are not present
         }
@@ -320,7 +320,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             try {
                 margin=element.getAttribute("margin").getIntValue();
                 util.setMargin(margin);
-            } catch ( org.jdom.DataConversionException e) {
+            } catch ( org.jdom2.DataConversionException e) {
                 log.warn("Could not parse margin attribute!");
             } catch ( NullPointerException e) {  // considered normal if the attributes are not present
             }
@@ -331,7 +331,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             int blue = element.getAttribute("blueBorder").getIntValue();
             int green = element.getAttribute("greenBorder").getIntValue();
             util.setBorderColor(new Color(red, green, blue));
-        } catch ( org.jdom.DataConversionException e) {
+        } catch ( org.jdom2.DataConversionException e) {
             log.warn("Could not parse border attributes!");
         } catch ( NullPointerException e) {  // considered normal if the attribute not present
         }
@@ -371,7 +371,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         try {
             x = element.getAttribute("x").getIntValue();
             y = element.getAttribute("y").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
+        } catch ( org.jdom2.DataConversionException e) {
             log.error("failed to convert positional attribute");
         }
         l.setLocation(x,y);
@@ -380,7 +380,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         int level = defaultLevel;
         try {
             level = element.getAttribute("level").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
+        } catch ( org.jdom2.DataConversionException e) {
             log.warn("Could not parse level attribute!");
         } catch ( NullPointerException e) {  // considered normal if the attribute not present
         }
@@ -414,7 +414,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         	try {
                 int deg = a.getIntValue();
                 ((PositionableLabel)l).setDegrees(deg);
-            } catch (org.jdom.DataConversionException dce) {}
+            } catch (org.jdom2.DataConversionException dce) {}
         }
         
         Element elem = element.getChild("tooltip");
@@ -462,7 +462,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                         }
                     }
                 }
-            } catch (org.jdom.DataConversionException dce) {}
+            } catch (org.jdom2.DataConversionException dce) {}
         }
         return icon;
     }

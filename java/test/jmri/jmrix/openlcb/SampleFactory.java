@@ -1,6 +1,6 @@
 package jmri.jmrix.openlcb;
 
-import org.jdom.*;
+import org.jdom2.*;
 
 import org.openlcb.cdi.CdiRep;
 
@@ -134,9 +134,9 @@ public class SampleFactory {
         Document doc = new Document(root);
         
         try {
-            org.jdom.output.XMLOutputter fmt = new org.jdom.output.XMLOutputter();
+            org.jdom2.output.XMLOutputter fmt = new org.jdom2.output.XMLOutputter();
         
-            fmt.setFormat(org.jdom.output.Format.getPrettyFormat());
+            fmt.setFormat(org.jdom2.output.Format.getPrettyFormat());
         
             fmt.output(doc, System.out);
         } catch (Exception e) {

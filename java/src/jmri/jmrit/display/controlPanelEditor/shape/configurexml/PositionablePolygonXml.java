@@ -4,7 +4,7 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.PathIterator;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.shape.*;
-import org.jdom.Element;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

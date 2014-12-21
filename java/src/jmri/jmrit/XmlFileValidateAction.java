@@ -9,9 +9,9 @@ import java.io.*;
 
 import javax.swing.*;
 
-import org.jdom.*;
-import org.jdom.input.*;
-import org.jdom.output.*;
+import org.jdom2.*;
+import org.jdom2.input.*;
+import org.jdom2.output.*;
 
 /**
  * Make sure an XML file is readable, and validates OK
@@ -110,7 +110,7 @@ public class XmlFileValidateAction extends AbstractAction {
     /**
      * Ask SAX to read and verify a file
      */
-    void readFile(File file) throws org.jdom.JDOMException, java.io.IOException {
+    void readFile(File file) throws org.jdom2.JDOMException, java.io.IOException {
         XmlFile xf = new XmlFile(){};   // odd syntax is due to XmlFile being abstract
 
         xf.rootFromFile(file);

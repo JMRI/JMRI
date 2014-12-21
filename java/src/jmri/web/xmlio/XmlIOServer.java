@@ -3,7 +3,7 @@
 package jmri.web.xmlio;
 
 import jmri.JmriException;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Interface for doing XML I/O.

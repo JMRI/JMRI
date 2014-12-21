@@ -6,7 +6,7 @@ import jmri.jmrix.jmriclient.json.JsonClientSystemConnectionMemo;
 import jmri.jmrix.jmriclient.json.JsonNetworkConnectionConfig;
 import jmri.jmrix.jmriclient.json.JsonNetworkPortController;
 import jmri.util.node.NodeIdentity;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  *

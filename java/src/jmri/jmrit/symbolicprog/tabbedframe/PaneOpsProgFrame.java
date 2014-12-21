@@ -8,7 +8,7 @@ import jmri.Programmer;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
 import javax.swing.JPanel;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 

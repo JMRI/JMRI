@@ -76,10 +76,10 @@ public class OperationsXml extends XmlFile {
 	}
 
 	/**
-	 * @throws org.jdom.JDOMException
+	 * @throws org.jdom2.JDOMException
 	 * @throws java.io.IOException
 	 */
-	protected void readFile(String filename) throws org.jdom.JDOMException, java.io.IOException {
+	protected void readFile(String filename) throws org.jdom2.JDOMException, java.io.IOException {
 		log.error("readFile not overridden");
 	}
 

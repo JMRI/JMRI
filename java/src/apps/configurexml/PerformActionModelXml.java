@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.Action;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Handle XML persistance of PerformActionModel objects.

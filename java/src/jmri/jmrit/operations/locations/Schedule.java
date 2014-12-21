@@ -9,7 +9,7 @@ import java.util.List;
 
 import jmri.jmrit.operations.setup.Control;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Represents a car delivery schedule for a location
@@ -311,7 +311,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 	 *            Consist XML element
 	 */
 	public Schedule(Element e) {
-		org.jdom.Attribute a;
+		org.jdom2.Attribute a;
 		if ((a = e.getAttribute(Xml.ID)) != null)
 			_id = a.getValue();
 		else
@@ -337,8 +337,8 @@ public class Schedule implements java.beans.PropertyChangeListener {
 	 * 
 	 * @return Contents in a JDOM Element
 	 */
-	public org.jdom.Element store() {
-		Element e = new org.jdom.Element(Xml.SCHEDULE);
+	public org.jdom2.Element store() {
+		Element e = new org.jdom2.Element(Xml.SCHEDULE);
 		e.setAttribute(Xml.ID, getId());
 		e.setAttribute(Xml.NAME, getName());
 		e.setAttribute(Xml.COMMENT, getComment());

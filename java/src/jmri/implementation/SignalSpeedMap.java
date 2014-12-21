@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.Hashtable;
 import java.util.List;
-import org.jdom.Element;
-import org.jdom.JDOMException;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
 
  /**
  * Default implementation to map Signal aspects or appearances to speed requirements.
@@ -105,7 +105,7 @@ public class SignalSpeedMap {
                 _headTable.put(Bundle.getMessage(name), speed);
                 if (log.isDebugEnabled()) log.debug("Add "+name+"="+Bundle.getMessage(name)+", "+speed+" to AppearanceSpeed Table");
             }
-        } catch (org.jdom.JDOMException e) {
+        } catch (org.jdom2.JDOMException e) {
             log.error("error reading file \"" + path + "\" due to: " + e);
         } catch (java.io.FileNotFoundException e) {
                 log.error("signalSpeeds file (" + path + ") doesn't exist in XmlFile search path.");

@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import jmri.util.FileUtil;
 
-import org.jdom.Document;
-import org.jdom.Element;
+import org.jdom2.Document;
+import org.jdom2.Element;
 
 /**
  * Handles reading and writing of Dispatcher options to disk as an XML file
@@ -64,7 +64,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 	 *  Reads Dispatcher Options from a file in the user's preferences directory
 	 *  If the file containing Dispatcher Options does not exist this routine returns quietly.
 	 */
-	public void readDispatcherOptions(DispatcherFrame f) throws org.jdom.JDOMException, java.io.IOException {
+	public void readDispatcherOptions(DispatcherFrame f) throws org.jdom2.JDOMException, java.io.IOException {
 		log.debug("entered readDispatcherOptions");
 		// check if file exists
 		if (checkFile(defaultFileName)) {
@@ -199,7 +199,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 		java.util.Map<String,String> m = new java.util.HashMap<String,String>();
 		m.put("type", "text/xsl");
 		m.put("href", xsltLocation+"dispatcheroptions.xsl");
-		org.jdom.ProcessingInstruction p = new org.jdom.ProcessingInstruction("xml-stylesheet", m);
+		org.jdom2.ProcessingInstruction p = new org.jdom2.ProcessingInstruction("xml-stylesheet", m);
 		doc.addContent(0,p);
 			
 		// save Dispatcher Options in xml format

@@ -7,8 +7,8 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jdom.Attribute;
-import org.jdom.Element;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
 
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.trains.Train;

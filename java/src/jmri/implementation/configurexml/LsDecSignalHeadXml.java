@@ -11,7 +11,7 @@ import jmri.Turnout;
 import jmri.NamedBeanHandle;
 
 import java.util.List;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Handle XML configuration for LsDecSignalHead objects.

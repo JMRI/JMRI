@@ -60,7 +60,7 @@ public class XmlFileCheckAction extends AbstractAction {
     /**
      * Ask SAX to read and verify a file
      */
-    void readFile(File file) throws org.jdom.JDOMException, java.io.IOException {
+    void readFile(File file) throws org.jdom2.JDOMException, java.io.IOException {
         XmlFile xf = new XmlFile(){};   // odd syntax is due to XmlFile being abstract
 
         xf.rootFromFile(file);

@@ -2,7 +2,7 @@ package jmri.managers.configurexml;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.jdom.Element;
+import org.jdom2.Element;
 import java.util.List;
 import java.lang.reflect.*;
 
@@ -238,7 +238,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                     int value = 0x00;
                      try {
                         value = multiItem.get(x).getAttribute("value").getIntValue();
-                    } catch ( org.jdom.DataConversionException e) {
+                    } catch ( org.jdom2.DataConversionException e) {
                         log.error("failed to convert positional attribute");
                     }
                     p.setMultipleChoiceOption(strClass, item, value);

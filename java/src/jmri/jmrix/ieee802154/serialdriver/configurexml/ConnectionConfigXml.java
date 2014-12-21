@@ -8,7 +8,7 @@ import jmri.jmrix.ieee802154.serialdriver.SerialDriverAdapter;
 import jmri.jmrix.ieee802154.serialdriver.SerialTrafficController;
 import jmri.jmrix.ieee802154.serialdriver.SerialSystemConnectionMemo;
 import jmri.jmrix.ieee802154.serialdriver.SerialNode;
-import org.jdom.*;
+import org.jdom2.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

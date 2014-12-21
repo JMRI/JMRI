@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.ArrayList;
 import jmri.util.FileUtil;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Default implementation of a SignalSystemManager.

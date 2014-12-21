@@ -1,6 +1,6 @@
 package jmri.jmrix.loconet.cmdstnconfig;
 
-import org.jdom.*;
+import org.jdom2.*;
 import java.util.*;
 
 import jmri.jmrit.XmlFile;

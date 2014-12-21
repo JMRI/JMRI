@@ -7,7 +7,7 @@ import java.util.List;
 
 import jmri.jmrit.operations.setup.Control;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Represents a schedule for trains
@@ -88,7 +88,7 @@ public class TrainSchedule {
 	 */
 	public TrainSchedule(Element e) {
 		// if (log.isDebugEnabled()) log.debug("ctor from element "+e);
-		org.jdom.Attribute a;
+		org.jdom2.Attribute a;
 		if ((a = e.getAttribute(Xml.ID)) != null)
 			_id = a.getValue();
 		else
@@ -115,7 +115,7 @@ public class TrainSchedule {
 	 * @return Contents in a JDOM Element
 	 */
 	public Element store() {
-		Element e = new org.jdom.Element(Xml.SCHEDULE);
+		Element e = new org.jdom2.Element(Xml.SCHEDULE);
 		e.setAttribute(Xml.ID, getId());
 		e.setAttribute(Xml.NAME, getName());
 		if (!getComment().equals(""))

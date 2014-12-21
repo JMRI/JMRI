@@ -480,7 +480,7 @@ public class OperationsSetupTest extends TestCase {
 		return s;
 	}
 
-	public void readTestSetup() throws org.jdom.JDOMException, java.io.IOException, java.io.FileNotFoundException {
+	public void readTestSetup() throws org.jdom2.JDOMException, java.io.IOException, java.io.FileNotFoundException {
 		// this uses explicit filenames intentionally, to ensure that
 		// the resulting files go into the test tree area.
 

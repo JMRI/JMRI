@@ -3,7 +3,7 @@ package jmri.jmrix.rps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.*;
-import org.jdom.*;
+import org.jdom2.*;
 import java.util.*;
 
 import jmri.jmrit.XmlFile;
@@ -71,7 +71,7 @@ public class PollingFile extends XmlFile {
      * for examination
      */
     public void loadFile(File f) 
-            throws org.jdom.JDOMException, java.io.IOException {
+            throws org.jdom2.JDOMException, java.io.IOException {
             
         root = rootFromFile(f);
     }
@@ -88,7 +88,7 @@ public class PollingFile extends XmlFile {
         int value = 0;
         try {
             if (a != null) value = a.getIntValue();
-        } catch (org.jdom.DataConversionException ex) {log.error("in getPollValues", ex);}
+        } catch (org.jdom2.DataConversionException ex) {log.error("in getPollValues", ex);}
         Engine.instance().setPollingInterval(value);
 
         Engine.instance().setDirectPollMode();

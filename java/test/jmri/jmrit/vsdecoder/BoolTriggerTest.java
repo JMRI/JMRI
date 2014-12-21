@@ -7,7 +7,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 import java.beans.PropertyChangeEvent;
 
 

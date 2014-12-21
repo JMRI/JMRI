@@ -8,7 +8,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.framework.TestCase;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 import jmri.NamedBean;
 import jmri.implementation.AbstractNamedBean;

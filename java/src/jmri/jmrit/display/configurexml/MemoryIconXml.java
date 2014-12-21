@@ -7,8 +7,8 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.MemoryIcon;
 import jmri.Memory;
-import org.jdom.Attribute;
-import org.jdom.Element;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
 import java.util.List;
 
 
@@ -158,7 +158,7 @@ public class MemoryIconXml extends PositionableLabelXml {
         try {
             x = element.getAttribute("x").getIntValue();
             y = element.getAttribute("y").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
+        } catch ( org.jdom2.DataConversionException e) {
             log.error("failed to convert positional attribute");
         }
         l.setOriginalLocation(x,y);

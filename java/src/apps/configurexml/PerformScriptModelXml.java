@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import apps.PerformScriptModel;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Handle XML persistance of PerformScriptModel objects

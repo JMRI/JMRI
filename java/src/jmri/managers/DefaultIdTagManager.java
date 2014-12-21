@@ -18,9 +18,9 @@ import jmri.IdTagManager;
 import jmri.implementation.DefaultIdTag;
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.ProcessingInstruction;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.ProcessingInstruction;
 
 /**
  * Concrete implementation for the Internal {@link jmri.IdTagManager} interface.
@@ -358,7 +358,7 @@ public class DefaultIdTagManager extends AbstractManager
             Element root = new Element("idtagtable");              // NOI18N
             root.setAttribute("noNamespaceSchemaLocation",         // NOI18N
                     "http://jmri.org/xml/schema/idtags.xsd",       // NOI18N
-                    org.jdom.Namespace.getNamespace("xsi",         // NOI18N
+                    org.jdom2.Namespace.getNamespace("xsi",         // NOI18N
                     "http://www.w3.org/2001/XMLSchema-instance")); // NOI18N
             Document doc = newDocument(root);
 
@@ -389,7 +389,7 @@ public class DefaultIdTagManager extends AbstractManager
             writeXML(file, doc);
         }
 
-        private void readFile(String fileName) throws org.jdom.JDOMException, java.io.IOException {
+        private void readFile(String fileName) throws org.jdom2.JDOMException, java.io.IOException {
             // Check file exists
             if (findFile(fileName) == null) {
                 log.debug(fileName + " file could not be found");

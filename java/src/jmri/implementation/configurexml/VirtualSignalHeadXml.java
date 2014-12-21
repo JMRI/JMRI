@@ -6,7 +6,7 @@ import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.implementation.VirtualSignalHead;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Handle XML configuration for VirtualSignalHead objects.

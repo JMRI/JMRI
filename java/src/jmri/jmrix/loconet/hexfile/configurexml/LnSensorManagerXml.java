@@ -1,6 +1,6 @@
 package jmri.jmrix.loconet.hexfile.configurexml;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 import edu.umd.cs.findbugs.annotations.SuppressWarnings;
 
 /**

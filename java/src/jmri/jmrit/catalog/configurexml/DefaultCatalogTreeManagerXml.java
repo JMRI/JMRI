@@ -18,9 +18,9 @@ import java.io.File;
 import javax.swing.tree.DefaultTreeModel;
 import jmri.util.FileUtil;
 
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.Attribute;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.Attribute;
 
 /**
  * Provides the abstract base and store functionality for
@@ -80,7 +80,7 @@ public class DefaultCatalogTreeManagerXml extends XmlFile
 			java.util.Map<String,String> m = new java.util.HashMap<String,String>();
 			m.put("type", "text/xsl");
 			m.put("href", xsltLocation+"panelfile.xsl");
-			org.jdom.ProcessingInstruction p = new org.jdom.ProcessingInstruction("xml-stylesheet", m);
+			org.jdom2.ProcessingInstruction p = new org.jdom2.ProcessingInstruction("xml-stylesheet", m);
 			doc.addContent(0,p);
 
 			store(root, trees);
@@ -187,7 +187,7 @@ public class DefaultCatalogTreeManagerXml extends XmlFile
                 }
             } else if (log.isDebugEnabled()) log.debug("File: "+defaultFileName+" not Found");
         }
-        catch (org.jdom.JDOMException jde) { log.error("Exception reading CatalogTrees: "+jde); }                           
+        catch (org.jdom2.JDOMException jde) { log.error("Exception reading CatalogTrees: "+jde); }                           
         catch (java.io.IOException ioe) { log.error("Exception reading CatalogTrees: "+ioe); }   
 	}
 	

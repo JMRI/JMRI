@@ -28,7 +28,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 import javax.swing.AbstractButton;
 

@@ -14,8 +14,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import javax.swing.*;
 
-import org.jdom.*;
-import org.jdom.input.SAXBuilder;
+import org.jdom2.*;
+import org.jdom2.input.SAXBuilder;
 
 /**
  * @author  Bob Jacobsen   Copyright 2012

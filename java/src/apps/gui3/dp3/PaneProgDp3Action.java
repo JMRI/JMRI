@@ -30,7 +30,7 @@ import jmri.jmrit.symbolicprog.*;
 import jmri.jmrit.symbolicprog.tabbedframe.*;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriPanel;
-import org.jdom.Element;
+import org.jdom2.Element;
 import jmri.util.FileUtil;
 
 /**

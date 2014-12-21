@@ -8,7 +8,7 @@ import jmri.jmrix.SerialPortAdapter;
 import jmri.jmrix.lenz.xnetsimulator.ConnectionConfig;
 import jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Handle XML persistance of layout connections by persistening

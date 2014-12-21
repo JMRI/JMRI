@@ -1,6 +1,6 @@
 package jmri.util.docbook.configurexml;
 
-import org.jdom.*;
+import org.jdom2.*;
 import java.util.ArrayList;
 
 import jmri.util.docbook.*;

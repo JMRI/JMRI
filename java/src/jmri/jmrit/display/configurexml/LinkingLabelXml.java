@@ -4,8 +4,8 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.LinkingLabel;
 
-import org.jdom.Attribute;
-import org.jdom.Element;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -90,7 +90,7 @@ public class LinkingLabelXml extends PositionableLabelXml {
                     int rotation = element.getAttribute("rotate").getIntValue();
                     icon.setRotation(rotation, l);
                 }
-            } catch (org.jdom.DataConversionException e) {}
+            } catch (org.jdom2.DataConversionException e) {}
 
             if (name.equals("yes")) {
                 NamedIcon nIcon = loadIcon(l,"icon", element, "LinkingLabel ", editor); 

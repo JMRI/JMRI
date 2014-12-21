@@ -13,7 +13,7 @@ import jmri.ConditionalManager;
 import jmri.managers.DefaultConditionalManager;
 import java.util.ArrayList;
 import java.util.List;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Provides the functionality for
@@ -279,7 +279,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 //    log.warn("No actions found for conditional "+sysName);
                 //}
                 ArrayList <ConditionalAction> actionList = new ArrayList <ConditionalAction> ();
-                org.jdom.Attribute attr = null;
+                org.jdom2.Attribute attr = null;
                 for (int n=0; n<conditionalActionList.size(); n++)
                 {
                     ConditionalAction action = new DefaultConditionalAction();

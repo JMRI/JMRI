@@ -3,7 +3,7 @@ package jmri.jmrix.rps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.*;
-import org.jdom.*;
+import org.jdom2.*;
 import java.util.*;
 
 import jmri.jmrit.XmlFile;
@@ -150,7 +150,7 @@ public class PositionFile extends XmlFile {
      * for examination
      */
     public void loadFile(File f) 
-            throws org.jdom.JDOMException, java.io.IOException {
+            throws org.jdom2.JDOMException, java.io.IOException {
             
         root = rootFromFile(f);
     }
@@ -182,7 +182,7 @@ public class PositionFile extends XmlFile {
             if (a==null) continue;
             int n = -1;
             try { n = a.getIntValue(); }
-            catch (org.jdom.DataConversionException e) {log.error("in maxReceiver", e);}
+            catch (org.jdom2.DataConversionException e) {log.error("in maxReceiver", e);}
             max = Math.max(max, n);
         }
         return max;
@@ -201,7 +201,7 @@ public class PositionFile extends XmlFile {
             if (a == null) continue;
             int num = -1;
             try { num = a.getIntValue(); }
-            catch (org.jdom.DataConversionException ex) {log.error("in getReceiverPosition", ex);}
+            catch (org.jdom2.DataConversionException ex) {log.error("in getReceiverPosition", ex);}
             if (num == n) return positionFromElement(e.getChild("position"));
         }
         return null;
@@ -220,7 +220,7 @@ public class PositionFile extends XmlFile {
             if (a == null) continue;
             int num = -1;
             try { num = a.getIntValue(); }
-            catch (org.jdom.DataConversionException ex) {log.error("in getReceiverActive", ex);}
+            catch (org.jdom2.DataConversionException ex) {log.error("in getReceiverActive", ex);}
             if (num != n) continue;
             a = e.getAttribute("active");
             if (a==null) return true; // default value
@@ -243,13 +243,13 @@ public class PositionFile extends XmlFile {
             if (a == null) continue;
             int num = -1;
             try { num = a.getIntValue(); }
-            catch (org.jdom.DataConversionException ex1) {log.error("in getReceiverMin", ex1);}
+            catch (org.jdom2.DataConversionException ex1) {log.error("in getReceiverMin", ex1);}
             if (num != n) continue;
             a = e.getAttribute("mintime");
             if (a==null) return 0; // default value
             try {
                 return a.getIntValue();
-            } catch (org.jdom.DataConversionException ex2) {
+            } catch (org.jdom2.DataConversionException ex2) {
                 return 0;
             }
         }
@@ -269,13 +269,13 @@ public class PositionFile extends XmlFile {
             if (a == null) continue;
             int num = -1;
             try { num = a.getIntValue(); }
-            catch (org.jdom.DataConversionException ex1) {log.error("in getReceiverMax", ex1);}
+            catch (org.jdom2.DataConversionException ex1) {log.error("in getReceiverMax", ex1);}
             if (num != n) continue;
             a = e.getAttribute("maxtime");
             if (a==null) return 99999; // default value
             try {
                 return a.getIntValue();
-            } catch (org.jdom.DataConversionException ex2) {
+            } catch (org.jdom2.DataConversionException ex2) {
                 return 99999;
             }
         }

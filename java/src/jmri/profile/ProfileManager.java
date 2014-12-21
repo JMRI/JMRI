@@ -18,12 +18,12 @@ import java.util.zip.ZipOutputStream;
 import jmri.beans.Bean;
 import jmri.jmrit.roster.Roster;
 import jmri.util.FileUtil;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
-import org.jdom.output.Format;
-import org.jdom.output.XMLOutputter;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -627,7 +627,7 @@ public class ProfileManager extends Bean {
      * @param exportExternalRoster It the roster is not within the profile
      * directory, should it be included?
      * @throws IOException
-     * @throws org.jdom.JDOMException
+     * @throws org.jdom2.JDOMException
      */
     public void export(Profile profile, File target, boolean exportExternalUserFiles, boolean exportExternalRoster) throws IOException, JDOMException {
         if (!target.exists()) {

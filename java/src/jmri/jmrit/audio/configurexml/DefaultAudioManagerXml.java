@@ -4,7 +4,7 @@ package jmri.jmrit.audio.configurexml;
 
 import jmri.InstanceManager;
 import jmri.managers.configurexml.AbstractAudioManagerConfigXML;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Persistency implementation for the default AudioManager persistence.

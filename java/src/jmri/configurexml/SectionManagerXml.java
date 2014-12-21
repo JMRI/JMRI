@@ -11,7 +11,7 @@ import jmri.Section;
 import jmri.SectionManager;
 
 import java.util.List;
-import org.jdom.*;
+import org.jdom2.*;
 
 /**
  * Provides the functionality for

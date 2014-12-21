@@ -10,7 +10,7 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.jdom.*;
+import org.jdom2.*;
 
 import jmri.progdebugger.*;
 
@@ -136,8 +136,8 @@ public class QualifierAdderTest extends TestCase {
             );
             
         // print JDOM tree, to check
-        //org.jdom.output.XMLOutputter fmt 
-        //    = new org.jdom.output.XMLOutputter(org.jdom.output.Format.getPrettyFormat());
+        //org.jdom2.output.XMLOutputter fmt 
+        //    = new org.jdom2.output.XMLOutputter(org.jdom2.output.Format.getPrettyFormat());
         //try {
         //	 fmt.output(doc, System.out);
         //} catch (Exception ex) { log.error("error writing XML", ex);}

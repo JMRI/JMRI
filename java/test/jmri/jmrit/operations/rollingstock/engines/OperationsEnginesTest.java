@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import org.jdom.JDOMException;
+import org.jdom2.JDOMException;
 
 import junit.framework.Assert;
 import junit.framework.Test;

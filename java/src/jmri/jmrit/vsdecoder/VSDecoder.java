@@ -50,7 +50,7 @@ import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.locations.Location;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 import jmri.jmrit.vsdecoder.swing.VSDControl;
 import jmri.jmrit.vsdecoder.swing.VSDManagerFrame;

@@ -30,7 +30,7 @@ public class RosterEntryTest extends TestCase {
 
     public void testPartialLoad() {
         // create Element
-        org.jdom.Element e = new org.jdom.Element("locomotive")
+        org.jdom2.Element e = new org.jdom2.Element("locomotive")
             .setAttribute("id","our id 1")
             .setAttribute("fileName","file here")
             .setAttribute("roadNumber","431")
@@ -38,8 +38,8 @@ public class RosterEntryTest extends TestCase {
             .setAttribute("mfg","Athearn")
             .setAttribute("dccAddress","1234")
             .addContent(
-                    new org.jdom.Element("locoaddress").addContent(
-                        new org.jdom.Element("dcclocoaddress")
+                    new org.jdom2.Element("locoaddress").addContent(
+                        new org.jdom2.Element("dcclocoaddress")
                             .setAttribute("number","1234")
                             .setAttribute("longaddress","yes")
                     )
@@ -59,7 +59,7 @@ public class RosterEntryTest extends TestCase {
 
     public void testEmptyLoad() {
         // create Element
-        org.jdom.Element e = new org.jdom.Element("locomotive")
+        org.jdom2.Element e = new org.jdom2.Element("locomotive")
             .setAttribute("id","our id 2")
             .setAttribute("fileName","file here")
             ; // end create element
@@ -79,14 +79,14 @@ public class RosterEntryTest extends TestCase {
 
     public void testFullLoad() {
         // create Element
-        org.jdom.Element e = new org.jdom.Element("locomotive")
+        org.jdom2.Element e = new org.jdom2.Element("locomotive")
             .setAttribute("id","our id 3")
             .setAttribute("fileName","file here")
             .setAttribute("roadNumber","431")
             .setAttribute("roadName","SP")
             .setAttribute("mfg","Athearn")
             .setAttribute("dccAddress","1234")
-            .addContent(new org.jdom.Element("decoder")
+            .addContent(new org.jdom2.Element("decoder")
                         .setAttribute("family","91")
                         .setAttribute("model","33")
                         )
@@ -134,14 +134,14 @@ public class RosterEntryTest extends TestCase {
     
     public void testXmlLoadStore() {
         // create Element
-        org.jdom.Element e = new org.jdom.Element("locomotive")
+        org.jdom2.Element e = new org.jdom2.Element("locomotive")
             .setAttribute("id","our id 4")
             .setAttribute("fileName","file here")
             .setAttribute("roadNumber","431")
             .setAttribute("roadName","SP")
             .setAttribute("mfg","Athearn")
             .setAttribute("dccAddress","1234")
-            .addContent(new org.jdom.Element("decoder")
+            .addContent(new org.jdom2.Element("decoder")
                         .setAttribute("family","91")
                         .setAttribute("model","33")
                         )
@@ -151,7 +151,7 @@ public class RosterEntryTest extends TestCase {
                             protected void warnShortLong(String s){}
         };
         
-        org.jdom.Element o = r.store();
+        org.jdom2.Element o = r.store();
         // check
         Assert.assertEquals("XML Element ", e.toString(), o.toString());
         Assert.assertEquals("family ","91", o.getChild("decoder").getAttribute("family").getValue());
@@ -160,24 +160,24 @@ public class RosterEntryTest extends TestCase {
 
     public void testXmlFunctionLabelsLoadStore() {
         // create Element
-        org.jdom.Element e = new org.jdom.Element("locomotive")
+        org.jdom2.Element e = new org.jdom2.Element("locomotive")
             .setAttribute("id","our id 4")
             .setAttribute("fileName","file here")
             .setAttribute("roadNumber","431")
             .setAttribute("roadName","SP")
             .setAttribute("mfg","Athearn")
             .setAttribute("dccAddress","1234")
-            .addContent(new org.jdom.Element("decoder")
+            .addContent(new org.jdom2.Element("decoder")
                         .setAttribute("family","91")
                         .setAttribute("model","33")
                   )
-            .addContent(new org.jdom.Element("functionlabels")
-                  .addContent(new org.jdom.Element("functionlabel")
+            .addContent(new org.jdom2.Element("functionlabels")
+                  .addContent(new org.jdom2.Element("functionlabel")
                          .setAttribute("num","2")
                          .setAttribute("lockable","true")
                          .addContent("label 2")
                        )
-                  .addContent(new org.jdom.Element("functionlabel")
+                  .addContent(new org.jdom2.Element("functionlabel")
                          .setAttribute("num","3")
                          .setAttribute("lockable","false")
                          .addContent("label 3")
@@ -197,7 +197,7 @@ public class RosterEntryTest extends TestCase {
         Assert.assertEquals("lockable 2", false, r.getFunctionLockable(3));
         Assert.assertEquals(null, r.getFunctionLabel(4));
         
-        org.jdom.Element o = r.store();
+        org.jdom2.Element o = r.store();
 
         // check stored element
         Assert.assertEquals("num 2","2", o.getChild("functionlabels").getChild("functionlabel").getAttribute("num").getValue());
@@ -284,31 +284,31 @@ public class RosterEntryTest extends TestCase {
 
     public void testXmlAttributesLoadStore() {
         // create Element
-        org.jdom.Element e = new org.jdom.Element("locomotive")
+        org.jdom2.Element e = new org.jdom2.Element("locomotive")
             .setAttribute("id","our id 4")
             .setAttribute("fileName","file here")
             .setAttribute("roadNumber","431")
             .setAttribute("roadName","SP")
             .setAttribute("mfg","Athearn")
             .setAttribute("dccAddress","1234")
-            .addContent(new org.jdom.Element("decoder")
+            .addContent(new org.jdom2.Element("decoder")
                         .setAttribute("family","91")
                         .setAttribute("model","33")
                   )
-            .addContent(new org.jdom.Element("attributepairs")
-                  .addContent(new org.jdom.Element("keyvaluepair")
-                         .addContent(new org.jdom.Element("key")
+            .addContent(new org.jdom2.Element("attributepairs")
+                  .addContent(new org.jdom2.Element("keyvaluepair")
+                         .addContent(new org.jdom2.Element("key")
                             .addContent("key 1")
                          )
-                         .addContent(new org.jdom.Element("value")
+                         .addContent(new org.jdom2.Element("value")
                             .addContent("value 1")
                          )
                        )
-                  .addContent(new org.jdom.Element("keyvaluepair")
-                         .addContent(new org.jdom.Element("key")
+                  .addContent(new org.jdom2.Element("keyvaluepair")
+                         .addContent(new org.jdom2.Element("key")
                             .addContent("key 2")
                          )
-                         .addContent(new org.jdom.Element("value")
+                         .addContent(new org.jdom2.Element("value")
                             .addContent("value 2")
                          )
                        )
@@ -328,7 +328,7 @@ public class RosterEntryTest extends TestCase {
         RosterEntry r = new RosterEntry("dummy filename");
         r.putAttribute("foo", "bar");
 
-        org.jdom.Element e = r.store();
+        org.jdom2.Element e = r.store();
         Assert.assertNotNull(e);
         Assert.assertNotNull(e.getChild("attributepairs"));
         Assert.assertNotNull(e.getChild("attributepairs")

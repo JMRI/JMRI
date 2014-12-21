@@ -7,7 +7,7 @@ import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.lenz.liusbserver.ConnectionConfig;
 import jmri.jmrix.lenz.liusbserver.LIUSBServerAdapter;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Handle XML persistance of layout connections by persistening

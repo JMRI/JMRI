@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.TrackSegment;
-import org.jdom.Attribute;
-import org.jdom.Element;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
 
 /**
  * This module handles configuration for display.TrackSegment objects for a LayoutEditor.
@@ -80,7 +80,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
 		try {
 			type1 = element.getAttribute("type1").getIntValue();
 			type2 = element.getAttribute("type2").getIntValue();
-		} catch (org.jdom.DataConversionException e) {
+		} catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert tracksegment attribute");
         }
         boolean dash = true;
@@ -117,7 +117,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
             if(l.getCircle()){
                 try {
                     l.setAngle(element.getAttribute("angle").getDoubleValue());
-                } catch (org.jdom.DataConversionException e) {
+                } catch (org.jdom2.DataConversionException e) {
                     log.error("failed to convert tracksegment attribute");
                 } catch ( NullPointerException e) {  // considered normal if the attribute not present
                 }

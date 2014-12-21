@@ -30,8 +30,8 @@ import javax.swing.*;
 
 import java.util.*;
 
-import org.jdom.*;
-import org.jdom.output.*;
+import org.jdom2.*;
+import org.jdom2.output.*;
 
 /**
  * Save throttles to XML

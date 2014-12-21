@@ -64,8 +64,15 @@ xercesImpl.jar
   version Xerces-J 2.9.1
   from http://www.apache.org/dist/xerces/j/
 
-jdom.jar                
+jdom.jar
+ (deprecated, we've moved to JDOM2; 
+  will be removed from here and control files post JMRI 3.12, 
+  but remains for e.g. CATS now)         
  version 1.1
+ from <jdom.org>
+ 
+jdom-2.0.5.jar               
+ version 2.0.5
  from <jdom.org>
  
 jython.jar

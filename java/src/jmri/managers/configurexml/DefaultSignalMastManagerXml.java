@@ -9,7 +9,7 @@ import jmri.implementation.SignalMastRepeater;
 import jmri.configurexml.XmlAdapter;
 import java.util.List;
 
-import org.jdom.*;
+import org.jdom2.*;
 
 /**
  * Handle XML configuration for a DefaultSignalMastManager objects.

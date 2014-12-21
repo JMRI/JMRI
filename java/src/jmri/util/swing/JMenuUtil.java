@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import javax.swing.*;
-import org.jdom.*;
+import org.jdom2.*;
 import java.beans.PropertyChangeListener;
 import jmri.util.SystemType;
 import jmri.util.jdom.LocaleSelector;

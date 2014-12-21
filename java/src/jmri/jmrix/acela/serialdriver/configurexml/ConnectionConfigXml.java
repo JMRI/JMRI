@@ -12,7 +12,7 @@ import jmri.jmrix.acela.AcelaNode;
 import jmri.jmrix.acela.AcelaTrafficController;
 
 import java.util.List;
-import org.jdom.*;
+import org.jdom2.*;
 
 /**
  * Handle XML persistance of layout connections by persistening

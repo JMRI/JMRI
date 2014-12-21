@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
 import jmri.util.PhysicalLocation;
-import org.jdom.Element;
+import org.jdom2.Element;
 import java.util.regex.*;
 
 public class ListeningSpot {

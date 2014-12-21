@@ -24,7 +24,7 @@ import java.util.Locale;
 
 import javax.swing.JComboBox;
 
-import org.jdom.JDOMException;
+import org.jdom2.JDOMException;
 
 /**
  * Tests for the Operations Route class Last manually cross-checked on 20090131

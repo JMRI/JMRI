@@ -12,7 +12,7 @@ import java.util.Vector;
 
 import jmri.util.davidflanagan.HardcopyWriter;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * ConsistRosterEntry represents a single element in a consist roster.
@@ -156,9 +156,9 @@ public class NceConsistRosterEntry {
      * @param e  Consist XML element
      */
     @SuppressWarnings("unchecked")
-	public NceConsistRosterEntry(org.jdom.Element e) {
+	public NceConsistRosterEntry(org.jdom2.Element e) {
         if (log.isDebugEnabled()) log.debug("ctor from element "+e);
-        org.jdom.Attribute a;
+        org.jdom2.Attribute a;
         if ((a = e.getAttribute("id")) != null )  _id = a.getValue();
         else log.warn("no id attribute in consist element when reading ConsistRoster");
         if ((a = e.getAttribute("consistNumber")) != null )  _consistNumber = a.getValue();
@@ -219,8 +219,8 @@ public class NceConsistRosterEntry {
      * detailed DTD in consist-roster-config.xml.
      * @return Contents in a JDOM Element
      */
-    org.jdom.Element store() {
-        org.jdom.Element e = new org.jdom.Element("consist");
+    org.jdom2.Element store() {
+        org.jdom2.Element e = new org.jdom2.Element("consist");
         e.setAttribute("id", getId());
         e.setAttribute("consistNumber",getConsistNumber());
         e.setAttribute("roadNumber",getRoadNumber());
@@ -228,14 +228,14 @@ public class NceConsistRosterEntry {
         e.setAttribute("model",getModel());
         e.setAttribute("comment",getComment());
         
-        org.jdom.Element loco1 = new org.jdom.Element("loco");
+        org.jdom2.Element loco1 = new org.jdom2.Element("loco");
         loco1.setAttribute("locoName","lead");
         loco1.setAttribute("dccLocoAddress",getLoco1DccAddress());
         loco1.setAttribute("longAddress",isLoco1LongAddress()?"yes":"no");
         loco1.setAttribute("locoDir",getLoco1Direction());
         e.addContent(loco1);
         
-        org.jdom.Element loco2 = new org.jdom.Element("loco");
+        org.jdom2.Element loco2 = new org.jdom2.Element("loco");
         loco2.setAttribute("locoName","rear");
         loco2.setAttribute("dccLocoAddress",getLoco2DccAddress());
         loco2.setAttribute("longAddress",isLoco2LongAddress()?"yes":"no");
@@ -243,7 +243,7 @@ public class NceConsistRosterEntry {
         e.addContent(loco2);
          
         if (!getLoco3DccAddress().equals("")){
-        	org.jdom.Element loco3 = new org.jdom.Element("loco");
+        	org.jdom2.Element loco3 = new org.jdom2.Element("loco");
         	loco3.setAttribute("locoName","mid");
         	loco3.setAttribute("locoMidNumber","1");
         	loco3.setAttribute("dccLocoAddress",getLoco3DccAddress());
@@ -253,7 +253,7 @@ public class NceConsistRosterEntry {
         }
 
         if (!getLoco4DccAddress().equals("")){
-        	org.jdom.Element loco4 = new org.jdom.Element("loco");
+        	org.jdom2.Element loco4 = new org.jdom2.Element("loco");
         	loco4.setAttribute("locoName","mid");
         	loco4.setAttribute("locoMidNumber","2");
         	loco4.setAttribute("dccLocoAddress",getLoco4DccAddress());
@@ -263,7 +263,7 @@ public class NceConsistRosterEntry {
         }
 
         if (!getLoco5DccAddress().equals("")){
-        	org.jdom.Element loco5 = new org.jdom.Element("loco");
+        	org.jdom2.Element loco5 = new org.jdom2.Element("loco");
         	loco5.setAttribute("locoName","mid");
         	loco5.setAttribute("locoMidNumber","3");
         	loco5.setAttribute("dccLocoAddress",getLoco5DccAddress());
@@ -273,7 +273,7 @@ public class NceConsistRosterEntry {
         }
 
         if (!getLoco6DccAddress().equals("")){
-        	org.jdom.Element loco6 = new org.jdom.Element("loco");
+        	org.jdom2.Element loco6 = new org.jdom2.Element("loco");
         	loco6.setAttribute("locoName","mid");
         	loco6.setAttribute("locoMidNumber","4");
         	loco6.setAttribute("dccLocoAddress",getLoco6DccAddress());

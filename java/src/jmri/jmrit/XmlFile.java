@@ -19,15 +19,15 @@ import javax.swing.JFileChooser;
 import jmri.util.FileUtil;
 import jmri.util.JmriLocalEntityResolver;
 import jmri.util.NoArchiveFileFilter;
-import org.jdom.Comment;
-import org.jdom.DocType;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.ProcessingInstruction;
-import org.jdom.input.SAXBuilder;
-import org.jdom.output.Format;
-import org.jdom.output.XMLOutputter;
+import org.jdom2.Comment;
+import org.jdom2.DocType;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.ProcessingInstruction;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,7 +70,7 @@ public abstract class XmlFile {
      * read the XML file from a JAR resource.
      *
      * @param name Filename, as needed by {@link #findFile}
-     * @throws org.jdom.JDOMException
+     * @throws org.jdom2.JDOMException
      * @throws java.io.FileNotFoundException
      * @return null if not found, else root element of located file
      */
@@ -99,7 +99,7 @@ public abstract class XmlFile {
      *
      * Exceptions are only thrown when local recovery is impossible.
      *
-     * @throws org.jdom.JDOMException only when all methods have failed
+     * @throws org.jdom2.JDOMException only when all methods have failed
      * @throws java.io.FileNotFoundException
      * @param file File to be parsed. A FileNotFoundException is thrown if it
      * doesn't exist.
@@ -124,7 +124,7 @@ public abstract class XmlFile {
      *
      * Exceptions are only thrown when local recovery is impossible.
      *
-     * @throws org.jdom.JDOMException only when all methods have failed
+     * @throws org.jdom2.JDOMException only when all methods have failed
      * @throws java.io.FileNotFoundException
      * @param stream InputStream to be parsed.
      * @return root element from the file. This should never be null, as an
@@ -139,7 +139,7 @@ public abstract class XmlFile {
      *
      * Exceptions are only thrown when local recovery is impossible.
      *
-     * @throws org.jdom.JDOMException only when all methods have failed
+     * @throws org.jdom2.JDOMException only when all methods have failed
      * @throws FileNotFoundException
      * @param url URL locating the data file
      * @return root element from the file. This should never be null, as an
@@ -163,7 +163,7 @@ public abstract class XmlFile {
      * schema
      * @param stream input containing the XML document
      * @return the root element of the XML document
-     * @throws org.jdom.JDOMException if the XML document is invalid
+     * @throws org.jdom2.JDOMException if the XML document is invalid
      * @throws java.io.IOException if the input cannot be read
      */
     protected Element getRoot(boolean verify, InputStream stream) throws JDOMException, IOException {
@@ -187,7 +187,7 @@ public abstract class XmlFile {
      * schema
      * @param reader input containing the XML document
      * @return the root element of the XML document
-     * @throws org.jdom.JDOMException if the XML document is invalid
+     * @throws org.jdom2.JDOMException if the XML document is invalid
      * @throws java.io.IOException if the input cannot be read
      * @since 3.1.5
      */
@@ -218,7 +218,7 @@ public abstract class XmlFile {
             XMLOutputter fmt = new XMLOutputter();
             fmt.setFormat(Format.getPrettyFormat()
                                 .setLineSeparator(System.getProperty("line.separator"))
-                                .setTextMode(Format.TextMode.PRESERVE));
+                                .setTextMode(Format.TextMode.TRIM_FULL_WHITE));
             fmt.output(doc, o);
         } finally {
             o.close();
@@ -472,9 +472,9 @@ public abstract class XmlFile {
             if (c instanceof ProcessingInstruction) {
                 try {
                     doc = processOneInstruction((ProcessingInstruction)c, doc);
-                } catch (org.jdom.transform.XSLTransformException ex) {
+                } catch (org.jdom2.transform.XSLTransformException ex) {
                     log.error("XSLT error while transforming with "+c+", ignoring transform", ex);
-                } catch (org.jdom.JDOMException ex) {
+                } catch (org.jdom2.JDOMException ex) {
                     log.error("JDOM error while transforming with "+c+", ignoring transform", ex);
                 } catch (java.io.IOException ex) {
                     log.error("IO error while transforming with "+c+", ignoring transform", ex);
@@ -485,7 +485,7 @@ public abstract class XmlFile {
         return doc ;
     }
     
-    Document processOneInstruction(ProcessingInstruction p, Document doc) throws org.jdom.transform.XSLTransformException, org.jdom.JDOMException, java.io.IOException {
+    Document processOneInstruction(ProcessingInstruction p, Document doc) throws org.jdom2.transform.XSLTransformException, org.jdom2.JDOMException, java.io.IOException {
         log.debug("handling ",p);
         
         // check target
@@ -503,7 +503,7 @@ public abstract class XmlFile {
         // read the XSLT transform into a Document to get XInclude done
         SAXBuilder builder = getBuilder(false);  // argument controls validation
         Document xdoc = builder.build(new BufferedInputStream(new FileInputStream(findFile(href))));
-        org.jdom.transform.XSLTransformer transformer = new org.jdom.transform.XSLTransformer(xdoc);
+        org.jdom2.transform.XSLTransformer transformer = new org.jdom2.transform.XSLTransformer(xdoc);
         return transformer.transform(doc);
     }
     

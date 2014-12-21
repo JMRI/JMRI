@@ -8,7 +8,7 @@ import jmri.jmrix.ieee802154.xbee.XBeeNode;
 import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
 import jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo;
 import java.util.List;
-import org.jdom.*;
+import org.jdom2.*;
 
 /**
  * Handle XML persistance of layout connections by persisting

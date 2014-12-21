@@ -254,9 +254,9 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 	 * @param e
 	 *            Consist XML element
 	 */
-	public ScheduleItem(org.jdom.Element e) {
+	public ScheduleItem(org.jdom2.Element e) {
 		// if (log.isDebugEnabled()) log.debug("ctor from element "+e);
-		org.jdom.Attribute a;
+		org.jdom2.Attribute a;
 		if ((a = e.getAttribute(Xml.ID)) != null)
 			_id = a.getValue();
 		else
@@ -295,8 +295,8 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 	 * 
 	 * @return Contents in a JDOM Element
 	 */
-	public org.jdom.Element store() {
-		org.jdom.Element e = new org.jdom.Element(Xml.ITEM);
+	public org.jdom2.Element store() {
+		org.jdom2.Element e = new org.jdom2.Element(Xml.ITEM);
 		e.setAttribute(Xml.ID, getId());
 		e.setAttribute(Xml.SEQUENCE_ID, Integer.toString(getSequenceId()));
 		e.setAttribute(Xml.TRAIN_SCHEDULE_ID, getSetoutTrainScheduleId());

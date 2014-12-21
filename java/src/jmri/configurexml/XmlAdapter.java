@@ -1,6 +1,6 @@
 package jmri.configurexml;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Interface assumed during configuration operations.

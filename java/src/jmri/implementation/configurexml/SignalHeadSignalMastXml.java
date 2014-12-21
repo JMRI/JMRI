@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.SignalMast;
 import jmri.implementation.SignalHeadSignalMast;
-import org.jdom.Element;
+import org.jdom2.Element;
 import java.util.List;
 
 /**

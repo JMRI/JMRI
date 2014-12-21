@@ -22,7 +22,7 @@ package jmri.jmrit.vsdecoder;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 abstract public class Trigger implements PropertyChangeListener {
 

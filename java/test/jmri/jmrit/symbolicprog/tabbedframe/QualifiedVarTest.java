@@ -7,9 +7,9 @@ import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
 import javax.swing.JPanel;
 
-import org.jdom.DocType;
-import org.jdom.Document;
-import org.jdom.Element;
+import org.jdom2.DocType;
+import org.jdom2.Document;
+import org.jdom2.Element;
 import junit.framework.*;
 
 /**
@@ -39,7 +39,7 @@ public class QualifiedVarTest extends TestCase {
                 // get the sample info
                 try {
                     jmri.jmrit.XmlFile file = new jmri.jmrit.XmlFile(){};
-                    org.jdom.Element el = file.rootFromFile(new java.io.File("java/test/jmri/jmrit/decoderdefn/DecoderWithQualifier.xml"));
+                    org.jdom2.Element el = file.rootFromFile(new java.io.File("java/test/jmri/jmrit/decoderdefn/DecoderWithQualifier.xml"));
         
                     DecoderFile df = new DecoderFile();  // used as a temporary
                     df.loadVariableModel(el.getChild("decoder"), p.variableModel);

@@ -22,7 +22,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 import javax.swing.tree.TreePath;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -788,7 +788,7 @@ public class EcosLocoToRoster implements EcosListener {
 
         try {
             decoderRoot = df.rootFromName(DecoderFile.fileLocation+df.getFilename());
-        } catch (org.jdom.JDOMException e) { log.error("JDOM Exception while loading decoder XML file: "+df.getFilename()); }
+        } catch (org.jdom2.JDOMException e) { log.error("JDOM Exception while loading decoder XML file: "+df.getFilename()); }
         catch (java.io.IOException e) { log.error("IO Exception while loading decoder XML file: "+df.getFilename()); }
         // load variables from decoder tree
         df.getProductID();

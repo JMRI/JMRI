@@ -1,6 +1,6 @@
 package jmri.jmrit.throttle;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.beans.PropertyVetoException;
@@ -51,7 +51,7 @@ public class WindowPreferences
             if (e.getAttribute("isIconified") != null)
             	c.setIcon( e.getAttribute("isIconified").getBooleanValue() );
         }
-        catch (org.jdom.DataConversionException ex) {
+        catch (org.jdom2.DataConversionException ex) {
             System.out.println(ex);
         } catch (PropertyVetoException ex) {
         	System.out.println(ex);
@@ -106,7 +106,7 @@ public class WindowPreferences
             if (e.getAttribute("isVisible")!=null)
             	c.setVisible(e.getAttribute("isVisible").getBooleanValue());
         }
-        catch (org.jdom.DataConversionException ex) {
+        catch (org.jdom2.DataConversionException ex) {
             System.out.println(ex);
         }
     }

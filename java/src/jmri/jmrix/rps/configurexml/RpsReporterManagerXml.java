@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrix.rps.RpsReporterManager;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Provides load and store functionality for

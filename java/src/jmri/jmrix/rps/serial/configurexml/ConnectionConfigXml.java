@@ -7,7 +7,7 @@ import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.rps.serial.ConnectionConfig;
 import jmri.jmrix.rps.serial.SerialAdapter;
 import java.util.List;
-import org.jdom.*;
+import org.jdom2.*;
 
 /**
  * Handle XML persistance of layout connections by persisting

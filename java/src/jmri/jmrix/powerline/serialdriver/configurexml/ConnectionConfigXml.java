@@ -8,7 +8,7 @@ import jmri.jmrix.powerline.serialdriver.ConnectionConfig;
 import jmri.jmrix.powerline.serialdriver.SerialDriverAdapter;
 //import jmri.jmrix.powerline.*;
 import java.util.List;
-import org.jdom.*;
+import org.jdom2.*;
 
 /**
  * Handle XML persistance of layout connections by persisting

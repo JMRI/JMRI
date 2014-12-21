@@ -10,28 +10,28 @@ import junit.framework.*;
 public class RosterEntryPaneTest extends TestCase {
 
     // statics for test objects
-    org.jdom.Element eOld = null;
-    org.jdom.Element eNew = null;
+    org.jdom2.Element eOld = null;
+    org.jdom2.Element eNew = null;
     RosterEntry rOld = null;
     RosterEntry rNew = null;
 
     public void setUp() {
         // create Element
-        eOld = new org.jdom.Element("locomotive")
+        eOld = new org.jdom2.Element("locomotive")
             .setAttribute("id","id info")
             .setAttribute("fileName","file here")
             .setAttribute("roadNumber","431")
             .setAttribute("roadName","SP")
             .setAttribute("mfg","Athearn")
             .setAttribute("dccAddress","1234")
-            .addContent(new org.jdom.Element("decoder")
+            .addContent(new org.jdom2.Element("decoder")
                         .setAttribute("family","91")
                         .setAttribute("model","33")
                         )
-            .addContent(new org.jdom.Element("locoaddress")
-                        .addContent(new org.jdom.Element("number").addContent("1234"))
+            .addContent(new org.jdom2.Element("locoaddress")
+                        .addContent(new org.jdom2.Element("number").addContent("1234"))
                         //As there is no throttle manager available all protocols default to dcc short
-                        .addContent(new org.jdom.Element("protocol").addContent("dcc_short"))
+                        .addContent(new org.jdom2.Element("protocol").addContent("dcc_short"))
                         
                         );
                         
@@ -39,13 +39,13 @@ public class RosterEntryPaneTest extends TestCase {
                       protected void warnShortLong(String s){}
         };
         
-        eNew = new org.jdom.Element("locomotive")
+        eNew = new org.jdom2.Element("locomotive")
             .setAttribute("id","id info")
             .setAttribute("fileName","file here")
             .setAttribute("roadNumber","431")
             .setAttribute("roadName","SP")
             .setAttribute("mfg","Athearn")
-            .addContent(new org.jdom.Element("decoder")
+            .addContent(new org.jdom2.Element("decoder")
                         .setAttribute("family","91")
                         .setAttribute("model","33")
                         )

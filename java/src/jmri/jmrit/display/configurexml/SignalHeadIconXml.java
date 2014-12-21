@@ -8,8 +8,8 @@ import jmri.SignalHead;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SignalHeadIcon;
-import org.jdom.Attribute;
-import org.jdom.Element;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
 import java.util.List;
 import java.util.HashMap;
 
@@ -147,7 +147,7 @@ public class SignalHeadIconXml extends PositionableLabelXml {
         try {
             attr = element.getAttribute("rotate");
             rotation = attr.getIntValue();
-        } catch (org.jdom.DataConversionException e){
+        } catch (org.jdom2.DataConversionException e){
         } catch ( NullPointerException e) {  // considered normal if the attributes are not present
         }
 
@@ -227,7 +227,7 @@ public class SignalHeadIconXml extends PositionableLabelXml {
             if (attr!=null) {
                 l.setClickMode(attr.getIntValue());
             }
-        } catch (org.jdom.DataConversionException e) {
+        } catch (org.jdom2.DataConversionException e) {
             log.error("Failed on clickmode attribute: "+e);
         }
 
@@ -236,7 +236,7 @@ public class SignalHeadIconXml extends PositionableLabelXml {
             if (attr!=null) {
                 l.setLitMode(attr.getBooleanValue());
             }
-        } catch (org.jdom.DataConversionException e) {
+        } catch (org.jdom2.DataConversionException e) {
             log.error("Failed on litmode attribute: "+e);
         }
 

@@ -202,7 +202,7 @@ public class Engine implements ReadingListener {
         pf.store(file);
     }
     
-    public void loadAlignment(File file) throws org.jdom.JDOMException, IOException {
+    public void loadAlignment(File file) throws org.jdom2.JDOMException, IOException {
         // start by getting the file
         PositionFile pf = new PositionFile();
         pf.loadFile(file);
@@ -318,7 +318,7 @@ public class Engine implements ReadingListener {
         pf.store(file);
     }
     
-    public void loadPollConfig(File file) throws org.jdom.JDOMException, IOException {
+    public void loadPollConfig(File file) throws org.jdom2.JDOMException, IOException {
         if (file.exists()) {
             PollingFile pf = new PollingFile();
             pf.loadFile(file);  

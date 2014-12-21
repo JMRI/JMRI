@@ -18,7 +18,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JToggleButton;
 import jmri.util.FileUtil;
 import jmri.util.swing.ResizableImagePanel;
-import org.jdom.Element;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -464,7 +464,7 @@ public class FunctionButton extends JToggleButton implements ActionListener
             		this.setSelectedIconPath(e.getAttribute("selectedIconPath").getValue());
             updateLnF();
         }
-        catch (org.jdom.DataConversionException ex)
+        catch (org.jdom2.DataConversionException ex)
         {
             log.error("DataConverstionException in setXml: "+ex);
         }

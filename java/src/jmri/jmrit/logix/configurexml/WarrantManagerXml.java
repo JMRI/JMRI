@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Iterator;
 
-import org.jdom.Element;
-import org.jdom.Attribute;
+import org.jdom2.Element;
+import org.jdom2.Attribute;
 
 import jmri.InstanceManager;
 import jmri.DccLocoAddress;
@@ -273,7 +273,7 @@ public class WarrantManagerXml //extends XmlFile
             int address = 0;
             try {
                address = elem.getAttribute("dccAddress").getIntValue();
-            } catch (org.jdom.DataConversionException dce) {
+            } catch (org.jdom2.DataConversionException dce) {
                 log.error(dce.toString()+ " in Warrant "+warrant.getDisplayName());
             }
             boolean isLong = true;
@@ -331,7 +331,7 @@ public class WarrantManagerXml //extends XmlFile
         long time = 0;
         try {
             time = elem.getAttribute("time").getLongValue();
-        } catch (org.jdom.DataConversionException dce) {}
+        } catch (org.jdom2.DataConversionException dce) {}
 
         Attribute attr = elem.getAttribute("command");
         String command = null;

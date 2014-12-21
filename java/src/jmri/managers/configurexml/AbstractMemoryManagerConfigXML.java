@@ -7,7 +7,7 @@ import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.jmrit.roster.RosterEntry;
 import java.util.List;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Provides the abstract base and store functionality for

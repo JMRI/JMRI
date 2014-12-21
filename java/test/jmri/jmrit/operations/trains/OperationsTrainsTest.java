@@ -41,7 +41,7 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.jdom.JDOMException;
+import org.jdom2.JDOMException;
 
 /**
  * Tests for the Operations Trains class Last manually cross-checked on 20090131

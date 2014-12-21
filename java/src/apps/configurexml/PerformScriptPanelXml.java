@@ -7,7 +7,7 @@ import apps.PerformScriptPanel;
 import jmri.InstanceManager;
 import java.awt.Component;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Handle XML persistance of PerformScriptModel objects

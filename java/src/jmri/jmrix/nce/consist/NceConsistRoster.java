@@ -13,9 +13,9 @@ import javax.swing.JComboBox;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.roster.Roster;
 
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.ProcessingInstruction;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.ProcessingInstruction;
 
 /**
  * NCE Consist Roster manages and manipulates a roster of consists.
@@ -302,7 +302,7 @@ public class NceConsistRoster extends XmlFile {
      * clear any existing entries.
      */
     @SuppressWarnings("unchecked")
-	void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
+	void readFile(String name) throws org.jdom2.JDOMException, java.io.IOException {
         // find root
         Element root = rootFromName(name);
         if (root==null) {

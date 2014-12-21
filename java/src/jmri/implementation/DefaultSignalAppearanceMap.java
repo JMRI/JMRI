@@ -8,8 +8,8 @@ import java.util.List;
 
 import java.io.File;
 import java.util.Vector;
-import org.jdom.Element;
-import org.jdom.JDOMException;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
 
 import jmri.SignalHead;
 import jmri.SignalSystem;
@@ -139,7 +139,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
         } catch (java.io.IOException e) {
             log.error("error reading file \""+file.getName(), e);
             return null;
-        } catch (org.jdom.JDOMException e) {
+        } catch (org.jdom2.JDOMException e) {
             log.error("error parsing file \""+file.getName(), e);
             return null;
         }

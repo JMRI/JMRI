@@ -16,8 +16,8 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.List;
 
-import org.jdom.Attribute;
-import org.jdom.Element;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
 
 /**
  * Handle configuration for display.IndicatorTurnoutIconXml objects.

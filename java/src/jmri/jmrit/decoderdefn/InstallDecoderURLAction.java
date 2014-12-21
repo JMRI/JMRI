@@ -17,7 +17,7 @@ import java.net.URL;
 
 import java.util.*;
 import jmri.util.FileUtil;
-import org.jdom.*;
+import org.jdom2.*;
 
 /**
  * Install decoder definition from URL
@@ -171,7 +171,7 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
     /**
      * Ask SAX to read and verify a file
      */
-    Element readFile(URL url) throws org.jdom.JDOMException, java.io.IOException {
+    Element readFile(URL url) throws org.jdom2.JDOMException, java.io.IOException {
         XmlFile xf = new XmlFile(){};   // odd syntax is due to XmlFile being abstract
         
         return xf.rootFromURL(url);

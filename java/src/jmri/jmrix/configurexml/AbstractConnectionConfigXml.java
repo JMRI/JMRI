@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import jmri.configurexml.*;
 import jmri.jmrix.PortAdapter;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 import java.util.List;
 
 /**

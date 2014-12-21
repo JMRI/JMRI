@@ -13,7 +13,7 @@ import jmri.TransitSectionAction;
 
 import java.util.List;
 import java.util.ArrayList;
-import org.jdom.*;
+import org.jdom2.*;
 
 /**
  * Provides the functionality for

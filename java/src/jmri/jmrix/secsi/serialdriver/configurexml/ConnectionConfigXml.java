@@ -8,7 +8,7 @@ import jmri.jmrix.secsi.serialdriver.ConnectionConfig;
 import jmri.jmrix.secsi.serialdriver.SerialDriverAdapter;
 import jmri.jmrix.secsi.*;
 import java.util.List;
-import org.jdom.*;
+import org.jdom2.*;
 
 /**
  * Handle XML persistance of layout connections by persisting

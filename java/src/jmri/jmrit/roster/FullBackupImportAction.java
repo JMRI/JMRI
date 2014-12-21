@@ -10,7 +10,7 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.util.zip.*;
 
-import org.jdom.*;
+import org.jdom2.*;
 
 import jmri.util.*;
 import jmri.util.swing.*;
@@ -152,7 +152,7 @@ public class FullBackupImportAction extends ImportRosterItemAction {
                     // use the new roster
                     Roster.instance().reloadRosterFile();
                 }
-                catch (org.jdom.JDOMException ex) {
+                catch (org.jdom2.JDOMException ex) {
                     ex.printStackTrace();
                 }
             }

@@ -8,7 +8,7 @@ import java.util.Vector;
 import java.beans.PropertyChangeEvent;
 
 import javax.swing.JLabel;
-import org.jdom.Element;
+import org.jdom2.Element;
 import jmri.Programmer;
 import javax.swing.JButton;
 import java.beans.PropertyChangeListener;

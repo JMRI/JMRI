@@ -24,7 +24,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 import jmri.util.JmriJFrame;
 
 import jmri.CatalogTree;
@@ -215,7 +215,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
         return familyMap;
     }
     
-    static List<Element> getDefaultIconItemTypes() throws org.jdom.JDOMException, java.io.IOException{
+    static List<Element> getDefaultIconItemTypes() throws org.jdom2.JDOMException, java.io.IOException{
         File file = new File("xml"+File.separator+"defaultPanelIcons.xml");
         if (!file.exists()) {
             log.error("defaultPanelIcons file doesn't exist: "+file.getPath());
@@ -238,7 +238,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
                 loadFamilies(typeName, families, ed);
                 Thread.yield();
             }
-        } catch (org.jdom.JDOMException e) {
+        } catch (org.jdom2.JDOMException e) {
             log.error("error reading file \"defaultPanelIcons.xml\" due to: "+e);
         } catch (java.io.IOException ioe) {
             log.error("error reading file \"defaultPanelIcons.xml\" due to: "+ioe);
@@ -275,7 +275,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
                 loadFamilies(itemType, families, ed);
                 ImageIndexEditor.indexChanged(true);
             }
-        } catch (org.jdom.JDOMException e) {
+        } catch (org.jdom2.JDOMException e) {
             log.error("error reading file \"defaultPanelIcons.xml\" due to: "+e);
         } catch (java.io.IOException ioe) {
             log.error("error reading file \"defaultPanelIcons.xml\" due to: "+ioe);

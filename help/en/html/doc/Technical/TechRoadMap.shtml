@@ -115,6 +115,26 @@ that support them is on a
 
 <P>
 
+<h2>Migration Notes</h2>
+
+This is a section of notes for various code migrations that are in progress
+or contemplated.
+
+<h3 id="jdom2">From JDOM 1 to JDOM 2</h3>
+
+JMRI 3.11 moved from JDOM version 1 to JDOM version 2.  This involved
+a new jdom-2.0.5.jar file (in place of the earlier jdom.jar), changes to 
+startup and build control files, and some required code changes:
+<ul>
+<li>JDOM 2 classes are in the org.jdom2 package instead of org.jdom.  This 
+required some changes to import statements and class-references in the source code.
+<li>The default output formatting is different, requiring minor changes in e.g. the XmlFile
+class output routines.
+</ul>
+
+In addition, JDOM 2 uses generics in it's input parameters and return values.  This
+means you can remove (now redundant) casts in many places.  Jenkins will warn about those.
+
 
 <!--#include virtual="/Footer" -->
 

@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
-import org.jdom.*;
+import org.jdom2.*;
 
 import jmri.InstanceManager;
 import jmri.SignalMastManager;

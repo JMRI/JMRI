@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import apps.SystemConsole;
 import apps.SystemConsoleConfigPanel;
 import jmri.util.swing.FontComboUtil;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Handle XML persistence of SystemConsoleConfigPanel objects.

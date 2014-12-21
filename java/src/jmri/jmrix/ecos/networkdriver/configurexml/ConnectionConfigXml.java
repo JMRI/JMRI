@@ -9,7 +9,7 @@ import jmri.jmrix.ecos.networkdriver.NetworkDriverAdapter;
 import jmri.jmrix.ecos.EcosPreferences;
 import java.util.List;
 
-import org.jdom.*;
+import org.jdom2.*;
 
 /**
  * Handle XML persistance of layout connections by persistening

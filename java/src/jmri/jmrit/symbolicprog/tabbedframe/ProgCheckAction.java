@@ -11,7 +11,7 @@ import java.io.*;
 import javax.swing.*;
 
 import java.util.*;
-import org.jdom.*;
+import org.jdom2.*;
 import java.util.regex.*;
 
 /**
@@ -218,7 +218,7 @@ public class ProgCheckAction extends AbstractAction {
     /**
      * Ask SAX to read and verify a file
      */
-    static Element readFile(File file) throws org.jdom.JDOMException, java.io.IOException {
+    static Element readFile(File file) throws org.jdom2.JDOMException, java.io.IOException {
         XmlFile xf = new XmlFile(){};   // odd syntax is due to XmlFile being abstract
         
         return xf.rootFromFile(file);

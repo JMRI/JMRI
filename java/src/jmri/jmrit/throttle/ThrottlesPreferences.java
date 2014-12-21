@@ -7,8 +7,8 @@ import java.io.File;
 import java.util.ArrayList;
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
-import org.jdom.Document;
-import org.jdom.Element;
+import org.jdom2.Document;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,11 +49,11 @@ public class ThrottlesPreferences {
 			load(root.getChild("throttlesPreferences"));
     }
     
-    public void load(org.jdom.Element e)
+    public void load(org.jdom2.Element e)
     {
     	if (e==null) return;
-    	org.jdom.Attribute a;
-    	org.jdom.Attribute b;
+    	org.jdom2.Attribute a;
+    	org.jdom2.Attribute b;
     	if ((a = e.getAttribute("isUsingExThrottle")) != null )  setUseExThrottle( a.getValue().compareTo("true") == 0 );
     	if ((a = e.getAttribute("isUsingToolBar")) != null )  setUsingToolBar( a.getValue().compareTo("true") == 0 );
     	if ((a = e.getAttribute("isResizingWindow")) != null )  setResizeWindow( a.getValue().compareTo("true") == 0 );
@@ -82,8 +82,8 @@ public class ThrottlesPreferences {
 	 */
 	static class ThrottlesPrefsXml extends XmlFile { }
 	
-    private org.jdom.Element store() {
-    	org.jdom.Element e = new org.jdom.Element("throttlesPreferences");
+    private org.jdom2.Element store() {
+    	org.jdom2.Element e = new org.jdom2.Element("throttlesPreferences");
     	e.setAttribute("isUsingExThrottle", ""+isUsingExThrottle());
     	e.setAttribute("isUsingToolBar", ""+isUsingToolBar() );
     	e.setAttribute("isUsingFunctionIcon", ""+isUsingFunctionIcon() );

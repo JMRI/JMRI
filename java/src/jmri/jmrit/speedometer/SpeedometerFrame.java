@@ -27,10 +27,10 @@ import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
 import jmri.util.IntlUtilities;
 
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.ProcessingInstruction;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.ProcessingInstruction;
 
 /**
  * Frame providing access to a speedometer.
@@ -588,7 +588,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
         Element root = new Element("speedometer-config");
         root.setAttribute("noNamespaceSchemaLocation",
                 "http://jmri.org/xml/schema/speedometer-3-9-3.xsd",
-                org.jdom.Namespace.getNamespace("xsi",
+                org.jdom2.Namespace.getNamespace("xsi",
                 "http://www.w3.org/2001/XMLSchema-instance"));
         Document doc = new Document(root);
 

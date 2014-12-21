@@ -27,7 +27,7 @@ import java.util.*;
 import javax.swing.*;
 import jmri.util.FileUtil;
 
-import org.jdom.*;
+import org.jdom2.*;
 
 /**
  * JPanel to create a new SignalMast
@@ -453,7 +453,7 @@ public class AddSignalMastPanel extends JPanel {
                     }
                 }
             }
-        } catch (org.jdom.JDOMException e) {
+        } catch (org.jdom2.JDOMException e) {
             mastBox.addItem("Failed to create definition, did you select a system?");
             log.warn("in loadMastDefinitions", e);
         } catch (java.io.IOException e) {
@@ -490,7 +490,7 @@ public class AddSignalMastPanel extends JPanel {
                 }
             }
         
-        } catch (org.jdom.JDOMException e) {
+        } catch (org.jdom2.JDOMException e) {
             log.warn("in loadMastDefinitions", e);
         } catch (java.io.IOException e) {
             //Can be considered normal

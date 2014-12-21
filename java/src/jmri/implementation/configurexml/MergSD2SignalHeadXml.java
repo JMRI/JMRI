@@ -11,7 +11,7 @@ import jmri.Turnout;
 import jmri.NamedBeanHandle;
 
 import java.util.List;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Handle XML configuration for MergSD2SignalHead objects.
@@ -135,7 +135,7 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
         }
         try {
             aspects = element.getAttribute("aspects").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
+        } catch ( org.jdom2.DataConversionException e) {
             log.warn("Could not parse level attribute!");
         } catch ( NullPointerException e) {  // considered normal if the attribute not present
         }

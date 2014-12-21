@@ -7,7 +7,7 @@ import junit.framework.*;
 import jmri.*;
 import jmri.util.*;
 
-import org.jdom.*;
+import org.jdom2.*;
 
 /**
  * Invokes complete set of tests of the jmri.web.xmlio.DefaultXmlIOServerTest class

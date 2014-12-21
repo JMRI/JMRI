@@ -7,7 +7,7 @@ import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.srcp.networkdriver.ConnectionConfig;
 import jmri.jmrix.srcp.networkdriver.NetworkDriverAdapter;
 
-/*import org.jdom.*;
+/*import org.jdom2.*;
 import javax.swing.*;*/
 
 /**

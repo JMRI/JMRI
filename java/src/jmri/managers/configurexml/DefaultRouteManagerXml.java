@@ -11,7 +11,7 @@ import jmri.Turnout;
 import jmri.Sensor;
 import jmri.managers.DefaultRouteManager;
 import java.util.List;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Provides the functionality for

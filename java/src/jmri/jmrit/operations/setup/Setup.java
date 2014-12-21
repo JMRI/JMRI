@@ -14,7 +14,7 @@ import jmri.jmrit.operations.trains.TrainLogger;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.web.server.WebServerManager;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1851,7 +1851,7 @@ public class Setup {
 			return;
 		}
 		Element operations = e.getChild(Xml.OPERATIONS);
-		org.jdom.Attribute a;
+		org.jdom2.Attribute a;
 
 		if ((operations.getChild(Xml.RAIL_ROAD) != null)
 				&& (a = operations.getChild(Xml.RAIL_ROAD).getAttribute(Xml.NAME)) != null) {

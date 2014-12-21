@@ -8,7 +8,7 @@ import jmri.jmrix.maple.serialdriver.ConnectionConfig;
 import jmri.jmrix.maple.serialdriver.SerialDriverAdapter;
 import jmri.jmrix.maple.*;
 import java.util.List;
-import org.jdom.*;
+import org.jdom2.*;
 
 /**
  * Handle XML persistance of layout connections by persisting

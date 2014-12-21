@@ -9,8 +9,8 @@ import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.Sensor;
 import java.util.List;
-import org.jdom.Element;
-import org.jdom.Attribute;
+import org.jdom2.Element;
+import org.jdom2.Attribute;
 import java.awt.Color;
 
 /**
@@ -178,7 +178,7 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
 					sense = ((layoutblockList.get(i))).
 											getAttribute("occupiedsense").getIntValue();
 				}		
-				catch (org.jdom.DataConversionException e) {
+				catch (org.jdom2.DataConversionException e) {
 					log.error("failed to convert occupiedsense attribute");
 				}
 				b.setOccupiedSense(sense);

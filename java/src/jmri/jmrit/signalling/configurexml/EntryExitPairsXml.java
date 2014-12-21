@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.signalling.EntryExitPairs;
-import org.jdom.Element;
+import org.jdom2.Element;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.SignalMast;

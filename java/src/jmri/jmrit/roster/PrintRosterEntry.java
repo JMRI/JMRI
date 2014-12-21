@@ -12,7 +12,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.ArrayList;
 import java.util.List;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 import jmri.util.JmriJFrame;
 import jmri.jmrit.XmlFile;
@@ -110,7 +110,7 @@ public class PrintRosterEntry implements PaneContainer {
             decoderRoot = d.rootFromName(DecoderFile.fileLocation+d.getFilename());
         
         }
-        catch (org.jdom.JDOMException exj) {
+        catch (org.jdom2.JDOMException exj) {
             log.error("could not parse "+d.getFilename()+": "+exj.getMessage());
             return;
         }

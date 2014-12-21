@@ -88,9 +88,9 @@ import static jmri.web.xmlio.XmlIO.TYPE;
 import static jmri.web.xmlio.XmlIO.UNKNOWN;
 import static jmri.web.xmlio.XmlIO.USERNAME;
 import static jmri.web.xmlio.XmlIO.VALUE;
-import org.jdom.Attribute;
-import org.jdom.DataConversionException;
-import org.jdom.Element;
+import org.jdom2.Attribute;
+import org.jdom2.DataConversionException;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -10,10 +10,10 @@ import java.util.Enumeration;
 
 import javax.swing.JComboBox;
 
-import org.jdom.Attribute;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.ProcessingInstruction;
+import org.jdom2.Attribute;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.ProcessingInstruction;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -179,7 +179,7 @@ public class DecoderIndexFile extends XmlFile {
      * @throws JDOMException
      * @throws FileNotFoundException
      */
-    static boolean updateIndexIfNeeded(String name) throws org.jdom.JDOMException, java.io.IOException {
+    static boolean updateIndexIfNeeded(String name) throws org.jdom2.JDOMException, java.io.IOException {
         // get version from master index; if not found, give up
         String masterVersion = null;
         DecoderIndexFile masterXmlFile = new DecoderIndexFile();
@@ -298,7 +298,7 @@ public class DecoderIndexFile extends XmlFile {
      * Read the contents of a decoderIndex XML file into this object. Note that this does not
      * clear any existing entries; reset the instance to do that.
      */
-    void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
+    void readFile(String name) throws org.jdom2.JDOMException, java.io.IOException {
         if (log.isDebugEnabled()) log.debug("readFile "+name);
 
         // read file, find root
@@ -439,7 +439,7 @@ public class DecoderIndexFile extends XmlFile {
         Element root = new Element("decoderIndex-config");
         root.setAttribute("noNamespaceSchemaLocation",
                 "http://jmri.org/xml/schema/decoder.xsd",
-                org.jdom.Namespace.getNamespace("xsi",
+                org.jdom2.Namespace.getNamespace("xsi",
                     "http://www.w3.org/2001/XMLSchema-instance"));
 
         Document doc = newDocument(root);
@@ -502,7 +502,7 @@ public class DecoderIndexFile extends XmlFile {
                 family.setAttribute("file",files[i]);
                 familyList.addContent(family);
             }
-            catch (org.jdom.JDOMException exj) {log.error("could not parse "+files[i]+": "+exj.getMessage());}
+            catch (org.jdom2.JDOMException exj) {log.error("could not parse "+files[i]+": "+exj.getMessage());}
             catch (java.io.FileNotFoundException exj) {log.error("could not read "+files[i]+": "+exj.getMessage());}
             catch (Exception exj) {log.error("other exception while dealing with "+files[i]+": "+exj.getMessage());}
         }

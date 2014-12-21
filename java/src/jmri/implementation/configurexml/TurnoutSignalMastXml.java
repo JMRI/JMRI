@@ -7,7 +7,7 @@ import jmri.Turnout;
 import jmri.implementation.TurnoutSignalMast;
 import jmri.SignalAppearanceMap;
 import java.util.List;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Handle XML configuration for a DefaultSignalMastManager objects.

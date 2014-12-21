@@ -8,8 +8,8 @@ import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.TrackSegment;
-import org.jdom.Attribute;
-import org.jdom.Element;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
 import java.awt.geom.*;
 
 /**
@@ -173,13 +173,13 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
 		try {
 			x = element.getAttribute("xcen").getFloatValue();
 			y = element.getAttribute("ycen").getFloatValue();
-		} catch (org.jdom.DataConversionException e) {
+		} catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert layoutslip center  attribute");
         }
         int type = LayoutSlip.SINGLE_SLIP;
         try {
             type=element.getAttribute("slipType").getIntValue();
-		} catch (org.jdom.DataConversionException e) {
+		} catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert layoutslip type attribute");
         }
 		
@@ -222,14 +222,14 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
 		try {
 			x = element.getAttribute("xa").getFloatValue();
 			y = element.getAttribute("ya").getFloatValue();
-		} catch (org.jdom.DataConversionException e) {
+		} catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert levelxing a coords attribute");
         }
 		l.setCoordsA(new Point2D.Double(x,y));
 		try {
 			x = element.getAttribute("xb").getFloatValue();
 			y = element.getAttribute("yb").getFloatValue();
-		} catch (org.jdom.DataConversionException e) {
+		} catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert levelxing b coords attribute");
         }
 		l.setCoordsB(new Point2D.Double(x,y));

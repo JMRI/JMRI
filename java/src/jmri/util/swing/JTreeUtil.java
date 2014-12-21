@@ -5,7 +5,7 @@ package jmri.util.swing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.tree.*;
-import org.jdom.*;
+import org.jdom2.*;
 
 /**
  * Common utility methods for working with JTrees.

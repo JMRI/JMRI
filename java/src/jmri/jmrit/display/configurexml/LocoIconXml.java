@@ -7,7 +7,7 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.Roster;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Handle configuration for display.LocoIcon objects.

@@ -23,7 +23,7 @@ import static jmri.jmris.json.JSON.METHOD;
 import static jmri.jmris.json.JSON.PUT;
 import static jmri.jmris.json.JSON.STATUS;
 import jmri.jmrit.consisttool.ConsistFile;
-import org.jdom.JDOMException;
+import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

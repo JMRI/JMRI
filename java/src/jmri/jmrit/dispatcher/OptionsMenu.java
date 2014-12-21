@@ -341,7 +341,7 @@ public class OptionsMenu extends JMenu {
 		try {
 			OptionsFile.instance().writeDispatcherOptions(dispatcher);
 		} 
-		//catch (org.jdom.JDOMException jde) { 
+		//catch (org.jdom2.JDOMException jde) { 
 		//	log.error("Exception writing Dispatcher options: "+jde); 
 		//}                           
 		catch (java.io.IOException ioe) { 

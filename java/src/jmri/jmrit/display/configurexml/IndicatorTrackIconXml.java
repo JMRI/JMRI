@@ -17,8 +17,8 @@ import java.util.Map.Entry;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.IndicatorTrackIcon;
 
-import org.jdom.Attribute;
-import org.jdom.Element;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
 
 /**
  * Handle configuration for display.IndicatorTrackIconXml objects.

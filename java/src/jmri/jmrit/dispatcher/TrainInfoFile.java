@@ -8,8 +8,8 @@ import java.io.File;
 import java.util.ResourceBundle;
 import jmri.util.FileUtil;
 
-import org.jdom.Document;
-import org.jdom.Element;
+import org.jdom2.Document;
+import org.jdom2.Element;
 
 /**
  * Handles reading and writing of TrainInfo files to disk as an XML file to/from
@@ -53,7 +53,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
      *  If the file containing Dispatcher TrainInfo does not exist this routine returns quietly.
      *  "name" is assumed to have the .xml or .XML extension already included
      */
-    public TrainInfo readTrainInfo(String name) throws org.jdom.JDOMException, java.io.IOException {
+    public TrainInfo readTrainInfo(String name) throws org.jdom2.JDOMException, java.io.IOException {
         log.debug("entered readTrainInfo");
         TrainInfo tInfo = null;
         // check if file exists
@@ -235,7 +235,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         java.util.Map<String, String> m = new java.util.HashMap<String, String>();
         m.put("type", "text/xsl");
         m.put("href", xsltLocation + "dispatcher-traininfo.xsl");
-        org.jdom.ProcessingInstruction p = new org.jdom.ProcessingInstruction("xml-stylesheet", m);
+        org.jdom2.ProcessingInstruction p = new org.jdom2.ProcessingInstruction("xml-stylesheet", m);
         doc.addContent(0, p);
 
         // save Dispatcher TrainInfo in xml format

@@ -678,11 +678,11 @@ public class Car extends RollingStock {
 	 * @param e
 	 *            Car XML element
 	 */
-	public Car(org.jdom.Element e) {
+	public Car(org.jdom2.Element e) {
 		loading = true; // stop track schedule from bumping
 		super.rollingStock(e);
 		loading = false;
-		org.jdom.Attribute a;
+		org.jdom2.Attribute a;
 		if ((a = e.getAttribute(Xml.PASSENGER)) != null)
 			_passenger = a.getValue().equals(Xml.TRUE);
 		if ((a = e.getAttribute(Xml.HAZARDOUS)) != null)
@@ -762,8 +762,8 @@ public class Car extends RollingStock {
 	 * 
 	 * @return Contents in a JDOM Element
 	 */
-	public org.jdom.Element store() {
-		org.jdom.Element e = new org.jdom.Element(Xml.CAR);
+	public org.jdom2.Element store() {
+		org.jdom2.Element e = new org.jdom2.Element(Xml.CAR);
 		super.store(e);
 		if (isPassenger())
 			e.setAttribute(Xml.PASSENGER, isPassenger() ? Xml.TRUE : Xml.FALSE);

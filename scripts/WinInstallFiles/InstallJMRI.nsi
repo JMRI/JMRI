@@ -428,6 +428,7 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\gluegen-rt.jar"
     Delete "$OUTDIR\javacsv.jar"
     Delete "$OUTDIR\javax.comm.properties"
+    Delete "$OUTDIR\jdom-2.0.5.jar"
     Delete "$OUTDIR\jdom.jar"
     Delete "$OUTDIR\jhall.jar"
     Delete "$OUTDIR\jinput-dx8.dll"

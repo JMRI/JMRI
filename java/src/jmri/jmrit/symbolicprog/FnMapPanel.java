@@ -9,8 +9,8 @@ import java.awt.*;
 
 import java.util.List;
 import java.util.ResourceBundle;
-import org.jdom.Element;
-import org.jdom.Attribute;
+import org.jdom2.Element;
+import org.jdom2.Attribute;
 import jmri.util.jdom.LocaleSelector;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
 

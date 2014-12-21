@@ -7,7 +7,7 @@ import jmri.SensorManager;
 import jmri.Sensor;
 
 import java.util.List;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Provides the abstract base and store functionality for

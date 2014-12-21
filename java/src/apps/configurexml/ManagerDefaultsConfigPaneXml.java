@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Handle XML persistence of ManagerDefaultsConfigPane objects.

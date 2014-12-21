@@ -6,8 +6,8 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SensorIcon;
 //import jmri.NamedBeanHandle;
-import org.jdom.Attribute;
-import org.jdom.Element;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
 import java.awt.Color;
 import java.util.List;
 import java.util.HashMap;
@@ -187,7 +187,7 @@ public class SensorIconXml extends PositionableLabelXml {
         int rotation = 0;
         try {
             rotation = element.getAttribute("rotate").getIntValue();
-        } catch (org.jdom.DataConversionException e) {
+        } catch (org.jdom2.DataConversionException e) {
         } catch ( NullPointerException e) {  // considered normal if the attributes are not present
         }
 
@@ -286,7 +286,7 @@ public class SensorIconXml extends PositionableLabelXml {
                 int blue = elem.getAttribute("blue").getIntValue();
                 int green = elem.getAttribute("green").getIntValue();
                 clrText = new Color(red, green, blue);
-            } catch ( org.jdom.DataConversionException e) {
+            } catch ( org.jdom2.DataConversionException e) {
                 log.warn("Could not parse color attributes!");
             } catch ( NullPointerException e) {  // considered normal if the attributes are not present
             }
@@ -295,7 +295,7 @@ public class SensorIconXml extends PositionableLabelXml {
                 int blue = elem.getAttribute("blueBack").getIntValue();
                 int green = elem.getAttribute("greenBack").getIntValue();
                 clrBackground = new Color(red, green, blue);
-            } catch ( org.jdom.DataConversionException e) {
+            } catch ( org.jdom2.DataConversionException e) {
                 log.warn("Could not parse color attributes!");
             } catch ( NullPointerException e) {  // considered normal if the attributes are not present
             }
@@ -309,7 +309,7 @@ public class SensorIconXml extends PositionableLabelXml {
                 int blue = element.getAttribute("blue"+state).getIntValue();
                 int green = element.getAttribute("green"+state).getIntValue();
                 clrText = new Color(red, green, blue);
-            } catch ( org.jdom.DataConversionException e) {
+            } catch ( org.jdom2.DataConversionException e) {
                 log.warn("Could not parse color attributes!");
             } catch ( NullPointerException e) {  // considered normal if the attributes are not present
             }
@@ -318,7 +318,7 @@ public class SensorIconXml extends PositionableLabelXml {
                 int blue = element.getAttribute("blue"+state+"Back").getIntValue();
                 int green = element.getAttribute("green"+state+"Back").getIntValue();
                 clrBackground = new Color(red, green, blue);
-            } catch ( org.jdom.DataConversionException e) {
+            } catch ( org.jdom2.DataConversionException e) {
                 log.warn("Could not parse color attributes!");
             } catch ( NullPointerException e) {  // considered normal if the attributes are not present
             }

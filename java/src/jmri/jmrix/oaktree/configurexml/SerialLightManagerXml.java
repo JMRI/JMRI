@@ -4,7 +4,7 @@ package jmri.jmrix.oaktree.configurexml;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.jdom.Element;
+import org.jdom2.Element;
 import jmri.jmrix.oaktree.*;
 
 /**

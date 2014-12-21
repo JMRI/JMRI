@@ -8,7 +8,7 @@ import jmri.jmrix.jmriclient.networkdriver.ConnectionConfig;
 import jmri.jmrix.jmriclient.networkdriver.NetworkDriverAdapter;
 import jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Handle XML persistance of layout connections by persistening

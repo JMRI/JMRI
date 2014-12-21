@@ -13,7 +13,7 @@ import jmri.Turnout;
 import java.util.List;
 import jmri.Reporter;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Persistency implementation for BlockManager persistance.
@@ -335,7 +335,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         try {
             toDir = element.getAttribute("todir").getIntValue();
             fromDir = element.getAttribute("fromdir").getIntValue();
-        } catch (org.jdom.DataConversionException e) {
+        } catch (org.jdom2.DataConversionException e) {
             log.error("Could not parse path attribute");
         } catch (NullPointerException e) {
             creationErrorEncountered ("Block Path entry in file missing required attribute",
@@ -369,7 +369,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         int setting = 0;
         try {
             setting = element.getAttribute("setting").getIntValue();
-        } catch (org.jdom.DataConversionException e) {
+        } catch (org.jdom2.DataConversionException e) {
             log.error("Could not parse beansetting attribute");
         }
         List<Element> turnouts = element.getChildren("turnout");

@@ -8,7 +8,7 @@ import jmri.InstanceManager;
 import jmri.implementation.DccSignalHead;
 import java.util.List;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Handle XML configuration for DccSignalHead objects.

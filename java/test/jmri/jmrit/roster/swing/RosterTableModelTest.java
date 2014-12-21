@@ -9,7 +9,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jdom.*;
+import org.jdom2.*;
 
 /**
  * Tests for the roster.swing.RosterTableModel class.
@@ -69,19 +69,19 @@ public class RosterTableModelTest extends TestCase {
         Element e;
         RosterEntry r;
         
-        e = new org.jdom.Element("locomotive")
+        e = new org.jdom2.Element("locomotive")
             .setAttribute("id","id 1")
             .setAttribute("fileName","file here")
             .setAttribute("roadNumber","431")
             .setAttribute("roadName","SP")
             .setAttribute("mfg","Athearn")
             .setAttribute("dccAddress","1234")
-            .addContent(new org.jdom.Element("decoder")
+            .addContent(new org.jdom2.Element("decoder")
                         .setAttribute("family","91")
                         .setAttribute("model","33")
                         )
-            .addContent(new org.jdom.Element("locoaddress")
-                .addContent(new org.jdom.Element("dcclocoaddress")
+            .addContent(new org.jdom2.Element("locoaddress")
+                .addContent(new org.jdom2.Element("dcclocoaddress")
                         .setAttribute("number","12")
                         .setAttribute("longaddress","yes")
                         )
@@ -94,18 +94,18 @@ public class RosterTableModelTest extends TestCase {
         Roster.instance().addEntry(r);
         r.putAttribute("key a", "value 1");
         
-        e = new org.jdom.Element("locomotive")
+        e = new org.jdom2.Element("locomotive")
             .setAttribute("id","id 2")
             .setAttribute("fileName","file here")
             .setAttribute("roadNumber","431")
             .setAttribute("roadName","SP")
             .setAttribute("mfg","Athearn")
-            .addContent(new org.jdom.Element("decoder")
+            .addContent(new org.jdom2.Element("decoder")
                         .setAttribute("family","91")
                         .setAttribute("model","34")
                         )
-            .addContent(new org.jdom.Element("locoaddress")
-                .addContent(new org.jdom.Element("dcclocoaddress")
+            .addContent(new org.jdom2.Element("locoaddress")
+                .addContent(new org.jdom2.Element("dcclocoaddress")
                         .setAttribute("number","13")
                         .setAttribute("longaddress","yes")
                         )
@@ -121,18 +121,18 @@ public class RosterTableModelTest extends TestCase {
         r.putAttribute("key c", "value 13");
         r.putAttribute("key d", "value 14");
 
-        e = new org.jdom.Element("locomotive")
+        e = new org.jdom2.Element("locomotive")
             .setAttribute("id","id 3")
             .setAttribute("fileName","file here")
             .setAttribute("roadNumber","431")
             .setAttribute("roadName","SP")
             .setAttribute("mfg","Athearn")
-            .addContent(new org.jdom.Element("decoder")
+            .addContent(new org.jdom2.Element("decoder")
                         .setAttribute("family","91")
                         .setAttribute("model","35")
                         )
-            .addContent(new org.jdom.Element("locoaddress")
-                .addContent(new org.jdom.Element("dcclocoaddress")
+            .addContent(new org.jdom2.Element("locoaddress")
+                .addContent(new org.jdom2.Element("dcclocoaddress")
                         .setAttribute("number","14")
                         .setAttribute("longaddress","yes")
                         )

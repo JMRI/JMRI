@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import jmri.configurexml.*;
 import jmri.jmrix.SerialPortAdapter;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Abstract base (and partial implementation) for

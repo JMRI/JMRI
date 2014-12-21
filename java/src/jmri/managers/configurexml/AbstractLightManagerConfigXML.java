@@ -10,7 +10,7 @@ import jmri.LightManager;
 import jmri.implementation.LightControl;
 import java.util.List;
 import java.util.ArrayList;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Provides the abstract base and store functionality for

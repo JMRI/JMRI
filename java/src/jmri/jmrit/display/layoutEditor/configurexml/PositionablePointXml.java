@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.PositionablePoint;
-import org.jdom.Attribute;
-import org.jdom.Element;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
 import java.awt.geom.*;
 
 /**
@@ -99,7 +99,7 @@ public class PositionablePointXml extends AbstractXmlAdapter {
 			x = element.getAttribute("x").getFloatValue();
 			y = element.getAttribute("y").getFloatValue();
 			type = element.getAttribute("type").getIntValue();
-		} catch (org.jdom.DataConversionException e) {
+		} catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert positionablepoint attribute");
         }
 		

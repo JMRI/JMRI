@@ -7,7 +7,7 @@ import jmri.Block;
 import jmri.DccThrottle;
 import jmri.NamedBean;
 import jmri.Section;
-import org.jdom.Element;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

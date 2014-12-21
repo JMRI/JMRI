@@ -8,7 +8,7 @@ import jmri.jmrix.grapevine.serialdriver.ConnectionConfig;
 import jmri.jmrix.grapevine.serialdriver.SerialDriverAdapter;
 import jmri.jmrix.grapevine.*;
 import java.util.List;
-import org.jdom.*;
+import org.jdom2.*;
 
 /**
  * Handle XML persistance of layout connections by persisting

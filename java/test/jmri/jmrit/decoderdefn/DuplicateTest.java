@@ -9,8 +9,8 @@ import junit.framework.*;
 import java.util.*;
 import java.io.*;
 
-import org.jdom.*;
-import org.jdom.filter.*;
+import org.jdom2.*;
+import org.jdom2.filter.*;
 
 import jmri.jmrit.XmlFile;
 
@@ -64,7 +64,7 @@ public class DuplicateTest extends TestCase {
         return failed;
     }
     
-    Element readFile(File file) throws org.jdom.JDOMException, java.io.IOException {
+    Element readFile(File file) throws org.jdom2.JDOMException, java.io.IOException {
         XmlFile xf = new XmlFile(){};   // odd syntax is due to XmlFile being abstract
         
         return xf.rootFromFile(file);

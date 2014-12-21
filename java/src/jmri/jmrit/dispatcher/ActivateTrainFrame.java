@@ -889,7 +889,7 @@ public class ActivateTrainFrame {
 			catch (java.io.IOException ioe) {
 				log.error("IO Exception when reading train info file "+ioe);
 			}
-			catch (org.jdom.JDOMException jde) {
+			catch (org.jdom2.JDOMException jde) {
 				log.error("JDOM Exception when reading train info file "+jde);
 			}
 		}
@@ -931,7 +931,7 @@ public class ActivateTrainFrame {
 			try {
 				_tiFile.writeTrainInfo(info, fileName);
 			} 
-			//catch (org.jdom.JDOMException jde) { 
+			//catch (org.jdom2.JDOMException jde) { 
 			//	log.error("JDOM exception writing Train Info: "+jde); 
 			//}                           
 			catch (java.io.IOException ioe) { 

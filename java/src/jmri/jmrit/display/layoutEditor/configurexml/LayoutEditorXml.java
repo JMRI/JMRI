@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import org.jdom.*;
+import org.jdom2.*;
 
 /**
  * Handle configuration for LayoutEditor panes.
@@ -253,7 +253,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 
 			mainlinetrackwidth = element.getAttribute("mainlinetrackwidth").getIntValue();
 			sidetrackwidth = element.getAttribute("sidetrackwidth").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
+        } catch ( org.jdom2.DataConversionException e) {
             log.error("failed to convert LayoutEditor's attribute");
             result = false;
         }
@@ -473,7 +473,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             int green = element.getAttribute("greenBackground").getIntValue();
             panel.setDefaultBackgroundColor(LayoutEditor.colorToString(new Color(red, green, blue)));
             panel.setBackgroundColor(new Color(red, green, blue));
-        } catch ( org.jdom.DataConversionException e) {
+        } catch ( org.jdom2.DataConversionException e) {
             log.warn("Could not parse color attributes!");
         } catch ( NullPointerException e) {  // considered normal if the attributes are not present
         }

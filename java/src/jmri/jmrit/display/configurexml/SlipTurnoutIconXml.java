@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SlipTurnoutIcon;
-import org.jdom.Attribute;
-import org.jdom.Element;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
 
 /**
  * Handle configuration for display.TurnoutIcon objects.
@@ -107,7 +107,7 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
         try {
             Attribute a = element.getAttribute("rotate");
             rotation = a.getIntValue();
-        } catch (org.jdom.DataConversionException e) {
+        } catch (org.jdom2.DataConversionException e) {
         } catch ( NullPointerException e) {  // considered normal if the attributes are not present
         }
         

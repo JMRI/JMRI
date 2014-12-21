@@ -23,7 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 class IntTrigger extends Trigger implements PropertyChangeListener {
 

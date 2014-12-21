@@ -10,8 +10,8 @@ import jmri.configurexml.AbstractXmlAdapter;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.panelEditor.PanelEditor;
-import org.jdom.Attribute;
-import org.jdom.Element;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -102,7 +102,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
             y = element.getAttribute("y").getIntValue();
             height = element.getAttribute("height").getIntValue();
             width = element.getAttribute("width").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
+        } catch ( org.jdom2.DataConversionException e) {
             log.error("failed to convert PanelEditor's attribute");
             result = false;
         }
@@ -174,7 +174,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
             int blue = element.getAttribute("blueBackground").getIntValue();
             int green = element.getAttribute("greenBackground").getIntValue();
             panel.setBackgroundColor(new Color(red, green, blue));
-        } catch ( org.jdom.DataConversionException e) {
+        } catch ( org.jdom2.DataConversionException e) {
             log.warn("Could not parse color attributes!");
         } catch ( NullPointerException e) {  // considered normal if the attributes are not present
         }

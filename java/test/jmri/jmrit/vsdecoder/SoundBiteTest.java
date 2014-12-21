@@ -8,7 +8,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import jmri.jmrit.vsdecoder.SoundBite;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 
 

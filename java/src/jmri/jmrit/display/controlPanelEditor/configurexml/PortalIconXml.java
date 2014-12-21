@@ -8,8 +8,8 @@ import jmri.jmrit.display.configurexml.PositionableLabelXml;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Portal;
 
-import org.jdom.Attribute;
-import org.jdom.Element;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
 
 /**
  * Handle configuration for display.PortalIcon objects.
@@ -104,7 +104,7 @@ public class PortalIconXml extends PositionableLabelXml {
         if ( a!=null ) {
         	try {
         		scale = a.getDoubleValue();
-            } catch (org.jdom.DataConversionException dce) {
+            } catch (org.jdom2.DataConversionException dce) {
             	log.error(l.getNameString()+" can't convert scale "+dce);
             }
         }
@@ -115,7 +115,7 @@ public class PortalIconXml extends PositionableLabelXml {
         if ( a!=null ) {
         	try {
         		deg = a.getIntValue();
-            } catch (org.jdom.DataConversionException dce) {
+            } catch (org.jdom2.DataConversionException dce) {
             	log.error(l.getNameString()+" can't convert rotate "+dce);
             }
         }

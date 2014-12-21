@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.implementation.VirtualSignalMast;
 import java.util.List;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Handle XML configuration for a DefaultSignalMastManager objects.

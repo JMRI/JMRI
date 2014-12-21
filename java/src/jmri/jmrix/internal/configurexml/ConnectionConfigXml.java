@@ -8,7 +8,7 @@ import jmri.jmrix.SerialPortAdapter;
 import jmri.jmrix.internal.ConnectionConfig;
 import jmri.jmrix.internal.InternalAdapter;
 
-import org.jdom.*;
+import org.jdom2.*;
 
 /**
  * Handle XML persistance of virtual layout connections

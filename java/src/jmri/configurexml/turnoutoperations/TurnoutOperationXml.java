@@ -5,7 +5,7 @@ package jmri.configurexml.turnoutoperations;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 import jmri.TurnoutOperation;
 import jmri.util.StringUtil;
@@ -19,7 +19,7 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
 
 	/**
 	 * inherited methods
-	 * @see jmri.configurexml.XmlAdapter#load(org.jdom.Element)
+	 * @see jmri.configurexml.XmlAdapter#load(org.jdom2.Element)
 	 */
 	public boolean load(Element e) throws Exception {
 		loadOne(e);
@@ -62,7 +62,7 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
 	}
 
 	/**
-	 * @see jmri.configurexml.XmlAdapter#load(org.jdom.Element, java.lang.Object)
+	 * @see jmri.configurexml.XmlAdapter#load(org.jdom2.Element, java.lang.Object)
 	 */
     public void load(Element element, Object o) {
         log.error("Invalid method called");

@@ -9,8 +9,8 @@ import jmri.jmrix.loconet.SE8cSignalHead;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
 
 import java.util.List;
-import org.jdom.DataConversionException;
-import org.jdom.Element;
+import org.jdom2.DataConversionException;
+import org.jdom2.Element;
 
 /**
  * Handle XML configuration for loconet.SE8cSignalHead objects.

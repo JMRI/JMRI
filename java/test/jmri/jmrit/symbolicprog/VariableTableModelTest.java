@@ -8,7 +8,7 @@ import javax.swing.*;
 import jmri.progdebugger.*;
 import junit.framework.*;
 
-import org.jdom.*;
+import org.jdom2.*;
 
 /**
  * VariableTableModelTest.java

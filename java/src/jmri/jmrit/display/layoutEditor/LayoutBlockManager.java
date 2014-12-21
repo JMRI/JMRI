@@ -234,7 +234,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 		try {
 			new BlockValueFile().readBlockValues();
 		} 
-		catch (org.jdom.JDOMException jde) {
+		catch (org.jdom2.JDOMException jde) {
 			log.error("JDOM Exception when retreiving block values "+jde);
 		}				
 		catch (java.io.IOException ioe) {

@@ -12,7 +12,7 @@ import jmri.jmrit.XmlFile;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.jmrit.symbolicprog.ResetTableModel;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * Represents and manipulates a decoder definition, both as a file and

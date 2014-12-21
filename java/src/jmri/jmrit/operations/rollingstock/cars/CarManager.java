@@ -20,8 +20,8 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 
-import org.jdom.Attribute;
-import org.jdom.Element;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
 
 /**
  * Manages the cars.
