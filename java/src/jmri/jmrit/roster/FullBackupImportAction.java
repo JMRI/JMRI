@@ -102,7 +102,7 @@ public class FullBackupImportAction extends ImportRosterItemAction {
                 // reading until read returns 0 or less.
                 try {
                     LocoFile xfile = new LocoFile();   // need a dummy object to do this operation in next line
-                    Element lroot = (Element)xfile.rootFromInputStream(zipper).clone();
+                    Element lroot = xfile.rootFromInputStream(zipper).clone();
                     if (lroot.getChild("locomotive") == null) continue;  // that's the roster file
                     mToID = lroot.getChild("locomotive").getAttributeValue("id");
                     

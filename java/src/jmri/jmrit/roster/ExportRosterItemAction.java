@@ -67,7 +67,7 @@ public class ExportRosterItemAction extends AbstractRosterItemAction  {
         LocoFile lf = new LocoFile();  // used as a temporary
         Element lroot;
         try {
-            lroot = (Element)lf.rootFromName(mFullFromFilename).clone();
+            lroot = lf.rootFromName(mFullFromFilename).clone();
         } catch (Exception e) {
             log.error("Exception while loading loco XML file: "+mFullFromFilename+" exception: "+e);
             return false;

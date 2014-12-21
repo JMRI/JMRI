@@ -197,7 +197,6 @@ public class DecoderFile extends XmlFile {
         return protocols.toArray(new LocoAddress.Protocol[protocols.size()]);
     }
     
-    @SuppressWarnings("unchecked") // JDOM getChildren returns plain List, not List<Element>
     private void setSupportedProtocols(){
         protocols = new ArrayList<LocoAddress.Protocol>();
         if(_element.getChild("protocols")!=null){
@@ -252,7 +251,6 @@ public class DecoderFile extends XmlFile {
     }
 
     // use the decoder Element from the file to load a VariableTableModel for programming.
-    @SuppressWarnings("unchecked") // JDOM getChildren returns plain List, not List<Element>
 	public void loadVariableModel(Element decoderElement,
                                   VariableTableModel variableModel) {
         
@@ -267,7 +265,6 @@ public class DecoderFile extends XmlFile {
     int nextCvStoreIndex = 0;
     int nextICvStoreIndex = 0;
     
-    @SuppressWarnings("unchecked") // JDOM getChildren returns plain List, not List<Element>
 	public void processVariablesElement(Element variablesElement,
                                   VariableTableModel variableModel, String extraInclude, String extraExclude) {
     
@@ -279,7 +276,7 @@ public class DecoderFile extends XmlFile {
         log.debug("extraInclude /{}/, extraExclude /{}/", extraInclude, extraExclude);
         
         // load variables to table
-        for (Element e : (List<Element>)variablesElement.getChildren("variable")) {
+        for (Element e : variablesElement.getChildren("variable")) {
             try {
                 // if its associated with an inconsistent number of functions,
                 // skip creating it
@@ -302,7 +299,7 @@ public class DecoderFile extends XmlFile {
         }
 
         // load constants to table
-        for (Element e : (List<Element>)variablesElement.getChildren("constant")) {
+        for (Element e : variablesElement.getChildren("constant")) {
             try {
                 // if its associated with an inconsistent number of functions,
                 // skip creating it
@@ -324,7 +321,7 @@ public class DecoderFile extends XmlFile {
             variableModel.setConstant(e);
         }
         
-        for (Element e : (List<Element>)variablesElement.getChildren("ivariable")) {
+        for (Element e : variablesElement.getChildren("ivariable")) {
             try {
                 if (log.isDebugEnabled()) log.debug("process iVar "+e.getAttribute("CVname"));
                 // if its associated with an inconsistent number of functions,
@@ -356,14 +353,13 @@ public class DecoderFile extends XmlFile {
             }
         }
         
-        for (Element e : (List<Element>)variablesElement.getChildren("variables")) {
+        for (Element e : variablesElement.getChildren("variables")) {
             processVariablesElement(e, variableModel, extraInclude, extraExclude);
         }
                 
     }
 
     // use the decoder Element from the file to load a VariableTableModel for programming.
-    @SuppressWarnings("unchecked") // JDOM getChildren returns plain List, not List<Element>
 	public void loadResetModel(Element decoderElement,
                                ResetTableModel resetModel) {
         if (decoderElement.getChild("resets") != null) {

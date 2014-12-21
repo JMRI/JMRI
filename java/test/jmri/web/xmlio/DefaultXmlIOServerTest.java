@@ -75,7 +75,7 @@ public class DefaultXmlIOServerTest extends TestCase {
         Assert.assertEquals(1, e.getChildren("item").size());
 
         Assert.assertNotNull(e.getChildren("item").get(0));
-        Element item = (Element) e.getChildren("item").get(0);
+        Element item = e.getChildren("item").get(0);
         Assert.assertNotNull(item.getChild("value"));
         Assert.assertNotNull(item.getChild("type"));
         Assert.assertNotNull(item.getChild("name"));
@@ -89,7 +89,7 @@ public class DefaultXmlIOServerTest extends TestCase {
 
         Element e = server.immediateRequest(getReadOneCommand());
 
-        Element item = (Element) e.getChildren("item").get(0);
+        Element item = e.getChildren("item").get(0);
         Assert.assertEquals(""+Turnout.CLOSED, item.getChild("value").getText());
     }
 
@@ -98,7 +98,7 @@ public class DefaultXmlIOServerTest extends TestCase {
 
         Element e = server.immediateRequest(getReadOneCommand());
 
-        Element item = (Element) e.getChildren("item").get(0);
+        Element item = e.getChildren("item").get(0);
         Assert.assertEquals(""+Turnout.THROWN, item.getChild("value").getText());
     }
     
@@ -107,7 +107,7 @@ public class DefaultXmlIOServerTest extends TestCase {
 
         Element e = server.immediateRequest(getWriteOneCommand());
 
-        Element item = (Element) e.getChildren("item").get(0);
+        Element item = e.getChildren("item").get(0);
         Assert.assertEquals(""+Turnout.THROWN, item.getChild("value").getText());
         Assert.assertEquals(Turnout.THROWN, t2.getCommandedState());
     }

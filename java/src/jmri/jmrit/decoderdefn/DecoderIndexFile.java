@@ -498,7 +498,7 @@ public class DecoderIndexFile extends XmlFile {
             DecoderFile d = new DecoderFile();
             try {
                 Element droot = d.rootFromName(DecoderFile.fileLocation+files[i]);
-                Element family = (Element)droot.getChild("decoder").getChild("family").clone();
+                Element family = droot.getChild("decoder").getChild("family").clone();
                 family.setAttribute("file",files[i]);
                 familyList.addContent(family);
             }

@@ -57,7 +57,6 @@ public class NodeIdentity {
         init(); // init as a method so the init can be synchronized.
     }
 
-    @SuppressWarnings("unchecked") // JDOM getChildren returns plain List, not List<Element>
     synchronized private void init() {
         File identityFile = this.identityFile();
         if (identityFile.exists()) {
@@ -65,7 +64,7 @@ public class NodeIdentity {
                 Document doc = (new SAXBuilder()).build(identityFile);
                 String id = doc.getRootElement().getChild(NODE_IDENTITY).getAttributeValue(NODE_IDENTITY);
                 this.formerIdentities.clear();
-                for (Element e : (List<Element>) doc.getRootElement().getChild(FORMER_IDENTITIES).getChildren()) {
+                for (Element e : doc.getRootElement().getChild(FORMER_IDENTITIES).getChildren()) {
                     this.formerIdentities.add(e.getAttributeValue(NODE_IDENTITY));
                 }
                 if (!this.validateIdentity(id)) {
