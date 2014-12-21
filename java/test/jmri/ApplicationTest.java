@@ -15,20 +15,20 @@ import junit.framework.TestSuite;
  */
 public class ApplicationTest extends TestCase {
 
-    public void testDefaultName() {
+    public void testSetName() {
+        // test default
         Assert.assertEquals("Default Application name is 'JMRI'", "JMRI", Application.getApplicationName());
-    }
 
-    public void testNameChange() {
+        // test ability to change
         setApplication("JMRI Testing");
         Assert.assertEquals("Changed Application name is 'JMRI Testing'", "JMRI Testing", Application.getApplicationName());
-    }
 
-    public void testSubsequentNameChange() {
+        // test failure on 2nd change
         setApplication("JMRI Testing 2");
         Assert.assertEquals("Changed Application name to 'JMRI Testing 2' prevented", "JMRI Testing", Application.getApplicationName());
         jmri.util.JUnitAppender.assertWarnMessage("Unable to set application name java.lang.IllegalAccessException: Application name cannot be modified once set.");
     }
+    
     private static void setApplication(String name) {
         try {
             jmri.Application.setApplicationName(name);
