@@ -30,7 +30,7 @@ public class JynstrumentFactory {
 			}
 		}
 		String jyFile = path+ File.separator + className+".py" ;
-		PythonInterpreter interp = (PythonInterpreter) jmri.util.PythonInterp.getPythonInterpreter();
+		PythonInterpreter interp = jmri.util.PythonInterp.getPythonInterpreter();
 		Jynstrument jyns;
 		try {
 			interp.execfile(jyFile);
