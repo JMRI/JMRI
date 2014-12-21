@@ -25,11 +25,9 @@ public class SprogCSStreamPortControllerTest extends TestCase {
         try{
            PipedInputStream tempPipe;
            tempPipe = new PipedInputStream();
-           DataInputStream tostream = new DataInputStream(tempPipe);
            DataOutputStream ostream = new DataOutputStream(new PipedOutputStream(tempPipe));
            tempPipe = new PipedInputStream();
            DataInputStream istream = new DataInputStream(tempPipe);
-           DataOutputStream tistream = new DataOutputStream(new PipedOutputStream(tempPipe));
 
            SprogCSStreamPortController xspc = new SprogCSStreamPortController(istream,ostream,"Test");
            Assert.assertNotNull("exists", xspc);        
