@@ -65,7 +65,7 @@ public class ManagerDefaultsConfigPane extends jmri.util.swing.JmriPanel {
         groups = new ButtonGroup[ManagerDefaultSelector.instance.knownManagers.length];
         for (int i = 0; i<ManagerDefaultSelector.instance.knownManagers.length; i++) groups[i] = new ButtonGroup();
         for (int x = 0; x<connList.size(); x++){
-            jmri.jmrix.SystemConnectionMemo memo = (jmri.jmrix.SystemConnectionMemo)connList.get(x);
+            jmri.jmrix.SystemConnectionMemo memo = connList.get(x);
             String name = memo.getUserName();
             matrix.add(new JLabel(name));
             int i = 0;
