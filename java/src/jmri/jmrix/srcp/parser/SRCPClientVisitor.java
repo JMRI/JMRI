@@ -163,20 +163,20 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
     if( group instanceof ASTfb ) {
        if(busMemo.provides(jmri.SensorManager.class) ) {
           int address = Integer.parseInt((String)(((SimpleNode)group.jjtGetChild(0)).jjtGetValue()));
-          ((jmri.jmrix.srcp.SRCPSensor)((jmri.jmrix.srcp.SRCPSensorManager)busMemo.getSensorManager()).provideSensor("" + address)).reply((SimpleNode)node);
+          ((jmri.jmrix.srcp.SRCPSensor)((jmri.jmrix.srcp.SRCPSensorManager)busMemo.getSensorManager()).provideSensor("" + address)).reply(node);
        }
     } else if( group instanceof ASTga ) {
        if(busMemo.provides(jmri.TurnoutManager.class) ) {
           if(group.jjtGetNumChildren()>=2){
-             int address = Integer.parseInt((String)(((SimpleNode)group.jjtGetChild(0)).jjtGetValue()));
-             boolean thrown = ((String)((SimpleNode)group.jjtGetChild(1)).jjtGetValue()).equals("1");
+             //int address = Integer.parseInt((String)(((SimpleNode)group.jjtGetChild(0)).jjtGetValue()));
+             //boolean thrown = ((String)((SimpleNode)group.jjtGetChild(1)).jjtGetValue()).equals("1");
           } else {
             // just returning the protocol.
           }
        }
     } else if( group instanceof ASTgl ) {
        if(busMemo.provides(jmri.ThrottleManager.class) ) {
-          int address = Integer.parseInt((String)(((SimpleNode)group.jjtGetChild(0)).jjtGetValue()));
+          //int address = Integer.parseInt((String)(((SimpleNode)group.jjtGetChild(0)).jjtGetValue()));
        }
     } else if( group instanceof ASTsm ) {
        if(busMemo.provides(jmri.ProgrammerManager.class) ) {
@@ -184,7 +184,7 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
        }
     } else if( group instanceof ASTpower ) {
        if(busMemo.provides(jmri.PowerManager.class) ) {
-          String state = (String)((SimpleNode)group.jjtGetChild(1)).jjtGetValue();
+          //String state = (String)((SimpleNode)group.jjtGetChild(1)).jjtGetValue();
           //busMemo.getPowerManager().setPower(state.equals("ON")?jmri.PowerManager.ON:jmri.PowerManager.OFF);
           ((jmri.jmrix.srcp.SRCPPowerManager)busMemo.getPowerManager()).reply(node);
        }
