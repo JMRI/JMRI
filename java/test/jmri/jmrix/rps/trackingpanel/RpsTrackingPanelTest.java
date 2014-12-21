@@ -91,8 +91,7 @@ public class RpsTrackingPanelTest extends TestCase {
     public void testXFrameCreation() {
     	JFrame f = jmri.util.JmriJFrame.getFrame("Test Tracking Panel");
     	Assert.assertTrue("found frame", f !=null );
-    	if (f != null)
-    		f.dispose();
+    	f.dispose();
     }
     
     // from here down is testing infrastructure
