@@ -50,12 +50,10 @@ public class JythonTest extends TestCase {
     public void testXXFrameCreation() {
     	JFrame f = jmri.util.JmriJFrame.getFrame("Script Entry");
     	Assert.assertTrue("found frame", f !=null );
-    	if (f != null)
-    		f.dispose();
+    	f.dispose();
     	f = jmri.util.JmriJFrame.getFrame("Script Output");
     	Assert.assertTrue("found frame", f !=null );
-    	if (f != null)
-    		f.dispose();
+    	f.dispose();
     }
     
     // from here down is testing infrastructure
