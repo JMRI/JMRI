@@ -49,8 +49,7 @@ public class AffineEntryPanelTest extends TestCase {
     public void testFrameCreation() {
     	JFrame f = jmri.util.JmriJFrame.getFrame("Test RPS Listener");
     	Assert.assertTrue("found frame", f !=null );
-    	if (f != null)
-    		f.dispose();    	
+    	f.dispose();    	
     }
     
     // from here down is testing infrastructure

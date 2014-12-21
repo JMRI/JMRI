@@ -32,8 +32,7 @@ public class RpsPositionIconTest extends TestCase {
     public void testXPanelCreation() {
     	JFrame f = jmri.util.JmriJFrame.getFrame("RPS Location Test");
     	Assert.assertTrue("found frame", f !=null );
-    	if (f != null)
-    		f.dispose();    	
+    	f.dispose();    	
     }
         
 	// from here down is testing infrastructure

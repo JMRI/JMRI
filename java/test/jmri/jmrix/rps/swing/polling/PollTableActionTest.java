@@ -23,8 +23,7 @@ public class PollTableActionTest extends TestCase {
         // confirm window was created
     	JFrame f = jmri.util.JmriJFrame.getFrame("RPS Polling Control");
     	Assert.assertTrue("found frame", f !=null );
-    	if (f != null)
-    		f.dispose();
+    	f.dispose();
     }
 
     // from here down is testing infrastructure

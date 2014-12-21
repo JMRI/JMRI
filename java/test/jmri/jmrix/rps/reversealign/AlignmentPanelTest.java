@@ -30,8 +30,7 @@ public class AlignmentPanelTest extends TestCase {
     public void testXFrameCreation() {
     	JFrame f = jmri.util.JmriJFrame.getFrame("RPS Alignment");
     	Assert.assertTrue("found frame", f !=null );
-    	if (f != null)
-    		f.dispose();
+    	f.dispose();
     }
         
 
