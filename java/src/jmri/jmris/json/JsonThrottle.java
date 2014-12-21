@@ -145,7 +145,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     public void parseRequest(Locale locale, JsonNode data, JsonThrottleServer server) {
         Iterator<Entry<String, JsonNode>> nodeIterator = data.fields();
         while (nodeIterator.hasNext()) {
-            Map.Entry<String, JsonNode> entry = (Map.Entry<String, JsonNode>) nodeIterator.next();
+            Map.Entry<String, JsonNode> entry = nodeIterator.next();
             String k = entry.getKey();
             JsonNode v = entry.getValue();
             if (k.equals(THROTTLE)) {
