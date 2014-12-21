@@ -3,9 +3,7 @@
 package jmri.jmrit.operations;
 
 import java.awt.Dimension;
-import java.awt.FontMetrics;
-import java.awt.GridBagConstraints;
-
+import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -20,15 +18,13 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
-
+import javax.swing.event.ChangeEvent;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
-import jmri.implementation.swing.SwingShutDownTask;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Control;
+import jmri.util.JmriJFrame;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.swing.XTableColumnModel;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,23 +35,32 @@ import org.slf4j.LoggerFactory;
  * @version $Revision$
  */
 
-public class OperationsFrame extends jmri.util.JmriJFrame implements AncestorListener {
+public class OperationsFrame extends JmriJFrame implements AncestorListener {
 
 	public static final String NEW_LINE = "\n"; // NOI18N
 	public static final String NONE = ""; // NOI18N
 
-	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "MS_CANNOT_BE_FINAL")
 	public OperationsFrame(String s) {
-		super(s);
-		setEscapeKeyClosesWindow(true);
+            this(s, new OperationsPanel());
 	}
 
 	public OperationsFrame() {
-		super();
-		setEscapeKeyClosesWindow(true);
+            this(new OperationsPanel());
 	}
 
-	public void initMinimumSize() {
+        public OperationsFrame(OperationsPanel p) {
+            super();
+            this.setContentPane(p);
+            this.setEscapeKeyClosesWindow(true);
+        }
+
+        public OperationsFrame(String s, OperationsPanel p) {
+            super(s);
+            this.setContentPane(p);
+            this.setEscapeKeyClosesWindow(true);
+        }
+
+        public void initMinimumSize() {
 		initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight250));
 	}
 
@@ -66,76 +71,32 @@ public class OperationsFrame extends jmri.util.JmriJFrame implements AncestorLis
 	}
 
 	protected void addItem(JComponent c, int x, int y) {
-		GridBagConstraints gc = new GridBagConstraints();
-		gc.gridx = x;
-		gc.gridy = y;
-		gc.weightx = 100.0;
-		gc.weighty = 100.0;
-		getContentPane().add(c, gc);
+            ((OperationsPanel) this.getContentPane()).addItem(c, x, y);
 	}
 
 	protected void addItemLeft(JComponent c, int x, int y) {
-		GridBagConstraints gc = new GridBagConstraints();
-		gc.gridx = x;
-		gc.gridy = y;
-		gc.weightx = 100.0;
-		gc.weighty = 100.0;
-		gc.anchor = GridBagConstraints.WEST;
-		getContentPane().add(c, gc);
+            ((OperationsPanel) this.getContentPane()).addItemLeft(c, x, y);
 	}
 
 	protected void addItemWidth(JComponent c, int width, int x, int y) {
-		GridBagConstraints gc = new GridBagConstraints();
-		gc.gridx = x;
-		gc.gridy = y;
-		gc.gridwidth = width;
-		gc.weightx = 100.0;
-		gc.weighty = 100.0;
-		getContentPane().add(c, gc);
+            ((OperationsPanel) this.getContentPane()).addItemWidth(c, width, x, y);
 	}
 
 	protected void addItem(JPanel p, JComponent c, int x, int y) {
-		GridBagConstraints gc = new GridBagConstraints();
-		gc.gridx = x;
-		gc.gridy = y;
-		gc.weightx = 100.0;
-		gc.weighty = 100.0;
-		p.add(c, gc);
+            ((OperationsPanel) this.getContentPane()).addItem(p, c, x, y);
 	}
 
 	protected void addItemLeft(JPanel p, JComponent c, int x, int y) {
-		GridBagConstraints gc = new GridBagConstraints();
-		gc.gridx = x;
-		gc.gridy = y;
-		gc.weightx = 100.0;
-		gc.weighty = 100.0;
-		gc.anchor = GridBagConstraints.WEST;
-		p.add(c, gc);
+            ((OperationsPanel) this.getContentPane()).addItemLeft(p, c, x, y);
 	}
 
 	protected void addItemTop(JPanel p, JComponent c, int x, int y) {
-		GridBagConstraints gc = new GridBagConstraints();
-		gc.gridx = x;
-		gc.gridy = y;
-		gc.weightx = 100;
-		gc.weighty = 100;
-		gc.anchor = GridBagConstraints.NORTH;
-		p.add(c, gc);
+            ((OperationsPanel) this.getContentPane()).addItemTop(p, c, x, y);
 	}
 
 	protected void addItemWidth(JPanel p, JComponent c, int width, int x, int y) {
-		GridBagConstraints gc = new GridBagConstraints();
-		gc.gridx = x;
-		gc.gridy = y;
-		gc.gridwidth = width;
-		gc.weightx = 100.0;
-		gc.weighty = 100.0;
-		gc.anchor = GridBagConstraints.WEST;
-		p.add(c, gc);
+            ((OperationsPanel) this.getContentPane()).addItemWidth(p, c, width, x, y);
 	}
-
-	private static final int MIN_CHECKBOXES = 5;
-	private static final int MAX_CHECKBOXES = 11;
 
 	/**
 	 * Gets the number of checkboxes(+1) that can fix in one row see OperationsFrame.minCheckboxes and
@@ -144,112 +105,62 @@ public class OperationsFrame extends jmri.util.JmriJFrame implements AncestorLis
 	 * @return the number of checkboxes, minimum is 5 (6 checkboxes)
 	 */
 	protected int getNumberOfCheckboxesPerLine() {
-		return getNumberOfCheckboxes(getPreferredSize());
-	}
-
-	private int getNumberOfCheckboxes(Dimension size) {
-		if (size == null)
-			return MIN_CHECKBOXES; // default is 6 checkboxes per row
-		StringBuilder pad = new StringBuilder("X");
-		for (int i = 0; i < CarTypes.instance().getMaxFullNameLength(); i++)
-			pad.append("X");
-
-		JCheckBox box = new JCheckBox(pad.toString());
-		int number = size.width / (box.getPreferredSize().width);
-		if (number < MIN_CHECKBOXES)
-			number = MIN_CHECKBOXES;
-		if (number > MAX_CHECKBOXES)
-			number = MAX_CHECKBOXES;
-		return number;
+            return ((OperationsPanel) this.getContentPane()).getNumberOfCheckboxesPerLine();
 	}
 
 	protected void addButtonAction(JButton b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			@Override
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				buttonActionPerformed(e);
-			}
-		});
+            ((OperationsPanel) this.getContentPane()).addButtonAction(b);
 	}
 
-	protected void buttonActionPerformed(java.awt.event.ActionEvent ae) {
-		log.debug("button action not overridden");
+	protected void buttonActionPerformed(ActionEvent ae) {
+            ((OperationsPanel) this.getContentPane()).buttonActionPerformed(ae);
 	}
 
 	protected void addRadioButtonAction(JRadioButton b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			@Override
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				radioButtonActionPerformed(e);
-			}
-		});
+            ((OperationsPanel) this.getContentPane()).addRadioButtonAction(b);
 	}
 
-	protected void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
-		log.debug("radio button action not overridden");
+	protected void radioButtonActionPerformed(ActionEvent ae) {
+            ((OperationsPanel) this.getContentPane()).radioButtonActionPerformed(ae);
 	}
 
 	protected void addCheckBoxAction(JCheckBox b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			@Override
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				checkBoxActionPerformed(e);
-			}
-		});
+            ((OperationsPanel) this.getContentPane()).addCheckBoxAction(b);
 	}
 
-	protected void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
-		log.debug("check box action not overridden");
+	protected void checkBoxActionPerformed(ActionEvent ae) {
+            ((OperationsPanel) this.getContentPane()).checkBoxActionPerformed(ae);
 	}
 
 	protected void addSpinnerChangeListerner(JSpinner s) {
-		s.addChangeListener(new javax.swing.event.ChangeListener() {
-			@Override
-			public void stateChanged(javax.swing.event.ChangeEvent e) {
-				spinnerChangeEvent(e);
-			}
-		});
+            ((OperationsPanel) this.getContentPane()).addSpinnerChangeListerner(s);
 	}
 
-	protected void spinnerChangeEvent(javax.swing.event.ChangeEvent ae) {
-		log.debug("spinner action not overridden");
+	protected void spinnerChangeEvent(ChangeEvent ae) {
+            ((OperationsPanel) this.getContentPane()).spinnerChangeEvent(ae);
 	}
 
 	protected void addComboBoxAction(JComboBox b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			@Override
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				comboBoxActionPerformed(e);
-			}
-		});
+            ((OperationsPanel) this.getContentPane()).addComboBoxAction(b);
 	}
 
-	protected void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
-		log.debug("combo box action not overridden");
+	protected void comboBoxActionPerformed(ActionEvent ae) {
+            ((OperationsPanel) this.getContentPane()).comboBoxActionPerformed(ae);
 	}
 
 	protected void selectNextItemComboBox(JComboBox b) {
-		int newIndex = b.getSelectedIndex() + 1;
-		if (newIndex < b.getItemCount())
-			b.setSelectedIndex(newIndex);
+            ((OperationsPanel) this.getContentPane()).selectNextItemComboBox(b);
 	}
 	
 	/**
 	 * Will modify the character column width of a TextArea box to 90% of a panels width. ScrollPane is set to 95% of
 	 * panel width.
 	 * 
+         * @param scrollPane
 	 * @param textArea
 	 */
 	protected void adjustTextAreaColumnWidth(JScrollPane scrollPane, JTextArea textArea) {
-		FontMetrics metrics = getFontMetrics(textArea.getFont());
-		int columnWidth = metrics.charWidth('m');
-		int width = getPreferredSize().width;
-		int columns = width / columnWidth * 90 / 100; // make text area 90% of the panel width
-		if (columns > textArea.getColumns()) {
-			log.debug("Increasing text area character width to {} columns", columns);
-			textArea.setColumns(columns);
-		}
-		scrollPane.setMinimumSize(new Dimension(width * 95 / 100, 60));
+            ((OperationsPanel) this.getContentPane()).adjustTextAreaColumnWidth(scrollPane, textArea);
 	}
 
 	/**
@@ -370,68 +281,20 @@ public class OperationsFrame extends jmri.util.JmriJFrame implements AncestorLis
 	}
 
 	protected void clearTableSort(JTable table) {
-		TableSorter sorter = null;
-		try {
-			sorter = (TableSorter) table.getModel();
-		} catch (Exception e) {
-			log.debug("table doesn't use sorter");
-		}
-		if (sorter == null)
-			return;
-		for (int i = 0; i < table.getColumnCount(); i++) {
-			sorter.setSortingStatus(i, TableSorter.NOT_SORTED);
-		}
+            ((OperationsPanel) this.getContentPane()).clearTableSort(table);
 	}
 
 	protected synchronized void createShutDownTask() {
-		OperationsManager.getInstance().setShutDownTask(new SwingShutDownTask("Operations Train Window Check", // NOI18N
-				Bundle.getMessage("PromptQuitWindowNotWritten"), Bundle.getMessage("PromptSaveQuit"), this) {
-			@Override
-			public boolean checkPromptNeeded() {
-				return !OperationsXml.areFilesDirty();
-			}
-
-			@Override
-			public boolean doPrompt() {
-				storeValues();
-				return true;
-			}
-
-			@Override
-			public boolean doClose() {
-				storeValues();
-				return true;
-			}
-		});
+            ((OperationsPanel) this.getContentPane()).createShutDownTask();
 	}
 
 	@Override
 	protected void storeValues() {
-		OperationsXml.save();
+            ((OperationsPanel) this.getContentPane()).storeValues();
 	}
 
 	protected String lineWrap(String s) {
-		int numberChar = 80;
-		Dimension size = getPreferredSize();
-		if (size != null) {
-			JLabel X = new JLabel("X");
-			numberChar = size.width / X.getPreferredSize().width;
-		}
-
-		String[] sa = s.split(NEW_LINE);
-		StringBuilder so = new StringBuilder();
-
-		for (int i = 0; i < sa.length; i++) {
-			if (i > 0)
-				so.append(NEW_LINE);
-			StringBuilder sb = new StringBuilder(sa[i]);
-			int j = 0;
-			while (j + numberChar < sb.length() && (j = sb.lastIndexOf(" ", j + numberChar)) != -1) {
-				sb.replace(j, j + 1, NEW_LINE);
-			}
-			so.append(sb);
-		}
-		return so.toString();
+            return ((OperationsPanel) this.getContentPane()).lineWrap(s);
 	}
 	
 	// Kludge fix for horizontal scrollbar encroaching buttons at bottom of a scrollable window.
@@ -453,24 +316,17 @@ public class OperationsFrame extends jmri.util.JmriJFrame implements AncestorLis
 	
 	@Override
 	public void ancestorAdded(AncestorEvent event) {
-//		log.debug("Ancestor Added");
-		// do nothing
+            ((OperationsPanel) this.getContentPane()).ancestorAdded(event);
 	}
 
 	@Override
 	public void ancestorRemoved(AncestorEvent event) {
-//		log.debug("Ancestor Removed");	
-		// do nothing
+            ((OperationsPanel) this.getContentPane()).ancestorRemoved(event);
 	}
 
 	@Override
 	public void ancestorMoved(AncestorEvent event) {
-		if (pad != null) {
-			if (pad.isVisible() ^ ((JScrollPane) event.getSource()).getHorizontalScrollBar().isShowing()) {
-				pad.setVisible(((JScrollPane) event.getSource()).getHorizontalScrollBar().isShowing());
-//				log.debug("Scrollbar visible: {}", pad.isVisible());
-			}
-		}
+            ((OperationsPanel) this.getContentPane()).ancestorMoved(event);
 	}
 
 	static Logger log = LoggerFactory.getLogger(OperationsFrame.class.getName());
