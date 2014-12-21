@@ -35,7 +35,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     @Override
     protected void getInstance() {
         if(adapter == null)
-        adapter = adapter = new NetworkDriverAdapter();
+        adapter = new NetworkDriverAdapter();
     }
 
     @Override
