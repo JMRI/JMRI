@@ -13,10 +13,13 @@ import junit.framework.*;
  */
 public class OBlockTest extends TestCase {
     
-	public void testCoding() {
+    @SuppressWarnings("all") // otherwise, you get "Comparing identical" warning (until something breaks!)
+	public void testEqualCoding() {
 	    // the following match is required by the JavaDoc
 	    Assert.assertTrue("Block.UNKNOWN == OBlock.DARK", Block.UNKNOWN == OBlock.DARK);
+	}
 	
+	public void testSeparateCoding() {
 	    Assert.assertTrue("Block.OCCUPIED != OBlock.ALLOCATED",     Block.OCCUPIED != OBlock.ALLOCATED);
 	    Assert.assertTrue("Block.OCCUPIED != OBlock.RUNNING",       Block.OCCUPIED != OBlock.RUNNING);
 	    Assert.assertTrue("Block.OCCUPIED != OBlock.OUT_OF_SERVICE",Block.OCCUPIED != OBlock.OUT_OF_SERVICE);
