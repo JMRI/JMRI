@@ -540,12 +540,12 @@ public class EcosLocoToRoster implements EcosListener {
         	String famComment = decoders.get(i).getFamilyComment();
         	String verString = decoders.get(i).getVersionsAsString();
         	String hoverText = "";
-        	if (famComment == null ? "" == null : famComment.equals("")) {
-        		if (verString == null ? "" != null : !verString.equals("")) {
+        	if (famComment == null || famComment.equals("")) {
+        		if (verString != null && !verString.equals("")) {
             		hoverText = "CV7=" + verString;
         		}
         	} else {
-        		if (verString == null ? "" == null : verString.equals("")) {
+        		if (verString == null || verString.equals("")) {
             		hoverText = famComment;
         		} else {
             		hoverText = famComment + "  CV7=" + verString;
