@@ -121,7 +121,7 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
             return name;
         }
 
-    };
+    }
 
     public AnalogClock2Display(Editor editor) {
         super(editor);
