@@ -131,7 +131,6 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
      * all the value-icon pairs
      * @param element Top level Element to unpack.
      */
-    @SuppressWarnings({ "unchecked", "null" })
     public boolean load(Element element) {
         // create the objects
 		EntryExitPairs eep = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
