@@ -16,9 +16,6 @@ import junit.framework.TestSuite;
 public class XNetMonPaneTest extends TestCase {
 
     public void testCtor() {
-        jmri.jmrix.lenz.XNetInterfaceScaffold t = new jmri.jmrix.lenz.XNetInterfaceScaffold(new jmri.jmrix.lenz.LenzCommandStation());
-        jmri.jmrix.lenz.XNetSystemConnectionMemo memo=new jmri.jmrix.lenz.XNetSystemConnectionMemo(t);
-
         XNetMonPane f = new XNetMonPane();
         Assert.assertNotNull(f);
     }
