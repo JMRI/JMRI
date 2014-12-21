@@ -26,11 +26,9 @@ public class XNetStreamPortControllerTest extends TestCase {
         try{
            PipedInputStream tempPipe;
            tempPipe = new PipedInputStream();
-           DataInputStream tostream = new DataInputStream(tempPipe);
            DataOutputStream ostream = new DataOutputStream(new PipedOutputStream(tempPipe));
            tempPipe = new PipedInputStream();
            DataInputStream istream = new DataInputStream(tempPipe);
-           DataOutputStream tistream = new DataOutputStream(new PipedOutputStream(tempPipe));
            XNetStreamPortController xspc = new XNetStreamPortController(istream,ostream,"Test");
            Assert.assertNotNull("exists", xspc);        
         } catch (java.io.IOException ioe) {
