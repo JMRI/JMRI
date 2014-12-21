@@ -271,7 +271,7 @@ public class Engine extends RollingStock {
 	protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
 		// Set dirty
 		EngineManagerXml.instance().setDirty(true);
-		super.firePropertyChange(p, old, n);
+		super.setDirtyAndFirePropertyChange(p, old, n);
 	}
 
 	private void addPropertyChangeListeners() {

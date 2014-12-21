@@ -839,7 +839,7 @@ public class Car extends RollingStock {
 	protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
 		// Set dirty
 		CarManagerXml.instance().setDirty(true);
-		super.firePropertyChange(p, old, n);
+		super.setDirtyAndFirePropertyChange(p, old, n);
 	}
 
 	private void addPropertyChangeListeners() {
