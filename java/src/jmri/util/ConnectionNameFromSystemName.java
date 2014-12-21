@@ -1,7 +1,7 @@
 package jmri.util;
 
 import jmri.jmrix.DCCManufacturerList;
-
+import jmri.jmrix.SystemConnectionMemo;
 /**
  * Common utility method for returning the System Connection Name from
  * the System Name Prefix
@@ -17,12 +17,12 @@ public class ConnectionNameFromSystemName{
      * @return The Connection System Name
      */
     static public String getConnectionName(String prefix){
-        java.util.List<Object> list 
-            = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
+        java.util.List<SystemConnectionMemo> list 
+            = jmri.InstanceManager.getList(SystemConnectionMemo.class);
         if (list != null) {
-            for (Object memo : list) {
-                if (((jmri.jmrix.SystemConnectionMemo)memo).getSystemPrefix().equals(prefix))
-                    return ((jmri.jmrix.SystemConnectionMemo)memo).getUserName();
+            for (SystemConnectionMemo memo : list) {
+                if (memo.getSystemPrefix().equals(prefix))
+                    return memo.getUserName();
             }
         }
         //Fall through if the system isn't using the new SystemConnectionMemo registration
@@ -40,12 +40,12 @@ public class ConnectionNameFromSystemName{
     static public String getPrefixFromName(String name){
         if (name==null)
             return null;
-        java.util.List<Object> list 
-            = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
+        java.util.List<SystemConnectionMemo> list 
+            = jmri.InstanceManager.getList(SystemConnectionMemo.class);
         if (list != null) {
-            for (Object memo : list) {
-                if (((jmri.jmrix.SystemConnectionMemo)memo).getUserName().equals(name)){
-                    return ((jmri.jmrix.SystemConnectionMemo)memo).getSystemPrefix();
+            for (SystemConnectionMemo memo : list) {
+                if (memo.getUserName().equals(name)){
+                    return memo.getSystemPrefix();
                 }
             }
         }

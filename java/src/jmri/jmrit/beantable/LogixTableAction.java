@@ -237,7 +237,7 @@ public class LogixTableAction extends AbstractTableAction {
             * Replace delete button with comboBox
             */
             protected void configDeleteColumn(JTable table) {
-                JComboBox editCombo = new JComboBox();
+                JComboBox<String> editCombo = new JComboBox<String>();
                 editCombo.addItem(rbx.getString("ButtonSelect"));
                 editCombo.addItem(rbx.getString("ButtonEdit"));
                 editCombo.addItem(rbx.getString("ButtonCopy"));
@@ -446,9 +446,9 @@ public class LogixTableAction extends AbstractTableAction {
    
 	private ActionTableModel _actionTableModel = null;
 	private VariableTableModel _variableTableModel = null;
-    private JComboBox _operatorBox;
-    private JComboBox _andOperatorBox;
-    private JComboBox _notOperatorBox;
+    private JComboBox<String> _operatorBox;
+    private JComboBox<String> _andOperatorBox;
+    private JComboBox<String> _notOperatorBox;
     private JTextField _antecedentField;
     private JPanel _antecedentPanel;
     private int _logicType = Conditional.ALL_AND;
@@ -457,12 +457,12 @@ public class LogixTableAction extends AbstractTableAction {
 
     /***  Conponents of Edit Variable Windows */
 	JmriJFrame _editVariableFrame = null;
-    JComboBox _variableTypeBox;
+    JComboBox<String> _variableTypeBox;
 	JTextField _variableNameField;
-    JComboBox _variableStateBox;
-	JComboBox _variableCompareOpBox;
-    JComboBox _variableSignalBox;
-	JComboBox _variableCompareTypeBox;
+    JComboBox<String> _variableStateBox;
+	JComboBox<String> _variableCompareOpBox;
+    JComboBox<String> _variableSignalBox;
+	JComboBox<String> _variableCompareTypeBox;
 	JTextField _variableData1Field;
 	JTextField _variableData2Field;
     JPanel _variableNamePanel;
@@ -474,13 +474,13 @@ public class LogixTableAction extends AbstractTableAction {
 
     /***  Conponents of Edit Action Windows */
 	JmriJFrame _editActionFrame = null;
-    JComboBox _actionItemTypeBox;
-    JComboBox _actionTypeBox;
-    JComboBox _actionBox;
+    JComboBox<String> _actionItemTypeBox;
+    JComboBox<String> _actionTypeBox;
+    JComboBox<String> _actionBox;
 	JTextField _actionNameField;
 	JTextField _longActionString;
 	JTextField _shortActionString;
-    JComboBox _actionOptionBox;
+    JComboBox<String> _actionOptionBox;
     JPanel _actionPanel;
     JPanel _actionTypePanel;
     JPanel _namePanel;
@@ -1523,11 +1523,11 @@ public class LogixTableAction extends AbstractTableAction {
 			logicPanel.add(varTitle);
 			// set up state variables table
 			// initialize and populate Combo boxes for table of state variables
-			_notOperatorBox = new JComboBox();
+			_notOperatorBox = new JComboBox<String>();
 			_notOperatorBox.addItem(" ");
 			_notOperatorBox.addItem(rbx.getString("LogicNOT"));
 
-			_andOperatorBox = new JComboBox();
+			_andOperatorBox = new JComboBox<String>();
 			_andOperatorBox.addItem(rbx.getString("LogicAND"));
 			_andOperatorBox.addItem(rbx.getString("LogicOR"));
 			// initialize table of state variables
@@ -1616,7 +1616,7 @@ public class LogixTableAction extends AbstractTableAction {
 			logicPanel.add(panel42);
                     
             // logic type area
-			_operatorBox = new JComboBox(new String[] {
+			_operatorBox = new JComboBox<String>(new String[] {
                     rbx.getString("LogicAND"),
                     rbx.getString("LogicOR"),
                     rbx.getString("LogicMixed") });
@@ -2232,7 +2232,7 @@ public class LogixTableAction extends AbstractTableAction {
         panel1.add(Box.createHorizontalGlue());
         panel1.add(Box.createHorizontalStrut(STRUT));
 // Item Type
-        _variableTypeBox = new JComboBox();
+        _variableTypeBox = new JComboBox<String>();
         for (int i = 0; i <= Conditional.ITEM_TYPE_LAST_STATE_VAR; i++) {
             _variableTypeBox.addItem(ConditionalVariable.getItemTypeString(i));
         }
@@ -2247,14 +2247,14 @@ public class LogixTableAction extends AbstractTableAction {
         panel1.add(_variableNamePanel);
         panel1.add(Box.createHorizontalStrut(STRUT));
 // State Box
-        _variableStateBox = new JComboBox();
+        _variableStateBox = new JComboBox<String>();
         _variableStateBox.addItem("XXXXXXX");
         _variableStatePanel = makeEditPanel(_variableStateBox, "LabelVariableState", "VariableStateHint"); 
         _variableStatePanel.setVisible(false);
         panel1.add(_variableStatePanel);
         panel1.add(Box.createHorizontalStrut(STRUT));
 // Aspects
-        _variableSignalBox = new JComboBox();
+        _variableSignalBox = new JComboBox<String>();
         _variableSignalBox.addItem("XXXXXXXXX");
         _variableSignalPanel = makeEditPanel(_variableSignalBox, "LabelVariableAspect", "VariableAspectHint");
         _variableSignalPanel.setVisible(false);
@@ -2263,14 +2263,14 @@ public class LogixTableAction extends AbstractTableAction {
 // Compare operator
         _variableComparePanel = new JPanel();
         _variableComparePanel.setLayout(new BoxLayout(_variableComparePanel, BoxLayout.X_AXIS));
-        _variableCompareOpBox = new JComboBox();
+        _variableCompareOpBox = new JComboBox<String>();
         for (int i = 1; i <= ConditionalVariable.NUM_COMPARE_OPERATIONS; i++) {
             _variableCompareOpBox.addItem(ConditionalVariable.getCompareOperationString(i));
         }
         _variableComparePanel.add(makeEditPanel(_variableCompareOpBox, "LabelCompareOp", "CompareHintMemory")); 
         _variableComparePanel.add(Box.createHorizontalStrut(STRUT));
 // Compare type
-        _variableCompareTypeBox = new JComboBox(); 
+        _variableCompareTypeBox = new JComboBox<String>(); 
         for (int i = 0; i < Conditional.ITEM_TO_MEMORY_TEST.length; i++) {
             _variableCompareTypeBox.addItem(ConditionalVariable.getStateString(Conditional.ITEM_TO_MEMORY_TEST[i]));
         }
@@ -2364,7 +2364,7 @@ public class LogixTableAction extends AbstractTableAction {
         Box panel1 = Box.createHorizontalBox();
         panel1.add(Box.createHorizontalGlue());
 
-        _actionItemTypeBox = new JComboBox();
+        _actionItemTypeBox = new JComboBox<String>();
         for (int i = 0; i <= Conditional.ITEM_TYPE_LAST_ACTION; i++) {
             _actionItemTypeBox.addItem(DefaultConditionalAction.getItemTypeString(i));
         }
@@ -2379,14 +2379,14 @@ public class LogixTableAction extends AbstractTableAction {
         panel1.add(_namePanel);
         panel1.add(Box.createHorizontalStrut(STRUT));
 
-        _actionTypeBox = new JComboBox();
+        _actionTypeBox = new JComboBox<String>();
         _actionTypeBox.addItem("");
         _actionTypePanel = makeEditPanel(_actionTypeBox, "LabelActionType", "ActionTypeHint");
         _actionTypePanel.setVisible(false);
         panel1.add(_actionTypePanel);
         panel1.add(Box.createHorizontalStrut(STRUT));
 
-        _actionBox = new JComboBox();
+        _actionBox = new JComboBox<String>();
         _actionBox.addItem("");
         _actionPanel = makeEditPanel(_actionBox, "LabelActionType", "ActionTypeHint");
         _actionPanel.setVisible(false);
@@ -2402,7 +2402,7 @@ public class LogixTableAction extends AbstractTableAction {
         panel1.add(_shortTextPanel);
         panel1.add(Box.createHorizontalStrut(STRUT));
 
-        _actionOptionBox = new JComboBox();
+        _actionOptionBox = new JComboBox<String>();
         for (int i = 1; i <= Conditional.NUM_ACTION_OPTIONS; i++) {
             _actionOptionBox.addItem(DefaultConditionalAction.getOptionString(i,_triggerOnChangeButton.isSelected()));
         }
@@ -3454,7 +3454,7 @@ public class LogixTableAction extends AbstractTableAction {
         }
     };
     
-    void loadJComboBoxWithSignalAspects(JComboBox box, String signalName) {
+    void loadJComboBoxWithSignalAspects(JComboBox<String> box, String signalName) {
         box.removeAllItems();
         log.debug("loadJComboBoxWithSignalAspects called with name: "+signalName);
         SignalHead h = InstanceManager.signalHeadManagerInstance().getSignalHead(signalName);
@@ -3487,7 +3487,7 @@ public class LogixTableAction extends AbstractTableAction {
         }
     };
     
-    void loadJComboBoxWithMastAspects(JComboBox box, String mastName) {
+    void loadJComboBoxWithMastAspects(JComboBox<String> box, String mastName) {
         box.removeAllItems();
         log.debug("loadJComboBoxWithMastAspects called with name: "+mastName);
         SignalMast m = InstanceManager.signalMastManagerInstance().getSignalMast(mastName);

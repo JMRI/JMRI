@@ -78,4 +78,4 @@ public class AcelaSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 }
 
 
-/* @(#)InternalSystemConnectionMemo.java */
+/* @(#)AcelaSystemConnectionMemo.java */

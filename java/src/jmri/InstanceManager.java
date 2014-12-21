@@ -92,8 +92,8 @@ public class InstanceManager {
      * registered with {@link #store}.
      * @param type The class Object for the items' type.
      */
-    static public <T> List<Object> getList(Class<T> type) {
-        return managerLists.get(type);
+    static public <T> List<T> getList(Class<T> type) {
+        return (List<T>)managerLists.get(type);
     }
     
     /**
@@ -174,7 +174,7 @@ public class InstanceManager {
      * see the {@link #getDefault} method
      */
     static public <T> void setDefault(Class<T> type, T val) {
-        List<Object> l = getList(type);
+        List<T> l = getList(type);
         if (l == null || (l.size()<1) ) {
             store(val, type);
             l = getList(type);
@@ -636,8 +636,14 @@ public class InstanceManager {
     // deprecated.
     //
     static public void setProgrammerManager(ProgrammerManager p) {
+        System.out.println("setProgrammerManager invoked with "+p);
+        new Exception("setProgrammerManager call tree").printStackTrace();
         store(p, ProgrammerManager.class);
-
+ 		if(programmerManagerInstance().isAddressedModePossible() )
+ 		    store(p, AddressedProgrammerManager.class);
+ 		if(programmerManagerInstance().isGlobalProgrammerAvailable() )
+ 		    store(p, GlobalProgrammerManager.class);
+       
     	// Now that we have a programmer manager, install the default
         // Consist manager if Ops mode is possible, and there isn't a
         // consist manager already.

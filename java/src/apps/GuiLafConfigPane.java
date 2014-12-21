@@ -99,7 +99,7 @@ public class GuiLafConfigPane extends JPanel {
         JPanel panel = new JPanel();
         // add JComboBoxen for language and country
         panel.setLayout(new FlowLayout());
-        localeBox = new JComboBox(new String[]{
+        localeBox = new JComboBox<String>(new String[]{
                         Locale.getDefault().getDisplayName(),
                         "(Please Wait)"});
         panel.add(localeBox);
@@ -117,7 +117,7 @@ public class GuiLafConfigPane extends JPanel {
                 java.util.Arrays.sort(localeNames);
                 Runnable update = new Runnable() {
                     public void run() {
-                        localeBox.setModel(new javax.swing.DefaultComboBoxModel(localeNames));
+                        localeBox.setModel(new javax.swing.DefaultComboBoxModel<String>(localeNames));
                         //localeBox.setModel(new javax.swing.DefaultComboBoxModel(locale.keySet().toArray()));
                         localeBox.setSelectedItem(Locale.getDefault().getDisplayName());
                     }
@@ -129,7 +129,7 @@ public class GuiLafConfigPane extends JPanel {
         return panel;
     }
 
-    JComboBox localeBox;
+    JComboBox<String> localeBox;
     HashMap<String, Locale> locale;
     String[] localeNames;
 
@@ -188,7 +188,7 @@ public class GuiLafConfigPane extends JPanel {
         17,
         18 };
     
-    static JComboBox fontSizeComboBox = new JComboBox(fontSizes);
+    static JComboBox<Integer> fontSizeComboBox = new JComboBox<Integer>(fontSizes);
     static java.awt.event.ActionListener listener;
     
     public void doFontSize(JPanel panel){

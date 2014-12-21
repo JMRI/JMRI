@@ -49,6 +49,10 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return false;
         if(manager==null)
             return false;
+        if (type.equals(jmri.GlobalProgrammerManager.class) && provides(jmri.ProgrammerManager.class))
+            return ((jmri.ProgrammerManager)get(jmri.ProgrammerManager.class)).isGlobalProgrammerAvailable();
+        if (type.equals(jmri.AddressedProgrammerManager.class) && provides(jmri.ProgrammerManager.class))
+            return ((jmri.ProgrammerManager)get(jmri.ProgrammerManager.class)).isAddressedModePossible();
         return manager.provides(type);
     }
     
@@ -57,8 +61,13 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public <T> T get(Class<?> T) {
         if (getDisabled())
             return null;
-        if(manager!=null)
+        if(manager!=null) {
+            if (T.equals(jmri.GlobalProgrammerManager.class))
+                return (T)get(jmri.ProgrammerManager.class);
+            if (T.equals(jmri.AddressedProgrammerManager.class))
+                return (T)get(jmri.ProgrammerManager.class);
             return (T)manager.get(T);
+        }
         return null; // nothing, by default
     }
     

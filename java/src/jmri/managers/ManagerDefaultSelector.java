@@ -10,6 +10,7 @@ import java.beans.PropertyChangeListener;
 import java.util.Vector;
 
 import jmri.*;
+import jmri.jmrix.SystemConnectionMemo;
 
 /**
  * Records and executes a desired set of defaults
@@ -123,7 +124,7 @@ public class ManagerDefaultSelector {
      */
     @SuppressWarnings("unchecked")
     public void configure() {
-        List<Object> connList = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
+        List<SystemConnectionMemo> connList = jmri.InstanceManager.getList(SystemConnectionMemo.class);
         if (connList == null) return; // nothing to do 
         
         for (Class c : defaults.keySet()) {
@@ -132,7 +133,7 @@ public class ManagerDefaultSelector {
             // have to find object of that type from proper connection
             boolean found = false;
             for (int x = 0; x<connList.size(); x++) {
-                jmri.jmrix.SystemConnectionMemo memo = (jmri.jmrix.SystemConnectionMemo)connList.get(x);
+                SystemConnectionMemo memo = connList.get(x);
                 String testName = memo.getUserName();
                 if (testName.equals(connectionName)) {
                     found = true;
@@ -165,14 +166,13 @@ public class ManagerDefaultSelector {
     public Hashtable<Class<?>, String> defaults = new Hashtable<Class<?>, String>();
     
     final public Item[] knownManagers = new Item[] {
-//                new Item("Clock", ClockControl.class, true),
-//                new Item("Turnouts", TurnoutManager.class, true),
-//                new Item("Lights", LightManager.class, true),
-//                new Item("Sensors", SensorManager.class, true),
                 new Item("Throttles", ThrottleManager.class, false),
                 new Item("<html>Power<br>Control</html>", PowerManager.class, false),
                 new Item("<html>Command<br>Station</html>", CommandStation.class, false),
-                new Item("Programmer", ProgrammerManager.class, false)
+                new Item("Programmer", ProgrammerManager.class, false),
+                new Item("<html>Service<br>Programmer</html>", GlobalProgrammerManager.class, false),
+                new Item("<html>Ops Mode<br>Programmer</html>", AddressedProgrammerManager.class, false),
+                new Item( "Consists ", ConsistManager.class, false)
     };
     
     public static class Item {

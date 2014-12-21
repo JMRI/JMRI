@@ -9,6 +9,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import jmri.managers.ManagerDefaultSelector;
+import jmri.jmrix.SystemConnectionMemo;
 
 /**
  * Provide GUI to configure InstanceManager defaults.
@@ -46,7 +47,7 @@ public class ManagerDefaultsConfigPane extends jmri.util.swing.JmriPanel {
         matrix.removeAll();
         
         // this doesn't find non-migrated systems, how do we handle that eventually?
-        List<Object> connList = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
+        List<SystemConnectionMemo> connList = jmri.InstanceManager.getList(SystemConnectionMemo.class);
         if (connList!=null){
             reloadConnections(connList);
         } else {
@@ -54,7 +55,7 @@ public class ManagerDefaultsConfigPane extends jmri.util.swing.JmriPanel {
         }
     }
     
-    void reloadConnections(List<Object> connList) {
+    void reloadConnections(List<SystemConnectionMemo> connList) {
         matrix.setLayout(new jmri.util.javaworld.GridLayout2(connList.size()+1, ManagerDefaultSelector.instance.knownManagers.length+1));
         matrix.add(new JLabel(""));
         

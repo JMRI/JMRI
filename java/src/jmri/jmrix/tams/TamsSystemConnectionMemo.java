@@ -117,8 +117,13 @@ public class TamsSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return true;
         if (type.equals(jmri.PowerManager.class))
             return true;
-         if (type.equals(jmri.ProgrammerManager.class))
-             return true;
+        if (type.equals(jmri.ProgrammerManager.class))
+            return true;
+        if (type.equals(jmri.GlobalProgrammerManager.class))
+            return getProgrammerManager().isGlobalProgrammerAvailable();
+        if (type.equals(jmri.AddressedProgrammerManager.class))
+            return getProgrammerManager().isAddressedModePossible();
+            
         if (type.equals(jmri.SensorManager.class))
             return true;
         if (type.equals(jmri.TurnoutManager.class))
@@ -134,8 +139,13 @@ public class TamsSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return (T)getThrottleManager();
         if (T.equals(jmri.PowerManager.class))
             return (T)getPowerManager();
-         if (T.equals(jmri.ProgrammerManager.class))
-             return (T)getProgrammerManager();
+        if (T.equals(jmri.ProgrammerManager.class))
+            return (T)getProgrammerManager();
+        if (T.equals(jmri.GlobalProgrammerManager.class))
+            return (T)getProgrammerManager();
+        if (T.equals(jmri.AddressedProgrammerManager.class))
+            return (T)getProgrammerManager();
+
         if (T.equals(jmri.SensorManager.class))
             return (T)getSensorManager();
         if (T.equals(jmri.TurnoutManager.class))

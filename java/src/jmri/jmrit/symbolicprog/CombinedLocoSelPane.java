@@ -222,7 +222,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         progFormat.add(new JLabel(Bundle.getMessage("ProgrammerFormat")));
         progFormat.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
 
-        programmerBox = new JComboBox(ProgDefault.findListOfProgFiles());
+        programmerBox = new JComboBox<String>(ProgDefault.findListOfProgFiles());
         programmerBox.setSelectedIndex(0);
         if (ProgDefault.getDefaultProgFile()!=null) programmerBox.setSelectedItem(ProgDefault.getDefaultProgFile());
         progFormat.add(programmerBox);
@@ -394,7 +394,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         log.warn(msg);
         _statusLabel.setText(msg);
         // try to select all decoders from that MFG
-        JComboBox temp = DecoderIndexFile.instance().matchingComboBox(null, null, Integer.toString(pMfgID), null, null, null);
+        JComboBox<String> temp = DecoderIndexFile.instance().matchingComboBox(null, null, Integer.toString(pMfgID), null, null, null);
         if (log.isDebugEnabled()) log.debug("mfg-only selectDecoder found "+temp.getItemCount()+" matches");
         // install all those in the JComboBox in place of the longer, original list
         if (temp.getItemCount() > 0) {
@@ -414,15 +414,15 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
      */
     void updateForDecoderNotID(int pMfgID, int pModelID) {
         log.warn("Found mfg "+pMfgID+" version "+pModelID+"; no such manufacterer defined");
-        JComboBox temp = DecoderIndexFile.instance().matchingComboBox(null, null, null, null, null, null);
+        JComboBox<String> temp = DecoderIndexFile.instance().matchingComboBox(null, null, null, null, null, null);
         decoderBox.setModel(temp.getModel());
         decoderBox.insertItemAt("<from locomotive settings>",0);
         decoderBox.setSelectedIndex(1);
     }
 
     protected GlobalRosterEntryComboBox locoBox = new GlobalRosterEntryComboBox();
-    private JComboBox decoderBox = null;       // private because children will override this
-    protected JComboBox programmerBox = null;
+    private JComboBox<String> decoderBox = null;       // private because children will override this
+    protected JComboBox<String> programmerBox = null;
     protected JToggleButton iddecoder;
     protected JToggleButton idloco;
     protected JButton go2;

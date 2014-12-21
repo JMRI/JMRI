@@ -133,6 +133,51 @@ See the
 <A HREF="http://java.com/en/download/manual.jsp">Get Java web page</a>
 for additional information.
 
+<h2 id="JDK8">Moving to Java 1.8 from 1.6</h2>
+This section discusses, roughly in order of decreasing importance, 
+the process of migrating from Java 1.6 to Java 1.8.
+
+<h3>Generics, Swing and JComboBox</h3>
+Java 1.8 introduces generics for Swing objects. The most common 
+one is JComboBox.  This Java 1.6 line:
+<pre><code>
+    JComboBox box = new JComboBox();
+</code></pre>
+describes the creation of a JComboBox that selects generic (Object) items.
+In Java 1.8, the JComboBox holds and selects objects of a specific type, usually
+String. It's written:
+<pre><code>
+    JComboBox<String> box = new JComboBox<String>();
+</code></pre>
+The most common code for getting the selected item still includes a cast:
+<pre><code>
+    String result = (String)box.getSelectedItem();
+</code></pre>
+because the JComboBox can actually contain objects of other types. (How can this 
+happen? If the box is editable, and somebody enters some other type)
+To avoid the case, a more robust idiom is:
+<pre><code>
+    String result = box.getItemAt(progBox.getSelectedIndex());
+</code></pre>
+
+<h3>JavaDoc and doclint</h3>
+
+Java 1.8 by default runs the 
+<a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/javadoc.html#CHDFDACB">doclint</a> doclet when making JavaDoc.
+By default, it is 
+<a href="http://blog.joda.org/2014/02/turning-off-doclint-in-jdk-8-javadoc.html">very aggressive</a> 
+on possible errors.
+The default Ant-based builds turn off some of the checking
+terms with
+<pre><code>
+-Xdoclint:all,-missing,-accessibility,-html,-syntax
+</code></pre>
+to drop tests for missing JavaDoc tags and certain benign HTML errors. (For now)
+
+
+
+
+
 <!--#include virtual="/Footer" -->
 
 	  </div><!-- closes #mainContent-->

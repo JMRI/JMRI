@@ -49,11 +49,11 @@ public class ActiveSystemsMenu extends JMenu {
     static public void addItems(JMenuBar m) {
 
         // get ComponentFactory objects and create menus
-        java.util.List<Object> list 
+        java.util.List<ComponentFactory> list 
                 = jmri.InstanceManager.getList(ComponentFactory.class);
         if (list != null) {
-            for (Object memo : list) {
-                JMenu menu = ((ComponentFactory)memo).getMenu();
+            for (ComponentFactory memo : list) {
+                JMenu menu = memo.getMenu();
                 if (menu != null) m.add(menu);
             }
         }

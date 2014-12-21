@@ -66,15 +66,20 @@ public class PR2SystemConnectionMemo extends LocoNetSystemConnectionMemo  {
     
     @Override
     @SuppressWarnings("unchecked")
-    public <T> T get(Class<?> T) {
+    public <T> T get(Class<?> type) {
         if (getDisabled())
             return null;
-        if (T.equals(jmri.PowerManager.class))
+        if (type.equals(jmri.PowerManager.class))
             return (T)getPowerPr2Manager();
-        if (T.equals(jmri.ThrottleManager.class))
+        if (type.equals(jmri.ThrottleManager.class))
             return (T)getPr2ThrottleManager();
-        if (T.equals(jmri.ProgrammerManager.class))
+        if (type.equals(jmri.ProgrammerManager.class))
             return (T)getProgrammerManager();
+        if (type.equals(jmri.GlobalProgrammerManager.class))
+            return (T)getProgrammerManager();
+        if (type.equals(jmri.AddressedProgrammerManager.class))
+            return (T)getProgrammerManager();
+            
         return null;
     }
     
@@ -88,6 +93,11 @@ public class PR2SystemConnectionMemo extends LocoNetSystemConnectionMemo  {
             return true;
         if (type.equals(jmri.ProgrammerManager.class))
             return true;
+        if (type.equals(jmri.GlobalProgrammerManager.class))
+            return getProgrammerManager().isGlobalProgrammerAvailable();
+        if (type.equals(jmri.AddressedProgrammerManager.class))
+            return getProgrammerManager().isAddressedModePossible();
+
         return false;
     }
     

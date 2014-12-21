@@ -39,10 +39,9 @@ abstract public class PowerManagerMenu extends JMenu {
         setText("Connection");
         
         // now add an item for each available manager
-        List<Object> managers = InstanceManager.getList(PowerManager.class);
+        List<PowerManager> managers = InstanceManager.getList(PowerManager.class);
         if (managers != null) {
-            for (Object obj : managers) {
-                PowerManager mgr = (PowerManager) obj;
+            for (PowerManager mgr : managers) {
                 if (mgr != null) {
                     JMenuItem item = new JRadioButtonMenuItem(mgr.getUserName());
                     add(item);
@@ -90,9 +89,8 @@ abstract public class PowerManagerMenu extends JMenu {
             }
         }
         // find PowerManager and return
-        List<Object> managers = InstanceManager.getList(PowerManager.class);
-        for (Object obj : managers) {
-            PowerManager mgr = (PowerManager) obj;
+        List<PowerManager> managers = InstanceManager.getList(PowerManager.class);
+        for (PowerManager mgr : managers) {
             if (name.equals(mgr.getUserName())) return mgr;
         }
         // should not happen

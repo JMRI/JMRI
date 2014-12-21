@@ -498,8 +498,8 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      * <P>
      * This does not include the development menu.
      *
-     * @param menuBar
-     * @param wi
+     * @param menuBar Menu bar to be populated
+     * @param wi WindowInterface where this menu bar will appear
      */
     protected void createMenus(JMenuBar menuBar, WindowInterface wi) {
         // the debugging statements in the following are
@@ -532,6 +532,12 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         log.debug("end building menus");
     }
 
+    /**
+     * Create default File menu
+     *
+     * @param menuBar Menu bar to be populated
+     * @param wi WindowInterface where this menu will appear as part of the menu bar
+     */
     protected void fileMenu(JMenuBar menuBar, WindowInterface wi) {
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         menuBar.add(fileMenu);
@@ -560,9 +566,11 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      * Set the location of the window-specific help for the preferences pane.
      * Made a separate method so if can be overridden for application specific
      * preferences help
+     * @param frame The frame being described in the help system
+     * @param location The location within the JavaHelp system
      */
-    protected void setPrefsFrameHelp(JmriJFrame f, String l) {
-        f.addHelpMenu(l, true);
+    protected void setPrefsFrameHelp(JmriJFrame frame, String location) {
+        frame.addHelpMenu(location, true);
     }
 
     protected void editMenu(JMenuBar menuBar, WindowInterface wi) {

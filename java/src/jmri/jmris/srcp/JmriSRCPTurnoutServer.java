@@ -6,6 +6,7 @@ import java.io.*;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.jmris.AbstractTurnoutServer;
+import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,15 +45,15 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
 
     public void sendStatus(int bus, int address) throws IOException {
         log.debug("send Status called with bus {} and address {}", bus, address);
-        java.util.List<Object> list = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
-        Object memo = null;
+        java.util.List<SystemConnectionMemo> list = jmri.InstanceManager.getList(SystemConnectionMemo.class);
+        SystemConnectionMemo memo = null;
         try {
             memo = list.get(bus - 1);
         } catch (java.lang.IndexOutOfBoundsException obe) {
             TimeStampedOutput.writeTimestamp(output,"412 ERROR wrong value\n\r");
             return;
         }
-        String turnoutName = ((jmri.jmrix.SystemConnectionMemo) memo).getSystemPrefix()
+        String turnoutName = memo.getSystemPrefix()
                 + "T" + address;
         // busy loop, wait for turnout to settle before continuing.
         while(InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName).getKnownState()!=InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName).getCommandedState()) {}
@@ -82,15 +83,15 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
     public void initTurnout(int bus, int address, String protocol) throws jmri.JmriException, java.io.IOException {
 
         log.debug("init Turnout called with bus {} address {} and protocol {}", bus, address, protocol);
-        java.util.List<Object> list = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
-        Object memo;
+        java.util.List<SystemConnectionMemo> list = jmri.InstanceManager.getList(SystemConnectionMemo.class);
+        SystemConnectionMemo memo;
         try {
             memo = list.get(bus - 1);
         } catch (java.lang.IndexOutOfBoundsException obe) {
             TimeStampedOutput.writeTimestamp(output,"412 ERROR wrong value\n\r");
             return;
         }
-        String turnoutName = ((jmri.jmrix.SystemConnectionMemo) memo).getSystemPrefix()
+        String turnoutName = memo.getSystemPrefix()
                 + "T" + address;
         // create turnout if it does not exist.
         this.initTurnout(turnoutName);
@@ -104,15 +105,15 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
     public void parseStatus(int bus, int address, int value) throws jmri.JmriException, java.io.IOException {
 
         log.debug("parse Status called with bus {} address {} and value {}", bus, address, value);
-        java.util.List<Object> list = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
-        Object memo;
+        java.util.List<SystemConnectionMemo> list = jmri.InstanceManager.getList(SystemConnectionMemo.class);
+        SystemConnectionMemo memo;
         try {
             memo = list.get(bus - 1);
         } catch (java.lang.IndexOutOfBoundsException obe) {
             TimeStampedOutput.writeTimestamp(output,"412 ERROR wrong value\n\r");
             return;
         }
-        String turnoutName = ((jmri.jmrix.SystemConnectionMemo) memo).getSystemPrefix()
+        String turnoutName = memo.getSystemPrefix()
                 + "T" + address;
         // create turnout if it does not exist since closeTurnout() and throwTurnout() no longer do so
         //this.initTurnout(turnoutName);
@@ -145,11 +146,11 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
           if (e.getPropertyName().equals("KnownState")) {
               try {
                   String Name = ((jmri.Turnout) e.getSource()).getSystemName();
-                  java.util.List<Object> List = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
+                  java.util.List<SystemConnectionMemo> List = jmri.InstanceManager.getList(SystemConnectionMemo.class);
                   int i = 0;
                   int address;
                   for (Object memo : List) {
-                      String prefix = ((jmri.jmrix.SystemConnectionMemo) memo).getClass().getName();
+                      String prefix = memo.getClass().getName();
                       if (Name.startsWith(prefix)) {
                           address = Integer.parseInt(Name.substring(prefix.length()));
                           sendStatus(i, address);

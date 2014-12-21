@@ -80,7 +80,7 @@ public class DecoderIndexFile extends XmlFile {
      * Get a JComboBox representing the choices that match
      * some information
      */
-    public JComboBox matchingComboBox(String mfg, String family, String decoderMfgID, String decoderVersionID, String decoderProductID, String model ) {
+    public JComboBox<String> matchingComboBox(String mfg, String family, String decoderMfgID, String decoderVersionID, String decoderProductID, String model ) {
         List<DecoderFile> l = matchingDecoderList(mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model );
         return jComboBoxFromList(l);
     }
@@ -89,16 +89,16 @@ public class DecoderIndexFile extends XmlFile {
      * Return a JComboBox made with the titles from a list of
      * DecoderFile entries
      */
-    static public JComboBox jComboBoxFromList(List<DecoderFile> l) {
-        return new JComboBox(jComboBoxModelFromList(l));
+    static public JComboBox<String> jComboBoxFromList(List<DecoderFile> l) {
+        return new JComboBox<String>(jComboBoxModelFromList(l));
     }
 
     /**
      * Return a new ComboBoxModel made with the titles from a list of
      * DecoderFile entries
      */
-    static public javax.swing.ComboBoxModel jComboBoxModelFromList(List<DecoderFile> l) {
-        javax.swing.DefaultComboBoxModel b = new javax.swing.DefaultComboBoxModel();
+    static public javax.swing.ComboBoxModel<String> jComboBoxModelFromList(List<DecoderFile> l) {
+        javax.swing.DefaultComboBoxModel<String> b = new javax.swing.DefaultComboBoxModel<String>();
         for (int i = 0; i < l.size(); i++) {
             DecoderFile r = l.get(i);
             b.addElement(r.titleString());

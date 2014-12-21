@@ -5,6 +5,7 @@ import java.io.*;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.jmris.AbstractSensorServer;
+import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,8 +32,8 @@ public class JmriSRCPSensorServer extends AbstractSensorServer {
     public void sendStatus(String sensorName, int Status) throws IOException {
         int bus = 0;
         int address = 0;
-        java.util.List<Object> list = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
-        for (Object memo : list) {
+        java.util.List<SystemConnectionMemo> list = jmri.InstanceManager.getList(SystemConnectionMemo.class);
+        for (SystemConnectionMemo memo : list) {
             String prefix = ((jmri.jmrix.SystemConnectionMemo) memo).getSystemPrefix();
             if (sensorName.startsWith(prefix)) {
                 try {
@@ -63,15 +64,15 @@ public class JmriSRCPSensorServer extends AbstractSensorServer {
 
     public void sendStatus(int bus, int address) throws IOException {
         log.debug("send Status called with bus " + bus + " and address " + address);
-        java.util.List<Object> list = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
-        Object memo;
+        java.util.List<SystemConnectionMemo> list = jmri.InstanceManager.getList(SystemConnectionMemo.class);
+        SystemConnectionMemo memo;
         try {
             memo = list.get(bus - 1);
         } catch (java.lang.IndexOutOfBoundsException obe) {
             TimeStampedOutput.writeTimestamp(output,"412 ERROR wrong value\n\r");
             return;
         }
-        String sensorName = ((jmri.jmrix.SystemConnectionMemo) memo).getSystemPrefix()
+        String sensorName = memo.getSystemPrefix()
                 + "S" + address;
         int Status = InstanceManager.sensorManagerInstance().provideSensor(sensorName).getKnownState();
         if (Status == Sensor.ACTIVE) {
@@ -101,15 +102,15 @@ public class JmriSRCPSensorServer extends AbstractSensorServer {
     public void parseStatus(int bus, int address, int value) throws jmri.JmriException, java.io.IOException {
         log.debug("parse Status called with bus " + bus + " address " + address
                 + " and value " + value);
-        java.util.List<Object> list = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
-        Object memo;
+        java.util.List<SystemConnectionMemo> list = jmri.InstanceManager.getList(SystemConnectionMemo.class);
+        SystemConnectionMemo memo;
         try {
             memo = list.get(bus - 1);
         } catch (java.lang.IndexOutOfBoundsException obe) {
             TimeStampedOutput.writeTimestamp(output,"412 ERROR wrong value\n\r");
             return;
         }
-        String sensorName = ((jmri.jmrix.SystemConnectionMemo) memo).getSystemPrefix()
+        String sensorName = memo.getSystemPrefix()
                 + "S" + address;
         this.initSensor(sensorName);
         if (value == 0) {
@@ -132,11 +133,11 @@ public class JmriSRCPSensorServer extends AbstractSensorServer {
         if (e.getPropertyName().equals("KnownState")) {
             try {
                 String Name = ((jmri.Sensor) e.getSource()).getSystemName();
-                java.util.List<Object> List = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
+                java.util.List<SystemConnectionMemo> List = jmri.InstanceManager.getList(SystemConnectionMemo.class);
                 int i = 0;
                 int address;
                 for (Object memo : List) {
-                    String prefix = ((jmri.jmrix.SystemConnectionMemo) memo).getClass().getName();
+                    String prefix = memo.getClass().getName();
                     if (Name.startsWith(prefix)) {
                         address = Integer.parseInt(Name.substring(prefix.length()));
                         sendStatus(i, address);

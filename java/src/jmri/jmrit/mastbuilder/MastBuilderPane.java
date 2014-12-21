@@ -22,7 +22,7 @@ public class MastBuilderPane extends javax.swing.JPanel {
         add(p);
         
         p.add(new JLabel("Signal System: "));
-        p.add(new JComboBox(new String[]{"basic", "AAR 1946","NYCS 1937"}));
+        p.add(new JComboBox<String>(new String[]{"basic", "AAR 1946","NYCS 1937"}));
 
         p.add(new JLabel("Number of outputs: "));
         p.add(new JTextField(5));
@@ -35,33 +35,33 @@ public class MastBuilderPane extends javax.swing.JPanel {
         
         // first how is titles
         p.add(new JLabel("   Aspect name   \\  Select type"));
-        p.add(new JComboBox(new String[]{"SignalHead","Turnout"}));
-        p.add(new JComboBox(new String[]{"SignalHead","Turnout"}));
-        p.add(new JComboBox(new String[]{"SignalHead","Turnout"}));
+        p.add(new JComboBox<String>(new String[]{"SignalHead","Turnout"}));
+        p.add(new JComboBox<String>(new String[]{"SignalHead","Turnout"}));
+        p.add(new JComboBox<String>(new String[]{"SignalHead","Turnout"}));
         p.add(new JLabel(""));
         
-        p.add(new JComboBox(new String[]{"Clear","Advance Approach Medium", "Approach Limited", "Limited-Clear"}));
-        p.add(new JComboBox(icons()));
-        p.add(new JComboBox(new String[]{"Closed","Thrown"}));
-        p.add(new JComboBox(icons()));
+        p.add(new JComboBox<String>(new String[]{"Clear","Advance Approach Medium", "Approach Limited", "Limited-Clear"}));
+        p.add(new JComboBox<Object>(icons()));
+        p.add(new JComboBox<String>(new String[]{"Closed","Thrown"}));
+        p.add(new JComboBox<Object>(icons()));
         p.add(new JButton("Delete"));
         
-        p.add(new JComboBox(new String[]{"Clear","Advance Approach Medium", "Approach Limited", "Limited-Clear"}));
-        p.add(new JComboBox(icons()));
-        p.add(new JComboBox(new String[]{"Closed","Thrown"}));
-        p.add(new JComboBox(icons()));
+        p.add(new JComboBox<String>(new String[]{"Clear","Advance Approach Medium", "Approach Limited", "Limited-Clear"}));
+        p.add(new JComboBox<Object>(icons()));
+        p.add(new JComboBox<String>(new String[]{"Closed","Thrown"}));
+        p.add(new JComboBox<Object>(icons()));
         p.add(new JButton("Delete"));
         
-        p.add(new JComboBox(new String[]{"Clear","Advance Approach Medium", "Approach Limited", "Limited-Clear"}));
-        p.add(new JComboBox(icons()));
-        p.add(new JComboBox(new String[]{"Closed","Thrown"}));
-        p.add(new JComboBox(icons()));
+        p.add(new JComboBox<String>(new String[]{"Clear","Advance Approach Medium", "Approach Limited", "Limited-Clear"}));
+        p.add(new JComboBox<Object>(icons()));
+        p.add(new JComboBox<String>(new String[]{"Closed","Thrown"}));
+        p.add(new JComboBox<Object>(icons()));
         p.add(new JButton("Delete"));
         
-        p.add(new JComboBox(new String[]{"Clear","Advance Approach Medium", "Approach Limited", "Limited-Clear"}));
-        p.add(new JComboBox(icons()));
-        p.add(new JComboBox(new String[]{"Closed","Thrown"}));
-        p.add(new JComboBox(icons()));
+        p.add(new JComboBox<String>(new String[]{"Clear","Advance Approach Medium", "Approach Limited", "Limited-Clear"}));
+        p.add(new JComboBox<Object>(icons()));
+        p.add(new JComboBox<String>(new String[]{"Closed","Thrown"}));
+        p.add(new JComboBox<Object>(icons()));
         p.add(new JButton("Delete"));
 
         p = new JPanel();

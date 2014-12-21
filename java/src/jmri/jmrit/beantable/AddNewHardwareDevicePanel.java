@@ -78,11 +78,11 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
             finishLabel.setEnabled(false);
             _endRange.setEnabled(false);
            /* System.out.println(jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class));
-            java.util.List<Object> list 
+            java.util.List<jmri.jmrix.SystemConnectionMemo> list 
                 = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
             if (list != null) {
-                for (Object memo : list) {
-                    System.out.println(((jmri.jmrix.SystemConnectionMemo)memo).getUserName());
+                for (jmri.jmrix.SystemConnectionMemo memo : list) {
+                    System.out.println(memo.getUserName());
                     //if (menu != null) m.add(menu);
                 }
             }*/

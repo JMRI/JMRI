@@ -85,6 +85,11 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return false;
         if (type.equals(jmri.ProgrammerManager.class))
             return true;
+        if (type.equals(jmri.GlobalProgrammerManager.class))
+            return getProgrammerManager().isGlobalProgrammerAvailable();
+        if (type.equals(jmri.AddressedProgrammerManager.class))
+            return getProgrammerManager().isAddressedModePossible();
+            
         if (type.equals(jmri.ThrottleManager.class))
             return true;
         if (type.equals(jmri.PowerManager.class))
@@ -113,6 +118,11 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return null;
         if (T.equals(jmri.ProgrammerManager.class))
             return (T)getProgrammerManager();
+        if (T.equals(jmri.GlobalProgrammerManager.class))
+            return (T)getProgrammerManager();
+        if (T.equals(jmri.AddressedProgrammerManager.class))
+            return (T)getProgrammerManager();
+
         if (T.equals(jmri.ThrottleManager.class))
             return (T)getThrottleManager();
         if (T.equals(jmri.PowerManager.class))

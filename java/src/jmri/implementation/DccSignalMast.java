@@ -70,10 +70,10 @@ public class DccSignalMast extends AbstractSignalMast {
             log.warn("First part of signal mast is incorrect "+systemName + " : " + mastType);
         } else {
             String commandStationPrefix = parts[0].substring(0, parts[0].indexOf("$")-1);
-            java.util.List<Object> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
+            java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
             if(connList!=null){
                 for(int x = 0; x < connList.size(); x++){
-                    jmri.CommandStation station = (jmri.CommandStation) connList.get(x);
+                    jmri.CommandStation station = connList.get(x);
                     if(station.getSystemPrefix().equals(commandStationPrefix)){
                         c = station;
                         break;

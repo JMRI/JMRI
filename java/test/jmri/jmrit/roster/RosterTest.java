@@ -104,7 +104,7 @@ public class RosterTest extends TestCase {
         e3.setId("entry 3");
         r.addEntry(e3);
         
-        javax.swing.JComboBox box;
+        javax.swing.JComboBox<Object> box;
         
         // "Select Loco" is the first entry in the RosterEntryComboBox, so an
         // empty comboBox has 1 item, and the first item is not a RosterEntry

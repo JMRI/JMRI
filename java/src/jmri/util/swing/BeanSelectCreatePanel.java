@@ -29,7 +29,7 @@ public class BeanSelectCreatePanel extends JPanel{
     
     JmriBeanComboBox existingCombo;
     JTextField hardwareAddress = new JTextField(8);
-    JComboBox prefixBox = new JComboBox();
+    JComboBox<String> prefixBox = new JComboBox<String>();
     jmri.UserPreferencesManager p;
     String systemSelectionCombo = this.getClass().getName()+".SystemSelected";
         

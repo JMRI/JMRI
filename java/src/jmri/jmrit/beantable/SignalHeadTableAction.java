@@ -265,9 +265,9 @@ public class SignalHeadTableAction extends AbstractTableAction {
     String[] ukSignalType = new String[]{"Home", "Distant"};
 
     JmriJFrame addFrame = null;
-    JComboBox typeBox;
+    JComboBox<String> typeBox;
     
-    // we share input fields across boxes so that 
+    // we share input fields across boxes so that
     // entries in one don't disappear when the user switches
     // to a different type
     Border blackline = BorderFactory.createLineBorder(Color.black);
@@ -303,18 +303,18 @@ public class SignalHeadTableAction extends AbstractTableAction {
     TitledBorder v5Border = BorderFactory.createTitledBorder(blackline);
     TitledBorder v6Border = BorderFactory.createTitledBorder(blackline);
     TitledBorder v7Border = BorderFactory.createTitledBorder(blackline);
-    JComboBox s1Box = new JComboBox(turnoutStates);
-    JComboBox s2Box = new JComboBox(turnoutStates);
-    JComboBox s2aBox = new JComboBox(signalStates);
-    JComboBox s3Box = new JComboBox(turnoutStates);
-    JComboBox s3aBox = new JComboBox(signalStates);
-    JComboBox s4Box = new JComboBox(turnoutStates);
-    JComboBox s5Box = new JComboBox(turnoutStates);
-    JComboBox s6Box = new JComboBox(turnoutStates);
-    JComboBox s7Box = new JComboBox(turnoutStates);
-    JComboBox stBox = new JComboBox(signalheadTypes); // Acela signal types
-    JComboBox mstBox = new JComboBox(ukSignalType);
-    JComboBox msaBox = new JComboBox(ukSignalAspects);
+    JComboBox<String> s1Box = new JComboBox<String>(turnoutStates);
+    JComboBox<String> s2Box = new JComboBox<String>(turnoutStates);
+    JComboBox<String> s2aBox = new JComboBox<String>(signalStates);
+    JComboBox<String> s3Box = new JComboBox<String>(turnoutStates);
+    JComboBox<String> s3aBox = new JComboBox<String>(signalStates);
+    JComboBox<String> s4Box = new JComboBox<String>(turnoutStates);
+    JComboBox<String> s5Box = new JComboBox<String>(turnoutStates);
+    JComboBox<String> s6Box = new JComboBox<String>(turnoutStates);
+    JComboBox<String> s7Box = new JComboBox<String>(turnoutStates);
+    JComboBox<String> stBox = new JComboBox<String>(signalheadTypes); // Acela signal types
+    JComboBox<String> mstBox = new JComboBox<String>(ukSignalType);
+    JComboBox<String> msaBox = new JComboBox<String>(ukSignalAspects);
 
     String acelaAspect = rb.getString("StringAcelaaspect");
     String se8c4Aspect = rb.getString("StringSE8c4aspect");
@@ -330,10 +330,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
     String mergSignalDriver = rb.getString("StringMerg");
     String singleTurnout = rb.getString("StringSingle");
     
-    JComboBox prefixBox = new JComboBox();
+    JComboBox<String> prefixBox = new JComboBox<String>();
     JLabel prefixBoxLabel = new JLabel("System : ");
 
-    int turnoutStateFromBox(JComboBox box) {
+    int turnoutStateFromBox(JComboBox<String> box) {
         String mode = (String)box.getSelectedItem();
         int result = jmri.util.StringUtil.getStateFromName(mode, turnoutStateValues, turnoutStates);
 
@@ -343,13 +343,13 @@ public class SignalHeadTableAction extends AbstractTableAction {
         }
         return result;
     }
-	void setTurnoutStateInBox (JComboBox box, int state, int[] iTurnoutStates) {
+	void setTurnoutStateInBox (JComboBox<String> box, int state, int[] iTurnoutStates) {
 		if (state==iTurnoutStates[0]) box.setSelectedIndex(0);
 		else if (state==iTurnoutStates[1]) box.setSelectedIndex(1);
 		else log.error("unexpected  turnout state value: "+state);
 	}
     
-    int signalStateFromBox(JComboBox box) {
+    int signalStateFromBox(JComboBox<String> box) {
         String mode = (String)box.getSelectedItem();
         int result = jmri.util.StringUtil.getStateFromName(mode, signalStatesValues, signalStates);
 
@@ -360,7 +360,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
         return result;
     }
     
-    void setSignalStateInBox (JComboBox box, int state) {
+    void setSignalStateInBox (JComboBox<String> box, int state) {
 		
         switch(state){
             case SignalHead.DARK : box.setSelectedIndex(0);
@@ -389,7 +389,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 		else log.error("unexpected  Signal state value: "+state);*/
 	}
     
-    int signalheadTypeFromBox(JComboBox box) {
+    int signalheadTypeFromBox(JComboBox<String> box) {
         String mode = (String)box.getSelectedItem();
         int result = jmri.util.StringUtil.getStateFromName(mode, signalheadTypeValues, signalheadTypes);
 
@@ -399,7 +399,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
         }
         return result;
     }
-	void setSignalheadTypeInBox (JComboBox box, int state, int[] iSignalheadTypes) {
+	void setSignalheadTypeInBox (JComboBox<String> box, int state, int[] iSignalheadTypes) {
 		if (state==iSignalheadTypes[0]) box.setSelectedIndex(0);
 		else if (state==iSignalheadTypes[1]) box.setSelectedIndex(1);
 		else if (state==iSignalheadTypes[2]) box.setSelectedIndex(2);
@@ -407,7 +407,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 		else log.error("unexpected signalhead type value: "+state);
 	}		
     
-    int ukSignalAspectsFromBox(JComboBox box){
+    int ukSignalAspectsFromBox(JComboBox<String> box){
         //String mode = (String)box.getSelectedItem();
         if(box.getSelectedIndex()==0) return 2;
         else if(box.getSelectedIndex()==1) return 3;
@@ -418,14 +418,14 @@ public class SignalHeadTableAction extends AbstractTableAction {
         }
     }
     
-    void setUkSignalAspectsFromBox(JComboBox box, int val){
+    void setUkSignalAspectsFromBox(JComboBox<String> box, int val){
         if (val==2) box.setSelectedIndex(0);
         else if (val==3) box.setSelectedIndex(1);
         else if (val==4) box.setSelectedIndex(2);
         else log.error("Unexpected Signal Aspect" + val);
     }
     
-    String ukSignalTypeFromBox(JComboBox box){
+    String ukSignalTypeFromBox(JComboBox<String> box){
         //String mode = (String)box.getSelectedItem();
         if(box.getSelectedIndex()==0) return "Home";
         else if(box.getSelectedIndex()==1) return "Distant";
@@ -435,7 +435,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
         }
     }
     
-    void setUkSignalType(JComboBox box, String val){
+    void setUkSignalType(JComboBox<String> box, String val){
         if (val.equals(ukSignalType[0])) box.setSelectedIndex(0);
         else if (val.equals(ukSignalType[1])) box.setSelectedIndex(1);
         else log.error("Unexpected Signal Type " + val);
@@ -475,7 +475,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             
             JPanel panelHeader = new JPanel();
             panelHeader.setLayout(new BoxLayout(panelHeader, BoxLayout.Y_AXIS));
-            panelHeader.add(typeBox = new JComboBox(new String[]{
+            panelHeader.add(typeBox = new JComboBox<String>(new String[]{
                 acelaAspect, dccSignalDecoder, doubleTurnout, lsDec, mergSignalDriver, quadOutput, 
                 singleTurnout, se8c4Aspect, tripleTurnout, tripleOutput, virtualHead
             }));
@@ -1299,18 +1299,18 @@ public class SignalHeadTableAction extends AbstractTableAction {
     JLabel eSysNameLabel = new JLabel ("");
 
     JLabel evtLabel = new JLabel("");
-    JComboBox es1Box = new JComboBox(turnoutStates);
-    JComboBox es2Box = new JComboBox(turnoutStates);
-    JComboBox es2aBox = new JComboBox(signalStates);
-    JComboBox es3Box = new JComboBox(turnoutStates);
-    JComboBox es3aBox = new JComboBox(signalStates);
-    JComboBox es4Box = new JComboBox(turnoutStates);
-    JComboBox es5Box = new JComboBox(turnoutStates);
-    JComboBox es6Box = new JComboBox(turnoutStates);
-    JComboBox es7Box = new JComboBox(turnoutStates);
-    JComboBox estBox = new JComboBox(signalheadTypes);
-    JComboBox emstBox = new JComboBox(ukSignalType);
-    JComboBox emsaBox = new JComboBox(ukSignalAspects);
+    JComboBox<String> es1Box = new JComboBox<String>(turnoutStates);
+    JComboBox<String> es2Box = new JComboBox<String>(turnoutStates);
+    JComboBox<String> es2aBox = new JComboBox<String>(signalStates);
+    JComboBox<String> es3Box = new JComboBox<String>(turnoutStates);
+    JComboBox<String> es3aBox = new JComboBox<String>(signalStates);
+    JComboBox<String> es4Box = new JComboBox<String>(turnoutStates);
+    JComboBox<String> es5Box = new JComboBox<String>(turnoutStates);
+    JComboBox<String> es6Box = new JComboBox<String>(turnoutStates);
+    JComboBox<String> es7Box = new JComboBox<String>(turnoutStates);
+    JComboBox<String> estBox = new JComboBox<String>(signalheadTypes);
+    JComboBox<String> emstBox = new JComboBox<String>(ukSignalType);
+    JComboBox<String> emsaBox = new JComboBox<String>(ukSignalAspects);
     
 	
     void editSignal(int row) {

@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import java.util.ResourceBundle;
 import java.util.List;
 import jmri.jmrix.sprog.*;
+import jmri.jmrix.SystemConnectionMemo;
 
 /**
  * Pane for power control
@@ -63,10 +64,10 @@ public class PowerPane extends javax.swing.JPanel implements java.beans.Property
 
     private boolean mgrOK() {
         if (p==null) {
-            List<Object> connList = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
+            List<SystemConnectionMemo> connList = jmri.InstanceManager.getList(SystemConnectionMemo.class);
             if (connList == null) return false; // nothing to do, no connections are configured
             for (int x = 0; x<connList.size(); x++) {
-                jmri.jmrix.SystemConnectionMemo memo = (jmri.jmrix.SystemConnectionMemo)connList.get(x);
+                SystemConnectionMemo memo = connList.get(x);
                 if(memo instanceof SprogSystemConnectionMemo)
                     p = ((SprogSystemConnectionMemo)memo).getPowerManager();
             }

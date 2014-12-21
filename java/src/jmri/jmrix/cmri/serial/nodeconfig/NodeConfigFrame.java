@@ -28,10 +28,10 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
     protected javax.swing.JTextField nodeAddrField = new javax.swing.JTextField(3);
     protected javax.swing.JLabel nodeAddrStatic = new javax.swing.JLabel("000");
-    protected javax.swing.JComboBox nodeTypeBox; 
+    protected javax.swing.JComboBox<String> nodeTypeBox; 
     protected javax.swing.JTextField receiveDelayField = new javax.swing.JTextField(3);
     protected javax.swing.JTextField pulseWidthField = new javax.swing.JTextField(4);
-    protected javax.swing.JComboBox cardSizeBox; 
+    protected javax.swing.JComboBox<String> cardSizeBox; 
     protected javax.swing.JLabel cardSizeText = new javax.swing.JLabel("   "+rb.getString("LabelCardSize"));
     
     protected javax.swing.JButton addButton = new javax.swing.JButton(rb.getString("ButtonAdd"));
@@ -107,7 +107,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         panel11.add(nodeAddrStatic);
         nodeAddrStatic.setVisible(false);
         panel11.add(new JLabel("   "+rb.getString("LabelNodeType")+" "));
-        nodeTypeBox = new JComboBox();
+        nodeTypeBox = new JComboBox<String>();
         panel11.add(nodeTypeBox);
         nodeTypeBox.addItem("SMINI");
         nodeTypeBox.addItem("USIC_SUSIC");
@@ -144,7 +144,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         receiveDelayField.setToolTipText(rb.getString("TipDelay"));
         receiveDelayField.setText("0");
         panel12.add(cardSizeText);
-        cardSizeBox = new JComboBox();
+        cardSizeBox = new JComboBox<String>();
         panel12.add(cardSizeBox);
         cardSizeBox.addItem(rb.getString("CardSize24"));
         cardSizeBox.addItem(rb.getString("CardSize32"));
@@ -195,7 +195,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         cardConfigTable.setRowSelectionAllowed(false);
         cardConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180,100));
 			
-        JComboBox cardTypeCombo = new JComboBox();
+        JComboBox<String> cardTypeCombo = new JComboBox<String>();
         cardTypeCombo.addItem(rb.getString("CardTypeOutput"));
         cardTypeCombo.addItem(rb.getString("CardTypeInput"));
         cardTypeCombo.addItem(rb.getString("CardTypeNone"));

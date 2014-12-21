@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrix.dcc4pc.Dcc4PcPortController;
 import jmri.jmrix.dcc4pc.Dcc4PcTrafficController;
 import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
+import jmri.jmrix.SystemConnectionMemo;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
@@ -106,7 +108,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
      */
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validOption1() { 
-        List<Object> connList = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
+        List<SystemConnectionMemo> connList = jmri.InstanceManager.getList(SystemConnectionMemo.class);
         if (connList!=null){
             ArrayList<String> progConn = new ArrayList<String>();
             progConn.add("");
@@ -115,7 +117,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
                 userName = adaptermemo.getUserName();
             }
             for(int i = 0; i<connList.size(); i++){
-                jmri.jmrix.SystemConnectionMemo scm = (jmri.jmrix.SystemConnectionMemo)connList.get(i);
+                SystemConnectionMemo scm = connList.get(i);
                 if(scm.provides(jmri.ProgrammerManager.class) && (!scm.getUserName().equals(userName))){
                     progConn.add(scm.getUserName());
                 }

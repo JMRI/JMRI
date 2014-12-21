@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 import javax.swing.JComboBox;
 
-public class JmriBeanComboBox extends JComboBox implements java.beans.PropertyChangeListener{
+public class JmriBeanComboBox extends JComboBox<String> implements java.beans.PropertyChangeListener{
 
     /*
     * Create a default Jmri Combo box for the given bean manager

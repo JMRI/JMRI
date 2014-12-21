@@ -36,11 +36,11 @@ public class SystemsMenu extends JMenu {
 
         // Put configured menus at top
         // get ComponentFactory object(s) and create menus
-        java.util.List<Object> list 
+        java.util.List<ComponentFactory> list 
                 = jmri.InstanceManager.getList(ComponentFactory.class);
         if (list != null) {
-            for (Object memo : list) {
-                JMenu menu = ((ComponentFactory)memo).getMenu();
+            for (ComponentFactory memo : list) {
+                JMenu menu = memo.getMenu();
                 if (menu != null) add(menu);
             }
             add(new javax.swing.JSeparator());

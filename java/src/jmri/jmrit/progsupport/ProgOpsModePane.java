@@ -21,11 +21,11 @@ public class ProgOpsModePane extends javax.swing.JPanel {
 
     // GUI member declarations
 
-    javax.swing.ButtonGroup mModeGroup;
-    javax.swing.JRadioButton mOpsByteButton  	= new javax.swing.JRadioButton();
-    javax.swing.JTextField mAddrField           = new javax.swing.JTextField(4);
-    javax.swing.JCheckBox mLongAddrCheck        = new javax.swing.JCheckBox("Long address");
-
+    ButtonGroup mModeGroup;
+    JRadioButton mOpsByteButton  	= new JRadioButton();
+    JTextField mAddrField           = new JTextField(4);
+    JCheckBox mLongAddrCheck        = new JCheckBox("Long address");
+    JComboBox<AddressedProgrammerManager>   progBox;
 
     public ProgOpsModePane(int direction) {
         this(direction, new javax.swing.ButtonGroup());
@@ -47,12 +47,7 @@ public class ProgOpsModePane extends javax.swing.JPanel {
         mLongAddrCheck.setToolTipText(Bundle.getMessage("ToolTipCheckedLongAddress"));
 
         // if a programmer is available, disable buttons for unavailable modes
-        if (InstanceManager.programmerManagerInstance()!=null) {
-            ProgrammerManager p = InstanceManager.programmerManagerInstance();
-            if (!p.isAddressedModePossible()) mOpsByteButton.setEnabled(false);
-        } else {
-            log.warn("No programmer available, so modes not set");
-        }
+        setModes(InstanceManager.getDefault(jmri.AddressedProgrammerManager.class));
 
         // general GUI config
         setLayout(new BoxLayout(this, direction));
@@ -61,13 +56,39 @@ public class ProgOpsModePane extends javax.swing.JPanel {
         add(mOpsByteButton);
         add(mAddrField);
         add(mLongAddrCheck);
+        
+        // create the display combo box
+        java.util.Vector<AddressedProgrammerManager> v = new java.util.Vector<AddressedProgrammerManager>();
+        for (AddressedProgrammerManager e : InstanceManager.getList(jmri.AddressedProgrammerManager.class))
+            v.add(e);
+        add(progBox = new JComboBox<AddressedProgrammerManager>(v));
+        // if only one, don't show
+        if (progBox.getItemCount()<2) progBox.setVisible(false);
+        progBox.addActionListener(new java.awt.event.ActionListener(){
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                // new selection
+                setModes(progBox.getItemAt(progBox.getSelectedIndex()));
+            }
+        });
+        progBox.setSelectedIndex(progBox.getItemCount()-1); // default is last
+
+
     }
 
+    void setModes(AddressedProgrammerManager p) {
+        if (p!=null) {
+            if (!p.isAddressedModePossible()) mOpsByteButton.setEnabled(false);
+        } else {
+            log.warn("No programmer available, so modes not set");
+        }
+    }
+    
     /**
      * Get a configured programmer
      */
     public Programmer getProgrammer() {
-		if (InstanceManager.programmerManagerInstance() != null) {
+        AddressedProgrammerManager pm = InstanceManager.getDefault(jmri.AddressedProgrammerManager.class);
+		if (pm != null) {
 			int address;
 			try {
 				address = Integer.parseInt(mAddrField.getText());
@@ -78,10 +99,9 @@ public class ProgOpsModePane extends javax.swing.JPanel {
 			boolean longAddr = mLongAddrCheck.isSelected();
 			log.debug("ops programmer for address " + address
 					+ ", long address " + longAddr);
-			Programmer p = InstanceManager.programmerManagerInstance()
-					.getAddressedProgrammer(longAddr, address);
-			p.setMode(getMode());
-			return p;
+			Programmer pr = pm.getAddressedProgrammer(longAddr, address);
+			pr.setMode(getMode());
+			return pr;
 		} else {
 			log.warn("request for ops mode programmer with no ProgrammerManager configured");
 			return null;
@@ -99,14 +119,6 @@ public class ProgOpsModePane extends javax.swing.JPanel {
             return 0;
     }
 
-    // set the programmer to the current mode
-    @SuppressWarnings("unused")
-	private void setProgrammerMode(int mode) {
-        log.debug("Setting programmer to mode "+mode);
-        if (InstanceManager.programmerManagerInstance() != null
-            && InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null)
-            InstanceManager.programmerManagerInstance().getGlobalProgrammer().setMode(mode);
-    }
 
     /**
      * Done with this pane

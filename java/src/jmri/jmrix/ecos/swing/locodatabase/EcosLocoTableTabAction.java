@@ -7,6 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import java.util.List;
+
 import jmri.Manager;
 import jmri.jmrit.beantable.AbstractTableAction;
 import jmri.jmrit.beantable.AbstractTableTabAction;
@@ -27,10 +29,9 @@ public class EcosLocoTableTabAction extends AbstractTableTabAction {
         dataPanel = new JPanel();
         dataTabs = new JTabbedPane();
         dataPanel.setLayout(new BorderLayout());
-        java.util.List<Object> list = jmri.InstanceManager.getList(jmri.jmrix.ecos.EcosSystemConnectionMemo.class);
+        java.util.List<EcosSystemConnectionMemo> list = jmri.InstanceManager.getList(EcosSystemConnectionMemo.class);
         if (list != null) {
-            for (Object memo : list) {
-                EcosSystemConnectionMemo eMemo = (EcosSystemConnectionMemo) memo;
+            for (EcosSystemConnectionMemo eMemo : list) {
                 //We only want to add connections that have an active loco address manager
                 if (eMemo.getLocoAddressManager()!=null){
                     TabbedTableItem itemModel = new TabbedTableItem(eMemo.getUserName(), true, eMemo.getLocoAddressManager(), getNewTableAction(eMemo.getUserName(), eMemo));

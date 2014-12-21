@@ -107,7 +107,7 @@ abstract public class AbstractActionPanel extends JPanel {
             add(removeButton);
             removeButton.addActionListener(this);
             // create the list of possibilities
-            selections = new JComboBox(AbstractActionModel.nameList());
+            selections = new JComboBox<String>(AbstractActionModel.nameList());
             add(selections);
         }
         Item(AbstractActionModel m) {
@@ -117,7 +117,7 @@ abstract public class AbstractActionPanel extends JPanel {
         }
 
         AbstractActionModel model = null;
-        JComboBox selections;
+        JComboBox<String> selections;
         
         void updateCombo(){
             String current = (String)selections.getSelectedItem();

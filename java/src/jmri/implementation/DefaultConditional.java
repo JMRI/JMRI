@@ -1275,7 +1275,7 @@ public class DefaultConditional extends AbstractNamedBean
             contentPanel.add(panel);
 
             panel = new JPanel();
-            panel.add(new JList(list.toArray()));
+            panel.add(new JList<String>(list.toArray(new String[0])));
             contentPanel.add(panel);
 
             panel = new JPanel();

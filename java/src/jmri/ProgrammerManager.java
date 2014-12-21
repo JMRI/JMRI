@@ -13,10 +13,11 @@ package jmri;
  * You get a {@link Programmer} object from a ProgrammerManager, which in turn can be located
  * from the {@link InstanceManager}.
  * <P>
- * The ProgramerManager also provides a reserve/release
- * system for tools that want to pretend they have exclusive use of a Programmer.
- * This is a cooperative reservation; both tools (first and second reserver) must
- * be using the reserve/release interface.
+ * This class forms the union of the {@link GlobalProgrammerManager} and {@link AddressedProgrammerManager}
+ * interfaces that older code which looks for a combined implementation can use.
+ * But it's deprecated, because the default {@link GlobalProgrammerManager} and {@link AddressedProgrammerManager}
+ * are likely to be different objects, so code should request the one it needs from 
+ * the instance manager.
  * <P>
  * This file is part of JMRI.
  * <P>
@@ -31,71 +32,12 @@ package jmri;
  * for more details.
  * <P>
  * @see             jmri.Programmer
- * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @version			$Revision$
+ * @author			Bob Jacobsen Copyright (C) 2001, 2008, 2014
+ * @deprecated      3.9.6
  */
-public interface ProgrammerManager  {
-
-    /**
-     * Gain access to the Global Mode Programmer without reservation.
-     * @return null only if there isn't a Global Mode Programmer available 
-     * via this Manager.
-     */
-    public Programmer getGlobalProgrammer();
-    
-    /**
-     * Gain access to a Addressed Mode Programmer without reservation.
-     * @param pLongAddress true if this is a long (14 bit) address, else false
-     * @param pAddress Specific decoder address to use.
-     * @return null only if there isn't an Ops Mode Programmer in the system
-     */
-    public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress);
-    
-    /**
-     * Gain access to the Global Mode Programmer, in the process reserving it
-     * for yourself.
-     * @return null if the existing Global Mode programmer is in use
-     */
-    public Programmer reserveGlobalProgrammer();
-    
-    /**
-     * Return access to the Global Mode Programmer, so that it can
-     * be used elsewhere.
-     */
-    public void releaseGlobalProgrammer(Programmer p);
-
-    /**
-     * Gain access to a (the) Addressed Mode Programmer, in the process
-     * reserving it for yourself.
-     * @param pLongAddress true if this is a long (14 bit) address, else false
-     * @param pAddress Specific decoder address to use.
-     * @return null if the address is in use by a reserved programmer
-     */
-    public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress);
-    
-    /**
-     * Return access to the Global Mode Programmer, so that it can
-     * be used elsewhere.
-     */
-    public void releaseAddressedProgrammer(AddressedProgrammer p);
-
-    /**
-     * Convenience method to check whether you'll be able to get
-     * a Global Mode programmer.
-     * @return false if there's no chance of getting one
-     */
-    public boolean isGlobalProgrammerAvailable();
-    
-    /**
-     * Convenience method to check whether you'll be able to get
-     * an Addressed Mode programmer.
-     * @return false if there's no chance of getting one
-     */
-    public boolean isAddressedModePossible();
-    
-    public String getUserName();
+public interface ProgrammerManager  extends AddressedProgrammerManager, GlobalProgrammerManager {
     
 }
 
 
-/* @(#)Programmer.java */
+/* @(#)ProgrammerManager.java */

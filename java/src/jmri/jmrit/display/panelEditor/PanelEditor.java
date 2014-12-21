@@ -101,12 +101,12 @@ public class PanelEditor extends Editor implements ItemListener {
     JCheckBox hiddenBox = new JCheckBox(Bundle.getMessage("CheckBoxHidden"));
     JCheckBox menuBox = new JCheckBox(Bundle.getMessage("CheckBoxMenuBar"));
     JLabel scrollableLabel = new JLabel(Bundle.getMessage("ComboBoxScrollable"));
-    JComboBox scrollableComboBox = new JComboBox();
+    JComboBox<String> scrollableComboBox = new JComboBox<String>();
 
     JButton labelAdd = new JButton(Bundle.getMessage("ButtonAddText"));
     JTextField nextLabel = new JTextField(10);
 
-    JComboBox _addIconBox;
+    JComboBox<ComboBoxItem> _addIconBox;
 
     public PanelEditor() {
     }
@@ -280,7 +280,7 @@ public class PanelEditor extends Editor implements ItemListener {
         }
 
         // Selection of the type of entity for the icon to represent is done from a combobox
-        _addIconBox = new JComboBox();
+        _addIconBox = new JComboBox<ComboBoxItem>();
         _addIconBox.setMinimumSize(new Dimension(75, 75));
         _addIconBox.setMaximumSize(new Dimension(200, 200));
         _addIconBox.addItem(new ComboBoxItem("RightTurnout"));

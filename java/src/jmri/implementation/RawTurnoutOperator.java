@@ -27,9 +27,9 @@ public class RawTurnoutOperator extends TurnoutOperator {
         int startAddress = sysName.lastIndexOf("T");
         address=Integer.parseInt(sysName.substring(startAddress+1, sysName.length()));
         String prefix = t.getSystemName().substring(0, startAddress);
-        java.util.List<Object> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
+        java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
         for(int x = 0; x < connList.size(); x++){
-            jmri.CommandStation station = (jmri.CommandStation) connList.get(x);
+            jmri.CommandStation station = connList.get(x);
             if(station.getSystemPrefix().equals(prefix)){
                 c = station;
                 break;

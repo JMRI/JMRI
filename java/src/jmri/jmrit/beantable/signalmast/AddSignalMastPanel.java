@@ -44,7 +44,7 @@ public class AddSignalMastPanel extends JPanel {
     String driverSelectionCombo = this.getClass().getName()+".SignallingDriverSelected";
     List<NamedBean> alreadyUsed = new ArrayList<NamedBean>();
     
-    JComboBox signalMastDriver;
+    JComboBox<String> signalMastDriver;
     
     JPanel signalHeadPanel = new JPanel();
     JPanel turnoutMastPanel = new JPanel();
@@ -52,7 +52,7 @@ public class AddSignalMastPanel extends JPanel {
     JScrollPane dccMastScroll;
     JPanel dccMastPanel = new JPanel();
     JLabel systemPrefixBoxLabel = new JLabel(rb.getString("DCCSystem") + ":");
-    JComboBox systemPrefixBox = new JComboBox();
+    JComboBox<String> systemPrefixBox = new JComboBox<String>();
     JLabel dccAspectAddressLabel = new JLabel(rb.getString("DCCMastAddress"));
     JTextField dccAspectAddressField = new JTextField(5);
     JCheckBox allowUnLit = new JCheckBox();
@@ -64,13 +64,13 @@ public class AddSignalMastPanel extends JPanel {
     
     public AddSignalMastPanel() {
         
-        signalMastDriver = new JComboBox(new String[]{
+        signalMastDriver = new JComboBox<String>(new String[]{
                 rb.getString("HeadCtlMast"), rb.getString("TurnCtlMast"), rb.getString("VirtualMast")
             });
         //Only allow the creation of DCC SignalMast if a command station instance is present, otherwise it will not work, so no point in adding it.
         if(jmri.InstanceManager.getList(jmri.CommandStation.class)!=null){
             signalMastDriver.addItem(rb.getString("DCCMast"));
-            java.util.List<Object> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
+            java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
             for(int x = 0; x < connList.size(); x++){
                 if(connList.get(x) instanceof jmri.jmrix.loconet.SlotManager){
                     signalMastDriver.addItem(rb.getString("LNCPMast"));
@@ -302,10 +302,10 @@ public class AddSignalMastPanel extends JPanel {
                     
                 }
             }
-            java.util.List<Object> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
+            java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
             if(connList!=null){
                 for(int x = 0; x < connList.size(); x++){
-                    jmri.CommandStation station = (jmri.CommandStation) connList.get(x);
+                    jmri.CommandStation station = connList.get(x);
                     systemPrefixBox.addItem(station.getUserName());
                 }
             } else {
@@ -383,8 +383,8 @@ public class AddSignalMastPanel extends JPanel {
         repaint();
     }
     JTextField userName = new JTextField(20);
-    JComboBox sigSysBox = new JComboBox();
-    JComboBox mastBox = new JComboBox(new String[]{rb.getString("MastEmpty")});
+    JComboBox<String> sigSysBox = new JComboBox<String>();
+    JComboBox<String> mastBox = new JComboBox<String>(new String[]{rb.getString("MastEmpty")});
     JCheckBox includeUsed = new JCheckBox(rb.getString("IncludeUsedHeads"));
     JCheckBox resetPreviousState = new JCheckBox(rb.getString("ResetPrevious"));
     
@@ -859,7 +859,7 @@ public class AddSignalMastPanel extends JPanel {
     int[] turnoutStateValues = new int[]{Turnout.CLOSED, Turnout.THROWN};
     
     BeanSelectCreatePanel turnoutUnLitBox = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-    JComboBox turnoutUnLitState = new JComboBox(turnoutStates);
+    JComboBox<String> turnoutUnLitState = new JComboBox<String>(turnoutStates);
     
     void turnoutUnLitPanel(){
         turnoutUnLitPanel.setLayout(new BoxLayout(turnoutUnLitPanel, BoxLayout.Y_AXIS));
@@ -879,7 +879,7 @@ public class AddSignalMastPanel extends JPanel {
         BeanSelectCreatePanel beanBox = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
         JCheckBox disabledCheck = new JCheckBox(rb.getString("DisableAspect"));
         JLabel turnoutStateLabel = new JLabel(rb.getString("SetState"));
-        JComboBox turnoutState = new JComboBox(turnoutStates);
+        JComboBox<String> turnoutState = new JComboBox<String>(turnoutStates);
         
         String aspect = "";
         
@@ -1006,11 +1006,11 @@ public class AddSignalMastPanel extends JPanel {
         if((!rb.getString("DCCMast").equals(signalMastDriver.getSelectedItem())) && (!rb.getString("LNCPMast").equals(signalMastDriver.getSelectedItem())))
             return;
         dccAspect = new HashMap<String, DCCAspectPanel>(10);
-        java.util.List<Object> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
+        java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
         systemPrefixBox.removeAllItems();
         if(connList!=null){
             for(int x = 0; x < connList.size(); x++){
-                jmri.CommandStation station = (jmri.CommandStation) connList.get(x);
+                jmri.CommandStation station = connList.get(x);
                 if(rb.getString("LNCPMast").equals(signalMastDriver.getSelectedItem())){
                     if(station instanceof jmri.jmrix.loconet.SlotManager){
                         systemPrefixBox.addItem(station.getUserName());
@@ -1117,8 +1117,8 @@ public class AddSignalMastPanel extends JPanel {
         return true;
     }
     
-    JComboBox copyFromMastSelection(){
-        JComboBox mastSelect = new JComboBox();
+    JComboBox<String> copyFromMastSelection(){
+        JComboBox<String> mastSelect = new JComboBox<String>();
         List<String> names = InstanceManager.signalMastManagerInstance().getSystemNameList();
         for(String name: names){
             if((InstanceManager.signalMastManagerInstance().getNamedBean(name) instanceof DccSignalMast) && 
@@ -1132,8 +1132,9 @@ public class AddSignalMastPanel extends JPanel {
             mastSelect.insertItemAt("", 0);
             mastSelect.setSelectedIndex(0);
             mastSelect.addActionListener(new ActionListener() {
+                @SuppressWarnings("unchecked") // e.getSource() cast from mastSelect source
                 public void actionPerformed(ActionEvent e) {
-                    JComboBox eb = (JComboBox) e.getSource();
+                    JComboBox<String> eb = (JComboBox<String>) e.getSource();
                     String sourceMast = (String)eb.getSelectedItem();
                     if(sourceMast!=null && !sourceMast.equals(""))
                         copyFromAnotherDCCMastAspect(sourceMast);

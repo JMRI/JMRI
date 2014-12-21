@@ -40,8 +40,8 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     protected javax.swing.JTextField nodeAddrField = new javax.swing.JTextField(3);
     protected javax.swing.JLabel nodeAddrStatic = new javax.swing.JLabel("000");
     protected javax.swing.JLabel nodeTypeStatic = new javax.swing.JLabel("Acela");
-    protected javax.swing.JComboBox nodeAddrBox; 
-    protected javax.swing.JComboBox nodeTypeBox; 
+    protected javax.swing.JComboBox<String> nodeAddrBox; 
+    protected javax.swing.JComboBox<String> nodeTypeBox; 
     
     protected javax.swing.JButton addButton = new javax.swing.JButton(rb.getString("ButtonAdd"));
     protected javax.swing.JButton editButton = new javax.swing.JButton(rb.getString("ButtonEdit"));
@@ -222,7 +222,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         panel11.setLayout(new FlowLayout());
         
         panel11.add(new JLabel(rb.getString("LabelNodeAddress")+" "));
-        nodeAddrBox = new JComboBox(AcelaNode.getNodeNames());
+        nodeAddrBox = new JComboBox<String>(AcelaNode.getNodeNames());
         nodeAddrBox.addActionListener(new java.awt.event.ActionListener() 
             {
                 public void actionPerformed(java.awt.event.ActionEvent event)
@@ -243,7 +243,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         JPanel panelNodeInfo = new JPanel();
 
         panelNodeInfo.add(new JLabel("   "+rb.getString("LabelNodeType")+" "));
-        nodeTypeBox = new JComboBox(AcelaNode.getModuleNames());
+        nodeTypeBox = new JComboBox<String>(AcelaNode.getModuleNames());
         nodeTypeBox.addActionListener(new java.awt.event.ActionListener() 
             {
                 public void actionPerformed(java.awt.event.ActionEvent event)
@@ -456,20 +456,20 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         d8outputConfigTable.setRowSelectionAllowed(false);
         d8outputConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180,125));
 			
-        JComboBox d8outputWiredCombo = new JComboBox();
+        JComboBox<String> d8outputWiredCombo = new JComboBox<String>();
         d8outputWiredCombo.addItem(rb.getString("OutputWiredNC"));
         d8outputWiredCombo.addItem(rb.getString("OutputWiredNO"));
 			
-        JComboBox d8initialStateCombo = new JComboBox();
+        JComboBox<String> d8initialStateCombo = new JComboBox<String>();
         d8initialStateCombo.addItem(rb.getString("InitialStateOn"));
         d8initialStateCombo.addItem(rb.getString("InitialStateOff"));
 			
-        JComboBox d8outputTypeCombo = new JComboBox();
+        JComboBox<String> d8outputTypeCombo = new JComboBox<String>();
         d8outputTypeCombo.addItem(rb.getString("OutputTypeONOFF"));
         d8outputTypeCombo.addItem(rb.getString("OutputTypePULSE"));
         d8outputTypeCombo.addItem(rb.getString("OutputTypeBLINK"));
 			
-        JComboBox d8outputLengthCombo = new JComboBox();
+        JComboBox<String> d8outputLengthCombo = new JComboBox<String>();
         for (int t=0;t<255;t++) {
             d8outputLengthCombo.addItem(String.valueOf(t));
         }
@@ -547,20 +547,20 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         TBoutputConfigTable.setRowSelectionAllowed(false);
         TBoutputConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180,62));
 			
-        JComboBox TBoutputWiredCombo = new JComboBox();
+        JComboBox<String> TBoutputWiredCombo = new JComboBox<String>();
         TBoutputWiredCombo.addItem(rb.getString("OutputWiredNC"));
         TBoutputWiredCombo.addItem(rb.getString("OutputWiredNO"));
 			
-        JComboBox TBoutputTypeCombo = new JComboBox();
+        JComboBox<String> TBoutputTypeCombo = new JComboBox<String>();
         TBoutputTypeCombo.addItem(rb.getString("OutputTypeONOFF"));
         TBoutputTypeCombo.addItem(rb.getString("OutputTypePULSE"));
         TBoutputTypeCombo.addItem(rb.getString("OutputTypeBLINK"));
 			
-        JComboBox TBinitialStateCombo = new JComboBox();
+        JComboBox<String> TBinitialStateCombo = new JComboBox<String>();
         TBinitialStateCombo.addItem(rb.getString("InitialStateOn"));
         TBinitialStateCombo.addItem(rb.getString("InitialStateOff"));
 
-        JComboBox TBoutputLengthCombo = new JComboBox();
+        JComboBox<String> TBoutputLengthCombo = new JComboBox<String>();
         for (int t=0;t<255;t++) {
             TBoutputLengthCombo.addItem(String.valueOf(t));
         }
@@ -609,17 +609,17 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         TBsensorConfigTable.setRowSelectionAllowed(false);
         TBsensorConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180,62));
 			
-        JComboBox TBfilterTypeCombo = new JComboBox();
+        JComboBox<String> TBfilterTypeCombo = new JComboBox<String>();
         TBfilterTypeCombo.addItem(rb.getString("FilterTypeNoise"));
         TBfilterTypeCombo.addItem(rb.getString("FilterTypeDebounce"));
         TBfilterTypeCombo.addItem(rb.getString("FilterTypeCarGap"));
         TBfilterTypeCombo.addItem(rb.getString("FilterTypeDirtyTrack"));
 			
-        JComboBox TBfilterPolarityCombo = new JComboBox();
+        JComboBox<String> TBfilterPolarityCombo = new JComboBox<String>();
         TBfilterPolarityCombo.addItem(rb.getString("FilterNormalPolarity"));
         TBfilterPolarityCombo.addItem(rb.getString("FilterInversePolarity"));
 			
-        JComboBox TBfilterThresholdCombo = new JComboBox();
+        JComboBox<String> TBfilterThresholdCombo = new JComboBox<String>();
         for (int t=0;t<32;t++) {
             TBfilterThresholdCombo.addItem(String.valueOf(t));
         }
@@ -696,17 +696,17 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         wmsensorConfigTable.setRowSelectionAllowed(false);
         wmsensorConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180,125));
 			
-        JComboBox wmfilterTypeCombo = new JComboBox();
+        JComboBox<String> wmfilterTypeCombo = new JComboBox<String>();
         wmfilterTypeCombo.addItem(rb.getString("FilterTypeNoise"));
         wmfilterTypeCombo.addItem(rb.getString("FilterTypeDebounce"));
         wmfilterTypeCombo.addItem(rb.getString("FilterTypeCarGap"));
         wmfilterTypeCombo.addItem(rb.getString("FilterTypeDirtyTrack"));
 			
-        JComboBox wmfilterPolarityCombo = new JComboBox();
+        JComboBox<String> wmfilterPolarityCombo = new JComboBox<String>();
         wmfilterPolarityCombo.addItem(rb.getString("FilterNormalPolarity"));
         wmfilterPolarityCombo.addItem(rb.getString("FilterInversePolarity"));
 			
-        JComboBox wmfilterThresholdCombo = new JComboBox();
+        JComboBox<String> wmfilterThresholdCombo = new JComboBox<String>();
         for (int t=0;t<32;t++) {
             wmfilterThresholdCombo.addItem(String.valueOf(t));
         }
@@ -782,20 +782,20 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         smoutputConfigTable.setRowSelectionAllowed(false);
         smoutputConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180,125));
 			
-        JComboBox smoutputWiredCombo = new JComboBox();
+        JComboBox<String> smoutputWiredCombo = new JComboBox<String>();
         smoutputWiredCombo.addItem(rb.getString("OutputWiredNC"));
         smoutputWiredCombo.addItem(rb.getString("OutputWiredNO"));
 			
-        JComboBox sminitialStateCombo = new JComboBox();
+        JComboBox<String> sminitialStateCombo = new JComboBox<String>();
         sminitialStateCombo.addItem(rb.getString("InitialStateOn"));
         sminitialStateCombo.addItem(rb.getString("InitialStateOff"));
 			
-        JComboBox smoutputTypeCombo = new JComboBox();
+        JComboBox<String> smoutputTypeCombo = new JComboBox<String>();
         smoutputTypeCombo.addItem(rb.getString("OutputTypeONOFF"));
         smoutputTypeCombo.addItem(rb.getString("OutputTypePULSE"));
         smoutputTypeCombo.addItem(rb.getString("OutputTypeBLINK"));
 			
-        JComboBox smoutputLengthCombo = new JComboBox();
+        JComboBox<String> smoutputLengthCombo = new JComboBox<String>();
         for (int t=0;t<255;t++) {
             smoutputLengthCombo.addItem(String.valueOf(t));
         }
@@ -877,20 +877,20 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         ymoutputConfigTable.setRowSelectionAllowed(false);
         ymoutputConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180,125));
 			
-        JComboBox ymoutputWiredCombo = new JComboBox();
+        JComboBox<String> ymoutputWiredCombo = new JComboBox<String>();
         ymoutputWiredCombo.addItem(rb.getString("OutputWiredNC"));
         ymoutputWiredCombo.addItem(rb.getString("OutputWiredNO"));
 			
-        JComboBox yminitialStateCombo = new JComboBox();
+        JComboBox<String> yminitialStateCombo = new JComboBox<String>();
         yminitialStateCombo.addItem(rb.getString("InitialStateOn"));
         yminitialStateCombo.addItem(rb.getString("InitialStateOff"));
 			
-        JComboBox ymoutputTypeCombo = new JComboBox();
+        JComboBox<String> ymoutputTypeCombo = new JComboBox<String>();
         ymoutputTypeCombo.addItem(rb.getString("OutputTypeONOFF"));
         ymoutputTypeCombo.addItem(rb.getString("OutputTypePULSE"));
         ymoutputTypeCombo.addItem(rb.getString("OutputTypeBLINK"));
 			
-        JComboBox ymoutputLengthCombo = new JComboBox();
+        JComboBox<String> ymoutputLengthCombo = new JComboBox<String>();
         for (int t=0;t<255;t++) {
             ymoutputLengthCombo.addItem(String.valueOf(t));
         }
@@ -972,20 +972,20 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         swoutputConfigTable.setRowSelectionAllowed(false);
         swoutputConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180,125));
 			
-        JComboBox swoutputWiredCombo = new JComboBox();
+        JComboBox<String> swoutputWiredCombo = new JComboBox<String>();
         swoutputWiredCombo.addItem(rb.getString("OutputWiredNC"));
         swoutputWiredCombo.addItem(rb.getString("OutputWiredNO"));
 			
-        JComboBox swinitialStateCombo = new JComboBox();
+        JComboBox<String> swinitialStateCombo = new JComboBox<String>();
         swinitialStateCombo.addItem(rb.getString("InitialStateOn"));
         swinitialStateCombo.addItem(rb.getString("InitialStateOff"));
 			
-        JComboBox swoutputTypeCombo = new JComboBox();
+        JComboBox<String> swoutputTypeCombo = new JComboBox<String>();
         swoutputTypeCombo.addItem(rb.getString("OutputTypeONOFF"));
         swoutputTypeCombo.addItem(rb.getString("OutputTypePULSE"));
         swoutputTypeCombo.addItem(rb.getString("OutputTypeBLINK"));
 			
-        JComboBox swoutputLengthCombo = new JComboBox();
+        JComboBox<String> swoutputLengthCombo = new JComboBox<String>();
         for (int t=0;t<255;t++) {
             swoutputLengthCombo.addItem(String.valueOf(t));
         }
@@ -1067,17 +1067,17 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         sysensorConfigTable.setRowSelectionAllowed(false);
         sysensorConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180,125));
 			
-        JComboBox syfilterTypeCombo = new JComboBox();
+        JComboBox<String> syfilterTypeCombo = new JComboBox<String>();
         syfilterTypeCombo.addItem(rb.getString("FilterTypeNoise"));
         syfilterTypeCombo.addItem(rb.getString("FilterTypeDebounce"));
         syfilterTypeCombo.addItem(rb.getString("FilterTypeCarGap"));
         syfilterTypeCombo.addItem(rb.getString("FilterTypeDirtyTrack"));
 			
-        JComboBox syfilterPolarityCombo = new JComboBox();
+        JComboBox<String> syfilterPolarityCombo = new JComboBox<String>();
         syfilterPolarityCombo.addItem(rb.getString("FilterNormalPolarity"));
         syfilterPolarityCombo.addItem(rb.getString("FilterInversePolarity"));
 			
-        JComboBox syfilterThresholdCombo = new JComboBox();
+        JComboBox<String> syfilterThresholdCombo = new JComboBox<String>();
         for (int t=0;t<32;t++) {
             syfilterThresholdCombo.addItem(String.valueOf(t));
         }

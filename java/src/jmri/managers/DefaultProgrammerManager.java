@@ -27,9 +27,23 @@ public class DefaultProgrammerManager implements ProgrammerManager {
 		this.userName = memo.getUserName();
 	}
     
-    String userName = "Internal";
+    String userName = "<Default>";
 
+    /**
+     * Provides the human-readable 
+     * representation for including ProgrammerManagers
+     * directly in e.g. JComboBoxes, so it should return a
+     * user-provided name for this particular one.
+     */
     public String getUserName() { return userName; }
+    
+    /**
+     * Provides the human-readable 
+     * representation for including ProgrammerManagers
+     * directly in e.g. JComboBoxes, so it should return a
+     * user-provided name for this particular one.
+     */
+    public String toString() { return getUserName(); }
     
     public Programmer getGlobalProgrammer() {
         if (log.isDebugEnabled()) log.debug("return default service-mode programmer");

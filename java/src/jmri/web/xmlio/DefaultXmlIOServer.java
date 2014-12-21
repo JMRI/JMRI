@@ -418,7 +418,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 List<LayoutEditor> layouts = Editor.getEditors(LayoutEditor.class);
                 for (Editor frame : layouts) {
                     if (frame.getAllowInFrameServlet()) {
-                        String title = ((JmriJFrame) ((Editor) frame).getTargetPanel().getTopLevelAncestor()).getTitle();
+                        String title = ((JmriJFrame) frame.getTargetPanel().getTopLevelAncestor()).getTitle();
                         if (!title.equals("") && !disallowedFrames.contains(title)) {
                             String escapedTitle = StringUtil.escapeString(title);
                             Element n = new Element((useAttributes) ? PANEL_ELEMENT : ITEM);
