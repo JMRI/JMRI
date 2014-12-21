@@ -100,8 +100,7 @@ public class RpsPositionIconTest extends jmri.util.SwingTestCase {
     public void testXFrameCreation() {
     	JFrame f = jmri.util.JmriJFrame.getFrame("RpsPositionIcon Test");
     	Assert.assertTrue("found frame", f !=null );
-    	if (f != null)
-    		f.dispose();
+    	f.dispose();
     }
 
 	// from here down is testing infrastructure
