@@ -329,8 +329,8 @@ public class SimulatorAdapter extends NcePortController implements
 			reply.setElement(1, 0x30);
 			break;
 		case NceBinaryCommand.READ_AUI4_CMD:	// Read AUI 4 byte response
-			reply.setElement(0, 0x00);			// fixed data for now
-			reply.setElement(1, 0x00);			// fixed data for now
+			reply.setElement(0, 0xFF);			// fixed data for now
+			reply.setElement(1, 0xFF);			// fixed data for now
 			reply.setElement(2, 0x00);			// fixed data for now
 			reply.setElement(3, 0x00);			// fixed data for now
 			break;
