@@ -16,12 +16,12 @@ public class SRCPProgrammerManager  extends DefaultProgrammerManager {
 
     //private Programmer localProgrammer;
 
-    private SRCPBusConnectionMemo _memo=null;
+    //private SRCPBusConnectionMemo _memo=null;
 
     public SRCPProgrammerManager(Programmer serviceModeProgrammer, SRCPBusConnectionMemo memo) {
         super(serviceModeProgrammer, memo);
         //localProgrammer = serviceModeProgrammer;
-        _memo=memo;
+        //_memo=memo;
 
     }
 
