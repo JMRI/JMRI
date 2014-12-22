@@ -66,7 +66,7 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
      * place.  
      */
     public void configureManagers() {
-       while(!configured);
+       while(!configured) {}
     }
 
     /**
