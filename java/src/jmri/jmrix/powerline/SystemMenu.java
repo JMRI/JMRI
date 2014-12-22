@@ -15,7 +15,12 @@ import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 @Deprecated
 @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class SystemMenu extends jmri.jmrix.powerline.swing.PowerlineMenu {
-    public SystemMenu(SerialSystemConnectionMemo memo) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8020035923762579268L;
+
+	public SystemMenu(SerialSystemConnectionMemo memo) {
         super(memo);
     }
 }

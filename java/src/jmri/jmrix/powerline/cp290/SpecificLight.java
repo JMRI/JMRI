@@ -33,6 +33,11 @@ import jmri.jmrix.powerline.*;
 public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4123284768492494792L;
+
+	/**
      * Create a Light object, with only system name.
      * <P>
      * 'systemName' was previously validated in SerialLightManager

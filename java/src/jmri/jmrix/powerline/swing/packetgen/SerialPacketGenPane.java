@@ -24,7 +24,12 @@ import jmri.jmrix.powerline.SerialTrafficController;
  */
 public class SerialPacketGenPane extends jmri.jmrix.powerline.swing.PowerlinePanel implements SerialListener {
 	
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.powerline.swing.packetgen.SerialPacketGenBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2993960846641037667L;
+
+	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.powerline.swing.packetgen.SerialPacketGenBundle");
 
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();

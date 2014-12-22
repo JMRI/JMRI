@@ -23,6 +23,11 @@ import jmri.jmrix.powerline.SerialTrafficController;
 @Deprecated
 public class SerialMonAction 			extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -563795110468683083L;
+
 	public SerialMonAction(String s, SerialTrafficController tc) {
 		super(s);
 		this.tc = tc;

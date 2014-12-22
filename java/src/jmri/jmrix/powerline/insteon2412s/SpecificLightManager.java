@@ -18,7 +18,12 @@ import jmri.jmrix.powerline.SerialTrafficController;
  */
 public class SpecificLightManager extends jmri.jmrix.powerline.SerialLightManager {
 
-    public SpecificLightManager(SerialTrafficController tc) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2376515486785530840L;
+
+	public SpecificLightManager(SerialTrafficController tc) {
         super(tc);
         this.tc = tc;
     }

@@ -32,7 +32,12 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
 
     // System-dependent instance variables
 
-    /** 
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8432585767207210483L;
+
+	/** 
      * Current output step 0 to maxDimStep.
      * <p>
      *  -1 means unknown

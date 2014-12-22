@@ -20,6 +20,11 @@ import jmri.jmrix.powerline.SerialTrafficController;
  */
 public class SerialPacketGenAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6499014957221691885L;
+
 	public SerialPacketGenAction(String s, SerialTrafficController tc) {
 		super(s);
 		this.tc = tc;

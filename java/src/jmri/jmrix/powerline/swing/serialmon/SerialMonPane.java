@@ -24,7 +24,11 @@ import jmri.jmrix.powerline.swing.PowerlinePanelInterface;
 
 public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements SerialListener, PowerlinePanelInterface  {
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.powerline.swing.serialmon.SerialMonBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5452592994756329128L;
+	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.powerline.swing.serialmon.SerialMonBundle");
     
     public SerialMonPane() {
         super();
@@ -80,7 +84,12 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements SerialL
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.powerline.swing.PowerlineNamedPaneAction {
-        public Default() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -2564227328398852669L;
+
+		public Default() {
             super("Open Powerline Monitor", 
                     new jmri.util.swing.sdi.JmriJFrameInterface(), 
                     SerialMonPane.class.getName(), 

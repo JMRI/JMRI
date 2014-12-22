@@ -19,6 +19,11 @@ import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 public class PowerlineMenu extends JMenu {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5098217284738165128L;
+
+	/**
      * Create a Powerline menu.
      * And loads the SerialSystemConnectionMemo to the various actions.
      * Actions will open new windows.

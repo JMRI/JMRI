@@ -22,6 +22,11 @@ import jmri.util.swing.*;
 public class PowerlineNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3525473344131355146L;
+
+	/**
      * Enhanced constructor for placing the pane in various 
      * GUIs
      */

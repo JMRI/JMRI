@@ -22,6 +22,10 @@ abstract public class PowerlinePanel extends jmri.util.swing.JmriPanel implement
 
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4095514688087393187L;
+	/**
      * make "memo" object available as convenience
      */
     protected SerialSystemConnectionMemo memo;
