@@ -636,8 +636,6 @@ public class InstanceManager {
     // deprecated.
     //
     static public void setProgrammerManager(ProgrammerManager p) {
-        System.out.println("setProgrammerManager invoked with "+p);
-        new Exception("setProgrammerManager call tree").printStackTrace();
         store(p, ProgrammerManager.class);
  		if(programmerManagerInstance().isAddressedModePossible() )
  		    store(p, AddressedProgrammerManager.class);
