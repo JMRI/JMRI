@@ -859,6 +859,38 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		}
 	}
 	
+	public void buildSelectedTrains(final List<Train> trains) {
+		// use a thread to allow table updates during build
+		Thread build = new Thread(new Runnable() {
+			public void run() {
+				for (Train train : trains) {
+					train.buildIfSelected();
+				}
+			}
+		});
+		build.setName("Build Trains"); // NOI18N
+		build.start();
+	}
+	
+	public boolean printSelectedTrains(List<Train> trains) {
+		for (Train train : trains) {
+			if (train.isBuildEnabled() && !train.printManifestIfBuilt())
+				return false; // failed to print all selected trains
+		}
+		return true;
+	}
+	
+	public boolean terminateSelectedTrains(List<Train> trains) {
+		for (Train train : trains) {
+			if (train.isBuildEnabled() && train.isBuilt())
+				if (train.isPrinted())
+					train.terminate();
+				else
+					return false; // train manifest not printed
+		}
+		return true;
+	}
+
 	public void load(Element root) {
 		if (root.getChild(Xml.OPTIONS) != null) {
 			Element options = root.getChild(Xml.OPTIONS);

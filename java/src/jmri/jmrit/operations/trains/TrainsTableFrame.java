@@ -327,14 +327,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 			f.initComponents(null);
 		}
 		if (ae.getSource() == buildButton) {
-			// use a thread to allow table updates during build
-			Thread build = new Thread(new Runnable() {
-				public void run() {
-					buildTrains();
-				}
-			});
-			build.setName("Build Trains"); // NOI18N
-			build.start();
+			// uses a thread which allows table updates during build
+			trainManager.buildSelectedTrains(getSortByList());
 		}
 		if (ae.getSource() == printButton) {
 			List<Train> trains = getSortByList();
@@ -415,33 +409,25 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		if (ae.getSource() == terminateButton) {
 			List<Train> trains = getSortByList();
 			for (Train train : trains) {
-				if (train.isBuildEnabled() && train.isBuilt() && train.isPrinted()) {
-					train.terminate();
-				} else if (train.isBuildEnabled() && train.isBuilt() && !train.isPrinted()) {
-					int status = JOptionPane.showConfirmDialog(null, Bundle
-							.getMessage("WarningTrainManifestNotPrinted"), MessageFormat.format(Bundle
-							.getMessage("TerminateTrain"), new Object[] { train.getName(), train.getDescription() }),
-							JOptionPane.YES_NO_OPTION);
-					if (status == JOptionPane.YES_OPTION)
+				if (train.isBuildEnabled() && train.isBuilt()) {
+					if (train.isPrinted()) {
 						train.terminate();
-					// Quit?
-					if (status == JOptionPane.CLOSED_OPTION)
-						return;
+					} else {
+						int status = JOptionPane.showConfirmDialog(null, Bundle
+								.getMessage("WarningTrainManifestNotPrinted"), MessageFormat
+								.format(Bundle.getMessage("TerminateTrain"), new Object[] { train.getName(),
+										train.getDescription() }), JOptionPane.YES_NO_OPTION);
+						if (status == JOptionPane.YES_OPTION)
+							train.terminate();
+						// Quit?
+						if (status == JOptionPane.CLOSED_OPTION)
+							return;
+					}
 				}
 			}
 		}
 		if (ae.getSource() == saveButton) {
 			storeValues();
-		}
-	}
-
-	/**
-	 * A thread is used to allow train table updates during builds.
-	 */
-	private void buildTrains() {
-		List<Train> trains = getSortByList();
-		for (Train train : trains) {
-			train.buildIfSelected();
 		}
 	}
 
