@@ -28,8 +28,6 @@ public class JsonNetworkConnectionConfig extends AbstractNetworkConnectionConfig
     protected JLabel nodeIdentityField = new JLabel();
     protected JLabel nodeIdentityLabel = new JLabel(Bundle.getMessage("NodeIdentityLabel")); // NOI18N
 
-    private final static Logger log = LoggerFactory.getLogger(JsonNetworkConnectionConfig.class);
-
     /**
      * Constructor for an object being created while loading existing
      * preferences.
