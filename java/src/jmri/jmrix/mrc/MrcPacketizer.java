@@ -112,7 +112,7 @@ public class MrcPacketizer extends MrcTrafficController {
                 xmtList.addLast(m);
                 if(debug){
                     log.debug("xmt list size " + xmtList.size()); //IN18N
-                    Iterator iterator = xmtList.iterator();
+                    Iterator<MrcMessage> iterator = xmtList.iterator();
                     while (iterator.hasNext()){
                         log.debug(iterator.next().toString());  
                     }
@@ -226,7 +226,6 @@ public class MrcPacketizer extends MrcTrafficController {
             trafficController = lt;
         }
 
-        @SuppressWarnings("null")
         @Override
 		public void run() {
             int firstByte;
@@ -555,7 +554,7 @@ public class MrcPacketizer extends MrcTrafficController {
                                 mCurrentState = IDLESTATE;
                                 if(debug){
                                     log.debug("xmt list size " + xmtList.size());
-                                    Iterator iterator = xmtList.iterator();
+                                    Iterator<MrcMessage> iterator = xmtList.iterator();
                                     while (iterator.hasNext()){
                                         log.debug(iterator.next().toString());  
                                     }

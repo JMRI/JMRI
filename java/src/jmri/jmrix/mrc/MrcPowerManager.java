@@ -9,7 +9,6 @@ import jmri.PowerManager;
 import jmri.JmriException;
 
 import java.util.Date;
-import java.util.ResourceBundle;
 
 /**
  * PowerManager implementation for controlling layout power

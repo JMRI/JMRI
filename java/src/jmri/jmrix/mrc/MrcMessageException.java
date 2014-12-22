@@ -11,6 +11,10 @@ import jmri.JmriException;
  * @version	$Revision: 17977 $
  */
 public class MrcMessageException extends JmriException {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2182935834694457386L;
 	public MrcMessageException(String s) { super(s); }
 	public MrcMessageException() {}
 }

@@ -19,7 +19,11 @@ import jmri.Turnout;
  */
 public class MrcTurnout extends AbstractTurnout implements MrcTrafficListener{
 
-    // Private data member to keep track of what turnout we control.
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4101674471527804047L;
+	// Private data member to keep track of what turnout we control.
     int _number;
     MrcTrafficController tc = null;
 	String prefix = "";

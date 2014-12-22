@@ -25,7 +25,11 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel{
 	
     //ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.mrc.packetgen.MrcPacketGenBundle");
 
-    // member declarations
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 491326388683242575L;
+	// member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(20);
@@ -121,6 +125,11 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel{
      */
     static public class Default extends jmri.jmrix.mrc.swing.MrcNamedPaneAction {
 
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 3767753843735978274L;
 
 		public Default() {
             super("Open MRC Send Binary Command", 

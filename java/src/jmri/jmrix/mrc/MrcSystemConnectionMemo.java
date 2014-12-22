@@ -3,6 +3,7 @@
 package jmri.jmrix.mrc;
 
 import jmri.*;
+
 import java.util.ResourceBundle;
 
 /**
@@ -43,9 +44,11 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             tc.setAdapterMemo(this);
     }
     
-    private ProgrammerManager programmerManager;
+    @SuppressWarnings("deprecation")
+	private ProgrammerManager programmerManager;
     
-    public ProgrammerManager getProgrammerManager() {
+    @SuppressWarnings("deprecation")
+	public ProgrammerManager getProgrammerManager() {
         //Do not want to return a programmer if the system is disabled
         if (getDisabled())
                 return null;
@@ -53,7 +56,8 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             programmerManager = new MrcProgrammerManager(new MrcProgrammer(getMrcTrafficController()), this);
         return programmerManager;
     }
-    public void setProgrammerManager(ProgrammerManager p) {
+    @SuppressWarnings("deprecation")
+	public void setProgrammerManager(ProgrammerManager p) {
         programmerManager = p;
     }
     
@@ -68,7 +72,8 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     /** 
      * Tells which managers this provides by class
      */
-    public boolean provides(Class<?> type) {
+    @SuppressWarnings("deprecation")
+	public boolean provides(Class<?> type) {
         if (getDisabled())
             return false;
         if (type.equals(jmri.ProgrammerManager.class))
@@ -96,7 +101,7 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     /** 
      * Provide manager by class
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "deprecation" })
     public <T> T get(Class<?> T) {
         if (getDisabled())
             return null;
@@ -133,7 +138,8 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * This puts the common manager config in one
      * place.  
      */
-    public void configureManagers() {
+    @SuppressWarnings("deprecation")
+	public void configureManagers() {
     	powerManager = new jmri.jmrix.mrc.MrcPowerManager(this);
         InstanceManager.setPowerManager(powerManager);
 
