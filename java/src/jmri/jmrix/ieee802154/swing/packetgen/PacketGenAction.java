@@ -33,8 +33,8 @@ public class PacketGenAction 			extends AbstractAction {
          super(s);
          // If there is no system memo given, assume the system memo
          // is the first one in the instance list.
-         _memo=(jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo)(jmri.InstanceManager.
-               getList(jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo.class).get(0));
+         _memo= jmri.InstanceManager.
+               getList(jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo.class).get(0);
     }
 
     public PacketGenAction() {
