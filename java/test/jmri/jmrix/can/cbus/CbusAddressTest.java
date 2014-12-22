@@ -19,7 +19,7 @@ import junit.framework.TestSuite;
 public class CbusAddressTest extends TestCase {
 
     public void testCanCreate() {
-        assertTrue(null != new CbusAddress("X0A;+N15E6"));
+        new CbusAddress("X0A;+N15E6");
     }
 
     public void testCbusAddressOK() {
