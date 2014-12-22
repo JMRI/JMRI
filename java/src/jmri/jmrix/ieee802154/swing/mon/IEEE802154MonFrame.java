@@ -23,8 +23,8 @@ import org.slf4j.LoggerFactory;
                super();
                // If there is no system memo given, assume the system memo
                // is the first one in the instance list.
-              _memo=(IEEE802154SystemConnectionMemo)(jmri.InstanceManager.
-                    getList(IEEE802154SystemConnectionMemo.class).get(0));
+              _memo= jmri.InstanceManager.
+                    getList(IEEE802154SystemConnectionMemo.class).get(0);
         }
 
 
