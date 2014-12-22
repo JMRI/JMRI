@@ -872,7 +872,6 @@ public class RouteTableAction extends AbstractTableAction {
         return true;
     }
 
-    @SuppressWarnings("null")
 	Route checkNamesOK() {
         // Get system name and user name
         String sName = _systemName.getText();

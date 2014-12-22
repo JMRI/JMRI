@@ -571,7 +571,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 	 * Check/Update Path objects for the attached jmri.Block using the 
 	 *		connectivity in the specified Layout Editor panel.
 	 */
-	@SuppressWarnings("null")
 	public void updatePathsUsingPanel(LayoutEditor panel) {
         if (panel==null) {
             log.error("Null panel in call to updatePathsUsingPanel");

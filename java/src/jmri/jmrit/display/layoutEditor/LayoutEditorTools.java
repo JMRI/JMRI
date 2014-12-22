@@ -1289,7 +1289,6 @@ public class LayoutEditorTools
 	 * Removes the SignalHead with the specified name from the panel and from
 	 *		assignment to any turnout, positionable point, or level crossing
 	 */
-	@SuppressWarnings("null")
 	public void removeSignalHeadFromPanel(String signalName) {
 		if ( (signalName==null) || (signalName.length()<1) ) return;
 		SignalHead head = jmri.InstanceManager.signalHeadManagerInstance().
