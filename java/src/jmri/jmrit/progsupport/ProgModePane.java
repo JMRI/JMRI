@@ -38,16 +38,18 @@ public class ProgModePane extends ProgModeSelector {
      */
     public ProgModePane(int direction) {
 
-        System.out.println("ProgrammerManager:");
-        for (Object p : InstanceManager.getList(ProgrammerManager.class))
-            System.out.println("   "+((ProgrammerManager)p).toString());
-        System.out.println("Addressed:");
-        for (Object p : InstanceManager.getList(AddressedProgrammerManager.class))
-            System.out.println("   "+((AddressedProgrammerManager)p).toString());
-        System.out.println("Global:");
-        for (Object p : InstanceManager.getList(GlobalProgrammerManager.class))
-            System.out.println("   "+((GlobalProgrammerManager)p).toString());
-
+        if (log.isDebugEnabled()) {
+            log.debug("ProgrammerManager:");
+            for (Object p : InstanceManager.getList(ProgrammerManager.class))
+                log.debug("   "+((ProgrammerManager)p).toString());
+            log.debug("Addressed:");
+            for (Object p : InstanceManager.getList(AddressedProgrammerManager.class))
+                log.debug("   "+((AddressedProgrammerManager)p).toString());
+            log.debug("Global:");
+            for (Object p : InstanceManager.getList(GlobalProgrammerManager.class))
+                log.debug("   "+((GlobalProgrammerManager)p).toString());
+        }
+        
         // general GUI config
         setLayout(new BoxLayout(this, direction));
 
