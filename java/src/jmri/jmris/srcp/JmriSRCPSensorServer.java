@@ -34,7 +34,7 @@ public class JmriSRCPSensorServer extends AbstractSensorServer {
         int address = 0;
         java.util.List<SystemConnectionMemo> list = jmri.InstanceManager.getList(SystemConnectionMemo.class);
         for (SystemConnectionMemo memo : list) {
-            String prefix = ((jmri.jmrix.SystemConnectionMemo) memo).getSystemPrefix();
+            String prefix = memo.getSystemPrefix();
             if (sensorName.startsWith(prefix)) {
                 try {
                     address = Integer.parseInt(sensorName.substring(prefix.length() + 1));
