@@ -4,6 +4,7 @@ package jmri.jmrix.nce;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.implementation.DefaultClockControl;
 import jmri.InstanceManager;
 import jmri.Timebase;
@@ -146,7 +147,8 @@ public class NceClockControl extends DefaultClockControl implements NceListener
         log.error("message received: " + m);
     }  
     
-    public void reply(NceReply r) {
+    @SuppressWarnings("unused")
+	public void reply(NceReply r) {
     	if (false && log.isDebugEnabled()){
             log.debug("NceReply(len " + r.getNumDataElements() + ") waiting: " + waiting +
         		" watingForRead: " + waitingForCmdRead +
@@ -382,9 +384,11 @@ public class NceClockControl extends DefaultClockControl implements NceListener
      */
     public void newInternalMinute()
     {
-        if (DEBUG_SHOW_SYNC_CALLS && log.isDebugEnabled()) {
-        	log.debug("newInternalMinute clockMode: " + clockMode + " nceInit: " + nceSyncInitStateCounter + " nceRun: " + nceSyncRunStateCounter);
-        }
+        if (DEBUG_SHOW_SYNC_CALLS) {
+			if (log.isDebugEnabled()) {
+				log.debug("newInternalMinute clockMode: " + clockMode + " nceInit: " + nceSyncInitStateCounter + " nceRun: " + nceSyncRunStateCounter);
+			}
+		}
     }
     
     @SuppressWarnings("deprecation")

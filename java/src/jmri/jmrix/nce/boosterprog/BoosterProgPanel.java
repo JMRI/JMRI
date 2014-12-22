@@ -21,7 +21,11 @@ import jmri.jmrix.nce.NceSystemConnectionMemo;
  */
 public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
 	
-    JTextField start = new JTextField(6);
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 418634505989298386L;
+	JTextField start = new JTextField(6);
     JTextField length = new JTextField(12);
 
     JLabel status = new JLabel();

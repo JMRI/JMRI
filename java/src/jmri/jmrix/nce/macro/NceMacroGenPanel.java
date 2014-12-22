@@ -21,7 +21,12 @@ import javax.swing.*;
 
 public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements jmri.jmrix.nce.NceListener {
 	
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.macro.NceMacroBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6258879427292297607L;
+
+	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.macro.NceMacroBundle");
 
 	private static final int REPLY_LEN = 1;
 	
@@ -211,6 +216,11 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
      */
     static public class Default extends jmri.jmrix.nce.swing.NceNamedPaneAction {
 
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 2833783324467310500L;
 
 		public Default() {
             super("Open NCE Send Macro Window", 

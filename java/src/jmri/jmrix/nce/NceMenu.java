@@ -18,7 +18,12 @@ import jmri.jmrix.nce.NceSystemConnectionMemo;
 @Deprecated
 @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class NceMenu extends jmri.jmrix.nce.swing.NceMenu {
-    public NceMenu(NceSystemConnectionMemo memo) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2128813679096151779L;
+
+	public NceMenu(NceSystemConnectionMemo memo) {
         super(memo);
     }
 }

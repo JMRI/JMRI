@@ -19,7 +19,12 @@ import jmri.Light;
  */
 public class NceLightManager extends AbstractLightManager {
 
-    public NceLightManager(NceTrafficController tc, String prefix) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3173397373353668311L;
+
+	public NceLightManager(NceTrafficController tc, String prefix) {
     	super();
         _trafficController = tc;
         this.prefix = prefix;

@@ -4,10 +4,13 @@ package jmri.jmrix.ncemonitor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
+
 import javax.swing.*;
+
 import java.awt.*;
 import java.util.Enumeration;
 import java.util.ResourceBundle;

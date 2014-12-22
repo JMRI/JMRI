@@ -23,7 +23,12 @@ import javax.swing.*;
  */
 public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements jmri.jmrix.nce.NceListener {
 	
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.packetgen.NcePacketGenBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4820259525840330859L;
+
+	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.packetgen.NcePacketGenBundle");
 
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
@@ -207,6 +212,11 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
      */
     static public class Default extends jmri.jmrix.nce.swing.NceNamedPaneAction {
 
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1797965223160428671L;
 
 		public Default() {
             super("Open NCE Send Binary Command", 

@@ -112,9 +112,11 @@ public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeL
             				}else{
             					// turnout feedback isn't monitoring, but listen in case it changes
              					mControlTurnout.addPropertyChangeListener(this);
-            					if (log.isDebugEnabled() && debugTurnoutMonitor) {
-            						log.debug("add turnout to listener NT" + NTnum  
+            					if (debugTurnoutMonitor) {
+            						if (log.isDebugEnabled()) {
+            							log.debug("add turnout to listener NT" + NTnum  
             								+ " Feed back mode: " + mControlTurnout.getFeedbackMode());
+            						}
             					}
             				}
             			}
@@ -149,8 +151,10 @@ public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeL
 				currentBlock = 0;
 
 			if (activeBlock[currentBlock]) {
-				if (debugTurnoutMonitor && log.isDebugEnabled())
-					log.debug("found turnouts block " + currentBlock);
+				if (debugTurnoutMonitor) {
+					if (log.isDebugEnabled())
+						log.debug("found turnouts block " + currentBlock);
+				}
 
 				// Read NCE CS memory
 				int nceAccAddress = CS_ACCY_MEMORY + currentBlock * BLOCK_LEN;
@@ -171,9 +175,11 @@ public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeL
     public void reply(NceReply r) {
 		if (r.getNumDataElements() == REPLY_LEN) {
 
-			if (log.isDebugEnabled() && debugTurnoutMonitor == true) {
-				log.debug("memory poll reply received for memory block "
-						+ currentBlock + ": " + r.toString());
+			if (debugTurnoutMonitor) {
+				if (log.isDebugEnabled()) {
+					log.debug("memory poll reply received for memory block "
+							+ currentBlock + ": " + r.toString());
+				}
 			}
 			// Copy receive data into buffer and process later
 			for (int i = 0; i < REPLY_LEN; i++){
@@ -316,14 +322,18 @@ public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeL
 			nceAccyClosed = NCE_ACCY_THROWN;
 		}
 
-		if (debugTurnoutMonitor && log.isDebugEnabled()) {
-			log.debug("turnout exists NT" + NTnum + " state: " + tCommandedState
-					+ " Feed back mode: " + rControlTurnout.getFeedbackMode());
+		if (debugTurnoutMonitor) {
+			if (log.isDebugEnabled()) {
+				log.debug("turnout exists NT" + NTnum + " state: " + tCommandedState
+						+ " Feed back mode: " + rControlTurnout.getFeedbackMode());
+			}
 		}
 
 		// Show the byte read from NCE CS
-		if (debugTurnoutMonitor && log.isDebugEnabled()) {
-			log.debug("memory byte: " + Integer.toHexString(recMemByte & 0xFF));
+		if (debugTurnoutMonitor) {
+			if (log.isDebugEnabled()) {
+				log.debug("memory byte: " + Integer.toHexString(recMemByte & 0xFF));
+			}
 		}
 
 		// test for closed or thrown, normally 0 = closed, 1 = thrown
@@ -367,14 +377,18 @@ public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeL
 			nceAccyClosed = NCE_ACCY_THROWN;
 		}
 
-		if (debugTurnoutMonitor && log.isDebugEnabled()) {
-			log.debug("turnout exists NT" + NTnum + " state: " + tKnownState
-					+ " Feed back mode: " + rControlTurnout.getFeedbackMode());
+		if (debugTurnoutMonitor) {
+			if (log.isDebugEnabled()) {
+				log.debug("turnout exists NT" + NTnum + " state: " + tKnownState
+						+ " Feed back mode: " + rControlTurnout.getFeedbackMode());
+			}
 		}
 
 		// Show the byte read from NCE CS
-		if (debugTurnoutMonitor && log.isDebugEnabled()) {
-			log.debug("memory byte: " + Integer.toHexString(recMemByte & 0xFF));
+		if (debugTurnoutMonitor) {
+			if (log.isDebugEnabled()) {
+				log.debug("memory byte: " + Integer.toHexString(recMemByte & 0xFF));
+			}
 		}
 
 		// test for closed or thrown, normally 0 = closed, 1 = thrown
