@@ -164,7 +164,7 @@ public class Mx1Throttle extends AbstractThrottle implements  Mx1Listener{
      * MRC Group 6
 	 */
     protected void sendFunctionGroup5() {
-    	int data = 0x00 |
+    	/* int data = 0x00 |
     			(f28 ? 0x80 : 0) |
     			(f27 ? 0x40 : 0) |
     			(f26 ? 0x20 : 0) |
@@ -172,7 +172,7 @@ public class Mx1Throttle extends AbstractThrottle implements  Mx1Listener{
     			(f24 ? 0x08 : 0) |
     			(f23 ? 0x04 : 0) |
     			(f22 ? 0x02 : 0) |
-    			(f21 ? 0x01 : 0);
+    			(f21 ? 0x01 : 0); */
 
     	/*Mx1Message m = Mx1Message.getSendFunction(6, addressLo, addressHi, data);
     	if(m!=null)
