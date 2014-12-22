@@ -612,7 +612,7 @@ public class NXFrame extends WarrantRoute {
     	boolean start = true;
 		while (curSteps < numSteps) {
 			if (start) {
-				curDistance = (minSpeed*time/2)/(FACTOR*_scale);;
+				curDistance = (minSpeed*time/2)/(FACTOR*_scale);
 	    		remRamp -= curDistance;
 				start = false;
 			}
