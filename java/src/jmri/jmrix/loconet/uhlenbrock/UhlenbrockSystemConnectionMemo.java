@@ -3,10 +3,11 @@
 package jmri.jmrix.loconet.uhlenbrock;
 
 import jmri.InstanceManager;
+import jmri.ProgrammerManager;
 import jmri.jmrix.loconet.*;
 
 /**
- * Lightweight class to denote that a Uhlenbrock is active
+ * Lightweight class to denote that an Uhlenbrock IB-COM or Intellibox II is active
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
  * @version             $Revision: 18841 $
@@ -22,37 +23,18 @@ public class UhlenbrockSystemConnectionMemo extends LocoNetSystemConnectionMemo 
         super();
     }
     
+    public ProgrammerManager getProgrammerManager() {
+        if (programmerManager == null)
+            programmerManager = new UhlenbrockProgrammerManager(getSlotManager(), this);
+        return programmerManager;
+    }
     
    /**
      * Configure the subset of LocoNet managers valid for the Uhlenbrock.
      */
     public void configureManagers() {
-        jmri.InstanceManager.setPowerManager(
-            getPowerManager());
-
-        jmri.InstanceManager.setTurnoutManager(
-            getTurnoutManager());
-
-        jmri.InstanceManager.setLightManager(
-            getLightManager());
-
-        jmri.InstanceManager.setSensorManager(
-            getSensorManager());
-
-        jmri.InstanceManager.setThrottleManager(
-            getThrottleManager());
-        
-        InstanceManager.setConsistManager(
-            getConsistManager());
-
-        InstanceManager.addClockControl(
-            getClockControl());
-
-        /*jmri.InstanceManager.setProgrammerManager(
-            new jmri.jmrix.loconet.LnProgrammerManager(getSlotManager(), this));*/
-
-        /*jmri.InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager());*/
-
+        super.configureManagers();
+        getSlotManager().setProgPowersOff(true);
     }
         
     private UhlenbrockLnThrottleManager throttleUhlManager;

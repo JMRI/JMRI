@@ -74,7 +74,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
       staleSlotCheckTimer.start();
     }
 
-    LnTrafficController tc;
+    public LnTrafficController tc;
     
     /**
      * Send a DCC packet to the rails. This implements the CommandStation interface.
@@ -386,7 +386,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             // assume its for us...
             if (log.isDebugEnabled())
                 log.debug("LACK in state "+progState+" message: "+m.toString());
-            if ( (m.getElement(1)&0xEF) == 0x6F && progState == 1 ) {
+            if ( (m.getElement(1)&0xED) == 0x6D && progState == 1 ) {  // Lisby: Used to be checked as EF/6F instead of ED/6D, but Uhlenbrock IB-COM does not set bit 1.
                 // in programming state
                 // check status byte
                 if ((m.getElement(2) == 1) // task accepted
@@ -1106,7 +1106,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
     
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(SlotManager.class.getName());
+    protected static Logger log = LoggerFactory.getLogger(SlotManager.class.getName());
 }
 
 

@@ -9,9 +9,12 @@ import jmri.jmrix.loconet.*;
 import gnu.io.SerialPort;
 /**
  * Update the code in jmri.jmrix.loconet.locobuffer so that it
- * operates correctly with the Intellibox on-board serial port.
+ * operates correctly with the IC-COM and Intellibox II on-board USB port.
+ * Note that the jmri.jmrix.loconet.intellibox package is for the first version of
+ * Uhlenbrock Intellibox, whereas this package (jmri.jmrix.loconet.uhlenbrock
+ * is for the Intellibox II and the IB-COM.
  * <P>
- * Since this is by definition connected to an Intellibox, 
+ * Since this is by definition connected to an Intellibox II or IB-COM, 
  * the command station prompt is suppressed.
  *
  * @author			Alex Shepherd   Copyright (C) 2004
@@ -42,13 +45,13 @@ public void configure() {
     setCommandStationType(getOptionState(option2Name));
     setTurnoutHandling(getOptionState(option3Name));
     // connect to a packetizing traffic controller
-    IBLnPacketizer packets = new IBLnPacketizer();
+    UhlenbrockPacketizer packets = new UhlenbrockPacketizer();
     packets.connectPort(this);
 
     // create memo
     /*LocoNetSystemConnectionMemo memo 
         = new LocoNetSystemConnectionMemo(packets, new SlotManager(packets));*/
-    adaptermemo.setSlotManager(new SlotManager(packets));
+    adaptermemo.setSlotManager(new UhlenbrockSlotManager(packets));
     adaptermemo.setLnTrafficController(packets);
     // do the common manager config
         adaptermemo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName, 

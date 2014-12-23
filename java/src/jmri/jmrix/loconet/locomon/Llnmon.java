@@ -538,6 +538,8 @@ public class Llnmon {
                     return "LONG_ACK: the Send IMM Packet command was rejected, the buffer is full/busy.\n";
                 } else if (ack1 == 0x7f) {
                     return "LONG_ACK: the Send IMM Packet command was accepted.\n";
+                } else if (l.getElement(1)==0x6D && l.getElement(2)==0x01) {
+                    return "Long_ACK: Uhlenbrock IB-COM / Intellibox II CV programming request was accepted.\n";
                 } else {
                     forceHex = true;
                     return "LONG_ACK: Unknown reponse to Send IMM Packet value 0x"
@@ -1630,6 +1632,8 @@ public class Llnmon {
                     opsMode = true;
                 } else if (((pcmd & ~LnConstants.PCMD_BYTE_MODE) & LnConstants.PCMD_MODE_MASK) == LnConstants.SRVC_TRK_RESERVED) {
                     progMode = "SERVICE TRACK RESERVED MODE DETECTED!";
+                } else if (pcmd==0) {
+                    progMode = "Uhlenbrock IB-COM / Intellibox II ";
                 } else {
                     progMode = "Unknown mode " + pcmd + " (0x" + Integer.toHexString(pcmd) + ")";
                     forceHex = true;
@@ -1644,7 +1648,7 @@ public class Llnmon {
                     if (opsMode) {
                         logString = operation + " to CV" + cvNumber + " of Loco " + mixedAdrStr
                                     + " value " + cvData + " (0x" + Integer.toHexString(cvData)
-                                    + ", " + Integer.toBinaryString(cvData) + ").\n";
+                                    + ", B'" + Integer.toBinaryString(cvData) + ").\n";
 
                     } else {
                         logString = operation + " to CV" + cvNumber + " value " + cvData + " (0x"
@@ -2804,6 +2808,16 @@ public class Llnmon {
                     } // end of switch (l.getElement(2))
                 } // end of case 0x09:
 
+                case 0x07: {
+                    // This might be Uhlenbrock IB-COM start/stop programming track
+                    if (l.getElement(2)==0x01 && l.getElement(3)==0x49 && l.getElement(4)==0x42) {
+                        switch (l.getElement(5)) {
+                            case 0x40: { return "Uhlenbrock IB-COM / Intellibox II Stop Programming Track.\n"; }
+                            case 0x41: { return "Uhlenbrock IB-COM / Intellibox II Start Programming Track.\n"; }
+                        }
+                    }
+                } // end of case 0x07:
+
                 default: {
                     // 0xE5 message of unknown format
                     forceHex = true;
@@ -3111,6 +3125,14 @@ public class Llnmon {
                             return generic + jmri.NmraPacket.format(packet) + "\n";
                         }
                     } // else { // F9-F28 w/a short address.
+                } else if (l.getElement(1)==0x1F && l.getElement(2)==0x01 && l.getElement(3)==0x49 && l.getElement(4)==0x42 &&
+                           l.getElement(8)==0x00 && l.getElement(10)==0x70 && l.getElement(11)==0x00 && l.getElement(15)==0x10) {
+                    // Uhlenbrock IB-COM / Intellibox II read or write CV value on programming track
+                    int cv  = l.getElement(7)+256*l.getElement(8);
+                    int val = l.getElement(9)+16*(l.getElement(5)&0x08);
+                    return "Command to Uhlenbrock IB-COM / Intellibox II for "
+                           + (l.getElement(6) == 0x71 ? "writing "+val+" to " : "reading from "
+                           + "CV "+cv+".\n");
                 } else {
                     /* Hmmmm... */
                     forceHex = true;
