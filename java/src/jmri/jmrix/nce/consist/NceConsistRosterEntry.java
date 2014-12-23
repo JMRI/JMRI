@@ -155,8 +155,7 @@ public class NceConsistRosterEntry {
      *
      * @param e  Consist XML element
      */
-    @SuppressWarnings("unchecked")
-	public NceConsistRosterEntry(org.jdom2.Element e) {
+    public NceConsistRosterEntry(org.jdom2.Element e) {
         if (log.isDebugEnabled()) log.debug("ctor from element "+e);
         org.jdom2.Attribute a;
         if ((a = e.getAttribute("id")) != null )  _id = a.getValue();
