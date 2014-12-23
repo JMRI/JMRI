@@ -71,7 +71,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     }
     private LnMessageManager lnm = null;
     
-    protected ProgrammerManager programmerManager;
+    private ProgrammerManager programmerManager;
     
     public ProgrammerManager getProgrammerManager() {
         if (programmerManager == null)
