@@ -10,7 +10,10 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
 import java.util.Locale;
 
 @DefaultAnnotation({NonNull.class, CheckReturnValue.class})
-@SuppressWarnings(value="NM_SAME_SIMPLE_NAME_AS_SUPERCLASS",justification="Desired pattern is repeated class names with package-level access to members")
+@SuppressWarnings(value={"NM_SAME_SIMPLE_NAME_AS_SUPERCLASS",
+                         "NP_NONNULL_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR"},
+                  justification="Desired pattern is repeated class names with package-level access to members;"
+                                +"FindBugs confused by static Bundle b = new Bundle() valid construction (12/2014)")
 
 @net.jcip.annotations.Immutable
 
