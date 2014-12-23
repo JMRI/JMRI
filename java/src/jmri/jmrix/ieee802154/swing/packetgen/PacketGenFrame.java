@@ -12,7 +12,11 @@ import jmri.jmrix.ieee802154.IEEE802154TrafficController;
  */
 public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
 
-    final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.ieee802154.IEEE802154ActionListBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6639533222251655795L;
+	final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.ieee802154.IEEE802154ActionListBundle");
 
     public void initComponents() throws Exception {
         super.initComponents();

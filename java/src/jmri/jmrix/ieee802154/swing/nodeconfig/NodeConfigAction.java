@@ -16,7 +16,11 @@ import java.awt.event.ActionEvent;
  */
 public class NodeConfigAction extends AbstractAction {
 
-    private jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo icm=null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 9095207703075488295L;
+	private jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo icm=null;
 
     public NodeConfigAction(String s, jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo cm) { 
        super(s);

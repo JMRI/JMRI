@@ -16,7 +16,12 @@ import java.awt.event.ActionEvent;
  */
 public class DiagnosticAction 	extends AbstractAction {
 
-    public DiagnosticAction(String s) { super(s);}
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1241617418393868830L;
+
+	public DiagnosticAction(String s) { super(s);}
 
     public DiagnosticAction() {
         this("Run C/MRI Diagnostic");

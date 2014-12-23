@@ -11,7 +11,12 @@ import java.util.ResourceBundle;
  * @version     $Revision$
  */
 public class XBeeMenu extends jmri.jmrix.ieee802154.swing.IEEE802154Menu {
-    public XBeeMenu(String name,jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo memo) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1839316572099070745L;
+
+	public XBeeMenu(String name,jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo memo) {
         this(memo);
         setText(name);
     }

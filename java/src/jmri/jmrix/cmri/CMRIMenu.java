@@ -13,7 +13,12 @@ import javax.swing.JMenu;
  * @version     $Revision$
  */
 public class CMRIMenu extends JMenu {
-    public CMRIMenu(String name) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4367233276261757531L;
+
+	public CMRIMenu(String name) {
         this();
         setText(name);
     }

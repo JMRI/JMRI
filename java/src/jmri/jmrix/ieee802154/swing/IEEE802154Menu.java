@@ -13,7 +13,12 @@ import javax.swing.JMenu;
  * @version     $Revision$
  */
 public class IEEE802154Menu extends JMenu {
-    public IEEE802154Menu(String name,jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo memo) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5731448996189078879L;
+
+	public IEEE802154Menu(String name,jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo memo) {
         this(memo);
         setText(name);
     }

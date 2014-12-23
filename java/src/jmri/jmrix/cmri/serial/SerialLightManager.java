@@ -19,7 +19,12 @@ import jmri.Light;
  */
 public class SerialLightManager extends AbstractLightManager {
 
-    public SerialLightManager() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6357999324956206115L;
+
+	public SerialLightManager() {
  
     }
 

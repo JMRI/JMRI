@@ -1,13 +1,16 @@
 package jmri.jmrix.ieee802154.xbee.configurexml;
 
 import jmri.InstanceManager;
+import jmri.jmrix.AbstractStreamPortController;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.ieee802154.xbee.ConnectionConfig;
 import jmri.jmrix.ieee802154.xbee.XBeeAdapter;
 import jmri.jmrix.ieee802154.xbee.XBeeNode;
 import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
 import jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo;
+
 import java.util.List;
+
 import org.jdom2.*;
 
 /**
@@ -128,7 +131,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             String streamController = findParmValue(n,"StreamController");
             if(streamController != null) {
                try {
-                  java.lang.Class T = Class.forName(streamController);
+                  java.lang.Class<jmri.jmrix.AbstractStreamPortController> T = (Class<AbstractStreamPortController>) Class.forName(streamController);
                   node.connectPortController(T);
                } catch(java.lang.ClassNotFoundException cnfe) {
                   //log.error("Unable to find class for stream controller : {}",streamController);
@@ -147,8 +150,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
      * @param name name of desired parameter
      * @return String value
      */
-    @SuppressWarnings("unchecked")
-	String findParmValue(Element e, String name) {
+    String findParmValue(Element e, String name) {
         List<Element> l = e.getChildren("parameter");
         for (int i = 0; i<l.size(); i++) {
             Element n = l.get(i);

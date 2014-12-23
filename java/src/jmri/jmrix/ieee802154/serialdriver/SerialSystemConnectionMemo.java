@@ -38,7 +38,6 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154
     /** 
      * Provide manager by class
      */
-    @SuppressWarnings("unchecked")
     public <T> T get(Class<?> T) {
         if (getDisabled())
             return null;

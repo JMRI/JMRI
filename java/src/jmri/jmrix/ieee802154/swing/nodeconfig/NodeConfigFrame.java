@@ -4,8 +4,8 @@ package jmri.jmrix.ieee802154.swing.nodeconfig;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.*;
 
+import java.awt.*;
 import java.util.ResourceBundle;
 
 import javax.swing.*;
@@ -24,10 +24,15 @@ import jmri.jmrix.ieee802154.IEEE802154Node;
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.ieee802154.swing.nodeconfig.NodeConfigBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1557388658986263960L;
 
-    protected javax.swing.JComboBox nodeAddrField = new javax.swing.JComboBox();
-    protected javax.swing.JComboBox nodeAddr64Field = new javax.swing.JComboBox();
+	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.ieee802154.swing.nodeconfig.NodeConfigBundle");
+
+    protected javax.swing.JComboBox<String> nodeAddrField = new javax.swing.JComboBox<String>();
+    protected javax.swing.JComboBox<String> nodeAddr64Field = new javax.swing.JComboBox<String>();
     protected javax.swing.JButton addButton = new javax.swing.JButton(rb.getString("ButtonAdd"));
     protected javax.swing.JButton editButton = new javax.swing.JButton(rb.getString("ButtonEdit"));
     protected javax.swing.JButton deleteButton = new javax.swing.JButton(rb.getString("ButtonDelete"));

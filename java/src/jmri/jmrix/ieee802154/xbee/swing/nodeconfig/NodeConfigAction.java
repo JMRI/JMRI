@@ -15,7 +15,11 @@ import java.awt.event.ActionEvent;
  */
 public class NodeConfigAction extends jmri.jmrix.ieee802154.swing.nodeconfig.NodeConfigAction {
 
-    private jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo xcm=null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6932741816925928746L;
+	private jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo xcm=null;
 
     public NodeConfigAction(String s, jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo cm) { 
        super(s,cm);

@@ -4,8 +4,8 @@ package jmri.jmrix.ieee802154.xbee.swing.nodeconfig;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.*;
 
+import java.awt.*;
 import java.util.ResourceBundle;
 
 import javax.swing.*;
@@ -30,11 +30,16 @@ import jmri.jmrix.ieee802154.xbee.XBeeNode;
  */
 public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.NodeConfigFrame {
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.ieee802154.xbee.swing.nodeconfig.NodeConfigBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5991183543628378378L;
+
+	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.ieee802154.xbee.swing.nodeconfig.NodeConfigBundle");
 
     private XBeeTrafficController xtc=null;
     protected javax.swing.JButton discoverButton = new javax.swing.JButton(rb.getString("ButtonDiscover"));
-    private javax.swing.JComboBox nodeIdentifierField = new javax.swing.JComboBox();
+    private JComboBox<String> nodeIdentifierField = new javax.swing.JComboBox<String>();
     protected JTable assignmentTable = null;
     protected TableModel assignmentListModel = null;
 
@@ -494,7 +499,12 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
     public class AssignmentTableModel extends AbstractTableModel
     {
 
-        private XBeeNode curNode = null;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 2449916200516563370L;
+
+		private XBeeNode curNode = null;
 
         public static final int BIT_COLUMN = 0;
         public static final int SYSNAME_COLUMN = 1;

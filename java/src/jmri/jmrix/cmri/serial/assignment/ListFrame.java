@@ -4,6 +4,7 @@ package jmri.jmrix.cmri.serial.assignment;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.serial.SerialNode;
@@ -12,9 +13,7 @@ import jmri.jmrix.cmri.serial.SerialAddress;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
 import java.io.IOException;
-
 import java.util.ResourceBundle;
 
 import javax.swing.border.Border;
@@ -30,7 +29,12 @@ import java.lang.Integer;
  */
 public class ListFrame extends jmri.util.JmriJFrame {
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.cmri.serial.assignment.ListBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -465507473346396767L;
+
+	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.cmri.serial.assignment.ListBundle");
 
 	// configured node information
 	protected int numConfigNodes = 0;
@@ -46,7 +50,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
 	
 	// node select pane items
 	JLabel nodeLabel = new JLabel(rb.getString("NodeBoxLabel")+" ");
-	JComboBox nodeSelBox = new JComboBox();
+	JComboBox<String> nodeSelBox = new JComboBox<String>();
 	ButtonGroup bitTypeGroup = new ButtonGroup();
 	JRadioButton inputBits = new JRadioButton(rb.getString("ShowInputButton")+"   ",false);
     JRadioButton outputBits = new JRadioButton(rb.getString("ShowOutputButton"),true);
@@ -324,6 +328,10 @@ public class ListFrame extends jmri.util.JmriJFrame {
      */
     public class AssignmentTableModel extends AbstractTableModel
     {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1360475678715883889L;
 		private String free = rb.getString("AssignmentFree");
 		private int curRow = -1;
 		private String curRowSysName = "";

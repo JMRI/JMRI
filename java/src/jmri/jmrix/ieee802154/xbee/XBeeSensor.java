@@ -22,7 +22,11 @@ import com.rapplogic.xbee.api.zigbee.ZNetRxIoSampleResponse;
 public class XBeeSensor extends AbstractSensor implements XBeeListener {
 
 
-    private String NodeIdentifier; /* This is a string representation of
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1015365837178480016L;
+	private String NodeIdentifier; /* This is a string representation of
                                       the XBee address in the system name
                                       It may be an address or it may be
                                       the NodeIdentifier string stored in

@@ -17,7 +17,11 @@ import jmri.Light;
 public class XBeeLight extends AbstractLight{
 
 
-    private String NodeIdentifier; /* This is a string representation of
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6879258557909355535L;
+	private String NodeIdentifier; /* This is a string representation of
                                       the XBee address in the system name
                                       It may be an address or it may be
                                       the NodeIdentifier string stored in

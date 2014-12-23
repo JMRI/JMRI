@@ -24,7 +24,12 @@ import jmri.jmrix.cmri.serial.SerialSensorManager;
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.cmri.serial.nodeconfig.NodeConfigBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4237332984381047586L;
+
+	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.cmri.serial.nodeconfig.NodeConfigBundle");
 
     protected javax.swing.JTextField nodeAddrField = new javax.swing.JTextField(3);
     protected javax.swing.JLabel nodeAddrStatic = new javax.swing.JLabel("000");
@@ -942,7 +947,11 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      */
     public class CardConfigModel extends AbstractTableModel
     {
-        public String getColumnName(int c) {return cardConfigColumnNames[c];}
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 8613368713011269394L;
+		public String getColumnName(int c) {return cardConfigColumnNames[c];}
         public Class<?> getColumnClass(int c) {return String.class;}
         public int getColumnCount () {return 2;}
         public int getRowCount () {return 64;}
@@ -974,7 +983,12 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      */
     public class SearchlightConfigModel extends AbstractTableModel
     {
-        public String getColumnName(int c) {return searchlightConfigColumnNames[c];}
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -8050347332422090157L;
+
+		public String getColumnName(int c) {return searchlightConfigColumnNames[c];}
         public Class<?> getColumnClass(int c) {
             if (c > 0) {
                 return Boolean.class;

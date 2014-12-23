@@ -16,7 +16,11 @@ import jmri.Turnout;
 
 public class XBeeTurnout extends AbstractTurnout{
 
-    private String NodeIdentifier; /* This is a string representation of
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3933452737189092378L;
+	private String NodeIdentifier; /* This is a string representation of
                                       the XBee address in the system name
                                       It may be an address or it may be
                                       the NodeIdentifier string stored in

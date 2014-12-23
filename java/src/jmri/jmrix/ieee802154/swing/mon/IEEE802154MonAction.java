@@ -19,7 +19,11 @@ import org.slf4j.LoggerFactory;
 
 public class IEEE802154MonAction extends AbstractAction {
 
-    private jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo _memo;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 542282941886486019L;
+	private jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo _memo;
 
     public IEEE802154MonAction(String s,jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo memo) { 
        super(s);

@@ -3,6 +3,7 @@
 package jmri.jmrix.ieee802154;
 
 import jmri.*;
+
 import java.util.ResourceBundle;
 
 /**
@@ -57,12 +58,14 @@ public class IEEE802154SystemConnectionMemo extends jmri.jmrix.SystemConnectionM
     /**
      * Always null as ieee802154 doesn't have a programmer
      */
-    public ProgrammerManager getProgrammerManager() {
+    @SuppressWarnings("deprecation")
+	public ProgrammerManager getProgrammerManager() {
         //Do not want to return a programmer ever
         return null;
     }
     
-    public void setProgrammerManager(ProgrammerManager p) {
+    @SuppressWarnings("deprecation")
+	public void setProgrammerManager(ProgrammerManager p) {
         // no programmer supported, should I throw an Exception??
     }
     
@@ -78,7 +81,6 @@ public class IEEE802154SystemConnectionMemo extends jmri.jmrix.SystemConnectionM
     /** 
      * Provide manager by class
      */
-    @SuppressWarnings("unchecked")
     public <T> T get(Class<?> T) {
         if (getDisabled())
             return null;

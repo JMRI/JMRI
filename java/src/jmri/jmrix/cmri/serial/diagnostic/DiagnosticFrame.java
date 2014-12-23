@@ -23,7 +23,11 @@ import java.lang.Integer;
  */
 public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.cmri.serial.SerialListener {
 
-    // member declarations
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6464613055016868125L;
+	// member declarations
     protected boolean outTest = true;
     protected boolean wrapTest = false;
     protected boolean isSMINI = false;

@@ -16,7 +16,12 @@ import jmri.Light;
  */ 
 public class XBeeLightManager extends AbstractLightManager {
 
-   protected String prefix = null;
+   /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3033596888763946284L;
+
+protected String prefix = null;
 
    protected XBeeTrafficController tc = null;
 
