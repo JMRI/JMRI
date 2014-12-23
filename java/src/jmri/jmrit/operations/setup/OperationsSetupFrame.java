@@ -27,7 +27,7 @@ public class OperationsSetupFrame extends OperationsFrame implements PropertyCha
 
         @Override
 	public void initComponents() {
-            ((OperationsSetupPanel) this.getContentPane()).initComponents();
+            super.initComponents();
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
