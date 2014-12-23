@@ -34,7 +34,7 @@
 <!-- 		For Diesel decoders output "9" is reserved (not used).  Associated bit is skipped -->	  
   <!-- Decoder Model information follows -->
   <decoder>
-    <family name="Tsunami Diesel Walthers OEM" mfg="Throttle-Up (SoundTraxx)" comment="These are OEM for Walthers Proto2000 Tsunami diesel decoders">
+    <family name="Tsunami Diesel Walthers OEM" mfg="SoundTraxx (Throttle-Up)" comment="These are OEM for Walthers Proto2000 Tsunami diesel decoders">
       <model model="Budd Metroliner" numOuts="4" numFns="14" connector="other" productID="Metro" comment="Prototype not equipped with a Bell)">
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>

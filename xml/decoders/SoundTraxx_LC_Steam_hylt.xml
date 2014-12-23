@@ -26,7 +26,7 @@
   <!-- Version 11 author Walter Thompson wsthompson@earthlink.net 20080412 -->
   <!--            added Reset option -->
   <decoder>
-    <family name="LC Steam hyperlight decoders" mfg="Throttle-Up (SoundTraxx)">
+    <family name="LC Steam hyperlight decoders" mfg="SoundTraxx (Throttle-Up)">
       <model model="090LC Steam" numOuts="4" numFns="10" nmraWarrant="yes" nmraWarrantStart="200305">
         <versionCV lowVersionID="39"/>
         <output name="Whistle"/>

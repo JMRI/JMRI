@@ -20,7 +20,7 @@
   <!-- Version 2 - Moved to Soundtraxx based on mfg ID-->
   <!-- Version 3 - created function mapping for outputs and features, added reset -->
   <decoder>
-    <family name="OEM Bachmann E-Z Command decoders" mfg="Throttle-Up (SoundTraxx)" lowVersionID="1">
+    <family name="OEM Bachmann E-Z Command decoders" mfg="SoundTraxx (Throttle-Up)" lowVersionID="1">
       <model model="2 function decoder (36-558)" numOuts="2" numFns="14" maxMotorCurrent=".5A" formFactor="HO, N" connector="NMRAmedium">
         <output name="1" label="White"/>
         <output name="2" label="Yellow"/>

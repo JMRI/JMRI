@@ -22,7 +22,7 @@
   <!-- Version 12 author Walter Thompson wsthompson@earthlink.net 20080412 -->
   <!--            added Reset option -->
   <decoder>
-    <family name="LC Diesel PNP Cab Unit decoders" mfg="Throttle-Up (SoundTraxx)">
+    <family name="LC Diesel PNP Cab Unit decoders" mfg="SoundTraxx (Throttle-Up)">
       <!--note: this file does not support the FX2 output for the LL100LC-->
       <model model="LL100LC Diesel" numOuts="4" numFns="10" nmraWarrant="yes" nmraWarrantStart="200305">
         <!-- note: The LL100LC has a headlight but no backup light -->

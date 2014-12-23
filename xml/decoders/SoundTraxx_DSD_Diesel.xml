@@ -28,7 +28,7 @@
   <!-- Version 11 author Walter Thompson wsthompson@earthlink.net 20080412 -->
   <!--            added Reset option -->
   <decoder>
-    <family name="DSD diesel" mfg="Throttle-Up (SoundTraxx)">
+    <family name="DSD diesel" mfg="SoundTraxx (Throttle-Up)">
       <model model="DSD diesel" numOuts="4" numFns="10">
         <versionCV lowVersionID="9" highVersionID="14"/>
         <versionCV lowVersionID="21"/>

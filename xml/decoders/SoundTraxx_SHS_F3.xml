@@ -21,7 +21,7 @@
   <!-- Version 4 author Walter Thompson wsthompson@earthlink.net 20080412 -->
   <!--            added Reset option -->
   <decoder>
-    <family name="SHS Diesel decoders" mfg="Throttle-Up (SoundTraxx)">
+    <family name="SHS Diesel decoders" mfg="SoundTraxx (Throttle-Up)">
       <model model="F3 Diesel" maxInputVolts="16V" maxMotorCurrent="5A" maxTotalCurrent="6A" formFactor="SHS F3" nmraWarrant="no" connector="other" numOuts="4" numFns="10">
         <versionCV lowVersionID="38"/>
         <output name="Bell"/>

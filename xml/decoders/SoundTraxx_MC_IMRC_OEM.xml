@@ -19,7 +19,7 @@
   <!-- version 2	Add SD40-2W																		-->
   <!-- Decoder Model information follows -->
   <decoder>
-    <family name="MC Intermountain OEM" mfg="Throttle-Up (SoundTraxx)">
+    <family name="MC Intermountain OEM" mfg="SoundTraxx (Throttle-Up)">
       <model model="ES44AC" numOuts="4" numFns="14" connector="other" productID="ES">
         <versionCV lowVersionID="96"/>
         <output name="3" label="  FX5  "/>

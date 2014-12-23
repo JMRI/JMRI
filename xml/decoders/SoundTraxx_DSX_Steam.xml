@@ -27,7 +27,7 @@
   <!-- Version 11 author Walter Thompson wsthompson@earthlink.net 20080412 -->
   <!--            added Reset option -->
   <decoder>
-    <family name="DSX Steam" mfg="Throttle-Up (SoundTraxx)">
+    <family name="DSX Steam" mfg="SoundTraxx (Throttle-Up)">
       <model model="DSX Steam" numOuts="0" numFns="10">
         <versionCV lowVersionID="17"/>
         <!--output name="3" label="F1/grn" -->

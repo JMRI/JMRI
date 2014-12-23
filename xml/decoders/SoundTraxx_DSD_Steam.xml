@@ -24,7 +24,7 @@
   <!-- Version 9 author Walter Thompson wsthompson@earthlink.net 20080412 -->
   <!--            added Reset option -->
   <decoder>
-    <family name="DSD Steam" mfg="Throttle-Up (SoundTraxx)">
+    <family name="DSD Steam" mfg="SoundTraxx (Throttle-Up)">
       <model model="DSD Steam" numOuts="4" numFns="10">
         <versionCV lowVersionID="6" highVersionID="7"/>
         <versionCV lowVersionID="15" highVersionID="16"/>

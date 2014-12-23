@@ -40,7 +40,7 @@
                 FX5 or FX6 are either physical or logical outputs (for TSU-750) used for "Rule 17 mode"     -->
   <!-- Decoder Model information follows -->
   <decoder>
-    <family name="Bachmann Sound Value" mfg="Throttle-Up (SoundTraxx)" comment="Bachmann Standard line HO locomotives with SoundTraxx DSD that Bachmann refers to as Sound Value">
+    <family name="Bachmann Sound Value" mfg="SoundTraxx (Throttle-Up)" comment="Bachmann Standard line HO locomotives with SoundTraxx DSD that Bachmann refers to as Sound Value">
       <model model="Alco FA2" numOuts="2" numFns="14" connector="other" productID="Alco_FA2" comment="Diesel Prime Mover Alco 244">
         <versionCV lowVersionID="82"/>
         <output name="FX5" label=" Rule 17">

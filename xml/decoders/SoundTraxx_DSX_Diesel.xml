@@ -28,7 +28,7 @@
   <!--            added Reset option -->
   <!-- version 12: added CV3&4  -->
   <decoder>
-    <family name="DSX Diesel" mfg="Throttle-Up (SoundTraxx)">
+    <family name="DSX Diesel" mfg="SoundTraxx (Throttle-Up)">
       <model model="DSX Diesel" numOuts="0" numFns="10">
         <versionCV lowVersionID="18" highVersionID="19"/>
         <output name="Bell"/>

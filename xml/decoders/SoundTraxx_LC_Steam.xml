@@ -23,7 +23,7 @@
   <!-- Version 9 author Walter Thompson wsthompson@earthlink.net 20080412 -->
   <!--            added Reset option -->
   <decoder>
-    <family name="LC steam decoders" mfg="Throttle-Up (SoundTraxx)">
+    <family name="LC steam decoders" mfg="SoundTraxx (Throttle-Up)">
       <model model="100LC Steam" numOuts="4" numFns="10" nmraWarrant="yes" nmraWarrantStart="200305">
         <versionCV lowVersionID="32"/>
         <output name="Whistle"/>

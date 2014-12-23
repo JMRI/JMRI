@@ -28,7 +28,7 @@
   <!-- Version 12 author Walter Thompson wsthompson@earthlink.net 20080412 -->
   <!--            added Reset option -->
   <decoder>
-    <family name="LC Diesel PNP decoders" mfg="Throttle-Up (SoundTraxx)">
+    <family name="LC Diesel PNP decoders" mfg="SoundTraxx (Throttle-Up)">
       <model model="AT100LC/KT100LC Diesel" numOuts="4" numFns="10" nmraWarrant="yes" nmraWarrantStart="200305">
         <versionCV lowVersionID="35"/>
         <output name="Horn"/>

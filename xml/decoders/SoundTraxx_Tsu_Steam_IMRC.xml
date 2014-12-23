@@ -27,7 +27,7 @@
                 FX5 or FX6 are either physical or logical outputs (for TSU-750) used for "Rule 17 mode"         -->
   <!-- Decoder Model information follows -->
   <decoder>
-    <family name="Tsunami Steam Intermountain OEM" mfg="Throttle-Up (SoundTraxx)">
+    <family name="Tsunami Steam Intermountain OEM" mfg="SoundTraxx (Throttle-Up)">
       <model model="HO SP AC12" numOuts="4" numFns="14" connector="other" productID="AC12">
         <versionCV lowVersionID="64"/>
         <output name="Whistle"/>

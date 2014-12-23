@@ -31,7 +31,7 @@
 <!-- 		For Diesel decoders output "9" is reserved (not used).  Associated bit is skipped -->	  
   <!-- Decoder Model information follows -->
   <decoder>
-    <family name="Tsunami Diesel Intermountain OEM" mfg="Throttle-Up (SoundTraxx)" comment="These are OEM for Intermountain Tsunami diesel decoders">
+    <family name="Tsunami Diesel Intermountain OEM" mfg="SoundTraxx (Throttle-Up)" comment="These are OEM for Intermountain Tsunami diesel decoders">
       <model model="HO ES44AC" numOuts="4" numFns="14" connector="other" productID="ES">
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>

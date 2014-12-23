@@ -40,7 +40,7 @@
   <!-- version 6        Function labels according to Genesis mapping, Output names normalized with other TSU Diesel -->  
   <!-- Decoder Model information follows -->
   <decoder>
-    <family name="Tsunami Diesel Genesis OEM" mfg="Throttle-Up (SoundTraxx)" comment="These are OEM for Athearn Genesis Tsunami diesel decoders">
+    <family name="Tsunami Diesel Genesis OEM" mfg="SoundTraxx (Throttle-Up)" comment="These are OEM for Athearn Genesis Tsunami diesel decoders">
       <model model="DDA40X" numOuts="4" numFns="14" connector="other" productID="DD">
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>

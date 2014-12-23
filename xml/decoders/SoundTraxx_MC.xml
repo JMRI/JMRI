@@ -17,7 +17,7 @@
   <!-- version 1	Based on the "Soundtraxx_Tsu_Diesel by Jack Shall 									-->
   <!-- Decoder Model information follows -->
   <decoder>
-    <family name="MC Motor Decoders" mfg="Throttle-Up (SoundTraxx)">
+    <family name="MC Motor Decoders" mfg="SoundTraxx (Throttle-Up)">
       <model model="MC1Z102P6" numOuts="2" numFns="14" connector="other" productID="851001">
         <versionCV lowVersionID="80"/>
         <output name="Xing Logic"/>

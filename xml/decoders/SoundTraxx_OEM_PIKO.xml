@@ -29,7 +29,7 @@
 -->
   <!-- Decoder Model information follows -->
   <decoder>
-    <family name="OEM PIKO" mfg="Throttle-Up (SoundTraxx)" comment="These are the PIKO OEM G scale steam decoders">
+    <family name="OEM PIKO" mfg="SoundTraxx (Throttle-Up)" comment="These are the PIKO OEM G scale steam decoders">
       <model model="Mogul" numOuts="2" numFns="14" connector="other" productID="Mogul">
         <output name="Whistle"/>
         <output name="Bell"/>

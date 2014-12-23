@@ -21,7 +21,7 @@
                 FX5 or FX6 are either physical or logical outputs (for TSU-750) used for "Rule 17 mode"         -->
   <!-- Decoder Model information follows -->
   <decoder>
-    <family name="Tsunami Steam Walthers OEM" mfg="Throttle-Up (SoundTraxx)" comment="These are OEM for Walthers Proto2000 Tsunami steam decoders">
+    <family name="Tsunami Steam Walthers OEM" mfg="SoundTraxx (Throttle-Up)" comment="These are OEM for Walthers Proto2000 Tsunami steam decoders">
       <model model="USRA 0-8-0" numOuts="2" numFns="14" connector="other" productID="USRA080" comment="USRA 0-8-0">
         <versionCV lowVersionID="64"/>
         <output name="FX5" label=" Rule 17">

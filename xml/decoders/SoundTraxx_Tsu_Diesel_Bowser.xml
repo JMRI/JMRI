@@ -34,7 +34,7 @@
 <!-- 		For Diesel decoders output "9" is reserved (not used).  Associated bit is skipped -->
   <!-- Decoder Model information follows -->
   <decoder>
-    <family name="Tsunami Diesel Bowser OEM" mfg="Throttle-Up (SoundTraxx)" comment="These are OEM for Bowser Tsunami diesel decoders">
+    <family name="Tsunami Diesel Bowser OEM" mfg="SoundTraxx (Throttle-Up)" comment="These are OEM for Bowser Tsunami diesel decoders">
       <model model="Alco C-628" numOuts="4" numFns="14" connector="other" productID="Century">
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>

@@ -29,7 +29,7 @@
   <!-- Version 12 author Walter Thompson wsthompson@earthlink.net 20080412 -->
   <!--            added Reset option -->
   <decoder>
-    <family name="LC Diesel PNP + FX decoders" mfg="Throttle-Up (SoundTraxx)">
+    <family name="LC Diesel PNP + FX decoders" mfg="SoundTraxx (Throttle-Up)">
       <model model="C628LC Diesel" numOuts="4" numFns="10" nmraWarrant="yes" nmraWarrantStart="200305">
         <versionCV lowVersionID="37"/>
         <output name="Horn"/>
