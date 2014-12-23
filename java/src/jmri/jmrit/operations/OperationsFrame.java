@@ -58,6 +58,11 @@ public class OperationsFrame extends JmriJFrame implements AncestorListener {
         this.setEscapeKeyClosesWindow(true);
     }
 
+    @Override
+    public void initComponents() {
+        ((OperationsPanel) this.getContentPane()).initComponents();
+    }
+
     public void initMinimumSize() {
         initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight250));
     }
@@ -288,6 +293,12 @@ public class OperationsFrame extends JmriJFrame implements AncestorListener {
 
     protected synchronized void createShutDownTask() {
         ((OperationsPanel) this.getContentPane()).createShutDownTask();
+    }
+
+    @Override
+    public void dispose() {
+        ((OperationsPanel) this.getContentPane()).dispose();
+        super.dispose();
     }
 
     @Override

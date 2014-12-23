@@ -46,12 +46,20 @@ public class OperationsPanel extends JPanel implements AncestorListener {
         super();
     }
 
+    public void initComponents() {
+        // The default method does nothing.
+    }
+
     public void initMinimumSize() {
         initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight250));
     }
 
     public void initMinimumSize(Dimension dimension) {
         setMinimumSize(dimension);
+    }
+
+    public void dispose() {
+        // The default method does nothing.
     }
 
     protected void addItem(JComponent c, int x, int y) {
