@@ -4,6 +4,7 @@ package jmri.jmrix.nce.consist;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -116,7 +117,7 @@ public class NceConsistRoster extends XmlFile {
      * when the ConsistRoster changes.
      *
      */
-    public JComboBox fullRosterComboBox() {
+    public JComboBox<String> fullRosterComboBox() {
         return matchingComboBox(null, null, null, null, null, null, null, null, null, null);
     }
 
@@ -124,14 +125,14 @@ public class NceConsistRoster extends XmlFile {
      * Get a JComboBox representing the choices that match.
      * There's 10 elements. 
      */
-    public JComboBox matchingComboBox(String roadName, String roadNumber,
+    public JComboBox<String> matchingComboBox(String roadName, String roadNumber,
 			String consistNumber, String eng1Address, String eng2Address,
 			String eng3Address, String eng4Address, String eng5Address,
 			String eng6Address, String id) {
         List<NceConsistRosterEntry> l = matchingList(roadName, roadNumber, consistNumber, eng1Address,
 				eng2Address, eng3Address, eng4Address, eng5Address,
 				eng6Address, id);
-        JComboBox b = new JComboBox();
+        JComboBox<String> b = new JComboBox<String>();
         for (int i = 0; i < l.size(); i++) {
             NceConsistRosterEntry r = _list.get(i);
             b.addItem(r.titleString());
@@ -139,7 +140,7 @@ public class NceConsistRoster extends XmlFile {
         return b;
     }
 
-    public void updateComboBox(JComboBox box) {
+    public void updateComboBox(JComboBox<String> box) {
         List<NceConsistRosterEntry> l = matchingList(null, null, null, null, null, null, null, null, null, null);
         box.removeAllItems();
         for (int i = 0; i < l.size(); i++) {
@@ -301,8 +302,7 @@ public class NceConsistRoster extends XmlFile {
      * Read the contents of a roster XML file into this object. Note that this does not
      * clear any existing entries.
      */
-    @SuppressWarnings("unchecked")
-	void readFile(String name) throws org.jdom2.JDOMException, java.io.IOException {
+    void readFile(String name) throws org.jdom2.JDOMException, java.io.IOException {
         // find root
         Element root = rootFromName(name);
         if (root==null) {

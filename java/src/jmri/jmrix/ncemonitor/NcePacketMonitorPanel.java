@@ -439,7 +439,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
 
     Thread readerThread;
 
-    protected javax.swing.JComboBox portBox = new javax.swing.JComboBox();
+    protected JComboBox<String> portBox = new javax.swing.JComboBox<String>();
     protected javax.swing.JButton openPortButton = new javax.swing.JButton();
 
     // use deprecated stop method to stop thread,

@@ -26,7 +26,13 @@ import java.util.List;
  */
 public class PrintNceConsistRosterAction  extends AbstractAction {
 
-    public PrintNceConsistRosterAction(String actionName, Frame frame, boolean preview) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2634928231435374292L;
+
+
+	public PrintNceConsistRosterAction(String actionName, Frame frame, boolean preview) {
         super(actionName);
         mFrame = frame;
         isPreview = preview;
