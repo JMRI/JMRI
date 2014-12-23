@@ -74,7 +74,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
       staleSlotCheckTimer.start();
     }
 
-    public LnTrafficController tc;
+    protected LnTrafficController tc;
     
     /**
      * Send a DCC packet to the rails. This implements the CommandStation interface.
@@ -1106,7 +1106,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
     
     // initialize logging
-    protected static Logger log = LoggerFactory.getLogger(SlotManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(SlotManager.class.getName());
 }
 
 

@@ -178,5 +178,8 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
         tc.sendLocoNetMessage(stopIBComPT());
      }
 
+    // initialize logging
+    static Logger log = LoggerFactory.getLogger(UhlenbrockSlotManager.class.getName());
+
 }
 /* @(#)UhlenbrockSlotManager.java */
