@@ -6,7 +6,6 @@ import java.awt.GridBagLayout;
 import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
 import java.util.List;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -20,7 +19,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
 import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.operations.ExceptionDisplayFrame;
 import jmri.jmrit.operations.OperationsPanel;
@@ -32,7 +30,6 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.web.server.WebServerManager;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -104,12 +101,12 @@ public class OperationsSetupPanel extends OperationsPanel implements PropertyCha
 	JTextField yearTextField = new JTextField(4);
 
 	// combo boxes
-	JComboBox<String> northComboBox = new JComboBox<String>();
-	JComboBox<String> southComboBox = new JComboBox<String>();
-	JComboBox<String> eastComboBox = new JComboBox<String>();
-	JComboBox<String> westComboBox = new JComboBox<String>();
-	JComboBox<String> localComboBox = new JComboBox<String>();
-	JComboBox<String> terminateComboBox = new JComboBox<String>();
+	JComboBox<String> northComboBox = new JComboBox<>();
+	JComboBox<String> southComboBox = new JComboBox<>();
+	JComboBox<String> eastComboBox = new JComboBox<>();
+	JComboBox<String> westComboBox = new JComboBox<>();
+	JComboBox<String> localComboBox = new JComboBox<>();
+	JComboBox<String> terminateComboBox = new JComboBox<>();
 
 	// text area
 	JTextArea commentTextArea = new JTextArea(2, 60);
@@ -118,9 +115,6 @@ public class OperationsSetupPanel extends OperationsPanel implements PropertyCha
 
 	public OperationsSetupPanel() {
 		super();
-	}
-
-	public void initComponents() {
 
 		// the following code sets the frame's initial state
 		// create manager to load operation settings
