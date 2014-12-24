@@ -1475,16 +1475,16 @@ public class Setup {
 		}
 	}
 
-	public static JComboBox getManifestFormatComboBox() {
-		JComboBox box = new JComboBox();
+	public static JComboBox<String> getManifestFormatComboBox() {
+		JComboBox<String> box = new JComboBox<>();
 		box.addItem(STANDARD_FORMAT);
 		box.addItem(TWO_COLUMN_FORMAT);
 		box.addItem(TWO_COLUMN_TRACK_FORMAT);
 		return box;
 	}
 
-	public static JComboBox getOrientationComboBox() {
-		JComboBox box = new JComboBox();
+	public static JComboBox<String> getOrientationComboBox() {
+		JComboBox<String> box = new JComboBox<>();
 		box.addItem(PORTRAIT);
 		box.addItem(LANDSCAPE);
 		box.addItem(HALFPAGE);
@@ -1496,8 +1496,8 @@ public class Setup {
 	 * 
 	 * @return the available text colors used for printing
 	 */
-	public static JComboBox getPrintColorComboBox() {
-		JComboBox box = new JComboBox();
+	public static JComboBox<String> getPrintColorComboBox() {
+		JComboBox<String> box = new JComboBox<>();
 		box.addItem(BLACK);
 		box.addItem(RED);
 		box.addItem(ORANGE);
@@ -1508,8 +1508,8 @@ public class Setup {
 		return box;
 	}
 
-	public static JComboBox getEngineMessageComboBox() {
-		JComboBox box = new JComboBox();
+	public static JComboBox<String> getEngineMessageComboBox() {
+		JComboBox<String> box = new JComboBox<>();
 		box.addItem(NONE);
 		for (String attribute : getEngineAttributes()) {
 			box.addItem(attribute);
@@ -1522,8 +1522,8 @@ public class Setup {
 		return box;
 	}
 
-	public static JComboBox getCarMessageComboBox() {
-		JComboBox box = new JComboBox();
+	public static JComboBox<String> getCarMessageComboBox() {
+		JComboBox<String> box = new JComboBox<>();
 		box.addItem(NONE);
 		for (String attribute : getCarAttributes()) {
 			box.addItem(attribute);
@@ -1541,8 +1541,8 @@ public class Setup {
 	 * @return JComboBox loaded with the strings (North, South, East, West) showing the available train directions for
 	 *         this railroad
 	 */
-	public static JComboBox getComboBox() {
-		JComboBox box = new JComboBox();
+	public static JComboBox<String> getComboBox() {
+		JComboBox<String> box = new JComboBox<>();
 		if ((traindir & EAST) > 0)
 			box.addItem(EAST_DIR);
 		if ((traindir & WEST) > 0)

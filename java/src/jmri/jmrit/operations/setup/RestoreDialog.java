@@ -46,7 +46,7 @@ public class RestoreDialog extends JDialog {
 	private JPanel contentPanel;
 	private JRadioButton automaticBackupsRadioButton;
 	private JRadioButton defaultBackupsRadioButton;
-	private JComboBox comboBox;
+	private JComboBox<BackupSet> comboBox;
 	private JButton restoreButton;
 	//private JButton helpButton;
 
@@ -120,7 +120,7 @@ public class RestoreDialog extends JDialog {
 				contentPanel.add(newLabelLabel);
 			}
 			{
-				comboBox = new JComboBox();
+				comboBox = new JComboBox<>();
 				comboBox.addItemListener(new ItemListener() {
 					public void itemStateChanged(ItemEvent arg0) {
 						do_comboBox_itemStateChanged(arg0);
@@ -275,7 +275,7 @@ public class RestoreDialog extends JDialog {
 		comboBox.removeAllItems();
 
 		BackupSet[] sets = backup.getBackupSets();
-		ComboBoxModel model = new DefaultComboBoxModel(sets);
+		ComboBoxModel<BackupSet> model = new DefaultComboBoxModel<BackupSet>(sets);
 
 		// Clear any current selection so that the state change will fire when
 		// we set a selection.

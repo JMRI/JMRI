@@ -33,12 +33,12 @@ public class ManageBackupsDialog extends JDialog {
 	private JButton selectAllButton;
 	private JButton clearAllButton;
 	private JScrollPane scrollPane;
-	private JList setList;
+	private JList<BackupSet> setList;
 
 	private JButton deleteButton;
-	//private JButton helpButton;
+	// private JButton helpButton;
 
-	private DefaultListModel model;
+	private DefaultListModel<BackupSet> model;
 
 	private AutoBackup backup;
 	private Component horizontalGlue;
@@ -75,8 +75,7 @@ public class ManageBackupsDialog extends JDialog {
 		gbl_contentPanel.rowWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
 		contentPanel.setLayout(gbl_contentPanel);
 		{
-			selectBackupSetsLabel = new JLabel(
-					Bundle.getMessage("ManageBackupsDialog.instructionsLabel.text"));
+			selectBackupSetsLabel = new JLabel(Bundle.getMessage("ManageBackupsDialog.instructionsLabel.text"));
 			GridBagConstraints gbc_selectBackupSetsLabel = new GridBagConstraints();
 			gbc_selectBackupSetsLabel.anchor = GridBagConstraints.WEST;
 			gbc_selectBackupSetsLabel.insets = new Insets(0, 0, 5, 0);
@@ -92,10 +91,10 @@ public class ManageBackupsDialog extends JDialog {
 			gbc_scrollPane.gridy = 1;
 			contentPanel.add(scrollPane, gbc_scrollPane);
 			{
-				setList = new JList();
+				setList = new JList<BackupSet>();
 				setList.setVisibleRowCount(20);
 
-				model = new DefaultListModel();
+				model = new DefaultListModel<BackupSet>();
 
 				// Load up the list control with the available BackupSets
 				for (BackupSet bs : backup.getBackupSets()) {
@@ -167,7 +166,7 @@ public class ManageBackupsDialog extends JDialog {
 						do_cancelButton_actionPerformed(e);
 					}
 				});
-				closeButton.setActionCommand("Cancel");	// NOI18N
+				closeButton.setActionCommand("Cancel"); // NOI18N
 				getRootPane().setDefaultButton(closeButton);
 				buttonPane.add(closeButton);
 			}
@@ -175,16 +174,16 @@ public class ManageBackupsDialog extends JDialog {
 				horizontalStrut_2 = Box.createHorizontalStrut(10);
 				buttonPane.add(horizontalStrut_2);
 			}
-//			{
-//				helpButton = new JButton(Bundle.getMessage("BackupDialog.helpButton.text"));
-//				helpButton.addActionListener(new ActionListener() {
-//					public void actionPerformed(ActionEvent e) {
-//						do_helpButton_actionPerformed(e);
-//					}
-//				});
-//				helpButton.setEnabled(false);
-//				buttonPane.add(helpButton);
-//			}
+			// {
+			// helpButton = new JButton(Bundle.getMessage("BackupDialog.helpButton.text"));
+			// helpButton.addActionListener(new ActionListener() {
+			// public void actionPerformed(ActionEvent e) {
+			// do_helpButton_actionPerformed(e);
+			// }
+			// });
+			// helpButton.setEnabled(false);
+			// buttonPane.add(helpButton);
+			// }
 		}
 
 		updateButtonStates();
@@ -205,11 +204,9 @@ public class ManageBackupsDialog extends JDialog {
 		int count = objs.length;
 		if (count > 0) {
 			// Make sure OK to delete backups
-			String msg = String
-					.format(Bundle.getMessage("ManageBackupsDialog.aboutToDelete"),
-							count);
-			int result = JOptionPane.showConfirmDialog(this, msg,
-					Bundle.getMessage("ManageBackupsDialog.deletingBackupSets"), JOptionPane.OK_CANCEL_OPTION);
+			String msg = String.format(Bundle.getMessage("ManageBackupsDialog.aboutToDelete"), count);
+			int result = JOptionPane.showConfirmDialog(this, msg, Bundle
+					.getMessage("ManageBackupsDialog.deletingBackupSets"), JOptionPane.OK_CANCEL_OPTION);
 
 			if (result == JOptionPane.OK_OPTION) {
 				for (Object obj : objs) {
