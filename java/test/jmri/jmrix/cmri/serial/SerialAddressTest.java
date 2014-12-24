@@ -27,6 +27,11 @@ public class SerialAddressTest extends TestCase {
 		jmri.InstanceManager.setTurnoutManager(l);
 		
 		jmri.LightManager lgt = new SerialLightManager() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 8424854866070434550L;
+
 			public void notifyLightCreationError(String conflict,int bitNum) {}
 		};	
 		jmri.InstanceManager.setLightManager(lgt);
