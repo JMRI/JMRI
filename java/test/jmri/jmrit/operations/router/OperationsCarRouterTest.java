@@ -2142,10 +2142,10 @@ public class OperationsCarRouterTest extends TestCase {
 		
 		// check car schedule ids
 		Assert.assertEquals("Car BA 3 schedule id", "", c3.getScheduleId());	// no track assignment, schedule not tested
-		Assert.assertEquals("Car BB 4 schedule id", "16c2", c4.getScheduleId());	// has track assignment
+		Assert.assertEquals("Car BB 4 schedule id", schAItem2.getId(), c4.getScheduleId());	// has track assignment
 		Assert.assertEquals("Car BC 5 schedule id", "", c5.getScheduleId());
 		Assert.assertEquals("Car BD 6 schedule id", "", c6.getScheduleId());
-		Assert.assertEquals("Car BA 7 schedule id", "16c1", c7.getScheduleId());	// has track assignment
+		Assert.assertEquals("Car BA 7 schedule id", schAItem1.getId(), c7.getScheduleId());	// has track assignment
 		Assert.assertEquals("Car BB 8 schedule id", "", c8.getScheduleId());
 		Assert.assertEquals("Car BC 9 schedule id", "", c9.getScheduleId());
 
