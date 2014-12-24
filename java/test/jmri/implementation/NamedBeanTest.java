@@ -18,7 +18,11 @@ public class NamedBeanTest extends TestCase {
 
 	public void testSetParameter() {
 	    NamedBean n = new AbstractNamedBean("sys", "usr"){
-	        public int getState() {return 0;}
+	        /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1840715699707517615L;
+			public int getState() {return 0;}
 	        public void setState(int i) {}
             public String getBeanType(){ return ""; }
 	    };
@@ -28,7 +32,11 @@ public class NamedBeanTest extends TestCase {
 
 	public void testGetParameter() {
 	    NamedBean n = new AbstractNamedBean("sys", "usr"){
-	        public int getState() {return 0;}
+	        /**
+			 * 
+			 */
+			private static final long serialVersionUID = -6325024894936622293L;
+			public int getState() {return 0;}
 	        public void setState(int i) {}
             public String getBeanType(){ return ""; }
 	    };
@@ -39,7 +47,11 @@ public class NamedBeanTest extends TestCase {
 
 	public void testGetSetNull() {
 	    NamedBean n = new AbstractNamedBean("sys", "usr"){
-	        public int getState() {return 0;}
+	        /**
+			 * 
+			 */
+			private static final long serialVersionUID = -3084037234443687552L;
+			public int getState() {return 0;}
 	        public void setState(int i) {}
             public String getBeanType(){ return ""; }
 	    };
@@ -52,7 +64,11 @@ public class NamedBeanTest extends TestCase {
 
 	public void testGetPropertyKeys() {
 	    NamedBean n = new AbstractNamedBean("sys", "usr"){
-	        public int getState() {return 0;}
+	        /**
+			 * 
+			 */
+			private static final long serialVersionUID = 2218307529643925912L;
+			public int getState() {return 0;}
 	        public void setState(int i) {}
             public String getBeanType(){ return ""; }
 	    };

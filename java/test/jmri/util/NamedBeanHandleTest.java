@@ -24,7 +24,11 @@ public class NamedBeanHandleTest extends TestCase {
         
     public void testHoldsTurnout() {
         Turnout t = new AbstractTurnout("name"){
-            protected void forwardCommandChangeToLayout(int s) {}
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -449495740652645244L;
+			protected void forwardCommandChangeToLayout(int s) {}
             protected void turnoutPushbuttonLockout(boolean b){}
         };
         NamedBeanHandle<Turnout> n = new NamedBeanHandle<Turnout>("name", t);

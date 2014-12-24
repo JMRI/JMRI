@@ -36,17 +36,32 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
         jmri.util.JUnitUtil.resetInstanceManager();
         InstanceManager.signalHeadManagerInstance().register(
             new DefaultSignalHead("IH1"){
-                protected void updateOutput(){}
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = -183285703527320024L;
+
+				protected void updateOutput(){}
             }
         );
         InstanceManager.signalHeadManagerInstance().register(
             new DefaultSignalHead("IH2"){
-                protected void updateOutput(){}
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = -7406765405866446309L;
+
+				protected void updateOutput(){}
             }
         );
         InstanceManager.signalHeadManagerInstance().register(
             new DefaultSignalHead("IH3"){
-                protected void updateOutput(){}
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = 5252087327996710968L;
+
+				protected void updateOutput(){}
             }
         );
 
@@ -81,17 +96,32 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
         jmri.util.JUnitUtil.resetInstanceManager();
         InstanceManager.signalHeadManagerInstance().register(
             new DefaultSignalHead("IH1"){
-                protected void updateOutput(){}
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = 790075319304422152L;
+
+				protected void updateOutput(){}
             }
         );
         InstanceManager.signalHeadManagerInstance().register(
             new DefaultSignalHead("IH2"){
-                protected void updateOutput(){}
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = -1129562077221922315L;
+
+				protected void updateOutput(){}
             }
         );
         InstanceManager.signalHeadManagerInstance().register(
             new DefaultSignalHead("IH3"){
-                protected void updateOutput(){}
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = 6702020027184748479L;
+
+				protected void updateOutput(){}
             }
         );
 

@@ -25,7 +25,11 @@ public class OrderedHashtableTest extends TestCase {
         OrderedHashtable<String, Turnout> oht = new OrderedHashtable<String, Turnout>();
         
         Turnout t1 = new AbstractTurnout("t1"){
-	        protected void forwardCommandChangeToLayout(int s) {}
+	        /**
+			 * 
+			 */
+			private static final long serialVersionUID = 2727946283337403138L;
+			protected void forwardCommandChangeToLayout(int s) {}
 	        protected void turnoutPushbuttonLockout(boolean locked) {}
         };
         Turnout t2 = new TestTurnout("t2");
@@ -147,7 +151,11 @@ public class OrderedHashtableTest extends TestCase {
 	}
 
     class TestTurnout extends AbstractTurnout {
-        TestTurnout(String s) { super(s); }
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -4925238066324681487L;
+		TestTurnout(String s) { super(s); }
 	    protected void forwardCommandChangeToLayout(int s) {}
 	    protected void turnoutPushbuttonLockout(boolean locked) {}
     }

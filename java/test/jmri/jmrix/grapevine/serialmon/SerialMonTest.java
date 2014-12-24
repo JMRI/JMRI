@@ -25,7 +25,12 @@ public class SerialMonTest extends TestCase {
         jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
         // create a SerialMonFrame
         SerialMonFrame f = new SerialMonFrame(){
-          { rawCheckBox.setSelected(true);}
+          /**
+			 * 
+			 */
+			private static final long serialVersionUID = -947606339366566391L;
+
+		{ rawCheckBox.setSelected(true);}
         };
         f.initComponents();
         f.setVisible(true);

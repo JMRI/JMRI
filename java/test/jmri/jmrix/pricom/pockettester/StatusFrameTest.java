@@ -23,7 +23,12 @@ public class StatusFrameTest extends TestCase {
         f.initComponents();
         f.setVisible(true);
         f.setSource(new DataSource(){
-            void sendBytes(byte[] bytes) {}
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 8224674918425447491L;
+
+			void sendBytes(byte[] bytes) {}
         });
         f.asciiFormattedMessage(PocketTesterTest.version);
         f.asciiFormattedMessage(PocketTesterTest.speed0003A);
@@ -43,7 +48,12 @@ public class StatusFrameTest extends TestCase {
         f.initComponents();
         f.setVisible(true);
         f.setSource(new DataSource(){
-            void sendBytes(byte[] bytes) {}
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 5500463612432095595L;
+
+			void sendBytes(byte[] bytes) {}
         });
         f.asciiFormattedMessage(PocketTesterTest.version);
         f.asciiFormattedMessage(PocketTesterTest.speed0003A);

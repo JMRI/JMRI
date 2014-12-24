@@ -98,7 +98,11 @@ public class ReporterTest extends TestCase {
     // Utility method to create a concrete AbstractReporter
     private Reporter createNewReporter(String systemName, String userName) {
         return new AbstractReporter(systemName, userName){
-            public int getState() { return state; }
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -7115796893268006682L;
+			public int getState() { return state; }
             public void setState(int s) { state = s; }
             int state = 0;
         };

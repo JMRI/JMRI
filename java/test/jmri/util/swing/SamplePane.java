@@ -13,7 +13,11 @@ import java.util.*;
 
 // sample class
 public class SamplePane extends jmri.util.swing.JmriPanel {
-    public SamplePane() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4679989667138496781L;
+	public SamplePane() {
     }
     public void initComponents() {
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));

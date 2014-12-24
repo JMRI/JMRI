@@ -22,7 +22,11 @@ public class CatalogTreeIndexTest extends TestCase {
 
 	public void testSetProperty() {
 	    NamedBean n = new CatalogTreeIndex("sys", "usr"){
-	        public int getState() {return 0;}
+	        /**
+			 * 
+			 */
+			private static final long serialVersionUID = 7694055913118415520L;
+			public int getState() {return 0;}
 	        public void setState(int i) {}
 	    };
 
@@ -31,7 +35,11 @@ public class CatalogTreeIndexTest extends TestCase {
 
 	public void testGetParameter() {
 	    NamedBean n = new CatalogTreeIndex("sys", "usr"){
-	        public int getState() {return 0;}
+	        /**
+			 * 
+			 */
+			private static final long serialVersionUID = 690755160053953145L;
+			public int getState() {return 0;}
 	        public void setState(int i) {}
 	    };
 	    
@@ -41,7 +49,11 @@ public class CatalogTreeIndexTest extends TestCase {
 
 	public void testGetSetNull() {
 	    NamedBean n = new CatalogTreeIndex("sys", "usr"){
-	        public int getState() {return 0;}
+	        /**
+			 * 
+			 */
+			private static final long serialVersionUID = 7945346563033351123L;
+			public int getState() {return 0;}
 	        public void setState(int i) {}
 	    };
 	    

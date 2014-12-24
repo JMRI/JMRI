@@ -350,7 +350,12 @@ public class BlockManagerXmlTest extends TestCase {
 	    Block b2 = InstanceManager.blockManagerInstance().createNewBlock("SystemNameb2","");
 	    
         Sensor s2 = new AbstractSensor("IS2"){
-            public void requestUpdateFromLayout() {}
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 7980486999549232479L;
+
+			public void requestUpdateFromLayout() {}
         };
         b2.setSensor("IS2");
         s2.setState(Sensor.ACTIVE);
@@ -361,7 +366,11 @@ public class BlockManagerXmlTest extends TestCase {
         p21.setFromBlockDirection(Path.RIGHT);
         p21.setToBlockDirection(Path.LEFT);
         p21.addSetting(new BeanSetting(new jmri.implementation.AbstractTurnout("IT1"){
-                            public void turnoutPushbuttonLockout(boolean b){}
+                            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 4168056209727170205L;
+							public void turnoutPushbuttonLockout(boolean b){}
                             public void forwardCommandChangeToLayout(int i){}
                         }, 
                         jmri.Turnout.THROWN));

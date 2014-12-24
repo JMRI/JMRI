@@ -14,13 +14,22 @@ import javax.swing.*;
  
 public class ButtonTestAction extends jmri.util.swing.JmriAbstractAction {
      
- 	public ButtonTestAction(String s, WindowInterface wi) {
+ 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4015207272165165037L;
+
+	public ButtonTestAction(String s, WindowInterface wi) {
  	    super(s, wi);
     }
 
     public jmri.util.swing.JmriPanel makePanel() {
         jmri.util.swing.JmriPanel newPane = new jmri.util.swing.JmriPanel() {
-            public String getHelpTarget() { 
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 7331202242405648635L;
+			public String getHelpTarget() { 
                 return "html.doc.Technical.JUnit";
             }
             public String getTitle() { 

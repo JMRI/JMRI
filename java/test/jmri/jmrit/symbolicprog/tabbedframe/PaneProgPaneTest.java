@@ -29,7 +29,12 @@ public class PaneProgPaneTest extends TestCase {
         PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
                                                  "test frame", "programmers/Basic.xml",
                                                  p, false) {
-            // dummy implementations
+            /**
+													 * 
+													 */
+													private static final long serialVersionUID = 4282192984429206254L;
+
+			// dummy implementations
             protected JPanel getModePane() { return null; }
         };
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
@@ -42,7 +47,12 @@ public class PaneProgPaneTest extends TestCase {
         // create test object with special implementation of the newColumn(String) operation
         colCount = 0;
         PaneProgPane p = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null, null) {
-                public JPanel newColumn(Element e, boolean a, Element el) { colCount++; return new JPanel();}
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = 7358324141533141966L;
+
+				public JPanel newColumn(Element e, boolean a, Element el) { colCount++; return new JPanel();}
             };
         assertNotNull("exists", p );
         assertEquals("column count", 2, colCount);
@@ -54,7 +64,12 @@ public class PaneProgPaneTest extends TestCase {
         PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
                                                  "test frame", "programmers/Basic.xml",
                                                  p, false) {
-            // dummy implementations
+            /**
+													 * 
+													 */
+													private static final long serialVersionUID = -4284222445404792610L;
+
+			// dummy implementations
             protected JPanel getModePane() { return null; }
         };
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
@@ -66,7 +81,12 @@ public class PaneProgPaneTest extends TestCase {
         // create test object with special implementation of the newVariable(String) operation
         varCount = 0;
         PaneProgPane p = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null, null) {
-                public void newVariable(Element e, JComponent p, GridBagLayout g, GridBagConstraints c, boolean a)
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = 4810838962908126464L;
+
+				public void newVariable(Element e, JComponent p, GridBagLayout g, GridBagConstraints c, boolean a)
                 { varCount++; }
             };
         assertNotNull("exists", p );
@@ -79,7 +99,12 @@ public class PaneProgPaneTest extends TestCase {
         PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
                                                  "test frame", "programmers/Basic.xml",
                                                  p, false) {
-            // dummy implementations
+            /**
+													 * 
+													 */
+													private static final long serialVersionUID = 5421457356996971001L;
+
+			// dummy implementations
             protected JPanel getModePane() { return null; }
         };
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
@@ -123,7 +148,12 @@ public class PaneProgPaneTest extends TestCase {
         PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
                                                  "test frame", "programmers/Basic.xml",
                                                  p, false) {
-            // dummy implementations
+            /**
+													 * 
+													 */
+													private static final long serialVersionUID = 3718742250875057900L;
+
+			// dummy implementations
             protected JPanel getModePane() { return null; }
         };
 
@@ -182,7 +212,12 @@ public class PaneProgPaneTest extends TestCase {
         PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
                                                  "test frame", "programmers/Basic.xml",
                                                  p, false) {
-            // dummy implementations
+            /**
+													 * 
+													 */
+													private static final long serialVersionUID = -1592842528954612678L;
+
+			// dummy implementations
             protected JPanel getModePane() { return null; }
         };
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
@@ -245,7 +280,12 @@ public class PaneProgPaneTest extends TestCase {
         PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
                                                  "test frame", "programmers/Basic.xml",
                                                  p, false) {
-            // dummy implementations
+            /**
+													 * 
+													 */
+													private static final long serialVersionUID = -6820598809604324879L;
+
+			// dummy implementations
             protected JPanel getModePane() { return null; }
         };
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);

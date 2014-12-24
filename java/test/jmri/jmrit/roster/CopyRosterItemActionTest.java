@@ -25,7 +25,12 @@ public class CopyRosterItemActionTest extends TestCase {
 
         // copy the item
         CopyRosterItemAction a = new CopyRosterItemAction("copy", new javax.swing.JFrame()){
-            protected boolean selectFrom() {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -3247630279571447763L;
+
+			protected boolean selectFrom() {
                 return false;  // aborts operation
             }
         };

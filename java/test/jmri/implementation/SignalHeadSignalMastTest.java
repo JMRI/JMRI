@@ -192,17 +192,32 @@ public class SignalHeadSignalMastTest extends TestCase {
         jmri.util.JUnitUtil.resetInstanceManager();
         InstanceManager.signalHeadManagerInstance().register(
             new DefaultSignalHead("IH1"){
-                protected void updateOutput(){}
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = -5706753107965832638L;
+
+				protected void updateOutput(){}
             }
         );
         InstanceManager.signalHeadManagerInstance().register(
             new DefaultSignalHead("IH2"){
-                protected void updateOutput(){}
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = 4697453950691440840L;
+
+				protected void updateOutput(){}
             }
         );
         InstanceManager.signalHeadManagerInstance().register(
             new DefaultSignalHead("IH3"){
-                protected void updateOutput(){}
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = -7226653655530900335L;
+
+				protected void updateOutput(){}
             }
         );
     }

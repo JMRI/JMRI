@@ -129,7 +129,12 @@ public class ProxyLightManagerTest extends TestCase {
         Assert.assertNotNull(InstanceManager.getDefault(LightManager.class).provideLight("IL1"));
         
         InternalLightManager m = new InternalLightManager() {
-            public String getSystemPrefix() { return "J"; }
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 8116874049550256716L;
+
+			public String getSystemPrefix() { return "J"; }
         };
         InstanceManager.setLightManager(m);
         
@@ -168,7 +173,12 @@ public class ProxyLightManagerTest extends TestCase {
         apps.tests.Log4JFixture.setUp(); 
         // create and register the manager object
         l = new InternalLightManager() {
-            public String getSystemPrefix() { return "J"; }
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 3997181366432698703L;
+
+			public String getSystemPrefix() { return "J"; }
         };
         jmri.InstanceManager.setLightManager(l);
     }

@@ -12,7 +12,11 @@ import javax.swing.*;
 
 public class LayoutManagerTest extends JFrame implements LayoutEventListener
 {
-    JPanel contentPane;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2526447929059638493L;
+	JPanel contentPane;
     JMenuBar jMenuBar1 = new JMenuBar();
     JMenu jMenuFile = new JMenu();
     JMenuItem jMenuFileExit = new JMenuItem();

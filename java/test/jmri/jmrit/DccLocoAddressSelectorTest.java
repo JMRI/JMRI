@@ -42,7 +42,12 @@ public class DccLocoAddressSelectorTest extends TestCase {
 	    setThrottleManager();
 	    reportedError = null;
         DccLocoAddressSelector sel = new DccLocoAddressSelector(){
-            void reportError(String msg) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -7065357497721821474L;
+
+			void reportError(String msg) {
                 reportedError = msg;
             }
         };

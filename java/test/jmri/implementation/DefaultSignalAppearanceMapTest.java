@@ -76,7 +76,12 @@ public class DefaultSignalAppearanceMapTest extends TestCase {
     public void testTwoHead() {
 
         SignalMast s = new SignalHeadSignalMast("IF$shsm:basic:two-searchlight:h1:h2") {
-            void configureAspectTable(String signalSystemName, String aspectMapName) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -9219184718621705160L;
+
+			void configureAspectTable(String signalSystemName, String aspectMapName) {
                 map = new DefaultSignalAppearanceMap("sys", "user");
             }
         };
@@ -130,10 +135,20 @@ public class DefaultSignalAppearanceMapTest extends TestCase {
     protected void setUp() { 
         apps.tests.Log4JFixture.setUp(); 
         h1 = new DefaultSignalHead("h1", "head1") {
-            protected void updateOutput() {}
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -9030944412578523332L;
+
+			protected void updateOutput() {}
         };
 	    h2 = new DefaultSignalHead("h2", "head2") {
-            protected void updateOutput() {}
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -445310567297205496L;
+
+			protected void updateOutput() {}
         };
         l1 = new ArrayList<NamedBeanHandle<SignalHead>>();
         l1.add(new NamedBeanHandle<SignalHead>("h1", h1));
