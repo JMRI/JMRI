@@ -15,7 +15,12 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 @Deprecated
 @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class CbusMenu extends jmri.jmrix.can.cbus.swing.CbusMenu {
-    public CbusMenu(CanSystemConnectionMemo memo) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6245807613785605893L;
+
+	public CbusMenu(CanSystemConnectionMemo memo) {
         super(memo);
     }
 }

@@ -22,7 +22,11 @@ import java.util.Timer;
  */
 public class OlcbSensor extends AbstractSensor implements CanListener {
 
-    static int ON_TIME = 500; // time that sensor is active after being tripped
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1114385900236113026L;
+	static int ON_TIME = 500; // time that sensor is active after being tripped
     Timer timer = null;
     
     OlcbAddress addrActive;    // go to active state

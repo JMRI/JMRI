@@ -15,7 +15,11 @@ import javax.swing.AbstractAction;
  * @version         $Revision$
  */
 public class PowerPanelAction extends AbstractAction {
-    static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrit.powerpanel.PowerPanelBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8975098374222170676L;
+	static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrit.powerpanel.PowerPanelBundle");
 
     public PowerPanelAction(String s) {
 	super(s);

@@ -24,7 +24,11 @@ import javax.swing.JOptionPane;
  */
 public class StoreXmlUserAction extends StoreXmlConfigAction {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2422199264501755141L;
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
 
     public StoreXmlUserAction() {
         this(

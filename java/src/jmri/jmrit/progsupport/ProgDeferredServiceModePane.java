@@ -49,7 +49,11 @@ import jmri.Programmer;
  */
 public class ProgDeferredServiceModePane extends ProgModeSelector implements java.beans.PropertyChangeListener {
 
-    ProgServiceModePane servicePane;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4795140446582465455L;
+	ProgServiceModePane servicePane;
     JFrame setFrame;
     JLabel currentMode = new JLabel();
     protected JButton setButton = new JButton(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("SET..."));

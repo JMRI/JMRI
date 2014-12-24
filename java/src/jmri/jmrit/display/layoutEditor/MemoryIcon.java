@@ -19,7 +19,11 @@ import javax.swing.JPopupMenu;
 @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
 
-    String defaultText = " ";
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 446165214555001212L;
+	String defaultText = " ";
 
     public MemoryIcon(String s, LayoutEditor panel) {
         super(s, panel);

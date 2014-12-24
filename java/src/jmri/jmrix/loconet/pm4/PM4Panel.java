@@ -29,7 +29,12 @@ import javax.swing.*;
  */
 public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
-    public PM4Panel() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1373713395993058042L;
+
+	public PM4Panel() {
         this(1);
     }
     public PM4Panel(int boardNum) {

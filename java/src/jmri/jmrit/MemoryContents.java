@@ -1270,7 +1270,11 @@ public class MemoryContents {
      * Generalized class from which detailed exceptions are derived.
      */
     public class MemoryFileException extends jmri.JmriException {
-        public MemoryFileException() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -1842436277554257895L;
+		public MemoryFileException() {
             super();
         }
         public MemoryFileException(String s) {
@@ -1282,7 +1286,11 @@ public class MemoryContents {
      * An exception for a record which has incorrect checksum.
      */
     public class MemoryFileChecksumException extends MemoryFileException {
-        public MemoryFileChecksumException() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -2557753591967552634L;
+		public MemoryFileChecksumException() {
             super();
         }
         public MemoryFileChecksumException(String s) {
@@ -1295,7 +1303,11 @@ public class MemoryContents {
      * supported.
      */
     public class MemoryFileUnknownRecordType extends MemoryFileException {
-        public MemoryFileUnknownRecordType() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 7780197492467941350L;
+		public MemoryFileUnknownRecordType() {
             super();
         }
         public MemoryFileUnknownRecordType(String s) {
@@ -1311,7 +1323,12 @@ public class MemoryContents {
      */
     public class MemoryFileRecordContentException extends MemoryFileException {
 
-        public MemoryFileRecordContentException() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 3879649549206375793L;
+
+		public MemoryFileRecordContentException() {
             super();
         }
 
@@ -1327,7 +1344,12 @@ public class MemoryContents {
      */
     public class MemoryFileRecordLengthException extends MemoryFileException {
 
-        public MemoryFileRecordLengthException() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -6154349477467623278L;
+
+		public MemoryFileRecordLengthException() {
             super();
         }
 
@@ -1341,7 +1363,12 @@ public class MemoryContents {
      */
     public class MemoryFileAddressingFormatException extends MemoryFileException {
 
-        public MemoryFileAddressingFormatException() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 4464776547895893181L;
+
+		public MemoryFileAddressingFormatException() {
             super();
         }
 
@@ -1355,7 +1382,12 @@ public class MemoryContents {
      */
     public class MemoryFileAddressingRangeException extends MemoryFileException {
 
-        public MemoryFileAddressingRangeException() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 4996513449040118695L;
+
+		public MemoryFileAddressingRangeException() {
             super();
         }
 
@@ -1369,7 +1401,12 @@ public class MemoryContents {
      */
     public class MemoryFileNoDataRecordsException extends MemoryFileException {
 
-        public MemoryFileNoDataRecordsException() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -8046649275084033197L;
+
+		public MemoryFileNoDataRecordsException() {
             super();
         }
 
@@ -1383,7 +1420,12 @@ public class MemoryContents {
      */
     public class MemoryFileNoEOFRecordException extends MemoryFileException {
 
-        public MemoryFileNoEOFRecordException() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -5011032819427318298L;
+
+		public MemoryFileNoEOFRecordException() {
             super();
         }
 
@@ -1398,7 +1440,12 @@ public class MemoryContents {
      */
     public class MemoryFileRecordFoundAfterEOFRecord extends MemoryFileException {
 
-        public MemoryFileRecordFoundAfterEOFRecord() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 5921252212959638124L;
+
+		public MemoryFileRecordFoundAfterEOFRecord() {
             super();
         }
 

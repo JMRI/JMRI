@@ -7,6 +7,11 @@ package jmri.jmrix.can.swing.monitor;
  */
 @Deprecated
 public class MonitorAction extends MonitorPane.Default  {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5272585942184607738L;
 }
 
 /* @(#)MonitorAction.java */

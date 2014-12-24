@@ -17,6 +17,10 @@ import java.util.ResourceBundle;
 public class LayoutBlockRouteTableAction extends AbstractAction {
 
     /**
+		 * 
+		 */
+		private static final long serialVersionUID = -2989828125582997520L;
+	/**
      * Create an action with a specific title.
      * <P>
      * Note that the argument is the Action title, not the title of the
@@ -47,7 +51,12 @@ public class LayoutBlockRouteTableAction extends AbstractAction {
         createModel();
 
         // create the frame
-        f = new jmri.util.JmriJFrame(){            
+        f = new jmri.util.JmriJFrame(){
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -8814222912512779305L;            
         };
         f.add(m);
         setTitle();

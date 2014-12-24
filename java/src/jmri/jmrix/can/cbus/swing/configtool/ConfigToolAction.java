@@ -12,5 +12,10 @@ package jmri.jmrix.can.cbus.swing.configtool;
  */
 @Deprecated
 public class ConfigToolAction extends ConfigToolPane.Default {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7266460541058394892L;
 }
 /* @(#)ConfigToolAction.java */

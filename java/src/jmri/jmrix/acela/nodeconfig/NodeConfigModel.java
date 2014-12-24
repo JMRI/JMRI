@@ -13,7 +13,11 @@ import javax.swing.table.AbstractTableModel;
  */
 public abstract class NodeConfigModel extends AbstractTableModel
 {
-        protected int numrows = 16;          // Trying to make a property here
+        /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8887616188889211179L;
+		protected int numrows = 16;          // Trying to make a property here
         protected boolean editmode = true;  // Trying to make a property here
 
         public int getRowCount () {return numrows;}

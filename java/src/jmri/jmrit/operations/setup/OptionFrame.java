@@ -13,7 +13,12 @@ import org.slf4j.LoggerFactory;
  */
 public class OptionFrame extends OperationsFrame {
 
-    public OptionFrame() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6966221440054475425L;
+
+	public OptionFrame() {
         super(Bundle.getMessage("TitleOptions"), new OptionPanel());
     }
 

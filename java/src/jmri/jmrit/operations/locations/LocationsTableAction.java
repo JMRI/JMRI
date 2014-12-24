@@ -17,7 +17,11 @@ import javax.swing.AbstractAction;
  */
 public class LocationsTableAction extends AbstractAction {
 
-    public LocationsTableAction(String s) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8215433161940132587L;
+	public LocationsTableAction(String s) {
     	super(s);
     }
 

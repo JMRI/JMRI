@@ -15,6 +15,11 @@ import javax.swing.*;
  */
 public class AlignmentPanelAction 			extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8498519485972403715L;
+
 	public AlignmentPanelAction(String s) { super(s);}
 
     public AlignmentPanelAction() {

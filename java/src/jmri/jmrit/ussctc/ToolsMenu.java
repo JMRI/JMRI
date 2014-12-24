@@ -15,7 +15,12 @@ import javax.swing.JMenu;
  * @version     $Revision$
  */
 public class ToolsMenu extends JMenu {
-    public ToolsMenu(String name) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6832144369646539440L;
+
+	public ToolsMenu(String name) {
         this();
         setText(name);
     }

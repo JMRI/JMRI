@@ -14,6 +14,10 @@ import javax.swing.*;
  */
 public class TrackEditCommentsAction extends AbstractAction {
 			
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5780179267092341140L;
 	private TrackEditFrame _tef;
 	
 	public TrackEditCommentsAction(TrackEditFrame tef){

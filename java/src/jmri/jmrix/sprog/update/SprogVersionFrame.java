@@ -14,7 +14,12 @@ import javax.swing.*;
  */
 public class SprogVersionFrame extends jmri.util.JmriJFrame implements SprogVersionListener {
 
-    public SprogVersionFrame() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8607639215087566190L;
+
+	public SprogVersionFrame() {
         super();
     }
     

@@ -47,7 +47,12 @@ import javax.swing.table.TableColumnModel;
  */
 public class SensorGroupFrame extends jmri.util.JmriJFrame {
 
-    public SensorGroupFrame() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3880652830503697536L;
+
+	public SensorGroupFrame() {
         super();
     }
 

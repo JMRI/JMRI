@@ -13,7 +13,12 @@ import javax.swing.AbstractAction;
  */
 public class ControlPanelEditorAction extends AbstractAction {
 
-    public ControlPanelEditorAction(String s) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7670881366702521286L;
+
+	public ControlPanelEditorAction(String s) {
         super(s);
     }
 

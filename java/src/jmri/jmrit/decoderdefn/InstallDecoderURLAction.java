@@ -28,7 +28,12 @@ import org.jdom2.*;
  */
 public class InstallDecoderURLAction extends JmriAbstractAction {
 
-    public InstallDecoderURLAction(String s, WindowInterface wi) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2460646302372383168L;
+
+	public InstallDecoderURLAction(String s, WindowInterface wi) {
     	super(s, wi);
     }
      

@@ -21,7 +21,12 @@ import jmri.jmrix.SystemConnectionMemo;
  */
 public class ManagerDefaultsConfigPane extends jmri.util.swing.JmriPanel {
 
-    public ManagerDefaultsConfigPane() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4382220076212974325L;
+
+	public ManagerDefaultsConfigPane() {
     
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         
@@ -96,7 +101,11 @@ public class ManagerDefaultsConfigPane extends jmri.util.swing.JmriPanel {
      * Captive class to track changes
      */
     static class SelectionButton extends JRadioButton {
-        SelectionButton(String name, Class<?> managerClass) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -2572336492673634333L;
+		SelectionButton(String name, Class<?> managerClass) {
             super();
             this.managerClass = managerClass;
             this.name = name;

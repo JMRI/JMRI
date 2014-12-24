@@ -15,7 +15,12 @@ import org.slf4j.LoggerFactory;
  */
 public class VirtualSignalHead extends DefaultSignalHead {
 
-    public VirtualSignalHead(String sys, String user) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 165874268187040428L;
+
+	public VirtualSignalHead(String sys, String user) {
         super(sys, user);
     }
 

@@ -15,7 +15,11 @@ import javax.swing.*;
  */
 public class StatusPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements Dcc4PcListener, Dcc4PcPanelInterface {
 
-    String appString = "Info        : ";
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1884301741261020275L;
+	String appString = "Info        : ";
     String proString = "Description : ";
     String hrdString = "Serial No   : ";
     JLabel infoText = new JLabel(appString+"<unknown>");

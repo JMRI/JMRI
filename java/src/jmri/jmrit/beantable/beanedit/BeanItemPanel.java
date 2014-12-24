@@ -11,7 +11,12 @@ import java.util.List;
  */
 public class BeanItemPanel extends JPanel{
 
-    public BeanItemPanel(){
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5160179371427193315L;
+
+	public BeanItemPanel(){
         super();
     }
 

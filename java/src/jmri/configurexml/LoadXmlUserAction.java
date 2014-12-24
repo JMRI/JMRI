@@ -25,7 +25,11 @@ import javax.swing.JOptionPane;
  */
 public class LoadXmlUserAction extends LoadXmlConfigAction {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5470543428367047464L;
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
 
     public LoadXmlUserAction() {
         this(rb.getString("MenuItemLoad"));

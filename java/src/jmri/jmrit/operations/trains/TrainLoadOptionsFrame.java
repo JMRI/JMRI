@@ -35,6 +35,11 @@ import jmri.jmrit.operations.setup.Setup;
 
 public class TrainLoadOptionsFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3409582934081412947L;
+
 	private static boolean loadAndType = false;
 
 	Train _train = null;

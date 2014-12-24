@@ -27,7 +27,11 @@ import javax.swing.event.MouseInputAdapter;
  */
 public class BusyGlassPane extends JComponent {
 
-    CBListener listener;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6832898807706288698L;
+	CBListener listener;
 
     public BusyGlassPane(List<JComponent> components, List<Rectangle> rectangles, Container contentPane, JFrame parent) {
         listener = new CBListener(components, rectangles, this, contentPane, parent);

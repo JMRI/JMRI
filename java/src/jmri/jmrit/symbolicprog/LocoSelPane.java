@@ -14,6 +14,11 @@ package jmri.jmrit.symbolicprog;
  */
 public class LocoSelPane extends jmri.util.swing.JmriPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5441744977916596992L;
+
 	public LocoSelPane() {
 	}
 

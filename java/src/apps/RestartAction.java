@@ -31,7 +31,12 @@ import jmri.util.swing.WindowInterface;
  */
 public class RestartAction extends JmriAbstractAction {
     
-    public RestartAction(String s, WindowInterface wi) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6850455424770019609L;
+
+	public RestartAction(String s, WindowInterface wi) {
         super(s, wi);
     }
     

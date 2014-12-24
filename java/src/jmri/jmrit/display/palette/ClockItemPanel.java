@@ -33,6 +33,11 @@ import jmri.jmrit.display.AnalogClock2Display;
 public class ClockItemPanel extends IconItemPanel {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -9176192083954731242L;
+
+	/**
     * Constructor for plain icons and backgrounds
     */
     public ClockItemPanel(JmriJFrame parentFrame, String type, Editor editor) {
@@ -87,7 +92,11 @@ public class ClockItemPanel extends IconItemPanel {
 
     public class ClockDragJLabel extends DragJLabel {
 
-        public ClockDragJLabel(DataFlavor flavor) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 7819734168461606333L;
+		public ClockDragJLabel(DataFlavor flavor) {
             super(flavor);
         }
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException,IOException {

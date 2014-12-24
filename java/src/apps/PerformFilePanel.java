@@ -30,7 +30,11 @@ import javax.swing.JPanel;
  */
 public class PerformFilePanel extends JPanel {
 
-    JPanel self;  // used for synchronization
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5019870518438422370L;
+	JPanel self;  // used for synchronization
     protected ResourceBundle rb;
 
     public PerformFilePanel() {
@@ -76,7 +80,11 @@ public class PerformFilePanel extends JPanel {
     JFileChooser fc = jmri.jmrit.XmlFile.userFileChooser("XML files", "xml");
 
     public class Item extends JPanel implements ActionListener {
-        JButton removeButton = new JButton(rb.getString("ButtonFileRemove"));
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 9081562133732338951L;
+		JButton removeButton = new JButton(rb.getString("ButtonFileRemove"));
         Item() {
             setLayout(new FlowLayout());
             add(removeButton);

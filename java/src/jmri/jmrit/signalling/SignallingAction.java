@@ -18,7 +18,11 @@ import java.util.ResourceBundle;
 
 public class SignallingAction extends AbstractAction {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -9089310555904109131L;
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
 
 	public SignallingAction(String s) {
         super(s);

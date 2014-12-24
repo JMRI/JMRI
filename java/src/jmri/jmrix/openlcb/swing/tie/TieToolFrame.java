@@ -21,7 +21,11 @@ import javax.swing.*;
  */
 public class TieToolFrame extends jmri.util.JmriJFrame {
 
-    static    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1190541122448290488L;
+	static    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");
 
     public void initComponents() throws Exception {
 

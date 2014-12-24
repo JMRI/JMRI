@@ -7,7 +7,12 @@ import javax.swing.JMenuBar;
 
 public class PickFrame extends JmriJFrame {
 
-    public PickFrame(String title) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3288532933990677427L;
+
+	public PickFrame(String title) {
         setTitle(title);
         /*
         addWindowListener(new java.awt.event.WindowAdapter() {

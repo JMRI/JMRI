@@ -19,6 +19,10 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
 
 	// member declarations
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7124285234526911696L;
 	// Drop down box and button to set XPressNet address
 	javax.swing.JComboBox addrBox = new javax.swing.JComboBox();
 	javax.swing.JButton setAddr = new javax.swing.JButton();

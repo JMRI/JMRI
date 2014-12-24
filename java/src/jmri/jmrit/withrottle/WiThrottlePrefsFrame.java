@@ -11,7 +11,11 @@ import java.util.ResourceBundle;
 
 public class WiThrottlePrefsFrame extends JmriJFrame{
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7117103794132618702L;
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
 
     public WiThrottlePrefsFrame(){
         

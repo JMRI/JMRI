@@ -19,6 +19,11 @@ import jmri.util.PythonInterp;
 public class InputWindowAction extends AbstractAction {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7519659048278662430L;
+
+	/**
      * Constructor just initializes parent class.
      * @param name Action name
      */

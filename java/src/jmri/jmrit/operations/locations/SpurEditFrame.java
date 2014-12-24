@@ -25,6 +25,10 @@ import jmri.jmrit.operations.setup.Control;
 
 public class SpurEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9021321721517947715L;
 	// labels, buttons, etc. for spurs
 	JLabel textSchedule = new JLabel(Bundle.getMessage("DeliverySchedule"));
 	JLabel textSchError = new JLabel();

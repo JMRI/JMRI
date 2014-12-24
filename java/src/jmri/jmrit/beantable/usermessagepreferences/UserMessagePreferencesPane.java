@@ -19,7 +19,12 @@ import java.awt.*;
  */
 public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
 
-    jmri.UserPreferencesManager p;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6892195773335485275L;
+
+	jmri.UserPreferencesManager p;
     
     public UserMessagePreferencesPane() {
         super();

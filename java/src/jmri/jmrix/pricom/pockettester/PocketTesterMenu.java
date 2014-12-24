@@ -13,7 +13,12 @@ import javax.swing.JMenu;
  * @version     $Revision$
  */
 public class PocketTesterMenu extends JMenu {
-    public PocketTesterMenu(String name) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5075945103413996675L;
+
+	public PocketTesterMenu(String name) {
         this();
         setText(name);
     }

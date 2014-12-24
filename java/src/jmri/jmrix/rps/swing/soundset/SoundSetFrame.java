@@ -14,7 +14,12 @@ import javax.swing.BoxLayout;
 
 public class SoundSetFrame extends jmri.util.JmriJFrame {
 
-    public SoundSetFrame() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6079518509404555599L;
+
+	public SoundSetFrame() {
         super();
         setTitle(title());
     }

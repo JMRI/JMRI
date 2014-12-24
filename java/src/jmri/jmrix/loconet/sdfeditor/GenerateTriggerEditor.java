@@ -14,7 +14,12 @@ import javax.swing.JLabel;
 
 class GenerateTriggerEditor extends SdfMacroEditor {
 
-    public GenerateTriggerEditor(SdfMacro inst) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4809270548383400410L;
+
+	public GenerateTriggerEditor(SdfMacro inst) {
         super(inst);
 
         // remove default message from SdfMacroEditor

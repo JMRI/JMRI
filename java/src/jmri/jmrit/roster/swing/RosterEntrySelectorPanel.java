@@ -18,7 +18,11 @@ import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
  */
 public class RosterEntrySelectorPanel extends JPanel implements RosterEntrySelector, RosterGroupSelector {
 
-    private RosterEntryComboBox entryCombo;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3641274360656995669L;
+	private RosterEntryComboBox entryCombo;
     private RosterGroupComboBox groupCombo;
 
     public RosterEntrySelectorPanel() {

@@ -27,7 +27,12 @@ import javax.swing.JCheckBox;
  */
 public class DS64Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
-    public DS64Panel() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8039300267592456122L;
+
+	public DS64Panel() {
         this(1);
     }
     public DS64Panel(int boardNum) {

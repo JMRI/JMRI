@@ -15,7 +15,11 @@ import jmri.jmrix.loconet.*;
  */
 public class MessagePanel extends jmri.jmrix.loconet.swing.LnPanel {
 
-    // GUI member declarations
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -729914131632149918L;
+	// GUI member declarations
     JButton button = new JButton("Send");
     JTextField text = new JTextField(10);
 

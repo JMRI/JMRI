@@ -41,7 +41,12 @@ import org.slf4j.LoggerFactory;
  */
 public class ReportPanel extends JPanel {
 
-    static java.util.ResourceBundle rb = null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8455989563494151294L;
+
+	static java.util.ResourceBundle rb = null;
 
     // member declarations
     JButton sendButton;

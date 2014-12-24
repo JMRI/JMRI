@@ -14,7 +14,12 @@ import javax.swing.AbstractAction;
 
 public abstract class PacketTableAction extends AbstractAction {
 
-    public PacketTableAction(String s) { super(s);}
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -755408790466810109L;
+
+	public PacketTableAction(String s) { super(s);}
     public PacketTableAction() { 
         super();
         java.util.ResourceBundle rb 

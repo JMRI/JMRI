@@ -20,7 +20,12 @@ import org.slf4j.LoggerFactory;
 public class PositionableRectangle extends PositionableShape {
 
     
-    public PositionableRectangle(Editor editor) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2917538746616969278L;
+
+	public PositionableRectangle(Editor editor) {
     	super(editor);
     }
 
@@ -50,7 +55,12 @@ public class PositionableRectangle extends PositionableShape {
     public boolean setEditItemMenu(JPopupMenu popup) {
         String txt = Bundle.getMessage("editShape", Bundle.getMessage("rectangle"));
         popup.add(new javax.swing.AbstractAction(txt) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = -5327546757439187531L;
+
+				public void actionPerformed(ActionEvent e) {
                 	if (_editFrame==null) {
                     	_editFrame = new DrawRectangle("editShape", "rectangle", null);
                     	setEditParams();               	                		

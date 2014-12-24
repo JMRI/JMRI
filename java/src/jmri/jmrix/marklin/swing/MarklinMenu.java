@@ -12,7 +12,12 @@ import jmri.jmrix.marklin.MarklinSystemConnectionMemo;
  */
 public class MarklinMenu extends JMenu{
 
-    public MarklinMenu(MarklinSystemConnectionMemo memo) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7952313409946046904L;
+
+	public MarklinMenu(MarklinSystemConnectionMemo memo) {
         super();
 
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.marklin.MarklinBundle");

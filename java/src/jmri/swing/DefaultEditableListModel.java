@@ -12,7 +12,12 @@ import javax.swing.DefaultListModel;
  */
 public class DefaultEditableListModel extends DefaultListModel implements EditableListModel {
 
-    @Override
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4856688370300717415L;
+
+	@Override
     public boolean isCellEditable(int index) {
         return true;
     }

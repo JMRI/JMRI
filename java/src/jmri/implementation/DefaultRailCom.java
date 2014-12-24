@@ -34,7 +34,11 @@ import jmri.Sensor;
  */
 public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom{
 
-    private int _currentState = 0x00;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7822601724014273735L;
+	private int _currentState = 0x00;
 
     public DefaultRailCom(String systemName) {
         super(systemName.toUpperCase());

@@ -21,7 +21,12 @@ import javax.swing.event.ListSelectionEvent;
 
 public class PickPanel extends JPanel implements ListSelectionListener, ChangeListener {
 
-    private int ROW_HEIGHT;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5093844168716608126L;
+
+	private int ROW_HEIGHT;
 
     PickListModel[] _models;
     JTabbedPane _tabPane;

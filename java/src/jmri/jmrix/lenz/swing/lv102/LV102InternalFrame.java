@@ -24,7 +24,12 @@ import jmri.*;
  */
 public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
-    private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.swing.lv102.LV102Bundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6394940286346535557L;
+
+	private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.swing.lv102.LV102Bundle");
 
     private progReplyListener progListener = null;
     private Thread progListenerThread = null;

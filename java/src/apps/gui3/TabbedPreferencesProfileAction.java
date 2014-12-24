@@ -12,7 +12,12 @@ import org.slf4j.LoggerFactory;
 
 public class TabbedPreferencesProfileAction extends TabbedPreferencesAction {
 
-    public TabbedPreferencesProfileAction() { 
+    /**
+		 * 
+		 */
+		private static final long serialVersionUID = 422306041173570634L;
+
+	public TabbedPreferencesProfileAction() { 
         super(Bundle.getMessage("MenuItemPreferencesProfile"));
         //preferencesItem = jmri.profile.Bundle.getMessage("ProfilePreferencesPanel.enabledPanel.TabConstraints.tabTitle");
         preferencesItem = "Profiles";

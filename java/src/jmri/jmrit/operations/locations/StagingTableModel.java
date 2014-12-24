@@ -16,6 +16,11 @@ import jmri.jmrit.operations.setup.Control;
  */
 public class StagingTableModel extends TrackTableModel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 406205617566439045L;
+
 	public StagingTableModel() {
 		super();
 	}

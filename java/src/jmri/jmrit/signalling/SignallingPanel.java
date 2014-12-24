@@ -43,7 +43,12 @@ import java.util.ResourceBundle;
  */
 public class SignallingPanel extends jmri.util.swing.JmriPanel {
     
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6437500061146748574L;
+
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
     
     JmriBeanComboBox sourceMastBox;
     JmriBeanComboBox destMastBox;
@@ -1289,7 +1294,11 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     
     abstract class TableModel extends AbstractTableModel implements PropertyChangeListener
     {
-        public Class<?> getColumnClass(int c) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 7361250471794011296L;
+		public Class<?> getColumnClass(int c) {
             if (c == INCLUDE_COLUMN) {
                 return Boolean.class;
             }
@@ -1333,7 +1342,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     
     class BlockModel extends TableModel
     {
-        BlockModel() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -7997858302507580484L;
+
+		BlockModel() {
             jmri.InstanceManager.blockManagerInstance().addPropertyChangeListener(this);
         }
 
@@ -1411,7 +1425,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     
     class TurnoutModel extends TableModel
     {
-        TurnoutModel() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 8155668809998527577L;
+
+		TurnoutModel() {
             jmri.InstanceManager.turnoutManagerInstance().addPropertyChangeListener(this);
         }
 
@@ -1470,7 +1489,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
      */
     class SensorModel extends TableModel
     {
-        SensorModel() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1976471188325126562L;
+
+		SensorModel() {
             InstanceManager.sensorManagerInstance().addPropertyChangeListener(this);
         }
 
@@ -1530,7 +1554,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     
     class SignalMastModel extends TableModel
     {
-        SignalMastModel() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 3218114528313492508L;
+
+		SignalMastModel() {
             jmri.InstanceManager.signalMastManagerInstance().addPropertyChangeListener(this);
         }
 
@@ -1599,7 +1628,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         protected JTable makeJTable(TableSorter srtr) {
             this.sorter = srtr;
             return new JTable(sorter)  {
-                public boolean editCellAt(int row, int column, java.util.EventObject e) {
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = 5719838067969573916L;
+
+				public boolean editCellAt(int row, int column, java.util.EventObject e) {
                     boolean res = super.editCellAt(row, column, e);
                     java.awt.Component c = this.getEditorComponent();
                     if (c instanceof javax.swing.JTextField) {
@@ -1662,7 +1696,11 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     abstract class AutoTableModel extends AbstractTableModel implements PropertyChangeListener
     {
     
-        AutoTableModel(){
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -272666720986232529L;
+		AutoTableModel(){
             smlValid();
         }
         
@@ -1702,7 +1740,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     
      class AutoBlockModel extends AutoTableModel {
         
-        AutoBlockModel() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -1271144423340776473L;
+
+		AutoBlockModel() {
             if (sml!=null)
                 sml.addPropertyChangeListener(this);
         }
@@ -1765,7 +1808,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
     
     class AutoTurnoutModel extends AutoTableModel {
-        AutoTurnoutModel() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 3406404811666081205L;
+
+		AutoTurnoutModel() {
             super();
         }
         
@@ -1796,7 +1844,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
     
     class AutoMastModel extends AutoTableModel {
-        AutoMastModel() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -6641207901154262227L;
+
+		AutoMastModel() {
             super();
         }
         
@@ -1827,13 +1880,23 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
     
     public static class MyComboBoxEditor extends DefaultCellEditor {
-        public MyComboBoxEditor(Vector<String> items) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 5009970368789179788L;
+
+		public MyComboBoxEditor(Vector<String> items) {
             super(new JComboBox(items));
         }
     }
     
     public static class MyComboBoxRenderer extends JComboBox implements TableCellRenderer {
-        public MyComboBoxRenderer(Vector<String> items) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1441539863361877122L;
+
+		public MyComboBoxRenderer(Vector<String> items) {
             super(items);
         }
     

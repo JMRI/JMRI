@@ -25,7 +25,12 @@ import javax.swing.*;
  */
 public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
 
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.can.cbus.swing.configtool.ConfigToolBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6189931385951469812L;
+
+	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.can.cbus.swing.configtool.ConfigToolBundle");
     
     static final int NRECORDERS = 6;
     CbusEventRecorder[] recorders = new CbusEventRecorder[NRECORDERS];
@@ -46,7 +51,12 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         
         // add sensor
         makeSensor = new MakeNamedBean("LabelEventActive", "LabelEventInactive"){
-            void create(String name) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -7423601645608436305L;
+
+			void create(String name) {
                 if(memo!=null){
                     ((jmri.SensorManager)memo.get(jmri.SensorManager.class)).provideSensor("MS"+name);
                 } else {
@@ -59,7 +69,12 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
 
         // add turnout
         makeTurnout = new MakeNamedBean("LabelEventThrown", "LabelEventClosed"){
-            void create(String name) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 5143711808149483844L;
+
+			void create(String name) {
                 if(memo!=null){
                     ((jmri.TurnoutManager)memo.get(jmri.TurnoutManager.class)).provideTurnout("MS"+name);
                 } else {
@@ -135,7 +150,11 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
      * Class to build one NamedBean
      */
     class MakeNamedBean extends JPanel implements CanListener {
-        JTextField f1 = new JTextField(20);
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 7057190769757489242L;
+		JTextField f1 = new JTextField(20);
         JTextField f2 = new JTextField(20);
 
         JButton bc;
@@ -226,7 +245,11 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
      * Class to handle recording and presenting one event.
      */
     static class CbusEventRecorder extends JPanel implements CanListener {
-        CbusEventRecorder() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 7826599461789753830L;
+		CbusEventRecorder() {
             super();
             this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
             add(event);
@@ -259,7 +282,12 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
-        public Default() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 8264581016480363352L;
+
+		public Default() {
             super("CBUS Event Capture Tool", 
                 new jmri.util.swing.sdi.JmriJFrameInterface(), 
                 ConfigToolPane.class.getName(), 

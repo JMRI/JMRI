@@ -24,7 +24,12 @@ IF$vsm:basic:one-searchlight:($0001)
  */
 public class VirtualSignalMast extends AbstractSignalMast {
 
-    public VirtualSignalMast(String systemName, String userName) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4407228715885422094L;
+
+	public VirtualSignalMast(String systemName, String userName) {
         super(systemName, userName);
         configureFromName(systemName);
     }

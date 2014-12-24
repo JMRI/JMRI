@@ -26,6 +26,10 @@ import javax.swing.*;
 public class MemoryComboIcon extends PositionableJPanel 
 			implements java.beans.PropertyChangeListener,  ActionListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5312988172386396581L;
 	JComboBox	_comboBox;
 	ComboModel	_model;
      
@@ -60,7 +64,11 @@ public class MemoryComboIcon extends PositionableJPanel
     }
     
     class ComboModel extends DefaultComboBoxModel {
-    	ComboModel() {
+    	/**
+		 * 
+		 */
+		private static final long serialVersionUID = 2915042785923780735L;
+		ComboModel() {
     		super();
     	}
     	ComboModel(String[] l) {
@@ -182,7 +190,12 @@ public class MemoryComboIcon extends PositionableJPanel
     public boolean setEditIconMenu(javax.swing.JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Memory"));
         popup.add(new javax.swing.AbstractAction(txt) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = -295173723551846563L;
+
+				public void actionPerformed(ActionEvent e) {
                     edit();
                 }
             });
@@ -195,7 +208,11 @@ public class MemoryComboIcon extends PositionableJPanel
 	DefaultListModel _listModel;
     protected void edit() {
         _iconEditor = new IconAdder("Memory") {
-            JList list;
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -2458542268881073784L;
+			JList list;
             JButton bDel = new JButton(Bundle.getMessage("deleteSelection"));
             JButton bAdd = new JButton(Bundle.getMessage("addItem"));
             JTextField textfield = new JTextField(30);

@@ -27,7 +27,12 @@ import jmri.jmrix.lenz.*;
  */
 public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListener {
 
-    protected XNetTrafficController tc = null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4494921840646526129L;
+
+	protected XNetTrafficController tc = null;
 
     public SystemInfoFrame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
         super("XPressNet System Information");

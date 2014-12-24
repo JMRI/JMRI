@@ -14,7 +14,12 @@ import javax.swing.JLabel;
 
 class SkipOnTriggerEditor extends SdfMacroEditor {
 
-    public SkipOnTriggerEditor(SdfMacro inst) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7444256530247471680L;
+
+	public SkipOnTriggerEditor(SdfMacro inst) {
         super(inst);
 
         // remove default message from SdfMacroEditor

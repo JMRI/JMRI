@@ -25,7 +25,11 @@ import jmri.jmrix.loconet.duplexgroup.LnDplxGrpInfoImplConstants;
 public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
                     implements LocoNetListener, javax.swing.event.ChangeListener {
 
-    DuplexChannelInfo dci[] = new DuplexChannelInfo[LnDplxGrpInfoImplConstants.DPLX_MAX_CH-LnDplxGrpInfoImplConstants.DPLX_MIN_CH+1];
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2574511937558247304L;
+	DuplexChannelInfo dci[] = new DuplexChannelInfo[LnDplxGrpInfoImplConstants.DPLX_MAX_CH-LnDplxGrpInfoImplConstants.DPLX_MIN_CH+1];
     private javax.swing.Timer   tmr;
     private static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.loconet.duplexgroup.DuplexGroupScan");
     DuplexGroupScanPanel safe;
@@ -490,7 +494,11 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
     private duplexGroupChannelScanGuiCanvas graphicArea;
 
     private class duplexGroupChannelScanGuiCanvas extends java.awt.Canvas {
-        private int barWidth = 7;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 3311247866128360812L;
+		private int barWidth = 7;
         private int barSpace = barWidth +8;
         private int barOffset = (barSpace - barWidth)/2;
         private final static int channelCount = 26-11+1;

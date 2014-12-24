@@ -13,7 +13,12 @@ import javax.swing.JMenu;
  * @version     $Revision$
  */
 public class z21Menu extends JMenu {
-    public z21Menu(String name,jmri.jmrix.roco.z21.z21SystemConnectionMemo memo) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3323808897274636375L;
+
+	public z21Menu(String name,jmri.jmrix.roco.z21.z21SystemConnectionMemo memo) {
         this(memo);
         setText(name);
     }

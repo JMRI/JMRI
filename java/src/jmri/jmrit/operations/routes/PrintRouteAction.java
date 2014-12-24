@@ -29,6 +29,10 @@ import jmri.jmrit.operations.setup.Control;
  */
 public class PrintRouteAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9199448958901465687L;
 	static final String NEW_LINE = "\n"; // NOI18N
 	static final String TAB = "\t"; // NOI18N
 	private static final int MAX_NAME_LENGTH = Control.max_len_string_location_name - 5;

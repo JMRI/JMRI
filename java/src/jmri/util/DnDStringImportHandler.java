@@ -21,7 +21,11 @@ import java.io.IOException;
 
 public class DnDStringImportHandler extends TransferHandler {
 
-    /////////////////////import
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2107475489891148707L;
+	/////////////////////import
     public boolean canImport(JComponent comp, DataFlavor[] transferFlavors) {
         //if (log.isDebugEnabled()) log.debug("DnDStringImportHandler.canImport ");
 

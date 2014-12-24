@@ -18,7 +18,12 @@ import jmri.jmrix.ecos.swing.*;
 
 public class EcosMonPane extends jmri.jmrix.AbstractMonPane implements EcosListener, EcosPanelInterface{
 
-    public EcosMonPane() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6307090381604775765L;
+
+	public EcosMonPane() {
         super();
     }
     
@@ -78,7 +83,12 @@ public class EcosMonPane extends jmri.jmrix.AbstractMonPane implements EcosListe
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.ecos.swing.EcosNamedPaneAction {
-        public Default() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 3709779221206654800L;
+
+		public Default() {
             super("ECOS Command Monitor", 
                 new jmri.util.swing.sdi.JmriJFrameInterface(), 
                 EcosMonPane.class.getName(), 

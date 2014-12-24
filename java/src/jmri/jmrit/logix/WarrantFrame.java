@@ -48,7 +48,12 @@ import jmri.jmrit.picker.PickListModel;
  */
 public class WarrantFrame extends WarrantRoute {
 
-    static int ROW_HEIGHT;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5799190071870090700L;
+
+	static int ROW_HEIGHT;
 
     JMenu _warrantMenu;
 
@@ -1250,7 +1255,11 @@ public class WarrantFrame extends WarrantRoute {
     /************************* Throttle Table ******************************/
 
     class ThrottleTableModel extends AbstractTableModel {
-        public static final int ROW_NUM = 0;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -6424673093367457660L;
+		public static final int ROW_NUM = 0;
         public static final int TIME_COLUMN = 1;
         public static final int COMMAND_COLUMN =2;
         public static final int VALUE_COLUMN =3;

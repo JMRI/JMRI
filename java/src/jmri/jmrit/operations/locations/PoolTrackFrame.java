@@ -37,6 +37,10 @@ import jmri.jmrit.operations.setup.Setup;
  */
 class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3751835388981078259L;
 	// labels
 	JLabel name = new JLabel(Bundle.getMessage("Name"));
 	JLabel minimum = new JLabel(Bundle.getMessage("Minimum"));

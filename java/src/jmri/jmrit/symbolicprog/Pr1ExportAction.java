@@ -26,6 +26,12 @@ import javax.swing.JFrame;
 public class Pr1ExportAction  extends AbstractAction {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5194604129231328181L;
+
+
+	/**
      * Create the action
      * @param actionName String name to be displayed in menus, etc
      * @param pModel  CvTableModel that contains the data to (eventually) be exported

@@ -34,6 +34,10 @@ import jmri.jmrit.operations.rollingstock.cars.CarLoads;
  */
 public class ScheduleTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2920410151470878120L;
 	// Defines the columns
 	private static final int IDCOLUMN = 0;
 	private static final int CURRENTCOLUMN = IDCOLUMN + 1;

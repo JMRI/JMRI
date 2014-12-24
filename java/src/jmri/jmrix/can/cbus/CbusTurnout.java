@@ -17,7 +17,11 @@ import jmri.jmrix.can.*;
 public class CbusTurnout extends jmri.implementation.AbstractTurnout 
                     implements CanListener {
 
-    CbusAddress addrThrown;   // go to thrown state
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6522418534748086660L;
+	CbusAddress addrThrown;   // go to thrown state
     CbusAddress addrClosed;   // go to closed state
 
     protected CbusTurnout(String prefix, String address, TrafficController tc){

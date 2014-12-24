@@ -10,7 +10,11 @@ package jmri.jmrix;
  * @version			$Revision$
  */
 public class NetworkConfigException extends jmri.JmriException {
-    public NetworkConfigException(String s) { super(s); }
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3547659489827422775L;
+	public NetworkConfigException(String s) { super(s); }
     public NetworkConfigException() {}
 
 }

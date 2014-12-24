@@ -34,7 +34,12 @@ public abstract class TurnoutOperator extends Thread {
 	 * operator is running. This implies that another operation has been
 	 * started and that this one should just quietly stop doing its thing.
 	 */
-	static public class TurnoutOperatorException extends java.lang.Exception { }
+	static public class TurnoutOperatorException extends java.lang.Exception {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -9039683362922025389L; }
 	
     static Logger log = LoggerFactory.getLogger(TurnoutOperator.class.getName());
 }

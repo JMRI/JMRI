@@ -22,7 +22,11 @@ import java.util.Vector;
  */
 public class PacketDataModel extends javax.swing.table.AbstractTableModel  {
 
-    static java.util.ResourceBundle rb 
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8398725528235582417L;
+	static java.util.ResourceBundle rb 
             = java.util.ResourceBundle.getBundle("jmri.jmrix.pricom.pockettester.TesterBundle");
     static public final int ADDRESSCOLUMN = 0;
     static public final int TYPECOLUMN = 1;

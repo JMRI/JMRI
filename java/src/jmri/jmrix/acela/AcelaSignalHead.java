@@ -17,6 +17,11 @@ import jmri.implementation.DefaultSignalHead;
 public class AcelaSignalHead extends DefaultSignalHead {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4814823979680236593L;
+
+	/**
      * Create a SignalHead object, with only a system name.
      * <P>
      * 'systemName' should have been previously validated

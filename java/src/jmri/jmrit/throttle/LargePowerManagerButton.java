@@ -4,7 +4,12 @@ import jmri.jmrit.catalog.NamedIcon;
 
 public class LargePowerManagerButton extends PowerManagerButton {
 
-    public LargePowerManagerButton(Boolean fullText) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2643364322004658891L;
+
+	public LargePowerManagerButton(Boolean fullText) {
         super(fullText);
     }
 

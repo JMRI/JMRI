@@ -19,6 +19,10 @@ import javax.swing.AbstractAction;
 
 public class AcelaMonAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6993893709144598203L;
 	public AcelaMonAction(String s) { 
 		super(s);
 	}

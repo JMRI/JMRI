@@ -18,7 +18,12 @@ import java.util.ResourceBundle;
  */
 public class LayoutBlockThroughPathsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4544331372118349150L;
+
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     public static final int SOURCECOL= 0;
     static final int DESTINATIONCOL = 1;

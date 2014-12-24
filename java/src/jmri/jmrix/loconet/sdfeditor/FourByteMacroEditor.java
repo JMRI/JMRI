@@ -19,7 +19,12 @@ import javax.swing.JLabel;
 
 class FourByteMacroEditor extends SdfMacroEditor {
 
-    public FourByteMacroEditor(SdfMacro inst) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4304621567924328054L;
+
+	public FourByteMacroEditor(SdfMacro inst) {
         super(inst);
 
         // remove default message from SdfMacroEditor

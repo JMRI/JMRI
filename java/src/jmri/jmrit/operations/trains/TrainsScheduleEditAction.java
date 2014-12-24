@@ -15,6 +15,11 @@ import javax.swing.*;
  */
 public class TrainsScheduleEditAction extends AbstractAction {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1796097519377642811L;
+
 	public TrainsScheduleEditAction(){
 		super(Bundle.getMessage("MenuItemEditSchedule"));
 	}

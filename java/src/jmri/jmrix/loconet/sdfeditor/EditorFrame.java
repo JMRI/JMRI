@@ -22,7 +22,12 @@ import jmri.jmrix.loconet.sdf.SdfBuffer;
  */
 public class EditorFrame extends JmriJFrame {
 
-    // GUI member declarations
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7106886649627618274L;
+
+	// GUI member declarations
     EditorPane pane;
 
     ResourceBundle res;

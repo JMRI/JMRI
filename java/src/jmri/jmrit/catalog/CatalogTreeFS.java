@@ -20,7 +20,12 @@ import java.util.HashMap;
  */
 public class CatalogTreeFS extends AbstractCatalogTree {
 
-    String[] _filter;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2391792373165194231L;
+
+	String[] _filter;
 
     public CatalogTreeFS(String sysName, String userName) {
         super(sysName, userName);

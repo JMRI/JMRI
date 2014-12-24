@@ -13,7 +13,12 @@ import javax.swing.JMenu;
  * @version     $Revision$
  */
 public class MapleMenu extends JMenu {
-    public MapleMenu(String name) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5496558545288767910L;
+
+	public MapleMenu(String name) {
         this();
         setText(name);
     }

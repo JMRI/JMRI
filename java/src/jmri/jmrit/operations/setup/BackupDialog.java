@@ -31,6 +31,11 @@ import jmri.jmrit.operations.UnexpectedExceptionContext;
 
 public class BackupDialog extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5510681557160040319L;
+
 	static Logger log = LoggerFactory
 			.getLogger(BackupDialog.class.getName());
 

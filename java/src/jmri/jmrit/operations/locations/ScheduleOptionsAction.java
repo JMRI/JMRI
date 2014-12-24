@@ -13,6 +13,10 @@ import javax.swing.AbstractAction;
  */
 public class ScheduleOptionsAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6958291145537202643L;
 	private ScheduleEditFrame _sef;
 
 	public ScheduleOptionsAction(ScheduleEditFrame sef) {

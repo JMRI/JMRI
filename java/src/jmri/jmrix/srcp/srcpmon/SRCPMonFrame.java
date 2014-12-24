@@ -16,6 +16,11 @@ import jmri.jmrix.srcp.SRCPTrafficController;
  */
 public class SRCPMonFrame extends jmri.jmrix.AbstractMonFrame implements SRCPListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7256002301176725810L;
+
 	public SRCPMonFrame() {
 		super();
 	}

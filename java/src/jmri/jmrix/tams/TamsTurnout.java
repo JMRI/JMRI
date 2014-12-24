@@ -22,7 +22,11 @@ import jmri.Turnout;
 public class TamsTurnout extends AbstractTurnout 
                          implements TamsListener {
 
-    String prefix;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1921305278634163107L;
+	String prefix;
     
     /**
      * Tams turnouts use the NMRA number (0-2040) as their numerical identification

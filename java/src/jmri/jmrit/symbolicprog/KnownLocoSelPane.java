@@ -27,7 +27,12 @@ import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
  */
 public class KnownLocoSelPane extends LocoSelPane  {
 
-    public KnownLocoSelPane(JLabel s, boolean ident) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 9052342102384471212L;
+
+	public KnownLocoSelPane(JLabel s, boolean ident) {
         mCanIdent = ident;
         mStatusLabel = s;
         init();

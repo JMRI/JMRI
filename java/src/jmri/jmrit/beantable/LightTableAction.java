@@ -45,6 +45,10 @@ import jmri.util.ConnectionNameFromSystemName;
 public class LightTableAction extends AbstractTableAction {
 	
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7804945776791377121L;
+	/**
      * Create an action with a specific title.
      * <P>
      * Note that the argument is the Action title, not the title of the
@@ -70,7 +74,11 @@ public class LightTableAction extends AbstractTableAction {
      */
     protected void createModel() {
         m = new BeanTableDataModel() {
-		    static public final int ENABLECOL = NUMCOLUMN;
+		    /**
+			 * 
+			 */
+			private static final long serialVersionUID = 5160578505530460869L;
+			static public final int ENABLECOL = NUMCOLUMN;
 		    static public final int INTENSITYCOL = ENABLECOL+1;
 		    static public final int EDITCOL = INTENSITYCOL+1;
 			protected String enabledString = rb.getString("ColumnHeadEnabled");
@@ -1711,6 +1719,10 @@ public class LightTableAction extends AbstractTableAction {
 	public class LightControlTableModel extends javax.swing.table.AbstractTableModel implements
 	java.beans.PropertyChangeListener {
 		
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 5343975370851932129L;
 		public static final int TYPE_COLUMN = 0;
 		public static final int DESCRIPTION_COLUMN = 1;
 		public static final int EDIT_COLUMN = 2;

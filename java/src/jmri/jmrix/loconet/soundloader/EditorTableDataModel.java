@@ -29,7 +29,11 @@ import jmri.util.FileUtil;
  */
 public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 
-    static public final int HEADERCOL = 0;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6127498935819325767L;
+	static public final int HEADERCOL = 0;
     static public final int TYPECOL = 1;
     static public final int MAPCOL = 2;
     static public final int HANDLECOL = 3;

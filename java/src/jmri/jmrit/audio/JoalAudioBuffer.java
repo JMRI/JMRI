@@ -72,7 +72,12 @@ import java.io.InputStream;
  */
 public class JoalAudioBuffer extends AbstractAudioBuffer {
 
-    private static AL al = JoalAudioFactory.getAL();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8278324841496444614L;
+
+	private static AL al = JoalAudioFactory.getAL();
 
     // Arrays to hold various .wav file information
     private int[] _format = new int[1];

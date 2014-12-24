@@ -52,7 +52,11 @@ import jmri.util.FileUtil;
  */
 public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
     
-    // member declarations
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7992772438444957125L;
+	// member declarations
     protected JButton clearButton = new JButton();
     protected JToggleButton freezeButton = new JToggleButton();
     protected JScrollPane jScrollPane1Can = new JScrollPane();
@@ -1059,7 +1063,12 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
-        public Default() {
+        /**
+			 * 
+			 */
+			private static final long serialVersionUID = -7861976003921031471L;
+
+		public Default() {
             super("CBUS Console", 
                 new jmri.util.swing.sdi.JmriJFrameInterface(), 
                 CbusConsolePane.class.getName(), 

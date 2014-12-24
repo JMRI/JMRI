@@ -507,7 +507,12 @@ public class EcosLocoToRoster implements EcosListener {
         dRoot = new DefaultMutableTreeNode("Root");
         dModel = new DefaultTreeModel(dRoot);
         dTree = new JTree(dModel){
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -3197427124986523211L;
+
+			@Override
             public String getToolTipText(MouseEvent evt) {
                 if (getRowForLocation(evt.getX(), evt.getY()) == -1) return null;
                 TreePath curPath = getPathForLocation(evt.getX(), evt.getY());
@@ -639,7 +644,11 @@ public class EcosLocoToRoster implements EcosListener {
     }
         // from http://www.codeguru.com/java/articles/143.shtml
     static class DecoderTreeNode extends DefaultMutableTreeNode {
-        private String toolTipText;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -5606230191141397789L;
+		private String toolTipText;
         private String title;
 
         public DecoderTreeNode(String str, String toolTipText, String title) {

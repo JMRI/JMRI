@@ -22,7 +22,11 @@ import jmri.jmrix.acela.AcelaNode;
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.acela.nodeconfig.NodeConfigBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -446990477956157630L;
+	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.acela.nodeconfig.NodeConfigBundle");
     protected Container contentPane;
     protected NodeConfigModel d8outputConfigModel;
     protected NodeConfigModel swoutputConfigModel;
@@ -1853,7 +1857,11 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 //    public class SensorConfigModel extends AbstractTableModel
     public class SensorConfigModel extends NodeConfigModel
     {
-        public String getColumnName(int c) {return sensorConfigColumnNames[c];}
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 8903322968361854433L;
+		public String getColumnName(int c) {return sensorConfigColumnNames[c];}
         public Class<?> getColumnClass(int c) {return String.class;}
         public int getColumnCount () {return 5;}
         public int getRowCount () {return numrows;}
@@ -1942,7 +1950,11 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      */
     public class OutputConfigModel extends NodeConfigModel
     {
-        public String getColumnName(int c) {return outputConfigColumnNames[c];}
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -6592677373811166261L;
+		public String getColumnName(int c) {return outputConfigColumnNames[c];}
         public Class<?> getColumnClass(int c) {return String.class;}
         public int getColumnCount () {return 6;}
         public int getRowCount () {return numrows;}

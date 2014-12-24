@@ -11,7 +11,12 @@ import java.util.*;
 
 public class OrderedHashtable<K, V> extends Hashtable<K, V> {
 
-    @Override
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8358692158328153199L;
+
+	@Override
     public V put(K key, V value) {
         keys.add(key);
         return super.put(key, value);

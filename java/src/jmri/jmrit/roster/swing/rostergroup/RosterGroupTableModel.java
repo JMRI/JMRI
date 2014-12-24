@@ -25,7 +25,11 @@ import javax.swing.JTextField;
  */
 public class RosterGroupTableModel extends javax.swing.table.AbstractTableModel {
 
-    static final int IDCOL = 0;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7420154419304239909L;
+	static final int IDCOL = 0;
     static final int ROADNUMBERCOL = 1;
     static final int ROADNAMECOL = 2;
     static final int MFGCOL = 3;

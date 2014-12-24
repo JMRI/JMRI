@@ -18,7 +18,12 @@ import javax.swing.*;
 
 public class Sprogv4UpdateAction 	extends SprogUpdateAction {
 
-  public Sprogv4UpdateAction(String s) { super(s);}
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5840047276798366447L;
+
+public Sprogv4UpdateAction(String s) { super(s);}
 
   public void actionPerformed(ActionEvent e) {
       Object[] options = {"Cancel", "Update"};

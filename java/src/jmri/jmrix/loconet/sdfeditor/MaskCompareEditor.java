@@ -14,7 +14,12 @@ import javax.swing.JLabel;
 
 class MaskCompareEditor extends SdfMacroEditor {
 
-    public MaskCompareEditor(SdfMacro inst) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1823359711169229533L;
+
+	public MaskCompareEditor(SdfMacro inst) {
         super(inst);
 
         // remove default message from SdfMacroEditor

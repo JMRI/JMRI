@@ -26,7 +26,11 @@ import jmri.jmrix.swing.ComponentFactory;
  * @version     $Revision$
  */
 public class ActiveSystemsMenu extends JMenu {
-    public ActiveSystemsMenu(String name) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6929237793054146826L;
+	public ActiveSystemsMenu(String name) {
         this();
         setText(name);
 

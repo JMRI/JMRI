@@ -18,7 +18,12 @@ import jmri.jmrix.grapevine.SerialTrafficController;
 
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
-    public SerialMonFrame() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6899668182950545603L;
+
+	public SerialMonFrame() {
         super();
     }
 

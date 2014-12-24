@@ -21,6 +21,11 @@ import jmri.jmrix.loconet.LnTrafficController;
 @Deprecated
 public class AlmBrowserAction 			extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5146701688497694865L;
+
 	public AlmBrowserAction(String s) { super(s);}
 
     public void actionPerformed(ActionEvent e) {

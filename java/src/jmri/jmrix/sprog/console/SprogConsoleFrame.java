@@ -28,7 +28,11 @@ import jmri.jmrix.sprog.update.*;
  */
 public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements SprogListener, SprogVersionListener {
     
-    // member declarations
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6621655151979316783L;
+	// member declarations
     protected javax.swing.JLabel cmdLabel = new javax.swing.JLabel();
     protected javax.swing.JLabel currentLabel = new javax.swing.JLabel();
     protected javax.swing.JButton sendButton = new javax.swing.JButton();

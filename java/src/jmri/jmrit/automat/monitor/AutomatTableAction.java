@@ -16,7 +16,12 @@ import javax.swing.AbstractAction;
 
 public class AutomatTableAction extends AbstractAction {
 
-    public AutomatTableAction(String actionName) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 247180783423184258L;
+
+	public AutomatTableAction(String actionName) {
         super(actionName);
     }
 

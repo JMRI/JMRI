@@ -17,7 +17,11 @@ import java.beans.PropertyChangeListener;
  */
 public class ComboRadioButtons extends JPanel {
 
-    ButtonGroup g = new ButtonGroup();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 45307396535595216L;
+	ButtonGroup g = new ButtonGroup();
 
     ComboRadioButtons(JComboBox box, EnumVariableValue var) {
         super();

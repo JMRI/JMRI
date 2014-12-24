@@ -41,7 +41,11 @@ import jmri.jmrit.logix.PortalManager;
 
 public class BlockPathTableModel extends AbstractTableModel implements PropertyChangeListener {
     
-    public static final int FROM_PORTAL_COLUMN = 0;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2472819814795605641L;
+	public static final int FROM_PORTAL_COLUMN = 0;
     public static final int NAME_COLUMN = 1;
     public static final int TO_PORTAL_COLUMN = 2;
     public static final int EDIT_COL = 3;

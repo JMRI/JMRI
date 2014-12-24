@@ -25,6 +25,10 @@ import jmri.jmrit.throttle.KeyListenerInstaller;
 public class FunctionPanel extends JInternalFrame implements FunctionListener, java.beans.PropertyChangeListener
 {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6030687326365816407L;
 	public static final int NUM_FUNCTION_BUTTONS = 29;
     public static final int NUM_FUNC_BUTTONS_INIT = 16;	//only show 16 function buttons at start
     private DccThrottle _throttle;

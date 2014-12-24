@@ -26,7 +26,12 @@ import javax.swing.SpinnerNumberModel;
 
 public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
 
-  private ServerFrame() {
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3729652398213286613L;
+
+private ServerFrame() {
     super("LocoNetOverTcp Server");
     
     getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));

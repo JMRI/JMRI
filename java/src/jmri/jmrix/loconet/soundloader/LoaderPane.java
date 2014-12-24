@@ -20,7 +20,12 @@ import jmri.util.FileUtil;
  */
 public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
 
-    // GUI member declarations
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3466057573583241795L;
+
+	// GUI member declarations
     static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.loconet.soundloader.Loader");
 
     JLabel inputFileName = new JLabel("");
@@ -50,7 +55,12 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
             JButton b = new JButton(res.getString("ButtonSelect"));
             b.addActionListener(new AbstractAction() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = 2498146136992279361L;
+
+				public void actionPerformed(java.awt.event.ActionEvent e) {
                     selectInputFile();
                 }
             });
@@ -73,7 +83,12 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
             readButton.setToolTipText(res.getString("TipReadDisabled"));
             p.add(readButton);
             readButton.addActionListener(new AbstractAction() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = -1408564712471319146L;
+
+				public void actionPerformed(java.awt.event.ActionEvent e) {
                     doRead();
                 }
             });
@@ -102,7 +117,12 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
             loadButton.setToolTipText(res.getString("TipLoadDisabled"));
             p.add(loadButton);
             loadButton.addActionListener(new AbstractAction() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = -1042657057160985067L;
+
+				public void actionPerformed(java.awt.event.ActionEvent e) {
                     doLoad();
                 }
             });

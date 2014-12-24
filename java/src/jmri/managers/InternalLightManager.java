@@ -15,11 +15,19 @@ import jmri.managers.AbstractLightManager;
 public class InternalLightManager extends AbstractLightManager {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2678277271494071178L;
+	/**
      * Create and return an internal (no layout connection) Light
      */
     protected Light createNewLight(String systemName, String userName) {
         return new AbstractVariableLight(systemName, userName){
-            //protected void forwardCommandChangeToLayout(int s) {}
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -5913007273311395912L;
+			//protected void forwardCommandChangeToLayout(int s) {}
             protected void sendIntensity(double intensity) {}
             protected void sendOnOffCommand(int newState) {}
             protected int getNumberOfSteps() { return 100; }

@@ -17,7 +17,12 @@ import java.util.Hashtable;
  */
 public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
 
-    static java.util.ResourceBundle rb 
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8215226616579760539L;
+
+	static java.util.ResourceBundle rb 
             = java.util.ResourceBundle.getBundle("jmri.jmrix.pricom.pockettester.TesterBundle");
 
     javax.swing.Timer timer = new javax.swing.Timer(500, new java.awt.event.ActionListener() {

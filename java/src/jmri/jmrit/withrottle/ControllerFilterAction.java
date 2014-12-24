@@ -13,7 +13,13 @@ import jmri.util.JmriJFrame;
  */
 public class ControllerFilterAction extends AbstractAction{
 
-    public ControllerFilterAction(String name) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8079644588217664906L;
+
+
+	public ControllerFilterAction(String name) {
         super(name);
         if ((jmri.InstanceManager.turnoutManagerInstance()==null) && (jmri.InstanceManager.routeManagerInstance()==null)) {
             setEnabled(false);

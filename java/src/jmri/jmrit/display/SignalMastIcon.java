@@ -29,7 +29,12 @@ import javax.swing.JOptionPane;
 
 public class SignalMastIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
 
-    public SignalMastIcon(Editor editor) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1381602315927376318L;
+
+	public SignalMastIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
         super(editor);
         _control = true;
@@ -263,7 +268,12 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
             for (int i=0; i<aspects.size(); i++){
                 final int index = i;
                 aspect.add(new AbstractAction(aspects.elementAt(index)){
-                    public void actionPerformed(ActionEvent e) {
+                    /**
+					 * 
+					 */
+					private static final long serialVersionUID = -2880512365482915995L;
+
+					public void actionPerformed(ActionEvent e) {
                         getSignalMast().setAspect(aspects.elementAt(index));
                     }
                 });
@@ -276,7 +286,12 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
             for (int i=0; i<aspects.size(); i++){
                 final int index = i;
                 popup.add(new AbstractAction(aspects.elementAt(index)){
-                    public void actionPerformed(ActionEvent e) {
+                    /**
+					 * 
+					 */
+					private static final long serialVersionUID = -5139716882196677458L;
+
+					public void actionPerformed(ActionEvent e) {
                         getSignalMast().setAspect(aspects.elementAt(index));
                     }
                 });
@@ -297,7 +312,12 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
             if(tct.isToolInUse())
                 addString = Bundle.getMessage("MenuTransitAddTo");
             popup.add(new AbstractAction(addString){
-                public void actionPerformed(ActionEvent e) {
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = 8999105169303183319L;
+
+				public void actionPerformed(ActionEvent e) {
                     try {
                         tct.addNamedBean(getSignalMast());
                     } catch (jmri.JmriException ex){
@@ -307,7 +327,12 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
             });
             if(tct.isToolInUse()){
                 popup.add(new AbstractAction(Bundle.getMessage("MenuTransitAddComplete")){
-                    public void actionPerformed(ActionEvent e) {
+                    /**
+					 * 
+					 */
+					private static final long serialVersionUID = 4260649479001420722L;
+
+					public void actionPerformed(ActionEvent e) {
                         Transit created;
                         try {
                             tct.addNamedBean(getSignalMast());
@@ -320,7 +345,12 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
                     }
                 });
                 popup.add(new AbstractAction(Bundle.getMessage("MenuTransitCancel")){
-                    public void actionPerformed(ActionEvent e) {
+                    /**
+					 * 
+					 */
+					private static final long serialVersionUID = -388638543659271424L;
+
+					public void actionPerformed(ActionEvent e) {
                         tct.cancelTransitCreate();
                     }
                 });
@@ -353,7 +383,12 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     public boolean setEditItemMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("SignalMast"));
         popup.add(new AbstractAction(txt) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = -4184564062800372222L;
+
+				public void actionPerformed(ActionEvent e) {
                     editItem();
                 }
             });

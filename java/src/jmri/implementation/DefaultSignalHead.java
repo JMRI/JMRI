@@ -14,7 +14,12 @@ package jmri.implementation;
  */
 public abstract class DefaultSignalHead extends AbstractSignalHead {
 
-    public DefaultSignalHead(String systemName, String userName) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1008833207689892684L;
+
+	public DefaultSignalHead(String systemName, String userName) {
         super(systemName, userName);
     }
 

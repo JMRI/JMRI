@@ -43,7 +43,11 @@ import jmri.*;
  */
 public class ProgServiceModeComboBox extends ProgModeSelector implements java.beans.PropertyChangeListener {
 
-    // GUI member declarations
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -337689867042266871L;
+	// GUI member declarations
     JComboBox<String> box;
     ArrayList<Integer> modes = new ArrayList<Integer>();
 

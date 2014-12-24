@@ -37,7 +37,12 @@ import org.slf4j.LoggerFactory;
  */
 public class OperationsServlet extends HttpServlet {
 
-    private ObjectMapper mapper;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5856610982342205832L;
+
+	private ObjectMapper mapper;
 
     private final static Logger log = LoggerFactory.getLogger(OperationsServlet.class);
 

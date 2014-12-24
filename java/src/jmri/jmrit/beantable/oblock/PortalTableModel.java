@@ -38,7 +38,11 @@ import jmri.jmrit.logix.PortalManager;
 
 public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
 
-    public static final int FROM_BLOCK_COLUMN = 0;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4467086483594717590L;
+	public static final int FROM_BLOCK_COLUMN = 0;
     public static final int NAME_COLUMN = 1;
     public static final int TO_BLOCK_COLUMN = 2;
     static public final int DELETE_COL = 3;

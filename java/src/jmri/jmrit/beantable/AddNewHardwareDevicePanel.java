@@ -23,7 +23,11 @@ import java.util.ResourceBundle;
 
 public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
 
-    public AddNewHardwareDevicePanel(JTextField sysAddress, JTextField userName, JComboBox prefixBox, JTextField endRange, JCheckBox addRange,
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -958394838638929630L;
+	public AddNewHardwareDevicePanel(JTextField sysAddress, JTextField userName, JComboBox prefixBox, JTextField endRange, JCheckBox addRange,
                              String addButtonLabel, ActionListener listener, ActionListener rangeListener) {
             setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             _endRange=endRange;

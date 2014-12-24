@@ -27,7 +27,11 @@ import javax.vecmath.Point3d;
 public class AlignmentPanel extends javax.swing.JPanel 
         implements ReadingListener, Constants {
     
-    public AlignmentPanel() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7798693118150508821L;
+	public AlignmentPanel() {
         super();
         Distributor.instance().addReadingListener(this);
         nf = java.text.NumberFormat.getInstance();
@@ -432,7 +436,11 @@ public class AlignmentPanel extends javax.swing.JPanel
      * Represent one line (DAQ element) of the operation
      */
     class Line extends JPanel {
-        Line() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -758969222553576502L;
+		Line() {
             setLayout(new java.awt.FlowLayout());
             add(new JLabel("Position:"));
             add(xl);

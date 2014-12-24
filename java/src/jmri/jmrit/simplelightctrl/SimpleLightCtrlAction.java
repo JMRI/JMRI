@@ -17,7 +17,11 @@ import java.awt.event.ActionEvent;
 
 public class SimpleLightCtrlAction 			extends AbstractAction {
 
-    public SimpleLightCtrlAction(String s) { 
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4405267193635229462L;
+	public SimpleLightCtrlAction(String s) { 
 	super(s);
 
 	// disable ourself if there is no primary light manager available

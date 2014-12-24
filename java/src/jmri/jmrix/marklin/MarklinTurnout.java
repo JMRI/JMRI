@@ -22,7 +22,11 @@ import jmri.Turnout;
 public class MarklinTurnout extends AbstractTurnout 
                          implements MarklinListener {
 
-    String prefix;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8288482023350129321L;
+	String prefix;
     
     /**
      * Marklin turnouts use the NMRA number (0-2040) as their numerical identification

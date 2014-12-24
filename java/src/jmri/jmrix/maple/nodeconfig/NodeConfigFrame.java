@@ -28,7 +28,12 @@ import jmri.jmrix.maple.OutputBits;
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.maple.nodeconfig.NodeConfigBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1694906139287195915L;
+
+	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.maple.nodeconfig.NodeConfigBundle");
 
     protected javax.swing.JTextField nodeAddrField = new javax.swing.JTextField(3);
     protected javax.swing.JLabel nodeAddrStatic = new javax.swing.JLabel("000");

@@ -28,6 +28,10 @@ import org.slf4j.LoggerFactory;
 
 public class DrawPolygon extends DrawFrame{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8879310189293502065L;
 	ArrayList <Point> 		_vertices;
 	int 	_curX;
 	int 	_curY;

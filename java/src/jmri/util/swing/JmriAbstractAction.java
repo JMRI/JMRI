@@ -20,7 +20,11 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class JmriAbstractAction extends javax.swing.AbstractAction {
 
-    protected WindowInterface.Hint hint = WindowInterface.Hint.DEFAULT;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 373576744806206486L;
+	protected WindowInterface.Hint hint = WindowInterface.Hint.DEFAULT;
     protected WindowInterface wi;
     protected Object context = null;
     static Logger log = LoggerFactory.getLogger(JmriAbstractAction.class.getName());

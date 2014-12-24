@@ -38,6 +38,11 @@ import javax.swing.SpinnerNumberModel;
  */
 public class SetTrainIconPositionFrame extends OperationsFrame {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6408476815508585050L;
+
 	RouteManager routeManager = RouteManager.instance();
 	
 	// labels

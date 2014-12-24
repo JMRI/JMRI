@@ -19,6 +19,10 @@ abstract public class Dcc4PcPanel extends jmri.util.swing.JmriPanel {
 
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1643643748631018231L;
+	/**
      * make "memo" object available as convenience
      */
     protected Dcc4PcSystemConnectionMemo memo;

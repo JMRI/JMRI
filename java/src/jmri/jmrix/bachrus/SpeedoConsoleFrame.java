@@ -46,7 +46,12 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                                                         ProgListener,
                                                         PropertyChangeListener {
 
-    /***
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8072253464949517395L;
+
+	/***
      * TODO:
      *  Complete the help file
      *  Allow selection of arbitrary scale

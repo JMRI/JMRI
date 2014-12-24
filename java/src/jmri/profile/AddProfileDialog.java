@@ -45,7 +45,11 @@ import org.slf4j.LoggerFactory;
  */
 public class AddProfileDialog extends javax.swing.JDialog {
 
-    private String profileId;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2838864019793309792L;
+	private String profileId;
     private boolean setNextProfile = false;
     private Profile source = null;
 

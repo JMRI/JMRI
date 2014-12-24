@@ -24,7 +24,11 @@ import org.slf4j.LoggerFactory;
  */
 class JsonPacketGenFrame extends JmriJFrame implements JsonClientListener {
 
-    private final JLabel jLabel1 = new JLabel();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6456973732502938283L;
+	private final JLabel jLabel1 = new JLabel();
     private final JButton sendButton = new JButton();
     private final JTextField packetTextField = new JTextField(12);
     private final ObjectMapper mapper = new ObjectMapper();

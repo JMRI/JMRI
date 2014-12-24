@@ -17,7 +17,12 @@ import javax.swing.JPanel;
  */
 public class ProgrammerConfigPane extends JPanel {
 
-    public ProgrammerConfigPane() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3341676760826030384L;
+
+	public ProgrammerConfigPane() {
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         JPanel p = new JPanel();
         p.setLayout(new java.awt.FlowLayout());

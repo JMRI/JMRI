@@ -19,6 +19,10 @@ abstract public class TamsPanel extends jmri.util.swing.JmriPanel implements Tam
 
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3918718731058984206L;
+	/**
      * make "memo" object available as convenietams
      */
     protected TamsSystemConnectionMemo memo;

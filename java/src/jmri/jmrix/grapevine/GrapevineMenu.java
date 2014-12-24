@@ -13,7 +13,12 @@ import javax.swing.JMenu;
  * @version     $Revision$
  */
 public class GrapevineMenu extends JMenu {
-    public GrapevineMenu(String name) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4017450895998949082L;
+
+	public GrapevineMenu(String name) {
         this();
         setText(name);
     }

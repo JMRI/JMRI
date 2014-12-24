@@ -38,7 +38,11 @@ import java.util.HashMap;
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 	
-    String  _iconFamily;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6367789273498688886L;
+	String  _iconFamily;
 
     public MultiSensorIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
@@ -204,7 +208,12 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     public boolean setEditItemMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("MultiSensor"));
         popup.add(new javax.swing.AbstractAction(txt) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = -1982221537127335781L;
+
+				public void actionPerformed(ActionEvent e) {
                     editItem();
                 }
             });
@@ -275,7 +284,12 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     public boolean setEditIconMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("MultiSensor"));
         popup.add(new AbstractAction(txt) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = -7056802867889464742L;
+
+				public void actionPerformed(ActionEvent e) {
                     edit();
                 }
             });

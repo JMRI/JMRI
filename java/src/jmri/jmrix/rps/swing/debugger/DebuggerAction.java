@@ -16,6 +16,11 @@ import java.awt.event.ActionEvent;
  */
 public class DebuggerAction 			extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6512666760743475128L;
+
 	public DebuggerAction(String s) { super(s);}
 
     public DebuggerAction() {

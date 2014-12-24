@@ -17,7 +17,13 @@ import javax.swing.*;
  */
 public class CsvExportAction  extends AbstractAction {
 
-    public CsvExportAction(String actionName, CvTableModel pModel, JFrame pParent) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5770050662682568623L;
+
+
+	public CsvExportAction(String actionName, CvTableModel pModel, JFrame pParent) {
         super(actionName);
         mModel = pModel;
         mParent = pParent ;

@@ -17,6 +17,10 @@ import javax.swing.*;
 public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
 		LocoNetListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4377983464521092360L;
 	// member declarations
 	javax.swing.JButton readButton;
 	javax.swing.JButton setButton;

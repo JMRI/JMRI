@@ -32,7 +32,12 @@ import jmri.util.FileUtil;
  */
 public class RunJythonScript extends JmriAbstractAction {
     
-    public  RunJythonScript(String s, WindowInterface wi) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2957647278966956841L;
+
+	public  RunJythonScript(String s, WindowInterface wi) {
     	super(s, wi);
     }
      

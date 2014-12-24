@@ -18,7 +18,11 @@ import jmri.ProgListener;
  */
 public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgListener {
 
-    // GUI member declarations
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7871764415019987802L;
+	// GUI member declarations
     javax.swing.JToggleButton readButton 	= new javax.swing.JToggleButton();
     javax.swing.JToggleButton writeButton 	= new javax.swing.JToggleButton();
     javax.swing.JTextField  addrField       = new javax.swing.JTextField(4);

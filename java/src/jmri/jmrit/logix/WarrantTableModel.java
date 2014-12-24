@@ -44,7 +44,11 @@ import jmri.jmrit.catalog.NamedIcon;
 
 class WarrantTableModel extends AbstractTableModel implements PropertyChangeListener 
 {
-    public static final int WARRANT_COLUMN = 0;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6318203351014416147L;
+	public static final int WARRANT_COLUMN = 0;
     public static final int ROUTE_COLUMN =1;
     public static final int TRAIN_NAME_COLUMN = 2;
     public static final int ADDRESS_COLUMN = 3;

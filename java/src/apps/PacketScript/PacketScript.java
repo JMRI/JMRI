@@ -39,7 +39,12 @@ import org.slf4j.LoggerFactory;
  */
 public class PacketScript extends Apps {
 
-    PacketScript(JFrame p) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2262124366039087938L;
+
+	PacketScript(JFrame p) {
         super(p);
         }
 

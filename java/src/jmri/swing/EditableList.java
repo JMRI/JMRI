@@ -20,7 +20,11 @@ import javax.swing.event.ChangeEvent;
  */
 public class EditableList extends JList implements CellEditorListener {
 
-    protected Component editorComp = null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2724300657041009593L;
+	protected Component editorComp = null;
     protected int editingIndex = -1;
     protected transient ListCellEditor cellEditor = null;
     private PropertyChangeListener editorRemover = null;
@@ -215,7 +219,12 @@ public class EditableList extends JList implements CellEditorListener {
      */
     private static class StartEditingAction extends AbstractAction {
 
-        @Override
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 2759348317251714909L;
+
+		@Override
         public void actionPerformed(ActionEvent e) {
             EditableList list = (EditableList) e.getSource();
             if (!list.hasFocus()) {
@@ -238,7 +247,12 @@ public class EditableList extends JList implements CellEditorListener {
 
     private class CancelEditingAction extends AbstractAction {
 
-        @Override
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -8222730187928540505L;
+
+		@Override
         public void actionPerformed(ActionEvent e) {
             EditableList list = (EditableList) e.getSource();
             list.removeEditor();

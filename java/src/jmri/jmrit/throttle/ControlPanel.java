@@ -50,7 +50,12 @@ import org.jdom2.Element;
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener, ActionListener, AddressListener 
 {
-    private DccThrottle throttle;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2556116647848797537L;
+
+	private DccThrottle throttle;
     
     private JSlider speedSlider;
     private JSlider speedSliderContinuous;

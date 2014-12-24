@@ -21,6 +21,10 @@ import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
  */
 public class CommonTurnoutOperationConfig extends TurnoutOperationConfig {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4672869740466183146L;
 	JSpinner intervalSpinner;   // actually a JSpinner
 	JSpinner maxTriesSpinner;   // actually a JSpinner
 	CommonTurnoutOperation myOp;

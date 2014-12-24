@@ -16,6 +16,11 @@ import jmri.jmrix.easydcc.EasyDccTrafficController;
  */
 public class EasyDccMonFrame extends jmri.jmrix.AbstractMonFrame implements EasyDccListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7982331955917888988L;
+
 	public EasyDccMonFrame() {
 		super();
 	}

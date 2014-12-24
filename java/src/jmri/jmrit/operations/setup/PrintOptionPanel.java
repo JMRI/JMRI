@@ -32,7 +32,12 @@ import org.slf4j.LoggerFactory;
  */
 public class PrintOptionPanel extends OperationsPanel {
 
-    // labels
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2753161901627545371L;
+
+	// labels
     JLabel logoURL = new JLabel("");
 
     // major buttons

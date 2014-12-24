@@ -22,7 +22,12 @@ public class SprogIIUpdateFrame
     extends SprogUpdateFrame
     implements SprogVersionListener {
 
-  public SprogIIUpdateFrame() {
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4424302689786420208L;
+
+public SprogIIUpdateFrame() {
     super();
   }
 

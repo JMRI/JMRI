@@ -59,7 +59,12 @@ import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
  */
 public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeListener {
 
-    public CombinedLocoSelPane(JLabel s) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8136064467797917479L;
+
+	public CombinedLocoSelPane(JLabel s) {
         _statusLabel = s;
         init();
     }

@@ -30,7 +30,11 @@ import jmri.util.FileUtil;
  
 public class FileLocationPane extends JPanel implements PreferencesPanel {
 
-    protected static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2492371396905648159L;
+	protected static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
     private boolean isDirty = false;
 
     public FileLocationPane() {
@@ -65,7 +69,12 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
         fcScript.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         fcScript.setAcceptAllFileFilterUsed(false);
         bScript.addActionListener(new AbstractAction() {
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 6381324878582255448L;
+
+			@Override
             public void actionPerformed(ActionEvent e) {
                 // get the file
                 fcScript.showOpenDialog(null);
@@ -103,7 +112,12 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
         fcUser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         fcUser.setAcceptAllFileFilterUsed(false);
         bUser.addActionListener(new AbstractAction() {
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -4085952502159628091L;
+
+			@Override
             public void actionPerformed(ActionEvent e) {
                 // get the file
                 fcUser.showOpenDialog(null);

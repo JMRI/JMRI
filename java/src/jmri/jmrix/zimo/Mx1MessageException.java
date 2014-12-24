@@ -13,6 +13,10 @@ import jmri.JmriException;
  * Adapted by Sip Bosch for use with zimo Mx-1
  */
 public class Mx1MessageException extends JmriException {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1112383031035600569L;
 	public Mx1MessageException(String s) { super(s); }
 	public Mx1MessageException() {}
 }

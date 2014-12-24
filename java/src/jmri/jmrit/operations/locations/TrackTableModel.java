@@ -26,6 +26,10 @@ import jmri.util.table.ButtonRenderer;
  */
 public class TrackTableModel extends AbstractTableModel implements PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7318273766197527079L;
 	public static final int SORTBYNAME = 1;
 	public static final int SORTBYID = 2;
 

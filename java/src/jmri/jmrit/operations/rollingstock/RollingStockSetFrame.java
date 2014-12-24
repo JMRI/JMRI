@@ -41,6 +41,11 @@ import jmri.jmrit.operations.trains.TrainManager;
 
 public class RollingStockSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7073826254938983591L;
+
 	protected static final ResourceBundle rb = ResourceBundle
 			.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
 

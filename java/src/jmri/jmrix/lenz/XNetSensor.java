@@ -16,7 +16,12 @@ import jmri.Sensor;
 public class XNetSensor extends AbstractSensor implements XNetListener {
 
 
-    private boolean statusRequested=false;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7452646637169609217L;
+
+	private boolean statusRequested=false;
 
     private int address;
     private int baseaddress; /* The result of integer division of the 

@@ -38,7 +38,12 @@ import org.slf4j.LoggerFactory;
  */
 public class DeleteRosterItemAction extends JmriAbstractAction {
 
-    public DeleteRosterItemAction(String s, WindowInterface wi) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1566611248270959245L;
+
+	public DeleteRosterItemAction(String s, WindowInterface wi) {
         super(s, wi);
     }
 

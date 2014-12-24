@@ -19,7 +19,12 @@ import javax.swing.JLabel;
 
 class TwoByteMacroEditor extends SdfMacroEditor {
 
-    public TwoByteMacroEditor(SdfMacro inst) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5363908602077121350L;
+
+	public TwoByteMacroEditor(SdfMacro inst) {
         super(inst);
 
         // remove default message from SdfMacroEditor

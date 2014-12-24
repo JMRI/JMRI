@@ -27,7 +27,12 @@ import java.io.DataInputStream;
  */
 public class LoaderPane extends javax.swing.JPanel {
 
-    static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.pricom.downloader.Loader");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 833932063738002557L;
+
+	static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.pricom.downloader.Loader");
 
     Vector<String> portNameVector = null;
     SerialPort  activeSerialPort = null;
@@ -478,7 +483,12 @@ public class LoaderPane extends javax.swing.JPanel {
             fileButton.setEnabled(false);
             fileButton.setToolTipText(res.getString("TipFileDisabled"));
             fileButton.addActionListener(new AbstractAction() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = -7851724841357411752L;
+
+				public void actionPerformed(java.awt.event.ActionEvent e) {
                     selectInputFile();
                 }
             });
@@ -514,7 +524,12 @@ public class LoaderPane extends javax.swing.JPanel {
             loadButton.setToolTipText(res.getString("TipLoadDisabled"));
             p.add(loadButton);
             loadButton.addActionListener(new AbstractAction() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = -576603777011196349L;
+
+				public void actionPerformed(java.awt.event.ActionEvent e) {
                     doLoad();
                 }
             });

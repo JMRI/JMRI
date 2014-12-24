@@ -29,7 +29,11 @@ import java.awt.Dimension;
 
 class BusyDialog extends JDialog {
 
-    JFrame frame; 
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8208365926206646918L;
+	JFrame frame; 
     JProgressBar pbar;
 
     public BusyDialog(JFrame frame, String title, boolean modal) {

@@ -30,6 +30,11 @@ import jmri.jmrit.roster.swing.speedprofile.SpeedProfileAction;
 public class RosterMenu extends JMenu {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1386179387265677639L;
+
+	/**
      * Ctor argument defining that the menu object will be
      * used as part of the main menu of the program, away from
      * any GUI that can select or use a RosterEntry.

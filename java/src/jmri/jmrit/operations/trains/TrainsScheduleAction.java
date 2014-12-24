@@ -15,6 +15,11 @@ import javax.swing.AbstractAction;
  */
 public class TrainsScheduleAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2153851570593170952L;
+
 	public TrainsScheduleAction(String s) {
 		super(s);
 	}

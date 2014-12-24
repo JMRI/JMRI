@@ -15,7 +15,12 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainConductorFrame extends OperationsFrame {
 
-    public TrainConductorFrame() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3456559207864002340L;
+
+	public TrainConductorFrame() {
         super(new TrainConductorPanel());
     }
 

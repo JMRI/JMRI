@@ -37,6 +37,11 @@ import jmri.jmrit.roster.swing.RosterGroupComboBox;
 public class RosterEntryToGroupAction extends AbstractAction {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 583406343893394954L;
+
+	/**
      * @param s Name of this action, e.g. in menus
      * @param who Component that action is associated with, used
      *              to ensure proper position in of dialog boxes

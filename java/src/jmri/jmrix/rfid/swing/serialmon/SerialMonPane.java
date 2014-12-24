@@ -22,7 +22,12 @@ import jmri.util.swing.sdi.JmriJFrameInterface;
 
 public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements RfidListener, RfidPanelInterface{
 
-    public SerialMonPane() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5991369812503715412L;
+
+	public SerialMonPane() {
         super();
     }
 
@@ -91,7 +96,12 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements RfidLis
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends RfidNamedPaneAction {
-        public Default() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -7671831932813281699L;
+
+		public Default() {
             super("RFID Device Command Monitor",
                 new JmriJFrameInterface(), 
                 SerialMonPane.class.getName(), 

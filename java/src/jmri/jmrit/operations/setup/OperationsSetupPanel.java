@@ -44,6 +44,10 @@ import org.slf4j.LoggerFactory;
  */
 public class OperationsSetupPanel extends OperationsPanel implements PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7662835134616666932L;
 	// labels
 	JLabel textIconNorth = new JLabel(Bundle.getMessage("IconNorth"));
 	JLabel textIconSouth = new JLabel(Bundle.getMessage("IconSouth"));

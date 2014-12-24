@@ -16,6 +16,10 @@ import java.util.ResourceBundle;
 
 public class DispatcherAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9148108708234506778L;
 	static final ResourceBundle rb = ResourceBundle
 			.getBundle("jmri.jmrit.dispatcher.DispatcherBundle");
 

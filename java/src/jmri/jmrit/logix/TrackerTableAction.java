@@ -37,7 +37,12 @@ import jmri.util.table.ButtonRenderer;
  */
 public class TrackerTableAction extends AbstractAction {
 
-    static int STRUT_SIZE = 10;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3359499686576807040L;
+
+	static int STRUT_SIZE = 10;
     
     private static TrackerTableAction _instance;
     private static ArrayList<Tracker> _trackerList = new ArrayList<Tracker>();
@@ -99,7 +104,11 @@ public class TrackerTableAction extends AbstractAction {
      */
     static class TableFrame extends JmriJFrame implements PropertyChangeListener, MouseListener 
     {
-        private TrackerTableModel _model;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -56337259221744388L;
+		private TrackerTableModel _model;
         private JmriJFrame _pickFrame;
         JDialog _dialog;
         JTextField  _trainNameBox = new JTextField(30);
@@ -644,7 +653,11 @@ public class TrackerTableAction extends AbstractAction {
     
     static class TrackerTableModel extends AbstractTableModel {
 
-        public static final int NAME_COL = 0;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -8320710926680330134L;
+		public static final int NAME_COL = 0;
         public static final int STATUS_COL = 1;
         public static final int STOP_COL = 2;
         public static final int NUMCOLS = 3;

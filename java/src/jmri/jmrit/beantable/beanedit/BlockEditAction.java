@@ -24,7 +24,11 @@ import javax.swing.*;
  */
 public class BlockEditAction extends BeanEditAction {
     
-    private String noneText = Bundle.getMessage("BlockNone");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2188902845944347657L;
+	private String noneText = Bundle.getMessage("BlockNone");
 	private String gradualText = Bundle.getMessage("BlockGradual");
 	private String tightText = Bundle.getMessage("BlockTight");
 	private String severeText = Bundle.getMessage("BlockSevere");
@@ -78,14 +82,24 @@ public class BlockEditAction extends BeanEditAction {
         }
         
         reporter.setResetItem(new AbstractAction(){
-            public void actionPerformed(ActionEvent e) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 2449970976942578601L;
+
+			public void actionPerformed(ActionEvent e) {
                 reporterField.setSelectedBean(((Block)bean).getReporter());
                 useCurrent.setSelected(((Block)bean).isReportingCurrent());
             }
         });
         
         reporter.setSaveItem(new AbstractAction(){
-            public void actionPerformed(ActionEvent e) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -6560902254904220330L;
+
+			public void actionPerformed(ActionEvent e) {
                 Block blk = (Block) bean;
                 blk.setReporter((Reporter)reporterField.getSelectedBean());
                 blk.setReportingCurrent(useCurrent.isSelected());
@@ -170,7 +184,12 @@ public class BlockEditAction extends BeanEditAction {
         permissiveField.setSelected(((Block)bean).getPermissiveWorking());
 
         basic.setSaveItem(new AbstractAction(){
-            public void actionPerformed(ActionEvent e) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 3999787373758196069L;
+
+			public void actionPerformed(ActionEvent e) {
                 Block blk = (Block) bean;
                 String cName = (String)curvatureField.getSelectedItem();
                 if (cName.equals(noneText)) blk.setCurvature(Block.NONE);
@@ -198,7 +217,12 @@ public class BlockEditAction extends BeanEditAction {
             }
         });
         basic.setResetItem(new AbstractAction(){
-            public void actionPerformed(ActionEvent e) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1875022997531442999L;
+
+			public void actionPerformed(ActionEvent e) {
                 Block blk = (Block) bean;
                 lengthField.setText(""+((Block)bean).getLengthMm());
 
@@ -260,7 +284,12 @@ public class BlockEditAction extends BeanEditAction {
         });
         
         basic.setSaveItem(new AbstractAction(){
-            public void actionPerformed(ActionEvent e) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 6849518499144179541L;
+
+			public void actionPerformed(ActionEvent e) {
                 Block blk = (Block) bean;
                 jmri.jmrit.display.layoutEditor.LayoutBlock lBlk = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlock(blk);
                 //If the block is related to a layoutblock then set the sensor details there and allow that to propergate the changes down.
@@ -272,7 +301,12 @@ public class BlockEditAction extends BeanEditAction {
             }
         });
         basic.setResetItem(new AbstractAction(){
-            public void actionPerformed(ActionEvent e) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1648534584189754888L;
+
+			public void actionPerformed(ActionEvent e) {
                 Block blk = (Block)bean;
                 //From basic details
                 sensorField.setSelectedBean(blk.getSensor());

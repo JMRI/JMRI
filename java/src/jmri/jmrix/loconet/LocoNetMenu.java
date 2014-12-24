@@ -13,7 +13,12 @@ package jmri.jmrix.loconet;
 @Deprecated
 @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class LocoNetMenu extends jmri.jmrix.loconet.swing.LocoNetMenu {
-    public LocoNetMenu(LocoNetSystemConnectionMemo memo) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1194141042822247444L;
+
+	public LocoNetMenu(LocoNetSystemConnectionMemo memo) {
         super(memo);
     }
 }

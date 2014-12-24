@@ -16,7 +16,12 @@ import javax.swing.JInternalFrame;
 public class ThrottleFramePropertyEditor extends JDialog
 {
     
-    private ThrottleWindow frame;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1010103920210252063L;
+
+	private ThrottleWindow frame;
 	
 	private JTextField titleField;
 	

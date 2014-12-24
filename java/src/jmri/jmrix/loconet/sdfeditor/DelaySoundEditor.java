@@ -14,7 +14,12 @@ import javax.swing.JLabel;
 
 class DelaySoundEditor extends SdfMacroEditor {
 
-    public DelaySoundEditor(SdfMacro inst) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8584517409405023951L;
+
+	public DelaySoundEditor(SdfMacro inst) {
         super(inst);
 
         // remove default message from SdfMacroEditor

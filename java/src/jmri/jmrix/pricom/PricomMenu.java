@@ -11,7 +11,12 @@ import javax.swing.JMenu;
  * @version     $Revision$
  */
 public class PricomMenu extends JMenu {
-    public PricomMenu(String name) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4327120523599989299L;
+
+	public PricomMenu(String name) {
         this();
         setText(name);
     }

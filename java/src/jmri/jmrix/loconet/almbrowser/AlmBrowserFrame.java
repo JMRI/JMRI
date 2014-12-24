@@ -30,7 +30,12 @@ import jmri.util.StringUtil;
 @Deprecated
 public class AlmBrowserFrame extends jmri.util.JmriJFrame implements LocoNetListener {
 
-    public AlmBrowserFrame() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7808858367861671176L;
+
+	public AlmBrowserFrame() {
         super("Configuration Browser");
     }
 

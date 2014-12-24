@@ -55,7 +55,12 @@ import jmri.util.FileUtil;
  */
 public class AudioBufferFrame extends AbstractAudioFrame {
 
-    private static int counter = 1;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5309874433054867893L;
+
+	private static int counter = 1;
 
     private boolean _newBuffer;
 

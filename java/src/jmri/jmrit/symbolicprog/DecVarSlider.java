@@ -19,6 +19,11 @@ import javax.swing.event.ChangeListener;
  */
 public class DecVarSlider extends JSlider implements ChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1009744573300199533L;
+
 	DecVarSlider(DecVariableValue var, int min, int max) {
 		super(new DefaultBoundedRangeModel(min, 0, min, max));
 		_var = var;

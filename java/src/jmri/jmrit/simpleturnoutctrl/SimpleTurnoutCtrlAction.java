@@ -18,7 +18,12 @@ import java.awt.event.ActionEvent;
 
 public class SimpleTurnoutCtrlAction 			extends JmriAbstractAction {
 
-    public SimpleTurnoutCtrlAction(String s, WindowInterface wi) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6750002493680281206L;
+
+	public SimpleTurnoutCtrlAction(String s, WindowInterface wi) {
     	super(s, wi);
     }
      

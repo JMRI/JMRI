@@ -27,7 +27,12 @@ import jmri.util.FileUtil;
  */
 abstract public class LoadStoreBaseAction extends AbstractAction {
 
-    public LoadStoreBaseAction(String s) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5757646065294988765L;
+
+	public LoadStoreBaseAction(String s) {
         super(s);
         // ensure that an XML config manager exists
         if (InstanceManager.configureManagerInstance()==null)

@@ -12,7 +12,12 @@ import jmri.jmrix.ecos.EcosSystemConnectionMemo;
  */
 public class EcosMenu extends JMenu{
 
-    public EcosMenu(EcosSystemConnectionMemo memo) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4469981554699046558L;
+
+	public EcosMenu(EcosSystemConnectionMemo memo) {
         super();
 
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.ecos.EcosBundle");

@@ -14,7 +14,12 @@ import javax.swing.JMenu;
  * @version     $Revision$
  */
 public class OpenLcbMenu extends JMenu {
-    public OpenLcbMenu(jmri.jmrix.can.CanSystemConnectionMemo memo) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5110967735264499487L;
+
+	public OpenLcbMenu(jmri.jmrix.can.CanSystemConnectionMemo memo) {
         super();
         
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");

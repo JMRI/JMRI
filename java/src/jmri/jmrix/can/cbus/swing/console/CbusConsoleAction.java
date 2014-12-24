@@ -12,6 +12,11 @@ package jmri.jmrix.can.cbus.swing.console;
  */
 @Deprecated
 public class CbusConsoleAction extends CbusConsolePane.Default{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7028354875214519619L;
 }
 
 /* @(#)CbusConsoleAction.java */

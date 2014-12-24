@@ -18,6 +18,10 @@ import javax.swing.JOptionPane;
 
 public class ResetEngineMovesAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5851492095725608963L;
 	EngineManager manager = EngineManager.instance();
 
 	public ResetEngineMovesAction(String actionName, Component frame) {

@@ -24,7 +24,11 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
 
     // GUI member declarations
 
-    JTextField locoRoadName 	= new JTextField(12);
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -9126105092523857438L;
+	JTextField locoRoadName 	= new JTextField(12);
     JTextField locoRoadNumber 	= new JTextField(5);
     JTextField locoMfg 		= new JTextField(12);
     JTextField locoModel 	= new JTextField(12);

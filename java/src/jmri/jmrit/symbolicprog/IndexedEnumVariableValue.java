@@ -531,7 +531,11 @@ public class IndexedEnumVariableValue extends VariableValue
      */
     public static class IVarComboBox extends JComboBox {
 
-        IndexedEnumVariableValue _var;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 2425259609787639833L;
+		IndexedEnumVariableValue _var;
         transient java.beans.PropertyChangeListener _l = null;
 
         IVarComboBox(ComboBoxModel m, IndexedEnumVariableValue var) {

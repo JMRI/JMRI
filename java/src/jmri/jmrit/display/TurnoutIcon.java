@@ -39,7 +39,11 @@ import java.util.Map.Entry;
 
 public class TurnoutIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
 
-    protected HashMap <Integer, NamedIcon> _iconStateMap;          // state int to icon
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3472126765169792282L;
+	protected HashMap <Integer, NamedIcon> _iconStateMap;          // state int to icon
     protected HashMap <String, Integer> _name2stateMap;       // name to state
     protected HashMap <Integer, String> _state2nameMap;       // state to name
 
@@ -327,7 +331,12 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     public boolean setEditItemMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Turnout"));
         popup.add(new javax.swing.AbstractAction(txt) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = 7127306717385487807L;
+
+				public void actionPerformed(ActionEvent e) {
                     editItem();
                 }
             });
@@ -390,7 +399,12 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     public boolean setEditIconMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Turnout"));
         popup.add(new javax.swing.AbstractAction(txt) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = 6578592768757773752L;
+
+				public void actionPerformed(ActionEvent e) {
                     edit();
                 }
             });

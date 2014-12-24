@@ -15,7 +15,12 @@ import java.util.List;
 
 public class RosterTreeNode extends DefaultMutableTreeNode {
     
-    public RosterTreeNode() { super(); }
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7965184515372170059L;
+
+	public RosterTreeNode() { super(); }
     
     /**
      * Initialize the connection to the Roster.

@@ -12,4 +12,9 @@ package jmri.jmrit.display;
 @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class LayoutEditorAction extends jmri.jmrit.display.layoutEditor.LayoutEditorAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -203513041332441489L;
+
 }

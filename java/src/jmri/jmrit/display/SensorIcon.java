@@ -38,7 +38,11 @@ import javax.swing.Timer;
 
 public class SensorIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
 
-    static final public int UNKOWN_FONT_COLOR =      0x03;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6172183103608993048L;
+	static final public int UNKOWN_FONT_COLOR =      0x03;
     static final public int UNKOWN_BACKGROUND_COLOR =    0x04;
     static final public int ACTIVE_FONT_COLOR =          0x05;
     static final public int ACTIVE_BACKGROUND_COLOR =    0x06;
@@ -301,13 +305,23 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         if (isEditable()) {
             if(isIcon()){
                 popup.add(new AbstractAction(Bundle.getMessage("ChangeToText")) {
-                    public void actionPerformed(ActionEvent e) {
+                    /**
+					 * 
+					 */
+					private static final long serialVersionUID = -3390271804671921017L;
+
+					public void actionPerformed(ActionEvent e) {
                         changeLayoutSensorType();
                     }
                 });
             } else {
                 popup.add(new AbstractAction(Bundle.getMessage("ChangeToIcon")) {
-                    public void actionPerformed(ActionEvent e) {
+                    /**
+					 * 
+					 */
+					private static final long serialVersionUID = 4519365584461692910L;
+
+					public void actionPerformed(ActionEvent e) {
                         changeLayoutSensorType();
                     }
                 });
@@ -336,7 +350,12 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             popup.add(CoordinateEdit.getTextEditAction(this, "OverlayText"));
         } else {
             popup.add(new AbstractAction(Bundle.getMessage("SetSensorText")) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = 2546736805586722119L;
+
+				public void actionPerformed(ActionEvent e) {
                     String name = getNameString();
                     sensorTextEdit(name);
                 }
@@ -414,7 +433,12 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     public boolean setEditItemMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Sensor"));
         popup.add(new AbstractAction(txt) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = -2742815748447591539L;
+
+				public void actionPerformed(ActionEvent e) {
                     editItem();
                 }
             });
@@ -478,7 +502,12 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     public boolean setEditIconMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Sensor"));
         popup.add(new AbstractAction(txt) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = 3488631229551835715L;
+
+				public void actionPerformed(ActionEvent e) {
                     edit();
                 }
             });

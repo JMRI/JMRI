@@ -21,7 +21,11 @@ import javax.swing.JPanel;
  */
 public class HexFileFrame extends JmriJFrame {
 
-    // member declarations
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2625562807572301674L;
+	// member declarations
     javax.swing.JButton openHexFileButton = new javax.swing.JButton();
     javax.swing.JButton filePauseButton = new javax.swing.JButton();
     javax.swing.JButton jButton1 = new javax.swing.JButton();

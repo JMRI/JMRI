@@ -12,7 +12,11 @@ import jmri.jmrix.roco.z21.z21TrafficController;
  */
 public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
 
-    final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.roco.z21.z21ActionListBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7715995607748223001L;
+	final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.roco.z21.z21ActionListBundle");
 
     public void initComponents() throws Exception {
         super.initComponents();

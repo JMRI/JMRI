@@ -13,7 +13,12 @@ import javax.swing.Icon;
  */
 public class PanelProAction extends JmriAbstractAction {
 
-    public PanelProAction(String s, WindowInterface wi) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 702355860636134517L;
+
+	public PanelProAction(String s, WindowInterface wi) {
     	super(s, wi);
     }
      

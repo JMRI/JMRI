@@ -32,6 +32,11 @@ import jmri.util.JmriJFrame;
 public class MemoryTableAction extends AbstractTableAction {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6680411522071265325L;
+
+	/**
      * Create an action with a specific title.
      * <P>
      * Note that the argument is the Action title, not the title of the
@@ -56,7 +61,12 @@ public class MemoryTableAction extends AbstractTableAction {
      */
     protected void createModel() {
         m = new BeanTableDataModel() {
-            public String getValue(String name) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -7916653024701722253L;
+
+			public String getValue(String name) {
                 Memory mem = InstanceManager.memoryManagerInstance().getBySystemName(name);
                 if (mem == null) return "?";
             	Object m = mem.getValue();

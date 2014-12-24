@@ -36,7 +36,12 @@ import java.util.ResourceBundle;
 
 public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements PropertyChangeListener {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4060876707415116653L;
+
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
 
     SignalMastLogic sml;
     SignalMast sourceMast;
@@ -180,7 +185,12 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
     
     public class SignalMastAppearanceModel extends AbstractTableModel implements PropertyChangeListener
     {
-        SignalMastAppearanceModel(){
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1161557965839973328L;
+
+		SignalMastAppearanceModel(){
             super();
             if(sml!=null)
                 sml.addPropertyChangeListener(this);

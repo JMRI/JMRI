@@ -22,7 +22,13 @@ import javax.swing.table.*;
  */
 
 public class TieTableModel extends AbstractTableModel {
-    static    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3376418873299331229L;
+
+
+	static    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");
 
     
     public static final int USERNAME_COLUMN = 0;

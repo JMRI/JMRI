@@ -34,7 +34,11 @@ import jmri.util.JmriJFrame;
  */
 public class PaneNewProgAction extends AbstractAction {
 
-    Object o1, o2, o3, o4;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4761829946106004226L;
+	Object o1, o2, o3, o4;
 
     public PaneNewProgAction() {
         this("DecoderPro service programmer");
@@ -64,13 +68,23 @@ public class PaneNewProgAction extends AbstractAction {
 
         // new Loco on programming track
         JPanel pane1 = new LocoSelTreePane(null){
-                protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = -3304246544040107635L;
+
+				protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
                                                 String filename) {
                     String title = SymbolicProgBundle.getMessage("FrameNewEntryTitle");
                     JFrame p = new PaneProgFrame(decoderFile, re,
                                                  title, "programmers"+File.separator+filename+".xml",
                                                  null, false){
-                        protected JPanel getModePane() { return null; }
+                        /**
+													 * 
+													 */
+													private static final long serialVersionUID = -4093978952107929146L;
+
+						protected JPanel getModePane() { return null; }
                     };
                     p.pack();
                     p.setVisible(true);

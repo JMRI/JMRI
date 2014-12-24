@@ -35,7 +35,12 @@ IF:basic:one-searchlight:(IH1)(IH2)
  */
 public class SignalHeadSignalMast extends AbstractSignalMast implements java.beans.VetoableChangeListener {
 
-    public SignalHeadSignalMast(String systemName, String userName) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2589115616693665064L;
+
+	public SignalHeadSignalMast(String systemName, String userName) {
         super(systemName, userName);
         configureFromName(systemName);
     }

@@ -14,7 +14,12 @@ import org.slf4j.LoggerFactory;
  */
 public class TabbedPreferencesFrame extends jmri.util.JmriJFrame {
     
-    public String getTitle() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4861869203791661041L;
+
+	public String getTitle() {
         return jmri.InstanceManager.tabbedPreferencesInstance().getTitle();
     
     }

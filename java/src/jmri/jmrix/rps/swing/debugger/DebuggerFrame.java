@@ -20,7 +20,12 @@ import java.awt.*;
 public class DebuggerFrame extends jmri.util.JmriJFrame 
             implements ReadingListener, MeasurementListener {
 
-    public DebuggerFrame() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4663988863071182111L;
+
+	public DebuggerFrame() {
         super();
         
         NUMSENSORS = Engine.instance().getMaxReceiverNumber();

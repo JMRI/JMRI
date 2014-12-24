@@ -34,6 +34,11 @@ import jmri.util.JmriJFrame;
 public class IdTagTableAction extends AbstractTableAction {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1575248820674993316L;
+
+	/**
      * Create an action with a specific title.
      * <P>
      * Note that the argument is the Action title, not the title of the
@@ -61,7 +66,11 @@ public class IdTagTableAction extends AbstractTableAction {
     protected void createModel() {
         m = new BeanTableDataModel() {
 
-            public static final int WHERECOL = NUMCOLUMN;
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 3809491722828887091L;
+			public static final int WHERECOL = NUMCOLUMN;
             public static final int WHENCOL = WHERECOL + 1;
             public static final int CLEARCOL = WHENCOL + 1;
 

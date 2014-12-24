@@ -19,7 +19,12 @@ import javax.swing.*;
  */
 public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
 
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5162692735562566371L;
+
+	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolBundle");
     
     JTextField number;
     JButton setNN;
@@ -107,7 +112,12 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
-        public Default() {
+        /**
+			 * 
+			 */
+			private static final long serialVersionUID = 7778206986212539509L;
+
+		public Default() {
             super(ResourceBundle.getBundle("jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolBundle").getString("Title"), 
                 new jmri.util.swing.sdi.JmriJFrameInterface(), 
                 NodeConfigToolPane.class.getName(), 

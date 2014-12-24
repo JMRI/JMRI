@@ -24,7 +24,12 @@ import org.slf4j.LoggerFactory;
 
 public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, CanPanelInterface {
 
-    String nextLine; 
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4848969197291158674L;
+
+	String nextLine; 
     public HubPane() {
         super();
         hub = new Hub() {
@@ -164,7 +169,12 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
-        public Default() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -8930726866772302244L;
+
+		public Default() {
             super("Openlcb Hub Control", 
                 new jmri.util.swing.sdi.JmriJFrameInterface(), 
                 HubPane.class.getName(), 

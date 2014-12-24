@@ -43,7 +43,11 @@ import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
  */
 public class AudioListenerFrame extends AbstractAudioFrame {
 
-    JPanelVector3f position = new JPanelVector3f(rba.getString("LabelPosition"),
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4006867664747801687L;
+	JPanelVector3f position = new JPanelVector3f(rba.getString("LabelPosition"),
                                                  rba.getString("UnitUnits"));
     JPanelVector3f velocity = new JPanelVector3f(rba.getString("LabelVelocity"),
                                                  rba.getString("UnitU/S"));

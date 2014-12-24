@@ -16,7 +16,11 @@ import jmri.jmrix.jmriclient.JMRIClientTrafficController;
  */
 public class JMRIClientMonFrame extends jmri.jmrix.AbstractMonFrame implements JMRIClientListener {
 
-        protected JMRIClientTrafficController tc = null;
+        /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2892712948852673352L;
+		protected JMRIClientTrafficController tc = null;
 
 	public JMRIClientMonFrame(jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo memo) {
 		super();

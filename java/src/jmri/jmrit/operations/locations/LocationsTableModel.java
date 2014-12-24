@@ -23,6 +23,11 @@ import jmri.util.table.ButtonRenderer;
  */
 public class LocationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8385333181895879131L;
+
 	LocationManager manager; // There is only one manager
 
 	// Defines the columns

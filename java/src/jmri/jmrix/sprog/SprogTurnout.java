@@ -23,6 +23,11 @@ import jmri.Turnout;
 public class SprogTurnout extends AbstractTurnout {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8636298470001846099L;
+
+	/**
      * Sprog turnouts use the NMRA number (0-511) as their numerical identification.
      */
     public SprogTurnout(int number) {

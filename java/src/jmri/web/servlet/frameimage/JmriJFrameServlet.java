@@ -53,7 +53,11 @@ import org.slf4j.LoggerFactory;
  */
 public class JmriJFrameServlet extends HttpServlet {
 
-    static String clickRetryTime = Integer.toString(WebServerManager.getWebServerPreferences().getClickDelay());
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8777952493753632897L;
+	static String clickRetryTime = Integer.toString(WebServerManager.getWebServerPreferences().getClickDelay());
     static String noclickRetryTime = Integer.toString(WebServerManager.getWebServerPreferences().getRefreshDelay());
     static List<String> disallowedFrames = WebServerManager.getWebServerPreferences().getDisallowedFrames();
     boolean useAjax = WebServerManager.getWebServerPreferences().useAjax();

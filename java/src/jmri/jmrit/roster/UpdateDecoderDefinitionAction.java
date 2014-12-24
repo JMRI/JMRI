@@ -21,7 +21,11 @@ import java.util.List;
  */
 public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
 
-    public UpdateDecoderDefinitionAction(String s, WindowInterface wi) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2751913119792322837L;
+	public UpdateDecoderDefinitionAction(String s, WindowInterface wi) {
         super(s, wi);
     }
 

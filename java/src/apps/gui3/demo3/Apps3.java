@@ -277,19 +277,34 @@ public class Apps3 {
         JToolBar toolBar = new JToolBar("(Close to dock)", JToolBar.VERTICAL);
         
         toolBar.add(new JButton(new AbstractAction("Preferences"){
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = 2959095773667629933L;
+
+				public void actionPerformed(ActionEvent e) {
                                         addPreferencesFrame();
                 }
             }));
 
         toolBar.add(new JButton(new AbstractAction("sample button 2"){
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1914116996373604862L;
+
+				public void actionPerformed(ActionEvent e) {
                                         addASampleFrame();
                 }
             }));
 
         toolBar.add(new JButton(new AbstractAction("sample button 3"){
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = 6176456566676222024L;
+
+				public void actionPerformed(ActionEvent e) {
                                         addASampleFrame();
                 }
             }));

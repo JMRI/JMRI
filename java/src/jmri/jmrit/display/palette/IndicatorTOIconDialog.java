@@ -25,7 +25,11 @@ import jmri.jmrit.catalog.NamedIcon;
 
 public class IndicatorTOIconDialog extends IconDialog {
     
-    String _key;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6760221740048137437L;
+	String _key;
 
     /**
     * Constructor for existing family to change icons, add/delete icons, or to delete the family

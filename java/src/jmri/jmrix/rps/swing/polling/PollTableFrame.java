@@ -18,7 +18,11 @@ import java.util.ResourceBundle;
 
 public class PollTableFrame extends jmri.util.JmriJFrame  {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.rps.swing.polling.PollingBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5780499097528063540L;
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.rps.swing.polling.PollingBundle");
     PollTablePane pane;
     
     public PollTableFrame() {

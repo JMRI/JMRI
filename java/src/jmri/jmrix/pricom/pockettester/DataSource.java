@@ -27,7 +27,11 @@ import java.io.DataInputStream;
  */
 public class DataSource extends jmri.util.JmriJFrame {
 
-    static DataSource existingInstance;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6253194020952470551L;
+	static DataSource existingInstance;
     
     /**
      * Provide access to a defined DataSource object.
@@ -176,7 +180,12 @@ public class DataSource extends jmri.util.JmriJFrame {
         
         { 
             MonitorAction a = new MonitorAction() {
-                public void connect(DataListener l) {
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = -1633077392080446971L;
+
+				public void connect(DataListener l) {
                     DataSource.this.addListener(l);
                 }
             };
@@ -187,7 +196,12 @@ public class DataSource extends jmri.util.JmriJFrame {
         
         {
             PacketTableAction p = new PacketTableAction() {
-                public void connect(DataListener l) {
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = 6577986261540429898L;
+
+				public void connect(DataListener l) {
                     DataSource.this.addListener(l);
                     ((PacketTableFrame)l).setSource(DataSource.this);
                 }
@@ -199,7 +213,12 @@ public class DataSource extends jmri.util.JmriJFrame {
         
         {
             StatusAction a = new StatusAction() {
-                public void connect(StatusFrame l) {
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = -8975013830132142941L;
+
+				public void connect(StatusFrame l) {
                     DataSource.this.addListener(l);
                     l.setSource(DataSource.this);
                 }

@@ -34,7 +34,11 @@ import jmri.util.com.sun.TableSorter;
  */
 public class BeanTableFrame extends jmri.util.JmriJFrame {
 
-    BeanTableDataModel		dataModel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 957809881083826909L;
+	BeanTableDataModel		dataModel;
     JTable			dataTable;
     JScrollPane 		dataScroll;
     Box bottomBox;		// panel at bottom for extra buttons etc

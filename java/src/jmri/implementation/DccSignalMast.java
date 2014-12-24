@@ -41,7 +41,12 @@ IF$dsm:basic:one-searchlight:(123)
  */
 public class DccSignalMast extends AbstractSignalMast {
 
-  public DccSignalMast( String sys, String user ) {
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2711857995161461274L;
+
+public DccSignalMast( String sys, String user ) {
     super(sys, user);
     configureFromName(sys);
   }

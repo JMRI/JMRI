@@ -37,6 +37,10 @@ import jmri.util.ConnectionNameFromSystemName;
 public class ReporterTableAction extends AbstractTableAction {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -9217844966853497641L;
+	/**
      * Create an action with a specific title.
      * <P>
      * Note that the argument is the Action title, not the title of the
@@ -67,7 +71,11 @@ public class ReporterTableAction extends AbstractTableAction {
     protected void createModel() {
         m = new BeanTableDataModel() {
 
-            public static final int LASTREPORTCOL = NUMCOLUMN;
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -6712845607416144730L;
+			public static final int LASTREPORTCOL = NUMCOLUMN;
 
             public String getValue(String name) {
                 Object value;

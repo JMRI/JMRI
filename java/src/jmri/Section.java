@@ -107,7 +107,12 @@ import java.beans.PropertyChangeListener;
 public class Section extends AbstractNamedBean
     implements  java.io.Serializable {
 
-    public Section(String systemName, String userName) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8977065652532075907L;
+
+	public Section(String systemName, String userName) {
         super(systemName.toUpperCase(), userName);
     }
 

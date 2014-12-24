@@ -16,6 +16,11 @@ import java.beans.PropertyChangeListener;
  */
 public class ComboCheckBox extends JCheckBox {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2689282114387973266L;
+
 	ComboCheckBox(JComboBox box, EnumVariableValue var) {
 		super();
 		_var = var;

@@ -25,6 +25,11 @@ import org.slf4j.LoggerFactory;
 public class PanelMenu extends JMenu {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2195917129303948988L;
+
+	/**
      * The single PanelMenu must now be accessed via the instance() method
      */
     private PanelMenu() {

@@ -26,7 +26,12 @@ import javax.swing.JTextField;
  */
 public class MemoryFrameAction extends AbstractAction {
 
-    public MemoryFrameAction(String s) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7755576646931522800L;
+
+	public MemoryFrameAction(String s) {
         super(s);
     }
     public MemoryFrameAction() {

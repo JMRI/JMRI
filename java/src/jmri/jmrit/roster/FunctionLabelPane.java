@@ -26,7 +26,12 @@ import org.slf4j.LoggerFactory;
  */
 public class FunctionLabelPane extends javax.swing.JPanel {
 
-    RosterEntry re;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4374849205711874964L;
+
+	RosterEntry re;
 
     JTextField[] labels;
     JCheckBox[] lockable;

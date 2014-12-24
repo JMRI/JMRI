@@ -13,7 +13,12 @@ import javax.swing.JMenu;
  * @version     $Revision$
  */
 public class JMRIClientMenu extends JMenu {
-    public JMRIClientMenu(String name,jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo memo) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5861232083288110754L;
+
+	public JMRIClientMenu(String name,jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo memo) {
         this(memo);
         setText(name);
     }

@@ -17,7 +17,11 @@ import jmri.jmrix.can.*;
 public class OlcbTurnout extends jmri.implementation.AbstractTurnout 
                     implements CanListener {
 
-    OlcbAddress addrThrown;   // go to thrown state
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2709042631708878196L;
+	OlcbAddress addrThrown;   // go to thrown state
     OlcbAddress addrClosed;   // go to closed state
 
 	protected OlcbTurnout(String prefix, String address, TrafficController tc) {

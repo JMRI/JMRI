@@ -18,7 +18,11 @@ import org.slf4j.LoggerFactory;
 
 public class LinkingLabel extends PositionableLabel implements LinkingObject {
 
-    public LinkingLabel(String s, Editor editor, String url) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4005690507923911871L;
+	public LinkingLabel(String s, Editor editor, String url) {
         super(s, editor);
         this.url = url;
         setPopupUtility(new PositionablePopupUtil(this, this));

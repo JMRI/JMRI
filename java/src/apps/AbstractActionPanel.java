@@ -39,7 +39,11 @@ import java.util.List;
  */
 abstract public class AbstractActionPanel extends JPanel {
 
-    JPanel self;  // used for synchronization
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5092031602319689380L;
+	JPanel self;  // used for synchronization
     protected ResourceBundle rb;
 
     String removeButtonKey;
@@ -100,7 +104,11 @@ abstract public class AbstractActionPanel extends JPanel {
     abstract AbstractActionModel getNewModel();
 
     public class Item extends JPanel implements ActionListener {
-        JButton removeButton = new JButton(rb.getString(removeButtonKey));
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -2499516926618516181L;
+		JButton removeButton = new JButton(rb.getString(removeButtonKey));
             
         Item() {
             setLayout(new FlowLayout());

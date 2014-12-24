@@ -38,7 +38,11 @@ import jmri.util.JmriJFrame;
  */
 public class PaneOpsProgAction 	extends AbstractAction {
 
-    Object o1, o2, o3, o4;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2255562820678458397L;
+	Object o1, o2, o3, o4;
     JLabel statusLabel;
 
     public PaneOpsProgAction() {
@@ -78,7 +82,12 @@ public class PaneOpsProgAction 	extends AbstractAction {
         // known loco on main track
         JPanel pane1 = new KnownLocoSelPane(false){  // no ident in ops mode yet
 
-            protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 2816965509649056116L;
+
+			protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
                                                 String filename) {
                 String title = java.text.MessageFormat.format(SymbolicProgBundle.getMessage("FrameOpsProgrammerTitle"),
                                                         new Object[]{re.getId()});

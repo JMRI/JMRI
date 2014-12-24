@@ -22,7 +22,12 @@ import jmri.jmrix.secsi.SerialSensorManager;
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.secsi.nodeconfig.NodeConfigBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3775018049333679363L;
+
+	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.secsi.nodeconfig.NodeConfigBundle");
 
     protected javax.swing.JTextField nodeAddrField = new javax.swing.JTextField(3);
     protected javax.swing.JLabel nodeAddrStatic = new javax.swing.JLabel("000");

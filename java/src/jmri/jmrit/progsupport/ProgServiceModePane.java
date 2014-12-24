@@ -42,7 +42,11 @@ public class ProgServiceModePane extends ProgModeSelector implements java.beans.
 
     // GUI member declarations
 
-    ButtonGroup modeGroup 		    = new ButtonGroup();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 9075947253729508706L;
+	ButtonGroup modeGroup 		    = new ButtonGroup();
     JRadioButton addressButton  	= new JRadioButton();
     JRadioButton pagedButton    	= new JRadioButton();
     JRadioButton directBitButton   	= new JRadioButton();

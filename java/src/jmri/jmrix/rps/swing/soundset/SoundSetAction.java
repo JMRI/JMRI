@@ -16,6 +16,11 @@ import java.awt.event.ActionEvent;
  */
 public class SoundSetAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3969609830068349700L;
+
 	public SoundSetAction(String s) { super(s);}
 
     public SoundSetAction() {

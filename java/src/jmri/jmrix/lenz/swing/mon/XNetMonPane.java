@@ -23,7 +23,12 @@ public class XNetMonPane extends jmri.jmrix.
   AbstractMonPane implements XNetListener
 {
 
-  final java.util.ResourceBundle rb =
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3065525281171843991L;
+
+final java.util.ResourceBundle rb =
     java.util.ResourceBundle.
     getBundle ("jmri.jmrix.lenz.swing.XNetSwingBundle");
 
@@ -1739,7 +1744,12 @@ public class XNetMonPane extends jmri.jmrix.
   static public class Default extends jmri.util.swing.JmriNamedPaneAction
   {
 
-    public Default ()
+    /**
+		 * 
+		 */
+		private static final long serialVersionUID = 8987187719675249342L;
+
+	public Default ()
     {
       super (java.util.ResourceBundle.
 	     getBundle ("jmri.jmrix.lenz.swing.XNetSwingBundle").

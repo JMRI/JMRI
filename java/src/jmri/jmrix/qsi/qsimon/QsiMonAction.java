@@ -18,6 +18,11 @@ import javax.swing.AbstractAction;
 
 public class QsiMonAction 			extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6725018075130721947L;
+
 	public QsiMonAction(String s) { super(s);}
 
 	public QsiMonAction() { 

@@ -27,7 +27,11 @@ import jmri.util.FileUtil;
  */
 public class RosterConfigPane extends JPanel {
 
-    JLabel filename;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8185051724790761792L;
+	JLabel filename;
     JTextField owner = new JTextField(20);
     JFileChooser fc;
     JPanel parent;
@@ -62,7 +66,12 @@ public class RosterConfigPane extends JPanel {
 
         parent = this;
         b.addActionListener(new AbstractAction() {
-            public void actionPerformed(ActionEvent e) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -1593137799319787064L;
+
+			public void actionPerformed(ActionEvent e) {
                 java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
                 // prompt with instructions
                 if (JOptionPane.OK_OPTION != JOptionPane.showConfirmDialog(parent.getTopLevelAncestor(), 
@@ -84,7 +93,12 @@ public class RosterConfigPane extends JPanel {
         p.add(b);
         b = new JButton(rb.getString("ButtonReset"));
         b.addActionListener(new AbstractAction() {
-            public void actionPerformed(ActionEvent e) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 898239723894109746L;
+
+			public void actionPerformed(ActionEvent e) {
                 filename.setText("");
                 validate();
                 if (getTopLevelAncestor()!=null) ((JFrame)getTopLevelAncestor()).pack();

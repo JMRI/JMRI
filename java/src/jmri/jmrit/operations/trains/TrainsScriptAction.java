@@ -15,6 +15,11 @@ import javax.swing.AbstractAction;
  */
 public class TrainsScriptAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4651831842002920942L;
+
 	public TrainsScriptAction(String s, TrainsTableFrame frame) {
 		super(s);
 		this.frame = frame;

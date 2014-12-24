@@ -15,7 +15,12 @@ import javax.swing.*;
  */
 public class SimpleServerFrame extends jmri.util.JmriJFrame {
 
-    public SimpleServerFrame() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8501305524191992037L;
+
+	public SimpleServerFrame() {
         this("Jmri Simple Server Starter");
     }
 

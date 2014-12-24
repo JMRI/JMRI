@@ -19,7 +19,11 @@ import java.util.ResourceBundle;
  */
 public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements LocoNetListener {
 
-    static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.loconet.pr3.Pr3Bundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8933317271320213820L;
+	static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.loconet.pr3.Pr3Bundle");
 
     public String getHelpTarget() { return "package.jmri.jmrix.loconet.pr3.swing.Pr3Select"; }
     public String getTitle() { 
@@ -113,7 +117,12 @@ public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements L
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
-        public Default() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -3595956373670767395L;
+
+		public Default() {
             super(LocoNetBundle.bundle().getString("MenuItemPr3ModeSelect"), 
                 new jmri.util.swing.sdi.JmriJFrameInterface(), 
                 Pr3SelectPane.class.getName(), 

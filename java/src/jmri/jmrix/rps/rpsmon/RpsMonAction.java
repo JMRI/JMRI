@@ -15,6 +15,11 @@ import java.awt.event.ActionEvent;
 
 public class RpsMonAction 			extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8976860321295273855L;
+
 	public RpsMonAction(String s) { super(s);}
 
     public RpsMonAction() {

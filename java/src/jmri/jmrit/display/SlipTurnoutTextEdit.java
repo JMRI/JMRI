@@ -26,6 +26,10 @@ import jmri.util.JmriJFrame;
 public class SlipTurnoutTextEdit extends JmriJFrame 
 {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4406026348970757874L;
 	SlipTurnoutIcon pl; 	// layout positional label tracked by this frame
 	static final String INIT = null;
 	String oldLWUE = INIT;

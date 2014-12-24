@@ -16,7 +16,11 @@ import jmri.util.JmriJFrame;
  */
 public class LoaderFrame extends JmriJFrame {
 
-    // GUI member declarations
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2659741505895230693L;
+	// GUI member declarations
     LoaderPane pane	= new LoaderPane();
 
     public LoaderFrame() {

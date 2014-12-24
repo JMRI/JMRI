@@ -17,7 +17,12 @@ import javax.swing.*;
  */
 public class FileHistoryAction extends AbstractAction {
 
-    public FileHistoryAction(String s) { 
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7063215106558684398L;
+
+	public FileHistoryAction(String s) { 
 	    super(s);
     }
 
@@ -26,7 +31,12 @@ public class FileHistoryAction extends AbstractAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        JFrame frame = new JmriJFrame(){};  // JmriJFrame to ensure fits on screen
+        JFrame frame = new JmriJFrame(){
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 6117481384011187775L;};  // JmriJFrame to ensure fits on screen
                 
         JTextArea pane = new JTextArea();
         pane.append("\n"); // add a little space at top

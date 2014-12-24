@@ -12,5 +12,10 @@ package jmri;
 @Deprecated
 @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")  // duplicate name OK while deprecated, for XML config migration
 public class GuiLafConfigPane extends apps.GuiLafConfigPane {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -758075191993702248L;
 }
 

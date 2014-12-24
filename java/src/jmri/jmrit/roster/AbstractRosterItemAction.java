@@ -28,7 +28,12 @@ import jmri.jmrit.roster.swing.RosterEntryComboBox;
  */
 abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstractAction {
 
-    public AbstractRosterItemAction(String pName, Component pWho) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8258669241681051088L;
+
+	public AbstractRosterItemAction(String pName, Component pWho) {
         super(pName);
         mParent = pWho;
     }

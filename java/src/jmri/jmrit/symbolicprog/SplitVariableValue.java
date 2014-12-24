@@ -422,7 +422,12 @@ public class SplitVariableValue extends VariableValue
      */
     public class VarTextField extends JTextField {
 
-        VarTextField(Document doc, String text, int col, SplitVariableValue var) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -4853000377889737952L;
+
+		VarTextField(Document doc, String text, int col, SplitVariableValue var) {
             super(doc, text, col);
             _var = var;
             // get the original color right

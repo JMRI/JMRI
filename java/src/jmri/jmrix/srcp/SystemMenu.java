@@ -13,7 +13,12 @@ import javax.swing.JMenu;
  * @version     $Revision$
  */
 public class SystemMenu extends JMenu {
-    public SystemMenu(String name) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6889528034410639602L;
+
+	public SystemMenu(String name) {
         this();
         setText(name);
     }

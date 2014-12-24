@@ -16,7 +16,11 @@ import org.slf4j.LoggerFactory;
  */
 public class WebServerAction extends JmriAbstractAction {
 
-    ServerThread serverThread = null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6023025995086573898L;
+	ServerThread serverThread = null;
     static Logger log = LoggerFactory.getLogger(WebServerAction.class);
 
     public WebServerAction(String s, WindowInterface wi) {

@@ -440,7 +440,12 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      */
     public static class VarComboBox extends JComboBox {
 
-        VarComboBox(ComboBoxModel m, EnumVariableValue var) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -133896999775526954L;
+
+		VarComboBox(ComboBoxModel m, EnumVariableValue var) {
             super(m);
             _var = var;
             _l = new java.beans.PropertyChangeListener() {
@@ -500,7 +505,12 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     }
     
     class TreeLeafNode extends DefaultMutableTreeNode {
-        TreeLeafNode(String name, int index) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 4826729728567652557L;
+
+		TreeLeafNode(String name, int index) {
             super(name);
             this.index = index;
         }

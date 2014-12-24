@@ -47,6 +47,10 @@ import jmri.util.JmriJFrame;
 
 public class SignalGroupTableAction extends AbstractTableAction implements PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3907892888059515176L;
 	static final ResourceBundle rbx = ResourceBundle
 			.getBundle("jmri.jmrit.beantable.LogixTableBundle");
 
@@ -89,7 +93,11 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
      */
     protected void createModel() {
         m = new BeanTableDataModel() {
-            static public final int COMMENTCOL = 2;
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 5080048505014587453L;
+			static public final int COMMENTCOL = 2;
             static public final int DELETECOL = 3;
 		    static public final int ENABLECOL = 4;
 		    static public final int SETCOL = 5;
@@ -853,7 +861,12 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     
     public class SignalMastAppearanceModel extends AbstractTableModel implements PropertyChangeListener
     {
-        public Class<?> getColumnClass(int c) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -8196267502015148289L;
+
+		public Class<?> getColumnClass(int c) {
             if (c == INCLUDE_COLUMN) {
                 return Boolean.class;
             }
@@ -948,7 +961,11 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
      */
     public abstract class SignalGroupOutputModel extends AbstractTableModel implements PropertyChangeListener
     {
-        public Class<?> getColumnClass(int c) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -7170451044063687952L;
+		public Class<?> getColumnClass(int c) {
             if (c == INCLUDE_COLUMN) {
                 return Boolean.class;
             }
@@ -983,7 +1000,12 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     
     class SignalGroupSignalModel extends SignalGroupOutputModel
     {
-        SignalGroupSignalModel() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 3600677786771301391L;
+
+		SignalGroupSignalModel() {
             InstanceManager.signalHeadManagerInstance().addPropertyChangeListener(this);
         }
         

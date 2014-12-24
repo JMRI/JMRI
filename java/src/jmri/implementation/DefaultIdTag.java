@@ -37,7 +37,11 @@ import org.jdom2.Element;
  */
 public class DefaultIdTag extends AbstractIdTag {
 
-    private int _currentState = UNKNOWN;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7077891597878576793L;
+	private int _currentState = UNKNOWN;
 
     public DefaultIdTag(String systemName) {
         super(systemName.toUpperCase());

@@ -44,7 +44,12 @@ import jmri.Light;
 public abstract class AbstractLight extends AbstractNamedBean
         implements Light, java.io.Serializable {
 
-    public AbstractLight(String systemName, String userName) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3863736856456563301L;
+
+	public AbstractLight(String systemName, String userName) {
         super(systemName.toUpperCase(), userName);
     }
 

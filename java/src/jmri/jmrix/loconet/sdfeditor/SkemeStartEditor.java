@@ -15,7 +15,12 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
 
 class SkemeStartEditor extends SdfMacroEditor {
 
-    public SkemeStartEditor(SdfMacro inst) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4488606516130401644L;
+
+	public SkemeStartEditor(SdfMacro inst) {
         super(inst);
         // No editor needed, leave default message in place.
     }

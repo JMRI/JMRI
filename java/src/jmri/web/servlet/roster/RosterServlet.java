@@ -56,7 +56,12 @@ import org.slf4j.LoggerFactory;
  */
 public class RosterServlet extends HttpServlet {
 
-    private ObjectMapper mapper;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -178879218045310132L;
+
+	private ObjectMapper mapper;
 
     static Logger log = LoggerFactory.getLogger(RosterServlet.class.getName());
 

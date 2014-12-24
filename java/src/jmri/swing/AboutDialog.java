@@ -22,7 +22,11 @@ import jmri.jmrix.ConnectionConfig;
  */
 public class AboutDialog extends JDialog {
 
-    ConnectionConfig[] connection = {null, null, null, null};
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -769569735384243080L;
+	ConnectionConfig[] connection = {null, null, null, null};
 
     // this should probably be changed to a JmriAbstractAction that opens a JOptionPane with the contents and an OK button instead.
     public AboutDialog(JFrame frame, boolean modal) {

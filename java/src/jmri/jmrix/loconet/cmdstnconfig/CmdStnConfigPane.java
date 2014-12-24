@@ -37,7 +37,11 @@ import java.util.ResourceBundle;
  */
 public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
 
-  int CONFIG_SLOT = 127 ;
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4164148406541743498L;
+int CONFIG_SLOT = 127 ;
   int MIN_OPTION = 1 ;
   int MAX_OPTION = 72 ;
   String LabelT = "T";

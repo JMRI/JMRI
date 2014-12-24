@@ -46,7 +46,12 @@ import org.slf4j.LoggerFactory;
  * @version			$Revision$
  */
 public class TreePanel extends JPanel {
-    public TreePanel() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8786948522926033006L;
+
+	public TreePanel() {
 
         super(true);
 

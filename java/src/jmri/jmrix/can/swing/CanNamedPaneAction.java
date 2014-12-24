@@ -19,6 +19,11 @@ import jmri.util.swing.*;
 public class CanNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5423896954824804035L;
+
+	/**
      * Enhanced constructor for placing the pane in various 
      * GUIs
      */

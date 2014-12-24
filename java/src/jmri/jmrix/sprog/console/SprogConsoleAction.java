@@ -16,6 +16,10 @@ import javax.swing.AbstractAction;
  */
 public class SprogConsoleAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3259877478074718099L;
 	public SprogConsoleAction(String s) { super(s);}
 
     public void actionPerformed(ActionEvent e) {

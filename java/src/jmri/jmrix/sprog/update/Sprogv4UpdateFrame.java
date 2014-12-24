@@ -21,7 +21,12 @@ public class Sprogv4UpdateFrame
     extends SprogUpdateFrame
     implements SprogVersionListener {
 
-  public Sprogv4UpdateFrame() {
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2440054586566473704L;
+
+public Sprogv4UpdateFrame() {
     super();
   }
 

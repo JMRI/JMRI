@@ -19,7 +19,11 @@ import java.awt.geom.*;
 
 public class AffineEntryPanel extends javax.swing.JPanel {
 
-    JTextField m00 = new JTextField(8);
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1282006269847211098L;
+	JTextField m00 = new JTextField(8);
     JTextField m01 = new JTextField(8);
     JTextField m02 = new JTextField(8);
     JTextField m10 = new JTextField(8);

@@ -15,7 +15,11 @@ import javax.swing.AbstractAction;
  * @version         $Revision$
  */
 public class LoaderPanelAction extends AbstractAction {
-    static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.pricom.downloader.Loader");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3172906837130428976L;
+	static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.pricom.downloader.Loader");
 
     public LoaderPanelAction(String s) {
 	    super(s);

@@ -35,7 +35,11 @@ import jmri.jmrit.catalog.NamedIcon;
 
 public class SignalMastItemPanel extends TableItemPanel implements ListSelectionListener {
 
-    SignalMast _mast;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7308622179668168349L;
+	SignalMast _mast;
 
     public SignalMastItemPanel(JmriJFrame parentFrame, String  type, String family, PickListModel model, Editor editor) {
         super(parentFrame, type, family, model, editor);
@@ -223,7 +227,11 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
 
     protected class IconDragJLabel extends DragJLabel {
 
-        public IconDragJLabel(DataFlavor flavor) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -2350506428940610321L;
+		public IconDragJLabel(DataFlavor flavor) {
             super(flavor);
         }
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException,IOException {

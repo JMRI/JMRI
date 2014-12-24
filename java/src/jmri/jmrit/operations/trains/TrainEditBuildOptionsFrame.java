@@ -45,6 +45,11 @@ import jmri.jmrit.operations.setup.Setup;
 
 public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9083947998710208542L;
+
 	Train _train = null;
 
 	JPanel panelOwnerNames = new JPanel();

@@ -11,7 +11,12 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ProfileTableModel extends AbstractTableModel implements PropertyChangeListener {
 
-    @SuppressWarnings("LeakingThisInConstructor")
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4425501077376055668L;
+
+	@SuppressWarnings("LeakingThisInConstructor")
     public ProfileTableModel() {
         ProfileManager.defaultManager().addPropertyChangeListener(this);
     }

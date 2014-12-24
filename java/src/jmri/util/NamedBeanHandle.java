@@ -11,7 +11,11 @@ package jmri.util;
 
 public class NamedBeanHandle<T> implements java.io.Serializable {
 
-    public NamedBeanHandle(String name, T bean) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7220729204802973081L;
+	public NamedBeanHandle(String name, T bean) {
         this.name = name;
         this.bean = bean;
     }

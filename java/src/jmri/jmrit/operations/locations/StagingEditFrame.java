@@ -21,6 +21,10 @@ import javax.swing.JPanel;
 
 public class StagingEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1540001164578122992L;
 	// check boxes
 	JCheckBox swapLoadsCheckBox = new JCheckBox(Bundle.getMessage("SwapCarLoads"));
 	JCheckBox emptyCheckBox = new JCheckBox(Bundle.getMessage("EmptyDefaultCarLoads"));

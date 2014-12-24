@@ -44,7 +44,11 @@ import jmri.jmrit.logix.PortalManager;
 
 public class SignalTableModel extends AbstractTableModel {
 
-    public static final int NAME_COLUMN = 0;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1150140866074591437L;
+	public static final int NAME_COLUMN = 0;
     public static final int FROM_BLOCK_COLUMN = 1;
     public static final int PORTAL_COLUMN = 2;
     public static final int TO_BLOCK_COLUMN = 3;

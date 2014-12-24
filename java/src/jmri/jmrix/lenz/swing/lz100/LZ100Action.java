@@ -19,7 +19,11 @@ import java.util.ResourceBundle;
  */
 public class LZ100Action extends AbstractAction {
 
-    jmri.jmrix.lenz.XNetSystemConnectionMemo _memo = null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5554346432287622638L;
+	jmri.jmrix.lenz.XNetSystemConnectionMemo _memo = null;
 
     public LZ100Action(String s,jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
        super(s);

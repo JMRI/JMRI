@@ -17,6 +17,10 @@ import jmri.jmrix.jmriclient.JMRIClientReply;
 
 public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.jmriclient.JMRIClientListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5887061407912166629L;
 	// member declarations
 	javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
 	javax.swing.JButton sendButton = new javax.swing.JButton();

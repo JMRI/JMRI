@@ -19,6 +19,11 @@ import jmri.util.swing.*;
 public class PanelProAction extends jmri.util.swing.JmriAbstractAction {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3146242803186853192L;
+
+	/**
      * Enhanced constructor for placing the pane in various 
      * GUIs
      */

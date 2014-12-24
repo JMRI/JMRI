@@ -20,7 +20,11 @@ public class EcosSensor extends AbstractSensor {
 
     //final static String prefix = "US";
 
-    int objectNumber = 0;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 896698049236927292L;
+	int objectNumber = 0;
 
     public EcosSensor(String systemName, String userName) {
         super(systemName, userName);

@@ -19,6 +19,11 @@ import jmri.util.swing.*;
 public class ThreePaneTLRWindow extends jmri.util.JmriJFrame {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4077174625408158411L;
+
+	/**
      * Create and initialize a multi-pane GUI window.
      */
     public ThreePaneTLRWindow(String name, String menubarFile, String toolbarFile) {

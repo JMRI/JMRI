@@ -18,7 +18,12 @@ import javax.swing.*;
  */
 public class SensorEditAction extends BeanEditAction {
     
-    public String helpTarget() { return "package.jmri.jmrit.beantable.SensorTable"; } //IN18N
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3309738587501961767L;
+
+	public String helpTarget() { return "package.jmri.jmrit.beantable.SensorTable"; } //IN18N
     
     SensorDebounceEditAction debounce;
     

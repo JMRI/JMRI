@@ -46,6 +46,10 @@ import org.slf4j.LoggerFactory;
  */
 public class AddressPanel extends JInternalFrame implements ThrottleListener, PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 522758580232523066L;
 	private DccThrottle throttle;
 	private DccThrottle consistThrottle;
 

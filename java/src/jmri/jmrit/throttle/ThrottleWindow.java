@@ -43,7 +43,11 @@ import org.jdom2.Element;
 // Should be named ThrottleFrame, but ThrottleFrame already exit, hence ThrottleWindow
 public class ThrottleWindow extends JmriJFrame {
 
-    private JPanel throttlesPanel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1218287946969126583L;
+	private JPanel throttlesPanel;
     private ThrottleFrame currentThrottleFrame;
     private CardLayout throttlesLayout;
     
@@ -325,21 +329,36 @@ public class ThrottleWindow extends JmriJFrame {
         JMenuItem fileMenuLoad = new JMenuItem(Bundle.getMessage("ThrottleFileMenuLoadThrottle"));
         fileMenuLoad.addActionListener(new AbstractAction() {
 
-            public void actionPerformed(ActionEvent e) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -6391693540976042709L;
+
+			public void actionPerformed(ActionEvent e) {
                 getCurrentThrottleFrame().loadThrottle(null);
             }
         });
         fileMenuSave = new JMenuItem(Bundle.getMessage("ThrottleFileMenuSaveThrottle"));
         fileMenuSave.addActionListener(new AbstractAction() {
 
-            public void actionPerformed(ActionEvent e) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -5623521370285957923L;
+
+			public void actionPerformed(ActionEvent e) {
                 getCurrentThrottleFrame().saveThrottle();
             }
         });
         JMenuItem fileMenuSaveAs = new JMenuItem(Bundle.getMessage("ThrottleFileMenuSaveAsThrottle"));
         fileMenuSaveAs.addActionListener(new AbstractAction() {
 
-            public void actionPerformed(ActionEvent e) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -4099887327237664140L;
+
+			public void actionPerformed(ActionEvent e) {
                 getCurrentThrottleFrame().saveThrottleAs();
             }
         });
@@ -390,7 +409,12 @@ public class ThrottleWindow extends JmriJFrame {
         viewAllButtons = new JMenuItem(Bundle.getMessage("ThrottleMenuViewAllFunctionButtons"));
         viewAllButtons.addActionListener(new AbstractAction() {
 
-            public void actionPerformed(ActionEvent ev) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 7909695402685750528L;
+
+			public void actionPerformed(ActionEvent ev) {
                 getCurrentThrottleFrame().getFunctionPanel().resetFnButtons();
                 getCurrentThrottleFrame().getFunctionPanel().setEnabled();
             }
@@ -399,7 +423,12 @@ public class ThrottleWindow extends JmriJFrame {
         JMenuItem makeAllComponentsInBounds = new JMenuItem(Bundle.getMessage("ThrottleMenuViewMakeAllComponentsInBounds"));
         makeAllComponentsInBounds.addActionListener(new AbstractAction() {
 
-            public void actionPerformed(ActionEvent ev) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -6803894990885239270L;
+
+			public void actionPerformed(ActionEvent ev) {
                 getCurrentThrottleFrame().makeAllComponentsInBounds();
             }
         });
@@ -407,7 +436,12 @@ public class ThrottleWindow extends JmriJFrame {
         JMenuItem switchViewMode = new JMenuItem(Bundle.getMessage("ThrottleMenuViewSwitchMode"));
         switchViewMode.addActionListener(new AbstractAction() {
 
-            public void actionPerformed(ActionEvent ev) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 8079758564829321581L;
+
+			public void actionPerformed(ActionEvent ev) {
                 switchMode();
             }
         });

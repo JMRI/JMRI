@@ -166,7 +166,11 @@ public class RosterMediaPane extends JPanel {
 
     private class RosterAttributesTableModel extends AbstractTableModel {
 
-        Vector<KeyValueModel> attributes;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -3682548535759237390L;
+		Vector<KeyValueModel> attributes;
         String titles[];
         boolean wasModified;
 

@@ -22,7 +22,12 @@ import jmri.Turnout;
 public class EcosTurnout extends AbstractTurnout 
                          implements EcosListener {
 
-    String prefix;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5048966966311573172L;
+
+	String prefix;
 
     int objectNumber = 0;
     boolean masterObjectNumber = true;

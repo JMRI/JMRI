@@ -15,6 +15,11 @@ import jmri.jmrix.xpa.XpaTrafficController;
  */
 public class XpaMonFrame extends jmri.jmrix.AbstractMonFrame implements XpaListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5989383639868963784L;
+
 	public XpaMonFrame() {
 		super();
 	}

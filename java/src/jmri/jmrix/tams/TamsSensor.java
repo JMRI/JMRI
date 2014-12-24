@@ -18,7 +18,12 @@ import jmri.implementation.AbstractSensor;
  */
 public class TamsSensor extends AbstractSensor {
 
-    public TamsSensor(String systemName, String userName) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -810400928174703675L;
+
+	public TamsSensor(String systemName, String userName) {
         super(systemName, userName);
         init(systemName);
     }

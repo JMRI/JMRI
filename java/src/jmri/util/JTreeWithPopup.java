@@ -16,7 +16,11 @@ import java.awt.event.*;
  */
 
 class JTreeWithPopup extends JTree implements ActionListener{
-    JPopupMenu popup;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4666689892833282531L;
+	JPopupMenu popup;
     JMenuItem mi;
     
     JTreeWithPopup(DefaultMutableTreeNode dmtn) {

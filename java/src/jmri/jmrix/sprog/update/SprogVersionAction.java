@@ -17,7 +17,12 @@ import javax.swing.*;
 
 public class SprogVersionAction extends AbstractAction {
     
-    public SprogVersionAction(String s) { super(s);}
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7751464314869150401L;
+
+	public SprogVersionAction(String s) { super(s);}
     
     public void actionPerformed(ActionEvent e) {
         // create a SprogVersionFrame

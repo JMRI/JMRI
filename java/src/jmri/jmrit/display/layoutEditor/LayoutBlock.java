@@ -67,7 +67,11 @@ import org.slf4j.MDC;
 
 public class LayoutBlock extends AbstractNamedBean implements java.beans.PropertyChangeListener
 {
-    public boolean enableAddRouteLogging = false;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5133877893672022035L;
+	public boolean enableAddRouteLogging = false;
     public boolean enableUpdateRouteLogging = false;
     public boolean enableDeleteRouteLogging = false;
     public boolean enableSearchRouteLogging = false;
@@ -888,7 +892,12 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 	}
     
     class LayoutBlockEditAction extends jmri.jmrit.beantable.beanedit.BlockEditAction{
-        @Override
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1200243516883528850L;
+
+		@Override
         public String helpTarget() { return "package.jmri.jmrit.display.EditLayoutBlock"; }  //IN18N
         
         @Override
@@ -926,7 +935,12 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             layout.addItem(new BeanEditItem(extraColorBox, rb.getString("ExtraColor"), rb.getString("ExtraColorHint")));
             
             layout.setSaveItem(new AbstractAction(){
-                public void actionPerformed(ActionEvent e) {
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = -8306290479368486226L;
+
+				public void actionPerformed(ActionEvent e) {
                     boolean needsRedraw = false;
                     int k = senseBox.getSelectedIndex();
                     int oldSense = occupiedSense;
@@ -966,7 +980,12 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             });
             
             layout.setResetItem(new AbstractAction(){
-                public void actionPerformed(ActionEvent e) {
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = 8424682609335608318L;
+
+				public void actionPerformed(ActionEvent e) {
                     memoryNameField.setText(memoryName);
                     setColorCombo(trackColorBox,blockTrackColor);
                     setColorCombo(occupiedColorBox,blockOccupiedColor);
@@ -998,7 +1017,12 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             }
             
             routing.setResetItem(new AbstractAction(){
-                public void actionPerformed(ActionEvent e) {
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = 6583889296784626636L;
+
+				public void actionPerformed(ActionEvent e) {
                     metricField.setText(Integer.toString(metric));
                     for(int i = 0; i<getNumberOfNeighbours(); i++){
                         JComboBox dir = neighbourDir.get(i);
@@ -1014,7 +1038,12 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             });
             
             routing.setSaveItem(new AbstractAction(){
-                public void actionPerformed(ActionEvent e) {
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = 4314794737329205107L;
+
+				public void actionPerformed(ActionEvent e) {
                     int m = Integer.parseInt(metricField.getText().trim());
                     if (m!=metric)
                         setBlockMetric(m);

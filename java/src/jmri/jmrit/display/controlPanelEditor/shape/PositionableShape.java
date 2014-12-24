@@ -39,7 +39,11 @@ import javax.swing.JPopupMenu;
 public class PositionableShape extends PositionableJComponent 
 					implements java.beans.PropertyChangeListener {
 
-    private Shape	_shape;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6747180861605933680L;
+	private Shape	_shape;
     protected Color	_lineColor = Color.black;
     protected Color	_fillColor = new Color(255, 255, 255, 0);
     protected int	_lineWidth = 1;

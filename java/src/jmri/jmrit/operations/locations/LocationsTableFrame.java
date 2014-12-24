@@ -35,6 +35,10 @@ import javax.swing.ScrollPaneConstants;
  */
 public class LocationsTableFrame extends OperationsFrame {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4984202877113842727L;
 	LocationsTableModel locationsModel = new LocationsTableModel();
 	javax.swing.JTable locationsTable = new javax.swing.JTable(locationsModel);
 	JScrollPane locationsPane;

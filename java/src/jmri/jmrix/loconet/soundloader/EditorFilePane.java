@@ -23,7 +23,12 @@ import jmri.util.com.sun.TableSorter;
  */
 public class EditorFilePane extends javax.swing.JPanel {
 
-    // GUI member declarations
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4194558549451699808L;
+
+	// GUI member declarations
     static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.loconet.soundloader.Editor");
     
     SpjFile file;

@@ -36,7 +36,11 @@ import java.io.IOException;
  */
  public class DragJLabel extends JLabel implements DragGestureListener, DragSourceListener, Transferable {    
 
-     protected DataFlavor _dataFlavor;
+     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7320850014520972400L;
+	protected DataFlavor _dataFlavor;
      public DragJLabel(DataFlavor flavor) {
          super();
          DragSource dragSource = DragSource.getDefaultDragSource();

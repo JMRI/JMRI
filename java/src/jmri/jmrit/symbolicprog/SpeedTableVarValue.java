@@ -879,7 +879,12 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      */
     public class VarSlider extends JSlider {
 
-        VarSlider(BoundedRangeModel m, CvValue var, int step) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 7077272684236102449L;
+
+		VarSlider(BoundedRangeModel m, CvValue var, int step) {
             super(m);
             _var = var;
             // get the original color right

@@ -29,7 +29,12 @@ import jmri.jmrix.loconet.LnTrafficController;
 public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         implements java.beans.PropertyChangeListener {
 
-        public LocoIOPanel() {
+        /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2652944223325097266L;
+
+		public LocoIOPanel() {
             super();
         
         }

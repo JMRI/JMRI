@@ -14,6 +14,10 @@ import javax.swing.AbstractAction;
  */
 public class IgnoreUsedTrackAction extends AbstractAction {
 			
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5281427667478029138L;
 	private TrackEditFrame _tef;
 	private IgnoreUsedTrackFrame _iutf;
 	

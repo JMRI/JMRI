@@ -15,7 +15,11 @@ import javax.swing.AbstractAction;
 
 public class StackMonAction extends AbstractAction {
 
-    private jmri.jmrix.lenz.XNetSystemConnectionMemo _memo=null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6608133121577126292L;
+	private jmri.jmrix.lenz.XNetSystemConnectionMemo _memo=null;
 
     public StackMonAction(String s,jmri.jmrix.lenz.XNetSystemConnectionMemo memo) { 
        super(s);

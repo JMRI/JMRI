@@ -22,6 +22,11 @@ import jmri.NmraPacket;
 public class EasyDccTurnout extends AbstractTurnout {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2850269669837354617L;
+
+	/**
 	 * EasyDcc turnouts use the NMRA number (0-511) as their numerical identification.
 	 */
 	public EasyDccTurnout(int number) {

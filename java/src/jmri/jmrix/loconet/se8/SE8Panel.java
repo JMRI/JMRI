@@ -32,7 +32,12 @@ import javax.swing.*;
  */
 public class SE8Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
-    public SE8Panel() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7400087827251524534L;
+
+	public SE8Panel() {
         this(1);
     }
     public SE8Panel(int boardNum) {

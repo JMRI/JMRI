@@ -16,7 +16,12 @@ import javax.swing.event.*;
 
 class PlayEditor extends SdfMacroEditor {
 
-    public PlayEditor(SdfMacro inst) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6609198608813676953L;
+
+	public PlayEditor(SdfMacro inst) {
         super(inst);
         // remove warning message from SdfMacroEditor
         this.removeAll();

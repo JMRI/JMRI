@@ -25,7 +25,12 @@ import jmri.jmrit.display.MemoryComboIcon;
 
 public class MemoryItemPanel extends TableItemPanel implements ChangeListener, ListSelectionListener {
 
-    enum Type { READONLY, READWRITE, SPINNER, COMBO }
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2163532275942706625L;
+
+	enum Type { READONLY, READWRITE, SPINNER, COMBO }
     JSpinner _spinner;
 
     public MemoryItemPanel(ItemPalette parentFrame, String type, String family, PickListModel model, Editor editor) {
@@ -200,7 +205,11 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
     }
 
     protected class IconDragJComponent extends DragJComponent {
-        Type _memType;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -8737089074889821544L;
+		Type _memType;
 
         public IconDragJComponent(DataFlavor flavor, Type type, Dimension dim) {
             super(flavor, dim);

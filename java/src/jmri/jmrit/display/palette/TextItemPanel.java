@@ -30,7 +30,11 @@ import jmri.jmrit.display.PositionableLabel;
 */
 public class TextItemPanel extends ItemPanel /*implements ActionListener */{
 
-//    JTextField _text;
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4047912812578857980L;
+	//    JTextField _text;
     DecoratorPanel _decorator;
 	
     public TextItemPanel(ItemPalette parentFrame, String  type, Editor editor) {
@@ -67,7 +71,11 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */{
     */
     class DragDecoratorLabel extends PositionableLabel implements DragGestureListener, DragSourceListener, Transferable {    
 
-        DataFlavor dataFlavor;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -7325043467502758054L;
+		DataFlavor dataFlavor;
 
         public DragDecoratorLabel(String s, Editor editor) {
             super(s, editor);

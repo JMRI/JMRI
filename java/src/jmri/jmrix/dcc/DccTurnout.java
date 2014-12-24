@@ -22,6 +22,11 @@ import jmri.*;
 public class DccTurnout extends AbstractTurnout {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2120643169908605976L;
+
+	/**
 	 * DCC turnouts use the NMRA number (0-511) as their numerical identification.
 	 */
 	public DccTurnout(int number) {

@@ -22,7 +22,11 @@ import jmri.jmrix.SystemConnectionMemo;
  */
 public class PowerPane extends javax.swing.JPanel implements java.beans.PropertyChangeListener {
 
-    // GUI member declarations
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -9185281612199315791L;
+	// GUI member declarations
     static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrit.powerpanel.PowerPanelBundle");
     JLabel onOffStatus 	= new JLabel(res.getString("LabelUnknown"));
     JButton onButton 	= new JButton(res.getString("ButtonOn"));

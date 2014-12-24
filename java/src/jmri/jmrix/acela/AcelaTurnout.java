@@ -23,7 +23,11 @@ import jmri.Turnout;
 
 public class AcelaTurnout extends AbstractTurnout {
 
-    final String prefix = "AT";
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -635023458091077051L;
+	final String prefix = "AT";
 
     /**
      * Create a Light object, with only system name.

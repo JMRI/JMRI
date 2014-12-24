@@ -23,6 +23,11 @@ import jmri.jmrit.catalog.NamedIcon;
 public class MultiSensorIconDialog extends IconDialog {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3597269148845925544L;
+
+	/**
     * Constructor for existing family to change icons, add/delete icons, or to delete the family
     */
     public MultiSensorIconDialog(String type, String family, FamilyItemPanel parent, 

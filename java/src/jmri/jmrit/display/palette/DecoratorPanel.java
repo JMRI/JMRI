@@ -32,7 +32,12 @@ import jmri.jmrit.display.palette.TextItemPanel.DragDecoratorLabel;
 */
 public class DecoratorPanel extends JPanel implements ChangeListener, ItemListener {
 
-    static final String[] JUSTIFICATION = {Bundle.getMessage("left"), 
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5434701410549611848L;
+
+	static final String[] JUSTIFICATION = {Bundle.getMessage("left"), 
                                             Bundle.getMessage("center"),
                                             Bundle.getMessage("right")};
 
@@ -102,7 +107,11 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
    }
 
     static class AJComboBox extends JComboBox {
-        int _which;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -6157176023804592198L;
+		int _which;
         AJComboBox(String[] items, int which) {
             super(items);
             _which = which;
@@ -119,7 +128,11 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     }
 
     static class AJSpinner extends JSpinner {
-        int _which;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 7526728664296406003L;
+		int _which;
 
         AJSpinner(SpinnerModel model, int which) {
             super(model);
@@ -128,7 +141,11 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     }
 
     static class AJRadioButton extends JRadioButton {
-        int which;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -8349059653187941804L;
+		int which;
 
         AJRadioButton(String text, int w) {
             super(text);

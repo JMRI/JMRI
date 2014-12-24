@@ -30,7 +30,12 @@ import org.slf4j.LoggerFactory;
  */
 public class XmlFileLocationAction extends AbstractAction {
 
-    public XmlFileLocationAction() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5884867804946089268L;
+
+	public XmlFileLocationAction() {
         super();
     }
 

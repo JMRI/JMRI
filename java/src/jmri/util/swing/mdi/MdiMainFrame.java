@@ -20,6 +20,11 @@ import jmri.util.swing.*;
 public class MdiMainFrame extends jmri.util.JmriJFrame {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1989252677160684285L;
+
+	/**
      * Create and initialize a multi-pane GUI window.
      */
     public MdiMainFrame(String name, String treeFile, String menubarFile, String toolbarFile) {

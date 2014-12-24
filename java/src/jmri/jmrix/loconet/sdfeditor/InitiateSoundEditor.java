@@ -16,7 +16,12 @@ import javax.swing.*;
 
 class InitiateSoundEditor extends SdfMacroEditor {
 
-    public InitiateSoundEditor(SdfMacro inst) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7107120240412402003L;
+
+	public InitiateSoundEditor(SdfMacro inst) {
         super(inst);
         
         // remove warning message from SdfMacroEditor

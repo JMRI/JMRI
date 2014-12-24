@@ -13,7 +13,12 @@ import javax.swing.*;
  */
 public class DefaultListCellEditor extends DefaultCellEditor implements ListCellEditor {
 
-    public DefaultListCellEditor(final JCheckBox checkBox) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7557104352512667759L;
+
+	public DefaultListCellEditor(final JCheckBox checkBox) {
         super(checkBox);
     }
 

@@ -26,6 +26,11 @@ import org.slf4j.LoggerFactory;
  */
 class ScheduleOptionsFrame extends OperationsFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4111002798586670354L;
+
 	// text field
 	JTextField factorTextField = new JTextField(5);
 

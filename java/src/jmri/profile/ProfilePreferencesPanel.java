@@ -52,7 +52,11 @@ import org.slf4j.LoggerFactory;
  */
 public final class ProfilePreferencesPanel extends JPanel implements PreferencesPanel, ListSelectionListener {
 
-    private static final Logger log = LoggerFactory.getLogger(ProfilePreferencesPanel.class);
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1375670900469426701L;
+	private static final Logger log = LoggerFactory.getLogger(ProfilePreferencesPanel.class);
 
     /**
      * Creates new form ProfilePreferencesPanel
@@ -86,7 +90,12 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
         chkStartWithActiveProfile = new JCheckBox();
         jScrollPane1 = new JScrollPane();
         profilesTbl = new JTable() {
-            //Implement table cell tool tips.
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -1464593093073508972L;
+
+			//Implement table cell tool tips.
             public String getToolTipText(MouseEvent e) {
                 try {
                     return getValueAt(rowAtPoint(e.getPoint()), -1).toString();

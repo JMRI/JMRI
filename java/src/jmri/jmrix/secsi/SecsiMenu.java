@@ -13,7 +13,12 @@ import javax.swing.JMenu;
  * @version     $Revision$
  */
 public class SecsiMenu extends JMenu {
-    public SecsiMenu(String name) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8675063885996858394L;
+
+	public SecsiMenu(String name) {
         this();
         setText(name);
     }

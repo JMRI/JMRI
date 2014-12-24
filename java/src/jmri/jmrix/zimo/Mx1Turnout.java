@@ -17,7 +17,11 @@ import jmri.Turnout;
  */
 public class Mx1Turnout extends AbstractTurnout /*implements Mx1TrafficListener*/{
 
-    // Private data member to keep track of what turnout we control.
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8921768041774861293L;
+	// Private data member to keep track of what turnout we control.
     int _number;
     Mx1TrafficController tc = null;
 	String prefix = "";

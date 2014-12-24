@@ -35,7 +35,11 @@ import jmri.jmrit.catalog.NamedIcon;
 
 public class IconDialog extends ItemDialog {
 
-    protected FamilyItemPanel _parent;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3594751185136377740L;
+	protected FamilyItemPanel _parent;
     protected String    _family;
     protected HashMap <String, NamedIcon>   _iconMap;
     protected JPanel        _iconPanel;

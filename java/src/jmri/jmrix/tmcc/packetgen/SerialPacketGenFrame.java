@@ -18,7 +18,11 @@ import javax.swing.JSeparator;
  */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.tmcc.SerialListener {
 
-    // member declarations
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6372326464393162756L;
+	// member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);

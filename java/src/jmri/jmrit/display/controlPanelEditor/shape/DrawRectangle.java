@@ -24,6 +24,10 @@ import org.slf4j.LoggerFactory;
 
 public class DrawRectangle extends DrawFrame{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8554060296993964525L;
 	int _width;
 	int _height;
 	JTextField _widthText;

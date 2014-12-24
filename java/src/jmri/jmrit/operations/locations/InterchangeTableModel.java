@@ -19,6 +19,11 @@ import jmri.jmrit.operations.setup.Control;
  */
 public class InterchangeTableModel extends TrackTableModel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3985319043804319680L;
+
 	public InterchangeTableModel() {
 		super();
 	}

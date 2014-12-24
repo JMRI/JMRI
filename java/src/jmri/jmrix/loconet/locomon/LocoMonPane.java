@@ -14,7 +14,12 @@ import jmri.jmrix.loconet.swing.*;
  */
 public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetListener, LnPanelInterface {
 
-    public LocoMonPane() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6661496696289363944L;
+
+	public LocoMonPane() {
         super();
     }
 
@@ -83,7 +88,12 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
-        public Default() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -3893647635865243864L;
+
+		public Default() {
             super(LocoNetBundle.bundle().getString("MenuItemLocoNetMonitor"), 
                 new jmri.util.swing.sdi.JmriJFrameInterface(), 
                 LocoMonPane.class.getName(), 

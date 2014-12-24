@@ -24,7 +24,12 @@ import javax.swing.table.*;
 public class PollDataModel extends AbstractTableModel
     implements MeasurementListener {
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.rps.swing.polling.PollingBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2108635861745609703L;
+
+	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.rps.swing.polling.PollingBundle");
 
     static final int NAMECOL   = 0;
     static final int IDCOL   = 1;

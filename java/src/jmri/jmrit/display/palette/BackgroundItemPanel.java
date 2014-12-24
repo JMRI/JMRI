@@ -30,6 +30,11 @@ import jmri.jmrit.catalog.NamedIcon;
 public class BackgroundItemPanel extends IconItemPanel {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3723444307245775612L;
+
+	/**
     * Constructor for plain icons and backgrounds
     */
     public BackgroundItemPanel(JmriJFrame parentFrame, String type, Editor editor) {
@@ -71,7 +76,11 @@ public class BackgroundItemPanel extends IconItemPanel {
     
     class ColorDialog extends JDialog implements ChangeListener {
 
-        JColorChooser _chooser;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 2436370829951652022L;
+		JColorChooser _chooser;
         Editor        _editor;
         JPanel        _preview;
 

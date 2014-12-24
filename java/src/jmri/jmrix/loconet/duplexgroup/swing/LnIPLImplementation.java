@@ -16,6 +16,11 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 public class LnIPLImplementation extends javax.swing.JComponent implements jmri.jmrix.loconet.LocoNetListener {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 451414694716197612L;
+
+	/**
      * Constructor for LnIPMImplementation which uses a LocoNetSystemConnectionMemo
      * which is provided by the instantiating method.
      * @param lnMemo - LocoNetSystemConnectionMemo for the LocoNet communication interface

@@ -38,7 +38,11 @@ import java.util.LinkedList;
  */
 public abstract class AbstractAudioSource extends AbstractAudio implements AudioSource {
 
-    private Vector3f _position        = new Vector3f( 0.0f,  0.0f,  0.0f);
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -984900360787361666L;
+	private Vector3f _position        = new Vector3f( 0.0f,  0.0f,  0.0f);
     private Vector3f _currentPosition = new Vector3f( 0.0f,  0.0f,  0.0f);
     private Vector3f _velocity        = new Vector3f( 0.0f,  0.0f,  0.0f);
     private float _gain               = 1.0f;

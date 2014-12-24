@@ -37,7 +37,11 @@ import javax.swing.JSeparator;
 public class SecurityElementIcon extends PositionableJPanel
     implements java.beans.PropertyChangeListener, Positionable {
 
-    JLabel rlspeed;  // speed from right to left, on the top
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5232033042555303053L;
+	JLabel rlspeed;  // speed from right to left, on the top
     JLabel dir;      // direction bits
     JLabel lrspeed;  // speed from left to right, on the bottom
 
@@ -145,7 +149,12 @@ public class SecurityElementIcon extends PositionableJPanel
         popup.add(new JMenuItem("SE "+element.getNumber()));
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
         popup.add(new AbstractAction("to: "+element.turnout) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = -1505776669265222198L;
+
+				public void actionPerformed(ActionEvent e) {
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(null,
                                                                 "Set turnout number:",
@@ -159,7 +168,12 @@ public class SecurityElementIcon extends PositionableJPanel
                   );
 
         popup.add(new AbstractAction("ds: "+element.dsSensor) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = -6842006232300774354L;
+
+				public void actionPerformed(ActionEvent e) {
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(null,
                                                                 "Set detection section number:",
@@ -173,7 +187,12 @@ public class SecurityElementIcon extends PositionableJPanel
                   );
 
         popup.add(new AbstractAction("aux: "+element.auxInput) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = 223154723293979472L;
+
+				public void actionPerformed(ActionEvent e) {
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(null,
                                                                 "Set aux input number:",
@@ -193,7 +212,12 @@ public class SecurityElementIcon extends PositionableJPanel
         if (element.attachAleg==SecurityElement.B) attach = "B";
         if (element.attachAleg==SecurityElement.C) attach = "C";
         popup.add(new AbstractAction("A: "+element.attachAnum+":"+attach) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = -9019202459221559744L;
+
+				public void actionPerformed(ActionEvent e) {
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(null,
                                                                 "Set A attachment number:",
@@ -219,7 +243,12 @@ public class SecurityElementIcon extends PositionableJPanel
         if (element.attachBleg==SecurityElement.B) attach = "B";
         if (element.attachBleg==SecurityElement.C) attach = "C";
         popup.add(new AbstractAction("B: "+element.attachBnum+":"+attach) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = -6981360786229151508L;
+
+				public void actionPerformed(ActionEvent e) {
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(null,
                                                                 "Set B attachment number:",
@@ -245,7 +274,12 @@ public class SecurityElementIcon extends PositionableJPanel
         if (element.attachCleg==SecurityElement.B) attach = "B";
         if (element.attachCleg==SecurityElement.C) attach = "C";
         popup.add(new AbstractAction("C: "+element.attachCnum+":"+attach) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = -3562580809687047261L;
+
+				public void actionPerformed(ActionEvent e) {
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(null,
                                                                 "Set C attachment number:",
@@ -270,7 +304,12 @@ public class SecurityElementIcon extends PositionableJPanel
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
 
         popup.add(new AbstractAction("maxAB: "+element.maxSpeedAB) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = -3697831403397293941L;
+
+				public void actionPerformed(ActionEvent e) {
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(null,
                                                                 "Set max A->B speed:",
@@ -283,7 +322,12 @@ public class SecurityElementIcon extends PositionableJPanel
             }
                   );
         popup.add(new AbstractAction("maxBA: "+element.maxSpeedBA) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = 7070779912097554726L;
+
+				public void actionPerformed(ActionEvent e) {
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(null,
                                                                 "Set max B->A speed:",
@@ -296,7 +340,12 @@ public class SecurityElementIcon extends PositionableJPanel
             }
                   );
         popup.add(new AbstractAction("maxAC: "+element.maxSpeedAC) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = 4786891499260931236L;
+
+				public void actionPerformed(ActionEvent e) {
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(null,
                                                                 "Set max A->C speed:",
@@ -309,7 +358,12 @@ public class SecurityElementIcon extends PositionableJPanel
             }
                   );
         popup.add(new AbstractAction("maxCA: "+element.maxSpeedCA) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = -2775320217358752015L;
+
+				public void actionPerformed(ActionEvent e) {
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(null,
                                                                 "Set max C->A speed:",
@@ -325,7 +379,12 @@ public class SecurityElementIcon extends PositionableJPanel
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
 
         popup.add(new AbstractAction("brakeAB: "+element.maxBrakingAB) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1607844645248224413L;
+
+				public void actionPerformed(ActionEvent e) {
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(null,
                                                                 "Set A->B braking:",
@@ -338,7 +397,12 @@ public class SecurityElementIcon extends PositionableJPanel
             }
                   );
         popup.add(new AbstractAction("brakeBA: "+element.maxBrakingBA) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = 7227608828014188310L;
+
+				public void actionPerformed(ActionEvent e) {
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(null,
                                                                 "Set B->A braking:",
@@ -351,7 +415,12 @@ public class SecurityElementIcon extends PositionableJPanel
             }
                   );
         popup.add(new AbstractAction("brakeAC: "+element.maxBrakingAC) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = -2785128231508818895L;
+
+				public void actionPerformed(ActionEvent e) {
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(null,
                                                                 "Set A->C braking:",
@@ -364,7 +433,12 @@ public class SecurityElementIcon extends PositionableJPanel
             }
                   );
         popup.add(new AbstractAction("brakeCA: "+element.maxBrakingCA) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = 323934321494857539L;
+
+				public void actionPerformed(ActionEvent e) {
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(null,
                                                                 "Set C->A braking:",
@@ -378,7 +452,12 @@ public class SecurityElementIcon extends PositionableJPanel
                   );
 
         popup.add(new AbstractAction("onAXreserve: "+element.onAXReservation) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = -4885394406478539694L;
+
+				public void actionPerformed(ActionEvent e) {
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(null,
                                                                 "On AX reservation (0 none, 1 stop opposite, 2 stop unreserved):",
@@ -391,7 +470,12 @@ public class SecurityElementIcon extends PositionableJPanel
             }
                   );
         popup.add(new AbstractAction("onXAreserve: "+element.onAXReservation) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = -801515559071332869L;
+
+				public void actionPerformed(ActionEvent e) {
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(null,
                                                                 "On XA reservation (0 none, 1 stop opposite, 2 stop unreserved):",
@@ -405,7 +489,12 @@ public class SecurityElementIcon extends PositionableJPanel
                   );
 
         popup.add(new AbstractAction("makeAreserve: "+element.makeAReservation) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = 7383194096751814470L;
+
+				public void actionPerformed(ActionEvent e) {
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(null,
                                                                 "Make A reservation (0 no, 1 yes):",
@@ -418,7 +507,12 @@ public class SecurityElementIcon extends PositionableJPanel
             }
                   );
         popup.add(new AbstractAction("makeBreserve: "+element.makeBReservation) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = -1178049823779554875L;
+
+				public void actionPerformed(ActionEvent e) {
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(null,
                                                                 "Make B reservation (0 no, 1 yes):",
@@ -431,7 +525,12 @@ public class SecurityElementIcon extends PositionableJPanel
             }
                   );
         popup.add(new AbstractAction("makeCreserve: "+element.makeCReservation) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = 566805998836706209L;
+
+				public void actionPerformed(ActionEvent e) {
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(null,
                                                                 "Make C reservation (0 no, 1 yes):",

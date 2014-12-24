@@ -19,7 +19,11 @@ import jmri.Light;
  */
 public class XNetLightManager extends AbstractLightManager {
 
-    private XNetTrafficController tc = null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4478201509172741798L;
+	private XNetTrafficController tc = null;
     private String prefix = null;
 
     public XNetLightManager(XNetTrafficController tc,String prefix) {

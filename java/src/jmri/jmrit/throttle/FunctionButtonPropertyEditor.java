@@ -14,7 +14,12 @@ import jmri.util.swing.EditableResizableImagePanel;
  */
 public class FunctionButtonPropertyEditor extends JDialog
 {
-    private FunctionButton button;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7969405753683639511L;
+
+	private FunctionButton button;
 
     private JTextField textField;
     private JCheckBox lockableCheckBox;

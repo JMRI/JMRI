@@ -24,6 +24,10 @@ import org.slf4j.LoggerFactory;
  */
 public class RestoreFilesAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4848726844188320052L;
 	static Logger log = LoggerFactory
 			.getLogger(RestoreFilesAction.class.getName());
 

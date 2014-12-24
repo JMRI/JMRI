@@ -25,7 +25,12 @@ import javax.swing.JCheckBoxMenuItem;
 
 public class RpsPositionIcon extends PositionableLabel implements MeasurementListener {
 
-    public RpsPositionIcon(Editor editor) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2764090638708108310L;
+
+	public RpsPositionIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
         super(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
                             "resources/icons/smallschematics/tracksegments/circuit-error.gif"), editor);
@@ -84,13 +89,23 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
         popup.add(showIdItem);
 
         popup.add(new AbstractAction("Set Origin") {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = -3391746152957428043L;
+
+				public void actionPerformed(ActionEvent e) {
                     setRpsOrigin();
                 }
             });
 
         popup.add(new AbstractAction("Set Current Location") {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = -9079038426378006086L;
+
+				public void actionPerformed(ActionEvent e) {
                     setRpsCurrentLocation();
                 }
             });
@@ -99,7 +114,12 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
         popup.add(notify);
         
         popup.add(new AbstractAction("Set Filter") {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = 3157524767064527041L;
+
+				public void actionPerformed(ActionEvent e) {
                     setFilterPopup();
                 }
             });
@@ -145,7 +165,12 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
      * then appears in the menu.
      */
     class Notifier extends AbstractAction {
-        public Notifier() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 5902446945220035813L;
+
+		public Notifier() {
             super();
         }
         /** 

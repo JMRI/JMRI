@@ -14,7 +14,12 @@ import javax.swing.*;
  */
 public class MastBuilderPane extends javax.swing.JPanel {
 
-    public MastBuilderPane() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2887050413450503483L;
+
+	public MastBuilderPane() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         JPanel p = new JPanel();

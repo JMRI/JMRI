@@ -37,7 +37,11 @@ import javax.swing.*;
 public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
                     implements java.beans.PropertyChangeListener {
 
-    // member declarations
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8260273846859188033L;
+	// member declarations
     JButton                     swingReadButton;
     JButton                     swingSetButton;
     ValidatedTextField          swingNameValueField = new ValidatedTextField(1,false,"a","b");
@@ -651,7 +655,12 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
      * action.
      */
     static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
-        public Default() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -7467617476118982830L;
+
+		public Default() {
             super(LocoNetBundle.bundle().getString("MenuItemDuplexInfo"),
                 new jmri.util.swing.sdi.JmriJFrameInterface(),
                 DuplexGroupInfoPanel.class.getName(),

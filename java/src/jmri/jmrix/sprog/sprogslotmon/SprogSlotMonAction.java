@@ -19,7 +19,12 @@ import javax.swing.AbstractAction;
 
 public class SprogSlotMonAction extends AbstractAction {
 
-    public SprogSlotMonAction(String s) { super(s);}
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7965879364483000275L;
+
+	public SprogSlotMonAction(String s) { super(s);}
     public SprogSlotMonAction() { this("SPROG Slot Monitor");}
 
     public void actionPerformed(ActionEvent e) {

@@ -22,7 +22,12 @@ import java.awt.*;
 public class SoundSetPane extends JPanel
             implements ReadingListener, MeasurementListener, PropertyChangeListener {
 
-    public SoundSetPane() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6186717308223634637L;
+
+	public SoundSetPane() {
         super();
     }
 

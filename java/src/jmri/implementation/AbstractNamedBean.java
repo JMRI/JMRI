@@ -29,7 +29,12 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
     //    e.printStackTrace();
     //}
 
-    protected AbstractNamedBean(String sys) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7953684310136579104L;
+
+	protected AbstractNamedBean(String sys) {
         mSystemName = sys;
         mUserName = null;
     }

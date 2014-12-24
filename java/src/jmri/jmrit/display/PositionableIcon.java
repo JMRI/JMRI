@@ -17,7 +17,11 @@ import jmri.jmrit.catalog.NamedIcon;
 
 public class PositionableIcon extends PositionableLabel {
 
-    protected HashMap <String, NamedIcon> _iconMap;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5192041937901708011L;
+	protected HashMap <String, NamedIcon> _iconMap;
     protected String  _iconFamily;
     protected double _scale = 1.0;			// getScale, come from net result found in one of the icons
     protected int _rotate = 0;

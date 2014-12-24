@@ -23,7 +23,11 @@ import jmri.InstanceManager;
 
 public class SensorTableDataModel extends BeanTableDataModel {
 
-    static public final int INVERTCOL = NUMCOLUMN;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 9025503488977960491L;
+	static public final int INVERTCOL = NUMCOLUMN;
     static public final int EDITCOL = INVERTCOL+1;
     static public final int USEGLOBALDELAY = EDITCOL+1;
     static public final int ACTIVEDELAY = USEGLOBALDELAY+1;

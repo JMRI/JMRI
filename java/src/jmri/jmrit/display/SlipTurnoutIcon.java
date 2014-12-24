@@ -44,7 +44,11 @@ import org.slf4j.LoggerFactory;
 
 public class SlipTurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
-    public SlipTurnoutIcon(Editor editor) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4644712323861322600L;
+	public SlipTurnoutIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
         super(new NamedIcon("resources/icons/smallschematics/tracksegments/os-slip-lower-west-upper-east.gif",
                             "resources/icons/smallschematics/tracksegments/os-slip-lower-west-upper-east.gif"), editor);
@@ -1010,7 +1014,12 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         else if (turnoutType==SCISSOR)
             popuptext = Bundle.getMessage("SetScissorText");
         popup.add(new AbstractAction(popuptext) {
-            public void actionPerformed(ActionEvent e) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1458395650486759302L;
+
+			public void actionPerformed(ActionEvent e) {
                 String name = getNameString();
                 slipTurnoutTextEdit(name);
             }

@@ -18,7 +18,12 @@ import java.awt.event.ActionEvent;
  
 public class JmriJFrameAction extends AbstractAction {
 
- 	public JmriJFrameAction(String s) {
+ 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8529364887679643165L;
+
+	public JmriJFrameAction(String s) {
     	super(s);
      }
      

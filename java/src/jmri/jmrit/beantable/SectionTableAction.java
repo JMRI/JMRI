@@ -54,6 +54,12 @@ import java.util.ArrayList;
 public class SectionTableAction extends AbstractTableAction {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8024377620599551244L;
+
+
+	/**
      * Create an action with a specific title.
      * <P>
      * Note that the argument is the Action title, not the title of the
@@ -83,6 +89,10 @@ public class SectionTableAction extends AbstractTableAction {
     protected void createModel() {
         m = new BeanTableDataModel() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 7958656807666017548L;
 			static public final int BEGINBLOCKCOL = NUMCOLUMN;
 			static public final int ENDBLOCKCOL = BEGINBLOCKCOL+1;
 			static public final int EDITCOL = ENDBLOCKCOL+1;
@@ -1166,6 +1176,11 @@ public class SectionTableAction extends AbstractTableAction {
 	public class BlockTableModel extends javax.swing.table.AbstractTableModel implements
 			java.beans.PropertyChangeListener {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 3125125881974648842L;
+
 		public static final int SNAME_COLUMN = 0;
 
 		public static final int UNAME_COLUMN = 1;
@@ -1257,6 +1272,11 @@ public class SectionTableAction extends AbstractTableAction {
 	 * Table model for Entry Points in Create/Edit Section window
 	 */
 	public class EntryPointTableModel extends javax.swing.table.AbstractTableModel {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -255007909450019689L;
 
 		public static final int BLOCK_COLUMN = 0;
 

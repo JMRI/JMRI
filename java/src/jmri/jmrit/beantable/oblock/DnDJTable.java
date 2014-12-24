@@ -45,7 +45,11 @@ import javax.swing.table.TableModel;
 public class DnDJTable extends JTable implements DropTargetListener,  
                     DragGestureListener, DragSourceListener, Transferable {
 
-     public static final String TableCellFlavorMime = DataFlavor.javaJVMLocalObjectMimeType +
+     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6622218098364227729L;
+	public static final String TableCellFlavorMime = DataFlavor.javaJVMLocalObjectMimeType +
                 ";class=jmri.jmrit.beantable.oblock.DnDJTable.TableCellSelection";
      public static final DataFlavor TABLECELL_FLAVOR = new DataFlavor(
                  jmri.jmrit.beantable.oblock.DnDJTable.TableCellSelection.class,
@@ -248,7 +252,11 @@ public class DnDJTable extends JTable implements DropTargetListener,
      }
 
      class DnDHandler extends TransferHandler {
-         JTable _table;
+         /**
+		 * 
+		 */
+		private static final long serialVersionUID = 8476413554238761109L;
+		JTable _table;
          DnDHandler (JTable table) {
              _table = table;
          }

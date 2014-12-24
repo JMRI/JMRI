@@ -23,6 +23,11 @@ import org.slf4j.LoggerFactory;
  */
 class AlternateTrackFrame extends OperationsFrame{
 		
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9027155799954540567L;
+
 	// combo boxes
 	JComboBox trackBox = new JComboBox();
 	

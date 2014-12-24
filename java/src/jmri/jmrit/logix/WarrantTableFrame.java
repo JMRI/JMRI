@@ -64,6 +64,10 @@ import jmri.util.table.ButtonRenderer;
 
 class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener 
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8994208663637783635L;
 	static final String halt = Bundle.getMessage("Halt");
 	static final String resume = Bundle.getMessage("Resume");
 	static final String abort = Bundle.getMessage("Abort");
@@ -327,7 +331,11 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener
 
     static public class ComboBoxCellEditor extends DefaultCellEditor
     {
-        TableSorter _sorter;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 3035798240606397980L;
+		TableSorter _sorter;
         
         ComboBoxCellEditor(JComboBox comboBox) {
             super(comboBox);

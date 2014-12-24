@@ -32,6 +32,10 @@ import jmri.util.JmriJFrame;
 public class JythonWindow extends AbstractAction {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2991411495753279905L;
+	/**
      * Constructor just initializes parent class.
      * @param name Action name
      */

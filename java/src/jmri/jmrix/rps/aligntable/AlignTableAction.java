@@ -21,7 +21,11 @@ import java.awt.event.ActionEvent;
  */
 public class AlignTableAction extends AbstractAction {
 
-    static final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.rps.aligntable.AlignTableBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1629850954178461422L;
+	static final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.rps.aligntable.AlignTableBundle");
 	public AlignTableAction(String s) { super(s);}
 
     public AlignTableAction() {

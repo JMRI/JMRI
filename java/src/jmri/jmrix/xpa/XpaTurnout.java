@@ -16,7 +16,11 @@ import jmri.Turnout;
  */
 public class XpaTurnout extends AbstractTurnout {
 
-    // Private data member to keep track of what turnout we control.
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1847371708656010119L;
+	// Private data member to keep track of what turnout we control.
     int _number;
 
     /**

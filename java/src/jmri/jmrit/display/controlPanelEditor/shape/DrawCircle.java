@@ -19,6 +19,10 @@ import org.slf4j.LoggerFactory;
 
 public class DrawCircle extends DrawFrame {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3871500332284884080L;
 	JTextField	_radiusText;
     int 		_radius;			// corner radius
 	

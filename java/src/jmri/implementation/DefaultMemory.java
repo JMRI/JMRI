@@ -11,7 +11,12 @@ package jmri.implementation;
  */
 public class DefaultMemory extends AbstractMemory {
 
-    public DefaultMemory(String systemName) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8101816552143434940L;
+
+	public DefaultMemory(String systemName) {
         super(systemName);
     }
 

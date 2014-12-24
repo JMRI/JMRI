@@ -684,6 +684,11 @@ public class PositionablePoint
 		}
 		popup.add(new JSeparator(JSeparator.HORIZONTAL));
 		popup.add(new AbstractAction(rb.getString("Remove")) {
+				/**
+			 * 
+			 */
+			private static final long serialVersionUID = -5879151659812492830L;
+
 				public void actionPerformed(ActionEvent e) {
 					if (layoutEditor.removePositionablePoint(instance)) {
 						// user is serious about removing this point from the panel
@@ -695,12 +700,22 @@ public class PositionablePoint
 		if (blockBoundary) {
             if(getType()==EDGE_CONNECTOR){
                 popup.add(new AbstractAction(rb.getString("EdgeEditLink")) {
-                    public void actionPerformed(ActionEvent e) {
+                    /**
+					 * 
+					 */
+					private static final long serialVersionUID = 7417712706336145182L;
+
+					public void actionPerformed(ActionEvent e) {
                         setLink();
                     }
                 });
                 popup.add(new AbstractAction(rb.getString("SetSignals")) {
-                    public void actionPerformed(ActionEvent e) {
+                    /**
+					 * 
+					 */
+					private static final long serialVersionUID = 7790296058732429696L;
+
+					public void actionPerformed(ActionEvent e) {
                         tools = new LayoutEditorTools(layoutEditor);
                         // bring up signals at level crossing tool dialog
                         tools.setSignalAtEdgeConnector(instance,
@@ -708,7 +723,12 @@ public class PositionablePoint
                     }
                 });
                 popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
-                    public void actionPerformed(ActionEvent event) {
+                    /**
+					 * 
+					 */
+					private static final long serialVersionUID = 4141089902371028010L;
+
+					public void actionPerformed(ActionEvent event) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
                         }
@@ -718,7 +738,12 @@ public class PositionablePoint
                 });
             } else {
                 popup.add(new AbstractAction(rb.getString("SetSignals")) {
-                        public void actionPerformed(ActionEvent e) {
+                        /**
+					 * 
+					 */
+					private static final long serialVersionUID = -4724061827365861420L;
+
+						public void actionPerformed(ActionEvent e) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
                         }
@@ -728,7 +753,12 @@ public class PositionablePoint
                         }
                     });
                 popup.add(new AbstractAction(rb.getString("SetSensors")) {
-                    public void actionPerformed(ActionEvent event) {
+                    /**
+					 * 
+					 */
+					private static final long serialVersionUID = 2796713739016080440L;
+
+					public void actionPerformed(ActionEvent event) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
                         }
@@ -738,7 +768,12 @@ public class PositionablePoint
                     }
                 });
                 popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
-                    public void actionPerformed(ActionEvent event) {
+                    /**
+					 * 
+					 */
+					private static final long serialVersionUID = -7773588998817362490L;
+
+					public void actionPerformed(ActionEvent event) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
                         }
@@ -750,7 +785,12 @@ public class PositionablePoint
 		}
         if (endBumper){
             popup.add(new AbstractAction(rb.getString("SetSensors")) {
-                public void actionPerformed(ActionEvent event) {
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = -7476420955847740957L;
+
+				public void actionPerformed(ActionEvent event) {
 					if (tools == null) {
 						tools = new LayoutEditorTools(layoutEditor);
 					}
@@ -760,7 +800,12 @@ public class PositionablePoint
                 }
             });
             popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
-                public void actionPerformed(ActionEvent event) {
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = -7043861591726586142L;
+
+				public void actionPerformed(ActionEvent event) {
 					if (tools == null) {
 						tools = new LayoutEditorTools(layoutEditor);
 					}

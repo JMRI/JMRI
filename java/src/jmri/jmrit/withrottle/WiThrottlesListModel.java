@@ -19,7 +19,12 @@ import java.util.ArrayList;
 
 
 public class WiThrottlesListModel extends AbstractTableModel{
-    ArrayList<DeviceServer> deviceList;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 473377515756069668L;
+
+	ArrayList<DeviceServer> deviceList;
     //DeviceServer[] deviceList;
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");

@@ -19,7 +19,12 @@ import org.slf4j.LoggerFactory;
 
 public class PositionableCircle extends PositionableShape {
     
-    public PositionableCircle(Editor editor) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1016948514119727789L;
+
+	public PositionableCircle(Editor editor) {
     	super(editor);
     	_height = _width = 100;
     }
@@ -64,7 +69,12 @@ public class PositionableCircle extends PositionableShape {
     public boolean setEditItemMenu(JPopupMenu popup) {
         String txt = Bundle.getMessage("editShape", Bundle.getMessage("circle"));
         popup.add(new javax.swing.AbstractAction(txt) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = 4014472244175717813L;
+
+				public void actionPerformed(ActionEvent e) {
                 	if (_editFrame==null) {
                        	_editFrame = new DrawCircle("editShape", "circle", null);
                     	setEditParams();               	

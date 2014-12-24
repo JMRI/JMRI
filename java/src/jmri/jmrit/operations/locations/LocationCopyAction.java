@@ -16,7 +16,12 @@ import javax.swing.AbstractAction;
  */
 public class LocationCopyAction extends AbstractAction {
     
-    public LocationCopyAction() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2327541514192626388L;
+
+	public LocationCopyAction() {
     	super(Bundle.getMessage("MenuItemCopyLocation"));
     }
 

@@ -19,7 +19,12 @@ import jmri.jmrit.operations.rollingstock.cars.CarEditFrame;
  */
 public class EditCarTypeAction extends AbstractAction {
     
-    public EditCarTypeAction() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7154562626596982051L;
+
+	public EditCarTypeAction() {
     	super(Bundle.getMessage("MenuItemEditCarType"));
     }
 

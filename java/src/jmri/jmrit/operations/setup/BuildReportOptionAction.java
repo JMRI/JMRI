@@ -17,6 +17,11 @@ import javax.swing.AbstractAction;
  */
 public class BuildReportOptionAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6686776607454912217L;
+
 	public BuildReportOptionAction() {
 		this(Bundle.getMessage("TitleBuildReportOptions"));
 	}

@@ -30,7 +30,11 @@ import jmri.util.com.sun.TableSorter;
  */
 public class BeanTablePane extends jmri.util.swing.JmriPanel {
 
-    BeanTableDataModel		dataModel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1172856759033682216L;
+	BeanTableDataModel		dataModel;
     JTable			dataTable;
     JScrollPane 		dataScroll;
     Box bottomBox;		// panel at bottom for extra buttons etc
@@ -95,7 +99,12 @@ public class BeanTablePane extends jmri.util.swing.JmriPanel {
      */
 	protected JTable makeJTable(TableSorter sorter) {
 	    return new JTable(sorter)  {
-            public boolean editCellAt(int row, int column, java.util.EventObject e) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 5236037575632515212L;
+
+			public boolean editCellAt(int row, int column, java.util.EventObject e) {
                 boolean res = super.editCellAt(row, column, e);
                 java.awt.Component c = this.getEditorComponent();
                 if (c instanceof javax.swing.JTextField) {

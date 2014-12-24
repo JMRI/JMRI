@@ -28,7 +28,11 @@ import jmri.Programmer;
  */
 public class ProgModePane extends ProgModeSelector {
 
-    // GUI member declarations
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -557999704137510315L;
+	// GUI member declarations
     ProgOpsModePane     mOpsPane;
     ProgServiceModePane mServicePane;
     ButtonGroup group = new ButtonGroup();

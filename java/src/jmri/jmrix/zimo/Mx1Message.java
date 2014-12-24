@@ -21,7 +21,12 @@ import java.io.Serializable;
  */
 public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
 
-    public Mx1Message(int len){
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6404655263624067289L;
+
+	public Mx1Message(int len){
         this(len, Mx1Packetizer.ASCII);
     }
     

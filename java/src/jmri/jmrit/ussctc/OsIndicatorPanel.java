@@ -16,7 +16,11 @@ import javax.swing.*;
  */
 public class OsIndicatorPanel extends BasePanel {
 
-    JTextField outputName;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5657380344257474438L;
+	JTextField outputName;
     JTextField sensorName;
     JTextField lockName;
 

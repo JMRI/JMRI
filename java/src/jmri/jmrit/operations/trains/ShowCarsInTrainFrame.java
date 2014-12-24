@@ -33,6 +33,10 @@ import jmri.jmrit.operations.setup.Setup;
 
 public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6230722380444056252L;
 	Train _train = null;
 	CarManager carManager = CarManager.instance();
 	TrainCommon trainCommon = new TrainCommon();

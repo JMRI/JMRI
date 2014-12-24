@@ -35,7 +35,11 @@ import javax.swing.*;
  */
 public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     
-    CbusEventTableDataModel eventModel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6372010365640931455L;
+	CbusEventTableDataModel eventModel;
     JTable		    eventTable;
     JScrollPane 	    eventScroll;
     
@@ -73,10 +77,20 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     public void init() {
         
         eventTable = new JTable(eventModel) {
-            // Override JTable Header to implement table header tool tips.
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1681756586973465353L;
+
+			// Override JTable Header to implement table header tool tips.
             protected JTableHeader createDefaultTableHeader() {
                 return new JTableHeader(columnModel) {
-                    public String getToolTipText(MouseEvent e) {
+                    /**
+					 * 
+					 */
+					private static final long serialVersionUID = -7938503603496660164L;
+
+					public String getToolTipText(MouseEvent e) {
                         java.awt.Point p = e.getPoint();
                         int index = columnModel.getColumnIndexAtX(p.x);
                         int realIndex =
@@ -228,7 +242,12 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
-        public Default() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 8642959048971044410L;
+
+		public Default() {
             super("CBUS Event table", 
                 new jmri.util.swing.sdi.JmriJFrameInterface(), 
                 CbusEventTablePane.class.getName(), 

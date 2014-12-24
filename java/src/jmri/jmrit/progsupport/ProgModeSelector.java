@@ -24,6 +24,11 @@ import jmri.Programmer;
 public abstract class ProgModeSelector extends javax.swing.JPanel {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6631676711791506851L;
+
+	/**
      * Get the configured programmer
      */
     abstract public Programmer getProgrammer();

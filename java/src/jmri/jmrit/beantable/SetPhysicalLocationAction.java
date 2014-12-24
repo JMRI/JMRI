@@ -36,7 +36,12 @@ import org.slf4j.LoggerFactory;
  */
 public class SetPhysicalLocationAction extends AbstractAction {
 
-    Reporter _reporter;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4814083186968429295L;
+
+	Reporter _reporter;
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.JmritBeantablePhysicalLocationBundle");
 
@@ -79,6 +84,11 @@ public class SetPhysicalLocationAction extends AbstractAction {
     class SetPhysicalLocationFrame extends OperationsFrame {
 
         /**
+		 * 
+		 */
+		private static final long serialVersionUID = 6749008114407458542L;
+
+		/**
          * Frame Constructor
          */
         public SetPhysicalLocationFrame() {
@@ -99,7 +109,12 @@ public class SetPhysicalLocationAction extends AbstractAction {
 
     class SetPhysicalLocationPanel extends OperationsPanel {
 
-        Reporter _reporter;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -5054495048362448275L;
+
+		Reporter _reporter;
 
         String emptyReporterString = "(No Reporters)";
 

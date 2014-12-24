@@ -13,6 +13,10 @@ import jmri.*;
  * @version			$Revision$
  */
 public class ProgModeException extends ProgrammerException {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8621463030237961954L;
 	public ProgModeException(String s) { super(s); }
 	public ProgModeException() {}
 	

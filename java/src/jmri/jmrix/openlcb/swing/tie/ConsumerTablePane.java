@@ -17,7 +17,12 @@ import javax.swing.table.*;
  */
 public class ConsumerTablePane extends JPanel {
 
-    static    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 583763500041401460L;
+
+	static    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");
 	
 	protected JTable table = null;
 	protected TableModel tableModel = null;

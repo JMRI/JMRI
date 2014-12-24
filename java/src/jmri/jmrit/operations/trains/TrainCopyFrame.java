@@ -26,6 +26,11 @@ import javax.swing.JPanel;
  */
 public class TrainCopyFrame extends OperationsFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4829987018175695904L;
+
 	TrainManager trainManager = TrainManager.instance();
 
 	// labels

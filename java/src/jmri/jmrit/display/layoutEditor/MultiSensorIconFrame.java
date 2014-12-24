@@ -23,7 +23,11 @@ import jmri.jmrit.display.MultiSensorIcon;
  */
 
 public class MultiSensorIconFrame extends JmriJFrame {
-    JPanel content = new JPanel();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6940028615554911494L;
+	JPanel content = new JPanel();
     JmriJFrame defaultsFrame;
     MultiIconEditor defaultIcons;
 	LayoutEditor layoutEditor = null;
@@ -141,7 +145,11 @@ public class MultiSensorIconFrame extends JmriJFrame {
     
     class Entry extends JPanel {
 
-        JTextField sensor = new JTextField(5);
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -8918960162933617297L;
+		JTextField sensor = new JTextField(5);
         JPanel self;
         MultiIconEditor ed = new MultiIconEditor(1);
         JmriJFrame edf = new JmriJFrame("", false, true);

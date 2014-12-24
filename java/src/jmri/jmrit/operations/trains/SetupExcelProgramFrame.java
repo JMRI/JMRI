@@ -34,6 +34,10 @@ import org.slf4j.LoggerFactory;
 
 public class SetupExcelProgramFrame extends OperationsFrame {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8918278401005216433L;
 	// checkboxes
 	protected static final ResourceBundle rb = ResourceBundle
 			.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");

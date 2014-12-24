@@ -22,7 +22,11 @@ import java.awt.event.*;
  */
 public class RpsTrackingControlPane extends JPanel {
 
-    RpsTrackingPanel panel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1526969572941516857L;
+	RpsTrackingPanel panel;
     
     public RpsTrackingControlPane(RpsTrackingPanel panel) {
         super();

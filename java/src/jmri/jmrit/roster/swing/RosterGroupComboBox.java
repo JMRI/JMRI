@@ -19,7 +19,11 @@ import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
  */
 public class RosterGroupComboBox extends JComboBox implements RosterGroupSelector {
 
-    private Roster _roster;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1817542492929278953L;
+	private Roster _roster;
     private boolean allEntriesEnabled = true;
 
     /**

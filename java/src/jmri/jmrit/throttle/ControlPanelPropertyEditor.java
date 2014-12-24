@@ -13,6 +13,11 @@ import java.awt.event.*;
  */
 public class ControlPanelPropertyEditor extends JDialog
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9096645075332040546L;
+
 	private ControlPanel control;
 
 	private JRadioButton displaySlider; // display slider from 0 to 100

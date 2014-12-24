@@ -19,7 +19,11 @@ import jmri.Reporter;
  */
 public abstract class AbstractReporter extends AbstractNamedBean implements Reporter, java.io.Serializable {
 
-    public AbstractReporter(String systemName) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5682753440499282867L;
+	public AbstractReporter(String systemName) {
         super(systemName.toUpperCase());
     }
 

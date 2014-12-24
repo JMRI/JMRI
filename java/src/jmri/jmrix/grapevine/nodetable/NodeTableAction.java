@@ -16,6 +16,10 @@ import java.awt.event.ActionEvent;
  */
 public class NodeTableAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8663753655086906561L;
 	public NodeTableAction(String s) { super(s);}
 
     public NodeTableAction() {

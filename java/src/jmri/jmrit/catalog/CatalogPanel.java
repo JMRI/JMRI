@@ -80,7 +80,11 @@ import jmri.util.FileUtil;
  */
 public class CatalogPanel extends JPanel implements MouseListener {
 
-    public static final double ICON_SCALE = 0.15;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5940317496784694547L;
+	public static final double ICON_SCALE = 0.15;
     public static final int ICON_WIDTH = 100;
     public static final int ICON_HEIGHT = 100;
 
@@ -753,7 +757,11 @@ public class CatalogPanel extends JPanel implements MouseListener {
         popup.add(new javax.swing.JPopupMenu.Separator());
 
         popup.add(new AbstractAction(Bundle.getMessage("RenameIcon")) {
-                NamedIcon icon;    
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1598669233012552574L;
+				NamedIcon icon;    
                 public void actionPerformed(ActionEvent e) {
                     rename(icon);
                 }
@@ -765,7 +773,11 @@ public class CatalogPanel extends JPanel implements MouseListener {
         popup.add(new javax.swing.JPopupMenu.Separator());
 
         popup.add(new AbstractAction(Bundle.getMessage("DeleteIcon")) {
-                NamedIcon icon;    
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = -2412374302278407718L;
+				NamedIcon icon;    
                 public void actionPerformed(ActionEvent e) {
                     delete(icon);
                 }
@@ -796,7 +808,11 @@ public class CatalogPanel extends JPanel implements MouseListener {
     }
 
     class DropJTree extends JTree implements DropTargetListener {
-        DataFlavor dataFlavor;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -6754039215423513840L;
+		DataFlavor dataFlavor;
         DropJTree (TreeModel model) {
             super (model);
             try {

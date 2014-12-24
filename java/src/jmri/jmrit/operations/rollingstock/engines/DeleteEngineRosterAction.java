@@ -18,6 +18,10 @@ import javax.swing.JOptionPane;
 
 public class DeleteEngineRosterAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 361439686459687524L;
 	EngineManager manager = EngineManager.instance();
 
 	public DeleteEngineRosterAction(String actionName, Component frame) {

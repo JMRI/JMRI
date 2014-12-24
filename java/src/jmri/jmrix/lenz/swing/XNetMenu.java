@@ -13,7 +13,12 @@ import javax.swing.JMenu;
  * @version     $Revision$
  */
 public class XNetMenu extends JMenu {
-    public XNetMenu(String name,jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8473128194237379596L;
+
+	public XNetMenu(String name,jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
         this(memo);
         setText(name);
     }

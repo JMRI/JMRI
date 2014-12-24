@@ -42,7 +42,11 @@ import jmri.InstanceManager;
 
 public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
 
-    JComboBox selectPanel = new JComboBox();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4871721972825766572L;
+	JComboBox selectPanel = new JComboBox();
     JComboBox fromPoint = new JComboBox();
     JComboBox toPoint = new JComboBox();
     
@@ -272,7 +276,12 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
     static final int NUMCOL = ENABLEDCOL+1;
     //Need to add a property change listener to catch when paths go active.
     class TableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener{
-        //needs a method to for when panel changes
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 3291217259103678604L;
+
+		//needs a method to for when panel changes
         //need a method to delete an item
         //Possibly also to set a route.
         //Add a propertychange listener to hear when the route goes active.

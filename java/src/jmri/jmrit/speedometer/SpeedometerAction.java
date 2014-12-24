@@ -17,7 +17,12 @@ import java.awt.event.ActionEvent;
 
 public class SpeedometerAction 			extends JmriAbstractAction {
 
-    public SpeedometerAction(String s, WindowInterface wi) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5303424007379961528L;
+
+	public SpeedometerAction(String s, WindowInterface wi) {
     	super(s, wi);
     }
      

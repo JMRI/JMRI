@@ -587,7 +587,12 @@ public class SignalGroupSubTableAction {
      */
     public abstract class SignalGroupOutputModel extends AbstractTableModel implements PropertyChangeListener
     {
-        public Class<?> getColumnClass(int c) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -6276559655520465435L;
+
+		public Class<?> getColumnClass(int c) {
             if (c == INCLUDE_COLUMN) {
                 return Boolean.class;
             }
@@ -636,7 +641,11 @@ public class SignalGroupSubTableAction {
      */
     class SignalGroupTurnoutModel extends SignalGroupOutputModel
     {
-        SignalGroupTurnoutModel() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -2635253900965148562L;
+		SignalGroupTurnoutModel() {
             InstanceManager.turnoutManagerInstance().addPropertyChangeListener(this);
         }
 
@@ -697,7 +706,12 @@ public class SignalGroupSubTableAction {
      */
     class SignalGroupSensorModel extends SignalGroupOutputModel
     {
-        SignalGroupSensorModel() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 368748896590901351L;
+
+		SignalGroupSensorModel() {
             InstanceManager.sensorManagerInstance().addPropertyChangeListener(this);
         }
 

@@ -26,7 +26,11 @@ import java.util.ResourceBundle;
  */
 public class LocoDataModel extends javax.swing.table.AbstractTableModel implements TamsListener  {
 
-    static public final int ADDRCOLUMN = 0;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8162723526280674206L;
+	static public final int ADDRCOLUMN = 0;
     static public final int SPDCOLUMN  = 1;
     static public final int FMTCOLUMN = 2;
     static public final int NAMECOLUMN = 3;

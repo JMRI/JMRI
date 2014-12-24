@@ -24,6 +24,11 @@ import jmri.util.JmriJFrame;
 public /*abstract*/ class PortalItemPanel extends FamilyItemPanel {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -305516951581213990L;
+
+	/**
     * Constructor types with multiple families and multiple icon families
     */
     public PortalItemPanel(JmriJFrame parentFrame, String type, String family, Editor editor) {

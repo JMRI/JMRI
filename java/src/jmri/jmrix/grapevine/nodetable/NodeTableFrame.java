@@ -17,7 +17,11 @@ import jmri.jmrix.grapevine.SerialTrafficController;
  */
 public class NodeTableFrame extends jmri.util.JmriJFrame {
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.grapevine.nodetable.NodeTableBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2093475836158292011L;
+	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.grapevine.nodetable.NodeTableBundle");
 
 		
     /**

@@ -20,7 +20,12 @@ public class LV102Frame extends jmri.util.JmriJFrame {
 
    //private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.swing.lv102.LV102Bundle");
 
-   public LV102Frame() {
+   /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6327549110966065451L;
+
+public LV102Frame() {
       this("LV102 Configuration Utility");
    }
 

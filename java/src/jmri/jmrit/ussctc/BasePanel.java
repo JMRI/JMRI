@@ -15,7 +15,12 @@ import javax.swing.*;
  */
 public class BasePanel extends JPanel implements Constants {
 
-    BasePanel() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1964780376359019410L;
+
+	BasePanel() {
         if (rb == null) rb = java.util.ResourceBundle.getBundle("jmri.jmrit.ussctc.UssCtcBundle");
     }
 

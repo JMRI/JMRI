@@ -27,7 +27,13 @@ import java.util.List;
 public class PrintDecoderListAction  extends AbstractAction {
 
 
-    public PrintDecoderListAction(String actionName, Frame frame, boolean preview) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4693793673785831632L;
+
+
+	public PrintDecoderListAction(String actionName, Frame frame, boolean preview) {
         super(actionName);
         mFrame = frame;
         isPreview = preview;

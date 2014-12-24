@@ -13,7 +13,12 @@ import javax.swing.JMenu;
  * @version     $Revision$
  */
 public class TMCCMenu extends JMenu {
-    public TMCCMenu(String name) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1759987972791093919L;
+
+	public TMCCMenu(String name) {
         this();
         setText(name);
     }

@@ -21,6 +21,12 @@ import javax.swing.*;
 public class Pr1WinExportAction  extends AbstractAction {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7841927026355092178L;
+
+
+	/**
      * Create the action
      * @param actionName String name to be displayed in menus, etc
      * @param pModel  CvTableModel that contains the data to (eventually) be exported

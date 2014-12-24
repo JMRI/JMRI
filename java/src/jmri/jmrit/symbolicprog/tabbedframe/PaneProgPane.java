@@ -68,7 +68,11 @@ import org.jdom2.Element;
 public class PaneProgPane extends javax.swing.JPanel
     implements java.beans.PropertyChangeListener  {
 
-    static final String LAST_GRIDX = "last_gridx";
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1884950541914044865L;
+	static final String LAST_GRIDX = "last_gridx";
     static final String LAST_GRIDY = "last_gridy";
 
     protected CvTableModel _cvModel;

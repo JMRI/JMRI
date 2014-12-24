@@ -21,6 +21,10 @@ import jmri.jmrix.acela.AcelaReply;
 
 public class AcelaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.acela.AcelaListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1748920880800009266L;
 	// member declarations
 	javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
 	javax.swing.JButton sendButton = new javax.swing.JButton();

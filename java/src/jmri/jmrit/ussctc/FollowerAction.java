@@ -11,7 +11,13 @@ package jmri.jmrit.ussctc;
  */
 public class FollowerAction extends jmri.util.JmriJFrameAction {
 
-    public FollowerAction(String s) { 
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2468330475804527825L;
+
+
+	public FollowerAction(String s) { 
 	    super(s);
 
         // disable ourself if there is no route manager object available

@@ -118,7 +118,11 @@ import org.slf4j.LoggerFactory;
 abstract public class Editor extends JmriJFrame implements MouseListener, MouseMotionListener,
         ActionListener, KeyListener, java.beans.VetoableChangeListener {
 
-    final public static int BKG = 1;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8861685536112059782L;
+	final public static int BKG = 1;
     final public static int TEMP = 2;
     final public static int ICONS = 3;
     final public static int LABELS = 4;
@@ -263,7 +267,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     class UrlErrorDialog extends JDialog {
 
-        JTextField _urlField;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 637005040413394683L;
+		JTextField _urlField;
         CatalogPanel _catalog;
         String _badUrl;
 
@@ -499,7 +507,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     static class ToolTipTimer extends Timer {
 
-        ToolTip tooltip;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 6055104942320433196L;
+		ToolTip tooltip;
 
         ToolTipTimer(int delay, ActionListener listener, ToolTip tip) {
             super(delay, listener);
@@ -517,7 +529,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
     public class TargetPane extends JLayeredPane {
 
-        int h = 100;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -534485804189013091L;
+		int h = 100;
         int w = 150;
 
         public TargetPane() {
@@ -1139,7 +1155,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (showAlignPopup(p)) {
             JMenu edit = new JMenu(Bundle.getMessage("EditAlignment"));
             edit.add(new AbstractAction(Bundle.getMessage("AlignX")) {
-                int _x;
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = -7203083564542121758L;
+				int _x;
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -1160,7 +1180,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 }
             }.init(p.getX()));
             edit.add(new AbstractAction(Bundle.getMessage("AlignMiddleX")) {
-                int _x;
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = -2457090959398631625L;
+				int _x;
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -1181,7 +1205,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 }
             }.init(p.getX() + p.getWidth() / 2));
             edit.add(new AbstractAction(Bundle.getMessage("AlignOtherX")) {
-                int _x;
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = 6736209013308083675L;
+				int _x;
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -1202,7 +1230,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 }
             }.init(p.getX() + p.getWidth()));
             edit.add(new AbstractAction(Bundle.getMessage("AlignY")) {
-                int _y;
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = 9193895818578333472L;
+				int _y;
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -1223,7 +1255,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 }
             }.init(p.getY()));
             edit.add(new AbstractAction(Bundle.getMessage("AlignMiddleY")) {
-                int _y;
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = -4959242969316962932L;
+				int _y;
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -1244,7 +1280,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 }
             }.init(p.getY() + p.getHeight() / 2));
             edit.add(new AbstractAction(Bundle.getMessage("AlignOtherY")) {
-                int _y;
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = -4912001637222249600L;
+				int _y;
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -1265,7 +1305,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 }
             }.init(p.getY() + p.getHeight()));
             edit.add(new AbstractAction(Bundle.getMessage("AlignXFirst")) {
-                @Override
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = -3044971256172094772L;
+
+				@Override
                 public void actionPerformed(ActionEvent e) {
                     if (_selectionGroup == null) {
                         return;
@@ -1281,7 +1326,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 }
             });
             edit.add(new AbstractAction(Bundle.getMessage("AlignYFirst")) {
-                @Override
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = 2965269127612055590L;
+
+				@Override
                 public void actionPerformed(ActionEvent e) {
                     if (_selectionGroup == null) {
                         return;
@@ -1381,7 +1431,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         jmri.NamedBean bean = p.getNamedBean();
         if (bean != null) {
             edit.add(new AbstractAction(Bundle.getMessage("SetSysNameTooltip")) {
-                Positionable comp;
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = 4071007784723460991L;
+				Positionable comp;
                 jmri.NamedBean bean;
 
                 @Override
@@ -1415,7 +1469,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
     public void setRemoveMenu(Positionable p, JPopupMenu popup) {
         popup.add(new AbstractAction(Bundle.getMessage("Remove")) {
-            Positionable comp;
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 7997695798410317687L;
+			Positionable comp;
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -1894,7 +1952,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     protected void addMemoryEditor() {
         IconAdder editor = new IconAdder("Memory") {
-            JButton bSpin = new JButton(Bundle.getMessage("AddSpinner"));
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -133542131690127907L;
+			JButton bSpin = new JButton(Bundle.getMessage("AddSpinner"));
             JButton bBox = new JButton(Bundle.getMessage("AddInputBox"));
             JSpinner spinner = new JSpinner(_spinCols);
 
@@ -2366,7 +2428,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
     public static class JFrameItem extends JmriJFrame {
 
-        IconAdder _editor;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -3530827106634066232L;
+		IconAdder _editor;
 
         JFrameItem(String name, IconAdder editor) {
             super(name);
@@ -2824,7 +2890,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             return false;
         }
         popup.add(new AbstractAction(Bundle.getMessage("TextAttributes")) {
-            Positionable comp;
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 9148489749062797624L;
+			Positionable comp;
 
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -2841,7 +2911,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     class TextAttrDialog extends JDialog {
 
-        Positionable _pos;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 6801138901620891961L;
+		Positionable _pos;
         jmri.jmrit.display.palette.DecoratorPanel _decorator;
 
         TextAttrDialog(Positionable p) {

@@ -17,7 +17,11 @@ import java.awt.event.ActionEvent;
 
 public class PacketGenAction 			extends AbstractAction {
 
-    jmri.jmrix.lenz.XNetSystemConnectionMemo _memo=null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5884805612020376097L;
+	jmri.jmrix.lenz.XNetSystemConnectionMemo _memo=null;
 
     public PacketGenAction(String s,jmri.jmrix.lenz.XNetSystemConnectionMemo memo) { 
        super(s);

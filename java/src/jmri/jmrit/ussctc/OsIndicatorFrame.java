@@ -15,7 +15,12 @@ import javax.swing.*;
  */
 public class OsIndicatorFrame extends jmri.util.JmriJFrame {
 
-    public OsIndicatorFrame() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -957500458464677560L;
+
+	public OsIndicatorFrame() {
         super();
     }
 

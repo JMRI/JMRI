@@ -14,7 +14,11 @@ import javax.swing.AbstractAction;
  */
 public class SetupExcelProgramSwitchListFrameAction extends AbstractAction {
 
-    public SetupExcelProgramSwitchListFrameAction(String s) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -569912978566932883L;
+	public SetupExcelProgramSwitchListFrameAction(String s) {
     	super(s);
     }
 

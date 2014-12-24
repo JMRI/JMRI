@@ -28,7 +28,11 @@ import jmri.util.FileUtil;
 
 public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
-    JCheckBox eStopCB;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5008747256799742063L;
+	JCheckBox eStopCB;
     JSpinner delaySpinner;
 
     JCheckBox momF2CB;

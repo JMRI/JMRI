@@ -15,7 +15,12 @@ import javax.swing.JMenu;
  * @version     $Revision$
  */
 public class SpeedoMenu extends JMenu {
-    public SpeedoMenu(String name) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2390789739386732815L;
+
+	public SpeedoMenu(String name) {
         this();
         setText(name);
     }

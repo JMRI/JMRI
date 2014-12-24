@@ -15,6 +15,10 @@ import jmri.jmrix.sprog.SprogMessage;
  */
 public class SprogPacketGenFrame extends jmri.util.JmriJFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 641828887730689784L;
 	// member declarations
 	javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
 	javax.swing.JButton sendButton = new javax.swing.JButton();

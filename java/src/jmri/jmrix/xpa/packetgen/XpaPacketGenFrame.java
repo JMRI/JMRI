@@ -17,6 +17,10 @@ import jmri.jmrix.xpa.XpaMessage;
 
 public class XpaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.xpa.XpaListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 696357180743551670L;
 	// member declarations
 	javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
 	javax.swing.JButton sendButton = new javax.swing.JButton();

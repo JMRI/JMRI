@@ -21,7 +21,13 @@ import jmri.util.swing.sdi.JmriJFrameInterface;
 public class RfidMenu extends JMenu {
 
 
-    public RfidMenu(RfidSystemConnectionMemo memo) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -9172828888739172868L;
+
+
+	public RfidMenu(RfidSystemConnectionMemo memo) {
 
         super();
 

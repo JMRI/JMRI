@@ -19,7 +19,12 @@ public class InternalSensorManager extends AbstractSensorManager {
      */
     protected Sensor createNewSensor(String systemName, String userName) {
         Sensor sen = new AbstractSensor(systemName, userName){
-            public void requestUpdateFromLayout(){}
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 6281257500525818919L;
+
+			public void requestUpdateFromLayout(){}
         };
         try {
             sen.setKnownState(getDefaultStateForNewSensors());

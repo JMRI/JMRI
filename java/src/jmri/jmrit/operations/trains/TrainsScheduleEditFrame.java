@@ -22,6 +22,11 @@ import jmri.jmrit.operations.setup.Control;
  */
 public class TrainsScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6005860633909479680L;
+
 	// text box
 	JTextField addTextBox = new JTextField(Control.max_len_string_attibute);
 

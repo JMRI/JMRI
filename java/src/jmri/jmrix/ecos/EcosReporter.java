@@ -30,7 +30,12 @@ import java.util.regex.Matcher;
  
  public class EcosReporter extends AbstractReporter implements PhysicalLocationReporter {
 
-    public EcosReporter(String systemName, String userName) {  // a human-readable Reporter number must be specified!
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4207301843857219092L;
+
+	public EcosReporter(String systemName, String userName) {  // a human-readable Reporter number must be specified!
         super(systemName, userName);  // can't use prefix here, as still in construction
      }
     

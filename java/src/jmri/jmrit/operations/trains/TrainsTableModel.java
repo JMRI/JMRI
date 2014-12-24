@@ -38,6 +38,11 @@ import jmri.util.table.ButtonRenderer;
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4245878111843075492L;
+
 	TrainManager trainManager = TrainManager.instance(); // There is only one manager
 
 	// Defines the columns
@@ -553,6 +558,10 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 	}
 	
 	class MyTableCellRenderer extends DefaultTableCellRenderer {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 6030024446880261924L;
 		@Override
 		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
 				boolean hasFocus, int row, int column) {

@@ -18,6 +18,10 @@ import jmri.jmrit.operations.routes.Route;
  */
 public class PrintRoutesAction extends PrintRouteAction {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6083754676592916495L;
 	private static final char FORM_FEED = '\f';
 
 	public PrintRoutesAction(String actionName, boolean preview) {

@@ -15,7 +15,11 @@ import javax.swing.*;
  */
 public class LogPanel extends JPanel {
 
-    // member declarations
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6095030332169881375L;
+	// member declarations
     javax.swing.JLabel label = new javax.swing.JLabel("Message:");
     javax.swing.JButton sendButton = new javax.swing.JButton("Add");
     javax.swing.JTextField textField = new javax.swing.JTextField(40);

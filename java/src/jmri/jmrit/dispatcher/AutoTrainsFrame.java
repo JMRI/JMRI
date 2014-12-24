@@ -38,7 +38,12 @@ import java.util.ResourceBundle;
  */
 public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 	
-    public AutoTrainsFrame (DispatcherFrame disp) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5083159503596027291L;
+
+	public AutoTrainsFrame (DispatcherFrame disp) {
 		super(false,true);
 		_dispatcher = disp;
 		initializeAutoTrainsWindow();

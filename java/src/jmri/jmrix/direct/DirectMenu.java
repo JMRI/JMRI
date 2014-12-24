@@ -14,7 +14,12 @@ import javax.swing.JMenu;
  * @version     $Revision$
  */
 public class DirectMenu extends JMenu {
-    public DirectMenu(String name) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4869945275533906814L;
+
+	public DirectMenu(String name) {
         this();
         setText(name);
     }

@@ -29,6 +29,11 @@ import jmri.jmrit.operations.setup.Setup;
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5846367542654823901L;
+
 	CarManager manager = CarManager.instance(); // There is only one manager
 
 	// Defines the columns

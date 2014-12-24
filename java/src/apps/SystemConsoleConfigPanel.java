@@ -40,7 +40,12 @@ import jmri.util.swing.FontComboUtil;
  */
 public class SystemConsoleConfigPanel extends JPanel {
 
-    private static final ResourceBundle rbc = ResourceBundle.getBundle("apps.AppsConfigBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2050602237831555417L;
+
+	private static final ResourceBundle rbc = ResourceBundle.getBundle("apps.AppsConfigBundle");
 
     private static final Integer fontSizes[] = {
         8,

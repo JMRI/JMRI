@@ -27,7 +27,11 @@ import jmri.jmrix.can.cbus.CbusConstants;
  */
 public class CbusEventFilterPanel extends JPanel {
     
-    protected JCheckBox nnEnButton = new JCheckBox();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5291143894239237548L;
+	protected JCheckBox nnEnButton = new JCheckBox();
     protected JTextField nnLowField = new JTextField("", 5);
     protected JTextField nnHighField = new JTextField("", 5);
     // Fields to enter Event range

@@ -30,6 +30,11 @@ import javax.swing.JRadioButton;
  */
 public class TrainsTableSetColorFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7242293868179247080L;
+
 	TrainManager trainManager = TrainManager.instance();
 
 	// labels

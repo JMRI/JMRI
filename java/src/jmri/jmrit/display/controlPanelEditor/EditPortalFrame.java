@@ -31,7 +31,11 @@ import jmri.jmrit.catalog.NamedIcon;
 
 public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelectionListener {
 
-    private OBlock _homeBlock;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8328681792874046328L;
+	private OBlock _homeBlock;
     private CircuitBuilder _parent;
     private OBlock _adjacentBlock;
 
@@ -563,7 +567,11 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
 
     public class IconDragJLabel extends DragJLabel {
 
-        public IconDragJLabel(DataFlavor flavor) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 7136480915082749291L;
+		public IconDragJLabel(DataFlavor flavor) {
             super(flavor);
         }
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException,IOException {

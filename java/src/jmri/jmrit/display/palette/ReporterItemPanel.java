@@ -23,7 +23,11 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.picker.PickListModel;
 
 public class ReporterItemPanel extends TableItemPanel {
-    ReporterIcon _reporter;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7260181246347519378L;
+	ReporterIcon _reporter;
 
     public ReporterItemPanel(JmriJFrame parentFrame, String  type, String family, PickListModel model, Editor editor) {
         super(parentFrame, type, family, model, editor);
@@ -118,7 +122,11 @@ public class ReporterItemPanel extends TableItemPanel {
 
     protected class IconDragJComponent extends DragJComponent {
 
-        public IconDragJComponent(DataFlavor flavor, Dimension dim) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -7459600899859373554L;
+		public IconDragJComponent(DataFlavor flavor, Dimension dim) {
             super(flavor, dim);
         }
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException,IOException {

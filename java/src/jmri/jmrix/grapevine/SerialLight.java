@@ -20,6 +20,11 @@ import jmri.implementation.AbstractLight;
 public class SerialLight extends AbstractLight {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1633282673542762421L;
+
+	/**
      * Create a Light object, with only system name.
      * <P>
      * 'systemName' was previously validated in SerialLightManager

@@ -12,7 +12,12 @@ import java.util.Comparator;
  */
 
 public class PreferNumericComparator implements Comparator<Object>, java.io.Serializable {
-    public PreferNumericComparator() {}
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7992060080109727828L;
+
+	public PreferNumericComparator() {}
     
     public int compare(Object oo1, Object oo2) {
                 

@@ -37,6 +37,10 @@ import jmri.util.swing.WindowInterface;
 public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4617322485702894536L;
+	/**
      * Property change listeners can listen for property changes with this name
      * from this object to take action when a user selects a roster group.
      */
@@ -467,7 +471,12 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
 
     class TransferHandler extends javax.swing.TransferHandler {
 
-        @Override
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 4224992650668284315L;
+
+		@Override
         public boolean canImport(JComponent c, DataFlavor[] transferFlavors) {
             for (DataFlavor flavor : transferFlavors) {
                 if (RosterEntrySelection.rosterEntryFlavor.equals(flavor)) {
@@ -518,6 +527,11 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
     }
 
     static public class TreeCellRenderer extends DefaultTreeCellRenderer {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 6470385455791687641L;
     }
 
     public class TreeSelectionListener implements javax.swing.event.TreeSelectionListener {

@@ -20,7 +20,12 @@ public class LZ100Frame extends jmri.util.JmriJFrame {
 
     //private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.swing.lz100.LZ100Bundle");
 
-    public LZ100Frame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4830621452390220529L;
+
+	public LZ100Frame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
 	    this("LZ100 Configuration Utility",memo);
     }
 

@@ -36,6 +36,11 @@ import jmri.util.JTableUtil;
 public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6600658860279143115L;
+
+	/**
      * Controls whether not-in-use slots are shown
      */
     javax.swing.JCheckBox 	showAllCheckBox = new javax.swing.JCheckBox();

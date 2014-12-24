@@ -21,7 +21,11 @@ import jmri.jmrit.roster.swing.RosterGroupComboBox;
 public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
 
 
-    public RosterGroupTableAction(String s, WindowInterface wi) {
+    /**
+		 * 
+		 */
+		private static final long serialVersionUID = -6077873425282362402L;
+	public RosterGroupTableAction(String s, WindowInterface wi) {
     	super(s, wi);
     }
      
@@ -56,6 +60,11 @@ public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
         // create the frame
         f = new RosterGroupTableFrame(m, helpTarget()){
             /**
+			 * 
+			 */
+			private static final long serialVersionUID = 3167164123972770969L;
+
+			/**
              * Include an "add" button
              */
             void extras() {

@@ -307,11 +307,21 @@ public class TrackSegment
 		else popup.add(rb.getString("NotHidden"));
 		popup.add(new JSeparator(JSeparator.HORIZONTAL));
 		popup.add(new AbstractAction(rb.getString("Edit")) {
+				/**
+			 * 
+			 */
+			private static final long serialVersionUID = -8434155343805889256L;
+
 				public void actionPerformed(ActionEvent e) {
 					editTrackSegment();
 				}
 			});
 		popup.add(new AbstractAction(rb.getString("Remove")) {
+				/**
+			 * 
+			 */
+			private static final long serialVersionUID = -5403313571121888412L;
+
 				public void actionPerformed(ActionEvent e) {
 					layoutEditor.removeTrackSegment(instance);
 					remove();
@@ -320,36 +330,66 @@ public class TrackSegment
 			});
         JMenu lineType = new JMenu(rb.getString("ChangeTo"));
         lineType.add(new AbstractAction(rb.getString("Line")) {
-            public void actionPerformed(ActionEvent e) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -2124868806018661728L;
+
+			public void actionPerformed(ActionEvent e) {
                 changeType(0);
 				}
         });
         lineType.add(new AbstractAction(rb.getString("Circle")) {
-            public void actionPerformed(ActionEvent e) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -481775061303245869L;
+
+			public void actionPerformed(ActionEvent e) {
                 changeType(1);
             }
         });
         lineType.add(new AbstractAction(rb.getString("Elipse")) {
-            public void actionPerformed(ActionEvent e) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -2192546838539431871L;
+
+			public void actionPerformed(ActionEvent e) {
                 changeType(2);
             }
         });
         popup.add(lineType);
         if (getArc()){
             popup.add(new AbstractAction(rb.getString("FlipAngle")) {
-                    public void actionPerformed(ActionEvent e) {
+                    /**
+				 * 
+				 */
+				private static final long serialVersionUID = -5467146687460909227L;
+
+					public void actionPerformed(ActionEvent e) {
                         flipAngle();
                     }
                 });
             if(hideConstructionLines()){
                 popup.add(new AbstractAction(rb.getString("ShowConstruct")) {
-                    public void actionPerformed(ActionEvent e) {
+                    /**
+					 * 
+					 */
+					private static final long serialVersionUID = -3681445953384400565L;
+
+					public void actionPerformed(ActionEvent e) {
                         hideConstructionLines(SHOWCON);
                     }
                 });
             } else {
                 popup.add(new AbstractAction(rb.getString("HideConstruct")) {
-                    public void actionPerformed(ActionEvent e) {
+                    /**
+					 * 
+					 */
+					private static final long serialVersionUID = -5218884649785670786L;
+
+					public void actionPerformed(ActionEvent e) {
                         hideConstructionLines(HIDECON);
                     }
                 });
@@ -357,7 +397,12 @@ public class TrackSegment
         }
         if ((!blockName.equals("")) && (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled())){
             popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = -2604285207958381230L;
+
+				public void actionPerformed(ActionEvent e) {
                     AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
                     routeTableAction.actionPerformed(e);
                 }

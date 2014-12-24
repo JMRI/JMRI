@@ -12,7 +12,11 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonPacketGenAction extends AbstractAction {
 
-    private final JsonClientSystemConnectionMemo memo;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1938615445470223692L;
+	private final JsonClientSystemConnectionMemo memo;
 
     JsonPacketGenAction(String message, JsonClientSystemConnectionMemo memo) {
         super(message);

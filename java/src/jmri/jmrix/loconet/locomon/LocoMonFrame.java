@@ -15,7 +15,12 @@ import jmri.jmrix.loconet.*;
 @Deprecated
 public class LocoMonFrame extends jmri.jmrix.AbstractMonFrame implements LocoNetListener {
 
-    public LocoMonFrame(LnTrafficController tc) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1761967273446973451L;
+
+	public LocoMonFrame(LnTrafficController tc) {
         super();
         this.tc = tc;
     }

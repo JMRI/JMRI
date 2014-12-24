@@ -25,6 +25,11 @@ import jmri.util.table.ButtonRenderer;
  */
 public class RoutesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6951642152186049680L;
+
 	RouteManager manager; // There is only one manager
 
 	// Defines the columns

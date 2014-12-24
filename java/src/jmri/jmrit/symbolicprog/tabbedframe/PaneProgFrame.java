@@ -43,7 +43,11 @@ import edu.umd.cs.findbugs.annotations.NonNull;
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener, PaneContainer  {
 
-    // members to contain working variable, CV values, Indexed CV values
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2824668047394722236L;
+	// members to contain working variable, CV values, Indexed CV values
     JLabel              progStatus   = new JLabel(SymbolicProgBundle.getMessage("StateIdle"));
     CvTableModel        cvModel      = null;
     IndexedCvTableModel iCvModel     = null;
@@ -140,7 +144,12 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
         // Add a save item
         fileMenu.add(new AbstractAction(SymbolicProgBundle.getMessage("MenuSave")) {
-            public void actionPerformed(ActionEvent e) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -5729965483978099042L;
+
+			public void actionPerformed(ActionEvent e) {
                 storeFile();
             }
         });

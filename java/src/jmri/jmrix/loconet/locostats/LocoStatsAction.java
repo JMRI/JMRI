@@ -7,4 +7,9 @@ package jmri.jmrix.loconet.locostats;
  */
 @Deprecated
 public class LocoStatsAction extends LocoStatsPanel.Default  {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5048782246550756993L;
 }

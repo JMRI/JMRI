@@ -43,7 +43,12 @@ import org.slf4j.LoggerFactory;
  */
 public class SoundPro extends Apps {
 
-    SoundPro(JFrame p) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3990086935026870871L;
+
+	SoundPro(JFrame p) {
         super(p);
     }
 
@@ -78,7 +83,12 @@ public class SoundPro extends Apps {
 
         Action audioTable = new jmri.jmrit.beantable.AudioTableAction(Bundle.getMessage("SpButtonAudioTable"));
         Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")){
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = -4436153177473078189L;
+
+				public void actionPerformed(ActionEvent e) {
 					Apps.handleQuit();
                 }
             };

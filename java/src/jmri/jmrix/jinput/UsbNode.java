@@ -22,7 +22,11 @@ import org.slf4j.LoggerFactory;
  * @version			$Revision$
  */
 public class UsbNode extends DefaultMutableTreeNode {
-    String name;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8201606725792217137L;
+	String name;
     Controller controller;
     Component component;
     

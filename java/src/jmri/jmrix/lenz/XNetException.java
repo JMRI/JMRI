@@ -12,7 +12,12 @@ import jmri.JmriException;
 
 public class XNetException extends JmriException {
 
-    public XNetException( String m ){
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7319439345455079700L;
+
+	public XNetException( String m ){
         super( m ) ;
     }
 

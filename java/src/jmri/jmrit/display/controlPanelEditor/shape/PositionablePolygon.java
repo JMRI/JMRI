@@ -29,6 +29,10 @@ import org.slf4j.LoggerFactory;
 
 public class PositionablePolygon extends PositionableShape {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6175122309400060896L;
 	private ArrayList<Rectangle>	_vertexHandles;
 	private boolean _editing = false;
 
@@ -83,7 +87,11 @@ public class PositionablePolygon extends PositionableShape {
     public boolean setEditItemMenu(JPopupMenu popup) {
         String txt = Bundle.getMessage("editShape", Bundle.getMessage("polygon"));
         popup.add(new javax.swing.AbstractAction(txt) {
-        	PositionablePolygon ps;
+        	/**
+			 * 
+			 */
+			private static final long serialVersionUID = 6740597325568794368L;
+			PositionablePolygon ps;
             @Override
                 public void actionPerformed(ActionEvent e) {
                 	if (_editFrame==null) {

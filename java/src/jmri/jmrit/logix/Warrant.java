@@ -44,7 +44,11 @@ import edu.umd.cs.findbugs.annotations.Nullable;
 public class Warrant extends jmri.implementation.AbstractNamedBean 
                     implements ThrottleListener, java.beans.PropertyChangeListener {
 
-    // permanent members.
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7798395667392538744L;
+	// permanent members.
     private ArrayList <BlockOrder> _savedOrders = new ArrayList <BlockOrder>();
     private BlockOrder _viaOrder;
     private BlockOrder _avoidOrder;

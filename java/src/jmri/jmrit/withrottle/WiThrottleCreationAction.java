@@ -19,7 +19,12 @@ import javax.swing.Icon;
 
 public class WiThrottleCreationAction extends JmriAbstractAction{
 
-    public WiThrottleCreationAction(String s, WindowInterface wi) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6107790829195111275L;
+
+	public WiThrottleCreationAction(String s, WindowInterface wi) {
     	super(s, wi);
     }
      

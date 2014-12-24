@@ -27,7 +27,12 @@ import javax.swing.JCheckBox;
  */
 public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
-    public BDL16Panel() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -287798661310758892L;
+
+	public BDL16Panel() {
         this (1);
     }
     public BDL16Panel(int boardNum) {

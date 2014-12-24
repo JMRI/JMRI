@@ -33,7 +33,11 @@ import javax.swing.JScrollPane;
  */
 public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener {
 
-    JButton nextButton  = new JButton("Next Entry");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2129153656311593566L;
+	JButton nextButton  = new JButton("Next Entry");
     JButton previousButton  = new JButton("Previous Entry");
     JButton deleteButton  = new JButton("Delete Entry");
     JButton refreshButton = new JButton("Refresh");

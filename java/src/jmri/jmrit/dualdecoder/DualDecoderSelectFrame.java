@@ -11,7 +11,12 @@ package jmri.jmrit.dualdecoder;
  */
 public class DualDecoderSelectFrame extends jmri.util.JmriJFrame {
 
-    public DualDecoderSelectFrame() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1029903266811472795L;
+
+	public DualDecoderSelectFrame() {
         this("Multi-Decoder Control");
     }
     

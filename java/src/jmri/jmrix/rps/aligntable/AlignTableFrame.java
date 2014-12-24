@@ -19,7 +19,11 @@ import javax.swing.*;
  */
 public class AlignTableFrame extends jmri.util.JmriJFrame {
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.rps.aligntable.AlignTableBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1010732755062965677L;
+	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.rps.aligntable.AlignTableBundle");
 		
     /**
      * Constructor method

@@ -17,7 +17,11 @@ import java.util.List;
  */
 public class CreateButtonPanel extends AbstractActionPanel {
 
-    public CreateButtonPanel() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1652489978153384059L;
+	public CreateButtonPanel() {
         super("ButtonButtonAdd", "ButtonButtonRemove");
     }
     List<CreateButtonModel> rememberedObjects() { return CreateButtonModel.rememberedObjects(); }

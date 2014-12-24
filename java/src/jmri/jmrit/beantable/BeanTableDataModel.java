@@ -43,7 +43,11 @@ import jmri.util.swing.XTableColumnModel;
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener {
 
-    static public final int SYSNAMECOL  = 0;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3276184372154591138L;
+	static public final int SYSNAMECOL  = 0;
     static public final int USERNAMECOL = 1;
     static public final int VALUECOL = 2;
     static public final int COMMENTCOL = 3;
@@ -598,7 +602,12 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
 
     public JTable makeJTable(TableSorter sorter) {
 	    JTable table = new JTable(sorter)  {
-            public boolean editCellAt(int row, int column, java.util.EventObject e) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 2511932624004472654L;
+
+			public boolean editCellAt(int row, int column, java.util.EventObject e) {
                 boolean res = super.editCellAt(row, column, e);
                 java.awt.Component c = this.getEditorComponent();
                 if (c instanceof javax.swing.JTextField) {

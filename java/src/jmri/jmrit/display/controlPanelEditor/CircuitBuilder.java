@@ -1177,7 +1177,11 @@ public class CircuitBuilder  {
      * gimmick to get JDialog to re-layout contents and repaint 
      */
     static class convertFrame extends JmriJFrame {
-    	JDialog _dialog;
+    	/**
+		 * 
+		 */
+		private static final long serialVersionUID = -6547026117570145767L;
+		JDialog _dialog;
     	convertFrame (JDialog dialog) {
     		super(false, false);
     		_dialog = dialog;

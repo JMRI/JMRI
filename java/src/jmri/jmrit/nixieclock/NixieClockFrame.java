@@ -25,7 +25,11 @@ import jmri.util.JmriJFrame;
  */
 public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
 
-    // GUI member declarations
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6327183291550522948L;
+	// GUI member declarations
     JLabel h1;  // msb of hours
     JLabel h2;
     JLabel m1;  // msb of minutes

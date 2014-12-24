@@ -18,6 +18,10 @@ import jmri.jmrix.easydcc.EasyDccReply;
 
 public class EasyDccPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.easydcc.EasyDccListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7918242560848851246L;
 	// member declarations
 	javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
 	javax.swing.JButton sendButton = new javax.swing.JButton();

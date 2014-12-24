@@ -19,6 +19,10 @@ import jmri.jmrix.qsi.QsiReply;
  */
 public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.qsi.QsiListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4372308600267781524L;
 	// member declarations
 	javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
 	javax.swing.JButton sendButton = new javax.swing.JButton();

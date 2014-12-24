@@ -14,7 +14,12 @@ import javax.swing.JLabel;
 
 class BranchToEditor extends SdfMacroEditor {
 
-    public BranchToEditor(SdfMacro inst) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7625740509332461282L;
+
+	public BranchToEditor(SdfMacro inst) {
         super(inst);
 
         // remove default message from SdfMacroEditor

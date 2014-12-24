@@ -14,7 +14,11 @@ import jmri.util.JmriJFrame;
  */
 public class PowerPanelFrame extends JmriJFrame {
 
-    // GUI member declarations
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1253132940033685L;
+	// GUI member declarations
     PowerPane pane	= new PowerPane();
 
     public PowerPanelFrame() {

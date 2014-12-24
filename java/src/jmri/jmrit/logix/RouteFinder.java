@@ -50,7 +50,11 @@ public class RouteFinder implements Runnable {
 
     static class RouteNode extends DefaultMutableTreeNode {
 
-        boolean _needsViaAncestor = false;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -5651237533899902323L;
+		boolean _needsViaAncestor = false;
 
         RouteNode(Object userObject) {
             super(userObject);

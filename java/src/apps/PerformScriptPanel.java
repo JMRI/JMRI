@@ -30,7 +30,11 @@ import javax.swing.JPanel;
  */
 public class PerformScriptPanel extends JPanel {
 
-    JPanel self;  // used for synchronization
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5977442451170083348L;
+	JPanel self;  // used for synchronization
     protected ResourceBundle rb;
 
     public PerformScriptPanel() {
@@ -76,7 +80,11 @@ public class PerformScriptPanel extends JPanel {
     JFileChooser fc = jmri.jmrit.XmlFile.userFileChooser("Python script files", "py");
 
     public class Item extends JPanel implements ActionListener {
-        JButton removeButton = new JButton(rb.getString("ButtonScriptRemove"));
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 773446142833490795L;
+		JButton removeButton = new JButton(rb.getString("ButtonScriptRemove"));
         Item() {
             setLayout(new FlowLayout());
             add(removeButton);

@@ -31,7 +31,11 @@ public class AudioTableFrame extends BeanTableFrame {
 
     //static final ResourceBundle rba = ResourceBundle.getBundle("jmri.jmrit.audio.swing.AudioTableBundle");
 
-    AudioTablePanel audioPanel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -92682823885444455L;
+	AudioTablePanel audioPanel;
     
     public AudioTableFrame(AudioTablePanel panel,
                            String helpTarget) {

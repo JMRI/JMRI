@@ -21,7 +21,11 @@ import java.io.*;
 
 public class LoadStorePanel extends javax.swing.JPanel {
 
-    public LoadStorePanel() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2101684476801445613L;
+	public LoadStorePanel() {
         super();
 
         // file load, store

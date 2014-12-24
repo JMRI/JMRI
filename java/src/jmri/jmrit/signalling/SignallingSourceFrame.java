@@ -13,7 +13,11 @@ import java.util.ResourceBundle;
 */
 public class SignallingSourceFrame extends jmri.util.JmriJFrame {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1380478577010543156L;
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
 
     public SignallingSourceFrame() {
         super(false, true);

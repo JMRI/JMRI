@@ -28,6 +28,10 @@ import jmri.jmrit.catalog.NamedIcon;
 
 
 public class DropJLabel extends JLabel implements DropTargetListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1675745024607997746L;
 	private DataFlavor 				_dataFlavor;
     private HashMap <String, NamedIcon>   _iconMap;
     private boolean 				_update;

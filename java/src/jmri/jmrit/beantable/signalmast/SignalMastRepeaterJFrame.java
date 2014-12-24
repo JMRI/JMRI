@@ -16,7 +16,12 @@ import java.util.ResourceBundle;
 
 public class SignalMastRepeaterJFrame extends JmriJFrame {
 
-    public SignalMastRepeaterJFrame() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4168900880081275831L;
+
+	public SignalMastRepeaterJFrame() {
         super(ResourceBundle.getBundle("jmri.jmrit.beantable.signalmast.RepeaterBundle")
                 .getString("TitleSignalMastRepeater"),false, true);
         

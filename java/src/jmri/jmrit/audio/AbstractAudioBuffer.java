@@ -35,6 +35,11 @@ import java.nio.ByteBuffer;
 public abstract class AbstractAudioBuffer extends AbstractAudio implements AudioBuffer {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8268569137224309135L;
+
+	/**
      * Holds the location of the sound sample used in this buffer
      */
     private String _url;

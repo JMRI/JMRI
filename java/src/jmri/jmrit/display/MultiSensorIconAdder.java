@@ -53,7 +53,11 @@ import java.awt.dnd.*;
 
 public class MultiSensorIconAdder extends IconAdder {
 
-    JRadioButton _updown;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6135920336395495628L;
+	JRadioButton _updown;
     JRadioButton _rightleft;
 
     HashMap <String, NamedBeanHandle<Sensor>>_sensorMap = new HashMap <String, NamedBeanHandle<Sensor>>();
@@ -269,7 +273,11 @@ public class MultiSensorIconAdder extends IconAdder {
     }
 
     class ExportHandler extends TransferHandler{
-        public int getSourceActions(JComponent c) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1457006609475522778L;
+		public int getSourceActions(JComponent c) {
             return COPY;
         }
         public Transferable createTransferable(JComponent c) {
@@ -421,7 +429,11 @@ public class MultiSensorIconAdder extends IconAdder {
     *  Enables the active MultiSensor icons to receive dragged icons
     */
     class DropPanel extends JPanel implements DropTargetListener {
-        DataFlavor dataFlavor;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 7051687527703065869L;
+		DataFlavor dataFlavor;
         DropPanel () {
             try {
                 dataFlavor = new DataFlavor(NamedBeanFlavorMime);

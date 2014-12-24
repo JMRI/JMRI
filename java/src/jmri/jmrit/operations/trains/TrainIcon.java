@@ -34,6 +34,11 @@ import jmri.jmrit.operations.routes.RouteLocation;
 
 public class TrainIcon extends LocoIcon {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8557652717518925827L;
+
 	public TrainIcon(Editor editor) {
 		// super ctor call to make sure this is an icon label
 		super(editor);
@@ -50,6 +55,11 @@ public class TrainIcon extends LocoIcon {
 	public boolean showPopUp(JPopupMenu popup) {
 		if (_train != null) {
 			popup.add(new AbstractAction(Bundle.getMessage("Move")) {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 8451701357783453156L;
+
 				public void actionPerformed(ActionEvent e) {
 					_train.move();
 				}
@@ -59,6 +69,11 @@ public class TrainIcon extends LocoIcon {
 			popup.add(new ShowCarsInTrainAction(Bundle.getMessage("MenuItemShowCarsInTrain"), _train));
 			if (!isEditable()) {
 				popup.add(new AbstractAction(Bundle.getMessage("SetX&Y")) {
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 4468534003526674824L;
+
 					public void actionPerformed(ActionEvent e) {
 						if (!_train.setTrainIconCoordinates())
 							JOptionPane.showMessageDialog(null, Bundle.getMessage("SeeOperationsSettings"), Bundle
@@ -151,6 +166,11 @@ public class TrainIcon extends LocoIcon {
 	}
 
 	public class ThrottleAction extends AbstractAction {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 7257772386113407944L;
+
 		public ThrottleAction(String actionName) {
 			super(actionName);
 			if (_entry == null)
@@ -167,6 +187,10 @@ public class TrainIcon extends LocoIcon {
 	 * 
 	 */
 	public class RouteAction extends AbstractAction {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1452621257414758068L;
 		RouteLocation _rl;
 
 		public RouteAction(String actionName, RouteLocation rl) {

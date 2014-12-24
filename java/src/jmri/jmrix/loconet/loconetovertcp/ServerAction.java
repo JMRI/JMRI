@@ -15,7 +15,12 @@ import java.awt.event.ActionEvent;
 public class ServerAction
   extends AbstractAction {
 
-  public ServerAction(String s) {
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7774780042559216689L;
+
+public ServerAction(String s) {
     super(s);
       // Get a server instance to cause the config to be read and the server
       // started if necessary

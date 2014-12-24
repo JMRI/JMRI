@@ -18,7 +18,12 @@ import java.util.HashMap;
  */
 public class CatalogTreeIndex extends AbstractCatalogTree {
 
-    public CatalogTreeIndex(String sysName, String userName) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -421977014689495815L;
+
+	public CatalogTreeIndex(String sysName, String userName) {
 
         super(sysName, userName);
     }

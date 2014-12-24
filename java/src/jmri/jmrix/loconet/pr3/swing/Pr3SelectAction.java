@@ -7,4 +7,9 @@ package jmri.jmrix.loconet.pr3.swing;
  */
 @Deprecated
 public class Pr3SelectAction extends Pr3SelectPane.Default  {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5920688310475654238L;
 }

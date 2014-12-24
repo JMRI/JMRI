@@ -45,7 +45,11 @@ import java.awt.dnd.*;
 
 public class SlipIconAdder extends IconAdder {
 
-    HashMap <String, NamedBeanHandle<Turnout>>_turnoutMap = new HashMap <String, NamedBeanHandle<Turnout>>();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1180321824458466527L;
+	HashMap <String, NamedBeanHandle<Turnout>>_turnoutMap = new HashMap <String, NamedBeanHandle<Turnout>>();
     int _lastIndex = 0;
     
     public static final String NamedBeanFlavorMime = DataFlavor.javaJVMLocalObjectMimeType +
@@ -432,7 +436,11 @@ public class SlipIconAdder extends IconAdder {
     }
 
     class ExportHandler extends TransferHandler{
-        public int getSourceActions(JComponent c) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 2774793567795135795L;
+		public int getSourceActions(JComponent c) {
             return COPY;
         }
         public Transferable createTransferable(JComponent c) {
@@ -580,7 +588,11 @@ public class SlipIconAdder extends IconAdder {
     *  Enables the active Slip icons to receive dragged icons
     */
     class DropPanel extends JPanel implements DropTargetListener {
-        DataFlavor dataFlavor;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -6045000647236056541L;
+		DataFlavor dataFlavor;
         DropPanel () {
             try {
                 dataFlavor = new DataFlavor(NamedBeanFlavorMime);

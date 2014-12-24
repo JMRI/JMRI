@@ -17,6 +17,11 @@ import javax.swing.*;
  */
 public class PrintTrainManifestAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8792964051342675135L;
+
 	public PrintTrainManifestAction(String actionName, boolean preview, Frame frame) {
 		super(actionName);
 		isPreview = preview;

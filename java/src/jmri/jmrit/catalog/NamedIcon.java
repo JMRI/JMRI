@@ -36,6 +36,11 @@ import jmri.util.FileUtil;
 public class NamedIcon extends ImageIcon {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5274934991719576677L;
+
+	/**
      * Create a NamedIcon that is a complete copy
      * of an existing NamedIcon
      * @param pOld Object to copy

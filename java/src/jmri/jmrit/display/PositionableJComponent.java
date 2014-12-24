@@ -18,7 +18,11 @@ import javax.swing.*;
  */
 public class PositionableJComponent extends JComponent implements Positionable {
 
-   	protected Editor _editor = null;
+   	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4906476926163826709L;
+	protected Editor _editor = null;
     protected boolean debug = false;
 
     private ToolTip _tooltip;

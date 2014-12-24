@@ -22,7 +22,13 @@ import javax.swing.table.*;
  */
 
 public class ConsumerTableModel extends AbstractTableModel {
-    static    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5173698837318536847L;
+
+
+	static    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");
 
     
     public static final int USERNAME_COLUMN = 0;

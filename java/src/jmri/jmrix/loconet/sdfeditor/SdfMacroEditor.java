@@ -18,7 +18,12 @@ import javax.swing.tree.*;
 
 public abstract class SdfMacroEditor extends JPanel {
 
-    public SdfMacroEditor(SdfMacro inst) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4518290766707658975L;
+
+	public SdfMacroEditor(SdfMacro inst) {
         this.inst = inst;
         
         // add a default behavior

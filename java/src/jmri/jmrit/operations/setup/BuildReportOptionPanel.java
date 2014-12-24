@@ -25,7 +25,12 @@ import org.slf4j.LoggerFactory;
  */
 public class BuildReportOptionPanel extends OperationsPanel {
 
-    // major buttons
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 755494379884398257L;
+
+	// major buttons
     JButton saveButton = new JButton(Bundle.getMessage("Save"));
 
     // radio buttons

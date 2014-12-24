@@ -60,7 +60,11 @@ import javax.swing.JTextField;
  */
 public class PreviewDialog extends JDialog {
 
-    JPanel          _selectedImage;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -65980932474359139L;
+	JPanel          _selectedImage;
     static Color    _grayColor = new Color(235,235,235);
     Color           _currentBackground = _grayColor;
 

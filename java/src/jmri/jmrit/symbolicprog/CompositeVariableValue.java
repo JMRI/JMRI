@@ -116,7 +116,11 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
      * <P> Serves as a home for various service methods
      */
     static class SettingList extends ArrayList<Setting> {
-        public SettingList() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -931774092092164586L;
+		public SettingList() {
             super();
             if (log.isDebugEnabled()) log.debug("New setting list");
         }

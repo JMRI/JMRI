@@ -18,7 +18,11 @@ import javax.swing.AbstractAction;
  */
 public class SystemInfoAction extends AbstractAction {
 
-    jmri.jmrix.lenz.XNetSystemConnectionMemo _memo=null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8341247362856299056L;
+	jmri.jmrix.lenz.XNetSystemConnectionMemo _memo=null;
 
     public SystemInfoAction(String s,jmri.jmrix.lenz.XNetSystemConnectionMemo memo) { 
        super(s);

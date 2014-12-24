@@ -20,7 +20,11 @@ import javax.swing.event.ChangeListener;
 @Deprecated // since 3.7.1
 public class IndexedVarSlider extends JSlider implements ChangeListener {
 
-    IndexedVariableValue _iVar;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8095790142790464814L;
+	IndexedVariableValue _iVar;
 
     IndexedVarSlider(IndexedVariableValue iVar, int min, int max) {
         super(new DefaultBoundedRangeModel(min, 0, min, max));

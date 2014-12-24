@@ -15,7 +15,12 @@ import org.slf4j.LoggerFactory;
  */
 public class PrintOptionFrame extends OperationsFrame {
 
-    public PrintOptionFrame() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3366352601871116274L;
+
+	public PrintOptionFrame() {
         super(Bundle.getMessage("TitlePrintOptions"), new PrintOptionPanel());
     }
 

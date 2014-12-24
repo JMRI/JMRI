@@ -21,6 +21,10 @@ import jmri.jmrit.operations.trains.TrainSwitchListEditFrame;
 
 public class TrackEditCommentsFrame extends OperationsFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3428891268059200871L;
 	// text areas
 	JTextArea commentBothTextArea = new JTextArea(5, 100);
 	JScrollPane commentBothScroller = new JScrollPane(commentBothTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,

@@ -15,7 +15,12 @@ import java.awt.event.ActionEvent;
 
  public class NixieClockAction extends AbstractAction {
 	 
-	 public NixieClockAction() {
+	 /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5653182277242573672L;
+
+	public NixieClockAction() {
          this("Nixie Clock");
      }
 

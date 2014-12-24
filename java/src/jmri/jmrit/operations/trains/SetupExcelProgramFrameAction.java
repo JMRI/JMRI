@@ -14,7 +14,11 @@ import javax.swing.AbstractAction;
  */
 public class SetupExcelProgramFrameAction extends AbstractAction {
 
-    public SetupExcelProgramFrameAction(String s) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6600261536718738913L;
+	public SetupExcelProgramFrameAction(String s) {
     	super(s);
     }
 

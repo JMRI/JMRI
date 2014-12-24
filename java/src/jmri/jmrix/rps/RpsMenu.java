@@ -12,7 +12,12 @@ import javax.swing.JSeparator;
  * @version     $Revision$
  */
 public class RpsMenu extends JMenu {
-    public RpsMenu(String name) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4274427241421520434L;
+
+	public RpsMenu(String name) {
         this();
         setText(name);
     }

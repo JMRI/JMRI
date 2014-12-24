@@ -57,7 +57,11 @@ import jmri.ShutDownTask;
  */
 public class WarrantTableAction extends AbstractAction {
 
-    static int STRUT_SIZE = 10;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4761753768022771535L;
+	static int STRUT_SIZE = 10;
     static JMenu _warrantMenu;
     private static WarrantTableAction _instance;
     private static HashMap <String, Warrant> _warrantMap = new HashMap <String, Warrant> ();
@@ -142,7 +146,12 @@ public class WarrantTableAction extends AbstractAction {
         _warrantMenu.add(new jmri.jmrit.logix.WarrantTableAction("CreateWarrant"));
         _warrantMenu.add(_trackerTable);
         _warrantMenu.add(new AbstractAction(Bundle.getMessage("CreateNXWarrant")) {
-        	public void actionPerformed(ActionEvent e) {
+        	/**
+			 * 
+			 */
+			private static final long serialVersionUID = 4129760191508866189L;
+
+			public void actionPerformed(ActionEvent e) {
         		setupWarrantTable();
             	_nxFrame = NXFrame.getInstance();
             	_nxFrame.setVisible(true);
@@ -536,7 +545,11 @@ public class WarrantTableAction extends AbstractAction {
 
     static class CreateWarrantFrame extends JFrame {
 
-        JTextField _sysNameBox;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -1815517166489246531L;
+		JTextField _sysNameBox;
         JTextField _userNameBox;
 
         private Warrant _startW;

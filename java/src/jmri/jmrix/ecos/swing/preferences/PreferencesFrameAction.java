@@ -18,7 +18,12 @@ import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 
 public class PreferencesFrameAction extends AbstractAction {
 
-    public PreferencesFrameAction(String s, EcosSystemConnectionMemo memo) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4657764227318850416L;
+
+	public PreferencesFrameAction(String s, EcosSystemConnectionMemo memo) {
         super(s);
         adaptermemo = memo;
     }

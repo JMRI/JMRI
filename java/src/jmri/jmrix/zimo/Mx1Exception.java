@@ -26,7 +26,12 @@ public class Mx1Exception extends JmriException {
 
 
 
-    public Mx1Exception( String m ){
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2147577208434848279L;
+
+	public Mx1Exception( String m ){
 
         super( m ) ;
 

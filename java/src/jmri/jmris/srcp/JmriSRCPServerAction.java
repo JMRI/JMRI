@@ -16,7 +16,11 @@ import java.awt.event.ActionEvent;
  */
  public class JmriSRCPServerAction extends AbstractAction {
 
-    public JmriSRCPServerAction(String s) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3322670049459400936L;
+	public JmriSRCPServerAction(String s) {
 	super(s);
         }
 

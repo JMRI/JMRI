@@ -33,6 +33,11 @@ import jmri.util.FileUtil;
 
 public class TrainsScriptFrame extends OperationsFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2270290709118571365L;
+
 	TrainManager trainManager = TrainManager.instance();
 
 	// script panels

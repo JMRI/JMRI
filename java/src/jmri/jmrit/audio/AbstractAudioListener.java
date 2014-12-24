@@ -34,7 +34,11 @@ import jmri.implementation.AbstractAudio;
  */
 public abstract class AbstractAudioListener extends AbstractAudio implements AudioListener {
 
-    private Vector3f _position      = new Vector3f( 0.0f,  0.0f,  0.0f);
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7653942390344476939L;
+	private Vector3f _position      = new Vector3f( 0.0f,  0.0f,  0.0f);
     private Vector3f _currentPosition = new Vector3f( 0.0f,  0.0f,  0.0f);
     private Vector3f _velocity      = new Vector3f( 0.0f,  0.0f,  0.0f);
     private Vector3f _orientationAt = new Vector3f( 0.0f,  1.0f,  0.0f);

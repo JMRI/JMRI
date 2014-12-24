@@ -17,6 +17,10 @@ import javax.swing.AbstractAction;
  * @author Gregory Madsen Copyright (C) 2012
  */
 public class ManageBackupsAction extends AbstractAction {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5177110637357504582L;
 	static Logger log = LoggerFactory
 			.getLogger(ManageBackupsAction.class.getName());
 

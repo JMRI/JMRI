@@ -20,7 +20,11 @@ import java.awt.datatransfer.StringSelection;
     
 public class DnDTableExportHandler extends TransferHandler{
 
-    public int getSourceActions(JComponent c) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2134105274438741231L;
+	public int getSourceActions(JComponent c) {
         return COPY;
     }
 

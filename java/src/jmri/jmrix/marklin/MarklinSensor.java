@@ -20,7 +20,12 @@ import jmri.implementation.AbstractSensor;
  */
 public class MarklinSensor extends AbstractSensor {
 
-    public MarklinSensor(String systemName, String userName) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7029240754803015932L;
+
+	public MarklinSensor(String systemName, String userName) {
         super(systemName, userName);
         init(systemName);
     }

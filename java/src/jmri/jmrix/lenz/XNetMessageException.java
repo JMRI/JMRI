@@ -11,6 +11,10 @@ package jmri.jmrix.lenz;
 import jmri.JmriException;
 
 public class XNetMessageException extends JmriException {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7598394462165501189L;
 	public XNetMessageException(String s) { super(s); }
 	public XNetMessageException() {}
 }

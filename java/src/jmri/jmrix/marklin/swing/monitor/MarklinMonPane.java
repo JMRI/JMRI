@@ -18,7 +18,12 @@ import jmri.jmrix.marklin.swing.*;
 
 public class MarklinMonPane extends jmri.jmrix.AbstractMonPane implements MarklinListener, MarklinPanelInterface{
 
-    public MarklinMonPane() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3683278624916620459L;
+
+	public MarklinMonPane() {
         super();
     }
     
@@ -78,7 +83,12 @@ public class MarklinMonPane extends jmri.jmrix.AbstractMonPane implements Markli
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.marklin.swing.MarklinNamedPaneAction {
-        public Default() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -4899436240553324573L;
+
+		public Default() {
             super("CS2 Command Monitor", 
                 new jmri.util.swing.sdi.JmriJFrameInterface(), 
                 MarklinMonPane.class.getName(), 

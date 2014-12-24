@@ -17,6 +17,11 @@ import javax.swing.*;
  */
 public class OperationsMenu extends JMenu {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 701227477994394798L;
+
 	public OperationsMenu(String name) {
 		this();
 		setText(name);

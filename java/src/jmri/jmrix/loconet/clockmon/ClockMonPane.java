@@ -29,7 +29,12 @@ import javax.swing.*;
  */
 public class ClockMonPane extends LnPanel implements SlotListener {
 
-    public String getHelpTarget() { return "package.jmri.jmrix.loconet.clockmon.ClockMonFrame"; }
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6741586521030027827L;
+
+	public String getHelpTarget() { return "package.jmri.jmrix.loconet.clockmon.ClockMonFrame"; }
     public String getTitle() { 
         return getTitle(jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemClockMon")); 
     }
@@ -122,7 +127,12 @@ public class ClockMonPane extends LnPanel implements SlotListener {
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
-        public Default() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 2901473960804245354L;
+
+		public Default() {
             super(LocoNetBundle.bundle().getString("MenuItemClockMon"), 
                 new jmri.util.swing.sdi.JmriJFrameInterface(), 
                 ClockMonPane.class.getName(), 

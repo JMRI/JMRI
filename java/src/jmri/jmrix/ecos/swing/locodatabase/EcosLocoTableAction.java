@@ -43,6 +43,10 @@ import jmri.util.swing.XTableColumnModel;
 public class EcosLocoTableAction extends AbstractTableAction {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2219906814091945412L;
+	/**
      * Create an action with a specific title.
      * <P>
      * Note that the argument is the Action title, not the title of the
@@ -69,6 +73,11 @@ public class EcosLocoTableAction extends AbstractTableAction {
         sorter.setTableHeader(dataTable.getTableHeader());
         // create the frame
         f = new jmri.jmrit.beantable.BeanTableFrame(m, helpTarget(), dataTable){
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1165304149219668666L;
 
         };
         setMenuBar(f);
@@ -105,7 +114,12 @@ public class EcosLocoTableAction extends AbstractTableAction {
     protected void createModel() {
         m = new BeanTableDataModel() {
         
-            //We have to set a manager first off, but this gets replaced.
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 5684158970230450044L;
+
+			//We have to set a manager first off, but this gets replaced.
             @Override
             protected EcosLocoAddressManager getManager() { return locoManager;}
             protected String getRosterAttribute() { return rosterAttribute; }
@@ -213,7 +227,12 @@ public class EcosLocoTableAction extends AbstractTableAction {
             public JTable makeJTable(TableSorter srtr) {
                 JTable table = new JTable(srtr)  {
                     
-                    @Override
+                    /**
+					 * 
+					 */
+					private static final long serialVersionUID = -3389761480752952913L;
+
+					@Override
                     public TableCellRenderer getCellRenderer(int row, int column) {
                         if (column == COMMENTCOL) {
                             return getRenderer(row);
@@ -584,7 +603,12 @@ public class EcosLocoTableAction extends AbstractTableAction {
     }
     
     static class RosterBoxRenderer extends GlobalRosterEntryComboBox implements TableCellRenderer {
-        public RosterBoxRenderer(RosterEntry re) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 7946142069235701497L;
+
+		public RosterBoxRenderer(RosterEntry re) {
             super();
             setNonSelectedItem(" ");
             if(re==null){
@@ -613,7 +637,12 @@ public class EcosLocoTableAction extends AbstractTableAction {
     }
     
     static class RosterComboBoxEditor extends DefaultCellEditor {
-        public RosterComboBoxEditor(GlobalRosterEntryComboBox cb) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -90878307599435295L;
+
+		public RosterComboBoxEditor(GlobalRosterEntryComboBox cb) {
             super(cb);
         }
     }

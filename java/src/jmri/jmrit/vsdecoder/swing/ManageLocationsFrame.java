@@ -65,7 +65,12 @@ import org.slf4j.LoggerFactory;
 
 public class ManageLocationsFrame extends JmriJFrame {
 
-    // Uncomment this when we add labels...
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 9159687443567118015L;
+
+	// Uncomment this when we add labels...
     public static enum PropertyChangeID { MUTE, VOLUME_CHANGE, ADD_DECODER, REMOVE_DECODER }
 
     public static final Map<PropertyChangeID, String> PCIDMap;
@@ -368,7 +373,11 @@ public class ManageLocationsFrame extends JmriJFrame {
     /** Private class to serve as TableModel for Reporters and Ops Locations */
     private static class LocationTableModel extends AbstractTableModel {
 
-        // These get internationalized at runtime in the constructor below.
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -6422871979102501443L;
+		// These get internationalized at runtime in the constructor below.
         private String[] columnNames = new String[6];
         private Object[][]rowData;
 
@@ -430,7 +439,11 @@ public class ManageLocationsFrame extends JmriJFrame {
     /** Private class for use as TableModel for Listener Locations */
     private class ListenerTableModel extends AbstractTableModel {
 
-        // These get internationalized at runtime in the constructor below.
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -6375914030167059399L;
+		// These get internationalized at runtime in the constructor below.
         private String[] columnNames = new String[7];
         private Object[][]rowData = null;
 

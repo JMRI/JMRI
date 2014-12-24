@@ -188,7 +188,11 @@ public class HelpUtil {
 
     static public Action getHelpAction(final String name, final Icon icon, final String id) {
         return new AbstractAction(name, icon) {
-            String helpID = id;
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -6252106625080009829L;
+			String helpID = id;
 
             public void actionPerformed(ActionEvent event) {
                 globalHelpBroker.setCurrentID(helpID);

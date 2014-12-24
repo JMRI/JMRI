@@ -15,7 +15,12 @@ import jmri.jmrix.rps.*;
 public class RpsMonFrame extends jmri.jmrix.AbstractMonFrame 
         implements ReadingListener, MeasurementListener {
 
-    public RpsMonFrame() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3577651671435326280L;
+
+	public RpsMonFrame() {
         super();
         Distributor.instance().addReadingListener(this);
         Distributor.instance().addMeasurementListener(this);

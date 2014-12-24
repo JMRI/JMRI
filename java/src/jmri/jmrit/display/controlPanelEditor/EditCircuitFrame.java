@@ -24,7 +24,11 @@ import jmri.jmrit.picker.PickPanel;
 
 public class EditCircuitFrame extends jmri.util.JmriJFrame {
 
-    private OBlock _block;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6144223447231259664L;
+	private OBlock _block;
     private CircuitBuilder _parent;
 
     private JTextField  _blockName = new JTextField();

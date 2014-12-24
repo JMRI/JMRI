@@ -40,7 +40,11 @@ import jmri.jmrit.operations.locations.Location;
 
 public class ManageLocationsAction extends AbstractAction {
 
-    private ManageLocationsFrame f = null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1147171842579642617L;
+	private ManageLocationsFrame f = null;
     private HashMap<String, PhysicalLocation> reporterMap;
     private HashMap<String, PhysicalLocation> blockMap;
     private HashMap<String, PhysicalLocation> opsMap;

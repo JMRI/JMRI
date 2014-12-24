@@ -18,7 +18,11 @@ import javax.swing.AbstractAction;
  */
 public class LI101Action extends AbstractAction {
 
-    jmri.jmrix.lenz.XNetSystemConnectionMemo _memo = null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6747495533665686139L;
+	jmri.jmrix.lenz.XNetSystemConnectionMemo _memo = null;
 
     public LI101Action(String s,jmri.jmrix.lenz.XNetSystemConnectionMemo memo) 
     { 

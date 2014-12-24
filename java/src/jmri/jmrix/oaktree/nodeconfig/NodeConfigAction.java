@@ -16,6 +16,10 @@ import java.awt.event.ActionEvent;
  */
 public class NodeConfigAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4262910926697011437L;
 	public NodeConfigAction(String s) { super(s);}
 
     public NodeConfigAction() {

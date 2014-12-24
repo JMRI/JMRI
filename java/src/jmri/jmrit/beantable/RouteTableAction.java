@@ -52,6 +52,10 @@ import jmri.util.swing.JmriBeanComboBox;
 
 public class RouteTableAction extends AbstractTableAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8319726020695754089L;
 	static final ResourceBundle rbx = ResourceBundle
 			.getBundle("jmri.jmrit.beantable.LogixTableBundle");
 
@@ -85,7 +89,11 @@ public class RouteTableAction extends AbstractTableAction {
      */
     protected void createModel() {
         m = new BeanTableDataModel() {
-		    static public final int ENABLECOL = NUMCOLUMN;
+		    /**
+			 * 
+			 */
+			private static final long serialVersionUID = -3860139623368533849L;
+			static public final int ENABLECOL = NUMCOLUMN;
 		    static public final int LOCKCOL = ENABLECOL+1;
 		    static public final int SETCOL = ENABLECOL+2;
     		public int getColumnCount(){ return NUMCOLUMN+3;}
@@ -1706,7 +1714,11 @@ public class RouteTableAction extends AbstractTableAction {
      */
     public abstract class RouteOutputModel extends AbstractTableModel implements PropertyChangeListener
     {
-        public Class<?> getColumnClass(int c) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -780231512435242770L;
+		public Class<?> getColumnClass(int c) {
             if (c == INCLUDE_COLUMN) {
                 return Boolean.class;
             }
@@ -1745,7 +1757,11 @@ public class RouteTableAction extends AbstractTableAction {
      */
     class RouteTurnoutModel extends RouteOutputModel
     {
-        RouteTurnoutModel() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 7052824030929111881L;
+		RouteTurnoutModel() {
             InstanceManager.turnoutManagerInstance().addPropertyChangeListener(this);
         }
 
@@ -1805,7 +1821,12 @@ public class RouteTableAction extends AbstractTableAction {
      */
     class RouteSensorModel extends RouteOutputModel
     {
-        RouteSensorModel() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -3324256506333915127L;
+
+		RouteSensorModel() {
             InstanceManager.sensorManagerInstance().addPropertyChangeListener(this);
         }
 

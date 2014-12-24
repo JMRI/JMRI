@@ -23,7 +23,12 @@ import jmri.jmrix.loconet.*;
  */
 public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
 
-    // GUI member declarations
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4382326277234572738L;
+
+	// GUI member declarations
     EditorFilePane pane;
 
     ResourceBundle res;
@@ -48,14 +53,24 @@ public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
         // add file button
         open = new JButton(res.getString("ButtonOpen"));
         open.addActionListener(new AbstractAction() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -6691600637263742650L;
+
+			public void actionPerformed(java.awt.event.ActionEvent e) {
                 selectInputFile();
             }
         });
 
         save = new JButton(res.getString("ButtonSave"));
         save.addActionListener(new AbstractAction() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -8592850250263713770L;
+
+			public void actionPerformed(java.awt.event.ActionEvent e) {
                 selectSaveFile();
             }
         });

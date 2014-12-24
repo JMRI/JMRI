@@ -18,7 +18,12 @@ import jmri.util.swing.*;
  
 public class QuitAction extends jmri.util.swing.JmriAbstractAction {
 
- 	public QuitAction(String s, WindowInterface wi) {
+ 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8792749754520269637L;
+
+	public QuitAction(String s, WindowInterface wi) {
     	super(s, wi);
     }
      

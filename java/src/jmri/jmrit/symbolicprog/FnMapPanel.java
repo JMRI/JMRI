@@ -80,7 +80,11 @@ import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
  * @version			$Revision$
  */
 public class FnMapPanel extends JPanel {
-    // GridBayLayout column numbers
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8500513259142259577L;
+	// GridBayLayout column numbers
     int fnName = 0;
     int firstOut = 1;
     

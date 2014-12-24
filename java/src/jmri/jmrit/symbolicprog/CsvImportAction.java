@@ -23,7 +23,11 @@ import javax.swing.JFrame;
 
 public class CsvImportAction  extends AbstractAction {
 
-    CvTableModel mModel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7626796287860510612L;
+	CvTableModel mModel;
     JFrame mParent ;
     FileChooserFilter fileFilter ;
     JFileChooser fileChooser ;

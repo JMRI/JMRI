@@ -39,7 +39,12 @@ import jmri.NamedBeanHandle;
 public class SignalHeadIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
 
 
-    String[] _validKey;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -457104828248662262L;
+
+	String[] _validKey;
 
     public SignalHeadIcon(Editor editor){
         super(editor);
@@ -242,7 +247,12 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
             popup.add(litMenu);
 
             popup.add(new AbstractAction(Bundle.getMessage("EditLogic")) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = -5336135816787933108L;
+
+				public void actionPerformed(ActionEvent e) {
                     jmri.jmrit.blockboss.BlockBossFrame f = new jmri.jmrit.blockboss.BlockBossFrame();
                     String name = getNameString();
                     f.setTitle(java.text.MessageFormat.format(Bundle.getMessage("SignalLogic"), name));
@@ -317,7 +327,12 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     public boolean setEditItemMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("SignalHead"));
         popup.add(new AbstractAction(txt) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = 7671614414680069967L;
+
+				public void actionPerformed(ActionEvent e) {
                     editItem();
                 }
             });
@@ -381,7 +396,12 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     public boolean setEditIconMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("SignalHead"));
         popup.add(new AbstractAction(txt) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = 4598688048130978173L;
+
+				public void actionPerformed(ActionEvent e) {
                     edit();
                 }
             });

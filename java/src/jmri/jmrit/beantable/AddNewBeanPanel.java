@@ -25,7 +25,11 @@ import java.util.ResourceBundle;
 
 public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
 
-    public AddNewBeanPanel(JTextField sys, JTextField userName, JTextField endRange, JCheckBox addRange, JCheckBox autoSystem,
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7238135491102630527L;
+	public AddNewBeanPanel(JTextField sys, JTextField userName, JTextField endRange, JCheckBox addRange, JCheckBox autoSystem,
                              String addButtonLabel, ActionListener listener) {
             sysName = sys;
             setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

@@ -18,7 +18,12 @@ import jmri.implementation.AbstractSensor;
 
 public class AcelaSensor extends AbstractSensor {
 
-    public AcelaSensor(String systemName) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1398533852085475990L;
+
+	public AcelaSensor(String systemName) {
         super(systemName);
         _knownState = UNKNOWN;
     }

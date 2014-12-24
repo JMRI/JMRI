@@ -23,7 +23,11 @@ import java.util.Enumeration;
  */
 public abstract class AbstractCatalogTree extends DefaultTreeModel implements CatalogTree {
 
-    private String mUserName;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6839273293799611575L;
+	private String mUserName;
     private String mSystemName;
 
   // private AbstractCatalogTree() {

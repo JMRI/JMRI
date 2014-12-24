@@ -20,6 +20,11 @@ import javax.swing.AbstractAction;
 
 public class AcelaPacketGenAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7642432788366749061L;
+
 	public AcelaPacketGenAction(String s) { super(s);}
 
 	public AcelaPacketGenAction() {

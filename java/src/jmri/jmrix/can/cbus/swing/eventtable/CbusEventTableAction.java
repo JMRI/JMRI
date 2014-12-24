@@ -12,5 +12,10 @@ package jmri.jmrix.can.cbus.swing.eventtable;
  */
 @Deprecated
 public class CbusEventTableAction extends CbusEventTablePane.Default {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6059905291650933645L;
 }
 /* @(#)CbusEventTableAction.java */

@@ -30,7 +30,11 @@ import jmri.util.table.ButtonRenderer;
  */
 public class AlignTablePane extends javax.swing.JPanel {
 
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.rps.aligntable.AlignTableBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3252695029810160130L;
+	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.rps.aligntable.AlignTableBundle");
 		
     /**
      * Constructor method
@@ -72,7 +76,12 @@ public class AlignTablePane extends javax.swing.JPanel {
         
         // status info on bottom
         JPanel p = new JPanel() {
-            public Dimension getMaximumSize() { 
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -4581696245014783172L;
+
+			public Dimension getMaximumSize() { 
                 int height = getPreferredSize().height;
                 int width = super.getMaximumSize().width;
                 return new Dimension(width, height); }
@@ -100,7 +109,12 @@ public class AlignTablePane extends javax.swing.JPanel {
         add(p);
         
         p = new JPanel() {
-            public Dimension getMaximumSize() { 
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -497747742857646038L;
+
+			public Dimension getMaximumSize() { 
                 int height = getPreferredSize().height;
                 int width = super.getMaximumSize().width;
                 return new Dimension(width, height); }
@@ -137,7 +151,11 @@ public class AlignTablePane extends javax.swing.JPanel {
 
         //
         add(loadStore = new jmri.jmrix.rps.swing.LoadStorePanel(){
-            // make sure we redisplay if changed
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1028997540423874815L;
+			// make sure we redisplay if changed
             public void load() {
                 super.load();
                 alignModel.fireTableStructureChanged();
@@ -185,7 +203,11 @@ public class AlignTablePane extends javax.swing.JPanel {
      *</ol>
      */
     public class AlignModel extends AbstractTableModel {
-        static private final int NUMCOL = 0;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 7340607471756623080L;
+		static private final int NUMCOL = 0;
         static private final int XCOL = 1;
         static private final int YCOL = 2;
         static private final int ZCOL = 3;

@@ -16,7 +16,11 @@ import jmri.jmrix.JmrixConfigPane;
  */
 public final class ConnectionLabel extends JLabel implements PropertyChangeListener {
 
-    ConnectionConfig connection;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4404932240707919099L;
+	ConnectionConfig connection;
 
     public ConnectionLabel(ConnectionConfig connection) {
         super();

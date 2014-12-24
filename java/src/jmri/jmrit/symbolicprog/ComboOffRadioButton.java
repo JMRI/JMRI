@@ -13,7 +13,12 @@ import javax.swing.*;
  */
 public class ComboOffRadioButton extends ComboRadioButtons {
 
-    ComboOffRadioButton(JComboBox box, EnumVariableValue var) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8850743261536717555L;
+
+	ComboOffRadioButton(JComboBox box, EnumVariableValue var) {
         super(box, var);
     }
 

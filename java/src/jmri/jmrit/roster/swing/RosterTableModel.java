@@ -28,7 +28,11 @@ import org.slf4j.LoggerFactory;
  */
 public class RosterTableModel extends DefaultTableModel implements PropertyChangeListener {
 
-    public static final int IDCOL = 0;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 994579600898713052L;
+	public static final int IDCOL = 0;
     static final int ADDRESSCOL = 1;
     static final int ICONCOL = 2;
     static final int DECODERCOL = 3;

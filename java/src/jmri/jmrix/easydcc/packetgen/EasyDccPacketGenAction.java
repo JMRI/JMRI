@@ -17,6 +17,10 @@ import javax.swing.AbstractAction;
  */
 public class EasyDccPacketGenAction 			extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3670621091383325151L;
 	public EasyDccPacketGenAction(String s) { super(s);}
 
     public EasyDccPacketGenAction() {

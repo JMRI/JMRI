@@ -11,7 +11,12 @@ import jmri.jmrit.operations.OperationsFrame;
  */
 public class EditManifestHeaderTextFrame extends OperationsFrame {
 
-    public EditManifestHeaderTextFrame() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8750952066802266213L;
+
+	public EditManifestHeaderTextFrame() {
         super(Bundle.getMessage("TitleManifestHeaderText"), new EditManifestHeaderTextPanel());
     }
 

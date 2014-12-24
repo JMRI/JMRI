@@ -18,7 +18,12 @@ import java.util.Comparator;
  */
 
 public class SystemNameComparator implements Comparator<Object>, java.io.Serializable {
-    public SystemNameComparator() {}
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3811487999466749129L;
+
+	public SystemNameComparator() {}
     
     public int compare(Object o1, Object o2) {
         if (o1.toString().length() <= 3 && o2.toString().length() <= 3) {

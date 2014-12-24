@@ -13,7 +13,12 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
 
 class SdlVersionEditor extends SdfMacroEditor {
 
-    public SdlVersionEditor(SdfMacro inst) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1892658707818585877L;
+
+	public SdlVersionEditor(SdfMacro inst) {
         super(inst);
         // No editor needed, leave default message in place.
     }

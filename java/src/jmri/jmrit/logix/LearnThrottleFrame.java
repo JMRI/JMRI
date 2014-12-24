@@ -59,7 +59,12 @@ import jmri.util.JmriJFrame;
 
 public class LearnThrottleFrame extends JmriJFrame implements java.beans.PropertyChangeListener
 {
-    static int STRUT_SIZE = 10;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 947885405216962871L;
+
+	static int STRUT_SIZE = 10;
     
     public int accelerateKey = 107; // numpad +;
     public int decelerateKey = 109; // numpad -;
@@ -375,7 +380,11 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
     }
     
     class ButtonFrame extends JPanel {
-        //private GridBagConstraints sliderConstraints;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -8035914158359447338L;
+		//private GridBagConstraints sliderConstraints;
         private JButton forwardButton, reverseButton;
         private JLabel forwardLight, reverseLight, stopLabel;
         private JButton stopButton;

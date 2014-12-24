@@ -40,7 +40,12 @@ import javax.swing.event.ChangeListener;
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener
 {
-    private LearnThrottleFrame _throttleFrame;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6313290252408712497L;
+
+	private LearnThrottleFrame _throttleFrame;
     
     private JSlider speedSlider;
     private JSpinner speedSpinner;

@@ -33,7 +33,11 @@ import javax.swing.*;
  */
 public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
 
-    // member declarations
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6281707873589937794L;
+	// member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
@@ -285,7 +289,12 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
-        public Default() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 6513091592493774694L;
+
+		public Default() {
             super("Send Can Frame", 
                 new jmri.util.swing.sdi.JmriJFrameInterface(), 
                 CanSendPane.class.getName(), 

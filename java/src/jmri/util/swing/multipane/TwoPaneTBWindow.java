@@ -22,6 +22,11 @@ import jmri.util.swing.*;
 abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6864603332029202076L;
+
+	/**
      * Create and initialize a multi-pane GUI window.
      */
     public TwoPaneTBWindow(String name, String menubarFile, String toolbarFile) {

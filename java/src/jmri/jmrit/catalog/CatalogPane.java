@@ -43,7 +43,12 @@ import org.slf4j.LoggerFactory;
  * @version			$Revision$
  */
 public class CatalogPane extends JPanel {
-    JLabel preview = new JLabel();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1101700212671088828L;
+
+	JLabel preview = new JLabel();
     public CatalogPane() {
 
         super(true);

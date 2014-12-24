@@ -38,6 +38,11 @@ import jmri.InstanceManager;
 public class JavaSoundAudioListener extends AbstractAudioListener {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 9173649719613819402L;
+
+	/**
      * Constructor for new JavaSoundAudioListener with system name
      *
      * @param systemName AudioListener object system name (e.g. IAL)

@@ -19,6 +19,10 @@ abstract public class CanPanel extends jmri.util.swing.JmriPanel implements CanP
 
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4619397055638527582L;
+	/**
      * make "memo" object available as convenience
      */
     protected CanSystemConnectionMemo memo;

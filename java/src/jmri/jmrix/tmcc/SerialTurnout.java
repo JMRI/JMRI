@@ -20,7 +20,12 @@ import jmri.Turnout;
  */
 public class SerialTurnout extends AbstractTurnout {
 
-    public SerialTurnout(int number) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5339532021030123183L;
+
+	public SerialTurnout(int number) {
         super("TT"+number);
         _number = number;
     }

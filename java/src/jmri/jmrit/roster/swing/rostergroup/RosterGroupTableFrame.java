@@ -32,7 +32,11 @@ import jmri.util.com.sun.TableSorter;
  */
 public class RosterGroupTableFrame extends jmri.util.JmriJFrame {
 
-    RosterGroupTableModel		dataModel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 81131762773750394L;
+	RosterGroupTableModel		dataModel;
     JTable			dataTable;
     JScrollPane 		dataScroll;
     Box bottomBox;		// panel at bottom for extra buttons etc

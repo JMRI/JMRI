@@ -41,6 +41,10 @@ import jmri.jmrit.operations.setup.Setup;
 
 public class CarEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4399065932806496248L;
 	CarManager carManager = CarManager.instance();
 	CarManagerXml managerXml = CarManagerXml.instance();
 	LocationManager locationManager = LocationManager.instance();

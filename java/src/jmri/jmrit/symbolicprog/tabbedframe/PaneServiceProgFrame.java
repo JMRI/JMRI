@@ -20,7 +20,11 @@ import javax.swing.JPanel;
 public class PaneServiceProgFrame extends PaneProgFrame
                          implements java.beans.PropertyChangeListener  {
 
-    jmri.jmrit.progsupport.ProgModeSelector  modePane;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1177241004682137802L;
+	jmri.jmrit.progsupport.ProgModeSelector  modePane;
 
 
     /**

@@ -20,7 +20,13 @@ import javax.swing.table.*;
  */
 
 public class ProducerTableModel extends AbstractTableModel {
-    static    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1734913950207049663L;
+
+
+	static    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");
 
     
     public static final int USERNAME_COLUMN = 0;

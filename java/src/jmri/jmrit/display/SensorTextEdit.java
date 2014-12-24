@@ -27,6 +27,11 @@ import jmri.util.JmriJFrame;
 public class SensorTextEdit extends JmriJFrame 
 {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5713312554502509613L;
+
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
 	SensorIcon pl; 	// layout positional label tracked by this frame

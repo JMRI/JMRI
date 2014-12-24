@@ -19,7 +19,12 @@ import jmri.Light;
  */
 public class LnLightManager extends AbstractLightManager {
 
-    public LnLightManager(LnTrafficController tc, String prefix) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2149079067924117653L;
+
+	public LnLightManager(LnTrafficController tc, String prefix) {
         _trafficController = tc;
         this.prefix = prefix;
     }

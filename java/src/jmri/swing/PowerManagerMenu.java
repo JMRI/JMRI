@@ -19,6 +19,11 @@ import jmri.PowerManager;
 abstract public class PowerManagerMenu extends JMenu {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1282259771699660069L;
+
+	/**
      * Get the currently selected manager
      */
     public PowerManager get() {

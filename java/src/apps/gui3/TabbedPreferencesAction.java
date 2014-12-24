@@ -19,6 +19,11 @@ import javax.swing.Icon;
 public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction {
 
     /**
+		 * 
+		 */
+		private static final long serialVersionUID = 7214016766558164269L;
+
+	/**
      * Create an action with a specific title.
      * <P>
      * Note that the argument is the Action title, not the title of the
@@ -80,6 +85,11 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
         
         if (f==null){
             f = new TabbedPreferencesFrame(){
+
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 400412053977528653L;
             };
               Runnable r = new Runnable() {
               public void run() {

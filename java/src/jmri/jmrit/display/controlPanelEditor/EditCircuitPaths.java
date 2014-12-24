@@ -25,7 +25,11 @@ import jmri.jmrit.logix.*;
 
 public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelectionListener {
 
-    private OBlock          _block;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6255531106871960794L;
+	private OBlock          _block;
     private CircuitBuilder  _parent;
     // mouse selections of track icons that define the path
     private ArrayList<Positionable> _pathGroup = new ArrayList<Positionable>();
@@ -209,7 +213,12 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     
     private static class PathCellRenderer extends JLabel implements ListCellRenderer {
      
-        public Component getListCellRendererComponent(
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 3285719502798567675L;
+
+		public Component getListCellRendererComponent(
            JList list,              // the list
            Object value,            // value to display
            int index,               // cell index
@@ -236,7 +245,11 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     //@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SIC_INNER_SHOULD_BE_STATIC")
     // passing just the path list instead of using _block saves a call 
     class PathListModel extends AbstractListModel {
-        public int getSize() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 5542865970112078810L;
+		public int getSize() {
             return _block.getPaths().size();
         }
         public Object getElementAt(int index) {

@@ -37,7 +37,11 @@ import java.awt.event.ComponentEvent;
 public class DccLocoAddressSelector extends JPanel
 {
 
-    JComboBox box = null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4741955850069067809L;
+	JComboBox box = null;
     JTextField text = new JTextField();
     
     public DccLocoAddressSelector() {

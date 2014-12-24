@@ -13,6 +13,10 @@ import javax.swing.AbstractAction;
  */
 public class ChangeTrackTypeAction extends AbstractAction {
 			
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9023722229777217045L;
 	private TrackEditFrame _tef;
 	
 	public ChangeTrackTypeAction(TrackEditFrame tef){

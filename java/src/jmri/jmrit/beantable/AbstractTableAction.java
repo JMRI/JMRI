@@ -26,7 +26,12 @@ import jmri.util.com.sun.TableSorter;
 
 abstract public class AbstractTableAction extends AbstractAction {
 
-    public AbstractTableAction(String actionName) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7910901479004827844L;
+
+	public AbstractTableAction(String actionName) {
         super(actionName);
     }
     
@@ -67,6 +72,11 @@ abstract public class AbstractTableAction extends AbstractAction {
         // create the frame
         f = new BeanTableFrame(m, helpTarget(), dataTable){
             /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1123302534258100353L;
+
+			/**
              * Include an "add" button
              */
             void extras() {

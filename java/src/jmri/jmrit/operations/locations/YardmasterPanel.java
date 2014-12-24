@@ -33,7 +33,12 @@ import org.slf4j.LoggerFactory;
  */
 public class YardmasterPanel extends CommonConductorYardmasterPanel {
 
-    protected static final boolean isManifest = false;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -88218348551032298L;
+
+	protected static final boolean isManifest = false;
 
     int _visitNumber = 1;
 

@@ -44,6 +44,11 @@ import jmri.jmrit.roster.RosterEntry;
 public class RemoveRosterEntryToGroupAction extends AbstractAction {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3631492408927497941L;
+
+	/**
      * @param s Name of this action, e.g. in menus
      * @param who Component that action is associated with, used
      *              to ensure proper position in of dialog boxes

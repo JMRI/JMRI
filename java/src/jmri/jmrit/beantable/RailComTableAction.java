@@ -29,6 +29,10 @@ import jmri.RailComManager;
 public class RailComTableAction extends AbstractTableAction {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4041803967319785256L;
+	/**
      * Create an action with a specific title.
      * <P>
      * Note that the argument is the Action title, not the title of the
@@ -56,7 +60,11 @@ public class RailComTableAction extends AbstractTableAction {
     protected void createModel() {
         m = new BeanTableDataModel() {
 
-            static public final int VALUECOL = 0;
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 2279329942656851421L;
+			static public final int VALUECOL = 0;
             public static final int WHERECOL = VALUECOL + 1;
             public static final int WHENCOL = WHERECOL + 1;
             public static final int CLEARCOL = WHENCOL + 1;

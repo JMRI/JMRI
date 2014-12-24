@@ -32,7 +32,11 @@ import jmri.util.JmriJFrame;
  */
 public class PaneEditAction 	extends AbstractAction {
 
-    Object o1, o2, o3, o4;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6644018374123999540L;
+	Object o1, o2, o3, o4;
 
     public PaneEditAction() {
         this("Edit Roster Entry");
@@ -60,13 +64,23 @@ public class PaneEditAction 	extends AbstractAction {
 
         // known entry, no programmer
         JPanel pane1 = new KnownLocoSelPane(false){  // not programming
-                protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = 5342530851054805325L;
+
+				protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
                                                 String filename) {
                     String title = SymbolicProgBundle.getMessage("FrameEditEntryTitle");
                     JFrame p = new PaneProgFrame(decoderFile, re,
                                                  title, "programmers"+File.separator+filename+".xml",
                                                  null, false){
-                        protected JPanel getModePane() { return null; }
+                        /**
+													 * 
+													 */
+													private static final long serialVersionUID = 8759999350875150400L;
+
+						protected JPanel getModePane() { return null; }
                     };
                     p.pack();
                     p.setVisible(true);

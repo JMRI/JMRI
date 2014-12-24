@@ -68,7 +68,12 @@ import net.java.games.joal.AL;
  */
 public class JoalAudioListener extends AbstractAudioListener {
 
-    private static AL al = JoalAudioFactory.getAL();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3857969947487071207L;
+
+	private static AL al = JoalAudioFactory.getAL();
 
     private boolean _initialised = false;
 

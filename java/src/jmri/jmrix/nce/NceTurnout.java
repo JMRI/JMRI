@@ -22,6 +22,10 @@ import jmri.PushbuttonPacket;
  */
 public class NceTurnout extends AbstractTurnout {
     
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9202074475490527883L;
 	NceTrafficController tc = null;
 	String prefix = "";
     /**

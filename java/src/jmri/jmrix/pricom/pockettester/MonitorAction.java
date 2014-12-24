@@ -18,7 +18,12 @@ import java.awt.event.ActionEvent;
  */
 public abstract class MonitorAction extends AbstractAction  {
 
-    public MonitorAction(String s) { super(s);}
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4061133241777429055L;
+
+	public MonitorAction(String s) { super(s);}
     public MonitorAction() {
         java.util.ResourceBundle rb 
             = java.util.ResourceBundle.getBundle("jmri.jmrix.pricom.pockettester.TesterBundle");

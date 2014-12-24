@@ -13,7 +13,12 @@ import org.slf4j.LoggerFactory;
  */
 public class UsbViewAction extends javax.swing.AbstractAction {
 
-    public UsbViewAction(String s) { 
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7957478904918565568L;
+
+	public UsbViewAction(String s) { 
         super(s);
     }
 

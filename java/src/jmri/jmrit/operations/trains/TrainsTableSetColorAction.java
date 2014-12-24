@@ -16,6 +16,11 @@ import javax.swing.AbstractAction;
  */
 public class TrainsTableSetColorAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2895152667316839146L;
+
 	public TrainsTableSetColorAction() {
 		super(Bundle.getMessage("MenuItemSetTrainColor"));
 	}

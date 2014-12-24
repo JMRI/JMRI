@@ -32,6 +32,10 @@ import javax.vecmath.Vector3f;
 public class NullAudioSource extends AbstractAudioSource {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7475706869819530598L;
+	/**
      * True if we've been initialised
      */
     private boolean _initialised = false;

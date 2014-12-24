@@ -19,6 +19,10 @@ import java.awt.event.ActionEvent;
 
 public class LnMessageClientAction extends AbstractAction
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8370182774389562857L;
 	static Logger log = LoggerFactory.getLogger(LnMessageClientAction.class.getName());
 
   public LnMessageClientAction( String s )

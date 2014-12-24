@@ -27,7 +27,11 @@ import javax.swing.border.Border;
 public class SimpleClockFrame extends JmriJFrame
 	implements java.beans.PropertyChangeListener {
 
-    private Timebase clock;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7633122761985513708L;
+	private Timebase clock;
 	private String hardwareName = null;
 	//private boolean synchronize = true;
 	//private boolean correct = true;

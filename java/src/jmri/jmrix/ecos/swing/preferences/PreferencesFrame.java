@@ -14,7 +14,12 @@ import jmri.jmrix.ecos.EcosSystemConnectionMemo;
  */
 public class PreferencesFrame extends jmri.util.JmriJFrame {
 
-    public PreferencesFrame() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8594656805050589881L;
+
+	public PreferencesFrame() {
         super();
     }
 

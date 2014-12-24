@@ -11,7 +11,12 @@ import jmri.jmrit.operations.OperationsFrame;
  */
 public class BuildReportOptionFrame extends OperationsFrame {
 
-    public BuildReportOptionFrame() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5896574373818704098L;
+
+	public BuildReportOptionFrame() {
         super(Bundle.getMessage("TitleBuildReportOptions"), new BuildReportOptionPanel()); // NOI18N
     }
 

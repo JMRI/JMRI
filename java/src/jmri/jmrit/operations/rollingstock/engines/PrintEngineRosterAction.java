@@ -30,6 +30,10 @@ import java.util.List;
  */
 public class PrintEngineRosterAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5500987959098367364L;
 	private static final int numberCharPerLine = 90;
 	final int ownerMaxLen = 5; // Only show the first 5 characters of the owner's name
 

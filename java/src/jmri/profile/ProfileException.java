@@ -12,7 +12,12 @@ import jmri.JmriException;
  */
 public class ProfileException extends JmriException {
 
-    ProfileException(String string) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7993146814601813130L;
+
+	ProfileException(String string) {
         super(string);
     }
 

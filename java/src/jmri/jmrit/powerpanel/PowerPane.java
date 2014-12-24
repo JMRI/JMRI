@@ -21,7 +21,12 @@ import java.util.List;
 public class PowerPane extends jmri.util.swing.JmriPanel 
             implements java.beans.PropertyChangeListener {
 
-    public String getHelpTarget() { 
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7334101847422291784L;
+
+	public String getHelpTarget() { 
         return "package.jmri.jmrit.powerpanel.PowerPanelFrame";
     }
     public String getTitle() { 
@@ -46,7 +51,12 @@ public class PowerPane extends jmri.util.swing.JmriPanel
     
     public PowerPane() {
         selectMenu = new jmri.swing.PowerManagerMenu(){
-            protected void choiceChanged() {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -7173050098266625273L;
+
+			protected void choiceChanged() {
                 managerChanged();
             }
         };

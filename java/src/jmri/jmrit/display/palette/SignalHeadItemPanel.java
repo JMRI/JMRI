@@ -37,7 +37,12 @@ import jmri.jmrit.display.SignalHeadIcon;
 
 public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelectionListener {
 
-    public SignalHeadItemPanel(JmriJFrame parentFrame, String  type, String family, PickListModel model, Editor editor) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2071814434938345310L;
+
+	public SignalHeadItemPanel(JmriJFrame parentFrame, String  type, String family, PickListModel model, Editor editor) {
         super(parentFrame, type, family, model, editor);
     }
 
@@ -164,7 +169,11 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
     }
 
     protected class IconDragJLabel extends DragJLabel {
-        HashMap <String, NamedIcon> iconMap;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1379306442765612241L;
+		HashMap <String, NamedIcon> iconMap;
 
         @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // icon map is within package 
         public IconDragJLabel(DataFlavor flavor, HashMap <String, NamedIcon> map) {

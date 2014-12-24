@@ -11,6 +11,10 @@ package jmri;
  * @version			$Revision$
  */
 public class ProgWriteException extends ProgrammerException {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2398622573540131588L;
 	public ProgWriteException(String s) { super(s); }
 	public ProgWriteException() {}
 

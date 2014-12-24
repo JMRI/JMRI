@@ -18,7 +18,12 @@ import javax.swing.AbstractAction;
 
 public class ExportCarRosterAction extends AbstractAction {
 	
-    public ExportCarRosterAction(String actionName, Component frame) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4463124347780716468L;
+
+	public ExportCarRosterAction(String actionName, Component frame) {
         super(actionName);
     }
 	

@@ -39,7 +39,12 @@ import org.slf4j.LoggerFactory;
  * @version			$Revision$
  */
 public final class TreeModel extends DefaultTreeModel {
-    private TreeModel() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2231559816159123031L;
+
+	private TreeModel() {
 
         super(new DefaultMutableTreeNode("Root"));
         dRoot = (DefaultMutableTreeNode)getRoot();  // this is used because we can't store the DMTN we just made during the super() call

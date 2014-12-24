@@ -31,7 +31,12 @@ import jmri.jmrit.picker.PickListModel;
 */
 public class IndicatorTOItemPanel extends TableItemPanel {
 
-    final static String[] STATUS_KEYS = {"ClearTrack", "OccupiedTrack", "PositionTrack", 
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -9080081407076209874L;
+
+	final static String[] STATUS_KEYS = {"ClearTrack", "OccupiedTrack", "PositionTrack", 
                             "AllocatedTrack", "DontUseTrack", "ErrorTrack"};
 
     private DetectionPanel  _detectPanel;
@@ -477,7 +482,11 @@ public class IndicatorTOItemPanel extends TableItemPanel {
 
     protected class IconDragJLabel extends DragJLabel {
 
-        public IconDragJLabel(DataFlavor flavor) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 2484596501816237387L;
+		public IconDragJLabel(DataFlavor flavor) {
             super(flavor);
         }
         @Override

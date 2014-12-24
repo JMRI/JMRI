@@ -15,7 +15,11 @@ import javax.swing.*;
  */
 public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements Dcc4PcListener {
 
-    // member declarations
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3220732618500304699L;
+	// member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(20);
@@ -111,7 +115,12 @@ public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.dcc4pc.swing.Dcc4PcNamedPaneAction {
-        public Default() {
+        /**
+			 * 
+			 */
+			private static final long serialVersionUID = -82246637685914738L;
+
+		public Default() {
             super("Dcc4PC Command Monitor", 
                 new jmri.util.swing.sdi.JmriJFrameInterface(), 
                 PacketGenPanel.class.getName(), 

@@ -19,7 +19,11 @@ import java.beans.PropertyChangeListener;
 
 public class SensorTableModel extends BeanTableModel implements PropertyChangeListener
 {
-    String[] _sysNameList;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3536564177611715912L;
+	String[] _sysNameList;
     Boolean[] _includedSensors;
 
     public SensorTableModel() {

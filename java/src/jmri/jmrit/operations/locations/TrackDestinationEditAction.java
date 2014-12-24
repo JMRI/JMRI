@@ -14,6 +14,10 @@ import javax.swing.*;
  */
 public class TrackDestinationEditAction extends AbstractAction {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8415281805320154117L;
 	private TrackEditFrame _frame;
 	private TrackDestinationEditFrame tdef = null;
 

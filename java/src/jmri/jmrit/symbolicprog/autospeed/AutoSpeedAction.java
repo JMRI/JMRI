@@ -30,7 +30,11 @@ import jmri.jmrit.symbolicprog.tabbedframe.*;
  */
 public class AutoSpeedAction 			extends AbstractAction {
 
-    Object o1, o2, o3, o4;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 9045736525279746469L;
+	Object o1, o2, o3, o4;
     JLabel statusLabel;
 
     public AutoSpeedAction(String s) {
@@ -63,7 +67,12 @@ public class AutoSpeedAction 			extends AbstractAction {
         // known loco on main track
         JPanel pane1 = new KnownLocoSelPane(false){  // no ident in ops mode yet
 
-            protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -4507849769156281853L;
+
+			protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
                                                 String filename) {
                 String title = "Set speed info for "+re.getId()+" on main track";
                 // find the ops-mode programmer

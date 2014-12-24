@@ -20,6 +20,10 @@ abstract public class RfidPanel extends jmri.util.swing.JmriPanel implements Rfi
 
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7165422097985422639L;
+	/**
      * make "memo" object available as convenience
      */
     protected RfidSystemConnectionMemo memo;

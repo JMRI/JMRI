@@ -18,7 +18,12 @@ import jmri.util.swing.WindowInterface;
  */
 public class LoadDefaultXmlThrottlesLayoutAction extends JmriAbstractAction {
 
-    public LoadDefaultXmlThrottlesLayoutAction(String s, WindowInterface wi) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7072234800463007379L;
+
+	public LoadDefaultXmlThrottlesLayoutAction(String s, WindowInterface wi) {
     	super(s, wi);
         // disable the ourselves if there is no throttle Manager
         if (jmri.InstanceManager.throttleManagerInstance()==null) {

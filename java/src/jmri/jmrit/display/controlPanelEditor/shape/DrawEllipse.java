@@ -21,6 +21,10 @@ import org.slf4j.LoggerFactory;
 
 public class DrawEllipse extends DrawFrame{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4225546649083339942L;
 	int _width;
 	int _height;
 	JTextField _widthText;

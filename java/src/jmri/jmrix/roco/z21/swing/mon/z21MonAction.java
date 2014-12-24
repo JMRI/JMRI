@@ -19,7 +19,11 @@ import org.slf4j.LoggerFactory;
 
 public class z21MonAction extends AbstractAction {
 
-    private jmri.jmrix.roco.z21.z21SystemConnectionMemo _memo;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5378782642878718080L;
+	private jmri.jmrix.roco.z21.z21SystemConnectionMemo _memo;
 
     public z21MonAction(String s,jmri.jmrix.roco.z21.z21SystemConnectionMemo memo) { 
        super(s);

@@ -28,7 +28,11 @@ import jmri.*;
 @Deprecated // since 3.7.1
 public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
-    private int _numRows = 0;                // must be zero until Vectors are initialized
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6882947172718717151L;
+	private int _numRows = 0;                // must be zero until Vectors are initialized
     static final int MAXCVNUM = 1200;
     private Vector<CvValue> _indxCvDisplayVector = new Vector<CvValue>();  // vector of CvValue objects, in display order
     private Vector<CvValue> _indxCvAllVector = new Vector<CvValue>(MAXCVNUM + 1);  // vector of all possible indexed CV objects

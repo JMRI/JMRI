@@ -25,7 +25,11 @@ import java.util.ResourceBundle;
  */
 public class StoreXmlConfigAction extends LoadStoreBaseAction {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1159289010249492584L;
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
 
     public StoreXmlConfigAction() {
         this("Store configuration ...");

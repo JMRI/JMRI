@@ -30,6 +30,10 @@ import jmri.jmrit.operations.trains.TrainScheduleManager;
 
 public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1010990061006978311L;
 	// combo box
 	JComboBox typesComboBox = CarTypes.instance().getComboBox();
 	JComboBox loadsComboBox = new JComboBox();

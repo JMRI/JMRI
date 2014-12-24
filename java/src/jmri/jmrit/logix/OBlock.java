@@ -64,7 +64,11 @@ import jmri.NamedBeanHandle;
  */
 public class OBlock extends jmri.Block implements java.beans.PropertyChangeListener {
 
-    /*
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8683807989230088682L;
+	/*
     * Block states.
     * NamedBean.UNKNOWN                 = 0x01;
     * Block.OCCUPIED =  Sensor.ACTIVE =   0x02;

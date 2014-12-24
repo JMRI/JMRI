@@ -14,7 +14,12 @@ import jmri.beans.Beans;
  */
 public class ThrottleCreationAction extends JmriAbstractAction {
 
-    public ThrottleCreationAction(String s, WindowInterface wi) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3268542525652376730L;
+
+	public ThrottleCreationAction(String s, WindowInterface wi) {
     	super(s, wi);
         // disable the ourselves if there is no throttle Manager
         if (jmri.InstanceManager.throttleManagerInstance()==null) {

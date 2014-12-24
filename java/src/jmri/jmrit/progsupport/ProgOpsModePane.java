@@ -21,7 +21,11 @@ public class ProgOpsModePane extends javax.swing.JPanel {
 
     // GUI member declarations
 
-    ButtonGroup mModeGroup;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 165989491869394147L;
+	ButtonGroup mModeGroup;
     JRadioButton mOpsByteButton  	= new JRadioButton();
     JTextField mAddrField           = new JTextField(4);
     JCheckBox mLongAddrCheck        = new JCheckBox("Long address");

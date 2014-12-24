@@ -30,7 +30,11 @@ import java.util.List;
  */
 public class EditorPane extends javax.swing.JPanel implements TreeSelectionListener {
 
-    // GUI member declarations
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1271269633621702533L;
+	// GUI member declarations
     static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.loconet.sdfeditor.Editor");
     static ResourceBundle exp = ResourceBundle.getBundle("jmri.jmrix.loconet.sdfeditor.Explanations");
         

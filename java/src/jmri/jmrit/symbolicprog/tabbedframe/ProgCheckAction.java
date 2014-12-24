@@ -23,7 +23,12 @@ import java.util.regex.*;
  */
 public class ProgCheckAction extends AbstractAction {
 
-    public ProgCheckAction(String s, JPanel who) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2266366526574569234L;
+
+	public ProgCheckAction(String s, JPanel who) {
         super(s);
         _who = who;
     }

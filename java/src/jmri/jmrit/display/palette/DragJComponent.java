@@ -35,7 +35,11 @@ import java.awt.dnd.*;
  */
  public abstract class DragJComponent extends JPanel implements DragGestureListener, DragSourceListener, Transferable {    
 
-     DataFlavor _dataFlavor;
+     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4302272454749137127L;
+	DataFlavor _dataFlavor;
      public DragJComponent(DataFlavor flavor, Dimension dim) {
          super();
          String borderName = ItemPalette.convertText("dragToPanel");

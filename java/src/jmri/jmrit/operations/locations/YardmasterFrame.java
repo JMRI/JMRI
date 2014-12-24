@@ -17,7 +17,12 @@ import org.slf4j.LoggerFactory;
  */
 public class YardmasterFrame extends OperationsFrame {
 
-    public YardmasterFrame() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2668419494752612867L;
+
+	public YardmasterFrame() {
         super(Bundle.getMessage("Yardmaster"), new YardmasterPanel());
     }
 

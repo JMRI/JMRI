@@ -28,6 +28,11 @@ public class Log4JTreePane extends jmri.util.swing.JmriPanel {
     //public String getHelpTarget() { return "Acknowledgements.shtml"; }
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8179937923267615464L;
+
+	/**
      * Provide a recommended title for an enclosing frame.
      */
     @Override

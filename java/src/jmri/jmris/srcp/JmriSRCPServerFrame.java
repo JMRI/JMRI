@@ -16,7 +16,12 @@ import javax.swing.*;
  */
 public class JmriSRCPServerFrame extends jmri.util.JmriJFrame {
 
-    public JmriSRCPServerFrame() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7304361652689711790L;
+
+	public JmriSRCPServerFrame() {
         this("Jmri SRCP Server Starter");
     }
 

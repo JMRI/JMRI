@@ -69,7 +69,12 @@ import java.util.Queue;
  */
 public class JoalAudioSource extends AbstractAudioSource {
 
-    private static AL al = JoalAudioFactory.getAL();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1727585531490964580L;
+
+	private static AL al = JoalAudioFactory.getAL();
 
     private boolean _initialised = false;
 

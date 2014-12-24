@@ -13,7 +13,12 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
 
 class EndSoundEditor extends SdfMacroEditor {
 
-    public EndSoundEditor(SdfMacro inst) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6145204145169749923L;
+
+	public EndSoundEditor(SdfMacro inst) {
         super(inst);
         
         // No editor needed, leave default message in place.

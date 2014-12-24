@@ -23,7 +23,13 @@ import jmri.NmraPacket;
  */
 public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
 
-    public LNCPSignalMast( String sys, String user ) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4564372505227894262L;
+
+
+	public LNCPSignalMast( String sys, String user ) {
         super(sys, user, "F$lncpsm");
         packetRepeatCount = 1;
         configureFromName(sys);

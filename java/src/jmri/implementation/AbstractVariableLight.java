@@ -43,7 +43,12 @@ import jmri.*;
 public abstract class AbstractVariableLight extends AbstractLight
     implements java.io.Serializable {
 
-    public AbstractVariableLight(String systemName, String userName) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2569969486641421337L;
+
+	public AbstractVariableLight(String systemName, String userName) {
         super(systemName, userName);
         if (internalClock == null) {
             initClocks();

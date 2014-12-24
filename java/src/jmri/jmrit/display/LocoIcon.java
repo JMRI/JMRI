@@ -30,7 +30,11 @@ import javax.swing.JRadioButtonMenuItem;
 
 public class LocoIcon extends PositionableLabel {
 
-    public static final String WHITE = Bundle.getMessage("White");		//loco background colors
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 9079140879519495618L;
+	public static final String WHITE = Bundle.getMessage("White");		//loco background colors
     public static final String GREEN = Bundle.getMessage("Green");
     public static final String GRAY = Bundle.getMessage("Gray");
     public static final String RED = Bundle.getMessage("Red");
@@ -93,7 +97,12 @@ public class LocoIcon extends PositionableLabel {
     public boolean showPopUp(JPopupMenu popup) {
         if (_entry != null) {
             popup.add(new AbstractAction("Throttle") {
-                public void actionPerformed(ActionEvent e) {
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = -1098488345509610672L;
+
+				public void actionPerformed(ActionEvent e) {
                     tf = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();
                     tf.getAddressPanel().setRosterEntry(_entry);
                     tf.toFront();

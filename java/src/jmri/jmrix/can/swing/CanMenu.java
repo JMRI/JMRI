@@ -16,7 +16,12 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  */
 public class CanMenu extends JMenu {
 
-    public CanMenu(CanSystemConnectionMemo memo){
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 892271699607148161L;
+
+	public CanMenu(CanSystemConnectionMemo memo){
         super();
         
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");

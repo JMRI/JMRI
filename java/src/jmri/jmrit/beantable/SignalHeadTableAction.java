@@ -70,6 +70,11 @@ import javax.swing.JScrollPane;
 public class SignalHeadTableAction extends AbstractTableAction {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3002943309835665818L;
+
+	/**
      * Create an action with a specific title.
      * <P>
      * Note that the argument is the Action title, not the title of the
@@ -91,7 +96,11 @@ public class SignalHeadTableAction extends AbstractTableAction {
      */
     protected void createModel() {
         m = new BeanTableDataModel() {
-		    static public final int LITCOL = NUMCOLUMN;
+		    /**
+			 * 
+			 */
+			private static final long serialVersionUID = 2404217237396255016L;
+			static public final int LITCOL = NUMCOLUMN;
 		    static public final int HELDCOL = LITCOL+1;
 			static public final int EDITCOL = HELDCOL+1;
     		public int getColumnCount( ){ return NUMCOLUMN+3;}

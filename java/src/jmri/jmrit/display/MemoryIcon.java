@@ -39,6 +39,10 @@ import jmri.NamedBeanHandle;
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener/*, DropTargetListener*/ {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5188156981152521812L;
 	NamedIcon defaultIcon = null;
     // the associated Memory object
     //protected Memory memory = null;
@@ -208,7 +212,12 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                 String key = iterator.next().toString();
                 //String value = ((NamedIcon)map.get(key)).getName();
                 popup.add(new AbstractAction(key) {
-                    public void actionPerformed(ActionEvent e) {
+                    /**
+					 * 
+					 */
+					private static final long serialVersionUID = 8228751338976484794L;
+
+					public void actionPerformed(ActionEvent e) {
                         String key = e.getActionCommand();
                         setValue(key);
                     }
@@ -218,7 +227,12 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         }  // end of selectable
         if(re!=null){
             popup.add(new AbstractAction(Bundle.getMessage("OpenThrottle")) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = -1747046428922716090L;
+
+				public void actionPerformed(ActionEvent e) {
                     ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
                     tf.toFront();
                     tf.getAddressPanel().setRosterEntry(re);
@@ -231,12 +245,22 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     final jmri.jmrit.dispatcher.ActiveTrain at = df.getActiveTrainForRoster(re);
                     if(at!=null){
                         popup.add(new AbstractAction(Bundle.getMessage("MenuTerminateTrain")) {
-                            public void actionPerformed(ActionEvent e) {
+                            /**
+							 * 
+							 */
+							private static final long serialVersionUID = 7567050494629070812L;
+
+							public void actionPerformed(ActionEvent e) {
                                 df.terminateActiveTrain(at);
                             }
                         });
                         popup.add(new AbstractAction(Bundle.getMessage("MenuAllocateExtra")) {
-                            public void actionPerformed(ActionEvent e) {
+                            /**
+							 * 
+							 */
+							private static final long serialVersionUID = 1179666702674214743L;
+
+							public void actionPerformed(ActionEvent e) {
                                 //Just brings up the standard allocate extra frame, this could be expanded in the future 
                                 //As a point and click operation.
                                 df.allocateExtraSection(e, at);
@@ -244,14 +268,24 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                         });
                         if(at.getStatus()==jmri.jmrit.dispatcher.ActiveTrain.DONE){
                             popup.add(new AbstractAction(Bundle.getMessage("MenuRestartTrain")) {
-                                public void actionPerformed(ActionEvent e) {
+                                /**
+								 * 
+								 */
+								private static final long serialVersionUID = -6796040644749115017L;
+
+								public void actionPerformed(ActionEvent e) {
                                     at.allocateAFresh();
                                 }
                             });
                         }
                     } else {
                         popup.add(new AbstractAction(Bundle.getMessage("MenuNewTrain")) {
-                            public void actionPerformed(ActionEvent e) {
+                            /**
+							 * 
+							 */
+							private static final long serialVersionUID = -5264943430258540552L;
+
+							public void actionPerformed(ActionEvent e) {
                                 if (!df.getNewTrainActive()) {
                                     df.getActiveTrainFrame().initiateTrain(e, re, jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getBlockWithMemoryAssigned(getMemory()).getBlock());
                                     df.setNewTrainActive(true);
@@ -274,7 +308,12 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     */    
     public boolean setTextEditMenu(JPopupMenu popup) {
         popup.add(new AbstractAction(Bundle.getMessage("EditMemoryValue")) {
-            public void actionPerformed(ActionEvent e) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -2220596646271191216L;
+
+			public void actionPerformed(ActionEvent e) {
                 editMemoryValue();
             }
         });
@@ -463,7 +502,12 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     public boolean setEditIconMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Memory"));
         popup.add(new AbstractAction(txt) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = -5704253266576765964L;
+
+				public void actionPerformed(ActionEvent e) {
                     edit();
                 }
             });
@@ -574,7 +618,12 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     
     class TransferHandler extends javax.swing.TransferHandler {
     
-        @Override
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -8026244689657101578L;
+
+		@Override
         public boolean canImport(JComponent c, DataFlavor[] transferFlavors) {
             for (DataFlavor flavor : transferFlavors) {
                 if (RosterEntrySelection.rosterEntryFlavor.equals(flavor)) {

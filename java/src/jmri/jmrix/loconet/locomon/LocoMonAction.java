@@ -7,4 +7,9 @@ package jmri.jmrix.loconet.locomon;
  */
 @Deprecated
 public class LocoMonAction extends LocoMonPane.Default  {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6269053405934504463L;
 }

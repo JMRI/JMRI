@@ -30,7 +30,12 @@ import jmri.util.JmriJFrame;
  */
 public class ReportContextAction extends jmri.util.swing.JmriAbstractAction {
 
-    public ReportContextAction(String s, WindowInterface wi) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -483497612204078175L;
+
+	public ReportContextAction(String s, WindowInterface wi) {
     	super(s, wi);
     }
      

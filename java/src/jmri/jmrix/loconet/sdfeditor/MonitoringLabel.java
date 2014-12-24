@@ -15,7 +15,12 @@ import org.slf4j.LoggerFactory;
  */
 public class MonitoringLabel extends javax.swing.JTextArea implements java.beans.PropertyChangeListener {
 
-    public MonitoringLabel() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 266331403840457618L;
+
+	public MonitoringLabel() {
         super();
     }
     public MonitoringLabel(int row, int col) {

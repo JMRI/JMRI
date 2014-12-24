@@ -17,7 +17,11 @@ import jmri.*;
  */
 public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.ProgListener {
 
-    boolean scanning = false;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1032342693614263212L;
+	boolean scanning = false;
     int next = 0;
 
     final int NENTRIES = 8;

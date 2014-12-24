@@ -23,7 +23,11 @@ import javax.swing.*;
  */
 public class SendPacketFrame extends jmri.util.JmriJFrame {
 
-    // member declarations
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1094279262803359342L;
+	// member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);

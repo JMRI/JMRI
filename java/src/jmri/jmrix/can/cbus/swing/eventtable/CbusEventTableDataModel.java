@@ -25,7 +25,11 @@ import jmri.util.FileUtil;
  */
 public class CbusEventTableDataModel extends javax.swing.table.AbstractTableModel implements CanListener  {
 
-    static public final int IDCOLUMN = 0;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 9220006375564405213L;
+	static public final int IDCOLUMN = 0;
     static public final int NODECOLUMN = IDCOLUMN + 1;
     static public final int NAMECOLUMN = NODECOLUMN + 1;
     static public final int EVENTCOLUMN  = NAMECOLUMN + 1;

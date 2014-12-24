@@ -17,7 +17,11 @@ import javax.swing.JOptionPane;
  */
 public class FactoryResetAction extends AbstractAction {
 
-    ResetTableModel rModel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -458358692285847216L;
+	ResetTableModel rModel;
     JFrame mParent ;
 
     public FactoryResetAction(String actionName, ResetTableModel rpModel, JFrame pParent) {

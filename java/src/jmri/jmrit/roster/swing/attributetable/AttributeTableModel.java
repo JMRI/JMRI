@@ -21,7 +21,12 @@ import jmri.jmrit.roster.*;
  */
 public class AttributeTableModel extends javax.swing.table.AbstractTableModel {
 
-    public int getRowCount() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 59936474957867177L;
+
+	public int getRowCount() {
         return Roster.instance().numEntries();
     }
     public int getColumnCount( ){

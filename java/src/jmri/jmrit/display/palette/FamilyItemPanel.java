@@ -28,7 +28,11 @@ import jmri.util.JmriJFrame;
 */
 public abstract class FamilyItemPanel extends ItemPanel {
 
-    protected String    _family;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 9107650071783695584L;
+	protected String    _family;
     protected JPanel    _iconFamilyPanel;
     protected JPanel    _iconPanel;     // panel contained in _iconFamilyPanel - all icons in family
     protected JPanel    _dragIconPanel; // contained in _iconFamilyPanel - to drag to control panel

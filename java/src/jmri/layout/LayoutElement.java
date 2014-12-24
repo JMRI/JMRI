@@ -7,7 +7,11 @@ package jmri.layout;
 
 public class LayoutElement extends javax.swing.tree.DefaultMutableTreeNode implements LayoutEventInterface
 {
-    private LayoutAddress       mAddress = null ;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2020897539141972121L;
+	private LayoutAddress       mAddress = null ;
     private LayoutEventData     mData = null ;
     private LayoutEventSource   mListeners = null ;
 

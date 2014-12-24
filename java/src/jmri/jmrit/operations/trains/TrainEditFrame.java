@@ -57,6 +57,10 @@ import jmri.jmrit.operations.setup.Setup;
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5151081816323580604L;
 	TrainManager trainManager;
 	RouteManager routeManager;
 

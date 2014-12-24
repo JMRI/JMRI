@@ -100,7 +100,11 @@ import org.slf4j.LoggerFactory;
  */
 public class ControlPanelEditor extends Editor implements DropTargetListener, ClipboardOwner {
 
-    public boolean _debug;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2767111074938103944L;
+	public boolean _debug;
     protected JMenuBar _menuBar;
     private JMenu _editorMenu;
     protected JMenu _editMenu;
@@ -303,19 +307,34 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _markerMenu = new JMenu(Bundle.getMessage("MenuMarker"));
         _menuBar.add(_markerMenu);
         _markerMenu.add(new AbstractAction(Bundle.getMessage("AddLoco")) {
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 154630416282406989L;
+
+			@Override
             public void actionPerformed(ActionEvent e) {
                 locoMarkerFromInput();
             }
         });
         _markerMenu.add(new AbstractAction(Bundle.getMessage("AddLocoRoster")) {
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -7447460365984229346L;
+
+			@Override
             public void actionPerformed(ActionEvent e) {
                 locoMarkerFromRoster();
             }
         });
         _markerMenu.add(new AbstractAction(Bundle.getMessage("RemoveMarkers")) {
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -4318812692030653839L;
+
+			@Override
             public void actionPerformed(ActionEvent e) {
                 removeMarkers();
             }
@@ -901,7 +920,12 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             if (_editorMenu == null) {
                 _editorMenu = new JMenu(Bundle.getMessage("MenuEdit"));
                 _editorMenu.add(new AbstractAction(Bundle.getMessage("OpenEditor")) {
-                    @Override
+                    /**
+					 * 
+					 */
+					private static final long serialVersionUID = 4440624973051999883L;
+
+					@Override
                     public void actionPerformed(ActionEvent e) {
                         setAllEditable(true);
                     }

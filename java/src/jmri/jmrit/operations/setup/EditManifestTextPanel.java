@@ -23,7 +23,12 @@ import org.slf4j.LoggerFactory;
  */
 public class EditManifestTextPanel extends OperationsPanel {
 
-    protected static final ResourceBundle rb = ResourceBundle
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4953082330888903645L;
+
+	protected static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
     // major buttons

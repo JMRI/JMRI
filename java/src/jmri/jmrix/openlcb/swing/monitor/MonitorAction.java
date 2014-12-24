@@ -10,6 +10,11 @@ package jmri.jmrix.openlcb.swing.monitor;
  * @version			$Revision$
  */
 public class MonitorAction 			extends MonitorPane.Default {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7796221855291230843L;
 }
 
 /* @(#)MonitorAction.java */

@@ -317,11 +317,21 @@ public class LayoutTurntable
 		popup.add(rb.getString("Turntable"));
 		popup.add(new JSeparator(JSeparator.HORIZONTAL));
 		popup.add(new AbstractAction(rb.getString("Edit")) {
+				/**
+			 * 
+			 */
+			private static final long serialVersionUID = 3697868897248094986L;
+
 				public void actionPerformed(ActionEvent e) {
 					editTurntable(instance);
 				}
 			});
 		popup.add(new AbstractAction(rb.getString("Remove")) {
+				/**
+			 * 
+			 */
+			private static final long serialVersionUID = -5542663629950241682L;
+
 				public void actionPerformed(ActionEvent e) {
 					if (layoutEditor.removeTurntable(instance)) {
 						// Returned true if user did not cancel

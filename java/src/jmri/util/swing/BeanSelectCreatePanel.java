@@ -20,7 +20,11 @@ import java.util.ArrayList;
 
 public class BeanSelectCreatePanel extends JPanel{
     
-    Manager _manager;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8850883067365493880L;
+	Manager _manager;
     NamedBean _defaultSelect;
     String _reference = null;
     JRadioButton existingItem = new JRadioButton();

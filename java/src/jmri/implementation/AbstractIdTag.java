@@ -29,7 +29,12 @@ import jmri.IdTag;
  */
 public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag {
 
-    protected Reporter _whereLastSeen = null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8149992170721277901L;
+
+	protected Reporter _whereLastSeen = null;
 
     protected Date _whenLastSeen = null;
 

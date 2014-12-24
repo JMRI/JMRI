@@ -14,7 +14,12 @@ import java.awt.event.ActionEvent;
  */
 public class SampleAutomaton3Action extends AbstractAction {
 
-    public SampleAutomaton3Action(String s) { super(s);}
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5768244525614974205L;
+
+	public SampleAutomaton3Action(String s) { super(s);}
 
     public void actionPerformed(ActionEvent e) {
         // create a SampleAutomaton2

@@ -15,7 +15,12 @@ import java.awt.event.ActionListener;
  */
 public class RpsTrackingFrame extends jmri.util.JmriJFrame {
     
-    public RpsTrackingFrame(String s) { super(s);}
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2932962639315165044L;
+
+	public RpsTrackingFrame(String s) { super(s);}
     
     public RpsTrackingFrame() {
         this("RPS Tracking Display");

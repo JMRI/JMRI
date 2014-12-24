@@ -49,7 +49,11 @@ import jmri.jmrit.display.LinkingLabel;
 */
 public class IconItemPanel extends ItemPanel implements MouseListener {
 
-    HashMap<String, NamedIcon> _iconMap;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1708592955281190759L;
+	HashMap<String, NamedIcon> _iconMap;
     HashMap<String, NamedIcon> _tmpIconMap;
     JPanel _iconPanel;
     JButton _catalogButton;
@@ -348,7 +352,11 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     
     public class IconDragJLabel extends DragJLabel implements DropTargetListener {
 
-        int level;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 6215368657257938019L;
+		int level;
 
         public IconDragJLabel(DataFlavor flavor, int zLevel) {
             super(flavor);

@@ -21,7 +21,12 @@ import jmri.jmrix.lenz.*;
  */
 public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
 
-    protected XNetTrafficController tc = null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -338386258040843147L;
+
+	protected XNetTrafficController tc = null;
 
     public LI101Frame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
         super("LI101 Configuration Utility");

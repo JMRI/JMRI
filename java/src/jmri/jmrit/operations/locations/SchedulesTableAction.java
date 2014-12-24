@@ -15,6 +15,11 @@ import javax.swing.AbstractAction;
  */
 public class SchedulesTableAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7587426088852825010L;
+
 	public SchedulesTableAction(String s) {
 		super(s);
 	}

@@ -32,6 +32,11 @@ import jmri.util.com.sun.TableSorter;
  */
 public class RoutesTableFrame extends OperationsFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5308632111456022575L;
+
 	RoutesTableModel routesModel = new RoutesTableModel();
 
 	// labels

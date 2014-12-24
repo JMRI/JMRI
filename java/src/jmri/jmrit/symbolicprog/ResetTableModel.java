@@ -24,7 +24,12 @@ import jmri.util.jdom.LocaleSelector;
  * @version   $Revision$
  */
 public class ResetTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
-    private String headers[] = {"Label", "Name",
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5802447765323835861L;
+
+	private String headers[] = {"Label", "Name",
                                 "PI", "PIvalue",
                                 "SI", "SIvalue",
                                 "CV", "Value",

@@ -35,7 +35,12 @@ import jmri.jmrit.roster.Roster;
   */
 public class DeleteRosterGroupAction extends JmriAbstractAction {
 
-    public DeleteRosterGroupAction(String s, WindowInterface wi) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5645990386314165982L;
+
+	public DeleteRosterGroupAction(String s, WindowInterface wi) {
     	super(s, wi);
     }
      

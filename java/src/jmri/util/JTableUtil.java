@@ -36,7 +36,12 @@ public class JTableUtil {
 	    }
 	    
     	JTable dataTable = new JTable(sorter)  {
-            public boolean editCellAt(int row, int column, java.util.EventObject e) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 8292955405169068708L;
+
+			public boolean editCellAt(int row, int column, java.util.EventObject e) {
                 boolean res = super.editCellAt(row, column, e);
                 java.awt.Component c = this.getEditorComponent();
                 if (c instanceof javax.swing.JTextField) {

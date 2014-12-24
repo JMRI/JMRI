@@ -18,6 +18,10 @@ import javax.swing.JOptionPane;
 
 public class ResetCarMovesAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -583218206426311128L;
 	CarManager manager = CarManager.instance();
 
 	public ResetCarMovesAction(String actionName, Component frame) {

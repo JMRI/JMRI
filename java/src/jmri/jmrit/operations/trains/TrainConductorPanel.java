@@ -25,7 +25,12 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainConductorPanel extends CommonConductorYardmasterPanel {
 
-    protected static final boolean isManifest = true;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7149077790256321679L;
+
+	protected static final boolean isManifest = true;
 
     // labels
     JLabel textTrainName = new JLabel();

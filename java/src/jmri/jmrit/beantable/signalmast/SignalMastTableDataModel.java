@@ -27,7 +27,11 @@ import jmri.util.swing.XTableColumnModel;
 
 public class SignalMastTableDataModel extends BeanTableDataModel {
 
-    static public final int EDITMASTCOL = NUMCOLUMN;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2753901812548953185L;
+	static public final int EDITMASTCOL = NUMCOLUMN;
     static public final int EDITLOGICCOL = EDITMASTCOL+1;
     static public final int LITCOL = EDITLOGICCOL+1;
     static public final int HELDCOL = LITCOL+1;
@@ -190,7 +194,12 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     //The JTable is extended so that we can reset the available aspect in the drop down when required
     class SignalMastJTable extends JTable{
         
-        public SignalMastJTable(TableSorter srtr){
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 7888512352829953819L;
+
+		public SignalMastJTable(TableSorter srtr){
             super(srtr);
         }
     

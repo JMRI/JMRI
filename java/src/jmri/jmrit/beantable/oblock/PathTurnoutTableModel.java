@@ -41,7 +41,11 @@ import jmri.jmrit.logix.OPath;
 
 public class PathTurnoutTableModel extends AbstractTableModel {
 
-    public static final int TURNOUT_NAME_COL = 0;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -734742811189091810L;
+	public static final int TURNOUT_NAME_COL = 0;
     public static final int SETTINGCOLUMN = 1;
     public static final int DELETE_COL = 2;
     public static final int NUMCOLS = 3;

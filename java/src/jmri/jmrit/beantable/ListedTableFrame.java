@@ -36,7 +36,11 @@ import javax.swing.*;
 public class ListedTableFrame extends BeanTableFrame {
     
     
-    ActionJList actionList;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6285854187511950725L;
+	ActionJList actionList;
     
     public boolean isMultipleInstances() { return true; }
 

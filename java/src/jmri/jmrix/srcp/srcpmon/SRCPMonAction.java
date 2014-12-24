@@ -18,6 +18,11 @@ import javax.swing.AbstractAction;
  */
 public class SRCPMonAction 			extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1842953700313402490L;
+
 	public SRCPMonAction() { super("SRCP Monitor");}
 	public SRCPMonAction(String s) { super(s);}
 

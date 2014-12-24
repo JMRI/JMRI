@@ -33,6 +33,11 @@ import java.io.File;
 
 public class TrainManifestOptionFrame extends OperationsFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4221631294388076034L;
+
 	Train _train = null;
 
 	// labels

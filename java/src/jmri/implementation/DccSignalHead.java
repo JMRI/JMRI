@@ -39,7 +39,12 @@ import jmri.*;
  */
 public class DccSignalHead extends AbstractSignalHead {
 
-  public DccSignalHead( String sys, String user ) {
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5400767347176104884L;
+
+public DccSignalHead( String sys, String user ) {
     super(sys, user);
     configureHead(sys);
     

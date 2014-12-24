@@ -14,6 +14,11 @@ import org.slf4j.LoggerFactory;
  * @version $Revision$
  */
 final class CarAttributeAction extends AbstractAction {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -369749063288544953L;
+
 	public CarAttributeAction(String actionName, CarAttributeEditFrame caef) {
 		super(actionName);
 		this.caef = caef;

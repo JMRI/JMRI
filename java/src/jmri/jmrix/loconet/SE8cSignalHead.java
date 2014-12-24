@@ -38,7 +38,12 @@ import jmri.implementation.DefaultSignalHead;
  */
 public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener {
 
-    public SE8cSignalHead(int pNumber, String userName) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6855220608807175722L;
+
+	public SE8cSignalHead(int pNumber, String userName) {
         // create systemname
         super("LH"+pNumber, userName);
         init(pNumber);

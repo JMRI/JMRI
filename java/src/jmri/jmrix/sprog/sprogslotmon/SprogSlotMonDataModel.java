@@ -19,7 +19,11 @@ import javax.swing.*;
  */
 public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel implements SprogSlotListener  {
 
-    static public final int SLOTCOLUMN = 0;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4486077436638200664L;
+	static public final int SLOTCOLUMN = 0;
 //    static public final int ESTOPCOLUMN = 1;
     static public final int ADDRCOLUMN = 1;
     static public final int SPDCOLUMN  = 2;

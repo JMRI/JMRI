@@ -17,7 +17,12 @@ import java.util.ResourceBundle;
  */
 public class LayoutBlockRouteTable extends jmri.util.swing.JmriPanel {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3294825239330691900L;
+
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     LayoutBlockRouteTableModel    dataModel;
     LayoutBlockNeighbourTableModel neighbourDataModel;

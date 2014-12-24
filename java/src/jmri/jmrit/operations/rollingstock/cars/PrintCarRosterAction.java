@@ -34,6 +34,11 @@ import jmri.jmrit.operations.setup.Setup;
  */
 public class PrintCarRosterAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6012807784689139181L;
+
 	public PrintCarRosterAction(String actionName, Frame frame, boolean preview, Component pWho) {
 		super(actionName);
 		mFrame = frame;
@@ -286,6 +291,10 @@ public class PrintCarRosterAction extends AbstractAction {
 	static final String NEW_LINE = "\n"; // NOI18N
 
 	public class CarPrintOptionFrame extends OperationsFrame {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -7320807344781148331L;
 		PrintCarRosterAction pcr;
 
 		public CarPrintOptionFrame(PrintCarRosterAction pcr) {

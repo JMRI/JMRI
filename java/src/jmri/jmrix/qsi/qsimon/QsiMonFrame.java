@@ -16,6 +16,11 @@ import jmri.jmrix.qsi.QsiTrafficController;
  */
 public class QsiMonFrame extends jmri.jmrix.AbstractMonFrame implements QsiListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2700439550177448217L;
+
 	public QsiMonFrame() {
 		super();
 	}

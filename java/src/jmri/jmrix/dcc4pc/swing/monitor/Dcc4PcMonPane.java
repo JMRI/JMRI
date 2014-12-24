@@ -18,7 +18,12 @@ import jmri.jmrix.dcc4pc.swing.*;
 
 public class Dcc4PcMonPane extends jmri.jmrix.AbstractMonPane implements Dcc4PcListener, Dcc4PcPanelInterface{
 
-    public Dcc4PcMonPane() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5843358285941449913L;
+
+	public Dcc4PcMonPane() {
         super();
     }
     
@@ -96,7 +101,12 @@ public class Dcc4PcMonPane extends jmri.jmrix.AbstractMonPane implements Dcc4PcL
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.dcc4pc.swing.Dcc4PcNamedPaneAction {
-        public Default() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -1315928416102283355L;
+
+		public Default() {
             super("Dcc4PC Command Monitor", 
                 new jmri.util.swing.sdi.JmriJFrameInterface(), 
                 Dcc4PcMonPane.class.getName(), 

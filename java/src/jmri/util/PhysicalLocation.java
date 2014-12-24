@@ -46,7 +46,12 @@ import org.slf4j.LoggerFactory;
 
 public class PhysicalLocation extends Vector3f {
 
-    float[] f = new float[3];  // used for extracting a single dimension
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6996042081848047974L;
+
+	float[] f = new float[3];  // used for extracting a single dimension
                                // from the underlying vector.
 
     private boolean _isTunnel;

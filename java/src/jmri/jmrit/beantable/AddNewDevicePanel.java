@@ -24,7 +24,11 @@ import java.util.ResourceBundle;
 
 public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
 
-    public AddNewDevicePanel(JTextField sys, JTextField userName,
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5114030241732110250L;
+	public AddNewDevicePanel(JTextField sys, JTextField userName,
                              String addButtonLabel, ActionListener listener) {
             sysName = sys;
             setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

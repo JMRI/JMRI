@@ -35,7 +35,12 @@ import org.slf4j.LoggerFactory;
  */
 public class PanelProPane extends apps.AppsLaunchPane {
 
-    PanelProPane() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5742354704602024439L;
+
+	PanelProPane() {
         super();
     }
 
@@ -67,7 +72,12 @@ public class PanelProPane extends apps.AppsLaunchPane {
         // Buttons
 
         Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")){
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = -9134833676932931297L;
+
+				public void actionPerformed(ActionEvent e) {
 					Apps.handleQuit();
                 }
             };

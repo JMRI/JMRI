@@ -16,7 +16,11 @@ import javax.swing.*;
  */
 public class FollowerPanel extends BasePanel {
 
-    JTextField  outputName;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4276657325541090103L;
+	JTextField  outputName;
     JTextField  sensorName;
     JTextField  vetoName;
     

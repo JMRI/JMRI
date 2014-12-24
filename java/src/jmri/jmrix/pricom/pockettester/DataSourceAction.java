@@ -16,7 +16,12 @@ import org.slf4j.LoggerFactory;
  */
 public class DataSourceAction extends jmri.util.JmriJFrameAction  {
 
-    public DataSourceAction(String s) { super(s);}        
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3504361321427171189L;
+
+	public DataSourceAction(String s) { super(s);}        
     public DataSourceAction() {
         super(""); // have to invoke a ctor that exists
         java.util.ResourceBundle rb 

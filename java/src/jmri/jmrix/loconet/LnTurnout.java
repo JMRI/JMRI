@@ -40,7 +40,12 @@ import jmri.implementation.AbstractTurnout;
  
  public class LnTurnout extends AbstractTurnout implements LocoNetListener {
 
-    public LnTurnout(String prefix, int number, LocoNetInterface controller) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8838048326340434647L;
+
+	public LnTurnout(String prefix, int number, LocoNetInterface controller) {
         // a human-readable turnout number must be specified!
         super(prefix+"T"+number);  // can't use prefix here, as still in construction
         log.debug("new turnout "+number);

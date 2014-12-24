@@ -13,7 +13,12 @@ import javax.swing.JMenu;
  * @version     $Revision$
  */
 public class OakTreeMenu extends JMenu {
-    public OakTreeMenu(String name) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3502858569724894577L;
+
+	public OakTreeMenu(String name) {
         this();
         setText(name);
     }

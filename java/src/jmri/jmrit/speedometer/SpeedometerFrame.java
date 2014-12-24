@@ -51,7 +51,11 @@ import org.jdom2.ProcessingInstruction;
 public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
 
-    final String blank = "       ";
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8321031366797967218L;
+	final String blank = "       ";
     JTextField startSensor = new JTextField(5);
     javax.swing.ButtonGroup startGroup 		= new javax.swing.ButtonGroup();
     javax.swing.JRadioButton startOnEntry  	= new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonEntry"));

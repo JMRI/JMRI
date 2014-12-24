@@ -19,7 +19,11 @@ public class InternalReporterManager extends AbstractReporterManager {
      */
     protected Reporter createNewReporter(String systemName, String userName) {
         return new AbstractReporter(systemName, userName){
-            public int getState() { return state; } 
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -2544443870907571291L;
+			public int getState() { return state; } 
             public void setState(int s) { state = s; }
             int state = 0;
         };

@@ -70,7 +70,11 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  */
 public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jmrix.loconet.LocoNetListener {
 
-    private static final boolean limitPasswordToNumericCharacters = false;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1193918545973539710L;
+	private static final boolean limitPasswordToNumericCharacters = false;
     private LocoNetSystemConnectionMemo memo;
     private Integer numUr92;
     private javax.swing.Timer   swingTmrIplQuery;

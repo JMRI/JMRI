@@ -16,7 +16,12 @@ import javax.swing.*;
  */
 public class JythonSigletAction extends AbstractAction {
 
-    public JythonSigletAction(String s, JPanel who) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7767646852999362415L;
+
+	public JythonSigletAction(String s, JPanel who) {
         super(s);
         _who = who;
     }

@@ -40,7 +40,11 @@ import jmri.util.JmriJFrame;
  */
 public class PaneProgAction 			extends AbstractAction {
 
-    Object o1, o2, o3, o4;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6931284008411705904L;
+	Object o1, o2, o3, o4;
     JLabel statusLabel;
     jmri.jmrit.progsupport.ProgModeSelector modePane = new jmri.jmrit.progsupport.ProgServiceModeComboBox();
 
@@ -89,7 +93,12 @@ public class PaneProgAction 			extends AbstractAction {
 
         // new Loco on programming track
         JPanel pane1 = new CombinedLocoSelTreePane(statusLabel){
-                protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = -4214840180299703440L;
+
+				protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
                                                 String filename) {
                     String title = java.text.MessageFormat.format(SymbolicProgBundle.getMessage("FrameServiceProgrammerTitle"),
                                                         new Object[]{"new decoder"});

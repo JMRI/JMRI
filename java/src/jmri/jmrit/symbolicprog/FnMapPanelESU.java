@@ -75,7 +75,11 @@ import org.jdom2.*;
  * @version			$Revision: 24716 $
  */
 public class FnMapPanelESU extends JPanel {
-    // columns
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5897048084177413562L;
+	// columns
     int firstCol = 0;
     int firstOut = 1;
     int currentCol = firstCol;

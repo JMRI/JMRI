@@ -13,7 +13,12 @@ import org.slf4j.LoggerFactory;
  */
 public class EditSwitchListTextFrame extends OperationsFrame {
 
-    public EditSwitchListTextFrame() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8868355208674070617L;
+
+	public EditSwitchListTextFrame() {
         super(Bundle.getMessage("TitleSwitchListText"), new EditSwitchListTextPanel());
     }
 

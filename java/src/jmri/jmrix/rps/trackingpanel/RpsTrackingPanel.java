@@ -26,7 +26,12 @@ import javax.vecmath.Point3d;
 public class RpsTrackingPanel extends javax.swing.JPanel 
     implements MeasurementListener {
     
-    public RpsTrackingPanel() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5705944161292948723L;
+
+	public RpsTrackingPanel() {
         super();
         Distributor.instance().addMeasurementListener(this);
         setToolTipText("<no item>");  // activates ToolTip, sets default

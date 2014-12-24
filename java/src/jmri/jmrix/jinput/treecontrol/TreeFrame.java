@@ -16,7 +16,11 @@ import org.slf4j.LoggerFactory;
  */
 public class TreeFrame extends JmriJFrame {
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.jinput.treecontrol.TreeBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5687145517875452389L;
+	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.jinput.treecontrol.TreeBundle");
 
     @Override
     public void initComponents() throws Exception {

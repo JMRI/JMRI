@@ -16,7 +16,11 @@ import javax.swing.*;
  */
 public class SensorGroupAction extends AbstractAction {
 
-    public SensorGroupAction(String s) { 
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6704486852181647895L;
+	public SensorGroupAction(String s) { 
 	super(s);
 
      // disable ourself if there is no route manager object available

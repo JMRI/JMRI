@@ -13,7 +13,12 @@ import jmri.jmrix.tams.TamsSystemConnectionMemo;
  */
 public class TamsMenu extends JMenu{
 
-        public TamsMenu(TamsSystemConnectionMemo memo) {
+        /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3647445955400088727L;
+
+		public TamsMenu(TamsSystemConnectionMemo memo) {
         super();
 
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.tams.TamsBundle");

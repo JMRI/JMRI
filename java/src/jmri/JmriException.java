@@ -10,6 +10,10 @@ package jmri;
  * @version			$Revision$
  */
 public class JmriException extends Exception {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2804039803790645735L;
 	public JmriException(String s, Throwable t) { super(s, t); }
 	public JmriException(String s) { super(s); }
 	public JmriException() {}

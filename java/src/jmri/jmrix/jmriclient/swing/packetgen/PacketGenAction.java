@@ -17,7 +17,11 @@ import javax.swing.AbstractAction;
  */
 public class PacketGenAction 			extends AbstractAction {
 
-        jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo _memo=null;
+        /**
+	 * 
+	 */
+	private static final long serialVersionUID = 36676032325616914L;
+		jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo _memo=null;
 
 	public PacketGenAction(String s,jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo memo) { 
            super(s);

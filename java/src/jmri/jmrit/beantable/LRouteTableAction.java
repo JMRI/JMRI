@@ -70,6 +70,10 @@ import jmri.util.SystemNameComparator;
 
 public class LRouteTableAction extends AbstractTableAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9004336444814249851L;
 	static final ResourceBundle rbx = ResourceBundle
 			.getBundle("jmri.jmrit.beantable.LRouteTableBundle");
 
@@ -104,7 +108,11 @@ public class LRouteTableAction extends AbstractTableAction {
 
     class LBeanTableDataModel extends BeanTableDataModel 
     {
-        // overlay the state column with the edit column
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -2397834189317951853L;
+		// overlay the state column with the edit column
         static public final int ENABLECOL = VALUECOL;
         static public final int EDITCOL = DELETECOL;
         protected String enabledString = rb.getString("ColumnHeadEnabled");
@@ -1954,7 +1962,11 @@ public class LRouteTableAction extends AbstractTableAction {
 
     public class ComboBoxCellEditor extends DefaultCellEditor
     {
-        ComboBoxCellEditor() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -2610003095583895650L;
+		ComboBoxCellEditor() {
             super(new JComboBox());
         }
         ComboBoxCellEditor(JComboBox comboBox) {
@@ -2001,7 +2013,11 @@ public class LRouteTableAction extends AbstractTableAction {
      */
     public abstract class RouteElementModel extends AbstractTableModel implements PropertyChangeListener
     {
-        abstract public boolean isInput();
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -8781528720076479485L;
+		abstract public boolean isInput();
 
         public Class<?> getColumnClass(int c) {
             if (c == INCLUDE_COLUMN) {
@@ -2055,7 +2071,11 @@ public class LRouteTableAction extends AbstractTableAction {
      */
     class RouteInputModel extends RouteElementModel
     {
-        public boolean isInput() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 210785278316050800L;
+		public boolean isInput() {
             return true;
         }
         public String getColumnName(int c) {
@@ -2122,7 +2142,11 @@ public class LRouteTableAction extends AbstractTableAction {
      */
     class RouteOutputModel extends RouteElementModel
     {
-        public boolean isInput() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 5167852390939595503L;
+		public boolean isInput() {
             return false;
         }
         public String getColumnName(int c) {
@@ -2189,7 +2213,11 @@ public class LRouteTableAction extends AbstractTableAction {
      */
     class AlignmentModel extends RouteElementModel
     {
-        public boolean isInput() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 3042074636786118990L;
+		public boolean isInput() {
             return false;
         }
         public String getColumnName(int c) {
@@ -2351,7 +2379,11 @@ public class LRouteTableAction extends AbstractTableAction {
     * Sorts RouteElement                                                            
     */
     public static class RouteElementComparator extends SystemNameComparator {
-        RouteElementComparator() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -4393706804845323729L;
+		RouteElementComparator() {
         }
         public int compare(Object o1, Object o2) {
             return super.compare( ((RouteElement)o1).getSysName(), ((RouteElement)o2).getSysName());

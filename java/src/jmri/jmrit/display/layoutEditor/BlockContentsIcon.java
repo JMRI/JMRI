@@ -14,7 +14,11 @@ import javax.swing.JOptionPane;
 @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class BlockContentsIcon extends jmri.jmrit.display.BlockContentsIcon {
 
-    String defaultText = " ";
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5596807754781580059L;
+	String defaultText = " ";
 
     public BlockContentsIcon(String s, LayoutEditor panel) {
         super(s, panel);

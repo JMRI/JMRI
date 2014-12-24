@@ -34,7 +34,12 @@ import jmri.util.JmriJFrame;
 */
 public class TableItemPanel extends FamilyItemPanel implements ListSelectionListener {
 
-    int ROW_HEIGHT;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -72832594032854676L;
+
+	int ROW_HEIGHT;
 
     protected JTable        _table;
     protected PickListModel _model;
@@ -225,7 +230,11 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     }
 
     protected class IconDragJLabel extends DragJLabel {
-        HashMap<String, NamedIcon> iconMap;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 2477024053040181591L;
+		HashMap<String, NamedIcon> iconMap;
 
         @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // icon map is within package 
         public IconDragJLabel(DataFlavor flavor, HashMap <String, NamedIcon> map) {

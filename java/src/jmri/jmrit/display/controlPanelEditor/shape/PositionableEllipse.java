@@ -18,7 +18,12 @@ import org.slf4j.LoggerFactory;
  */
 
 public class PositionableEllipse extends PositionableRectangle {
-    public PositionableEllipse(Editor editor) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2828662466661825613L;
+
+	public PositionableEllipse(Editor editor) {
     	super(editor);
     }
 
@@ -48,7 +53,12 @@ public class PositionableEllipse extends PositionableRectangle {
     public boolean setEditItemMenu(JPopupMenu popup) {
         String txt = Bundle.getMessage("editShape", Bundle.getMessage("ellipse"));
         popup.add(new javax.swing.AbstractAction(txt) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = -2502324392840592055L;
+
+				public void actionPerformed(ActionEvent e) {
                 	if (_editFrame==null) {
                     	_editFrame = new DrawEllipse("editShape", "ellipse", null);
                     	setEditParams();               	                		

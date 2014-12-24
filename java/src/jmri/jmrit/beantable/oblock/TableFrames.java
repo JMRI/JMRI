@@ -78,7 +78,11 @@ import jmri.jmrit.logix.WarrantTableAction;
 
 public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameListener {
 
-    static int ROW_HEIGHT;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5328547694482485128L;
+	static int ROW_HEIGHT;
     public static final int STRUT_SIZE = 10;
 
     JTable		_oBlockTable;
@@ -627,7 +631,11 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
     /***********************  BlockPathFrame ******************************/
     static class BlockPathFrame extends JInternalFrame {
-        BlockPathTableModel blockPathModel;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1917299755191589427L;
+		BlockPathTableModel blockPathModel;
 
         public BlockPathFrame(String title, boolean resizable, boolean closable, 
                        boolean maximizable, boolean iconifiable) {
@@ -784,7 +792,11 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
     static class MyBooleanRenderer extends javax.swing.table.DefaultTableCellRenderer {
     	
-    	String _trueValue;
+    	/**
+		 * 
+		 */
+		private static final long serialVersionUID = 934007494903837404L;
+		String _trueValue;
     	String _falseValue;
     	
     	MyBooleanRenderer(String trueValue, String falseValue) {

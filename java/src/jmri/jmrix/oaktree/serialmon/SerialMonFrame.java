@@ -17,7 +17,12 @@ import jmri.jmrix.oaktree.SerialTrafficController;
 
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
-    public SerialMonFrame() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4175675095718284698L;
+
+	public SerialMonFrame() {
         super();
     }
 

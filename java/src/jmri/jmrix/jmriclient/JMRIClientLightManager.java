@@ -18,7 +18,11 @@ import jmri.Light;
 
 public class JMRIClientLightManager extends jmri.managers.AbstractLightManager {
 
-    private JMRIClientSystemConnectionMemo memo=null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6247705424672589496L;
+	private JMRIClientSystemConnectionMemo memo=null;
     private String prefix = null;
 
     public JMRIClientLightManager(JMRIClientSystemConnectionMemo memo) {

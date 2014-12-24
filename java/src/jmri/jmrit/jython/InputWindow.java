@@ -32,7 +32,11 @@ import jmri.util.FileUtil;
  */
 public class InputWindow extends JPanel {
 
-    JTextArea area;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8043631915757357490L;
+	JTextArea area;
     JButton button;
     JButton loadButton;
     JButton storeButton;

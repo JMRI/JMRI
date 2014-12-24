@@ -761,7 +761,11 @@ public class TabbedPreferences extends AppConfigBase {
 
     static class PreferencesCatItems implements java.io.Serializable {
 
-        /*
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 5928584215129175250L;
+		/*
          * This contains details of all list items to be displayed in the
          * preferences
          */
@@ -858,7 +862,11 @@ public class TabbedPreferences extends AppConfigBase {
 
         static class TabDetails implements java.io.Serializable {
 
-            /* This contains all the JPanels that make up a preferences menus */
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -7077354592762639878L;
+			/* This contains all the JPanels that make up a preferences menus */
             JComponent tabItem;
             String tabTooltip;
             String tabTitle;

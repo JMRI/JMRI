@@ -11,7 +11,11 @@ package jmri.jmrit.symbolicprog.tabbedframe;
  *
  */
 public class WatchingLabel extends javax.swing.JLabel  {
-    public WatchingLabel(String name, javax.swing.JComponent c) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1571754037047065268L;
+	public WatchingLabel(String name, javax.swing.JComponent c) {
         super(name);
         
         comp = c;

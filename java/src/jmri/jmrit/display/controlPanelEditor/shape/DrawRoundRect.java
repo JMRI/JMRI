@@ -18,7 +18,11 @@ import org.slf4j.LoggerFactory;
 
 public class DrawRoundRect extends DrawRectangle {
 	
-    JTextField	_radiusText;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2900780978857411283L;
+	JTextField	_radiusText;
     int 		_radius;			// corner radius
 	
 	public DrawRoundRect(String which, String title, ShapeDrawer parent) {

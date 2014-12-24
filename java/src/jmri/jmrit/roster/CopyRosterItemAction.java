@@ -33,7 +33,12 @@ import org.slf4j.LoggerFactory;
  */
 public class CopyRosterItemAction extends AbstractRosterItemAction {
 
-    public CopyRosterItemAction(String s, WindowInterface wi) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1887063385344105392L;
+
+	public CopyRosterItemAction(String s, WindowInterface wi) {
     	super(s, wi);
     }
      

@@ -51,7 +51,11 @@ import jmri.util.FileUtil;
  */
 public class PaneProgDp3Action 	extends jmri.util.swing.JmriAbstractAction implements jmri.ProgListener, jmri.jmrit.symbolicprog.tabbedframe.PaneContainer{
 
-    Object o1, o2, o3, o4;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5579779133820749548L;
+	Object o1, o2, o3, o4;
     JLabel statusLabel;
     jmri.jmrit.progsupport.ProgModeSelector modePane = new jmri.jmrit.progsupport.ProgServiceModeComboBox();
 
@@ -109,7 +113,12 @@ public class PaneProgDp3Action 	extends jmri.util.swing.JmriAbstractAction imple
             final JPanel bottomPanel = new JPanel(new BorderLayout());
             // new Loco on programming track
             combinedLocoSelTree = new CombinedLocoSelTreePane(statusLabel){
-                @Override
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = 587815634507269784L;
+
+				@Override
                 protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
                                                 String filename) {
                     log.debug("startProgrammer");
@@ -124,7 +133,12 @@ public class PaneProgDp3Action 	extends jmri.util.swing.JmriAbstractAction imple
                         p = new PaneProgFrame(decoderFile, re,
                                          title, "programmers"+File.separator+"Comprehensive.xml", // NOI18N
                                          null, false){
-                            protected JPanel getModePane() { return null; }
+                            /**
+											 * 
+											 */
+											private static final long serialVersionUID = -4335497929570046467L;
+
+							protected JPanel getModePane() { return null; }
                         };
                     }
                     p.pack();
@@ -636,7 +650,12 @@ public class PaneProgDp3Action 	extends jmri.util.swing.JmriAbstractAction imple
     
     class ThisProgPane extends PaneProgPane {
         
-        public ThisProgPane(PaneContainer parent, String name, Element pane, CvTableModel cvModel, IndexedCvTableModel icvModel, VariableTableModel varModel, Element modelElem){
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 8855795459526662034L;
+
+		public ThisProgPane(PaneContainer parent, String name, Element pane, CvTableModel cvModel, IndexedCvTableModel icvModel, VariableTableModel varModel, Element modelElem){
             super(parent, name, pane, cvModel, icvModel, varModel, modelElem, re);
             bottom.remove(readChangesButton);
             bottom.remove(writeChangesButton);

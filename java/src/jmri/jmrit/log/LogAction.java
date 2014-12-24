@@ -15,7 +15,11 @@ import javax.swing.AbstractAction;
  */
 public class LogAction extends AbstractAction {
 
-    public LogAction(String s) { 
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2009661892835759238L;
+	public LogAction(String s) { 
 	    super(s);
     }
 

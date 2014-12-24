@@ -39,7 +39,12 @@ import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
  */
 public class NewLocoSelPane extends jmri.util.swing.JmriPanel  {
 
-    public NewLocoSelPane(JLabel s) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3220976963077803055L;
+
+	public NewLocoSelPane(JLabel s) {
         _statusLabel = s;
         init();
     }

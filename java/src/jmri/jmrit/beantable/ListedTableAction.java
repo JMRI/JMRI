@@ -17,7 +17,11 @@ import java.util.ResourceBundle;
 
 public class ListedTableAction extends AbstractAction {
 
-    String gotoListItem = null;
+    /**
+		 * 
+		 */
+		private static final long serialVersionUID = 6097143838837199839L;
+	String gotoListItem = null;
     String title = rbean.getString("TitleListedTable");
     public static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
     /**
@@ -64,6 +68,11 @@ public class ListedTableAction extends AbstractAction {
         Runnable r = new Runnable() {
           public void run() {
             f = new ListedTableFrame(title){
+
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = -2029385586619585289L;
             };
             f.initComponents();
             addToFrame(f);

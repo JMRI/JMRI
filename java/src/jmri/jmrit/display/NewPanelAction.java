@@ -21,7 +21,11 @@ import javax.swing.JOptionPane;
  */
 public class NewPanelAction extends AbstractAction {
 
-    public NewPanelAction(String s) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4195350738625521948L;
+	public NewPanelAction(String s) {
         super(s);
     }
 

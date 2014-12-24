@@ -27,6 +27,10 @@ import java.util.List;
 
 public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4268396118355876227L;
 	TrainManager manager;
 	String Empty = "            ";
 

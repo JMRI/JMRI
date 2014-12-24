@@ -18,7 +18,12 @@ import jmri.util.zeroconf.ZeroConfService;
  */
 public class LnMessageServerAction extends AbstractAction {
 
-    public LnMessageServerAction( String s ) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5248571475794161828L;
+
+	public LnMessageServerAction( String s ) {
         super( s ) ;
     }
 

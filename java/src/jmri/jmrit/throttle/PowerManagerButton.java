@@ -16,7 +16,11 @@ import jmri.jmrit.powerpanel.PowerPane;
 
 public abstract class PowerManagerButton extends JButton implements PropertyChangeListener {
 
-    static final ResourceBundle pprb = ResourceBundle.getBundle("jmri.jmrit.powerpanel.PowerPanelBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6973591266016989688L;
+	static final ResourceBundle pprb = ResourceBundle.getBundle("jmri.jmrit.powerpanel.PowerPanelBundle");
     private PowerPane powerControl = new PowerPane();
     private PowerManager powerMgr = null;
     private Boolean fullText = false;

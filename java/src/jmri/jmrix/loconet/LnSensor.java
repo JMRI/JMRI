@@ -21,7 +21,11 @@ import jmri.Sensor;
  */
 public class LnSensor extends AbstractSensor implements LocoNetListener {
 
-    private LnSensorAddress a;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7056878460532584580L;
+	private LnSensorAddress a;
 
     public LnSensor(String systemName, String userName, LnTrafficController tc, String prefix) {
         super(systemName, userName);

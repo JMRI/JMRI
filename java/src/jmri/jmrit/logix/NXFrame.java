@@ -51,6 +51,10 @@ import jmri.DccLocoAddress;
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class NXFrame extends WarrantRoute {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8971792418011219112L;
 	WarrantTableFrame 	_parent;
     JTextField  _dccNumBox = new JTextField();
     JTextField  _trainNameBox = new JTextField();

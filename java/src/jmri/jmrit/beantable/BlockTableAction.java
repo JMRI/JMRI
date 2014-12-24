@@ -44,6 +44,11 @@ import jmri.util.JmriJFrame;
 public class BlockTableAction extends AbstractTableAction {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6207247759586108823L;
+
+	/**
      * Create an action with a specific title.
      * <P>
      * Note that the argument is the Action title, not the title of the
@@ -94,7 +99,11 @@ public class BlockTableAction extends AbstractTableAction {
      */
     protected void createModel() {
         m = new BeanTableDataModel() {
-            static public final int EDITCOL = NUMCOLUMN;
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 7556903687684791477L;
+			static public final int EDITCOL = NUMCOLUMN;
         	static public final int DIRECTIONCOL = EDITCOL+1;
 			static public final int LENGTHCOL = DIRECTIONCOL+1;
 			static public final int CURVECOL = LENGTHCOL+1;

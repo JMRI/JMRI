@@ -19,7 +19,11 @@ import jmri.jmrix.grapevine.SerialMessage;
  */
 public class RenumberFrame extends jmri.util.JmriJFrame {
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.grapevine.nodetable.NodeTableBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5432314146936737538L;
+	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.grapevine.nodetable.NodeTableBundle");
 		
     /**
      * Constructor method

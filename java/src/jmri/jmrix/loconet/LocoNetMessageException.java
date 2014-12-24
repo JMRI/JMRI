@@ -11,6 +11,10 @@ import jmri.JmriException;
  * @version	$Revision$
  */
 public class LocoNetMessageException extends JmriException {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6472332226397111753L;
 	public LocoNetMessageException(String s) { super(s); }
 	public LocoNetMessageException() {}
 }

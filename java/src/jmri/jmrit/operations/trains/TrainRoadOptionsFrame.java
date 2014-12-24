@@ -33,6 +33,11 @@ import jmri.jmrit.operations.setup.Setup;
 
 public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4077306284213827815L;
+
 	Train _train = null;
 
 	JPanel pRoadControls = new JPanel();

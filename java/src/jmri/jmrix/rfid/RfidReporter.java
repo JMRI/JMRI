@@ -43,7 +43,12 @@ import java.util.regex.Matcher;
 public class RfidReporter extends AbstractReporter
     implements RfidTagListener, PhysicalLocationReporter {
 
-    public RfidReporter(String systemName) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5764746168270178892L;
+
+	public RfidReporter(String systemName) {
         super(systemName);
     }
 

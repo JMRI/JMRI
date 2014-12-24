@@ -18,7 +18,12 @@ import javax.swing.*;
  */
 public class LogixLoadAction extends AbstractAction {
 
-    public LogixLoadAction(String s, JPanel who) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4280773749053470400L;
+
+	public LogixLoadAction(String s, JPanel who) {
         super(s);
         _who = who;
     }

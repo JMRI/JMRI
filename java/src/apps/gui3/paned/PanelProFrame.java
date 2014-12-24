@@ -19,6 +19,12 @@ import jmri.util.swing.multipane.*;
 public class PanelProFrame extends MultiPaneWindow {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5937729511010257865L;
+
+
+	/**
      * Enhanced constructor for placing the pane in various 
      * GUIs
      */

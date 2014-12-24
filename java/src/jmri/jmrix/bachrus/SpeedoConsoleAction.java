@@ -16,6 +16,10 @@ import javax.swing.AbstractAction;
  */
 public class SpeedoConsoleAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5455680125546606150L;
 	public SpeedoConsoleAction(String s) { super(s);}
 
     public void actionPerformed(ActionEvent e) {

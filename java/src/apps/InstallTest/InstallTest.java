@@ -42,6 +42,11 @@ import org.slf4j.LoggerFactory;
  */
 public class InstallTest extends Apps {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1292408345588882623L;
+
 	InstallTest(JFrame p) {
         super(p);
     }
@@ -71,7 +76,12 @@ public class InstallTest extends Apps {
         Action serviceprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction(Bundle.getMessage("DpButtonUseProgrammingTrack"));
         Action opsprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(Bundle.getMessage("DpButtonProgramOnMainTrack"));
         Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")){
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = -9126451934736739677L;
+
+				public void actionPerformed(ActionEvent e) {
 					Apps.handleQuit();
                 }
             };

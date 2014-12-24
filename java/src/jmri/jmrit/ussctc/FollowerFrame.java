@@ -15,7 +15,12 @@ import javax.swing.*;
  */
 public class FollowerFrame extends jmri.util.JmriJFrame {
 
-    public FollowerFrame() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6090025917852821775L;
+
+	public FollowerFrame() {
         super();
     }
 

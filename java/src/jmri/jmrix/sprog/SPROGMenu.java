@@ -15,7 +15,12 @@ import javax.swing.JMenu;
  * @version     $Revision$
  */
 public class SPROGMenu extends JMenu {
-    public SPROGMenu(SprogSystemConnectionMemo memo) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1949933616919504363L;
+
+	public SPROGMenu(SprogSystemConnectionMemo memo) {
         this();
         setText(memo.getUserName());
     }

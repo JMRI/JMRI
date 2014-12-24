@@ -53,7 +53,11 @@ import org.slf4j.LoggerFactory;
      */
 public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
 
-    static public final int SYSNAMECOL  = 0;
+    /**
+		 * 
+		 */
+		private static final long serialVersionUID = -4782167334919251464L;
+	static public final int SYSNAMECOL  = 0;
     static public final int USERNAMECOL = 1;
     static public final int COMMENTCOL = 2;
     static public final int STATECOL = 3;

@@ -26,7 +26,11 @@ import jmri.jmrix.can.cbus.*;
  */
 public class CbusEventFilterFrame extends JmriJFrame {
     
-    protected static final int FILTERS = 4;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -618391050120364272L;
+	protected static final int FILTERS = 4;
     static final Color[] filterColors = {Color.RED, Color.GREEN, Color.CYAN, Color.YELLOW};
     protected CbusEventFilterPanel[] filterPanes = new CbusEventFilterPanel[FILTERS];
 

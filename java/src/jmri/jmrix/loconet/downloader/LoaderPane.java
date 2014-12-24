@@ -44,7 +44,12 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
 
     // GUI member declarations
 
-    JLabel inputFileName = new JLabel("");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6862502901108992179L;
+
+	JLabel inputFileName = new JLabel("");
 
     JTextField bootload = new JTextField();
     JTextField mfg      = new JTextField();

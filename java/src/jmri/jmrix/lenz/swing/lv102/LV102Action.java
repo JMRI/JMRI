@@ -19,7 +19,12 @@ import java.util.ResourceBundle;
  */
 public class LV102Action extends AbstractAction {
 
-    public LV102Action(String s) { super(s);}
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8355340585591242351L;
+
+	public LV102Action(String s) { super(s);}
     public LV102Action() {
 
         this("LV102 Configuration Manager");

@@ -48,7 +48,12 @@ import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
  */
 public class AudioSourceFrame extends AbstractAudioFrame {
 
-    private static int counter = 1;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -933611748183387484L;
+
+	private static int counter = 1;
 
     private boolean _newSource;
     

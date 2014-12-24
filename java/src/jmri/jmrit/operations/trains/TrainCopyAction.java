@@ -16,6 +16,11 @@ import javax.swing.AbstractAction;
  */
 public class TrainCopyAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8004749161373746580L;
+
 	public TrainCopyAction(String s) {
 		super(s);
 	}

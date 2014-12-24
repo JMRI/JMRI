@@ -31,7 +31,11 @@ import jmri.jmrit.logix.Portal;
 
 public class PortalIcon extends PositionableIcon implements java.beans.PropertyChangeListener  {
 
-    public static final String HIDDEN = "hidden";
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4299340063847211257L;
+	public static final String HIDDEN = "hidden";
     public static final String VISIBLE = "block";
     public static final String PATH = "path";
     public static final String TO_ARROW = "toArrow";
@@ -257,7 +261,12 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
     }
     private void setRemoveMenu(JPopupMenu popup) {
     	popup.add(new AbstractAction(Bundle.getMessage("Remove")) {
-            public void actionPerformed(ActionEvent e) { 
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -45993184055488058L;
+
+			public void actionPerformed(ActionEvent e) { 
                 remove();
              }
     	});    	

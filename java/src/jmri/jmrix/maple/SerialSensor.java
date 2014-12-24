@@ -14,7 +14,12 @@ import jmri.implementation.AbstractSensor;
  */
 public class SerialSensor extends AbstractSensor {
 
-    public SerialSensor(String systemName) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -196410325440991581L;
+
+	public SerialSensor(String systemName) {
         super(systemName);
         _knownState = UNKNOWN;
     }

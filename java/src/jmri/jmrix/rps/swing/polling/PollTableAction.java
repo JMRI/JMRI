@@ -18,6 +18,11 @@ import java.awt.event.ActionEvent;
  */
 public class PollTableAction 			extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4624903291006242421L;
+
 	public PollTableAction(String s) { super(s);}
 
     public PollTableAction() {

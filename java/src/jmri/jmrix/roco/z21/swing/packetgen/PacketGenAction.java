@@ -17,7 +17,11 @@ import java.awt.event.ActionEvent;
 
 public class PacketGenAction 			extends AbstractAction {
 
-    jmri.jmrix.roco.z21.z21SystemConnectionMemo _memo=null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2121741838451012843L;
+	jmri.jmrix.roco.z21.z21SystemConnectionMemo _memo=null;
 
     public PacketGenAction(String s,jmri.jmrix.roco.z21.z21SystemConnectionMemo memo) { 
        super(s);

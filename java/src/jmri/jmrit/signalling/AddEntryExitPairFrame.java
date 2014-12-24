@@ -18,7 +18,12 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 */
 public class AddEntryExitPairFrame extends jmri.util.JmriJFrame {
 
-    public AddEntryExitPairFrame() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1133603057019255324L;
+
+	public AddEntryExitPairFrame() {
         super(false, true);
     }
     

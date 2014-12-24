@@ -24,7 +24,12 @@ import javax.vecmath.Point3d;
 public class DebuggerTimePane extends JPanel 
             implements ReadingListener, MeasurementListener {
 
-    public DebuggerTimePane() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7146556518025256466L;
+
+	public DebuggerTimePane() {
         super();
         
         NUMSENSORS = Engine.instance().getMaxReceiverNumber();

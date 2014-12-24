@@ -21,6 +21,10 @@ import jmri.jmrit.operations.OperationsXml;
  */
 public class BackupFilesAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2252745243582800660L;
 	static Logger log = LoggerFactory
 			.getLogger(BackupFilesAction.class.getName());
 

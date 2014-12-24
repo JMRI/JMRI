@@ -15,7 +15,12 @@ import jmri.Reporter;
  */
 public abstract class AbstractSensor extends AbstractNamedBean implements Sensor, java.io.Serializable {
 
-    // ctor takes a system-name string for initialization
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6188852412145851127L;
+
+	// ctor takes a system-name string for initialization
     public AbstractSensor(String systemName) {
         super(systemName.toUpperCase());
     }

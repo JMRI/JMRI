@@ -15,7 +15,11 @@ import javax.swing.*;
  */
 public class PacketGenPanel extends jmri.jmrix.ecos.swing.EcosPanel implements EcosListener {
 
-    // member declarations
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4117052466081375675L;
+	// member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(20);

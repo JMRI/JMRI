@@ -21,6 +21,11 @@ import jmri.util.swing.WindowInterface;
 public class RfidNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2811521437408908950L;
+
+	/**
      * Enhanced constructor for placing the pane in various 
      * GUIs
      */

@@ -38,6 +38,11 @@ import javax.swing.SpinnerNumberModel;
  */
 public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3933825267912834479L;
+
 	RouteManager routeManager = RouteManager.instance();
 
 	// labels

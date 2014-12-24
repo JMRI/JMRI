@@ -25,7 +25,11 @@ import org.slf4j.LoggerFactory;
  */
 public class ConsistDataModel extends AbstractTableModel {
 
-    final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.consisttool.ConsistTool");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2830664682896481975L;
+	final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.consisttool.ConsistTool");
     static private final int ADDRCOLUMN = 0;    // Locomotive address
     static private final int ROSTERCOLUMN = 1;  // Roster Entry, this exists
     static private final int DIRECTIONCOLUMN = 2;  // Relative Direction

@@ -24,7 +24,12 @@ import javax.swing.JFrame;
 
 abstract public class AbstractFrameAction extends AbstractAction {
 
-    public AbstractFrameAction(String actionName, String className) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3154020951934948120L;
+
+	public AbstractFrameAction(String actionName, String className) {
         super(actionName);
         this.className = className;
     }

@@ -28,6 +28,10 @@ import jmri.jmrit.operations.routes.RouteLocation;
  */
 public class PrintTrainAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -571267253370599017L;
 	static final String NEW_LINE = "\n"; // NOI18N
 	static final String TAB = "\t"; // NOI18N
 

@@ -44,6 +44,10 @@ import javax.swing.*;
 
 public class MemoryIconCoordinateEdit extends CoordinateEdit {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2891580354099086691L;
 	MemoryIcon pl; 			// positional label tracked by this frame
 	int oldX;
 	int oldY;
@@ -57,7 +61,12 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
     
     public static AbstractAction getCoordinateEditAction(final MemoryIcon pos) {
         return new AbstractAction(Bundle.getMessage("SetXY")) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = -7073550829531445326L;
+
+				public void actionPerformed(ActionEvent e) {
                     MemoryIconCoordinateEdit f = new MemoryIconCoordinateEdit();
                     f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
                     f.init(Bundle.getMessage("SetXY"), pos, true);

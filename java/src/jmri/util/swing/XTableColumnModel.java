@@ -25,7 +25,11 @@ import java.util.Enumeration;
  */
 
 public class XTableColumnModel extends DefaultTableColumnModel {
-    /** Array of TableColumn objects in this model.
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6890678360829524192L;
+	/** Array of TableColumn objects in this model.
      *  Holds all column objects, regardless of their visibility
      */
     protected Vector<TableColumn> allTableColumns            = new Vector<TableColumn>();

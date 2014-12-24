@@ -12,7 +12,12 @@ import jmri.util.JmriJFrameAction;
  */
 public class TreeAction extends JmriJFrameAction {
 
-    public TreeAction(String s) { 
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6718366926805444393L;
+
+	public TreeAction(String s) { 
         super(s);
     }
 

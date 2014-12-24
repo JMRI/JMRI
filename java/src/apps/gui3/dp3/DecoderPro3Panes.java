@@ -14,7 +14,12 @@ import jmri.util.BusyGlassPane;
 public class DecoderPro3Panes extends javax.swing.JPanel
     implements jmri.jmrit.symbolicprog.tabbedframe.PaneContainer {
 
-    public boolean isBusy() { return false; }
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7909265900453394172L;
+
+	public boolean isBusy() { return false; }
     
     public void paneFinished() {}
     

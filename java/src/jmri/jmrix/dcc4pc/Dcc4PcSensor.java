@@ -20,7 +20,12 @@ import jmri.implementation.AbstractSensor;
  */
 public class Dcc4PcSensor extends AbstractSensor {
 
-    public Dcc4PcSensor(String systemName, String userName) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4792333997713777957L;
+
+	public Dcc4PcSensor(String systemName, String userName) {
         super(systemName, userName);
         init(systemName);
     }

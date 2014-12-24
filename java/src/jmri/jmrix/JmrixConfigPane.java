@@ -39,6 +39,10 @@ import javax.swing.JScrollPane;
 public class JmrixConfigPane extends JPanel {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6184977238513337292L;
+	/**
      * Get access to a pane describing existing configuration
      * information, or create one if needed.
      * <P>

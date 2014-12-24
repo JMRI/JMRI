@@ -16,7 +16,12 @@ import jmri.util.swing.*;
  */
 public class LicenseAction extends jmri.util.swing.JmriAbstractAction {
 
-    public LicenseAction() { super("License");}
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 9049030313953910292L;
+
+	public LicenseAction() { super("License");}
 
     public LicenseAction(String s, Icon i, WindowInterface w) {
         super(s, i, w);

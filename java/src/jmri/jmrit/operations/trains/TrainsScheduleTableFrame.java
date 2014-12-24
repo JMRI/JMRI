@@ -39,6 +39,10 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 
 //	public static SwingShutDownTask trainDirtyTask;
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2436589778859368847L;
 	public static final String NAME = Bundle.getMessage("Name"); // Sort by choices
 	public static final String TIME = Bundle.getMessage("Time");
 

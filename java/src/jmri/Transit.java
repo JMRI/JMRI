@@ -65,7 +65,12 @@ import jmri.implementation.AbstractNamedBean;
 public class Transit extends AbstractNamedBean
 					implements java.io.Serializable {
 
-    public Transit(String systemName, String userName) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1416985602957797317L;
+
+	public Transit(String systemName, String userName) {
         super(systemName.toUpperCase(), userName);
     }
 

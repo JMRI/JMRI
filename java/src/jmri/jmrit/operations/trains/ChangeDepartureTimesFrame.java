@@ -30,6 +30,11 @@ public class ChangeDepartureTimesFrame extends OperationsFrame {
 
 	// text field
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3038840373591772138L;
+
 	// major buttons
 	javax.swing.JButton changeButton = new javax.swing.JButton(Bundle.getMessage("Change"));
 

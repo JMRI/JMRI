@@ -24,7 +24,11 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
 
     // GUI member declarations
     
-    Timebase clock;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1891908489623623638L;
+	Timebase clock;
     double minuteAngle;
     double hourAngle;
     String amPm;
@@ -70,7 +74,11 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
     }
     
     public class ClockPanel extends JPanel {
-        // Create a Panel that has clockface drawn on it scaled to the size of the panel
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 8721855316541244373L;
+		// Create a Panel that has clockface drawn on it scaled to the size of the panel
         // Define common variables
         Image logo;
         Image scaledLogo;

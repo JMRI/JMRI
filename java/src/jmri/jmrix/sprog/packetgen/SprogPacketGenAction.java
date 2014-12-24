@@ -17,6 +17,10 @@ import javax.swing.AbstractAction;
  */
 public class SprogPacketGenAction 			extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4279427035479187090L;
 	public SprogPacketGenAction(String s) { super(s);}
 
     public void actionPerformed(ActionEvent e) {

@@ -12,7 +12,12 @@ import javax.swing.JComboBox;
 
 public class JmriBeanComboBox extends JComboBox<String> implements java.beans.PropertyChangeListener{
 
-    /*
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7690075595407232375L;
+
+	/*
     * Create a default Jmri Combo box for the given bean manager
     * @param manager the jmri manager that is used to populate the combo box
     */

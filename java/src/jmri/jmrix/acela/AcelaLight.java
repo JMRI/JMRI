@@ -23,6 +23,11 @@ import jmri.implementation.AbstractLight;
 public class AcelaLight extends AbstractLight {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2275150502965932412L;
+
+	/**
      * Create a Light object, with only system name.
      * <P>
      * 'systemName' was previously validated in AcelaLightManager

@@ -20,7 +20,12 @@ import org.slf4j.LoggerFactory;
  */
 public class RecreateRosterAction extends JmriAbstractAction {
 
-    public RecreateRosterAction(String s, WindowInterface wi) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2421095427974812157L;
+
+	public RecreateRosterAction(String s, WindowInterface wi) {
     	super(s, wi);
     }
      

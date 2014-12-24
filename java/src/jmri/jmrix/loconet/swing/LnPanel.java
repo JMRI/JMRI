@@ -19,6 +19,10 @@ abstract public class LnPanel extends jmri.util.swing.JmriPanel implements LnPan
 
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 9092473563938799253L;
+	/**
      * make "memo" object available as convenience
      */
     protected LocoNetSystemConnectionMemo memo;

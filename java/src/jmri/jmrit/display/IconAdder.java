@@ -72,7 +72,12 @@ import javax.swing.table.TableColumn;
 
 public class IconAdder extends JPanel implements ListSelectionListener {
 
-    static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6650497287808063959L;
+
+	static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
     int ROW_HEIGHT;
 
@@ -689,7 +694,11 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     }
 
     private class IconButton extends DropButton {
-        String key;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -2038108988532738646L;
+		String key;
         IconButton(String label, Icon icon) {  // init icon passed to avoid ref before ctor complete
             super(icon);
             key = label;
@@ -708,7 +717,11 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     }
 
     class DropButton extends JToggleButton implements DropTargetListener {
-        DataFlavor dataFlavor;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 7846729392258288644L;
+		DataFlavor dataFlavor;
         DropButton (Icon icon) {
             super(icon);
             try {

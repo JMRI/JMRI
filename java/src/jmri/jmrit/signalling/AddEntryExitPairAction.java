@@ -17,6 +17,11 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
  */
 public class AddEntryExitPairAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2153517492240562949L;
+
 	public AddEntryExitPairAction(String s, LayoutEditor panel) {
         super(s);
         this.panel = panel;

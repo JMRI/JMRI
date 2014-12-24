@@ -39,6 +39,10 @@ import javax.swing.JPanel;
 public class JmriPanel extends JPanel {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 419130062777215699L;
+	/**
      * Provide a help target string which an enclosing
      * frame can provide as a help reference.
      *<p>

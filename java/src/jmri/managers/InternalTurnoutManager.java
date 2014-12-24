@@ -18,7 +18,11 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
      */
     protected Turnout createNewTurnout(String systemName, String userName) {
         return new AbstractTurnout(systemName, userName){
-            protected void forwardCommandChangeToLayout(int s) {}
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -7745266016274027809L;
+			protected void forwardCommandChangeToLayout(int s) {}
             protected void turnoutPushbuttonLockout(boolean b){}
         };
     }

@@ -31,7 +31,11 @@ import jmri.jmrit.roster.RosterEntrySelector;
  */
 public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntrySelector {
 
-    protected Roster _roster;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3147210325149684853L;
+	protected Roster _roster;
     protected String _group;
     protected String _roadName;
     protected String _roadNumber;

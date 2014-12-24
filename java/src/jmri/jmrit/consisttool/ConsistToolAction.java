@@ -20,7 +20,11 @@ import java.awt.event.ActionEvent;
  public class ConsistToolAction extends JmriAbstractAction {
 
  
-    public ConsistToolAction(String s, WindowInterface wi) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2206396348711181432L;
+	public ConsistToolAction(String s, WindowInterface wi) {
     	super(s, wi);
         // disable ourself if there is no consist manager available
         if (jmri.InstanceManager.getDefault(jmri.ConsistManager.class)==null) {

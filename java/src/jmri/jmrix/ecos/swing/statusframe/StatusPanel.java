@@ -16,7 +16,11 @@ import javax.swing.*;
  */
 public class StatusPanel extends jmri.jmrix.ecos.swing.EcosPanel implements EcosListener {
 
-    String appString = "Application Version: ";
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4996790282175507335L;
+	String appString = "Application Version: ";
     String proString = "   Protocol Version: ";
     String hrdString = "   Hardware Version: ";
     JLabel appVersion = new JLabel(appString+"<unknown>");
@@ -130,7 +134,12 @@ public class StatusPanel extends jmri.jmrix.ecos.swing.EcosPanel implements Ecos
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.ecos.swing.EcosNamedPaneAction {
-        public Default() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 8240707560751847245L;
+
+		public Default() {
             super(ResourceBundle.getBundle("jmri.jmrix.ecos.EcosBundle").getString("MenuItemInfo"), 
                 new jmri.util.swing.sdi.JmriJFrameInterface(), 
                 StatusPanel.class.getName(), 

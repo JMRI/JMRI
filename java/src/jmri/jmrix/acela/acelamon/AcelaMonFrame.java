@@ -20,6 +20,11 @@ import jmri.jmrix.acela.AcelaTrafficController;
 
 public class AcelaMonFrame extends jmri.jmrix.AbstractMonFrame implements AcelaListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6831074157726656711L;
+
 	public AcelaMonFrame() {
 		super();
 	}

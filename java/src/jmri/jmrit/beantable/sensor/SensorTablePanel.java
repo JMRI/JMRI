@@ -17,7 +17,12 @@ import java.awt.event.*;
 
 public class SensorTablePanel extends jmri.jmrit.beantable.BeanTablePane {
 
-    public SensorTablePanel() {        
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5518659429484806029L;
+
+	public SensorTablePanel() {        
     }
     
     public void initComponents() throws Exception {

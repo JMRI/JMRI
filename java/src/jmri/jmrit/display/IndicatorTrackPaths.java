@@ -165,7 +165,11 @@ import jmri.jmrit.logix.OBlock;
     
     static class LocoLable extends PositionableRoundRect {
     	
-    	OBlock _block;
+    	/**
+		 * 
+		 */
+		private static final long serialVersionUID = -5874790860514345475L;
+		OBlock _block;
     	
         public LocoLable(Editor editor) {
         	super(editor);

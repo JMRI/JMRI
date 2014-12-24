@@ -18,7 +18,12 @@ import javax.swing.*;
  * @version			$Revision$
  */
 public class GraphPane extends JPanel implements Printable {
-    final int PAD = 40;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 260997228988676886L;
+
+	final int PAD = 40;
 
     protected String xLabel;
     protected String yLabel;

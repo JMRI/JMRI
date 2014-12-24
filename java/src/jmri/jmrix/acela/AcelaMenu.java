@@ -17,7 +17,12 @@ import javax.swing.JMenu;
  */
 
 public class AcelaMenu extends JMenu {
-    public AcelaMenu(String name) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8525208553585140664L;
+
+	public AcelaMenu(String name) {
         this();
         setText(name);
     }

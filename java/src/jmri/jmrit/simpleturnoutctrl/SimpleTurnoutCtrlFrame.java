@@ -21,6 +21,10 @@ import javax.swing.JPanel;
  */
 public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5237015745740025462L;
 	private static final String LOCKED = "Locked";
 	private static final String UNLOCKED = "Normal";
 

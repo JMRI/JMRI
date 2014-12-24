@@ -25,7 +25,12 @@ import javax.swing.JPanel;
  */
 public class LocoSelTreePane extends CombinedLocoSelTreePane  {
 
-    public LocoSelTreePane(JLabel s) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4048446656319711656L;
+
+	public LocoSelTreePane(JLabel s) {
             super(s);
     }
 

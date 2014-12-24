@@ -26,7 +26,12 @@ import jmri.util.FileUtil;
  */
 public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmri.SignalAppearanceMap {
 
-    public DefaultSignalAppearanceMap(String systemName, String userName) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1448362198557086500L;
+
+	public DefaultSignalAppearanceMap(String systemName, String userName) {
         super(systemName, userName);
     }
 

@@ -39,6 +39,10 @@ import jmri.jmrit.operations.setup.Setup;
 
 public class EngineEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7527604846983933144L;
 	EngineManager manager = EngineManager.instance();
 	EngineManagerXml managerXml = EngineManagerXml.instance();
 	EngineModels engineModels = EngineModels.instance();

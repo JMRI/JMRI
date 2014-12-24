@@ -40,7 +40,12 @@ import jmri.NamedBeanHandle;
  */
 public class MergSD2SignalHead extends DefaultSignalHead {
     
-    public MergSD2SignalHead(String sys, String user, int aspect,NamedBeanHandle<Turnout> t1, NamedBeanHandle<Turnout> t2, NamedBeanHandle<Turnout> t3, boolean feather, boolean home){
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4482155949121611404L;
+
+	public MergSD2SignalHead(String sys, String user, int aspect,NamedBeanHandle<Turnout> t1, NamedBeanHandle<Turnout> t2, NamedBeanHandle<Turnout> t3, boolean feather, boolean home){
         super(sys, user);
         mAspects=aspect;
         mInput1=t1;

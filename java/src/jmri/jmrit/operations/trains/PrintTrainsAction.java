@@ -26,6 +26,10 @@ import java.util.List;
  */
 public class PrintTrainsAction extends PrintTrainAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4793759654485486345L;
 	static final String NEW_LINE = "\n"; // NOI18N
 	static final String TAB = "\t"; // NOI18N
 	static final char FORM_FEED = '\f'; // NOI18N

@@ -38,7 +38,12 @@ import jmri.util.JmriJFrame;
  */
 public abstract class AbstractMonFrame extends JmriJFrame  {
 
-    // template functions to fill in
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7090997005389773332L;
+
+	// template functions to fill in
     protected abstract String title();    // provide the title for the frame
 
     /**

@@ -31,6 +31,11 @@ import org.slf4j.LoggerFactory;
  */
 public class CarAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8817198567309887518L;
+
 	CarManager carManager = CarManager.instance();
 
 	// labels

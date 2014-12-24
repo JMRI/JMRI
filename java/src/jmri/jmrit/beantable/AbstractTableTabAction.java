@@ -18,7 +18,12 @@ import jmri.util.com.sun.TableSorter;
 
 abstract public class AbstractTableTabAction extends AbstractTableAction {
 
-    public static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7423371299023131468L;
+
+	public static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
 
     protected JPanel dataPanel;
     protected JTabbedPane dataTabs;

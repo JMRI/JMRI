@@ -28,7 +28,11 @@ import jmri.jmrit.throttle.ThrottleFrameManager;
  */
 public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.ConsistListener,jmri.ConsistListListener {
 
-    final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.consisttool.ConsistTool");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7572352658600799471L;
+	final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.consisttool.ConsistTool");
     // GUI member declarations
     JLabel textAdrLabel = new JLabel();
     DccLocoAddressSelector adrSelector = new DccLocoAddressSelector();

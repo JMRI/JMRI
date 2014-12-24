@@ -14,7 +14,11 @@ import javax.swing.AbstractAction;
  */
 public class TrainsByCarTypeAction extends AbstractAction {
 	
-    public TrainsByCarTypeAction(String s) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2521837006549809639L;
+	public TrainsByCarTypeAction(String s) {
     	super(s);
     }
     

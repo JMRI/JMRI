@@ -5,6 +5,11 @@ import javax.swing.AbstractAction;
 
 public class ThrottlesListAction extends AbstractAction {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6318756102854541505L;
+
+	/**
      * Constructor
      * @param s Name for the action.
      */

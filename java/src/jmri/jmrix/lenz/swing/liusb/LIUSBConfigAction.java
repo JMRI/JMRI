@@ -16,7 +16,11 @@ import javax.swing.AbstractAction;
  */
 public class LIUSBConfigAction extends AbstractAction {
 
-    private jmri.jmrix.lenz.XNetSystemConnectionMemo _memo = null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1332639667485599526L;
+	private jmri.jmrix.lenz.XNetSystemConnectionMemo _memo = null;
 
     public LIUSBConfigAction(String s,jmri.jmrix.lenz.XNetSystemConnectionMemo memo) { 
       super(s);

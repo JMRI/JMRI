@@ -21,7 +21,12 @@ import jmri.jmrix.lenz.*;
  */
 public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XNetListener {
 
-    private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.swing.lz100.LZ100Bundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8054742294210908919L;
+
+	private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.swing.lz100.LZ100Bundle");
 
     private boolean autoMode = false; // Holds Auto/Manual Startup Mode.
 

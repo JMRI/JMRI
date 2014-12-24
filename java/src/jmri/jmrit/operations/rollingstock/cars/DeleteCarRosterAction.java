@@ -18,6 +18,10 @@ import javax.swing.JOptionPane;
 
 public class DeleteCarRosterAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5022134191648659769L;
 	javax.swing.JLabel textLine = new javax.swing.JLabel();
 	javax.swing.JLabel lineNumber = new javax.swing.JLabel();
 

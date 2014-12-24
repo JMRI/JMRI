@@ -12,6 +12,11 @@
 package jmri.jmrix.lenz.swing.mon;
 
 public class XNetMonAction extends XNetMonPane.Default {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2767731630044145424L;
 }
 
 

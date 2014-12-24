@@ -41,7 +41,11 @@ public class LocoIOTableModel
         extends javax.swing.table.AbstractTableModel
         implements java.beans.PropertyChangeListener
 {
-    private LocoIOData liodata;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 145067099477782903L;
+	private LocoIOData liodata;
     private boolean inHex;
     //private String maxSizeMode = "";
 

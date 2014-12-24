@@ -16,7 +16,12 @@ import javax.swing.table.AbstractTableModel;
  */
 
 public abstract class BeanTableModel extends AbstractTableModel {
-    public Class<?> getColumnClass(int c) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8121523528465367528L;
+
+	public Class<?> getColumnClass(int c) {
         if (c == INCLUDE_COLUMN) {
             return Boolean.class;
         }

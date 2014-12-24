@@ -45,6 +45,11 @@ import java.util.Map.Entry;
 
 public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7715842501699997420L;
+
 	HashMap<String, HashMap<Integer, NamedIcon>> _iconMaps;
 
     private NamedBeanHandle<Sensor> namedOccSensor = null;

@@ -22,6 +22,10 @@ import jmri.jmrix.loconet.*;
 public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5149412620444668985L;
+	/**
      * Controls whether not-in-use slots are shown
      */
     javax.swing.JCheckBox 	showAllCheckBox = new javax.swing.JCheckBox();
@@ -141,7 +145,12 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
-        public Default() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 8377346674021280925L;
+
+		public Default() {
             super(LocoNetBundle.bundle().getString("MenuItemSlotMonitor"), 
                 new jmri.util.swing.sdi.JmriJFrameInterface(), 
                 SlotMonPane.class.getName(), 

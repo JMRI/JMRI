@@ -16,6 +16,11 @@ import jmri.jmrix.sprog.SprogTrafficController;
  */
 public class SprogMonFrame extends jmri.jmrix.AbstractMonFrame implements SprogListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4645506663293913369L;
+
 	public SprogMonFrame() {
 		super();
 	}

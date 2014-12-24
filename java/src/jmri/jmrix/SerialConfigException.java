@@ -10,7 +10,11 @@ package jmri.jmrix;
  * @version			$Revision$
  */
 public class SerialConfigException extends jmri.JmriException {
-    public SerialConfigException(String s) { super(s); }
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7879594498283129336L;
+	public SerialConfigException(String s) { super(s); }
     public SerialConfigException() {}
 
 }

@@ -16,7 +16,11 @@ import javax.swing.*;
  */
 public class SendPacketAction extends AbstractAction {
 
-    public SendPacketAction(String s) { 
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3000436999151726193L;
+	public SendPacketAction(String s) { 
 	super(s);
 
      // disable ourself if there is no command Station object available

@@ -48,7 +48,11 @@ import org.slf4j.LoggerFactory;
  */
 public class AppsLaunchFrame extends jmri.util.JmriJFrame {
 
-    static String profileFilename;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8986597544309635883L;
+	static String profileFilename;
 
     public AppsLaunchFrame(AppsLaunchPane containedPane, String name) {
         super(name);

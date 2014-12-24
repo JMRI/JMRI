@@ -13,7 +13,12 @@ import javax.swing.JMenu;
  * @version     $Revision$
  */
 public class QSIMenu extends JMenu {
-    public QSIMenu(String name) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4546652147704212565L;
+
+	public QSIMenu(String name) {
         this();
         setText(name);
     }

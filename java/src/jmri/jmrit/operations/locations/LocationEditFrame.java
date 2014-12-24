@@ -29,6 +29,10 @@ import java.util.List;
 
 public class LocationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -820196357214001064L;
 	YardTableModel yardModel = new YardTableModel();
 	JTable yardTable = new JTable(yardModel);
 	JScrollPane yardPane;

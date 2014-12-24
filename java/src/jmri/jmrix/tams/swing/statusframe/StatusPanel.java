@@ -17,7 +17,11 @@ import javax.swing.*;
  */
 public class StatusPanel extends jmri.jmrix.tams.swing.TamsPanel implements TamsListener {
 
-    String appString = "Application Version : ";
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5401219799607877348L;
+	String appString = "Application Version : ";
     String serString = "Serial Number : ";
     JLabel appVersion = new JLabel(appString+"<unknown>");
     JLabel serVersion = new JLabel(serString+"<unknown>");
@@ -94,7 +98,12 @@ public class StatusPanel extends jmri.jmrix.tams.swing.TamsPanel implements Tams
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.tams.swing.TamsNamedPaneAction {
-        public Default() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 2919382089865855790L;
+
+		public Default() {
             super(ResourceBundle.getBundle("jmri.jmrix.tams.TamsBundle").getString("MenuItemInfo"), 
                 new jmri.util.swing.sdi.JmriJFrameInterface(), 
                 StatusPanel.class.getName(), 

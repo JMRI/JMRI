@@ -22,7 +22,11 @@ import javax.swing.table.TableColumnModel;
  */
 
 public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
-        static private final int ADDRCOLUMN = 0;    // Locomotive address
+        /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7752680157999743122L;
+		static private final int ADDRCOLUMN = 0;    // Locomotive address
         static private final int TYPECOLUMN = 1;    // Type of Database Entry
         //static private final int PLACEHODLER = 2;   // 
         static private final int DELCOLUMN = 3;     // Remove Button

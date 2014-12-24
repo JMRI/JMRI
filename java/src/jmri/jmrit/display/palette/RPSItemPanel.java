@@ -25,6 +25,11 @@ import jmri.jmrit.display.RpsPositionIcon;
 public class RPSItemPanel extends FamilyItemPanel {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2633287040269806654L;
+
+	/**
     * Constructor for plain icons and backgrounds
     */
     public RPSItemPanel(JmriJFrame parentFrame, String  type, String family, Editor editor) {
@@ -50,7 +55,11 @@ public class RPSItemPanel extends FamilyItemPanel {
     }
 
     protected class IconDragJLabel extends DragJLabel {
-        HashMap <String, NamedIcon> iconMap;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -4933936822216537874L;
+		HashMap <String, NamedIcon> iconMap;
 
         @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // icon map is within package 
         public IconDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map) {

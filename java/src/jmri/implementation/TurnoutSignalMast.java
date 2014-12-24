@@ -29,7 +29,12 @@ IF$tsm:basic:one-searchlight:(IT1)(IT2)
  */
 public class TurnoutSignalMast extends AbstractSignalMast {
 
-    public TurnoutSignalMast(String systemName, String userName) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1372935171542317280L;
+
+	public TurnoutSignalMast(String systemName, String userName) {
         super(systemName, userName);
         configureFromName(systemName);
     }
@@ -193,7 +198,11 @@ public class TurnoutSignalMast extends AbstractSignalMast {
     
     static class TurnoutAspect implements java.io.Serializable{
         
-        NamedBeanHandle<Turnout> namedTurnout;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 8111549826837671830L;
+		NamedBeanHandle<Turnout> namedTurnout;
         int state;
         
         TurnoutAspect(String turnoutName, int turnoutState){

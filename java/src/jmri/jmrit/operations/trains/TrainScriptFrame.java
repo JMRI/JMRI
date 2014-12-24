@@ -34,6 +34,10 @@ import jmri.util.FileUtil;
 
 public class TrainScriptFrame extends OperationsFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -433735047063720515L;
 	TrainManager manager;
 	TrainManagerXml managerXml;
 

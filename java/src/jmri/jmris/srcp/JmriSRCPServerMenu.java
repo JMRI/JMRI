@@ -17,7 +17,12 @@ import java.util.*;
  * @version     $Revision$
  */
 public class JmriSRCPServerMenu extends JMenu {
-    public JmriSRCPServerMenu(String name) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8023053965239852858L;
+
+	public JmriSRCPServerMenu(String name) {
         this();
         setText(name);
     }

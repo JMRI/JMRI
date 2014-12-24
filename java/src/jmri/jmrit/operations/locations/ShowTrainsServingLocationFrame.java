@@ -28,6 +28,10 @@ import javax.swing.*;
 
 public class ShowTrainsServingLocationFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2234885033768829476L;
 	// location
 	Location _location = null;
 	Track _track = null;

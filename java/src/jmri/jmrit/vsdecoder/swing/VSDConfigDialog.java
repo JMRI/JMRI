@@ -54,7 +54,12 @@ import jmri.jmrit.symbolicprog.VariableTableModel;
 
 public class VSDConfigDialog extends JDialog {
 
-    private static final ResourceBundle rb = VSDSwingBundle.bundle();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3891269629328182031L;
+
+	private static final ResourceBundle rb = VSDSwingBundle.bundle();
 
     public static final String CONFIG_PROPERTY = "Config";
 

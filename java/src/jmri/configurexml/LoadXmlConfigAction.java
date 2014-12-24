@@ -24,7 +24,12 @@ import javax.swing.JFileChooser;
  */
 public class LoadXmlConfigAction extends LoadStoreBaseAction {
 
-    public LoadXmlConfigAction() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6243836869038163553L;
+
+	public LoadXmlConfigAction() {
         this("Open Panel File ...");
     }
 

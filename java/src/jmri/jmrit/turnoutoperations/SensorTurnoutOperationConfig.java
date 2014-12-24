@@ -16,6 +16,11 @@ import jmri.TurnoutOperation;
 public class SensorTurnoutOperationConfig extends CommonTurnoutOperationConfig {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6249075363448607648L;
+
+	/**
 	 * Create the config JPanel, if there is one, to configure this operation type
 	 */
 	public SensorTurnoutOperationConfig(TurnoutOperation op) {

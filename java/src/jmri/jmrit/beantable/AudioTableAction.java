@@ -52,7 +52,11 @@ import jmri.NamedBean;
 
 public class AudioTableAction extends AbstractTableAction {
 
-    AudioTableDataModel listener;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 997606126554992440L;
+	AudioTableDataModel listener;
     AudioTableDataModel buffers;
     AudioTableDataModel sources;    
 
@@ -117,6 +121,11 @@ public class AudioTableAction extends AbstractTableAction {
         atf = new AudioTableFrame(atp, helpTarget())
         {
             /**
+			 * 
+			 */
+			private static final long serialVersionUID = -7518952412034675558L;
+
+			/**
              * Include "Add Source..." and "Add Buffer..." buttons
              */
             @Override
@@ -274,7 +283,12 @@ public class AudioTableAction extends AbstractTableAction {
      */
     abstract public class AudioTableDataModel extends BeanTableDataModel implements PropertyChangeListener {
 
-        char subType;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1263874422331471609L;
+
+		char subType;
 
         public static final int EDITCOL = NUMCOLUMN;
 
@@ -447,7 +461,12 @@ public class AudioTableAction extends AbstractTableAction {
      */
     public class AudioListenerTableDataModel extends AudioTableDataModel {
 
-        AudioListenerTableDataModel() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 2124461381030149588L;
+
+		AudioListenerTableDataModel() {
             super(Audio.LISTENER);
         }
 
@@ -462,7 +481,12 @@ public class AudioTableAction extends AbstractTableAction {
      */
     public class AudioBufferTableDataModel extends AudioTableDataModel {
 
-        AudioBufferTableDataModel() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -8823961737671739012L;
+
+		AudioBufferTableDataModel() {
             super(Audio.BUFFER);
         }
 
@@ -477,7 +501,12 @@ public class AudioTableAction extends AbstractTableAction {
      */
     public class AudioSourceTableDataModel extends AudioTableDataModel {
 
-        AudioSourceTableDataModel() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 8123546730548750171L;
+
+		AudioSourceTableDataModel() {
             super(Audio.SOURCE);
         }
 

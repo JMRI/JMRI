@@ -38,7 +38,11 @@ import org.jdom2.*;
 
 public class AddSignalMastPanel extends JPanel {
 
-    jmri.UserPreferencesManager prefs = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2027577182244302143L;
+	jmri.UserPreferencesManager prefs = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
     String systemSelectionCombo = this.getClass().getName()+".SignallingSystemSelected";
     String mastSelectionCombo = this.getClass().getName()+".SignallingMastSelected";
     String driverSelectionCombo = this.getClass().getName()+".SignallingDriverSelected";

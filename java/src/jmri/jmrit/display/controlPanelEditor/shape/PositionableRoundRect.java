@@ -19,7 +19,11 @@ import org.slf4j.LoggerFactory;
 
 public class PositionableRoundRect extends PositionableRectangle {
 
-    protected int	_radius = 10;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8833172771959196146L;
+	protected int	_radius = 10;
     
     public PositionableRoundRect(Editor editor) {
     	super(editor);
@@ -57,7 +61,12 @@ public class PositionableRoundRect extends PositionableRectangle {
     public boolean setEditItemMenu(JPopupMenu popup) {
         String txt = Bundle.getMessage("editShape", Bundle.getMessage("roundRect"));
         popup.add(new javax.swing.AbstractAction(txt) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = -1360281223318437388L;
+
+				public void actionPerformed(ActionEvent e) {
                 	if (_editFrame==null) {
                     	_editFrame = new DrawRoundRect("editShape", "roundRect", null);
                     	setEditParams();               	                		

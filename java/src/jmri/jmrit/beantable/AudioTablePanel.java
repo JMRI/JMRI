@@ -43,7 +43,11 @@ import jmri.util.swing.XTableColumnModel;
  */
 public class AudioTablePanel extends JPanel {
 
-    private AudioTableDataModel     listenerDataModel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3379930683020715564L;
+	private AudioTableDataModel     listenerDataModel;
     private AudioTableDataModel     bufferDataModel;
     private AudioTableDataModel     sourceDataModel;
     private JTable                  listenerDataTable;

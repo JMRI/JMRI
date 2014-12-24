@@ -11,7 +11,11 @@ import javax.swing.*;
  */
 public abstract class AbstractPacketGenFrame extends jmri.util.JmriJFrame {
 
-    // member declarations
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5082190885030718992L;
+	// member declarations
     protected javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     protected javax.swing.JButton sendButton = new javax.swing.JButton();
 //    protected javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);

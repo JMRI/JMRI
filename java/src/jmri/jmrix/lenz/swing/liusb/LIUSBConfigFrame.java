@@ -21,7 +21,12 @@ import jmri.jmrix.lenz.*;
  */
 public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListener {
 
-    protected XNetTrafficController tc = null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5772554676540073551L;
+
+	protected XNetTrafficController tc = null;
 
     public LIUSBConfigFrame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
         super("LIUSB Configuration Utility");

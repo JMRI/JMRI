@@ -17,9 +17,19 @@ import javax.swing.border.TitledBorder;
  */
 public class JTitledSeparator extends JPanel {
 
-    private final static class SeparatorPane extends JPanel {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4197641321226803099L;
 
-        private SeparatorPane() {
+	private final static class SeparatorPane extends JPanel {
+
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 17667095414633319L;
+
+		private SeparatorPane() {
             super(new GridBagLayout());
             setOpaque(false);
             setDoubleBuffered(false);
@@ -44,7 +54,12 @@ public class JTitledSeparator extends JPanel {
         super(new BorderLayout());
         JPanel westPanel = new JPanel(new BorderLayout()) {
 
-            @SuppressWarnings("deprecation")
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 2501748738360927763L;
+
+			@SuppressWarnings("deprecation")
             @Override
             public void reshape(int x, int y, int w, int h) {
                 super.reshape(x, y, w, h);

@@ -19,6 +19,11 @@ import jmri.util.swing.*;
 public class EcosNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5891812706143295616L;
+
+	/**
      * Enhanced constructor for placing the pane in various 
      * GUIs
      */

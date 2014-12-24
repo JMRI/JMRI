@@ -20,6 +20,10 @@ import java.lang.reflect.Constructor;
  */
 public class TurnoutOperationConfig extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8525871604406638058L;
 	TurnoutOperation myOperation;
 	//boolean valid = true;
 	

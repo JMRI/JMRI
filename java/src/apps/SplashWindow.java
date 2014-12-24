@@ -22,7 +22,11 @@ import javax.swing.BoxLayout;
  * @version     $Revision$
  */
 public class SplashWindow extends JFrame {
-    Image splashIm;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 300950834122464494L;
+	Image splashIm;
     
     public SplashWindow() {
         super("JMRI");

@@ -15,6 +15,11 @@ import java.awt.event.ActionEvent;
 
 public class SymbolicProgAction 			extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4028779777781438509L;
+
 	public SymbolicProgAction(String s) { super(s);}
 
     public void actionPerformed(ActionEvent e) {

@@ -54,7 +54,11 @@ import jmri.util.FileUtil;
  */
 public final class ImageIndexEditor extends JmriJFrame {
 
-    CatalogPanel    _catalog;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8308930846582782285L;
+	CatalogPanel    _catalog;
     CatalogPanel    _index;
 
     static ImageIndexEditor _instance;

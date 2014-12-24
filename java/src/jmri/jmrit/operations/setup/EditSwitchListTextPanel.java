@@ -22,7 +22,12 @@ import org.slf4j.LoggerFactory;
  */
 public class EditSwitchListTextPanel extends OperationsPanel {
 
-    protected static final ResourceBundle rb = ResourceBundle
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1972541065567773705L;
+
+	protected static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
     // major buttons

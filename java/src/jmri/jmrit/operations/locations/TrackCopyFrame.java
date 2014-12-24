@@ -34,6 +34,11 @@ import javax.swing.JTextField;
  */
 public class TrackCopyFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6643856888682557276L;
+
 	// text field
 	JTextField trackNameTextField = new javax.swing.JTextField(Control.max_len_string_track_name);
 

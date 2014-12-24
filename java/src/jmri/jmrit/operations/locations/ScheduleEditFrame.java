@@ -26,6 +26,10 @@ import java.text.MessageFormat;
 
 public class ScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4077459319293039003L;
 	ScheduleTableModel scheduleModel = new ScheduleTableModel();
 	JTable scheduleTable = new JTable(scheduleModel);
 	JScrollPane schedulePane;

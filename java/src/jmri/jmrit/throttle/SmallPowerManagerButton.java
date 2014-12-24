@@ -3,6 +3,11 @@ package jmri.jmrit.throttle;
 import jmri.jmrit.catalog.NamedIcon;
 
 public class SmallPowerManagerButton extends PowerManagerButton {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8046373027649683567L;
+
 	public SmallPowerManagerButton() {
 		super();
 		setBorderPainted(false);

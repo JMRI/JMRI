@@ -44,7 +44,11 @@ import jmri.util.javaworld.GridLayout2;
  */
 public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
 
-    // member declarations
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7522111619927231L;
+	// member declarations
     JLabel jLabel1 = new JLabel();
     JButton sendButton = new JButton();
     JTextField packetTextField = new JTextField(12);
@@ -625,7 +629,12 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     }
     
     static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
-        public Default() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -8652162554686888688L;
+
+		public Default() {
             super("Send CAN Frames and OpenLCB Messages", 
                 new jmri.util.swing.sdi.JmriJFrameInterface(), 
                 OpenLcbCanSendPane.class.getName(), 

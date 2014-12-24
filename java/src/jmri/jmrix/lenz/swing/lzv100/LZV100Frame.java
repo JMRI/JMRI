@@ -22,7 +22,12 @@ import javax.swing.*;
  */
 public class LZV100Frame extends jmri.util.JmriJFrame {
 
-    public LZV100Frame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -272552917307354256L;
+
+	public LZV100Frame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
         this("LZV100 Configuration Utility",memo);
     }
 

@@ -29,7 +29,12 @@ import jmri.util.FileUtil;
  * @version			$Revision$
  */
 public class CatalogTreeModel extends DefaultTreeModel {
-    public CatalogTreeModel() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2743570810771604153L;
+
+	public CatalogTreeModel() {
 
         super(new DefaultMutableTreeNode("Root"));
         dRoot = (DefaultMutableTreeNode)getRoot();  // this is used because we can't store the DMTN we just made during the super() call

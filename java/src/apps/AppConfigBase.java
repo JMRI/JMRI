@@ -31,7 +31,12 @@ import javax.swing.*;
  */
 public class AppConfigBase extends JmriPanel {
 
-    protected static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -341194769406457667L;
+
+	protected static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
 
     /**
      * Remember items to persist

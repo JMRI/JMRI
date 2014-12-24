@@ -22,6 +22,11 @@ import javax.swing.JMenu;
 public class CarRosterMenu extends JMenu {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3092393314294283921L;
+
+	/**
 	 * Ctor argument defining that the menu object will be used as part of the main menu of the program, away from any
 	 * GUI that can select or use a RosterEntry.
 	 */

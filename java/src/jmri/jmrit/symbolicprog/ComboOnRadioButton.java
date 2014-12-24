@@ -13,6 +13,11 @@ import javax.swing.*;
  */
 public class ComboOnRadioButton extends ComboRadioButtons {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1301681065479961160L;
+
 	ComboOnRadioButton(JComboBox box, EnumVariableValue var) {
 		super(box, var);
 	}		

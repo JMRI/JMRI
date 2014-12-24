@@ -12,7 +12,12 @@ import javax.swing.*;
  */
 public class LogFrame extends jmri.util.JmriJFrame {
 
-    public LogFrame() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5024411537936197158L;
+
+	public LogFrame() {
         super();
     }
 

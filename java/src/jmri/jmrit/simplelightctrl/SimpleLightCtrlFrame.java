@@ -24,7 +24,11 @@ import javax.swing.JPanel;
  */
 public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.simplelightctrl.SimpleLightCtrlBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7837647126381592983L;
+	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.simplelightctrl.SimpleLightCtrlBundle");
     static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
     
     DecimalFormat threeDigits = new DecimalFormat("000");

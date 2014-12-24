@@ -328,7 +328,12 @@ public class LongAddrVariableValue extends VariableValue
      */
     public class VarTextField extends JTextField {
 
-        VarTextField(Document doc, String text, int col, LongAddrVariableValue var) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -5489064948676750746L;
+
+		VarTextField(Document doc, String text, int col, LongAddrVariableValue var) {
             super(doc, text, col);
             _var = var;
             // get the original color right

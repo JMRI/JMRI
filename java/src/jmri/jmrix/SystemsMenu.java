@@ -21,7 +21,12 @@ import org.slf4j.LoggerFactory;
  * @version     $Revision$
  */
 public class SystemsMenu extends JMenu {
-    public SystemsMenu(String name) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4380492272339103766L;
+
+	public SystemsMenu(String name) {
         this();
         setText(name);
     }

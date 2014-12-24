@@ -52,7 +52,11 @@ import org.slf4j.LoggerFactory;
 //	listen() has to run in a separate thread.
 public class UserInterface extends JmriJFrame implements DeviceListener, DeviceManager, ZeroConfServiceListener {
 
-    static Logger log = LoggerFactory.getLogger(UserInterface.class.getName());
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8012190396840569066L;
+	static Logger log = LoggerFactory.getLogger(UserInterface.class.getName());
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
 
     JMenuBar menuBar;
@@ -209,7 +213,12 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         JMenu menu = new JMenu(rb.getString("MenuMenu"));
         serverOnOff = new JMenuItem(rb.getString("MenuMenuStop"));
         serverOnOff.addActionListener(new AbstractAction() {
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 8264877902074382783L;
+
+			@Override
             public void actionPerformed(ActionEvent event) {
                 if (isListen) {	//	Stop server
                     disableServer();

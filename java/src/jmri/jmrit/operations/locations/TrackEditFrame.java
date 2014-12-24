@@ -38,6 +38,10 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
 	// private static boolean loadAndType = false;
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4882708019195894528L;
 	// Managers
 	// LocationManagerXml managerXml = LocationManagerXml.instance();
 	TrainManager trainManager = TrainManager.instance();

@@ -50,7 +50,12 @@ import org.slf4j.LoggerFactory;
  */
 public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
 
-    public CombinedLocoSelTreePane(JLabel s) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8012548215648047175L;
+
+	public CombinedLocoSelTreePane(JLabel s) {
         super(s);
     }
 
@@ -76,7 +81,12 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
         dModel = new InvisibleTreeModel(dRoot);
         dTree = new JTree(dModel) {
 
-            public String getToolTipText(MouseEvent evt) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -368593183793431097L;
+
+			public String getToolTipText(MouseEvent evt) {
                 if (getRowForLocation(evt.getX(), evt.getY()) == -1) {
                     return null;
                 }
@@ -540,7 +550,11 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
     */
     class InvisibleTreeModel extends DefaultTreeModel {
 
-        protected boolean filterIsActive;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 5006838010114081564L;
+		protected boolean filterIsActive;
 
         public InvisibleTreeModel(TreeNode root) {
             this(root, false);
@@ -582,7 +596,11 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
 
     class DecoderTreeNode extends DefaultMutableTreeNode {
 
-        protected boolean isIdentified;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -118495487772522124L;
+		protected boolean isIdentified;
         private String toolTipText;
         private String title;
         DecoderFile.Showable showable = DecoderFile.Showable.YES;  // default

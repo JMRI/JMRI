@@ -18,7 +18,12 @@ import javax.swing.AbstractAction;
  */
 public class EasyDccMonAction 			extends AbstractAction {
 
-    public EasyDccMonAction() {this("EasyDCC Command Monitor"); }
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3642371717181525383L;
+
+	public EasyDccMonAction() {this("EasyDCC Command Monitor"); }
 	public EasyDccMonAction(String s) { super(s);}
 
     public void actionPerformed(ActionEvent e) {

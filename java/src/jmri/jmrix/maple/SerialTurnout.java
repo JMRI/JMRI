@@ -55,6 +55,11 @@ import jmri.Turnout;
 public class SerialTurnout extends AbstractTurnout {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4128349882207745822L;
+
+	/**
      * Create a Turnout object, with both system and user names.
      * <P>
      * 'systemName' was previously validated in SerialTurnoutManager

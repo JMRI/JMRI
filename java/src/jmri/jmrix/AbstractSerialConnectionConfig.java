@@ -502,7 +502,12 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     class ComboBoxRenderer extends JLabel
                        implements ListCellRenderer {
 
-        public ComboBoxRenderer() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 3617752100442828216L;
+
+		public ComboBoxRenderer() {
             setHorizontalAlignment(LEFT);
             setVerticalAlignment(CENTER);
         }

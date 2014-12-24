@@ -14,7 +14,12 @@ import javax.swing.*;
  * @version     $Revision$
  */
 public class DebugMenu extends JMenu {
-    public DebugMenu(String name, JPanel panel) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -954409766062724149L;
+
+	public DebugMenu(String name, JPanel panel) {
         this(panel);
         setText(name);
     }

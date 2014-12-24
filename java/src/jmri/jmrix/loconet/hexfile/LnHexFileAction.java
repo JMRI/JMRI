@@ -16,7 +16,12 @@ import javax.swing.AbstractAction;
  */
 public class LnHexFileAction 			extends AbstractAction {
 
-    public LnHexFileAction(String s) { super(s);}
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1088838081840819866L;
+
+	public LnHexFileAction(String s) { super(s);}
 
     public void actionPerformed(ActionEvent e) {
         // create a LnHexFileFrame

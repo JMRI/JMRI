@@ -28,6 +28,11 @@ import jmri.jmrit.operations.trains.TrainManager;
  */
 public class EngineAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6682092348083316799L;
+
 	EngineManager engineManager = EngineManager.instance();
 
 	// labels

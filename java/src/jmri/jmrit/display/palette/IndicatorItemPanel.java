@@ -27,7 +27,11 @@ import jmri.jmrit.catalog.DragJLabel;
 */
 public class IndicatorItemPanel extends FamilyItemPanel {
 
-    private DetectionPanel  _detectPanel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -9163142250538558938L;
+	private DetectionPanel  _detectPanel;
 
     /**
     * Constructor for plain icons and backgrounds
@@ -124,7 +128,11 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     }
 
     protected class IndicatorDragJLabel extends DragJLabel {
-        HashMap <String, NamedIcon> iconMap;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -4091016874029191930L;
+		HashMap <String, NamedIcon> iconMap;
 
         @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // icon map is within package 
         public IndicatorDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map) {

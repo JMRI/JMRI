@@ -19,7 +19,12 @@ import jmri.*;
  */
 public abstract class AbstractMemory extends AbstractNamedBean implements Memory, java.io.Serializable {
 
-    public AbstractMemory(String systemName) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8229102006318332654L;
+
+	public AbstractMemory(String systemName) {
         super(systemName.toUpperCase());
     }
 

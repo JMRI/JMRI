@@ -37,7 +37,12 @@ import org.slf4j.LoggerFactory;
  */
 public class CreateRosterGroupAction extends JmriAbstractAction {
 
-    public CreateRosterGroupAction(String s, WindowInterface wi) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8222098783980850363L;
+
+	public CreateRosterGroupAction(String s, WindowInterface wi) {
     	super(s, wi);
     }
      

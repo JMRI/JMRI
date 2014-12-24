@@ -31,7 +31,11 @@ import org.slf4j.LoggerFactory;
  */
 public class SimpleServlet extends WebSocketServlet {
 
-    private final Set<SimpleWebSocket> sockets = new CopyOnWriteArraySet<SimpleWebSocket>();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3435613482175230757L;
+	private final Set<SimpleWebSocket> sockets = new CopyOnWriteArraySet<SimpleWebSocket>();
     private static final Logger log = LoggerFactory.getLogger(SimpleServlet.class);
 
     public SimpleServlet() {

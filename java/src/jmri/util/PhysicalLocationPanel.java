@@ -33,7 +33,11 @@ import javax.swing.border.*;
 
 public class PhysicalLocationPanel extends JPanel {
 
-    TitledBorder tb;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5045462821415921427L;
+	TitledBorder tb;
     JSpinner xs, ys, zs;
     SpinnerNumberModel spinnerModel;
 

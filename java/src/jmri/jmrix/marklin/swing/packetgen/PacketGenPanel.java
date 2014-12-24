@@ -17,7 +17,11 @@ import javax.swing.*;
  */
 public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implements MarklinListener {
 
-    // member declarations
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3967326301653114203L;
+	// member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JLabel jLabel2 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();

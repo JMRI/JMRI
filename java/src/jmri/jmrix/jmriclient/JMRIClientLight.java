@@ -18,6 +18,10 @@ import jmri.Light;
  */
 public class JMRIClientLight extends AbstractLight implements JMRIClientListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3236146021088496281L;
 	// data members
 	private int _number;   // light number
         private JMRIClientTrafficController tc=null;

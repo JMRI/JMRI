@@ -18,7 +18,11 @@ import jmri.util.JTableUtil;
  */
 public class AutomatTableFrame extends jmri.util.JmriJFrame {
 
-    AutomatTableDataModel	dataModel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6052436715378143786L;
+	AutomatTableDataModel	dataModel;
     JTable			dataTable;
     JScrollPane 		dataScroll;
 

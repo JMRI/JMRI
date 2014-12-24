@@ -61,7 +61,12 @@ import jmri.util.JmriJFrame;
  */
 public final class SystemConsole extends JTextArea {
 
-    static final ResourceBundle rbc = ResourceBundle.getBundle("apps.AppsConfigBundle"); // NOI18N
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1807853160696208390L;
+
+	static final ResourceBundle rbc = ResourceBundle.getBundle("apps.AppsConfigBundle"); // NOI18N
 
     private static final int STD_ERR = 1;
     private static final int STD_OUT = 2;

@@ -16,7 +16,12 @@ import jmri.*;
 public abstract class AbstractSignalMast extends AbstractNamedBean
     implements SignalMast, java.io.Serializable, java.beans.VetoableChangeListener  {
 
-    public AbstractSignalMast(String systemName, String userName) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1520502542242668008L;
+
+	public AbstractSignalMast(String systemName, String userName) {
         super(systemName, userName);
     }
 

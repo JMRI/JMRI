@@ -21,7 +21,12 @@ import javax.swing.*;
  */
 public class SensorDebounceEditAction extends BeanEditAction {
 
-    public String helpTarget() { return "package.jmri.jmrit.beantable.SensorTable"; } //IN18N
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3622370435108538307L;
+
+	public String helpTarget() { return "package.jmri.jmrit.beantable.SensorTable"; } //IN18N
     
     public String getBeanType() { return Bundle.getMessage("BeanNameSensor"); }
     
@@ -97,12 +102,22 @@ public class SensorDebounceEditAction extends BeanEditAction {
         basic.addItem(new BeanEditItem(sensorDebounceActiveField,Bundle.getMessage("SensorActiveDebounce"), Bundle.getMessage("SensorActiveDebounceText")));
         
         basic.setSaveItem(new AbstractAction(){
-            public void actionPerformed(ActionEvent e) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -4211002470804824662L;
+
+			public void actionPerformed(ActionEvent e) {
                 saveDebounceItems(e);
             }
         });
         basic.setResetItem(new AbstractAction(){
-            public void actionPerformed(ActionEvent e) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -9107982698145419220L;
+
+			public void actionPerformed(ActionEvent e) {
                 resetDebounceItems(e);
             }
         });

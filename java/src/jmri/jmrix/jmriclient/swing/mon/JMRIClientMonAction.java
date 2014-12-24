@@ -18,7 +18,11 @@ import javax.swing.AbstractAction;
  */
 public class JMRIClientMonAction extends AbstractAction {
 
-        private jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo _memo;
+        /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3199061276329508557L;
+		private jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo _memo;
 
 	public JMRIClientMonAction(jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo memo) { 
            this("JMRICLient Monitor",memo);

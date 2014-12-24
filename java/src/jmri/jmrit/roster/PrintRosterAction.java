@@ -27,7 +27,13 @@ import jmri.beans.Beans;
  */
 public class PrintRosterAction  extends jmri.util.swing.JmriAbstractAction {
 
-    public PrintRosterAction(String s, jmri.util.swing.WindowInterface wi) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8641271368187099365L;
+
+
+	public PrintRosterAction(String s, jmri.util.swing.WindowInterface wi) {
     	super(s, wi);
         isPreview = true;
     }

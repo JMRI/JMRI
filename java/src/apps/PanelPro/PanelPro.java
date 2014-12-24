@@ -42,7 +42,12 @@ import org.slf4j.LoggerFactory;
  */
 public class PanelPro extends Apps {
 
-    PanelPro(JFrame p) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6877561526624987567L;
+
+	PanelPro(JFrame p) {
         super(p);
     }
 
@@ -71,7 +76,12 @@ public class PanelPro extends Apps {
         // Buttons
 
         Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")){
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = 8078721796099848602L;
+
+				public void actionPerformed(ActionEvent e) {
 					Apps.handleQuit();
                 }
             };

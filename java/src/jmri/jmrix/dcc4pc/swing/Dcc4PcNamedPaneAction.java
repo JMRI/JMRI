@@ -19,6 +19,11 @@ import jmri.util.swing.*;
 public class Dcc4PcNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7611126087064298478L;
+
+	/**
      * Enhanced constructor for placing the pane in various 
      * GUIs
      */

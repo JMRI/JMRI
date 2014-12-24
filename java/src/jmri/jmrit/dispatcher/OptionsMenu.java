@@ -39,6 +39,11 @@ import java.util.ResourceBundle;
 
 public class OptionsMenu extends JMenu {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2060918292476729120L;
+
 	static final ResourceBundle rb = ResourceBundle
 			.getBundle("jmri.jmrit.dispatcher.DispatcherBundle");
 

@@ -13,7 +13,12 @@ import javax.swing.JButton;
 */
 public class SpeedProfileFrame extends jmri.util.JmriJFrame {
 
-    public SpeedProfileFrame() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 665383251598012193L;
+
+	public SpeedProfileFrame() {
         super(false, true);
     }
     

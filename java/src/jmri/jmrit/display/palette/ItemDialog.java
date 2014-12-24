@@ -18,7 +18,12 @@ import jmri.util.JmriJFrame;
 
 public class ItemDialog extends JmriJFrame {
 
-//    protected ItemPanel _parent;
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2157245075058528455L;
+
+	//    protected ItemPanel _parent;
     protected String    _type;
 //    protected String    _family;
     

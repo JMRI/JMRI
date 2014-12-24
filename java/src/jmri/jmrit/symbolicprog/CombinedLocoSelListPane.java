@@ -42,7 +42,13 @@ import java.util.List;
  */
 public class CombinedLocoSelListPane extends CombinedLocoSelPane  {
 
-        public CombinedLocoSelListPane(JLabel s) {
+        /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8124040231760463058L;
+
+
+		public CombinedLocoSelListPane(JLabel s) {
                 super(s);
         }
 

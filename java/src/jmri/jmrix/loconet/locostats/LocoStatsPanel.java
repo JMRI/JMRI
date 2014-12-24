@@ -37,7 +37,11 @@ import javax.swing.*;
  */
 public class LocoStatsPanel extends LnPanel implements LocoNetListener {
 
-    JPanel lb2Panel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5940710123873302443L;
+	JPanel lb2Panel;
     JPanel rawPanel;
     JPanel pr2Panel;
     JPanel ms100Panel;
@@ -278,7 +282,12 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
-        public Default() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -5534308120479708337L;
+
+		public Default() {
             super(LocoNetBundle.bundle().getString("MenuItemLocoStats"), 
                 new jmri.util.swing.sdi.JmriJFrameInterface(), 
                 LocoStatsPanel.class.getName(), 

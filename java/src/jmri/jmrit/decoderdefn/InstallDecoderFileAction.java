@@ -21,7 +21,12 @@ import javax.swing.Icon;
  */
 public class InstallDecoderFileAction extends InstallDecoderURLAction {
 
-    public InstallDecoderFileAction(String s, WindowInterface wi) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8029283743478939558L;
+
+	public InstallDecoderFileAction(String s, WindowInterface wi) {
     	super(s, wi);
     }
      

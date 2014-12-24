@@ -21,7 +21,11 @@ import java.util.ResourceBundle;
  */
 public class LocoDataPane extends jmri.jmrix.tams.swing.TamsPanel {
 
-    LocoDataModel	locoModel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7652937506195229419L;
+	LocoDataModel	locoModel;
     JTable				locoTable;
     JScrollPane 		locoScroll;
     
@@ -128,7 +132,12 @@ public class LocoDataPane extends jmri.jmrix.tams.swing.TamsPanel {
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.tams.swing.TamsNamedPaneAction {
-        public Default() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 8803207637297660717L;
+
+		public Default() {
             super(rb.getString("Title"), 
                 new jmri.util.swing.sdi.JmriJFrameInterface(), 
                 LocoDataPane.class.getName(), 

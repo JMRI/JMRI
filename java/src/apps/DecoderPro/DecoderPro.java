@@ -42,7 +42,12 @@ import org.slf4j.LoggerFactory;
  */
 public class DecoderPro extends Apps {
 
-    DecoderPro(JFrame p) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3951875421070292360L;
+
+	DecoderPro(JFrame p) {
         super(p);
     }
 
@@ -73,7 +78,12 @@ public class DecoderPro extends Apps {
         Action serviceprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction(Bundle.getMessage("DpButtonUseProgrammingTrack"));
         Action opsprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(Bundle.getMessage("DpButtonProgramOnMainTrack"));
         Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")){
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = -3633527961661923859L;
+
+				public void actionPerformed(ActionEvent e) {
 					Apps.handleQuit();
                 }
             };

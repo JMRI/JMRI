@@ -51,7 +51,12 @@ import jmri.jmrit.picker.PickListModel;
 
 public class ItemPalette extends JmriJFrame implements ChangeListener  {
 
-    public static final int STRUT_SIZE = 10;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2199633774956241700L;
+
+	public static final int STRUT_SIZE = 10;
     
     static JTabbedPane _tabPane;
     static HashMap<String, ItemPanel> _tabIndex;

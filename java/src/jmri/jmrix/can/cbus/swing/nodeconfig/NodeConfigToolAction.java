@@ -13,6 +13,11 @@ package jmri.jmrix.can.cbus.swing.nodeconfig;
 @Deprecated
 public class NodeConfigToolAction extends NodeConfigToolPane.Default {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4597119966501136198L;
+
 }
 
 /* @(#)NodeConfigToolAction.java */

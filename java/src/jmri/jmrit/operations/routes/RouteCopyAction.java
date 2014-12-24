@@ -15,6 +15,11 @@ import javax.swing.AbstractAction;
  */
 public class RouteCopyAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8588935081117079361L;
+
 	public RouteCopyAction(String s) {
 		super(s);
 	}

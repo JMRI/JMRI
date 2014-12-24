@@ -10,7 +10,12 @@ import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
  */
 public class Dcc4PcMenu extends JMenu{
 
-        public Dcc4PcMenu(Dcc4PcSystemConnectionMemo memo) {
+        /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4819102295260652770L;
+
+		public Dcc4PcMenu(Dcc4PcSystemConnectionMemo memo) {
         super();
 
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.dcc4pc.Dcc4PcBundle");

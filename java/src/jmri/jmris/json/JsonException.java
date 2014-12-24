@@ -9,7 +9,11 @@ import com.fasterxml.jackson.databind.JsonNode;
  */
 public class JsonException extends Exception {
 
-    private int code = 500;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 679496849352537572L;
+	private int code = 500;
 
     public JsonException(int i, String s, Throwable t) {
         super(s, t);

@@ -15,7 +15,12 @@ import jmri.*;
  */
 public class PowerButtonAction extends javax.swing.AbstractAction implements java.beans.PropertyChangeListener {
 
-    public PowerButtonAction(String title) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2336270044595139511L;
+
+	public PowerButtonAction(String title) {
 	    super(title);
 	    checkManager();
 	    updateLabel();

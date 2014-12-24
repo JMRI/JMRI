@@ -17,7 +17,12 @@ import java.util.ResourceBundle;
 @Deprecated
 public class AddSensorJFrame extends JmriJFrame {
 
-    public AddSensorJFrame() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 764691745775053638L;
+
+	public AddSensorJFrame() {
         super(ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle")
                 .getString("TitleAddSensor"));
         

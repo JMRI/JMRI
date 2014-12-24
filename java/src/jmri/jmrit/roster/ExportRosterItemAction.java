@@ -38,7 +38,12 @@ import org.slf4j.LoggerFactory;
  */
 public class ExportRosterItemAction extends AbstractRosterItemAction  {
 
-    public ExportRosterItemAction(String pName, Component pWho) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6157199339046481963L;
+
+	public ExportRosterItemAction(String pName, Component pWho) {
         super(pName, pWho);
     }
     

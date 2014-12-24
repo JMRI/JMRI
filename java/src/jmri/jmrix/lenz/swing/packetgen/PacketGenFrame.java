@@ -12,7 +12,11 @@ import jmri.jmrix.lenz.XNetTrafficController;
  */
 public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
 
-    final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.lenz.swing.XNetSwingBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1866366252396463489L;
+	final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.lenz.swing.XNetSwingBundle");
 
     public void initComponents() throws Exception {
         super.initComponents();

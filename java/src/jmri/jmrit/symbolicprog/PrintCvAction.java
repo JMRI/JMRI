@@ -24,7 +24,11 @@ import javax.swing.*;
  */
 public class PrintCvAction  extends AbstractAction {
 
-    final int TABLE_COLS = 3; 
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -834651924896005111L;
+	final int TABLE_COLS = 3; 
     
     public PrintCvAction(String actionName, CvTableModel pModel, PaneProgFrame pParent, boolean preview, RosterEntry pRoster) {
         super(actionName);

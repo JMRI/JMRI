@@ -43,7 +43,11 @@ import javax.swing.*;
 
 public class BlockBossFrame extends jmri.util.JmriJFrame {
 
-    JPanel modeSingle               = new JPanel();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3755131702786969639L;
+	JPanel modeSingle               = new JPanel();
     JRadioButton buttonSingle;
     JTextField sSensorField1        = new JTextField(6);
     JTextField sSensorField2        = new JTextField(6);

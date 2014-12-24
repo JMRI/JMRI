@@ -41,7 +41,12 @@ import jmri.jmrit.roster.Roster;
  */
 public class CopyRosterGroupAction extends JmriAbstractAction {
 
-    public CopyRosterGroupAction(String s, WindowInterface wi) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3490415977207449861L;
+
+	public CopyRosterGroupAction(String s, WindowInterface wi) {
         super(s, wi);
     }
 

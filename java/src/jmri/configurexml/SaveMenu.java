@@ -15,7 +15,12 @@ import java.util.*;
  * @version     $Revision$
  */
 public class SaveMenu extends JMenu {
-    public SaveMenu(String name) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6477363534170911645L;
+
+	public SaveMenu(String name) {
         this();
         setText(name);
     }

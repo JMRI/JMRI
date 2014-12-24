@@ -23,6 +23,10 @@ import jmri.TurnoutOperationManager;
  */
 public class TurnoutOperationFrame extends JDialog {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8722204384333835792L;
 	TurnoutOperationFrame self = this;
 	TurnoutOperationConfig currentConfig = null;
 	TurnoutOperation currentOperation = null;

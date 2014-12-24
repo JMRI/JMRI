@@ -58,6 +58,11 @@ import jmri.util.swing.JmriBeanComboBox;
 public class TurnoutTableAction extends AbstractTableAction {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8221584673872246104L;
+
+	/**
      * Create an action with a specific title.
      * <P>
      * Note that the argument is the Action title, not the title of the
@@ -144,7 +149,12 @@ public class TurnoutTableAction extends AbstractTableAction {
         // note that this is a class creation, and very long
         m = new BeanTableDataModel() {
                 
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -8822546005900067212L;
+
+			@Override
     		public int getColumnCount(){
                 return DIVERGCOL+1;
      		}
@@ -514,7 +524,12 @@ public class TurnoutTableAction extends AbstractTableAction {
                 this.sorter = srtr;
                 JTable table = new JTable(srtr)  {
                     
-                    public TableCellRenderer getCellRenderer(int row, int column) {
+                    /**
+					 * 
+					 */
+					private static final long serialVersionUID = -3082196412648458792L;
+
+					public TableCellRenderer getCellRenderer(int row, int column) {
                         //Convert the displayed index to the model index, rather than the displayed index
                         int modelColumn = getColumnModel().getColumn(column).getModelIndex();
                         if (modelColumn == SENSOR1COL || modelColumn == SENSOR2COL) {
@@ -828,7 +843,11 @@ public class TurnoutTableAction extends AbstractTableAction {
     }
     
     protected static class TurnoutOperationEditor extends JDialog {
-    	TurnoutOperationConfig config;
+    	/**
+		 * 
+		 */
+		private static final long serialVersionUID = 3523604197678096714L;
+		TurnoutOperationConfig config;
     	TurnoutOperation myOp;
     	Turnout myTurnout;
     	
@@ -1258,7 +1277,12 @@ public class TurnoutTableAction extends AbstractTableAction {
     public String getClassDescription() { return rb.getString("TitleTurnoutTable"); }
     
     static class BeanBoxRenderer extends JmriBeanComboBox implements TableCellRenderer {
-        public BeanBoxRenderer() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 7351045146446284915L;
+
+		public BeanBoxRenderer() {
             super(InstanceManager.sensorManagerInstance());
             setFirstItemBlank(true);
         }
@@ -1281,7 +1305,12 @@ public class TurnoutTableAction extends AbstractTableAction {
     }
     
     static class BeanComboBoxEditor extends DefaultCellEditor {
-        public BeanComboBoxEditor(JmriBeanComboBox beanBox) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1705620352249335223L;
+
+		public BeanComboBoxEditor(JmriBeanComboBox beanBox) {
             super(beanBox);
         }
     }

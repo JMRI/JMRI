@@ -48,6 +48,10 @@ import jmri.util.com.sun.TableSorter;
  */
 public class TrainsTableFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4237149773850338265L;
 	public static final String MOVE = Bundle.getMessage("Move");
 	public static final String TERMINATE = Bundle.getMessage("Terminate");
 	public static final String RESET = Bundle.getMessage("Reset");

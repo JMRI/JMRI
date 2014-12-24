@@ -19,7 +19,11 @@ import jmri.implementation.AbstractLight;
  */
 public class XNetLight extends AbstractLight implements XNetListener {
 
-    private XNetTrafficController tc=null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1847924231251447075L;
+	private XNetTrafficController tc=null;
     private XNetLightManager lm=null;
 
     /**

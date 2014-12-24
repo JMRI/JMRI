@@ -21,6 +21,11 @@ import org.slf4j.LoggerFactory;
  */
 public class PrintMoreOptionPanel extends OperationsPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5124421051550630914L;
+
 	// labels
     // major buttons
     JButton saveButton = new JButton(Bundle.getMessage("Save"));

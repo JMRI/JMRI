@@ -14,7 +14,11 @@ import javax.swing.AbstractAction;
  */
 public class TrainRoadOptionsAction extends AbstractAction {
 
-    public TrainRoadOptionsAction(String s, TrainEditFrame frame) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8700464067750312373L;
+	public TrainRoadOptionsAction(String s, TrainEditFrame frame) {
     	super(s);
     	this.frame = frame;
     }

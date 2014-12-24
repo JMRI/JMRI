@@ -20,6 +20,10 @@ import jmri.util.com.sun.TableSorter;
 
 public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3962047189679581L;
 	CarsTableModel _carsTableModel;
 	JTable _carsTable;
 	TableSorter _sorter;

@@ -30,6 +30,10 @@ import java.util.List;
  */
 public class PrintTrainsByCarTypesAction  extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2653744210816739088L;
 	static final String NEW_LINE = "\n";	// NOI18N
 	static final String TAB = "\t"; // NOI18N
 	TrainManager trainManager = TrainManager.instance();

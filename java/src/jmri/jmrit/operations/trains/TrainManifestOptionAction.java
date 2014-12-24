@@ -18,6 +18,10 @@ import javax.swing.AbstractAction;
  */
 public class TrainManifestOptionAction extends AbstractAction {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5997184366069609071L;
 	TrainEditFrame frame = null;
 
     public TrainManifestOptionAction(String s, TrainEditFrame frame) {

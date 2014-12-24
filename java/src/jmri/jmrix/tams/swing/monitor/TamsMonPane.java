@@ -22,7 +22,12 @@ import java.util.ResourceBundle;
 
 public class TamsMonPane extends jmri.jmrix.AbstractMonPane implements TamsListener, TamsPanelInterface{
 
-    public TamsMonPane() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4164141037445448914L;
+
+	public TamsMonPane() {
         super();
     }
     
@@ -100,7 +105,12 @@ public class TamsMonPane extends jmri.jmrix.AbstractMonPane implements TamsListe
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.tams.swing.TamsNamedPaneAction {
-        public Default() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1991332397617036846L;
+
+		public Default() {
             super(ResourceBundle.getBundle("jmri.jmrix.tams.TamsBundle").getString("CommandMonitor"), 
                 new jmri.util.swing.sdi.JmriJFrameInterface(), 
                 TamsMonPane.class.getName(), 

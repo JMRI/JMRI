@@ -13,7 +13,12 @@ import javax.swing.JMenu;
  * @version     $Revision$
  */
 public class EasyDCCMenu extends JMenu {
-    public EasyDCCMenu(String name) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7711006235388013294L;
+
+	public EasyDCCMenu(String name) {
         this();
         setText(name);
     }

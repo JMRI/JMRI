@@ -17,7 +17,12 @@ import jmri.jmrix.can.swing.CanNamedPaneAction;
  */
 public class NmraNetMenu extends JMenu {
 
-    public NmraNetMenu(CanSystemConnectionMemo memo){
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6905626225063951958L;
+
+	public NmraNetMenu(CanSystemConnectionMemo memo){
         super();
         
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");

@@ -25,7 +25,12 @@ import java.util.List;
 @Deprecated
 public class AddSensorPanel extends jmri.util.swing.JmriPanel {
                              
-    public AddSensorPanel(){
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4498057881822875833L;
+
+	public AddSensorPanel(){
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         ActionListener listener = new ActionListener() {
                 public void actionPerformed(ActionEvent e) {

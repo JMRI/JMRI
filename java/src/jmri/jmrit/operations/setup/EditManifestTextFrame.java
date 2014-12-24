@@ -13,7 +13,12 @@ import org.slf4j.LoggerFactory;
  */
 public class EditManifestTextFrame extends OperationsFrame {
 
-    public EditManifestTextFrame() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 104327699477689025L;
+
+	public EditManifestTextFrame() {
         super(Bundle.getMessage("TitleManifestText"), new EditManifestTextPanel());
     }
 

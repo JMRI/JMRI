@@ -19,6 +19,10 @@ abstract public class MarklinPanel extends jmri.util.swing.JmriPanel implements 
 
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -997775203894632617L;
+	/**
      * make "memo" object available as convenience
      */
     protected MarklinSystemConnectionMemo memo;

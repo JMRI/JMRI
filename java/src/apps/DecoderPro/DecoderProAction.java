@@ -13,7 +13,12 @@ import javax.swing.Icon;
  */
 public class DecoderProAction extends JmriAbstractAction {
 
-    public DecoderProAction(String s, WindowInterface wi) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 938739183249391676L;
+
+	public DecoderProAction(String s, WindowInterface wi) {
     	super(s, wi);
     }
      

@@ -111,7 +111,11 @@ import jmri.implementation.AbstractTurnout;
 
 public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
-    /* State information */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7143747084589933154L;
+	/* State information */
     protected static final int OFFSENT = 1;
     protected static final int COMMANDSENT = 2;
     protected static final int STATUSREQUESTSENT = 4;

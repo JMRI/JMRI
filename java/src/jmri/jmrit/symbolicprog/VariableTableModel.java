@@ -30,7 +30,12 @@ import jmri.util.jdom.LocaleSelector;
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
-    private String headers[] = null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6912067927864604835L;
+
+	private String headers[] = null;
 
     private Vector<VariableValue> rowVector = new Vector<VariableValue>();  // vector of Variable items
     private CvTableModel _cvModel = null;          // reference to external table model

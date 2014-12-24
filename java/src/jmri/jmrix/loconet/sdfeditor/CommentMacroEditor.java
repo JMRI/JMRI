@@ -14,7 +14,12 @@ import javax.swing.JLabel;
 
 class CommentMacroEditor extends SdfMacroEditor {
 
-    public CommentMacroEditor(SdfMacro inst) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5917155143113013316L;
+
+	public CommentMacroEditor(SdfMacro inst) {
         super(inst);
 
         // remove default message from SdfMacroEditor

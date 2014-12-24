@@ -13,7 +13,11 @@ import java.util.ResourceBundle;
  * @version         $Revision$
  */
 public class PowerPanelAction extends jmri.util.swing.JmriNamedPaneAction {
-    static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrit.powerpanel.PowerPanelBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6470371810613141456L;
+	static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrit.powerpanel.PowerPanelBundle");
 
     public PowerPanelAction(String s, jmri.util.swing.WindowInterface wi) {
         super(s, wi, "jmri.jmrit.powerpanel.PowerPane");

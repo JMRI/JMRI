@@ -38,7 +38,11 @@ import jmri.util.swing.XTableColumnModel;
  */
 public class RosterTable extends JmriPanel implements RosterEntrySelector, RosterGroupSelector {
 
-    RosterTableModel dataModel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4642772877556156627L;
+	RosterTableModel dataModel;
     TableSorter sorter;
     JTable dataTable;
     JScrollPane dataScroll;
@@ -346,9 +350,19 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
 
     public class RosterCellEditor extends DefaultCellEditor implements TableCellEditor {
 
-        public RosterCellEditor() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -6459789129802283684L;
+
+		public RosterCellEditor() {
             super(new JTextField() {
-                @Override
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = -3459969794810110857L;
+
+				@Override
                 public void setBorder(Border border) {
                     //No border required
                 }

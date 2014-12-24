@@ -66,7 +66,11 @@ import org.slf4j.LoggerFactory;
 */
 public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataModel implements PropertyChangeListener {
 
-    protected ArrayList <NamedBean> _pickList;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4174669657476555432L;
+	protected ArrayList <NamedBean> _pickList;
     protected String _name;
     private JTable  _table;       // table using this model
     protected TableSorter _sorter;
@@ -438,7 +442,11 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     static final Logger log = LoggerFactory.getLogger(PickListModel.class.getName());
 
     static class TurnoutPickModel extends PickListModel {
-        TurnoutManager manager;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 7013117956249797371L;
+		TurnoutManager manager;
         TurnoutPickModel () {
              _name = rb.getString("TitleTurnoutTable");
         }
@@ -458,7 +466,11 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     }
 
     static class SensorPickModel extends PickListModel {
-        SensorManager manager;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -5449473524170410469L;
+		SensorManager manager;
         SensorPickModel () {
             _name = rb.getString("TitleSensorTable");
         }
@@ -478,7 +490,11 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     }
 
     static class MultiSensorPickModel extends SensorPickModel {
-        private HashMap <Integer, String> _position = new HashMap <Integer, String> ();
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 5378755836882039735L;
+		private HashMap <Integer, String> _position = new HashMap <Integer, String> ();
         MultiSensorPickModel () {
             super();
         }
@@ -496,7 +512,11 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     }
 
     static class SignalHeadPickModel extends PickListModel {
-        SignalHeadManager manager;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -2036689134503776495L;
+		SignalHeadManager manager;
         SignalHeadPickModel () {
              _name = rb.getString("TitleSignalTable");
         }
@@ -520,7 +540,11 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     }
 
     static class SignalMastPickModel extends PickListModel {
-        SignalMastManager manager;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -2376422980165819407L;
+		SignalMastManager manager;
         SignalMastPickModel () {
             _name = rb.getString("TitleSignalMastTable");
         }
@@ -544,7 +568,11 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     }
 
     static class MemoryPickModel extends PickListModel {
-        MemoryManager manager;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 554967330577788658L;
+		MemoryManager manager;
         MemoryPickModel () {
             _name = rb.getString("TitleMemoryTable");
         }
@@ -564,7 +592,11 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     }
     
     static class BlockPickModel extends PickListModel {
-        BlockManager manager;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 6772550115260370075L;
+		BlockManager manager;
         BlockPickModel () {
             _name = rb.getString("TitleBlockTable");
         }
@@ -584,7 +616,11 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     }
 
     static class ReporterPickModel extends PickListModel {
-        ReporterManager manager;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -8225533577316449385L;
+		ReporterManager manager;
         ReporterPickModel () {
             _name = rb.getString("TitleReporterTable");
         }
@@ -604,7 +640,11 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     }
 
     static class LightPickModel extends PickListModel {
-        LightManager manager;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 2563996274392877385L;
+		LightManager manager;
         LightPickModel () {
             _name = rb.getString("TitleLightTable");
         }
@@ -624,7 +664,11 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     }
 
     static class OBlockPickModel extends PickListModel {
-        OBlockManager manager;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -8891253867640053650L;
+		OBlockManager manager;
         OBlockPickModel () {
             _name = rb.getString("TitleBlockTable");
         }
@@ -644,7 +688,11 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     }
 
     static class WarrantPickModel extends PickListModel {
-        WarrantManager manager;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 233304766160346957L;
+		WarrantManager manager;
         WarrantPickModel () {
             _name = rb.getString("TitleWarrantTable");
         }
@@ -663,7 +711,11 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
     }
     static class ConditionalPickModel extends PickListModel {
-        ConditionalManager manager;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1850772979922233034L;
+		ConditionalManager manager;
         ConditionalPickModel () {
             _name = rb.getString("TitleConditionalTable");
         }
@@ -704,7 +756,11 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     
     static class EntryExitPickModel extends PickListModel {
         
-        EntryExitPairs manager;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -1274360959113717578L;
+		EntryExitPairs manager;
         EntryExitPickModel () {
             _name = rb.getString("TitleEntryExitTable");
         }

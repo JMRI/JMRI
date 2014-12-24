@@ -17,7 +17,11 @@ import org.slf4j.LoggerFactory;
  */
 public class DecoderIndexCreateAction extends JmriAbstractAction {
 
-    public DecoderIndexCreateAction(String s, WindowInterface wi) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4750974443596415652L;
+	public DecoderIndexCreateAction(String s, WindowInterface wi) {
         super(s, wi);
     }
 

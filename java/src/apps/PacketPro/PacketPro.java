@@ -40,7 +40,12 @@ import org.slf4j.LoggerFactory;
  */
 public class PacketPro extends Apps {
 
-    PacketPro(JFrame p) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3300948571506621106L;
+
+	PacketPro(JFrame p) {
         super(p);
     }
 

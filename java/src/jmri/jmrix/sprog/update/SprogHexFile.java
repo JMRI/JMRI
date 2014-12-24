@@ -14,7 +14,11 @@ import javax.swing.*;
  * @version			$Revision$
  */
 public class SprogHexFile extends jmri.util.JmriJFrame {
-  private File file;
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4982055575560612793L;
+private File file;
   private FileInputStream in;
   private BufferedInputStream buffIn;
   private FileOutputStream out;

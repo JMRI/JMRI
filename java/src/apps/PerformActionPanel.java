@@ -18,7 +18,11 @@ import java.util.List;
  */
 public class PerformActionPanel extends AbstractActionPanel {
 
-    public PerformActionPanel() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8339294658454017607L;
+	public PerformActionPanel() {
         super("ButtonActionAdd","ButtonActionRemove");
     }
     List<PerformActionModel> rememberedObjects() { return PerformActionModel.rememberedObjects(); }

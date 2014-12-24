@@ -50,7 +50,11 @@ import javax.swing.*;
 abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.LnPanel 
         implements LocoNetListener {
 
-    JPanel contents = new JPanel();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8539447083900083082L;
+	JPanel contents = new JPanel();
     java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.loconet.LocoNetBundle");
 
     public JToggleButton readAllButton  = null;

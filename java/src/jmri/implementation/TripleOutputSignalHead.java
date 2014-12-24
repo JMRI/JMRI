@@ -31,7 +31,12 @@ import jmri.NamedBeanHandle;
  */
 public class TripleOutputSignalHead extends DoubleTurnoutSignalHead {
 
-    public TripleOutputSignalHead(String sys, String user, NamedBeanHandle<Turnout> green, NamedBeanHandle<Turnout> blue, NamedBeanHandle<Turnout> red) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -356039905643728496L;
+
+	public TripleOutputSignalHead(String sys, String user, NamedBeanHandle<Turnout> green, NamedBeanHandle<Turnout> blue, NamedBeanHandle<Turnout> red) {
         super(sys, user, green, red);
         mBlue = blue;
     }

@@ -23,6 +23,11 @@ import org.slf4j.LoggerFactory;
  */
 public class ResetAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3591765950664839428L;
+
 	public ResetAction(String s) {
 		super(s);
 	}

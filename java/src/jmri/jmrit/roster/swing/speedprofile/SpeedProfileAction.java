@@ -18,7 +18,11 @@ import org.slf4j.LoggerFactory;
  */
 public class SpeedProfileAction extends JmriAbstractAction {
 
-    public SpeedProfileAction(String s, WindowInterface wi) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7900417672370349395L;
+	public SpeedProfileAction(String s, WindowInterface wi) {
     	super(s, wi);
     }
      

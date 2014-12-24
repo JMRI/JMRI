@@ -14,7 +14,12 @@ import javax.swing.AbstractAction;
  */
 public class RpsTrackingFrameAction extends AbstractAction {
     
-    public RpsTrackingFrameAction(String s) { super(s);}
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 250425187172662597L;
+
+	public RpsTrackingFrameAction(String s) { super(s);}
     
     public RpsTrackingFrameAction() {
         this("RPS Tracking Display");

@@ -20,7 +20,12 @@ import javax.swing.JLabel;
 
 class LoadModifierEditor extends SdfMacroEditor {
 
-    public LoadModifierEditor(SdfMacro inst) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8107914840589271502L;
+
+	public LoadModifierEditor(SdfMacro inst) {
         super(inst);
 
         // remove default message from SdfMacroEditor

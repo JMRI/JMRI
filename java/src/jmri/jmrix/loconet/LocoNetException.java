@@ -12,7 +12,12 @@ import jmri.JmriException;
  */
 public class LocoNetException extends JmriException {
 
-    public LocoNetException( String m ){
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7412254026659440390L;
+
+	public LocoNetException( String m ){
         super( m ) ;
     }
 

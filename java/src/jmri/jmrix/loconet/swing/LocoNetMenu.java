@@ -18,6 +18,11 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 public class LocoNetMenu extends JMenu {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5699192434035288187L;
+
+	/**
      * Create a LocoNet menu.
      * Preloads the TrafficController to certain actions.
      * Actions will open new windows.

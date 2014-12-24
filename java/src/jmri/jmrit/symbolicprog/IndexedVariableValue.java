@@ -509,7 +509,12 @@ public class IndexedVariableValue extends VariableValue
      */
     public class VarTextField extends JTextField {
 
-        VarTextField(Document doc, String text, int col, IndexedVariableValue var) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 2882756295414352651L;
+
+		VarTextField(Document doc, String text, int col, IndexedVariableValue var) {
             super(doc, text, col);
             _var = var;
             // get the original color right

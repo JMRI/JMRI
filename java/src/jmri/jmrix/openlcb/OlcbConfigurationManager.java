@@ -373,7 +373,12 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             log.debug("StartUpHandler starts up");
             // wait 4 seconds for adapter startup
             javax.swing.Action doNextStep = new javax.swing.AbstractAction() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = -5412454245885537585L;
+
+				public void actionPerformed(java.awt.event.ActionEvent e) {
                     run();
                 }
             };

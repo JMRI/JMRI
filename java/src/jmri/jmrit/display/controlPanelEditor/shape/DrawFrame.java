@@ -42,7 +42,11 @@ import org.slf4j.LoggerFactory;
 
 public abstract class DrawFrame  extends jmri.util.JmriJFrame {
 	
-    protected ShapeDrawer _parent;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2448915417340063804L;
+	protected ShapeDrawer _parent;
     protected boolean _editing;
     
     static int STRUT_SIZE = 10;

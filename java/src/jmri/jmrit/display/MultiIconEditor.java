@@ -28,7 +28,11 @@ import javax.swing.JPanel;
 
 public class MultiIconEditor extends JPanel {
 
-    JButton[] buttonList;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1389053721198245719L;
+	JButton[] buttonList;
     NamedIcon[] iconList;
 
     public CatalogPane catalog = new CatalogPane();
@@ -71,7 +75,12 @@ public class MultiIconEditor extends JPanel {
 
 
     private class IconButton extends JButton {
-        IconButton(int index, Icon init) {  // init icon passed to avoid ref before ctor complete
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -309406418364834814L;
+
+		IconButton(int index, Icon init) {  // init icon passed to avoid ref before ctor complete
             super(init);
             savedIndex = index;
             addActionListener( new ActionListener() {

@@ -21,7 +21,11 @@ import org.slf4j.LoggerFactory;
 
 public class RailroadNamePreferencesPanel extends JPanel implements PreferencesPanel {
 
-    static Logger log = LoggerFactory.getLogger(RailroadNamePreferencesPanel.class);
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2483121076473347952L;
+	static Logger log = LoggerFactory.getLogger(RailroadNamePreferencesPanel.class);
     Border lineBorder;
     JTextField railroadName;
     JButton saveB;

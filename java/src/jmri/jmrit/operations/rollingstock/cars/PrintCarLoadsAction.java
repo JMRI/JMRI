@@ -26,6 +26,10 @@ import java.util.List;
  */
 public class PrintCarLoadsAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7822254186432763396L;
 	CarManager manager = CarManager.instance();
 
 	public PrintCarLoadsAction(String actionName, boolean preview, Component pWho) {

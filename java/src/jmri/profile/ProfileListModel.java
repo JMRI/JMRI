@@ -15,7 +15,12 @@ import javax.swing.AbstractListModel;
  */
 public class ProfileListModel extends AbstractListModel {
 
-    public ProfileListModel() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2962313838094980115L;
+
+	public ProfileListModel() {
         ProfileManager.defaultManager().addPropertyChangeListener(ProfileManager.PROFILES, new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {

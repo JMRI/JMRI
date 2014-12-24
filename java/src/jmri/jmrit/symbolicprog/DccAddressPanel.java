@@ -31,7 +31,12 @@ import javax.swing.*;
  */
 public class DccAddressPanel extends JPanel {
 
-    JTextField val = new JTextField(6);
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -310275111701105498L;
+
+	JTextField val = new JTextField(6);
 
     VariableValue primaryAddr = null;
     VariableValue extendAddr = null;

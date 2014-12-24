@@ -39,7 +39,12 @@ import java.util.ResourceBundle;
 
 public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implements PropertyChangeListener {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.signalmast.RepeaterBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -9220621583127217095L;
+
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.signalmast.RepeaterBundle");
     
     DefaultSignalMastManager dsmm;
     
@@ -173,7 +178,12 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
     
     public class SignalMastRepeaterModel extends AbstractTableModel implements PropertyChangeListener
     {
-        SignalMastRepeaterModel(){
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -452987462897570268L;
+
+		SignalMastRepeaterModel(){
             super();
             dsmm.addPropertyChangeListener(this);
         }

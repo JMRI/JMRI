@@ -27,7 +27,11 @@ import org.slf4j.LoggerFactory;
  */
 public class ExternalLinkContentViewerUI extends BasicContentViewerUI {
 
-    public ExternalLinkContentViewerUI(JHelpContentViewer x) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2831707586009813945L;
+	public ExternalLinkContentViewerUI(JHelpContentViewer x) {
         super(x);
     }
 

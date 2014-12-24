@@ -15,7 +15,12 @@ import javax.swing.JMenu;
  * @version     $Revision$
  */
 public class XpaMenu extends JMenu {
-    public XpaMenu(String name) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7777240221430757170L;
+
+	public XpaMenu(String name) {
         this();
         setText(name);
     }

@@ -17,7 +17,12 @@ import javax.swing.table.*;
  */
 public class TieTablePane extends JPanel {
 
-    static    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6218419515561898759L;
+
+	static    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");
 	
 	protected JTable table = null;
 	protected TableModel tableModel = null;

@@ -29,7 +29,11 @@ import jmri.jmrit.display.controlPanelEditor.PortalIcon;
 */
 public abstract class ItemPanel extends JPanel {
 
-    protected JmriJFrame  _paletteFrame;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6256134896588725084L;
+	protected JmriJFrame  _paletteFrame;
     protected String    _itemType;
     protected Editor    _editor;
     protected boolean   _initialized = false;    // Has init() been run

@@ -22,7 +22,12 @@ import jmri.jmrix.rps.Reading;
  */
 public class CsvExportAction extends AbstractAction implements ReadingListener {
 
-    public CsvExportAction(String actionName) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2188047459182097454L;
+
+	public CsvExportAction(String actionName) {
         super(actionName);
     }
 

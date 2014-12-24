@@ -39,7 +39,11 @@ import java.util.Map.Entry;
 public class IndicatorTrackIcon extends PositionableIcon 
                         implements java.beans.PropertyChangeListener, IndicatorTrack {
 
-    private NamedBeanHandle<Sensor> namedOccSensor = null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3651878897031870004L;
+	private NamedBeanHandle<Sensor> namedOccSensor = null;
     private NamedBeanHandle<OBlock> namedOccBlock = null;
 
     private IndicatorTrackPaths _pathUtil;
@@ -263,7 +267,12 @@ public class IndicatorTrackIcon extends PositionableIcon
     public boolean setEditItemMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("IndicatorTrack"));
         popup.add(new javax.swing.AbstractAction(txt) {
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = 6698198580196221026L;
+
+				public void actionPerformed(ActionEvent e) {
                     editItem();
                 }
             });

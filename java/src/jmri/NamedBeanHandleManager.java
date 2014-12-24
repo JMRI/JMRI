@@ -43,7 +43,12 @@ import java.util.List;
 
 public class NamedBeanHandleManager extends jmri.managers.AbstractManager implements java.io.Serializable{
 
-    public NamedBeanHandleManager(){
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2201166159004504615L;
+
+	public NamedBeanHandleManager(){
         super();
     }
     //Checks are performed to make sure that the beans are the same type before being returned

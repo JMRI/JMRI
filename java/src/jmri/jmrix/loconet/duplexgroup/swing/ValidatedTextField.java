@@ -20,7 +20,11 @@ import java.awt.event.FocusEvent;
  */
 public class ValidatedTextField extends javax.swing.JTextField  {
 
-    ValidatedTextField thisone;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4592093311837686838L;
+	ValidatedTextField thisone;
 
     /**
      * Provides a validated text field, where the validation mechanism requires

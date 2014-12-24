@@ -42,7 +42,12 @@ import org.slf4j.LoggerFactory;
  */
 public class DispatcherPro extends Apps {
 
-    DispatcherPro(JFrame p) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3275818803083884156L;
+
+	DispatcherPro(JFrame p) {
         super(p);
     }
 
@@ -71,7 +76,12 @@ public class DispatcherPro extends Apps {
         // Buttons
 
         Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")){
-                public void actionPerformed(ActionEvent e) {
+                /**
+			 * 
+			 */
+			private static final long serialVersionUID = -670021141772027717L;
+
+				public void actionPerformed(ActionEvent e) {
 					Apps.handleQuit();
                 }
             };

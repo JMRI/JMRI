@@ -16,6 +16,10 @@ import java.awt.event.ActionEvent;
  */
 public class SerialPacketGenAction  extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9108403301774618719L;
 	public SerialPacketGenAction(String s) { super(s);}
 
     public SerialPacketGenAction() {

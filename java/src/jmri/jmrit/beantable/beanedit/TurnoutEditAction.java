@@ -24,7 +24,12 @@ import javax.swing.*;
  */
 public class TurnoutEditAction extends BeanEditAction {
     
-    public String helpTarget() { return "package.jmri.jmrit.beantable.TurnoutTable"; } //IN18N
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3432794348005461234L;
+
+	public String helpTarget() { return "package.jmri.jmrit.beantable.TurnoutTable"; } //IN18N
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -130,7 +135,12 @@ public class TurnoutEditAction extends BeanEditAction {
         feedback.addItem(new BeanEditItem(operationsName, Bundle.getMessage("FeedbackNameSet"), Bundle.getMessage("FeedbackNameSetToolTip")));
         
         feedback.setSaveItem(new AbstractAction(){
-            public void actionPerformed(ActionEvent e) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 2969190372668700931L;
+
+			public void actionPerformed(ActionEvent e) {
                 Turnout t = (Turnout)bean;
                 String modeName = (String)modeBox.getSelectedItem();
                 t.setFeedbackMode(modeName);
@@ -183,7 +193,12 @@ public class TurnoutEditAction extends BeanEditAction {
         });
         
         feedback.setResetItem(new AbstractAction(){
-            public void actionPerformed(ActionEvent e) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -6958613309056965212L;
+
+			public void actionPerformed(ActionEvent e) {
                 Turnout t = (Turnout)bean;
                 
                 sensorFeedBack1Field.setSelectedBean(t.getFirstSensor());
@@ -303,7 +318,12 @@ public class TurnoutEditAction extends BeanEditAction {
         
         
         lock.setSaveItem(new AbstractAction(){
-            public void actionPerformed(ActionEvent e) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -275341435715029798L;
+
+			public void actionPerformed(ActionEvent e) {
                 Turnout t = (Turnout)bean;
                 String lockOpName = (String) lockOperationBox.getSelectedItem();
                 if (lockOpName.equals(bothText)){
@@ -325,7 +345,12 @@ public class TurnoutEditAction extends BeanEditAction {
         });
         
         lock.setResetItem(new AbstractAction(){
-            public void actionPerformed(ActionEvent e) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 7063263885175963245L;
+
+			public void actionPerformed(ActionEvent e) {
                 Turnout t = (Turnout)bean;
                 lockBox.setSelectedItem (t.getDecoderName());
                 lockBox.setEnabled(true);
@@ -392,7 +417,12 @@ public class TurnoutEditAction extends BeanEditAction {
         speed.addItem(new BeanEditItem(thrownSpeedBox, Bundle.getMessage("ThrownSpeed"), Bundle.getMessage("ThrownSpeedToolTip")));
         
         speed.setSaveItem(new AbstractAction(){
-            public void actionPerformed(ActionEvent e) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 8189801856564109719L;
+
+			public void actionPerformed(ActionEvent e) {
                 Turnout t = (Turnout)bean;
                 String speed = (String)closedSpeedBox.getSelectedItem();
                 try {
@@ -416,7 +446,12 @@ public class TurnoutEditAction extends BeanEditAction {
         });
         
         speed.setResetItem(new AbstractAction(){
-            public void actionPerformed(ActionEvent e) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 3766958497699526365L;
+
+			public void actionPerformed(ActionEvent e) {
                 Turnout t = (Turnout)bean;
                 
                 String speed = t.getDivergingSpeed();

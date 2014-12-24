@@ -23,7 +23,12 @@ import org.jdom2.output.*;
  */
 public class XmlFileValidateAction extends AbstractAction {
 
-    public XmlFileValidateAction(String s, JPanel who) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1565162336074463863L;
+
+	public XmlFileValidateAction(String s, JPanel who) {
         super(s);
         _who = who;
     }

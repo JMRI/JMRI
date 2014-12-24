@@ -20,7 +20,11 @@ import jmri.jmrit.logix.Portal;
 
 public class PortalList extends JList {
 
-    private PortalListModel _portalListModel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3541625426527534729L;
+	private PortalListModel _portalListModel;
     
     PortalList(OBlock block) {
     	super();
@@ -37,7 +41,12 @@ public class PortalList extends JList {
     
     private static class PortalCellRenderer extends JLabel implements ListCellRenderer {
         
-        public Component getListCellRendererComponent(
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1558678851660924661L;
+
+		public Component getListCellRendererComponent(
            JList list,              // the list
            Object value,            // value to display
            int index,               // cell index
@@ -61,7 +70,11 @@ public class PortalList extends JList {
     }
     
     class PortalListModel extends AbstractListModel {
-    	OBlock _homeBlock;
+    	/**
+		 * 
+		 */
+		private static final long serialVersionUID = -4919221001404316553L;
+		OBlock _homeBlock;
     	PortalListModel(OBlock block) {
     		_homeBlock = block;
     	}

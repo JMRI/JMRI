@@ -24,7 +24,12 @@ import java.awt.event.ActionListener;
 
 public class LightIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
-    public LightIcon(Editor editor) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7831042733869845309L;
+
+	public LightIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
         super(new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif",
                             "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif"), editor);

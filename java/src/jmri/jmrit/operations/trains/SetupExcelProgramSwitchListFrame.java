@@ -34,6 +34,11 @@ import org.slf4j.LoggerFactory;
 
 public class SetupExcelProgramSwitchListFrame extends OperationsFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3528092911363603010L;
+
 	// text windows
 	JTextField fileName = new JTextField(30);
 	

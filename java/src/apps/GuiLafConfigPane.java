@@ -32,7 +32,12 @@ import javax.swing.*;
  */
 public class GuiLafConfigPane extends JPanel {
 	
-	 private static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
+	 /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3846942336860819413L;
+
+	private static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
 
     java.util.Hashtable<String, String> installedLAFs;
     ButtonGroup LAFGroup;

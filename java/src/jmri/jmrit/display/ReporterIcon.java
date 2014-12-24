@@ -20,7 +20,12 @@ import javax.swing.JMenu;
 
 public class ReporterIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
-    public ReporterIcon(Editor editor) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 729371636139026298L;
+
+	public ReporterIcon(Editor editor) {
         // super ctor call to make sure this is a String label
         super("???", editor);
         setText("???");

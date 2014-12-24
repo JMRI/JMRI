@@ -21,7 +21,12 @@ import javax.swing.*;
  */
 public class PrintAction  extends AbstractAction {
 
-    public PrintAction(String actionName, PaneProgFrame frame, boolean preview) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -633211100496026121L;
+
+	public PrintAction(String actionName, PaneProgFrame frame, boolean preview) {
         super(actionName);
         mFrame = frame;
         isPreview = preview;

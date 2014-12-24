@@ -19,6 +19,10 @@ abstract public class EcosPanel extends jmri.util.swing.JmriPanel implements Eco
 
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7196545038127365848L;
+	/**
      * make "memo" object available as convenience
      */
     protected EcosSystemConnectionMemo memo;

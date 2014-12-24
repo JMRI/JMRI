@@ -17,7 +17,11 @@ import org.slf4j.LoggerFactory;
  */
  public class z21MonFrame extends jmri.jmrix.AbstractMonFrame implements z21Listener {
 
-        private z21SystemConnectionMemo _memo=null;
+        /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8216921338328955386L;
+		private z21SystemConnectionMemo _memo=null;
 
         public z21MonFrame() {
                super();

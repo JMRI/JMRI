@@ -25,7 +25,11 @@ import jmri.jmrit.display.MultiSensorIcon;
 
 public class MultiSensorItemPanel extends TableItemPanel {
 
-    JPanel _multiSensorPanel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -743088921159606185L;
+	JPanel _multiSensorPanel;
     MultiSensorSelectionModel _selectionModel;
     boolean _upDown = false;
 
@@ -206,7 +210,11 @@ public class MultiSensorItemPanel extends TableItemPanel {
     
     protected class MultiSensorSelectionModel extends DefaultListSelectionModel {
 
-        ArrayList<NamedBean> _selections;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 8448986920160037659L;
+		ArrayList<NamedBean> _selections;
         int[] _positions;
         int _nextPosition;
         PickListModel _tableModel;
@@ -316,7 +324,11 @@ public class MultiSensorItemPanel extends TableItemPanel {
     }
 
     protected class IconDragJLabel extends DragJLabel {
-        HashMap <String, NamedIcon> iconMap;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 451205074058595934L;
+		HashMap <String, NamedIcon> iconMap;
 
         @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // icon map is within package 
         public IconDragJLabel(DataFlavor flavor, HashMap <String, NamedIcon> map) {

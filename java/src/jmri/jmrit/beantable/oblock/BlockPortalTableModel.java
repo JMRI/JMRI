@@ -41,7 +41,11 @@ import jmri.jmrit.logix.OBlock;
 
 class BlockPortalTableModel extends AbstractTableModel implements PropertyChangeListener {
 
-    public static final int BLOCK_NAME_COLUMN = 0;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6547843920072979055L;
+	public static final int BLOCK_NAME_COLUMN = 0;
     public static final int PORTAL_NAME_COLUMN = 1;
     public static final int NUMCOLS = 2;
 

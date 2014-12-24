@@ -10,6 +10,10 @@ package jmri;
  * @version			$Revision$
  */
 public class TimebaseRateException extends JmriException {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2898280102429813235L;
 	public TimebaseRateException(String s) { super(s); }
 	public TimebaseRateException() {}
 

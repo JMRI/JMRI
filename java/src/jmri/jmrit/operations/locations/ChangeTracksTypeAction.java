@@ -14,6 +14,10 @@ import javax.swing.AbstractAction;
  */
 public class ChangeTracksTypeAction extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4301236628809396753L;
 	private LocationEditFrame _lef;
 
 	public ChangeTracksTypeAction(LocationEditFrame lef) {

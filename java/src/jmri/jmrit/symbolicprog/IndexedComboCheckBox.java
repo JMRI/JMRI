@@ -18,7 +18,12 @@ import java.beans.PropertyChangeListener;
 @Deprecated // since 3.7.1
 public class IndexedComboCheckBox extends JCheckBox {
 
-    IndexedComboCheckBox(JComboBox box, IndexedEnumVariableValue var) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2948204731039652274L;
+
+	IndexedComboCheckBox(JComboBox box, IndexedEnumVariableValue var) {
         super();
         _var = var;
         _box = box;

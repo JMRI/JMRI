@@ -43,7 +43,12 @@ import java.util.regex.Matcher;
  
 public class LnReporter extends AbstractReporter implements LocoNetListener, PhysicalLocationReporter {
 
-    public LnReporter(int number, LnTrafficController tc, String prefix) {  // a human-readable Reporter number must be specified!
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4140421326633704317L;
+
+	public LnReporter(int number, LnTrafficController tc, String prefix) {  // a human-readable Reporter number must be specified!
         super(prefix+"R"+number);  // can't use prefix here, as still in construction
         log.debug("new Reporter "+number);
          _number = number;

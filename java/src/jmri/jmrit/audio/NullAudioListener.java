@@ -32,6 +32,11 @@ import javax.vecmath.Vector3f;
 public class NullAudioListener extends AbstractAudioListener {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8149788369213980559L;
+
+	/**
      * Constructor for new NullAudioListener with system name
      *
      * @param systemName AudioListener object system name (e.g. IAL)

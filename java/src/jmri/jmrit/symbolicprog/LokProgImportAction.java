@@ -23,7 +23,11 @@ import javax.swing.JFrame;
 
 public class LokProgImportAction  extends AbstractAction {
 
-    CvTableModel mModel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2113094604113840817L;
+	CvTableModel mModel;
     JFrame mParent ;
     FileChooserFilter fileFilter ;
     JFileChooser fileChooser ;

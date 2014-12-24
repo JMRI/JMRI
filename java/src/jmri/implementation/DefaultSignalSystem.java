@@ -21,7 +21,12 @@ import jmri.SignalSystem;
  */
 public class DefaultSignalSystem extends AbstractNamedBean implements SignalSystem  {
 
-    public DefaultSignalSystem(String systemName, String userName) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5899513293974310228L;
+
+	public DefaultSignalSystem(String systemName, String userName) {
         super(systemName, userName);
     }
 

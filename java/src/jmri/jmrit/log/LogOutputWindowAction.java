@@ -17,7 +17,12 @@ import javax.swing.*;
  */
 public class LogOutputWindowAction extends AbstractAction {
 
-    public LogOutputWindowAction(String s) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3272363386014713812L;
+
+	public LogOutputWindowAction(String s) {
         super(s);
     }
 

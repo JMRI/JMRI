@@ -22,7 +22,12 @@ import jmri.Light;
  */
 public class AcelaLightManager extends AbstractLightManager {
 
-    public AcelaLightManager() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 854966186258234895L;
+
+	public AcelaLightManager() {
     	
     }
 

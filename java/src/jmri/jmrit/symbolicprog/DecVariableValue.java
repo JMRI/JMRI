@@ -338,7 +338,12 @@ public class DecVariableValue extends VariableValue
      */
     public class VarTextField extends JTextField {
 
-        VarTextField(Document doc, String text, int col, DecVariableValue var) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 7844901319795104952L;
+
+		VarTextField(Document doc, String text, int col, DecVariableValue var) {
             super(doc, text, col);
             _var = var;
             // get the original color right

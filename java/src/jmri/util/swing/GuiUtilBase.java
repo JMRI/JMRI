@@ -142,7 +142,12 @@ public class GuiUtilBase {
     }
     
     static class CallingAbstractAction extends javax.swing.AbstractAction{
-        public CallingAbstractAction(String name, Icon icon){
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -6063626025483350164L;
+
+		public CallingAbstractAction(String name, Icon icon){
             super(name, icon);
         }
         
@@ -179,14 +184,22 @@ public class GuiUtilBase {
     static Action createEmptyMenuItem(Icon icon, String name){
         if (icon != null) {
             AbstractAction act = new AbstractAction(name, icon){
-                public void actionPerformed(java.awt.event.ActionEvent e) {}
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = 3780162682022372836L;
+				public void actionPerformed(java.awt.event.ActionEvent e) {}
                 public String toString() { return (String) getValue(javax.swing.Action.NAME); }
             };
             act.setEnabled(false);
             return act;
         } else { // then name must be present
             AbstractAction act = new AbstractAction(name){
-                public void actionPerformed(java.awt.event.ActionEvent e) {}
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = -1746638499145752231L;
+				public void actionPerformed(java.awt.event.ActionEvent e) {}
                 public String toString() { return (String) getValue(javax.swing.Action.NAME); }
             };
             act.setEnabled(false);

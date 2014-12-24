@@ -16,7 +16,12 @@ import java.awt.event.ActionEvent;
  */
 public class ListAction extends AbstractAction {
 
-    public ListAction(String s) { super(s);}
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 969660510115409385L;
+
+	public ListAction(String s) { super(s);}
 
     public ListAction() {
         this("List C/MRI Assignments");

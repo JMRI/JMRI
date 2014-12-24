@@ -35,7 +35,11 @@ import jmri.util.JmriJFrame;
  */
 public class ControllerFilterFrame extends JmriJFrame implements TableModelListener{
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6006763517792223304L;
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
     static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
     private static String[] COLUMN_NAMES = {rbx.getString("ColumnLabelSystemName"),
                                             rbx.getString("ColumnLabelUserName"),
@@ -207,7 +211,11 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
     
     public abstract class AbstractFilterModel extends AbstractTableModel implements PropertyChangeListener{
         
-        List<String> sysNameList= null;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -4167975455673762191L;
+		List<String> sysNameList= null;
         boolean isDirty;
 
         public Class<?> getColumnClass(int c) {
@@ -257,7 +265,11 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
 
     class TurnoutFilterModel extends AbstractFilterModel{
 
-        TurnoutManager mgr = InstanceManager.turnoutManagerInstance();
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 647944884708203007L;
+		TurnoutManager mgr = InstanceManager.turnoutManagerInstance();
         
         TurnoutFilterModel() {
             
@@ -323,7 +335,11 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
 
     class RouteFilterModel extends AbstractFilterModel{
 
-        RouteManager mgr = InstanceManager.routeManagerInstance();
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -6672681464508618475L;
+		RouteManager mgr = InstanceManager.routeManagerInstance();
 
         RouteFilterModel() {
 

@@ -11,7 +11,13 @@ package jmri.jmrit.ussctc;
  */
 public class OsIndicatorAction extends jmri.util.JmriJFrameAction {
 
-    public OsIndicatorAction(String s) { 
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5595732368842780074L;
+
+
+	public OsIndicatorAction(String s) { 
 	    super(s);
 
         // disable ourself if there is no route manager object available

@@ -29,7 +29,13 @@ import jmri.jmrit.operations.trains.TrainManager;
 
 public class VSDOptionsDialog extends JDialog {
 
-    public static final String OPTIONS_PROPERTY = "Options"; // NOI18N
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4803792315315710325L;
+
+
+	public static final String OPTIONS_PROPERTY = "Options"; // NOI18N
 
 
     private JComboBox opsTrainComboBox;

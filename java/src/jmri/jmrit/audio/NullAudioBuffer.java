@@ -32,6 +32,11 @@ import java.io.InputStream;
 public class NullAudioBuffer extends AbstractAudioBuffer {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2227618459689268908L;
+
+	/**
      * Constructor for new NullAudioBuffer with system name
      *
      * @param systemName AudioBuffer object system name (e.g. IAB4)

@@ -20,7 +20,11 @@ import jmri.jmrix.can.TrafficController;
  */
 public class CbusSensor extends AbstractSensor implements CanListener {
 
-    CbusAddress addrActive;    // go to active state
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3589288718741372494L;
+	CbusAddress addrActive;    // go to active state
     CbusAddress addrInactive;  // go to inactive state
 
     public CbusSensor(String prefix, String address, TrafficController tc) {

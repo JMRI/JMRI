@@ -26,7 +26,12 @@ import jmri.util.table.ButtonRenderer;
  */
 public class PollTablePane extends javax.swing.JPanel {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.rps.swing.polling.PollingBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1187242999349776714L;
+
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.rps.swing.polling.PollingBundle");
 		
     PollDataModel pollModel = null;
     jmri.ModifiedFlag modifiedFlag;
@@ -65,7 +70,12 @@ public class PollTablePane extends javax.swing.JPanel {
         
         // status info on bottom
         JPanel p = new JPanel() {
-            public Dimension getMaximumSize() { 
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 2303477665465877882L;
+
+			public Dimension getMaximumSize() { 
                 int height = getPreferredSize().height;
                 int width = super.getMaximumSize().width;
                 return new Dimension(width, height); }

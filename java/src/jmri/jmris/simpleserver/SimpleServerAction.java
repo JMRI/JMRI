@@ -16,7 +16,11 @@ import java.awt.event.ActionEvent;
  */
  public class SimpleServerAction extends AbstractAction {
 
-    public SimpleServerAction(String s) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 9027149722115966187L;
+	public SimpleServerAction(String s) {
 	super(s);
         }
 

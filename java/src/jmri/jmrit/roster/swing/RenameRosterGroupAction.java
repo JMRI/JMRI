@@ -38,7 +38,12 @@ import jmri.jmrit.roster.Roster;
  */
 public class RenameRosterGroupAction extends JmriAbstractAction {
 
-    public RenameRosterGroupAction(String s, WindowInterface wi) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1370317330367764168L;
+
+	public RenameRosterGroupAction(String s, WindowInterface wi) {
         super(s, wi);
     }
 

@@ -17,6 +17,10 @@ import javax.swing.AbstractAction;
  */
 public class XpaConfigureAction  extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5845992931132270975L;
 	public XpaConfigureAction(String s) { super(s);}
 
     public void actionPerformed(ActionEvent e) {

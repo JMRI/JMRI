@@ -13,7 +13,12 @@ import javax.swing.AbstractAction;
  */
 public class LayoutEditorAction extends AbstractAction {
 
-    public LayoutEditorAction(String s) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8529340792792129330L;
+
+	public LayoutEditorAction(String s) {
         super(s);
     }
 
