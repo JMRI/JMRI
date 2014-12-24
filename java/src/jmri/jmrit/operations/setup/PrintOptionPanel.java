@@ -129,8 +129,7 @@ public class PrintOptionPanel extends OperationsPanel {
     JPanel pSwDrop = new JPanel();
     JPanel pSwLocal = new JPanel();
 
-    @Override
-    public void initComponents() {
+    public PrintOptionPanel() {
 
         // the following code sets the frame's initial state
         // add tool tips

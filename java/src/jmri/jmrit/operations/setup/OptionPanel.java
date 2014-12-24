@@ -73,8 +73,7 @@ public class OptionPanel extends OperationsPanel {
     // combo boxes
     JComboBox numberPassesComboBox = new JComboBox();
 
-    @Override
-    public void initComponents() {
+    public OptionPanel() {
 
         // load checkboxes
         localInterchangeCheckBox.setSelected(Setup.isLocalInterchangeMovesEnabled());

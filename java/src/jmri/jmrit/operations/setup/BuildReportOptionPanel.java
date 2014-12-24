@@ -51,8 +51,7 @@ public class BuildReportOptionPanel extends OperationsPanel {
     // combo boxes
     JComboBox fontSizeComboBox = new JComboBox();
 
-    @Override
-    public void initComponents() {
+    public BuildReportOptionPanel() {
 
 		// the following code sets the frame's initial state
         // add tool tips

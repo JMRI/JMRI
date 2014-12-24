@@ -55,8 +55,13 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
     // panels
     JPanel pTrainVisit = new JPanel();
 
-    public void initComponents(Location location) {
-        super.initComponents();
+    public YardmasterPanel() {
+        this(null);
+    }
+
+    public YardmasterPanel(Location location) {
+        super();
+        initComponents();
 
         _location = location;
 

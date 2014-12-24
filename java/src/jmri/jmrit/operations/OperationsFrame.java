@@ -64,7 +64,8 @@ public class OperationsFrame extends JmriJFrame implements AncestorListener {
 
     @Override
     public void initComponents() {
-        ((OperationsPanel) this.getContentPane()).initComponents();
+        // default method does nothing, but fail to call super.initComponents,
+        // so that Exception does not need to be caught
     }
 
     public void initMinimumSize() {

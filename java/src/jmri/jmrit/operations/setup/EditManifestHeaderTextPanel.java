@@ -61,8 +61,7 @@ public class EditManifestHeaderTextPanel extends OperationsPanel {
     JTextField model_TextField = new JTextField(25);
     JTextField consist_TextField = new JTextField(25);
 
-    @Override
-    public void initComponents() {
+    public EditManifestHeaderTextPanel() {
 
         // the following code sets the frame's initial state
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

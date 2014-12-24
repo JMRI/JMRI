@@ -67,8 +67,8 @@ public class SetPhysicalLocationAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         // create a copy route frame
         if (f == null || !f.isVisible()) {
-            f = new SetPhysicalLocationFrame();
-            f.initComponents(_reporter);
+            f = new SetPhysicalLocationFrame(_reporter);
+            f.setVisible(true);
         }
         f.setExtendedState(Frame.NORMAL);
     }
@@ -91,19 +91,13 @@ public class SetPhysicalLocationAction extends AbstractAction {
 		/**
          * Frame Constructor
          */
-        public SetPhysicalLocationFrame() {
-            super(rb.getString("MenuSetPhysicalLocation"), new SetPhysicalLocationPanel());
-        }
-
-        public void initComponents(Reporter r) {
-            super.initComponents();
-            ((SetPhysicalLocationPanel) this.getContentPane()).initComponents(r);
+        public SetPhysicalLocationFrame(Reporter reporter) {
+            super(rb.getString("MenuSetPhysicalLocation"), new SetPhysicalLocationPanel(reporter));
 
             // add help menu to window
             addHelpMenu("package.jmri.jmrit.operations.Operations_SetTrainIconCoordinates", true); // fix this later
 
             pack();
-            this.setVisible(true);
         }
     }
 
@@ -133,7 +127,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
         // Spinners
         PhysicalLocationPanel physicalLocation;
 
-        public void initComponents(Reporter l) {
+        public SetPhysicalLocationPanel(Reporter l) {
 
             // Store the location (null if called from the list view)
             _reporter = l;

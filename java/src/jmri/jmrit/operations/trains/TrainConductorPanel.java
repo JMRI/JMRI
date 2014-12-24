@@ -41,12 +41,17 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
     JPanel pTrainDepartureTime = new JPanel();
 
     // major buttons
+
+    /**
+     * Default constructor required to use as JavaBean.
+     */
     public TrainConductorPanel() {
-        super();
+        this(null);
     }
 
-    public void initComponents(Train train) {
-        super.initComponents();
+    public TrainConductorPanel(Train train) {
+        super();
+        initComponents();
 
         _train = train;
 

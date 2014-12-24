@@ -39,8 +39,7 @@ public class PrintMoreOptionPanel extends OperationsPanel {
 
 	// text area
 	// combo boxes
-    @Override
-    public void initComponents() {
+    public PrintMoreOptionPanel() {
 
         // the following code sets the frame's initial state
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

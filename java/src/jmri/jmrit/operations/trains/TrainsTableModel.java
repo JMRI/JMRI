@@ -2,9 +2,6 @@
 
 package jmri.jmrit.operations.trains;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Frame;
@@ -13,14 +10,12 @@ import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
 import java.util.Hashtable;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
-
 import jmri.jmrit.beantable.EnablingCheckboxRenderer;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.routes.RouteEditFrame;
@@ -29,6 +24,8 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Table Model for edit of trains used by operations
@@ -495,13 +492,12 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		TrainConductorFrame f = _trainConductorHashTable.get(train.getId());
 		// create a copy train frame
 		if (f == null || !f.isVisible()) {
-			f = new TrainConductorFrame();
-			f.initComponents(train);
+			f = new TrainConductorFrame(train);
 			_trainConductorHashTable.put(train.getId(), f);
 		} else {
 			f.setExtendedState(Frame.NORMAL);
-			f.setVisible(true); // this also brings the frame into focus
 		}
+                f.setVisible(true); // this also brings the frame into focus
 		tcf = f;
 	}
 

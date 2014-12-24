@@ -17,18 +17,13 @@ import org.slf4j.LoggerFactory;
  */
 public class YardmasterFrame extends OperationsFrame {
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = -2668419494752612867L;
-
-	public YardmasterFrame() {
-        super(Bundle.getMessage("Yardmaster"), new YardmasterPanel());
+    public YardmasterFrame(Location location) {
+        super(Bundle.getMessage("Yardmaster"), new YardmasterPanel(location));
+        this.initComponents(location);
     }
 
-    public void initComponents(Location location) {
+    private void initComponents(Location location) {
         super.initComponents();
-        ((YardmasterPanel) this.getContentPane()).initComponents(location);
 
         if (location != null) {
 
