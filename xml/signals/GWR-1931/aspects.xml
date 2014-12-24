@@ -30,6 +30,7 @@
       <indication>Next signal displaying proceed aspect</indication>
       <description>Proceed</description>
       <speed>Normal</speed>
+      <speed2>Normal</speed2>
       <route>Normal</route>
     </aspect>
     <aspect>
@@ -37,6 +38,7 @@
       <indication>Next signal displaying proceed aspect</indication>
       <description>Proceed via diverging route</description>
       <speed>Normal</speed>
+      <speed2>Normal</speed2>
       <route>Diverging</route>
     </aspect>
     <aspect>
@@ -44,6 +46,7 @@
       <indication>Proceed: be prepared to stop at the next signal</indication>
       <description>Proceed with caution</description>
       <speed>Normal</speed>
+      <speed2>Normal</speed2>
       <route>Either</route>
     </aspect>
     <aspect>
@@ -51,12 +54,14 @@
       <indication>Stop</indication>
       <description>Stop</description>
       <speed>Stop</speed>
+      <speed2>Stop</speed2>
     </aspect>
     <aspect>
       <name>Unlit</name>
       <indication>Not illuminated</indication>
       <description>Stop</description>
       <speed>Stop</speed>
+      <speed2>Stop</speed2>
     </aspect>
   </aspects>
   <imagetypes>

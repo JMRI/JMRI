@@ -44,6 +44,8 @@
       <description></description>
       <reference></reference>
       <comment></comment>
+      <speed></speed>
+      <speed2></speed2>
     </aspect>
 
   </aspects>

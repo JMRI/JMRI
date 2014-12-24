@@ -52,24 +52,28 @@
       <name>Clear</name>
       <indication>Proceed</indication>
       <speed>Normal</speed>
+      <speed2>Normal</speed2>
     </aspect>
 
     <aspect>
       <name>Approach</name>
       <indication>Proceed preparing to stop at next signal</indication>
       <speed>Medium</speed>
+      <speed2>Medium</speed2>
     </aspect>
 
     <aspect>
       <name>Stop</name>
       <indication>Stop</indication>
       <speed>Stop</speed>
+      <speed2>Stop</speed2>
     </aspect>
 
     <aspect>
       <name>Diverging Clear</name>
       <indication>Proceed through diverging route</indication>
       <speed>Medium</speed>
+      <speed2>Medium</speed2>
       <route>Diverging</route>
     </aspect>
 
@@ -77,6 +81,7 @@
       <name>Diverging Approach</name>
       <indication>Proceed through diverging route preparing to stop at next signal</indication>
       <speed>Limited</speed>
+      <speed2>Limited</speed2>
       <route>Diverging</route>
     </aspect>
 
