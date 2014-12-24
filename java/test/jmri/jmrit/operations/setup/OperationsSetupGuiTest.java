@@ -134,45 +134,46 @@ public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
 	public void testOptionFrameWrite(){
 		OptionFrame f = new OptionFrame();
 		f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
-		f.initComponents();		
+		f.initComponents();
+                OptionPanel p = (OptionPanel) f.getContentPane();
 		
 		// confirm defaults
-		Assert.assertTrue("build normal", f.buildNormal.isSelected());
-		Assert.assertFalse("build aggressive", f.buildAggressive.isSelected());
-		Assert.assertFalse("local", f.localSpurCheckBox.isSelected());
-		Assert.assertFalse("interchange", f.localInterchangeCheckBox.isSelected());
-		Assert.assertFalse("yard", f.localYardCheckBox.isSelected());
-		Assert.assertFalse("rfid", f.rfidCheckBox.isSelected());
-		Assert.assertFalse("car logger", f.carLoggerCheckBox.isSelected());
-		Assert.assertFalse("engine logger", f.engineLoggerCheckBox.isSelected());
-		Assert.assertTrue("router", f.routerCheckBox.isSelected());
+		Assert.assertTrue("build normal", p.buildNormal.isSelected());
+		Assert.assertFalse("build aggressive", p.buildAggressive.isSelected());
+		Assert.assertFalse("local", p.localSpurCheckBox.isSelected());
+		Assert.assertFalse("interchange", p.localInterchangeCheckBox.isSelected());
+		Assert.assertFalse("yard", p.localYardCheckBox.isSelected());
+		Assert.assertFalse("rfid", p.rfidCheckBox.isSelected());
+		Assert.assertFalse("car logger", p.carLoggerCheckBox.isSelected());
+		Assert.assertFalse("engine logger", p.engineLoggerCheckBox.isSelected());
+		Assert.assertTrue("router", p.routerCheckBox.isSelected());
 		
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.buildAggressive ) );
-		Assert.assertFalse("build normal", f.buildNormal.isSelected());
-		Assert.assertTrue("build aggressive", f.buildAggressive.isSelected());
+		getHelper().enterClickAndLeave( new MouseEventData( this, p.buildAggressive ) );
+		Assert.assertFalse("build normal", p.buildNormal.isSelected());
+		Assert.assertTrue("build aggressive", p.buildAggressive.isSelected());
 		
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.localSpurCheckBox ) );
-		Assert.assertTrue("local", f.localSpurCheckBox.isSelected());
+		getHelper().enterClickAndLeave( new MouseEventData( this, p.localSpurCheckBox ) );
+		Assert.assertTrue("local", p.localSpurCheckBox.isSelected());
 		
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.localInterchangeCheckBox ) );
-		Assert.assertTrue("interchange", f.localInterchangeCheckBox.isSelected());
+		getHelper().enterClickAndLeave( new MouseEventData( this, p.localInterchangeCheckBox ) );
+		Assert.assertTrue("interchange", p.localInterchangeCheckBox.isSelected());
 		
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.localYardCheckBox ) );
-		Assert.assertTrue("yard", f.localYardCheckBox.isSelected());
+		getHelper().enterClickAndLeave( new MouseEventData( this, p.localYardCheckBox ) );
+		Assert.assertTrue("yard", p.localYardCheckBox.isSelected());
 		
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.rfidCheckBox ) );
-		Assert.assertTrue("rfid", f.rfidCheckBox.isSelected());
+		getHelper().enterClickAndLeave( new MouseEventData( this, p.rfidCheckBox ) );
+		Assert.assertTrue("rfid", p.rfidCheckBox.isSelected());
 		
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.carLoggerCheckBox ) );
-		Assert.assertTrue("car logger", f.carLoggerCheckBox.isSelected());
+		getHelper().enterClickAndLeave( new MouseEventData( this, p.carLoggerCheckBox ) );
+		Assert.assertTrue("car logger", p.carLoggerCheckBox.isSelected());
 		
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.engineLoggerCheckBox ) );
-		Assert.assertTrue("engine logger", f.engineLoggerCheckBox.isSelected());
+		getHelper().enterClickAndLeave( new MouseEventData( this, p.engineLoggerCheckBox ) );
+		Assert.assertTrue("engine logger", p.engineLoggerCheckBox.isSelected());
 		
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.routerCheckBox ) );
-		Assert.assertFalse("router", f.routerCheckBox.isSelected());
+		getHelper().enterClickAndLeave( new MouseEventData( this, p.routerCheckBox ) );
+		Assert.assertFalse("router", p.routerCheckBox.isSelected());
 		
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
+		getHelper().enterClickAndLeave( new MouseEventData( this, p.saveButton ) );
 		//done
 		f.dispose();
 	}
@@ -180,17 +181,18 @@ public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
 	public void testOptionFrameRead(){
 		OptionFrame f = new OptionFrame();
 		f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
-		f.initComponents();		
+		f.initComponents();
+                OptionPanel p = (OptionPanel) f.getContentPane();
 		
-		Assert.assertFalse("build normal",f.buildNormal.isSelected());
-		Assert.assertTrue("build aggressive",f.buildAggressive.isSelected());
-		Assert.assertTrue("local", f.localSpurCheckBox.isSelected());
-		Assert.assertTrue("interchange", f.localInterchangeCheckBox.isSelected());
-		Assert.assertTrue("yard", f.localYardCheckBox.isSelected());
-		Assert.assertTrue("rfid", f.rfidCheckBox.isSelected());
-		Assert.assertTrue("car logger", f.carLoggerCheckBox.isSelected());
-		Assert.assertTrue("engine logger", f.engineLoggerCheckBox.isSelected());
-		Assert.assertFalse("router", f.routerCheckBox.isSelected());
+		Assert.assertFalse("build normal",p.buildNormal.isSelected());
+		Assert.assertTrue("build aggressive",p.buildAggressive.isSelected());
+		Assert.assertTrue("local", p.localSpurCheckBox.isSelected());
+		Assert.assertTrue("interchange", p.localInterchangeCheckBox.isSelected());
+		Assert.assertTrue("yard", p.localYardCheckBox.isSelected());
+		Assert.assertTrue("rfid", p.rfidCheckBox.isSelected());
+		Assert.assertTrue("car logger", p.carLoggerCheckBox.isSelected());
+		Assert.assertTrue("engine logger", p.engineLoggerCheckBox.isSelected());
+		Assert.assertFalse("router", p.routerCheckBox.isSelected());
 		
 		//done
 		f.dispose();
