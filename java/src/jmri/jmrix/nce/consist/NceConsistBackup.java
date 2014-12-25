@@ -1,4 +1,4 @@
-//NceConsistBackup.java
+// NceConsistBackup.java
 
 package jmri.jmrix.nce.consist;
 
@@ -48,20 +48,20 @@ import jmri.util.FileUtil;
 
 
 public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListener{
-
+	
 	private static final int CONSIST_LNTH = 16;		// 16 bytes per line
 	private int replyLen = 0;					// expected byte length
 	private int waiting = 0;					// to catch responses not intended for this module
 	private boolean fileValid = false;			// used to flag backup status messages
-
+	
 	private byte[] nceConsistData = new byte [CONSIST_LNTH];
-
+	
 	JLabel textConsist = new JLabel();
 	JLabel consistNumber = new JLabel();
-
+	
 	private NceTrafficController tc = null ;
 	private int workingNumConsists = -1;
-
+	
 	public NceConsistBackup(NceTrafficController t) {
 		tc = t;
 		workingNumConsists = NceCmdStationMemory.CabMemorySerial.NUM_CONSIST;
@@ -69,16 +69,16 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 			workingNumConsists = NceCmdStationMemory.CabMemoryUsb.NUM_CONSIST;
 		}
 	}
-
+	
 	public void run() {
 
 		// get file to write to
 		JFileChooser fc = new JFileChooser(FileUtil.getUserFilesPath());
 		fc.addChoosableFileFilter(new textFilter());
-
+		
 		File fs = new File ("NCE consist backup.txt");
 		fc.setSelectedFile(fs);
-
+		
 		int retVal = fc.showSaveDialog(null);
 		if (retVal != JFileChooser.APPROVE_OPTION)
 			return; // Canceled
@@ -86,15 +86,15 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 			return; // Canceled
 
 		File f = fc.getSelectedFile();
-		if (fc.getFileFilter() != fc.getAcceptAllFileFilter()){
-			// append .txt to file name if needed
-			String fileName = f.getAbsolutePath();
-			String fileNameLC = fileName.toLowerCase();
-			if (!fileNameLC.endsWith(".txt")){
-				fileName = fileName+".txt";
-				f = new File(fileName);
-			}
-		}
+        if (fc.getFileFilter() != fc.getAcceptAllFileFilter()){
+        	// append .txt to file name if needed
+        	String fileName = f.getAbsolutePath();
+        	String fileNameLC = fileName.toLowerCase();
+        	if (!fileNameLC.endsWith(".txt")){
+        		fileName = fileName+".txt";
+        		f = new File(fileName);
+        	}
+        }
 		if (f.exists()) {
 			if(JOptionPane.showConfirmDialog(null, "File "
 					+ f.getName() + " already exists, overwrite it?",
@@ -110,43 +110,43 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 		} catch (IOException e) {
 			return;
 		}
-
+		
 		if (JOptionPane.showConfirmDialog(null,
 				"Backup can take over a minute, continue?", "NCE Consist Backup",
 				JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 			fileOut.close();
 			return;
 		}
-
+		
 		// create a status frame
-		JPanel ps = new JPanel();
-		jmri.util.JmriJFrame fstatus = new jmri.util.JmriJFrame("Consist Backup");
-		fstatus.setLocationRelativeTo(null);
-		fstatus.setSize (200,100);
-		fstatus.getContentPane().add (ps);
-
-		ps.add (textConsist);
-		ps.add(consistNumber);
-
+	   	JPanel ps = new JPanel();
+	   	jmri.util.JmriJFrame fstatus = new jmri.util.JmriJFrame("Consist Backup");
+	   	fstatus.setLocationRelativeTo(null);
+	   	fstatus.setSize (200,100);
+	   	fstatus.getContentPane().add (ps);
+	   	
+	   	ps.add (textConsist);
+	   	ps.add(consistNumber);
+	   	
 		textConsist.setText("Consist line number:");
-		textConsist.setVisible(true);
-		consistNumber.setVisible(true);
-
+        textConsist.setVisible(true);
+        consistNumber.setVisible(true);
+        
 
 		// now read NCE CS consist memory and write to file
-
+		
 		waiting = 0;			// reset in case there was a previous error
 		fileValid = true;		// assume we're going to succeed
-		// output string to file
+	// output string to file
 
 
 		for (int consistNum = 0; consistNum < workingNumConsists; consistNum++) {
-
+			
 			consistNumber.setText(Integer.toString(consistNum));
 			fstatus.setVisible (true);
 
 			getNceConsist(consistNum);
-
+			
 			if (!fileValid)
 				consistNum = workingNumConsists;  // break out of for loop
 
@@ -165,7 +165,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 				fileOut.println(buf.toString());
 			}
 		}
-
+		
 		if (fileValid) {
 			// NCE file terminator
 			String line = ":0000";
@@ -175,7 +175,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 		// Write to disk and close file
 		fileOut.flush();
 		fileOut.close();
-
+		
 		// kill status panel
 		fstatus.dispose();
 
@@ -196,7 +196,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 		// wait for read to complete 
 		readWait();
 	}
-
+	
 	// wait up to 30 sec per read
 	private boolean readWait() {
 		int waitcount = 30;
@@ -205,7 +205,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 				try {
 					wait(1000);
 				} catch (InterruptedException e) {
-					Thread.currentThread().interrupt(); // retain if needed later
+				    Thread.currentThread().interrupt(); // retain if needed later
 				}
 			}
 			if (waitcount-- < 0) {
@@ -244,41 +244,35 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 			return;
 		}
 
-		// reply_1 was a set usb page cmd
-		if (r.getNumDataElements() == NceMessage.REPLY_1) {
-			return;
-		} else {
-			// load data buffer
-			for (int i = 0; i < replyLen; i++) {
-				nceConsistData[i] = (byte) r.getElement(i);
-			}
+		// load data buffer
+		for (int i = 0; i < NceMessage.REPLY_16; i++) {
+			nceConsistData[i] = (byte) r.getElement(i);
 		}
-
 		waiting--;
-
+		
 		// wake up backup thread
 		synchronized (this) {
 			notify();
 		}
 	}
-
+	
 	private static class textFilter extends javax.swing.filechooser.FileFilter {
-
+		
 		public boolean accept(File f){
 			if (f.isDirectory())
-				return true;
+			return true;
 			String name = f.getName();
 			if (name.matches(".*\\.txt"))
 				return true;
 			else
 				return false;
 		}
-
+		
 		public String getDescription() {
 			return "Text Documents (*.txt)";
 		}
 	}
 
 	static Logger log = LoggerFactory
-			.getLogger(NceConsistBackup.class.getName());
+	.getLogger(NceConsistBackup.class.getName());
 }
