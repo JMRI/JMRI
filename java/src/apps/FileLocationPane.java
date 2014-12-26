@@ -36,6 +36,9 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
 	private static final long serialVersionUID = -2492371396905648159L;
 	protected static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
     private boolean isDirty = false;
+    private boolean restartRequired = false;
+    private final JTextField scriptLocation = new JTextField();
+    private final JTextField userLocation = new JTextField();
 
     public FileLocationPane() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -52,12 +55,6 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
         throttleLocation.setText(jmri.jmrit.throttle.ThrottleFrame.getDefaultThrottleFolder());
         add(p);*/
         
-    }
-    
-    public static void save(){
-        FileUtil.setScriptsPath(scriptLocation.getText());
-        FileUtil.setUserFilesPath(userLocation.getText());
-        //jmri.jmrit.throttle.ThrottleFrame.setDefaultThrottleLocation(throttleLocation.getText());
     }
     
     private JPanel ScriptsLocation(){
@@ -132,10 +129,6 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
         return p;
     }
 
-    private static final JTextField scriptLocation = new JTextField();
-    private static final JTextField userLocation = new JTextField();
-    //protected static JTextField throttleLocation = new JTextField();
-
     @Override
     public String getPreferencesItem() {
         return "FILELOCATIONS"; // NOI18N
@@ -163,7 +156,7 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
 
     @Override
     public boolean isPersistant() {
-        return true;
+        return false;
     }
 
     @Override
@@ -173,7 +166,14 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
 
     @Override
     public void savePreferences() {
-        FileLocationPane.save();
+        if (!FileUtil.getUserFilesPath().equals(this.userLocation.getText())) {
+            FileUtil.setUserFilesPath(this.userLocation.getText());
+            this.restartRequired = true;
+        }
+        if (!FileUtil.getScriptsPath().equals(this.scriptLocation.getText())) {
+            FileUtil.setScriptsPath(this.scriptLocation.getText());
+            this.restartRequired = true;
+        }
     }
 
     @Override
@@ -181,5 +181,9 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
         return isDirty;
     }
 
-}
+    @Override
+    public boolean isRestartRequired() {
+        return this.restartRequired;
+    }
 
+}

@@ -22,10 +22,10 @@ import org.slf4j.LoggerFactory;
 public class RailroadNamePreferencesPanel extends JPanel implements PreferencesPanel {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -2483121076473347952L;
-	static Logger log = LoggerFactory.getLogger(RailroadNamePreferencesPanel.class);
+     *
+     */
+    private static final long serialVersionUID = -2483121076473347952L;
+    static Logger log = LoggerFactory.getLogger(RailroadNamePreferencesPanel.class);
     Border lineBorder;
     JTextField railroadName;
     JButton saveB;
@@ -107,7 +107,6 @@ public class RailroadNamePreferencesPanel extends JPanel implements PreferencesP
             }
         }
 
-
     }
 
     /**
@@ -179,5 +178,10 @@ public class RailroadNamePreferencesPanel extends JPanel implements PreferencesP
     @Override
     public boolean isDirty() {
         return this.preferences.isDirty();
+    }
+
+    @Override
+    public boolean isRestartRequired() {
+        return false;
     }
 }

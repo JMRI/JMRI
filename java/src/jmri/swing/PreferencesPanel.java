@@ -91,10 +91,16 @@ public interface PreferencesPanel {
     public abstract void savePreferences();
 
     /**
-     * Indicate that preferences need to be saved
+     * Indicate that preferences need to be saved.
      *
      * @return true if preferences need to be saved, false otherwise
      */
     public abstract boolean isDirty();
 
+    /**
+     * Indicate that the preferences will not take effect until restarted.
+     *
+     * @return true if the application needs to restart
+     */
+    public abstract boolean isRestartRequired();
 }

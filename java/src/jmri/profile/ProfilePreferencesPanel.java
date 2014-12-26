@@ -641,6 +641,12 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
     public boolean isDirty() {
         return false; // ProfileManager preferences are saved immediately, so this is always false
     }
+
+    @Override
+    public boolean isRestartRequired() {
+        // true if the next profile to use has changed, false otherwise
+        return !ProfileManager.defaultManager().getActiveProfile().equals(ProfileManager.defaultManager().getNextActiveProfile());
+    }
     /* Comment out until I get around to utilizing this, so Jenkins does not throw warnings.
      private static class ZipFileFilter extends FileFilter {
 

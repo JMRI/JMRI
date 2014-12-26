@@ -35,4 +35,8 @@ public abstract class OperationsPreferencesPanel extends OperationsPanel impleme
         return false;
     }
 
+    @Override
+    public boolean isRestartRequired() {
+        return false;
+    }
 }

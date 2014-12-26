@@ -378,4 +378,9 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
     public boolean isDirty() {
         return InstanceManager.getDefault(ThrottlesPreferences.class).isDirty();
     }
+
+    @Override
+    public boolean isRestartRequired() {
+        return true;
+    }
 }

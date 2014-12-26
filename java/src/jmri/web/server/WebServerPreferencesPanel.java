@@ -50,6 +50,7 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
     WebServerPreferences preferences;
     JFrame parentFrame = null;
     boolean enableSave;
+    private boolean restartRequired = false;
 
     public WebServerPreferencesPanel() {
         preferences = WebServerManager.getWebServerPreferences();
@@ -151,6 +152,7 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
                     JOptionPane.WARNING_MESSAGE);
             didSet = false;
         } else {
+            this.restartRequired = (preferences.getPort() != portNum);
             preferences.setPort(portNum);
         }
         preferences.setReadonlyPower(readonlyPower.isSelected());
@@ -341,5 +343,10 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
     @Override
     public boolean isDirty() {
         return this.preferences.isDirty();
+    }
+
+    @Override
+    public boolean isRestartRequired() {
+        return this.restartRequired;
     }
 }
