@@ -9,7 +9,6 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.trains.TrainSwitchListText;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,14 +19,15 @@ import org.slf4j.LoggerFactory;
  * @author Dan Boudreau Copyright (C) 2013
  * @version $Revision: 21846 $
  */
-public class EditSwitchListTextPanel extends OperationsPanel {
+public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -1972541065567773705L;
+     *
+     */
+    private static final long serialVersionUID = -1972541065567773705L;
+    private static final Logger log = LoggerFactory.getLogger(EditSwitchListTextPanel.class);
 
-	protected static final ResourceBundle rb = ResourceBundle
+    protected static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
     // major buttons
@@ -58,7 +58,7 @@ public class EditSwitchListTextPanel extends OperationsPanel {
         // the following code sets the frame's initial state
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-		// manifest text fields
+        // manifest text fields
         JPanel pSwitchList = new JPanel();
         JScrollPane pSwitchListPane = new JScrollPane(pSwitchList);
         pSwitchListPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutSwitchList")));
@@ -204,31 +204,61 @@ public class EditSwitchListTextPanel extends OperationsPanel {
             trainDoneTextField.setText(rb.getString("TrainDone"));
         }
         if (ae.getSource() == saveButton) {
-            TrainSwitchListText.setStringSwitchListFor(switchListForTextField.getText());
-            TrainSwitchListText.setStringScheduledWork(scheduledWorkTextField.getText());
-
-            TrainSwitchListText.setStringDepartsAt(departsAtTextField.getText());
-            TrainSwitchListText.setStringDepartsAtExpectedArrival(departsAtExpectedArrivalTextField.getText());
-            TrainSwitchListText.setStringDepartedExpected(departedExpectedTextField.getText());
-
-            TrainSwitchListText.setStringVisitNumber(visitNumberTextField.getText());
-            TrainSwitchListText.setStringVisitNumberDeparted(visitNumberDepartedTextField.getText());
-            TrainSwitchListText.setStringVisitNumberTerminates(visitNumberTerminatesTextField.getText());
-            TrainSwitchListText.setStringVisitNumberTerminatesDeparted(visitNumberTerminatesDepartedTextField.getText());
-            TrainSwitchListText.setStringVisitNumberDone(visitNumberDoneTextField.getText());
-
-            TrainSwitchListText.setStringTrainDirectionChange(trainDirectionChangeTextField.getText());
-            TrainSwitchListText.setStringNoCarPickUps(noCarPickUpsTextField.getText());
-            TrainSwitchListText.setStringNoCarDrops(noCarDropsTextField.getText());
-            TrainSwitchListText.setStringTrainDone(trainDoneTextField.getText());
-
-            OperationsSetupXml.instance().writeOperationsFile();
-
+            this.savePreferences();
             if (Setup.isCloseWindowOnSaveEnabled()) {
                 dispose();
             }
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(EditSwitchListTextPanel.class);
+    @Override
+    public String getTabbedPreferencesTitle() {
+        return Bundle.getMessage("TitleSwitchListText"); // NOI18N
+    }
+
+    @Override
+    public String getPreferencesTooltip() {
+        return null;
+    }
+
+    @Override
+    public void savePreferences() {
+        TrainSwitchListText.setStringSwitchListFor(switchListForTextField.getText());
+        TrainSwitchListText.setStringScheduledWork(scheduledWorkTextField.getText());
+
+        TrainSwitchListText.setStringDepartsAt(departsAtTextField.getText());
+        TrainSwitchListText.setStringDepartsAtExpectedArrival(departsAtExpectedArrivalTextField.getText());
+        TrainSwitchListText.setStringDepartedExpected(departedExpectedTextField.getText());
+
+        TrainSwitchListText.setStringVisitNumber(visitNumberTextField.getText());
+        TrainSwitchListText.setStringVisitNumberDeparted(visitNumberDepartedTextField.getText());
+        TrainSwitchListText.setStringVisitNumberTerminates(visitNumberTerminatesTextField.getText());
+        TrainSwitchListText.setStringVisitNumberTerminatesDeparted(visitNumberTerminatesDepartedTextField.getText());
+        TrainSwitchListText.setStringVisitNumberDone(visitNumberDoneTextField.getText());
+
+        TrainSwitchListText.setStringTrainDirectionChange(trainDirectionChangeTextField.getText());
+        TrainSwitchListText.setStringNoCarPickUps(noCarPickUpsTextField.getText());
+        TrainSwitchListText.setStringNoCarDrops(noCarDropsTextField.getText());
+        TrainSwitchListText.setStringTrainDone(trainDoneTextField.getText());
+
+        OperationsSetupXml.instance().writeOperationsFile();
+    }
+
+    @Override
+    public boolean isDirty() {
+        return (TrainSwitchListText.getStringSwitchListFor().equals(switchListForTextField.getText())
+                || TrainSwitchListText.getStringScheduledWork().equals(scheduledWorkTextField.getText())
+                || TrainSwitchListText.getStringDepartsAt().equals(departsAtTextField.getText())
+                || TrainSwitchListText.getStringDepartsAtExpectedArrival().equals(departsAtExpectedArrivalTextField.getText())
+                || TrainSwitchListText.getStringDepartedExpected().equals(departedExpectedTextField.getText())
+                || TrainSwitchListText.getStringVisitNumber().equals(visitNumberTextField.getText())
+                || TrainSwitchListText.getStringVisitNumberDeparted().equals(visitNumberDepartedTextField.getText())
+                || TrainSwitchListText.getStringVisitNumberTerminates().equals(visitNumberTerminatesTextField.getText())
+                || TrainSwitchListText.getStringVisitNumberTerminatesDeparted().equals(visitNumberTerminatesDepartedTextField.getText())
+                || TrainSwitchListText.getStringVisitNumberDone().equals(visitNumberDoneTextField.getText())
+                || TrainSwitchListText.getStringTrainDirectionChange().equals(trainDirectionChangeTextField.getText())
+                || TrainSwitchListText.getStringNoCarPickUps().equals(noCarPickUpsTextField.getText())
+                || TrainSwitchListText.getStringNoCarDrops().equals(noCarDropsTextField.getText())
+                || TrainSwitchListText.getStringTrainDone().equals(trainDoneTextField.getText()));
+    }
 }

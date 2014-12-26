@@ -9,7 +9,6 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManifestText;
 import org.slf4j.Logger;
@@ -21,21 +20,22 @@ import org.slf4j.LoggerFactory;
  * @author Dan Boudreau Copyright (C) 2013
  * @version $Revision: 21846 $
  */
-public class EditManifestTextPanel extends OperationsPanel {
+public class EditManifestTextPanel extends OperationsPreferencesPanel {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 4953082330888903645L;
+     *
+     */
+    private static final long serialVersionUID = 4953082330888903645L;
+    private static final Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class);
 
-	protected static final ResourceBundle rb = ResourceBundle
+    protected static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
     // major buttons
     JButton saveButton = new JButton(Bundle.getMessage("Save"));
     JButton resetButton = new JButton(rb.getString("Reset"));
 
-	// text field
+    // text field
     JTextField manifestForTrainTextField = new JTextField(60);
     JTextField validTextField = new JTextField(60);
     JTextField scheduledWorkAtTextField = new JTextField(60);
@@ -65,7 +65,7 @@ public class EditManifestTextPanel extends OperationsPanel {
         // the following code sets the frame's initial state
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-		// manifest text fields
+        // manifest text fields
         JPanel pManifest = new JPanel();
         JScrollPane pManifestPane = new JScrollPane(pManifest);
         pManifestPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutManifest")));
@@ -275,41 +275,77 @@ public class EditManifestTextPanel extends OperationsPanel {
             locoAndCabooseChangeAtTextField.setText(rb.getString("LocoAndCabooseChangeAt"));
         }
         if (ae.getSource() == saveButton) {
-            TrainManifestText.setStringManifestForTrain(manifestForTrainTextField.getText());
-            TrainManifestText.setStringValid(validTextField.getText());
-            TrainManifestText.setStringScheduledWork(scheduledWorkAtTextField.getText());
-            TrainManifestText.setStringWorkDepartureTime(scheduledWorkDepartureTextField.getText());
-            TrainManifestText.setStringWorkArrivalTime(scheduledWorkArrivalTextField.getText());
-            TrainManifestText.setStringNoScheduledWork(noScheduledWorkAtTextField.getText());
-            TrainManifestText.setStringNoScheduledWorkWithRouteComment(noScheduledWorkAtWithRouteCommentTextField
-                    .getText());
-            TrainManifestText.setStringDepartTime(departTimeTextField.getText());
-            TrainManifestText.setStringTrainDepartsCars(trainDepartsCarsTextField.getText());
-            TrainManifestText.setStringTrainDepartsLoads(trainDepartsLoadsTextField.getText());
-            TrainManifestText.setStringTrainTerminates(trainTerminatesInTextField.getText());
-
-            TrainManifestText.setStringDestination(destinationTextField.getText());
-            TrainManifestText.setStringTo(toTextField.getText());
-            TrainManifestText.setStringFrom(fromTextField.getText());
-            TrainManifestText.setStringDest(destTextField.getText());
-            TrainManifestText.setStringFinalDestination(finalDestinationTextField.getText());
-
-            TrainManifestText.setStringAddHelpers(addHelpersAtTextField.getText());
-            TrainManifestText.setStringRemoveHelpers(removeHelpersAtTextField.getText());
-            TrainManifestText.setStringLocoChange(locoChangeAtTextField.getText());
-            TrainManifestText.setStringCabooseChange(cabooseChangeAtTextField.getText());
-            TrainManifestText.setStringLocoAndCabooseChange(locoAndCabooseChangeAtTextField.getText());
-
-            OperationsSetupXml.instance().writeOperationsFile();
-
-            // recreate all train manifests
-            TrainManager.instance().setTrainsModified();
-
+            this.savePreferences();
             if (Setup.isCloseWindowOnSaveEnabled()) {
                 dispose();
             }
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class);
+    @Override
+    public String getTabbedPreferencesTitle() {
+        return Bundle.getMessage("TitleManifestText"); // NOI18N
+    }
+
+    @Override
+    public String getPreferencesTooltip() {
+        return null;
+    }
+
+    @Override
+    public void savePreferences() {
+        TrainManifestText.setStringManifestForTrain(manifestForTrainTextField.getText());
+        TrainManifestText.setStringValid(validTextField.getText());
+        TrainManifestText.setStringScheduledWork(scheduledWorkAtTextField.getText());
+        TrainManifestText.setStringWorkDepartureTime(scheduledWorkDepartureTextField.getText());
+        TrainManifestText.setStringWorkArrivalTime(scheduledWorkArrivalTextField.getText());
+        TrainManifestText.setStringNoScheduledWork(noScheduledWorkAtTextField.getText());
+        TrainManifestText.setStringNoScheduledWorkWithRouteComment(noScheduledWorkAtWithRouteCommentTextField.getText());
+        TrainManifestText.setStringDepartTime(departTimeTextField.getText());
+        TrainManifestText.setStringTrainDepartsCars(trainDepartsCarsTextField.getText());
+        TrainManifestText.setStringTrainDepartsLoads(trainDepartsLoadsTextField.getText());
+        TrainManifestText.setStringTrainTerminates(trainTerminatesInTextField.getText());
+
+        TrainManifestText.setStringDestination(destinationTextField.getText());
+        TrainManifestText.setStringTo(toTextField.getText());
+        TrainManifestText.setStringFrom(fromTextField.getText());
+        TrainManifestText.setStringDest(destTextField.getText());
+        TrainManifestText.setStringFinalDestination(finalDestinationTextField.getText());
+
+        TrainManifestText.setStringAddHelpers(addHelpersAtTextField.getText());
+        TrainManifestText.setStringRemoveHelpers(removeHelpersAtTextField.getText());
+        TrainManifestText.setStringLocoChange(locoChangeAtTextField.getText());
+        TrainManifestText.setStringCabooseChange(cabooseChangeAtTextField.getText());
+        TrainManifestText.setStringLocoAndCabooseChange(locoAndCabooseChangeAtTextField.getText());
+
+        OperationsSetupXml.instance().writeOperationsFile();
+
+        // recreate all train manifests
+        TrainManager.instance().setTrainsModified();
+    }
+
+    @Override
+    public boolean isDirty() {
+        return (TrainManifestText.getStringManifestForTrain().equals(manifestForTrainTextField.getText())
+                || TrainManifestText.getStringValid().equals(validTextField.getText())
+                || TrainManifestText.getStringScheduledWork().equals(scheduledWorkAtTextField.getText())
+                || TrainManifestText.getStringWorkDepartureTime().equals(scheduledWorkDepartureTextField.getText())
+                || TrainManifestText.getStringWorkArrivalTime().equals(scheduledWorkArrivalTextField.getText())
+                || TrainManifestText.getStringNoScheduledWork().equals(noScheduledWorkAtTextField.getText())
+                || TrainManifestText.getStringNoScheduledWorkWithRouteComment().equals(noScheduledWorkAtWithRouteCommentTextField.getText())
+                || TrainManifestText.getStringDepartTime().equals(departTimeTextField.getText())
+                || TrainManifestText.getStringTrainDepartsCars().equals(trainDepartsCarsTextField.getText())
+                || TrainManifestText.getStringTrainDepartsLoads().equals(trainDepartsLoadsTextField.getText())
+                || TrainManifestText.getStringTrainTerminates().equals(trainTerminatesInTextField.getText())
+                || TrainManifestText.getStringDestination().equals(destinationTextField.getText())
+                || TrainManifestText.getStringTo().equals(toTextField.getText())
+                || TrainManifestText.getStringFrom().equals(fromTextField.getText())
+                || TrainManifestText.getStringDest().equals(destTextField.getText())
+                || TrainManifestText.getStringFinalDestination().equals(finalDestinationTextField.getText())
+                || TrainManifestText.getStringAddHelpers().equals(addHelpersAtTextField.getText())
+                || TrainManifestText.getStringRemoveHelpers().equals(removeHelpersAtTextField.getText())
+                || TrainManifestText.getStringLocoChange().equals(locoChangeAtTextField.getText())
+                || TrainManifestText.getStringCabooseChange().equals(cabooseChangeAtTextField.getText())
+                || TrainManifestText.getStringLocoAndCabooseChange().equals(locoAndCabooseChangeAtTextField.getText()));
+    }
 }

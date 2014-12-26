@@ -8,7 +8,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.trains.TrainManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,26 +18,27 @@ import org.slf4j.LoggerFactory;
  * @author Dan Boudreau Copyright (C) 2012
  * @version $Revision: 21846 $
  */
-public class PrintMoreOptionPanel extends OperationsPanel {
+public class PrintMoreOptionPanel extends OperationsPreferencesPanel {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5124421051550630914L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = -5124421051550630914L;
+    private static final Logger log = LoggerFactory.getLogger(OperationsSetupFrame.class);
 
-	// labels
+    // labels
     // major buttons
     JButton saveButton = new JButton(Bundle.getMessage("Save"));
 
-	// radio buttons
-	// check boxes
+    // radio buttons
+    // check boxes
     // text field
     JTextField tab1TextField = new JTextField(2);
     JTextField tab2TextField = new JTextField(2);
     JTextField tab3TextField = new JTextField(2);
 
-	// text area
-	// combo boxes
+    // text area
+    // combo boxes
     public PrintMoreOptionPanel() {
 
         // the following code sets the frame's initial state
@@ -89,25 +89,49 @@ public class PrintMoreOptionPanel extends OperationsPanel {
     @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == saveButton) {
-
-            try {
-                Setup.setTab1length(Integer.parseInt(tab1TextField.getText()));
-                Setup.setTab2length(Integer.parseInt(tab2TextField.getText()));
-                Setup.setTab3length(Integer.parseInt(tab3TextField.getText()));
-            } catch (Exception e) {
-                log.error("Tab wasn't a number");
-            }
-
-            OperationsSetupXml.instance().writeOperationsFile();
-
-            // recreate all train manifests
-            TrainManager.instance().setTrainsModified();
-
+            this.savePreferences();
             if (Setup.isCloseWindowOnSaveEnabled()) {
                 dispose();
             }
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(OperationsSetupFrame.class);
+    @Override
+    public String getTabbedPreferencesTitle() {
+        return Bundle.getMessage("TitlePrintMoreOptions"); // NOI18N
+    }
+
+    @Override
+    public String getPreferencesTooltip() {
+        return null;
+    }
+
+    @Override
+    public void savePreferences() {
+
+        try {
+            Setup.setTab1length(Integer.parseInt(tab1TextField.getText()));
+            Setup.setTab2length(Integer.parseInt(tab2TextField.getText()));
+            Setup.setTab3length(Integer.parseInt(tab3TextField.getText()));
+        } catch (Exception e) {
+            log.error("Tab wasn't a number");
+        }
+
+        OperationsSetupXml.instance().writeOperationsFile();
+
+        // recreate all train manifests
+        TrainManager.instance().setTrainsModified();
+    }
+
+    @Override
+    public boolean isDirty() {
+        try {
+            return (Setup.getTab1Length() != Integer.parseInt(tab1TextField.getText())
+                    || Setup.getTab2Length() != Integer.parseInt(tab2TextField.getText())
+                    || Setup.getTab3Length() != Integer.parseInt(tab3TextField.getText()));
+        } catch (Exception e) {
+            log.error("Tab wasn't a number");
+        }
+        return true;
+    }
 }

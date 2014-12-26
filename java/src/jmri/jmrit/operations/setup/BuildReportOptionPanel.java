@@ -13,7 +13,6 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import jmri.jmrit.operations.OperationsPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,14 +22,12 @@ import org.slf4j.LoggerFactory;
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012, 2013
  * @version $Revision: 21643 $
  */
-public class BuildReportOptionPanel extends OperationsPanel {
+public class BuildReportOptionPanel extends OperationsPreferencesPanel {
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 755494379884398257L;
+    private static final long serialVersionUID = 755494379884398257L;
+    private static final Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class);
 
-	// major buttons
+    // major buttons
     JButton saveButton = new JButton(Bundle.getMessage("Save"));
 
     // radio buttons
@@ -53,7 +50,7 @@ public class BuildReportOptionPanel extends OperationsPanel {
 
     public BuildReportOptionPanel() {
 
-		// the following code sets the frame's initial state
+        // the following code sets the frame's initial state
         // add tool tips
         saveButton.setToolTipText(Bundle.getMessage("SaveToolTip"));
         buildReportCheckBox.setToolTipText(Bundle.getMessage("CreatesTextFileTip"));
@@ -145,41 +142,7 @@ public class BuildReportOptionPanel extends OperationsPanel {
     @Override
     public void buttonActionPerformed(ActionEvent ae) {
         if (ae.getSource() == saveButton) {
-
-            // font size
-            Setup.setBuildReportFontSize((Integer) fontSizeComboBox.getSelectedItem());
-
-            // build report level
-            if (buildReportMin.isSelected()) {
-                Setup.setBuildReportLevel(Setup.BUILD_REPORT_MINIMAL);
-            } else if (buildReportNor.isSelected()) {
-                Setup.setBuildReportLevel(Setup.BUILD_REPORT_NORMAL);
-            } else if (buildReportMax.isSelected()) {
-                Setup.setBuildReportLevel(Setup.BUILD_REPORT_DETAILED);
-            } else if (buildReportVD.isSelected()) {
-                Setup.setBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
-            }
-
-            // router build report level
-            String oldReportLevel = Setup.getRouterBuildReportLevel();
-            if (buildReportRouterNor.isSelected()) {
-                Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_NORMAL);
-            } else if (buildReportRouterMax.isSelected()) {
-                Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_DETAILED);
-            } else if (buildReportRouterVD.isSelected()) {
-                Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
-            }
-
-            if (!oldReportLevel.equals(Setup.getRouterBuildReportLevel())) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("buildReportRouter"), Bundle
-                        .getMessage("buildReportRouterTitle"), JOptionPane.INFORMATION_MESSAGE);
-            }
-
-            Setup.setBuildReportEditorEnabled(buildReportCheckBox.isSelected());
-            Setup.setBuildReportIndentEnabled(buildReportIndentCheckBox.isSelected());
-            Setup.setBuildReportAlwaysPreviewEnabled(buildReportAlwaysPreviewCheckBox.isSelected());
-
-            OperationsSetupXml.instance().writeOperationsFile();
+            this.savePreferences();
             if (Setup.isCloseWindowOnSaveEnabled()) {
                 dispose();
             }
@@ -217,5 +180,81 @@ public class BuildReportOptionPanel extends OperationsPanel {
                 || !buildReportVD.isSelected());
     }
 
-    private static final Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class);
+    @Override
+    public String getTabbedPreferencesTitle() {
+        return Bundle.getMessage("TitleBuildReportOptions"); // NOI18N
+    }
+
+    @Override
+    public String getPreferencesTooltip() {
+        return null;
+    }
+
+    @Override
+    public void savePreferences() {
+        // font size
+        Setup.setBuildReportFontSize((Integer) fontSizeComboBox.getSelectedItem());
+
+        // build report level
+        if (buildReportMin.isSelected()) {
+            Setup.setBuildReportLevel(Setup.BUILD_REPORT_MINIMAL);
+        } else if (buildReportNor.isSelected()) {
+            Setup.setBuildReportLevel(Setup.BUILD_REPORT_NORMAL);
+        } else if (buildReportMax.isSelected()) {
+            Setup.setBuildReportLevel(Setup.BUILD_REPORT_DETAILED);
+        } else if (buildReportVD.isSelected()) {
+            Setup.setBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
+        }
+
+        // router build report level
+        String oldReportLevel = Setup.getRouterBuildReportLevel();
+        if (buildReportRouterNor.isSelected()) {
+            Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_NORMAL);
+        } else if (buildReportRouterMax.isSelected()) {
+            Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_DETAILED);
+        } else if (buildReportRouterVD.isSelected()) {
+            Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
+        }
+
+        if (!oldReportLevel.equals(Setup.getRouterBuildReportLevel())) {
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("buildReportRouter"), Bundle
+                    .getMessage("buildReportRouterTitle"), JOptionPane.INFORMATION_MESSAGE);
+        }
+
+        Setup.setBuildReportEditorEnabled(buildReportCheckBox.isSelected());
+        Setup.setBuildReportIndentEnabled(buildReportIndentCheckBox.isSelected());
+        Setup.setBuildReportAlwaysPreviewEnabled(buildReportAlwaysPreviewCheckBox.isSelected());
+
+        OperationsSetupXml.instance().writeOperationsFile();
+    }
+
+    @Override
+    public boolean isDirty() {
+        String reportLevel = Setup.getBuildReportLevel();
+        if (buildReportMin.isSelected()) {
+            reportLevel = Setup.BUILD_REPORT_MINIMAL;
+        } else if (buildReportNor.isSelected()) {
+            reportLevel = Setup.BUILD_REPORT_NORMAL;
+        } else if (buildReportMax.isSelected()) {
+            reportLevel = Setup.BUILD_REPORT_DETAILED;
+        } else if (buildReportVD.isSelected()) {
+            reportLevel = Setup.BUILD_REPORT_VERY_DETAILED;
+        }
+
+        String routerReportLevel = Setup.getRouterBuildReportLevel();
+        if (buildReportRouterNor.isSelected()) {
+            routerReportLevel = Setup.BUILD_REPORT_NORMAL;
+        } else if (buildReportRouterMax.isSelected()) {
+            routerReportLevel = Setup.BUILD_REPORT_DETAILED;
+        } else if (buildReportRouterVD.isSelected()) {
+            routerReportLevel = Setup.BUILD_REPORT_VERY_DETAILED;
+        }
+
+        return (Setup.getBuildReportFontSize() != (Integer) fontSizeComboBox.getSelectedItem()
+                || !reportLevel.equals(Setup.getBuildReportLevel())
+                || !routerReportLevel.equals(Setup.getRouterBuildReportLevel())
+                || Setup.isBuildReportEditorEnabled() != buildReportCheckBox.isSelected()
+                || Setup.isBuildReportIndentEnabled() != buildReportIndentCheckBox.isSelected()
+                || Setup.isBuildReportAlwaysPreviewEnabled() != buildReportAlwaysPreviewCheckBox.isSelected());
+    }
 }
