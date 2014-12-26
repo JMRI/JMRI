@@ -35,7 +35,7 @@ class ScheduleOptionsFrame extends OperationsFrame {
 	JTextField factorTextField = new JTextField(5);
 
 	// combo boxes
-	JComboBox trackBox = new JComboBox();
+	JComboBox<Track> trackBox = new JComboBox<>();
 
 	// radio buttons
 

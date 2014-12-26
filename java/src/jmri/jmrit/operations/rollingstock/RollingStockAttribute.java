@@ -110,13 +110,13 @@ public class RollingStockAttribute {
 		return list.contains(name);
 	}
 
-	public JComboBox getComboBox() {
-		JComboBox box = new JComboBox();
+	public JComboBox<String> getComboBox() {
+		JComboBox<String> box = new JComboBox<>();
 		updateComboBox(box);
 		return box;
 	}
 
-	public void updateComboBox(JComboBox box) {
+	public void updateComboBox(JComboBox<String> box) {
 		box.removeAllItems();
 		for (String name : getNames())
 			box.addItem(name);

@@ -51,7 +51,7 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
 	JTextField trackMinLengthTextField = new JTextField(5);
 
 	// combo box
-	JComboBox comboBoxPools = new JComboBox();
+	JComboBox<Pool> comboBoxPools = new JComboBox<>();
 
 	// major buttons
 	JButton addButton = new JButton(Bundle.getMessage("Add"));
@@ -228,19 +228,13 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
 						.getMessage("ErrorTrackLength"), JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			if (comboBoxPools.getSelectedItem() != null && comboBoxPools.getSelectedItem().equals(Location.NONE)) {
-				_track.setPool(null);
-				if (_pool != null)
-					_pool.removePropertyChangeListener(this);
-				_pool = null;
-			} else if (comboBoxPools.getSelectedItem() != null
-					&& !comboBoxPools.getSelectedItem().equals(Location.NONE)) {
-				if (_pool != null)
-					_pool.removePropertyChangeListener(this);
-				_pool = (Pool) comboBoxPools.getSelectedItem();
-				_pool.addPropertyChangeListener(this);
-				_track.setPool(_pool);
-			}
+			
+			if (_pool != null)
+				_pool.removePropertyChangeListener(this);
+			_pool = (Pool) comboBoxPools.getSelectedItem();
+			if (_pool != null)
+				_pool.addPropertyChangeListener(this);			
+			_track.setPool(_pool);	// this causes a property change to this frame
 
 			// save location file
 			OperationsXml.save();
@@ -271,6 +265,7 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
 
 		if (e.getPropertyName().equals(Pool.LISTCHANGE_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Location.LENGTH_CHANGED_PROPERTY)
+				|| e.getPropertyName().equals(Track.POOL_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Track.MIN_LENGTH_CHANGED_PROPERTY))
 			updatePoolStatus();
 	}

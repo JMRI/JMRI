@@ -894,9 +894,9 @@ public class Location implements java.beans.PropertyChangeListener {
 	 * @param box
 	 *            JComboBox to be updated.
 	 */
-	public void updateComboBox(JComboBox box) {
+	public void updateComboBox(JComboBox<Track> box) {
 		box.removeAllItems();
-		box.addItem(NONE);
+		box.addItem(null);
 		List<Track> tracks = getTrackByNameList(null);
 		for (Track track : tracks) {
 			box.addItem(track);
@@ -915,7 +915,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	 * @param destination
 	 *            When true, the tracks are destinations for the rs.
 	 */
-	public void updateComboBox(JComboBox box, RollingStock rs, boolean filter, boolean destination) {
+	public void updateComboBox(JComboBox<Track> box, RollingStock rs, boolean filter, boolean destination) {
 		updateComboBox(box);
 		if (!filter || rs == null)
 			return;
@@ -987,9 +987,9 @@ public class Location implements java.beans.PropertyChangeListener {
 				.size()));
 	}
 
-	public void updatePoolComboBox(JComboBox box) {
+	public void updatePoolComboBox(JComboBox<Pool> box) {
 		box.removeAllItems();
-		box.addItem(NONE);
+		box.addItem(null);
 		for (Pool pool : getPoolsByNameList()) {
 			box.addItem(pool);
 		}

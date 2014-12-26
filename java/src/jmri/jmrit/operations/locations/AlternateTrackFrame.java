@@ -29,7 +29,7 @@ class AlternateTrackFrame extends OperationsFrame{
 	private static final long serialVersionUID = -9027155799954540567L;
 
 	// combo boxes
-	JComboBox trackBox = new JComboBox();
+	JComboBox<Track> trackBox = new JComboBox<>();
 	
 	// radio buttons
 	
@@ -75,10 +75,7 @@ class AlternateTrackFrame extends OperationsFrame{
 	
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == saveButton){
-			if (trackBox.getSelectedItem() != null && !trackBox.getSelectedItem().equals(Location.NONE))
-				_track.setAlternateTrack((Track)trackBox.getSelectedItem());
-			else 
-				_track.setAlternateTrack(null);
+			_track.setAlternateTrack((Track)trackBox.getSelectedItem());
 			OperationsXml.save();
 			if (Setup.isCloseWindowOnSaveEnabled())
 				dispose();
