@@ -231,6 +231,7 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 	List<String> tempCars;
 	
 	public void testCarEditFrame(){	
+		loadCars();		// load cars
 		CarEditFrame f = new CarEditFrame();
 		f.setTitle("Test Add Car Frame");
 		f.initComponents();
@@ -312,6 +313,8 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 	public void testCarEditFrameRead(){
 		loadCars();		// load cars
 		CarManager cManager = CarManager.instance();
+		// should have 5 cars now
+		Assert.assertEquals("number of cars", 5, cManager.getNumEntries());
 		Car c1 = cManager.getByRoadAndNumber("NH", "1");
 
 		CarEditFrame f = new CarEditFrame();
@@ -339,7 +342,7 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
         getHelper().enterClickAndLeave( new MouseEventData( this, f.deleteButton ) );
 		
 		// should have 5 cars now
-		Assert.assertEquals("number of cars", 5, cManager.getNumEntries());
+		Assert.assertEquals("number of cars", 4, cManager.getNumEntries());
 		
 		f.dispose();
 	}

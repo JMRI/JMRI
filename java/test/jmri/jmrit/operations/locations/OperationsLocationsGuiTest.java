@@ -516,18 +516,18 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("Schedule 1", sch1, sm.getScheduleByName("new schedule"));
 		Assert.assertEquals("Schedule 2", sch2, sm.getScheduleByName("newer schedule"));
 		
-		JComboBox box = sm.getComboBox();
-		Assert.assertEquals("3 First schedule name", "", box.getItemAt(0));
+		JComboBox<Schedule> box = sm.getComboBox();
+		Assert.assertEquals("3 First schedule name", null, box.getItemAt(0));
 		Assert.assertEquals("3 First schedule name", sch1, box.getItemAt(1));
 		Assert.assertEquals("3 First schedule name", sch2, box.getItemAt(2));
 		
-		JComboBox box2 = sm.getSpursByScheduleComboBox(s1);
+		JComboBox<LocationTrackPair> box2 = sm.getSpursByScheduleComboBox(s1);
 		Assert.assertEquals("First siding name", null, box2.getItemAt(0));
 		
 		// now add a schedule to siding
 		t.setScheduleId(sch1.getId());
 		
-		JComboBox box3 = sm.getSpursByScheduleComboBox(s1);
+		JComboBox<LocationTrackPair> box3 = sm.getSpursByScheduleComboBox(s1);
 		LocationTrackPair ltp = (LocationTrackPair)box3.getItemAt(0);
 		
 		Assert.assertEquals("Location track pair location", l, ltp.getLocation()); 

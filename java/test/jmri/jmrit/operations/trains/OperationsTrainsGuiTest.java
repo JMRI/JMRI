@@ -709,6 +709,10 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		jmri.jmrit.display.panelEditor.PanelEditor editor = new jmri.jmrit.display.panelEditor.PanelEditor(
 				"Train Test Panel");
 		PanelMenu.instance().addEditorPanel(editor);
+		
+		// confirm panel creation
+		JmriJFrame f = JmriJFrame.getFrame("Train Test Panel");
+		Assert.assertNotNull(f);
 
 		// Place train icons on panel
 		Setup.setPanelName("Train Test Panel");
@@ -1037,12 +1041,12 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		editor.getTargetFrame().dispose();
 	}
 
-	public void testTrainTestPanel() {
-		// confirm panel creation
-		JmriJFrame f = JmriJFrame.getFrame("Train Test Panel");
-		Assert.assertNotNull(f);
-
-	}
+//	public void testTrainTestPanel() {
+//		// confirm panel creation
+//		JmriJFrame f = JmriJFrame.getFrame("Train Test Panel");
+//		Assert.assertNotNull(f);
+//
+//	}
 
 	@SuppressWarnings("unchecked")
 	private void pressDialogButton(JmriJFrame f, String buttonName) {
