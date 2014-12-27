@@ -2,7 +2,6 @@
 package apps.gui3;
 
 import apps.AppConfigBase;
-import apps.GuiLafConfigPane;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.awt.BorderLayout;
@@ -48,6 +47,7 @@ import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.JmrixConfigPane;
 import jmri.swing.PreferencesPanel;
+import jmri.swing.PreferencesSubPanel;
 import jmri.util.FileUtil;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -193,49 +193,21 @@ public class TabbedPreferences extends AppConfigBase {
                 connectionPanel, false, null);
 
         try {
-            // DISPLAY/GUI items are a special case since a single object
-            // provides multiple panels
-            GuiLafConfigPane gui = new GuiLafConfigPane();
-            items.add(0, gui);
-            this.preferencesPanels.put(gui.getClass().getCanonicalName(), gui);
-            addItem(gui.getPreferencesItem(),
-                    gui.getPreferencesItemText(),
-                    gui.getTabbedPreferencesTitle(),
-                    gui.getLabelKey(),
-                    gui,
-                    gui.isPersistant(),
-                    gui.getPreferencesTooltip()
-            );
-            addItem(gui.getPreferencesItem(),
-                    gui.getPreferencesItemText(),
-                    rb.getString("TabbedLayoutLocale"),
-                    rb.getString("LabelTabbedLayoutLocale"),
-                    gui.doLocale(),
-                    false,
-                    null
-            );
-        } catch (Exception ex) {
-            log.error("Error in trying to add display config to the preferences "
-                    + ex.toString());
-        }
-        try {
             List<String> classNames = (new ObjectMapper()).readValue(
                     ResourceBundle.getBundle("apps.AppsStructureBundle").getString("PreferencesPanels"),
                     new TypeReference<List<String>>() {
                     });
             for (String className : classNames) {
                 try {
-                    PreferencesPanel panel = (PreferencesPanel) Class.forName(
-                            className).newInstance();
-                    this.preferencesPanels.put(className, panel);
-                    addItem(panel.getPreferencesItem(),
-                            panel.getPreferencesItemText(),
-                            panel.getTabbedPreferencesTitle(),
-                            panel.getLabelKey(),
-                            panel.getPreferencesComponent(),
-                            panel.isPersistant(),
-                            panel.getPreferencesTooltip()
-                    );
+                    PreferencesPanel panel = (PreferencesPanel) Class.forName(className).newInstance();
+                    if (panel instanceof PreferencesSubPanel) {
+                        className = ((PreferencesSubPanel) panel).getParentClassName();
+                        if (!this.preferencesPanels.containsKey(className)) {
+                            this.addPreferencesPanel((PreferencesPanel) Class.forName(className).newInstance());
+                        }
+                        ((PreferencesSubPanel) panel).setParent(this.preferencesPanels.get(className));
+                    }
+                    this.addPreferencesPanel(panel);
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
                     log.error("Unable to add preferences class (" + className + ")", e);
                 }
@@ -375,6 +347,18 @@ public class TabbedPreferences extends AppConfigBase {
     void selection(String View) {
         CardLayout cl = (CardLayout) (detailpanel.getLayout());
         cl.show(detailpanel, View);
+    }
+
+    public void addPreferencesPanel(PreferencesPanel panel) {
+        this.preferencesPanels.put(panel.getClass().getName(), panel);
+        addItem(panel.getPreferencesItem(),
+                panel.getPreferencesItemText(),
+                panel.getTabbedPreferencesTitle(),
+                panel.getLabelKey(),
+                panel.getPreferencesComponent(),
+                panel.isPersistant(),
+                panel.getPreferencesTooltip()
+        );
     }
 
     public void addItem(String prefItem, String itemText, String tabtitle,
@@ -571,7 +555,6 @@ public class TabbedPreferences extends AppConfigBase {
     }
 
     JmrixConfigPane comm1;
-    GuiLafConfigPane guiPrefs;
 
     private void removeTab(ActionEvent e, int x) {
         int i;

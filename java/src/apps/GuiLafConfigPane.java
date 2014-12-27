@@ -46,7 +46,7 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
      */
     private static final long serialVersionUID = -3846942336860819413L;
 
-    private static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
+    static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
 
     HashMap<String, String> installedLAFs;
     ButtonGroup LAFGroup;
@@ -271,7 +271,8 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     @Override
     public boolean isDirty() {
         return (this.dirty
-                || SwingSettings.getNonStandardMouseEvent() != mouseEvent.isSelected());
+                || SwingSettings.getNonStandardMouseEvent() != mouseEvent.isSelected()
+                || !Locale.getDefault().equals(this.localeBox.getSelectedItem()));
     }
 
     @Override
