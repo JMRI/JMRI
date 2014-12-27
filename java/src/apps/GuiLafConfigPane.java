@@ -4,9 +4,9 @@ package apps;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.util.Enumeration;
+import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
@@ -14,11 +14,13 @@ import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import jmri.swing.PreferencesPanel;
 import jmri.util.swing.SwingSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * @version	$Revision$
  * @since 2.9.5 (Previously in jmri package)
  */
-public class GuiLafConfigPane extends JPanel {
+public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
 
     /**
      *
@@ -46,9 +48,10 @@ public class GuiLafConfigPane extends JPanel {
 
     private static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
 
-    Hashtable<String, String> installedLAFs;
+    HashMap<String, String> installedLAFs;
     ButtonGroup LAFGroup;
     String selectedLAF;
+    private boolean dirty = false;
 
     public GuiLafConfigPane() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -74,21 +77,20 @@ public class GuiLafConfigPane extends JPanel {
         // find L&F definitions
         panel.setLayout(new FlowLayout());
         UIManager.LookAndFeelInfo[] plafs = UIManager.getInstalledLookAndFeels();
-        installedLAFs = new Hashtable<>(plafs.length);
+        installedLAFs = new HashMap<>(plafs.length);
         for (UIManager.LookAndFeelInfo plaf : plafs) {
             installedLAFs.put(plaf.getName(), plaf.getClassName());
         }
         // make the radio buttons
         LAFGroup = new ButtonGroup();
-        Enumeration<String> LAFNames = installedLAFs.keys();
-        while (LAFNames.hasMoreElements()) {
-            String name = LAFNames.nextElement();
+        for (String name : installedLAFs.keySet()) {
             JRadioButton jmi = new JRadioButton(name);
             panel.add(jmi);
             LAFGroup.add(jmi);
             jmi.setActionCommand(name);
             jmi.addActionListener((ActionEvent e) -> {
                 selectedLAF = e.getActionCommand();
+                this.dirty = true;
             });
             if (installedLAFs.get(name).equals(UIManager.getLookAndFeel().getClass().getName())) {
                 jmi.setSelected(true);
@@ -123,7 +125,7 @@ public class GuiLafConfigPane extends JPanel {
                 locale.put(locales[i].getDisplayName(), locales[i]);
                 localeNames[i] = locales[i].getDisplayName();
             }
-            java.util.Arrays.sort(localeNames);
+            Arrays.sort(localeNames);
             Runnable update = () -> {
                 localeBox.setModel(new DefaultComboBoxModel<>(localeNames));
                 //localeBox.setModel(new javax.swing.DefaultComboBoxModel(locale.keySet().toArray()));
@@ -200,7 +202,7 @@ public class GuiLafConfigPane extends JPanel {
         18};
 
     static JComboBox<Integer> fontSizeComboBox = new JComboBox<>(fontSizes);
-    static java.awt.event.ActionListener listener;
+    static ActionListener listener;
 
     public void doFontSize(JPanel panel) {
 
@@ -215,6 +217,7 @@ public class GuiLafConfigPane extends JPanel {
 
         fontSizeComboBox.addActionListener(listener = (ActionEvent e) -> {
             setFontSize((Integer) fontSizeComboBox.getSelectedItem());
+            this.dirty = true;
         });
     }
 
@@ -224,4 +227,55 @@ public class GuiLafConfigPane extends JPanel {
     }
     // initialize logging
     static Logger log = LoggerFactory.getLogger(GuiLafConfigPane.class.getName());
+
+    @Override
+    public String getPreferencesItem() {
+        return "DISPLAY"; // NOI18N
+    }
+
+    @Override
+    public String getPreferencesItemText() {
+        return rb.getString("MenuDisplay"); // NOI18N
+    }
+
+    @Override
+    public String getTabbedPreferencesTitle() {
+        return rb.getString("TabbedLayoutGUI"); // NOI18N
+    }
+
+    @Override
+    public String getLabelKey() {
+        return rb.getString("LabelTabbedLayoutGUI"); // NOI18N
+    }
+
+    @Override
+    public JComponent getPreferencesComponent() {
+        return this;
+    }
+
+    @Override
+    public boolean isPersistant() {
+        return true;
+    }
+
+    @Override
+    public String getPreferencesTooltip() {
+        return null;
+    }
+
+    @Override
+    public void savePreferences() {
+        // do nothing - the persistant manager will take care of this
+    }
+
+    @Override
+    public boolean isDirty() {
+        return (this.dirty
+                || SwingSettings.getNonStandardMouseEvent() != mouseEvent.isSelected());
+    }
+
+    @Override
+    public boolean isRestartRequired() {
+        return this.isDirty(); // all changes require a restart
+    }
 }

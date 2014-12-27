@@ -4,15 +4,19 @@ package apps;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
+import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import jmri.InstanceManager;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.managers.ManagerDefaultSelector;
+import jmri.swing.PreferencesPanel;
 import jmri.util.javaworld.GridLayout2;
+import jmri.util.swing.JmriPanel;
 
 /**
  * Provide GUI to configure InstanceManager defaults.
@@ -22,12 +26,14 @@ import jmri.util.javaworld.GridLayout2;
  * @version	$Revision$
  * @since 2.9.5
  */
-public class ManagerDefaultsConfigPane extends jmri.util.swing.JmriPanel {
+public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesPanel {
 
     /**
      *
      */
     private static final long serialVersionUID = 4382220076212974325L;
+    private static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
+    private boolean dirty = false;
 
     public ManagerDefaultsConfigPane() {
 
@@ -58,6 +64,7 @@ public class ManagerDefaultsConfigPane extends jmri.util.swing.JmriPanel {
         } else {
             matrix.add(new JLabel("No new-form system connections configured"));
         }
+        this.dirty = true;
     }
 
     void reloadConnections(List<SystemConnectionMemo> connList) {
@@ -98,6 +105,56 @@ public class ManagerDefaultsConfigPane extends jmri.util.swing.JmriPanel {
     }
 
     ButtonGroup[] groups;
+
+    @Override
+    public String getPreferencesItem() {
+        return "DEFAULTS"; // NOI18N
+    }
+
+    @Override
+    public String getPreferencesItemText() {
+        return rb.getString("MenuDefaults"); // NOI18N
+    }
+
+    @Override
+    public String getTabbedPreferencesTitle() {
+        return rb.getString("TabbedLayoutDefaults"); // NOI18N
+    }
+
+    @Override
+    public String getLabelKey() {
+        return rb.getString("LabelTabbedLayoutDefaults"); // NOI18N
+    }
+
+    @Override
+    public JComponent getPreferencesComponent() {
+        return this;
+    }
+
+    @Override
+    public boolean isPersistant() {
+        return true;
+    }
+
+    @Override
+    public String getPreferencesTooltip() {
+        return null;
+    }
+
+    @Override
+    public void savePreferences() {
+        // do nothing - the persistant manager will take care of this
+    }
+
+    @Override
+    public boolean isDirty() {
+        return this.dirty;
+    }
+
+    @Override
+    public boolean isRestartRequired() {
+        return this.isDirty();
+    }
 
     /**
      * Captive class to track changes

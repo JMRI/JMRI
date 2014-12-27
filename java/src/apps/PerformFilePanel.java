@@ -9,15 +9,17 @@ import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import jmri.swing.PreferencesPanel;
 
 /**
  * Provide a GUI for configuring PerformFileModel objects.
  * <P>
- * A PerformFileModel object loads a file the program is started.
+ * A PerformFileModel object loads a file when the program is started.
  * <P>
  *
  * <P>
@@ -25,7 +27,7 @@ import javax.swing.JPanel;
  * @version $Revision$
  * @see apps.PerformFileModel
  */
-public class PerformFilePanel extends JPanel {
+public class PerformFilePanel extends JPanel implements PreferencesPanel {
 
     /**
      *
@@ -33,6 +35,7 @@ public class PerformFilePanel extends JPanel {
     private static final long serialVersionUID = 5019870518438422370L;
     JPanel self;  // used for synchronization
     protected ResourceBundle rb;
+    private boolean dirty = false;
 
     public PerformFilePanel() {
         self = this;
@@ -71,10 +74,61 @@ public class PerformFilePanel extends JPanel {
             if (getTopLevelAncestor() != null) {
                 ((JFrame) getTopLevelAncestor()).pack();
             }
+            this.dirty = true;
         }
     }
 
     JFileChooser fc = jmri.jmrit.XmlFile.userFileChooser("XML files", "xml");
+
+    @Override
+    public String getPreferencesItem() {
+        return "STARTUP"; // NOI18N
+    }
+
+    @Override
+    public String getPreferencesItemText() {
+        return rb.getString("MenuStartUp"); // NOI18N
+    }
+
+    @Override
+    public String getTabbedPreferencesTitle() {
+        return rb.getString("TabbedLayoutStartupFiles"); // NOI18N
+    }
+
+    @Override
+    public String getLabelKey() {
+        return rb.getString("LabelTabbedLayoutStartupFiles"); // NOI18N
+    }
+
+    @Override
+    public JComponent getPreferencesComponent() {
+        return this;
+    }
+
+    @Override
+    public boolean isPersistant() {
+        return true;
+    }
+
+    @Override
+    public String getPreferencesTooltip() {
+        return null;
+    }
+
+    @Override
+    public void savePreferences() {
+        // do nothing - the persistant manager will take care of this
+    }
+
+    @Override
+    public boolean isDirty() {
+        return this.dirty;
+    }
+
+    @Override
+    public boolean isRestartRequired() {
+        return this.isDirty();
+    }
 
     public class Item extends JPanel implements ActionListener {
 
@@ -128,6 +182,7 @@ public class PerformFilePanel extends JPanel {
                 // unlink to encourage garbage collection
                 removeButton.removeActionListener(this);
                 model = null;
+                dirty = true;
             }
         }
     }

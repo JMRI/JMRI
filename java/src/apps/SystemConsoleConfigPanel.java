@@ -8,11 +8,13 @@ import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.UIManager;
+import jmri.swing.PreferencesPanel;
 import jmri.util.swing.FontComboUtil;
 
 /**
@@ -32,7 +34,7 @@ import jmri.util.swing.FontComboUtil;
  * @author Matthew Harris copyright (c) 2010, 2011
  * @version $Revision$
  */
-public class SystemConsoleConfigPanel extends JPanel {
+public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel {
 
     /**
      *
@@ -177,6 +179,61 @@ public class SystemConsoleConfigPanel extends JPanel {
                 (fontStyleBold.isSelected() ? Font.BOLD : Font.PLAIN)
                 | (fontStyleItalic.isSelected() ? Font.ITALIC : Font.PLAIN));
         scheme.repaint();
+    }
+
+    @Override
+    public String getPreferencesItem() {
+        return "DISPLAY"; // NOI18N
+    }
+
+    @Override
+    public String getPreferencesItemText() {
+        return rbc.getString("MenuDisplay"); // NOI18N
+    }
+
+    @Override
+    public String getTabbedPreferencesTitle() {
+        return rbc.getString("TabbedLayoutConsole"); // NOI18N
+    }
+
+    @Override
+    public String getLabelKey() {
+        return rbc.getString("LabelTabbedLayoutConsole"); // NOI18N
+    }
+
+    @Override
+    public JComponent getPreferencesComponent() {
+        return this;
+    }
+
+    @Override
+    public boolean isPersistant() {
+        return true;
+    }
+
+    @Override
+    public String getPreferencesTooltip() {
+        return null;
+    }
+
+    @Override
+    public void savePreferences() {
+        // do nothing - the persistant manager will take care of this
+    }
+
+    @Override
+    public boolean isDirty() {
+        // console preferences take effect immediately, but are not saved
+        // immediately, so we can't tell without rereading the preferences.xml,
+        // but it's to expensive to read that file to determine if it matches
+        // the in memory preferences for this console, so simply return false
+        return false;
+    }
+
+    @Override
+    public boolean isRestartRequired() {
+        // since changes are applied immediately, this is not required
+        return false;
     }
 }
 /* @(#)SystemConsoleConfigPanel.java */

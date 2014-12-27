@@ -6,14 +6,17 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import jmri.swing.PreferencesPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,25 +34,21 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright 2003
  * @version $Revision$
  */
-abstract public class AbstractActionPanel extends JPanel {
+abstract public class AbstractActionPanel extends JPanel implements PreferencesPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5092031602319689380L;
     JPanel self;  // used for synchronization
     protected ResourceBundle rb;
-
+    protected boolean dirty = false;
     String removeButtonKey;
 
     public AbstractActionPanel(String addButtonKey, String removeButtonKey) {
         self = this;
         this.removeButtonKey = removeButtonKey;
 
+        rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
+
         // GUi is a series of horizontal entries
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
 
         // add existing items
         JButton addButton = new JButton(rb.getString(addButtonKey));
@@ -88,10 +87,51 @@ abstract public class AbstractActionPanel extends JPanel {
             if (getTopLevelAncestor() != null) {
                 ((JFrame) getTopLevelAncestor()).pack();
             }
+            this.dirty = true;
         }
     }
 
     abstract AbstractActionModel getNewModel();
+
+    @Override
+    public String getPreferencesItem() {
+        return "STARTUP"; // NOI18N
+    }
+
+    @Override
+    public String getPreferencesItemText() {
+        return rb.getString("MenuStartUp"); // NOI18N
+    }
+
+    @Override
+    public JComponent getPreferencesComponent() {
+        return this;
+    }
+
+    @Override
+    public boolean isPersistant() {
+        return true;
+    }
+
+    @Override
+    public String getPreferencesTooltip() {
+        return null;
+    }
+
+    @Override
+    public void savePreferences() {
+        // do nothing - the persistant manager will take care of this
+    }
+
+    @Override
+    public boolean isDirty() {
+        return this.dirty;
+    }
+
+    @Override
+    public boolean isRestartRequired() {
+        return this.isDirty();
+    }
 
     public class Item extends JPanel implements ActionListener {
 
@@ -108,6 +148,11 @@ abstract public class AbstractActionPanel extends JPanel {
             // create the list of possibilities
             selections = new JComboBox<>(AbstractActionModel.nameList());
             add(selections);
+            selections.addItemListener((ItemEvent e) -> {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    dirty = true;
+                }
+            });
         }
 
         Item(AbstractActionModel m) {
@@ -157,6 +202,7 @@ abstract public class AbstractActionPanel extends JPanel {
                 // unlink to encourage garbage collection
                 removeButton.removeActionListener(this);
                 model = null;
+                dirty = true;
             }
         }
     }

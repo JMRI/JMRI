@@ -34,4 +34,14 @@ public class CreateButtonPanel extends AbstractActionPanel {
     AbstractActionModel getNewModel() {
         return new CreateButtonModel();
     }
+
+    @Override
+    public String getTabbedPreferencesTitle() {
+        return rb.getString("TabbedLayoutCreateButton"); // NOI18N
+    }
+
+    @Override
+    public String getLabelKey() {
+        return rb.getString("LabelTabbedLayoutCreateButton"); // NOI18N
+    }
 }

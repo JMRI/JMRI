@@ -34,4 +34,14 @@ public class PerformActionPanel extends AbstractActionPanel {
     AbstractActionModel getNewModel() {
         return new PerformActionModel();
     }
+
+    @Override
+    public String getTabbedPreferencesTitle() {
+        return rb.getString("TabbedLayoutStartupActions"); // NOI18N
+    }
+
+    @Override
+    public String getLabelKey() {
+        return rb.getString("LabelTabbedLayoutStartupActions"); // NOI18N
+    }
 }

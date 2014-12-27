@@ -2,14 +2,7 @@
 package apps.gui3;
 
 import apps.AppConfigBase;
-import apps.CreateButtonPanel;
-import apps.FileLocationPane;
 import apps.GuiLafConfigPane;
-import apps.ManagerDefaultsConfigPane;
-import apps.PerformActionPanel;
-import apps.PerformFilePanel;
-import apps.PerformScriptPanel;
-import apps.SystemConsoleConfigPanel;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.awt.BorderLayout;
@@ -28,6 +21,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -60,10 +54,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide access to preferences via a tabbed pane
+ * Provide access to preferences via a tabbed pane.
  *
  * Preferences panels listed in the PreferencesPanel property of the
- * AppsConfigBundle ResourceBundle will be automatically loaded if they
+ * apps.AppsStructureBundle ResourceBundle will be automatically loaded if they
  * implement the {@link jmri.swing.PreferencesPanel} interface.
  *
  * Other Preferences Panels will need to be manually added to this file in a
@@ -182,9 +176,6 @@ public class TabbedPreferences extends AppConfigBase {
         detailpanel.setLayout(new CardLayout());
         detailpanel.setBorder(BorderFactory.createEmptyBorder(6, 3, 6, 6));
 
-        GuiLafConfigPane gui = new GuiLafConfigPane();
-        items.add(0, gui);
-
         save = new JButton(
                 rb.getString("ButtonSave"),
                 new ImageIcon(
@@ -202,70 +193,34 @@ public class TabbedPreferences extends AppConfigBase {
                 connectionPanel, false, null);
 
         try {
-            addItem("DEFAULTS", rb.getString("MenuDefaults"),
-                    rb.getString("TabbedLayoutDefaults"),
-                    rb.getString("LabelTabbedLayoutDefaults"),
-                    new ManagerDefaultsConfigPane(), true, null);
-        } catch (Exception ex) {
-            log.error("Error in trying to add defaults to the preferences "
-                    + ex.toString());
-        }
-        try {
-            // Added here instead of later to maintain existing panel order
-            FileLocationPane panel = new FileLocationPane();
-            this.preferencesPanels.put(FileLocationPane.class.getCanonicalName(), panel);
-            addItem(panel.getPreferencesItem(),
-                    panel.getPreferencesItemText(),
-                    panel.getTabbedPreferencesTitle(),
-                    panel.getLabelKey(),
-                    panel.getPreferencesComponent(),
-                    panel.isPersistant(),
-                    panel.getPreferencesTooltip()
+            // DISPLAY/GUI items are a special case since a single object
+            // provides multiple panels
+            GuiLafConfigPane gui = new GuiLafConfigPane();
+            items.add(0, gui);
+            this.preferencesPanels.put(gui.getClass().getCanonicalName(), gui);
+            addItem(gui.getPreferencesItem(),
+                    gui.getPreferencesItemText(),
+                    gui.getTabbedPreferencesTitle(),
+                    gui.getLabelKey(),
+                    gui,
+                    gui.isPersistant(),
+                    gui.getPreferencesTooltip()
             );
-        } catch (Exception ex) {
-            log.error("Error in trying to add the file locations to the preferences "
-                    + ex.toString());
-        }
-        try {
-            addItem("STARTUP", rb.getString("MenuStartUp"),
-                    rb.getString("TabbedLayoutStartupActions"),
-                    rb.getString("LabelTabbedLayoutStartupActions"),
-                    new PerformActionPanel(), true, null);
-            addItem("STARTUP", rb.getString("MenuStartUp"),
-                    rb.getString("TabbedLayoutCreateButton"),
-                    rb.getString("LabelTabbedLayoutCreateButton"),
-                    new CreateButtonPanel(), true, null);
-            addItem("STARTUP", rb.getString("MenuStartUp"),
-                    rb.getString("TabbedLayoutStartupFiles"),
-                    rb.getString("LabelTabbedLayoutStartupFiles"),
-                    new PerformFilePanel(), true, null);
-            addItem("STARTUP", rb.getString("MenuStartUp"),
-                    rb.getString("TabbedLayoutStartupScripts"),
-                    rb.getString("LabelTabbedLayoutStartupScripts"),
-                    new PerformScriptPanel(), true, null);
-        } catch (Exception ex) {
-            log.error("Error in trying to add the startup items to the preferences "
-                    + ex.toString());
-        }
-        try {
-            addItem("DISPLAY", rb.getString("MenuDisplay"),
-                    rb.getString("TabbedLayoutGUI"),
-                    rb.getString("LabelTabbedLayoutGUI"), gui, true, null);
-            addItem("DISPLAY", rb.getString("MenuDisplay"),
+            addItem(gui.getPreferencesItem(),
+                    gui.getPreferencesItemText(),
                     rb.getString("TabbedLayoutLocale"),
-                    rb.getString("LabelTabbedLayoutLocale"), gui.doLocale(),
-                    false, null);
-            addItem("DISPLAY", rb.getString("MenuDisplay"),
-                    rb.getString("TabbedLayoutConsole"),
-                    rb.getString("LabelTabbedLayoutConsole"),
-                    new SystemConsoleConfigPanel(), true, null);
+                    rb.getString("LabelTabbedLayoutLocale"),
+                    gui.doLocale(),
+                    false,
+                    null
+            );
         } catch (Exception ex) {
             log.error("Error in trying to add display config to the preferences "
                     + ex.toString());
         }
         try {
             List<String> classNames = (new ObjectMapper()).readValue(
-                    java.util.ResourceBundle.getBundle("apps.AppsStructureBundle").getString("PreferencesPanels"),
+                    ResourceBundle.getBundle("apps.AppsStructureBundle").getString("PreferencesPanels"),
                     new TypeReference<List<String>>() {
                     });
             for (String className : classNames) {
