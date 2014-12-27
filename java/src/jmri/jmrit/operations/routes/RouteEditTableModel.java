@@ -113,7 +113,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 		setPreferredWidths(table);
 
 		// set row height
-		table.setRowHeight(new JComboBox().getPreferredSize().height);
+		table.setRowHeight(new JComboBox<>().getPreferredSize().height);
 		updateList();
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -269,24 +269,24 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 		case NAME_COLUMN:
 			return rl.getName();
 		case TRAIN_COLUMN: {
-			JComboBox cb = Setup.getComboBox();
+			JComboBox<String> cb = Setup.getComboBox();
 			cb.setSelectedItem(rl.getTrainDirectionString());
 			return cb;
 		}
 		case MAXMOVES_COLUMN:
 			return Integer.toString(rl.getMaxCarMoves());
 		case RANDOM_CONTROL_COLUMN: {
-			JComboBox cb = getRandomControlComboBox();
+			JComboBox<String> cb = getRandomControlComboBox();
 			cb.setSelectedItem(rl.getRandomControl());
 			return cb;
 		}
 		case PICKUP_COLUMN: {
-			JComboBox cb = getYesNoComboBox();
+			JComboBox<String> cb = getYesNoComboBox();
 			cb.setSelectedItem(rl.isPickUpAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"));
 			return cb;
 		}
 		case DROP_COLUMN: {
-			JComboBox cb = getYesNoComboBox();
+			JComboBox<String> cb = getYesNoComboBox();
 			cb.setSelectedItem(rl.isDropAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"));
 			return cb;
 		}
@@ -294,7 +294,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 			if (_showWait) {
 				return Integer.toString(rl.getWait());
 			} else {
-				JComboBox cb = getTimeComboBox();
+				JComboBox<String> cb = getTimeComboBox();
 				cb.setSelectedItem(rl.getDepartureTime());
 				return cb;
 			}
@@ -396,7 +396,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 		_route.deleteLocation(routeList.get(row));
 	}
 
-	private int _trainDirection = Setup.getDirectionInt((String) Setup.getComboBox().getItemAt(0));
+	private int _trainDirection = Setup.getDirectionInt(Setup.getComboBox().getItemAt(0));
 
 	public int getLastTrainDirection() {
 		return _trainDirection;
@@ -404,7 +404,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 
 	private void setTrainDirection(Object value, int row) {
 		RouteLocation rl = routeList.get(row);
-		_trainDirection = Setup.getDirectionInt((String) ((JComboBox) value).getSelectedItem());
+		_trainDirection = Setup.getDirectionInt((String) ((JComboBox<?>) value).getSelectedItem());
 		rl.setTrainDirection(_trainDirection);
 		// update train icon
 		rl.setTrainIconCoordinates();
@@ -435,17 +435,17 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 	}
 	
 	private void setRandomControlValue(Object value, int row) {
-		routeList.get(row).setRandomControl((String) ((JComboBox) value).getSelectedItem());
+		routeList.get(row).setRandomControl((String) ((JComboBox<?>) value).getSelectedItem());
 	}
 
 	private void setDrop(Object value, int row) {
 		routeList.get(row).setDropAllowed(
-				((String) ((JComboBox) value).getSelectedItem()).equals(Bundle.getMessage("yes")));
+				((String) ((JComboBox<?>) value).getSelectedItem()).equals(Bundle.getMessage("yes")));
 	}
 
 	private void setPickup(Object value, int row) {
 		routeList.get(row).setPickUpAllowed(
-				((String) ((JComboBox) value).getSelectedItem()).equals(Bundle.getMessage("yes")));
+				((String) ((JComboBox<?>) value).getSelectedItem()).equals(Bundle.getMessage("yes")));
 	}
 
 	private int _maxTrainLength = Setup.getMaxTrainLength();
@@ -468,7 +468,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 	}
 
 	private void setDepartureTime(Object value, int row) {
-		routeList.get(row).setDepartureTime(((String) ((JComboBox) value).getSelectedItem()));
+		routeList.get(row).setDepartureTime(((String) ((JComboBox<?>) value).getSelectedItem()));
 	}
 
 	private void setMaxTrainLength(Object value, int row) {
@@ -583,15 +583,15 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 		dialog.setVisible(true);
 	}
 
-	private JComboBox getYesNoComboBox() {
-		JComboBox cb = new JComboBox();
+	private JComboBox<String> getYesNoComboBox() {
+		JComboBox<String> cb = new JComboBox<>();
 		cb.addItem(Bundle.getMessage("yes"));
 		cb.addItem(Bundle.getMessage("no"));
 		return cb;
 	}
 	
-	private JComboBox getRandomControlComboBox() {
-		JComboBox cb = new JComboBox();
+	private JComboBox<String> getRandomControlComboBox() {
+		JComboBox<String> cb = new JComboBox<>();
 		cb.addItem(RouteLocation.DISABLED);
 		// 10 to 100 by 10
 		for (int i = 10; i < 101; i = i + 10)
@@ -599,8 +599,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 		return cb;
 	}
 
-	private JComboBox getTimeComboBox() {
-		JComboBox timeBox = new JComboBox();
+	private JComboBox<String> getTimeComboBox() {
+		JComboBox<String> timeBox = new JComboBox<>();
 		String hour;
 		String minute;
 		timeBox.addItem("");

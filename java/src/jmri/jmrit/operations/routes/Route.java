@@ -338,16 +338,16 @@ public class Route implements java.beans.PropertyChangeListener {
 		return ORPHAN;
 	}
 
-	public JComboBox getComboBox() {
-		JComboBox box = new JComboBox();
+	public JComboBox<RouteLocation> getComboBox() {
+		JComboBox<RouteLocation> box = new JComboBox<>();
 		for (RouteLocation rl : getLocationsBySequenceList())
 			box.addItem(rl);
 		return box;
 	}
 
-	public void updateComboBox(JComboBox box) {
+	public void updateComboBox(JComboBox<RouteLocation> box) {
 		box.removeAllItems();
-		box.addItem("");
+		box.addItem(null);
 		for (RouteLocation rl : getLocationsBySequenceList())
 			box.addItem(rl);
 	}

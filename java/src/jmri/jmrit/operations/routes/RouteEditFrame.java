@@ -68,7 +68,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	JTextField commentTextField = new JTextField(35);
 
 	// combo boxes
-	JComboBox locationBox = LocationManager.instance().getComboBox();
+	JComboBox<Location> locationBox = LocationManager.instance().getComboBox();
 
 	public static final String NAME = Bundle.getMessage("Name");
 	public static final String DISPOSE = "dispose"; // NOI18N

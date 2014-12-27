@@ -4,12 +4,14 @@ package jmri.jmrit.operations.trains;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -133,23 +135,23 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 	JTextField builtBeforeTextField = new JTextField(10);
 
 	// combo boxes
-	JComboBox ownerBox = CarOwners.instance().getComboBox();
+	JComboBox<String> ownerBox = CarOwners.instance().getComboBox();
 
 	// train requirements 1st set
-	JComboBox routePickup1Box = new JComboBox();
-	JComboBox routeDrop1Box = new JComboBox();
-	JComboBox roadCaboose1Box = new JComboBox();
-	JComboBox roadEngine1Box = CarRoads.instance().getComboBox();
-	JComboBox modelEngine1Box = EngineModels.instance().getComboBox();
-	JComboBox numEngines1Box = new JComboBox();
+	JComboBox<RouteLocation> routePickup1Box = new JComboBox<>();
+	JComboBox<RouteLocation> routeDrop1Box = new JComboBox<>();
+	JComboBox<String> roadCaboose1Box = new JComboBox<>();
+	JComboBox<String> roadEngine1Box = CarRoads.instance().getComboBox();
+	JComboBox<String> modelEngine1Box = EngineModels.instance().getComboBox();
+	JComboBox<String> numEngines1Box = new JComboBox<>();
 
 	// train requirements 2nd set
-	JComboBox routePickup2Box = new JComboBox();
-	JComboBox routeDrop2Box = new JComboBox();
-	JComboBox roadCaboose2Box = new JComboBox();
-	JComboBox roadEngine2Box = CarRoads.instance().getComboBox();
-	JComboBox modelEngine2Box = EngineModels.instance().getComboBox();
-	JComboBox numEngines2Box = new JComboBox();
+	JComboBox<RouteLocation> routePickup2Box = new JComboBox<>();
+	JComboBox<RouteLocation> routeDrop2Box = new JComboBox<>();
+	JComboBox<String> roadCaboose2Box = new JComboBox<>();
+	JComboBox<String> roadEngine2Box = CarRoads.instance().getComboBox();
+	JComboBox<String> modelEngine2Box = EngineModels.instance().getComboBox();
+	JComboBox<String> numEngines2Box = new JComboBox<>();
 
 	public static final String DISPOSE = "dispose"; // NOI18N
 
@@ -755,11 +757,11 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		if (helper1Service.isSelected())
 			options1 = options1 | Train.HELPER_ENGINES;
 		_train.setSecondLegOptions(options1);
-		if (routePickup1Box.getSelectedItem() != null && !routePickup1Box.getSelectedItem().equals(""))
+		if (routePickup1Box.getSelectedItem() != null)
 			_train.setSecondLegStartLocation((RouteLocation) routePickup1Box.getSelectedItem());
 		else
 			_train.setSecondLegStartLocation(null);
-		if (routeDrop1Box.getSelectedItem() != null && !routeDrop1Box.getSelectedItem().equals(""))
+		if (routeDrop1Box.getSelectedItem() != null)
 			_train.setSecondLegEndLocation((RouteLocation) routeDrop1Box.getSelectedItem());
 		else
 			_train.setSecondLegEndLocation(null);
@@ -797,18 +799,14 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 	}
 
 	private boolean checkInput() {
-		if ((!none1.isSelected() && (routePickup1Box.getSelectedItem() == null || routePickup1Box
-				.getSelectedItem().equals("")))
-				|| (!none2.isSelected() && (routePickup2Box.getSelectedItem() == null || routePickup2Box
-						.getSelectedItem().equals("")))) {
+		if ((!none1.isSelected() && routePickup1Box.getSelectedItem() == null)
+				|| (!none2.isSelected() && routePickup2Box.getSelectedItem() == null)) {
 			JOptionPane.showMessageDialog(this, Bundle.getMessage("SelectLocationEngChange"), Bundle
 					.getMessage("CanNotSave"), JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
-		if ((helper1Service.isSelected() && (routeDrop1Box.getSelectedItem() == null || routeDrop1Box
-				.getSelectedItem().equals("")))
-				|| (helper2Service.isSelected() && (routeDrop2Box.getSelectedItem() == null || routeDrop2Box
-						.getSelectedItem().equals("")))) {
+		if ((helper1Service.isSelected() && routeDrop1Box.getSelectedItem() == null)
+				|| (helper2Service.isSelected() && routeDrop2Box.getSelectedItem() == null)) {
 			JOptionPane.showMessageDialog(this, Bundle.getMessage("SelectLocationEndHelper"), Bundle
 					.getMessage("CanNotSave"), JOptionPane.ERROR_MESSAGE);
 			return false;
@@ -865,7 +863,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 	}
 
 	// update caboose road box based on radio selection
-	private void updateCabooseRoadComboBox(JComboBox box) {
+	private void updateCabooseRoadComboBox(JComboBox<String> box) {
 		box.removeAllItems();
 		box.addItem("");
 		List<String> roads = CarManager.instance().getCabooseRoadNames();
@@ -874,7 +872,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		}
 	}
 
-	private void updateEngineRoadComboBox(JComboBox box, String engineModel) {
+	private void updateEngineRoadComboBox(JComboBox<String> box, String engineModel) {
 		if (engineModel == null)
 			return;
 		box.removeAllItems();

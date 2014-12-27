@@ -4,6 +4,7 @@ package jmri.jmrit.operations.routes;
  
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.operations.OperationsFrame;
@@ -20,9 +21,11 @@ import java.awt.GridBagLayout;
 import java.awt.Point;
 import java.awt.event.ComponentListener;
 import java.text.MessageFormat;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -66,7 +69,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
 	
 	
 	// combo boxes
-	javax.swing.JComboBox locationBox = LocationManager.instance().getComboBox();
+	JComboBox<Location> locationBox = LocationManager.instance().getComboBox();
 	
     //Spinners	 
     JSpinner spinTrainIconEastX = new JSpinner(new SpinnerNumberModel(0,0,10000,1));
