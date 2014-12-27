@@ -452,5 +452,48 @@ public class StringUtil {
         return s.replaceAll("%20"," ").replaceAll("%23","#").replaceAll("%26","&").replaceAll("%27","'").replaceAll("%22","\"").replaceAll("%3C","<").replaceAll("%3E",">");
     }
     
+    /**
+     * Convert an array of objects into a single string. Each object's toString value is displayed within square brackets
+     * and separated by commas.
+     */
+     static public <E> String arrayToString(E[] v) {
+        String retval = "";
+        boolean first = true;
+        for (E e : v) {
+            if (!first) retval += ",";
+            first = false;
+            retval += "["+e+"]";
+        }
+        return retval;
+     }
+     
+     /**
+     * Convert an array of bytes into a single string. Each element is displayed within square brackets
+     * and separated by commas.
+     */
+     static public String arrayToString(byte[] v) {
+        String retval = "";
+        boolean first = true;
+        for (byte e : v) {
+            if (!first) retval += ",";
+            first = false;
+            retval += "["+e+"]";
+        }
+        return retval;
+     }
     
+     /**
+     * Convert an array of ints into a single string. Each element is displayed within square brackets
+     * and separated by commas.
+     */
+     static public String arrayToString(int[] v) {
+        String retval = "";
+        boolean first = true;
+        for (int e : v) {
+            if (!first) retval += ",";
+            first = false;
+            retval += "["+e+"]";
+        }
+        return retval;
+     }
 }

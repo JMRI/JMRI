@@ -357,6 +357,20 @@ public class StringUtilTest extends TestCase {
         
     }
     
+    public void testArrayToString() {
+        Object[] a = new Object[]{"A","B","C"};
+        Assert.assertEquals("Object", "[A],[B],[C]", StringUtil.arrayToString(a));
+        
+        String[] b = new String[]{"X","Y","Z"};
+        Assert.assertEquals("Object", "[X],[Y],[Z]", StringUtil.arrayToString(b));        
+
+        byte[] c = new byte[]{1,2,3};
+        Assert.assertEquals("Object", "[1],[2],[3]", StringUtil.arrayToString(c));        
+
+        int[] d = new int[]{1,2,3};
+        Assert.assertEquals("Object", "[1],[2],[3]", StringUtil.arrayToString(d));        
+    }
+    
 	// from here down is testing infrastructure
 
 	public StringUtilTest(String s) {
