@@ -457,14 +457,16 @@ public class StringUtil {
      * and separated by commas.
      */
      static public <E> String arrayToString(E[] v) {
-        String retval = "";
+        StringBuffer retval = new StringBuffer();
         boolean first = true;
         for (E e : v) {
-            if (!first) retval += ",";
+            if (!first) retval.append(',');
             first = false;
-            retval += "["+e+"]";
+            retval.append('[');
+            retval.append(e.toString());
+            retval.append(']');
         }
-        return retval;
+        return new String(retval);
      }
      
      /**
@@ -472,14 +474,16 @@ public class StringUtil {
      * and separated by commas.
      */
      static public String arrayToString(byte[] v) {
-        String retval = "";
+        StringBuffer retval = new StringBuffer();
         boolean first = true;
         for (byte e : v) {
-            if (!first) retval += ",";
+            if (!first) retval.append(',');
             first = false;
-            retval += "["+e+"]";
+            retval.append('[');
+            retval.append(e);
+            retval.append(']');
         }
-        return retval;
+        return new String(retval);
      }
     
      /**
@@ -487,13 +491,15 @@ public class StringUtil {
      * and separated by commas.
      */
      static public String arrayToString(int[] v) {
-        String retval = "";
+        StringBuffer retval = new StringBuffer();
         boolean first = true;
         for (int e : v) {
-            if (!first) retval += ",";
+            if (!first) retval.append(',');
             first = false;
-            retval += "["+e+"]";
+            retval.append('[');
+            retval.append(e);
+            retval.append(']');
         }
-        return retval;
+        return new String(retval);
      }
 }
