@@ -197,7 +197,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
     public void actionPerformed(ActionEvent e) {
         if (log.isDebugEnabled()) log.debug("action command: "+e.getActionCommand());
         char b = e.getActionCommand().charAt(0);
-        int row = Integer.valueOf(e.getActionCommand().substring(1)).intValue();
+        int row = Integer.parseInt(e.getActionCommand().substring(1));
         if (log.isDebugEnabled()) log.debug("event on "+b+" row "+row);
         if (b=='R') {
             // read command

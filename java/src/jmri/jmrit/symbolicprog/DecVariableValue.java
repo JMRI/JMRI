@@ -84,8 +84,8 @@ public class DecVariableValue extends VariableValue
         if(!_value.getText().equals("")){
             // there may be a lost focus event left in the queue when disposed so protect
             if (!oldContents.equals(_value.getText())) {
-                int newVal = Integer.valueOf(_value.getText()).intValue();
-                int oldVal = Integer.valueOf(oldContents).intValue();
+                int newVal = Integer.parseInt(_value.getText());
+                int oldVal = Integer.parseInt(oldContents);
                 updatedTextField();
                 prop.firePropertyChange("Value", Integer.valueOf(oldVal), Integer.valueOf(newVal));
             }
@@ -111,7 +111,7 @@ public class DecVariableValue extends VariableValue
         int oldCv = cv.getValue();
         int newVal;
         try {
-            newVal = Integer.valueOf(_value.getText()).intValue();
+            newVal = Integer.parseInt(_value.getText());
         }
         catch (java.lang.NumberFormatException ex) { newVal = 0; }
         int newCv = newValue(oldCv, newVal, getMask());
@@ -122,7 +122,7 @@ public class DecVariableValue extends VariableValue
     /** ActionListener implementations */
     public void actionPerformed(ActionEvent e) {
         if (log.isDebugEnabled()) log.debug("actionPerformed");
-        int newVal = Integer.valueOf(_value.getText()).intValue();
+        int newVal = Integer.parseInt(_value.getText());
         updatedTextField();
         prop.firePropertyChange("Value", null, Integer.valueOf(newVal));
     }
@@ -149,7 +149,7 @@ public class DecVariableValue extends VariableValue
     }
 
     public int getIntValue() {
-        return Integer.valueOf(_value.getText()).intValue();
+        return Integer.parseInt(_value.getText());
     }
     
     public Object getValueObject() {
@@ -241,7 +241,7 @@ public class DecVariableValue extends VariableValue
     public void setValue(int value) {
         int oldVal;
         try {
-            oldVal = Integer.valueOf(_value.getText()).intValue();
+            oldVal = Integer.parseInt(_value.getText());
         } catch (java.lang.NumberFormatException ex) { oldVal = -999; }
         if (log.isDebugEnabled()) log.debug("setValue with new value "+value+" old value "+oldVal);
         if (oldVal != value) {
