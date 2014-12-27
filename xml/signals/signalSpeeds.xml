@@ -36,19 +36,30 @@
       <revremark>Increase Normal speed to 80 and add new speeds of Sixty and Fifty to accomodate BNSF signal system definition</revremark>
     </revision>
   </revhistory>
-  <!-- Meaning of the number used for the aspectSpeeds names in the aspectSpeeds  -->
-  <!-- table below. The table maps the names used in signal aspects.xml files to  -->
-  <!-- a number that is translated to a throttle setting.                         -->
-  <!-- percentNormal is the percentage of the recorded speed (the "Normal" speed  -->
-  <!-- percentThrottle is the percentage of the full throttle speed               -->
-  <interpretation>percentThrottle</interpretation>
-  <!-- Speed changes are ramped from the current indication to the next.          -->
-  <!-- Throttle speed commands are sent incrementally with a delay between them.  -->
+  <!-- This file sets the values returned by the SignalSpeedMap class.  It is designed to -->
+  <!-- set the defaults for running Warrants.  However uses other Warrants are possible.  -->
+  <!-- If so, make the necessary changes you desire.  However,                            -->
+  <!-- PLEASE DO NOT COMMIT ANY CHANGES TO THIS FILE THAT ARE INCOMPATIBLE WITH WARRANTS! -->
+  <!-- The "aspectSpeeds" table below maps the speed names used in signal aspects.xml  -->
+  <!-- files to a number. The number may be translated to a throttle setting.  The     -->
+  <!-- meaning of the number may be given two different interpretations.               -->
+
+  <!-- Interpretation: A hint for how the code may use the number.       -->
+  <!-- percentNormal is the percentage of the recorded speed.  The speed -->
+  <!-- when running with no signals or aspect clear.                     -->                               
+  <!-- percentThrottle is the percentage of the full throttle speed.     -->
+  <!-- That is, number is an absolute throttle setting.                  -->
+  <interpretation>percentNormal</interpretation>
+  
+  <!-- Speed changes are ramped from the current speed to the next in increments. -->
   <!-- The delay in milliseconds between speed increments sent to the throttle.   -->
   <msPerIncrement>750</msPerIncrement>
-  <!-- Time needed to ramp a speed change can be shortened      -->
-  <!-- by increasing the number of steps per throttle command   -->
+  
+  <!-- stepsPerIncrement is the number of throttle speed increments to use per the -->
+  <!-- above ms time. The time needed to ramp a speed change can be shortened      -->
+  <!-- by increasing the number of throttle speed increments.                      -->
   <stepsPerIncrement>1</stepsPerIncrement>
+  
   <!-- Map speed names to ratios used in throttle settings                            -->
   <!-- speed names may be put into aspect.xml files to indicate speed for the aspect  -->
   <!-- Each speed name is a "speed notch" and additional notch names can be added -   -->
@@ -56,14 +67,14 @@
   <!-- signal Heads and those used in "aspects.xml" file for Signal Masts.            -->
   <!-- These speeds are enforced at the entrance to a block                           -->
   <aspectSpeeds>
-    <Maximum>100</Maximum>
-    <Normal>80</Normal>
+    <Maximum>125</Maximum>
+    <Normal>100</Normal>
     <Sixty>60</Sixty>
     <Fifty>50</Fifty>
-    <Limited>35</Limited>
-    <Medium>20</Medium>
-    <Slow>10</Slow>
-    <Restricted>3</Restricted>
+    <Limited>75</Limited>
+    <Medium>50</Medium>
+    <Slow>25</Slow>
+    <Restricted>15</Restricted>
     <Stop>0</Stop>
   </aspectSpeeds>
   <!-- speeds associated with SignalHead appearances for heads NOT used in SignalMasts  -->
