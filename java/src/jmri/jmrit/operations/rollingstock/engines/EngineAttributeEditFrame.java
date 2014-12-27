@@ -45,7 +45,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 	javax.swing.JButton replaceButton = new javax.swing.JButton();
 
 	// combo box
-	javax.swing.JComboBox comboBox;
+	javax.swing.JComboBox<String> comboBox;
 
 	// text box
 	javax.swing.JTextField addTextBox = new javax.swing.JTextField(Control.max_len_string_attibute);

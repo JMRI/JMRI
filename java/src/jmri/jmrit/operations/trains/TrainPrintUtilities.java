@@ -364,8 +364,8 @@ public class TrainPrintUtilities {
 	 * JOptionPane.INFORMATION_MESSAGE); return; }
 	 */
 
-	public static JComboBox getPrinterJComboBox() {
-		JComboBox box = new JComboBox();
+	public static JComboBox<String> getPrinterJComboBox() {
+		JComboBox<String> box = new JComboBox<>();
 		PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null);
 		for (PrintService printService : services) {
 			box.addItem(printService.getName());

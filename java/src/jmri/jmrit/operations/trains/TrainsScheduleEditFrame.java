@@ -31,7 +31,7 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
 	JTextField addTextBox = new JTextField(Control.max_len_string_attibute);
 
 	// combo box
-	JComboBox comboBox;
+	JComboBox<TrainSchedule> comboBox;
     
     // major buttons
     JButton addButton = new JButton(Bundle.getMessage("Add"));

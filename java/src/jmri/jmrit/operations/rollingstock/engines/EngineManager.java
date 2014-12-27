@@ -127,15 +127,15 @@ public class EngineManager extends RollingStockManager{
      * Creates a combo box containing all of the consist names
      * @return a combo box with all of the consist names
      */
-    public JComboBox getConsistComboBox(){
-    	JComboBox box = new JComboBox();
+    public JComboBox<String> getConsistComboBox(){
+    	JComboBox<String> box = new JComboBox<>();
     	box.addItem("");
     	for (String name : getConsistNameList())
        		box.addItem(name);
     	return box;
     }
     
-    public void updateConsistComboBox(JComboBox box) {
+    public void updateConsistComboBox(JComboBox<String> box) {
     	box.removeAllItems();
     	box.addItem("");
     	for (String name : getConsistNameList())

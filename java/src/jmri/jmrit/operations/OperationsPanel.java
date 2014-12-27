@@ -204,7 +204,7 @@ public class OperationsPanel extends JPanel implements AncestorListener {
         log.debug("spinner action not overridden");
     }
 
-    protected void addComboBoxAction(JComboBox b) {
+    protected void addComboBoxAction(JComboBox<?> b) {
         b.addActionListener((ActionEvent e) -> {
             comboBoxActionPerformed(e);
         });
@@ -214,7 +214,7 @@ public class OperationsPanel extends JPanel implements AncestorListener {
         log.debug("combobox action not overridden");
     }
 
-    protected void selectNextItemComboBox(JComboBox b) {
+    protected void selectNextItemComboBox(JComboBox<?> b) {
         int newIndex = b.getSelectedIndex() + 1;
         if (newIndex < b.getItemCount()) {
             b.setSelectedIndex(newIndex);

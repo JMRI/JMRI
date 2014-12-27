@@ -4,8 +4,6 @@ package jmri.jmrit.operations.trains;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import jmri.jmrit.operations.OperationsFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Conductor Frame. Shows work for a train one location at a time.
@@ -41,5 +39,5 @@ public class TrainConductorFrame extends OperationsFrame {
         setVisible(true);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(TrainConductorFrame.class.getName());
+//   private static final Logger log = LoggerFactory.getLogger(TrainConductorFrame.class.getName());
 }

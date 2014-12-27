@@ -600,9 +600,9 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	 * @param car
 	 *            the car to be serviced
 	 */
-	public void updateTrainComboBox(JComboBox box, Car car) {
+	public void updateTrainComboBox(JComboBox<Train> box, Car car) {
 		box.removeAllItems();
-		box.addItem(NONE);
+		box.addItem(null);
 		for (Train train : getTrainsByNameList()) {
 			if (train.services(car))
 				box.addItem(train);
@@ -670,8 +670,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	 * 
 	 * @return the available text colors used for printing
 	 */
-	public JComboBox getRowColorComboBox() {
-		JComboBox box = new JComboBox();
+	public JComboBox<String> getRowColorComboBox() {
+		JComboBox<String> box = new JComboBox<>();
 		box.addItem(NONE);
 		box.addItem(Setup.BLACK);
 		box.addItem(Setup.RED);

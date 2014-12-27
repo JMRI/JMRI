@@ -79,14 +79,14 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 	JTextField rfidTextField = new JTextField(16);
 
 	// combo boxes
-	JComboBox roadComboBox = CarRoads.instance().getComboBox();
-	JComboBox modelComboBox = engineModels.getComboBox();
-	JComboBox typeComboBox = engineTypes.getComboBox();
-	JComboBox lengthComboBox = engineLengths.getComboBox();
-	JComboBox ownerComboBox = CarOwners.instance().getComboBox();
-	JComboBox locationBox = locationManager.getComboBox();
-	JComboBox trackLocationBox = new JComboBox();
-	JComboBox consistComboBox = manager.getConsistComboBox();
+	JComboBox<String> roadComboBox = CarRoads.instance().getComboBox();
+	JComboBox<String> modelComboBox = engineModels.getComboBox();
+	JComboBox<String> typeComboBox = engineTypes.getComboBox();
+	JComboBox<String> lengthComboBox = engineLengths.getComboBox();
+	JComboBox<String> ownerComboBox = CarOwners.instance().getComboBox();
+	JComboBox<Location> locationBox = locationManager.getComboBox();
+	JComboBox<Track> trackLocationBox = new JComboBox<>();
+	JComboBox<String> consistComboBox = manager.getConsistComboBox();
 
 	public static final String ROAD = Bundle.getMessage("Road");
 	public static final String MODEL = Bundle.getMessage("Model");

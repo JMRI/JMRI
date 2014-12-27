@@ -4,9 +4,11 @@ package jmri.jmrit.operations.trains;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -17,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
@@ -66,7 +69,7 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
 	// text field
 
 	// combo boxes
-	JComboBox comboBoxRoads = CarRoads.instance().getComboBox();
+	JComboBox<String> comboBoxRoads = CarRoads.instance().getComboBox();
 
 	public static final String DISPOSE = "dispose"; // NOI18N
 

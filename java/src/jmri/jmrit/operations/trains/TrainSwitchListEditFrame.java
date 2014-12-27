@@ -55,7 +55,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 	// load managers
 	LocationManager locationManager = LocationManager.instance();
 	List<JCheckBox> locationCheckBoxes = new ArrayList<JCheckBox>();
-	List<JComboBox> locationComboBoxes = new ArrayList<JComboBox>();
+	List<JComboBox<String>> locationComboBoxes = new ArrayList<JComboBox<String>>();
 	JPanel locationPanelCheckBoxes = new JPanel();
 
 	// checkboxes
@@ -271,7 +271,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		for (int i = 0; i < locationCheckBoxes.size(); i++) {
 			String locationName = locationCheckBoxes.get(i).getName();
 			Location location = locationManager.getLocationByName(locationName);
-			JComboBox comboBox = locationComboBoxes.get(i);
+			JComboBox<?> comboBox = locationComboBoxes.get(i);
 			String printerName = (String) comboBox.getSelectedItem();
 			if (printerName.equals(TrainPrintUtilities.getDefaultPrinterName())) {
 				location.setDefaultPrinterName(Location.NONE);
@@ -396,7 +396,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 			addCommentButtonAction(button);
 			addItem(locationPanelCheckBoxes, button, 4, y);
 
-			JComboBox comboBox = TrainPrintUtilities.getPrinterJComboBox();
+			JComboBox<String> comboBox = TrainPrintUtilities.getPrinterJComboBox();
 			locationComboBoxes.add(comboBox);
 			comboBox.setSelectedItem(location.getDefaultPrinterName());
 			addComboBoxAction(comboBox);

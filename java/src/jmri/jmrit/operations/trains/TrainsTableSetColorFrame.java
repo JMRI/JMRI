@@ -50,12 +50,12 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
 
 	// combo boxes
 	JComboBox<Train> trainBox = TrainManager.instance().getTrainComboBox();
-	JComboBox colorBox = TrainManager.instance().getRowColorComboBox();
+	JComboBox<String> colorBox = TrainManager.instance().getRowColorComboBox();
 	
-	JComboBox colorBuiltBox = TrainManager.instance().getRowColorComboBox();
-	JComboBox colorBuildFailedBox = TrainManager.instance().getRowColorComboBox();
-	JComboBox colorTrainEnRouteBox = TrainManager.instance().getRowColorComboBox();
-	JComboBox colorTerminatedBox = TrainManager.instance().getRowColorComboBox();
+	JComboBox<String> colorBuiltBox = TrainManager.instance().getRowColorComboBox();
+	JComboBox<String> colorBuildFailedBox = TrainManager.instance().getRowColorComboBox();
+	JComboBox<String> colorTrainEnRouteBox = TrainManager.instance().getRowColorComboBox();
+	JComboBox<String> colorTerminatedBox = TrainManager.instance().getRowColorComboBox();
 	
 	// display panels based on which option is selected
 	JPanel pTrains;

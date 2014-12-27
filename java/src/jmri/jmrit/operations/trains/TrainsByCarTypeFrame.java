@@ -4,6 +4,7 @@ package jmri.jmrit.operations.trains;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -56,7 +57,7 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
 	// for padding out panel
 
 	// combo boxes
-	JComboBox typeComboBox = CarTypes.instance().getComboBox();
+	JComboBox<String> typeComboBox = CarTypes.instance().getComboBox();
 
 	public TrainsByCarTypeFrame() {
 		super();

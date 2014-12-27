@@ -4,9 +4,11 @@ package jmri.jmrit.operations.trains;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -18,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
@@ -71,8 +74,8 @@ public class TrainLoadOptionsFrame extends OperationsFrame implements java.beans
 	// text field
 
 	// combo boxes
-	JComboBox comboBoxTypes = CarTypes.instance().getComboBox();
-	JComboBox comboBoxLoads = CarLoads.instance().getComboBox(null);
+	JComboBox<String> comboBoxTypes = CarTypes.instance().getComboBox();
+	JComboBox<String> comboBoxLoads = CarLoads.instance().getComboBox(null);
 
 	public static final String DISPOSE = "dispose"; // NOI18N
 
@@ -313,7 +316,7 @@ public class TrainLoadOptionsFrame extends OperationsFrame implements java.beans
 		CarTypes.instance().updateComboBox(comboBoxTypes);
 		// remove types not serviced by this train
 		for (int i = comboBoxTypes.getItemCount() - 1; i >= 0; i--) {
-			String type = (String) comboBoxTypes.getItemAt(i);
+			String type = comboBoxTypes.getItemAt(i);
 			if (_train != null && !_train.acceptsTypeName(type)) {
 				comboBoxTypes.removeItem(type);
 			}

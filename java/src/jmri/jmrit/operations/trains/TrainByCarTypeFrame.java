@@ -50,9 +50,9 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 	// radio buttons
 
 	// combo boxes
-	JComboBox trainsComboBox = TrainManager.instance().getTrainComboBox();
-	JComboBox typeComboBox = CarTypes.instance().getComboBox();
-	JComboBox carsComboBox = new JComboBox();
+	JComboBox<Train> trainsComboBox = TrainManager.instance().getTrainComboBox();
+	JComboBox<String> typeComboBox = CarTypes.instance().getComboBox();
+	JComboBox<Car> carsComboBox = new JComboBox<>();
 
 	// The car currently selected
 	Car _car;
@@ -156,7 +156,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 		if (_car != null)
 			_car.removePropertyChangeListener(this);
 		_car = null;
-		if (carsComboBox.getSelectedItem() != null && !carsComboBox.getSelectedItem().equals(CarManager.NONE)) {
+		if (carsComboBox.getSelectedItem() != null) {
 			_car = (Car) carsComboBox.getSelectedItem();
 			_car.addPropertyChangeListener(this);
 		}
@@ -334,7 +334,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 		carsComboBox.removeAllItems();
 		String carType = (String) typeComboBox.getSelectedItem();
 		// load car combobox
-		carsComboBox.addItem(CarManager.NONE);
+		carsComboBox.addItem(null);
 		List<RollingStock> cars = CarManager.instance().getByTypeList(carType);
 		for (RollingStock rs : cars) {
 			Car car = (Car) rs;

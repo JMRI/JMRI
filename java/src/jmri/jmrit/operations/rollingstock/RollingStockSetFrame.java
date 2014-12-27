@@ -466,7 +466,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 
 	private void loadTrain(RollingStock rs) {
 		if (!ignoreTrainCheckBox.isSelected()) {
-			if (trainBox.getSelectedItem() == null || trainBox.getSelectedItem().equals("")) {
+			if (trainBox.getSelectedItem() == null) {
 				if (rs.getTrain() != null) {
 					// prevent rs from being picked up and delivered
 					setRouteLocationAndDestination(rs, rs.getTrain(), null, null);
@@ -588,7 +588,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 				return false;
 
 			if (!ignoreTrainCheckBox.isSelected()) {
-				if (trainBox.getSelectedItem() == null || trainBox.getSelectedItem().equals("")) {
+				if (trainBox.getSelectedItem() == null) {
 					rs.setTrain(null);
 				} else {
 					rs.setTrain((Train) trainBox.getSelectedItem());
@@ -713,8 +713,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 				track = (Track)trackDestinationBox.getSelectedItem();
 			loc.updateComboBox(trackDestinationBox, _rs, autoDestinationTrackCheckBox.isSelected(), true);
 			// check for staging, add track if train is built and terminates into staging
-			if (autoDestinationTrackCheckBox.isSelected() && trainBox.getSelectedItem() != null
-					&& !trainBox.getSelectedItem().equals("")) {
+			if (autoDestinationTrackCheckBox.isSelected() && trainBox.getSelectedItem() != null) {
 				Train train = (Train) trainBox.getSelectedItem();
 				if (train.isBuilt() && train.getTerminationTrack() != null
 						&& train.getTerminationTrack().getLocation() == loc) {

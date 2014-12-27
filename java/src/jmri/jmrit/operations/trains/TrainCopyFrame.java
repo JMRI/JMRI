@@ -14,6 +14,7 @@ import java.text.MessageFormat;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -42,7 +43,7 @@ public class TrainCopyFrame extends OperationsFrame {
 	javax.swing.JButton copyButton = new javax.swing.JButton(Bundle.getMessage("Copy"));
 
 	// combo boxes
-	javax.swing.JComboBox trainBox = TrainManager.instance().getTrainComboBox();
+	JComboBox<Train> trainBox = TrainManager.instance().getTrainComboBox();
 
 	public TrainCopyFrame(Train train) {
 		// general GUI config

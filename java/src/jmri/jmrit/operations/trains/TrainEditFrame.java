@@ -117,13 +117,13 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	JLabel space5 = new JLabel("       ");
 
 	// combo boxes
-	JComboBox hourBox = new JComboBox();
-	JComboBox minuteBox = new JComboBox();
-	JComboBox routeBox = RouteManager.instance().getComboBox();
-	JComboBox roadCabooseBox = new JComboBox();
-	JComboBox roadEngineBox = new JComboBox();
-	JComboBox modelEngineBox = EngineModels.instance().getComboBox();
-	JComboBox numEnginesBox = new JComboBox();
+	JComboBox<String> hourBox = new JComboBox<>();
+	JComboBox<String> minuteBox = new JComboBox<>();
+	JComboBox<Route> routeBox = RouteManager.instance().getComboBox();
+	JComboBox<String> roadCabooseBox = new JComboBox<>();
+	JComboBox<String> roadEngineBox = new JComboBox<>();
+	JComboBox<String> modelEngineBox = EngineModels.instance().getComboBox();
+	JComboBox<String> numEnginesBox = new JComboBox<>();
 
 	public static final String DISPOSE = "dispose"; // NOI18N
 
