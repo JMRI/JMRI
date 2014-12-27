@@ -43,7 +43,6 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
      */
     public AddressedHighCvProgrammerFacade(Programmer prog, String top, String addrCVhigh, String addrCVlow, String valueCV, String modulo) {
         super(prog);
-        this.prog = prog;
         this.top = Integer.parseInt(top);
         this.addrCVhigh = Integer.parseInt(addrCVhigh);
         this.addrCVlow = Integer.parseInt(addrCVlow);
@@ -51,8 +50,6 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
         this.modulo = Integer.parseInt(modulo);
         log.debug("Created with "+prog+", "+this.top+", "+this.addrCVhigh+", "+this.addrCVlow+", "+this.valueCV+", "+this.modulo);
     }
-
-    Programmer prog;
     
     int top;
     int addrCVhigh;

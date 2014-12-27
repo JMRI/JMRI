@@ -50,7 +50,6 @@ public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFac
      */
     public ResettingOffsetHighCvProgrammerFacade(Programmer prog, String top, String addrCV, String cvFactor, String modulo, String indicator) {
         super(prog);
-        this.prog = prog;
         this.top = Integer.parseInt(top);
         this.addrCV = Integer.parseInt(addrCV);
         this.cvFactor = Integer.parseInt(cvFactor);
@@ -58,8 +57,6 @@ public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFac
         this.indicator = Integer.parseInt(indicator);
     }
 
-    Programmer prog;
-    
     int top;
     int addrCV;
     int cvFactor;

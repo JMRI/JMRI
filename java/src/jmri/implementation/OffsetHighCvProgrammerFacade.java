@@ -47,14 +47,11 @@ public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade imple
      */
     public OffsetHighCvProgrammerFacade(Programmer prog, String top, String addrCV, String cvFactor, String modulo) {
         super(prog);
-        this.prog = prog;
         this.top = Integer.parseInt(top);
         this.addrCV = Integer.parseInt(addrCV);
         this.cvFactor = Integer.parseInt(cvFactor);
         this.modulo = Integer.parseInt(modulo);
     }
-
-    Programmer prog;
     
     int top;
     int addrCV;
