@@ -2,23 +2,26 @@
 
 package apps;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.awt.Component;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
+import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import jmri.Application;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrix.JmrixConfigPane;
 import jmri.util.swing.JmriPanel;
-
-import java.awt.Component;
-import java.text.MessageFormat;
-import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import javax.swing.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Basic configuration infrastructure, to be 
@@ -41,7 +44,7 @@ public class AppConfigBase extends JmriPanel {
     /**
      * Remember items to persist
      */
-    protected List<Component> items = new ArrayList<Component>();
+    protected List<Component> items = new ArrayList<>();
 
     /**
      * Construct a configuration panel for inclusion in a preferences
@@ -84,25 +87,24 @@ public class AppConfigBase extends JmriPanel {
      * @return true if OK, false if duplicates present.
      */
     private boolean checkDups() {
-        Map<String, List<JmrixConfigPane>> ports = new HashMap<String, List<JmrixConfigPane>>();
+        Map<String, List<JmrixConfigPane>> ports = new HashMap<>();
         ArrayList<JmrixConfigPane> configPaneList = JmrixConfigPane.getListOfConfigPanes();
-    	for (int i=0; i<configPaneList.size(); i++){
-            JmrixConfigPane configPane = configPaneList.get(i);
-            if (!configPane.getDisabled()) {
-		        String port = configPane.getCurrentProtocolInfo();
-		        /*We need to test to make sure that the connection port is not set to (none)
-		        If it is set to none, then it is likely a simulator.*/
-		        if(!port.equals(JmrixConfigPane.NONE)){
-		            if (!ports.containsKey(port)){
-		            	List<JmrixConfigPane> arg1 = new ArrayList<JmrixConfigPane>();
-		            	arg1.add(configPane);
-						ports.put(port, arg1);
-		            } else {
-		            	ports.get(port).add(configPane);
-		            }
-		        }
+            for (JmrixConfigPane configPane : configPaneList) {
+                if (!configPane.getDisabled()) {
+                    String port = configPane.getCurrentProtocolInfo();
+                    /*We need to test to make sure that the connection port is not set to (none)
+                    If it is set to none, then it is likely a simulator.*/
+                    if(!port.equals(JmrixConfigPane.NONE)){
+                        if (!ports.containsKey(port)){
+                            List<JmrixConfigPane> arg1 = new ArrayList<>();
+                            arg1.add(configPane);
+                            ports.put(port, arg1);
+                        } else {
+                            ports.get(port).add(configPane);
+                        }
+                    }
+                }
             }
-        }
         boolean ret = true;
         /* one or more dups or NONE, lets see if it is dups */
         for (Map.Entry<String, List<JmrixConfigPane>> e : ports.entrySet()) {
@@ -128,17 +130,18 @@ public class AppConfigBase extends JmriPanel {
      * @return true if okay
      */
     private boolean checkPortNames() {
-        ArrayList<JmrixConfigPane> configPane = JmrixConfigPane.getListOfConfigPanes();
-    	for (int i=0; i<configPane.size(); i++){
-            String port = configPane.get(i).getCurrentProtocolInfo();
-    		if (port.equals(JmrixConfigPane.NONE_SELECTED) || port.equals(JmrixConfigPane.NO_PORTS_FOUND)) {
-    	           if (JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("MessageSerialPortWarning"), new Object[]{port, configPane.get(i).getCurrentProtocolName()}), rb.getString("MessageSerialPortNotValid"), JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE) != JOptionPane.YES_OPTION)
-    			return false;
-    		}
-    	}
+        for (JmrixConfigPane configPane : JmrixConfigPane.getListOfConfigPanes()) {
+            String port = configPane.getCurrentProtocolInfo();
+            if (port.equals(JmrixConfigPane.NONE_SELECTED) || port.equals(JmrixConfigPane.NO_PORTS_FOUND)) {
+                if (JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("MessageSerialPortWarning"), new Object[]{port, configPane.getCurrentProtocolName()}), rb.getString("MessageSerialPortNotValid"), JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE) != JOptionPane.YES_OPTION) {
+                    return false;
+                }
+            }
+        }
     	return true;
     }
 
+    @Override
     public void dispose() {
         items.clear();
     }
@@ -146,20 +149,21 @@ public class AppConfigBase extends JmriPanel {
     public void saveContents() {
         // remove old prefs that are registered in ConfigManager
         InstanceManager.configureManagerInstance().removePrefItems();
-        // put the new GUI items on the persistance list
-        for (int i = 0; i < items.size(); i++) {
-            InstanceManager.configureManagerInstance().registerPref(items.get(i));
-        }
+            // put the new GUI items on the persistance list
+            for (Component item : items) {
+                InstanceManager.configureManagerInstance().registerPref(item);
+            }
         InstanceManager.configureManagerInstance().storePrefs();
     }
 
     /**
-     * Handle the Save button:  Backup the file, write a new one, prompt for
-     * what to do next.  To do that, the last step is to present a dialog
-     * box prompting the user to end the program.
+     * Handle the Save button: Backup the file, write a new one, prompt for what
+     * to do next. To do that, the last step is to present a dialog box
+     * prompting the user to end the program, if required.
+     *
+     * @param restartRequired true if JMRI should prompt user to restart
      */
-     
-    public void savePressed() {
+    public void savePressed(boolean restartRequired) {
         // true if port name OK
         if (!checkPortNames())           
                 return;
@@ -171,47 +175,49 @@ public class AppConfigBase extends JmriPanel {
         final UserPreferencesManager p;
         p = InstanceManager.getDefault(UserPreferencesManager.class);
         p.resetChangeMade();
-        if (p.getMultipleChoiceOption(getClassName(),"quitAfterSave") == 0) {
-            JPanel message = new JPanel();
-            JLabel question = new JLabel(MessageFormat.format(rb.getString("MessageLongQuitWarning"), Application.getApplicationName()));
-            final JCheckBox remember = new JCheckBox(rb.getString("MessageRememberSetting"));
-            remember.setFont(remember.getFont().deriveFont(10.0F));
-            message.setLayout(new BoxLayout(message, BoxLayout.Y_AXIS));
-            message.add(question);
-            message.add(remember);
-            Object[] options = {rb.getString("RestartNow"), rb.getString("RestartLater")};
-            int retVal = JOptionPane.showOptionDialog(this,
-                    message,
-                    MessageFormat.format(rb.getString("MessageShortQuitWarning"), Application.getApplicationName()),
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    null,
-                    options,
-                    null);
-            switch (retVal) {
-                case JOptionPane.YES_OPTION:
-                    if (remember.isSelected()) {
-                        p.setMultipleChoiceOption(getClassName(), "quitAfterSave", 0x02);
-                        saveContents();
-                    }
-                    dispose();
-                    Apps.handleRestart();
-                    break;
-                case JOptionPane.NO_OPTION:
-                    if (remember.isSelected()) {
-                        p.setMultipleChoiceOption(getClassName(), "quitAfterSave", 0x01);
-                    }
-                    break;
-                default:
-                    break;
-            }
-        } else if (p.getMultipleChoiceOption(getClassName(),"quitAfterSave") == 2) {
-        	// restart the program
-        	dispose();
+        if (restartRequired) {
+            if (p.getMultipleChoiceOption(getClassName(), "quitAfterSave") == 0) {
+                JPanel message = new JPanel();
+                JLabel question = new JLabel(MessageFormat.format(rb.getString("MessageLongQuitWarning"), Application.getApplicationName()));
+                final JCheckBox remember = new JCheckBox(rb.getString("MessageRememberSetting"));
+                remember.setFont(remember.getFont().deriveFont(10.0F));
+                message.setLayout(new BoxLayout(message, BoxLayout.Y_AXIS));
+                message.add(question);
+                message.add(remember);
+                Object[] options = {rb.getString("RestartNow"), rb.getString("RestartLater")};
+                int retVal = JOptionPane.showOptionDialog(this,
+                        message,
+                        MessageFormat.format(rb.getString("MessageShortQuitWarning"), Application.getApplicationName()),
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        options,
+                        null);
+                switch (retVal) {
+                    case JOptionPane.YES_OPTION:
+                        if (remember.isSelected()) {
+                            p.setMultipleChoiceOption(getClassName(), "quitAfterSave", 0x02);
+                            saveContents();
+                        }
+                        dispose();
+                        Apps.handleRestart();
+                        break;
+                    case JOptionPane.NO_OPTION:
+                        if (remember.isSelected()) {
+                            p.setMultipleChoiceOption(getClassName(), "quitAfterSave", 0x01);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            } else if (p.getMultipleChoiceOption(getClassName(), "quitAfterSave") == 2) {
+                // restart the program
+                dispose();
         	// do orderly shutdown.  Note this
-        	// invokes Apps.handleRestart, even if this
-        	// panel hasn't been created by an Apps subclass.
-        	Apps.handleRestart();
+                // invokes Apps.handleRestart, even if this
+                // panel hasn't been created by an Apps subclass.
+                Apps.handleRestart();
+            }
         }
         // don't restart the program, just close the window
         if (getTopLevelAncestor() != null) {
@@ -222,7 +228,7 @@ public class AppConfigBase extends JmriPanel {
     public String getClassDescription() { return rb.getString("Application"); }
 
     public void setMessagePreferencesDetails(){
-        HashMap<Integer,String> options = new HashMap<Integer,String>(3);
+        HashMap<Integer,String> options = new HashMap<>(3);
         options.put(0x00, rb.getString("QuitAsk"));
         options.put(0x01, rb.getString("QuitNever"));
         options.put(0x02, rb.getString("QuitAlways"));

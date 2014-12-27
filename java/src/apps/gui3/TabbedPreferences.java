@@ -50,11 +50,6 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.plaf.FontUIResource;
 import jmri.InstanceManager;
-import jmri.jmrit.beantable.usermessagepreferences.UserMessagePreferencesPane;
-import jmri.jmrit.roster.RosterConfigPane;
-import jmri.jmrit.symbolicprog.ProgrammerConfigPane;
-import jmri.jmrit.throttle.ThrottlesPreferencesPane;
-import jmri.jmrit.withrottle.WiThrottlePrefsPanel;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.JmrixConfigPane;
@@ -102,8 +97,6 @@ public class TabbedPreferences extends AppConfigBase {
     // class! How about switching AppConfigPanel to tabbed?
     JPanel detailpanel = new JPanel();
     JTabbedPane connectionPanel = new JTabbedPane();
-    ThrottlesPreferencesPane throttlePreferences;
-    WiThrottlePrefsPanel withrottlePrefsPanel;
 
     ArrayList<JmrixConfigPane> connectionTabInstance = new ArrayList<>();
     ArrayList<PreferencesCatItems> preferencesArray = new ArrayList<>();
@@ -177,8 +170,6 @@ public class TabbedPreferences extends AppConfigBase {
         addConnectionIcon = new ImageIcon(
                 FileUtil.findExternalFilename("program:resources/icons/misc/gui3/Add16x16.png"));
 
-        throttlePreferences = new ThrottlesPreferencesPane();
-        withrottlePrefsPanel = new WiThrottlePrefsPanel();
         list = new JList();
         listScroller = new JScrollPane(list);
         listScroller.setPreferredSize(new Dimension(100, 100));
@@ -199,10 +190,7 @@ public class TabbedPreferences extends AppConfigBase {
                 new ImageIcon(
                         FileUtil.findExternalFilename("program:resources/icons/misc/gui3/SaveIcon.png")));
         save.addActionListener((ActionEvent e) -> {
-            invokeSaveOptions();
-            throttlePreferences.jbSaveActionPerformed(e);
-            withrottlePrefsPanel.storeValues();
-            savePressed();
+            savePressed(invokeSaveOptions());
         });
 
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -223,10 +211,17 @@ public class TabbedPreferences extends AppConfigBase {
                     + ex.toString());
         }
         try {
-            addItem("FILELOCATIONS", rb.getString("MenuFileLocation"),
-                    rb.getString("TabbedLayoutFileLocations"),
-                    rb.getString("LabelTabbedFileLocations"),
-                    new FileLocationPane(), false, null);
+            // Added here instead of later to maintain existing panel order
+            FileLocationPane panel = new FileLocationPane();
+            this.preferencesPanels.put(FileLocationPane.class.getCanonicalName(), panel);
+            addItem(panel.getPreferencesItem(),
+                    panel.getPreferencesItemText(),
+                    panel.getTabbedPreferencesTitle(),
+                    panel.getLabelKey(),
+                    panel.getPreferencesComponent(),
+                    panel.isPersistant(),
+                    panel.getPreferencesTooltip()
+            );
         } catch (Exception ex) {
             log.error("Error in trying to add the file locations to the preferences "
                     + ex.toString());
@@ -269,42 +264,6 @@ public class TabbedPreferences extends AppConfigBase {
                     + ex.toString());
         }
         try {
-            addItem("MESSAGES", rb.getString("MenuMessages"), null, null,
-                    new UserMessagePreferencesPane(), false, null);
-        } catch (Exception ex) {
-            log.error("Error in trying to add message items to the preferences "
-                    + ex.toString());
-        }
-        try {
-            addItem("ROSTER", rb.getString("MenuRoster"),
-                    rb.getString("TabbedLayoutProgrammer"),
-                    rb.getString("LabelTabbedLayoutProgrammer"),
-                    new ProgrammerConfigPane(true), true, null);
-            addItem("ROSTER", rb.getString("MenuRoster"),
-                    rb.getString("TabbedLayoutRoster"),
-                    rb.getString("LabelTabbedLayoutRoster"),
-                    new RosterConfigPane(), true, null);
-        } catch (Exception ex) {
-            log.error("Error in trying to add roster preferemce "
-                    + ex.toString());
-        }
-        try {
-            addItem("THROTTLE", rb.getString("MenuThrottle"), null, null,
-                    throttlePreferences, false, null);
-        } catch (Exception ex) {
-            log.error("Error in trying to add throttle preferences "
-                    + ex.toString());
-        }
-        try {
-            addItem("WITHROTTLE", rb.getString("MenuWiThrottle"), null, null,
-                    withrottlePrefsPanel, false, null);
-        } catch (Exception ex) {
-            log.error("Error in trying to add WiThrottle preferences "
-                    + ex.toString());
-        }
-        try {
-            // need to replace this mechanism with some mechanism that relies on a
-            // cached discovery mechanism for plugins like @ http://code.google.com/p/jspf/
             List<String> classNames = (new ObjectMapper()).readValue(
                     java.util.ResourceBundle.getBundle("apps.AppsStructureBundle").getString("PreferencesPanels"),
                     new TypeReference<List<String>>() {
@@ -323,8 +282,7 @@ public class TabbedPreferences extends AppConfigBase {
                             panel.getPreferencesTooltip()
                     );
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-                    log.error("Unable to add preferences class (" + className
-                            + ")", e);
+                    log.error("Unable to add preferences class (" + className + ")", e);
                 }
             }
         } catch (Exception e) {
@@ -356,6 +314,7 @@ public class TabbedPreferences extends AppConfigBase {
      * @param type The class of the object
      * @param strMethod the method to be invoked at save.
      */
+    @Deprecated
     public <T> void addItemToSave(T object, Class<T> type, String strMethod) {
         if (!saveHook.containsKey(type)) {
             saveHook.put(type, object);
@@ -363,10 +322,11 @@ public class TabbedPreferences extends AppConfigBase {
         }
     }
 
-    void invokeSaveOptions() {
+    private boolean invokeSaveOptions() {
+        boolean restartRequired = false;
         Enumeration<Class<?>> keys = saveHook.keys();
         while (keys.hasMoreElements()) {
-
+            restartRequired = true; // force restarting if any preferences panes that do not implement PreferencesPanel are invoked
             Class<?> strClass = keys.nextElement();
             String strMethod = saveMethod.get(strClass);
             boolean booMethod = false;
@@ -410,7 +370,11 @@ public class TabbedPreferences extends AppConfigBase {
             if (!panel.isPersistant()) {
                 panel.savePreferences();
             }
+            if (!restartRequired) {
+                restartRequired = panel.isRestartRequired();
+            }
         }
+        return restartRequired;
     }
 
     void setUpConnectionPanel() {

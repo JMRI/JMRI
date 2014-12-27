@@ -4,9 +4,11 @@ package jmri.jmrit.roster;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -14,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileFilter;
+import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
 
 /**
@@ -23,7 +26,7 @@ import jmri.util.FileUtil;
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2007
  * @version	$Revision$
  */
-public class RosterConfigPane extends JPanel {
+public class RosterConfigPane extends JPanel implements PreferencesPanel {
 
     /**
      *
@@ -33,6 +36,7 @@ public class RosterConfigPane extends JPanel {
     JTextField owner = new JTextField(20);
     JFileChooser fc;
     JPanel parent;
+    private final ResourceBundle apb = ResourceBundle.getBundle("apps.AppsConfigBundle");
 
     public RosterConfigPane() {
         fc = new JFileChooser(FileUtil.getUserFilesPath());
@@ -53,14 +57,13 @@ public class RosterConfigPane extends JPanel {
             }
         };
 
-        java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
-        fc.setDialogTitle(rb.getString("DialogTitleMove"));
+        fc.setDialogTitle(Bundle.getMessage("DialogTitleMove"));
         fc.setFileFilter(filt);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JPanel p = new JPanel();
         p.setLayout(new FlowLayout());
-        p.add(new JLabel(rb.getString("LabelMoveLocation")));
+        p.add(new JLabel(Bundle.getMessage("LabelMoveLocation")));
 
         p.add(filename = new JLabel(Roster.getFileLocation()));
         // don't show default location, so it's not deemed a user selection
@@ -68,7 +71,7 @@ public class RosterConfigPane extends JPanel {
         if (FileUtil.getUserFilesPath().equals(Roster.getFileLocation())) {
             filename.setText("");
         }
-        JButton b = new JButton(rb.getString("ButtonSetDots"));
+        JButton b = new JButton(Bundle.getMessage("ButtonSetDots"));
 
         parent = this;
         b.addActionListener(new AbstractAction() {
@@ -77,12 +80,12 @@ public class RosterConfigPane extends JPanel {
              */
             private static final long serialVersionUID = -1593137799319787064L;
 
+            @Override
             public void actionPerformed(ActionEvent e) {
-                java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
                 // prompt with instructions
                 if (JOptionPane.OK_OPTION != JOptionPane.showConfirmDialog(parent.getTopLevelAncestor(),
-                        rb.getString("DialogMsgMoveWarning"),
-                        rb.getString("DialogMsgMoveQuestion"),
+                        Bundle.getMessage("DialogMsgMoveWarning"),
+                        Bundle.getMessage("DialogMsgMoveQuestion"),
                         JOptionPane.OK_CANCEL_OPTION
                 )) {
                     return;
@@ -105,13 +108,14 @@ public class RosterConfigPane extends JPanel {
             }
         });
         p.add(b);
-        b = new JButton(rb.getString("ButtonReset"));
+        b = new JButton(Bundle.getMessage("ButtonReset"));
         b.addActionListener(new AbstractAction() {
             /**
              *
              */
             private static final long serialVersionUID = 898239723894109746L;
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 filename.setText("");
                 validate();
@@ -125,7 +129,7 @@ public class RosterConfigPane extends JPanel {
 
         JPanel p2 = new JPanel();
         p2.setLayout(new FlowLayout());
-        p2.add(new JLabel(rb.getString("LabelDefaultOwner")));
+        p2.add(new JLabel(Bundle.getMessage("LabelDefaultOwner")));
         owner.setText(RosterEntry.getDefaultOwner());
         p2.add(owner);
         add(p2);
@@ -141,6 +145,57 @@ public class RosterConfigPane extends JPanel {
 
     public String getSelectedItem() {
         return filename.getText();
+    }
+
+    @Override
+    public String getPreferencesItem() {
+        return "ROSTER"; // NOI18N
+    }
+
+    @Override
+    public String getPreferencesItemText() {
+        return this.apb.getString("MenuRoster"); // NOI18N
+    }
+
+    @Override
+    public String getTabbedPreferencesTitle() {
+        return this.apb.getString("TabbedLayoutRoster"); // NOI18N
+    }
+
+    @Override
+    public String getLabelKey() {
+        return this.apb.getString("LabelTabbedLayoutRoster"); // NOI18N
+    }
+
+    @Override
+    public JComponent getPreferencesComponent() {
+        return this;
+    }
+
+    @Override
+    public boolean isPersistant() {
+        return true;
+    }
+
+    @Override
+    public String getPreferencesTooltip() {
+        return null;
+    }
+
+    @Override
+    public void savePreferences() {
+        // do nothing - the persistant manager will take care of this
+    }
+
+    @Override
+    public boolean isDirty() {
+        return (!Roster.getFileLocation().equals(this.getSelectedItem())
+                || !RosterEntry.getDefaultOwner().equals(this.getDefaultOwner()));
+    }
+
+    @Override
+    public boolean isRestartRequired() {
+        return !Roster.getFileLocation().equals(this.getSelectedItem());
     }
 
 }
