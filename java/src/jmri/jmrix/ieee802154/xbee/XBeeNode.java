@@ -13,6 +13,7 @@ import com.rapplogic.xbee.api.XBeeAddress16;
 import com.rapplogic.xbee.api.XBeeAddress64;
 
 import jmri.NamedBean;
+import jmri.util.StringUtil;
 import java.util.HashMap;
 
 /**
@@ -52,7 +53,9 @@ public class XBeeNode extends IEEE802154Node {
         super(pan,user,global);
         Identifier="";
         if(log.isDebugEnabled()) log.debug("Created new node with panId: " +
-                                pan + " userId: " + user + " and GUID: " + global);
+                                StringUtil.arrayToString(pan) 
+                                + " userId: " + StringUtil.arrayToString(user) 
+                                + " and GUID: " + StringUtil.arrayToString(global));
          pinObjects = new HashMap<Integer,NamedBean>(); 
          isPolled = false;
     }
