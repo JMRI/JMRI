@@ -28,6 +28,8 @@ public class EditManifestTextFrame extends OperationsFrame {
 
         // build menu
         addHelpMenu("package.jmri.jmrit.operations.Operations_ManifestPrintOptionsTools", true); // NOI18N
+        
+        initMinimumSize();
     }
 
     private static final Logger log = LoggerFactory.getLogger(OperationsSetupFrame.class);

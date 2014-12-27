@@ -38,6 +38,8 @@ public class PrintOptionFrame extends OperationsFrame {
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_PrintOptions", true); // NOI18N
+        
+        initMinimumSize();
     }
 
     private static final Logger log = LoggerFactory.getLogger(PrintOptionFrame.class);

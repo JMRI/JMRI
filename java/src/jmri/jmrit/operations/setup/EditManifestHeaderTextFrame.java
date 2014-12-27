@@ -26,5 +26,7 @@ public class EditManifestHeaderTextFrame extends OperationsFrame {
 
         // build menu
         addHelpMenu("package.jmri.jmrit.operations.Operations_ManifestPrintOptionsTools", true); // NOI18N
+        
+        initMinimumSize();
     }
 }

@@ -28,6 +28,8 @@ public class OptionFrame extends OperationsFrame {
 
         // build menu
         addHelpMenu("package.jmri.jmrit.operations.Operations_SettingsOptions", true); // NOI18N
+        
+        initMinimumSize();
     }
 
     private static final Logger log = LoggerFactory.getLogger(OptionFrame.class);
