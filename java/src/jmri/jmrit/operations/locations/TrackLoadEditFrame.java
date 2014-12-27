@@ -14,6 +14,7 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
 import java.awt.*;
+
 import javax.swing.*;
 
 /**
@@ -72,10 +73,10 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 	JRadioButton shipLoadNameExclude = new JRadioButton(Bundle.getMessage("Exclude"));
 
 	// combo box
-	JComboBox comboBoxLoads = CarLoads.instance().getComboBox(null);
-	JComboBox comboBoxShipLoads = CarLoads.instance().getComboBox(null);
-	JComboBox comboBoxTypes = CarTypes.instance().getComboBox();
-	JComboBox comboBoxShipTypes = CarTypes.instance().getComboBox();
+	JComboBox<String> comboBoxLoads = CarLoads.instance().getComboBox(null);
+	JComboBox<String> comboBoxShipLoads = CarLoads.instance().getComboBox(null);
+	JComboBox<String> comboBoxTypes = CarTypes.instance().getComboBox();
+	JComboBox<String> comboBoxShipTypes = CarTypes.instance().getComboBox();
 
 	// labels
 	JLabel trackName = new JLabel();
@@ -474,7 +475,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 		CarTypes.instance().updateComboBox(comboBoxTypes);
 		// remove car types not serviced by this location and track
 		for (int i = comboBoxTypes.getItemCount() - 1; i >= 0; i--) {
-			String type = (String) comboBoxTypes.getItemAt(i);
+			String type = comboBoxTypes.getItemAt(i);
 			if (_track != null && !_track.acceptsTypeName(type)) {
 				comboBoxTypes.removeItem(type);
 			}
@@ -482,7 +483,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 		CarTypes.instance().updateComboBox(comboBoxShipTypes);
 		// remove car types not serviced by this location and track
 		for (int i = comboBoxShipTypes.getItemCount() - 1; i >= 0; i--) {
-			String type = (String) comboBoxShipTypes.getItemAt(i);
+			String type = comboBoxShipTypes.getItemAt(i);
 			if (_track != null && !_track.acceptsTypeName(type)) {
 				comboBoxShipTypes.removeItem(type);
 			}

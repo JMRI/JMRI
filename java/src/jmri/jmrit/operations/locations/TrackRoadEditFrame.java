@@ -48,7 +48,7 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
 	JRadioButton roadNameExclude = new JRadioButton(Bundle.getMessage("Exclude"));
 
 	// combo box
-	JComboBox comboBoxRoads = CarRoads.instance().getComboBox();
+	JComboBox<String> comboBoxRoads = CarRoads.instance().getComboBox();
 
 	// labels
 	JLabel trackName = new JLabel();

@@ -4,6 +4,7 @@ package jmri.jmrit.operations.routes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
 
@@ -12,6 +13,7 @@ import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 
 import javax.swing.BoxLayout;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -45,7 +47,7 @@ public class RouteCopyFrame extends OperationsFrame {
 	javax.swing.JButton copyButton = new javax.swing.JButton(Bundle.getMessage("Copy"));
 
 	// combo boxes
-	javax.swing.JComboBox routeBox = RouteManager.instance().getComboBox();
+	JComboBox<Route> routeBox = RouteManager.instance().getComboBox();
 
 	public RouteCopyFrame() {
 		super(Bundle.getMessage("TitleRouteCopy"));

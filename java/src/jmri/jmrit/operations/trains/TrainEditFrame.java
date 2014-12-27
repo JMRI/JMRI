@@ -435,7 +435,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 					new Object[] { train.getName() }), Bundle.getMessage("deleteTrain"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 				return;
 			}
-			routeBox.setSelectedItem(RouteManager.NONE);
+			routeBox.setSelectedItem(null);
 			trainManager.deregister(train);
 			for (Frame frame : children) {
 				frame.dispose();
@@ -660,7 +660,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 				if (route != null)
 					route.removePropertyChangeListener(this);
 				Object selected = routeBox.getSelectedItem();
-				if (selected != null && !selected.equals(RouteManager.NONE)) {
+				if (selected != null) {
 					route = (Route) selected;
 					_train.setRoute(route);
 					route.addPropertyChangeListener(this);
@@ -899,7 +899,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		ref = new RouteEditFrame();
 		setChildFrame(ref);
 		Object selected = routeBox.getSelectedItem();
-		if (selected != null && !selected.equals(RouteManager.NONE)) {
+		if (selected != null) {
 			Route route = (Route) selected;
 			ref.initComponents(route);
 		} else {

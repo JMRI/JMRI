@@ -106,10 +106,10 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JRadioButton excludeTrainPickup = new JRadioButton(Bundle.getMessage("ExcludeTrains"));
 	JRadioButton excludeRoutePickup = new JRadioButton(Bundle.getMessage("ExcludeRoutes"));
 
-	JComboBox comboBoxDropTrains = trainManager.getTrainComboBox();
-	JComboBox comboBoxDropRoutes = routeManager.getComboBox();
-	JComboBox comboBoxPickupTrains = trainManager.getTrainComboBox();
-	JComboBox comboBoxPickupRoutes = routeManager.getComboBox();
+	JComboBox<Train> comboBoxDropTrains = trainManager.getTrainComboBox();
+	JComboBox<Route> comboBoxDropRoutes = routeManager.getComboBox();
+	JComboBox<Train> comboBoxPickupTrains = trainManager.getTrainComboBox();
+	JComboBox<Route> comboBoxPickupRoutes = routeManager.getComboBox();
 
 	// text field
 	JTextField trackNameTextField = new JTextField(Control.max_len_string_track_name);
@@ -391,7 +391,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		if (ae.getSource() == addDropButton) {
 			String id = "";
 			if (trainDrop.isSelected() || excludeTrainDrop.isSelected()) {
-				if (comboBoxDropTrains.getSelectedItem().equals(TrainManager.NONE))
+				if (comboBoxDropTrains.getSelectedItem() == null)
 					return;
 				Train train = ((Train) comboBoxDropTrains.getSelectedItem());
 				Route route = train.getRoute();
@@ -403,7 +403,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 				}
 				selectNextItemComboBox(comboBoxDropTrains);
 			} else {
-				if (comboBoxDropRoutes.getSelectedItem().equals(RouteManager.NONE))
+				if (comboBoxDropRoutes.getSelectedItem() == null)
 					return;
 				Route route = ((Route) comboBoxDropRoutes.getSelectedItem());
 				id = route.getId();
@@ -419,12 +419,12 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		if (ae.getSource() == deleteDropButton) {
 			String id = "";
 			if (trainDrop.isSelected() || excludeTrainDrop.isSelected()) {
-				if (comboBoxDropTrains.getSelectedItem().equals(TrainManager.NONE))
+				if (comboBoxDropTrains.getSelectedItem() == null)
 					return;
 				id = ((Train) comboBoxDropTrains.getSelectedItem()).getId();
 				selectNextItemComboBox(comboBoxDropTrains);
 			} else {
-				if (comboBoxDropRoutes.getSelectedItem().equals(RouteManager.NONE))
+				if (comboBoxDropRoutes.getSelectedItem() == null)
 					return;
 				id = ((Route) comboBoxDropRoutes.getSelectedItem()).getId();
 				selectNextItemComboBox(comboBoxDropRoutes);
@@ -434,7 +434,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		if (ae.getSource() == addPickupButton) {
 			String id = "";
 			if (trainPickup.isSelected() || excludeTrainPickup.isSelected()) {
-				if (comboBoxPickupTrains.getSelectedItem().equals(TrainManager.NONE))
+				if (comboBoxPickupTrains.getSelectedItem() == null)
 					return;
 				Train train = ((Train) comboBoxPickupTrains.getSelectedItem());
 				Route route = train.getRoute();
@@ -446,7 +446,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 				}
 				selectNextItemComboBox(comboBoxPickupTrains);
 			} else {
-				if (comboBoxPickupRoutes.getSelectedItem().equals(RouteManager.NONE))
+				if (comboBoxPickupRoutes.getSelectedItem() == null)
 					return;
 				Route route = ((Route) comboBoxPickupRoutes.getSelectedItem());
 				id = route.getId();
@@ -462,12 +462,12 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		if (ae.getSource() == deletePickupButton) {
 			String id = "";
 			if (trainPickup.isSelected() || excludeTrainPickup.isSelected()) {
-				if (comboBoxPickupTrains.getSelectedItem().equals(TrainManager.NONE))
+				if (comboBoxPickupTrains.getSelectedItem() == null)
 					return;
 				id = ((Train) comboBoxPickupTrains.getSelectedItem()).getId();
 				selectNextItemComboBox(comboBoxPickupTrains);
 			} else {
-				if (comboBoxPickupRoutes.getSelectedItem().equals(RouteManager.NONE))
+				if (comboBoxPickupRoutes.getSelectedItem() == null)
 					return;
 				id = ((Route) comboBoxPickupRoutes.getSelectedItem()).getId();
 				selectNextItemComboBox(comboBoxPickupRoutes);
@@ -761,7 +761,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	// TODO only update comboBox when train or route list changes.
 	private void updateDropOptions() {
 		dropPanel.removeAll();
-		int numberOfCheckboxes = getNumberOfCheckboxesPerLine();
+		int numberOfItems = getNumberOfCheckboxesPerLine();
 
 		JPanel p = new JPanel();
 		p.setLayout(new GridBagLayout());
@@ -771,7 +771,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		p.add(excludeTrainDrop);
 		p.add(excludeRouteDrop);
 		GridBagConstraints gc = new GridBagConstraints();
-		gc.gridwidth = numberOfCheckboxes + 1;
+		gc.gridwidth = numberOfItems + 1;
 		dropPanel.add(p, gc);
 
 		int y = 1; // vertical position in panel
@@ -817,7 +817,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 						_track.deleteDropId(id);
 					names.setText(name);
 					addItem(dropPanel, names, x++, y);
-					if (x > numberOfCheckboxes) {
+					if (x > numberOfItems) {
 						y++;
 						x = 0;
 					}
@@ -913,9 +913,9 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	}
 
 	// filter all trains not serviced by this track
-	private void autoTrainComboBox(JComboBox box) {
+	private void autoTrainComboBox(JComboBox<Train> box) {
 		for (int i = 1; i < box.getItemCount(); i++) {
-			Train train = (Train) box.getItemAt(i);
+			Train train = box.getItemAt(i);
 			if (!checkRoute(train.getRoute())) {
 				box.removeItemAt(i--);
 			}
@@ -932,9 +932,9 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	}
 
 	// filter out all routes not serviced by this track
-	private void autoRouteComboBox(JComboBox box) {
+	private void autoRouteComboBox(JComboBox<Route> box) {
 		for (int i = 1; i < box.getItemCount(); i++) {
-			Route route = (Route) box.getItemAt(i);
+			Route route = box.getItemAt(i);
 			if (!checkRoute(route)) {
 				box.removeItemAt(i--);
 			}

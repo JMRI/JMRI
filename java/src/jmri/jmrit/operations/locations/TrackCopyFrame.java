@@ -47,8 +47,8 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 	JButton saveButton = new javax.swing.JButton(Bundle.getMessage("Save"));
 
 	// combo boxes
-	JComboBox locationBox = LocationManager.instance().getComboBox();
-	JComboBox trackBox = new JComboBox();
+	JComboBox<Location> locationBox = LocationManager.instance().getComboBox();
+	JComboBox<Track> trackBox = new JComboBox<>();
 	
 	// checkboxes
 	JCheckBox sameNameCheckBox = new JCheckBox(Bundle.getMessage("SameName"));

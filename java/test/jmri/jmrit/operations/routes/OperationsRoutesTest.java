@@ -448,9 +448,9 @@ public class OperationsRoutesTest extends TestCase {
 		}
 
 		// test the combo box
-		JComboBox b = rm.getComboBox();
+		JComboBox<Route> b = rm.getComboBox();
 		Assert.assertEquals("ComboBox item count", 4, b.getItemCount());
-		Assert.assertEquals("First combo item", "", b.getItemAt(0));
+		Assert.assertEquals("First combo item", null, b.getItemAt(0));
 		Assert.assertEquals("First combo route", route2, b.getItemAt(1));
 		Assert.assertEquals("2nd combo route", route4, b.getItemAt(2));
 		Assert.assertEquals("3rd combo route", route3, b.getItemAt(3));
@@ -483,7 +483,7 @@ public class OperationsRoutesTest extends TestCase {
 		// test combo box update
 		rm.updateComboBox(b);
 		Assert.assertEquals("ComboBox item count", 2, b.getItemCount());
-		Assert.assertEquals("First combo item", "", b.getItemAt(0));
+		Assert.assertEquals("First combo item", null, b.getItemAt(0));
 		Assert.assertEquals("First combo route", route2, b.getItemAt(1));
 
 		// finish up by deleting the last route

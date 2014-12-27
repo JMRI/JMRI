@@ -578,15 +578,15 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		return out;
 	}
 
-	public JComboBox getTrainComboBox() {
-		JComboBox box = new JComboBox();
+	public JComboBox<Train> getTrainComboBox() {
+		JComboBox<Train> box = new JComboBox<>();
 		updateTrainComboBox(box);
 		return box;
 	}
 
-	public void updateTrainComboBox(JComboBox box) {
+	public void updateTrainComboBox(JComboBox<Train> box) {
 		box.removeAllItems();
-		box.addItem(NONE);
+		box.addItem(null);
 		for (Train train : getTrainsByNameList()) {
 			box.addItem(train);
 		}

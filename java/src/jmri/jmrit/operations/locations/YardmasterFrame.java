@@ -6,8 +6,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Setup;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Yardmaster Frame. Shows work at one location.
@@ -51,5 +49,5 @@ public class YardmasterFrame extends OperationsFrame {
         setVisible(true);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(YardmasterFrame.class.getName());
+//    private static final Logger log = LoggerFactory.getLogger(YardmasterFrame.class.getName());
 }

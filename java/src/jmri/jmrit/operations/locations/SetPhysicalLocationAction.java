@@ -4,21 +4,30 @@ package jmri.jmrit.operations.locations;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.awt.event.ActionEvent;
 import java.awt.Frame;
+
 import jmri.jmrit.operations.OperationsFrame;
+
 import javax.swing.JButton;
+
 import jmri.util.PhysicalLocationPanel;
+
 import javax.swing.BoxLayout;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
+
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 
 import javax.swing.AbstractAction;
 
 import jmri.util.PhysicalLocation;
+
 import javax.swing.JOptionPane;
+
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.OperationsXml;
 
@@ -76,7 +85,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
 		JButton closeButton = new JButton(Bundle.getMessage("Close"));
 
 		// combo boxes
-		javax.swing.JComboBox locationBox = LocationManager.instance().getComboBox();
+		JComboBox<Location> locationBox = LocationManager.instance().getComboBox();
 
 		// Spinners
 		PhysicalLocationPanel physicalLocation;

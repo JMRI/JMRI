@@ -33,7 +33,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
 	JLabel textSchedule = new JLabel(Bundle.getMessage("DeliverySchedule"));
 	JLabel textSchError = new JLabel();
 	JButton editScheduleButton = new JButton(Bundle.getMessage("Edit"));
-	JComboBox comboBoxSchedules = ScheduleManager.instance().getComboBox();
+	JComboBox<Schedule> comboBoxSchedules = ScheduleManager.instance().getComboBox();
 
 	JPanel panelSchedule = panelOpt4;
 
@@ -96,7 +96,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
 			sef.dispose();
 		sef = new ScheduleEditFrame();
 		Object selected = comboBoxSchedules.getSelectedItem();
-		if (selected != null && !selected.equals(ScheduleManager.NONE)) {
+		if (selected != null) {
 			Schedule schedule = (Schedule) selected;
 			sef.setTitle(MessageFormat.format(Bundle.getMessage("TitleScheduleEdit"),
 					new Object[] { _track.getName() }));

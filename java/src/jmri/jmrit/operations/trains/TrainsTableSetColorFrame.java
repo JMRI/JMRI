@@ -49,7 +49,7 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
 	JButton saveButton = new JButton(Bundle.getMessage("Save"));
 
 	// combo boxes
-	JComboBox trainBox = TrainManager.instance().getTrainComboBox();
+	JComboBox<Train> trainBox = TrainManager.instance().getTrainComboBox();
 	JComboBox colorBox = TrainManager.instance().getRowColorComboBox();
 	
 	JComboBox colorBuiltBox = TrainManager.instance().getRowColorComboBox();

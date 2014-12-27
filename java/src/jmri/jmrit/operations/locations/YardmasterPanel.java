@@ -5,12 +5,14 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
+
 import jmri.jmrit.operations.CommonConductorYardmasterPanel;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -22,6 +24,7 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManifestText;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,8 +49,8 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
     JTextPane textSwitchListComment = new JTextPane();
 
     // combo boxes
-    JComboBox trainComboBox = new JComboBox();
-    JComboBox trainVisitComboBox = new JComboBox();
+    JComboBox<Train> trainComboBox = new JComboBox<>();
+    JComboBox<Integer> trainVisitComboBox = new JComboBox<>();
 
     // buttons
     JButton nextButton = new JButton(Bundle.getMessage("Next"));
@@ -283,7 +286,7 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
         Object selectedItem = trainComboBox.getSelectedItem();
         trainComboBox.setVisible(false); // used as a flag to ignore updates
         trainComboBox.removeAllItems();
-        trainComboBox.addItem(TrainManager.NONE);
+        trainComboBox.addItem(null);
         if (_location != null) {
             List<Train> trains = trainManager.getTrainsArrivingThisLocationList(_location);
             trains.stream().filter((train) -> (TrainCommon.isThereWorkAtLocation(train, _location))).forEach((train) -> {

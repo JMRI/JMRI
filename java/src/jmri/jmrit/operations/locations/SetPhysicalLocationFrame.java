@@ -4,6 +4,7 @@ package jmri.jmrit.operations.locations;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -14,11 +15,14 @@ import jmri.util.PhysicalLocation;
 
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
 import java.awt.Dimension;
 
 /**
@@ -50,7 +54,7 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
 	JButton saveButton = new JButton(Bundle.getMessage("Save"));
 
 	// combo boxes
-	javax.swing.JComboBox locationBox = LocationManager.instance().getComboBox();
+	JComboBox<Location> locationBox = LocationManager.instance().getComboBox();
 
 	// Spinners
 	PhysicalLocationPanel physicalLocation;

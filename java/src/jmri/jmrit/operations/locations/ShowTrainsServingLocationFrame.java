@@ -44,7 +44,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
 	// for padding out panel
 
 	// combo boxes
-	JComboBox typeComboBox = new JComboBox();
+	JComboBox<String> typeComboBox = new JComboBox<>();
 	
 	// check boxes
 	JCheckBox showAllTrainsCheckBox = new JCheckBox(Bundle.getMessage("ShowAllTrains"));
@@ -196,7 +196,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
 		CarTypes.instance().updateComboBox(typeComboBox);
 		// remove car types not serviced by this location and track
 		for (int i = typeComboBox.getItemCount() - 1; i >= 0; i--) {
-			String type = (String) typeComboBox.getItemAt(i);
+			String type = typeComboBox.getItemAt(i);
 			if (_location != null && !_location.acceptsTypeName(type)) {
 				typeComboBox.removeItem(type);
 			}
