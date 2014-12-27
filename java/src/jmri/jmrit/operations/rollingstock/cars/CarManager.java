@@ -13,6 +13,7 @@ import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
+
 import java.util.Enumeration;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -171,8 +172,8 @@ public class CarManager extends RollingStockManager {
 	 * 
 	 * @return comboBox with Kernel names.
 	 */
-	public JComboBox getKernelComboBox() {
-		JComboBox box = new JComboBox();
+	public JComboBox<String> getKernelComboBox() {
+		JComboBox<String> box = new JComboBox<>();
 		box.addItem(NONE);
 		for (String kernelName : getKernelNameList()) {
 			box.addItem(kernelName);
@@ -186,7 +187,7 @@ public class CarManager extends RollingStockManager {
 	 * @param box
 	 *            comboBox requesting update
 	 */
-	public void updateKernelComboBox(JComboBox box) {
+	public void updateKernelComboBox(JComboBox<String> box) {
 		box.removeAllItems();
 		box.addItem(NONE);
 		for (String kernelName : getKernelNameList()) {

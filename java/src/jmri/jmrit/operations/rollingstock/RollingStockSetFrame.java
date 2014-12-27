@@ -66,13 +66,13 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	protected JButton ignoreAllButton = new JButton(Bundle.getMessage("IgnoreAll"));
 
 	// combo boxes
-	protected JComboBox locationBox = LocationManager.instance().getComboBox();
-	protected JComboBox trackLocationBox = new JComboBox();
-	protected JComboBox destinationBox = LocationManager.instance().getComboBox();
-	protected JComboBox trackDestinationBox = new JComboBox();
-	protected JComboBox finalDestinationBox = LocationManager.instance().getComboBox();
-	protected JComboBox finalDestTrackBox = new JComboBox();
-	protected JComboBox trainBox = TrainManager.instance().getTrainComboBox();
+	protected JComboBox<Location> locationBox = LocationManager.instance().getComboBox();
+	protected JComboBox<Track> trackLocationBox = new JComboBox<>();
+	protected JComboBox<Location> destinationBox = LocationManager.instance().getComboBox();
+	protected JComboBox<Track> trackDestinationBox = new JComboBox<>();
+	protected JComboBox<Location> finalDestinationBox = LocationManager.instance().getComboBox();
+	protected JComboBox<Track> finalDestTrackBox = new JComboBox<>();
+	protected JComboBox<Train> trainBox = TrainManager.instance().getTrainComboBox();
 
 	// check boxes
 	protected JCheckBox autoTrackCheckBox = new JCheckBox(Bundle.getMessage("Auto"));

@@ -259,8 +259,8 @@ public class PrintCarRosterAction extends AbstractAction {
 		return buf.toString();
 	}
 
-	JComboBox sortByComboBox = new JComboBox();
-	JComboBox manifestOrientationComboBox = Setup.getOrientationComboBox();
+	JComboBox<String> sortByComboBox = new JComboBox<>();
+	JComboBox<String> manifestOrientationComboBox = Setup.getOrientationComboBox();
 
 	JCheckBox printCarsWithLocation = new JCheckBox(Bundle.getMessage("PrintCarsWithLocation"));
 	JCheckBox printCarLength = new JCheckBox(Bundle.getMessage("PrintCarLength"));
@@ -393,7 +393,7 @@ public class PrintCarRosterAction extends AbstractAction {
 			}
 		}
 
-		private void loadSortByComboBox(JComboBox box) {
+		private void loadSortByComboBox(JComboBox<String> box) {
 			for (int i = panel.carsTableModel.SORTBY_NUMBER; i <= panel.carsTableModel.SORTBY_LAST; i++) {
 				box.addItem(panel.carsTableModel.getSortByName(i));
 			}

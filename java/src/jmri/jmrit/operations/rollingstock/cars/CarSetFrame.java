@@ -52,11 +52,11 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 	Car _car;
 
 	// combo boxes
-	protected JComboBox destReturnWhenEmptyBox = LocationManager.instance().getComboBox();
-	protected JComboBox trackReturnWhenEmptyBox = new JComboBox();
-	protected JComboBox loadReturnWhenEmptyBox = CarLoads.instance().getComboBox(null);
-	JComboBox loadComboBox = CarLoads.instance().getComboBox(null);
-	JComboBox kernelComboBox = carManager.getKernelComboBox();
+	protected JComboBox<Location> destReturnWhenEmptyBox = LocationManager.instance().getComboBox();
+	protected JComboBox<Track> trackReturnWhenEmptyBox = new JComboBox<>();
+	protected JComboBox<String> loadReturnWhenEmptyBox = CarLoads.instance().getComboBox(null);
+	JComboBox<String> loadComboBox = CarLoads.instance().getComboBox(null);
+	JComboBox<String> kernelComboBox = carManager.getKernelComboBox();
 
 	// buttons
 	JButton editLoadButton = new JButton(Bundle.getMessage("Edit"));

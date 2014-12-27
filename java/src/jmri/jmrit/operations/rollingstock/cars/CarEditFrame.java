@@ -90,15 +90,15 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 	JTextField rfidTextField = new JTextField(16);
 
 	// combo boxes
-	JComboBox roadComboBox = CarRoads.instance().getComboBox();
-	JComboBox typeComboBox = CarTypes.instance().getComboBox();
-	JComboBox colorComboBox = CarColors.instance().getComboBox();
-	JComboBox lengthComboBox = CarLengths.instance().getComboBox();
-	JComboBox ownerComboBox = CarOwners.instance().getComboBox();
-	JComboBox locationBox = locationManager.getComboBox();
-	JComboBox trackLocationBox = new JComboBox();
-	JComboBox loadComboBox = CarLoads.instance().getComboBox(null);
-	JComboBox kernelComboBox = carManager.getKernelComboBox();
+	JComboBox<String> roadComboBox = CarRoads.instance().getComboBox();
+	JComboBox<String> typeComboBox = CarTypes.instance().getComboBox();
+	JComboBox<String> colorComboBox = CarColors.instance().getComboBox();
+	JComboBox<String> lengthComboBox = CarLengths.instance().getComboBox();
+	JComboBox<String> ownerComboBox = CarOwners.instance().getComboBox();
+	JComboBox<Location> locationBox = locationManager.getComboBox();
+	JComboBox<Track> trackLocationBox = new JComboBox<>();
+	JComboBox<String> loadComboBox = CarLoads.instance().getComboBox(null);
+	JComboBox<String> kernelComboBox = carManager.getKernelComboBox();
 
 	// panels
 	JPanel pBlocking = new JPanel();

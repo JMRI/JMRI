@@ -5,6 +5,7 @@ package jmri.jmrit.operations.rollingstock.cars;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -12,6 +13,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.LocationsByCarTypeFrame;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -20,6 +22,7 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainsByCarTypeFrame;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,7 +52,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 	JButton replaceButton = new JButton();
 
 	// combo box
-	JComboBox comboBox;
+	JComboBox<String> comboBox;
 
 	// text box
 	JTextField addTextBox = new JTextField(Control.max_len_string_attibute);
