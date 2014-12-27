@@ -12,6 +12,5 @@ public class Revision {
     public String date;
     public String authorinitials;
     public String revremark;
-    public RevHistory history;
 }
 
