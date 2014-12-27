@@ -11,8 +11,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManifestHeaderText;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user edit of manifest header text strings
@@ -26,7 +24,7 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
      *
      */
     private static final long serialVersionUID = 3520403072636166571L;
-    private static final Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class);
+//    private static final Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class);
 
     protected static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");

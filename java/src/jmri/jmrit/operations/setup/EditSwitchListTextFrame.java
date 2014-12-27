@@ -2,8 +2,6 @@
 package jmri.jmrit.operations.setup;
 
 import jmri.jmrit.operations.OperationsFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user edit of switch list text strings
@@ -32,5 +30,5 @@ public class EditSwitchListTextFrame extends OperationsFrame {
         initMinimumSize();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(EditSwitchListTextFrame.class);
+//    private static final Logger log = LoggerFactory.getLogger(EditSwitchListTextFrame.class);
 }

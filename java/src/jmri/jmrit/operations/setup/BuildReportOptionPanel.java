@@ -13,8 +13,6 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user edit of the build report options
@@ -25,7 +23,7 @@ import org.slf4j.LoggerFactory;
 public class BuildReportOptionPanel extends OperationsPreferencesPanel {
 
     private static final long serialVersionUID = 755494379884398257L;
-    private static final Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class);
+//    private static final Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class);
 
     // major buttons
     JButton saveButton = new JButton(Bundle.getMessage("Save"));
@@ -46,7 +44,7 @@ public class BuildReportOptionPanel extends OperationsPreferencesPanel {
     JCheckBox buildReportAlwaysPreviewCheckBox = new JCheckBox(Bundle.getMessage("BuildReportAlwaysPreview"));
 
     // combo boxes
-    JComboBox fontSizeComboBox = new JComboBox();
+    JComboBox<Integer> fontSizeComboBox = new JComboBox<>();
 
     public BuildReportOptionPanel() {
 

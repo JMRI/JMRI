@@ -10,8 +10,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import jmri.jmrit.operations.trains.TrainSwitchListText;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user edit of switch list text strings
@@ -25,7 +23,7 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
      *
      */
     private static final long serialVersionUID = -1972541065567773705L;
-    private static final Logger log = LoggerFactory.getLogger(EditSwitchListTextPanel.class);
+//    private static final Logger log = LoggerFactory.getLogger(EditSwitchListTextPanel.class);
 
     protected static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");

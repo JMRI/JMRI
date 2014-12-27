@@ -2,8 +2,6 @@
 package jmri.jmrit.operations.setup;
 
 import jmri.jmrit.operations.OperationsFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user edit of manifest text strings
@@ -32,5 +30,5 @@ public class EditManifestTextFrame extends OperationsFrame {
         initMinimumSize();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(OperationsSetupFrame.class);
+//    private static final Logger log = LoggerFactory.getLogger(OperationsSetupFrame.class);
 }

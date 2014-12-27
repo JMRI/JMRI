@@ -783,12 +783,12 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
                 || Setup.isTrainIconCordEnabled() != iconCheckBox.isSelected()
                 || Setup.isTrainIconAppendEnabled() != appendCheckBox.isSelected()
                 // save train icon colors
-                || !Setup.getTrainIconColorNorth().equals((String) northComboBox.getSelectedItem())
-                || !Setup.getTrainIconColorSouth().equals((String) southComboBox.getSelectedItem())
-                || !Setup.getTrainIconColorEast().equals((String) eastComboBox.getSelectedItem())
-                || !Setup.getTrainIconColorWest().equals((String) westComboBox.getSelectedItem())
-                || !Setup.getTrainIconColorLocal().equals((String) localComboBox.getSelectedItem())
-                || !Setup.getTrainIconColorTerminate().equals((String) terminateComboBox.getSelectedItem())
+                || !Setup.getTrainIconColorNorth().equals(northComboBox.getSelectedItem())
+                || !Setup.getTrainIconColorSouth().equals(southComboBox.getSelectedItem())
+                || !Setup.getTrainIconColorEast().equals(eastComboBox.getSelectedItem())
+                || !Setup.getTrainIconColorWest().equals(westComboBox.getSelectedItem())
+                || !Setup.getTrainIconColorLocal().equals(localComboBox.getSelectedItem())
+                || !Setup.getTrainIconColorTerminate().equals(terminateComboBox.getSelectedItem())
                 || Setup.getMaxNumberEngines() != Integer.parseInt(maxEngineSizeTextField.getText())
                 || Setup.getHorsePowerPerTon() != Integer.parseInt(hptTextField.getText())
                 // switch time

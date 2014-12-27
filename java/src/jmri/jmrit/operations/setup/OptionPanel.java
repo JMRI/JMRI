@@ -71,7 +71,7 @@ public class OptionPanel extends OperationsPanel {
     JTextField valueTextField = new JTextField(10);
 
     // combo boxes
-    JComboBox numberPassesComboBox = new JComboBox();
+    JComboBox<Integer> numberPassesComboBox = new JComboBox<>();
 
     public OptionPanel() {
 
