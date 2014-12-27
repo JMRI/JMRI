@@ -4,8 +4,7 @@ package jmri.jmrix;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -54,7 +53,7 @@ public class JmrixConfigPane extends JPanel {
      * @return a configuration panel for the specified communications object.
      */
     public static JmrixConfigPane instance(int index) {
-        JmrixConfigPane retval = configPaneTable.get(Integer.valueOf(index));
+        JmrixConfigPane retval = configPaneTable.get(index);
         if (retval != null) {
             return retval;
         }
@@ -62,23 +61,19 @@ public class JmrixConfigPane extends JPanel {
     }
 
     public static JmrixConfigPane instance(ConnectionConfig config) {
-        Enumeration<Integer> e = configPaneTable.keys();
-        int keyValue;
-        while (e.hasMoreElements()) {
-            keyValue = e.nextElement();
-            if (configPaneTable.get(keyValue).ccCurrent == config) {
-                return configPaneTable.get(keyValue);
+        for (int key : configPaneTable.keySet()) {
+            if (configPaneTable.get(key).ccCurrent == config) {
+                return configPaneTable.get(key);
             }
         }
         return null;
-
     }
+
     /*
      * Create panel is seperated off from the instance and synchronized, so that only
      * one connection can be configured at once, this prevents multiple threads from
      * trying to create the same panel at the same time.
      */
-
     private static synchronized JmrixConfigPane createPanel(int index) {
         JmrixConfigPane retval = configPaneTable.get(Integer.valueOf(index));
         if (retval != null) {
@@ -105,11 +100,9 @@ public class JmrixConfigPane extends JPanel {
         if (conlist != null) {
             lastIndex = conlist.size();
         }
-        Enumeration<Integer> e = configPaneTable.keys();
-        while (e.hasMoreElements()) {
-            int keyValue = e.nextElement();
-            if (keyValue > lastIndex) {
-                lastIndex = keyValue;
+        for (int key : configPaneTable.keySet()) {
+            if (key > lastIndex) {
+                lastIndex = key;
             }
         }
         lastIndex++;
@@ -140,7 +133,7 @@ public class JmrixConfigPane extends JPanel {
             try {
                 confPane.ccCurrent.dispose();
             } catch (Exception ex) {
-                log.error("Error Occured while disposing connection " + ex.toString());
+                log.error("Error Occured while disposing connection {}", ex.toString());
             }
         }
         InstanceManager.configureManagerInstance().deregister(confPane);
@@ -150,12 +143,9 @@ public class JmrixConfigPane extends JPanel {
     }
 
     public static int getInstanceNumber(JmrixConfigPane confPane) {
-        Enumeration<Integer> e = configPaneTable.keys();
-        int keyValue;
-        while (e.hasMoreElements()) {
-            keyValue = e.nextElement();
-            if (configPaneTable.get(keyValue).equals(confPane)) {
-                return keyValue;
+        for (int key : configPaneTable.keySet()) {
+            if (configPaneTable.get(key).equals(confPane)) {
+                return key;
             }
         }
         return -1;
@@ -165,7 +155,7 @@ public class JmrixConfigPane extends JPanel {
         return new ArrayList<>(configPaneTable.values());
     }
 
-    static final Hashtable<Integer, JmrixConfigPane> configPaneTable = new Hashtable<>();
+    static final HashMap<Integer, JmrixConfigPane> configPaneTable = new HashMap<>();
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
 
@@ -243,10 +233,9 @@ public class JmrixConfigPane extends JPanel {
                     }
                     classConnectionList[n++] = config;
                 } catch (NullPointerException e) {
-                    log.debug("Attempt to load " + className + " failed: " + e);
-                    e.printStackTrace();
+                    log.error("Attempt to load {} failed.", className, e);
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-                    log.debug("Attempt to load " + className + " failed: " + e);
+                    log.debug("Attempt to load {} failed: {}.", className, e);
                 }
             }
             if ((modeBox.getSelectedIndex() == 0) && (p.getComboBoxLastSelection((String) manuBox.getSelectedItem()) != null)) {
@@ -306,11 +295,8 @@ public class JmrixConfigPane extends JPanel {
                     if (classConnectionNameList.length == 1) {
                         modeBox.setSelectedIndex(1);
                     }
-                } catch (NullPointerException e) {
-                    log.warn("Attempt to load " + classConnectionNameList1 + " failed: " + e);
-                    e.printStackTrace();
-                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-                    log.warn("Attempt to load " + classConnectionNameList1 + " failed: " + e);
+                } catch (NullPointerException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+                    log.warn("Attempt to load {} failed: {}", classConnectionNameList1, e);
                 }
             }
             if (p.getComboBoxLastSelection((String) manuBox.getSelectedItem()) != null) {
@@ -327,10 +313,7 @@ public class JmrixConfigPane extends JPanel {
         int current = modeBox.getSelectedIndex();
         details.removeAll();
         // first choice is -no- protocol chosen
-        if (log.isDebugEnabled()) {
-            log.debug("new selection is " + current
-                    + " " + modeBox.getSelectedItem());
-        }
+        log.debug("new selection is {} {}", current, modeBox.getSelectedItem());
         if ((current != 0) && (current != -1)) {
             if ((ccCurrent != null) && (ccCurrent != classConnectionList[current])) {
                 ccCurrent.dispose();
@@ -405,5 +388,5 @@ public class JmrixConfigPane extends JPanel {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(JmrixConfigPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(JmrixConfigPane.class);
 }
