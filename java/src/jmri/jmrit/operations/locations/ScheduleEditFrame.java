@@ -64,7 +64,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 	JTextField commentTextField = new JTextField(35);
 
 	// combo boxes
-	JComboBox typeBox = new JComboBox();
+	JComboBox<String> typeBox = new JComboBox<>();
 
 	public static final int MAX_NAME_LENGTH = Control.max_len_string_location_name;
 	public static final String NAME = Bundle.getMessage("Name");

@@ -121,7 +121,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
 	// combo box
-	JComboBox comboBoxTypes = CarTypes.instance().getComboBox();
+//	JComboBox comboBoxTypes = CarTypes.instance().getComboBox();
 
 	// optional panel for spurs, staging, and interchanges
 	JPanel dropPanel = new JPanel();
@@ -303,7 +303,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		addRadioButtonAction(excludeTrainPickup);
 		addRadioButtonAction(excludeRoutePickup);
 
-		addComboBoxAction(comboBoxTypes);
+//		addComboBoxAction(comboBoxTypes);
 
 		addCheckBoxAction(autoDropCheckBox);
 		addCheckBoxAction(autoPickupCheckBox);
@@ -333,7 +333,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
 		// load
 		updateCheckboxes();
-		updateTypeComboBoxes();
+//		updateTypeComboBoxes();
 		updateTrainDir();
 		updateCarOrder();
 		updateDropOptions();
@@ -962,6 +962,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
 	// car and loco types
 	private void updateCheckboxes() {
+//		log.debug("Update all checkboxes");
 		checkBoxes.clear();
 		panelCheckBoxes.removeAll();
 		x = 0;
@@ -980,8 +981,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
 		panelCheckBoxes.revalidate();
 		panelCheckBoxes.repaint();
-		validate();
-		pack();
+//		revalidate();
+//		pack();
 	}
 
 	int x = 0;
@@ -1078,16 +1079,16 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 	}
 
-	private void updateTypeComboBoxes() {
-		CarTypes.instance().updateComboBox(comboBoxTypes);
-		// remove car types not serviced by this location and track
-		for (int i = comboBoxTypes.getItemCount() - 1; i >= 0; i--) {
-			String type = (String) comboBoxTypes.getItemAt(i);
-			if (_track != null && !_track.acceptsTypeName(type)) {
-				comboBoxTypes.removeItem(type);
-			}
-		}
-	}
+//	private void updateTypeComboBoxes() {
+//		CarTypes.instance().updateComboBox(comboBoxTypes);
+//		// remove car types not serviced by this location and track
+//		for (int i = comboBoxTypes.getItemCount() - 1; i >= 0; i--) {
+//			String type = (String) comboBoxTypes.getItemAt(i);
+//			if (_track != null && !_track.acceptsTypeName(type)) {
+//				comboBoxTypes.removeItem(type);
+//			}
+//		}
+//	}
 
 	// set the service order
 	private void updateCarOrder() {
@@ -1119,15 +1120,15 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 				|| e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY)) {
 			updateCheckboxes();
-			updateTypeComboBoxes();
+//			updateTypeComboBoxes();
 		}
 		if (e.getPropertyName().equals(Location.TRAINDIRECTION_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Track.TRAINDIRECTION_CHANGED_PROPERTY)) {
 			updateTrainDir();
 		}
-		if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)) {
-			updateTypeComboBoxes();
-		}
+//		if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)) {
+//			updateTypeComboBoxes();
+//		}
 		if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY)) {
 			updateTrainComboBox();
 			updateDropOptions();

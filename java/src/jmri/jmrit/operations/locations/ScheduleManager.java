@@ -200,8 +200,8 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 	 * 
 	 * @return JComboBox with a list of schedules.
 	 */
-	public JComboBox getComboBox() {
-		JComboBox box = new JComboBox();
+	public JComboBox<Schedule> getComboBox() {
+		JComboBox<Schedule> box = new JComboBox<>();
 		updateComboBox(box);
 		return box;
 	}
@@ -212,9 +212,9 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 	 * @param box
 	 *            the JComboBox needing an update.
 	 */
-	public void updateComboBox(JComboBox box) {
+	public void updateComboBox(JComboBox<Schedule> box) {
 		box.removeAllItems();
-		box.addItem(NONE);
+		box.addItem(null);
 		for (Schedule schedule : getSchedulesByNameList()) {
 			box.addItem(schedule);
 		}
@@ -294,8 +294,8 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 	 *            The schedule for this JComboBox.
 	 * @return JComboBox with a list of spurs using schedule.
 	 */
-	public JComboBox getSpursByScheduleComboBox(Schedule schedule) {
-		JComboBox box = new JComboBox();
+	public JComboBox<LocationTrackPair> getSpursByScheduleComboBox(Schedule schedule) {
+		JComboBox<LocationTrackPair> box = new JComboBox<>();
 		// search all spurs for that use schedule
 		for (Location location : LocationManager.instance().getLocationsByNameList()) {
 			for (Track spur : location.getTrackByNameList(Track.SPUR)) {

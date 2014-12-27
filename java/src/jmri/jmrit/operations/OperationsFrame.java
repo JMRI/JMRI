@@ -148,7 +148,7 @@ public class OperationsFrame extends JmriJFrame implements AncestorListener {
         ((OperationsPanel) this.getContentPane()).spinnerChangeEvent(ae);
     }
 
-    protected void addComboBoxAction(JComboBox b) {
+    protected void addComboBoxAction(JComboBox<?> b) {
         b.addActionListener(this::comboBoxActionPerformed);
     }
 
@@ -156,7 +156,7 @@ public class OperationsFrame extends JmriJFrame implements AncestorListener {
         ((OperationsPanel) this.getContentPane()).comboBoxActionPerformed(ae);
     }
 
-    protected void selectNextItemComboBox(JComboBox b) {
+    protected void selectNextItemComboBox(JComboBox<?> b) {
         ((OperationsPanel) this.getContentPane()).selectNextItemComboBox(b);
     }
 

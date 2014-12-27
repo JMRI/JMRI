@@ -251,15 +251,19 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 		}
 	}
 
-	public JComboBox getComboBox() {
-		JComboBox box = new JComboBox();
+	/**
+	 * 
+	 * @return locations for this railroad
+	 */
+	public JComboBox<Location> getComboBox() {
+		JComboBox<Location> box = new JComboBox<>();
 		updateComboBox(box);
 		return box;
 	}
 
-	public void updateComboBox(JComboBox box) {
+	public void updateComboBox(JComboBox<Location> box) {
 		box.removeAllItems();
-		box.addItem(NONE);
+		box.addItem(null);
 		for (Location loc : getLocationsByNameList()) {
 			box.addItem(loc);
 		}

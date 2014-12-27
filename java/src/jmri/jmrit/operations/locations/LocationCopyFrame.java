@@ -49,7 +49,7 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
 	JButton saveButton = new javax.swing.JButton(Bundle.getMessage("Save"));
 
 	// combo boxes
-	JComboBox locationBox = locationManager.getComboBox();
+	JComboBox<Location> locationBox = locationManager.getComboBox();
 	
 	// checkboxes
 	JCheckBox moveRollingStockCheckBox = new JCheckBox(Bundle.getMessage("MoveRollingStock"));
@@ -128,7 +128,7 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
 			if (!checkName())
 				return;
 
-			if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals(LocationManager.NONE)) {
+			if (locationBox.getSelectedItem() == null) {
 				JOptionPane.showMessageDialog(this, Bundle.getMessage("SelectLocationToCopy"), MessageFormat.format(Bundle
 						.getMessage("CanNotLocation"), new Object[] { Bundle.getMessage("Copy") }), JOptionPane.ERROR_MESSAGE);			
 				return;

@@ -211,7 +211,7 @@ public class OperationsPanel extends JPanel implements AncestorListener {
     }
 
     protected void comboBoxActionPerformed(ActionEvent ae) {
-        log.debug("combo box action not overridden");
+        log.debug("combobox action not overridden");
     }
 
     protected void selectNextItemComboBox(JComboBox b) {
