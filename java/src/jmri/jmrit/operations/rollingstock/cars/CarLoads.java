@@ -93,8 +93,8 @@ public class CarLoads extends RollingStockAttribute {
 	 * @param type
 	 * @return JComboBox with car loads starting with empty string.
 	 */
-	public JComboBox getSelectComboBox(String type) {
-		JComboBox box = new JComboBox();
+	public JComboBox<String> getSelectComboBox(String type) {
+		JComboBox<String> box = new JComboBox<>();
 		box.addItem(NONE);
 		for (String load : getNames(type)) {
 			box.addItem(load);
@@ -108,8 +108,8 @@ public class CarLoads extends RollingStockAttribute {
 	 * @param type
 	 * @return JComboBox with car loads.
 	 */
-	public JComboBox getComboBox(String type) {
-		JComboBox box = new JComboBox();
+	public JComboBox<String> getComboBox(String type) {
+		JComboBox<String> box = new JComboBox<>();
 		updateComboBox(type, box);
 		return box;
 
@@ -120,8 +120,8 @@ public class CarLoads extends RollingStockAttribute {
 	 * 
 	 * @return JComboBox with car priorities.
 	 */
-	public JComboBox getPriorityComboBox() {
-		JComboBox box = new JComboBox();
+	public JComboBox<String> getPriorityComboBox() {
+		JComboBox<String> box = new JComboBox<>();
 		box.addItem(CarLoad.PRIORITY_LOW);
 		box.addItem(CarLoad.PRIORITY_HIGH);
 		return box;
@@ -132,8 +132,8 @@ public class CarLoads extends RollingStockAttribute {
 	 * 
 	 * @return JComboBox with load types: LOAD_TYPE_EMPTY and LOAD_TYPE_LOAD
 	 */
-	public JComboBox getLoadTypesComboBox() {
-		JComboBox box = new JComboBox();
+	public JComboBox<String> getLoadTypesComboBox() {
+		JComboBox<String> box = new JComboBox<>();
 		box.addItem(CarLoad.LOAD_TYPE_EMPTY);
 		box.addItem(CarLoad.LOAD_TYPE_LOAD);
 		return box;
@@ -220,7 +220,7 @@ public class CarLoads extends RollingStockAttribute {
 		return names.contains(name);
 	}
 
-	public void updateComboBox(String type, JComboBox box) {
+	public void updateComboBox(String type, JComboBox<String> box) {
 		box.removeAllItems();
 		List<String> loads = getNames(type);
 		for (String name : loads) {
@@ -228,7 +228,7 @@ public class CarLoads extends RollingStockAttribute {
 		}
 	}
 
-	public void updateRweComboBox(String type, JComboBox box) {
+	public void updateRweComboBox(String type, JComboBox<String> box) {
 		box.removeAllItems();
 		List<String> loads = getNames(type);
 		for (String name : loads) {

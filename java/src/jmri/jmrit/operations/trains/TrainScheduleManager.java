@@ -187,24 +187,24 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
 	}
 
 	/**
-	 * Gets a JComboBox loaded with schedules.
+	 * Gets a JComboBox loaded with schedules starting with null.
 	 * 
 	 * @return JComboBox with a list of schedules.
 	 */
-	public JComboBox getComboBox() {
-		JComboBox box = new JComboBox();
+	public JComboBox<TrainSchedule> getComboBox() {
+		JComboBox<TrainSchedule> box = new JComboBox<>();
 		updateComboBox(box);
 		return box;
 	}
 
 	/**
-	 * Gets a JComboBox loaded with schedules starting with an empty string.
+	 * Gets a JComboBox loaded with schedules starting with null.
 	 * 
-	 * @return JComboBox with a list of schedules starting with an empty string.
+	 * @return JComboBox with a list of schedules starting with null.
 	 */
-	public JComboBox getSelectComboBox() {
-		JComboBox box = new JComboBox();
-		box.addItem(NONE);
+	public JComboBox<TrainSchedule> getSelectComboBox() {
+		JComboBox<TrainSchedule> box = new JComboBox<>();
+		box.addItem(null);
 		for (TrainSchedule sch: getSchedulesByIdList()) {
 			box.addItem(sch);
 		}
@@ -217,7 +217,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
 	 * @param box
 	 *            the JComboBox needing an update.
 	 */
-	public void updateComboBox(JComboBox box) {
+	public void updateComboBox(JComboBox<TrainSchedule> box) {
 		box.removeAllItems();
 		for (TrainSchedule sch: getSchedulesByNameList()) {
 			box.addItem(sch);

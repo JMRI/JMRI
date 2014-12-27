@@ -4,7 +4,9 @@ package jmri.jmrit.operations.locations;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.awt.GridBagLayout;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
@@ -35,8 +37,8 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
 	 */
 	private static final long serialVersionUID = -1010990061006978311L;
 	// combo box
-	JComboBox typesComboBox = CarTypes.instance().getComboBox();
-	JComboBox loadsComboBox = new JComboBox();
+	JComboBox<String> typesComboBox = CarTypes.instance().getComboBox();
+	JComboBox<String> loadsComboBox = new JComboBox<>();
 
 	// panels
 	JPanel locationsPanel;

@@ -58,8 +58,8 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
 	// text field
 
 	// combo boxes
-	JComboBox typeComboBox = CarTypes.instance().getComboBox();
-	JComboBox loadComboBox = CarLoads.instance().getComboBox(null);
+	JComboBox<String> typeComboBox = CarTypes.instance().getComboBox();
+	JComboBox<String> loadComboBox = CarLoads.instance().getComboBox(null);
 
 	// selected location
 	Location _location;

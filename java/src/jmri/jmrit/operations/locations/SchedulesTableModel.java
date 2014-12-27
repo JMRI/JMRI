@@ -99,7 +99,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 		setPreferredWidths(frame, table);
 
 		// set row height
-		table.setRowHeight(new JComboBox().getPreferredSize().height);
+		table.setRowHeight(new JComboBox<>().getPreferredSize().height);
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	}
@@ -213,7 +213,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 		case SPUR_NUMBER_COLUMN:
 			return scheduleManager.getSpursByScheduleComboBox(s).getItemCount();
 		case SPUR_COLUMN: {
-			JComboBox box = scheduleManager.getSpursByScheduleComboBox(s);
+			JComboBox<LocationTrackPair> box = scheduleManager.getSpursByScheduleComboBox(s);
 			String index = comboSelect.get(sysList.get(row));
 			if (index != null && box.getItemCount() > Integer.parseInt(index)) {
 				box.setSelectedIndex(Integer.parseInt(index));
@@ -286,27 +286,27 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 
 	private void selectJComboBox(Object value, int row) {
 		Schedule schedule = sysList.get(row);
-		JComboBox box = (JComboBox) value;
+		JComboBox<?> box = (JComboBox<?>) value;
 		comboSelect.put(schedule, Integer.toString(box.getSelectedIndex()));
 		fireTableRowsUpdated(row, row);
 	}
 
 	private LocationTrackPair getLocationTrackPair(int row) {
 		Schedule s = sysList.get(row);
-		JComboBox box = scheduleManager.getSpursByScheduleComboBox(s);
+		JComboBox<LocationTrackPair> box = scheduleManager.getSpursByScheduleComboBox(s);
 		String index = comboSelect.get(sysList.get(row));
 		LocationTrackPair ltp;
 		if (index != null) {
-			ltp = (LocationTrackPair) box.getItemAt(Integer.parseInt(index));
+			ltp = box.getItemAt(Integer.parseInt(index));
 		} else {
-			ltp = (LocationTrackPair) box.getItemAt(0);
+			ltp = box.getItemAt(0);
 		}
 		return ltp;
 	}
 
 	private String getScheduleStatus(int row) {
 		Schedule sch = sysList.get(row);
-		JComboBox box = scheduleManager.getSpursByScheduleComboBox(sch);
+		JComboBox<?> box = scheduleManager.getSpursByScheduleComboBox(sch);
 		for (int i = 0; i < box.getItemCount(); i++) {
 			LocationTrackPair ltp = (LocationTrackPair) box.getItemAt(i);
 			String status = ltp.getTrack().checkScheduleValid();
