@@ -141,7 +141,7 @@ public class OperationsPanel extends JPanel implements AncestorListener {
      * @return the number of checkboxes, minimum is 5 (6 checkboxes)
      */
     protected int getNumberOfCheckboxesPerLine() {
-        return getNumberOfCheckboxesPerLine(getPreferredSize());
+        return getNumberOfCheckboxesPerLine(this.getPreferredSize());
     }
 
     protected int getNumberOfCheckboxesPerLine(Dimension size) {
@@ -229,9 +229,13 @@ public class OperationsPanel extends JPanel implements AncestorListener {
      * @param textArea
      */
     protected void adjustTextAreaColumnWidth(JScrollPane scrollPane, JTextArea textArea) {
+        this.adjustTextAreaColumnWidth(scrollPane, textArea, this.getPreferredSize());
+    }
+
+    protected void adjustTextAreaColumnWidth(JScrollPane scrollPane, JTextArea textArea, Dimension size) {
         FontMetrics metrics = getFontMetrics(textArea.getFont());
         int columnWidth = metrics.charWidth('m');
-        int width = getPreferredSize().width;
+        int width = size.width;
         int columns = width / columnWidth * 90 / 100; // make text area 90% of the panel width
         if (columns > textArea.getColumns()) {
             log.debug("Increasing text area character width to {} columns", columns);
@@ -403,8 +407,11 @@ public class OperationsPanel extends JPanel implements AncestorListener {
     }
 
     protected String lineWrap(String s) {
+        return this.lineWrap(s, this.getPreferredSize());
+    }
+
+    protected String lineWrap(String s, Dimension size) {
         int numberChar = 80;
-        Dimension size = getPreferredSize();
         if (size != null) {
             JLabel X = new JLabel("X");
             numberChar = size.width / X.getPreferredSize().width;

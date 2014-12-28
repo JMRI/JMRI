@@ -168,7 +168,7 @@ public class OperationsFrame extends JmriJFrame implements AncestorListener {
      * @param textArea
      */
     protected void adjustTextAreaColumnWidth(JScrollPane scrollPane, JTextArea textArea) {
-        ((OperationsPanel) this.getContentPane()).adjustTextAreaColumnWidth(scrollPane, textArea);
+        ((OperationsPanel) this.getContentPane()).adjustTextAreaColumnWidth(scrollPane, textArea, this.getPreferredSize());
     }
 
     /**
@@ -312,7 +312,7 @@ public class OperationsFrame extends JmriJFrame implements AncestorListener {
     }
 
     protected String lineWrap(String s) {
-        return ((OperationsPanel) this.getContentPane()).lineWrap(s);
+        return ((OperationsPanel) this.getContentPane()).lineWrap(s, this.getPreferredSize());
     }
 
     // Kludge fix for horizontal scrollbar encroaching buttons at bottom of a scrollable window.
