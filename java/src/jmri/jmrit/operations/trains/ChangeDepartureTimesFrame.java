@@ -50,7 +50,7 @@ public class ChangeDepartureTimesFrame extends OperationsFrame {
 
 		// Layout the panel by rows
 
-		for (int i = 0; i < 24; i++) {
+		for (int i = 1; i < 24; i++) {
 			hourBox.addItem(Integer.toString(i));
 		}
 
