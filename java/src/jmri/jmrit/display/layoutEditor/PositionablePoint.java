@@ -7,9 +7,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.util.ResourceBundle;
 import java.awt.event.ActionListener;
+import java.awt.BorderLayout;
+import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
 import javax.swing.JPopupMenu;
+import javax.swing.*;
 import javax.swing.JSeparator;
 
 import jmri.NamedBeanHandle;
@@ -19,9 +22,8 @@ import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.Path;
 import jmri.jmrit.signalling.SignallingGuiTools;
-import javax.swing.*;
-import java.awt.BorderLayout;
-import java.util.ArrayList;
+import jmri.util.swing.JCBHandle;
+
 
 /**
  * PositionablePoint is a Point defining a node in the Track that can be dragged around the
@@ -42,6 +44,7 @@ import java.util.ArrayList;
  * serves as a place to store them.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
+ * @author Bob Jacobsen Copyright (2) 2014
  * @version $Revision$
  */
 
@@ -899,8 +902,8 @@ public class PositionablePoint
 		return dir;
     }
     
-    JComboBox linkPointsBox;
-    JComboBox editorCombo;
+    JComboBox<String> linkPointsBox;
+    JComboBox<JCBHandle<LayoutEditor>> editorCombo; // Stores with LayoutEditor or "None"
     
     void setLink(){
         if(getConnect1()==null || getConnect1().getLayoutBlock()==null){
@@ -935,15 +938,16 @@ public class PositionablePoint
     ArrayList<PositionablePoint> pointList;
     
     public JPanel getLinkPanel(){
-        editorCombo = new JComboBox();
+        editorCombo = new JComboBox<JCBHandle<LayoutEditor>>();
         ArrayList<LayoutEditor> panels = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
-        editorCombo.addItem("None");
+        editorCombo.addItem(new JCBHandle<LayoutEditor>("None"));
         if(panels.contains(layoutEditor))
             panels.remove(layoutEditor);
         for (LayoutEditor p:panels){
-            editorCombo.addItem(p);
+            JCBHandle<LayoutEditor> h = new JCBHandle<LayoutEditor>(p);
+            editorCombo.addItem(h);
             if(p==getLinkedEditor())
-                editorCombo.setSelectedItem(p);
+                editorCombo.setSelectedItem(h);
         }
         
         ActionListener selectPanelListener = new ActionListener() {
@@ -956,7 +960,7 @@ public class PositionablePoint
         JPanel selectorPanel= new JPanel();
         selectorPanel.add(new JLabel("Select Panel"));
         selectorPanel.add(editorCombo);
-        linkPointsBox = new JComboBox();
+        linkPointsBox = new JComboBox<String>();
         updatePointBox();
         selectorPanel.add(new JLabel("Connecting Block"));
         selectorPanel.add(linkPointsBox);
@@ -972,7 +976,8 @@ public class PositionablePoint
         }
         int ourDir = getConnect1Dir();
         linkPointsBox.setEnabled(true);
-        for (PositionablePoint p:((LayoutEditor)editorCombo.getSelectedItem()).pointList) {
+        for (PositionablePoint p: editorCombo.getItemAt(editorCombo.getSelectedIndex()).item()
+                                    .pointList) {
             if(p.getType()==EDGE_CONNECTOR) {
                 if(p.getLinkedPoint()==this){
                     pointList.add(p);
