@@ -1,4 +1,4 @@
-
+/* This is a template for package-info.java files */
 /**
  * Package-level comment, replaces package.html
  */
