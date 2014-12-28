@@ -158,7 +158,12 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
                     return; // done
                 }
             }
-            int index = trainComboBox.getSelectedIndex() + 1;
+            int index = trainComboBox.getSelectedIndex();
+            // index = -1 if first item (null) in trainComboBox
+            if (index == -1)
+            	index = 1;
+            else
+            	index++;
             if (index >= trainComboBox.getItemCount()) {
                 index = 0;
             }
@@ -172,7 +177,7 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
         // made the combo box not visible during updates, so ignore if not visible
         if (ae.getSource() == trainComboBox && trainComboBox.isVisible()) {
             _train = null;
-            if (trainComboBox.getSelectedItem() != null && !trainComboBox.getSelectedItem().equals(TrainManager.NONE)) {
+            if (trainComboBox.getSelectedItem() != null) {
                 _train = (Train) trainComboBox.getSelectedItem();
                 _visitNumber = 1;
             }
