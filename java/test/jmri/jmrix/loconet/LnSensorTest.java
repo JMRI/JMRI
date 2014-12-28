@@ -86,7 +86,7 @@ public class LnSensorTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {LnSensor.class.getName()};
+        String[] testCaseName = {LnSensorTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
