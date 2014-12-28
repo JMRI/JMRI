@@ -1,4 +1,4 @@
-//OperationsFrame.java
+//OperationsPanel.java
 package jmri.jmrit.operations;
 
 import java.awt.Dimension;
@@ -32,7 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Frame for operations
+ * Panel for operations
  *
  * @author Dan Boudreau Copyright (C) 2008, 2012
  * @version $Revision$
@@ -40,10 +40,10 @@ import org.slf4j.LoggerFactory;
 public class OperationsPanel extends JPanel implements AncestorListener {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 4203296733948891651L;
-	public static final String NEW_LINE = "\n"; // NOI18N
+     *
+     */
+    private static final long serialVersionUID = 4203296733948891651L;
+    public static final String NEW_LINE = "\n"; // NOI18N
     public static final String NONE = ""; // NOI18N
 
     public OperationsPanel() {
@@ -141,10 +141,10 @@ public class OperationsPanel extends JPanel implements AncestorListener {
      * @return the number of checkboxes, minimum is 5 (6 checkboxes)
      */
     protected int getNumberOfCheckboxesPerLine() {
-        return getNumberOfCheckboxes(getPreferredSize());
+        return getNumberOfCheckboxesPerLine(getPreferredSize());
     }
 
-    private int getNumberOfCheckboxes(Dimension size) {
+    protected int getNumberOfCheckboxesPerLine(Dimension size) {
         if (size == null) {
             return MIN_CHECKBOXES; // default is 6 checkboxes per row
         }

@@ -36,10 +36,10 @@ import org.slf4j.LoggerFactory;
 public class OperationsFrame extends JmriJFrame implements AncestorListener {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -8263240370517832287L;
-	public static final String NEW_LINE = "\n"; // NOI18N
+     *
+     */
+    private static final long serialVersionUID = -8263240370517832287L;
+    public static final String NEW_LINE = "\n"; // NOI18N
     public static final String NONE = ""; // NOI18N
 
     public OperationsFrame(String s) {
@@ -113,7 +113,7 @@ public class OperationsFrame extends JmriJFrame implements AncestorListener {
      * @return the number of checkboxes, minimum is 5 (6 checkboxes)
      */
     protected int getNumberOfCheckboxesPerLine() {
-        return ((OperationsPanel) this.getContentPane()).getNumberOfCheckboxesPerLine();
+        return ((OperationsPanel) this.getContentPane()).getNumberOfCheckboxesPerLine(this.getPreferredSize());
     }
 
     protected void addButtonAction(JButton b) {
