@@ -1135,8 +1135,8 @@ public class LayoutSlip extends LayoutTurnout
     static class TurnoutState{
         int turnoutA = Turnout.CLOSED;
         int turnoutB = Turnout.CLOSED;
-        JComboBox turnoutABox;
-        JComboBox turnoutBBox;
+        JComboBox<String> turnoutABox;
+        JComboBox<String> turnoutBBox;
     
         TurnoutState(int turnoutA, int turnoutB){
             this.turnoutA = turnoutA;
@@ -1159,22 +1159,22 @@ public class LayoutSlip extends LayoutTurnout
             turnoutB = state;
         }
         
-        JComboBox getComboA(){
+        JComboBox<String> getComboA(){
             if(turnoutABox==null){
                 String state[] = new String[]{InstanceManager.turnoutManagerInstance().getClosedText(),
                                 InstanceManager.turnoutManagerInstance().getThrownText()};
-                turnoutABox = new JComboBox(state);
+                turnoutABox = new JComboBox<String>(state);
                 if(turnoutA == Turnout.THROWN)
                     turnoutABox.setSelectedIndex(1);
             }
             return turnoutABox;
         }
         
-        JComboBox getComboB(){
+        JComboBox<String> getComboB(){
             if(turnoutBBox==null){
                 String state[] = new String[]{InstanceManager.turnoutManagerInstance().getClosedText(),
                                 InstanceManager.turnoutManagerInstance().getThrownText()};
-                turnoutBBox = new JComboBox(state);
+                turnoutBBox = new JComboBox<String>(state);
                 if(turnoutB == Turnout.THROWN)
                     turnoutBBox.setSelectedIndex(1);
             }

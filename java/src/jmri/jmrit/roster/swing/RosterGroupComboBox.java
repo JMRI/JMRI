@@ -17,7 +17,7 @@ import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
  * @version	$Revision: $
  * @see jmri.jmrit.roster.Roster
  */
-public class RosterGroupComboBox extends JComboBox implements RosterGroupSelector {
+public class RosterGroupComboBox extends JComboBox<String> implements RosterGroupSelector {
 
     /**
 	 * 

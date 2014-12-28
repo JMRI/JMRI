@@ -751,19 +751,19 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     JCheckBox sensorDebounceGlobalCheck = new JCheckBox(rb.getString("OccupancySensorUseGlobal"));
 	JTextField memoryNameField = new JTextField(16);
     JTextField metricField = new JTextField(10);
-    JComboBox senseBox = new JComboBox();
+    JComboBox<String> senseBox = new JComboBox<String>();
     JCheckBox permissiveCheck = new JCheckBox("Permissive Working Allowed");
     int senseActiveIndex;
     int senseInactiveIndex;
-    JComboBox trackColorBox = new JComboBox();
-	JComboBox occupiedColorBox = new JComboBox();
-	JComboBox extraColorBox = new JComboBox();
-    JComboBox blockSpeedBox = new JComboBox();
+    JComboBox<String> trackColorBox = new JComboBox<String>();
+	JComboBox<String> occupiedColorBox = new JComboBox<String>();
+	JComboBox<String> extraColorBox = new JComboBox<String>();
+    JComboBox<String> blockSpeedBox = new JComboBox<String>();
 	JLabel blockUseLabel= new JLabel( rb.getString("UseCount"));
 	JButton blockEditDone;
 	JButton blockEditCancel;
 	boolean editOpen = false;
-    JComboBox attachedBlocks = new JComboBox();
+    JComboBox<String> attachedBlocks = new JComboBox<String>();
     
     protected void editLayoutBlock(Component callingPane){
         LayoutBlockEditAction beanEdit = new LayoutBlockEditAction();
@@ -779,7 +779,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     
     String[] working = {"Bi-Directional", "Recieve Only", "Send Only"};
     
-    ArrayList<JComboBox> neighbourDir;
+    ArrayList<JComboBox<String>> neighbourDir;
 	void blockEditDonePressed(ActionEvent a) {
 		boolean needsRedraw = false;
 		// check if Sensor changed
@@ -1009,9 +1009,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             routing.addItem(new BeanEditItem(metricField, "Block Metric", "set the cost for going over this block"));
             
             routing.addItem(new BeanEditItem(null, null, "Set the direction of the connection to the neighbouring block"));
-            neighbourDir = new ArrayList<JComboBox>(getNumberOfNeighbours());
+            neighbourDir = new ArrayList<JComboBox<String>>(getNumberOfNeighbours());
             for(int i = 0; i<getNumberOfNeighbours(); i++){
-                JComboBox dir = new JComboBox(working);
+                JComboBox<String> dir = new JComboBox<String>(working);
                 routing.addItem(new BeanEditItem(dir, getNeighbourAtIndex(i).getDisplayName(), null));
                 neighbourDir.add(dir);
             }
@@ -1025,7 +1025,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 				public void actionPerformed(ActionEvent e) {
                     metricField.setText(Integer.toString(metric));
                     for(int i = 0; i<getNumberOfNeighbours(); i++){
-                        JComboBox dir = neighbourDir.get(i);
+                        JComboBox<String> dir = neighbourDir.get(i);
                         Block blk = neighbours.get(i).getBlock();
                         if(block.isBlockDenied(blk))
                             dir.setSelectedIndex(2);
@@ -1087,13 +1087,13 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 			Color.lightGray,Color.white,Color.red,Color.pink,Color.orange,
 			Color.yellow,Color.green,Color.blue,Color.magenta,Color.cyan};
 	int numColors = 13;  // number of entries in the above arrays
-	private void initializeColorCombo(JComboBox colorCombo) {
+	private void initializeColorCombo(JComboBox<String> colorCombo) {
 		colorCombo.removeAllItems();
 		for (int i = 0;i<numColors;i++) {
 			colorCombo.addItem( rb.getString(colorText[i]) );
 		}
 	}
-	private void setColorCombo(JComboBox colorCombo,Color color) {
+	private void setColorCombo(JComboBox<String> colorCombo,Color color) {
 		for (int i = 0;i<numColors;i++) {
 			if (color==colorCode[i]) {
 				colorCombo.setSelectedIndex(i);
@@ -1101,7 +1101,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 			}
 		}
 	}
-	private Color getSelectedColor(JComboBox colorCombo) {
+	private Color getSelectedColor(JComboBox<String> colorCombo) {
 		return (colorCode[colorCombo.getSelectedIndex()]);
 	}
 	

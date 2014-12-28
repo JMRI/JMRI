@@ -91,7 +91,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     }
     
     public void lastItem() {
-        _value = new JComboBox(_itemArray);
+        _value = new JComboBox<String>(_itemArray);
         // finish initialization
         _value.setActionCommand("");
         _defaultColor = _value.getBackground();
@@ -110,7 +110,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     }
 
     // stored value
-    JComboBox _value = null;
+    JComboBox<String> _value = null;
 
     // place to keep the items & associated numbers
     private String[] _itemArray = null;
@@ -438,14 +438,14 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * @author			Bob Jacobsen   Copyright (C) 2001
      * @version         $Revision$
      */
-    public static class VarComboBox extends JComboBox {
+    public static class VarComboBox extends JComboBox<String> {
 
         /**
 		 * 
 		 */
 		private static final long serialVersionUID = -133896999775526954L;
 
-		VarComboBox(ComboBoxModel m, EnumVariableValue var) {
+		VarComboBox(ComboBoxModel<String> m, EnumVariableValue var) {
             super(m);
             _var = var;
             _l = new java.beans.PropertyChangeListener() {
