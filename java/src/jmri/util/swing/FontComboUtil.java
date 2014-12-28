@@ -159,7 +159,7 @@ public class FontComboUtil {
      * @see #getFontCombo(int, int, boolean)
      * @return List of all available font families as a {@link JComboBox}
      */
-    public static JComboBox getFontCombo() {
+    public static JComboBox<String> getFontCombo() {
         return getFontCombo(ALL);
     }
 
@@ -171,7 +171,7 @@ public class FontComboUtil {
      * @param previewOnly set to True to show only a preview in the list; False to show both name and preview
      * @return List of specified font families as a {@link JComboBox}
      */
-    public static JComboBox getFontCombo(boolean previewOnly) {
+    public static JComboBox<String> getFontCombo(boolean previewOnly) {
         return getFontCombo(ALL, previewOnly);
     }
 
@@ -183,7 +183,7 @@ public class FontComboUtil {
      * {@link #PROPORTIONAL}, {@link #CHARACTER}, {@link #SYMBOL} or {@link #ALL}
      * @return List of specified font families as a {@link JComboBox}
      */
-    public static JComboBox getFontCombo(int which) {
+    public static JComboBox<String> getFontCombo(int which) {
         return getFontCombo(which, true);
     }
 
@@ -197,7 +197,7 @@ public class FontComboUtil {
      * @param previewOnly set to True to show only a preview in the list; False to show both name and preview
      * @return List of specified font families as a {@link JComboBox}
      */
-    public static JComboBox getFontCombo(int which, boolean previewOnly) {
+    public static JComboBox<String> getFontCombo(int which, boolean previewOnly) {
         return getFontCombo(which, 0, previewOnly);
     }
 
@@ -211,7 +211,7 @@ public class FontComboUtil {
      * @param size point size for the preview
      * @return List of specified font families as a {@link JComboBox}
      */
-    public static JComboBox getFontCombo(int which, int size) {
+    public static JComboBox<String> getFontCombo(int which, int size) {
         return getFontCombo(which, size, true);
     }
 
@@ -246,9 +246,9 @@ public class FontComboUtil {
      * @param previewOnly true to show only a preview in the list; false to show both name and preview
      * @return List of specified font families as a {@link JComboBox}
      */
-    public static JComboBox getFontCombo(int which, final int size, final boolean previewOnly) {
+    public static JComboBox<String> getFontCombo(int which, final int size, final boolean previewOnly) {
         // Create a JComboBox containing the specified list of font families
-        JComboBox fontList = new JComboBox(getFonts(which).toArray());
+        JComboBox<String> fontList = new JComboBox<String>(getFonts(which).toArray(new String[0]));
 
         // Assign a custom renderer
         fontList.setRenderer(new ListCellRenderer() {

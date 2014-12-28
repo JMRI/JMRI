@@ -163,8 +163,8 @@ public class JmrixConfigPane extends JPanel {
     public static final String NO_PORTS_FOUND = rb.getString("noPortsFound");
     public static final String NONE = rb.getString("none");
 
-    JComboBox modeBox = new JComboBox();
-    JComboBox manuBox = new JComboBox();
+    JComboBox<String> modeBox = new JComboBox<String>();
+    JComboBox<String> manuBox = new JComboBox<String>();
 
     JPanel details = new JPanel();
     String[] classConnectionNameList;

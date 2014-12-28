@@ -450,7 +450,7 @@ public class TabbedPreferences extends AppConfigBase {
         if (list.getListSelectionListeners().length > 0) {
             list.removeListSelectionListener(list.getListSelectionListeners()[0]);
         }
-        list = new JList(new Vector<>(getChoices()));
+        list = new JList<String>(new Vector<String>(getChoices()));
         listScroller = new JScrollPane(list);
         listScroller.setPreferredSize(new Dimension(100, 100));
 

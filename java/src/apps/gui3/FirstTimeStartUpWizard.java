@@ -294,7 +294,7 @@ public class FirstTimeStartUpWizard {
         JPanel panel = new JPanel();
         // add JComboBoxen for language and country
         panel.setLayout(new FlowLayout());
-        localeBox = new JComboBox(new String[]{
+        localeBox = new JComboBox<String>(new String[]{
                         Locale.getDefault().getDisplayName(),
                         "(Please Wait)"});
         panel.add(localeBox);
@@ -312,7 +312,7 @@ public class FirstTimeStartUpWizard {
                 java.util.Arrays.sort(localeNames);
                 Runnable update = new Runnable() {
                     public void run() {
-                        localeBox.setModel(new javax.swing.DefaultComboBoxModel(localeNames));
+                        localeBox.setModel(new javax.swing.DefaultComboBoxModel<String>(localeNames));
                         localeBox.setSelectedItem(Locale.getDefault().getDisplayName());
                     }
                 };
@@ -341,7 +341,7 @@ public class FirstTimeStartUpWizard {
         return label;
     }
     
-    JComboBox localeBox;
+    JComboBox<String> localeBox;
     HashMap<String, Locale> locale;
     String[] localeNames;
     
