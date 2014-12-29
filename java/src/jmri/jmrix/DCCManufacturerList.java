@@ -28,7 +28,6 @@ public class DCCManufacturerList {
     public static final String EASYDCC = "Easy DCC";
     public static final String DCC4PC = "DCC4PC";
     public static final String DCCSPEC = "DCC Specialties";
-    public static final String FLEISHMANN = "Fleishmann";
     public static final String IEEE802154 = "IEEE 802.15.4";
     public static final String XBee = "XBee (API Mode)";
     public static final String JMRI = "JMRI (Network)";
@@ -69,7 +68,6 @@ public class DCCManufacturerList {
           DCC4PC,
           EASYDCC,
           ESU,
-          FLEISHMANN,
           HORNBY,
           IEEE802154,
           JMRI,
@@ -115,7 +113,6 @@ public class DCCManufacturerList {
         if(System.equals(EASYDCC)) { return new jmri.jmrix.easydcc.EasyDccConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(DCC4PC)) { return new jmri.jmrix.dcc4pc.Dcc4PcConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(ESU)) { return new jmri.jmrix.ecos.EcosConnectionTypeList().getAvailableProtocolClasses(); }
-        if(System.equals(FLEISHMANN)) { return new jmri.jmrix.loconet.Intellibox.FleischmannConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(HORNBY)) { return new jmri.jmrix.lenz.hornbyelite.EliteConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(IEEE802154)) { return new jmri.jmrix.ieee802154.SerialConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(LENZ)) { return new jmri.jmrix.lenz.LenzConnectionTypeList().getAvailableProtocolClasses(); }
