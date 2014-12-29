@@ -44,6 +44,8 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
 import jmri.InstanceManager;
 import jmri.Programmer;
+import jmri.GlobalProgrammerManager;
+import jmri.AddressedProgrammerManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
@@ -1345,7 +1347,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
      */
     //taken out of CombinedLocoSelPane
     protected void startIdentifyLoco() {
-        if (InstanceManager.programmerManagerInstance() == null || !InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()) {
+        if (InstanceManager.getDefault(GlobalProgrammerManager.class) == null) {
             log.error("Identify loco called when no service mode programmer is available");
             JOptionPane.showMessageDialog(null, Bundle.getMessage("IdentifyError"));
             return;
@@ -1409,7 +1411,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             } else if (ops.isSelected()) {
                 int address = Integer.parseInt(re.getDccAddress());
                 boolean longAddr = re.isLongAddress();
-                Programmer pProg = InstanceManager.programmerManagerInstance().getAddressedProgrammer(longAddr, address);
+                Programmer pProg = InstanceManager.getDefault(AddressedProgrammerManager.class).getAddressedProgrammer(longAddr, address);
                 progFrame = new PaneOpsProgFrame(decoderFile, re, title, "programmers" + File.separator + filename + ".xml", pProg);
             }
             if (progFrame == null) {
@@ -1500,36 +1502,39 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     protected void updateProgrammerStatus() {
         ConnectionConfig oldServMode = serModeProCon;
         ConnectionConfig oldOpsMode = opsModeProCon;
-        if (InstanceManager.programmerManagerInstance() != null) {
-            if (InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()) {
-                String serviceModeProgrammer = InstanceManager.programmerManagerInstance().getUserName();
-                ArrayList<Object> connList = InstanceManager.configureManagerInstance().getInstanceList(ConnectionConfig.class);
-                if (connList != null) {
-                    for (int x = 0; x < connList.size(); x++) {
-                        ConnectionConfig conn = (ConnectionConfig) connList.get(x);
-                        if (conn.getConnectionName() != null && conn.getConnectionName().equals(serviceModeProgrammer)) {
-                            serModeProCon = conn;
-                        }
-                    }
-                }
-            }
-            if (InstanceManager.programmerManagerInstance().isAddressedModePossible()) {
-                //Ideally we should probably have the programmer manager reference the username configured in the system connection memo.
-                //but as DP3 (jmri can not use mutliple programmers!) isn't designed for multi-connection enviroments this should be sufficient*/
-                String opsModeProgrammer = InstanceManager.programmerManagerInstance().getUserName();
-                ArrayList<Object> connList = InstanceManager.configureManagerInstance().getInstanceList(ConnectionConfig.class);
-                if (connList != null) {
-                    for (int x = 0; x < connList.size(); x++) {
-                        ConnectionConfig conn = (ConnectionConfig) connList.get(x);
-                        if (conn.getConnectionName() != null && conn.getConnectionName().equals(opsModeProgrammer)) {
-                            opsModeProCon = conn;
-                        }
+
+        GlobalProgrammerManager gpm = InstanceManager.getDefault(GlobalProgrammerManager.class);
+        if (gpm!=null) {
+            String serviceModeProgrammer = gpm.getUserName();
+            ArrayList<Object> connList = InstanceManager.configureManagerInstance().getInstanceList(ConnectionConfig.class);
+            if (connList != null) {
+                for (int x = 0; x < connList.size(); x++) {
+                    ConnectionConfig conn = (ConnectionConfig) connList.get(x);
+                    if (conn.getConnectionName() != null && conn.getConnectionName().equals(serviceModeProgrammer)) {
+                        serModeProCon = conn;
                     }
                 }
             }
         }
+        AddressedProgrammerManager apm = InstanceManager.getDefault(AddressedProgrammerManager.class);
+        if (apm!=null) {
+            //Ideally we should probably have the programmer manager reference the username configured in the system connection memo.
+            //but as DP3 (jmri can not use mutliple programmers!) isn't designed for multi-connection enviroments this should be sufficient*/
+            String opsModeProgrammer = apm.getUserName();
+            ArrayList<Object> connList = InstanceManager.configureManagerInstance().getInstanceList(ConnectionConfig.class);
+            if (connList != null) {
+                for (int x = 0; x < connList.size(); x++) {
+                    ConnectionConfig conn = (ConnectionConfig) connList.get(x);
+                    if (conn.getConnectionName() != null && conn.getConnectionName().equals(opsModeProgrammer)) {
+                        opsModeProCon = conn;
+                    }
+                }
+            }
+        }
+        
         if (serModeProCon != null) {
-            if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getInfo()) && InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null) {
+            if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getInfo()) 
+                    && gpm != null) {
                 serviceModeProgrammerLabel.setText(
                         Bundle.getMessage("ServiceModeProgOnline", serModeProCon.getConnectionName()));
                 serviceModeProgrammerLabel.setForeground(new Color(0, 128, 0));
@@ -1556,8 +1561,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 firePropertyChange("setprogservice", "setEnabled", false);
             }
         }
+        
         if (opsModeProCon != null) {
-            if (ConnectionStatus.instance().isConnectionOk(opsModeProCon.getInfo()) && InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null) {
+            if (ConnectionStatus.instance().isConnectionOk(opsModeProCon.getInfo()) && apm!=null ) {
                 operationsModeProgrammerLabel.setText(
                         Bundle.getMessage("OpsModeProgOnline", opsModeProCon.getConnectionName()));
                 operationsModeProgrammerLabel.setForeground(new Color(0, 128, 0));
