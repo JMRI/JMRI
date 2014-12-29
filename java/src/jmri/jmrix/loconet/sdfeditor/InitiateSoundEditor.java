@@ -34,7 +34,7 @@ class InitiateSoundEditor extends SdfMacroEditor {
         p.setLayout(new FlowLayout());
         
         p.add(new JLabel("Start sequence when: "));
-        box = new JComboBox(SdfConstants.editorTriggerNames);
+        box = new JComboBox<String>(SdfConstants.editorTriggerNames);
 
         // find & set index of selected value
         update();
@@ -75,7 +75,7 @@ class InitiateSoundEditor extends SdfMacroEditor {
         nottrig.addActionListener(l);
     }
     
-    JComboBox box;
+    JComboBox<String> box;
     
     public void update() {
         // find & set index of selected trigger

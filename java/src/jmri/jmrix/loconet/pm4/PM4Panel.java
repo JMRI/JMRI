@@ -101,7 +101,7 @@ public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         return getTitle(jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemPM4Programmer")); 
     }
 
-    void setSpeedFromDisplay(int offset, JComboBox box) {
+    void setSpeedFromDisplay(int offset, JComboBox<String> box) {
         switch (box.getSelectedIndex()) {
         case 0:
             opsw[offset] = false;
@@ -149,7 +149,7 @@ public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
     }
 
-    void setDisplaySpeed(int offset, JComboBox box) {
+    void setDisplaySpeed(int offset, JComboBox<String> box) {
         int index = 0;
         if (!opsw[offset+2]) index++;
         if (opsw[offset]) index+=2;
@@ -199,19 +199,19 @@ public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         }
     }
 
-    JComboBox current = new JComboBox(new String[]{ "1.5 amps", "3 amps", "4.5 amps", "6 amps",
+    JComboBox<String> current = new JComboBox<String>(new String[]{ "1.5 amps", "3 amps", "4.5 amps", "6 amps",
                 				"7.5 amps", "9 amps", "10.5 amps", "12 amps"});
 
-    JComboBox slow1 = new JComboBox(new String[]{ "Slow", "Standard",
+    JComboBox<String> slow1 = new JComboBox<String>(new String[]{ "Slow", "Standard",
                                             "Faster (PM42 only)", "Fastest (PM42 only)"});
     JCheckBox rev1  = new JCheckBox();
-    JComboBox slow2 = new JComboBox(new String[]{ "Slow", "Standard",
+    JComboBox<String> slow2 = new JComboBox<String>(new String[]{ "Slow", "Standard",
                                             "Faster (PM42 only)", "Fastest (PM42 only)"});
     JCheckBox rev2  = new JCheckBox();
-    JComboBox slow3 = new JComboBox(new String[]{ "Slow", "Standard",
+    JComboBox<String> slow3 = new JComboBox<String>(new String[]{ "Slow", "Standard",
                                             "Faster (PM42 only)", "Fastest (PM42 only)"});
     JCheckBox rev3  = new JCheckBox();
-    JComboBox slow4 = new JComboBox(new String[]{ "Slow", "Standard",
+    JComboBox<String> slow4 = new JComboBox<String>(new String[]{ "Slow", "Standard",
                                             "Faster (PM42 only)", "Fastest (PM42 only)"});
     JCheckBox rev4  = new JCheckBox();
 
