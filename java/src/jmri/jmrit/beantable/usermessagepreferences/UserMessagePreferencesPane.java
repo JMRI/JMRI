@@ -168,6 +168,7 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
                 if (p.getPreferencesSize(strClass) > 1) {
                     JScrollPane scrollPane = new JScrollPane(classholder);
                     scrollPane.setPreferredSize(new Dimension(300, 300));
+                    scrollPane.setBorder(BorderFactory.createEmptyBorder());
                     tab.add(scrollPane, p.getClassDescription(strClass));
                 }
             }
