@@ -30,7 +30,7 @@ public class MemoryComboIcon extends PositionableJPanel
 	 * 
 	 */
 	private static final long serialVersionUID = 5312988172386396581L;
-	JComboBox	_comboBox;
+	JComboBox<String>	_comboBox;
 	ComboModel	_model;
      
     // the associated Memory object
@@ -44,7 +44,7 @@ public class MemoryComboIcon extends PositionableJPanel
         } else {
             _model = new ComboModel();
         }
-        _comboBox = new JComboBox(_model);        	
+        _comboBox = new JComboBox<String>(_model);        	
         _comboBox.addActionListener(this);
         setDisplayLevel(Editor.LABELS);
         
@@ -63,7 +63,7 @@ public class MemoryComboIcon extends PositionableJPanel
         setPopupUtility(new PositionablePopupUtil(this, _comboBox));
     }
     
-    class ComboModel extends DefaultComboBoxModel {
+    class ComboModel extends DefaultComboBoxModel<String> {
     	/**
 		 * 
 		 */
@@ -74,23 +74,19 @@ public class MemoryComboIcon extends PositionableJPanel
     	ComboModel(String[] l) {
     		super(l);
     	}
-    	public void addElement(Object obj) {
+    	public void addElement(String obj) {
     		if (getIndexOf(obj)>=0) {
     			return;
     		} 
-    		if (obj instanceof String) {
-    			super.addElement(obj);
-                updateMemory();
-    		}
+    		super.addElement(obj);
+            updateMemory();
     	}
-    	public void insertElementAt(Object obj, int idx) {
+    	public void insertElementAt(String obj, int idx) {
     		if (getIndexOf(obj)>=0) {
     			return;
     		} 
-    		if (obj instanceof String) {
-    			super.insertElementAt(obj, idx);
-                updateMemory();
-    		}    		
+    		super.insertElementAt(obj, idx);
+            updateMemory(); 		
     	}
     }
 
@@ -205,19 +201,19 @@ public class MemoryComboIcon extends PositionableJPanel
     /**
     * Poppup menu iconEditor's ActionListener
     */
-	DefaultListModel _listModel;
+	DefaultListModel<String> _listModel;
     protected void edit() {
         _iconEditor = new IconAdder("Memory") {
             /**
 			 * 
 			 */
 			private static final long serialVersionUID = -2458542268881073784L;
-			JList list;
+			JList<String> list;
             JButton bDel = new JButton(Bundle.getMessage("deleteSelection"));
             JButton bAdd = new JButton(Bundle.getMessage("addItem"));
             JTextField textfield = new JTextField(30);
             protected void addAdditionalButtons(JPanel p) {
-            	_listModel = new DefaultListModel();
+            	_listModel = new DefaultListModel<String>();
             	bDel.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                     	int idx = list.getSelectedIndex();
@@ -242,7 +238,7 @@ public class MemoryComboIcon extends PositionableJPanel
                 for (int i=0; i<_model.getSize(); i++) {
                 	_listModel.add(i, _model.getElementAt(i));
                 }
-                list = new JList(_listModel);
+                list = new JList<String>(_listModel);
                 JScrollPane scrollPane = new JScrollPane(list);
                 JPanel p1 = new JPanel();
                 p1.add(new JLabel(Bundle.getMessage("comboList")));
