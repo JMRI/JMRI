@@ -609,34 +609,13 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
 
     /**
-     * Remember whether the attached command station has powered
-     * off the main track after programming
+     * Remember whether the attached command station
+     * needs a sequence sent after programming.
+     * The default operation is implemented in doEndOfProgramming
+     * and turns power back on by sending a GPON message.
      */
-    private boolean mProgPowersOff = false;
+    private boolean mProgEndSequence = false;
 
-    /**
-     * Determine whether this Programmer implementation powers off the
-     * main track after a service track programming operation.
-     * This is entirely determined by
-     * the attached command station, not the code here, so it
-     * refers to the mProgPowersOff member variable which is recording
-     * the known state of that.
-     * @return True if main track off after service operation
-     */
-    public boolean getProgPowersOff() { return mProgPowersOff; }
-
-    /**
-     * Configure whether this Programmer owers off the
-     * main track after a service track programming operation.<P>
-     * This is not part of the Programmer interface, but is used
-     * as part of the startup sequence for the LocoNet objects.
-     *
-     * @param pProgPowersOff True if power is off afterward
-     */
-    public void setProgPowersOff(boolean pProgPowersOff) {
-        log.debug("set progPowersOff to "+pProgPowersOff);
-        mProgPowersOff = pProgPowersOff;
-    }
 
     /**
      * Remember whether the attached command station can read from
@@ -656,23 +635,13 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     public boolean getCanRead() { return mCanRead; }
 
     /**
-     * Configure whether this Programmer implementation is capable of
-     * reading decoder contents. <P>
-     * This is not part of the Programmer interface, but is used
-     * as part of the startup sequence for the LocoNet objects.
-     *
-     * @param pCanRead True if reads are possible
+     * Set the command station type to one of the known
+     * types in the {@link LnCommandStationType} enum.
      */
-    public void setCanRead(boolean pCanRead) {
-        log.debug("set canRead to "+pCanRead);
-        mCanRead = pCanRead;
-    }
-
-    /**
-     * Set the command station type
-     */
-    public void setCommandStationType(String value){
+    public void setCommandStationType(LnCommandStationType value){
         commandStationType = value;
+        mCanRead = value.getCanRead();
+        mProgEndSequence = value.getProgPowersOff();
     }
     
     LocoNetThrottledTransmitter throttledTransmitter = null;
@@ -687,16 +656,17 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     /**
      * Get the command station type
      */
-    public String getCommandStationType(){
+    public LnCommandStationType getCommandStationType(){
         return commandStationType;
     }
-    protected String commandStationType = "<unknown>";
+    protected LnCommandStationType commandStationType = null;
     
     /**
      * Determine is a mode is available for this Programmer implementation
      * @param mode A mode constant from the Programmer interface
      * @return True if paged or register mode
      */
+    @Override
     public boolean hasMode(int mode) {
         if ( mode == Programmer.PAGEMODE ||
              mode == Programmer.ADDRESSMODE ||
@@ -760,7 +730,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
     public void doWrite(int CV, int val, jmri.ProgListener p, int pcmd) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) log.debug("writeCV: "+CV);
-        stopPowerTimer();  // still programming, so no longer waiting for power off
+        stopEndOfProgrammingTimer();  // still programming, so no longer waiting for power off
 
         useProgrammer(p);
         _progRead = false;
@@ -798,7 +768,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     public void doConfirm(int CV, int val, ProgListener p,
                           int pcmd) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) log.debug("confirmCV: "+CV);
-        stopPowerTimer();  // still programming, so no longer waiting for power off
+        stopEndOfProgrammingTimer();  // still programming, so no longer waiting for power off
 
         useProgrammer(p);
         _progRead = false;
@@ -846,7 +816,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
     void doRead(int CV, jmri.ProgListener p, int progByte) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) log.debug("readCV: "+CV);
-        stopPowerTimer();  // still programming, so no longer waiting for power off
+        stopEndOfProgrammingTimer();  // still programming, so no longer waiting for power off
 
         useProgrammer(p);
         _progRead = true;
@@ -915,7 +885,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      */
     protected void notifyProgListenerEnd(int value, int status) {
         // (re)start power timer
-        restartPowerTimer();
+        restartEndOfProgrammingTimer();
         // and send the reply
         ProgListener p = _usingProgrammer;
         _usingProgrammer = null;
@@ -929,7 +899,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      */
     protected void notifyProgListenerLack(int status) {
         // (re)start power timer
-        restartPowerTimer();
+        restartEndOfProgrammingTimer();
         // and send the reply
         sendProgrammingReply(_usingProgrammer, -1, status);
         _usingProgrammer = null;
@@ -989,10 +959,10 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         }
     }
     /**
-     * Internal routine to stop power timer, as another programming
+     * Internal routine to stop end-of-programming timer, as another programming
      * operation has happened
      */
-    protected void stopPowerTimer() {
+    protected void stopEndOfProgrammingTimer() {
         if (mPowerTimer!=null) mPowerTimer.stop();
     }
 
@@ -1000,12 +970,12 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * Internal routine to handle timer restart if needed to restore
      * power.  This is only needed in service mode.
      */
-    protected void restartPowerTimer() {
-        if (mProgPowersOff && mServiceMode) {
+    protected void restartEndOfProgrammingTimer() {
+        if (mProgEndSequence && mServiceMode) {
             if (mPowerTimer==null) {
                 mPowerTimer = new javax.swing.Timer(2000, new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent e) {
-                            doPowerOn();
+                            doEndOfProgramming();
                         }
                     });
             }
@@ -1017,9 +987,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
 
     /**
-     * Internal routine to handle a timeout & turn power off
+     * Internal routine to handle a programming timeout by turning power off
      */
-    synchronized protected void doPowerOn() {
+    synchronized protected void doEndOfProgramming() {
         if (progState == 0) {
             // we're not programming, time to power on
             if (log.isDebugEnabled()) log.debug("timeout: turn power on");
