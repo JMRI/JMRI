@@ -96,7 +96,12 @@ public class Xml {
 	static final String SAME_AS_MANIFEST = "sameAsManifest"; // NOI18N
 	static final String REAL_TIME = "realTime"; // NOI18N
 	static final String ALL_TRAINS = "allTrains"; // NOI18N
-	static final String PAGE_MODE = "pageMode"; // NOI18N
+	static final String PAGE_MODE = "pageMode"; // NOI18N, backwards compatible for versions before 3.11
+	static final String PAGE_FORMAT = "pageFormat"; // NOI18N
+	static final String PAGE_NORMAL = "pageNormal"; // NOI18N
+	static final String PAGE_PER_TRAIN = "pagePerTrain"; // NOI18N
+	static final String PAGE_PER_VISIT = "pagePerVisit"; // NOI18N
+
 	static final String PRINT_ROUTE_LOCATION = "printRouteLocation"; // NOI18N
 	
 	static final String PREFIX = "prefix"; // NOI18N
@@ -128,6 +133,10 @@ public class Xml {
 	static final String TWO_COLUMNS = "twoColumns"; // NOI18N
 	static final String MANIFEST_FORMAT = "manifestFormat";  // NOI18N
 	static final String VALUE = "value"; // NOI18N
+	static final String STANDARD = "0";	// NOI18N
+	static final String TWO_COLUMN = "1"; // NOI18N
+	static final String TWO_COLUMN_TRACK = "2"; // NOI18N
+
 	
 	static final String TRUNCATE = "truncate"; // NOI18N
 	static final String USE_DEPARTURE_TIME = "useDepartureTime"; // NOI18N

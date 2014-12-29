@@ -39,7 +39,7 @@ import java.io.File;
 /**
  * Frame for user selection of switch lists
  * 
- * @author Dan Boudreau Copyright (C) 2008, 2012, 2013
+ * @author Dan Boudreau Copyright (C) 2008, 2012, 2013, 2014
  * @version $Revision$
  */
 
@@ -61,7 +61,6 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 	// checkboxes
 	JCheckBox switchListRealTimeCheckBox = new JCheckBox(Bundle.getMessage("SwitchListRealTime"));
 	JCheckBox switchListAllTrainsCheckBox = new JCheckBox(Bundle.getMessage("SwitchListAllTrains"));
-	JCheckBox switchListPageCheckBox = new JCheckBox(Bundle.getMessage("SwitchListPage"));
 
 	// major buttons
 	JButton clearButton = new JButton(Bundle.getMessage("Clear"));
@@ -76,6 +75,8 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 	JButton updateButton = new JButton(Bundle.getMessage("Update"));
 	JButton resetButton = new JButton(Bundle.getMessage("ResetSwitchLists"));
 	JButton saveButton = new JButton(Bundle.getMessage("Save"));
+
+	JComboBox<String> switchListPageComboBox = Setup.getSwitchListPageFormatComboBox();
 
 	// panels
 	JPanel customPanel;
@@ -94,7 +95,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		// tool tips
 		switchListRealTimeCheckBox.setToolTipText(Bundle.getMessage("RealTimeTip"));
 		switchListAllTrainsCheckBox.setToolTipText(Bundle.getMessage("AllTrainsTip"));
-		switchListPageCheckBox.setToolTipText(Bundle.getMessage("PageTrainTip"));
+		switchListPageComboBox.setToolTipText(Bundle.getMessage("PageTrainTip"));
 		csvChangeButton.setToolTipText(Bundle.getMessage("CsvChangesTip"));
 		changeButton.setToolTipText(Bundle.getMessage("PrintChangesTip"));
 		resetButton.setToolTipText(Bundle.getMessage("ResetSwitchListTip"));
@@ -120,8 +121,14 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		pSwitchListOptions.setLayout(new GridBagLayout());
 		pSwitchListOptions.setBorder(BorderFactory.createTitledBorder(Bundle
 				.getMessage("BorderLayoutSwitchListOptions")));
+
+		JPanel pSwitchListPageFormat = new JPanel();
+		pSwitchListPageFormat.setBorder(BorderFactory.createTitledBorder(Bundle
+				.getMessage("BorderLayoutSwitchListPageFormat")));
+		pSwitchListPageFormat.add(switchListPageComboBox);
+
 		addItem(pSwitchListOptions, switchListAllTrainsCheckBox, 1, 0);
-		addItem(pSwitchListOptions, switchListPageCheckBox, 2, 0);
+		addItem(pSwitchListOptions, pSwitchListPageFormat, 2, 0);
 		addItem(pSwitchListOptions, switchListRealTimeCheckBox, 3, 0);
 		addItem(pSwitchListOptions, saveButton, 4, 0);
 
@@ -137,7 +144,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		// row 4
 		addItem(controlPanel, updateButton, 0, 3);
 		addItem(controlPanel, resetButton, 1, 3);
-		
+
 		// row 5
 		customPanel = new JPanel();
 		customPanel.setLayout(new GridBagLayout());
@@ -153,19 +160,18 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		getContentPane().add(pSwitchListOptions);
 		getContentPane().add(controlPanel);
 		getContentPane().add(customPanel);
-		
+
 		customPanel.setVisible(Setup.isGenerateCsvSwitchListEnabled());
 
 		// Set the state
 		switchListRealTimeCheckBox.setSelected(Setup.isSwitchListRealTime());
 		switchListAllTrainsCheckBox.setSelected(Setup.isSwitchListAllTrainsEnabled());
-		switchListPageCheckBox.setSelected(Setup.isSwitchListPagePerTrainEnabled());
+		switchListPageComboBox.setSelectedItem(Setup.getSwitchListPageFormat());
 
 		updateButton.setVisible(!switchListRealTimeCheckBox.isSelected());
 		resetButton.setVisible(!switchListRealTimeCheckBox.isSelected());
 		saveButton.setEnabled(false);
 
-		// setup buttons
 		addButtonAction(clearButton);
 		addButtonAction(setButton);
 		addButtonAction(printButton);
@@ -179,12 +185,11 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		addButtonAction(resetButton);
 		addButtonAction(saveButton);
 
-		// setup checkbox
 		addCheckBoxAction(switchListRealTimeCheckBox);
 		addCheckBoxAction(switchListAllTrainsCheckBox);
-		addCheckBoxAction(switchListPageCheckBox);
-		
-		// property change
+
+		addComboBoxAction(switchListPageComboBox);
+
 		Setup.addPropertyChangeListener(this);
 
 		// build menu
@@ -282,7 +287,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		}
 		Setup.setSwitchListRealTime(switchListRealTimeCheckBox.isSelected());
 		Setup.setSwitchListAllTrainsEnabled(switchListAllTrainsCheckBox.isSelected());
-		Setup.setSwitchListPagePerTrainEnabled(switchListPageCheckBox.isSelected());
+		Setup.setSwitchListPageFormat((String) switchListPageComboBox.getSelectedItem());
 		// save location file
 		OperationsXml.save();
 		enableSaveButton(false);
@@ -361,12 +366,6 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		Location mainLocation = null; // user can have multiple locations with the "same" name.
 
 		for (Location location : locations) {
-			//TODO not sure this is needed, see enableChangeButtons
-//			if (location.getStatus().equals(Location.MODIFIED) && location.isSwitchListEnabled()) {
-//				changeButton.setEnabled(true);
-//				csvChangeButton.setEnabled(true);
-//				runChangeButton.setEnabled(true);
-//			}
 			String name = TrainCommon.splitString(location.getName());
 			if (mainLocation != null && TrainCommon.splitString(mainLocation.getName()).equals(name)) {
 				location.setSwitchListEnabled(mainLocation.isSwitchListEnabled());
@@ -522,7 +521,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 
 	protected void comboBoxActionPerformed(ActionEvent ae) {
 		log.debug("combo box action");
-		saveButton.setEnabled(true);
+		enableSaveButton(true);
 	}
 
 	public void dispose() {

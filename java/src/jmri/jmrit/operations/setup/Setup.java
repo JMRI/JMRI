@@ -101,11 +101,7 @@ public class Setup {
 	public static final String AAR = Bundle.getMessage("ArrCodes"); // Car types
 
 	public static final String MONOSPACED = Bundle.getMessage("Monospaced"); // default printer font
-	
-	public static final int STANDARD = 0;
-	public static final int TWO_COLUMN = 1;
-	public static final int TWO_COLUMN_TRACK = 2;
-	
+		
 	public static final String STANDARD_FORMAT = Bundle.getMessage("StandardFormat");
 	public static final String TWO_COLUMN_FORMAT = Bundle.getMessage("TwoColumnFormat");
 	public static final String TWO_COLUMN_TRACK_FORMAT = Bundle.getMessage("TwoColumnTrackFormat");
@@ -114,6 +110,10 @@ public class Setup {
 	public static final String LANDSCAPE = Bundle.getMessage("Landscape");
 	public static final String HALFPAGE = Bundle.getMessage("HalfPage");
 	public static final String HANDHELD = Bundle.getMessage("HandHeld");
+	
+	public static final String PAGE_NORMAL = Bundle.getMessage("PageNormal");
+	public static final String PAGE_PER_TRAIN = Bundle.getMessage("PagePerTrain");
+	public static final String PAGE_PER_VISIT = Bundle.getMessage("PagePerVisit");	
 
 	public static final String LENGTHABV = Bundle.getMessage("LengthSymbol");
 
@@ -247,7 +247,7 @@ public class Setup {
 	private static int tab1CharLength = Control.max_len_string_attibute;
 	private static int tab2CharLength = 6; // arbitrary lengths
 	private static int tab3CharLength = 8;
-//	private static boolean twoColumnFormat = false; // when true, use two columns for work at a location
+	
 	private static String manifestFormat = STANDARD_FORMAT;
 	private static boolean manifestEditorEnabled = false; // when true use text editor to view build report
 	private static boolean switchListSameManifest = true; // when true switch list format is the same as the manifest
@@ -257,7 +257,7 @@ public class Setup {
 	
 	private static boolean switchListRealTime = true; // when true switch list only show work for built trains
 	private static boolean switchListAllTrains = true; // when true show all trains that visit the location
-	private static boolean switchListPage = false; // when true each train has its own page
+	private static String switchListPageFormat = PAGE_NORMAL;	// how switch lists pages are printed
 	
 	private static boolean buildReportEditorEnabled = false; // when true use text editor to view build report
 	private static boolean buildReportIndentEnabled = true; // when true use text editor to view build report
@@ -767,12 +767,12 @@ public class Setup {
 		return switchListAllTrains;
 	}
 
-	public static void setSwitchListPagePerTrainEnabled(boolean b) {
-		switchListPage = b;
+	public static void setSwitchListPageFormat(String format) {
+		switchListPageFormat = format;
 	}
 
-	public static boolean isSwitchListPagePerTrainEnabled() {
-		return switchListPage;
+	public static String getSwitchListPageFormat() {
+		return switchListPageFormat;
 	}
 
 	public static void setTruncateManifestEnabled(boolean b) {
@@ -1493,6 +1493,14 @@ public class Setup {
 		box.addItem(HANDHELD);
 		return box;
 	}
+	
+	public static JComboBox<String> getSwitchListPageFormatComboBox() {
+		JComboBox<String> box = new JComboBox<>();
+		box.addItem(PAGE_NORMAL);
+		box.addItem(PAGE_PER_TRAIN);
+		box.addItem(PAGE_PER_VISIT);
+		return box;
+	}
 
 	/**
 	 * 
@@ -1702,7 +1710,16 @@ public class Setup {
 		values.setAttribute(Xml.SAME_AS_MANIFEST, isSwitchListFormatSameAsManifest() ? Xml.TRUE : Xml.FALSE);
 		values.setAttribute(Xml.REAL_TIME, isSwitchListRealTime() ? Xml.TRUE : Xml.FALSE);
 		values.setAttribute(Xml.ALL_TRAINS, isSwitchListAllTrainsEnabled() ? Xml.TRUE : Xml.FALSE);
-		values.setAttribute(Xml.PAGE_MODE, isSwitchListPagePerTrainEnabled() ? Xml.TRUE : Xml.FALSE);
+		
+		// save switch list format
+		String format = Xml.PAGE_NORMAL;
+		if (getSwitchListPageFormat().equals(PAGE_PER_TRAIN)) {
+			format = Xml.PAGE_PER_TRAIN;
+			values.setAttribute(Xml.PAGE_MODE, Xml.TRUE); // backwards compatible for versions before 3.11
+		} else if (getSwitchListPageFormat().equals(PAGE_PER_VISIT))
+			format = Xml.PAGE_PER_VISIT;
+		values.setAttribute(Xml.PAGE_FORMAT, format);
+		
 		values.setAttribute(Xml.PRINT_ROUTE_LOCATION, isSwitchListRouteLocationCommentEnabled() ? Xml.TRUE : Xml.FALSE);
 
 		e.addContent(values = new Element(Xml.SWITCH_LIST_PICKUP_CAR_FORMAT));
@@ -1758,12 +1775,14 @@ public class Setup {
 		values.setAttribute(Xml.TWO_COLUMNS, getManifestFormat() == TWO_COLUMN_FORMAT  ? Xml.TRUE : Xml.FALSE);
 		// new format June 2014
 		e.addContent(values = new Element(Xml.MANIFEST_FORMAT));
-		int value = STANDARD;
+		
+		// save manifest format
+		String value = Xml.STANDARD;
 		if (getManifestFormat().equals(TWO_COLUMN_FORMAT))
-			value = TWO_COLUMN;
+			value = Xml.TWO_COLUMN;
 		else if (getManifestFormat().equals(TWO_COLUMN_TRACK_FORMAT))
-			value = TWO_COLUMN_TRACK;
-		values.setAttribute(Xml.VALUE, Integer.toString(value));
+			value = Xml.TWO_COLUMN_TRACK;
+		values.setAttribute(Xml.VALUE, value);
 
 		if (!getManifestLogoURL().equals("")) {
 			values = new Element(Xml.MANIFEST_LOGO);
@@ -2110,11 +2129,28 @@ public class Setup {
 					log.debug("allTrains: {}", b);
 				switchListAllTrains = b.equals(Xml.TRUE);
 			}
-			if ((a = operations.getChild(Xml.SWITCH_LIST).getAttribute(Xml.PAGE_MODE)) != null) {
+			if ((a = operations.getChild(Xml.SWITCH_LIST).getAttribute(Xml.PAGE_FORMAT)) != null) {
+				switch (a.getValue()) {
+				case Xml.PAGE_NORMAL:
+					switchListPageFormat = PAGE_NORMAL;
+					break;
+				case Xml.PAGE_PER_TRAIN:
+					switchListPageFormat = PAGE_PER_TRAIN;
+					break;
+				case Xml.PAGE_PER_VISIT:
+					switchListPageFormat = PAGE_PER_VISIT;
+					break;
+				default:
+					log.error("Unknown switch list page format {}", a.getValue());
+				}
+			}
+			// old way to save switch list page format pre 3.11
+			else if ((a = operations.getChild(Xml.SWITCH_LIST).getAttribute(Xml.PAGE_MODE)) != null) {
 				String b = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("pageMode: {}", b);
-				setSwitchListPagePerTrainEnabled(b.equals(Xml.TRUE));
+					log.debug("old style pageMode: {}", b);
+				if (b.equals(Xml.TRUE))
+					switchListPageFormat = PAGE_PER_TRAIN;
 			}
 			if ((a = operations.getChild(Xml.SWITCH_LIST).getAttribute(Xml.PRINT_ROUTE_LOCATION)) != null) {
 				String b = a.getValue();
@@ -2327,23 +2363,18 @@ public class Setup {
 		}
 		if ((operations.getChild(Xml.MANIFEST_FORMAT) != null)) {
 			if ((a = operations.getChild(Xml.MANIFEST_FORMAT).getAttribute(Xml.VALUE)) != null) {
-				try {
-					int value = Integer.parseInt(a.getValue());
-					switch (value) {
-					case STANDARD:
-						manifestFormat = STANDARD_FORMAT;
-						break;
-					case TWO_COLUMN:
-						manifestFormat = TWO_COLUMN_FORMAT;
-						break;
-					case TWO_COLUMN_TRACK:
-						manifestFormat = TWO_COLUMN_TRACK_FORMAT;
-						break;
-					default:
-						log.debug("Unknown manifest format");
-					}
-				} catch (NumberFormatException ee) {
-					log.debug("Manifest format isn't an integer");
+				switch (a.getValue()) {
+				case Xml.STANDARD:
+					manifestFormat = STANDARD_FORMAT;
+					break;
+				case Xml.TWO_COLUMN:
+					manifestFormat = TWO_COLUMN_FORMAT;
+					break;
+				case Xml.TWO_COLUMN_TRACK:
+					manifestFormat = TWO_COLUMN_TRACK_FORMAT;
+					break;
+				default:
+					log.debug("Unknown manifest format");
 				}
 			}
 		} else if ((operations.getChild(Xml.COLUMN_FORMAT) != null)) {

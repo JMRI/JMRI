@@ -55,7 +55,7 @@ public class TrainSwitchLists extends TrainCommon {
 				location.setSwitchListState(Location.SW_APPEND);
 			location.setStatus(Location.UPDATED);
 		}
-		
+
 		log.debug("Append: {} for location ({})", append, location.getName());
 
 		// create switch list file
@@ -107,12 +107,12 @@ public class TrainSwitchLists extends TrainCommon {
 				}
 				// we're now going to add to the switch list
 				if (!nextTrain) {
-					if (append && Setup.isSwitchListPagePerTrainEnabled()) {
+					if (append && !Setup.getSwitchListPageFormat().equals(Setup.PAGE_NORMAL)) {
 						fileOut.write(FORM_FEED);
 					}
 					if (Setup.isPrintValidEnabled())
 						newLine(fileOut, valid);
-				} else if (Setup.isSwitchListPagePerTrainEnabled()) {
+				} else if (!Setup.getSwitchListPageFormat().equals(Setup.PAGE_NORMAL)) {
 					fileOut.write(FORM_FEED);
 				}
 				nextTrain = true;
@@ -162,6 +162,9 @@ public class TrainSwitchLists extends TrainCommon {
 						// Print visit number only if previous location wasn't the same
 						RouteLocation rlPrevious = routeList.get(r - 1);
 						if (!splitString(rl.getName()).equals(splitString(rlPrevious.getName()))) {
+							if (Setup.getSwitchListPageFormat().equals(Setup.PAGE_PER_VISIT)) {
+								fileOut.write(FORM_FEED);
+							}
 							newLine(fileOut);
 							if (train.isTrainInRoute()) {
 								if (expectedArrivalTime.equals("-1")) // NOI18N
