@@ -162,9 +162,9 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     }
 
     jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-    protected JComboBox portBox = new JComboBox();
+    protected JComboBox<String> portBox = new JComboBox<String>();
     protected JLabel portBoxLabel;
-    protected JComboBox baudBox = new JComboBox();
+    protected JComboBox<String> baudBox = new JComboBox<String>();
     protected JLabel baudBoxLabel;
     protected String[] baudList;
     protected jmri.jmrix.SerialPortAdapter adapter = null;
@@ -285,7 +285,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             String[] optionsAvailable = adapter.getOptions();
             options = new Hashtable<String, Option>();
             for(String i:optionsAvailable){
-                JComboBox opt = new JComboBox(adapter.getOptionChoices(i));
+                JComboBox<String> opt = new JComboBox<String>(adapter.getOptionChoices(i));
                 opt.setSelectedItem(adapter.getOptionState(i));
                 options.put(i, new Option(adapter.getOptionDisplayName(i), opt, adapter.isOptionAdvanced(i)));
             }
@@ -498,7 +498,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     }
 
     class ComboBoxRenderer extends JLabel
-                       implements ListCellRenderer {
+                       implements ListCellRenderer<String> {
 
         /**
 		 * 
@@ -517,13 +517,13 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
          */
         @Override
         public Component getListCellRendererComponent(
-                                           JList list,
-                                           Object value,
+                                           JList<? extends String> list,
+                                           String name,
                                            int index,
                                            boolean isSelected,
                                            boolean cellHasFocus) {
 
-            String displayName = value.toString();
+            String displayName = name.toString();
             setOpaque(index > -1);
             setForeground(Color.black);
             list.setSelectionForeground(Color.black);
@@ -547,7 +547,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     }
 
     @SuppressWarnings("UseOfObsoleteCollectionType")
-    protected synchronized static void updateSerialPortNames(String portName, JComboBox portCombo, Vector<String> portList){
+    protected synchronized static void updateSerialPortNames(String portName, JComboBox<String> portCombo, Vector<String> portList){
         for(Entry<String, SerialPortFriendlyName> en : PortNameMapper.getPortNameMap().entrySet()){
             en.getValue().setValidPort(false);
         }
