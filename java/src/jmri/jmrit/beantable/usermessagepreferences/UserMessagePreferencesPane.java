@@ -2,13 +2,10 @@
 package jmri.jmrit.beantable.usermessagepreferences;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -66,7 +63,7 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
         add(tab);
     }
 
-    void setMinimumMessagePref() {
+    private void setMinimumMessagePref() {
         //This ensures that as a minimum that the following items are at least initialised and appear in the preference panel
         p.setClassDescription(AudioTableAction.class.getName());
         p.setClassDescription(BlockTableAction.class.getName());
@@ -94,23 +91,23 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
 
     JTabbedPane tab = new JTabbedPane();
 
-    private Hashtable<JComboBox, ListItems> _comboBoxes = new Hashtable<>();
-    private Hashtable<JCheckBox, ListItems> _checkBoxes = new Hashtable<>();
+    private HashMap<JComboBox, ListItems> _comboBoxes = new HashMap<>();
+    private HashMap<JCheckBox, ListItems> _checkBoxes = new HashMap<>();
 
     private void newMessageTab() {
         remove(tab);
         tab = new JTabbedPane();
 
         //might need to redo this so that it doesn't recreate everything all the time.
-        _comboBoxes = new Hashtable<>();
-        _checkBoxes = new Hashtable<>();
+        _comboBoxes = new HashMap<>();
+        _checkBoxes = new HashMap<>();
 
-        java.util.ArrayList<String> preferenceClassList = p.getPreferencesClasses();
+        ArrayList<String> preferenceClassList = p.getPreferencesClasses();
         for (String strClass : preferenceClassList) {
             JPanel classholder = new JPanel();
             classholder.setLayout(new BorderLayout());
 
-            HashMap<Integer, String> options = null;
+            HashMap<Integer, String> options;
             boolean add = false;
             boolean addtoindependant = false;
             if (p.getPreferencesSize(strClass) > 1) {
@@ -175,12 +172,10 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
                 }
             }
         }
-        Enumeration<JComboBox> keys = _comboBoxes.keys();
-        Hashtable<String, ArrayList<ListItems>> countOfItems = new Hashtable<>();
-        Hashtable<String, ArrayList<JCheckBox>> countOfItemsCheck = new Hashtable<>();
-        Hashtable<String, ArrayList<JComboBox>> countOfItemsCombo = new Hashtable<>();
-        while (keys.hasMoreElements()) {
-            JComboBox key = keys.nextElement();
+        HashMap<String, ArrayList<ListItems>> countOfItems = new HashMap<>();
+        HashMap<String, ArrayList<JCheckBox>> countOfItemsCheck = new HashMap<>();
+        HashMap<String, ArrayList<JComboBox>> countOfItemsCombo = new HashMap<>();
+        for (JComboBox key : this._comboBoxes.keySet()) {
             if (!_comboBoxes.get(key).isIncluded()) {
                 String strItem = _comboBoxes.get(key).getItem();
                 if (!countOfItems.containsKey(strItem)) {
@@ -196,9 +191,7 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
             }
         }
 
-        Enumeration<JCheckBox> cbKeys = _checkBoxes.keys();
-        while (cbKeys.hasMoreElements()) {
-            JCheckBox key = cbKeys.nextElement();
+        for (JCheckBox key : this._checkBoxes.keySet()) {
             if (!_checkBoxes.get(key).isIncluded()) {
                 String strItem = _checkBoxes.get(key).getItem();
 
@@ -213,15 +206,13 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
                 acb.add(key);
             }
         }
-        Enumeration<String> skeys = countOfItems.keys();
         JPanel miscPanel = new JPanel();
         miscPanel.setLayout(new BoxLayout(miscPanel, BoxLayout.Y_AXIS));
 
         JPanel mischolder = new JPanel();
         mischolder.setLayout(new BorderLayout());
         mischolder.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        while (skeys.hasMoreElements()) {
-            String item = skeys.nextElement();
+        for (String item : countOfItems.keySet()) {
             ArrayList<ListItems> a = countOfItems.get(item);
             ArrayList<JCheckBox> chb = countOfItemsCheck.get(item);
             ArrayList<JComboBox> cob = countOfItemsCombo.get(item);
@@ -263,7 +254,6 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
                 JPanel itemPanel = new JPanel();
                 JPanel subItem = new JPanel();
                 subItem.setLayout(new BoxLayout(subItem, BoxLayout.Y_AXIS));
-                itemPanel.setBorder(BorderFactory.createLineBorder(Color.black));
                 subItem.add(new JLabel(p.getClassDescription(a.get(0).getClassName()), JLabel.CENTER));
 
                 if (countOfItemsCheck.containsKey(item)) {
@@ -325,20 +315,14 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
 
     @Override
     public boolean isDirty() {
-
-        Enumeration<JComboBox> keys = _comboBoxes.keys();
-        while (keys.hasMoreElements()) {
-            JComboBox key = keys.nextElement();
+        for (JComboBox key : this._comboBoxes.keySet()) {
             String strClass = _comboBoxes.get(key).getClassName();
             String strItem = _comboBoxes.get(key).getItem();
             if (!p.getChoiceOptions(strClass, strItem).get(p.getMultipleChoiceOption(strClass, strItem)).equals((String)key.getSelectedItem())) {
                 return true;
             }
         }
-
-        Enumeration<JCheckBox> ckeys = _checkBoxes.keys();
-        while (ckeys.hasMoreElements()) {
-            JCheckBox key = ckeys.nextElement();
+        for (JCheckBox key : this._checkBoxes.keySet()) {
             String strClass = _checkBoxes.get(key).getClassName();
             String strItem = _checkBoxes.get(key).getItem();
             if (p.getPreferenceState(strClass, strItem) != key.isSelected()) {
@@ -387,18 +371,14 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
         updating = true;
         p.setLoading();
 
-        Enumeration<JComboBox> keys = _comboBoxes.keys();
-        while (keys.hasMoreElements()) {
-            JComboBox key = keys.nextElement();
+        for (JComboBox key : this._comboBoxes.keySet()) {
             String strClass = _comboBoxes.get(key).getClassName();
             String strItem = _comboBoxes.get(key).getItem();
             String strSelection = (String) key.getSelectedItem();
             p.setMultipleChoiceOption(strClass, strItem, strSelection);
         }
 
-        Enumeration<JCheckBox> ckeys = _checkBoxes.keys();
-        while (ckeys.hasMoreElements()) {
-            JCheckBox key = ckeys.nextElement();
+        for (JCheckBox key : this._checkBoxes.keySet()) {
             String strClass = _checkBoxes.get(key).getClassName();
             String strItem = _checkBoxes.get(key).getItem();
             p.setPreferenceState(strClass, strItem, key.isSelected());
