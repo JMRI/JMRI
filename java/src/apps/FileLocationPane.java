@@ -33,7 +33,6 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
      */
     private static final long serialVersionUID = -2492371396905648159L;
     protected static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
-    private boolean isDirty = false;
     private boolean restartRequired = false;
     private final JTextField scriptLocation = new JTextField();
     private final JTextField userLocation = new JTextField();
@@ -75,7 +74,6 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
                     return; // cancelled
                 }
                 scriptLocation.setText(fcScript.getSelectedFile() + File.separator);
-                isDirty = true;
                 validate();
                 if (getTopLevelAncestor() != null) {
                     ((JFrame) getTopLevelAncestor()).pack();
@@ -122,7 +120,6 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
                     return; // cancelled
                 }
                 userLocation.setText(fcUser.getSelectedFile() + File.separator);
-                isDirty = true;
                 validate();
                 if (getTopLevelAncestor() != null) {
                     ((JFrame) getTopLevelAncestor()).pack();
@@ -160,7 +157,7 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
 
     @Override
     public boolean isPersistant() {
-        return false;
+        return true;
     }
 
     @Override
@@ -182,7 +179,8 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
 
     @Override
     public boolean isDirty() {
-        return isDirty;
+        return (!FileUtil.getUserFilesPath().equals(this.userLocation.getText())
+                || !FileUtil.getScriptsPath().equals(this.scriptLocation.getText()));
     }
 
     @Override
