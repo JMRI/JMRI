@@ -58,7 +58,7 @@ public class GuiLocalePreferencesPanel implements PreferencesSubPanel {
 
     @Override
     public boolean isPersistant() {
-        return this.getParent().isPersistant();
+        return false;
     }
 
     @Override
