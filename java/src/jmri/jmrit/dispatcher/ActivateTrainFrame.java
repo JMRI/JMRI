@@ -98,10 +98,10 @@ public class ActivateTrainFrame {
 	private JCheckBox reverseAtEndBox = new JCheckBox(Bundle.getMessage("ReverseAtEnd"));
     int delayedStartInt[] = new int[]{ActiveTrain.NODELAY, ActiveTrain.TIMEDDELAY, ActiveTrain.SENSORDELAY};
     String delayedStartString[] = new String[]{Bundle.getMessage("DelayedStartNone"), Bundle.getMessage("DelayedStartTimed"), Bundle.getMessage("DelayedStartSensor")};
-    private JComboBox<?> delayedStartBox = new JComboBox<Object>(delayedStartString);
+    private JComboBox<String> delayedStartBox = new JComboBox<String>(delayedStartString);
     private JLabel delayedReStartLabel = new JLabel(Bundle.getMessage("DelayRestart"));
     private JLabel delayReStartSensorLabel = new JLabel(Bundle.getMessage("RestartSensor"));
-    private JComboBox<?> delayedReStartBox = new JComboBox<Object>(delayedStartString);
+    private JComboBox<String> delayedReStartBox = new JComboBox<String>(delayedStartString);
     private jmri.util.swing.JmriBeanComboBox delaySensor = new jmri.util.swing.JmriBeanComboBox(jmri.InstanceManager.sensorManagerInstance());
     private jmri.util.swing.JmriBeanComboBox delayReStartSensor = new jmri.util.swing.JmriBeanComboBox(jmri.InstanceManager.sensorManagerInstance());
     
@@ -1056,7 +1056,7 @@ public class ActivateTrainFrame {
 		return found;
 	}
     
-    int delayModeFromBox(JComboBox<?> box) {
+    int delayModeFromBox(JComboBox<String> box) {
         String mode = (String)box.getSelectedItem();
         int result = jmri.util.StringUtil.getStateFromName(mode, delayedStartInt, delayedStartString);
         
@@ -1067,7 +1067,7 @@ public class ActivateTrainFrame {
         return result;
     }
     
-    void setDelayModeBox(int mode, JComboBox<?> box) {
+    void setDelayModeBox(int mode, JComboBox<String> box) {
         String result = jmri.util.StringUtil.getNameFromState(mode, delayedStartInt, delayedStartString);
         box.setSelectedItem(result);
     }
