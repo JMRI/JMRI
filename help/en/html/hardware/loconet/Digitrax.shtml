@@ -73,8 +73,7 @@ station over the LocoNet&reg; using one of several types of &reg; adapter.</p>
   <li>DB150 Command Station/Booster</li>
   <li>DCS100 Command Station/Booster</li>
   <li>DCS200 Command Station/Booster</li>
-  <li><a href="Uhlenbrock.shtml">Intellibox: The Uhlenbrock Central
-  Unit</a></li>
+  <li><a href="Uhlenbrock.shtml">Intellibox: The Uhlenbrock Central Unit</a></li>
   <li><a href="Uhlenbrock.shtml">Intellibox II or IB-Com</a></li>
   <li>DCC-Mux: DCC data combiner with built-in LocoNet command station </li>
 </ul>
@@ -108,8 +107,8 @@ type available on some older computers.</p>
     on most Windows Vista machines. If you have problems with the MS100, 
     you might not be able to fix them, and nobody may be able to help you.</p>
 
-<p>The Uhlenbrock Intellibox can also be controlled directly through it's
-serial port; there's a <a href="Uhlenbrock.shtml">separate page</a> on how to
+<p>The Uhlenbrock Intellibox command stations can also be controlled directly through it's
+serial port or USB connection; there's a <a href="Uhlenbrock.shtml">separate page</a> on how to
 do this. </p>
 
 <h2><a name="Programmer">PR2 and PR3 Programmers</a></h2>
@@ -227,7 +226,6 @@ connected to a PR3 operating in stand-alone programming mode.
       blank if you've selected LocoBuffer-USB, PR3 or MS100. </li>
               
       </ul>
-=======
   
   <li>Click "Save". You'll be asked if it's OK for the program to quit, click
     "Yes". </li>
@@ -282,9 +280,8 @@ devices, but does not provide the Rail-Synch signals that some LocoNet devices
 (particularly boosters and the BDL16, BDL162 and BDL168) require. A LocoBuffer 
 should be connected to the LocoNet-T connection. </p>
 
-<p><b>Uhlenbrock Intellibox II and IB-Com</b> - These systems currently do not support 
-programming, either via a programming track or on the main.<br>
-The Intellibox II and IB-Com has two 
+<p><b>Uhlenbrock Intellibox II and IB-Com</b> - 
+The Intellibox II and IB-Com have two 
 LocoNet connections, called LocoNet-T and LocoNet-B. The LocoNet-T 
 connection can drive more devices, but does not provide the Rail-Synch signals that 
 some LocoNet devices (particularly boosters and the BDL16, BDL162 and BDL168) require. 

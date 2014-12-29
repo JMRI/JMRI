@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
  <TITLE>
- JMRI Install Guide: Uhlenbrock Intellibox via Serial Port
+ JMRI Install Guide: Uhlenbrock Intellibox connections
  </TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Michael Beck" name=Author>
@@ -28,22 +28,13 @@
     <div id="mainContent">
 
       <H1> 
-      JMRI Install Guide: Uhlenbrock Intellibox via Serial Port
+      JMRI Install Guide: Uhlenbrock Intellibox connections
       </H1>
 
 
 <P>JMRI can communicate with an Uhlenbrock Intellibox via the Intellibox built-in serial 
     port, the Intellibox-II USB port and the LocoNet&reg; protocol. 
     This page provide more detail on the possibilities.</p>
-
-<h2>Limitations
-</h2>
-<p><b>Uhlenbrock Intellibox</b> - None</p>
-
-<p><b>Uhlenbrock Intellibox II and IB-Com</b> - These systems currently do not support 
-programming, either via a programming track or on the main.</p>
-
-
 
 <h2 id="serial">Direct serial connection</h2>
 <a href="images/UhlenbrockConfig-I.png"><img src="images/UhlenbrockConfig-I.png" align="right" width="180" height="115"></a>
