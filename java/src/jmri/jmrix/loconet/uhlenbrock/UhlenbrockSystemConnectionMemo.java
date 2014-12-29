@@ -30,22 +30,8 @@ public class UhlenbrockSystemConnectionMemo extends LocoNetSystemConnectionMemo 
         return super.getProgrammerManager();
     }
     
-    private UhlenbrockLnThrottleManager throttleUhlManager;
-    
-    @Override
-    public UhlenbrockLnThrottleManager getThrottleManager() { 
-        if (getDisabled())
-            return null;
-        if (throttleUhlManager == null)
-            throttleUhlManager = new jmri.jmrix.loconet.uhlenbrock.UhlenbrockLnThrottleManager(this);
-        return throttleUhlManager;
-    }
-        
     public void dispose() {
         InstanceManager.deregister(this, UhlenbrockSystemConnectionMemo.class);
-        if (throttleUhlManager != null) {
-            InstanceManager.deregister(throttleUhlManager, jmri.jmrix.loconet.uhlenbrock.UhlenbrockLnThrottleManager.class);
-        }
         super.dispose();
     }
 
