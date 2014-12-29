@@ -247,16 +247,18 @@ public class Setup {
 	private static int tab1CharLength = Control.max_len_string_attibute;
 	private static int tab2CharLength = 6; // arbitrary lengths
 	private static int tab3CharLength = 8;
-	private static boolean twoColumnFormat = false; // when true, use two columns for work at a location
+//	private static boolean twoColumnFormat = false; // when true, use two columns for work at a location
 	private static String manifestFormat = STANDARD_FORMAT;
 	private static boolean manifestEditorEnabled = false; // when true use text editor to view build report
 	private static boolean switchListSameManifest = true; // when true switch list format is the same as the manifest
 	private static boolean manifestTruncated = false; // when true, manifest is truncated if switch list is available
 	private static boolean manifestDepartureTime = false; // when true, manifest shows train's departure time
 	private static boolean switchListRouteComment = true; // when true, switch list have route location comments
+	
 	private static boolean switchListRealTime = true; // when true switch list only show work for built trains
 	private static boolean switchListAllTrains = true; // when true show all trains that visit the location
 	private static boolean switchListPage = false; // when true each train has its own page
+	
 	private static boolean buildReportEditorEnabled = false; // when true use text editor to view build report
 	private static boolean buildReportIndentEnabled = true; // when true use text editor to view build report
 	private static boolean buildReportAlwaysPreviewEnabled = false; // when true use text editor to view build report
@@ -992,13 +994,13 @@ public class Setup {
 		tab3CharLength = length;
 	}
 
-	public static boolean isTwoColumnFormatEnabled() {
-		return twoColumnFormat;
-	}
-
-	public static void setTwoColumnFormatEnabled(boolean enable) {
-		twoColumnFormat = enable;
-	}
+//	public static boolean isTwoColumnFormatEnabled() {
+//		return twoColumnFormat;
+//	}
+//
+//	public static void setTwoColumnFormatEnabled(boolean enable) {
+//		twoColumnFormat = enable;
+//	}
 	
 	public static String getManifestFormat() {
 		return manifestFormat;
@@ -1541,7 +1543,7 @@ public class Setup {
 	 * @return JComboBox loaded with the strings (North, South, East, West) showing the available train directions for
 	 *         this railroad
 	 */
-	public static JComboBox<String> getComboBox() {
+	public static JComboBox<String> getTrainDirectionComboBox() {
 		JComboBox<String> box = new JComboBox<>();
 		if ((traindir & EAST) > 0)
 			box.addItem(EAST_DIR);
@@ -1559,7 +1561,7 @@ public class Setup {
 	 * 
 	 * @return List of valid train directions
 	 */
-	public static List<String> getList() {
+	public static List<String> getTrainDirectionList() {
 		List<String> directions = new ArrayList<String>();
 		if ((traindir & EAST) > 0)
 			directions.add(EAST_DIR);

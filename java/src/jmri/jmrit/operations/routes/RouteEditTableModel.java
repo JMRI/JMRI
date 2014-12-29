@@ -39,8 +39,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 	// Defines the columns
 	private static final int ID_COLUMN = 0;
 	private static final int NAME_COLUMN = ID_COLUMN + 1;
-	private static final int TRAIN_COLUMN = NAME_COLUMN + 1;
-	private static final int MAXMOVES_COLUMN = TRAIN_COLUMN + 1;
+	private static final int TRAIN_DIRECTION_COLUMN = NAME_COLUMN + 1;
+	private static final int MAXMOVES_COLUMN = TRAIN_DIRECTION_COLUMN + 1;
 	private static final int RANDOM_CONTROL_COLUMN = MAXMOVES_COLUMN + 1;
 	private static final int PICKUP_COLUMN = RANDOM_CONTROL_COLUMN + 1;
 	private static final int DROP_COLUMN = PICKUP_COLUMN + 1;
@@ -125,7 +125,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 			return; // done
 		table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(40);
 		table.getColumnModel().getColumn(NAME_COLUMN).setPreferredWidth(150);
-		table.getColumnModel().getColumn(TRAIN_COLUMN).setPreferredWidth(95);
+		table.getColumnModel().getColumn(TRAIN_DIRECTION_COLUMN).setPreferredWidth(95);
 		table.getColumnModel().getColumn(MAXMOVES_COLUMN).setPreferredWidth(50);
 		table.getColumnModel().getColumn(RANDOM_CONTROL_COLUMN).setPreferredWidth(65);
 		table.getColumnModel().getColumn(PICKUP_COLUMN).setPreferredWidth(65);
@@ -155,7 +155,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 			return Bundle.getMessage("Id");
 		case NAME_COLUMN:
 			return Bundle.getMessage("Location");
-		case TRAIN_COLUMN:
+		case TRAIN_DIRECTION_COLUMN:
 			return Bundle.getMessage("TrainDirection");
 		case MAXMOVES_COLUMN:
 			return Bundle.getMessage("MaxMoves");
@@ -198,7 +198,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 			return String.class;
 		case NAME_COLUMN:
 			return String.class;
-		case TRAIN_COLUMN:
+		case TRAIN_DIRECTION_COLUMN:
 			return JComboBox.class;
 		case MAXMOVES_COLUMN:
 			return String.class;
@@ -238,7 +238,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 	public boolean isCellEditable(int row, int col) {
 		switch (col) {
 		case DELETE_COLUMN:
-		case TRAIN_COLUMN:
+		case TRAIN_DIRECTION_COLUMN:
 		case MAXMOVES_COLUMN:
 		case RANDOM_CONTROL_COLUMN:
 		case PICKUP_COLUMN:
@@ -268,8 +268,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 			return rl.getId();
 		case NAME_COLUMN:
 			return rl.getName();
-		case TRAIN_COLUMN: {
-			JComboBox<String> cb = Setup.getComboBox();
+		case TRAIN_DIRECTION_COLUMN: {
+			JComboBox<String> cb = Setup.getTrainDirectionComboBox();
 			cb.setSelectedItem(rl.getTrainDirectionString());
 			return cb;
 		}
@@ -342,7 +342,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 		case DELETE_COLUMN:
 			deleteRouteLocation(row);
 			break;
-		case TRAIN_COLUMN:
+		case TRAIN_DIRECTION_COLUMN:
 			setTrainDirection(value, row);
 			break;
 		case MAXMOVES_COLUMN:
@@ -396,7 +396,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 		_route.deleteLocation(routeList.get(row));
 	}
 
-	private int _trainDirection = Setup.getDirectionInt(Setup.getComboBox().getItemAt(0));
+	private int _trainDirection = Setup.getDirectionInt(Setup.getTrainDirectionComboBox().getItemAt(0));
 
 	public int getLastTrainDirection() {
 		return _trainDirection;

@@ -18,7 +18,6 @@ import java.util.List;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainSchedule;
 import jmri.jmrit.operations.trains.TrainScheduleManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
@@ -625,11 +624,11 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		}
 	}
 
-	private int _trainDirection = Setup.getDirectionInt(Setup.getComboBox().getItemAt(0));
-
-	public int getLastTrainDirection() {
-		return _trainDirection;
-	}
+//	private int _trainDirection = Setup.getDirectionInt(Setup.getTrainDirectionComboBox().getItemAt(0));
+//
+//	public int getLastTrainDirection() {
+//		return _trainDirection;
+//	}
 
 	public void setMatchMode(boolean mode) {
 		if (mode != _matchMode) {

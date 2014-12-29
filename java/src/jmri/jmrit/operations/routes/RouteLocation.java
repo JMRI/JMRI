@@ -416,7 +416,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 		}
 		if ((a = e.getAttribute(Xml.TRAIN_DIRECTION)) != null) {
 			// early releases had text for train direction
-			if (Setup.getList().contains(a.getValue())) {
+			if (Setup.getTrainDirectionList().contains(a.getValue())) {
 				_trainDir = Setup.getDirectionInt(a.getValue());
 				log.debug("found old train direction {} new direction {}", a.getValue(), _trainDir);
 			} else {
