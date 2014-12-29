@@ -53,9 +53,9 @@
     <property name="release.is_branched" value="false"/>
 
     <!-- should compiler warn of use of deprecated APIs? (on/off) -->
-    <property name="deprecation" value="off"/>
+    <property name="deprecation" value="off"/> <!-- off at start of 3.11 series, as we work through changes -->
 
-    <!-- SDK version (1.8 as of JMRI 3.11.1 [3.10 pre-releases]) -->
+    <!-- SDK version (1.8 as of JMRI 3.11.1 [3.12/4.0 pre-releases]) -->
     <property name="sdk_version"    value="1.8"/>
     <property name="source_version" value="${sdk_version}"/>
     <property name="jre_version"    value="${sdk_version}"/>
@@ -397,9 +397,7 @@
                deprecation="${deprecation}"
                debug="${java.debugging}">
             <classpath refid="compile.class.path"/>
-            <!-- <compilerarg value="-Xlint:-serial"/>  off during 1.8 migration -->
-            <!-- <compilerarg value="-Xlint:-deprecation"/>  off during 1.8 migration -->
-            <!-- <compilerarg value="-Xlint:unchecked"/>  off during 1.8 migration -->
+            <compilerarg value="-Xlint:-unchecked"/>  <!-- off during 1.8 migration -->
         </javac>
     </target>
 
