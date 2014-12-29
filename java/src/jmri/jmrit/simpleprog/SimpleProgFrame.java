@@ -113,6 +113,7 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
         tPane2.add(new JLabel(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("VALUE IS:")));
         tPane2.add(decButton);
         tPane2.add(hexButton);
+        tPane2.add(Box.createVerticalGlue());
         tPane.add(tPane2);
 
         getContentPane().add(tPane);
