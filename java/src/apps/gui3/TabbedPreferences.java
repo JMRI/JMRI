@@ -301,6 +301,20 @@ public class TabbedPreferences extends AppConfigBase {
                 restartRequired = panel.isRestartRequired();
             }
         }
+        if (!restartRequired) {
+            for (Component item : this.items) {
+                // Every item is a PreferencesPanel, but this is not enforced
+                // by AppsConfigBase. Should it be?
+                if (item instanceof PreferencesPanel) {
+                    restartRequired = ((PreferencesPanel) item).isRestartRequired();
+                } else {
+                    restartRequired = true;
+                }
+                if (restartRequired) {
+                    break;
+                }
+            }
+        }
         return restartRequired;
     }
 

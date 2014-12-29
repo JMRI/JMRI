@@ -9,9 +9,11 @@ import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import jmri.InstanceManager;
+import jmri.swing.PreferencesPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,12 +36,13 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2004, 2010
  * @version	$Revision$
  */
-public class JmrixConfigPane extends JPanel {
+public class JmrixConfigPane extends JPanel implements PreferencesPanel {
 
     /**
      *
      */
     private static final long serialVersionUID = -6184977238513337292L;
+    private static final ResourceBundle acb = ResourceBundle.getBundle("apps.AppsConfigBundle");
 
     /**
      * Get access to a pane describing existing configuration information, or
@@ -163,8 +166,8 @@ public class JmrixConfigPane extends JPanel {
     public static final String NO_PORTS_FOUND = rb.getString("noPortsFound");
     public static final String NONE = rb.getString("none");
 
-    JComboBox<String> modeBox = new JComboBox<String>();
-    JComboBox<String> manuBox = new JComboBox<String>();
+    JComboBox<String> modeBox = new JComboBox<>();
+    JComboBox<String> manuBox = new JComboBox<>();
 
     JPanel details = new JPanel();
     String[] classConnectionNameList;
@@ -389,4 +392,63 @@ public class JmrixConfigPane extends JPanel {
 
     // initialize logging
     static Logger log = LoggerFactory.getLogger(JmrixConfigPane.class);
+
+    @Override
+    public String getPreferencesItem() {
+        return "CONNECTIONS"; // NOI18N
+    }
+
+    @Override
+    public String getPreferencesItemText() {
+        return acb.getString("MenuConnections"); // NOI18N
+    }
+
+    @Override
+    public String getTabbedPreferencesTitle() {
+        String title = this.getConnectionName();
+        if (title == null
+                && this.getCurrentProtocolName() != null
+                && !this.getCurrentProtocolName().equals(JmrixConfigPane.NONE)) {
+            title = this.getCurrentProtocolName();
+        }
+        if (title != null && !this.getDisabled()) {
+            title = "(" + title + ")";
+        }
+        return title;
+    }
+
+    @Override
+    public String getLabelKey() {
+        return null;
+    }
+
+    @Override
+    public JComponent getPreferencesComponent() {
+        return this;
+    }
+
+    @Override
+    public boolean isPersistant() {
+        return false;
+    }
+
+    @Override
+    public String getPreferencesTooltip() {
+        return this.getTabbedPreferencesTitle();
+    }
+
+    @Override
+    public void savePreferences() {
+        // do nothing - the persistant manager will take care of this
+    }
+
+    @Override
+    public boolean isDirty() {
+        return this.ccCurrent.isDirty();
+    }
+
+    @Override
+    public boolean isRestartRequired() {
+        return this.ccCurrent.isRestartRequired();
+    }
 }

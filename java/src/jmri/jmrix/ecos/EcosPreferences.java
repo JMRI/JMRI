@@ -2,10 +2,12 @@
 
 package jmri.jmrix.ecos;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.InstanceManager;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
+import jmri.jmrix.ecos.swing.preferences.PreferencesPane;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Stores User Preferences on how to deal with syncronising the Ecos Database
@@ -34,10 +36,10 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/{
             }
         }
         adaptermemo = memo;
-        jmri.InstanceManager.tabbedPreferencesInstance().addItem("ECOS", "ECOS Preferences", adaptermemo.getUserName(), null, new jmri.jmrix.ecos.swing.preferences.PreferencesPane(this), false, null);
+        InstanceManager.tabbedPreferencesInstance().addPreferencesPanel(new PreferencesPane(this));
     }
     
-    EcosSystemConnectionMemo adaptermemo;
+    private EcosSystemConnectionMemo adaptermemo;
 
     boolean preferencesLoaded = false;
     public boolean getPreferencesLoaded() { return preferencesLoaded; }
@@ -369,6 +371,13 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/{
     protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
       
     static Logger log = LoggerFactory.getLogger(EcosPreferences.class.getName());
+
+    /**
+     * @return the adaptermemo
+     */
+    public EcosSystemConnectionMemo getAdaptermemo() {
+        return adaptermemo;
+    }
 
  }
  

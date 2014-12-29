@@ -3,13 +3,25 @@
 package jmri.jmrix.ecos.swing.preferences;
 
 //import jmri.InstanceManager;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JSeparator;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import jmri.jmrix.ecos.EcosPreferences;
-import java.awt.Component;
-
-import javax.swing.*;
+import jmri.swing.PreferencesPanel;
 
 /**
  * Pane to show ECoS preferences
@@ -17,7 +29,7 @@ import javax.swing.*;
  * @author	Kevin Dickerson Copyright (C) 2009
  * @version	$Revision$
  */
-public class PreferencesPane extends javax.swing.JPanel implements PropertyChangeListener {
+public class PreferencesPane extends javax.swing.JPanel implements PropertyChangeListener, PreferencesPanel {
 
     /**
 	 * 
@@ -477,6 +489,58 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         return ecosProtocolTypes[masterBox.getSelectedIndex()];
 
     }*/
+
+    @Override
+    public String getPreferencesItem() {
+        return "ECOS"; // NOI18N
+    }
+
+    @Override
+    public String getPreferencesItemText() {
+        return "ECOS Preferences"; // TODO: I18N
+    }
+
+    @Override
+    public String getTabbedPreferencesTitle() {
+        return this.ep.getAdaptermemo().getUserName();
+    }
+
+    @Override
+    public String getLabelKey() {
+        return null;
+    }
+
+    @Override
+    public JComponent getPreferencesComponent() {
+        return this;
+    }
+
+    @Override
+    public boolean isPersistant() {
+        return false;
+    }
+
+    @Override
+    public String getPreferencesTooltip() {
+        return null;
+    }
+
+    @Override
+    public void savePreferences() {
+        this.updateButtonPressed();
+    }
+
+    @Override
+    public boolean isDirty() {
+        return this.ep.getChangeMade();
+    }
+
+    @Override
+    public boolean isRestartRequired() {
+        // is this correct? If not, we would need to set a flag in
+        // updateButtonPressed() to set this true.
+        return false;
+    }
 }
 
 
