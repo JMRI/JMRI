@@ -17,7 +17,7 @@ import jmri.Programmer;
  * @author			Bob Jacobsen   Copyright (C) 2001
  * @version			$Revision$
  */
-public class ProgOpsModePane extends javax.swing.JPanel {
+public class ProgOpsModePane extends JPanel {
 
     // GUI member declarations
 
@@ -41,26 +41,6 @@ public class ProgOpsModePane extends javax.swing.JPanel {
      */
     public ProgOpsModePane(int direction, javax.swing.ButtonGroup group) {
 
-        // save the group to use
-        mModeGroup = group;
-
-        // configure items for GUI
-        mOpsByteButton.setText(Bundle.getMessage("OpsByteMode"));
-        mModeGroup.add(mOpsByteButton);
-        mAddrField.setToolTipText(Bundle.getMessage("ToolTipEnterDecoderAddress"));
-        mLongAddrCheck.setToolTipText(Bundle.getMessage("ToolTipCheckedLongAddress"));
-
-        // if a programmer is available, disable buttons for unavailable modes
-        setModes(InstanceManager.getDefault(jmri.AddressedProgrammerManager.class));
-
-        // general GUI config
-        setLayout(new BoxLayout(this, direction));
-
-        // install items in GUI
-        add(mOpsByteButton);
-        add(mAddrField);
-        add(mLongAddrCheck);
-        
         // create the display combo box
         java.util.Vector<AddressedProgrammerManager> v = new java.util.Vector<AddressedProgrammerManager>();
         for (AddressedProgrammerManager e : InstanceManager.getList(jmri.AddressedProgrammerManager.class))
@@ -76,6 +56,30 @@ public class ProgOpsModePane extends javax.swing.JPanel {
         });
         progBox.setSelectedIndex(progBox.getItemCount()-1); // default is last
 
+        // save the group to use
+        mModeGroup = group;
+
+        // configure buttons
+        mOpsByteButton.setText(Bundle.getMessage("OpsByteMode"));
+        mModeGroup.add(mOpsByteButton);
+        mAddrField.setToolTipText(Bundle.getMessage("ToolTipEnterDecoderAddress"));
+        mLongAddrCheck.setToolTipText(Bundle.getMessage("ToolTipCheckedLongAddress"));
+
+        // if a programmer is available, disable buttons for unavailable modes
+        setModes(InstanceManager.getDefault(jmri.AddressedProgrammerManager.class));
+
+        // general GUI config
+        setLayout(new BoxLayout(this, direction));
+
+        // install items in GUI
+        add(mOpsByteButton);
+        
+        JPanel panel = new JPanel();
+        panel.setLayout(new java.awt.FlowLayout());
+        panel.add(new JLabel("Addr:"));
+        panel.add(mAddrField);
+        add(panel);
+        add(mLongAddrCheck);
 
     }
 
