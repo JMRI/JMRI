@@ -38,12 +38,13 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
         Assert.assertTrue("power manager present", InstanceManager.powerManagerInstance()==m2);        
     }
     
-    public void testDefaultProgrammerManager() {
+    public void testDefaultProgrammerManagers() {
         ProgrammerManager m = new jmri.progdebugger.DebugProgrammerManager();
         
         InstanceManager.setProgrammerManager(m);
         
-        Assert.assertTrue("programmer manager present", InstanceManager.programmerManagerInstance()==m);        
+        Assert.assertTrue("global programmer manager was set", InstanceManager.getDefault(GlobalProgrammerManager.class)==m);        
+        Assert.assertTrue("addressed programmer manager was set", InstanceManager.getDefault(AddressedProgrammerManager.class)==m);        
     }
     
     public void testSecondDefaultProgrammerManager() {
@@ -53,7 +54,8 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
         InstanceManager.setProgrammerManager(m1);
         InstanceManager.setProgrammerManager(m2);
         
-        Assert.assertTrue("2nd instance is default", InstanceManager.programmerManagerInstance()==m2);        
+        Assert.assertTrue("2nd global programmer manager is default", InstanceManager.getDefault(GlobalProgrammerManager.class)==m2);        
+        Assert.assertTrue("2nd addressed programmer manager is default", InstanceManager.getDefault(AddressedProgrammerManager.class)==m2);        
     }
     
     // Testing new load store
