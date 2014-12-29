@@ -174,31 +174,34 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private CommandStation commandStation=null;
 
     public boolean provides(Class<?> type) {
-         if (getDisabled())
-             return false;
-         if (type.equals(jmri.ProgrammerManager.class))
-             return true;
-         if (type.equals(jmri.GlobalProgrammerManager.class))
-             return getProgrammerManager().isGlobalProgrammerAvailable();
-         if (type.equals(jmri.AddressedProgrammerManager.class))
-             return getProgrammerManager().isAddressedModePossible();
-            
-         if (type.equals(jmri.ThrottleManager.class))
-             return true;
-         if (type.equals(jmri.PowerManager.class))
-             return true;
-         if (type.equals(jmri.SensorManager.class))
-             return true;
-         if (type.equals(jmri.TurnoutManager.class))
-             return true;
-         if (type.equals(jmri.LightManager.class))
-             return true;
-         if (type.equals(jmri.ConsistManager.class))
-             return true;
-         if (type.equals(jmri.CommandStation.class))
-             return true;
-         return false; // nothing, by default
-     }
+        if (getDisabled())
+            return false;
+        else if (type.equals(jmri.ProgrammerManager.class))
+            return true;
+        else if (type.equals(jmri.GlobalProgrammerManager.class)) {
+            ProgrammerManager p = getProgrammerManager();
+            if (p == null) return false;
+            return p.isGlobalProgrammerAvailable();
+        } else if (type.equals(jmri.AddressedProgrammerManager.class)) {
+            ProgrammerManager p = getProgrammerManager();
+            if (p == null) return false;
+            return p.isAddressedModePossible();
+        } else if (type.equals(jmri.ThrottleManager.class))
+            return true;
+        else if (type.equals(jmri.PowerManager.class))
+            return true;
+        else if (type.equals(jmri.SensorManager.class))
+            return true;
+        else if (type.equals(jmri.TurnoutManager.class))
+            return true;
+        else if (type.equals(jmri.LightManager.class))
+            return true;
+        else if (type.equals(jmri.ConsistManager.class))
+            return true;
+        else if (type.equals(jmri.CommandStation.class))
+            return true;
+        else return false; // nothing, by default
+    }
 
      @SuppressWarnings("unchecked")
      public <T> T get(Class<?> T) {
