@@ -33,40 +33,104 @@
 
 
 <P>JMRI can communicate with an Uhlenbrock Intellibox via the Intellibox built-in serial 
-    port and the LocoNet&reg; protocol. </p>
+    port, the Intellibox-II USB port and the LocoNet&reg; protocol. 
+    This page provide more detail on the possibilities.</p>
 
+<h2>Limitations
+</h2>
+<p><b>Uhlenbrock Intellibox</b> - None</p>
+
+<p><b>Uhlenbrock Intellibox II and IB-Com</b> - These systems currently do not support 
+programming, either via a programming track or on the main.</p>
+
+
+
+<h2 id="serial">Direct serial connection</h2>
+<a href="images/UhlenbrockConfig-I.png"><img src="images/UhlenbrockConfig-I.png" align="right" width="180" height="115"></a>
+This section is applicable to the "Intellibox-I", which includes
+<ul>
+<li>Intellibox ref. 65000
+<li>Intellibox IR ref. 65050
+<li>Fleischmann Twin Center (software version 1.1 or later)
+</ul>
+which have an RS232 serial port for connection.
 <p>
-Configure the options of your Uhlenbrock Intellibox to be:
+Configure the options of your Intellibox-I command station to be:
 <UL>
 <LI>SO 2 value 4  (Select LocoNet protocol in the interface)
 <LI>SO 5 value 1  (Use 1 stop bit on the serial port)
 <LI>SO 6 value 255  (CTS never set false due to pressing a stop button)
-
 <LI>Baudrate 19200
 </UL>
 
+<p>
 Then start the JMRI program and configure it to:
-
 <UL>
-<LI>"LocoNet Intellibox Serial Port" protocol
+<LI>Select the "Uhlenbrock" manufacturer for your connection
+<LI>Select "LocoNet Intellibox-I (Serial)" protocol
 <LI>Select the appropriate serial port on your computer
 <LI>Select 19200 baud
 <LI>Select hardware handshaking
 </UL>
+Save and restart.
 
 <p>
 Note that the hardware handshaking in the Intellibox serial port is not entire reliable, and messages
 can be lost if you have a lot of traffic. For running a complicated layout, we
 recommend you consider a LocoBuffer-USB, PR3 or other interface that will let you connect
 JMRI to the LocoNet port of the Intellibox instead of the serial port.
+See the <a href="#loconet">LocoNet connection section</a> below.
 
-<h2>System Capabilities</h2>
-<p><b>Uhlenbrock Intellibox</b> - None</p>
 
-<p><b>Uhlenbrock Intellibox II and IB-Com</b> - These systems currently do not support 
-programming, either via a programming track or on the main.</p>
+<h2 id="usb">Direct USB connection</h2>
+<a href="images/UhlenbrockConfig-II.png"><img src="images/UhlenbrockConfig-II.png" align="right" width="180" height="115"></a>
+This section is applicable to the "Intellibox-II", which includes
+<ul>
+<li>Intellibox II ref. 65100
+<li>IB-Com ref. 65070/65071
+<li>Intellibox Basic ref. 65060
+</ul>
+which have a USB port for direct connection.
 
-<p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
+<p>
+Start the JMRI program and configure it to:
+<UL>
+<LI>Select the "Uhlenbrock" manufacturer for your connection
+<LI>Select "LocoNet Intellibox-II/IB-Com (USB)" protocol
+</UL>
+Save and restart.
+
+
+<h2 id="loconet">LocoNet connection</h2>
+
+You can connect an Intellibox command station to a LocoNet, using
+any of available 
+<a href="Digitrax.shtml">LocoNet connection methods</a>.
+<p>
+Intellibox command stations are divided into two types,
+called "Intellibox-I":
+<ul>
+<li>Intellibox ref. 65000
+<li>Intellibox IR ref. 65050
+<li>Fleischmann Twin Center (software version 1.1 or later)
+</ul>
+and "Intellibox-II":
+<ul>
+<li>Intellibox II ref. 65100
+<li>IB-Com ref. 65070/65071
+<li>Intellibox Basic ref. 65060
+</ul>
+<p>
+Start the JMRI program and configure it to:
+<UL>
+<LI>Select the "Digitrax" manufacturer for your connection
+<LI>Select the appropriate connection for your hardware.
+<LI>Select either the "Intellibox-I" or "Intellibox-II" command station as needed.
+</UL>
+Save and restart.
+
+
+
     </div>
   </div>
 <!--#include virtual="/Footer" -->

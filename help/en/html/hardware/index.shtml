@@ -128,18 +128,19 @@
 	            </ul>
 		    </p>
 	        <p class="dl">Configure:
-		<a href="loconet/LocoNetSim.shtml">LocoNet Simulator for use when disconnected from a layout</a>.</p>
+                <a href="loconet/LocoNetSim.shtml">LocoNet Simulator for use when disconnected from a layout</a>.</p>
 	        <p class="dl">Configure: Remote connection to a LocoNet via
-		<a href="loconet/LocoNetServer.shtml">JMRI LocoNet Server</a>.</p>
+                <a href="loconet/LocoNetServer.shtml">JMRI LocoNet Server</a>.</p>
 	        <p class="dl">Configure: Remote connection to a LocoNet via
-		<a href="loconet/LbServer.shtml">LbServer</a>.</p>
-		<a href="loconet/LocoNetworking.shtml">More information on connecting multiple computers to a single LocoNet</a>
+                <a href="loconet/LbServer.shtml">LbServer</a>.</p>
+                <a href="loconet/LocoNetworking.shtml">More information on connecting multiple computers to a single LocoNet</a>
 	        <p class="dl">Configure: Programming and testing decoders without a command station via a 
-		<a href="loconet/PR2.shtml">Digitrax PR2 interface</a>
-		or
-		<a href="loconet/PR3.shtml">PR3 interface</a>.</p>
-		    <p class="dl">Configure: Directly connecting to an
-		<a href="loconet/Uhlenbrock.shtml">Intellibox serial port</a>.
+                <a href="loconet/PR2.shtml">Digitrax PR2 interface</a>
+                or
+                <a href="loconet/PR3.shtml">PR3 interface</a>.</p>
+		    
+            <p class="dl">Configure: Directly connecting to an
+                <a href="loconet/Uhlenbrock.shtml">Intellibox</a>.
 	    </dd>
 
 	    <dt class="im">
@@ -157,8 +158,8 @@
 		<img src="images/ico-fl.gif" width="54" height="34" alt="Fleischmann"></a>
 	    </dt>
 	    <dt>Fleischmann</dt>
-	    <dd><p class="dl">Configure: Twin Centre via the
-	        <A href="loconet/Fleischmann.shtml">serial connection</a></p> 
+	    <dd><p class="dl">Configure: 
+	        <A href="loconet/Fleischmann.shtml">Twin Centre communications</a></p> 
 	    </dd>
 
 	    <dt class="im">
@@ -314,15 +315,20 @@
 	    <dt class="im"><a href="http://www.uhlenbrock.de/">
 	    <IMG src="images/ico-Ur.gif" width="44" height="34" alt="Uhlenbrock"></a></dt>
 	    <dt>Uhlenbrock</dt>
-	    <dd>The Intellibox can be connected to JMRI programs either via its
-	    LocoNet connections, or via its own serial port.:
+	    <dd>The Intellibox can be connected to JMRI programs either via a
+	    LocoNet connection, or via its own built-in serial (RS232) port
+	    or USB connection.
 	    
-	    <p class="dl">Configure: Uhlenbrock Intellibox via
-		<a href="loconet/Digitrax.shtml">MS100 or LocoBuffer LocoNet interfaces</a>
+	    <p class="dl">Configure: Uhlenbrock Intellibox-I or -II via
+		<a href="loconet/Uhlenbrock.shtml#loconet">LocoNet interface</a>
 		</p>
 
-	    <p class="dl">Configure: Uhlenbrock Intellibox via
-		<A href="loconet/Uhlenbrock.shtml">built-in serial port</a>
+	    <p class="dl">Configure: Uhlenbrock Intellibox-I via
+		<A href="loconet/Uhlenbrock.shtml#serial">built-in serial port</a>
+		</p>
+
+	    <p class="dl">Configure: Uhlenbrock Intellibox-II via
+		<A href="loconet/Uhlenbrock.shtml#usb">built-in USB connection</a>
 		</p>
 
 	    </dd>
