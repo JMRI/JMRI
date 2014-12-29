@@ -21,6 +21,7 @@ package jmri.jmrit.vsdecoder;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -28,15 +29,21 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ResourceBundle;
+
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
+
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.swing.JmriPanel;
+
 import javax.swing.SwingWorker;
+
 import jmri.jmrit.DccLocoAddressSelector;
 import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
+
 import java.text.MessageFormat;
+
 import javax.swing.JOptionPane;
 
 import jmri.Programmer;
@@ -47,7 +54,7 @@ import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 
 
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "deprecation" })
 public class VSDConfigPanel extends JmriPanel {
 
     private static final ResourceBundle vsdecoderBundle = VSDecoderBundle.bundle();
@@ -64,7 +71,7 @@ public class VSDConfigPanel extends JmriPanel {
     private RosterEntrySelectorPanel rosterSelector;
     private javax.swing.JLabel rosterLabel;
     private javax.swing.JButton rosterSaveButton;
-    private javax.swing.JComboBox profileComboBox;
+    private javax.swing.JComboBox<Object> profileComboBox;
     private javax.swing.JLabel profileLabel;
 
     // Panels for the tabbed pane.
@@ -175,7 +182,7 @@ public class VSDConfigPanel extends JmriPanel {
 
 	log.warn("updating the profile list.");
 	
-	profileComboBox.setModel(new DefaultComboBoxModel());
+	profileComboBox.setModel(new DefaultComboBoxModel<Object>());
 	Iterator<String> itr = s.iterator();
 	while (itr.hasNext()) {
 
@@ -276,12 +283,12 @@ public class VSDConfigPanel extends JmriPanel {
 	addressSetButton = new javax.swing.JButton();
 	addressSelector = new DccLocoAddressSelector();
 
-	profileComboBox = new javax.swing.JComboBox();
+	profileComboBox = new javax.swing.JComboBox<Object>();
 	profileLabel = new javax.swing.JLabel();
 	
 
 
-        profileComboBox.setModel(new javax.swing.DefaultComboBoxModel());
+        profileComboBox.setModel(new javax.swing.DefaultComboBoxModel<Object>());
 	// Add any already-loaded profile names
 	ArrayList<String> sl = VSDecoderManager.instance().getVSDProfileNames();
 	if (sl.isEmpty())

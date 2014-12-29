@@ -20,6 +20,7 @@ package jmri.jmrit.vsdecoder;
  */
 
 import javax.swing.*;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
@@ -56,7 +57,8 @@ class BusyDialog extends JDialog {
 	this.add(pbar, BorderLayout.CENTER);
     }
 
-    public void start() {
+    @SuppressWarnings("deprecation")
+	public void start() {
 	this.pack();
 	this.setVisible(true);
 	this.getContentPane().paintAll(pbar.getGraphics());

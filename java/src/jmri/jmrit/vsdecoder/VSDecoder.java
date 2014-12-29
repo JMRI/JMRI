@@ -816,7 +816,7 @@ public class VSDecoder implements PropertyChangeListener {
 	 * @param pn
 	 *            (String) : Parameter Name to find within the VSD File.
 	 */
-	@SuppressWarnings({ "unchecked", "cast" })
+	@SuppressWarnings({ "cast" })
 	public void setXml(VSDFile vf, String pn) {
 		Iterator<Element> itr;
 		Element e = null;

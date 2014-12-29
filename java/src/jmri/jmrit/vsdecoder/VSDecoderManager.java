@@ -627,7 +627,6 @@ public class VSDecoderManager implements PropertyChangeListener {
 	
 	ArrayList<String> new_entries = new ArrayList<String>();
 
-	@SuppressWarnings("unchecked") // NOI18N
 	java.util.Iterator<Element> i = root.getChildren("profile").iterator(); // NOI18N
 	while (i.hasNext()) {
 	    Element e = i.next();

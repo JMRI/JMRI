@@ -223,7 +223,6 @@ class DieselSound extends EngineSound {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void setXml(Element e, VSDFile vf) {
 	Element el;
 	//int num_notches;

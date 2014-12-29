@@ -27,10 +27,13 @@ package jmri.jmrit.vsdecoder;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.swing.*;
+
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.util.swing.*;
@@ -43,11 +46,15 @@ import java.util.Collections;
 import java.util.Arrays;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.border.TitledBorder;
+
 import jmri.util.FileUtil;
 
 /**
@@ -307,6 +314,7 @@ public class VSDecoderPane extends JmriPanel {
      * Looks up a decoder profile by name and returns that decoder.
      */
     public VSDecoder getDecoder(String profile) {
+	@SuppressWarnings("deprecation")
 	VSDecoder d = VSDecoderManager.instance().getVSDecoder(profile);
 	addPropertyChangeListener(d);
 	return(d);

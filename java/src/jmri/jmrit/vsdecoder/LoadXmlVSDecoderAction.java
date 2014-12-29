@@ -99,8 +99,7 @@ public class LoadXmlVSDecoderAction extends AbstractAction {
      *
      * @param  f  The XML file containing throttles.
      */
-    @SuppressWarnings("unchecked")
-	public boolean loadVSDecoderProfile(java.io.File f) throws java.io.IOException {
+    public boolean loadVSDecoderProfile(java.io.File f) throws java.io.IOException {
 	try {
 	    VSDecoderPrefs prefs = new VSDecoderPrefs();
 	    Element root = prefs.rootFromFile(f);

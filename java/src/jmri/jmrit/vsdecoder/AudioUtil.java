@@ -27,12 +27,14 @@ import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.jmrit.audio.AudioBuffer;
 import net.java.games.joal.AL;
 import net.java.games.joal.ALException;
 import net.java.games.joal.util.ALut;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -326,7 +328,8 @@ public class AudioUtil {
         public ByteBuffer data;
         public int format;
         public int frequency;
-        public int loop;
+        @SuppressWarnings("unused")
+		public int loop;
 
         public AudioByteBuffer(ByteBuffer d, int fmt, int freq, int lp) {
             data = d;

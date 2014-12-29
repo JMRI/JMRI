@@ -26,9 +26,12 @@ package jmri.jmrit.vsdecoder.swing;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.ResourceBundle;
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -44,7 +47,6 @@ import jmri.jmrit.DccLocoAddressSelector;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
 import jmri.jmrit.vsdecoder.*;
-
 import jmri.Programmer;
 import jmri.InstanceManager;
 import jmri.jmrit.roster.Roster;
@@ -52,6 +54,7 @@ import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 
+@SuppressWarnings("deprecation")
 public class VSDConfigDialog extends JDialog {
 
     /**
@@ -83,7 +86,7 @@ public class VSDConfigDialog extends JDialog {
     private RosterEntrySelectorPanel rosterSelector;
     private javax.swing.JLabel rosterLabel;
     private javax.swing.JButton rosterSaveButton;
-    private javax.swing.JComboBox profileComboBox;
+    private javax.swing.JComboBox<Object> profileComboBox;
     private javax.swing.JButton profileLoadButton;
     private javax.swing.JLabel profileLabel;
     private javax.swing.JPanel rosterPanel;
@@ -179,7 +182,7 @@ public class VSDConfigDialog extends JDialog {
 	// Profile select Pane
 	profilePanel = new JPanel();
 	profilePanel.setLayout(new BoxLayout(profilePanel, BoxLayout.PAGE_AXIS));
-	profileComboBox = new javax.swing.JComboBox();
+	profileComboBox = new javax.swing.JComboBox<Object>();
 	profileComboBox.setToolTipText(rb.getString("ProfileComboBoxToolTip"));
 	profileLabel = new javax.swing.JLabel();
 	profileLoadButton = new JButton(rb.getString("LoadVSDFileButtonLabel"));
@@ -191,7 +194,7 @@ public class VSDConfigDialog extends JDialog {
 	title.setTitlePosition(TitledBorder.DEFAULT_POSITION);
 	profilePanel.setBorder(title2);
 	
-        profileComboBox.setModel(new javax.swing.DefaultComboBoxModel());
+        profileComboBox.setModel(new javax.swing.DefaultComboBoxModel<Object>());
 	// Add any already-loaded profile names
 	ArrayList<String> sl = VSDecoderManager.instance().getVSDProfileNames();
 	if (sl.isEmpty())

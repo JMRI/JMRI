@@ -29,6 +29,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -43,6 +44,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.event.EventListenerList;
 import javax.swing.table.AbstractTableModel;
+
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.Reporter;
@@ -59,6 +61,7 @@ import jmri.jmrit.vsdecoder.listener.ListeningSpot;
 import jmri.util.JmriJFrame;
 import jmri.util.PhysicalLocation;
 import jmri.util.WindowMenu;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -460,7 +463,8 @@ public class ManageLocationsFrame extends JmriJFrame {
             rowData = dataMap;
         }
 
-        public HashMap<String, ListeningSpot> getDataMap() {
+        @SuppressWarnings("unused")
+		public HashMap<String, ListeningSpot> getDataMap() {
             // Includes only the ones with the checkbox made
             HashMap<String, ListeningSpot> retv = new HashMap<String, ListeningSpot>();
             ListeningSpot spot = null;

@@ -185,7 +185,6 @@ class Diesel3Sound extends EngineSound {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void setXml(Element e, VSDFile vf) {
 	Element el;
 	String fn;

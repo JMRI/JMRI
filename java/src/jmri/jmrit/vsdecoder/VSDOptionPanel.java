@@ -20,18 +20,21 @@ package jmri.jmrit.vsdecoder;
  */
 
 import javax.swing.*;
+
 import java.awt.*;
+
 import jmri.util.swing.*;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.Train;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 @SuppressWarnings("serial")
 public class VSDOptionPanel extends JmriPanel {
 
-    private javax.swing.JComboBox hornOptionComboBox;
-    private javax.swing.JComboBox opsTrainComboBox;
+    private javax.swing.JComboBox<Object> hornOptionComboBox;
+    private javax.swing.JComboBox<Train> opsTrainComboBox;
 
     private Train selected_train;
 
@@ -73,8 +76,8 @@ public class VSDOptionPanel extends JmriPanel {
 		}
 	    });
 
-	hornOptionComboBox = new javax.swing.JComboBox();
-	hornOptionComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "3-Chime Leslie", "5-Chime Leslie", "4-Chime Nathan" }));
+	hornOptionComboBox = new javax.swing.JComboBox<Object>();
+	hornOptionComboBox.setModel(new javax.swing.DefaultComboBoxModel<Object>(new String[] { "3-Chime Leslie", "5-Chime Leslie", "4-Chime Nathan" }));
 	x = new JLabel();
 	x.setText("Horn Option: ");
 	this.add(x);
@@ -82,8 +85,8 @@ public class VSDOptionPanel extends JmriPanel {
 	x = new JLabel();
 	x.setText("Engine Option: ");
 	this.add(x);
-	JComboBox y = new javax.swing.JComboBox();
-	y.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Non-Turbo", "Turbo" }));
+	JComboBox<Object> y = new javax.swing.JComboBox<Object>();
+	y.setModel(new javax.swing.DefaultComboBoxModel<Object>(new String[] { "Non-Turbo", "Turbo" }));
 	this.add(y);
     }
 

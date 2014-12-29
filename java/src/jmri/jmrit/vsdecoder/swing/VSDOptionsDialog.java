@@ -25,6 +25,8 @@ package jmri.jmrit.vsdecoder.swing;
  */
 
 import javax.swing.*;
+
+import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 
 public class VSDOptionsDialog extends JDialog {
@@ -38,7 +40,7 @@ public class VSDOptionsDialog extends JDialog {
 	public static final String OPTIONS_PROPERTY = "Options"; // NOI18N
 
 
-    private JComboBox opsTrainComboBox;
+    private JComboBox<Train> opsTrainComboBox;
 
     public VSDOptionsDialog(JPanel parent, String title) {
 	super(SwingUtilities.getWindowAncestor(parent), title);

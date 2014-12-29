@@ -215,7 +215,6 @@ public class VSDFile extends ZipFile {
 	// Iterate through all the profiles in the file.
 	// Would like to get rid of this suppression, but I think it's fairly safe to assume a list of children
 	// returned from an Element is going to be a list of Elements.
-	@SuppressWarnings("unchecked")
 	Iterator<Element> i = xmlroot.getChildren("profile").iterator();
 	// If no Profiles, file is invalid.
 	if (!i.hasNext()) {
@@ -231,7 +230,6 @@ public class VSDFile extends ZipFile {
 	    // Get the "Sound" children ... these are the ones that should have files
 	    // Would like to get rid of this suppression, but I think it's fairly safe to assume a list of children
 	    // returned from an Element is going to be a list of Elements.
-	    @SuppressWarnings("unchecked")
 	    Iterator<Element> i2 = (e.getChildren("sound")).iterator();
 	    if (!i2.hasNext()) {
 		log.warn("Validate: Profile " + e.getAttributeValue("name") + " has no Sounds");
@@ -351,7 +349,6 @@ public class VSDFile extends ZipFile {
     }
 
     protected boolean validateFiles(Element el, String name, String[] fnames, Boolean required) {
-	@SuppressWarnings("unchecked")
 	List<Element> elist = el.getChildren(name);
 	String s;
 
@@ -366,7 +363,6 @@ public class VSDFile extends ZipFile {
 
 	// Would like to get rid of this suppression, but I think it's fairly safe to assume a list of children
 	// returned from an Element is going to be a list of Elements.
-	@SuppressWarnings("unchecked")
 	Iterator<Element> ns_i = elist.iterator();
 	while(ns_i.hasNext()) {
 	    Element ns_e = ns_i.next();
