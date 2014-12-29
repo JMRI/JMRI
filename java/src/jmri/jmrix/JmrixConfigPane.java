@@ -13,6 +13,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import jmri.InstanceManager;
+import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -160,11 +161,9 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
 
     static final HashMap<Integer, JmrixConfigPane> configPaneTable = new HashMap<>();
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
-
-    public static final String NONE_SELECTED = rb.getString("noneSelected");
-    public static final String NO_PORTS_FOUND = rb.getString("noPortsFound");
-    public static final String NONE = rb.getString("none");
+    public static final String NONE_SELECTED = Bundle.getMessage("noneSelected");
+    public static final String NO_PORTS_FOUND = Bundle.getMessage("noPortsFound");
+    public static final String NONE = Bundle.getMessage("none");
 
     JComboBox<String> modeBox = new JComboBox<>();
     JComboBox<String> manuBox = new JComboBox<>();
@@ -189,6 +188,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
         ccCurrent = original;
 
         setLayout(new BorderLayout());
+        this.setBorder(BorderFactory.createEmptyBorder(0, 8, 0, 8));
 
         manuBox.addItem(NONE_SELECTED);
 
@@ -254,19 +254,19 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
             selection();
         });
         JPanel manufacturerPanel = new JPanel();
-        manufacturerPanel.setBorder(BorderFactory.createTitledBorder("System manufacturer:"));
         manufacturerPanel.add(manuBox);
         JPanel connectionPanel = new JPanel();
-        connectionPanel.setBorder(BorderFactory.createTitledBorder("System connection:"));
         connectionPanel.add(modeBox);
         JPanel initialPanel = new JPanel();
         initialPanel.setLayout(new BoxLayout(initialPanel, BoxLayout.Y_AXIS));
+        initialPanel.add(new JTitledSeparator(Bundle.getMessage("SystemManufacturer"))); // NOI18N
         initialPanel.add(manufacturerPanel);
+        initialPanel.add(new JTitledSeparator(Bundle.getMessage("SystemConnection"))); // NOI18N
         initialPanel.add(connectionPanel);
         add(initialPanel, BorderLayout.NORTH);
-
+        initialPanel.add(new JTitledSeparator(Bundle.getMessage("Settings"))); // NOI18N
         JScrollPane scroll = new JScrollPane(details);
-        scroll.setBorder(BorderFactory.createTitledBorder("Settings:"));
+        scroll.setBorder(BorderFactory.createEmptyBorder());
         add(scroll, BorderLayout.CENTER);
 
         selection();  // first time through, pretend we've selected a value
