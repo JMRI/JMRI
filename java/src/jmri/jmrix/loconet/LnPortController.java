@@ -68,9 +68,8 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     { 
         commandStationNames = new String[commandStationTypes.length];
         int i = 0;
-        for (LnCommandStationType e : commandStationTypes) {
-            commandStationNames[i] = commandStationTypes[i].getName();
-            ++i;
+        for (LnCommandStationType type : commandStationTypes) {
+            commandStationNames[i++] = type.getName();
         }
     }
     
