@@ -223,9 +223,7 @@ public class TabbedPreferences extends AppConfigBase {
     private boolean invokeSaveOptions() {
         boolean restartRequired = false;
         for (PreferencesPanel panel : this.preferencesPanels.values()) {
-            if (!panel.isPersistant()) {
-                panel.savePreferences();
-            }
+            panel.savePreferences();
             if (!restartRequired) {
                 restartRequired = panel.isRestartRequired();
             }
