@@ -383,8 +383,10 @@ public class InstanceManager {
     }
 
     /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
+     * @deprecated Since 3.11.1, use @{link #getDefault} for either GlobalProgrammerManager
+     * or AddressedProgrammerManager directly
      */
+    @Deprecated
     static public ProgrammerManager programmerManagerInstance()  { 
         return getDefault(ProgrammerManager.class);
     }
@@ -636,10 +638,9 @@ public class InstanceManager {
     // deprecated.
     //
     static public void setProgrammerManager(ProgrammerManager p) {
-        store(p, ProgrammerManager.class);
- 		if(programmerManagerInstance().isAddressedModePossible() )
+ 		if(p.isAddressedModePossible() )
  		    store(p, AddressedProgrammerManager.class);
- 		if(programmerManagerInstance().isGlobalProgrammerAvailable() )
+ 		if(p.isGlobalProgrammerAvailable() )
  		    store(p, GlobalProgrammerManager.class);
        
     	// Now that we have a programmer manager, install the default

@@ -74,6 +74,10 @@ public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
             return new DefaultMemoryManager();
         }
 
+        if (type == ProgrammerManager.class) {
+            return new DeferringProgrammerManager();
+        }
+
         if (type == ReporterManager.class) {
             return new jmri.managers.ProxyReporterManager();
         }
