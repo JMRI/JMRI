@@ -42,14 +42,20 @@ public class DeferringProgrammerManager implements ProgrammerManager {
     
     public Programmer getGlobalProgrammer() {
         if (log.isDebugEnabled()) log.debug("return default service-mode programmer");
-        return InstanceManager.getDefault(GlobalProgrammerManager.class).getGlobalProgrammer();
+        GlobalProgrammerManager gp = InstanceManager.getDefault(GlobalProgrammerManager.class);
+        if (gp == null) return null;
+        return gp.getGlobalProgrammer();
     }
 
     public Programmer reserveGlobalProgrammer() {
-        return InstanceManager.getDefault(GlobalProgrammerManager.class).reserveGlobalProgrammer();
+        GlobalProgrammerManager gp = InstanceManager.getDefault(GlobalProgrammerManager.class);
+        if (gp == null) return null;
+        return gp.reserveGlobalProgrammer();
     }
     public void releaseGlobalProgrammer(Programmer p) {
-        InstanceManager.getDefault(GlobalProgrammerManager.class).releaseGlobalProgrammer(p);
+        GlobalProgrammerManager gp = InstanceManager.getDefault(GlobalProgrammerManager.class);
+        if (gp == null) return;
+        gp.releaseGlobalProgrammer(p);
     }
 
     /**
@@ -57,17 +63,27 @@ public class DeferringProgrammerManager implements ProgrammerManager {
      * @return false if there's no chance of getting one
      */
     public boolean isGlobalProgrammerAvailable() {
+        GlobalProgrammerManager gp = InstanceManager.getDefault(GlobalProgrammerManager.class);
+        if (gp == null) return false;
         return InstanceManager.getDefault(GlobalProgrammerManager.class).isGlobalProgrammerAvailable();
     }
 
+
+
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
-        return InstanceManager.getDefault(AddressedProgrammerManager.class).getAddressedProgrammer(pLongAddress, pAddress);
+        AddressedProgrammerManager ap = InstanceManager.getDefault(AddressedProgrammerManager.class);
+        if (ap == null) return null;
+        return ap.getAddressedProgrammer(pLongAddress, pAddress);
     }
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
-        return InstanceManager.getDefault(AddressedProgrammerManager.class).reserveAddressedProgrammer(pLongAddress, pAddress);
+        AddressedProgrammerManager ap = InstanceManager.getDefault(AddressedProgrammerManager.class);
+        if (ap == null) return null;
+        return ap.reserveAddressedProgrammer(pLongAddress, pAddress);
     }
     public void releaseAddressedProgrammer(AddressedProgrammer p) {
-        InstanceManager.getDefault(AddressedProgrammerManager.class).releaseAddressedProgrammer(p);
+        AddressedProgrammerManager ap = InstanceManager.getDefault(AddressedProgrammerManager.class);
+        if (ap == null) return;
+        ap.releaseAddressedProgrammer(p);
     }
 
     /**
@@ -75,7 +91,9 @@ public class DeferringProgrammerManager implements ProgrammerManager {
      * @return false if there's no chance of getting one
      */
     public boolean isAddressedModePossible() {
-        return InstanceManager.getDefault(AddressedProgrammerManager.class).isAddressedModePossible();
+        AddressedProgrammerManager ap = InstanceManager.getDefault(AddressedProgrammerManager.class);
+        if (ap == null) return false;
+        return ap.isAddressedModePossible();
     }
 
 
