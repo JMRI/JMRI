@@ -4,6 +4,7 @@ package jmri.jmrit.dispatcher;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.*;
 import jmri.util.*;
 import jmri.jmrit.roster.Roster;
@@ -13,6 +14,7 @@ import jmri.jmrit.operations.trains.TrainManager;
 
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
 
 import java.util.ArrayList;
@@ -69,20 +71,20 @@ public class ActivateTrainFrame {
 	//private String selectedTrain = "";
 	private JmriJFrame initiateFrame=null;
 	private Container initiatePane = null;
-	private JComboBox transitSelectBox = new JComboBox();
+	private JComboBox<String> transitSelectBox = new JComboBox<String>();
 	private ArrayList<Transit> transitBoxList = new ArrayList<Transit>();
 	private JLabel trainBoxLabel = new JLabel("     "+Bundle.getMessage("TrainBoxLabel")+":");
-	private JComboBox trainSelectBox = new JComboBox();
+	private JComboBox<String> trainSelectBox = new JComboBox<String>();
 	private ArrayList<RosterEntry> trainBoxList = new ArrayList<RosterEntry>();
 	private JLabel trainFieldLabel = new JLabel(Bundle.getMessage("TrainBoxLabel")+":");
 	private JTextField trainNameField = new JTextField(10);
 	private JLabel dccAddressFieldLabel = new JLabel("     "+Bundle.getMessage("DccAddressFieldLabel")+":");
 	private JTextField dccAddressField = new JTextField(6);
 	private JCheckBox inTransitBox = new JCheckBox(Bundle.getMessage("TrainInTransit"));
-	private JComboBox startingBlockBox = new JComboBox();
+	private JComboBox<String> startingBlockBox = new JComboBox<String>();
 	private ArrayList<Block> startingBlockBoxList = new ArrayList<Block>();
 	private ArrayList<Integer> startingBlockSeqList = new ArrayList<Integer>();
-	private JComboBox destinationBlockBox = new JComboBox();
+	private JComboBox<String> destinationBlockBox = new JComboBox<String>();
 	private ArrayList<Block> destinationBlockBoxList = new ArrayList<Block>();
 	private ArrayList<Integer> destinationBlockSeqList = new ArrayList<Integer>();
 	private JButton addNewTrainButton = null;
@@ -96,10 +98,10 @@ public class ActivateTrainFrame {
 	private JCheckBox reverseAtEndBox = new JCheckBox(Bundle.getMessage("ReverseAtEnd"));
     int delayedStartInt[] = new int[]{ActiveTrain.NODELAY, ActiveTrain.TIMEDDELAY, ActiveTrain.SENSORDELAY};
     String delayedStartString[] = new String[]{Bundle.getMessage("DelayedStartNone"), Bundle.getMessage("DelayedStartTimed"), Bundle.getMessage("DelayedStartSensor")};
-    private JComboBox delayedStartBox = new JComboBox(delayedStartString);
+    private JComboBox<?> delayedStartBox = new JComboBox<Object>(delayedStartString);
     private JLabel delayedReStartLabel = new JLabel(Bundle.getMessage("DelayRestart"));
     private JLabel delayReStartSensorLabel = new JLabel(Bundle.getMessage("RestartSensor"));
-    private JComboBox delayedReStartBox = new JComboBox(delayedStartString);
+    private JComboBox<?> delayedReStartBox = new JComboBox<Object>(delayedStartString);
     private jmri.util.swing.JmriBeanComboBox delaySensor = new jmri.util.swing.JmriBeanComboBox(jmri.InstanceManager.sensorManagerInstance());
     private jmri.util.swing.JmriBeanComboBox delayReStartSensor = new jmri.util.swing.JmriBeanComboBox(jmri.InstanceManager.sensorManagerInstance());
     
@@ -111,7 +113,7 @@ public class ActivateTrainFrame {
     private JTextField delayMinField = new JTextField(3);
     private JLabel delayMinLabel = new JLabel(Bundle.getMessage("RestartTimed"));
     
-	private JComboBox trainTypeBox = new JComboBox();	
+	private JComboBox<String> trainTypeBox = new JComboBox<String>();	
 	// Note: See also items related to automatically running trains near the end of this module
 	
     boolean transitsFromSpecificBlock = false;
@@ -1042,7 +1044,7 @@ public class ActivateTrainFrame {
 		newName = newName.replaceAll("[\\W]","_");
 		return (newName+".xml");
 	}
-	private boolean setComboBox(JComboBox box, String txt) {
+	private boolean setComboBox(JComboBox<String> box, String txt) {
 		boolean found = false;
 		for (int i = 0; i<box.getItemCount(); i++) {
 			if (txt.equals(box.getItemAt(i))) {
@@ -1054,7 +1056,7 @@ public class ActivateTrainFrame {
 		return found;
 	}
     
-    int delayModeFromBox(JComboBox box) {
+    int delayModeFromBox(JComboBox<?> box) {
         String mode = (String)box.getSelectedItem();
         int result = jmri.util.StringUtil.getStateFromName(mode, delayedStartInt, delayedStartString);
         
@@ -1065,7 +1067,7 @@ public class ActivateTrainFrame {
         return result;
     }
     
-    void setDelayModeBox(int mode, JComboBox box) {
+    void setDelayModeBox(int mode, JComboBox<?> box) {
         String result = jmri.util.StringUtil.getNameFromState(mode, delayedStartInt, delayedStartString);
         box.setSelectedItem(result);
     }
@@ -1094,7 +1096,7 @@ public class ActivateTrainFrame {
 	private JTextField maxSpeedField = new JTextField(5);
 	private	JPanel pa2 = new JPanel();
 	private JLabel rampRateLabel = new JLabel(Bundle.getMessage("RampRateBoxLabel"));
-	private JComboBox rampRateBox = new JComboBox();
+	private JComboBox<String> rampRateBox = new JComboBox<String>();
 	private	JPanel pa3 = new JPanel();
 	private JCheckBox soundDecoderBox = new JCheckBox(Bundle.getMessage("SoundDecoder"));
 	private JCheckBox runInReverseBox = new JCheckBox(Bundle.getMessage("RunInReverse"));

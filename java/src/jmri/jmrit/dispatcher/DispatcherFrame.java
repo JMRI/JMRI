@@ -4,8 +4,8 @@ package jmri.jmrit.dispatcher;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.*;
-import jmri.Scale;
 import jmri.util.*;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -14,6 +14,7 @@ import jmri.jmrit.roster.RosterEntry;
 
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableColumn;
@@ -422,8 +423,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 	// allocate extra window variables
 	private JmriJFrame extraFrame=null;
 	private Container extraPane = null;
-	private JComboBox atSelectBox = new JComboBox();
-	private JComboBox extraBox = new JComboBox();
+	private JComboBox<String> atSelectBox = new JComboBox<String>();
+	private JComboBox<String> extraBox = new JComboBox<String>();
 	private ArrayList<Section> extraBoxList = new ArrayList<Section>();
 	private int atSelectedIndex = -1;
 	
@@ -1424,7 +1425,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                 for(int i = 1; i<intermediateSections.size(); i++){
                     Section se = intermediateSections.get(i);
                     if(preSec==mastHeldAtSection) {
-                        log.debug("Section is beyond held mast do not set turnouts " + tmpcur.getDisplayName());
+                        log.debug("Section is beyond held mast do not set turnouts " + (tmpcur != null ? tmpcur.getDisplayName() : "null"));
                         break;
                     }
                     if(!checkTurnoutStates(tmpcur,tmpSeqNo,se,at, preSec)) { return null; }
@@ -1453,7 +1454,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                 //The first section in the list will be the same as the nextSection, so we skip that.
                 for(int i = 1; i<intermediateSections.size(); i++){
                     if(tmpcur==mastHeldAtSection){
-                        log.debug("Section is beyond held mast do not allocate any more sections " + tmpcur.getDisplayName());
+                        log.debug("Section is beyond held mast do not allocate any more sections " + (tmpcur != null ? tmpcur.getDisplayName() : "null"));
                         break;
                     }
                     Section se = intermediateSections.get(i);

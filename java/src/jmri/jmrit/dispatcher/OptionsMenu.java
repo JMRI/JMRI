@@ -4,16 +4,17 @@ package jmri.jmrit.dispatcher;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.swing.*;
-import java.awt.*;
-import jmri.Scale;
 
+import javax.swing.*;
+
+import java.awt.*;
+
+import jmri.Scale;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JmriJFrame;
- 
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -106,14 +107,14 @@ public class OptionsMenu extends JMenu {
 	JmriJFrame optionsFrame = null;
 	Container optionsPane = null;
 	JCheckBox useConnectivityCheckBox = new JCheckBox(rb.getString("UseConnectivity"));
-	JComboBox layoutEditorBox = new JComboBox();
+	JComboBox<String> layoutEditorBox = new JComboBox<String>();
 	ArrayList<LayoutEditor> layoutEditorList = new ArrayList<LayoutEditor>();
 	JCheckBox autoAllocateCheckBox = new JCheckBox(rb.getString("AutoAllocateBox"));
 	JCheckBox autoTurnoutsCheckBox = new JCheckBox(rb.getString("AutoTurnoutsBox"));
 	JRadioButton trainsFromRoster = new JRadioButton(rb.getString("TrainsFromRoster"));
 	JRadioButton trainsFromTrains = new JRadioButton(rb.getString("TrainsFromTrains"));
 	JRadioButton trainsFromUser = new JRadioButton(rb.getString("TrainsFromUser"));
-    JComboBox signalTypeBox;
+    JComboBox<String> signalTypeBox;
 	JCheckBox detectionCheckBox = new JCheckBox(rb.getString("DetectionBox"));
 	JCheckBox shortNameCheckBox = new JCheckBox(rb.getString("ShortNameBox"));
 	JCheckBox nameInBlockCheckBox = new JCheckBox(rb.getString("NameInBlockBox"));
@@ -121,7 +122,7 @@ public class OptionsMenu extends JMenu {
 	JCheckBox extraColorForAllocatedCheckBox = new JCheckBox(rb.getString("ExtraColorForAllocatedBox"));
 	JCheckBox nameInAllocatedBlockCheckBox = new JCheckBox(rb.getString("NameInAllocatedBlockBox"));
     JCheckBox supportVSDecoderCheckBox = new JCheckBox(rb.getString("SupportVSDecoder"));
-	JComboBox layoutScaleBox = new JComboBox();
+	JComboBox<String> layoutScaleBox = new JComboBox<String>();
 	JRadioButton scaleFeet = new JRadioButton(rb.getString("ScaleFeet"));
 	JRadioButton scaleMeters = new JRadioButton(rb.getString("ScaleMeters"));
     JCheckBox openDispatcherWithPanel = new JCheckBox(Bundle.getMessage("OpenDispatcherWithPanelBox"));
@@ -140,7 +141,7 @@ public class OptionsMenu extends JMenu {
 			useConnectivityCheckBox.setToolTipText(rb.getString("UseConnectivityHint"));
 			p1.add(layoutEditorBox);
 			layoutEditorBox.setToolTipText(rb.getString("LayoutEditorHint"));
-            signalTypeBox = new JComboBox(signalTypes);
+            signalTypeBox = new JComboBox<String>(signalTypes);
             p1.add(signalTypeBox);
             signalTypeBox.setToolTipText(rb.getString("SignalTypeHint"));
 			optionsPane.add(p1);

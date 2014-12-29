@@ -4,7 +4,9 @@ package jmri.jmrit.dispatcher;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.NamedBeanHandle;
+
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Date;
@@ -722,8 +724,10 @@ public class ActiveTrain {
         restartPoint = true;
         if(getDelayedRestart()==TIMEDDELAY){
             Date now = jmri.InstanceManager.timebaseInstance().getTime();
-            int nowHours = now.getHours();
-            int nowMinutes = now.getMinutes();
+            @SuppressWarnings("deprecation")
+			int nowHours = now.getHours();
+            @SuppressWarnings("deprecation")
+			int nowMinutes = now.getMinutes();
             int hours = getRestartDelay() / 60;
             int minutes = getRestartDelay() % 60;
             restartHr = nowHours + hours + ((nowMinutes + minutes) /60);
