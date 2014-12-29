@@ -55,6 +55,7 @@ public class PackageTest extends TestCase {
         suite.addTest(LnSensorTest.suite());
         suite.addTest(LnSensorAddressTest.suite());
         suite.addTest(LnSensorManagerTest.suite());
+        suite.addTest(LnCommandStationTypeTest.suite());
 
 
         if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
