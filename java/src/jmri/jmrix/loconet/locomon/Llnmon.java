@@ -3196,7 +3196,7 @@ public class Llnmon {
         } // case LnConstants.RE_OPC_IB2_F8_F12
 
         case LnConstants.RE_OPC_IB2_SPECIAL: {
-            if ((l.getElement(1) == LnConstants.PE_IB2_SPECIAL_FUNCS_TOKEN) && 
+            if ((l.getElement(1) == LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN) && 
                     ((l.getElement(3) == LnConstants.RE_IB2_SPECIAL_F13_F19_TOKEN) ||
                     (l.getElement(3) == LnConstants.RE_IB2_SPECIAL_F21_F27_TOKEN))) {
                 // Intellibox-II function control message for mobile decoder F13 
@@ -3221,15 +3221,28 @@ public class Llnmon {
                 s.append("\n");
                 return s.toString();
             } else if (l.getElement(3) == LnConstants.RE_IB2_SPECIAL_F20_F28_TOKEN) {
-                // Special-case for F20 and F28, since the tokens from the previous case
+                // Special-case for F12, F20 and F28, since the tokens from the previous case
                 // can only encode 7 bits of data in element(4).
                 StringBuilder s = new StringBuilder("Set (Intellibox-II format) loco in slot ");
                 s.append(l.getElement(2));
+                s.append(" F12=");
+                s.append((l.getElement(4)&LnConstants.RE_IB2_SPECIAL_F12_MASK)==0?"Off":"On");                
                 s.append(" F20=");
                 s.append((l.getElement(4)&LnConstants.RE_IB2_SPECIAL_F20_MASK)==0?"Off":"On");
                 s.append(" F28=");
                 s.append((l.getElement(4)&LnConstants.RE_IB2_SPECIAL_F28_MASK)==0?"Off\n":"On\n");
                 return s.toString();
+            } else if (l.getElement(3) == LnConstants.RE_IB1_SPECIAL_F9_F11_TOKEN) {
+                // For Intellibox "one" with SW version 2.x - Special-case for F9 to F11
+                StringBuilder s = new StringBuilder("Set (Intellibox-I v2.x format) loco in slot ");
+                s.append(l.getElement(2));
+                s.append(" F9=");
+                s.append((l.getElement(4)&LnConstants.RE_IB1_F9_MASK)==0?"Off":"On");                
+                s.append(" F10=");
+                s.append((l.getElement(4)&LnConstants.RE_IB1_F10_MASK)==0?"Off":"On");
+                s.append(" F11=");
+                s.append((l.getElement(4)&LnConstants.RE_IB1_F11_MASK)==0?"Off\n":"On\n");
+                return s.toString();                
             }
             // Because the usage of other tokens in message element(3) are not yet 
             // understood, let execution fall thru to the "default" case
