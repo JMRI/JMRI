@@ -2,24 +2,22 @@
 
 package jmri.jmrix;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
-
-import javax.swing.JPanel;
+import java.awt.event.ItemListener;
+import java.util.Hashtable;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
-import javax.swing.JComboBox;
-
-import java.util.Hashtable;
+import javax.swing.JPanel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base class for common implementation of the Simulator ConnectionConfig
@@ -31,7 +29,7 @@ import java.util.Hashtable;
  */
 
 //
-abstract public class AbstractSimulatorConnectionConfig extends AbstractConnectionConfig implements jmri.jmrix.ConnectionConfig {
+abstract public class AbstractSimulatorConnectionConfig extends AbstractConnectionConfig {
 
     /**
      * Ctor for an object being created during load process

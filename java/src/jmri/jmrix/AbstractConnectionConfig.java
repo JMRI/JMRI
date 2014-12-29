@@ -1,5 +1,4 @@
 // AbstractSerialConnectionConfig.java
-
 package jmri.jmrix;
 
 import java.awt.GridBagConstraints;
@@ -20,79 +19,113 @@ import org.slf4j.LoggerFactory;
 /**
  * Abstract base class for common implementation of the ConnectionConfig
  *
- * @author      Bob Jacobsen   Copyright (C) 2001, 2003
+ * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @version	$Revision$
  */
-abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionConfig {
+abstract public class AbstractConnectionConfig implements ConnectionConfig {
 
     /**
-     * Ctor for a functional object with no prexisting adapter.
-     * Expect that the subclass setInstance() will fill the adapter member.
+     * Ctor for a functional object with no prexisting adapter. Expect that the
+     * subclass setInstance() will fill the adapter member.
      */
     public AbstractConnectionConfig() {
     }
-    
+
     protected final UserPreferencesManager pref = InstanceManager.getDefault(UserPreferencesManager.class);
-    
+
     abstract void checkInitDone();
-    
+
     abstract public void updateAdapter();
-    
+
     protected int NUMOPTIONS = 2;
-    
+
     protected JCheckBox showAdvanced = new JCheckBox("Additional Connection Settings");
-    
+
     protected JLabel systemPrefixLabel = new JLabel("Connection Prefix");
     protected JLabel connectionNameLabel = new JLabel("Connection Name");
     protected JTextField systemPrefixField = new JTextField(10);
     protected JTextField connectionNameField = new JTextField(15);
     protected String systemPrefix;
     protected String connectionName;
-    
+
     protected JPanel _details;
-    
-    protected Hashtable<String, Option> options = new Hashtable<String, Option>();
-    
+
+    protected Hashtable<String, Option> options = new Hashtable<>();
+
+    /**
+     * Determine if configuration needs to be written to disk.
+     *
+     * This default implementation always returns true to maintain the existing
+     * behavior.
+     *
+     * @return true if configuration need to be saved, false otherwise
+     */
+    @Override
+    public boolean isDirty() {
+        // We really need some mechanism for tracking changes from the as-loaded
+        // state that allows this method to return true or false
+        return true;
+    }
+
+    /**
+     * Determine if application needs to be restarted for configuration changes
+     * to be applied.
+     *
+     * The default implementation always returns true to maintain the existing
+     * behavior.
+     *
+     * @return true if application needs to restart, false otherwise
+     */
+    @Override
+    public boolean isRestartRequired() {
+        // Should return true only if isDirty() == true and the specific changes
+        // that have not been saved require a restart to take effect
+        // Since there is no real mechanism to determine either, simply return
+        // true to maintain existing behavior.
+        return true;
+    }
+
     protected static class Option {
-        
+
         String optionDisplayName;
         JComponent optionSelection;
         Boolean advanced = true;
         JLabel label = null;
-        
-        public Option(String name, JComponent optionSelection, Boolean advanced){
+
+        public Option(String name, JComponent optionSelection, Boolean advanced) {
             this.optionDisplayName = name;
             this.optionSelection = optionSelection;
             this.advanced = advanced;
         }
-        
-        protected String getDisplayName(){
+
+        protected String getDisplayName() {
             return optionDisplayName;
         }
-        
-        public JLabel getLabel(){
-            if(label == null)
+
+        public JLabel getLabel() {
+            if (label == null) {
                 label = new JLabel(getDisplayName(), JLabel.LEFT);
+            }
             return label;
         }
-        
-        public JComponent getComponent(){
+
+        public JComponent getComponent() {
             return optionSelection;
         }
-        
-        protected Boolean isAdvanced(){
+
+        protected Boolean isAdvanced() {
             return advanced;
         }
-        
-        protected void setAdvanced(Boolean boo){
+
+        protected void setAdvanced(Boolean boo) {
             advanced = boo;
         }
-        
-        public String getItem(){
-            if(optionSelection instanceof JComboBox){
-                return (String)((JComboBox)optionSelection).getSelectedItem();
-            } else if (optionSelection instanceof JTextField){
-                return ((JTextField)optionSelection).getText();
+
+        public String getItem() {
+            if (optionSelection instanceof JComboBox) {
+                return (String) ((JComboBox) optionSelection).getSelectedItem();
+            } else if (optionSelection instanceof JTextField) {
+                return ((JTextField) optionSelection).getText();
             }
             return null;
         }
@@ -103,25 +136,27 @@ abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionC
      * <i>unless</I> its already been set.
      */
     abstract protected void setInstance();
-    
+
+    @Override
     abstract public String getInfo();
-    
-    protected ArrayList<JComponent> additionalItems = new ArrayList<JComponent>(0);
-    
-    static java.util.ResourceBundle rb = 
-        java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
-    
-	abstract public void loadDetails(final JPanel details) ;
-    
+
+    protected ArrayList<JComponent> additionalItems = new ArrayList<>(0);
+
+    static java.util.ResourceBundle rb
+            = java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
+
+    @Override
+    abstract public void loadDetails(final JPanel details);
+
     protected GridBagLayout gbLayout = new GridBagLayout();
     protected GridBagConstraints cL = new GridBagConstraints();
     protected GridBagConstraints cR = new GridBagConstraints();
-    
+
     abstract void showAdvancedItems();
-    
-    protected int addStandardDetails(PortAdapter adapter, boolean incAdvanced, int i){
-        for(String item:options.keySet()){
-            if(!options.get(item).isAdvanced()){
+
+    protected int addStandardDetails(PortAdapter adapter, boolean incAdvanced, int i) {
+        for (String item : options.keySet()) {
+            if (!options.get(item).isAdvanced()) {
                 cR.gridy = i;
                 cL.gridy = i;
                 gbLayout.setConstraints(options.get(item).getLabel(), cL);
@@ -131,8 +166,8 @@ abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionC
                 i++;
             }
         }
-        
-        if(adapter.getSystemConnectionMemo()!=null){
+
+        if (adapter.getSystemConnectionMemo() != null) {
             cR.gridy = i;
             cL.gridy = i;
             gbLayout.setConstraints(systemPrefixLabel, cL);
@@ -148,26 +183,33 @@ abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionC
             _details.add(connectionNameField);
             i++;
         }
-        if (incAdvanced){
-            cL.gridwidth=2;
+        if (incAdvanced) {
+            cL.gridwidth = 2;
             cL.gridy = i;
             cR.gridy = i;
             gbLayout.setConstraints(showAdvanced, cL);
             _details.add(showAdvanced);
-            cL.gridwidth=1;
+            cL.gridwidth = 1;
             i++;
         }
         return i;
     }
-        
+
+    @Override
     abstract public String getManufacturer();
+
+    @Override
     abstract public void setManufacturer(String manufacturer);
-    
+
+    @Override
     abstract public String getConnectionName();
-    
+
+    @Override
     abstract public boolean getDisabled();
+
+    @Override
     abstract public void setDisabled(boolean disable);
-    
+
     static protected Logger log = LoggerFactory.getLogger(AbstractConnectionConfig.class.getName());
-    
+
 }

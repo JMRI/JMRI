@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @version	$Revision$
  */
-abstract public class AbstractNetworkConnectionConfig extends AbstractConnectionConfig implements ConnectionConfig {
+abstract public class AbstractNetworkConnectionConfig extends AbstractConnectionConfig {
 
     private final static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
 

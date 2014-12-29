@@ -2,36 +2,34 @@
 
 package jmri.jmrix;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import gnu.io.CommPortIdentifier;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-
-import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
-import java.awt.*;
-import javax.swing.*;
-
-import javax.swing.JOptionPane;
-
-import java.awt.Color;
-import java.util.Vector;
+import java.awt.event.ItemListener;
 import java.util.Collections;
 import java.util.Enumeration;
-import java.util.ResourceBundle;
-import java.util.Map.Entry;
 import java.util.Hashtable;
-
+import java.util.Map.Entry;
+import java.util.ResourceBundle;
+import java.util.Vector;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
-import gnu.io.CommPortIdentifier;
-
+import javax.swing.ListCellRenderer;
 import jmri.util.PortNameMapper;
 import jmri.util.PortNameMapper.SerialPortFriendlyName;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base class for common implementation of the ConnectionConfig
@@ -41,7 +39,7 @@ import jmri.util.PortNameMapper.SerialPortFriendlyName;
  */
 
 //
-abstract public class AbstractSerialConnectionConfig extends AbstractConnectionConfig implements jmri.jmrix.ConnectionConfig {
+abstract public class AbstractSerialConnectionConfig extends AbstractConnectionConfig {
 
     /**
      * Ctor for an object being created during load process
