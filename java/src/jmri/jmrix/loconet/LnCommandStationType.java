@@ -40,8 +40,8 @@ public enum LnCommandStationType {
     COMMAND_STATION_DB150       ("DB150 (Empire Builder)",      false,  true,   "LnThrottleManager"),  // NOI18N
     COMMAND_STATION_LBPS        ("LocoBuffer (PS)",             true,   false,  "LnThrottleManager"),  // NOI18N
     COMMAND_STATION_MM          ("Mix-Master",                  false,  true,   "LnThrottleManager"),  // NOI18N
-    COMMAND_STATION_IBX_TYPE_1  ("Intellibox-I",                true,   false,  "Ib1ThrottleManager"), // NOI18N
-    COMMAND_STATION_IBX_TYPE_2  ("Intellibox-II",               true,   false,  "Ib2ThrottleManager"), // NOI18N
+    COMMAND_STATION_IBX_TYPE_1  ("Intellibox-I",                true,   true,   "Ib1ThrottleManager"), // NOI18N
+    COMMAND_STATION_IBX_TYPE_2  ("Intellibox-II",               true,   true,   "Ib2ThrottleManager"), // NOI18N
 
     COMMAND_STATION_PR3_ALONE   ("PR3 standalone programmer",   true,   false,  "LnThrottleManager"),  // NOI18N
     COMMAND_STATION_STANDALONE  ("Stand-alone LocoNet",         false,  false,  "LnThrottleManager");  // NOI18N  
