@@ -44,6 +44,9 @@ public class AppConfigBase extends JmriPanel {
     /**
      * Remember items to persist
      */
+    // This should probably be a list of PreferencesPanel instead of a list
+    // of Component, but TabbedPreferences.connectionPanel needs to implement
+    // PreferencesPanel to make this change.
     protected List<Component> items = new ArrayList<>();
 
     /**

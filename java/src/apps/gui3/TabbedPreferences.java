@@ -12,13 +12,10 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Vector;
@@ -87,23 +84,16 @@ public class TabbedPreferences extends AppConfigBase {
     ArrayList<Element> preferencesElements = new ArrayList<>();
     HashMap<String, PreferencesPanel> preferencesPanels = new HashMap<>();
 
-    // All the following needs to be in a separate preferences frame
-    // class! How about switching AppConfigPanel to tabbed?
     JPanel detailpanel = new JPanel();
     JTabbedPane connectionPanel = new JTabbedPane();
 
     ArrayList<JmrixConfigPane> connectionTabInstance = new ArrayList<>();
     ArrayList<PreferencesCatItems> preferencesArray = new ArrayList<>();
     JPanel buttonpanel;
-    @SuppressWarnings("rawtypes")
-    // IDEs in Java 1.7 warn about this, IDEs in Java 1.6 don't.
-    JList list; // Java 1.7 changes JList to a generic (JList<String> in this
-    // case)
+    JList<String> list;
     JButton save;
     JScrollPane listScroller;
     int initalisationState = 0x00;
-    Hashtable<Class<?>, Object> saveHook = new Hashtable<>();
-    Hashtable<Class<?>, String> saveMethod = new Hashtable<>();
     private static final long serialVersionUID = -6266891995866315885L;
 
     static final int UNINITIALISED = 0x00;
@@ -230,69 +220,8 @@ public class TabbedPreferences extends AppConfigBase {
         return initalisationState;
     }
 
-    /**
-     * Provides a method for preferences dynamically added to the preference
-     * window to have a method ran when the save button is pressed, thus
-     * allowing panes to put placed into a state where the information can be
-     * saved
-     *
-     * @param <T> The class of the object
-     * @param object The instance of the pane
-     * @param type The class of the object
-     * @param strMethod the method to be invoked at save.
-     */
-    @Deprecated
-    public <T> void addItemToSave(T object, Class<T> type, String strMethod) {
-        if (!saveHook.containsKey(type)) {
-            saveHook.put(type, object);
-            saveMethod.put(type, strMethod);
-        }
-    }
-
     private boolean invokeSaveOptions() {
         boolean restartRequired = false;
-        Enumeration<Class<?>> keys = saveHook.keys();
-        while (keys.hasMoreElements()) {
-            restartRequired = true; // force restarting if any preferences panes that do not implement PreferencesPanel are invoked
-            Class<?> strClass = keys.nextElement();
-            String strMethod = saveMethod.get(strClass);
-            boolean booMethod = false;
-            boolean errorInMethod = false;
-            try {
-                Method method;
-                try {
-                    method = strClass.getDeclaredMethod(strMethod);
-                    method.invoke(saveHook.get(strClass));
-                    booMethod = true;
-                } catch (InvocationTargetException | IllegalAccessException et) {
-                    errorInMethod = true;
-                    log.error(et.toString());
-                } catch (NoSuchMethodException | SecurityException | IllegalArgumentException e) {
-                    log.error(e.toString());
-                    booMethod = false;
-                }
-
-                if ((!booMethod) && (!errorInMethod)) {
-                    try {
-                        method = strClass.getMethod(strMethod);
-                        method.invoke(saveHook.get(strClass));
-                        booMethod = true;
-                    } catch (InvocationTargetException | IllegalAccessException et) {
-                        booMethod = false;
-                        log.error(et.toString());
-                    } catch (NoSuchMethodException | SecurityException | IllegalArgumentException e) {
-                        log.error(e.toString());
-                        booMethod = false;
-                    }
-                }
-                if (!booMethod) {
-                    log.error("Unable to save Preferences for " + strClass);
-                }
-            } catch (Exception e) {
-                log.error("unable to get a class name" + e);
-                log.error("Unable to save Preferences for " + strClass);
-            }
-        }
         for (PreferencesPanel panel : this.preferencesPanels.values()) {
             if (!panel.isPersistant()) {
                 panel.savePreferences();
@@ -302,14 +231,11 @@ public class TabbedPreferences extends AppConfigBase {
             }
         }
         if (!restartRequired) {
-            for (Component item : this.items) {
-                // Every item is a PreferencesPanel, but this is not enforced
-                // by AppsConfigBase. Should it be?
-                if (item instanceof PreferencesPanel) {
-                    restartRequired = ((PreferencesPanel) item).isRestartRequired();
-                } else {
-                    restartRequired = true;
-                }
+            // Since this.preferencesPanels does not include Connections, we
+            // loop through the contents of this.connectionTabInstance, to see
+            // if any ConnectionConfig indicates a need to restart JMRI.
+            for (PreferencesPanel panel : this.connectionTabInstance) {
+                restartRequired = panel.isRestartRequired();
                 if (restartRequired) {
                     break;
                 }
@@ -375,7 +301,7 @@ public class TabbedPreferences extends AppConfigBase {
         );
     }
 
-    public void addItem(String prefItem, String itemText, String tabtitle,
+    private void addItem(String prefItem, String itemText, String tabtitle,
             String labelKey, JComponent item, boolean store, String tooltip) {
         PreferencesCatItems itemBeingAdded = null;
         for (PreferencesCatItems preferences : preferencesArray) {
