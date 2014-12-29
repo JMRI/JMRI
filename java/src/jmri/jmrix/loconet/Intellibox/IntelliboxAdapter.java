@@ -12,7 +12,7 @@ import jmri.jmrix.loconet.*;
  * operates correctly with the Intellibox on-board serial port.
  * <P>
  * Since this is by definition connected to an Intellibox, 
- * the command station prompt is suppressed.
+ * the command station prompt has limited choices
  *
  * @author			Alex Shepherd   Copyright (C) 2004
  * @author          Bob Jacobsen    Copyright (C) 2005, 2010
@@ -23,6 +23,10 @@ public class IntelliboxAdapter extends LocoBufferAdapter {
 
     public IntelliboxAdapter() {
         super();
+
+        // define command station options
+        options.remove(option2Name);
+        options.put(option2Name, new Option("Command station type:", commandStationOptions(), false));
 
         validSpeeds = new String[]{"19200", "38400", "115200"};
         validSpeedValues = new int[]{19200, 38400, 115200};
@@ -46,7 +50,7 @@ public void configure() {
     adaptermemo.setSlotManager(new SlotManager(packets));
     adaptermemo.setLnTrafficController(packets);
     // do the common manager config
-    adaptermemo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName, 
+    adaptermemo.configureCommandStation(commandStationType, 
                                             mTurnoutNoRetry, mTurnoutExtraSpace);
     adaptermemo.configureManagers();
 
@@ -78,25 +82,14 @@ public void configure() {
     public String option1Name() { return "Serial connection uses "; }
 
     /**
-     * Option 2, usually used for command station type, is suppressed by
-     * providing just one option.
+     * Provide just one valid command station value
      */
-    public String[] validOption2() { 
-        String[] retval = {"Intellibox"}; 
+    public String[] commandStationOptions() {
+        String[] retval = {
+                          LnCommandStationType.COMMAND_STATION_IBX_TYPE_1.getName()
+        }; 
         return retval;
     }
-
-    /*String manufacturerName = jmri.jmrix.DCCManufacturerList.UHLEN;
-    
-    public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }*/
-    
-    //public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
-    
-    /*public void dispose(){
-        adaptermemo.dispose();
-        adaptermemo = null;
-    }*/
     
     static Logger log = LoggerFactory.getLogger(IntelliboxAdapter.class.getName());
 

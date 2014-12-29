@@ -26,6 +26,11 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
 
     public UhlenbrockAdapter() {
         super();
+        
+        // define command station options
+        options.remove(option2Name);
+        options.put(option2Name, new Option("Command station type:", commandStationOptions(), false));
+
         if (adaptermemo!=null){
             adaptermemo.dispose();
         }
@@ -54,7 +59,7 @@ public void configure() {
     adaptermemo.setSlotManager(new UhlenbrockSlotManager(packets));
     adaptermemo.setLnTrafficController(packets);
     // do the common manager config
-        adaptermemo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName, 
+        adaptermemo.configureCommandStation(commandStationType, 
                                             mTurnoutNoRetry, mTurnoutExtraSpace);
     adaptermemo.configureManagers();
 
@@ -98,6 +103,16 @@ public void configure() {
                   +" RTSCTS_IN= "+SerialPort.FLOWCONTROL_RTSCTS_IN);
     }
     
+    /**
+     * Provide just one valid command station value
+     */
+    public String[] commandStationOptions() {
+        String[] retval = {
+                          LnCommandStationType.COMMAND_STATION_IBX_TYPE_2.getName()
+        }; 
+        return retval;
+    }
+
     static Logger log = LoggerFactory.getLogger(UhlenbrockAdapter.class.getName());
 
 }

@@ -48,40 +48,50 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
 
     protected LocoNetSystemConnectionMemo adaptermemo = null;
 
-    protected boolean mCanRead = true;
-    protected boolean mProgPowersOff = false;
-    protected String commandStationName = "<unknown>";
+    protected LnCommandStationType commandStationType = null;
+
     protected boolean mTurnoutNoRetry = false;
     protected boolean mTurnoutExtraSpace = false;
     
-    protected String[] commandStationNames = {
-                                    "DCS100 (Chief)", 
-                                    "DCS200",
-                                    "DCS50 (Zephyr)",
-                                    "DCS51 (Zephyr Xtra)",
-                                    "DB150 (Empire Builder)",
-                                    "Intellibox",
-                                    "LocoBuffer (PS)",
-                                    "Mix-Master"};
+    protected LnCommandStationType[] commandStationTypes = {
+                                    LnCommandStationType.COMMAND_STATION_DCS100, 
+                                    LnCommandStationType.COMMAND_STATION_DCS200,
+                                    LnCommandStationType.COMMAND_STATION_DCS050,
+                                    LnCommandStationType.COMMAND_STATION_DCS051 ,
+                                    LnCommandStationType.COMMAND_STATION_DB150,
+                                    LnCommandStationType.COMMAND_STATION_IBX_TYPE_1,
+                                    LnCommandStationType.COMMAND_STATION_IBX_TYPE_2,
+                                    LnCommandStationType.COMMAND_STATION_LBPS,
+                                    LnCommandStationType.COMMAND_STATION_MM };
+    
+    protected String[] commandStationNames;
+    { 
+        commandStationNames = new String[commandStationTypes.length];
+        int i = 0;
+        for (LnCommandStationType e : commandStationTypes) {
+            commandStationNames[i] = commandStationTypes[i].getName();
+            ++i;
+        }
+    }
     
     // There are also "PR3 standalone programmer" and "Stand-alone LocoNet"
     // in pr3/PR3Adapter
                                     
     /**
-     * Set config info from the command station type name.
+     * Set config info from a name, which needs to be one of the valid
+     * ones.
      */
-    public void setCommandStationType(String value) {
+    public void setCommandStationType(String name) {
+        setCommandStationType(LnCommandStationType.getByName(name));
+    }
+    
+    /**
+     * Set config info from the command station type enum.
+     */
+    public void setCommandStationType(LnCommandStationType value) {
 		if (value == null) return;  // can happen while switching protocols
     	log.debug("setCommandStationType: "+value);
-        if (value.equals("DB150 (Empire Builder)") || value.equals("Mix-Master")) {
-            mCanRead = false;
-            mProgPowersOff = true;
-        }
-        else {
-            mCanRead = true;
-            mProgPowersOff = false;
-        }
-        commandStationName = value;
+        commandStationType = value;
     }
     public void setTurnoutHandling(String value) {
         if (value.equals("One Only") || value.equals("Both")) mTurnoutNoRetry = true;

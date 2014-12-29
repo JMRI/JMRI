@@ -106,7 +106,7 @@ public class LnMessageClient extends LnTrafficRouter {
         clientMemo.setSlotManager(new SlotManager(this));
         clientMemo.setLnTrafficController(this);
         // do the common manager config
-        clientMemo.configureCommandStation(true, false,"<unknown>",  // for now, assume full capability
+        clientMemo.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100,  // for now, assume full capability
                                             false, false);
         clientMemo.configureManagers();
 

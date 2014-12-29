@@ -30,14 +30,6 @@ public class UhlenbrockSystemConnectionMemo extends LocoNetSystemConnectionMemo 
         return super.getProgrammerManager();
     }
     
-   /**
-     * Configure the subset of LocoNet managers valid for the Uhlenbrock.
-     */
-    public void configureManagers() {
-        super.configureManagers();
-        getSlotManager().setProgPowersOff(true);
-    }
-        
     private UhlenbrockLnThrottleManager throttleUhlManager;
     
     @Override
@@ -48,54 +40,7 @@ public class UhlenbrockSystemConnectionMemo extends LocoNetSystemConnectionMemo 
             throttleUhlManager = new jmri.jmrix.loconet.uhlenbrock.UhlenbrockLnThrottleManager(this);
         return throttleUhlManager;
     }
-    
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T> T get(Class<?> T) {
-        if (getDisabled())
-            return null;
-        if (T.equals(jmri.ThrottleManager.class))
-            return (T)getThrottleManager();
-        if (T.equals(jmri.PowerManager.class))
-            return (T)getPowerManager();
-        if (T.equals(jmri.SensorManager.class))
-            return (T)getSensorManager();
-        if (T.equals(jmri.TurnoutManager.class))
-            return (T)getTurnoutManager();
-        if (T.equals(jmri.LightManager.class))
-            return (T)getLightManager();
-        if (T.equals(jmri.ClockControl.class))
-            return (T)getClockControl();
-        if (T.equals(jmri.ConsistManager.class))
-            return (T)getConsistManager();
-        if (T.equals(jmri.CommandStation.class))
-            return (T)getSlotManager();
-        return null;
-    }
-    
-    @Override
-    public boolean provides(Class<?> type) {
-        if (getDisabled())
-            return false;
-        if (type.equals(jmri.ThrottleManager.class))
-            return true;
-        if (type.equals(jmri.PowerManager.class))
-            return true;
-        if (type.equals(jmri.SensorManager.class))
-            return true;
-        if (type.equals(jmri.TurnoutManager.class))
-            return true;
-        if (type.equals(jmri.LightManager.class))
-            return true;
-        if (type.equals(jmri.ConsistManager.class))
-            return true;
-        if (type.equals(jmri.ClockControl.class))
-            return true;
-        if (type.equals(jmri.CommandStation.class))
-            return true;
-        return false;
-    }
-    
+        
     public void dispose() {
         InstanceManager.deregister(this, UhlenbrockSystemConnectionMemo.class);
         if (throttleUhlManager != null) {

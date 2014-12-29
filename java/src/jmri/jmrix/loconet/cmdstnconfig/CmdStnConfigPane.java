@@ -89,7 +89,7 @@ int CONFIG_SLOT = 127 ;
     // set up constants from properties file, if possible
     String name = "<unchanged>";
     try {
-        name = memo.getSlotManager().getCommandStationType();
+        name = memo.getSlotManager().getCommandStationType().getName();
         // get first token
         if ( name.indexOf(' ') != -1) name = name.substring(0, name.indexOf(' '));
         log.debug("match /"+name+"/");

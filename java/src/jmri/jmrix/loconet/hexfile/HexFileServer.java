@@ -45,7 +45,7 @@ public class HexFileServer {
         port.getAdapterMemo().setLnTrafficController(packets);
 
         // do the common manager config
-        port.getAdapterMemo().configureCommandStation(true, false, "<unknown>",   // full featured by default
+        port.getAdapterMemo().configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100,   // full featured by default
                 false, false);
         port.getAdapterMemo().configureManagers();
 

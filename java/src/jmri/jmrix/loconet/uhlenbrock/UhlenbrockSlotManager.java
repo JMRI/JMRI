@@ -166,6 +166,7 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
     
     // internal method to remember who's using the programmer
     // Note: Overridden in order to also call the startIBComPT method
+    @Override
     protected void useProgrammer(jmri.ProgListener p) throws jmri.ProgrammerException {
         super.useProgrammer (p);
         tc.sendLocoNetMessage(startIBComPT());
@@ -173,8 +174,9 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
     
     // A couple of seconds after the last programming command, power is meant to be turned on.
     // However, for the Uhlenbrock IB-COM / Intellibox II, the command station is taken out of programming mode instead.
-    synchronized protected void doPowerOn () {
-        log.info("Uhlenbrock doPowerOn");
+    @Override
+    synchronized protected void doEndOfProgramming () {
+        log.debug("Uhlenbrock doEndOfProgramming");
         tc.sendLocoNetMessage(stopIBComPT());
      }
 

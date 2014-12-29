@@ -70,8 +70,8 @@ public class PR3Adapter extends LocoBufferAdapter {
     public void configure() {
         setCommandStationType(getOptionState(option2Name));
         setTurnoutHandling(getOptionState(option3Name));
-        if (commandStationName.startsWith("PR3")) {
-            // PR3 case
+        if (commandStationType == LnCommandStationType.COMMAND_STATION_PR3_ALONE) {
+            // PR3 standalone case
             // connect to a packetizing traffic controller
             // that does echoing
             jmri.jmrix.loconet.pr2.LnPr2Packetizer packets = new jmri.jmrix.loconet.pr2.LnPr2Packetizer();
@@ -83,7 +83,7 @@ public class PR3Adapter extends LocoBufferAdapter {
             adaptermemo.setSlotManager(new SlotManager(packets));
             adaptermemo.setLnTrafficController(packets);
             // do the common manager config
-            adaptermemo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName, 
+            adaptermemo.configureCommandStation(commandStationType, 
                                                 mTurnoutNoRetry, mTurnoutExtraSpace);
             PR3SystemConnectionMemo memo = (PR3SystemConnectionMemo)adaptermemo;
             memo.configureManagersPR2();
@@ -102,7 +102,7 @@ public class PR3Adapter extends LocoBufferAdapter {
             packets.sendLocoNetMessage(msg);
             
         } else {
-            // MS100 modes
+            // MS100 modes - connecting to a separate command station
             // connect to a packetizing traffic controller
             LnPacketizer packets = new LnPacketizer();
             packets.connectPort(this);
@@ -113,7 +113,7 @@ public class PR3Adapter extends LocoBufferAdapter {
             adaptermemo.setSlotManager(new SlotManager(packets));
             adaptermemo.setLnTrafficController(packets);
             // do the common manager config
-            adaptermemo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName, 
+            adaptermemo.configureCommandStation(commandStationType, 
                                             mTurnoutNoRetry, mTurnoutExtraSpace);
             
             PR3SystemConnectionMemo memo = (PR3SystemConnectionMemo)adaptermemo;
@@ -128,7 +128,7 @@ public class PR3Adapter extends LocoBufferAdapter {
             msg.setOpCode( 0xD3 );
             msg.setElement( 1, 0x10 );
             msg.setElement( 2, 0 );  // set MS100, no power
-            if (commandStationName.startsWith("Stand-alone"))
+            if (commandStationType == LnCommandStationType.COMMAND_STATION_STANDALONE)
                 msg.setElement( 2, 3 );  // set MS100, with power
             msg.setElement( 3, 0 );
             msg.setElement( 4, 0 );
@@ -158,11 +158,11 @@ public class PR3Adapter extends LocoBufferAdapter {
      */
     public String[] commandStationOptions() {
         String[] retval = new String[commandStationNames.length+2];
-        retval[0] = "PR3 standalone programmer";
+        retval[0] = LnCommandStationType.COMMAND_STATION_PR3_ALONE.getName();
         for (int i=0; i<commandStationNames.length; i++) {
             retval[i+1] = commandStationNames[i];
         }
-        retval[retval.length-1] = "Stand-alone LocoNet";
+        retval[retval.length-1] = LnCommandStationType.COMMAND_STATION_STANDALONE.getName();
         return retval;
     }
     

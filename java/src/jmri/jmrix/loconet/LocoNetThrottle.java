@@ -20,17 +20,17 @@ import jmri.jmrix.AbstractThrottle;
  * @version $Revision$
  */
 public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
-    private LocoNetSlot slot;
-    private LocoNetInterface network;
-    private int address;
+    protected LocoNetSlot slot;
+    protected LocoNetInterface network;
+    protected int address;
 
     // members to record the last known spd/dirf/snd bytes AS READ FROM THE LAYOUT!!
-    private int layout_spd;
-    private int layout_dirf;
-    private int layout_snd;
+    protected int layout_spd;
+    protected int layout_dirf;
+    protected int layout_snd;
     
     // slot status to be warned if slot released or dispatched
-    private int slotStatus;
+    protected int slotStatus;
 
     /**
      * Constructor
@@ -195,12 +195,33 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     }
 
     protected void sendFunctionGroup3() {
+        // LocoNet practice is to send F9-F12 as a DCC packet
         byte[] result = jmri.NmraPacket.function9Through12Packet(address, (address>=100),
                                          getF9(), getF10(), getF11(), getF12());
 
         ((jmri.CommandStation)adapterMemo.get(jmri.CommandStation.class)).sendPacket(result, 4); // repeat = 4
     }
 
+    @Override
+    protected void sendFunctionGroup4() {
+        // LocoNet practice is to send F13-F20 as a DCC packet
+        byte[] result = jmri.NmraPacket.function13Through20Packet(address, (address>=100),
+                getF13(), getF14(), getF15(), getF16(),
+                getF17(), getF18(), getF19(), getF20());
+
+        ((jmri.CommandStation)adapterMemo.get(jmri.CommandStation.class)).sendPacket(result, 4); // repeat = 4
+    } 
+    
+    @Override
+    protected void sendFunctionGroup5() {
+        // LocoNet practice is to send F21-F28 as a DCC packet
+        byte[] result = jmri.NmraPacket.function21Through28Packet(address, (address>=100),
+                getF21(), getF22(), getF23(), getF24(),
+                getF25(), getF26(), getF27(), getF28());
+
+        ((jmri.CommandStation)adapterMemo.get(jmri.CommandStation.class)).sendPacket(result, 4); // repeat = 4
+    }
+    
     /**
      * Set the speed.
      * <P>

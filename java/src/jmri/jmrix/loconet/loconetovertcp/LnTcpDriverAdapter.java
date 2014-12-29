@@ -44,7 +44,7 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
         adaptermemo.setSlotManager(new SlotManager(packets));
         adaptermemo.setLnTrafficController(packets);
         // do the common manager config
-        adaptermemo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName, 
+        adaptermemo.configureCommandStation(commandStationType,
                                             mTurnoutNoRetry, mTurnoutExtraSpace);
         adaptermemo.configureManagers();
 
@@ -65,10 +65,6 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
     	log.debug("configureOption1: "+value);
         setCommandStationType(value);
     }
-    
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
-    public String[] getCommandStationNames() { return commandStationNames; }
-    public String   getCurrentCommandStation() { return commandStationName; }
     
     public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
     

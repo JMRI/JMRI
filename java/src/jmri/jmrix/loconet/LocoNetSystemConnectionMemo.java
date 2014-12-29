@@ -91,18 +91,14 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
      * @param mProgPowersOff
      * @param name Command station type name
      */
-    public void configureCommandStation(boolean mCanRead, boolean mProgPowersOff, 
-                                        String name, boolean mTurnoutNoRetry, boolean mTurnoutExtraSpace) {
+    public void configureCommandStation(LnCommandStationType type, boolean mTurnoutNoRetry, boolean mTurnoutExtraSpace) {
 
         this.mTurnoutNoRetry = mTurnoutNoRetry;
         this.mTurnoutExtraSpace = mTurnoutExtraSpace;
         
         // loconet.SlotManager to do programming (the Programmer instance is registered
         // when the SlotManager is created)
-        // set slot manager's read capability
-        sm.setCanRead(mCanRead);
-        sm.setProgPowersOff(mProgPowersOff);
-        sm.setCommandStationType(name);
+        sm.setCommandStationType(type);
         sm.setSystemConnectionMemo(this);
         
         // store as CommandStation object
@@ -236,10 +232,16 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     protected ThrottleManager throttleManager;
     
     public ThrottleManager getThrottleManager() { 
+        log.debug("GetThrottleManager for {}",getSlotManager().getCommandStationType());
         if (getDisabled())
             return null;
-        if (throttleManager == null)
-            throttleManager = new jmri.jmrix.loconet.LnThrottleManager(this);
+        if (throttleManager == null) {
+            // ask command station type for specific throttle manager
+            LnCommandStationType cmdstation = getSlotManager().getCommandStationType();
+            log.debug("getThrottleManager constructs for {}",cmdstation.getName());
+            throttleManager = cmdstation.getThrottleManager(this);
+            log.debug("result was type {}",throttleManager.getClass());
+        }
         return throttleManager;
     }
     

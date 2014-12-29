@@ -21,13 +21,13 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         super(p);
     }
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no pre-existing adapter
      */
     public ConnectionConfig() {
         super();
     }
 
-    public String name() { return "LocoNet Intellibox Serial Port"; }
+    public String name() { return "Intellibox-I (Serial)"; }
 
     protected void setInstance() { 
         if (adapter == null)

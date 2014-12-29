@@ -215,7 +215,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
          adaptermemo.setLnTrafficController(packets);
         // do the common manager config
 
-        adaptermemo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName, 
+        adaptermemo.configureCommandStation(commandStationType, 
                                             mTurnoutNoRetry, mTurnoutExtraSpace);
         adaptermemo.configureManagers();
 

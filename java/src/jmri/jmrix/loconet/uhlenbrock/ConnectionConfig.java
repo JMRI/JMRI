@@ -27,7 +27,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         super();
     }
 
-    public String name() { return "Uhlenbrock LocoNet Implementation"; }
+    public String name() { return "Intellibox-II/IB-Com (USB)"; }
 
     protected void setInstance() { 
         if (adapter == null)

@@ -107,12 +107,12 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     }
 
     /**
-     * SlotListener contract. Get notification that an address has changed slot.
+     * Get notification that an address has changed slot.
      * This method creates a throttle for all ThrottleListeners of that address
      * and notifies them via the ThrottleListener.notifyThrottleFound method.
      */
     public void notifyChangedSlot(LocoNetSlot s) {
-    	DccThrottle throttle = new LocoNetThrottle((LocoNetSystemConnectionMemo)adapterMemo, s);
+    	DccThrottle throttle = createThrottle((LocoNetSystemConnectionMemo)adapterMemo, s);
     	notifyThrottleKnown(throttle, new DccLocoAddress(s.locoAddr(),isLongAddress(s.locoAddr()) ) );
         //end the waiting thread since we got a response
     	if(waitingForNotification.containsKey(s.locoAddr())){
@@ -121,6 +121,10 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         }    	
     }
 
+    DccThrottle createThrottle(LocoNetSystemConnectionMemo memo, LocoNetSlot s) {
+        return new LocoNetThrottle(memo, s);
+    }
+    
     /**
      * Address 128 and above is a long address
      **/
