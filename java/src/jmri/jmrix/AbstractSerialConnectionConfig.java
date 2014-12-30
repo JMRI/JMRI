@@ -255,9 +255,9 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             for (int i=0; i<portBox.getItemCount(); i++) {
                 outerloop:
                 for(String friendlyName: getPortFriendlyNames()){
-                    if(((String)portBox.getItemAt(i)).contains(friendlyName)){
+                    if((portBox.getItemAt(i)).contains(friendlyName)){
                         portBox.setSelectedIndex(i);
-                        adapter.setPort(PortNameMapper.getPortFromName((String)portBox.getItemAt(i)));
+                        adapter.setPort(PortNameMapper.getPortFromName(portBox.getItemAt(i)));
                         break outerloop;
                     }
                 }

@@ -88,8 +88,7 @@ public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel
             SystemConsole.getInstance().setScheme(((JComboBox) e.getSource()).getSelectedIndex());
         });
 
-        scheme.setRenderer((JList<? extends Scheme> list, Scheme value, int index, boolean isSelected, boolean hasFocus) -> {
-            Scheme scheme1 = (Scheme) value;
+        scheme.setRenderer((JList<? extends Scheme> list, Scheme scheme, int index, boolean isSelected, boolean hasFocus) -> {
             JPanel p1 = new JPanel();
             p1.setOpaque(index > -1);
             if (isSelected && index > -1) {
@@ -99,11 +98,11 @@ public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel
                 p1.setBackground(list.getBackground());
                 p1.setForeground(list.getForeground());
             }
-            JLabel l = new JLabel(" " + scheme1.description + " ");
+            JLabel l = new JLabel(" " + scheme.description + " ");
             l.setOpaque(true);
             l.setFont(new Font("Monospaced", SystemConsole.getInstance().getFontStyle(), 12));
-            l.setForeground(scheme1.foreground);
-            l.setBackground(scheme1.background);
+            l.setForeground(scheme.foreground);
+            l.setBackground(scheme.background);
             p1.add(l);
             // 'Oribble hack as CDE/Motif JComboBox doesn't seem to like
             // displaying JPanel objects in the JComboBox header
