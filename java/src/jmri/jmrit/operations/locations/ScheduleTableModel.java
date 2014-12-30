@@ -373,32 +373,34 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		return cb;
 	}
 
-	private JComboBox getSetoutDayComboBox(ScheduleItem si) {
-		JComboBox cb = TrainScheduleManager.instance().getSelectComboBox();
+	private JComboBox<TrainSchedule> getSetoutDayComboBox(ScheduleItem si) {
+		JComboBox<TrainSchedule> cb = TrainScheduleManager.instance().getSelectComboBox();
 		TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(si.getSetoutTrainScheduleId());
 		if (sch != null) {
 			cb.setSelectedItem(sch);
-		}
-		if (sch == null && !si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE)) {
+		} else if (!si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE)) {
+			// error user deleted this set out day
 			String notValid = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si
 					.getSetoutTrainScheduleId() });
-			cb.addItem(notValid);
-			cb.setSelectedItem(notValid);
+			TrainSchedule errorSchedule = new TrainSchedule(si.getSetoutTrainScheduleId(), notValid);
+			cb.addItem(errorSchedule);
+			cb.setSelectedItem(errorSchedule);
 		}
 		return cb;
 	}
 	
-	private JComboBox getPickupDayComboBox(ScheduleItem si) {
-		JComboBox cb = TrainScheduleManager.instance().getSelectComboBox();
+	private JComboBox<TrainSchedule> getPickupDayComboBox(ScheduleItem si) {
+		JComboBox<TrainSchedule> cb = TrainScheduleManager.instance().getSelectComboBox();
 		TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(si.getPickupTrainScheduleId());
 		if (sch != null) {
 			cb.setSelectedItem(sch);
-		}
-		if (sch == null && !si.getPickupTrainScheduleId().equals(ScheduleItem.NONE)) {
+		} else if (!si.getPickupTrainScheduleId().equals(ScheduleItem.NONE)) {
+			// error user deleted this pick up day
 			String notValid = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si
 					.getPickupTrainScheduleId() });
-			cb.addItem(notValid);
-			cb.setSelectedItem(notValid);
+			TrainSchedule errorSchedule = new TrainSchedule(si.getSetoutTrainScheduleId(), notValid);
+			cb.addItem(errorSchedule);
+			cb.setSelectedItem(errorSchedule);
 		}
 		return cb;
 	}
@@ -431,32 +433,39 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		return cb;
 	}
 
-	private JComboBox getDestComboBox(ScheduleItem si) {
+	private JComboBox<Location> getDestComboBox(ScheduleItem si) {
 		// log.debug("getDestComboBox for ScheduleItem "+si.getType());
-		JComboBox cb = LocationManager.instance().getComboBox();
+		JComboBox<Location> cb = LocationManager.instance().getComboBox();
 		filterDestinations(cb, si.getTypeName());
 		cb.setSelectedItem(si.getDestination());
-		if (si.getDestination() != null && !cb.getSelectedItem().equals(si.getDestination())) {
+		if (si.getDestination() != null && cb.getSelectedIndex() == -1) {
+			// user deleted destination
 			String notValid = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si.getDestination() });
-			cb.addItem(notValid);
-			cb.setSelectedItem(notValid);
+			Location errorLocation = si.getDestination();
+			errorLocation.setName(notValid);
+			cb.addItem(errorLocation);
+			cb.setSelectedItem(errorLocation);
 		}
 		return cb;
 	}
 
-	private JComboBox getTrackComboBox(ScheduleItem si) {
+	private JComboBox<Track> getTrackComboBox(ScheduleItem si) {
 		// log.debug("getTrackComboBox for ScheduleItem "+si.getType());
-		JComboBox cb = new JComboBox();
+		JComboBox<Track> cb = new JComboBox<>();
 		if (si.getDestination() != null) {
 			Location dest = si.getDestination();
 			dest.updateComboBox(cb);
 			filterTracks(dest, cb, si.getTypeName(), si.getRoadName(), si.getShipLoadName());
 			cb.setSelectedItem(si.getDestinationTrack());
-			if (si.getDestinationTrack() != null && !cb.getSelectedItem().equals(si.getDestinationTrack())) {
+			if (si.getDestinationTrack() != null && cb.getSelectedIndex() == -1) {
+				// user deleted track at destination, this is self correcting, when user restarts program, track
+				// assignment will be gone.
 				String notValid = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si
 						.getDestinationTrack() });
-				cb.addItem(notValid);
-				cb.setSelectedItem(notValid);
+				Track errorTrack = si.getDestinationTrack();
+				errorTrack.setName(notValid);
+				cb.addItem(errorTrack);
+				cb.setSelectedItem(errorTrack);
 			}
 		}
 		return cb;

@@ -1527,11 +1527,17 @@ public class Track {
 			return Bundle.getMessage("empty");
 		}
 		for (ScheduleItem si : scheduleItems) {
-			// check train schedule
+			// check train schedules
 			if (!si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE)
 					&& TrainScheduleManager.instance().getScheduleById(si.getSetoutTrainScheduleId()) == null) {
 				status = MessageFormat.format(Bundle.getMessage("NotValid"),
 						new Object[] { si.getSetoutTrainScheduleId() });
+				break;
+			}
+			if (!si.getPickupTrainScheduleId().equals(ScheduleItem.NONE)
+					&& TrainScheduleManager.instance().getScheduleById(si.getPickupTrainScheduleId()) == null) {
+				status = MessageFormat.format(Bundle.getMessage("NotValid"),
+						new Object[] { si.getPickupTrainScheduleId() });
 				break;
 			}
 			if (!_location.acceptsTypeName(si.getTypeName())) {
@@ -1565,9 +1571,10 @@ public class Track {
 				break;
 			}
 			// check destination
-			if (si.getDestination() != null && !si.getDestination().acceptsTypeName(si.getTypeName())) {
-				status = MessageFormat.format(Bundle.getMessage("NotValid"),
-						new Object[] { si.getDestination() });
+			if (si.getDestination() != null
+					&& (!si.getDestination().acceptsTypeName(si.getTypeName()) || LocationManager.instance()
+							.getLocationById(si.getDestination().getId()) == null)) {
+				status = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si.getDestination() });
 				break;
 			}
 			// check destination track
