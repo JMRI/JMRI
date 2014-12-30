@@ -2,17 +2,14 @@
 
 package jmri.implementation;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.File;
+import java.net.URL;
 import java.util.Hashtable;
 import java.util.List;
-
 import jmri.util.FileUtil;
-
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
  /**
  * Default implementation to map Signal aspects or appearances to speed requirements.
@@ -38,25 +35,14 @@ public class SignalSpeedMap {
         return _map;
     }
     
-    static String getPath() {
-    	String path = FileUtil.getUserFilesPath() + "signalSpeeds.xml";
-      	 File file = new File(path);
-       	 if (!file.exists()) {
-           	 path = "xml" + File.separator
-                        + "signals" + File.separator
-                        + "signalSpeeds.xml";    		 
-       	 }
-       	 return path;
-    }
-    
     static void loadMap() {
         _map = new SignalSpeedMap();
 
-        String path = getPath();
+        URL path = FileUtil.findURL("signalSpeeds.xml", new String[] {"", "xml/signals"});
         jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile(){};
         Element root;
         try {
-            root = xf.rootFromName(path);
+            root = xf.rootFromURL(path);
             Element e = root.getChild("interpretation");
             String sval = e.getText().toUpperCase();
             if (sval.equals("PERCENTNORMAL")) {
