@@ -44,8 +44,15 @@ making your change on the other machines (and testing it!)
 or at least putting a comment in the others
 to describe how they now differ.
 
+<p>
+During startup, JMRI gets additional information from several sources:
+<ul>
+<li>If present, a "python.properties" file configures the Jython interpreter environment
+<li>JMRI's own <a href="../../profiles.shtml">profiles and configuration information</a>.
+</ul>
+
 <a name="linux">
-<h2>Linux</h2></a>
+<h2 id="linux">Linux</h2></a>
 
 JMRI distributions for Linux contain shell (bash) scripts
 for each of the main applications:  DecoderPro, PanelPro, etc.
@@ -164,67 +171,11 @@ JMRI has registered five application signatures:
 
 <h3>Script Details</h3>
 
-Each bundle as a startup shell (Bash) script in the Contents/MacOSX
+Each bundle has a startup shell (Bash) script in the Contents/MacOSX
 directory what does the actual startup.
-In this section, we briefly describe what each section of that script does.
-<dl>
-<dt>CLASSNAME
-<dd>To make the script easier to maintain, the name of the main
-class is defined near the beginning.
-
-<dt>Debug setting
-<dd>
-If the DEBUG symbol is set to anything, the script will produce
-debugging output after each section.
-
-<dt>Directory
-<dd>
-To run, JMRI needs to be able to find things in the current directory.
-This step attempts to set that directory automatically.
-<p>
-If the JMRI_HOME environment variable is defined
-and pointing to a directory that contains a jmri.jar file,
-change the current directory to there.
-<p>
-Otherwise, change the current directory to where the application bundle
-is located.
-
-<dt>Classpath
-<dd>
-The script builds the Java classpath automatically to contain,
-in order:
-<ul>
-<li>class files in the current directory
-<li>class files in the class subdirectory of the current directory
-<li>class files in the java/class subdirectory of the current directory
-<li>all jar files in the current directory, except jmri.jar
-<li>jmri.jar in the current directory
-<li>all jar files in the lib subdirectory of the current directory
-</ul>
-<p>
-This allows you to drop jar files into the 
-JMRI install directory for the 
-<a href="plugins.shtml">JMRI plug-in mechanism</a>.
-
-<dt>Configuration File
-<dd>
-The configuration file name is made 
-from the name of the application bundle, followed by "Config2.xml".  For example,
-the DecoderPro application uses DecoderProConfig2.xml as a preferences file.
-If a copy of that application is named MyJmriApp, it will use a preferences 
-file named MyJmriAppConfig2.xml. 
-<p>
-This lets you create as many specialized configurations you'd like by just
-copying and renaming an application.
-
-<dt>Java options
-<dd>
-The program sets a number of options for the JVM.  This includes
-the necessary program settings, setting memory limits, various
-symbols to control operation, and some options specific to Mac OS X.
-
-<dt>Java command
-<dd>Finally, the script puts all this together into a java command, which it executes.
+This is the same script as used for Linux, 
+see please see <a href="#linux">that section</a>
+for details.
 
 </dl>
 
@@ -313,7 +264,7 @@ This allows you to drop jar files into the JMRI install directory for the <a hre
 In a default JMRI installation, a number of shortcuts are created in the Start Menu, along with Desktop Icons for DecoderPro and PanelPro.
 <h4>Start Menu shortcuts</h4>
 All JMRI Start Menu shortcuts are placed in the "JMRI" start menu folder (or sub-folders) in the following structure:
-<ul> <!-- id="side"> <!-- use sidebar css style -->
+<ul> 
  <li>JMRI
  <ul>
   <li>DecoderPro - launch DecoderPro application
@@ -372,10 +323,7 @@ The structure of Desktop Icon creation is similar to that of the Start Menu shor
  <dt>Icon
  <dd>"C:\Program Files\JMRI\decpro5.ico"
 </dl>
-<!-- <p>
-(This section needs information on how icons and shortcuts work.
-The InstallerVISE installer does something to associate an icon
-and to put two shortcuts on the desktop) -->
+
 
 
 <!--#include virtual="/Footer" -->
