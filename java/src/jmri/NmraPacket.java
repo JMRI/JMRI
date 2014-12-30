@@ -1004,7 +1004,11 @@ public class NmraPacket {
         return retVal;
     }
 
-    static boolean addressCheck(int address, boolean longAddr) {
+    /**
+     * Check if an address is (possibly) valid, e.g. 
+     * fits within the NMRA space definition
+     */
+    static public boolean addressCheck(int address, boolean longAddr) {
         if (address < 0 ) {  // zero is valid broadcast
             log.error("invalid address "+address);
             return false;
@@ -1020,19 +1024,28 @@ public class NmraPacket {
         return true;  // passes test, hence OK
     }
 
-    static final public int NO_ADDRESS = 1;
-    static final public int LOCO_SHORT_ADDRESS = 2;
-    static final public int LOCO_LONG_ADDRESS = 4;
-    static final public int ACCESSORY_SHORT_ADDRESS = 8;
-
+    public enum DccAddressType {
+        NO_ADDRESS,
+        BROADCAST,
+        IDLE,
+        LOCO_SHORT_ADDRESS,
+        LOCO_LONG_ADDRESS,
+        ACCESSORY_ADDRESS;
+    }
+    
     /**
      * Extract the address type from an NMRA packet.
      *<P>
      * This finds and returns the type of address within a specific
      * packet, e.g. "the stationary decoder space".
      */
-    static int extractAddressType(byte[] packet) {
-        return 0;
+    static public DccAddressType extractAddressType(byte[] packet) {
+        if (packet[0] == 0x00) return DccAddressType.BROADCAST;
+        if ((packet[0]&0xFF) == 0xFF) return DccAddressType.IDLE;
+        if ((0x80&packet[0]) == 0x00) return DccAddressType.LOCO_SHORT_ADDRESS;
+        if ((0xC0&packet[0]) == 0xC0) return DccAddressType.LOCO_LONG_ADDRESS;
+        if ((0xC0&packet[0]) == 0x80) return DccAddressType.ACCESSORY_ADDRESS;
+        return DccAddressType.NO_ADDRESS;
     }
 
     /**
@@ -1040,19 +1053,50 @@ public class NmraPacket {
      *<P>
      * This finds and returns the numerical address within a specific
      * type, e.g. "first address within the stationary decoder space".
+     *
+     * As a special case, IDLE is returned as -1 instead of 255.
+     * Best to check the address type first....
+     *
+     * Note: This is not working for the ACCESSORY_ADDRESS
+     * type. The JUnit test is also commented out.
      */
-    static int extractAddressNumber(byte[] packet) {
+    static public int extractAddressNumber(byte[] packet) {
+        switch (extractAddressType(packet)) {
+            case BROADCAST:
+                return 0;
+            case IDLE:
+                return -1;
+            case LOCO_SHORT_ADDRESS:
+                return packet[0]&0xFF;
+            case LOCO_LONG_ADDRESS:
+                return (packet[0]&0x3F)<<8|(packet[1]&0xFF);
+            case ACCESSORY_ADDRESS:
+                log.warn("extractAddressNumber can't handle ACCESSORY_ADDRESS in {}", format(packet));
+                return -1;
+        }
         return 0;
     }
 
      /**
      * Extract the instruction from an NMRA packet
      *<P>
-     * This finds and returns the instruction bits within a specific
-     * type of packet/instruction, masking off the other bits.
+     * This finds and returns the instruction bytr within a specific
+     * type of packet/instruction. 
      *
      */
-    static int extractInstruction(byte[] packet) {
+    static public int extractInstruction(byte[] packet) {
+        switch (extractAddressType(packet)) {
+            case BROADCAST:
+                return packet[1]&0xFF;
+            case IDLE:
+                return packet[1]&0xFF;
+            case LOCO_SHORT_ADDRESS:
+                return packet[1]&0xFF;
+            case LOCO_LONG_ADDRESS:
+                return packet[2]&0xFF;
+            case ACCESSORY_ADDRESS:
+                return packet[2]&0xFF;
+        }
         return 0;
     }
 

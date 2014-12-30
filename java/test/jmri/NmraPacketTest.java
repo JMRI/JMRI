@@ -150,12 +150,6 @@ public class NmraPacketTest extends TestCase {
 		Assert.assertEquals("fifth byte ",  0x3C^0x3D^0x01^0x0C, ba[4] & 0xFF);
 	}
 
-	public void testAddressShortLoco1() {
-	    byte [] ba = new byte[]{};
-	    NmraPacket.extractAddressNumber(ba);
-	    NmraPacket.extractAddressType(ba);
-        }
-
 	public void testF13F20A() {
 		// "typical packet" test, short address
 		byte[] ba = NmraPacket.function13Through20Packet(60, false, true, false, true, false, true, false, true, false);
@@ -355,7 +349,37 @@ public class NmraPacketTest extends TestCase {
 		Assert.assertEquals("byte 4", data, ba[4]&0xFF);
 	}
 
+    public void testExtractAddressTypeAcc() {
+		byte[] ba = NmraPacket.accSignalDecoderPkt(123, 12);
+        Assert.assertEquals("Accessory", NmraPacket.DccAddressType.ACCESSORY_ADDRESS, NmraPacket.extractAddressType(ba));
+    }
+		
+    public void testExtractAddressTypeShort() {
+		byte[] bs = NmraPacket.function13Through20Packet(60, false, true, false, true, false, true, false, true, false);
+        Assert.assertEquals("Short Loco", NmraPacket.DccAddressType.LOCO_SHORT_ADDRESS, NmraPacket.extractAddressType(bs));
+    }
         
+    public void testExtractAddressTypeLong() {
+		byte[] bl = NmraPacket.function13Through20Packet(2060, true, true, false, true, false, true, false, true, false);
+        Assert.assertEquals("Long Loco", NmraPacket.DccAddressType.LOCO_LONG_ADDRESS, NmraPacket.extractAddressType(bl));
+    }
+    
+    public void testExtractAddressNumberAcc() {
+		byte[] ba = NmraPacket.accSignalDecoderPkt(123, 12);
+		NmraPacket.extractAddressNumber(ba);
+		jmri.util.JUnitAppender.assertWarnMessage("extractAddressNumber can't handle ACCESSORY_ADDRESS in 9F 75 0C E6 ");
+    }
+		
+    public void testExtractAddressNumberShort() {
+		byte[] bs = NmraPacket.function13Through20Packet(60, false, true, false, true, false, true, false, true, false);
+        Assert.assertEquals("Short Loco", 60, NmraPacket.extractAddressNumber(bs));
+    }
+        
+    public void testExtractAddressNumberLong() {
+		byte[] bl = NmraPacket.function13Through20Packet(2060, true, true, false, true, false, true, false, true, false);
+        Assert.assertEquals("Long Loco", 2060, NmraPacket.extractAddressNumber(bl));        
+    }
+    
 	// from here down is testing infrastructure
 	public NmraPacketTest(String s) {
 		super(s);
@@ -374,6 +398,16 @@ public class NmraPacketTest extends TestCase {
 		return suite;
 	}
 
+    // The minimal setup for log4J
+    protected void setUp() throws Exception { 
+        apps.tests.Log4JFixture.setUp(); 
+        super.setUp();
+    }
+    protected void tearDown() throws Exception { 
+        super.tearDown();
+        apps.tests.Log4JFixture.tearDown(); 
+    }
+    
 	static Logger log = Logger.getLogger(NmraPacketTest.class.getName());
 
 }
