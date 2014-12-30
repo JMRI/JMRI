@@ -6,13 +6,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -21,28 +17,19 @@ import java.util.ResourceBundle;
 import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.plaf.FontUIResource;
-import jmri.InstanceManager;
-import jmri.jmrix.ConnectionConfig;
-import jmri.jmrix.ConnectionStatus;
-import jmri.jmrix.JmrixConfigPane;
 import jmri.swing.PreferencesPanel;
 import jmri.swing.PreferencesSubPanel;
 import jmri.util.FileUtil;
@@ -85,9 +72,7 @@ public class TabbedPreferences extends AppConfigBase {
     HashMap<String, PreferencesPanel> preferencesPanels = new HashMap<>();
 
     JPanel detailpanel = new JPanel();
-    JTabbedPane connectionPanel = new JTabbedPane();
 
-    ArrayList<JmrixConfigPane> connectionTabInstance = new ArrayList<>();
     ArrayList<PreferencesCatItems> preferencesArray = new ArrayList<>();
     JPanel buttonpanel;
     JList<String> list;
@@ -144,16 +129,6 @@ public class TabbedPreferences extends AppConfigBase {
         }
         initalisationState = INITIALISING;
 
-        deleteConnectionIconRollOver = new ImageIcon(
-                FileUtil.findExternalFilename("program:resources/icons/misc/gui3/Delete16x16.png"));
-        deleteConnectionIcon = new ImageIcon(
-                FileUtil.findExternalFilename("program:resources/icons/misc/gui3/Delete-bw16x16.png"));
-        deleteConnectionButtonSize = new Dimension(
-                deleteConnectionIcon.getIconWidth() + 2,
-                deleteConnectionIcon.getIconHeight() + 2);
-        addConnectionIcon = new ImageIcon(
-                FileUtil.findExternalFilename("program:resources/icons/misc/gui3/Add16x16.png"));
-
         list = new JList();
         listScroller = new JScrollPane(list);
         listScroller.setPreferredSize(new Dimension(100, 100));
@@ -175,12 +150,6 @@ public class TabbedPreferences extends AppConfigBase {
         });
 
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-
-        setUpConnectionPanel();
-        connectionPanel.setSelectedIndex(0);
-
-        addItem("CONNECTIONS", rb.getString("MenuConnections"), null, null,
-                connectionPanel, false, null);
 
         try {
             List<String> classNames = (new ObjectMapper()).readValue(
@@ -228,33 +197,7 @@ public class TabbedPreferences extends AppConfigBase {
                 restartRequired = panel.isRestartRequired();
             }
         }
-        if (!restartRequired) {
-            // Since this.preferencesPanels does not include Connections, we
-            // loop through the contents of this.connectionTabInstance, to see
-            // if any ConnectionConfig indicates a need to restart JMRI.
-            for (PreferencesPanel panel : this.connectionTabInstance) {
-                restartRequired = panel.isRestartRequired();
-                if (restartRequired) {
-                    break;
-                }
-            }
-        }
         return restartRequired;
-    }
-
-    void setUpConnectionPanel() {
-        ArrayList<Object> connList = InstanceManager.configureManagerInstance()
-                .getInstanceList(ConnectionConfig.class);
-        if (connList != null) {
-            for (int x = 0; x < connList.size(); x++) {
-                JmrixConfigPane configPane = JmrixConfigPane.instance(x);
-                addConnection(x, configPane);
-            }
-        } else {
-            addConnection(0, JmrixConfigPane.createNewPanel());
-        }
-        connectionPanel.addChangeListener(addTabListener);
-        newConnectionTab();
     }
 
     public void setUIFontSize(float size) {
@@ -401,180 +344,6 @@ public class TabbedPreferences extends AppConfigBase {
         buttonpanel.add(listScroller);
         buttonpanel.add(save);
     }
-
-    void addConnection(int tabPosition, final JmrixConfigPane configPane) {
-        JPanel p = new JPanel();
-        p.setLayout(new BorderLayout());
-        p.add(configPane, BorderLayout.CENTER);
-
-        JButton tabCloseButton = new JButton(deleteConnectionIcon);
-        tabCloseButton.setPreferredSize(deleteConnectionButtonSize);
-        tabCloseButton.setBorderPainted(false);
-        tabCloseButton.setRolloverIcon(deleteConnectionIconRollOver);
-        tabCloseButton.setVisible(false);
-
-        JPanel c = new JPanel();
-        c.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        final JCheckBox disable = new JCheckBox("Disable Connection");
-        disable.setSelected(configPane.getDisabled());
-        disable.addActionListener((ActionEvent e) -> {
-            configPane.setDisabled(disable.isSelected());
-        });
-        c.add(disable);
-        p.add(c, BorderLayout.SOUTH);
-        String title;
-
-        if (configPane.getConnectionName() != null) {
-            title = configPane.getConnectionName();
-        } else if ((configPane.getCurrentProtocolName() != null)
-                && (!configPane.getCurrentProtocolName().equals(
-                        JmrixConfigPane.NONE))) {
-            title = configPane.getCurrentProtocolName();
-        } else {
-            title = rb.getString("TabbedLayoutConnection") + (tabPosition + 1);
-            if (connectionPanel.indexOfTab(title) != -1) {
-                for (int x = 2; x < 12; x++) {
-                    title = rb.getString("TabbedLayoutConnection")
-                            + (tabPosition + 2);
-                    if (connectionPanel.indexOfTab(title) != -1) {
-                        break;
-                    }
-                }
-            }
-        }
-
-        final JPanel tabTitle = new JPanel(new BorderLayout(5, 0));
-        tabTitle.setOpaque(false);
-        p.setName(title);
-
-        if (configPane.getDisabled()) {
-            title = "(" + title + ")";
-        }
-
-        JLabel tabLabel = new JLabel(title, JLabel.LEFT);
-        tabTitle.add(tabLabel, BorderLayout.WEST);
-        tabTitle.add(tabCloseButton, BorderLayout.EAST);
-
-        connectionTabInstance.add(configPane);
-        connectionPanel.add(p);
-        connectionPanel.setTabComponentAt(tabPosition, tabTitle);
-
-        tabCloseButton.addActionListener((ActionEvent e) -> {
-            removeTab(e, connectionPanel.indexOfTabComponent(tabTitle));
-        });
-
-        connectionPanel.setToolTipTextAt(tabPosition, title);
-
-        if (ConnectionStatus.instance().isConnectionOk(
-                configPane.getCurrentProtocolInfo())) {
-            tabLabel.setForeground(Color.black);
-        } else {
-            tabLabel.setForeground(Color.red);
-        }
-        if (configPane.getDisabled()) {
-            tabLabel.setForeground(Color.ORANGE);
-        }
-
-        items.add(configPane);
-    }
-
-    void addConnectionTab() {
-        connectionPanel.removeTabAt(connectionPanel
-                .indexOfTab(addConnectionIcon));
-        addConnection(connectionTabInstance.size(),
-                JmrixConfigPane.createNewPanel());
-        newConnectionTab();
-    }
-
-    void newConnectionTab() {
-        connectionPanel.addTab(null, addConnectionIcon, null,
-                rb.getString("ToolTipAddNewConnection"));
-        connectionPanel.setSelectedIndex(connectionPanel.getTabCount() - 2);
-    }
-
-    JmrixConfigPane comm1;
-
-    private void removeTab(ActionEvent e, int x) {
-        int i;
-
-        i = x;
-
-        if (i != -1) {
-            int n = JOptionPane.showConfirmDialog(null, MessageFormat.format(
-                    rb.getString("MessageDoDelete"),
-                    new Object[]{connectionPanel.getTitleAt(i)}),
-                    rb.getString("MessageDeleteConnection"),
-                    JOptionPane.YES_NO_OPTION);
-            if (n != JOptionPane.YES_OPTION) {
-                return;
-            }
-
-            JmrixConfigPane configPane = connectionTabInstance.get(i);
-
-            connectionPanel.removeChangeListener(addTabListener);
-            connectionPanel.remove(i); // was x
-            items.remove(configPane);
-            try {
-                JmrixConfigPane.dispose(configPane);
-            } catch (NullPointerException ex) {
-                log.error("Caught Null Pointer Exception while removing connection tab");
-            }
-            connectionTabInstance.remove(i);
-            if (connectionPanel.getTabCount() == 1) {
-                addConnectionTab();
-            }
-            if (x != 0) {
-                connectionPanel.setSelectedIndex(x - 1);
-            } else {
-                connectionPanel.setSelectedIndex(0);
-            }
-            connectionPanel.addChangeListener(addTabListener);
-        }
-        activeTab();
-    }
-
-    transient ChangeListener addTabListener = new ChangeListener() {
-        // This method is called whenever the selected tab changes
-        @Override
-        public void stateChanged(ChangeEvent evt) {
-            JTabbedPane pane = (JTabbedPane) evt.getSource();
-            int sel = pane.getSelectedIndex();
-            if (sel == -1) {
-                addConnectionTab();
-                return;
-            } else {
-                Icon icon = pane.getIconAt(sel);
-                if (icon == addConnectionIcon) {
-                    addConnectionTab();
-                    return;
-                }
-            }
-            activeTab();
-        }
-    };
-
-    void activeTab() {
-        int sel = connectionPanel.getSelectedIndex();
-        for (int i = 0; i < connectionPanel.getTabCount() - 1; i++) {
-            JPanel panel = (JPanel) connectionPanel.getTabComponentAt(i);
-            panel.invalidate();
-            Component[] comp = panel.getComponents();
-            for (Component c : comp) {
-                if (c instanceof JButton) {
-                    if (i == sel) {
-                        c.setVisible(true);
-                    } else {
-                        c.setVisible(false);
-                    }
-                }
-            }
-        }
-    }
-
-    private ImageIcon deleteConnectionIcon;
-    private ImageIcon deleteConnectionIconRollOver;
-    private Dimension deleteConnectionButtonSize;
-    private ImageIcon addConnectionIcon;
 
     static class PreferencesCatItems implements java.io.Serializable {
 

@@ -239,4 +239,8 @@ public class AppConfigBase extends JmriPanel {
     }
 
     public String getClassName() { return AppConfigBase.class.getName(); }
+
+    public List getItems() {
+        return this.items;
+    }
 }
