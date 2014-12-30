@@ -1197,7 +1197,6 @@ public class PaneProgPane extends javax.swing.JPanel
     /**
      * Create a new group from the JDOM group Element
      */
-    @SuppressWarnings("unchecked")
     protected JPanel newGroup(Element element, boolean showStdName, Element modelElem) {
 
         // create a panel to add as a new column or row

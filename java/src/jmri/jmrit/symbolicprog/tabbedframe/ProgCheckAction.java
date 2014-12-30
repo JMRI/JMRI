@@ -62,7 +62,6 @@ public class ProgCheckAction extends AbstractAction {
     /**
      * Find all of the display elements descending from this element
      */
-    @SuppressWarnings("unchecked")
 	static protected void expandElement(Element el, List<Element> list) {
         // get the leaves here
         list.addAll(el.getChildren("display"));

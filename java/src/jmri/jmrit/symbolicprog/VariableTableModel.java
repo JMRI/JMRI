@@ -461,7 +461,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
     protected VariableValue processCompositeVal(Element child, String name, String comment, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String CV, String mask, String item) {
         VariableValue v;
-        @SuppressWarnings("unchecked")
         List<Element> lChoice = child.getChildren("compositeChoice");
         CompositeVariableValue v1 = new CompositeVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, 0, lChoice.size() - 1, _cvModel.allCvMap(), _status, item);
         v = v1; // v1 is of CompositeVariableType, so doesn't need casts
@@ -565,7 +564,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
     protected VariableValue processIEnumVal(Element child, String name, String comment, String cvName, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String cv, String mask, String item, String productID, String modelID, String familyID) throws NumberFormatException {
         VariableValue iv;
-        @SuppressWarnings("unchecked")
         List<Element> l = child.getChildren("ienumChoice");
         IndexedEnumVariableValue v1 = new IndexedEnumVariableValue(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cv, mask, _indxCvModel.allIndxCvMap(), _status, item);
         iv = v1;
@@ -677,7 +675,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         ShortAddrVariableValue v1 = new ShortAddrVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, _cvModel.allCvMap(), _status, item);
         v = v1;
         // get specifics if any
-        @SuppressWarnings("unchecked")
         List<Element> l = child.getChildren("shortAddressChanges");
         for (int k = 0; k < l.size(); k++) {
             v1.setModifiedCV(l.get(k).getAttribute("cv").getValue());

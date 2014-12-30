@@ -267,7 +267,6 @@ public class FnMapPanel extends JPanel {
      * to configure the number of outputs and set up any that
      * are named instead of numbered.
      */
-    @SuppressWarnings("unchecked")
 	protected void configOutputs(Element model) {
         if (model==null) {
             log.debug("configOutputs was given a null model");

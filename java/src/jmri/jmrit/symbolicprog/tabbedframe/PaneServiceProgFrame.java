@@ -50,7 +50,6 @@ public class PaneServiceProgFrame extends PaneProgFrame
      * @param name
      * @param file
      */
-    @SuppressWarnings("unchecked")
     public PaneServiceProgFrame(DecoderFile decoderFile, RosterEntry r,
                                 String name, String file, Programmer pProg) {
         super(decoderFile, r, name, file, pProg, false);

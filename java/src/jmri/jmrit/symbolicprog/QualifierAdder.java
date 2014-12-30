@@ -38,7 +38,6 @@ public abstract class QualifierAdder {
         
         ArrayList<Qualifier> lq = new ArrayList<Qualifier>(); 
         
-        @SuppressWarnings("unchecked")
         List<Element> le = e.getChildren("qualifier"); // we assign to this to allow us to suppress unchecked error
         processList(le, lq, model);
         

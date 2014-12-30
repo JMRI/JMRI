@@ -1999,7 +1999,7 @@ public class LRouteTableAction extends AbstractTableAction {
                 }
                 items = getOutputComboBoxItems(elt.getType());
             }
-            JComboBox<String> comboBox = (JComboBox<String>)getComponent();
+            JComboBox<String> comboBox = (JComboBox)getComponent();
             comboBox.removeAllItems();
             for (int i=0; i<items.length; i++) {
                 comboBox.addItem(items[i]);

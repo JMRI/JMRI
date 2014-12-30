@@ -39,27 +39,27 @@ public class SimpleClockFrame extends JmriJFrame
     protected boolean showTime = false;
     DecimalFormat threeDigits = new DecimalFormat("0.000");	// 3 digit precision for speedup factor
 
-    protected javax.swing.JComboBox timeSourceBox = null;
-	protected javax.swing.JComboBox clockStartBox = null;
+    protected JComboBox<String> timeSourceBox = null;
+	protected JComboBox<String> clockStartBox = null;
 	
-	protected javax.swing.JCheckBox synchronizeCheckBox = null;
-	protected javax.swing.JCheckBox correctCheckBox = null;
-	protected javax.swing.JCheckBox displayCheckBox = null;
-	protected javax.swing.JCheckBox showStartupCheckBox = null;
-	protected javax.swing.JCheckBox startStoppedCheckBox = null;
-	protected javax.swing.JCheckBox startSetTimeCheckBox = null;
+	protected JCheckBox synchronizeCheckBox = null;
+	protected JCheckBox correctCheckBox = null;
+	protected JCheckBox displayCheckBox = null;
+	protected JCheckBox showStartupCheckBox = null;
+	protected JCheckBox startStoppedCheckBox = null;
+	protected JCheckBox startSetTimeCheckBox = null;
 
-    protected javax.swing.JTextField factorField = new javax.swing.JTextField(5);
-    protected javax.swing.JTextField hoursField = new javax.swing.JTextField(2);
-    protected javax.swing.JTextField minutesField = new javax.swing.JTextField(2);
-    protected javax.swing.JTextField startHoursField = new javax.swing.JTextField(2);
-    protected javax.swing.JTextField startMinutesField = new javax.swing.JTextField(2);
+    protected JTextField factorField = new javax.swing.JTextField(5);
+    protected JTextField hoursField = new javax.swing.JTextField(2);
+    protected JTextField minutesField = new javax.swing.JTextField(2);
+    protected JTextField startHoursField = new javax.swing.JTextField(2);
+    protected JTextField startMinutesField = new javax.swing.JTextField(2);
 
-    protected javax.swing.JButton setRateButton = new javax.swing.JButton(Bundle.getMessage("ButtonSet"));
-    protected javax.swing.JButton setTimeButton = new javax.swing.JButton(Bundle.getMessage("ButtonSet"));
-    protected javax.swing.JButton startButton = new javax.swing.JButton(Bundle.getMessage("ButtonStart"));
-    protected javax.swing.JButton stopButton = new javax.swing.JButton(Bundle.getMessage("ButtonStop"));
-    protected javax.swing.JButton setStartTimeButton = new javax.swing.JButton(
+    protected JButton setRateButton = new javax.swing.JButton(Bundle.getMessage("ButtonSet"));
+    protected JButton setTimeButton = new javax.swing.JButton(Bundle.getMessage("ButtonSet"));
+    protected JButton startButton = new javax.swing.JButton(Bundle.getMessage("ButtonStart"));
+    protected JButton stopButton = new javax.swing.JButton(Bundle.getMessage("ButtonStop"));
+    protected JButton setStartTimeButton = new javax.swing.JButton(
 														Bundle.getMessage("ButtonSet"));
 
     protected javax.swing.JLabel clockStatus = new javax.swing.JLabel();
@@ -107,7 +107,7 @@ public class SimpleClockFrame extends JmriJFrame
         // Set up time source choice
         JPanel panel11 = new JPanel();
         panel11.add(new JLabel(Bundle.getMessage("TimeSource")+" "));
-        timeSourceBox = new JComboBox();
+        timeSourceBox = new JComboBox<String>();
         panel11.add(timeSourceBox);
         timeSourceBox.addItem(Bundle.getMessage("ComputerClock"));
 		hardwareName = InstanceManager.clockControlInstance().getHardwareClockName();
@@ -239,7 +239,7 @@ public class SimpleClockFrame extends JmriJFrame
 		panel6.add(panel62);
 		JPanel panel63 = new JPanel();
         panel63.add(new JLabel(Bundle.getMessage("StartClock")+" "));
-		clockStartBox = new JComboBox();
+		clockStartBox = new JComboBox<String>();
         panel63.add(clockStartBox);
         clockStartBox.addItem(Bundle.getMessage("None"));
         clockStartBox.addItem(Bundle.getMessage("MenuItemNixieClock"));

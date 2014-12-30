@@ -157,11 +157,11 @@ public class Maintenance
                 names.add( name);
             }
         }
-        DefaultListModel listModel = new DefaultListModel();
+        DefaultListModel<String> listModel = new DefaultListModel<String>();
         for (int i=0; i<display.size(); i++)  {
             listModel.addElement(display.get(i));
         }
-        JList list = new JList(listModel);
+        JList<String> list = new JList<String>(listModel);
         list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         JButton button = new JButton(rbm.getString("DeleteButton"));
@@ -272,11 +272,11 @@ public class Maintenance
                 }
             }
         }
-        DefaultListModel listModel = new DefaultListModel();
+        DefaultListModel<String> listModel = new DefaultListModel<String>();
         for (int i=0; i<display.size(); i++)  {
             listModel.addElement(display.get(i));
         }
-        JList list = new JList(listModel);
+        JList<String> list = new JList<String>(listModel);
         list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         JButton button = new JButton(rbm.getString("DeleteButton"));

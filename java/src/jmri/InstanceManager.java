@@ -92,6 +92,7 @@ public class InstanceManager {
      * registered with {@link #store}.
      * @param type The class Object for the items' type.
      */
+    @SuppressWarnings("unchecked") // the cast here is protected by the structure of the managerLists
     static public <T> List<T> getList(Class<T> type) {
         return (List<T>)managerLists.get(type);
     }
@@ -254,13 +255,12 @@ public class InstanceManager {
         }
     }
     
-    @SuppressWarnings("unchecked")
 	protected static void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
         // make a copy of the listener vector to synchronized not needed for transmit
         Vector<PropertyChangeListener> v;
         synchronized(InstanceManager.class)
             {
-                v = (Vector<PropertyChangeListener>) listeners.clone();
+                v = new Vector<PropertyChangeListener>(listeners);
             }
         // forward to all listeners
         int cnt = v.size();

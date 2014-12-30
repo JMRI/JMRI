@@ -305,7 +305,6 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
         }    
    }
     
-    @SuppressWarnings("unchecked")
     public void resetSelections() {
         Enumeration<DecoderTreeNode> e = dRoot.breadthFirstEnumeration();
         while (e.hasMoreElements()) {
@@ -327,7 +326,6 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
     /**
      * Decoder identify has matched one or more specific types
      */
-    @SuppressWarnings("unchecked")
     void updateForDecoderTypeID(List<DecoderFile> pList) {
         // find and select the first item
         if (log.isDebugEnabled()) {
@@ -362,13 +360,13 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
 
         // Find decoder nodes in tree and set selected
         for (int i = 0; i < pList.size(); i++) { // loop over selected decoders
+            e = dRoot.breadthFirstEnumeration();
 
             DecoderFile f = pList.get(i);
             String findMfg = f.getMfg();
             String findFamily = f.getFamily();
             String findModel = f.getModel();
 
-            e = dRoot.breadthFirstEnumeration();
             while (e.hasMoreElements()) { // loop over the tree & find node
                 DecoderTreeNode node = e.nextElement();
                 // never match show=NO nodes
@@ -423,14 +421,15 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
      * @param pMfgID Manufacturer ID number (CV8)
      * @param pModelID Model ID number (CV7)
      */
-    @SuppressWarnings("unchecked")
     void updateForDecoderMfgID(String pMfg, int pMfgID, int pModelID) {
         String msg = "Found mfg " + pMfgID + " (" + pMfg + ") version " + pModelID + "; no such decoder defined";
         log.warn(msg);
         _statusLabel.setText(msg);
         // find this mfg to select it
         dTree.clearSelection();
+
         Enumeration<DecoderTreeNode> e = dRoot.breadthFirstEnumeration();
+
         ArrayList<DecoderTreeNode> selected = new ArrayList<DecoderTreeNode>();
         selectedPath = new ArrayList<TreePath>();
         while (e.hasMoreElements()) {
@@ -451,7 +450,9 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
         }
         for (DecoderTreeNode node : selected) {
             node.setIdentified(true);
-            Enumeration<DecoderTreeNode> es = node.breadthFirstEnumeration();
+
+            Enumeration<DecoderTreeNode> es = dRoot.breadthFirstEnumeration();
+
             while (es.hasMoreElements()) {
                 es.nextElement().setIdentified(true);
             }
@@ -478,7 +479,6 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
      * This must not trigger an update event from the Tree selection, so we
      * remove and replace the listener.
      */
-    @SuppressWarnings("unchecked")
     void setDecoderSelectionFromLoco(String loco) {
         // if there's a valid loco entry...
         RosterEntry locoEntry = Roster.instance().entryFromTitle(loco);
@@ -500,6 +500,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
 
         // find this one to select it
         Enumeration<DecoderTreeNode> e = dRoot.breadthFirstEnumeration();
+
         while (e.hasMoreElements()) {
             DecoderTreeNode node = e.nextElement();
             DecoderTreeNode parentNode = (DecoderTreeNode) node.getParent();
@@ -611,6 +612,12 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
             this.title = title;
         }
 
+        @Override
+        @SuppressWarnings("unchecked") // required because super.breadthFirstEnumeration not fully typed
+        public Enumeration<DecoderTreeNode> breadthFirstEnumeration() {
+            return super.breadthFirstEnumeration();
+        }
+        
         public String getTitle() {
             return title;
         }

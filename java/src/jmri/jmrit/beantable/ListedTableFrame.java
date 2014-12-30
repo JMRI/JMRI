@@ -49,7 +49,7 @@ public class ListedTableFrame extends BeanTableFrame {
 
     final UserPreferencesManager pref = InstanceManager.getDefault(UserPreferencesManager.class);
     JSplitPane cardHolder;
-    JList list;
+    JList<String> list;
     JScrollPane listScroller;
     JPanel buttonpanel;
     JPanel detailpanel;
@@ -120,7 +120,7 @@ public class ListedTableFrame extends BeanTableFrame {
             TabbedTableItemListArrayArray.remove(dead);
         }
         
-        list = new JList(new Vector<String>(getChoices()));
+        list = new JList<String>(new Vector<String>(getChoices()));
         listScroller = new JScrollPane(list);
 
         list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);

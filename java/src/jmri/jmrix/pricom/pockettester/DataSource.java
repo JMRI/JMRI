@@ -275,9 +275,9 @@ public class DataSource extends jmri.util.JmriJFrame {
 
     Thread readerThread;
 
-    protected javax.swing.JComboBox portBox = new javax.swing.JComboBox();
-    protected javax.swing.JComboBox speedBox 
-            = new javax.swing.JComboBox(new String[]{"9600", "19200", "38400", "57600", "115200"});
+    protected javax.swing.JComboBox<String> portBox = new javax.swing.JComboBox<String>();
+    protected javax.swing.JComboBox<String> speedBox 
+            = new javax.swing.JComboBox<String>(new String[]{"9600", "19200", "38400", "57600", "115200"});
     protected javax.swing.JButton openPortButton = new javax.swing.JButton();
 
     @SuppressWarnings("deprecation")

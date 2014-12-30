@@ -381,7 +381,6 @@ public class FnMapPanelESU extends JPanel {
      * to configure the number of rows and columns and set up any
      * custom column names.
      */
-    @SuppressWarnings("unchecked")
     protected void configOutputs(Element model) {
         if (model==null) {
             log.debug("configOutputs was given a null model");

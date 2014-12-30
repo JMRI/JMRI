@@ -290,7 +290,6 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
         xf.loadVariableModel(decoderElem, variableModel);
     }
 
-    @SuppressWarnings({ "unchecked" })
 	void processLocoFile(Element loco) {
         // load the name et al
         locoRoadName.setText(loco.getAttributeValue("roadName"));

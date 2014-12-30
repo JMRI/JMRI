@@ -235,7 +235,7 @@ public class BlockTableAction extends AbstractTableAction {
 				}
 				else if (col==CURVECOL) {
                     
-					String cName = (String)((JComboBox<String>)value).getSelectedItem();
+					String cName = (String)((JComboBox)value).getSelectedItem();
                     if (cName.equals(noneText)) b.setCurvature(Block.NONE);
 					else if (cName.equals(gradualText)) b.setCurvature(Block.GRADUAL);
 					else if (cName.equals(tightText)) b.setCurvature(Block.TIGHT);
@@ -248,7 +248,7 @@ public class BlockTableAction extends AbstractTableAction {
                     fireTableRowsUpdated(row,row);
                 }
                 else if (col==SPEEDCOL){
-                    String speed = (String)((JComboBox<String>)value).getSelectedItem();
+                    String speed = (String)((JComboBox)value).getSelectedItem();
                     try {
                         b.setBlockSpeed(speed);
                     } catch (jmri.JmriException ex) {
@@ -269,7 +269,7 @@ public class BlockTableAction extends AbstractTableAction {
                     fireTableRowsUpdated(row,row);
                 }
                 else if (col==SENSORCOL){
-                    String strSensor = (String)((JComboBox<String>)value).getSelectedItem();
+                    String strSensor = (String)((JComboBox)value).getSelectedItem();
                     b.setSensor(strSensor);
                     return;
                 }

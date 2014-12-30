@@ -193,13 +193,12 @@ abstract public class SystemConnectionMemo {
     /**
      * Trigger the notification of all PropertyChangeListeners
      */
-    @SuppressWarnings("unchecked")
 	protected void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
         // make a copy of the listener vector to synchronized not needed for transmit
         Vector<PropertyChangeListener> v;
         synchronized(this)
             {
-                v = (Vector<PropertyChangeListener>) listeners.clone();
+                v = new Vector<PropertyChangeListener>(listeners);
             }
         // forward to all listeners
         int cnt = v.size();

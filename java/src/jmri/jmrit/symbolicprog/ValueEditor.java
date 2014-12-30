@@ -141,12 +141,11 @@ public class ValueEditor extends JComboBox implements TableCellEditor, FocusList
         listeners.removeElement(cel);
     }
     
-    @SuppressWarnings("unchecked")
     protected void fireEditingCanceled() {
         if (log.isDebugEnabled()) log.debug("fireEditingCancelled, but we are not setting back the old value");
         Vector<CellEditorListener> local;
         synchronized (listeners) {
-            local = (Vector<CellEditorListener>)listeners.clone();
+            local = new Vector<CellEditorListener>(listeners);
         }
         ChangeEvent ce = new ChangeEvent(this);
         for (int i = local.size()-1; i >= 0; i--) {
@@ -154,12 +153,11 @@ public class ValueEditor extends JComboBox implements TableCellEditor, FocusList
         }
     }
     
-    @SuppressWarnings("unchecked")
     protected void fireEditingStopped() {
         if (log.isDebugEnabled()) log.debug("fireEditingStopped");
         Vector<CellEditorListener> local;
         synchronized (listeners) {
-            local = (Vector<CellEditorListener>)listeners.clone();
+             local = new Vector<CellEditorListener>(listeners);
         }
         ChangeEvent ce = new ChangeEvent(this);
         for (int i = local.size() - 1; i >= 0; i--) {

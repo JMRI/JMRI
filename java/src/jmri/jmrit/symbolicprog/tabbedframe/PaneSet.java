@@ -159,7 +159,6 @@ public class PaneSet {
             return;
         }
 
-        @SuppressWarnings("unchecked")
         List<Element> paneList = base.getChildren("pane");
         
         if (log.isDebugEnabled()) log.debug("will process "+paneList.size()+" pane definitions");

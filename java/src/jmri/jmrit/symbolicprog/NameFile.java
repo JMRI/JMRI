@@ -81,7 +81,6 @@ public class NameFile extends XmlFile {
 		readNames(root);
 	}
 
-	@SuppressWarnings("unchecked")
 	void readNames(Element root) {
 
 		List<Element> l = root.getChildren("definition");

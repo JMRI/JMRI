@@ -349,7 +349,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     boolean b = ((Boolean) value).booleanValue();
                     t.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT,	b);
                 } else if (col == MODECOL ) {
-                    String modeName = (String)((JComboBox<String>)value).getSelectedItem();
+                    String modeName = (String)((JComboBox)value).getSelectedItem();
                     t.setFeedbackMode(modeName);
                 } else if (col==SENSOR1COL ) {
                     try {
@@ -369,7 +369,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     // do nothing as this is handled by the combo box listener
                 } else if (col==OPSEDITCOL ) {
                     t.setInhibitOperation(false);
-                    editTurnoutOperation(t, (JComboBox<String>)getValueAt(row,OPSONOFFCOL));
+                    editTurnoutOperation(t, (JComboBox)getValueAt(row,OPSONOFFCOL));
                 } else if (col==EDITCOL ) {
                     class WindowMaker implements Runnable {
                         Turnout t;
@@ -383,7 +383,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     WindowMaker w = new WindowMaker(t);
 					javax.swing.SwingUtilities.invokeLater(w);
                 } else if (col == LOCKOPRCOL) {
-                    String lockOpName = (String) ((JComboBox<String>) value)
+                    String lockOpName = (String) ((JComboBox) value)
                         .getSelectedItem();
                     if (lockOpName.equals(bothText)){
                         t.enableLockOperation(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, true);
@@ -397,10 +397,10 @@ public class TurnoutTableAction extends AbstractTableAction {
                         t.enableLockOperation(Turnout.PUSHBUTTONLOCKOUT, true);
                     }
                 } else if (col == LOCKDECCOL){
-                    String decoderName = (String)((JComboBox<String>)value).getSelectedItem();
+                    String decoderName = (String)((JComboBox)value).getSelectedItem();
                     t.setDecoderName(decoderName);
                 } else if (col==STRAIGHTCOL){
-                    String speed = (String)((JComboBox<String>)value).getSelectedItem();
+                    String speed = (String)((JComboBox)value).getSelectedItem();
                     try {
                         t.setStraightSpeed(speed);
                     } catch (jmri.JmriException ex) {
@@ -413,7 +413,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     fireTableRowsUpdated(row,row);
                 } else if (col==DIVERGCOL) {
                     
-                    String speed = (String)((JComboBox<String>)value).getSelectedItem();
+                    String speed = (String)((JComboBox)value).getSelectedItem();
                     try {
                         t.setDivergingSpeed(speed);
                     } catch (jmri.JmriException ex) {
