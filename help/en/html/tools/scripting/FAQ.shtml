@@ -464,6 +464,24 @@ class SensndExample(jmri.jmrit.automat.Siglet) :
 SensndExample().start()
 </pre>
 
+<h2>Is JMRI's support for Python complete?</h2>
+
+JMRI scripting uses <a href="">Jython</a>, a Java-implemented 
+form of the Python language.  The basic language is pretty complete,
+but not all of the Python libraries are available.  Some "import" statements
+that you might read in a book might not work because of missing libraries.
+<p>
+Support is improving
+all the time, though, and you might want to try a more modern version of 
+Jython than the one that JMRI distributes. To do that, install Jython on 
+you computer, then add a python.properties in your user files location that
+sets the python configuration variables, e.g.:
+<code><pre>
+python.home = C:\Users\admin\JMRI\systemfiles 
+python.path = c:\jython2.5.3\lib 
+python.startup = 
+</pre></code>
+
 <!--#include virtual="/Footer" -->
 </body>
 </html>
