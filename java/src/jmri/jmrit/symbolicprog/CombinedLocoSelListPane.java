@@ -65,7 +65,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane  {
         pane1a.setLayout(new BoxLayout(pane1a, BoxLayout.X_AXIS));
         pane1a.add(new JLabel("Decoder installed: "));
         // create the list of manufacturers
-        mMfgList = new JList();
+        mMfgList = new JList<String>();
         updateMfgListContents(null);
         mMfgList.clearSelection();
         mMfgList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -88,7 +88,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane  {
             }};
         mMfgList.addListSelectionListener(mMfgListener);
 
-        mDecoderList = new JList(DecoderIndexFile.instance()
+        mDecoderList = new JList<String>(DecoderIndexFile.instance()
                             .matchingComboBox(null, null, null, null, null, null).getModel());
         mDecoderList.clearSelection();
         mDecoderList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -157,7 +157,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane  {
                 )
                     theMfgList.add(allMfgList.get(i));
         }
-        mMfgList.setListData(theMfgList.toArray());
+        mMfgList.setListData(theMfgList.toArray(new String[0]));
 
         mMfgList.setSelectedValue(currentValue, true);
         if (mMfgListener!=null) mMfgList.addListSelectionListener(mMfgListener);
@@ -221,7 +221,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane  {
 
     void listDecodersFromMfg(int pMfgID, String pMfg) {
         // try to select all decoders from that MFG
-        JComboBox temp = DecoderIndexFile.instance().matchingComboBox(null, null, Integer.toString(pMfgID), null, null, null);
+        JComboBox<String> temp = DecoderIndexFile.instance().matchingComboBox(null, null, Integer.toString(pMfgID), null, null, null);
         if (log.isDebugEnabled()) log.debug("mfg-only selectDecoder found "+temp.getItemCount()+" matches");
         // install all those in the JComboBox in place of the longer, original list
         mDecoderList.setModel(temp.getModel());
@@ -238,7 +238,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane  {
         _statusLabel.setText(msg);
         mMfgList.setSelectedIndex(1);
         mMfgList.clearSelection();
-        JComboBox temp = DecoderIndexFile.instance().matchingComboBox(null, null, null, null, null, null);
+        JComboBox<String> temp = DecoderIndexFile.instance().matchingComboBox(null, null, null, null, null, null);
         mDecoderList.setModel(temp.getModel());
         mDecoderList.clearSelection();
     }
@@ -288,10 +288,10 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane  {
         else return (String)mDecoderList.getSelectedValue();
     }
 
-    JList mDecoderList;
+    JList<String> mDecoderList;
     ListSelectionListener mDecoderListener;
 
-    JList mMfgList;
+    JList<String> mMfgList;
     ListSelectionListener mMfgListener;
 
 

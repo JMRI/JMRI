@@ -91,7 +91,7 @@ public class IndexedEnumVariableValue extends VariableValue
     public void lastItem() {
         // we now know the maxVal, store it for whatever reason
         _maxVal = _valueArray[_nstored-1];
-        _value = new JComboBox(_itemArray);
+        _value = new JComboBox<String>(_itemArray);
         // finish initialization
         _value.setActionCommand("8");
         _defaultColor = _value.getBackground();
@@ -118,7 +118,7 @@ public class IndexedEnumVariableValue extends VariableValue
     }
 
     // stored value
-    JComboBox _value = null;
+    JComboBox<String> _value = null;
 
     // place to keep the items & associated numbers
     String[] _itemArray = null;
@@ -529,7 +529,7 @@ public class IndexedEnumVariableValue extends VariableValue
      * @author  Bob Jacobsen   Copyright (C) 2001
      * @version $Revision$
      */
-    public static class IVarComboBox extends JComboBox {
+    public static class IVarComboBox extends JComboBox<String> {
 
         /**
 		 * 
@@ -538,7 +538,7 @@ public class IndexedEnumVariableValue extends VariableValue
 		IndexedEnumVariableValue _var;
         transient java.beans.PropertyChangeListener _l = null;
 
-        IVarComboBox(ComboBoxModel m, IndexedEnumVariableValue var) {
+        IVarComboBox(ComboBoxModel<String> m, IndexedEnumVariableValue var) {
             super(m);
             _var = var;
             _l = new java.beans.PropertyChangeListener() {

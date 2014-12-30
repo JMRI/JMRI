@@ -29,7 +29,7 @@ public class ConstantValue extends VariableValue {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
-        _value = new JComboBox();
+        _value = new JComboBox<Integer>();
         for (int i=0; i<=maxVal; i++) {
             _value.addItem(i);
         }
@@ -54,7 +54,7 @@ public class ConstantValue extends VariableValue {
      }
      
     // stored value
-    JComboBox _value = null;
+    JComboBox<Integer> _value = null;
 
     public void setToolTipText(String t) {
         super.setToolTipText(t);   // do default stuff

@@ -31,7 +31,7 @@ public class ProgrammerConfigPane extends JPanel implements PreferencesPanel {
         JPanel p = new JPanel();
         p.setLayout(new java.awt.FlowLayout());
         p.add(new JLabel("Format:"));
-        p.add(programmerBox = new JComboBox(jmri.jmrit.symbolicprog.ProgDefault.findListOfProgFiles()));
+        p.add(programmerBox = new JComboBox<String>(jmri.jmrit.symbolicprog.ProgDefault.findListOfProgFiles()));
         programmerBox.setSelectedItem(jmri.jmrit.symbolicprog.ProgDefault.getDefaultProgFile());
         add(p);
 
@@ -45,7 +45,7 @@ public class ProgrammerConfigPane extends JPanel implements PreferencesPanel {
         this.add(advancedPanel);
         this.add(javax.swing.Box.createVerticalGlue());
     }
-    JComboBox programmerBox;
+    JComboBox<String> programmerBox;
 
     /**
      * This constructor does nothing different than the default constructor.

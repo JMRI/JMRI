@@ -44,7 +44,7 @@ public class KnownLocoSelPane extends LocoSelPane  {
 
     boolean mCanIdent;
 
-    JComboBox programmerBox;
+    JComboBox<String> programmerBox;
 
     protected void init() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -91,7 +91,7 @@ public class KnownLocoSelPane extends LocoSelPane  {
         pane3a.add(new JLabel(Bundle.getMessage("ProgrammerFormat")));
 
         // create the programmer box
-        programmerBox = new JComboBox(ProgDefault.findListOfProgFiles());
+        programmerBox = new JComboBox<String>(ProgDefault.findListOfProgFiles());
         programmerBox.setSelectedIndex(0);
         if (ProgDefault.getDefaultProgFile()!=null) programmerBox.setSelectedItem(ProgDefault.getDefaultProgFile());
         pane3a.add(programmerBox);

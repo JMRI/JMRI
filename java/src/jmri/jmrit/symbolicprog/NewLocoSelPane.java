@@ -118,7 +118,7 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel  {
     }
 
     private void selectDecoder(int mfgID, int modelID, int productID) {
-        JComboBox temp = null;
+        JComboBox<String> temp = null;
 
         // if productID present, try with that
         if (productID != -1) {
@@ -168,8 +168,8 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel  {
         }
     }
 
-    private JComboBox locoBox = null;
-    private JComboBox decoderBox = null;
+    private JComboBox<Object> locoBox = null;
+    private JComboBox<String> decoderBox = null;
 
     /**
      * Handle pushing the open programmer button by finding names, then calling a template method

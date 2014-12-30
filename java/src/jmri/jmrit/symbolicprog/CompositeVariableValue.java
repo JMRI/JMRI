@@ -57,7 +57,7 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
-        _value = new JComboBox();
+        _value = new JComboBox<String>();
         if (log.isDebugEnabled()) log.debug("New Composite named "+name);
     }
 
@@ -65,7 +65,7 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
      * Create a null object.  Normally only used for tests and to pre-load classes.
      */
     public CompositeVariableValue() {
-        _value = new JComboBox();
+        _value = new JComboBox<String>();
     }
 
     public CvValue[] usesCVs() {
