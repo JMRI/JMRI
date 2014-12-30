@@ -4,9 +4,13 @@ package jmri.implementation;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.util.Hashtable;
 import java.util.List;
+
+import jmri.util.FileUtil;
+
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 
@@ -34,12 +38,21 @@ public class SignalSpeedMap {
         return _map;
     }
     
+    static String getPath() {
+    	String path = FileUtil.getUserFilesPath() + "signalSpeeds.xml";
+      	 File file = new File(path);
+       	 if (!file.exists()) {
+           	 path = "xml" + File.separator
+                        + "signals" + File.separator
+                        + "signalSpeeds.xml";    		 
+       	 }
+       	 return path;
+    }
+    
     static void loadMap() {
         _map = new SignalSpeedMap();
 
-        String path = "xml" + File.separator
-                + "signals" + File.separator
-                + "signalSpeeds.xml";
+        String path = getPath();
         jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile(){};
         Element root;
         try {
@@ -82,7 +95,6 @@ public class SignalSpeedMap {
             }
             if (log.isDebugEnabled()) log.debug("_numSteps = "+_numSteps);
 
-            @SuppressWarnings("unchecked")
             List<Element> list = root.getChild("aspectSpeeds").getChildren();
             for (int i = 0; i < list.size(); i++) {
                 String name = list.get(i).getName();
@@ -97,7 +109,6 @@ public class SignalSpeedMap {
                 _table.put(name, speed);
             }
 
-            @SuppressWarnings("unchecked")
             List<Element>l = root.getChild("appearanceSpeeds").getChildren();
             for (int i = 0; i < l.size(); i++) {
                 String name = l.get(i).getName();
