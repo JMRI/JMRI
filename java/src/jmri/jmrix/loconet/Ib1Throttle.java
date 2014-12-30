@@ -28,18 +28,8 @@ public class Ib1Throttle extends LocoNetThrottle {
     }
 
     protected void sendFunctionGroup3() {
-        // Special LocoNet message for Uhlenbrock Intellibox-II implementation
-        int new_IB2_F9_F12 =   ((getF12() ? LnConstants.RE_IB2_F12_MASK : 0) |
-                                (getF11() ? LnConstants.RE_IB2_F11_MASK : 0) |
-                                (getF10() ? LnConstants.RE_IB2_F10_MASK : 0) |
-                                (getF9()  ? LnConstants.RE_IB2_F9_MASK  : 0));
-            LocoNetMessage msg = new LocoNetMessage(4);
-            msg.setOpCode(LnConstants.RE_OPC_IB2_F9_F12);
-            msg.setElement(1, slot.getSlot());
-            msg.setElement(2, new_IB2_F9_F12);
-            network.sendLocoNetMessage(msg);
-
-        // Special LocoNet messages for Uhlenbrock Intellibox-I version 2.x implementation 
+        // Special LocoNet messages for Uhlenbrock Intellibox-I version 2.x implementation
+        // Intellibox-II uses another implementation for these functions
         // Functions F9 to F11            
         int new_IB1_F9_F11 =   ((getF11() ? LnConstants.RE_IB1_F11_MASK : 0) |
                                 (getF10() ? LnConstants.RE_IB1_F10_MASK : 0) |
@@ -48,10 +38,11 @@ public class Ib1Throttle extends LocoNetThrottle {
             msg1.setOpCode(LnConstants.RE_OPC_IB2_SPECIAL);
             msg1.setElement(1, LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN);                
             msg1.setElement(2, slot.getSlot());
-            msg1.setElement(3, LnConstants.RE_IB1_SPECIAL_F9_F11_TOKEN);               
+            msg1.setElement(3, LnConstants.RE_IB1_SPECIAL_F5_F11_TOKEN);               
             msg1.setElement(4, new_IB1_F9_F11);
-            network.sendLocoNetMessage(msg1);            
-        // Function F12 (and F20 and F28) 
+            network.sendLocoNetMessage(msg1);
+
+        // Function F12 (and F20 and F28)
         int new_IB2_F20_F28 =  ((getF12() ? LnConstants.RE_IB2_SPECIAL_F12_MASK : 0) |
                                 (getF20() ? LnConstants.RE_IB2_SPECIAL_F20_MASK : 0) |
                                 (getF28() ? LnConstants.RE_IB2_SPECIAL_F28_MASK : 0));

@@ -21,6 +21,9 @@ package jmri.jmrix.loconet;
  * Al Silverstein provided the reverse-engineering effort for the
  * OPC_MULTI_SENSE message.
  * <P>
+ * Alain Le Marchand completed the list of constants for Uhlenbrock Intellibox-I and -II,
+ * from observations of Intellibox traffic.
+ * <P>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project.  That permission
  * does not extend to uses in other software products.  If you wish to
@@ -462,14 +465,38 @@ public final static int RE_DPLX_SCAN_REPORT_B3             = 0x10 ;
 
 // Intellibox-II mobile decoder function control
 // also used for Intellibox ("one") with SW version 2.x for control of functions beyond F8
-public final static int RE_OPC_IB2_F9_F12                  = 0xA3; //Used by Intellibox-II only for F9-F12
-public final static int RE_IB1_F9_MASK                     = 0x10; //Used by Intellibox ("one") version 2.x only for F9
-public final static int RE_IB1_F10_MASK                    = 0x20; //Used by Intellibox ("one") version 2.x only for F10
-public final static int RE_IB1_F11_MASK                    = 0x40; //Used by Intellibox ("one") version 2.x only for F11
+// Intellibox-I version 2.x has two ways to control F0-F8:
+//    - with regular LocoNet OPC_LOCO_SND and OPC_LOCO_DIRF
+//    - with special Uhlenbrock RE_OPC_IB2_SPECIAL
+
+//Used by Intellibox-II only, for F9-F12
+public final static int RE_OPC_IB2_F9_F12                  = 0xA3; 
 public final static int RE_IB2_F9_MASK                     = 0x01;
 public final static int RE_IB2_F10_MASK                    = 0x02;
 public final static int RE_IB2_F11_MASK                    = 0x04;
 public final static int RE_IB2_F12_MASK                    = 0x08;
+
+// Common to Intellibox-I and -II :
+public final static int RE_OPC_IB2_SPECIAL                 = 0xD4; //For functions F13-F28 (IB-II) and by IB-I v2.x ("one") for F0-F28
+public final static int RE_IB2_SPECIAL_FUNCS_TOKEN         = 0x20;
+//Used only by Intellibox-I ("one") version 2.x
+public final static int RE_IB1_SPECIAL_F0_F4_TOKEN         = 0x06; //Used by Intellibox-I ("one") version 2.x
+public final static int RE_IB1_F0_MASK                     = 0x10; //Used by Intellibox-I ("one") version 2.x only for F0
+public final static int RE_IB1_F1_MASK                     = 0x01; //Used by Intellibox-I ("one") version 2.x only for F1
+public final static int RE_IB1_F2_MASK                     = 0x02; //Used by Intellibox-I ("one") version 2.x only for F2
+public final static int RE_IB1_F3_MASK                     = 0x04; //Used by Intellibox-I ("one") version 2.x only for F3
+public final static int RE_IB1_F4_MASK                     = 0x08; //Used by Intellibox-I ("one") version 2.x only for F4
+//Used only by Intellibox-I ("one") version 2.x
+public final static int RE_IB1_SPECIAL_F5_F11_TOKEN        = 0x07; //Used by Intellibox-I ("one") version 2.x
+public final static int RE_IB1_F5_MASK                     = 0x01; //Used by Intellibox-I ("one") version 2.x only for F5
+public final static int RE_IB1_F6_MASK                     = 0x02; //Used by Intellibox-I ("one") version 2.x only for F6
+public final static int RE_IB1_F7_MASK                     = 0x04; //Used by Intellibox-I ("one") version 2.x only for F7
+public final static int RE_IB1_F8_MASK                     = 0x08; //Used by Intellibox-I ("one") version 2.x only for F8
+public final static int RE_IB1_F9_MASK                     = 0x10; //Used by Intellibox-I ("one") version 2.x only for F9
+public final static int RE_IB1_F10_MASK                    = 0x20; //Used by Intellibox-I ("one") version 2.x only for F10
+public final static int RE_IB1_F11_MASK                    = 0x40; //Used by Intellibox-I ("one") version 2.x only for F11
+// Common to Intellibox-I and -II :
+public final static int RE_IB2_SPECIAL_F13_F19_TOKEN       = 0x08;
 public final static int RE_IB2_F13_MASK                    = 0x01;
 public final static int RE_IB2_F14_MASK                    = 0x02;
 public final static int RE_IB2_F15_MASK                    = 0x04;
@@ -477,6 +504,8 @@ public final static int RE_IB2_F16_MASK                    = 0x08;
 public final static int RE_IB2_F17_MASK                    = 0x10;
 public final static int RE_IB2_F18_MASK                    = 0x20;
 public final static int RE_IB2_F19_MASK                    = 0x40;
+// Common to Intellibox-I and -II :
+public final static int RE_IB2_SPECIAL_F21_F27_TOKEN       = 0x09;
 public final static int RE_IB2_F21_MASK                    = 0x01;
 public final static int RE_IB2_F22_MASK                    = 0x02;
 public final static int RE_IB2_F23_MASK                    = 0x04;
@@ -484,12 +513,8 @@ public final static int RE_IB2_F24_MASK                    = 0x08;
 public final static int RE_IB2_F25_MASK                    = 0x10;
 public final static int RE_IB2_F26_MASK                    = 0x20;
 public final static int RE_IB2_F27_MASK                    = 0x40;
-public final static int RE_OPC_IB2_SPECIAL                 = 0xD4; //For functions F13-F28 (IBII and IB 2.x) and by IB 2.x ("one") for F9-F28
-public final static int RE_IB2_SPECIAL_FUNCS_TOKEN         = 0x20;
-public final static int RE_IB1_SPECIAL_F9_F11_TOKEN        = 0x07; //Used by Intellibox ("one") version 2.x
-public final static int RE_IB2_SPECIAL_F13_F19_TOKEN       = 0x08;
-public final static int RE_IB2_SPECIAL_F21_F27_TOKEN       = 0x09;
-public final static int RE_IB2_SPECIAL_F20_F28_TOKEN       = 0x05;
+// Common to Intellibox-I and -II :
+public final static int RE_IB2_SPECIAL_F20_F28_TOKEN       = 0x05; // Also applicable to F12
 public final static int RE_IB2_SPECIAL_F12_MASK            = 0x10; //F12 is also controlled with the special F20-F28 command
 public final static int RE_IB2_SPECIAL_F20_MASK            = 0x20;
 public final static int RE_IB2_SPECIAL_F28_MASK            = 0x40;

@@ -27,9 +27,10 @@ public class Ib2Throttle extends LocoNetThrottle {
         log.debug("Ib2Throttle created");
     }
 
-
     protected void sendFunctionGroup3() {
         // Special LocoNet message for Uhlenbrock Intellibox-II implementation
+        // Intellibox-I uses another implementation for these functions
+        // Functions F9 to F12
         int new_IB2_F9_F12 =   ((getF12() ? LnConstants.RE_IB2_F12_MASK : 0) |
                                 (getF11() ? LnConstants.RE_IB2_F11_MASK : 0) |
                                 (getF10() ? LnConstants.RE_IB2_F10_MASK : 0) |
@@ -38,31 +39,7 @@ public class Ib2Throttle extends LocoNetThrottle {
             msg.setOpCode(LnConstants.RE_OPC_IB2_F9_F12);
             msg.setElement(1, slot.getSlot());
             msg.setElement(2, new_IB2_F9_F12);
-            network.sendLocoNetMessage(msg);
-
-        // Special LocoNet messages for Uhlenbrock Intellibox-I version 2.x implementation 
-        // Functions F9 to F11            
-        int new_IB1_F9_F11 =   ((getF11() ? LnConstants.RE_IB1_F11_MASK : 0) |
-                                (getF10() ? LnConstants.RE_IB1_F10_MASK : 0) |
-                                (getF9()  ? LnConstants.RE_IB1_F9_MASK  : 0));
-            LocoNetMessage msg1 = new LocoNetMessage(6);
-            msg1.setOpCode(LnConstants.RE_OPC_IB2_SPECIAL);
-            msg1.setElement(1, LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN);                
-            msg1.setElement(2, slot.getSlot());
-            msg1.setElement(3, LnConstants.RE_IB1_SPECIAL_F9_F11_TOKEN);               
-            msg1.setElement(4, new_IB1_F9_F11);
-            network.sendLocoNetMessage(msg1);            
-        // Function F12 (and F20 and F28) 
-        int new_IB2_F20_F28 =  ((getF12() ? LnConstants.RE_IB2_SPECIAL_F12_MASK : 0) |
-                                (getF20() ? LnConstants.RE_IB2_SPECIAL_F20_MASK : 0) |
-                                (getF28() ? LnConstants.RE_IB2_SPECIAL_F28_MASK : 0));
-            LocoNetMessage msg2 = new LocoNetMessage(6);
-            msg2.setOpCode(LnConstants.RE_OPC_IB2_SPECIAL);
-            msg2.setElement(1, LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN);            
-            msg2.setElement(2, slot.getSlot());
-            msg2.setElement(3, LnConstants.RE_IB2_SPECIAL_F20_F28_TOKEN);             
-            msg2.setElement(4, new_IB2_F20_F28);
-            network.sendLocoNetMessage(msg2);              
+            network.sendLocoNetMessage(msg);         
     }
 
     @Override

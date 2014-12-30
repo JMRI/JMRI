@@ -36,6 +36,11 @@
     port, the Intellibox-II USB port and the LocoNet&reg; protocol. 
     This page provide more detail on the possibilities.</p>
 
+<p><i>Notes:<br> 
+      - Full support of Intellibox-II has been added to JMRI in development version 3.11.1.
+      It is not available in previous versions 3.10 and below.<br>
+      - Direct Serial protocol for Intellibox-I was named "LocoNet Intellibox Serial Port" up to JMRI version 3.10.</i></p>
+
 <h2 id="serial">Direct serial connection</h2>
 <a href="images/UhlenbrockConfig-I.png"><img src="images/UhlenbrockConfig-I.png" align="right" width="180" height="115"></a>
 This section is applicable to the "Intellibox-I", which includes
