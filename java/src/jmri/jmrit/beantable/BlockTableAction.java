@@ -160,7 +160,7 @@ public class BlockTableAction extends AbstractTableAction {
 					return jmri.Path.decodeDirection(b.getDirection());
 				}
 				else if (col==CURVECOL) {
-					JComboBox c = new JComboBox(curveOptions);
+					JComboBox<String> c = new JComboBox<String>(curveOptions);
 					if (b.getCurvature()==Block.NONE) c.setSelectedItem(0);
 					else if (b.getCurvature()==Block.GRADUAL) c.setSelectedItem(gradualText);
 					else if (b.getCurvature()==Block.TIGHT) c.setSelectedItem(tightText);
@@ -184,7 +184,7 @@ public class BlockTableAction extends AbstractTableAction {
                     if(!speedList.contains(speed)){
                         speedList.add(speed);
                     }
-                    JComboBox c = new JComboBox(speedList);
+                    JComboBox<String> c = new JComboBox<String>(speedList);
                     c.setEditable(true);
                     c.setSelectedItem(speed);
                     return c;
@@ -199,7 +199,7 @@ public class BlockTableAction extends AbstractTableAction {
                 }
                 else if (col==SENSORCOL){
                     Sensor sensor = b.getSensor();
-                    JComboBox c = new JComboBox(sensorList);
+                    JComboBox<String> c = new JComboBox<String>(sensorList);
                     String name = "";
                     if(sensor!=null){
                         name = sensor.getDisplayName();
@@ -235,7 +235,7 @@ public class BlockTableAction extends AbstractTableAction {
 				}
 				else if (col==CURVECOL) {
                     
-					String cName = (String)((JComboBox)value).getSelectedItem();
+					String cName = (String)((JComboBox<String>)value).getSelectedItem();
                     if (cName.equals(noneText)) b.setCurvature(Block.NONE);
 					else if (cName.equals(gradualText)) b.setCurvature(Block.GRADUAL);
 					else if (cName.equals(tightText)) b.setCurvature(Block.TIGHT);
@@ -248,7 +248,7 @@ public class BlockTableAction extends AbstractTableAction {
                     fireTableRowsUpdated(row,row);
                 }
                 else if (col==SPEEDCOL){
-                    String speed = (String)((JComboBox)value).getSelectedItem();
+                    String speed = (String)((JComboBox<String>)value).getSelectedItem();
                     try {
                         b.setBlockSpeed(speed);
                     } catch (jmri.JmriException ex) {
@@ -269,7 +269,7 @@ public class BlockTableAction extends AbstractTableAction {
                     fireTableRowsUpdated(row,row);
                 }
                 else if (col==SENSORCOL){
-                    String strSensor = (String)((JComboBox)value).getSelectedItem();
+                    String strSensor = (String)((JComboBox<String>)value).getSelectedItem();
                     b.setSensor(strSensor);
                     return;
                 }
@@ -484,7 +484,7 @@ public class BlockTableAction extends AbstractTableAction {
     }
     
     protected void setDefaultSpeeds(JFrame _who){
-        JComboBox blockSpeedCombo = new JComboBox(speedList);
+        JComboBox<String> blockSpeedCombo = new JComboBox<String>(speedList);
         blockSpeedCombo.setEditable(true);
         
         JPanel block = new JPanel();
@@ -532,7 +532,7 @@ public class BlockTableAction extends AbstractTableAction {
     JLabel sysNameLabel = new JLabel(rb.getString("LabelSystemName"));
     JLabel userNameLabel = new JLabel(rb.getString("LabelUserName"));
     
-    JComboBox cur = new JComboBox(curveOptions);
+    JComboBox<String> cur = new JComboBox<String>(curveOptions);
     JTextField lengthField = new JTextField(7);
     JTextField blockSpeed = new JTextField(7);
     JCheckBox checkPerm = new JCheckBox(rb.getString("BlockPermColName"));
@@ -561,7 +561,7 @@ public class BlockTableAction extends AbstractTableAction {
         addFrame.setVisible(true);
     }
     
-    JComboBox speeds = new JComboBox();
+    JComboBox<String> speeds = new JComboBox<String>();
     
     JPanel additionalAddOption(){
         
@@ -577,7 +577,7 @@ public class BlockTableAction extends AbstractTableAction {
         mainPanel.add(new JLabel("  "));
         mainPanel.add(checkPerm);
         
-        speeds = new JComboBox();
+        speeds = new JComboBox<String>();
         speeds.setEditable(true);
         for (int i=0; i<speedList.size(); i++) {
             speeds.addItem(speedList.get(i));

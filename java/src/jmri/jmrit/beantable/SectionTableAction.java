@@ -270,10 +270,10 @@ public class SectionTableAction extends AbstractTableAction {
     jmri.UserPreferencesManager pref;
 	JButton create = null;
 	JButton update = null;
-	JComboBox blockBox = new JComboBox();
+	JComboBox<String> blockBox = new JComboBox<String>();
 	JButton addBlock = null;
 	JButton deleteBlocks = null;
-	JComboBox layoutEditorBox = new JComboBox();
+	JComboBox<String> layoutEditorBox = new JComboBox<String>();
 	JTextField forwardSensorField = new JTextField(12);
 	JTextField reverseSensorField = new JTextField(12);
 	JTextField forwardStopSensorField = new JTextField(12);
@@ -434,7 +434,7 @@ public class SectionTableAction extends AbstractTableAction {
 			toBlockColumn.setMinWidth(150);
 			toBlockColumn.setMaxWidth(210);
 // GT - 12-Oct-2009 - end			
-			JComboBox directionCombo = new JComboBox();
+			JComboBox<String> directionCombo = new JComboBox<String>();
 			directionCombo.addItem(rbx.getString("SectionForward"));
 			directionCombo.addItem(rbx.getString("SectionReverse"));
 			directionCombo.addItem(rbx.getString("Unknown"));
@@ -800,7 +800,7 @@ public class SectionTableAction extends AbstractTableAction {
 			blockTableModel.fireTableDataChanged();
 		}
 	}
-	private boolean initializeLayoutEditorCombo(JComboBox box) {
+	private boolean initializeLayoutEditorCombo(JComboBox<String> box) {
 		// get list of Layout Editor panels
 		lePanelList = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
 		if (lePanelList.size()==0) return false;

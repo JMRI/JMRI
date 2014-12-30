@@ -529,7 +529,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                 if (this.getValueAt(i, j) == null) {
                     columnStrings[j] = spaces;
                 } else if (this.getValueAt(i, j)instanceof JComboBox){
-                        columnStrings[j] = (String)((JComboBox) this.getValueAt(i, j)).getSelectedItem();
+                        columnStrings[j] = (String)((JComboBox<String>) this.getValueAt(i, j)).getSelectedItem();
                     } else if (this.getValueAt(i, j)instanceof Boolean){
                             columnStrings[j] = ( this.getValueAt(i, j)).toString();
                         }else columnStrings[j] = (String) this.getValueAt(i, j);
@@ -804,7 +804,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             return;
         }
         
-        JComboBox box = new JComboBox();
+        JComboBox<String> box = new JComboBox<String>();
         List<String> nameList = getManager().getSystemNameList();
         for(int i = 0; i<nameList.size(); i++){
             NamedBean nb = getBySystemName(nameList.get(i));

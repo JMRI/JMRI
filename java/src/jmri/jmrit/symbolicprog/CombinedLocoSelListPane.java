@@ -73,7 +73,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane  {
             public void valueChanged(ListSelectionEvent e) {
                 if (!mMfgList.isSelectionEmpty()) {
                     // manufacturer selected, update decoder list
-                    String vMfg = (String) mMfgList.getSelectedValue();
+                    String vMfg = mMfgList.getSelectedValue();
                     try {
                         int vMfgID = Integer.parseInt(
                                     DecoderIndexFile.instance().mfgIdFromName(vMfg));
@@ -142,7 +142,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane  {
      */
     void updateMfgListContents(String specific) {
         if (mMfgListener!=null) mMfgList.removeListSelectionListener(mMfgListener);
-        String currentValue = (String)mMfgList.getSelectedValue();
+        String currentValue = mMfgList.getSelectedValue();
 
         List<String> allMfgList = DecoderIndexFile.instance().getMfgNameList();
         List<String> theMfgList = new ArrayList<String>();
@@ -173,9 +173,9 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane  {
     void updateMfgListToSelectedDecoder() {
         // update to point at this mfg, _without_ changing the decoder list
         DecoderFile df = DecoderIndexFile.instance()
-                        .fileFromTitle((String)mDecoderList.getSelectedValue());
+                        .fileFromTitle(mDecoderList.getSelectedValue());
         if (log.isDebugEnabled()) log.debug("decoder selection changed to "
-                                            +(String)mDecoderList.getSelectedValue());
+                                            +mDecoderList.getSelectedValue());
         if (df!=null) {
             if (log.isDebugEnabled()) log.debug("matching mfg is "
                                                 +df.getMfg());
@@ -285,7 +285,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane  {
      */
     protected String selectedDecoderType() {
         if (!isDecoderSelected()) return null;
-        else return (String)mDecoderList.getSelectedValue();
+        else return mDecoderList.getSelectedValue();
     }
 
     JList<String> mDecoderList;

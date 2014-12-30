@@ -63,14 +63,14 @@ public class SignalGroupSubTableAction {
         return "package.jmri.jmrit.beantable.SignalGroupTable";
     }
     
-    void setoperBox(boolean mode, JComboBox box) {
+    void setoperBox(boolean mode, JComboBox<String> box) {
         int _mode = 0;
         if (mode) _mode = 1;
         String result = jmri.util.StringUtil.getNameFromState(_mode, operValues, oper);
         box.setSelectedItem(result);
     }
     
-    boolean operFromBox(JComboBox box) {
+    boolean operFromBox(JComboBox<String> box) {
         String mode = (String)box.getSelectedItem();
         int result = jmri.util.StringUtil.getStateFromName(mode, operValues, oper);
         
@@ -85,7 +85,7 @@ public class SignalGroupSubTableAction {
     private static String[] oper = new String[]{"AND", "OR"};
     private static int[] operValues = new int[]{0x00, 0x01};
 
-    int sensorModeFromBox(JComboBox box) {
+    int sensorModeFromBox(JComboBox<String> box) {
         String mode = (String)box.getSelectedItem();
         int result = jmri.util.StringUtil.getStateFromName(mode, sensorInputModeValues, sensorInputModes);
         
@@ -96,12 +96,12 @@ public class SignalGroupSubTableAction {
         return result;
     }
  
-    void setSensorModeBox(int mode, JComboBox box) {
+    void setSensorModeBox(int mode, JComboBox<String> box) {
         String result = jmri.util.StringUtil.getNameFromState(mode, sensorInputModeValues, sensorInputModes);
         box.setSelectedItem(result);
     }
     
-    int signalStateFromBox(JComboBox box) {
+    int signalStateFromBox(JComboBox<String> box) {
         SignalHead sig = jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(curSignal);
         int result;
         String mode;
@@ -121,7 +121,7 @@ public class SignalGroupSubTableAction {
         return result;
     }
     
-    void setSignalStateBox(int mode, JComboBox box) {
+    void setSignalStateBox(int mode, JComboBox<String> box) {
         SignalHead sig = jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(curSignal);
         String result = jmri.util.StringUtil.getNameFromState(mode, sig.getValidStates(), sig.getValidStateNames());
         box.setSelectedItem(result);
@@ -129,7 +129,7 @@ public class SignalGroupSubTableAction {
     
     
 
-    int turnoutModeFromBox(JComboBox box) {
+    int turnoutModeFromBox(JComboBox<String> box) {
         String mode = (String)box.getSelectedItem();
         int result = jmri.util.StringUtil.getStateFromName(mode, turnoutInputModeValues, turnoutInputModes);
         
@@ -140,15 +140,15 @@ public class SignalGroupSubTableAction {
         return result;
     }
  
-    void setTurnoutModeBox(int mode, JComboBox box) {
+    void setTurnoutModeBox(int mode, JComboBox<String> box) {
         String result = jmri.util.StringUtil.getNameFromState(mode, turnoutInputModeValues, turnoutInputModes);
         box.setSelectedItem(result);
     }
        
     JLabel _systemName;
-    JComboBox _OnAppearance;
-    JComboBox _OffAppearance;
-    JComboBox _SensorTurnoutOper = new JComboBox(oper);
+    JComboBox<String> _OnAppearance;
+    JComboBox<String> _OffAppearance;
+    JComboBox<String> _SensorTurnoutOper = new JComboBox<String>(oper);
 
     JmriJFrame addFrame = null;
     SignalGroupTurnoutModel _SignalGroupTurnoutModel;
@@ -184,8 +184,8 @@ public class SignalGroupSubTableAction {
         curSignalHead = jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(curSignal);
         //SignalHead sig = jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(curSignal);
         
-        _OnAppearance = new JComboBox(curSignalHead.getValidStateNames());
-        _OffAppearance = new JComboBox(curSignalHead.getValidStateNames());
+        _OnAppearance = new JComboBox<String>(curSignalHead.getValidStateNames());
+        _OffAppearance = new JComboBox<String>(curSignalHead.getValidStateNames());
         _systemName= new JLabel(signal);
         _systemName.setVisible(true);
         
@@ -307,7 +307,7 @@ public class SignalGroupSubTableAction {
                                                             java.awt.Dimension(480,80));
 
             ROW_HEIGHT = SignalGroupTurnoutTable.getRowHeight();
-            JComboBox stateTCombo = new JComboBox();
+            JComboBox<String> stateTCombo = new JComboBox<String>();
    			stateTCombo.addItem(SET_TO_CLOSED);
 			stateTCombo.addItem(SET_TO_THROWN);
             TableColumnModel SignalGroupTurnoutColumnModel = SignalGroupTurnoutTable.getColumnModel();
@@ -366,7 +366,7 @@ public class SignalGroupSubTableAction {
             } catch (ClassCastException e3) {}  // if not a sortable table model
             SignalGroupSensorTable.setRowSelectionAllowed(false);
             SignalGroupSensorTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480,80));
-            JComboBox stateSCombo = new JComboBox();
+            JComboBox<String> stateSCombo = new JComboBox<String>();
    			stateSCombo.addItem(SET_TO_ACTIVE);
 			stateSCombo.addItem(SET_TO_INACTIVE);
             TableColumnModel SignalGroupSensorColumnModel = SignalGroupSensorTable.getColumnModel();

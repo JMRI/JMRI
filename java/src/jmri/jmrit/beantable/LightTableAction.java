@@ -249,7 +249,7 @@ public class LightTableAction extends AbstractTableAction {
 
     // items of add frame
 	JLabel systemLabel = new JLabel (rb.getString("LightSystem") );
-	JComboBox prefixBox = new JComboBox();
+	JComboBox<String> prefixBox = new JComboBox<String>();
 	JCheckBox addRangeBox = new JCheckBox( rb.getString("LightAddRangeBox") );
 	JTextField fieldHardwareAddress = new JTextField(10);
 	JTextField fieldNumToAdd = new JTextField(5);
@@ -941,7 +941,7 @@ public class LightTableAction extends AbstractTableAction {
 	
 	// items for add/edit Light Control window
 	private JmriJFrame addControlFrame = null;
-    private JComboBox typeBox;
+    private JComboBox<String> typeBox;
     private JLabel typeBoxLabel = new JLabel( rb.getString("LightControlType") );
     private int sensorControlIndex;
     private int fastClockControlIndex;
@@ -961,7 +961,7 @@ public class LightTableAction extends AbstractTableAction {
     private JTextField field2a = new JTextField(8);  // Fast Clock
     private JTextField field2b = new JTextField(8); // Timed ON
     private JLabel f2Label = new JLabel( rb.getString("LightSensorSense") );
-    private JComboBox stateBox;
+    private JComboBox<String> stateBox;
     private int sensorActiveIndex;
     private int sensorInactiveIndex;
     private int turnoutClosedIndex;
@@ -1004,7 +1004,7 @@ public class LightTableAction extends AbstractTableAction {
             JPanel panel31 = new JPanel();
             panel31.setLayout(new FlowLayout());
             panel31.add(typeBoxLabel);
-            panel31.add(typeBox = new JComboBox(new String[]{noControl,
+            panel31.add(typeBox = new JComboBox<String>(new String[]{noControl,
 				sensorControl,fastClockControl,turnoutStatusControl,timedOnControl,twoSensorControl
             }));
 			noControlIndex = 0;
@@ -1040,7 +1040,7 @@ public class LightTableAction extends AbstractTableAction {
             JPanel panel33 = new JPanel();
             panel33.setLayout(new FlowLayout());
             panel33.add(f2Label);
-            panel33.add(stateBox = new JComboBox(new String[]{
+            panel33.add(stateBox = new JComboBox<String>(new String[]{
                 rbean.getString("SensorStateActive"),rbean.getString("SensorStateInactive"),
             }));
             stateBox.setToolTipText( rb.getString("LightSensorSenseHint") );

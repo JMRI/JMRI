@@ -27,7 +27,7 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = -958394838638929630L;
-	public AddNewHardwareDevicePanel(JTextField sysAddress, JTextField userName, JComboBox prefixBox, JTextField endRange, JCheckBox addRange,
+	public AddNewHardwareDevicePanel(JTextField sysAddress, JTextField userName, JComboBox<String> prefixBox, JTextField endRange, JCheckBox addRange,
                              String addButtonLabel, ActionListener listener, ActionListener rangeListener) {
             setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             _endRange=endRange;

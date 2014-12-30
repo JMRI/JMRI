@@ -113,9 +113,9 @@ public class BlockEditAction extends BeanEditAction {
     }
     
     JTextField lengthField = new JTextField(20);
-    JComboBox curvatureField = new JComboBox(curveOptions);
+    JComboBox<String> curvatureField = new JComboBox<String>(curveOptions);
     JCheckBox permissiveField = new JCheckBox();
-    JComboBox speedField;
+    JComboBox<String> speedField;
     
     JRadioButton inch = new JRadioButton(Bundle.getMessage("LengthInches"));
     JRadioButton cm = new JRadioButton(Bundle.getMessage("LengthCentimeters"));
@@ -178,7 +178,7 @@ public class BlockEditAction extends BeanEditAction {
         
         basic.addItem(new BeanEditItem(p, Bundle.getMessage("BlockLengthUnits"), Bundle.getMessage("BlockLengthUnitsText")));
         basic.addItem(new BeanEditItem(curvatureField, Bundle.getMessage("BlockCurveColName"), ""));
-        basic.addItem(new BeanEditItem(speedField = new JComboBox(speedList), Bundle.getMessage("BlockSpeedColName"), Bundle.getMessage("BlockMaxSpeedText")));
+        basic.addItem(new BeanEditItem(speedField = new JComboBox<String>(speedList), Bundle.getMessage("BlockSpeedColName"), Bundle.getMessage("BlockMaxSpeedText")));
         basic.addItem(new BeanEditItem(permissiveField, Bundle.getMessage("BlockPermColName"), Bundle.getMessage("BlockPermissiveText")));
 
         permissiveField.setSelected(((Block)bean).getPermissiveWorking());

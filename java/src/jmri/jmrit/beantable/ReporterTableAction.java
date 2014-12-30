@@ -164,7 +164,7 @@ public class ReporterTableAction extends AbstractTableAction {
     JmriJFrame addFrame = null;
     JTextField sysName = new JTextField(10);
     JTextField userName = new JTextField(20);
-    JComboBox prefixBox = new JComboBox();
+    JComboBox<String> prefixBox = new JComboBox<String>();
     JTextField numberToAdd = new JTextField(10);
     JCheckBox range = new JCheckBox("Add a range");
     JLabel sysNameLabel = new JLabel("Hardware Address");

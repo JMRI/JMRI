@@ -251,15 +251,12 @@ public class FontComboUtil {
         JComboBox<String> fontList = new JComboBox<String>(getFonts(which).toArray(new String[0]));
 
         // Assign a custom renderer
-        fontList.setRenderer(new ListCellRenderer() {
-            public Component getListCellRendererComponent(JList list,
-                    Object value,
+        fontList.setRenderer(new ListCellRenderer<String>() {
+            public Component getListCellRendererComponent(JList<? extends String> list,
+                    String family,  // name of the current font family
                     int index,
                     boolean isSelected,
                     boolean hasFocus) {
-
-                // Get the name of the current font family
-                String family = (String)value;
 
                 JPanel p = new JPanel();
                 p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));

@@ -319,7 +319,7 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
         for (JComboBox key : this._comboBoxes.keySet()) {
             String strClass = _comboBoxes.get(key).getClassName();
             String strItem = _comboBoxes.get(key).getItem();
-            if (!p.getChoiceOptions(strClass, strItem).get(p.getMultipleChoiceOption(strClass, strItem)).equals((String)key.getSelectedItem())) {
+            if (!p.getChoiceOptions(strClass, strItem).get(p.getMultipleChoiceOption(strClass, strItem)).equals(key.getSelectedItem())) {
                 return true;
             }
         }

@@ -268,7 +268,7 @@ public class RouteTableAction extends AbstractTableAction {
         return "package.jmri.jmrit.beantable.RouteTable";
     }
 
-    int sensorModeFromBox(JComboBox box) {
+    int sensorModeFromBox(JComboBox<String> box) {
         String mode = (String)box.getSelectedItem();
         int result = jmri.util.StringUtil.getStateFromName(mode, sensorInputModeValues, sensorInputModes);
         
@@ -279,12 +279,12 @@ public class RouteTableAction extends AbstractTableAction {
         return result;
     }
  
-    void setSensorModeBox(int mode, JComboBox box) {
+    void setSensorModeBox(int mode, JComboBox<String> box) {
         String result = jmri.util.StringUtil.getNameFromState(mode, sensorInputModeValues, sensorInputModes);
         box.setSelectedItem(result);
     }
        
-    int turnoutModeFromBox(JComboBox box) {
+    int turnoutModeFromBox(JComboBox<String> box) {
         String mode = (String)box.getSelectedItem();
         int result = jmri.util.StringUtil.getStateFromName(mode, turnoutInputModeValues, turnoutInputModes);
         
@@ -295,7 +295,7 @@ public class RouteTableAction extends AbstractTableAction {
         return result;
     }
  
-    void setTurnoutModeBox(int mode, JComboBox box) {
+    void setTurnoutModeBox(int mode, JComboBox<String> box) {
         String result = jmri.util.StringUtil.getNameFromState(mode, turnoutInputModeValues, turnoutInputModes);
         box.setSelectedItem(result);
     }
@@ -318,18 +318,18 @@ public class RouteTableAction extends AbstractTableAction {
 
     JmriBeanComboBox sensor1;
     
-    JComboBox  sensor1mode = new JComboBox(sensorInputModes);
+    JComboBox<String>  sensor1mode = new JComboBox<String>(sensorInputModes);
     JmriBeanComboBox sensor2;
-    JComboBox  sensor2mode = new JComboBox(sensorInputModes);
+    JComboBox<String>  sensor2mode = new JComboBox<String>(sensorInputModes);
     JmriBeanComboBox sensor3;
-    JComboBox  sensor3mode = new JComboBox(sensorInputModes);
+    JComboBox<String>  sensor3mode = new JComboBox<String>(sensorInputModes);
     
     JmriBeanComboBox cTurnout;
     JmriBeanComboBox cLockTurnout;
 	JTextField timeDelay = new JTextField(5);
 
-    JComboBox cTurnoutStateBox = new JComboBox(turnoutInputModes);
-    JComboBox cLockTurnoutStateBox = new JComboBox(lockTurnoutInputModes);
+    JComboBox<String> cTurnoutStateBox = new JComboBox<String>(turnoutInputModes);
+    JComboBox<String> cLockTurnoutStateBox = new JComboBox<String>(lockTurnoutInputModes);
     
     ButtonGroup selGroup = null;
     JRadioButton allButton = null;   
@@ -486,7 +486,7 @@ public class RouteTableAction extends AbstractTableAction {
                                                             java.awt.Dimension(480,80));
 
             ROW_HEIGHT = routeTurnoutTable.getRowHeight();
-            JComboBox stateTCombo = new JComboBox();
+            JComboBox<String> stateTCombo = new JComboBox<String>();
    			stateTCombo.addItem(SET_TO_CLOSED);
 			stateTCombo.addItem(SET_TO_THROWN);
 			stateTCombo.addItem(SET_TO_TOGGLE);
@@ -540,7 +540,7 @@ public class RouteTableAction extends AbstractTableAction {
             } catch (ClassCastException e3) {}  // if not a sortable table model
             routeSensorTable.setRowSelectionAllowed(false);
             routeSensorTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480,80));
-            JComboBox stateSCombo = new JComboBox();
+            JComboBox<String> stateSCombo = new JComboBox<String>();
    			stateSCombo.addItem(SET_TO_ACTIVE);
 			stateSCombo.addItem(SET_TO_INACTIVE);
 			stateSCombo.addItem(SET_TO_TOGGLE);
@@ -1503,7 +1503,7 @@ public class RouteTableAction extends AbstractTableAction {
         return false;
     }
 
-    int makeSensorConditional(JmriBeanComboBox jmriBox, JComboBox sensorbox, int numConds, 
+    int makeSensorConditional(JmriBeanComboBox jmriBox, JComboBox<String> sensorbox, int numConds, 
                         boolean onChange, ArrayList<ConditionalAction>actionList,
                         ArrayList<ConditionalVariable>vetoList, Logix logix, String prefix, String uName) 
     {
@@ -1528,7 +1528,7 @@ public class RouteTableAction extends AbstractTableAction {
         return numConds;
     }
 
-    int makeTurnoutConditional(JmriBeanComboBox jmriBox, JComboBox box, int numConds, 
+    int makeTurnoutConditional(JmriBeanComboBox jmriBox, JComboBox<String> box, int numConds, 
                         boolean onChange, ArrayList<ConditionalAction>actionList,
                         ArrayList<ConditionalVariable>vetoList, Logix logix, String prefix, String uName) 
     {
@@ -1572,7 +1572,7 @@ public class RouteTableAction extends AbstractTableAction {
         return list;
     }
 
-	ConditionalVariable makeCtrlSensorVar(JmriBeanComboBox jmriBox, JComboBox sensorbox,
+	ConditionalVariable makeCtrlSensorVar(JmriBeanComboBox jmriBox, JComboBox<String> sensorbox,
                                            boolean makeVeto, boolean onChange) {
         String devName = jmriBox.getSelectedDisplayName();
         if (jmriBox.getSelectedBean() == null /*|| devName.length() == 0*/) {
@@ -1625,7 +1625,7 @@ public class RouteTableAction extends AbstractTableAction {
         return new ConditionalVariable(negated, oper, type, devName, trigger);
     }
 
-	ConditionalVariable makeCtrlTurnoutVar(JmriBeanComboBox jmriBox, JComboBox box,
+	ConditionalVariable makeCtrlTurnoutVar(JmriBeanComboBox jmriBox, JComboBox<String> box,
                                             boolean makeVeto, boolean onChange) {
         
         if (jmriBox.getSelectedBean() == null) {

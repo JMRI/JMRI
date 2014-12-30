@@ -301,18 +301,18 @@ public class LRouteTableAction extends AbstractTableAction {
 
     RouteInputModel _inputModel;
     JScrollPane _inputScrollPane;
-    JComboBox _testStateCombo;
+    JComboBox<String> _testStateCombo;
     JRadioButton _inputAllButton;   
     boolean _showAllInput;
 
     RouteOutputModel _outputModel;
     JScrollPane _outputScrollPane;
-    JComboBox _setStateCombo;
+    JComboBox<String> _setStateCombo;
     JRadioButton _outputAllButton;
     boolean _showAllOutput;
 
     AlignmentModel _alignModel;
-    JComboBox _alignCombo;
+    JComboBox<String> _alignCombo;
     JRadioButton _alignAllButton;
     boolean _showAllAlign;
 
@@ -1103,13 +1103,13 @@ public class LRouteTableAction extends AbstractTableAction {
             tab4.add(new JLabel(rbx.getString("PickAlign")));
             _alignModel = new AlignmentModel();
             JTable alignTable = new JTable(_alignModel);
-            _alignCombo = new JComboBox();
+            _alignCombo = new JComboBox<String>();
             for (int i=0; i<ALIGNMENT_STATES.length; i++) {
                 _alignCombo.addItem(ALIGNMENT_STATES[i]);
             }
             JScrollPane alignScrollPane = makeColumns(alignTable, _alignCombo, false);
             //alignTable.setPreferredScrollableViewportSize(new java.awt.Dimension(250,200));
-            _alignCombo = new JComboBox();
+            _alignCombo = new JComboBox<String>();
             for (int i=0; i<ALIGNMENT_STATES.length; i++) {
                 _alignCombo.addItem(ALIGNMENT_STATES[i]);
             }
@@ -1177,7 +1177,7 @@ public class LRouteTableAction extends AbstractTableAction {
     /*
     * Utility for addPressed
     */
-    JScrollPane makeColumns(JTable table, JComboBox box, boolean specialBox) {
+    JScrollPane makeColumns(JTable table, JComboBox<String> box, boolean specialBox) {
         table.setRowSelectionAllowed(false);
         //table.setPreferredScrollableViewportSize(new java.awt.Dimension(250,450));
         TableColumnModel columnModel = table.getColumnModel();
@@ -1204,7 +1204,7 @@ public class LRouteTableAction extends AbstractTableAction {
 
         TableColumn stateColumnT = columnModel.getColumn(RouteElementModel.STATE_COLUMN);
         if (specialBox) {
-            box = new JComboBox();
+            box = new JComboBox<String>();
             stateColumnT.setCellEditor(new ComboBoxCellEditor(box));
         } else {
             stateColumnT.setCellEditor(new DefaultCellEditor(box));
@@ -1967,9 +1967,9 @@ public class LRouteTableAction extends AbstractTableAction {
 		 */
 		private static final long serialVersionUID = -2610003095583895650L;
 		ComboBoxCellEditor() {
-            super(new JComboBox());
+            super(new JComboBox<String>());
         }
-        ComboBoxCellEditor(JComboBox comboBox) {
+        ComboBoxCellEditor(JComboBox<String> comboBox) {
             super(comboBox);
         }
         public Component getTableCellEditorComponent(JTable table, Object value, 
@@ -1999,7 +1999,7 @@ public class LRouteTableAction extends AbstractTableAction {
                 }
                 items = getOutputComboBoxItems(elt.getType());
             }
-            JComboBox comboBox = (JComboBox)getComponent();
+            JComboBox<String> comboBox = (JComboBox<String>)getComponent();
             comboBox.removeAllItems();
             for (int i=0; i<items.length; i++) {
                 comboBox.addItem(items[i]);

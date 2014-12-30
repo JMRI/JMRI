@@ -86,7 +86,7 @@ public class SensorTableAction extends AbstractTableAction {
 
     JTextField sysName = new JTextField(40);
     JTextField userName = new JTextField(40);
-    JComboBox prefixBox = new JComboBox();
+    JComboBox<String> prefixBox = new JComboBox<String>();
     JTextField numberToAdd = new JTextField(5);
     JCheckBox range = new JCheckBox("Add a range");
     JLabel sysNameLabel = new JLabel("Hardware Address");
@@ -122,7 +122,7 @@ public class SensorTableAction extends AbstractTableAction {
                     Boolean addToPrefix = true;
                     //Simple test not to add a system with a duplicate System prefix
                     for (int i = 0; i<prefixBox.getItemCount(); i++){
-                        if(((String)prefixBox.getItemAt(i)).equals(manuName))
+                        if((prefixBox.getItemAt(i)).equals(manuName))
                             addToPrefix=false;
                     }
                     if (addToPrefix)
@@ -277,7 +277,7 @@ public class SensorTableAction extends AbstractTableAction {
     
     protected void setDefaultState(JFrame _who){
         String[] sensorStates = new String[]{ Bundle.getMessage("BeanStateUnknown"),  Bundle.getMessage("SensorStateInactive"), Bundle.getMessage("SensorStateActive"), Bundle.getMessage("BeanStateInconsistent")};
-        JComboBox stateCombo = new JComboBox(sensorStates);
+        JComboBox<String> stateCombo = new JComboBox<String>(sensorStates);
         switch(jmri.managers.InternalSensorManager.getDefaultStateForNewSensors()){
             case jmri.Sensor.ACTIVE : stateCombo.setSelectedItem(Bundle.getMessage("SensorStateActive")); break;
             case jmri.Sensor.INACTIVE : stateCombo.setSelectedItem(Bundle.getMessage("SensorStateInactive")); break;

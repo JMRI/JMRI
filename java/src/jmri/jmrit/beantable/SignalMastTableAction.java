@@ -120,7 +120,7 @@ public class SignalMastTableAction extends AbstractTableAction {
 
     static final Logger log = LoggerFactory.getLogger(SignalMastTableAction.class.getName());
 
-    public static class MyComboBoxRenderer extends JComboBox implements TableCellRenderer {
+    public static class MyComboBoxRenderer extends JComboBox<String> implements TableCellRenderer {
         /**
 		 * 
 		 */
@@ -153,7 +153,7 @@ public class SignalMastTableAction extends AbstractTableAction {
 		private static final long serialVersionUID = -7751205079226082780L;
 
 		public MyComboBoxEditor(Vector<String> items) {
-            super(new JComboBox(items));
+            super(new JComboBox<String>(items));
         }
     }
     

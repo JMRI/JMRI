@@ -122,7 +122,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
         JButton closeButton = new JButton(rb.getString("Close"));
 
         // combo boxes
-        javax.swing.JComboBox reporterBox = getReporterComboBox();
+        JComboBox<String> reporterBox = getReporterComboBox();
 
         // Spinners
         PhysicalLocationPanel physicalLocation;
@@ -177,7 +177,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
         /**
          * Construct the combo box with the list of available Reporters
          */
-        protected javax.swing.JComboBox getReporterComboBox() {
+        protected JComboBox<String> getReporterComboBox() {
             ReporterManager mgr = InstanceManager.reporterManagerInstance();
             String[] nameArray = mgr.getSystemNameArray();
             List<String> displayList = new ArrayList<>();
@@ -194,7 +194,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
             }
             String[] sa = new String[displayList.size()];
             displayList.toArray(sa);
-            JComboBox retv = new JComboBox(sa);
+            JComboBox<String> retv = new JComboBox<String>(sa);
             return (retv);
 
         }

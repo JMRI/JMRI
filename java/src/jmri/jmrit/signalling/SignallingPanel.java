@@ -381,7 +381,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         } catch (ClassCastException e3) {}  // if not a sortable table model
         manualBlockTable.setRowSelectionAllowed(false);
         manualBlockTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480,100));
-        JComboBox stateCCombo = new JComboBox();
+        JComboBox<String> stateCCombo = new JComboBox<String>();
         stateCCombo.addItem(SET_TO_UNOCCUPIED);
         stateCCombo.addItem(SET_TO_OCCUPIED);
         stateCCombo.addItem(SET_TO_ANY);
@@ -513,7 +513,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         } catch (ClassCastException e3) {}  // if not a sortable table model
         manualTurnoutTable.setRowSelectionAllowed(false);
         manualTurnoutTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480,100));
-        JComboBox stateCCombo = new JComboBox();
+        JComboBox<String> stateCCombo = new JComboBox<String>();
         stateCCombo.addItem(SET_TO_THROWN);
         stateCCombo.addItem(SET_TO_CLOSED);
         stateCCombo.addItem(SET_TO_ANY);
@@ -630,7 +630,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         } catch (ClassCastException e3) {}  // if not a sortable table model
         manualSensorTable.setRowSelectionAllowed(false);
         manualSensorTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480,100));
-        JComboBox stateCCombo = new JComboBox();
+        JComboBox<String> stateCCombo = new JComboBox<String>();
         stateCCombo.addItem(SET_TO_INACTIVE);
         stateCCombo.addItem(SET_TO_ACTIVE);
         
@@ -874,7 +874,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     
     }
     
-    int blockModeFromBox(JComboBox box) {
+    int blockModeFromBox(JComboBox<String> box) {
         String mode = (String)box.getSelectedItem();
         int result = jmri.util.StringUtil.getStateFromName(mode, blockInputModeValues, blockInputModes);
         
@@ -885,7 +885,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         return result;
     }
     
-    void setBlockModeBox(int mode, JComboBox box) {
+    void setBlockModeBox(int mode, JComboBox<String> box) {
         String result = jmri.util.StringUtil.getNameFromState(mode, blockInputModeValues, blockInputModes);
         box.setSelectedItem(result);
     }
@@ -991,7 +991,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         }
     }
     
-    void signalMastCombo(JComboBox box, SignalMast select){
+    void signalMastCombo(JComboBox<String> box, SignalMast select){
         box.removeAllItems();
         List<String> nameList = smm.getSystemNameList();
         String[] displayList = new String[nameList.size()];
@@ -1886,11 +1886,11 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 		private static final long serialVersionUID = 5009970368789179788L;
 
 		public MyComboBoxEditor(Vector<String> items) {
-            super(new JComboBox(items));
+            super(new JComboBox<String>(items));
         }
     }
     
-    public static class MyComboBoxRenderer extends JComboBox implements TableCellRenderer {
+    public static class MyComboBoxRenderer extends JComboBox<String> implements TableCellRenderer {
         /**
 		 * 
 		 */
