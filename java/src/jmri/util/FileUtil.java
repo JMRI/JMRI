@@ -817,7 +817,7 @@ public final class FileUtil {
         // return path if in jmri.jar or null
         resource = FileUtil.class.getClassLoader().getResource(path);
         if (resource == null) {
-            log.debug("Unable to to get URL for {}", path);
+            log.debug("Unable to get URL for {}", path);
         }
         return resource;
     }
