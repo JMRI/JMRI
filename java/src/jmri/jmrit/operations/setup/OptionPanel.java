@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.trains.TrainManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,14 +23,14 @@ import org.slf4j.LoggerFactory;
  * @author Dan Boudreau Copyright (C) 2010, 2011, 2012, 2013
  * @version $Revision$
  */
-public class OptionPanel extends OperationsPanel {
+public class OptionPanel extends OperationsPreferencesPanel {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5466426954499681092L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = -5466426954499681092L;
 
-	// labels
+    // labels
     // major buttons
     JButton saveButton = new JButton(Bundle.getMessage("Save"));
 
@@ -252,39 +251,7 @@ public class OptionPanel extends OperationsPanel {
     @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == saveButton) {
-            // build option
-            Setup.setBuildAggressive(buildAggressive.isSelected());
-            Setup.setNumberPasses((Integer) numberPassesComboBox.getSelectedItem());
-            // Local moves?
-            Setup.setLocalInterchangeMovesEnabled(localInterchangeCheckBox.isSelected());
-            Setup.setLocalSpurMovesEnabled(localSpurCheckBox.isSelected());
-            Setup.setLocalYardMovesEnabled(localYardCheckBox.isSelected());
-            // Staging options
-            Setup.setTrainIntoStagingCheckEnabled(trainIntoStagingCheckBox.isSelected());
-            Setup.setStagingTrackImmediatelyAvail(stagingAvailCheckBox.isSelected());
-            Setup.setAllowReturnToStagingEnabled(stagingTurnCheckBox.isSelected());
-            Setup.setPromptFromStagingEnabled(promptFromTrackStagingCheckBox.isSelected());
-            Setup.setPromptToStagingEnabled(promptToTrackStagingCheckBox.isSelected());
-            // Car routing enabled?
-            Setup.setCarRoutingEnabled(routerCheckBox.isSelected());
-            Setup.setCarRoutingViaYardsEnabled(routerYardCheckBox.isSelected());
-            Setup.setOnlyActiveTrainsEnabled(!routerAllTrainsBox.isSelected());
-            Setup.setCheckCarDestinationEnabled(routerRestrictBox.isSelected());
-            // Options
-            Setup.setGenerateCsvManifestEnabled(generateCvsManifestCheckBox.isSelected());
-            Setup.setGenerateCsvSwitchListEnabled(generateCvsSwitchListCheckBox.isSelected());
-            Setup.setValueEnabled(valueCheckBox.isSelected());
-            Setup.setValueLabel(valueTextField.getText());
-            Setup.setRfidEnabled(rfidCheckBox.isSelected());
-            Setup.setRfidLabel(rfidTextField.getText());
-            // Logging enabled?
-            Setup.setEngineLoggerEnabled(engineLoggerCheckBox.isSelected());
-            Setup.setCarLoggerEnabled(carLoggerCheckBox.isSelected());
-            Setup.setTrainLoggerEnabled(trainLoggerCheckBox.isSelected());
-            // VSD
-            Setup.setVsdPhysicalLocationEnabled(enableVsdCheckBox.isSelected());
-            // write the file
-            OperationsSetupXml.instance().writeOperationsFile();
+            this.savePreferences();
             if (Setup.isCloseWindowOnSaveEnabled()) {
                 dispose();
             }
@@ -305,4 +272,86 @@ public class OptionPanel extends OperationsPanel {
     }
 
     private static final Logger log = LoggerFactory.getLogger(OptionPanel.class);
+
+    @Override
+    public String getTabbedPreferencesTitle() {
+        return Bundle.getMessage("TitleOptions"); // NOI18N
+    }
+
+    @Override
+    public String getPreferencesTooltip() {
+        return null;
+    }
+
+    @Override
+    public void savePreferences() {
+        // build option
+        Setup.setBuildAggressive(buildAggressive.isSelected());
+        Setup.setNumberPasses((Integer) numberPassesComboBox.getSelectedItem());
+        // Local moves?
+        Setup.setLocalInterchangeMovesEnabled(localInterchangeCheckBox.isSelected());
+        Setup.setLocalSpurMovesEnabled(localSpurCheckBox.isSelected());
+        Setup.setLocalYardMovesEnabled(localYardCheckBox.isSelected());
+        // Staging options
+        Setup.setTrainIntoStagingCheckEnabled(trainIntoStagingCheckBox.isSelected());
+        Setup.setStagingTrackImmediatelyAvail(stagingAvailCheckBox.isSelected());
+        Setup.setAllowReturnToStagingEnabled(stagingTurnCheckBox.isSelected());
+        Setup.setPromptFromStagingEnabled(promptFromTrackStagingCheckBox.isSelected());
+        Setup.setPromptToStagingEnabled(promptToTrackStagingCheckBox.isSelected());
+        // Car routing enabled?
+        Setup.setCarRoutingEnabled(routerCheckBox.isSelected());
+        Setup.setCarRoutingViaYardsEnabled(routerYardCheckBox.isSelected());
+        Setup.setOnlyActiveTrainsEnabled(!routerAllTrainsBox.isSelected());
+        Setup.setCheckCarDestinationEnabled(routerRestrictBox.isSelected());
+        // Options
+        Setup.setGenerateCsvManifestEnabled(generateCvsManifestCheckBox.isSelected());
+        Setup.setGenerateCsvSwitchListEnabled(generateCvsSwitchListCheckBox.isSelected());
+        Setup.setValueEnabled(valueCheckBox.isSelected());
+        Setup.setValueLabel(valueTextField.getText());
+        Setup.setRfidEnabled(rfidCheckBox.isSelected());
+        Setup.setRfidLabel(rfidTextField.getText());
+        // Logging enabled?
+        Setup.setEngineLoggerEnabled(engineLoggerCheckBox.isSelected());
+        Setup.setCarLoggerEnabled(carLoggerCheckBox.isSelected());
+        Setup.setTrainLoggerEnabled(trainLoggerCheckBox.isSelected());
+        // VSD
+        Setup.setVsdPhysicalLocationEnabled(enableVsdCheckBox.isSelected());
+        // write the file
+        OperationsSetupXml.instance().writeOperationsFile();
+    }
+
+    @Override
+    public boolean isDirty() {
+        return ( // build option
+                Setup.isBuildAggressive() != buildAggressive.isSelected()
+                || Setup.getNumberPasses() != (int) numberPassesComboBox.getSelectedItem()
+                // Local moves?
+                || Setup.isLocalInterchangeMovesEnabled() != localInterchangeCheckBox.isSelected()
+                || Setup.isLocalSpurMovesEnabled() != localSpurCheckBox.isSelected()
+                || Setup.isLocalYardMovesEnabled() != localYardCheckBox.isSelected()
+                // Staging options
+                || Setup.isTrainIntoStagingCheckEnabled() != trainIntoStagingCheckBox.isSelected()
+                || Setup.isStagingTrackImmediatelyAvail() != stagingAvailCheckBox.isSelected()
+                || Setup.isAllowReturnToStagingEnabled() != stagingTurnCheckBox.isSelected()
+                || Setup.isPromptFromStagingEnabled() != promptFromTrackStagingCheckBox.isSelected()
+                || Setup.isPromptToStagingEnabled() != promptToTrackStagingCheckBox.isSelected()
+                // Car routing enabled?
+                || Setup.isCarRoutingEnabled() != routerCheckBox.isSelected()
+                || Setup.isCarRoutingViaYardsEnabled() != routerYardCheckBox.isSelected()
+                || Setup.isOnlyActiveTrainsEnabled() != !routerAllTrainsBox.isSelected()
+                || Setup.isCheckCarDestinationEnabled() != routerRestrictBox.isSelected()
+                // Options
+                || Setup.isGenerateCsvManifestEnabled() != generateCvsManifestCheckBox.isSelected()
+                || Setup.isGenerateCsvSwitchListEnabled() != generateCvsSwitchListCheckBox.isSelected()
+                || Setup.isValueEnabled() != valueCheckBox.isSelected()
+                || !Setup.getValueLabel().equals(valueTextField.getText())
+                || Setup.isRfidEnabled() != rfidCheckBox.isSelected()
+                || !Setup.getRfidLabel().equals(rfidTextField.getText())
+                // Logging enabled?
+                || Setup.isEngineLoggerEnabled() != engineLoggerCheckBox.isSelected()
+                || Setup.isCarLoggerEnabled() != carLoggerCheckBox.isSelected()
+                || Setup.isTrainLoggerEnabled() != trainLoggerCheckBox.isSelected()
+                // VSD
+                || Setup.isVsdPhysicalLocationEnabled() != enableVsdCheckBox.isSelected());
+    }
 }
