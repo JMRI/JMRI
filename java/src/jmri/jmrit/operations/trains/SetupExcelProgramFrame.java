@@ -4,29 +4,26 @@ package jmri.jmrit.operations.trains;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
+import java.io.File;
 import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsManager;
-import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.setup.Setup;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Frame for user edit of the name and directory of an Excel program.
+ * Frame for user edit of the file name of an Excel program.
  * 
  * @author Dan Boudreau Copyright (C) 2013
  * @version $Revision: 22249 $
@@ -41,14 +38,18 @@ public class SetupExcelProgramFrame extends OperationsFrame {
 	// checkboxes
 	protected static final ResourceBundle rb = ResourceBundle
 			.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
-	JCheckBox generateCvsManifestCheckBox = new JCheckBox(rb.getString("GenerateCsvManifest")); 
+	JCheckBox generateCheckBox = new JCheckBox(); 
 
 	// text windows
-	JTextField fileName = new JTextField(30);
+	JTextField fileNameTextField = new JTextField(30);
 
 	// major buttons
+	JButton addButton = new JButton(Bundle.getMessage("Add"));
 	JButton testButton = new JButton(Bundle.getMessage("Test"));
 	JButton saveButton = new JButton(Bundle.getMessage("Save"));
+	
+	// directory
+	JPanel pDirectoryName;
 
 	public void initComponents() {
 
@@ -59,33 +60,30 @@ public class SetupExcelProgramFrame extends OperationsFrame {
 		// row 1
 		JPanel pOptions = new JPanel();
 		pOptions.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Options")));
-		pOptions.add(generateCvsManifestCheckBox);
-		
-		generateCvsManifestCheckBox.setSelected(Setup.isGenerateCsvManifestEnabled());
+		pOptions.add(generateCheckBox);
 		
 		// row 2
-		JPanel pDirectoryName = new JPanel();
+		pDirectoryName = new JPanel();
 		pDirectoryName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Directory")));
-		pDirectoryName.add(new JLabel(OperationsManager.getInstance().getFile(TrainCustomManifest.getDirectoryName()).getPath()));
 
 		JPanel pFileName = new JPanel();
 		pFileName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("FileName")));
-		pFileName.add(fileName);
-
-		fileName.setText(TrainCustomManifest.getFileName());
+		pFileName.add(fileNameTextField);
 
 		// row 4 buttons
-		JPanel pB = new JPanel();
-		pB.setLayout(new GridBagLayout());
-		addItem(pB, testButton, 1, 0);
-		addItem(pB, saveButton, 3, 0);
+		JPanel pButtons = new JPanel();
+		pButtons.setLayout(new GridBagLayout());
+		addItem(pButtons, addButton, 1, 0);
+		addItem(pButtons, testButton, 2, 0);
+		addItem(pButtons, saveButton, 3, 0);
 
 		getContentPane().add(pOptions);
 		getContentPane().add(pDirectoryName);
 		getContentPane().add(pFileName);
-		getContentPane().add(pB);
+		getContentPane().add(pButtons);
 
 		// setup buttons
+		addButtonAction(addButton);
 		addButtonAction(testButton);
 		addButtonAction(saveButton);
 
@@ -94,35 +92,30 @@ public class SetupExcelProgramFrame extends OperationsFrame {
 
 		initMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight300));
 	}
-
-	// Save and Test
-	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
-
-		TrainCustomManifest.setFileName(fileName.getText());
-
-		if (ae.getSource() == testButton) {
-			if (TrainCustomManifest.manifestCreatorFileExists()) {
-				JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("DirectoryNameFileName"),
-						new Object[] { TrainCustomManifest.getDirectoryName(), TrainCustomManifest.getFileName() }),
-						Bundle.getMessage("ManifestCreatorFound"), JOptionPane.INFORMATION_MESSAGE);
-			} else {
-				JOptionPane.showMessageDialog(this, MessageFormat.format(
-						Bundle.getMessage("LoadDirectoryNameFileName"), new Object[] {
-								TrainCustomManifest.getDirectoryName(), TrainCustomManifest.getFileName() }), Bundle
-						.getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
+	
+	/**
+	 * Opens a dialog window in either the csvManifest or csvSwitchLists directory
+	 * @param directoryName
+	 * @return
+	 */
+	protected File selectFile(String directoryName) {
+		JFileChooser fc = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("ExcelProgramFiles"), "xls", "xlsm"); // NOI18N
+		if (fc == null) {
+			log.error("Could not find user directory");
+		} else {
+			fc.setCurrentDirectory(OperationsManager.getInstance().getFile(directoryName));
+			fc.setDialogTitle(Bundle.getMessage("FindDesiredExcelFile"));
+			// when reusing the chooser, make sure new files are included
+			fc.rescanCurrentDirectory();
+			int retVal = fc.showOpenDialog(null);
+			// handle selection or cancel
+			if (retVal == JFileChooser.APPROVE_OPTION) {
+				File file = fc.getSelectedFile();
+				// Run the script from it's filename
+				return file;
 			}
 		}
-		if (ae.getSource() == saveButton) {
-			log.debug("Save button activated");
-			Setup.setGenerateCsvManifestEnabled(generateCvsManifestCheckBox.isSelected());
-			OperationsXml.save();
-			if (Setup.isCloseWindowOnSaveEnabled())
-				dispose();
-		}
-	}
-
-	public void dispose() {
-		super.dispose();
+		return null;
 	}
 
 	static Logger log = LoggerFactory.getLogger(SetupExcelProgramFrame.class.getName());
