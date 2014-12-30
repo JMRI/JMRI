@@ -93,7 +93,7 @@ public class MemoryComboIcon extends PositionableJPanel
     public Positionable deepClone() {
     	String[] list = new String[_model.getSize()];
     	for (int i=0; i<_model.getSize(); i++) {
-    		list[i] = (String)_model.getElementAt(i);		
+    		list[i] = _model.getElementAt(i);		
     	}
         MemoryComboIcon pos = new MemoryComboIcon(_editor, list);
         return finishClone(pos);
