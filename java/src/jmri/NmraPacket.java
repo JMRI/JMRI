@@ -1064,6 +1064,7 @@ public class NmraPacket {
         switch (extractAddressType(packet)) {
             case BROADCAST:
                 return 0;
+            case NO_ADDRESS:
             case IDLE:
                 return -1;
             case LOCO_SHORT_ADDRESS:
@@ -1087,13 +1088,11 @@ public class NmraPacket {
     static public int extractInstruction(byte[] packet) {
         switch (extractAddressType(packet)) {
             case BROADCAST:
-                return packet[1]&0xFF;
+            case NO_ADDRESS:
             case IDLE:
-                return packet[1]&0xFF;
             case LOCO_SHORT_ADDRESS:
                 return packet[1]&0xFF;
             case LOCO_LONG_ADDRESS:
-                return packet[2]&0xFF;
             case ACCESSORY_ADDRESS:
                 return packet[2]&0xFF;
         }
