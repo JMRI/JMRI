@@ -47,7 +47,7 @@ public enum LnCommandStationType {
     COMMAND_STATION_LBPS        ("LocoBuffer (PS)",             true,   false,  "LnThrottleManager",    "SlotManager"),  // NOI18N
     COMMAND_STATION_MM          ("Mix-Master",                  false,  true,   "LnThrottleManager",    "SlotManager"),  // NOI18N
     COMMAND_STATION_IBX_TYPE_1  ("Intellibox-I",                true,   true,   "Ib1ThrottleManager",   "SlotManager"), // NOI18N
-    COMMAND_STATION_IBX_TYPE_2  ("Intellibox-II",               true,   true,   "Ib2ThrottleManager",   "SlotManager"), // NOI18N
+    COMMAND_STATION_IBX_TYPE_2  ("Intellibox-II",               true,   true,   "Ib2ThrottleManager",   "UhlenbrockSlotManager"), // NOI18N
 
     COMMAND_STATION_PR3_ALONE   ("PR3 standalone programmer",   true,   false,  "LnThrottleManager",    "SlotManager"),  // NOI18N
     COMMAND_STATION_STANDALONE  ("Stand-alone LocoNet",         false,  false,  "LnThrottleManager",    "SlotManager");  // NOI18N  
@@ -100,16 +100,10 @@ public enum LnCommandStationType {
             log.debug("attempting to create {}", className);
             Class<?> c = Class.forName(className);
             java.lang.reflect.Constructor<?>[] allConstructors = c.getDeclaredConstructors();
-            log.debug("found {} ctors", allConstructors.length);
             for (java.lang.reflect.Constructor ctor : allConstructors) {
                 Class<?>[] pType  = ctor.getParameterTypes();
-                log.debug("  ctor with {} parameters {}, match {}?", 
-                                pType.length, 
-                                (pType.length>0 ? ("first type "+pType[0].toString()) : ""),
-                                LocoNetSystemConnectionMemo.class.toString());
                 if (pType.length == 1 && pType[0].equals(LocoNetSystemConnectionMemo.class)) {
                     // this is the right ctor
-                    log.debug("Invoking");
                     return (ThrottleManager)ctor.newInstance(memo);
                 }
             }
@@ -136,16 +130,10 @@ public enum LnCommandStationType {
             log.debug("attempting to create {}", className);
             Class<?> c = Class.forName(className);
             java.lang.reflect.Constructor<?>[] allConstructors = c.getDeclaredConstructors();
-            log.debug("found {} ctors", allConstructors.length);
             for (java.lang.reflect.Constructor ctor : allConstructors) {
                 Class<?>[] pType  = ctor.getParameterTypes();
-                log.debug("  ctor with {} parameters {}, match {}?", 
-                                pType.length, 
-                                (pType.length>0 ? ("first type "+pType[0].toString()) : ""),
-                                LnTrafficController.class.toString());
                 if (pType.length == 1 && pType[0].equals(LnTrafficController.class)) {
                     // this is the right ctor
-                    log.debug("Invoking");
                     return (SlotManager)ctor.newInstance(tc);
                 }
             }

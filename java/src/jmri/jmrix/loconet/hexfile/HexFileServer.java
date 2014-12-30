@@ -41,7 +41,6 @@ public class HexFileServer {
         connected = true;
 
         // create memo
-        port.getAdapterMemo().setSlotManager(new SlotManager(packets));
         port.getAdapterMemo().setLnTrafficController(packets);
 
         // do the common manager config

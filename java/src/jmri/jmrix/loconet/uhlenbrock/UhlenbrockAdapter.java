@@ -54,9 +54,6 @@ public void configure() {
     packets.connectPort(this);
 
     // create memo
-    /*LocoNetSystemConnectionMemo memo 
-        = new LocoNetSystemConnectionMemo(packets, new SlotManager(packets));*/
-    adaptermemo.setSlotManager(new UhlenbrockSlotManager(packets));
     adaptermemo.setLnTrafficController(packets);
     // do the common manager config
         adaptermemo.configureCommandStation(commandStationType, 

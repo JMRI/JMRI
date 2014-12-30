@@ -24,7 +24,9 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
                                         SlotManager sm) {
         super("L", "LocoNet");
         this.lt = lt;
-        setSlotManager(sm);
+        
+        this.sm = sm; // doesn't full register, but fine for this purpose.
+        
         register(); // registers general type
         InstanceManager.store(this, LocoNetSystemConnectionMemo.class); // also register as specific type
         
@@ -49,12 +51,11 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
      * Provides access to the SlotManager for this
      * particular connection.
      */
-    public SlotManager getSlotManager() { return sm; }
-    private SlotManager sm;
-    public void setSlotManager(SlotManager sm){
-        this.sm = sm;
-        if (sm != null) sm.setThrottledTransmitter(tm, mTurnoutNoRetry);
+    public SlotManager getSlotManager() { 
+        if (sm == null) log.error("slot manager is null, but there should always be a valid SlotManager", new Exception("Traceback"));
+        return sm;
     }
+    private SlotManager sm;
     
     /**
      * Provides access to the TrafficController for this
@@ -93,11 +94,15 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
      */
     public void configureCommandStation(LnCommandStationType type, boolean mTurnoutNoRetry, boolean mTurnoutExtraSpace) {
 
+        // store arguments
         this.mTurnoutNoRetry = mTurnoutNoRetry;
         this.mTurnoutExtraSpace = mTurnoutExtraSpace;
         
-        // loconet.SlotManager to do programming (the Programmer instance is registered
-        // when the SlotManager is created)
+        // create and install SlotManager
+        if (sm !=null) log.error("Installing SlotManager twice", new Exception("TraceBack"));
+        sm = type.getSlotManager(lt);
+        if (sm != null) sm.setThrottledTransmitter(tm, mTurnoutNoRetry);
+        
         sm.setCommandStationType(type);
         sm.setSystemConnectionMemo(this);
         

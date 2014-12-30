@@ -41,7 +41,6 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
         packets.connectPort(this);
 
         // create memo
-        adaptermemo.setSlotManager(new SlotManager(packets));
         adaptermemo.setLnTrafficController(packets);
         // do the common manager config
         adaptermemo.configureCommandStation(commandStationType,

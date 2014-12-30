@@ -285,6 +285,14 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 tc.sendLocoNetMessage(mo);             
             }
         }
+        
+        // this is where additional decoding for Uhlenbrock messages should go,
+        // following the pattern of the "extended function" message above:
+        // * Make sure it's the right message type
+        // * Figure out which slot it's addressed to
+        // * Invoke a handler routine in that slot.
+        
+        
     }
 
     /**

@@ -80,7 +80,6 @@ public class PR3Adapter extends LocoBufferAdapter {
             // create memo
             /*PR3SystemConnectionMemo memo 
                 = new PR3SystemConnectionMemo(packets, new SlotManager(packets));*/
-            adaptermemo.setSlotManager(new SlotManager(packets));
             adaptermemo.setLnTrafficController(packets);
             // do the common manager config
             adaptermemo.configureCommandStation(commandStationType, 
@@ -110,7 +109,6 @@ public class PR3Adapter extends LocoBufferAdapter {
             // create memo
             /*PR3SystemConnectionMemo memo 
                 = new PR3SystemConnectionMemo(packets, new SlotManager(packets));*/
-            adaptermemo.setSlotManager(new SlotManager(packets));
             adaptermemo.setLnTrafficController(packets);
             // do the common manager config
             adaptermemo.configureCommandStation(commandStationType, 

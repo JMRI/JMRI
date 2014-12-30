@@ -38,7 +38,6 @@ public class HexFileFrame extends JmriJFrame {
 
     public HexFileFrame() {
         super();
-        //adaptermemo = new LocoNetSystemConnectionMemo();
     }
     
     //LocoNetSystemConnectionMemo adaptermemo = null;
@@ -161,7 +160,6 @@ public class HexFileFrame extends JmriJFrame {
         connected = true;
 
         // create memo
-        port.getAdapterMemo().setSlotManager(new SlotManager(packets));
         port.getAdapterMemo().setLnTrafficController(packets);
 
         // do the common manager config
