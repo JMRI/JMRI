@@ -8,12 +8,17 @@ import org.slf4j.LoggerFactory;
 import jmri.ThrottleManager;
 
 /** 
- * Enum to carry command-station specific information.
+ * Enum to carry command-station specific information
+ * for LocoNet implementations.
  *<p>
  * Because you can't inherit and extend enums, this
  * will accumulate information from subtypes.  We 
  * use reflection to deal with that.
- *
+ *<p>
+ * This is (slowly) centralizing all of the command-station-specific
+ * dependencies for startup.  It does _not_ handle the connection-specific
+ * dependencies for e.g. the connections via networks and Uhlenbrock serial/USB; those are
+ * still done via port adapters, special packetizers et al.
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -31,35 +36,38 @@ import jmri.ThrottleManager;
  * @version			$Revision$
  */
 
+@net.jcip.annotations.Immutable
 public enum LnCommandStationType {
-    //  enum value                 name                         canRead progEndOp   ThrottleManager
-    COMMAND_STATION_DCS100      ("DCS100 (Chief)",              true,   false,  "LnThrottleManager"),  // NOI18N
-    COMMAND_STATION_DCS200      ("DCS200",                      true,   false,  "LnThrottleManager"),  // NOI18N
-    COMMAND_STATION_DCS050      ("DCS50 (Zephyr)",              true,   false,  "LnThrottleManager"),  // NOI18N
-    COMMAND_STATION_DCS051      ("DCS51 (Zephyr Xtra)",         true,   false,  "LnThrottleManager"),  // NOI18N
-    COMMAND_STATION_DB150       ("DB150 (Empire Builder)",      false,  true,   "LnThrottleManager"),  // NOI18N
-    COMMAND_STATION_LBPS        ("LocoBuffer (PS)",             true,   false,  "LnThrottleManager"),  // NOI18N
-    COMMAND_STATION_MM          ("Mix-Master",                  false,  true,   "LnThrottleManager"),  // NOI18N
-    COMMAND_STATION_IBX_TYPE_1  ("Intellibox-I",                true,   true,   "Ib1ThrottleManager"), // NOI18N
-    COMMAND_STATION_IBX_TYPE_2  ("Intellibox-II",               true,   true,   "Ib2ThrottleManager"), // NOI18N
+    //  enum value                 name                         canRead progEndOp   ThrottleManager      SlotManager
+    COMMAND_STATION_DCS100      ("DCS100 (Chief)",              true,   false,  "LnThrottleManager",    "SlotManager"),  // NOI18N
+    COMMAND_STATION_DCS200      ("DCS200",                      true,   false,  "LnThrottleManager",    "SlotManager"),  // NOI18N
+    COMMAND_STATION_DCS050      ("DCS50 (Zephyr)",              true,   false,  "LnThrottleManager",    "SlotManager"),  // NOI18N
+    COMMAND_STATION_DCS051      ("DCS51 (Zephyr Xtra)",         true,   false,  "LnThrottleManager",    "SlotManager"),  // NOI18N
+    COMMAND_STATION_DB150       ("DB150 (Empire Builder)",      false,  true,   "LnThrottleManager",    "SlotManager"),  // NOI18N
+    COMMAND_STATION_LBPS        ("LocoBuffer (PS)",             true,   false,  "LnThrottleManager",    "SlotManager"),  // NOI18N
+    COMMAND_STATION_MM          ("Mix-Master",                  false,  true,   "LnThrottleManager",    "SlotManager"),  // NOI18N
+    COMMAND_STATION_IBX_TYPE_1  ("Intellibox-I",                true,   true,   "Ib1ThrottleManager",   "SlotManager"), // NOI18N
+    COMMAND_STATION_IBX_TYPE_2  ("Intellibox-II",               true,   true,   "Ib2ThrottleManager",   "SlotManager"), // NOI18N
 
-    COMMAND_STATION_PR3_ALONE   ("PR3 standalone programmer",   true,   false,  "LnThrottleManager"),  // NOI18N
-    COMMAND_STATION_STANDALONE  ("Stand-alone LocoNet",         false,  false,  "LnThrottleManager");  // NOI18N  
+    COMMAND_STATION_PR3_ALONE   ("PR3 standalone programmer",   true,   false,  "LnThrottleManager",    "SlotManager"),  // NOI18N
+    COMMAND_STATION_STANDALONE  ("Stand-alone LocoNet",         false,  false,  "LnThrottleManager",    "SlotManager");  // NOI18N  
 
     // Note that the convention is that the first word (space-separated token) of the name is the
     // name of a configuration file for loconet.cmdstnconfig
     
-    LnCommandStationType(String name, boolean canRead, boolean progEndOp, String throttleClassName) {
+    LnCommandStationType(String name, boolean canRead, boolean progEndOp, String throttleClassName, String slotManagerClassName) {
         this.name = name;
         this.canRead = canRead;
         this.progEndOp = progEndOp;
         this.throttleClassName = throttleClassName;
+        this.slotManagerClassName = slotManagerClassName;
     }
     
     String name;
     boolean canRead;
     boolean progEndOp;
     String throttleClassName;
+    String slotManagerClassName;
     
     public String getName() { return name; }
     
@@ -117,6 +125,43 @@ public enum LnCommandStationType {
         }
         return null;        
      }
+
+    /**
+     * Get a new SlotManager of the right type for this command station.
+     */
+     public SlotManager getSlotManager(LnTrafficController tc) {
+        try {
+            // uses reflection
+            String className = "jmri.jmrix.loconet."+slotManagerClassName;
+            log.debug("attempting to create {}", className);
+            Class<?> c = Class.forName(className);
+            java.lang.reflect.Constructor<?>[] allConstructors = c.getDeclaredConstructors();
+            log.debug("found {} ctors", allConstructors.length);
+            for (java.lang.reflect.Constructor ctor : allConstructors) {
+                Class<?>[] pType  = ctor.getParameterTypes();
+                log.debug("  ctor with {} parameters {}, match {}?", 
+                                pType.length, 
+                                (pType.length>0 ? ("first type "+pType[0].toString()) : ""),
+                                LnTrafficController.class.toString());
+                if (pType.length == 1 && pType[0].equals(LnTrafficController.class)) {
+                    // this is the right ctor
+                    log.debug("Invoking");
+                    return (SlotManager)ctor.newInstance(tc);
+                }
+            }
+            log.error("Did not find a slotmanager ctor for {}", name);
+        } catch (ClassNotFoundException e1) {
+            log.error("Could not find class for slotmanager from type {} in enum element {}", slotManagerClassName, name);
+        } catch (InstantiationException e2) {
+            log.error("Could not create slotmanager object from type {} in enum element {}", slotManagerClassName, name, e2);
+        } catch (IllegalAccessException e3) {
+            log.error("Access error creating slotmanager object from type {} in enum element {}", slotManagerClassName, name, e3);
+        } catch (java.lang.reflect.InvocationTargetException e4) {
+            log.error("Invocation error while creating slotmanager object from type {} in enum element {}", slotManagerClassName, name, e4);
+        }
+        return null;        
+     }
+
     static Logger log = LoggerFactory.getLogger(LnCommandStationType.class.getName());
 }
     
