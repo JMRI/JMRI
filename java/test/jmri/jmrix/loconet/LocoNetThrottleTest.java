@@ -10,7 +10,7 @@ public class LocoNetThrottleTest extends TestCase {
     }
 
     public void testCTor() {
-       LocoNetThrottle t = new LocoNetThrottle(new LocoNetSystemConnectionMemo(lnis, null), new LocoNetSlot(0));
+       LocoNetThrottle t = new LocoNetThrottle(new LocoNetSystemConnectionMemo(lnis, slotmanager), new LocoNetSlot(0));
        Assert.assertNotNull(t);
     }
 
@@ -29,7 +29,7 @@ public class LocoNetThrottleTest extends TestCase {
               return 0;
            }
        };
-       LocoNetThrottle t1 = new LocoNetThrottle(new LocoNetSystemConnectionMemo(lnis, null), s1);
+       LocoNetThrottle t1 = new LocoNetThrottle(new LocoNetSystemConnectionMemo(lnis, slotmanager), s1);
        Assert.assertEquals(0.0f,t1.getSpeedSetting());
        t1.setSpeedSetting(0.5f);
        // the speed change SHOULD be changed.
@@ -47,7 +47,7 @@ public class LocoNetThrottleTest extends TestCase {
               return 0;
            }
        };
-       LocoNetThrottle t2 = new LocoNetThrottle(new LocoNetSystemConnectionMemo(lnis, null), s2);
+       LocoNetThrottle t2 = new LocoNetThrottle(new LocoNetSystemConnectionMemo(lnis, slotmanager), s2);
        Assert.assertEquals(0.0f,t2.getSpeedSetting());
        t2.setSpeedSetting(0.5f);
        // the speed change SHOULD be changed.
@@ -65,7 +65,7 @@ public class LocoNetThrottleTest extends TestCase {
               return 0;
            }
        };
-       LocoNetThrottle t3 = new LocoNetThrottle(new LocoNetSystemConnectionMemo(lnis, null), s3);
+       LocoNetThrottle t3 = new LocoNetThrottle(new LocoNetSystemConnectionMemo(lnis, slotmanager), s3);
        Assert.assertEquals(0.0f,t3.getSpeedSetting());
        t3.setSpeedSetting(0.5f);
        // the speed change SHOULD NOT be changed.
@@ -85,15 +85,16 @@ public class LocoNetThrottleTest extends TestCase {
               return 0;
            }
        };
-       LocoNetThrottle t4 = new LocoNetThrottle(new LocoNetSystemConnectionMemo(lnis, null), s4);
+       LocoNetThrottle t4 = new LocoNetThrottle(new LocoNetSystemConnectionMemo(lnis, slotmanager), s4);
        Assert.assertEquals(0.0f,t4.getSpeedSetting());
        t4.setSpeedSetting(0.5f);
        // the speed change SHOULD be ignored.
        Assert.assertEquals(0.0f,t4.getSpeedSetting());
     }
-
+        
     LocoNetInterfaceScaffold lnis;
-
+    SlotManager slotmanager;
+    
 	// Main entry point
 	static public void main(String[] args) {
 		String[] testCaseName = {LocoNetThrottleTest.class.getName()};
@@ -107,9 +108,24 @@ public class LocoNetThrottleTest extends TestCase {
 	}
 
     // The minimal setup for log4J
-    protected void setUp() { 
+    protected void setUp() throws Exception { 
         // prepare an interface
         lnis = new LocoNetInterfaceScaffold();
+        slotmanager = new SlotManager(lnis);
+        
+        // set slot 3 to address 3
+        LocoNetMessage m = new LocoNetMessage(13);
+        m.setOpCode(LnConstants.OPC_WR_SL_DATA);
+        m.setElement(1, 0x0E);
+        m.setElement(2, 0x03);        
+        m.setElement(4, 0x03);
+        slotmanager.slot(3).setSlot(m);
+
+        // set slot 4 to address 255
+        m.setElement(2, 0x04);        
+        m.setElement(4, 0x7F);
+        m.setElement(9, 0x01);
+        slotmanager.slot(4).setSlot(m);
 
         apps.tests.Log4JFixture.setUp(); 
     }
