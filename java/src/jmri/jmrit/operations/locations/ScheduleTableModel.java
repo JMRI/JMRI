@@ -76,6 +76,12 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		// and add them back in
 		for (ScheduleItem si : _list) {
 			si.addPropertyChangeListener(this);
+			// TODO the following two property changes could be moved to ScheduleItem
+			// covers the cases where destination or track is deleted
+			if (si.getDestination() != null)
+				si.getDestination().addPropertyChangeListener(this);
+			if (si.getDestinationTrack() != null)
+				si.getDestinationTrack().addPropertyChangeListener(this);
 		}
 	}
 
@@ -660,7 +666,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 				|| e.getPropertyName().equals(Track.ROADS_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Track.LOADS_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Track.SCHEDULE_CHANGED_PROPERTY)
-				|| e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY)) {
+				|| e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY)
+				|| e.getPropertyName().equals(Location.DISPOSE_CHANGED_PROPERTY)) {
 			fireTableDataChanged();
 		}
 		// update hit count or other schedule item?
@@ -676,9 +683,11 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
 	private void removePropertyChangeScheduleItems() {
 		for (ScheduleItem si : _list) {
-			// if object has been deleted, it's not here; ignore it
-			if (si != null)
-				si.removePropertyChangeListener(this);
+			si.removePropertyChangeListener(this);
+			if (si.getDestination() != null)
+				si.getDestination().removePropertyChangeListener(this);
+			if (si.getDestinationTrack() != null)
+				si.getDestinationTrack().removePropertyChangeListener(this);
 		}
 	}
 
