@@ -22,7 +22,7 @@ public class LnCommandStationTypeTest extends TestCase {
     }
 
     public void testThrottleManager() {
-        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(null, new SlotManager(new LocoNetInterfaceScaffold()));
         
         jmri.ThrottleManager tm = LnCommandStationType.COMMAND_STATION_DCS200.getThrottleManager(memo);
         Assert.assertEquals(LnThrottleManager.class, tm.getClass());
