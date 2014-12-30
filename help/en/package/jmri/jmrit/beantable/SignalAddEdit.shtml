@@ -59,10 +59,13 @@ Head information.  Click "Cancel" to exit without making any changes. Closing th
 <dt>DCC Signal Decoder</dt>
   <dd>
   This type controls Signal Heads attached to a 
-  decoder that uses the 
-  <a href="http://www.nmra.org/standards/DCC/standards_rps/rp921.html#Extended%20Accessory%20Decoder%20Control%20Packet%20Format">DCC signal packets</a>
-  defined by the 
-  <a href="http://www.nmra.org/standards/DCC/DCCHome.html">NMRA DCC Working Group</a> for control.
+  decoder that uses the DCC signal packets defined by the 
+  <a href="http://www.nmra.org/standards/DCC/DCCHome.html">NMRA DCC Working Group</a> for control. 
+  (You might be able to find information on those DCC packets on page 9 at 
+  <a href="http://www.nmra.org/sites/default/files/s-9.2.1_2012_07.pdf">this link</a>; the 
+  NMRA has deliberately made their web site difficult to link into, so if that doesn't work, search
+  for "NMRA 9.2.1 Extended Accessory Decoder Control Packet Format").
+  
   This is a special protocol defined for driving Signal Heads, and is different from how
   "accessory decoders" (e.g. Turnout outputs) are controlled. 
 	  <p>
@@ -79,9 +82,10 @@ Key difference between a Signal Head and a Signal Mast is the number of differen
 <dt>Single Output</dt>
   <dd>
   This connection type controls a Signal Head with one output.
-	  A Signal Head connection that uses just one output line to indicate up to 2 Appearances plus Flashing. You can select 2 Appearances from the following list: Dark, Red, Yellow, Green and Lunar.
-The output coding is such that a Turnout status Thrown (On) controls one Appearance and Turnout Closed (off) controls the other. 
-Flashing allows for a third appearance, which will flash between the two Appearances configured.
+  A Signal Head connection that uses just one output line to indicate up to 2 Appearances plus Flashing. 
+  You can select 2 Appearances from the following list: Dark, Red, Yellow, Green and Lunar.
+  The output coding is such that a Turnout status Thrown (On) controls one Appearance and Turnout Closed (off) controls the other. 
+  Flashing allows for a third appearance, which will flash between the two Appearances configured.
   The connection can be to a single lamp/LED to display a single appearance.
   An alternative method is to connect a pair of LEDs to the single output
   wired up suitable so that when the output of the decoder is On you get one
@@ -209,7 +213,7 @@ Approach, all three On controls the Restricting, and all three Closed (Off) make
   the 1st signal head on the 1st SE8c, as configured from the Digitrax factory, 
   is "257" by selecting "Create new", then selecting "LocoNet" in the drop down box,
   enter "257" in the field next to it.
-  See page 5 and 7 of the Digitrax SE8c Manual <a href="http://www.digitrax.com/static/apps/products/detection-signaling/se8c/documents/SE8C.pdf">http://www.digitrax.com/static/apps/products/detection-signaling/se8c/documents/SE8C.pdf</a>.
+  See page 5 and 7 of the <a href="http://www.digitrax.com/static/apps/products/detection-signaling/se8c/documents/SE8C.pdf">Digitrax SE8c Manual</a>.
   Do the same in the second Turnout field, entering "258" as the second Signal Head address.
   Alternately, if you're using more than one hardware type, you can 
   either select a Turnout from the drop down list of already-defined Turnouts
