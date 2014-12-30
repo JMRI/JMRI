@@ -106,7 +106,7 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
     }
     
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
+    	if (pcs!=null) pcs.removePropertyChangeListener(l);
         register.remove(l);
         listenerRefs.remove(l);
     }

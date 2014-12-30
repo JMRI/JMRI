@@ -127,10 +127,16 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
     	w.addPropertyChangeListener(this);
     	fireTableDataChanged();
     }
+    /**
+     * Removes any warrant, not just NXWarrant
+     * @param w
+     */
     public void removeNXWarrant(Warrant w) {
     	w.removePropertyChangeListener(this);
     	_warList.remove(w);       	
     	_warNX.remove(w);
+    	_manager.deregister(w);
+        w.dispose();
     }
     
     public Warrant getWarrantAt(int index) {
@@ -148,6 +154,7 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
         return NUMCOLS;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case WARRANT_COLUMN: return Bundle.getMessage("Warrant");
@@ -165,6 +172,7 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
     }
 
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case WARRANT_COLUMN:
@@ -185,6 +193,7 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
         return false;
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case WARRANT_COLUMN:  return String.class;
@@ -305,6 +314,7 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
         return "";
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         if (log.isDebugEnabled()) log.debug("setValueAt: row= "+row+", column= "+col+", value= "+value.getClass().getName());
         Warrant w = getWarrantAt(row);
@@ -441,9 +451,13 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
                 break;
             case DELETE_COLUMN:
                 if (w.getRunMode() == Warrant.MODE_NONE) {
-                	removeNXWarrant(w);
-                	_manager.deregister(w);
-                    w.dispose();
+                	removeNXWarrant(w);	// removes any warrant
+                } else {
+                	w.controlRunTrain(Warrant.ABORT);
+                    if (_warNX.contains(w)) {	// don't remove regular warrants
+                    	removeNXWarrant(w);                    	
+                    }
+
                 }
                 break;
         }

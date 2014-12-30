@@ -13,7 +13,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +33,6 @@ import javax.swing.JTextField;
 import javax.swing.JTable;
 
 import jmri.InstanceManager;
-
 import jmri.util.com.sun.TableSorter;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -110,19 +108,19 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener
         	TableSorter sorter = new jmri.util.com.sun.TableSorter(_model);
             table = jmri.util.JTableUtil.sortableDataModel(sorter);
             sorter.setTableHeader(table.getTableHeader());
-            comboEd = new ComboBoxCellEditor(new JComboBox(), sorter);
+            comboEd = new ComboBoxCellEditor(new JComboBox<String>(), sorter);
             // set model last so later casts will work
             ((jmri.util.com.sun.TableSorter)table.getModel()).setTableModel(_model);
         } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
             log.error("WarrantTable: Unexpected error: "+e);
             table = new JTable(_model);
-            comboEd = new ComboBoxCellEditor(new JComboBox());
+            comboEd = new ComboBoxCellEditor(new JComboBox<String>());
         }
         
         table.setDefaultRenderer(Boolean.class, new ButtonRenderer());
         table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
         table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
-        JComboBox box = new JComboBox(controls);
+        JComboBox <String> box = new JComboBox<String>(controls);
         box.setFont(new Font(null, Font.PLAIN, 12));
         table.getColumnModel().getColumn(WarrantTableModel.CONTROL_COLUMN).setCellEditor(new DefaultCellEditor(box));
         table.getColumnModel().getColumn(WarrantTableModel.ROUTE_COLUMN).setCellEditor(comboEd);
@@ -254,6 +252,7 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener
         tablePanel.add(bottom);
 
         addWindowListener(new java.awt.event.WindowAdapter() {
+        	@Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     dispose();
                 }
@@ -337,15 +336,16 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener
 		private static final long serialVersionUID = 3035798240606397980L;
 		TableSorter _sorter;
         
-        ComboBoxCellEditor(JComboBox comboBox) {
+        ComboBoxCellEditor(JComboBox <String> comboBox) {
             super(comboBox);
             comboBox.setFont(new Font(null, Font.PLAIN, 12));
         }
-        ComboBoxCellEditor(JComboBox comboBox, TableSorter sorter) {
+        ComboBoxCellEditor(JComboBox <String> comboBox, TableSorter sorter) {
             super(comboBox);
             comboBox.setFont(new Font(null, Font.PLAIN, 12));
             _sorter = sorter;
         }
+        @Override
         public Component getTableCellEditorComponent(JTable table, Object value, 
                                          boolean isSelected, int row, int column) 
         {
@@ -357,7 +357,8 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener
             	row = _sorter.modelIndex(row);            	
             }
             Warrant warrant = model.getWarrantAt(row);
-            JComboBox comboBox = (JComboBox)getComponent();
+            @SuppressWarnings("unchecked")
+            JComboBox<String> comboBox = (JComboBox<String>)getComponent();
             comboBox.removeAllItems();
             List <BlockOrder> orders = warrant.getBlockOrders();
             for (int i=0; i<orders.size(); i++) {
