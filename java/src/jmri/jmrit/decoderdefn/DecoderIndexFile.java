@@ -153,7 +153,7 @@ public class DecoderIndexFile extends XmlFile {
             }
             // see if needs to be updated
             try {
-                if (updateIndexIfNeeded(defaultDecoderIndexFilename())) {
+                if (updateIndexIfNeeded()) {
                     try {
                         _instance = new DecoderIndexFile();
                         _instance.readFile(defaultDecoderIndexFilename());
@@ -173,13 +173,13 @@ public class DecoderIndexFile extends XmlFile {
 
     /**
      * Check whether the user's version of the decoder index file needs to be
-     * updated; if it does, then force the update.
+     * updated; if it does, then forces the update.
+     *
      * @return true is the index should be reloaded because it was updated
-     * @param name
-     * @throws JDOMException
-     * @throws FileNotFoundException
+     * @throws org.jdom2.JDOMException
+     * @throws java.io.IOException
      */
-    static boolean updateIndexIfNeeded(String name) throws org.jdom2.JDOMException, java.io.IOException {
+    static boolean updateIndexIfNeeded() throws org.jdom2.JDOMException, java.io.IOException {
         // get version from master index; if not found, give up
         String masterVersion = null;
         DecoderIndexFile masterXmlFile = new DecoderIndexFile();
