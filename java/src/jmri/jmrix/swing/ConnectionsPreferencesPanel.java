@@ -81,24 +81,21 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Preferen
         this(InstanceManager.getDefault(TabbedPreferences.class));
     }
 
-    transient ChangeListener addTabListener = new ChangeListener() {
+    transient ChangeListener addTabListener = (ChangeEvent evt) -> {
         // This method is called whenever the selected tab changes
-        @Override
-        public void stateChanged(ChangeEvent evt) {
-            JTabbedPane pane = (JTabbedPane) evt.getSource();
-            int sel = pane.getSelectedIndex();
-            if (sel == -1) {
+        JTabbedPane pane = (JTabbedPane) evt.getSource();
+        int sel = pane.getSelectedIndex();
+        if (sel == -1) {
+            addConnectionTab();
+            return;
+        } else {
+            Icon icon = pane.getIconAt(sel);
+            if (icon == addIcon) {
                 addConnectionTab();
                 return;
-            } else {
-                Icon icon = pane.getIconAt(sel);
-                if (icon == addIcon) {
-                    addConnectionTab();
-                    return;
-                }
             }
-            activeTab();
         }
+        activeTab();
     };
 
     private void activeTab() {
@@ -287,6 +284,11 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Preferen
 
     @Override
     public boolean isDirty() {
+        for (PreferencesPanel panel : this.configPanes) {
+            if (panel.isDirty()) {
+                return true;
+            }
+        }
         return false;
     }
 
