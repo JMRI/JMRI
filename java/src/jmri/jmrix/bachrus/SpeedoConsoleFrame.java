@@ -267,6 +267,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
         // Listen to selection of scale
         scaleList.addActionListener(new java.awt.event.ActionListener() {
+            @SuppressWarnings("unchecked") // action semantics pass an Object that must be a JComboBox<String>
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 JComboBox<String> cb = (JComboBox<String>)e.getSource();
                 selectedScale = scales[cb.getSelectedIndex()];

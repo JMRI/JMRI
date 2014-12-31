@@ -23,8 +23,8 @@ public class StackNXPanel extends JPanel{
     
     private JPanel entryExitPanel;
     
-    private DefaultListModel listModel;
-    private JList list = new JList();
+    private DefaultListModel<String> listModel;
+    private JList<String> list = new JList<String>();
     JScrollPane listScrollPane = new JScrollPane(list);
     
     public StackNXPanel(){
@@ -34,7 +34,7 @@ public class StackNXPanel extends JPanel{
     
     private void initGUI()
     {
-        listModel = new DefaultListModel();
+        listModel = new DefaultListModel<String>();
         setLayout(new BorderLayout());
         entryExitPanel = new JPanel();
         entryExitPanel.setDoubleBuffered(true);

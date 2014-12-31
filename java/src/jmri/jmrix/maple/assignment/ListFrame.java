@@ -53,7 +53,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
 	
 	// node select pane items
 	JLabel nodeLabel = new JLabel(rb.getString("NodeBoxLabel")+" ");
-	JComboBox nodeSelBox = new JComboBox();
+	JComboBox<String> nodeSelBox = new JComboBox<String>();
 	ButtonGroup bitTypeGroup = new ButtonGroup();
 	JRadioButton inputBits = new JRadioButton(rb.getString("ShowInputButton")+"   ",false);
     JRadioButton outputBits = new JRadioButton(rb.getString("ShowOutputButton"),true);

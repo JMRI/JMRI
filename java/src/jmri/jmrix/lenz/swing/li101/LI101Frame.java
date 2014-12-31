@@ -123,8 +123,8 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
 
     boolean read = false;
 
-    JComboBox addrBox = new javax.swing.JComboBox();
-    JComboBox speedBox = new javax.swing.JComboBox();
+    JComboBox<String> addrBox = new javax.swing.JComboBox<String>();
+    JComboBox<String> speedBox = new javax.swing.JComboBox<String>();
 
     JLabel status = new JLabel("");
 

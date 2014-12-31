@@ -76,9 +76,6 @@ public class AppConfigBase extends JmriPanel {
         return JmrixConfigPane.instance(index).getDisabled();
     }
     
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(AppConfigBase.class.getName());
-
     /**
      * Detect duplicate connection types
      * It depends on all connections have the first word be the same
@@ -240,7 +237,11 @@ public class AppConfigBase extends JmriPanel {
 
     public String getClassName() { return AppConfigBase.class.getName(); }
 
-    public List getItems() {
+    public List<Component> getItems() {
         return this.items;
     }
+
+    // initialize logging
+    static Logger log = LoggerFactory.getLogger(AppConfigBase.class.getName());
+
 }

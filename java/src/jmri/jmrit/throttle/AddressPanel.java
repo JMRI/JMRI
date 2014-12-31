@@ -65,7 +65,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	private JButton progButton;
 	private JButton setButton;
 	private RosterEntrySelectorPanel rosterBox;
-	private JComboBox conRosterBox;
+	private JComboBox<String> conRosterBox;
 	
 	private RosterEntry rosterEntry;
 
@@ -349,7 +349,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 
 		conRosterBox = NceConsistRoster.instance().fullRosterComboBox();
 		if (NceConsistRoster.instance().numEntries() > 0) {
-			conRosterBox.insertItemAt(new NullComboBoxConsist(), 0);
+			conRosterBox.insertItemAt(Bundle.getMessage("NoConsistSelected"), 0);  // empty entry
 			conRosterBox.setSelectedIndex(0);
 			conRosterBox.setToolTipText(Bundle.getMessage("SelectConsistFromRosterTT"));
 			conRosterBox.addActionListener(new ActionListener() {
@@ -412,7 +412,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	}
 
 	private void consistRosterSelected() {
-		if (!(conRosterBox.getSelectedItem() instanceof NullComboBoxConsist)) {
+		if (!(conRosterBox.getSelectedItem().equals(Bundle.getMessage("NoConsistSelected")))) {
 			String rosterEntryTitle = conRosterBox.getSelectedItem().toString();
 			NceConsistRosterEntry cre = NceConsistRoster.instance()
 					.entryFromTitle(rosterEntryTitle);
@@ -609,13 +609,6 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
     public RosterEntrySelectorPanel getRosterEntrySelector() {
         return rosterBox;
     }
-
-	static class NullComboBoxConsist {
-        @Override
-		public String toString() {
-			return Bundle.getMessage("NoConsistSelected");
-		}
-	}
 
 	public DccThrottle getThrottle() {
 		return throttle;

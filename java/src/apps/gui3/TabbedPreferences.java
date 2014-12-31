@@ -129,7 +129,7 @@ public class TabbedPreferences extends AppConfigBase {
         }
         initalisationState = INITIALISING;
 
-        list = new JList();
+        list = new JList<String>();
         listScroller = new JScrollPane(list);
         listScroller.setPreferredSize(new Dimension(100, 100));
 

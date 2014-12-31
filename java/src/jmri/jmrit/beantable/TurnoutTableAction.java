@@ -369,7 +369,9 @@ public class TurnoutTableAction extends AbstractTableAction {
                     // do nothing as this is handled by the combo box listener
                 } else if (col==OPSEDITCOL ) {
                     t.setInhibitOperation(false);
-                    editTurnoutOperation(t, (JComboBox)getValueAt(row,OPSONOFFCOL));
+                    @SuppressWarnings("unchecked") // cast to JComboBox<String> required in OPSEDITCOL
+                    JComboBox<String> cb = (JComboBox<String>)getValueAt(row,OPSONOFFCOL);
+                    editTurnoutOperation(t, cb);
                 } else if (col==EDITCOL ) {
                     class WindowMaker implements Runnable {
                         Turnout t;

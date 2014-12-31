@@ -33,7 +33,7 @@
 -warn:-syntheticAccess
 -warn:-tasks(<task1>|...|<taskN>)
 -warn:+typeHiding
--warn:-unchecked
+-warn:+unchecked
 -warn:-unqualified-field-access
 -warn:-unqualifiedField
 -warn:+unusedLabel

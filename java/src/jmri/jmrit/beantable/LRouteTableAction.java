@@ -1972,6 +1972,9 @@ public class LRouteTableAction extends AbstractTableAction {
         ComboBoxCellEditor(JComboBox<String> comboBox) {
             super(comboBox);
         }
+        
+        @SuppressWarnings("unchecked") // getComponent call requires an unchecked cast
+        @Override
         public Component getTableCellEditorComponent(JTable table, Object value, 
                                          boolean isSelected, int row, int column) 
         {
@@ -1999,7 +2002,7 @@ public class LRouteTableAction extends AbstractTableAction {
                 }
                 items = getOutputComboBoxItems(elt.getType());
             }
-            JComboBox<String> comboBox = (JComboBox)getComponent();
+            JComboBox<String> comboBox = (JComboBox<String>)getComponent();
             comboBox.removeAllItems();
             for (int i=0; i<items.length; i++) {
                 comboBox.addItem(items[i]);

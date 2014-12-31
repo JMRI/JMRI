@@ -52,8 +52,8 @@ public class AddRosterEntryToEcos extends AbstractAction {
     }
 
     EcosSystemConnectionMemo adaptermemo;
-    JComboBox rosterEntry = new JComboBox();
-    JComboBox selections;
+    JComboBox<String> rosterEntry = new JComboBox<String>();
+    JComboBox<String> selections;
     Roster roster;
     
     public void actionPerformed(ActionEvent event) {

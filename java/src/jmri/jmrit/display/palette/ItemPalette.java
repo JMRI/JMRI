@@ -145,7 +145,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
         CatalogTree tree = manager.getBySystemName("NXPI");
         if (tree != null) {
             CatalogTreeNode root = (CatalogTreeNode)tree.getRoot();
-            @SuppressWarnings("unchecked")
+            @SuppressWarnings("unchecked") // root.children() is still unchecked in JDOM2
             Enumeration<CatalogTreeNode> e = root.children();
             while (e.hasMoreElements()) {
                 CatalogTreeNode node = e.nextElement();
@@ -175,7 +175,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
                                         loadIndicatorFamilyMap(CatalogTreeNode node, Editor ed) {
         HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyMap =
                                 new HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>();
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings("unchecked") // node.children() is still unchecked in JDOM2
         Enumeration<CatalogTreeNode> ee = node.children();
         while (ee.hasMoreElements()) {
             CatalogTreeNode famNode = ee.nextElement();
@@ -189,7 +189,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
     static HashMap<String, HashMap<String, NamedIcon>> loadFamilyMap(CatalogTreeNode node, Editor ed) {
         HashMap <String, HashMap<String, NamedIcon>> familyMap =
                  new HashMap <String, HashMap<String, NamedIcon>> ();
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings("unchecked") // node.children() is still unchecked in JDOM2
         Enumeration<CatalogTreeNode> ee = node.children();
         while (ee.hasMoreElements()) {
             CatalogTreeNode famNode = ee.nextElement();
@@ -228,7 +228,6 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
         }
         jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile(){};
         Element root = xf.rootFromFile(file);
-        @SuppressWarnings("unchecked")
         List<Element> typeList = root.getChild("ItemTypes").getChildren();
         return typeList;
     }
@@ -238,7 +237,6 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
         	List<Element> typeList = getDefaultIconItemTypes();
             for (int i = 0; i < typeList.size(); i++) {
                 String typeName = typeList.get(i).getName();
-                @SuppressWarnings("unchecked")
                 List<Element>families = typeList.get(i).getChildren();
                 loadFamilies(typeName, families, ed);
                 Thread.yield();
@@ -275,7 +273,6 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
                 if (!typeName.equals(itemType)) {
                 	continue;
                 }
-                @SuppressWarnings("unchecked")
                 List<Element>families = typeList.get(i).getChildren();
                 loadFamilies(itemType, families, ed);
                 ImageIndexEditor.indexChanged(true);
@@ -295,7 +292,6 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
             String familyName = families.get(k).getName();
             HashMap <String, NamedIcon> iconMap = 
                     new HashMap <String, NamedIcon> ();     // Map of all icons of in family, familyName
-            @SuppressWarnings("unchecked")
             List<Element>iconfiles = families.get(k).getChildren();
             for (int j = 0; j < iconfiles.size(); j++) {
                 String iconName = iconfiles.get(j).getName();
@@ -328,7 +324,6 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
                 new HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> ();     // Map of all families of type, typeName
         for (int k = 0; k < typeList.size(); k++) {
             String familyName = typeList.get(k).getName();
-            @SuppressWarnings("unchecked")
             List<Element> types = typeList.get(k).getChildren();
             HashMap<String, HashMap<String, NamedIcon>> familyMap = loadDefaultFamilyMap(types, ed);
             familyTOMap.put(familyName, familyMap);
