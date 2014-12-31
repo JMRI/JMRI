@@ -78,7 +78,7 @@ public class TabbedPreferences extends AppConfigBase {
     JList<String> list;
     JButton save;
     JScrollPane listScroller;
-    int initalisationState = 0x00;
+    int initialisationState = 0x00;
     private static final long serialVersionUID = -6266891995866315885L;
 
     public static final int UNINITIALISED = 0x00;
@@ -122,11 +122,11 @@ public class TabbedPreferences extends AppConfigBase {
 
     @SuppressWarnings("rawtypes")
     public synchronized int init() {
-        if (initalisationState == INITIALISED) {
+        if (initialisationState == INITIALISED) {
             return INITIALISED;
         }
-        if (initalisationState != UNINITIALISED) {
-            return initalisationState;
+        if (initialisationState != UNINITIALISED) {
+            return initialisationState;
         }
         this.setInitalisationState(INITIALISING);
 
@@ -187,13 +187,21 @@ public class TabbedPreferences extends AppConfigBase {
         list.setSelectedIndex(0);
         selection(preferencesArray.get(0).getPrefItem());
         this.setInitalisationState(INITIALISED);
-        return initalisationState;
+        return initialisationState;
     }
 
     private void setInitalisationState(int state) {
-        int old = this.initalisationState;
-        this.initalisationState = state;
+        int old = this.initialisationState;
+        this.initialisationState = state;
         this.firePropertyChange(INITIALIZATION, old, state);
+    }
+
+    public int getInitialisationState() {
+        return this.initialisationState;
+    }
+
+    public boolean isInitialised() {
+        return (this.getInitialisationState() == INITIALISED);
     }
 
     private boolean invokeSaveOptions() {
@@ -263,7 +271,7 @@ public class TabbedPreferences extends AppConfigBase {
             preferencesArray.add(itemBeingAdded);
             // As this is a new item in the selection list, we need to update
             // the JList.
-            if (initalisationState == INITIALISED) {
+            if (initialisationState == INITIALISED) {
                 updateJList();
             }
         }
