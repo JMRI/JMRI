@@ -51,13 +51,12 @@ public class PrintLocationsAction extends AbstractAction {
 	static final int MAX_NAME_LENGTH = Control.max_len_string_location_name;
 
 	LocationManager manager = LocationManager.instance();
-	
 
 	public PrintLocationsAction(String actionName, boolean isPreview) {
 		super(actionName);
 		_isPreview = isPreview;
 	}
-	
+
 	public PrintLocationsAction(String actionName, boolean isPreview, Location location) {
 		super(actionName);
 		_isPreview = isPreview;
@@ -86,8 +85,7 @@ public class PrintLocationsAction extends AbstractAction {
 		if (_location != null)
 			title = _location.getName();
 		try {
-			writer = new HardcopyWriter(new Frame(), title, 10, .5, .5, .5, .5,
-					_isPreview);
+			writer = new HardcopyWriter(new Frame(), title, 10, .5, .5, .5, .5, _isPreview);
 		} catch (HardcopyWriter.PrintCanceledException ex) {
 			log.debug("Print cancelled");
 			return;
@@ -99,14 +97,17 @@ public class PrintLocationsAction extends AbstractAction {
 			// print schedules?
 			if (printSchedules.isSelected())
 				printSchedulesSelected();
+			if (printComments.isSelected())
+				printCommentsSelected();
 			// print detailed report?
 			if (printDetails.isSelected())
 				printDetailsSelected();
 			// print analysis?
 			if (printAnalysis.isSelected())
 				printAnalysisSelected();
-			if (printLocations.isSelected() || printSchedules.isSelected() || printDetails.isSelected()
-					|| printAnalysis.isSelected()) // prevents NPE on close
+			// prevent NPE on close
+			if (printLocations.isSelected() || printSchedules.isSelected() || printComments.isSelected()
+					|| printDetails.isSelected() || printAnalysis.isSelected())
 				// force completion of the printing
 				writer.close();
 		} catch (IOException we) {
@@ -124,22 +125,19 @@ public class PrintLocationsAction extends AbstractAction {
 		int numberEngines = 0;
 		// header
 		String s = Bundle.getMessage("Location") + TAB + TAB + TAB + Bundle.getMessage("Length") + " "
-				+ Bundle.getMessage("Used") + TAB + Bundle.getMessage("RS") + TAB + Bundle.getMessage("Cars")
-				+ TAB + Bundle.getMessage("Engines") + TAB + Bundle.getMessage("Pickups") + " "
-				+ Bundle.getMessage("Drop") + NEW_LINE;
+				+ Bundle.getMessage("Used") + TAB + Bundle.getMessage("RS") + TAB + Bundle.getMessage("Cars") + TAB
+				+ Bundle.getMessage("Engines") + TAB + Bundle.getMessage("Pickups") + " " + Bundle.getMessage("Drop")
+				+ NEW_LINE;
 		writer.write(s);
 		for (Location location : locations) {
 			if (_location != null && location != _location)
 				continue;
 			// location name, track length, used, number of RS, scheduled pick ups and drops
 			s = padOutString(location.getName(), Control.max_len_string_location_name) + TAB + "  "
-					+ Integer.toString(location.getLength()) + TAB
-					+ Integer.toString(location.getUsedLength()) + TAB
-					+ Integer.toString(location.getNumberRS()) + TAB 
-					+ Integer.toString(location.getNumberCars()) + TAB 
-					+ Integer.toString(location.getNumberEngines()) + TAB
-					+ Integer.toString(location.getPickupRS()) + TAB + Integer.toString(location.getDropRS())
-					+ NEW_LINE;
+					+ Integer.toString(location.getLength()) + TAB + Integer.toString(location.getUsedLength()) + TAB
+					+ Integer.toString(location.getNumberRS()) + TAB + Integer.toString(location.getNumberCars()) + TAB
+					+ Integer.toString(location.getNumberEngines()) + TAB + Integer.toString(location.getPickupRS())
+					+ TAB + Integer.toString(location.getDropRS()) + NEW_LINE;
 			writer.write(s);
 
 			totalLength += location.getLength();
@@ -193,13 +191,12 @@ public class PrintLocationsAction extends AbstractAction {
 		}
 
 		// summary
-		s = MessageFormat.format(Bundle.getMessage("TotalLengthMsg"), new Object[] {
-				Integer.toString(totalLength), Integer.toString(usedLength),
-				Integer.toString(usedLength * 100 / totalLength) })
+		s = MessageFormat.format(Bundle.getMessage("TotalLengthMsg"), new Object[] { Integer.toString(totalLength),
+				Integer.toString(usedLength), Integer.toString(usedLength * 100 / totalLength) })
 				+ NEW_LINE;
 		writer.write(s);
-		s = MessageFormat.format(Bundle.getMessage("TotalRollingMsg"), new Object[] {
-				Integer.toString(numberRS), Integer.toString(numberCars), Integer.toString(numberEngines) })
+		s = MessageFormat.format(Bundle.getMessage("TotalRollingMsg"), new Object[] { Integer.toString(numberRS),
+				Integer.toString(numberCars), Integer.toString(numberEngines) })
 				+ NEW_LINE;
 		writer.write(s);
 		// are there trains en route, then some cars and engines not counted!
@@ -209,14 +206,15 @@ public class PrintLocationsAction extends AbstractAction {
 					+ NEW_LINE;
 			writer.write(s);
 		}
-		if (printSchedules.isSelected() || printDetails.isSelected() || printAnalysis.isSelected())
+		if (printSchedules.isSelected() || printComments.isSelected() || printDetails.isSelected()
+				|| printAnalysis.isSelected())
 			writer.write(FORM_FEED);
 	}
 
 	private void printSchedulesSelected() throws IOException {
 		List<Location> locations = manager.getLocationsByNameList();
-		String s = padOutString(Bundle.getMessage("Schedules"), MAX_NAME_LENGTH) + " " + Bundle.getMessage("Location") + " - "
-				+ Bundle.getMessage("SpurName") + NEW_LINE;
+		String s = padOutString(Bundle.getMessage("Schedules"), MAX_NAME_LENGTH) + " " + Bundle.getMessage("Location")
+				+ " - " + Bundle.getMessage("SpurName") + NEW_LINE;
 		writer.write(s);
 		List<Schedule> schedules = ScheduleManager.instance().getSchedulesByNameList();
 		for (Schedule schedule : schedules) {
@@ -227,7 +225,8 @@ public class PrintLocationsAction extends AbstractAction {
 				for (Track spur : spurs) {
 					if (spur.getScheduleId().equals(schedule.getId())) {
 						// pad out schedule name
-						s = padOutString(schedule.getName(), MAX_NAME_LENGTH) + " " + location.getName() + " - " + spur.getName();
+						s = padOutString(schedule.getName(), MAX_NAME_LENGTH) + " " + location.getName() + " - "
+								+ spur.getName();
 						String status = spur.checkScheduleValid();
 						if (!status.equals(Track.SCHEDULE_OKAY)) {
 							StringBuffer buf = new StringBuffer(s);
@@ -245,24 +244,68 @@ public class PrintLocationsAction extends AbstractAction {
 						String mode = Bundle.getMessage("Sequential");
 						if (spur.getScheduleMode() == Track.MATCH)
 							mode = Bundle.getMessage("Match");
-						s = padOutString("", MAX_NAME_LENGTH)+ SPACE
-								+ Bundle.getMessage("ScheduleMode") + ": " + mode  + NEW_LINE;
+						s = padOutString("", MAX_NAME_LENGTH) + SPACE + Bundle.getMessage("ScheduleMode") + ": " + mode
+								+ NEW_LINE;
 						writer.write(s);
 						// show alternate track if there's one
 						if (spur.getAlternateTrack() != null) {
-							s = padOutString("", MAX_NAME_LENGTH)+ SPACE
+							s = padOutString("", MAX_NAME_LENGTH)
+									+ SPACE
 									+ MessageFormat.format(Bundle.getMessage("AlternateTrackName"), new Object[] { spur
 											.getAlternateTrack().getName() }) + NEW_LINE;
 							writer.write(s);
 						}
 						// show custom loads from staging if not 100%
 						if (spur.getReservationFactor() != 100) {
-							s = padOutString("", MAX_NAME_LENGTH)+ SPACE
+							s = padOutString("", MAX_NAME_LENGTH)
+									+ SPACE
 									+ MessageFormat.format(Bundle.getMessage("PercentageStaging"), new Object[] { spur
 											.getReservationFactor() }) + NEW_LINE;
 							writer.write(s);
 						}
 					}
+				}
+			}
+		}
+		if (printComments.isSelected() || printDetails.isSelected() || printAnalysis.isSelected())
+			writer.write(FORM_FEED);
+	}
+
+	private void printCommentsSelected() throws IOException {
+		String s = Bundle.getMessage("PrintComments") + NEW_LINE + NEW_LINE;
+		writer.write(s);
+		List<Location> locations = manager.getLocationsByNameList();
+		for (Location location : locations) {
+			if (_location != null && location != _location)
+				continue;
+			s = location.getName() + NEW_LINE;
+			writer.write(s);
+			s = location.getComment() + NEW_LINE;
+			writer.write(s);
+			for (Track track : location.getTrackByNameList(null)) {
+				s = SPACE + track.getName() + NEW_LINE;
+				writer.write(s);
+				if (!track.getComment().equals(Track.NONE)) {
+					s = SPACE + SPACE + track.getComment() + NEW_LINE;
+					writer.write(s);
+				}
+				if (!track.getCommentBoth().equals(Track.NONE)) {
+					s = SPACE + SPACE + Bundle.getMessage("CommentBoth") + ":" + NEW_LINE;
+					writer.write(s);
+					s = SPACE + SPACE + track.getCommentBoth() + NEW_LINE;
+					writer.write(s);
+				}
+				if (!track.getCommentPickup().equals(Track.NONE)) {
+					s = SPACE + SPACE + Bundle.getMessage("CommentPickup") + ":" + NEW_LINE;
+					writer.write(s);
+					s = SPACE + SPACE + track.getCommentPickup() + NEW_LINE;
+					writer.write(s);
+				}
+				if (!track.getCommentSetout().equals(Track.NONE)) {
+					s = SPACE + SPACE + Bundle.getMessage("CommentSetout") + ":" + NEW_LINE;
+					writer.write(s);
+					s = SPACE + SPACE + track.getCommentSetout() + NEW_LINE;
+					writer.write(s);
 				}
 			}
 		}
@@ -340,15 +383,15 @@ public class PrintLocationsAction extends AbstractAction {
 					totalTrackLength = totalTrackLength + car.getTotalLength();
 				}
 			}
-			writer.write(MessageFormat.format(Bundle.getMessage("NumberTypeLength"), new Object[] {
-					numberOfCars, type, totalTrackLength })
+			writer.write(MessageFormat.format(Bundle.getMessage("NumberTypeLength"), new Object[] { numberOfCars, type,
+					totalTrackLength })
 					+ NEW_LINE);
 			// don't bother reporting when the number of cars for a given type is zero
 			if (numberOfCars > 0) {
 				// spurs
 				writer.write(SPACE
-						+ MessageFormat.format(Bundle.getMessage("SpurTrackThatAccept"),
-								new Object[] { type }) + NEW_LINE);
+						+ MessageFormat.format(Bundle.getMessage("SpurTrackThatAccept"), new Object[] { type })
+						+ NEW_LINE);
 				int trackLength = getTrackLengthAcceptType(locations, type, Track.SPUR);
 				if (trackLength > 0)
 					writer.write(SPACE
@@ -358,8 +401,8 @@ public class PrintLocationsAction extends AbstractAction {
 					writer.write(SPACE + Bundle.getMessage("None") + NEW_LINE);
 				// yards
 				writer.write(SPACE
-						+ MessageFormat.format(Bundle.getMessage("YardTrackThatAccept"),
-								new Object[] { type }) + NEW_LINE);
+						+ MessageFormat.format(Bundle.getMessage("YardTrackThatAccept"), new Object[] { type })
+						+ NEW_LINE);
 				trackLength = getTrackLengthAcceptType(locations, type, Track.YARD);
 				if (trackLength > 0)
 					writer.write(SPACE
@@ -369,25 +412,25 @@ public class PrintLocationsAction extends AbstractAction {
 					writer.write(SPACE + Bundle.getMessage("None") + NEW_LINE);
 				// interchanges
 				writer.write(SPACE
-						+ MessageFormat.format(Bundle.getMessage("InterchangesThatAccept"),
-								new Object[] { type }) + NEW_LINE);
+						+ MessageFormat.format(Bundle.getMessage("InterchangesThatAccept"), new Object[] { type })
+						+ NEW_LINE);
 				trackLength = getTrackLengthAcceptType(locations, type, Track.INTERCHANGE);
 				if (trackLength > 0)
 					writer.write(SPACE
-							+ MessageFormat.format(Bundle.getMessage("TotalLengthInterchange"), new Object[] {
-									type, trackLength, 100 * totalTrackLength / trackLength }) + NEW_LINE);
+							+ MessageFormat.format(Bundle.getMessage("TotalLengthInterchange"), new Object[] { type,
+									trackLength, 100 * totalTrackLength / trackLength }) + NEW_LINE);
 				else
 					writer.write(SPACE + Bundle.getMessage("None") + NEW_LINE);
 				// staging
 				if (showStaging) {
 					writer.write(SPACE
-							+ MessageFormat.format(Bundle.getMessage("StageTrackThatAccept"),
-									new Object[] { type }) + NEW_LINE);
+							+ MessageFormat.format(Bundle.getMessage("StageTrackThatAccept"), new Object[] { type })
+							+ NEW_LINE);
 					trackLength = getTrackLengthAcceptType(locations, type, Track.STAGING);
 					if (trackLength > 0)
 						writer.write(SPACE
-								+ MessageFormat.format(Bundle.getMessage("TotalLengthStage"), new Object[] {
-										type, trackLength, 100 * totalTrackLength / trackLength }) + NEW_LINE);
+								+ MessageFormat.format(Bundle.getMessage("TotalLengthStage"), new Object[] { type,
+										trackLength, 100 * totalTrackLength / trackLength }) + NEW_LINE);
 					else
 						writer.write(SPACE + Bundle.getMessage("None") + NEW_LINE);
 				}
@@ -395,8 +438,7 @@ public class PrintLocationsAction extends AbstractAction {
 		}
 	}
 
-	private int getTrackLengthAcceptType(List<Location> locations, String carType, String trackType)
-			throws IOException {
+	private int getTrackLengthAcceptType(List<Location> locations, String carType, String trackType) throws IOException {
 		int trackLength = 0;
 		for (Location location : locations) {
 			if (_location != null && location != _location)
@@ -419,8 +461,8 @@ public class PrintLocationsAction extends AbstractAction {
 		String s = TAB + padOutString(track.getName(), Control.max_len_string_track_name) + " "
 				+ Integer.toString(track.getLength()) + TAB + Integer.toString(track.getUsedLength()) + TAB
 				+ Integer.toString(track.getNumberRS()) + TAB + Integer.toString(track.getNumberCars()) + TAB
-				+ Integer.toString(track.getNumberEngines()) + TAB + Integer.toString(track.getPickupRS())
-				+ TAB + Integer.toString(track.getDropRS()) + NEW_LINE;
+				+ Integer.toString(track.getNumberEngines()) + TAB + Integer.toString(track.getPickupRS()) + TAB
+				+ Integer.toString(track.getDropRS()) + NEW_LINE;
 		return s;
 	}
 
@@ -465,8 +507,7 @@ public class PrintLocationsAction extends AbstractAction {
 	private int characters = 70;
 
 	private String getLocationTypes(Location location) {
-		StringBuffer buf = new StringBuffer(TAB + TAB + Bundle.getMessage("TypesServiced") + NEW_LINE + TAB
-				+ TAB);
+		StringBuffer buf = new StringBuffer(TAB + TAB + Bundle.getMessage("TypesServiced") + NEW_LINE + TAB + TAB);
 		int charCount = 0;
 		int typeCount = 0;
 
@@ -481,7 +522,7 @@ public class PrintLocationsAction extends AbstractAction {
 				buf.append(type + ", ");
 			}
 		}
-		
+
 		for (String type : EngineTypes.instance().getNames()) {
 			if (location.acceptsTypeName(type)) {
 				typeCount++;
@@ -503,8 +544,7 @@ public class PrintLocationsAction extends AbstractAction {
 	}
 
 	private String getTrackTypes(Location location, Track track) {
-		StringBuffer buf = new StringBuffer(TAB + TAB + Bundle.getMessage("TypesServicedTrack") + NEW_LINE
-				+ TAB + TAB);
+		StringBuffer buf = new StringBuffer(TAB + TAB + Bundle.getMessage("TypesServicedTrack") + NEW_LINE + TAB + TAB);
 		int charCount = 0;
 		int typeCount = 0;
 
@@ -544,14 +584,14 @@ public class PrintLocationsAction extends AbstractAction {
 		if (track.getRoadOption().equals(Track.ALL_ROADS)) {
 			return TAB + TAB + Bundle.getMessage("AcceptsAllRoads") + NEW_LINE;
 		}
-		
+
 		String op = Bundle.getMessage("RoadsServicedTrack");
 		if (track.getRoadOption().equals(Track.EXCLUDE_ROADS))
 			op = Bundle.getMessage("ExcludeRoadsTrack");
 
 		StringBuffer buf = new StringBuffer(TAB + TAB + op + NEW_LINE + TAB + TAB);
 		int charCount = 0;
-		
+
 		for (String road : track.getRoadNames()) {
 			charCount += road.length() + 2;
 			if (charCount > characters) {
@@ -570,14 +610,14 @@ public class PrintLocationsAction extends AbstractAction {
 		if (track.getLoadOption().equals(Track.ALL_LOADS)) {
 			return TAB + TAB + Bundle.getMessage("AcceptsAllLoads") + NEW_LINE;
 		}
-		
+
 		String op = Bundle.getMessage("LoadsServicedTrack");
 		if (track.getLoadOption().equals(Track.EXCLUDE_LOADS))
 			op = Bundle.getMessage("ExcludeLoadsTrack");
 
 		StringBuffer buf = new StringBuffer(TAB + TAB + op + NEW_LINE + TAB + TAB);
 		int charCount = 0;
-		
+
 		for (String load : track.getLoadNames()) {
 			charCount += load.length() + 2;
 			if (charCount > characters) {
@@ -591,7 +631,7 @@ public class PrintLocationsAction extends AbstractAction {
 		buf.append(NEW_LINE);
 		return buf.toString();
 	}
-	
+
 	private String getTrackShipLoads(Track track) {
 		// only staging has the ship load control
 		if (!track.getTrackType().equals(Track.STAGING))
@@ -602,10 +642,10 @@ public class PrintLocationsAction extends AbstractAction {
 		String op = Bundle.getMessage("LoadsShippedTrack");
 		if (track.getShipLoadOption().equals(Track.EXCLUDE_LOADS))
 			op = Bundle.getMessage("ExcludeLoadsShippedTrack");
-		
+
 		StringBuffer buf = new StringBuffer(TAB + TAB + op + NEW_LINE + TAB + TAB);
 		int charCount = 0;
-		
+
 		for (String load : track.getShipLoadNames()) {
 			charCount += load.length() + 2;
 			if (charCount > characters) {
@@ -662,8 +702,8 @@ public class PrintLocationsAction extends AbstractAction {
 			for (String id : ids) {
 				Route route = RouteManager.instance().getRouteById(id);
 				if (route == null) {
-					log.info("Could not find a route for id: " + id + " location ("
-							+ track.getLocation().getName() + ") track (" + track.getName() + ")"); // NOI18N
+					log.info("Could not find a route for id: " + id + " location (" + track.getLocation().getName()
+							+ ") track (" + track.getName() + ")"); // NOI18N
 					continue;
 				}
 				charCount += route.getName().length() + 2;
@@ -686,8 +726,7 @@ public class PrintLocationsAction extends AbstractAction {
 		StringBuffer buf;
 		int charCount = 0;
 		String[] ids = track.getPickupIds();
-		if (track.getPickupOption().equals(Track.TRAINS)
-				|| track.getPickupOption().equals(Track.EXCLUDE_TRAINS)) {
+		if (track.getPickupOption().equals(Track.TRAINS) || track.getPickupOption().equals(Track.EXCLUDE_TRAINS)) {
 			String trainType = Bundle.getMessage("TrainsPickUpTrack");
 			if (track.getPickupOption().equals(Track.EXCLUDE_TRAINS))
 				trainType = Bundle.getMessage("ExcludeTrainsPickUpTrack");
@@ -713,8 +752,8 @@ public class PrintLocationsAction extends AbstractAction {
 			for (String id : ids) {
 				Route route = RouteManager.instance().getRouteById(id);
 				if (route == null) {
-					log.info("Could not find a route for id: " + id + " location ("
-							+ track.getLocation().getName() + ") track (" + track.getName() + ")"); // NOI18N
+					log.info("Could not find a route for id: " + id + " location (" + track.getLocation().getName()
+							+ ") track (" + track.getName() + ")"); // NOI18N
 					continue;
 				}
 				charCount += route.getName().length() + 2;
@@ -730,14 +769,15 @@ public class PrintLocationsAction extends AbstractAction {
 		buf.append(NEW_LINE);
 		return buf.toString();
 	}
-	
+
 	private String getDestinations(Track track) {
 		if (track.getDestinationOption().equals(Track.ALL_DESTINATIONS))
 			return "";
 		String op = Bundle.getMessage("AcceptOnly") + " " + track.getDestinationListSize() + " "
 				+ Bundle.getMessage("Destinations") + ":";
 		if (track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS))
-			op = Bundle.getMessage("Exclude") + " " + (LocationManager.instance().getNumberOfLocations() - track.getDestinationListSize()) + " "
+			op = Bundle.getMessage("Exclude") + " "
+					+ (LocationManager.instance().getNumberOfLocations() - track.getDestinationListSize()) + " "
 					+ Bundle.getMessage("Destinations") + ":";
 		StringBuffer buf = new StringBuffer(TAB + TAB + op + NEW_LINE + TAB + TAB);
 		String[] destIds = track.getDestinationIds();
@@ -765,8 +805,9 @@ public class PrintLocationsAction extends AbstractAction {
 			return "";
 		StringBuffer buf = new StringBuffer(TAB
 				+ TAB
-				+ MessageFormat.format(Bundle.getMessage("TrackScheduleName"), new Object[] { track
-						.getScheduleName() }) + NEW_LINE);
+				+ MessageFormat
+						.format(Bundle.getMessage("TrackScheduleName"), new Object[] { track.getScheduleName() })
+				+ NEW_LINE);
 		if (track.getAlternateTrack() != null)
 			buf.append(TAB
 					+ TAB
@@ -779,7 +820,7 @@ public class PrintLocationsAction extends AbstractAction {
 							.getReservationFactor() }) + NEW_LINE);
 		return buf.toString();
 	}
-	
+
 	private String padOutString(String s, int length) {
 		StringBuffer buf = new StringBuffer(s);
 		for (int n = s.length(); n < length; n++) {
@@ -790,6 +831,7 @@ public class PrintLocationsAction extends AbstractAction {
 
 	JCheckBox printLocations = new JCheckBox(Bundle.getMessage("PrintLocations"));
 	JCheckBox printSchedules = new JCheckBox(Bundle.getMessage("PrintSchedules"));
+	JCheckBox printComments = new JCheckBox(Bundle.getMessage("PrintComments"));
 	JCheckBox printDetails = new JCheckBox(Bundle.getMessage("PrintDetails"));
 	JCheckBox printAnalysis = new JCheckBox(Bundle.getMessage("PrintAnalysis"));
 
@@ -810,14 +852,16 @@ public class PrintLocationsAction extends AbstractAction {
 			pPanel.setLayout(new GridBagLayout());
 			pPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("PrintOptions")));
 			addItemLeft(pPanel, printLocations, 0, 0);
-			addItemLeft(pPanel, printSchedules, 0, 1);
-			addItemLeft(pPanel, printDetails, 0, 2);
-			addItemLeft(pPanel, printAnalysis, 0, 3);
+			addItemLeft(pPanel, printSchedules, 0, 3);
+			addItemLeft(pPanel, printComments, 0, 5);
+			addItemLeft(pPanel, printDetails, 0, 7);
+			addItemLeft(pPanel, printAnalysis, 0, 9);
 			// set defaults
 			printLocations.setSelected(true);
 			printSchedules.setSelected(true);
-			printDetails.setSelected(true);
-			printAnalysis.setSelected(true);
+			printComments.setSelected(false);
+			printDetails.setSelected(false);
+			printAnalysis.setSelected(false);
 
 			// add tool tips
 
@@ -847,6 +891,5 @@ public class PrintLocationsAction extends AbstractAction {
 		}
 	}
 
-	static Logger log = LoggerFactory.getLogger(PrintLocationsAction.class
-			.getName());
+	static Logger log = LoggerFactory.getLogger(PrintLocationsAction.class.getName());
 }
