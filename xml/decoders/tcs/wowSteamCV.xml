@@ -15,6 +15,20 @@
 <!-- version 1 - for WoW 100 & 101 -->
 
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<variable CV="3" item="Accel" default="32" tooltip="Sets the acceleration rate (delay or momentum), 1(default)" comment="Range 0-255">
+		<decVal max="255"/>
+		<label>Accel 1 Rate</label>
+		<label xml:lang="it">Grado Accell.1</label>
+		<comment xml:lang="it">Valori 0-255</comment>
+		<tooltip xml:lang="it">Progr. grado accellerazione (ritardo o inerzia), valori 0(default)-255</tooltip>
+	</variable>
+	<variable CV="4" item="Decel" default="96" tooltip="Sets the deceleration rate (delay or momentum), 1(default)" comment="Range 0-255">
+		<decVal max="255"/>
+		<label>Decel 1 Rate</label>
+		<label xml:lang="it">Grado Decell.1</label>
+		<comment xml:lang="it">Valori 0-255</comment>
+		<tooltip xml:lang="it">Progr. grado decellerazione (ritardo o inerzia), valori 0-255</tooltip>
+	</variable>
 	<!-- Chuff Rate CV -->
 	<variable item="Step 1 Chuff Rate" CV="T2CV.3.1" default="46592" mask="VVVVVVVVVVVVVVVV">
 		<decVal max="65535"/>
@@ -420,7 +434,7 @@
 		<decVal max="65535"/>
 		<label>Random Sound Overall Timer</label>
 	</variable>
-	<variable item="Sound Setting 26" CV="T2CV.4.7" default="20" tooltip="The speed at which Random sounds will stop playing (speed of zero stops random sounds from playing)">
+	<variable item="Sound Setting 26" CV="T2CV.4.7" default="15" tooltip="The speed at which Random sounds will stop playing (speed of zero stops random sounds from playing)">
 		<decVal max="126"/>
 		<label>Random Sound Cutout Speed Step</label>
 	</variable>

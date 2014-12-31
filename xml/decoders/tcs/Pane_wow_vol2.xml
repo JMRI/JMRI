@@ -26,6 +26,9 @@
           <text xml:lang="it">Dovete avere JMRI 3.9.5 o successivo.</text>
         </label>
         <label>
+          <text>Recommend to change volume groups, if available, rather than these</text>
+        </label>
+        <label>
           <text>   </text>
         </label>
 		</column>

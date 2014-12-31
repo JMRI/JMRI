@@ -41,6 +41,11 @@
 		<display item="Button 7 Sound" layout="above" format="tree"/>
 		<display item="Button 8 Sound" layout="above" format="tree"/>
 		<display item="Button 9 Sound" layout="above" format="tree"/>
+    </row>
+	<label>
+		<text>   </text>
+	</label>
+    <row>
 		<display item="Button 10 Sound" layout="above" format="tree"/>
 		<display item="Button 11 Sound" layout="above" format="tree"/>
 		<display item="Button 12 Sound" layout="above" format="tree"/>
@@ -48,14 +53,14 @@
 		<display item="Button 14 Sound" layout="above" format="tree"/>
 		<display item="Button 15 Sound" layout="above" format="tree"/>
 		<display item="Button 16 Sound" layout="above" format="tree"/>
+		<display item="Button 17 Sound" layout="above" format="tree"/>
+		<display item="Button 18 Sound" layout="above" format="tree"/>
+		<display item="Button 19 Sound" layout="above" format="tree"/>
     </row>
 	<label>
 		<text>   </text>
 	</label>
     <row>
-		<display item="Button 17 Sound" layout="above" format="tree"/>
-		<display item="Button 18 Sound" layout="above" format="tree"/>
-		<display item="Button 19 Sound" layout="above" format="tree"/>
 		<display item="Button 20 Sound" layout="above" format="tree"/>
 		<display item="Button 21 Sound" layout="above" format="tree"/>
 		<display item="Button 22 Sound" layout="above" format="tree"/>
@@ -65,6 +70,11 @@
 		<display item="Button 26 Sound" layout="above" format="tree"/>
 		<display item="Button 27 Sound" layout="above" format="tree"/>
 		<display item="Button 28 Sound" layout="above" format="tree"/>
+    </row>
+	<label>
+		<text>   </text>
+	</label>
+    <row>
 		<display item="Random 1 Sound" layout="above" format="tree"/>
 		<display item="Random 2 Sound" layout="above" format="tree"/>
 		<display item="Random 3 Sound" layout="above" format="tree"/>

@@ -292,5 +292,16 @@
     <display item="Sound Group 7 Checkbox 6" format="checkbox"/>
     <display item="Sound Group 7 Checkbox 7" format="checkbox"/>
     <display item="Sound Group 7 Checkbox 8" format="checkbox"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Sound Group 8 Checkbox 1" format="checkbox"/>
+    <display item="Sound Group 8 Checkbox 2" format="checkbox"/>
+    <display item="Sound Group 8 Checkbox 3" format="checkbox"/>
+    <display item="Sound Group 8 Checkbox 4" format="checkbox"/>
+    <display item="Sound Group 8 Checkbox 5" format="checkbox"/>
+    <display item="Sound Group 8 Checkbox 6" format="checkbox"/>
+    <display item="Sound Group 8 Checkbox 7" format="checkbox"/>
+    <display item="Sound Group 8 Checkbox 8" format="checkbox"/>
   </column>
 </pane>

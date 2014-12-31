@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<!-- version 1 - new file for TCS version 2 sound set -->
+<!-- version 1 - new file for TCS version 1 sound set -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 	<enumChoiceGroup>
 		<name>air pump</name>
@@ -99,9 +99,9 @@
 	</enumChoiceGroup>
 	<enumChoiceGroup>
 		<name>horn</name>
-		<enumChoice choice="Horn 1" value="90"/>
-		<enumChoice choice="Horn 2" value="91"/>
-		<enumChoice choice="Horn 3" value="92"/>
+		<enumChoice choice="Horn Nathan K5LA Short" value="90"/>
+		<enumChoice choice="Horn Nathan K5LA Long" value="91"/>
+		<enumChoice choice="Horn Nathan K5LA Quill" value="92" />
 	</enumChoiceGroup>
 	<enumChoice choice="Idling Sounds 1" value="396"/>
 	<enumChoiceGroup>
@@ -111,11 +111,16 @@
 		<enumChoice choice="Injector 3" value="123"/>
 	</enumChoiceGroup>
 	<enumChoiceGroup>
+		<name>Mute</name>
+		<enumChoice choice="Mute" value="370"/>
+		<enumChoice choice="Silence" value="371"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
 		<name>rod clank</name>
-		<enumChoice choice="Rod Clank 1" value="93"/>
-		<enumChoice choice="Rod Clank 2" value="94"/>
-		<enumChoice choice="Rod Clank 3" value="95"/>
-		<enumChoice choice="Rod Clank 4" value="96"/>
+		<enumChoice choice="Strasburg 475 rod clank coasting 1" value="93"/>
+		<enumChoice choice="Strasburg 475 rod clank coasting 2" value="94"/>
+		<enumChoice choice="Strasburg 475 rod clank under power 1" value="95"/>
+		<enumChoice choice="Strasburg 475 rod clank under power 2" value="96"/>
 	</enumChoiceGroup>
 	<enumChoiceGroup>
 		<name>safety</name>
@@ -128,196 +133,12 @@
 		<enumChoice choice="Shovelling 2 Butterfly - Air Powered" value="132"/>
 	</enumChoiceGroup>
 	<enumChoice choice="Waterfill 1" value="398"/>
-	<enumChoiceGroup>
-		<name>whistle forward</name>
-		<enumChoice choice="Horn Nathan K5LA Forward" value="156"/>
-		<enumChoice choice="Whistle 14 - Forward" value="146"/>
-		<enumChoice choice="Whistle 16 - Forward" value="148"/>
-		<enumChoice choice="Whistle 17 - Forward" value="149"/>
-		<enumChoice choice="Whistle Alamo Michigan Plant Forward" value="133"/>
-		<enumChoice choice="Whistle B &amp; O Forward" value="142"/>
-		<enumChoice choice="Whistle Great Northern 5 Chime Forward" value="155"/>
-		<enumChoice choice="Whistle Hancock 3 Chime Forward" value="150"/>
-		<enumChoice choice="Whistle Kingsly 4 Chime Forward" value="135"/>
-		<enumChoice choice="Whistle Lunkenheimer 3 chime Forward" value="145"/>
-		<enumChoice choice="Whistle Lunkenheimer Single Note Forward" value="147"/>
-		<enumChoice choice="Whistle NPR 765 Foward" value="137"/>
-		<enumChoice choice="Whistle NW Single Chime Forward" value="144"/>
-		<enumChoice choice="Whistle NW single chime short bell forward" value="154"/>
-		<enumChoice choice="Whistle PA 3 Chime Forward" value="134"/>
-		<enumChoice choice="Whistle Pennsy K4 Forward" value="143"/>
-		<enumChoice choice="Whistle Reading 6 Chime 2 Forward" value="136"/>
-		<enumChoice choice="Whistle Reading 6 Chime Forward" value="138"/>
-		<enumChoice choice="Whistle Reading Pacific G2 Forward" value="139"/>
-		<enumChoice choice="Whistle Reading Single Chime Forward" value="140"/>
-		<enumChoice choice="Whistle Santa Fe 6 Chime Forward" value="153"/>
-		<enumChoice choice="Whistle Southern 6 Chime Forward" value="151"/>
-		<enumChoice choice="Whistle Wabash 3 Chime Forward" value="141"/>
-		<enumChoice choice="Whistle Wabash 6 Chime Forward" value="152"/>
-	</enumChoiceGroup>
-	<enumChoiceGroup>
-		<name>whistle long</name>
-		<enumChoice choice="Horn Nathan K5LA Long" value="88"/>
-		<enumChoice choice="Whistle 14 - Long" value="58"/>
-		<enumChoice choice="Whistle 16 - Long" value="64"/>
-		<enumChoice choice="Whistle 17 - Long" value="67"/>
-		<enumChoice choice="Whistle Alamo Michigan Plant Long" value="19"/>
-		<enumChoice choice="Whistle B &amp; O Long" value="46"/>
-		<enumChoice choice="Whistle Great Northern 5 Chime Long" value="85"/>
-		<enumChoice choice="Whistle Hancock 3 Chime Long" value="70"/>
-		<enumChoice choice="Whistle Kingsly 4 Chime Long" value="25"/>
-		<enumChoice choice="Whistle Lunkenheimer 3 chime Long" value="55"/>
-		<enumChoice choice="Whistle Lunkenheimer Single Note Long" value="61"/>
-		<enumChoice choice="Whistle NPR 765 Long" value="31"/>
-		<enumChoice choice="Whistle NW Single Chime Long" value="52"/>
-		<enumChoice choice="Whistle NW single chime short bell Long" value="82"/>
-		<enumChoice choice="Whistle PA 3 Chime Long" value="22"/>
-		<enumChoice choice="Whistle Pennsy K4 Long" value="49"/>
-		<enumChoice choice="Whistle Reading 6 Chime 2 Long" value="28"/>
-		<enumChoice choice="Whistle Reading 6 Chime Long" value="34"/>
-		<enumChoice choice="Whistle Reading Pacific G2 Long" value="37"/>
-		<enumChoice choice="Whistle Reading Single Chime Long" value="40"/>
-		<enumChoice choice="Whistle Santa Fe 6 Chime Long" value="79"/>
-		<enumChoice choice="Whistle Southern 6 Chime Long" value="72"/>
-		<enumChoice choice="Whistle Wabash 3 Chime Long" value="43"/>
-		<enumChoice choice="Whistle Wabash 6 Chime Long" value="76"/>
-	</enumChoiceGroup>
-	<enumChoiceGroup>
-		<name>whistle quill</name>
-		<enumChoice choice="Horn Nathan K5LA Quill" value="89"/>
-		<enumChoice choice="Whistle 14 - Quill" value="59"/>
-		<enumChoice choice="Whistle 16 - Quill" value="65"/>
-		<enumChoice choice="Whistle 17 - Quill" value="68"/>
-		<enumChoice choice="Whistle Alamo Michigan Plant Quill" value="20"/>
-		<enumChoice choice="Whistle B &amp; O Quill" value="47"/>
-		<enumChoice choice="Whistle Great Northern 5 Chime Quill" value="86"/>
-		<enumChoice choice="Whistle Hancock 3 Chime Quill" value="71"/>
-		<enumChoice choice="Whistle Kingsly 4 Chime Quill" value="26"/>
-		<enumChoice choice="Whistle Lunkenheimer 3 chime Quill" value="56"/>
-		<enumChoice choice="Whistle Lunkenheimer Single Note Quill" value="62"/>
-		<enumChoice choice="Whistle NPR 765 Quill" value="32"/>
-		<enumChoice choice="Whistle NW Single Chime Quill" value="53"/>
-		<enumChoice choice="Whistle NW single chime short bell Quill" value="83"/>
-		<enumChoice choice="Whistle PA 3 Chime Quill" value="23"/>
-		<enumChoice choice="Whistle Pennsy K4 Quill" value="50"/>
-		<enumChoice choice="Whistle Reading 6 Chime 2 Quill" value="29"/>
-		<enumChoice choice="Whistle Reading 6 Chime Quill" value="35"/>
-		<enumChoice choice="Whistle Reading Pacific G2 Quill" value="38"/>
-		<enumChoice choice="Whistle Reading Single Chime Quill" value="41"/>
-		<enumChoice choice="Whistle Santa Fe 6 Chime Quill" value="80"/>
-		<enumChoice choice="Whistle Southern 6 Chime Quill" value="74"/>
-		<enumChoice choice="Whistle Wabash 3 Chime Quill" value="44"/>
-		<enumChoice choice="Whistle Wabash 6 Chime Quill" value="77"/>
-	</enumChoiceGroup>
-	<enumChoiceGroup>
-		<name>whistle reverse</name>
-		<enumChoice choice="Horn Nathan K5LA Reverse" value="180"/>
-		<enumChoice choice="Whistle 14 - Reverse" value="170"/>
-		<enumChoice choice="Whistle 16 - Reverse" value="172"/>
-		<enumChoice choice="Whistle 17 - Reverse" value="173"/>
-		<enumChoice choice="Whistle Alamo Michigan Plant Reverse" value="157"/>
-		<enumChoice choice="Whistle B &amp; O Reverse" value="166"/>
-		<enumChoice choice="Whistle Great Northern 5 Chime Reverse" value="179"/>
-		<enumChoice choice="Whistle Hancock 3 Chime Reverse" value="174"/>
-		<enumChoice choice="Whistle Kingsly 4 Chime Reverse" value="159"/>
-		<enumChoice choice="Whistle Lunkenheimer 3 chime Reverse" value="169"/>
-		<enumChoice choice="Whistle Lunkenheimer Single Note Reverse" value="171"/>
-		<enumChoice choice="Whistle NPR 765 Reverse" value="161"/>
-		<enumChoice choice="Whistle NW Single Chime Reverse" value="168"/>
-		<enumChoice choice="Whistle NW single chime short bell Reverse" value="178"/>
-		<enumChoice choice="Whistle PA 3 Chime Reverse" value="158"/>
-		<enumChoice choice="Whistle Pennsy K4 Reverse" value="167"/>
-		<enumChoice choice="Whistle Reading 6 Chime 2 Reverse" value="160"/>
-		<enumChoice choice="Whistle Reading 6 Chime Reverse" value="162"/>
-		<enumChoice choice="Whistle Reading Pacific G2 Reverse" value="163"/>
-		<enumChoice choice="Whistle Reading Single Chime Reverse" value="164"/>
-		<enumChoice choice="Whistle Santa Fe 6 Chime Reverse" value="177"/>
-		<enumChoice choice="Whistle Southern 6 Chime Reverse" value="175"/>
-		<enumChoice choice="Whistle Wabash 3 Chime Reverse" value="165"/>
-		<enumChoice choice="Whistle Wabash 6 Chime Reverse" value="176"/>
-	</enumChoiceGroup>
-	<enumChoiceGroup>
-		<name>whistle rotate</name>
-		<enumChoice choice="Rotate Horn Nathan K5LA" value="395"/>
-		<enumChoice choice="Rotate Whistle 14" value="385"/>
-		<enumChoice choice="Rotate Whistle 16" value="387"/>
-		<enumChoice choice="Rotate Whistle 17" value="388"/>
-		<enumChoice choice="Rotate Whistle Alamo Michigan Plant" value="372"/>
-		<enumChoice choice="Rotate Whistle B &amp; O" value="381"/>
-		<enumChoice choice="Rotate Whistle Changed" value="371"/>
-		<enumChoice choice="Rotate Whistle Great Northern 5 Chime" value="394"/>
-		<enumChoice choice="Rotate Whistle Hancock 3 Chime" value="389"/>
-		<enumChoice choice="Rotate Whistle Kingsly 4 Chime" value="374"/>
-		<enumChoice choice="Rotate Whistle Lunkenheimer 3 chime" value="384"/>
-		<enumChoice choice="Rotate Whistle Lunkenheimer Single Note" value="386"/>
-		<enumChoice choice="Rotate Whistle NPR 765" value="376"/>
-		<enumChoice choice="Rotate Whistle NW Single Chime" value="383"/>
-		<enumChoice choice="Rotate Whistle NW single chime short bell" value="393"/>
-		<enumChoice choice="Rotate Whistle PA 3 Chime" value="373"/>
-		<enumChoice choice="Rotate Whistle Pennsy K4" value="382"/>
-		<enumChoice choice="Rotate Whistle Reading 6 Chime" value="377"/>
-		<enumChoice choice="Rotate Whistle Reading 6 Chime 2" value="375"/>
-		<enumChoice choice="Rotate Whistle Reading Pacific G2" value="378"/>
-		<enumChoice choice="Rotate Whistle Reading Single Chime" value="379"/>
-		<enumChoice choice="Rotate Whistle Santa Fe 6 Chime" value="392"/>
-		<enumChoice choice="Rotate Whistle Southern 6 Chime" value="390"/>
-		<enumChoice choice="Rotate Whistle Wabash 3 Chime" value="380"/>
-		<enumChoice choice="Rotate Whistle Wabash 6 Chime" value="391"/>
-		<enumChoice choice="Silence" value="370"/>
-	</enumChoiceGroup>
-	<enumChoiceGroup>
-		<name>whistle short</name>
-		<enumChoice choice="Horn Nathan K5LA Short" value="87"/>
-		<enumChoice choice="Whistle 14 - Short" value="57"/>
-		<enumChoice choice="Whistle 16 - Short" value="63"/>
-		<enumChoice choice="Whistle 17 - Short" value="66"/>
-		<enumChoice choice="Whistle Alamo Michigan Plant Short" value="18"/>
-		<enumChoice choice="Whistle B &amp; O Short" value="45"/>
-		<enumChoice choice="Whistle Great Northern 5 Chime Short" value="84"/>
-		<enumChoice choice="Whistle Hancock 3 Chime Short" value="69"/>
-		<enumChoice choice="Whistle Kingsly 4 Chime Short" value="24"/>
-		<enumChoice choice="Whistle Lunkenheimer 3 chime Short" value="54"/>
-		<enumChoice choice="Whistle Lunkenheimer Single Note Short" value="60"/>
-		<enumChoice choice="Whistle NPR 765 Short" value="30"/>
-		<enumChoice choice="Whistle NW Single Chime Short" value="51"/>
-		<enumChoice choice="Whistle NW single chime short bell Short" value="81"/>
-		<enumChoice choice="Whistle PA 3 Chime Short" value="21"/>
-		<enumChoice choice="Whistle Pennsy K4 Short" value="48"/>
-		<enumChoice choice="Whistle Reading 6 Chime 2 Short" value="27"/>
-		<enumChoice choice="Whistle Reading 6 Chime Short" value="33"/>
-		<enumChoice choice="Whistle Reading Pacific G2 Short" value="36"/>
-		<enumChoice choice="Whistle Reading Single Chime Short" value="39"/>
-		<enumChoice choice="Whistle Santa Fe 6 Chime Short" value="78"/>
-		<enumChoice choice="Whistle Southern 6 Chime Short" value="72"/>
-		<enumChoice choice="Whistle Wabash 3 Chime Short" value="42"/>
-		<enumChoice choice="Whistle Wabash 6 Chime Short" value="75"/>
-	</enumChoiceGroup>
-	<enumChoiceGroup>
-		<name>whistle stop</name>
-		<enumChoice choice="Horn Nathan K5LA Stop" value="204"/>
-		<enumChoice choice="Whistle 14 - Stop" value="194"/>
-		<enumChoice choice="Whistle 16 - Stop" value="196"/>
-		<enumChoice choice="Whistle 17 - Stop" value="197"/>
-		<enumChoice choice="Whistle Alamo Michigan Plant Stop" value="181"/>
-		<enumChoice choice="Whistle B &amp; O Stop" value="190"/>
-		<enumChoice choice="Whistle Great Northern 5 Chime Stop" value="203"/>
-		<enumChoice choice="Whistle Hancock 3 Chime Stop" value="198"/>
-		<enumChoice choice="Whistle Kingsly 4 Chime Stop" value="183"/>
-		<enumChoice choice="Whistle Lunkenheimer 3 chime Stop" value="193"/>
-		<enumChoice choice="Whistle Lunkenheimer Single Note Stop" value="195"/>
-		<enumChoice choice="Whistle NPR 765 Stop" value="185"/>
-		<enumChoice choice="Whistle NW single chime short bell Stop" value="202"/>
-		<enumChoice choice="Whistle NW Single Chime Stop" value="192"/>
-		<enumChoice choice="Whistle PA 3 Chime Stop" value="182"/>
-		<enumChoice choice="Whistle Pennsy K4 Stop" value="191"/>
-		<enumChoice choice="Whistle Reading 6 Chime 2 Stop" value="184"/>
-		<enumChoice choice="Whistle Reading 6 Chime Stop" value="186"/>
-		<enumChoice choice="Whistle Reading Pacific G2 Stop" value="187"/>
-		<enumChoice choice="Whistle Reading Single Chime Stop" value="188"/>
-		<enumChoice choice="Whistle Santa Fe 6 Chime Stop" value="201"/>
-		<enumChoice choice="Whistle Southern 6 Chime Stop" value="199"/>
-		<enumChoice choice="Whistle Wabash 3 Chime Stop" value="189"/>
-		<enumChoice choice="Whistle Wabash 6 Chime Stop" value="200"/>
-	</enumChoiceGroup>
+	<enumChoice choice="Whistle Forward" value="133"/>
+	<enumChoice choice="Whistle Long" value="19"/>
+	<enumChoice choice="Whistle Quill" value="20"/>
+	<enumChoice choice="Whistle Reverse" value="157"/>
+	<enumChoice choice="Whistle Short" value="18"/>
+	<enumChoice choice="Whistle Stop" value="181"/>
+	<enumChoice choice="Rotate Whistle" value="372"/>
 	<enumChoice choice="None" value="65535" />
 </enumVal>

@@ -13,38 +13,40 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 	<version author="Michael Mosher" version="1" lastUpdated="20141024"/>
+	<version author="Michael Mosher" version="2" lastUpdated="20141231"/>
+	<!-- add user preset reset types -->
 	<decoder>
 		<family name="WOW Sound Set 3" mfg="Train Control Systems" comment="TCS FW Starting Jan 2012">
-				<model model="WOW Sound 101" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="TBD"
-					lowVersionID="3" highVersionID="3" productID="61">
-					<output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
-					<output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
-					<output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
-					<output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
-					<output name="5" label="Brown" connection="solder" maxcurrent="100 mA"/>
-					<output name="6" label="Pink" connection="solder" maxcurrent="100 mA"/>
-					<output name="Dim"/>
-					<output name="Ditch"/>
-					<output name="Motor"/>
-					<output name="BEMF"/>
-					<output name="Brake"/>
-					<size length="2.860" width="0.680" height="0.145" units="inches"/>
-				</model>
-				<model model="WOW Sound 121" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="TBD"
-					lowVersionID="3" highVersionID="3" productID="61">
-					<output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
-					<output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
-					<output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
-					<output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
-					<output name="5" label="Brown" connection="solder" maxcurrent="100 mA"/>
-					<output name="6" label="Pink" connection="solder" maxcurrent="100 mA"/>
-					<output name="Dim"/>
-					<output name="Ditch"/>
-					<output name="Motor"/>
-					<output name="BEMF"/>
-					<output name="Brake"/>
-					<size length="1.28" width="0.69" height="0.22" units="inches"/>
-				</model>
+			<model model="WOW Sound 101" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="TBD"
+				lowVersionID="3" highVersionID="3" productID="130">
+				<output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
+				<output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
+				<output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
+				<output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
+				<output name="5" label="Brown" connection="solder" maxcurrent="100 mA"/>
+				<output name="6" label="Pink" connection="solder" maxcurrent="100 mA"/>
+				<output name="Dim"/>
+				<output name="Ditch"/>
+				<output name="Motor"/>
+				<output name="BEMF"/>
+				<output name="Brake"/>
+				<size length="1.35" width="0.66" height="0.22" units="inches"/>
+			</model>
+			<model model="WOW Sound 121" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="TBD"
+				lowVersionID="3" highVersionID="3" productID="131">
+				<output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
+				<output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
+				<output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
+				<output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
+				<output name="5" label="Brown" connection="solder" maxcurrent="100 mA"/>
+				<output name="6" label="Pink" connection="solder" maxcurrent="100 mA"/>
+				<output name="Dim"/>
+				<output name="Ditch"/>
+				<output name="Motor"/>
+				<output name="BEMF"/>
+				<output name="Brake"/>
+				<size length="1.28" width="0.69" height="0.22" units="inches"/>
+			</model>
 		</family>
 		<programming direct="yes" paged="yes" register="yes" ops="yes">
 		<capability>
@@ -53,9 +55,9 @@
 		</programming>
 		<variables>
 
-			<xi:include href="http://jmri.org/xml/decoders/tcs/CV1_CV99_FW86.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/tcs/CV100_CV157_FW86.xml"/>
-			<variable item="Sound Option 3" CV="248" default="3">
+			<xi:include href="http://jmri.org/xml/decoders/tcs/CV1_CV99_wow.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/tcs/CV100_CV187_wow.xml"/>
+			<variable item="Sound Option 4" CV="248" default="3" readOnly="yes">
 				<decVal/>
 				<label>Sound Set</label>
 			</variable>
@@ -1610,11 +1612,10 @@
 				<decVal max="100"/>
 				<label>Waterfill 1</label>
 			</variable>
-			
 			<!-- sound CVs -->
-			<variable item="Sound Option 1" CV="T2CV.4.8" default="1">
+			<variable item="Sound Option 1" CV="T2CV.4.8" default="0">
 				<enumVal>
-					<enumChoice choice="Whistle Alamo Michigan Plant" value="1"/>
+					<enumChoice choice="Whistle Alamo Michigan Plant"/>
 					<enumChoice choice="Whistle Atchison, Topeka, and Santa Fe 6 Chime Original" />
 					<enumChoice choice="Whistle Atchison, Topeka, and Santa Fe 6 Chime Replica" />
 					<enumChoice choice="Whistle B &amp; O 3 Chime" />
@@ -1662,16 +1663,21 @@
 				<decVal max="100"/>
 				<label>Global volume</label>
 			</variable>
-			<variable item="Sound Option 2" CV="T2CV.4.11" default="1" tooltip="Not available in version 1">
+			<variable item="Sound Option 2" CV="T2CV.4.11" default="1" mask="XXXXXXXXXVVVVVVV">
 				<enumVal>
-				<enumChoice choice="Heavy Steam"/>
-				<enumChoice choice="Medium Steam"/>
-				<enumChoice choice="Light Steam"/>
-				<enumChoice choice="Heavy Articulated Steam" value="128"/>
-				<enumChoice choice="Medium Articulated Steam"/>
-				<enumChoice choice="Light Articulated Steam"/>
+					<enumChoice choice="Heavy Steam"/>
+					<enumChoice choice="Medium Steam"/>
+					<enumChoice choice="Light Steam"/>
+					<enumChoice choice="R&amp;N #425"/>
 				</enumVal>
 				<label>Steam locomotive type</label>
+			</variable>
+			<variable item="Sound Option 3" CV="T2CV.4.11" default="0" mask="XXXXXXXXVXXXXXXX" >
+				<enumVal>
+					<enumChoice choice="Non Articulated"/>
+					<enumChoice choice="Articulated"/>
+					</enumVal>
+				<label>Articulation type</label>
 			</variable>
 			<variable item="Sound Group 7 Checkbox 8" CV="T2CV.4.19" default="1" mask="XXXXXXXXVXXXXXXX">
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
@@ -1797,12 +1803,14 @@
 		</variables>
 		<resets>
 			<factReset label="Entire decoder (All motor, light, and sound settings)" CV="T2CV.5.0" default="2"/>
-			<factReset label="All motor and light settings" CV="T2CV.5.0" default="3"/>
-			<factReset label="All sound settings" CV="T2CV.5.0" default="4"/>
-			<factReset label="Sound button mappings" CV="T2CV.5.0" default="5"/>
-			<factReset label="Chuff timing" CV="T2CV.5.0" default="6"/>
-			<factReset label="Sound CV's" CV="T2CV.5.0" default="7"/>
-			<factReset label="Sound type volumes" CV="T2CV.5.0" default="8"/>
+			<factReset label="All sound settings" CV="T2CV.5.0" default="3"/>
+			<factReset label="Sound button mappings" CV="T2CV.5.0" default="4"/>
+			<factReset label="Chuff timing" CV="T2CV.5.0" default="5"/>
+			<factReset label="Sound CV's" CV="T2CV.5.0" default="6"/>
+			<factReset label="Sound type volumes" CV="T2CV.5.0" default="7"/>
+			<factReset label="User Preset 1" CV="T2CV.5.0" default="8"/>
+			<factReset label="User Preset 2" CV="T2CV.5.0" default="9"/>
+			<factReset label="User Preset 3" CV="T2CV.5.0" default="10"/>
 		</resets>
 	</decoder>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Momentum.xml"/>
