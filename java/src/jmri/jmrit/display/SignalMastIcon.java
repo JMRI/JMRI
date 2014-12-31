@@ -17,13 +17,14 @@ import javax.swing.*;
 import javax.swing.JOptionPane;
 
 /**
- * An icon to display a status of a SignalMast.
- * <P>
- * For now, this is done via text.
+ * An icon to display a status of a {@link jmri.SignalMast}.
+ * <p>
+ * The icons displayed are loaded from the {@link jmri.SignalAppearanceMap}
+ * in the {@link jmri.SignalMast}.
  *
  * @see jmri.SignalMastManager
  * @see jmri.InstanceManager
- * @author Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009, 2014
  * @version $Revision$
  */
 

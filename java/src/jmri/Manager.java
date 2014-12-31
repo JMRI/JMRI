@@ -139,7 +139,7 @@ public interface Manager {
      * @param property The programmatic name of the request
      *                 "CanDelete" will enquire with all listerners if the item can be deleted
      *                 "DoDelete" tells the listerner to delete the item
-     * @throws PropertyVetoException - if the recipients wishes the delete to be aborted (see above).
+     * @throws java.beans.PropertyVetoException - if the recipients wishes the delete to be aborted (see above).
      */
     public void deleteBean(NamedBean n, String property) throws java.beans.PropertyVetoException;
     
