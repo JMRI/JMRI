@@ -76,7 +76,6 @@ public class FileLocationPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         return result;
     }
 
-    @SuppressWarnings("unchecked")
     private String loadUserLocations(Element messages, String attr) {
         List<Element> messageList = messages.getChildren("fileLocation");
         for (Element message : messageList) {

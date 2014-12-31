@@ -410,7 +410,6 @@ public class PaneProgDp3Action 	extends jmri.util.swing.JmriAbstractAction imple
     Element modelElem = null;
     ThisProgPane progPane = null;
     
-    @SuppressWarnings("unchecked")
     synchronized void setUpRosterPanel(){
         re=null;
         if(rosterPanel==null){
