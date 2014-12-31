@@ -83,7 +83,6 @@ public class SignalHeadSignalMastXml
         }
         Element e = element.getChild("disabledAspects");
         if(e!=null){
-            @SuppressWarnings("unchecked")
             List<Element> list = e.getChildren("disabledAspect");
             for(Element aspect: list){
                 ((SignalHeadSignalMast)m).setAspectDisabled(aspect.getText());

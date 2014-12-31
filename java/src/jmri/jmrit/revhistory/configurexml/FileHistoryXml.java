@@ -51,7 +51,6 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
     static public FileHistory loadFileHistory(Element e) {
         FileHistory r = new FileHistory();
         
-        @SuppressWarnings("unchecked")
         java.util.List<Element> list = e.getChildren("operation");
         for (int i = 0; i<list.size(); i++) {
             loadOperation(r, list.get(i));

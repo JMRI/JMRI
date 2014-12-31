@@ -30,7 +30,6 @@ public class TurnoutOperationManagerXml extends jmri.configurexml.AbstractXmlAda
         log.error("Invalid method called");
     }
 
-    @SuppressWarnings("unchecked")
 	public boolean load(Element operationsElement) {
     	boolean result = true;
     	TurnoutOperationManager manager = TurnoutOperationManager.getInstance();

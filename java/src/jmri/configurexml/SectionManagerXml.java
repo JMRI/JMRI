@@ -160,7 +160,6 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
      * invoke this with the parent of the set of Section elements.
      * @param sections Element containing the Section elements to load.
      */
-    @SuppressWarnings("unchecked")
 	public void loadSections(Element sections) {
 		List<Element> sectionList = sections.getChildren("section");
         if (log.isDebugEnabled()) log.debug("Found "+sectionList.size()+" sections");

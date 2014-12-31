@@ -99,7 +99,6 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
      * @param element Top level Element to unpack.
      * @return true if successful
      */
-    @SuppressWarnings("unchecked")
 	public boolean load(Element element) {
         int aspects=2;
         List<Element> l = element.getChildren("turnoutname");

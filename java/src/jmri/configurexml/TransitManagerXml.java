@@ -133,7 +133,7 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
      * invoke this with the parent of the set of Transit elements.
      * @param transits Element containing the Transit elements to load.
      */
-    @SuppressWarnings({ "unchecked", "null" })
+    @SuppressWarnings("null")
 	public void loadTransits(Element transits) {
 		List<Element> transitList = transits.getChildren("transit");
         if (log.isDebugEnabled()) log.debug("Found "+transitList.size()+" transits");

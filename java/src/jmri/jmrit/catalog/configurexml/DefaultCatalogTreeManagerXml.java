@@ -43,7 +43,6 @@ public class DefaultCatalogTreeManagerXml extends XmlFile
 	/*
 	 *  Writes out tree values to a file in the user's preferences directory
 	 */
-	@SuppressWarnings("unchecked")
 	public void writeCatalogTrees() throws java.io.IOException {
 		if (log.isDebugEnabled()) log.debug("entered writeCatalogTreeValues");
         CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
@@ -58,7 +57,9 @@ public class DefaultCatalogTreeManagerXml extends XmlFile
                 CatalogTreeNode root = (CatalogTreeNode)tree.getRoot();
                 log.debug("enumerateTree called for root= "+root.toString()+
                               ", has "+root.getChildCount()+" children");
-                Enumeration<CatalogTreeNode> e =root.depthFirstEnumeration();
+                              
+                @SuppressWarnings("unchecked") // root.depthFirstEnumeration isn't fully typed in JDOM2
+                Enumeration<CatalogTreeNode> e = root.depthFirstEnumeration();
                 while (e.hasMoreElements()) {
                     CatalogTreeNode n = e.nextElement();
                     log.debug("nodeName= "+n.getUserObject()+" has "+n.getLeaves().size()+
@@ -140,7 +141,6 @@ public class DefaultCatalogTreeManagerXml extends XmlFile
     /**
      * Recursively store a CatalogTree
      */
-    @SuppressWarnings("unchecked")
 	public void storeNode(Element parent, CatalogTreeNode node) {
         if (log.isDebugEnabled()) log.debug("storeNode "+node.toString()+
                                  ", has "+node.getLeaves().size()+" leaves.");
@@ -155,6 +155,7 @@ public class DefaultCatalogTreeManagerXml extends XmlFile
             element.addContent(el);
         }
         parent.addContent(element);
+        @SuppressWarnings("unchecked") // is node.children actually of <Element> type?
         Enumeration<CatalogTreeNode> e = node.children();
         while (e.hasMoreElements()) {
             CatalogTreeNode n = e.nextElement();
@@ -208,7 +209,6 @@ public class DefaultCatalogTreeManagerXml extends XmlFile
     /**
      * Utility method to load the individual CatalogTree objects.
      */
-    @SuppressWarnings("unchecked")
 	public void loadCatalogTrees(Element catalogTrees) {
         List<Element> catList = catalogTrees.getChildren("catalogTree");
         if (log.isDebugEnabled()) log.debug("loadCatalogTrees: found "+catList.size()+" CatalogTree objects");
@@ -242,7 +242,6 @@ public class DefaultCatalogTreeManagerXml extends XmlFile
         }
     }
 
-    @SuppressWarnings("unchecked")
 	private void addLeaves(Element element, CatalogTreeNode node) {
         List<Element> leafList = element.getChildren("leaf");
         for (int i=0; i<leafList.size(); i++) {
@@ -267,7 +266,6 @@ public class DefaultCatalogTreeManagerXml extends XmlFile
     /**
     * Recursively load a CatalogTree
     */
-    @SuppressWarnings("unchecked")
 	public void loadNode(Element element, CatalogTreeNode parent, DefaultTreeModel model) {
         List<Element> nodeList = element.getChildren("node");
         if (log.isDebugEnabled()) log.debug("Found "+nodeList.size()+" CatalogTreeNode objects");

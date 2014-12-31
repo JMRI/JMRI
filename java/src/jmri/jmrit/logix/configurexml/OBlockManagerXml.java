@@ -243,7 +243,6 @@ public class OBlockManagerXml // extends XmlFile
      * @param blocks Top level Element to unpack.
      * @return true if successful
      */
-    @SuppressWarnings("unchecked")
     public boolean load(Element blocks) {
         _blockMap = new HashMap <String, OBlock>();
         _pathMap = new HashMap <String, OPath>();
@@ -268,7 +267,6 @@ public class OBlockManagerXml // extends XmlFile
         log.error("load called. Invalid method.");
     }
     
-    @SuppressWarnings("unchecked")
     void loadBlock(Element elem) {
         if (elem.getAttribute("systemName") == null) {
             log.error("unexpected null in systemName "+elem+" "+elem.getAttributes());
@@ -397,7 +395,7 @@ public class OBlockManagerXml // extends XmlFile
                 if (fromBlock!=null) {
                 	portal.setFromBlock(fromBlock, false);
                     fromBlock.addPortal(portal);
-                    @SuppressWarnings("unchecked")
+                    
                     List<Element> ePathsFromBlock = eFromBlk.getChildren("path");
                     for (int i=0; i<ePathsFromBlock.size(); i++) {
                         Element e = ePathsFromBlock.get(i);
@@ -428,7 +426,7 @@ public class OBlockManagerXml // extends XmlFile
                 if (toBlock!=null) {
                     portal.setToBlock(toBlock, false);
                     toBlock.addPortal(portal);
-                    @SuppressWarnings("unchecked")
+                    
                     List<Element> ePathsToBlock = eToBlk.getChildren("path");
                     for (int i=0; i<ePathsToBlock.size(); i++) {
                         Element e = ePathsToBlock.get(i);
@@ -480,7 +478,6 @@ public class OBlockManagerXml // extends XmlFile
         return portal;
     }
 
-    @SuppressWarnings("unchecked")
     OPath loadPath(Element elem, OBlock block) {
         String pName = elem.getAttribute("pathName").getValue();
         OPath path = getPath(block, pName);

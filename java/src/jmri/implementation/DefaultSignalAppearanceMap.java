@@ -87,7 +87,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
         try {
             root = xf.rootFromFile(file);
             // get appearances
-            @SuppressWarnings("unchecked")
+
             List<Element> l = root.getChild("appearances").getChildren("appearance");
             
             // find all appearances, include them by aspect name, 
@@ -96,7 +96,6 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
                 if (log.isDebugEnabled()) log.debug("aspect name "+name);
                 
                 // add 'show' sub-elements as ints
-                @SuppressWarnings("unchecked")
                 List<Element> c = l.get(i).getChildren("show");
                 
                 int[] appearances = new int[c.size()];
@@ -118,17 +117,13 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
                     appearances[j] = ival;
                 }
                 map.addAspect(name, appearances);
-
-                //java.util.Hashtable<String, String> images = new java.util.Hashtable<String, String>();
-                
-                @SuppressWarnings("unchecked")
+                                
                 List<Element> img = l.get(i).getChildren("imagelink");
                 loadImageMaps(img, name, map);
                 
                 // now add the rest of the attributes
                 java.util.Hashtable<String, String> hm = new java.util.Hashtable<String, String>();
                 
-                @SuppressWarnings("unchecked")
                 List<Element> a = l.get(i).getChildren();
 
                 for (int j = 0; j < a.size(); j++) {
@@ -200,7 +195,6 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
         }
         
         try {
-            @SuppressWarnings("unchecked")
             List<Element> img = root.getChild("specificappearances").getChild(child).getChildren("imagelink");
             String name = "$"+child;
             if (img.size()==0){
@@ -238,11 +232,10 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
         if (log.isDebugEnabled()) log.debug("load aspect relation map signalSystem= \""+signalSystemName+"\", aspectMap= \""+aspectMapName+"\"");
         
         try {
-            @SuppressWarnings("unchecked")
             List<Element> l = root.getChild("aspectMappings").getChildren("aspectMapping");
             for (int i = 0; i < l.size(); i++) {
                 String advanced = l.get(i).getChild("advancedAspect").getText();
-                @SuppressWarnings("unchecked")
+
                 List<Element> o = l.get(i).getChildren("ourAspect");
                 String[] appearances = new String[o.size()];
                 for (int j = 0; j < o.size(); j++) {

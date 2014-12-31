@@ -45,7 +45,6 @@ public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapt
             PropertyDescriptor[] properties = b.getPropertyDescriptors();
             
             // add properties
-            @SuppressWarnings("unchecked")
             List<Element> children = e.getChildren("property");
             for (int i = 0; i<children.size(); i++) {
                 // unpack XML

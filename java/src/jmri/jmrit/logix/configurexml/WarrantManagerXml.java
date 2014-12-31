@@ -194,7 +194,6 @@ public class WarrantManagerXml //extends XmlFile
      * @param warrants Top level Element to unpack.
      * @return true if successful
      */
-    @SuppressWarnings("unchecked")
     public boolean load(Element warrants) {
 
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
@@ -290,7 +289,6 @@ public class WarrantManagerXml //extends XmlFile
         }
     }
 
-    @SuppressWarnings("unchecked")
     BlockOrder loadBlockOrder(Element elem) {
 
         OBlock block = null;

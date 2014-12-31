@@ -77,7 +77,6 @@ public class VirtualSignalMastXml
         }
         Element e = element.getChild("disabledAspects");
         if(e!=null){
-            @SuppressWarnings("unchecked")
             List<Element> list = e.getChildren("disabledAspect");
             for(Element aspect: list){
                 m.setAspectDisabled(aspect.getText());

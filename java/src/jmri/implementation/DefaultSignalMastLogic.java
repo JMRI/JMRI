@@ -1565,7 +1565,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
             }
         }
         
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings("unchecked") // (NamedBeanHandle<Turnout>) nbh.getNamedBean() is unchecked cast
         ArrayList<NamedBeanHandle<Turnout>> getNamedTurnouts(){
             ArrayList<NamedBeanHandle<Turnout>> out = new ArrayList<NamedBeanHandle<Turnout>>();
             for(NamedBeanSetting nbh:userSetTurnouts){
@@ -1608,7 +1608,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
             return out;
         }
         
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings("unchecked") // (NamedBeanHandle<Sensor>) nbh.getNamedBean() is unchecked cast
         ArrayList<NamedBeanHandle<Sensor>> getNamedSensors(){
             ArrayList<NamedBeanHandle<Sensor>> out = new ArrayList<NamedBeanHandle<Sensor>>();
             for(NamedBeanSetting nbh:userSetSensors){

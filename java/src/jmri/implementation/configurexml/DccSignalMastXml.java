@@ -81,7 +81,6 @@ public class DccSignalMastXml
         return loadCommonDCCMast(m, element);
     }
     
-    @SuppressWarnings("unchecked")
     protected boolean loadCommonDCCMast(DccSignalMast m, Element element){
         loadCommon(m, element);
         if(element.getChild("unlit")!=null){

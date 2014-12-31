@@ -129,7 +129,6 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
      * @param element Top level blocks Element to unpack.
      * @return true if successful
       */
-    @SuppressWarnings("unchecked")
 	public boolean load(Element element) {
     	boolean result = true;
         List<Element> l = element.getChildren("signalelement");

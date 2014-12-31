@@ -53,7 +53,6 @@ public class TripleOutputSignalHeadXml extends DoubleTurnoutSignalHeadXml {
      * @param element Top level Element to unpack.
      * @return true if successful
      */
-    @SuppressWarnings("unchecked")
 	public boolean load(Element element) {
         List<Element> l = element.getChildren("turnoutname");
         if (l.size() == 0) l = element.getChildren("turnout");

@@ -535,7 +535,6 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * @see jmri.configurexml.XmlAdapter#loadDeferred()
      * @since 3.3.2
      */
-    @SuppressWarnings("unchecked")
     @Override
     public boolean load(URL url, boolean registerDeferred) throws JmriConfigureXmlException {
         boolean result = true;

@@ -85,7 +85,6 @@ public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
      * @param element Top level Element to unpack.
      * @return true if successful
      */
-    @SuppressWarnings("unchecked")
 	public boolean load(Element element) {
         List<Element> l = element.getChildren("turnout");
         NamedBeanHandle<Turnout> green = loadTurnout(l.get(0));

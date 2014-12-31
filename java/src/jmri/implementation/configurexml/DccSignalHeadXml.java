@@ -73,7 +73,6 @@ public class DccSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBe
      * @param element Top level Element to unpack.
      * @return true if successful
      */
-    @SuppressWarnings("unchecked")
     public boolean load(Element element) {
         // put it together
         String sys = getSystemName(element);

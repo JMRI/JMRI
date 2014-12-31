@@ -81,7 +81,6 @@ public class TurnoutSignalMastXml
      * @param element Top level Element to unpack.
      * @return true if successful
      */
-    @SuppressWarnings("unchecked")
     public boolean load(Element element) {
         TurnoutSignalMast m;
         String sys = getSystemName(element);
