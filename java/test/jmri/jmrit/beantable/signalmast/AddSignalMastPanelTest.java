@@ -4,10 +4,6 @@ package jmri.jmrit.beantable.signalmast;
 
 import jmri.implementation.SignalSystemTestUtil;
 
-import javax.swing.JFrame;
-
-import java.io.*;
-
 import junit.framework.*;
 
 /**

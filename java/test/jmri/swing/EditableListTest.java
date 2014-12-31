@@ -3,7 +3,6 @@
 package jmri.swing;
 
 import org.apache.log4j.Logger;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

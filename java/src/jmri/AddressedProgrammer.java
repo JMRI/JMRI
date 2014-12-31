@@ -2,9 +2,6 @@
 
 package jmri;
 
-import jmri.ProgListener;
-import java.beans.PropertyChangeListener;
-
 /**
  * Provide access to the hardware DCC decoder programming capability.
  * <P>

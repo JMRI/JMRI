@@ -3,7 +3,6 @@ package jmri.jmrit.display.layoutEditor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.util.JmriJFrame;
-import jmri.NamedBean;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.SignalMastLogic;

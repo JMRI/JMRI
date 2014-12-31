@@ -11,7 +11,6 @@ import java.util.Enumeration;
 import jmri.Sensor;
 import jmri.JmriException;
 import java.util.Arrays;
-import jmri.InstanceManager;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
 

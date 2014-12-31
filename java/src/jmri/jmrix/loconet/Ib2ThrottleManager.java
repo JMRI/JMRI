@@ -1,16 +1,9 @@
 package jmri.jmrix.loconet;
 
-import java.util.Hashtable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.DccThrottle;
-import jmri.ThrottleManager;
-import jmri.LocoAddress;
-import jmri.DccLocoAddress;
-import jmri.ThrottleListener;
-import jmri.jmrix.AbstractThrottleManager;
 import jmri.jmrix.loconet.LocoNetSlot;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 

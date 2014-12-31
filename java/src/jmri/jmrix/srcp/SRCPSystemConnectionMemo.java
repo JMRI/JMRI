@@ -3,7 +3,6 @@
 package jmri.jmrix.srcp;
 
 import jmri.InstanceManager;
-import jmri.*;
 import java.util.ResourceBundle;
 
 /**

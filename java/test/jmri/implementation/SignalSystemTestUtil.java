@@ -2,11 +2,7 @@
 
 package jmri.implementation;
 
-import javax.swing.JFrame;
-
 import java.io.*;
-
-import junit.framework.*;
 
 /**
  * Static utilities for testing signal system code

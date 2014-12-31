@@ -2,8 +2,6 @@ package jmri.jmrix.openlcb;
 
 import org.jdom2.*;
 
-import org.openlcb.cdi.CdiRep;
-
 /**
  * Static methods for creating sample XML trees.
  *

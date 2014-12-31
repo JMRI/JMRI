@@ -3,8 +3,6 @@
 package jmri.util;
 
 import org.apache.log4j.Logger;
-import jmri.*;
-import jmri.implementation.AbstractTurnout;
 import junit.framework.*;
 import java.util.*;
 

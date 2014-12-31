@@ -7,8 +7,6 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
-import java.util.List;
-
 import jmri.Manager;
 import jmri.jmrit.beantable.AbstractTableAction;
 import jmri.jmrit.beantable.AbstractTableTabAction;

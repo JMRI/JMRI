@@ -6,8 +6,6 @@ import java.io.*;
 
 import junit.framework.*;
 
-import jmri.util.JUnitUtil;
-
 /**
  * Base for XML schema testing
  *

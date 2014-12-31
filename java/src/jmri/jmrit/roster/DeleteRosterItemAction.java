@@ -3,7 +3,6 @@ package jmri.jmrit.roster;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.io.File;
 import java.util.ResourceBundle;
 import javax.swing.Icon;
 import javax.swing.JComboBox;

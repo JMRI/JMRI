@@ -4,7 +4,6 @@ package jmri.jmrit.decoderdefn;
 
 import org.apache.log4j.Logger;
 import junit.framework.*;
-import java.io.File;
 
 //import jmri.InstanceManager;
 

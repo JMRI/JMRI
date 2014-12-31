@@ -9,7 +9,6 @@ import jmri.ClockControl;
 import jmri.InstanceManager;
 import jmri.PowerManager;
 import jmri.ProgrammerManager;
-import jmri.ReporterManager;
 import jmri.SensorManager;
 import jmri.ThrottleManager;
 import jmri.TurnoutManager;

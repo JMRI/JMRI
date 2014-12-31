@@ -1,12 +1,9 @@
 package jmri.jmrix.zimo;
 
-import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.Throttle;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
-import static jmri.DccThrottle.SpeedStepMode128;
 import jmri.jmrix.AbstractThrottle;
 
 /**

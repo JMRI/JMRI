@@ -9,8 +9,6 @@ package jmri.jmrix.roco.z21;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-
 import jmri.jmrix.AbstractPortController;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;

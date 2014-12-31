@@ -2,16 +2,8 @@
 
 package jmri.jmrit.display.configurexml;
 
-import org.apache.log4j.Logger;
-import java.io.*;
-
-import junit.framework.Assert;
 import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import jmri.InstanceManager;
 import jmri.configurexml.LoadAndStoreTestBase;
-import jmri.util.FileUtil;
 
 /**
  * Test that configuration files can be read and then stored again

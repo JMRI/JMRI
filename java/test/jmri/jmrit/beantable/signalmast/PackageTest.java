@@ -2,8 +2,6 @@
 
 package jmri.jmrit.beantable.signalmast;
 
-import javax.swing.JFrame;
-
 import junit.framework.*;
 
 /**

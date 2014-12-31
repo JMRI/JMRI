@@ -3,10 +3,6 @@
 package jmri.jmrit.display.configurexml;
 
 import org.apache.log4j.Logger;
-import jmri.jmrit.XmlFile;
-import java.io.*;
-
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

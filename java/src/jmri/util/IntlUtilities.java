@@ -2,9 +2,6 @@
 
 package jmri.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Common utility methods for Internationalization (I18N) 
  * and Localization (L12N).

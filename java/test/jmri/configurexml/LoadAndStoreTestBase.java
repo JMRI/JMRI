@@ -1,7 +1,6 @@
 // LoadAndStoreTestBase.java
 package jmri.configurexml;
 
-import jmri.jmrit.XmlFile;
 import java.io.*;
 import jmri.InstanceManager;
 import jmri.util.FileUtil;

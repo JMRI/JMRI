@@ -4,8 +4,6 @@ import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
-import jmri.jmrix.AbstractPortController;
-
 /**
  * <p>Title: XNetPacketizerTest </p>
  * <p>Description: </p>

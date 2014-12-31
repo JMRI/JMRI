@@ -5,8 +5,6 @@ package jmri.implementation;
 import org.apache.log4j.Logger;
 import junit.framework.*;
 
-import java.io.*;
-
 /**
  * Tests of the signal system definition files.
  *<p>

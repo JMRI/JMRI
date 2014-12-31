@@ -5,7 +5,6 @@ package jmri.jmrit.symbolicprog;
 import org.apache.log4j.Logger;
 import java.util.*;
 import javax.swing.*;
-import java.awt.Component;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;

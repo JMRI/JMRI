@@ -7,13 +7,9 @@ import jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo;
 
 
 /**

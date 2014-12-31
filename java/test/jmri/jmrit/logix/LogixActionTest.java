@@ -1,20 +1,14 @@
 // LogixActionTest.java
 package jmri.jmrit.logix;
 
-import javax.swing.JButton;
-
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Memory;
 import jmri.Turnout;
-import jmri.jmrit.display.Editor;
 import jmri.jmrit.logix.Warrant;
 import jmri.util.JUnitUtil;
 
-import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.extensions.jfcunit.finder.AbstractButtonFinder;
-import junit.extensions.jfcunit.finder.DialogFinder;
 import junit.framework.*;
 
 /**

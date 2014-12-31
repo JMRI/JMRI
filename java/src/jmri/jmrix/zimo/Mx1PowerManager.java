@@ -4,8 +4,6 @@ package jmri.jmrix.zimo;
 
 import jmri.JmriException;
 import jmri.PowerManager;
-import static jmri.PowerManager.OFF;
-import static jmri.PowerManager.ON;
 import static jmri.jmrix.zimo.Mx1Message.ACKREP1;
 
 /**

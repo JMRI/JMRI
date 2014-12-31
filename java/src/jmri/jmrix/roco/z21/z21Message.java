@@ -1,7 +1,6 @@
 // z21Message.java
 package jmri.jmrix.roco.z21;
 
-import jmri.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

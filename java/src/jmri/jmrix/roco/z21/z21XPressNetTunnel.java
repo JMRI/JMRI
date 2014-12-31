@@ -11,8 +11,6 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
 import jmri.jmrix.lenz.XNetStreamPortController;
-import jmri.jmrix.lenz.XNetSystemConnectionMemo;
-import jmri.jmrix.lenz.XNetTrafficController;
 import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetListener;

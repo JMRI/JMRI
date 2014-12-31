@@ -5,10 +5,6 @@ package jmri.jmrix.loconet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.CommandStation;
-import jmri.ProgListener;
-import jmri.Programmer;
-import jmri.jmrix.AbstractProgrammer;
-import jmri.jmrix.loconet.*;
 
 
 /**

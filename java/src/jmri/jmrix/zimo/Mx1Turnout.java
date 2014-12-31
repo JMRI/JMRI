@@ -4,7 +4,6 @@ package jmri.jmrix.zimo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.Date;
 import jmri.implementation.AbstractTurnout;
 import jmri.Turnout;
 

@@ -1,14 +1,12 @@
 package jmri.jmrix.openlcb.swing.networktree;
 
 import org.openlcb.*;
-import org.openlcb.implementations.*;
 import org.openlcb.swing.networktree.*;
 
 import javax.swing.*;
 import javax.swing.tree.*;
 import javax.swing.event.*;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

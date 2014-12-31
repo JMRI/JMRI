@@ -1,17 +1,11 @@
 package jmri.jmrix.openlcb.swing.networktree;
 
-import org.openlcb.*;
 import org.openlcb.cdi.swing.*;
-import org.openlcb.cdi.jdom.*;
-
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URL;
 import javax.swing.*;
 
 import org.jdom2.*;

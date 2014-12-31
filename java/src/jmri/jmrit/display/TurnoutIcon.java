@@ -13,7 +13,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JPopupMenu;
-import javax.swing.SwingUtilities;
 import javax.swing.JCheckBoxMenuItem;
 import java.util.HashMap;
 import java.util.Hashtable;

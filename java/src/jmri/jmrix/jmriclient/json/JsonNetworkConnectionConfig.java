@@ -13,8 +13,6 @@ import jmri.jmris.json.JSON;
 import jmri.jmrix.AbstractNetworkConnectionConfig;
 import jmri.jmrix.NetworkPortAdapter;
 import jmri.util.zeroconf.ZeroConfClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
