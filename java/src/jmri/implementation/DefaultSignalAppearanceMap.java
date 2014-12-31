@@ -163,14 +163,13 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
         }
         map.aspectImageMap.put(name, images);
     }
-
-    public final static int NUMSPECIFIC = 4;
     
     static void loadSpecificMap(String signalSystemName, String aspectMapName, DefaultSignalAppearanceMap SMmap, Element root){
         if (log.isDebugEnabled()) log.debug("load specific signalSystem= \""+signalSystemName+"\", aspectMap= \""+aspectMapName+"\"");
-        for (int i = 0; i<NUMSPECIFIC; i++){
-            loadSpecificAspect(signalSystemName, aspectMapName, i, SMmap, root);
-        }
+        loadSpecificAspect(signalSystemName, aspectMapName, HELD, SMmap, root);
+        loadSpecificAspect(signalSystemName, aspectMapName, DANGER, SMmap, root);
+        loadSpecificAspect(signalSystemName, aspectMapName, PERMISSIVE, SMmap, root);
+        loadSpecificAspect(signalSystemName, aspectMapName, DARK, SMmap, root);
     }
 
     static void loadSpecificAspect(String signalSystemName, String aspectMapName, int aspectType, DefaultSignalAppearanceMap SMmap, Element root) {
