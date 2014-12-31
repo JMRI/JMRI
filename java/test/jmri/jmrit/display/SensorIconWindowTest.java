@@ -21,6 +21,7 @@ import junit.extensions.jfcunit.eventdata.*;
  */
 public class SensorIconWindowTest extends jmri.util.SwingTestCase {
 
+    @SuppressWarnings("unchecked") // DialogFinder not parameterized
 	public void testPanelEditor() throws Exception {
 	    
         jmri.jmrit.display.panelEditor.PanelEditor panel = 
@@ -94,6 +95,7 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
         
 	}
 
+    @SuppressWarnings("unchecked") // DialogFinder not parameterized
 	public void testLayoutEditor() throws Exception {
 	    
         jmri.jmrit.display.layoutEditor.LayoutEditor panel = 
