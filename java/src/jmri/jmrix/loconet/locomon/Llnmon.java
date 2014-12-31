@@ -279,11 +279,11 @@ public class Llnmon {
                     SENSOR_ADR(l.getElement(1), l.getElement(2));
 
             try {
-                jmri.Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
-                if ((turnout != null) && (turnout.getUserName().length() > 0))
-                    turnoutUserName = "(" + turnout.getUserName() + ")";
-                else
-                    turnoutUserName = "()";
+                    jmri.Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
+                    if ((turnout != null) && (turnout.getUserName().length() > 0))
+                        turnoutUserName = "(" + turnout.getUserName() + ")";
+                    else
+                        turnoutUserName = "()";
             }
             catch (Exception e) {
                 turnoutUserName = "()";
@@ -311,11 +311,11 @@ public class Llnmon {
                     SENSOR_ADR(l.getElement(1), l.getElement(2));
 
             try {
-                jmri.Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
-                if ((turnout != null) && (turnout.getUserName().length() > 0))
-                    turnoutUserName = "(" + turnout.getUserName() + ")";
-                else
-                    turnoutUserName = "()";
+                    jmri.Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
+                    if ((turnout != null) && (turnout.getUserName().length() > 0))
+                        turnoutUserName = "(" + turnout.getUserName() + ")";
+                    else
+                        turnoutUserName = "()";
             }
             catch (Exception e) {
                 turnoutUserName = "()";
@@ -603,15 +603,15 @@ public class Llnmon {
             String sensorUserName = "";
             try {
                 sensorSystemName = locoNetSensorPrefix + contactNum;
-                jmri.Sensor sensor = sensorManager.getBySystemName(
-                    sensorSystemName);
-                if ((sensor != null) && (sensor.getUserName().length() > 0 )) {
-                    sensorUserName = " (" + sensor.getUserName() + ")";
+                    jmri.Sensor sensor = sensorManager.getBySystemName(
+                        sensorSystemName);
+                    if ((sensor != null) && (sensor.getUserName().length() > 0 )) {
+                        sensorUserName = " (" + sensor.getUserName() + ")";
+                    }
+                    else {
+                        sensorUserName = "()";
+                    }
                 }
-                else {
-                    sensorUserName = "()";
-                }
-            }
             catch (Exception e) {
                 sensorUserName = "()";
             }
@@ -684,12 +684,12 @@ public class Llnmon {
                     SENSOR_ADR(sn1, sn2);
 
             try {
-                jmri.Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
-                if ((turnout != null) && (turnout.getUserName().length() > 0))
-                    turnoutUserName = "(" + turnout.getUserName() + ")";
-                else
-                    turnoutUserName = "()";
-            }
+                    jmri.Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
+                    if ((turnout != null) && (turnout.getUserName().length() > 0))
+                        turnoutUserName = "(" + turnout.getUserName() + ")";
+                    else
+                        turnoutUserName = "()";
+                }
             catch (Exception e) {
                 turnoutUserName = "()";
             }
@@ -1153,12 +1153,12 @@ public class Llnmon {
                         ((l.getElement(1)&0x1F)*128 + l.getElement(2) +1);
 
                 try {
-                    jmri.Reporter reporter = reporterManager.getBySystemName(reporterSystemName);
-                    if ((reporter != null) && (reporter.getUserName().length() > 0))
-                        reporterUserName = "(" + reporter.getUserName() + ")";
-                    else
-                        reporterUserName = "()";
-                }
+                        jmri.Reporter reporter = reporterManager.getBySystemName(reporterSystemName);
+                        if ((reporter != null) && (reporter.getUserName().length() > 0))
+                            reporterUserName = "(" + reporter.getUserName() + ")";
+                        else
+                            reporterUserName = "()";
+                    }
                 catch (Exception e) {
                     reporterUserName = "()";
                 }
@@ -1964,7 +1964,7 @@ public class Llnmon {
                     int pxct2 = l.getElement(10);
 
                     int d[] = l.getPeerXfrData();
-
+                    
                     String generic = "Peer to Peer transfer: SRC=0x"
                                      + Integer.toHexString(src)
                                      + ", DSTL=0x"
@@ -2783,11 +2783,11 @@ public class Llnmon {
                                     ((l.getElement(5)&0x1F)*128 + l.getElement(6) +1);
 
                             try {
-                                jmri.Reporter reporter = reporterManager.getBySystemName(reporterSystemName);
-                                if ((reporter != null) && (reporter.getUserName().length() > 0))
-                                    reporterUserName = "(" + reporter.getUserName() + ")";
-                                else
-                                    reporterUserName = "()";
+                                    jmri.Reporter reporter = reporterManager.getBySystemName(reporterSystemName);
+                                    if ((reporter != null) && (reporter.getUserName().length() > 0))
+                                        reporterUserName = "(" + reporter.getUserName() + ")";
+                                    else
+                                        reporterUserName = "()";
                             }
                             catch (Exception e) {
                                 reporterUserName = "()";
@@ -2814,12 +2814,20 @@ public class Llnmon {
                         switch (l.getElement(5)) {
                             case 0x40: { return "Uhlenbrock IB-COM / Intellibox II Stop Programming Track.\n"; }
                             case 0x41: { return "Uhlenbrock IB-COM / Intellibox II Start Programming Track.\n"; }
+                            default:
+                                forceHex = true;
+                                return "Unknown OPC_PEER_XFER, may be related to Uhkenbrock\n";
                         }
+                    } else {
+                        forceHex = true;
+                        return "Message with opcode 0xE5, length 0x07, and unknown format.";
                     }
+                        
                 } // end of case 0x07:
 
                 default: {
-                    // 0xE5 message of unknown format
+                    // 0xE5 message with length byte that does not correspond to
+                    // a well-defined message (yet?)
                     forceHex = true;
                     return "Message with opcode 0xE5 and unknown format.";
 
