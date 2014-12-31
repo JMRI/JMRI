@@ -36,8 +36,8 @@ public class LocoDataPane extends jmri.jmrix.tams.swing.TamsPanel {
     
     JTextField addr = new JTextField(5);
     JTextField name = new JTextField(10);
-    JComboBox speedBox = new JComboBox(speed);
-    JComboBox formatBox = new JComboBox(fmt);
+    JComboBox<String> speedBox = new JComboBox<String>(speed);
+    JComboBox<String> formatBox = new JComboBox<String>(fmt);
     JButton addButton = new JButton(rb.getString("AddLoco"));
     
     

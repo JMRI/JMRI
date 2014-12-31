@@ -38,15 +38,15 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
 	JPanel throttletabpanel = new JPanel();
     JPanel rostertabpanel = new JPanel();
     JPanel turnouttabpanel = new JPanel();
-    JComboBox _addTurnoutsEcos;
-    JComboBox _removeTurnoutsEcos;
-    JComboBox _addTurnoutsJmri;
-    JComboBox _removeTurnoutsJmri;
-    JComboBox _masterControl;
-    JComboBox _addLocoEcos;
-    JComboBox _removeLocosEcos;
-    JComboBox _addLocoJmri;
-    JComboBox _removeLocosJmri;
+    JComboBox<String> _addTurnoutsEcos;
+    JComboBox<String> _removeTurnoutsEcos;
+    JComboBox<String> _addTurnoutsJmri;
+    JComboBox<String> _removeTurnoutsJmri;
+    JComboBox<String> _masterControl;
+    JComboBox<String> _addLocoEcos;
+    JComboBox<String> _removeLocosEcos;
+    JComboBox<String> _addLocoJmri;
+    JComboBox<String> _removeLocosJmri;
     JTextField _ecosAttSufText;
     JTextField _ecosDescription;
     JRadioButton _adhocLocoEcosAsk;
@@ -61,7 +61,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
     ButtonGroup _locoEcosControl;
     ButtonGroup _locoControl;
     JCheckBox _rememberAdhocLocosEcos;
-    //JComboBox _defaultProtocol;
+    //JComboBox<String> _defaultProtocol;
     EcosPreferences ep;
     boolean updateButtonPressed=false;
     
@@ -146,7 +146,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         
         JPanel _removeTurnoutsEcosPanel = new JPanel();
         JLabel _removeTurnoutsEcosLabel = new JLabel("Remove Turnouts From the ECoS");
-        _removeTurnoutsEcos = new JComboBox();
+        _removeTurnoutsEcos = new JComboBox<String>();
         _removeTurnoutsEcosPanel.add(_removeTurnoutsEcosLabel);
         initializeChoiceCombo(_removeTurnoutsEcos);
         if (ep.getRemoveTurnoutsFromEcos()!=0x00)
@@ -156,7 +156,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         
         JPanel _addTurnoutsJMRIPanel = new JPanel();
         JLabel _addTurnoutsJMRILabel = new JLabel("Add Turnouts to JMRI");
-        _addTurnoutsJmri = new JComboBox();
+        _addTurnoutsJmri = new JComboBox<String>();
         _addTurnoutsJMRIPanel.add(_addTurnoutsJMRILabel);
         initializeChoiceCombo(_addTurnoutsJmri);
         if (ep.getAddTurnoutsToJMRI()!=0x00)
@@ -166,7 +166,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         
         JPanel _removeTurnoutsJMRIPanel = new JPanel();
         JLabel _removeTurnoutsJMRILabel = new JLabel("Remove Turnouts from JMRI");
-        _removeTurnoutsJmri = new JComboBox();
+        _removeTurnoutsJmri = new JComboBox<String>();
         _removeTurnoutsJMRIPanel.add(_removeTurnoutsJMRILabel);
         initializeChoiceCombo(_removeTurnoutsJmri);
         if (ep.getRemoveTurnoutsFromJMRI()!=0x00)
@@ -189,7 +189,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         JLabel _masterLocoLabel = new JLabel("Resolve conflicts between JMRI and the ECOS");
         _masterLocoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         _locomaster.add(_masterLocoLabel);
-        _masterControl = new JComboBox();
+        _masterControl = new JComboBox<String>();
         initializeMasterControlCombo(_masterControl);
         if (ep.getLocoMaster()!=0x00)
             setMasterControlType(_masterControl, ep.getLocoMaster());
@@ -199,7 +199,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         
         JPanel _addlocoecospanel = new JPanel();
         JLabel _addLocosEcosLabel = new JLabel("Add Locos to the ECoS");
-        _addLocoEcos = new JComboBox();
+        _addLocoEcos = new JComboBox<String>();
         _addlocoecospanel.add(_addLocosEcosLabel);
         initializeChoiceCombo(_addLocoEcos);
         if (ep.getAddLocoToEcos()!=0x00)
@@ -218,7 +218,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
 
         JPanel _removelocosecospanel = new JPanel();
         JLabel _removeLocosEcosLabel = new JLabel("Remove Locos from the ECoS");
-        _removeLocosEcos = new JComboBox();
+        _removeLocosEcos = new JComboBox<String>();
         _removelocosecospanel.add(_removeLocosEcosLabel);
         initializeChoiceCombo(_removeLocosEcos);
         if (ep.getRemoveLocoFromEcos()!=0x00)
@@ -234,7 +234,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         
         JPanel _addlocosjmripanel = new JPanel();
         JLabel _addLocoJmriLabel = new JLabel("Add Locos to JMRI Roster");
-        _addLocoJmri = new JComboBox();
+        _addLocoJmri = new JComboBox<String>();
         _addlocosjmripanel.add(_addLocoJmriLabel);
         initializeChoiceCombo(_addLocoJmri);
         if (ep.getAddLocoToJMRI()!=0x00)
@@ -249,7 +249,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         
         JPanel _removelocosjmripanel = new JPanel();
         JLabel _removeLocosJmriLabel = new JLabel("Remove Locos from JMRI Roster");
-        _removeLocosJmri = new JComboBox();
+        _removeLocosJmri = new JComboBox<String>();
         _removelocosjmripanel.add(_removeLocosJmriLabel);
         initializeChoiceCombo(_removeLocosJmri);
         if (ep.getRemoveLocoFromJMRI()!=0x00)
@@ -359,7 +359,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
 
         JLabel _defaultprotocolLabel = new JLabel("Sets the Default protocol to use for an Adhoc Loco");
         _defaultprotocolpanel.add(_defaultprotocolLabel);
-        _defaultProtocol = new JComboBox();
+        _defaultProtocol = new JComboBox<String>();
         initializeEcosProtocolCombo(_defaultProtocol);
         if (ep.getLocoMaster()!=0x00)
         setEcosProtocolType(_defaultProtocol, ep.getDefaultEcosProtocol());
@@ -422,13 +422,13 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
     int[] masterControlCode = {0x00,0x01,0x02,0x03};
     int numTypes = 4;  // number of entries in the above arrays
     
-    private void initializeMasterControlCombo(JComboBox masterCombo) {
+    private void initializeMasterControlCombo(JComboBox<String> masterCombo) {
 		masterCombo.removeAllItems();
 		for (int i = 0;i<numTypes;i++) {
 			masterCombo.addItem(masterControlTypes[i]);
 		}
 	}
-    private void setMasterControlType(JComboBox masterBox, int master){
+    private void setMasterControlType(JComboBox<String> masterBox, int master){
         for (int i = 0;i<numTypes;i++) {
 			if (master==masterControlCode[i]) {
 				masterBox.setSelectedIndex(i);
@@ -437,7 +437,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
 		}
     }
     
-    private int getMasterControlType(JComboBox masterBox){
+    private int getMasterControlType(JComboBox<String> masterBox){
         return masterControlCode[masterBox.getSelectedIndex()];
     
     }
@@ -446,13 +446,13 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
     int[] masterChoiceCode = {0x00,0x01,0x02};
     int numChoiceTypes = 3;  // number of entries in the above arrays
     
-    private void initializeChoiceCombo(JComboBox masterCombo) {
+    private void initializeChoiceCombo(JComboBox<String> masterCombo) {
 		masterCombo.removeAllItems();
 		for (int i = 0;i<numChoiceTypes;i++) {
 			masterCombo.addItem(choiceTypes[i]);
 		}
 	}
-    private void setChoiceType(JComboBox masterBox, int master){
+    private void setChoiceType(JComboBox<String> masterBox, int master){
         for (int i = 0;i<numChoiceTypes;i++) {
 			if (master==masterChoiceCode[i]) {
 				masterBox.setSelectedIndex(i);
@@ -461,7 +461,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
 		}
     }
     
-    private int getChoiceType(JComboBox masterBox){
+    private int getChoiceType(JComboBox<String> masterBox){
         return masterChoiceCode[masterBox.getSelectedIndex()];
     
     }
@@ -470,13 +470,13 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
    // String[] ecosProtocolTypes = {"DCC14","DCC28", "DCC128", "MM14", "MM27", "MM28", "SX32", "MMFKT"};
    // int numProtocolTypes = 8;  // number of entries in the above arrays
 
-    /*private void initializeEcosProtocolCombo(JComboBox protocolCombo) {
+    /*private void initializeEcosProtocolCombo(JComboBox<String> protocolCombo) {
 		protocolCombo.removeAllItems();
 		for (int i = 0;i<numProtocolTypes;i++) {
 			protocolCombo.addItem(ecosProtocolTypes[i]);
 		}
 	}*/
-    /*private void setEcosProtocolType(JComboBox masterBox, String protocol){
+    /*private void setEcosProtocolType(JComboBox<String> masterBox, String protocol){
         for (int i = 0;i<numProtocolTypes;i++) {
 			if (protocol.equals(ecosProtocolTypes[i])) {
 				masterBox.setSelectedIndex(i);
@@ -485,7 +485,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
 		}
     }*/
 
-    /*private String getEcosProtocol(JComboBox masterBox){
+    /*private String getEcosProtocol(JComboBox<String> masterBox){
         return ecosProtocolTypes[masterBox.getSelectedIndex()];
 
     }*/

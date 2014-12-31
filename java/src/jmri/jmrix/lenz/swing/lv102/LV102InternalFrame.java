@@ -259,11 +259,11 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
     boolean read = false;
 
-    JComboBox voltBox = new javax.swing.JComboBox();
-    JComboBox eLineBox = new javax.swing.JComboBox();
-    JComboBox railComBox = new javax.swing.JComboBox();
-    JComboBox railComModeBox = new javax.swing.JComboBox();
-    JComboBox railComTimingBox = new javax.swing.JComboBox();
+    JComboBox<String> voltBox = new javax.swing.JComboBox<String>();
+    JComboBox<String> eLineBox = new javax.swing.JComboBox<String>();
+    JComboBox<String> railComBox = new javax.swing.JComboBox<String>();
+    JComboBox<String> railComModeBox = new javax.swing.JComboBox<String>();
+    JComboBox<String> railComTimingBox = new javax.swing.JComboBox<String>();
 
     JLabel CurrentStatus = new JLabel(" ");
 

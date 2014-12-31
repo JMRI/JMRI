@@ -66,7 +66,7 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame {
 	JTextField	_sensorName = new JTextField(30);
 	JRadioButton _hideShape;
 	JRadioButton _changeLevel;	
-	JComboBox	_levelComboBox;
+	JComboBox<String>	_levelComboBox;
     
 	public DrawFrame(String which, String title, ShapeDrawer parent) {
 		super(title, false, false);
@@ -208,7 +208,7 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame {
 	    ButtonGroup bg = new ButtonGroup();
 	    bg.add(_hideShape);
 	    bg.add(_changeLevel);
-        _levelComboBox = new JComboBox();
+        _levelComboBox = new JComboBox<String>();
         _levelComboBox.addItem(Bundle.getMessage("SameLevel"));
         for (int i=1; i<11; i++) {
         	_levelComboBox.addItem(Bundle.getMessage("Level")+" "+Integer.valueOf(i));

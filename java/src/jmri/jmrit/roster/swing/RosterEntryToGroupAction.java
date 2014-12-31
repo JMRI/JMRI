@@ -52,7 +52,7 @@ public class RosterEntryToGroupAction extends AbstractAction {
     }
 
     Component _who;
-    JComboBox rosterEntry = new JComboBox();
+    JComboBox<String> rosterEntry = new JComboBox<String>();
     RosterGroupComboBox selections;
     Roster roster;
     String lastGroupSelect = null;

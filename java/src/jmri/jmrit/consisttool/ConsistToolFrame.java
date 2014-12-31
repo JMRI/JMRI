@@ -36,7 +36,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
     // GUI member declarations
     JLabel textAdrLabel = new JLabel();
     DccLocoAddressSelector adrSelector = new DccLocoAddressSelector();
-    JComboBox consistAdrBox = new JComboBox();
+    JComboBox<Object> consistAdrBox = new JComboBox<Object>();
     JRadioButton isAdvancedConsist = new JRadioButton(rb.getString("AdvancedConsistButtonText"));
     JRadioButton isCSConsist = new JRadioButton(rb.getString("CommandStationConsistButtonText"));
     JButton deleteButton = new JButton();

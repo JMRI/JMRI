@@ -237,7 +237,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
     }
 
     public void valueChanged(ListSelectionEvent e) {
-        Portal portal = (Portal)_portalList.getSelectedValue();
+        Portal portal = _portalList.getSelectedValue();
         if (portal!=null) {
             _portalName.setText(portal.getName());
             PortalIcon icon = _parent.getPortalIconMap().get(portal.getName());
@@ -252,7 +252,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
     /************************* end setup **************************/
 
     private void changePortalName() {
-        Portal portal = (Portal)_portalList.getSelectedValue();
+        Portal portal = _portalList.getSelectedValue();
         String oldName = null;
         if (portal!=null) {
             oldName = portal.getName();        	
@@ -275,7 +275,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
 
     private void deletePortal() {
         String name = _portalName.getText();
-        Portal portal = (Portal)_portalList.getSelectedValue();
+        Portal portal = _portalList.getSelectedValue();
         if (portal==null) {
         	PortalManager portalMgr = InstanceManager.getDefault(jmri.jmrit.logix.PortalManager.class);
         	portal = portalMgr.getByUserName(name);

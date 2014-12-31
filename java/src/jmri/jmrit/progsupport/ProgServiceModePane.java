@@ -52,7 +52,7 @@ public class ProgServiceModePane extends ProgModeSelector implements java.beans.
     JRadioButton directBitButton   	= new JRadioButton();
     JRadioButton directByteButton   = new JRadioButton();
     JRadioButton registerButton 	= new JRadioButton();
-    JComboBox   progBox;
+    JComboBox<GlobalProgrammerManager>   progBox;
 
     /**
      * Get the configured programmer
@@ -104,7 +104,7 @@ public class ProgServiceModePane extends ProgModeSelector implements java.beans.
         java.util.Vector<GlobalProgrammerManager> v = new java.util.Vector<GlobalProgrammerManager>();
         for (Object e : InstanceManager.getList(jmri.GlobalProgrammerManager.class))
             v.add((GlobalProgrammerManager)e);
-        add(progBox = new JComboBox(v));
+        add(progBox = new JComboBox<GlobalProgrammerManager>(v));
         // if only one, don't show
         if (progBox.getItemCount()<2) progBox.setVisible(false);
         progBox.addActionListener(new java.awt.event.ActionListener(){

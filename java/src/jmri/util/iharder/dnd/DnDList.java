@@ -19,8 +19,8 @@ import org.slf4j.LoggerFactory;
  * @author  rharder@usa.net
  * @version 1.1
  */
-public class DnDList 
-extends javax.swing.JList
+public class DnDList<E>
+extends javax.swing.JList<E>
 implements  java.awt.dnd.DropTargetListener, 
             java.awt.dnd.DragSourceListener, 
             java.awt.dnd.DragGestureListener    
@@ -40,7 +40,7 @@ implements  java.awt.dnd.DropTargetListener,
      */
     public DnDList() 
     {   
-        super( new javax.swing.DefaultListModel() );
+        super( new javax.swing.DefaultListModel<E>() );
         initComponents();
     }   // end constructor
     
@@ -54,7 +54,7 @@ implements  java.awt.dnd.DropTargetListener,
      * @param model The model to use
      * @since 1.1
      */
-    public DnDList( javax.swing.DefaultListModel model )
+    public DnDList( javax.swing.DefaultListModel<E> model )
     {   super( model );
         initComponents();
     }   // end constructor
@@ -69,7 +69,7 @@ implements  java.awt.dnd.DropTargetListener,
      * @param data The data from which to construct a list
      * @since 1.1
      */
-    public DnDList( Object[] data )
+    public DnDList( E[] data )
     {   this();
         ((javax.swing.DefaultListModel)getModel()).copyInto( data );
     }   // end constructor
@@ -85,7 +85,7 @@ implements  java.awt.dnd.DropTargetListener,
      * @param data The data from which to construct a list
      * @since 1.1
      */
-	public DnDList( java.util.Vector<?> data )
+	public DnDList( java.util.Vector<E> data )
     {   this();
         ((javax.swing.DefaultListModel)getModel()).copyInto( data.toArray() );
     }   // end constructor
@@ -109,7 +109,7 @@ implements  java.awt.dnd.DropTargetListener,
   
     public void dragGestureRecognized( java.awt.dnd.DragGestureEvent event) 
     {   //System.out.println( "DragGestureListener.dragGestureRecognized" );
-        final Object selected = getSelectedValue();
+        final E selected = getSelectedValue();
         if ( selected != null )
         {
             sourceIndex = getSelectedIndex();
@@ -118,7 +118,7 @@ implements  java.awt.dnd.DropTargetListener,
                  * This will be called when the transfer data is requested at the very end.
                  * At this point we can remove the object from its original place in the list.
                  */
-                public Object getObject()
+                public E getObject()
                 {   
                     ((javax.swing.DefaultListModel)getModel()).remove( sourceIndex );
                     return selected;
@@ -187,7 +187,7 @@ implements  java.awt.dnd.DropTargetListener,
     }   // end dropActionChanged
     
     
-    
+    @SuppressWarnings("unchecked") // DnD starts with a generic Object
     public void drop( java.awt.dnd.DropTargetDropEvent evt ) 
     {   //System.out.println( "DropTargetListener.drop" );
         java.awt.datatransfer.Transferable transferable = evt.getTransferable();
@@ -212,16 +212,16 @@ implements  java.awt.dnd.DropTargetListener,
             {
                 // See where in the list we dropped the element.
                 int dropIndex = locationToIndex( evt.getLocation() );
-                javax.swing.DefaultListModel model = (javax.swing.DefaultListModel)getModel();
+                javax.swing.DefaultListModel<E> model = (javax.swing.DefaultListModel<E>)getModel();
 
                 if( dropIndex < 0 )
-                    model.addElement( obj );
+                    model.addElement( (E)obj );
                 
                 // Else is it moving down the list?
                 else if( sourceIndex >= 0 && dropIndex > sourceIndex )
-                    model.add( dropIndex-1, obj );
+                    model.add( dropIndex-1, (E)obj );
                 else
-                    model.add( dropIndex, obj );
+                    model.add( dropIndex, (E)obj );
 
             }   // end if: we got the object
             

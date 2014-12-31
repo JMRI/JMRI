@@ -45,7 +45,7 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
 
     java.text.NumberFormat nf;
 
-    JComboBox mode;
+    JComboBox<String> mode;
     JButton doButton;
 
     JTextField vs = new JTextField(18);
@@ -126,7 +126,7 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
         // add controls at bottom
         p = new JPanel();
         
-        mode = new JComboBox(new String[]{"From time fields", "from X,Y,Z fields", "from time file", "from X,Y,Z file"});
+        mode = new JComboBox<String>(new String[]{"From time fields", "from X,Y,Z fields", "from time file", "from X,Y,Z file"});
         p.add(mode);
         p.setLayout(new FlowLayout());
         

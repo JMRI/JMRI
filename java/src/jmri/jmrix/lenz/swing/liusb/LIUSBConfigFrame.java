@@ -108,7 +108,7 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
 
     boolean read = false;
 
-    JComboBox addrBox = new javax.swing.JComboBox();
+    JComboBox<String> addrBox = new javax.swing.JComboBox<String>();
 
     JLabel status = new JLabel("");
 

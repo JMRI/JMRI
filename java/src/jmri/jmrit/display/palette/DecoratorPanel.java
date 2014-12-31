@@ -106,7 +106,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         _buttonGroup = new ButtonGroup();
    }
 
-    static class AJComboBox extends JComboBox {
+    static class AJComboBox extends JComboBox<String> {
         /**
 		 * 
 		 */
@@ -118,7 +118,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         }
     }
 
-    private JPanel makeBoxPanel(String caption, JComboBox box) {
+    private JPanel makeBoxPanel(String caption, JComboBox<String> box) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(new JLabel(Bundle.getMessage(caption)));

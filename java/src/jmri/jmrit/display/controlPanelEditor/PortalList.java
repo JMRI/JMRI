@@ -18,7 +18,7 @@ import jmri.jmrit.logix.Portal;
  * 
  */
 
-public class PortalList extends JList {
+public class PortalList extends JList<Portal> {
 
     /**
 	 * 
@@ -39,7 +39,7 @@ public class PortalList extends JList {
         _portalListModel.dataChange();    	
     }
     
-    private static class PortalCellRenderer extends JLabel implements ListCellRenderer {
+    private static class PortalCellRenderer extends JLabel implements ListCellRenderer<Portal> {
         
         /**
 		 * 
@@ -47,13 +47,13 @@ public class PortalList extends JList {
 		private static final long serialVersionUID = 1558678851660924661L;
 
 		public Component getListCellRendererComponent(
-           JList list,              // the list
-           Object value,            // value to display
+           JList<? extends Portal> list,              // the list
+           Portal value,            // value to display
            int index,               // cell index
            boolean isSelected,      // is the cell selected
            boolean cellHasFocus)    // does the cell have focus
         {
-             String s = ((Portal)value).getDescription();
+             String s = value.getDescription();
              setText(s);
              if (isSelected) {
                  setBackground(list.getSelectionBackground());
@@ -69,7 +69,7 @@ public class PortalList extends JList {
         }
     }
     
-    class PortalListModel extends AbstractListModel {
+    class PortalListModel extends AbstractListModel<Portal> {
     	/**
 		 * 
 		 */
@@ -81,7 +81,7 @@ public class PortalList extends JList {
         public int getSize() {
             return _homeBlock.getPortals().size();
         }
-        public Object getElementAt(int index) {
+        public Portal getElementAt(int index) {
         	if (index<getSize()) {
                 return _homeBlock.getPortals().get(index);        		
         	}

@@ -170,7 +170,7 @@ public class EditPortalDirection extends jmri.util.JmriJFrame implements ActionL
 
     /************************* end setup **************************/
     public void valueChanged(ListSelectionEvent e) {
-        Portal portal = (Portal)_portalList.getSelectedValue();
+        Portal portal = _portalList.getSelectedValue();
         if (portal!=null) {
             PortalIcon icon = _parent.getPortalIconMap().get(portal.getName());
             setPortalIcon(icon, false);

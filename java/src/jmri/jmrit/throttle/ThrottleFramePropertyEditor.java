@@ -25,7 +25,7 @@ public class ThrottleFramePropertyEditor extends JDialog
 	
 	private JTextField titleField;
 	
-	private JList titleType;
+	private JList<String> titleType;
 	
 	private JCheckBox borderOff;
 
@@ -79,7 +79,7 @@ public class ThrottleFramePropertyEditor extends JDialog
         constraints.gridx++;
         propertyPanel.add(titleField, constraints);
 
-        titleType = new JList(titleTextTypeNames);
+        titleType = new JList<String>(titleTextTypeNames);
         titleType.setVisibleRowCount(titleTextTypeNames.length);
         titleType.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         for (int i = 0; i < titleTextTypes.length; i++) {

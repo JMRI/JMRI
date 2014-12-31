@@ -127,7 +127,7 @@ public class PollDataModel extends AbstractTableModel
         case POLLCOL:
             return Boolean.valueOf(Engine.instance().getTransmitter(r).isPolled());
         case TYPECOL:
-            JComboBox b = new JComboBox(new String[]{"F2", "F3", "BSCI"});
+            JComboBox<String> b = new JComboBox<String>(new String[]{"F2", "F3", "BSCI"});
             return b;
         case LASTXCOL:
             m = Engine.instance().getTransmitter(r).getLastMeasurement();

@@ -12001,7 +12001,7 @@ public class LayoutEditorTools
     // operational variables for Set Signals at Double Crossover Turnout tool
 	private JmriJFrame setSignalsAtSlipFrame = null;
 	private boolean setSignalsAtSlipOpen = false;
-	private JComboBox slipNameCombo = new JComboBox();
+	private JComboBox<String> slipNameCombo = new JComboBox<String>();
 	private JTextField a1SlipField = new JTextField(16);
 	private JTextField a2SlipField = new JTextField(16);
 	private JTextField b1SlipField = new JTextField(16);

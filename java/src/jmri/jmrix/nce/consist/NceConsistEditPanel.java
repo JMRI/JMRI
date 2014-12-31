@@ -146,7 +146,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 	JLabel textConRoadNumber = new JLabel();
 	JLabel textConModel = new JLabel();
 	
-	JComboBox conRosterBox = NceConsistRoster.instance().fullRosterComboBox();
+	JComboBox<String> conRosterBox = NceConsistRoster.instance().fullRosterComboBox();
 
 	// for padding out panel
 	JLabel space1 = new JLabel("            ");
@@ -161,7 +161,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 	// lead loco
 	JLabel textLoco1 = new JLabel();
 	JTextField locoTextField1 = new JTextField(4);
-	JComboBox locoRosterBox1 = new RosterEntryComboBox();
+	JComboBox<Object> locoRosterBox1 = new RosterEntryComboBox();
 	JButton adrButton1 = new JButton();
 	JButton cmdButton1 = new JButton();
 	JButton dirButton1 = new JButton();
@@ -169,7 +169,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 	// rear loco
 	JLabel textLoco2 = new JLabel();
 	JTextField locoTextField2 = new JTextField(4);
-	JComboBox locoRosterBox2 = new RosterEntryComboBox();
+	JComboBox<Object> locoRosterBox2 = new RosterEntryComboBox();
 	JButton adrButton2 = new JButton();
 	JButton cmdButton2 = new JButton();
 	JButton dirButton2 = new JButton();
@@ -177,7 +177,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 	// mid loco
 	JLabel textLoco3 = new JLabel();
 	JTextField locoTextField3 = new JTextField(4);
-	JComboBox locoRosterBox3 = new RosterEntryComboBox();
+	JComboBox<Object> locoRosterBox3 = new RosterEntryComboBox();
 	JButton adrButton3 = new JButton();
 	JButton cmdButton3 = new JButton();
 	JButton dirButton3 = new JButton();
@@ -185,7 +185,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 	// mid loco
 	JLabel textLoco4 = new JLabel();
 	JTextField locoTextField4 = new JTextField(4);
-	JComboBox locoRosterBox4 = new RosterEntryComboBox();
+	JComboBox<Object> locoRosterBox4 = new RosterEntryComboBox();
 	JButton adrButton4 = new JButton();
 	JButton cmdButton4 = new JButton();
 	JButton dirButton4 = new JButton();
@@ -193,7 +193,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 	// mid loco
 	JLabel textLoco5 = new JLabel();
 	JTextField locoTextField5 = new JTextField(4);
-	JComboBox locoRosterBox5 = new RosterEntryComboBox();
+	JComboBox<Object> locoRosterBox5 = new RosterEntryComboBox();
 	JButton adrButton5 = new JButton();
 	JButton cmdButton5 = new JButton();
 	JButton dirButton5 = new JButton();
@@ -201,7 +201,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 	// mid loco
 	JLabel textLoco6 = new JLabel();
 	JTextField locoTextField6 = new JTextField(4);
-	JComboBox locoRosterBox6 = new RosterEntryComboBox();
+	JComboBox<Object> locoRosterBox6 = new RosterEntryComboBox();
 	JButton adrButton6 = new JButton();
 	JButton cmdButton6 = new JButton();
 	JButton dirButton6 = new JButton();
@@ -657,7 +657,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 			rosterBoxSelect(locoRosterBox6, locoTextField6, adrButton6);
 	}
 	// load a loco from roster
-	private void rosterBoxSelect(JComboBox locoRosterBox,
+	private void rosterBoxSelect(JComboBox<Object> locoRosterBox,
 			JTextField locoTextField, JButton adrButton) {
 		RosterEntry entry = null;
 		Object o = locoRosterBox.getSelectedItem();
@@ -1532,7 +1532,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 
 	// update loco fields, returns false if loco address is null
 	private boolean updateLocoFields(NceReply r, int index,
-			JComboBox locoRosterBox, JTextField locoTextField,
+			JComboBox<Object> locoRosterBox, JTextField locoTextField,
 			JButton adrButton, JButton dirButton, JButton cmdButton) {
 		// index = 0 for lead and rear locos, 0,2,4,6 for mid
 		String locoAddrText = getLocoAddrText(r, index);
@@ -1577,7 +1577,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 	}
 
 	// modify loco fields because an add, replace, delete button has been pressed
-	private void modifyLocoFields(JComboBox locoRosterBox,
+	private void modifyLocoFields(JComboBox<Object> locoRosterBox,
 			JTextField locoTextField, JButton adrButton, JButton dirButton,
 			JButton cmdButton) {
 		if (validLocoAdr(locoTextField.getText()) < 0)
@@ -1721,7 +1721,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 	 * @param dirButton
 	 * @param cmdButton
 	 */
-	private void loadOneLine(JComboBox locoRosterBox, JTextField locoTextField,
+	private void loadOneLine(JComboBox<Object> locoRosterBox, JTextField locoTextField,
 			JButton adrButton, JButton dirButton, JButton cmdButton) {
 		if (locoTextField.getText().equals(""))
 			return;
@@ -1921,7 +1921,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 	}
 	
 	private void enableLocoRow(boolean flag, JTextField locoTextField,
-			JComboBox locoRosterBox, JButton adrButton, JButton dirButton,
+			JComboBox<Object> locoRosterBox, JButton adrButton, JButton dirButton,
 			JButton cmdButton) {
 		locoTextField.setEnabled(flag);
 		locoRosterBox.setEnabled(flag);
@@ -1947,7 +1947,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 	}
 
 	private void initLocoRow(int row, String s, JLabel textLoco,
-			JTextField locoTextField, JComboBox locoRosterBox,
+			JTextField locoTextField, JComboBox<Object> locoRosterBox,
 			JButton adrButton, JButton dirButton, JButton cmdButton) {
 
 		textLoco.setText(s);
@@ -2002,7 +2002,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 
 	ActionListener consistRosterListener;
 
-	private void initConsistRoster(JComboBox conRosterBox) {
+	private void initConsistRoster(JComboBox<String> conRosterBox) {
 		conRosterBox.insertItemAt("", 0);
 		conRosterBox.setSelectedIndex(0);
 		conRosterBox.setVisible(true);

@@ -41,7 +41,7 @@ public class DccLocoAddressSelector extends JPanel
 	 * 
 	 */
 	private static final long serialVersionUID = -4741955850069067809L;
-	JComboBox box = null;
+	JComboBox<String> box = null;
     JTextField text = new JTextField();
     
     public DccLocoAddressSelector() {
@@ -62,7 +62,7 @@ public class DccLocoAddressSelector extends JPanel
     }
     
     void configureBox(String[] protocols){
-        box = new JComboBox(protocols);
+        box = new JComboBox<String>(protocols);
         box.setSelectedIndex(0);
         text = new JTextField();
         text.setColumns(4);
@@ -268,7 +268,7 @@ public class DccLocoAddressSelector extends JPanel
      * Because Swing only allows a component to be inserted in one
      * container, this can only be done once
      */
-    public JComboBox getSelector() { 
+    public JComboBox<String> getSelector() { 
         if (boxUsed) {
             log.error("getSelector invoked after text already requested");
             return null;

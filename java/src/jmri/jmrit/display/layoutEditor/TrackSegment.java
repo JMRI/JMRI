@@ -443,10 +443,10 @@ public class TrackSegment
     
 	// variables for Edit Track Segment pane
 	private JmriJFrame editTrackSegmentFrame = null;
-	private JComboBox dashedBox = new JComboBox();
+	private JComboBox<String> dashedBox = new JComboBox<String>();
     private int dashedIndex;
     private int solidIndex;
-	private JComboBox mainlineBox = new JComboBox();
+	private JComboBox<String> mainlineBox = new JComboBox<String>();
     private int mainlineTrackIndex;
     private int sideTrackIndex;
 	private JTextField blockNameField = new JTextField(16);

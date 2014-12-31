@@ -31,7 +31,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
     protected javax.swing.JTextField nodeAddrField = new javax.swing.JTextField(3);
     protected javax.swing.JLabel nodeAddrStatic = new javax.swing.JLabel("000");
-    protected javax.swing.JComboBox nodeTypeBox; 
+    protected javax.swing.JComboBox<String> nodeTypeBox; 
     
     protected javax.swing.JButton addButton = new javax.swing.JButton(rb.getString("ButtonAdd"));
     protected javax.swing.JButton editButton = new javax.swing.JButton(rb.getString("ButtonEdit"));
@@ -90,7 +90,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         panel11.add(nodeAddrStatic);
         nodeAddrStatic.setVisible(false);
         panel11.add(new JLabel("   "+rb.getString("LabelNodeType")+" "));
-        nodeTypeBox = new JComboBox(SerialNode.getBoardNames());
+        nodeTypeBox = new JComboBox<String>(SerialNode.getBoardNames());
         panel11.add(nodeTypeBox);
         nodeTypeBox.setToolTipText(rb.getString("TipNodeType"));
         contentPane.add(panel11);

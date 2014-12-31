@@ -61,7 +61,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
 
     // UI components for Add/Edit Source
     JLabel assignedBufferLabel = new JLabel(rba.getString("LabelAssignedBuffer"));
-    JComboBox assignedBuffer = new JComboBox();
+    JComboBox<String> assignedBuffer = new JComboBox<String>();
     JLabel loopMinLabel = new JLabel(rba.getString("LabelLoopMin"));
     JSpinner loopMin = new JSpinner();
     JLabel loopMaxLabel = new JLabel(rba.getString("LabelLoopMax"));

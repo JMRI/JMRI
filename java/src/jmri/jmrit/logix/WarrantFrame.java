@@ -76,7 +76,7 @@ public class WarrantFrame extends WarrantRoute {
     JPanel      _routePanel;
     JPanel      _commandPanel;
     RosterEntry _train;
-    JComboBox	_rosterBox = new JComboBox();
+    JComboBox<String>	_rosterBox = new JComboBox<String>();
     JTextField  _dccNumBox = new JTextField();
     JTextField  _trainNameBox = new JTextField();
     JTextField  _throttleFactorBox =  new JTextField();

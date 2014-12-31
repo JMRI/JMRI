@@ -121,7 +121,7 @@ abstract class BeanEditAction extends AbstractAction {
                     
         Object[] strArray = new Object[listeners.size()];
         listeners.toArray(strArray);
-        JList list = new JList(strArray);
+        JList<Object> list = new JList<Object>(strArray);
         list.setLayoutOrientation(JList.VERTICAL);
         list.setVisibleRowCount(-1);
         list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);

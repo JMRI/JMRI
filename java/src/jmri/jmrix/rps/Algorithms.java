@@ -22,8 +22,8 @@ public class Algorithms implements Constants {
                         "Analytic A"
                         };
     
-    public static JComboBox algorithmBox() {
-        JComboBox j = new JComboBox(names);
+    public static JComboBox<String> algorithmBox() {
+        JComboBox<String> j = new JComboBox<String>(names);
         j.setSelectedItem(Engine.instance().getAlgorithm());
         return j;
     }

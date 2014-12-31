@@ -35,7 +35,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     private ArrayList<Positionable> _pathGroup = new ArrayList<Positionable>();
 
     private JTextField		_pathName = new JTextField();
-    private JList	_pathList;   // Java 1.6; in Java 1.7, JList<OPath>
+    private JList<OPath>	_pathList;   // Java 1.6; in Java 1.7, JList<OPath>
     private PathListModel	_pathListModel;
 
     private boolean _pathChange = false;
@@ -116,7 +116,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         pathPanel.add(panel);
 
         _pathListModel = new PathListModel();
-        _pathList = new JList(); // Java 1.6; in Java 1.7, JList<OPath>
+        _pathList = new JList<OPath>();
         _pathList.setModel(_pathListModel);
         _pathList.addListSelectionListener(this);
         _pathList.setCellRenderer(new PathCellRenderer());
@@ -211,7 +211,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         return pathPanel;
     }
     
-    private static class PathCellRenderer extends JLabel implements ListCellRenderer {
+    private static class PathCellRenderer extends JLabel implements ListCellRenderer<OPath> {
      
         /**
 		 * 
@@ -219,13 +219,13 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 		private static final long serialVersionUID = 3285719502798567675L;
 
 		public Component getListCellRendererComponent(
-           JList list,              // the list
-           Object value,            // value to display
+           JList<? extends OPath> list,              // the list
+           OPath value,            // value to display
            int index,               // cell index
            boolean isSelected,      // is the cell selected
            boolean cellHasFocus)    // does the cell have focus
         {
-             String s = ((OPath)value).getDescription();
+             String s = value.getDescription();
              setText(s);
              if (isSelected) {
                  setBackground(list.getSelectionBackground());
@@ -242,9 +242,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     }
 
 
-    //@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SIC_INNER_SHOULD_BE_STATIC")
-    // passing just the path list instead of using _block saves a call 
-    class PathListModel extends AbstractListModel {
+    class PathListModel extends AbstractListModel<OPath> {
         /**
 		 * 
 		 */
@@ -252,8 +250,8 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 		public int getSize() {
             return _block.getPaths().size();
         }
-        public Object getElementAt(int index) {
-            return _block.getPaths().get(index);
+        public OPath getElementAt(int index) {
+            return (OPath)_block.getPaths().get(index);
         }
         public void dataChange() {
             fireContentsChanged(this, 0, 0);
@@ -264,7 +262,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     */
     public void valueChanged(ListSelectionEvent e) {
         clearPath();
-        OPath path = (OPath)_pathList.getSelectedValue();
+        OPath path = _pathList.getSelectedValue();
         if (path!=null) {
             _pathName.setText(path.getName());
             showPath(path);
@@ -640,7 +638,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
     private void changePathName() {
         String name = _pathName.getText();
-        OPath path = (OPath)_pathList.getSelectedValue();
+        OPath path = _pathList.getSelectedValue();
         if (name==null || name.trim().length()==0 || path==null) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("changePathName"), 
                             Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
@@ -683,7 +681,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     }
 
     private void deletePath() {
-        OPath path = (OPath)_pathList.getSelectedValue();
+        OPath path = _pathList.getSelectedValue();
         if (path==null) {
             // check that name was typed in and not selected
             path = _block.getPathByName(_pathName.getText());

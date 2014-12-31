@@ -45,7 +45,7 @@ public class LoaderPane extends javax.swing.JPanel {
         justification="Class is no longer active, no hardware with which to test fix")
     OutputStream ostream = null;
 
-    JComboBox   portBox = new JComboBox();
+    JComboBox<String>   portBox = new JComboBox<String>();
     JButton     openPortButton = new JButton();
     JTextArea   traffic = new JTextArea();
 

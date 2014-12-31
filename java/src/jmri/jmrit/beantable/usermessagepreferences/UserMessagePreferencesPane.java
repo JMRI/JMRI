@@ -91,7 +91,7 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
 
     JTabbedPane tab = new JTabbedPane();
 
-    private HashMap<JComboBox, ListItems> _comboBoxes = new HashMap<>();
+    private HashMap<JComboBox<Object>, ListItems> _comboBoxes = new HashMap<JComboBox<Object>, ListItems>();
     private HashMap<JCheckBox, ListItems> _checkBoxes = new HashMap<>();
 
     private void newMessageTab() {
@@ -120,7 +120,7 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
                 String itemName = p.getChoiceName(strClass, j);
                 options = p.getChoiceOptions(strClass, itemName);
                 if (options != null) {
-                    JComboBox optionBox = new JComboBox();
+                    JComboBox<Object> optionBox = new JComboBox<Object>();
                     ListItems li = new ListItems(strClass, itemName);
                     _comboBoxes.put(optionBox, li);
                     li.isIncluded(addtoindependant);
@@ -175,8 +175,8 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
         }
         HashMap<String, ArrayList<ListItems>> countOfItems = new HashMap<>();
         HashMap<String, ArrayList<JCheckBox>> countOfItemsCheck = new HashMap<>();
-        HashMap<String, ArrayList<JComboBox>> countOfItemsCombo = new HashMap<>();
-        for (JComboBox key : this._comboBoxes.keySet()) {
+        HashMap<String, ArrayList<JComboBox<Object>>> countOfItemsCombo = new HashMap<>();
+        for (JComboBox<Object> key : this._comboBoxes.keySet()) {
             if (!_comboBoxes.get(key).isIncluded()) {
                 String strItem = _comboBoxes.get(key).getItem();
                 if (!countOfItems.containsKey(strItem)) {
@@ -187,7 +187,7 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
                 ArrayList<ListItems> a = countOfItems.get(strItem);
                 a.add(_comboBoxes.get(key));
 
-                ArrayList<JComboBox> acb = countOfItemsCombo.get(strItem);
+                ArrayList<JComboBox<Object>> acb = countOfItemsCombo.get(strItem);
                 acb.add(key);
             }
         }
@@ -216,7 +216,7 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
         for (String item : countOfItems.keySet()) {
             ArrayList<ListItems> a = countOfItems.get(item);
             ArrayList<JCheckBox> chb = countOfItemsCheck.get(item);
-            ArrayList<JComboBox> cob = countOfItemsCombo.get(item);
+            ArrayList<JComboBox<Object>> cob = countOfItemsCombo.get(item);
             if (a.size() > 1) {
                 JPanel tableDeleteTabPanel = new JPanel();
                 tableDeleteTabPanel.setLayout(new BoxLayout(tableDeleteTabPanel, BoxLayout.Y_AXIS));
@@ -228,7 +228,7 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
                     JPanel insideCombo = new JPanel();
                     int gridsize = (int) (Math.ceil((cob.size() / 2.0)));
                     insideCombo.setLayout(new jmri.util.javaworld.GridLayout2(gridsize, 2 * 2, 10, 2));
-                    for (JComboBox combo : cob) {
+                    for (JComboBox<Object> combo : cob) {
                         JLabel _comboLabel = new JLabel(p.getClassDescription(_comboBoxes.get(combo).getClassName()), JLabel.RIGHT);
                         _comboBoxes.get(combo).isIncluded(true);
                         insideCombo.add(_comboLabel);
@@ -316,7 +316,7 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
 
     @Override
     public boolean isDirty() {
-        for (JComboBox key : this._comboBoxes.keySet()) {
+        for (JComboBox<Object> key : this._comboBoxes.keySet()) {
             String strClass = _comboBoxes.get(key).getClassName();
             String strItem = _comboBoxes.get(key).getItem();
             if (!p.getChoiceOptions(strClass, strItem).get(p.getMultipleChoiceOption(strClass, strItem)).equals(key.getSelectedItem())) {
@@ -372,7 +372,7 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
         updating = true;
         p.setLoading();
 
-        for (JComboBox key : this._comboBoxes.keySet()) {
+        for (JComboBox<Object> key : this._comboBoxes.keySet()) {
             String strClass = _comboBoxes.get(key).getClassName();
             String strItem = _comboBoxes.get(key).getItem();
             String strSelection = (String) key.getSelectedItem();

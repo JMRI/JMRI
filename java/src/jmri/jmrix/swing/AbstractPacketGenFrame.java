@@ -18,8 +18,7 @@ public abstract class AbstractPacketGenFrame extends jmri.util.JmriJFrame {
 	// member declarations
     protected javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     protected javax.swing.JButton sendButton = new javax.swing.JButton();
-//    protected javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
-    protected javax.swing.JComboBox packetTextField = new javax.swing.JComboBox();
+    protected javax.swing.JComboBox<String> packetTextField = new javax.swing.JComboBox<String>();
     
     public AbstractPacketGenFrame() {
         super();
@@ -50,7 +49,7 @@ public abstract class AbstractPacketGenFrame extends jmri.util.JmriJFrame {
         sendButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     sendButtonActionPerformed(e);
-		    packetTextField.addItem(packetTextField.getSelectedItem());
+		    packetTextField.addItem((String)packetTextField.getSelectedItem());
 		    packetTextField.setSelectedItem("");
 		}
             });

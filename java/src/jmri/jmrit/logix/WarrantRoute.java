@@ -106,7 +106,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                 }
             }
         } else {
-            JComboBox<String> box = (JComboBox)obj;
+            JComboBox<String> box = (JComboBox<String>)obj;
             if (!_origin.checkPathBox(box)) {
             	if (!_destination.checkPathBox(box)) {
             		if (!_via.checkPathBox(box)) {

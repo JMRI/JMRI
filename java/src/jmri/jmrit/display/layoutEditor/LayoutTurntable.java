@@ -771,7 +771,7 @@ public class LayoutTurntable
         JPanel turnoutPanel;
         BeanSelectCreatePanel beanBox;
         TitledBorder border;
-        JComboBox turnoutStateCombo;
+        JComboBox<String> turnoutStateCombo;
         JLabel turnoutStateLabel;
         JTextField angle;
         final int[] turnoutStateValues = new int[]{Turnout.CLOSED, Turnout.THROWN};
@@ -809,7 +809,7 @@ public class LayoutTurntable
                 String turnoutStateClosed = InstanceManager.turnoutManagerInstance().getClosedText();
                 String[] turnoutStates = new String[]{turnoutStateClosed, turnoutStateThrown};
                 
-                turnoutStateCombo = new JComboBox(turnoutStates);
+                turnoutStateCombo = new JComboBox<String>(turnoutStates);
                 turnoutStateLabel = new JLabel(rb.getString("TurnoutState"));
                 turnoutPanel = new JPanel();
                 

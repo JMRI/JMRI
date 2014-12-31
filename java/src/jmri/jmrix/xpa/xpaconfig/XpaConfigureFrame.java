@@ -24,7 +24,7 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
 	 */
 	private static final long serialVersionUID = -7124285234526911696L;
 	// Drop down box and button to set XPressNet address
-	javax.swing.JComboBox addrBox = new javax.swing.JComboBox();
+	javax.swing.JComboBox<String> addrBox = new javax.swing.JComboBox<String>();
 	javax.swing.JButton setAddr = new javax.swing.JButton();
 
  	// Buttons to set the function of the phone's zero button (is it 
@@ -35,7 +35,7 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
 
 	// Drop down box and button to set duration of a momentary 
 	// function
-	javax.swing.JComboBox functionBox = new javax.swing.JComboBox();
+	javax.swing.JComboBox<String> functionBox = new javax.swing.JComboBox<String>();
 	javax.swing.JButton setFunction = new javax.swing.JButton();
 
 	protected String[] validTimes = new String[]{"0.2s","0.4s","0.6s","0.8s","1.0s","1.2s","1.4s","1.6s","1.8s","2.0s"};

@@ -68,7 +68,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     JTextField configAddressField = new JTextField("000000");                   // NOI18N
     JTextField readDataField = new JTextField(80);
     JTextField writeDataField = new JTextField(80);
-    JComboBox addrSpace = new JComboBox(new String[]{"CDI", "All", "Config", "None"});
+    JComboBox<String> addrSpace = new JComboBox<String>(new String[]{"CDI", "All", "Config", "None"});
 
     Connection connection;
     AliasMap aliasMap;

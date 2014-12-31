@@ -2218,7 +2218,7 @@ public class LayoutTurnout
 	private JTextField blockBNameField = new JTextField(16);
 	private JTextField blockCNameField = new JTextField(16);
 	private JTextField blockDNameField = new JTextField(16);
-    private JComboBox stateBox = new JComboBox();
+    private JComboBox<String> stateBox = new JComboBox<String>();
     private JCheckBox hiddenBox = new JCheckBox(rb.getString("HideTurnout"));
     private int turnoutClosedIndex;
     private int turnoutThrownIndex;

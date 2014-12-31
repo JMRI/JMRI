@@ -68,7 +68,7 @@ public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
              * Include an "add" button
              */
             void extras() {
-                final JComboBox selectCombo = new RosterGroupComboBox();
+                final JComboBox<String> selectCombo = new RosterGroupComboBox();
                 selectCombo.insertItemAt("",0);
                 selectCombo.setSelectedIndex(-1);
                 JPanel p25 = new JPanel();
@@ -103,7 +103,7 @@ public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
              */
         /*    void extras() {
                 
-                final JComboBox selectCombo = roster.rosterGroupBox();
+                final JComboBox<Object> selectCombo = roster.rosterGroupBox();
                 //addToTopBox(selectCombo);
                 selectCombo.insertItemAt("",0);
                 selectCombo.setSelectedIndex(-1);
