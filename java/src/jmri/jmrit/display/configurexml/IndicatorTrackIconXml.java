@@ -125,7 +125,6 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
         
         Element elem = element.getChild("iconmap");
         if (elem!=null) {
-            @SuppressWarnings("unchecked")
             List<Element>status = elem.getChildren();
             if (status.size()>0) {
                 for (int i=0; i<status.size(); i++) {
@@ -168,7 +167,6 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
         elem = element.getChild("paths");
         if (elem!=null) {
             ArrayList<String> paths = new ArrayList<String>();
-            @SuppressWarnings("unchecked")
             List<Element>pth = elem.getChildren();
             for (int i=0; i<pth.size(); i++) {
                 paths.add(pth.get(i).getText());

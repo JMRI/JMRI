@@ -115,7 +115,6 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
      * invoke this with the parent of the set of layoutblock elements.
      * @param layoutblocks Element containing the layoutblock elements to load.
      */
-    @SuppressWarnings("unchecked")
 	public void loadLayoutBlocks(Element layoutblocks) {
         LayoutBlockManager tm = InstanceManager.getDefault(LayoutBlockManager.class);
         if (layoutblocks.getAttribute("blockrouting")!=null){

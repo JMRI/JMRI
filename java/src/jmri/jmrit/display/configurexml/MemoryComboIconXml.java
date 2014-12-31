@@ -71,7 +71,6 @@ public class MemoryComboIconXml extends PositionableLabelXml {
         Editor p = (Editor)o;
 
         Element elem = element.getChild("itemList");
-        @SuppressWarnings("unchecked")
 		List<Element> list = elem.getChildren("item");
         String[] items = new String[list.size()];
         for (int i=0; i<list.size(); i++) {

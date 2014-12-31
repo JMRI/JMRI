@@ -151,13 +151,11 @@ public class SignalHeadIconXml extends PositionableLabelXml {
         } catch ( NullPointerException e) {  // considered normal if the attributes are not present
         }
 
-        @SuppressWarnings("unchecked")
         List<Element>aspects = element.getChildren();
         if (aspects.size()>0) {
             Element icons = element.getChild("icons");
             Element elem = element;
             if (icons!=null) {
-                @SuppressWarnings("unchecked")
                 List<Element>c = icons.getChildren();
                 aspects = c;
                 elem = icons;

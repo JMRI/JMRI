@@ -77,7 +77,6 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
      * @param element Top level Element to unpack.
      * @param o  LayoutEditor as an Object
      */
-    @SuppressWarnings("unchecked")
 	public void load(Element element, Object o) {
         // create the objects
         LayoutEditor p = (LayoutEditor)o;

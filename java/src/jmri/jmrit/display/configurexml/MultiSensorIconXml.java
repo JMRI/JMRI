@@ -61,7 +61,6 @@ public class MultiSensorIconXml extends PositionableLabelXml {
      * @param element Top level Element to unpack.
      * @param o  an Editor an Object
      */
-    @SuppressWarnings("unchecked")
 	public void load(Element element, Object o) {
 		Editor pe = (Editor)o;
         MultiSensorIcon l = new MultiSensorIcon(pe);

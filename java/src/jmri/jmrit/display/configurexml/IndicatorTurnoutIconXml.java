@@ -129,12 +129,10 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
         }
         Element elem = element.getChild("iconmaps");
         if (elem!=null) {
-            @SuppressWarnings("unchecked")
             List<Element>maps = elem.getChildren();
             if (maps.size()>0) {
                 for (int i=0; i<maps.size(); i++) {
                     String status = maps.get(i).getName();
-                    @SuppressWarnings("unchecked")
                     List<Element>states = maps.get(i).getChildren();
                     for (int k=0; k<states.size(); k++) {
                         String msg = "IndicatorTurnout \""+l.getNameString()+"\" icon \""+states.get(k).getName()+"\" ";
@@ -177,7 +175,6 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
         elem = element.getChild("paths");
         if (elem!=null) {
             ArrayList<String> paths = new ArrayList<String>();
-            @SuppressWarnings("unchecked")
             List<Element>pth = elem.getChildren();
             for (int i=0; i<pth.size(); i++) {
                 paths.add(pth.get(i).getText());

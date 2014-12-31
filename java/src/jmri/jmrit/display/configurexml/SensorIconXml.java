@@ -268,7 +268,6 @@ public class SensorIconXml extends PositionableLabelXml {
         }
     }
     
-    @SuppressWarnings("unchecked")
     private void loadSensorTextState(String state, SensorIcon l, Element element){
         String name = null;
         Color clrText=null;

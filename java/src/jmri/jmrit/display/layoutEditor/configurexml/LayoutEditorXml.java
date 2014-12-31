@@ -211,7 +211,6 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
      * register and fill it, then pop it in a JFrame
      * @param element Top level Element to unpack.
      */
-    @SuppressWarnings("unchecked")
 	public boolean load(Element element) {
     	boolean result = true;
 		Attribute a;

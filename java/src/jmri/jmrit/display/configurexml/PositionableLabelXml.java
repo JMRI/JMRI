@@ -166,7 +166,6 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
      * @param element Top level Element to unpack.
      * @param o  Editor as an Object
      */
-    @SuppressWarnings("unchecked")
     public void load(Element element, Object o) {
         // create the objects
         PositionableLabel l = null;

@@ -111,14 +111,12 @@ public class TurnoutIconXml extends PositionableLabelXml {
         else
             l.setDirectControl(false);
 
-        @SuppressWarnings("unchecked")
         List<Element>states = element.getChildren();
         if (states.size()>0) {
             if (log.isDebugEnabled()) log.debug("Main element has"+states.size()+" items");
             Element elem = element;     // the element containing the icons
             Element icons = element.getChild("icons");
             if (icons!=null) {
-                @SuppressWarnings("unchecked")
                 List<Element>s = icons.getChildren();
                 states = s;
                 elem = icons;          // the element containing the icons

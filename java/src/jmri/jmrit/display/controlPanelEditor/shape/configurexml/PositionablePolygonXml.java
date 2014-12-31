@@ -69,7 +69,6 @@ public class PositionablePolygonXml extends PositionableShapeXml {
      * @param element Top level Element to unpack.
      * @param o  Editor as an Object
      */
-    @SuppressWarnings("unchecked")
     public void load(Element element, Object o) {
         // create the objects
         Editor ed = (Editor)o;

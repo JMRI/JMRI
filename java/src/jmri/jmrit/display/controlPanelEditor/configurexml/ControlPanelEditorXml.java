@@ -115,7 +115,6 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
      * @param element Top level Element to unpack.
      * @return true if successful
      */
-    @SuppressWarnings("unchecked")
     @Override
     public boolean load(Element element) {
         boolean result = true;

@@ -84,7 +84,6 @@ public class BlockContentsIconXml extends PositionableLabelXml {
      * @param element Top level Element to unpack.
      * @param o an Editor as an Object
      */
-    @SuppressWarnings("unchecked")
 	public void load(Element element, Object o) {
 
 		Editor ed = null;
