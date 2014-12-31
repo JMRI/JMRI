@@ -1,24 +1,19 @@
 package jmri.configurexml;
 
-import jmri.InstanceManager;
-import jmri.jmrit.revhistory.FileHistory;
-
 import java.io.File;
 import java.net.URL;
-
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Collections;
-import java.util.Map;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import jmri.InstanceManager;
+import jmri.jmrit.revhistory.FileHistory;
 import jmri.util.FileUtil;
-
-//import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.ProcessingInstruction;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -366,15 +361,19 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
     
     public void storePrefs(File file) {
-        Element root = initStore();
-        addPrefsStore(root);
-        finalStore(root, file);
+        synchronized (this) {
+            Element root = initStore();
+            addPrefsStore(root);
+            finalStore(root, file);
+        }
     }
     
     public void storeUserPrefs(File file) {
-        Element root = initStore();
-        addUserPrefsStore(root);
-        finalStore(root, file);
+        synchronized (this) {
+            Element root = initStore();
+            addUserPrefsStore(root);
+            finalStore(root, file);
+        }
     }
 
     /**
