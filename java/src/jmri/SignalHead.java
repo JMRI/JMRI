@@ -34,7 +34,8 @@ package jmri;
  * set to a definite value for e.g. display on a panel or
  * evaluation in higher level logic.
  *
- *<DT>held<DD>Whether the head's lamps should be forced to the RED position
+ *<DT>held<DD>Whether the head's lamps should be forced to a specific appearance,
+ * e.g. RED
  * in higher-level logic.
  *<P>
  * For use in signaling systems, this is a convenient
