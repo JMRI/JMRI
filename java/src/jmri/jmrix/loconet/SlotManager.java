@@ -258,6 +258,11 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             programmerOpMessage(m,i);
         }
 
+        // LONG_ACK response?
+        if (m.getOpCode()==LnConstants.OPC_LONG_ACK) {
+            handleLongAck(m);
+        }
+
         // see if extended function message
         if (isExtFunctionMessage(m)) {
             // yes, get address
@@ -388,19 +393,55 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         case LnConstants.OPC_MOVE_SLOTS:  // handle the follow-on message when it comes
             return i; // need to cope with that!!
 
-        case LnConstants.OPC_LONG_ACK:
+        default:
+				// nothing here for us
+            return i;
+        }
+        // break gets to here
+        return i;
+    }
+    
+    
+   /*
+    * The following methods are for parsing LACK as response to CV programming. It is divided into numerous
+    * small methods so that each bit can be overridden for special parsing for individual command station types.
+    */
+    protected boolean checkLackByte1 (int Byte1) {
+        if ((Byte1 & 0xEF) == 0x6F)
+            return true;
+        else
+            return false;
+    }
+    protected boolean checkLackTaskAccepted (int Byte2) {
+        if (Byte2 == 1 // task accepted
+                || Byte2 == 0x23 || Byte2 == 0x2B || Byte2 == 0x6B// added as DCS51 fix
+                || Byte2 == 0x7F)
+            return true;
+        else
+            return false;
+    }
+    protected boolean checkLackProgrammerBusy (int Byte2) {
+        if (Byte2 == 0)
+            return true;
+        else
+            return false;
+    }
+    protected boolean checkLackAcceptedBlind (int Byte2) {
+        if (Byte2 == 0x40)
+            return true;
+        else
+            return false;
+    }
+    protected void handleLongAck (LocoNetMessage m) {
             // handle if reply to slot. There's no slot number in the LACK, unfortunately.
             // If this is a LACK to a Slot op, and progState is command pending,
             // assume its for us...
             if (log.isDebugEnabled())
                 log.debug("LACK in state "+progState+" message: "+m.toString());
-            if ( (m.getElement(1)&0xED) == 0x6D && progState == 1 ) {  // Lisby: Used to be checked as EF/6F instead of ED/6D, but Uhlenbrock IB-COM does not set bit 1.
+        if ( checkLackByte1(m.getElement(1)) && progState == 1 ) {
                 // in programming state
                 // check status byte
-                if ((m.getElement(2) == 1) // task accepted
-                    || (m.getElement(2) == 0x23) || (m.getElement(2) == 0x2B) || (m.getElement(2) == 0x6B)// added as DCS51 fix
-                    || (m.getElement(2) == 0x7F)
-                    ) {
+            if (checkLackTaskAccepted(m.getElement(2))) { // task accepted
                     // 'not implemented' (op on main)
                     // but BDL16 and other devices can eventually reply, so
                     // move to commandExecuting state
@@ -410,25 +451,20 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                     else
                         startShortTimer();
                     progState = 2;
-                    return i;
-                }
-                else if (m.getElement(2) == 0) { // task aborted as busy
+            } else if (checkLackProgrammerBusy(m.getElement(2))) { // task aborted as busy
                     // move to not programming state
                     progState = 0;
                     // notify user ProgListener
                     stopTimer();
                     notifyProgListenerLack(jmri.ProgListener.ProgrammerBusy);
-                    return i;
-                }
-                else if (m.getElement(2) == 0x40) { // task accepted blind
+            } else if (checkLackAcceptedBlind(m.getElement(2))) { // task accepted blind
                 	if((_progRead || _progConfirm) && !mServiceMode) {	// incorrect Reserved OpSw setting can cause this response to OpsMode Read
                 														// just treat it as a normal OpsMode Read response
 	                    // move to commandExecuting state
 	                    log.debug("LACK accepted (ignoring incorrect OpSw), next state 2");
                         startShortTimer();
 	                    progState = 2;
-                	}
-	                else {
+                } else {
 	                    // move to not programming state
 	                    progState = 0;
 	                    // notify user ProgListener
@@ -446,27 +482,16 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 	                    timer.setRepeats(false);
 	                    timer.start();
 	                }
-                    return i;
-                }
-                else { // not sure how to cope, so complain
+            } else { // not sure how to cope, so complain
                     log.warn("unexpected LACK reply code "+m.getElement(2));
                     // move to not programming state
                     progState = 0;
                     // notify user ProgListener
                     stopTimer();
                     notifyProgListenerLack(jmri.ProgListener.UnknownError);
-                    return i;
                 }
             }
-            else return i;
-
-        default:
-				// nothing here for us
-            return i;
         }
-        // break gets to here
-        return i;
-    }
 
     public void forwardMessageToSlot(LocoNetMessage m, int i) {
 
@@ -979,7 +1004,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * power.  This is only needed in service mode.
      */
     protected void restartEndOfProgrammingTimer() {
-        if (mProgEndSequence && mServiceMode) {
+        if (mProgEndSequence) {
             if (mPowerTimer==null) {
                 mPowerTimer = new javax.swing.Timer(2000, new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent e) {
