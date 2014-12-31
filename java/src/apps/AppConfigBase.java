@@ -1,5 +1,4 @@
 // AppConfigBase.java
-
 package apps;
 
 import java.awt.Component;
@@ -24,22 +23,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Basic configuration infrastructure, to be 
- * used by specific GUI implementations
+ * Basic configuration infrastructure, to be used by specific GUI
+ * implementations
  *
- * @author	Bob Jacobsen   Copyright (C) 2003, 2008, 2010
- * @author      Matthew Harris copyright (c) 2009
+ * @author	Bob Jacobsen Copyright (C) 2003, 2008, 2010
+ * @author Matthew Harris copyright (c) 2009
  * @author	Ken Cameron Copyright (C) 2011
  * @version	$Revision$
  */
 public class AppConfigBase extends JmriPanel {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -341194769406457667L;
+     *
+     */
+    private static final long serialVersionUID = -341194769406457667L;
 
-	protected static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
+    protected static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
 
     /**
      * Remember items to persist
@@ -50,20 +49,20 @@ public class AppConfigBase extends JmriPanel {
     protected List<Component> items = new ArrayList<>();
 
     /**
-     * Construct a configuration panel for inclusion in a preferences
-     * or configuration dialog with default number of connections.
+     * Construct a configuration panel for inclusion in a preferences or
+     * configuration dialog with default number of connections.
      */
     public AppConfigBase() {
     }
-    
+
     public static String getManufacturerName(int index) {
         return JmrixConfigPane.instance(index).getCurrentManufacturerName();
     }
-    
+
     public static String getConnection(int index) {
         return JmrixConfigPane.instance(index).getCurrentProtocolName();
     }
-    
+
     public static String getPort(int index) {
         return JmrixConfigPane.instance(index).getCurrentProtocolInfo();
     }
@@ -75,58 +74,59 @@ public class AppConfigBase extends JmriPanel {
     public static boolean getDisabled(int index) {
         return JmrixConfigPane.instance(index).getDisabled();
     }
-    
+
     /**
-     * Detect duplicate connection types
-     * It depends on all connections have the first word be the same
-     * if they share the same type. So LocoNet ... is a fine example.
+     * Detect duplicate connection types It depends on all connections have the
+     * first word be the same if they share the same type. So LocoNet ... is a
+     * fine example.
      * <p>
-     * This also was broken when the names for systems were updated before
-     * JMRI 2.9.4, so it should be revisited.
-     * 
+     * This also was broken when the names for systems were updated before JMRI
+     * 2.9.4, so it should be revisited.
+     *
      * @return true if OK, false if duplicates present.
      */
     private boolean checkDups() {
         Map<String, List<JmrixConfigPane>> ports = new HashMap<>();
         ArrayList<JmrixConfigPane> configPaneList = JmrixConfigPane.getListOfConfigPanes();
-            for (JmrixConfigPane configPane : configPaneList) {
-                if (!configPane.getDisabled()) {
-                    String port = configPane.getCurrentProtocolInfo();
-                    /*We need to test to make sure that the connection port is not set to (none)
-                    If it is set to none, then it is likely a simulator.*/
-                    if(!port.equals(JmrixConfigPane.NONE)){
-                        if (!ports.containsKey(port)){
-                            List<JmrixConfigPane> arg1 = new ArrayList<>();
-                            arg1.add(configPane);
-                            ports.put(port, arg1);
-                        } else {
-                            ports.get(port).add(configPane);
-                        }
+        for (JmrixConfigPane configPane : configPaneList) {
+            if (!configPane.getDisabled()) {
+                String port = configPane.getCurrentProtocolInfo();
+                /*We need to test to make sure that the connection port is not set to (none)
+                 If it is set to none, then it is likely a simulator.*/
+                if (!port.equals(JmrixConfigPane.NONE)) {
+                    if (!ports.containsKey(port)) {
+                        List<JmrixConfigPane> arg1 = new ArrayList<>();
+                        arg1.add(configPane);
+                        ports.put(port, arg1);
+                    } else {
+                        ports.get(port).add(configPane);
                     }
                 }
             }
+        }
         boolean ret = true;
         /* one or more dups or NONE, lets see if it is dups */
         for (Map.Entry<String, List<JmrixConfigPane>> e : ports.entrySet()) {
-        	if (e.getValue().size() > 1) {
-        		/* dup port found */
-        		ret = false;
-        		StringBuilder nameB = new StringBuilder();
-        		for (int n = 0; n < e.getValue().size(); n++) {
+            if (e.getValue().size() > 1) {
+                /* dup port found */
+                ret = false;
+                StringBuilder nameB = new StringBuilder();
+                for (int n = 0; n < e.getValue().size(); n++) {
                     nameB.append(e.getValue().get(n).getCurrentManufacturerName());
-        			nameB.append("|");
-        		}
-        		String instanceNames = new String(nameB);
-        		instanceNames = instanceNames.substring(0, instanceNames.lastIndexOf("|"));
-        		instanceNames = instanceNames.replaceAll("[|]", ", ");
-        		log.error("Duplicate ports found on: " + instanceNames + " for port: " + e.getKey());
-        	}
+                    nameB.append("|");
+                }
+                String instanceNames = new String(nameB);
+                instanceNames = instanceNames.substring(0, instanceNames.lastIndexOf("|"));
+                instanceNames = instanceNames.replaceAll("[|]", ", ");
+                log.error("Duplicate ports found on: " + instanceNames + " for port: " + e.getKey());
+            }
         }
         return ret;
     }
 
     /**
      * Checks to see if user selected a valid serial port
+     *
      * @return true if okay
      */
     private boolean checkPortNames() {
@@ -138,7 +138,7 @@ public class AppConfigBase extends JmriPanel {
                 }
             }
         }
-    	return true;
+        return true;
     }
 
     @Override
@@ -149,10 +149,10 @@ public class AppConfigBase extends JmriPanel {
     public void saveContents() {
         // remove old prefs that are registered in ConfigManager
         InstanceManager.configureManagerInstance().removePrefItems();
-            // put the new GUI items on the persistance list
-            for (Component item : items) {
-                InstanceManager.configureManagerInstance().registerPref(item);
-            }
+        // put the new GUI items on the persistance list
+        for (Component item : items) {
+            InstanceManager.configureManagerInstance().registerPref(item);
+        }
         InstanceManager.configureManagerInstance().storePrefs();
     }
 
@@ -165,12 +165,15 @@ public class AppConfigBase extends JmriPanel {
      */
     public void savePressed(boolean restartRequired) {
         // true if port name OK
-        if (!checkPortNames())           
-                return;
+        if (!checkPortNames()) {
+            return;
+        }
         // true if there arn't any duplicates
-        if (!checkDups())
-        	if (!(JOptionPane.showConfirmDialog(null, rb.getString("MessageLongDupsWarning"), rb.getString("MessageShortDupsWarning"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION))
-        		return;
+        if (!checkDups()) {
+            if (!(JOptionPane.showConfirmDialog(null, rb.getString("MessageLongDupsWarning"), rb.getString("MessageShortDupsWarning"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)) {
+                return;
+            }
+        }
         saveContents();
         final UserPreferencesManager p;
         p = InstanceManager.getDefault(UserPreferencesManager.class);
@@ -213,7 +216,7 @@ public class AppConfigBase extends JmriPanel {
             } else if (p.getMultipleChoiceOption(getClassName(), "quitAfterSave") == 2) {
                 // restart the program
                 dispose();
-        	// do orderly shutdown.  Note this
+                // do orderly shutdown.  Note this
                 // invokes Apps.handleRestart, even if this
                 // panel hasn't been created by an Apps subclass.
                 Apps.handleRestart();
@@ -225,17 +228,21 @@ public class AppConfigBase extends JmriPanel {
         }
     }
 
-    public String getClassDescription() { return rb.getString("Application"); }
+    public String getClassDescription() {
+        return rb.getString("Application");
+    }
 
-    public void setMessagePreferencesDetails(){
-        HashMap<Integer,String> options = new HashMap<>(3);
+    public void setMessagePreferencesDetails() {
+        HashMap<Integer, String> options = new HashMap<>(3);
         options.put(0x00, rb.getString("QuitAsk"));
         options.put(0x01, rb.getString("QuitNever"));
         options.put(0x02, rb.getString("QuitAlways"));
         jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).messageItemDetails(getClassName(), "quitAfterSave", rb.getString("quitAfterSave"), options, 0x00);
     }
 
-    public String getClassName() { return AppConfigBase.class.getName(); }
+    public String getClassName() {
+        return AppConfigBase.class.getName();
+    }
 
     public List<Component> getItems() {
         return this.items;
