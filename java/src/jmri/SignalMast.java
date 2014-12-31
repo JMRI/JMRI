@@ -15,23 +15,23 @@ import java.util.Vector;
  * <p>
  * Aspects are named by a user defined String name.
  *
- *<DT>lit<DD>Whether the head's lamps are lit or left dark.
+ *<DT>lit<DD>Whether the mast's lamps are lit or left dark.
  *<P>
  * This differs from the DARK color defined for the appearance
  * parameter, in that it's independent of that.  Lit is 
- * intended to allow you to extinquish a signal head for 
+ * intended to allow you to extinquish a signal mast for 
  * approach lighting, while still allowing it's color to be
  * set to a definite value for e.g. display on a panel or
  * evaluation in higher level logic.
  *
- *<DT>held<DD>Whether the head's lamps should be forced to a specific aspect, 
+ *<DT>held<DD>Whether the mast's lamps should be forced to a specific aspect, 
  * e.g. Stop, 
  * in higher-level logic.
  *<P>
  * For use in signaling systems, this is a convenient
  * way of storing whether a higher-level of control (e.g. non-vital
  * system or dispatcher) has "held" the signal at stop. It does
- * not effect how this signal head actually works; any appearance can
+ * not effect how this signal mast actually works; any appearance can
  * be set and will be displayed even when "held" is set.
  *</dl>
  * The integer state (getState(), setState()) is the index of the
@@ -77,14 +77,14 @@ public interface SignalMast extends NamedBean {
 
     /**
      * Lit is a bound parameter. It controls
-     * whether the signal head's lamps are lit or left dark.
+     * whether the signal mast's lamps are lit or left dark.
      */
     public boolean getLit();
     public void setLit(boolean newLit);
 
     /**
      * Held is a bound parameter. It controls
-     * what mechanisms can control the head's appearance.
+     * what mechanisms can control the mast's appearance.
      * The actual semantics are defined by those external mechanisms.
      */
     public boolean getHeld();
