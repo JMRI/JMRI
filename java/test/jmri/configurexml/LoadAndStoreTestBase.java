@@ -62,6 +62,10 @@ public class LoadAndStoreTestBase extends TestCase {
         // load file
         InstanceManager.configureManagerInstance().load(inFile);
 
+		InstanceManager.logixManagerInstance().activateAllLogixs();
+		InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+        new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
+
         String name = inFile.getName();
 
         // store file
