@@ -1,7 +1,6 @@
 // AppConfigBase.java
 package apps;
 
-import java.awt.Component;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +17,7 @@ import jmri.Application;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrix.JmrixConfigPane;
+import jmri.swing.PreferencesPanel;
 import jmri.util.swing.JmriPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,10 +43,7 @@ public class AppConfigBase extends JmriPanel {
     /**
      * Remember items to persist
      */
-    // This should probably be a list of PreferencesPanel instead of a list
-    // of Component, but TabbedPreferences.connectionPanel needs to implement
-    // PreferencesPanel to make this change.
-    protected List<Component> items = new ArrayList<>();
+    protected List<PreferencesPanel> items = new ArrayList<>();
 
     /**
      * Construct a configuration panel for inclusion in a preferences or
@@ -150,7 +147,7 @@ public class AppConfigBase extends JmriPanel {
         // remove old prefs that are registered in ConfigManager
         InstanceManager.configureManagerInstance().removePrefItems();
         // put the new GUI items on the persistance list
-        for (Component item : items) {
+        for (PreferencesPanel item : items) {
             InstanceManager.configureManagerInstance().registerPref(item);
         }
         InstanceManager.configureManagerInstance().storePrefs();
@@ -244,7 +241,7 @@ public class AppConfigBase extends JmriPanel {
         return AppConfigBase.class.getName();
     }
 
-    public List<Component> getItems() {
+    public List<PreferencesPanel> getItems() {
         return this.items;
     }
 

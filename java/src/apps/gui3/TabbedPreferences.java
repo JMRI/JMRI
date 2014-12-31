@@ -236,14 +236,14 @@ public class TabbedPreferences extends AppConfigBase {
                 panel.getPreferencesItemText(),
                 panel.getTabbedPreferencesTitle(),
                 panel.getLabelKey(),
-                panel.getPreferencesComponent(),
+                panel,
                 panel.isPersistant(),
                 panel.getPreferencesTooltip()
         );
     }
 
     private void addItem(String prefItem, String itemText, String tabtitle,
-            String labelKey, JComponent item, boolean store, String tooltip) {
+            String labelKey, PreferencesPanel item, boolean store, String tooltip) {
         PreferencesCatItems itemBeingAdded = null;
         for (PreferencesCatItems preferences : preferencesArray) {
             if (preferences.getPrefItem().equals(prefItem)) {
@@ -263,7 +263,7 @@ public class TabbedPreferences extends AppConfigBase {
         if (tabtitle == null) {
             tabtitle = itemText;
         }
-        itemBeingAdded.addPreferenceItem(tabtitle, labelKey, item, tooltip);
+        itemBeingAdded.addPreferenceItem(tabtitle, labelKey, item.getPreferencesComponent(), tooltip);
         if (store) {
             items.add(item);
         }
