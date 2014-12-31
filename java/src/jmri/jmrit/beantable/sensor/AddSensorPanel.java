@@ -138,7 +138,7 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
     
     protected SensorManager senManager = jmri.InstanceManager.sensorManagerInstance();
     
-    JComboBox prefixBox = new JComboBox();
+    JComboBox<String> prefixBox = new JComboBox<String>();
     JTextField numberToAdd = new JTextField(10);
     JCheckBox range = new JCheckBox("Add a range");
     String systemSelectionCombo = this.getClass().getName()+".SystemSelected";

@@ -67,7 +67,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
     SensorTableModel _sensorModel;
     JScrollPane _sensorScrollPane;
     JTextField _nameField;
-    JList _sensorGroupList;
+    JList<String> _sensorGroupList;
         
     public void initComponents() {
         addHelpMenu("package.jmri.jmrit.sensorgroup.SensorGroupFrame", true);
@@ -154,7 +154,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
 
         JPanel p5 = new JPanel();
 
-        DefaultListModel groupModel = new DefaultListModel();
+        DefaultListModel<String> groupModel = new DefaultListModel<String>();
         // Look for Sensor group in Route table 
         RouteManager rm = InstanceManager.routeManagerInstance();
         List<String> routeList = rm.getSystemNameList();
@@ -185,7 +185,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
                 groupModel.addElement(c.getUserName().substring(ConditionalUserPrefix.length()));
             }
         }
-        _sensorGroupList = new JList(groupModel);
+        _sensorGroupList = new JList<String>(groupModel);
         _sensorGroupList.setPrototypeCellValue(ConditionalUserPrefix+"XXXXXXXXXX");
         _sensorGroupList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         _sensorGroupList.setVisibleRowCount(5);
@@ -246,7 +246,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         logix.addConditional(cSystemName, 0);
         logix.setEnabled(true);
         logix.activateLogix();
-        ((DefaultListModel)_sensorGroupList.getModel()).addElement(
+        ((DefaultListModel<String>)_sensorGroupList.getModel()).addElement(
                                 cUserName.substring(ConditionalUserPrefix.length()));
         clear();
     }
@@ -256,7 +256,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
              _sensorModel.setValueAt(Boolean.FALSE, i, BeanTableModel.INCLUDE_COLUMN);
         }
         // look for name in List panel
-        String group = (String)_sensorGroupList.getSelectedValue();
+        String group = _sensorGroupList.getSelectedValue();
         if (group == null) { // not there, look in text field
             group = _nameField.getText().toUpperCase().trim();
         }

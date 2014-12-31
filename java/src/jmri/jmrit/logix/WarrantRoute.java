@@ -106,7 +106,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                 }
             }
         } else {
-            JComboBox box = (JComboBox)obj;
+            JComboBox<String> box = (JComboBox)obj;
             if (!_origin.checkPathBox(box)) {
             	if (!_destination.checkPathBox(box)) {
             		if (!_via.checkPathBox(box)) {
@@ -146,7 +146,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     	return panel;
     }
 
-    private JPanel makeLabelCombo(String title, JComboBox box, String tooltip) {
+    private JPanel makeLabelCombo(String title, JComboBox<String> box, String tooltip) {
 
         JPanel p = new JPanel();
         p.setLayout(new BorderLayout());
@@ -185,15 +185,15 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     	Location location;
     	private BlockOrder order;
     	private JTextField blockBox = new JTextField();
-        private JComboBox pathBox = new JComboBox();
-        private JComboBox portalBox;
+        private JComboBox<String> pathBox = new JComboBox<String>();
+        private JComboBox<String> portalBox;
  
     	RouteLocation(Location loc) {
     		location = loc;
             doSize(blockBox, 500, 200);
             doSize(pathBox, 500, 200);
     		if (location==Location.ORIGIN ||location==Location.DEST) {
-            	portalBox = new JComboBox();
+            	portalBox = new JComboBox<String>();
                 doSize(portalBox, 500, 200);
     		}
     	}
@@ -270,7 +270,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         	}
         	return false;
         }
-        protected boolean checkPathBox(JComboBox box) {
+        protected boolean checkPathBox(JComboBox<String> box) {
         	if (box == pathBox) {
         		if (portalBox!=null) {
                     setPortalBox(order);        			
@@ -279,7 +279,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         	}
         	return false;
         }
-        protected boolean checkPortalBox(JComboBox box) {
+        protected boolean checkPortalBox(JComboBox<String> box) {
         	return (box == portalBox);
         }
         protected void setOrderEntryPortal()  {

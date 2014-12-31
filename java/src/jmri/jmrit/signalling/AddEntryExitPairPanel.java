@@ -46,12 +46,12 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
 	 * 
 	 */
 	private static final long serialVersionUID = 4871721972825766572L;
-	JComboBox selectPanel = new JComboBox();
-    JComboBox fromPoint = new JComboBox();
-    JComboBox toPoint = new JComboBox();
+	JComboBox<String> selectPanel = new JComboBox<String>();
+    JComboBox<String> fromPoint = new JComboBox<String>();
+    JComboBox<String> toPoint = new JComboBox<String>();
     
     String [] interlockTypes = {"Set Turnouts Only", "Set Turnouts and SignalMasts", "Full Interlock"};
-    JComboBox typeBox = new JComboBox(interlockTypes);
+    JComboBox<String> typeBox = new JComboBox<String>(interlockTypes);
     
     ArrayList<LayoutEditor> panels;
     
@@ -498,7 +498,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
             setColumnToHoldButton(table, CLEARCOL, 
                     new JButton(rb.getString("ButtonClear")));
                     
-            JComboBox typeCombo = new JComboBox(NXTYPE_NAMES);
+            JComboBox<String> typeCombo = new JComboBox<String>(NXTYPE_NAMES);
         
             TableColumn col = table.getColumnModel().getColumn(TYPECOL);
             col.setCellEditor(new DefaultCellEditor(typeCombo));
@@ -548,7 +548,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
     JmriJFrame optionsFrame = null;
     Container optionsPane = null;
     String [] clearOptions = {"Prompt User", "Clear Route", "Cancel Route"};
-    JComboBox clearEntry = new JComboBox(clearOptions);
+    JComboBox<String> clearEntry = new JComboBox<String>(clearOptions);
     JTextField durationSetting = new JTextField(10);
     String[] colorText = {"None", "Black","DarkGray","Gray", 
 			"LightGray","White","Red","Pink","Orange",
@@ -559,15 +559,15 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
 	int numColors = 14;  // number of entries in the above arrays
     JCheckBox dispatcherUse = new JCheckBox(Bundle.getMessage("DispatcherInt"));
     
-    JComboBox settingTrackColorBox = new JComboBox();
+    JComboBox<String> settingTrackColorBox = new JComboBox<String>();
     
-    private void initializeColorCombo(JComboBox colorCombo) {
+    private void initializeColorCombo(JComboBox<String> colorCombo) {
 		colorCombo.removeAllItems();
 		for (int i = 0;i<numColors;i++) {
 			colorCombo.addItem( rb.getString(colorText[i]) );
 		}
 	}
-	private void setColorCombo(JComboBox colorCombo,Color color) {
+	private void setColorCombo(JComboBox<String> colorCombo,Color color) {
 		for (int i = 0;i<numColors;i++) {
 			if (color==colorCode[i]) {
 				colorCombo.setSelectedIndex(i);
@@ -575,7 +575,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
 			}
 		}
 	}
-	private Color getSelectedColor(JComboBox colorCombo) {
+	private Color getSelectedColor(JComboBox<String> colorCombo) {
 		return (colorCode[colorCombo.getSelectedIndex()]);
 	}
 	

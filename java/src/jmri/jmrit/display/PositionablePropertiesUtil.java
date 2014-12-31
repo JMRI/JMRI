@@ -94,12 +94,12 @@ public class PositionablePropertiesUtil {
     ImageIcon[] images;
     String[] _fontcolors = {"Black", "Dark Gray", "Gray", "Light Gray", "White", "Red", "Orange", "Yellow", "Green", "Blue", "Magenta"};
     String[] _backgroundcolors;
-    JComboBox fontColor;
-    JComboBox backgroundColor;
+    JComboBox<Integer> fontColor;
+    JComboBox<Integer> backgroundColor;
     JTextField fontSizeField;
     
     String[] _justification = {"Left", "Right", "Center"};
-    JComboBox _justificationCombo;
+    JComboBox<String> _justificationCombo;
     
     void textPanel(){
         _textPanel = new JPanel();
@@ -149,8 +149,8 @@ public class PositionablePropertiesUtil {
                 images[i].setDescription(_backgroundcolors[i]);
             }
         }
-        backgroundColor = new JComboBox(intArray);
-        backgroundColor.setRenderer(new ColorComboBoxRenderer());
+        backgroundColor = new JComboBox<Integer>(intArray);
+        backgroundColor.setRenderer(new ColorComboBoxRenderer<Integer>());
         backgroundColor.setMaximumRowCount(5);
         backgroundColor.setSelectedIndex(backCurrentColor);
         backgroundColor.addActionListener(PreviewActionListener);
@@ -169,8 +169,8 @@ public class PositionablePropertiesUtil {
                 fontCurrentColor = i;
         }
     
-        fontColor = new JComboBox(intArray);
-        fontColor.setRenderer(new ColorComboBoxRenderer());
+        fontColor = new JComboBox<Integer>(intArray);
+        fontColor.setRenderer(new ColorComboBoxRenderer<Integer>());
         fontColor.setMaximumRowCount(5);
         fontColor.setSelectedIndex(fontCurrentColor);
         fontColor.addActionListener(PreviewActionListener);
@@ -178,7 +178,7 @@ public class PositionablePropertiesUtil {
         
         JPanel fontSizePanel = new JPanel();
         fontSizePanel.setLayout(new BoxLayout(fontSizePanel, BoxLayout.Y_AXIS));
-        fontSizeChoice = new JList(fontSizes);
+        fontSizeChoice = new JList<String>(fontSizes);
         
         fontSizeChoice.setSelectedValue(""+fontSize, true);
         fontSizeChoice.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -206,7 +206,7 @@ public class PositionablePropertiesUtil {
         _textPanel.add(ColorPanel);
         
         JPanel justificationPanel = new JPanel();
-        _justificationCombo = new JComboBox(_justification);
+        _justificationCombo = new JComboBox<String>(_justification);
         if(justification==0x00)
             _justificationCombo.setSelectedIndex(0);
         else if (justification ==0x02)
@@ -251,11 +251,11 @@ public class PositionablePropertiesUtil {
                 }
             }
             
-            final JComboBox txtColor = new JComboBox(intArray);
+            final JComboBox<Integer> txtColor = new JComboBox<Integer>(intArray);
             JPanel txtPanel = new JPanel();
             //txtPanel.setLayout(new BoxLayout(txtPanel, BoxLayout.Y_AXIS));
             JPanel p = new JPanel();
-            txtColor.setRenderer(new ColorComboBoxRenderer());
+            txtColor.setRenderer(new ColorComboBoxRenderer<Integer>());
             txtColor.setMaximumRowCount(5);
 
             txtColor.setSelectedIndex(fontcolor);
@@ -267,8 +267,8 @@ public class PositionablePropertiesUtil {
             p.add(new JLabel("Font Color"));
             p.add(txtColor);
             txtPanel.add(p);
-            final JComboBox txtBackColor = new JComboBox(intArray);
-            txtBackColor.setRenderer(new ColorComboBoxRenderer());
+            final JComboBox<Integer> txtBackColor = new JComboBox<Integer>(intArray);
+            txtBackColor.setRenderer(new ColorComboBoxRenderer<Integer>());
             txtBackColor.setMaximumRowCount(5);
             txtBackColor.setSelectedIndex(backcolor);
             txtBackColor.addActionListener(new ActionListener() {
@@ -323,7 +323,7 @@ public class PositionablePropertiesUtil {
       }
     };
     
-    JComboBox borderColorCombo;
+    JComboBox<Integer> borderColorCombo;
     javax.swing.JSpinner borderSizeTextSpin;
     javax.swing.JSpinner marginSizeTextSpin;
     
@@ -347,8 +347,8 @@ public class PositionablePropertiesUtil {
         }
         //Last colour on the background is none.
         intArray[_backgroundcolors.length-1] = Integer.valueOf(_backgroundcolors.length-1);
-        borderColorCombo = new JComboBox(intArray);
-        borderColorCombo.setRenderer(new ColorComboBoxRenderer());
+        borderColorCombo = new JComboBox<Integer>(intArray);
+        borderColorCombo.setRenderer(new ColorComboBoxRenderer<Integer>());
         borderColorCombo.setMaximumRowCount(5);
         borderColorCombo.setSelectedIndex(borderCurrentColor);
         borderColorCombo.addActionListener(PreviewActionListener);
@@ -726,7 +726,7 @@ public class PositionablePropertiesUtil {
     protected String fontSizes[] = { "6", "8", "10", "11", "12", "14", "16",
     "20", "24", "28", "32", "36"};
     
-    Color colorFromComboBox(JComboBox select, Color defaultColor){
+    Color colorFromComboBox(JComboBox<Integer> select, Color defaultColor){
         Color desiredColor = defaultColor;
         try {
                 // try to get a color by name using reflection
@@ -769,8 +769,8 @@ public class PositionablePropertiesUtil {
         return spinX;
     }
 
-    class ColorComboBoxRenderer extends JLabel
-                           implements ListCellRenderer {
+    class ColorComboBoxRenderer<E> extends JLabel
+                           implements ListCellRenderer<E> {
 
         /**
 		 * 
