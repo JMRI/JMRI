@@ -10,7 +10,7 @@ import javax.swing.DefaultListModel;
  *
  * @author rhwood
  */
-public class DefaultEditableListModel extends DefaultListModel implements EditableListModel {
+public class DefaultEditableListModel<E> extends DefaultListModel<E> implements EditableListModel<E> {
 
     /**
 	 * 
@@ -23,7 +23,7 @@ public class DefaultEditableListModel extends DefaultListModel implements Editab
     }
 
     @Override
-    public void setValueAt(Object value, int index) {
+    public void setValueAt(E value, int index) {
         super.setElementAt(value, index);
     }
 }

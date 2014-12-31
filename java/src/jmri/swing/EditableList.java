@@ -18,7 +18,7 @@ import javax.swing.event.ChangeEvent;
  *
  * @author rhwood
  */
-public class EditableList extends JList implements CellEditorListener {
+public class EditableList<E> extends JList<E> implements CellEditorListener {
 
     /**
 	 * 
@@ -26,15 +26,15 @@ public class EditableList extends JList implements CellEditorListener {
 	private static final long serialVersionUID = 2724300657041009593L;
 	protected Component editorComp = null;
     protected int editingIndex = -1;
-    protected transient ListCellEditor cellEditor = null;
+    protected transient ListCellEditor<E> cellEditor = null;
     private PropertyChangeListener editorRemover = null;
 
     public EditableList() {
-        super(new DefaultEditableListModel());
+        super(new DefaultEditableListModel<E>());
         init();
     }
     
-    public EditableList(ListModel dataModel) {
+    public EditableList(ListModel<E> dataModel) {
         super(dataModel);
         init();
     }
@@ -48,11 +48,11 @@ public class EditableList extends JList implements CellEditorListener {
         putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);                                                              //NOI18N
     }
 
-    public void setListCellEditor(ListCellEditor editor) {
+    public void setListCellEditor(ListCellEditor<E> editor) {
         this.cellEditor = editor;
     }
 
-    public ListCellEditor getListCellEditor() {
+    public ListCellEditor<E> getListCellEditor() {
         return cellEditor;
     }
 
@@ -69,7 +69,7 @@ public class EditableList extends JList implements CellEditorListener {
     }
 
     public Component prepareEditor(int index) {
-        Object value = getModel().getElementAt(index);
+        E value = getModel().getElementAt(index);
         boolean isSelected = isSelectedIndex(index);
         Component comp = cellEditor.getListCellEditorComponent(this, value, isSelected, index);
         if (comp instanceof JComponent) {
@@ -193,7 +193,7 @@ public class EditableList extends JList implements CellEditorListener {
         return false;
     }
 
-    public void setValueAt(Object value, int index) {
+    public void setValueAt(E value, int index) {
         ((EditableListModel) getModel()).setValueAt(value, index);
     }
 
@@ -203,7 +203,7 @@ public class EditableList extends JList implements CellEditorListener {
     @Override
     public void editingStopped(ChangeEvent e) {
         if (cellEditor != null) {
-            Object value = cellEditor.getCellEditorValue();
+            E value = cellEditor.getCellEditorValue();
             setValueAt(value, editingIndex);
             removeEditor();
         }
@@ -217,7 +217,7 @@ public class EditableList extends JList implements CellEditorListener {
     /*
      * Editing
      */
-    private static class StartEditingAction extends AbstractAction {
+    private class StartEditingAction extends AbstractAction {
 
         /**
 		 * 
@@ -228,7 +228,7 @@ public class EditableList extends JList implements CellEditorListener {
         public void actionPerformed(ActionEvent e) {
             EditableList list = (EditableList) e.getSource();
             if (!list.hasFocus()) {
-                CellEditor cellEditor = list.getListCellEditor();
+                ListCellEditor<E> cellEditor = list.getListCellEditor();
                 if (cellEditor != null && !cellEditor.stopCellEditing()) {
                     return;
                 }
