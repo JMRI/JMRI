@@ -41,7 +41,7 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
     Border lineBorder;
     JSpinner clickDelaySpinner;
     JSpinner refreshDelaySpinner;
-    EditableList disallowedFrames;
+    EditableList<String> disallowedFrames;
     JCheckBox useAjaxCB;
     JTextField port;
     JButton saveB;
@@ -100,7 +100,7 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
     private void setGUI() {
         clickDelaySpinner.setValue(preferences.getClickDelay());
         refreshDelaySpinner.setValue(preferences.getRefreshDelay());
-        DefaultEditableListModel model = new DefaultEditableListModel();
+        DefaultEditableListModel<String> model = new DefaultEditableListModel<String>();
         for (String frame : preferences.getDisallowedFrames()) {
             model.addElement(frame);
         }
@@ -208,10 +208,10 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         panel.add(useAjaxCB);
 
         JPanel dfPanel = new JPanel();
-        disallowedFrames = new EditableList();
+        disallowedFrames = new EditableList<String>();
         JTextField tf = new JTextField();
         tf.setBorder(BorderFactory.createLineBorder(Color.black));
-        disallowedFrames.setListCellEditor(new DefaultListCellEditor(tf));
+        disallowedFrames.setListCellEditor(new DefaultListCellEditor<String>(tf));
         dfPanel.add(new JScrollPane(disallowedFrames));
         dfPanel.add(new JLabel(Bundle.getMessage("LabelDisallowedFrames")));
         dfPanel.setToolTipText(Bundle.getMessage("ToolTipDisallowedFrames"));
@@ -291,8 +291,9 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
     }
 
     @Override
+    @SuppressWarnings("unchecked") // getModel() returns a JList model, which isn't powerful enough
     public void contentsChanged(ListDataEvent lde) {
-        DefaultEditableListModel model = (DefaultEditableListModel) disallowedFrames.getModel();
+        DefaultEditableListModel<String> model = (DefaultEditableListModel)disallowedFrames.getModel();
         if (!model.getElementAt(model.getSize() - 1).equals(" ")) {
             model.addElement(" ");
         } else if (model.getElementAt(lde.getIndex0()).toString().isEmpty()) {

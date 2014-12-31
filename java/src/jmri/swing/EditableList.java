@@ -194,7 +194,7 @@ public class EditableList<E> extends JList<E> implements CellEditorListener {
     }
 
     public void setValueAt(E value, int index) {
-        ((EditableListModel) getModel()).setValueAt(value, index);
+        ((EditableListModel<E>) getModel()).setValueAt(value, index);
     }
 
     /*
@@ -225,6 +225,7 @@ public class EditableList<E> extends JList<E> implements CellEditorListener {
 		private static final long serialVersionUID = 2759348317251714909L;
 
 		@Override
+		@SuppressWarnings("unchecked") // have to cast CellEditor to ListCellEditor to access methods
         public void actionPerformed(ActionEvent e) {
             EditableList list = (EditableList) e.getSource();
             if (!list.hasFocus()) {
