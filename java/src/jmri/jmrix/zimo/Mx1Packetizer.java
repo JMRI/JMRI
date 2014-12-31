@@ -658,7 +658,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
         int checksum = 0xff;
         
         for(int i = 0; i < m.getNumDataElements(); i++ ) {
-            checksum = (int)(crc8bit_table[(checksum ^ ((m.getElement(i))&0xff))]);
+            checksum = crc8bit_table[(checksum ^ ((m.getElement(i))&0xff))];
         }
         return (byte)(checksum&0xff);
     }
