@@ -72,7 +72,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
      * Unpack the node information when reading the "connection" element
      * @param e Element containing the connection info
      */
-    @SuppressWarnings("unchecked")
 	protected void unpackElement(Element e) {
         List<Element> l = e.getChildren("node");
         for (int i = 0; i<l.size(); i++) {
@@ -107,7 +106,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
      * @param name name of desired parameter
      * @return String value
      */
-    @SuppressWarnings("unchecked")
 	String findParmValue(Element e, String name) {
         List<Element> l = e.getChildren("parameter");
         for (int i = 0; i<l.size(); i++) {

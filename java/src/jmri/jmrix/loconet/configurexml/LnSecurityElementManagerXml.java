@@ -111,7 +111,6 @@ public class LnSecurityElementManagerXml extends jmri.configurexml.AbstractXmlAd
      * Utility method to load the individual SecurityElement objects.
      * @param elements Element containing the securityelement elements to load.
      */
-    @SuppressWarnings("unchecked")
 	public void loadElements(Element elements) {
         List<Element> elementList = elements.getChildren("securityelement");
         if (log.isDebugEnabled()) log.debug("Found "+elementList.size()+" securityelement s");

@@ -102,7 +102,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
      * Unpack the node information when reading the "connection" element
      * @param e Element containing the connection info
      */
-    @SuppressWarnings("unchecked")
     protected void unpackElement(Element e) {
         List<Element> l = e.getChildren("node");
         for (int i = 0; i<l.size(); i++) {
@@ -131,6 +130,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             String streamController = findParmValue(n,"StreamController");
             if(streamController != null) {
                try {
+                  @SuppressWarnings("unchecked") // Class.forName cast is unchecked at this point
                   java.lang.Class<jmri.jmrix.AbstractStreamPortController> T = (Class<AbstractStreamPortController>) Class.forName(streamController);
                   node.connectPortController(T);
                } catch(java.lang.ClassNotFoundException cnfe) {

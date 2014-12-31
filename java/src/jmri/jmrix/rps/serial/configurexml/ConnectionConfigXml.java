@@ -86,7 +86,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
      * @param name name of desired parameter
      * @return String value
      */
-    @SuppressWarnings("unchecked")
 	String findParmValue(Element e, String name) {
         List<Element> l = e.getChildren("parameter");
         for (int i = 0; i<l.size(); i++) {

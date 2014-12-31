@@ -87,7 +87,6 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     
     }
     
-    @SuppressWarnings("unchecked")
     @Override
     protected void unpackElement(Element e) {
         List<Element> ecosPref = e.getChildren("commandStationPreferences");

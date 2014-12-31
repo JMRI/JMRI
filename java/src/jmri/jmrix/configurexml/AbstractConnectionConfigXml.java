@@ -123,7 +123,6 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
     protected void loadOptions(Element e, PortAdapter adapter){
         if(e==null)
             return;
-        @SuppressWarnings("unchecked")
         List<Element> optionList = e.getChildren("option");
         for (Element so : optionList) {
             adapter.setOptionState(so.getChild("name").getText(), so.getChild("value").getText());
