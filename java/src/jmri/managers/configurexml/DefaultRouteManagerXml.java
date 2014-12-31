@@ -229,7 +229,6 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
      * invoke this with the parent of the set of Route elements.
      * @param routes Element containing the Route elements to load.
      */
-    @SuppressWarnings("unchecked")
 	public void loadRoutes(Element routes) {
         List<Element> routeList = routes.getChildren("route");
         if (log.isDebugEnabled()) log.debug("Found "+routeList.size()+" routes");

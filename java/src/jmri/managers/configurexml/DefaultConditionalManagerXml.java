@@ -173,7 +173,6 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
      * invoke this with the parent of the set of Logix elements.
      * @param conditionals Element containing the Logix elements to load.
      */
-    @SuppressWarnings("unchecked")
 	public void loadConditionals(Element conditionals) {
 		List<Element> conditionalList = conditionals.getChildren("conditional");
         if (log.isDebugEnabled()) log.debug("Found "+conditionalList.size()+" conditionals");

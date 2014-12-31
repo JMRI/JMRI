@@ -46,7 +46,6 @@ public class ManagerDefaultSelectorXml extends AbstractXmlAdapter {
     }
 
     public boolean load(Element e) {
-        @SuppressWarnings("unchecked")
         List<Element> list = e.getChildren("setting");
         
         for (Element s : list) {

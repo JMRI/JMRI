@@ -108,7 +108,6 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
      * invoke this with the parent of the set of SignalHead elements.
      * @param signalheads Element containing the SignalHead elements to load.
      */
-    @SuppressWarnings("unchecked")
 	public void loadSignalHeads(Element signalheads) {
         InstanceManager.signalHeadManagerInstance();
 

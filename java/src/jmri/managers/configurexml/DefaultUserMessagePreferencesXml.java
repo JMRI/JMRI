@@ -203,7 +203,6 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
      * @param messages Top level Element to unpack.
      * @return true if successful
      */
-    @SuppressWarnings("unchecked")
     public boolean load(Element messages) {
         // ensure the master object exists
         jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);

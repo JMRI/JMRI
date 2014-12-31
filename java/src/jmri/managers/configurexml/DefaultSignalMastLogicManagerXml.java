@@ -168,7 +168,6 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
         return loadSignalMastLogic(signalMastLogic);
     }
 
-    @SuppressWarnings("unchecked")
     public boolean loadSignalMastLogic(Element signalMastLogic) {
         List<Element> logicList = signalMastLogic.getChildren("signalmastlogic");
         if (log.isDebugEnabled()) log.debug("Found "+logicList.size()+" signal mast logics");

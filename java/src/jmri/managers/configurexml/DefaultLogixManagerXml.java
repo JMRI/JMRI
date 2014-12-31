@@ -110,7 +110,6 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
      * invoke this with the parent of the set of Logix elements.
      * @param logixs Element containing the Logix elements to load.
      */
-    @SuppressWarnings("unchecked")
 	public void loadLogixs(Element logixs) {
 		List<Element> logixList = logixs.getChildren("logix");
         if (log.isDebugEnabled()) log.debug("Found "+logixList.size()+" logixs");
