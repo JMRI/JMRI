@@ -230,8 +230,9 @@ are all user defined and can be in any language all are optional and dependant u
 When the path ahead is not set or clear the signal mast logic will set the signal mast to this appearance.<br>
 <b>permissive</b> (Call-On) this appearance is displayed if the block ahead is occupied, 
 but another train is allowed to enter it.<br>
-<b>held</b> is used to provide an alternative image on the panel to indicate that
-the signal has been held at Danger.<br>
+<b>held</b> provides (via the imagelink element) an alternative panel image to indicate that
+the "held" condition on the signal has been set. Higher-level logic can (optionally)
+use the aspect element to determine what to set the signal to when held has been set.<br>
 <b>dark</b> is used to provide an alternative image on the panel to indicate that
 the signal is not lit.<br>
 Each specific aspect can be given an alternative image to use other than that given
