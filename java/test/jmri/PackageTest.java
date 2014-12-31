@@ -52,6 +52,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.managers.PackageTest.suite());
         suite.addTest(jmri.jmrix.PackageTest.suite());  // last due to threading issues?
         suite.addTest(jmri.jmrit.PackageTest.suite());  // last due to classloader issues?
+        suite.addTest(jmri.swing.PackageTest.suite());
         suite.addTest(jmri.util.PackageTest.suite());
         suite.addTest(jmri.web.PackageTest.suite());
         suite.addTest(jmri.jmris.PackageTest.suite());
