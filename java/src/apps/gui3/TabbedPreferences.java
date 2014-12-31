@@ -9,7 +9,6 @@ import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -52,7 +51,7 @@ import org.slf4j.LoggerFactory;
  * @author Randall Wood 2012
  * @version $Revision$
  */
-public class TabbedPreferences extends AppConfigBase implements PropertyChangeSupport {
+public class TabbedPreferences extends AppConfigBase {
 
     @Override
     public String getHelpTarget() {
@@ -86,8 +85,6 @@ public class TabbedPreferences extends AppConfigBase implements PropertyChangeSu
     public static final int INITIALISING = 0x01;
     public static final int INITIALISED = 0x02;
     public static final String INITIALIZATION = "PROP_INITIALIZATION";
-
-    private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     public TabbedPreferences() {
 
@@ -196,7 +193,7 @@ public class TabbedPreferences extends AppConfigBase implements PropertyChangeSu
     private void setInitalisationState(int state) {
         int old = this.initalisationState;
         this.initalisationState = state;
-        pcs.firePropertyChange(INITIALIZATION, old, state);
+        this.firePropertyChange(INITIALIZATION, old, state);
     }
 
     private boolean invokeSaveOptions() {
