@@ -87,7 +87,7 @@ public class OperationsCarsTest extends TestCase {
 		String[] colors = cc1.getNames();
 		Assert.assertEquals("First color name", "Ugly Brown", colors[0]);
 		Assert.assertEquals("2nd color name", "BoxCar Red", colors[1]);
-		JComboBox box = cc1.getComboBox();
+		JComboBox<?> box = cc1.getComboBox();
 		Assert.assertEquals("First comboBox color name", "Ugly Brown", box.getItemAt(0));
 		Assert.assertEquals("2nd comboBox color name", "BoxCar Red", box.getItemAt(1));
 		cc1.deleteName("Ugly Brown");
@@ -113,7 +113,7 @@ public class OperationsCarsTest extends TestCase {
 		String[] lengths = cl1.getNames();
 		Assert.assertEquals("First length name", "2", lengths[0]);
 		Assert.assertEquals("2nd length name", "1", lengths[1]);
-		JComboBox box = cl1.getComboBox();
+		JComboBox<?> box = cl1.getComboBox();
 		Assert.assertEquals("First comboBox length name", "2", box.getItemAt(0));
 		Assert.assertEquals("2nd comboBox length name", "1", box.getItemAt(1));
 		cl1.deleteName("2");
@@ -134,7 +134,7 @@ public class OperationsCarsTest extends TestCase {
 		String[] owners = co1.getNames();
 		Assert.assertEquals("First owner name", "Really Rich 3", owners[0]);
 		Assert.assertEquals("2nd owner name", "Rich Guy 1", owners[1]);
-		JComboBox box = co1.getComboBox();
+		JComboBox<?> box = co1.getComboBox();
 		Assert.assertEquals("First comboBox owner name", "Really Rich 3", box.getItemAt(0));
 		Assert.assertEquals("2nd comboBox owner name", "Rich Guy 1", box.getItemAt(1));
 		co1.deleteName("Really Rich 3");
@@ -164,7 +164,7 @@ public class OperationsCarsTest extends TestCase {
 		String[] roads = cr1.getNames();
 		Assert.assertEquals("First road name", "Road New4", roads[0]);
 		Assert.assertEquals("2nd road name", "Road New1", roads[1]);
-		JComboBox box = cr1.getComboBox();
+		JComboBox<?> box = cr1.getComboBox();
 		Assert.assertEquals("First comboBox road name", "Road New4", box.getItemAt(0));
 		Assert.assertEquals("2nd comboBox road name", "Road New1", box.getItemAt(1));
 		cr1.deleteName("Road New4");
@@ -192,7 +192,7 @@ public class OperationsCarsTest extends TestCase {
 		String[] types = ct1.getNames();
 		Assert.assertEquals("First type name", "Type New4", types[0]);
 		Assert.assertEquals("2nd type name", "Type New1", types[1]);
-		JComboBox box = ct1.getComboBox();
+		JComboBox<?> box = ct1.getComboBox();
 		Assert.assertEquals("First comboBox type name", "Type New4", box.getItemAt(0));
 		Assert.assertEquals("2nd comboBox type name", "Type New1", box.getItemAt(1));
 		ct1.deleteName("Type New4");

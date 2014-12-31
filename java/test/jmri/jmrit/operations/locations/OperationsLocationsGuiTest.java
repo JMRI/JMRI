@@ -528,7 +528,7 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		t.setScheduleId(sch1.getId());
 		
 		JComboBox<LocationTrackPair> box3 = sm.getSpursByScheduleComboBox(s1);
-		LocationTrackPair ltp = (LocationTrackPair)box3.getItemAt(0);
+		LocationTrackPair ltp = box3.getItemAt(0);
 		
 		Assert.assertEquals("Location track pair location", l, ltp.getLocation()); 
 		Assert.assertEquals("Location track pair track", t, ltp.getTrack()); 
