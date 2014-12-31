@@ -139,6 +139,12 @@ public abstract class AppsBase {
             Thread thr2 = new Thread(r, "initialize python interpreter");
             thr2.start();
         }
+
+		// all loaded, initialize objects as necessary
+		InstanceManager.logixManagerInstance().activateAllLogixs();
+		InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+        new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
+
     }
 
     /**

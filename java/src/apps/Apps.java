@@ -288,6 +288,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         // Create menu categories and add to the menu bar, add actions to menus
         createMenus(menuBar, wi);
 
+        // done
         long end = System.nanoTime();
 
         long elapsedTime = (end - start) / 1000000;
@@ -426,6 +427,12 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                 }
             }
         }, eventMask);
+
+        // do final activation
+		InstanceManager.logixManagerInstance().activateAllLogixs();
+		InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+        new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
+        
         log.debug("End constructor");
     }
 
@@ -972,8 +979,8 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
     static SplashWindow sp = null;
     static AWTEventListener debugListener = null;
-    static boolean debugFired = false;
-    static boolean debugmsg = false;
+    static boolean debugFired = false;  // true if we've seen F8 during startup
+    static boolean debugmsg = false;    // true while we're handling the "No Logix?" prompt window on startup
 
     static protected void splash(boolean show) {
         splash(show, false);
@@ -1054,7 +1061,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         Object[] options = {"Disable",
             "Enable"};
 
-        int retval = JOptionPane.showOptionDialog(null, "Do you wish to start JMRI with logix disabled?", "Start Up",
+        int retval = JOptionPane.showOptionDialog(null, "Start JMRI with Logix enabled or disabled?", "Start Up",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
@@ -1063,7 +1070,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             return;
         }
         InstanceManager.logixManagerInstance().setLoadDisabled(true);
-        log.info("Requested load Logixs disabled.");
+        log.info("Requested loading with Logixs disabled.");
         debugmsg = false;
     }
 
