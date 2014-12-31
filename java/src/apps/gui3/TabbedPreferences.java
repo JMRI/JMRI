@@ -81,9 +81,9 @@ public class TabbedPreferences extends AppConfigBase {
     int initalisationState = 0x00;
     private static final long serialVersionUID = -6266891995866315885L;
 
-    static final int UNINITIALISED = 0x00;
-    static final int INITIALISING = 0x01;
-    static final int INITIALISED = 0x02;
+    public static final int UNINITIALISED = 0x00;
+    public static final int INITIALISING = 0x01;
+    public static final int INITIALISED = 0x02;
 
     public TabbedPreferences() {
 
