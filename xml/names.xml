@@ -886,6 +886,15 @@
         <definition item="Sound Group 7 Checkbox 7" />
         <definition item="Sound Group 7 Checkbox 8" />
 
+        <definition item="Sound Group 8 Checkbox 1" />
+        <definition item="Sound Group 8 Checkbox 2" />
+        <definition item="Sound Group 8 Checkbox 3" />
+        <definition item="Sound Group 8 Checkbox 4" />
+        <definition item="Sound Group 8 Checkbox 5" />
+        <definition item="Sound Group 8 Checkbox 6" />
+        <definition item="Sound Group 8 Checkbox 7" />
+        <definition item="Sound Group 8 Checkbox 8" />
+
 		<!-- Volumes and other analog settings -->
 		<definition item="Sound Setting 1" />
 		<definition item="Sound Setting 2" />
