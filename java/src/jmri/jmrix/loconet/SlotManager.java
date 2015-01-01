@@ -57,23 +57,23 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         
         // initialize slot array
         for (int i=0; i<=127; i++) _slots[i] = new LocoNetSlot(i);
-
+        
         // listen to the LocoNet
         tc.addLocoNetListener(~0, this);
-
-          // We will scan the slot table every 10 s for in-use slots that are stale
+        
+        // We will scan the slot table every 10 s for in-use slots that are stale
         staleSlotCheckTimer = new javax.swing.Timer(10000, new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-              checkStaleSlots();
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    checkStaleSlots();
+                }
             }
-          }
-        );
-
-      staleSlotCheckTimer.setRepeats(true);
-      staleSlotCheckTimer.setInitialDelay( 30000 );
-      staleSlotCheckTimer.start();
+            );
+        
+        staleSlotCheckTimer.setRepeats(true);
+        staleSlotCheckTimer.setInitialDelay( 30000 );
+        staleSlotCheckTimer.start();
     }
-
+    
     protected LnTrafficController tc;
     
     /**
@@ -84,7 +84,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         if (repeats>7) log.error("Too many repeats!");
         if (packet.length<=1) log.error("Invalid DCC packet length: "+packet.length);
         if (packet.length>6) log.error("Only 6-byte packets accepted: "+packet.length);
-
+        
         LocoNetMessage m = new LocoNetMessage(11);
         m.setElement(0,0xED);
         m.setElement(1,0x0B);
@@ -93,7 +93,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         int length = packet.length-1;
         
         m.setElement(3, (repeats&0x7)+16*(length&0x7));
-
+        
         int highBits = 0;
         if (length>=1 && ((packet[0]&0x80) != 0)) highBits |= 0x01;
         if (length>=2 && ((packet[1]&0x80) != 0)) highBits |= 0x02;
@@ -101,27 +101,27 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         if (length>=4 && ((packet[3]&0x80) != 0)) highBits |= 0x08;
         if (length>=5 && ((packet[4]&0x80) != 0)) highBits |= 0x10;
         m.setElement(4,highBits);
-
+        
         m.setElement(5,0);
         m.setElement(6,0);
         m.setElement(7,0);
         m.setElement(8,0);
         m.setElement(9,0);
         for (int i=0; i<packet.length-1; i++) m.setElement(5+i, packet[i]&0x7F);
-
+        
         if (throttledTransmitter != null) 
             throttledTransmitter.sendLocoNetMessage(m);
         else
             tc.sendLocoNetMessage(m);
     }
-
+    
     /**
      * Information on slot state is stored in an array of LocoNetSlot objects.
      * This is declared final because we never need to modify the array itself,
      * just its contents.
      */
     final private LocoNetSlot _slots[] = new LocoNetSlot[128];
-
+    
     /**
      * Access the information in a specific slot.  Note that this is a
      * mutable access, so that the information in the LocoNetSlot object
@@ -130,7 +130,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @return   The Slot object
      */
     public LocoNetSlot slot(int i) {return _slots[i];}
-
+    
     /**
      * Obtain a slot for a particular loco address.
      * <P>This requires access to the command station, even if the
@@ -153,7 +153,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     public void slotFromLocoAddress(int i, SlotListener l) {
         // store connection between this address and listener for later
         mLocoAddrHash.put(Integer.valueOf(i), l);
-
+        
         // send info request
         LocoNetMessage m = new LocoNetMessage(4);
         m.setOpCode(LnConstants.OPC_LOCO_ADR);  // OPC_LOCO_ADR
@@ -161,7 +161,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         m.setElement(2, i&0x7F);
         tc.sendLocoNetMessage(m);
     }
-
+    
     /**
      * method to scan the slot array looking for slots that are in-use but have
      * not had any updates in over 90s and issue a read slot request to update
@@ -170,50 +170,50 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      *
      * This is intended to be called from the staleSlotCheckTimer
      */
-
+    
     javax.swing.Timer staleSlotCheckTimer = null ;
-
+    
     private void checkStaleSlots() {
-      long staleTimeout = System.currentTimeMillis() - 90000;
-      LocoNetSlot slot;
-
+        long staleTimeout = System.currentTimeMillis() - 90000;
+        LocoNetSlot slot;
+        
         // We will just check the normal loco slots 1 to 120
-      for (int i = 1; i <= 120; i++) {
-        slot = _slots[i];
-        if ( (slot.slotStatus() == LnConstants.LOCO_IN_USE) &&
-            (slot.getLastUpdateTime() <= staleTimeout))
-          sendReadSlot(i);
-      }
+        for (int i = 1; i <= 120; i++) {
+            slot = _slots[i];
+            if ( (slot.slotStatus() == LnConstants.LOCO_IN_USE) &&
+                 (slot.getLastUpdateTime() <= staleTimeout))
+                sendReadSlot(i);
+        }
     }
-
+    
     /**
      * Provide a mapping between locomotive addresses and the
      * SlotListener that's interested in them
      */
     Hashtable<Integer,SlotListener> mLocoAddrHash = new Hashtable<Integer,SlotListener>();
-
+    
     // data members to hold contact with the slot listeners
     final private Vector<SlotListener> slotListeners = new Vector<SlotListener>();
-
+    
     public synchronized void addSlotListener(SlotListener l) {
         // add only if not already registered
         if (!slotListeners.contains(l)) {
             slotListeners.addElement(l);
         }
     }
-
+    
     public synchronized void removeSlotListener(SlotListener l) {
         if (slotListeners.contains(l)) {
             slotListeners.removeElement(l);
         }
     }
-
+    
     /**
      * Trigger the notification of all SlotListeners.
      * @param s The changed slot to notify.
      */
     @SuppressWarnings("unchecked")
-	protected void notify(LocoNetSlot s) {
+    protected void notify(LocoNetSlot s) {
         // make a copy of the listener vector to synchronized not needed for transmit
         Vector<SlotListener> v;
         synchronized(this)
@@ -230,7 +230,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             client.notifyChangedSlot(s);
         }
     }
-
+    
     LocoNetMessage immedPacket;
     
     /**
@@ -249,7 +249,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             immedPacket = m;
         else
             immedPacket = null;
-
+        
         // slot specific message?
         int i = findSlotFromMessage(m);
         if (i != -1) {
@@ -257,12 +257,12 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             respondToAddrRequest(m,i);
             programmerOpMessage(m,i);
         }
-
+        
         // LONG_ACK response?
         if (m.getOpCode()==LnConstants.OPC_LONG_ACK) {
             handleLongAck(m);
         }
-
+        
         // see if extended function message
         if (isExtFunctionMessage(m)) {
             // yes, get address
@@ -274,7 +274,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 LocoNetSlot slot = slot(j);
                 if ( slot == null ) continue;
                 if ( (slot.locoAddr() != addr) 
-                    || (slot.slotStatus() == LnConstants.LOCO_FREE) ) continue;
+                     || (slot.slotStatus() == LnConstants.LOCO_FREE) ) continue;
                 // found!
                 slot.functionMessage(getDirectDccPacket(m));
                 found = true;
@@ -299,7 +299,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         
         
     }
-
+    
     /**
      * If this is a direct function command, return -1, 
      * otherwise return DCC address word
@@ -354,7 +354,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         }
         return result;
     }
-
+    
     /** 
      * True if the message is an external DCC packet
      * request for F9-F28
@@ -373,28 +373,28 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * FInd the slot number that a message references
      */
     public int findSlotFromMessage(LocoNetMessage m) {
-
+        
         int i = -1;  // find the slot index in the message and store here
-
+        
         // decode the specific message type and hence slot number
         switch (m.getOpCode()) {
         case LnConstants.OPC_WR_SL_DATA:
         case LnConstants.OPC_SL_RD_DATA:
             i = m.getElement(2);
             break;
-
+            
         case LnConstants.OPC_LOCO_DIRF:
         case LnConstants.OPC_LOCO_SND:
         case LnConstants.OPC_LOCO_SPD:
         case LnConstants.OPC_SLOT_STAT1:
             i = m.getElement(1);
             break;
-
+            
         case LnConstants.OPC_MOVE_SLOTS:  // handle the follow-on message when it comes
             return i; // need to cope with that!!
-
+            
         default:
-				// nothing here for us
+            // nothing here for us
             return i;
         }
         // break gets to here
@@ -402,10 +402,10 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
     
     
-   /*
-    * The following methods are for parsing LACK as response to CV programming. It is divided into numerous
-    * small methods so that each bit can be overridden for special parsing for individual command station types.
-    */
+    /*
+     * The following methods are for parsing LACK as response to CV programming. It is divided into numerous
+     * small methods so that each bit can be overridden for special parsing for individual command station types.
+     */
     protected boolean checkLackByte1 (int Byte1) {
         if ((Byte1 & 0xEF) == 0x6F)
             return true;
@@ -414,8 +414,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
     protected boolean checkLackTaskAccepted (int Byte2) {
         if (Byte2 == 1 // task accepted
-                || Byte2 == 0x23 || Byte2 == 0x2B || Byte2 == 0x6B// added as DCS51 fix
-                || Byte2 == 0x7F)
+            || Byte2 == 0x23 || Byte2 == 0x2B || Byte2 == 0x6B// added as DCS51 fix
+            || Byte2 == 0x7F)
             return true;
         else
             return false;
@@ -433,68 +433,68 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             return false;
     }
     protected void handleLongAck (LocoNetMessage m) {
-            // handle if reply to slot. There's no slot number in the LACK, unfortunately.
-            // If this is a LACK to a Slot op, and progState is command pending,
-            // assume its for us...
-            if (log.isDebugEnabled())
-                log.debug("LACK in state "+progState+" message: "+m.toString());
+        // handle if reply to slot. There's no slot number in the LACK, unfortunately.
+        // If this is a LACK to a Slot op, and progState is command pending,
+        // assume its for us...
+        if (log.isDebugEnabled())
+            log.debug("LACK in state "+progState+" message: "+m.toString());
         if ( checkLackByte1(m.getElement(1)) && progState == 1 ) {
-                // in programming state
-                // check status byte
+            // in programming state
+            // check status byte
             if (checkLackTaskAccepted(m.getElement(2))) { // task accepted
-                    // 'not implemented' (op on main)
-                    // but BDL16 and other devices can eventually reply, so
-                    // move to commandExecuting state
-                    log.debug("LACK accepted, next state 2");
-                    if ( (_progRead || _progConfirm) && mServiceMode)
-                        startLongTimer();
-                    else
-                        startShortTimer();
-                    progState = 2;
+                // 'not implemented' (op on main)
+                // but BDL16 and other devices can eventually reply, so
+                // move to commandExecuting state
+                log.debug("LACK accepted, next state 2");
+                if ( (_progRead || _progConfirm) && mServiceMode)
+                    startLongTimer();
+                else
+                    startShortTimer();
+                progState = 2;
             } else if (checkLackProgrammerBusy(m.getElement(2))) { // task aborted as busy
-                    // move to not programming state
-                    progState = 0;
-                    // notify user ProgListener
-                    stopTimer();
-                    notifyProgListenerLack(jmri.ProgListener.ProgrammerBusy);
+                // move to not programming state
+                progState = 0;
+                // notify user ProgListener
+                stopTimer();
+                notifyProgListenerLack(jmri.ProgListener.ProgrammerBusy);
             } else if (checkLackAcceptedBlind(m.getElement(2))) { // task accepted blind
-                	if((_progRead || _progConfirm) && !mServiceMode) {	// incorrect Reserved OpSw setting can cause this response to OpsMode Read
-                														// just treat it as a normal OpsMode Read response
-	                    // move to commandExecuting state
-	                    log.debug("LACK accepted (ignoring incorrect OpSw), next state 2");
-                        startShortTimer();
-	                    progState = 2;
+                if((_progRead || _progConfirm) && !mServiceMode) {	// incorrect Reserved OpSw setting can cause this response to OpsMode Read
+                    // just treat it as a normal OpsMode Read response
+                    // move to commandExecuting state
+                    log.debug("LACK accepted (ignoring incorrect OpSw), next state 2");
+                    startShortTimer();
+                    progState = 2;
                 } else {
-	                    // move to not programming state
-	                    progState = 0;
-	                    // notify user ProgListener
-	                    stopTimer();
-	                    // have to send this in a little while to 
-	                    // allow command station time to execute
-	                    int delay = 100; // milliseconds
-	                    javax.swing.Timer timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
-	                            public void actionPerformed(java.awt.event.ActionEvent e) {
-	                                notifyProgListenerEnd(-1, 0); // no value (e.g. -1), no error status (e.g.0)
-	                            }
-	                        });
-	                    timer.stop();
-	                    timer.setInitialDelay(delay);
-	                    timer.setRepeats(false);
-	                    timer.start();
-	                }
-            } else { // not sure how to cope, so complain
-                    log.warn("unexpected LACK reply code "+m.getElement(2));
                     // move to not programming state
                     progState = 0;
                     // notify user ProgListener
                     stopTimer();
-                    notifyProgListenerLack(jmri.ProgListener.UnknownError);
+                    // have to send this in a little while to 
+                    // allow command station time to execute
+                    int delay = 100; // milliseconds
+                    javax.swing.Timer timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
+                            public void actionPerformed(java.awt.event.ActionEvent e) {
+                                notifyProgListenerEnd(-1, 0); // no value (e.g. -1), no error status (e.g.0)
+                            }
+                        });
+                    timer.stop();
+                    timer.setInitialDelay(delay);
+                    timer.setRepeats(false);
+                    timer.start();
                 }
+            } else { // not sure how to cope, so complain
+                log.warn("unexpected LACK reply code "+m.getElement(2));
+                // move to not programming state
+                progState = 0;
+                // notify user ProgListener
+                stopTimer();
+                notifyProgListenerLack(jmri.ProgListener.UnknownError);
             }
         }
-
+    }
+    
     public void forwardMessageToSlot(LocoNetMessage m, int i) {
-
+        
         // if here, i holds the slot number, and we expect to be able to parse
         // and have the slot handle the message
         if (i>=_slots.length || i<0) log.error("Received slot number "+i+
@@ -511,7 +511,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // notify listeners that slot may have changed
         notify(_slots[i]);
     }
-
+    
     protected void respondToAddrRequest(LocoNetMessage m, int i) {
         // if this is OPC_SL_RD_DATA
         if (m.getOpCode()==0xE7) {
@@ -532,9 +532,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             }
         }
     }
-
+    
     protected void programmerOpMessage(LocoNetMessage m, int i) {
-
+        
         // start checking for programming operations in slot 124
         if (i == 124) {
             // here its an operation on the programmer slot
@@ -554,7 +554,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                     // move to not programming state
                     stopTimer();
                     progState = 0;
-
+                    
                     // parse out value returned
                     int value = -1;
                     int status = 0;
@@ -576,7 +576,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                         status = (status | jmri.ProgListener.NoAck);
                     if ( (_slots[i].pcmd() & LnConstants.PSTAT_USER_ABORTED ) != 0 )
                         status = (status | jmri.ProgListener.UserAborted);
-
+                    
                     // and send the notification
                     notifyProgListenerEnd(value, status);
                 }
@@ -587,9 +587,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             }
         }
     }
-
+    
     // members for handling the programmer interface
-
+    
     /**
      * Set the mode of the Programmer implementation.
      * @param mode A mode constant from the Programmer interface
@@ -602,7 +602,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             _mode = mode;
         }
     }
-
+    
     /**
      * Get the current mode of the Programmer implementation.
      * @return A mode constant from the Programmer interface
@@ -611,7 +611,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     /**
      * Records the current mode of the Programmer implementation.
-    */
+     */
     protected int _mode = Programmer.PAGEMODE;
 
     /**
@@ -623,7 +623,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @param newval
      */
     @SuppressWarnings("unchecked")
-	protected void notifyPropertyChange(String name, int oldval, int newval) {
+    protected void notifyPropertyChange(String name, int oldval, int newval) {
         // make a copy of the listener vector to synchronized not needed for transmit
         Vector<PropertyChangeListener> v;
         synchronized(this)
@@ -777,7 +777,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
 
     public void confirmCVOpsMode(int CV, int val, jmri.ProgListener p,
-                               int addr, boolean longAddr) throws jmri.ProgrammerException {
+                                 int addr, boolean longAddr) throws jmri.ProgrammerException {
         lopsa = addr&0x7f;
         hopsa = (addr/128)&0x7f;
         mServiceMode = false;
@@ -1068,10 +1068,10 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // schedule next read if needed
         if (nextReadSlot < 127) {
             javax.swing.Timer t = new javax.swing.Timer(500, new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    readNextSlot();
-                }
-            });
+                    public void actionPerformed(java.awt.event.ActionEvent e) {
+                        readNextSlot();
+                    }
+                });
             t.setRepeats(false);
             t.start();
         }
@@ -1088,7 +1088,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         return result;
     }
     
-   public void setSystemConnectionMemo(LocoNetSystemConnectionMemo memo){
+    public void setSystemConnectionMemo(LocoNetSystemConnectionMemo memo){
         adaptermemo = memo;
     }
     
