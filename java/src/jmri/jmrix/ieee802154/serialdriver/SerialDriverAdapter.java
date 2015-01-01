@@ -3,8 +3,6 @@
 package jmri.jmrix.ieee802154.serialdriver;
 
 import jmri.jmrix.ieee802154.IEEE802154PortController;
-import jmri.jmrix.ieee802154.serialdriver.SerialSystemConnectionMemo;
-import jmri.jmrix.ieee802154.serialdriver.SerialTrafficController;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,11 +33,6 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
 
     public SerialDriverAdapter() {
         super();
-    }
-
-    @Override
-    public jmri.jmrix.SystemConnectionMemo getSystemConnectionMemo() {
-    	return adaptermemo;
     }
 
     public String openPort(String portName, String appName)  {

@@ -29,6 +29,10 @@ import gnu.io.SerialPortEventListener;
 public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
     public LocoBufferAdapter() {
+        this(new LocoNetSystemConnectionMemo());
+    }
+
+    public LocoBufferAdapter(LocoNetSystemConnectionMemo adapterMemo) {
         super();
         option1Name = "FlowControl";
         option2Name = "CommandStation";
@@ -36,7 +40,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         options.put(option1Name, new Option("Connection uses:", validOption1));
         options.put(option2Name, new Option("Command station type:", commandStationNames, false));
         options.put(option3Name, new Option("Turnout command handling:", new String[]{"Normal", "Spread", "One Only", "Both"}));
-        adaptermemo = new LocoNetSystemConnectionMemo();
+        this.adaptermemo = adapterMemo;
     }
 
     Vector<String> portNameVector = null;
@@ -296,8 +300,6 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
     private boolean opened = false;
     InputStream serialStream = null;
         
-    public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
-    
     public void dispose(){
         if (adaptermemo!=null)
             adaptermemo.dispose();

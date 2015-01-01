@@ -2,9 +2,6 @@
 
 package jmri.jmrix.powerline;
 
-import jmri.jmrix.SystemConnectionMemo;
-import jmri.jmrix.powerline.SerialSystemConnectionMemo;
-
 /**
  * Abstract base for classes representing a communications port
  * @author	Bob Jacobsen    Copyright (C) 2001, 2006, 2007, 2008
@@ -17,17 +14,12 @@ public abstract class SerialPortController extends jmri.jmrix.AbstractSerialPort
     // objects to SerialTrafficController classes, who in turn will deal in messages.
     protected SerialSystemConnectionMemo adaptermemo = null;
     
-    public void setDisabled(boolean disabled) { 
-        mDisabled = disabled;
-        if(adaptermemo!=null)
-            adaptermemo.setDisabled(disabled);
-    }
-    
     @Override
-    public SystemConnectionMemo getSystemConnectionMemo() { 
-    	if (adaptermemo == null)
-    		adaptermemo= new SerialSystemConnectionMemo();
-    	return adaptermemo; 
+    public SerialSystemConnectionMemo getSystemConnectionMemo() {
+        if (adaptermemo == null) {
+            adaptermemo = new SerialSystemConnectionMemo();
+        }
+        return adaptermemo;
     }
 //
 //    // returns the InputStream from the port

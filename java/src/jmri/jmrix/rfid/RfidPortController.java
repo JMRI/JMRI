@@ -27,6 +27,11 @@ public abstract class RfidPortController extends jmri.jmrix.AbstractSerialPortCo
     // check that this object is ready to operate
     @Override
     public abstract boolean status();
+    
+    @Override
+    public RfidSystemConnectionMemo getSystemConnectionMemo() {
+        return this.adapterMemo;
+    }
 }
 
 

@@ -37,11 +37,6 @@ public class SerialDriverAdapter extends TamsPortController  implements jmri.jmr
         adaptermemo = new TamsSystemConnectionMemo();
     }
 
-    @Override
-    public TamsSystemConnectionMemo getSystemConnectionMemo() {
-    	return adaptermemo;
-    }
-
     public String openPort(String portName, String appName)  {
         // open the port, check ability to set moderators
         try {

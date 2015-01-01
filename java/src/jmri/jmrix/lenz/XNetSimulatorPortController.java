@@ -51,26 +51,13 @@ public abstract class XNetSimulatorPortController extends jmri.jmrix.AbstractSer
     protected XNetSystemConnectionMemo adaptermemo = null;
 
     @Override
-    public jmri.jmrix.SystemConnectionMemo getSystemConnectionMemo(){
-        if(adaptermemo!=null){
-          log.debug("adapter memo not null");
-          return adaptermemo;
-        }
-        else
-        {
-          log.debug("adapter memo null");
-          return null;
-	}
+    public XNetSystemConnectionMemo getSystemConnectionMemo(){
+        log.debug("adapter memo {}null", (this.adaptermemo != null) ? "not " : "");
+        return this.adaptermemo;
     }
 
     public void dispose(){
        adaptermemo.dispose();
-    }
-    
-    public void setDisabled(boolean disabled) { 
-        mDisabled = disabled;
-        if(adaptermemo!=null)
-            adaptermemo.setDisabled(disabled);
     }
 
     static Logger log = LoggerFactory.getLogger(XNetSimulatorPortController.class.getName());

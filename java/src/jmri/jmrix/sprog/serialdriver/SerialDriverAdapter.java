@@ -15,6 +15,7 @@ import java.util.TooManyListenersException;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
+import jmri.jmrix.SystemConnectionMemo;
 
 /**
  * Implements SerialPortAdapter for the Sprog system.
@@ -210,5 +211,10 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
     }
 
     static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+
+    @Override
+    public SprogSystemConnectionMemo getSystemConnectionMemo() {
+        return this.adaptermemo;
+    }
 
 }

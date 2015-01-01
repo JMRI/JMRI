@@ -18,6 +18,7 @@ import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
+import jmri.jmrix.SystemConnectionMemo;
 
 /**
  * Implements SerialPortAdapter for connecting to two sensors via the
@@ -186,6 +187,11 @@ public class SerialSensorAdapter extends AbstractSerialPortController
      * Do a sensor change on the event queue
      */
     public void notify(String sensor, boolean value) {
+    }
+
+    @Override
+    public SystemConnectionMemo getSystemConnectionMemo() {
+        return null; // No SystemConnectionMemo
     }
 
     /**

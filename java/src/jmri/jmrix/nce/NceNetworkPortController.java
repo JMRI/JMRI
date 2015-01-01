@@ -15,14 +15,8 @@ public abstract class NceNetworkPortController extends jmri.jmrix.AbstractNetwor
 	// objects to NceTrafficController classes, who in turn will deal in messages.
     protected NceSystemConnectionMemo adaptermemo = null;
     
-    public void setDisabled(boolean disabled) { 
-        mDisabled = disabled;
-        if(adaptermemo!=null)
-            adaptermemo.setDisabled(disabled);
-    }
-    
     @Override
-    public SystemConnectionMemo getSystemConnectionMemo() { 
+    public NceSystemConnectionMemo getSystemConnectionMemo() { 
     	if (adaptermemo == null)
     		adaptermemo = new NceSystemConnectionMemo();
     	return adaptermemo; 

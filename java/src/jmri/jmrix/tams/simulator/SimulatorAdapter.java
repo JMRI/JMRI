@@ -43,11 +43,6 @@ public class SimulatorAdapter extends TamsPortController implements
         adaptermemo = new TamsSystemConnectionMemo();
     }
 
-    @Override
-    public TamsSystemConnectionMemo getSystemConnectionMemo() {
-    	return adaptermemo;
-	}
-
     public void dispose(){
         if (adaptermemo!=null)
             adaptermemo.dispose();

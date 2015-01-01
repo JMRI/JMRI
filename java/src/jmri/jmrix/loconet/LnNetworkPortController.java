@@ -63,11 +63,11 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
         commandStationType = value;
     }
 
-    public void setDisabled(boolean disabled) { 
-        mDisabled = disabled;
-        if(adaptermemo!=null)
-            adaptermemo.setDisabled(disabled);
+    @Override
+    public LocoNetSystemConnectionMemo getSystemConnectionMemo() {
+        return this.adaptermemo;
     }
+
     public void setTurnoutHandling(String value) {
         if (value.equals("One Only") || value.equals("Both")) mTurnoutNoRetry = true;
         if (value.equals("Spread") || value.equals("Both")) mTurnoutExtraSpace = true;

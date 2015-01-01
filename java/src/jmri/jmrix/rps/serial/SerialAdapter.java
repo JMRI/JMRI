@@ -16,6 +16,7 @@ import java.io.IOException;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
+import jmri.jmrix.SystemConnectionMemo;
 
 /**
  * Implements SerialPortAdapter for the RPS system.
@@ -234,6 +235,11 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
         if (activeSerialPort != null) activeSerialPort.close();
         serialStream = null;    // flags state
         activeSerialPort = null; // flags state
+    }
+
+    @Override
+    public SystemConnectionMemo getSystemConnectionMemo() {
+        return null; // No SystemConnectionMemo
     }
 
     /**

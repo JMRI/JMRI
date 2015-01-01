@@ -13,6 +13,8 @@ import jmri.jmrix.lenz.XNetReply;
 
 
 import java.io.*;
+import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 
 
 /**
@@ -294,6 +296,11 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
                   protected void resetupConnection() {
                       parent.startBCastThread();
                   }
+
+            @Override
+            public XNetSystemConnectionMemo getSystemConnectionMemo() {
+                return this.parent.getSystemConnectionMemo();
+            }
         }
 
         // Internal class for communication port connection
@@ -316,6 +323,11 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
                   protected void resetupConnection() {
                       parent.startCommThread();
                   }
+
+            @Override
+            public XNetSystemConnectionMemo getSystemConnectionMemo() {
+                return this.parent.getSystemConnectionMemo();
+            }
 
         }
 

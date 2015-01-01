@@ -13,6 +13,11 @@ public abstract class SRCPPortController extends jmri.jmrix.AbstractNetworkPortC
 	// base class. Implementations will provide InputStream and OutputStream
 	// objects to SRCPTrafficController classes, who in turn will deal in messages.
     protected SRCPSystemConnectionMemo adaptermemo = null;
+    
+    @Override
+    public SRCPSystemConnectionMemo getSystemConnectionMemo() {
+        return this.adaptermemo;
+    }
 }
 
 

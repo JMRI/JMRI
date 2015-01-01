@@ -27,8 +27,6 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
         mManufacturer = jmri.jmrix.DCCManufacturerList.ESU;
         adaptermemo = new jmri.jmrix.ecos.EcosSystemConnectionMemo();
     }
-
-    public EcosSystemConnectionMemo getSystemConnectionMemo() {return adaptermemo; }
     
     /**
      * set up all of the other objects to operate with an ECOS command

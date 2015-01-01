@@ -42,24 +42,11 @@ public abstract class AbstractStreamPortController extends AbstractPortControlle
        // no recovery possible here.
     }
 
-    public SystemConnectionMemo getSystemConnectionMemo() { 
-        if(adaptermemo!=null){
-          log.debug("adapter memo not null");
-          return adaptermemo;
-        }
-        else
-        {
-          log.debug("adapter memo null");
-          return null;
-        }
+    @Override
+    public SystemConnectionMemo getSystemConnectionMemo() {
+        log.debug("adapter memo {}null", (this.adaptermemo != null) ? "not " : "");
+        return this.adaptermemo;
     }
-
-    public void setDisabled(boolean disabled) {
-        mDisabled = disabled;
-        if(adaptermemo!=null)
-            adaptermemo.setDisabled(disabled);
-    }
-
 
     // connection shouldn't require any action.
     public void connect() {}

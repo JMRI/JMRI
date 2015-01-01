@@ -29,10 +29,9 @@ public abstract class AcelaPortController extends jmri.jmrix.AbstractSerialPortC
     
     protected AcelaSystemConnectionMemo adaptermemo = null;
 
-    public void setDisabled(boolean disabled) {
-        mDisabled = disabled;
-        if(adaptermemo!=null)
-            adaptermemo.setDisabled(disabled);
+    @Override
+    public AcelaSystemConnectionMemo getSystemConnectionMemo() {
+        return this.adaptermemo;
     }
 }
 

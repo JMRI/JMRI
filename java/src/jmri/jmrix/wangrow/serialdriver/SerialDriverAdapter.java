@@ -44,11 +44,6 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
 		setManufacturer(jmri.jmrix.DCCManufacturerList.WANGROW);
         adaptermemo = new NceSystemConnectionMemo();
 	}
-
-    @Override
-    public SystemConnectionMemo getSystemConnectionMemo() {
-    	return adaptermemo;
-	}
     
 	public String openPort(String portName, String appName)  {
         // open the port, check ability to set moderators

@@ -43,16 +43,9 @@ public abstract class XNetNetworkPortController extends jmri.jmrix.AbstractNetwo
     protected XNetSystemConnectionMemo adaptermemo = null;
 
     @Override
-    public jmri.jmrix.SystemConnectionMemo getSystemConnectionMemo(){
-        if(adaptermemo!=null){
-          log.debug("adapter memo not null");
-          return adaptermemo;
-        }
-        else
-        {
-          log.debug("adapter memo null");
-          return null;
-        }
+    public XNetSystemConnectionMemo getSystemConnectionMemo() {
+        log.debug("adapter memo {}null", (this.adaptermemo != null) ? "not " : "");
+        return this.adaptermemo;
     }
 
     public void dispose(){
@@ -61,15 +54,9 @@ public abstract class XNetNetworkPortController extends jmri.jmrix.AbstractNetwo
        log.error("Dispose called");
     }
     
-    public void setDisabled(boolean disabled) { 
-        mDisabled = disabled;
-        if(adaptermemo!=null)
-            adaptermemo.setDisabled(disabled);
-    }
-
     /**
      * Customizable method to deal with resetting a system connection after
-     * a sucessful recovery of a connection.
+     * a successful recovery of a connection.
      */
     @Override
     protected void resetupConnection() {

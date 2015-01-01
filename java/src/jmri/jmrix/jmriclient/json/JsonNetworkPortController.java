@@ -2,7 +2,6 @@ package jmri.jmrix.jmriclient.json;
 
 import jmri.jmris.json.JsonServerPreferences;
 import jmri.jmrix.AbstractNetworkPortController;
-import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.jmriclient.ActiveFlag;
 
 /**
@@ -31,7 +30,7 @@ public class JsonNetworkPortController extends AbstractNetworkPortController {
     }
 
     @Override
-    public SystemConnectionMemo getSystemConnectionMemo() {
+    public JsonClientSystemConnectionMemo getSystemConnectionMemo() {
         return this.memo;
     }
 

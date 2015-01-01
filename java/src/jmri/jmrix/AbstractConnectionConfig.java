@@ -62,9 +62,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
      */
     @Override
     public boolean isDirty() {
-        // We really need some mechanism for tracking changes from the as-loaded
-        // state that allows this method to return true or false
-        return true;
+        return this.getAdapter().isDirty();
     }
 
     /**
@@ -78,11 +76,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
      */
     @Override
     public boolean isRestartRequired() {
-        // Should return true only if isDirty() == true and the specific changes
-        // that have not been saved require a restart to take effect
-        // Since there is no real mechanism to determine either, simply return
-        // true to maintain existing behavior.
-        return true;
+        return this.getAdapter().isRestartRequired();
     }
 
     protected static class Option {

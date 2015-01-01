@@ -109,8 +109,6 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
      	return null;
     }
     
-    public MarklinSystemConnectionMemo getSystemConnectionMemo() {return adaptermemo; }
-    
     /**
      * set up all of the other objects to operate with an ECOS command
      * station connected to this port

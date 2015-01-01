@@ -72,8 +72,6 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter  implements jmri.
             adaptermemo.dispose();
         adaptermemo = null;
     }
-    
-    public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
 
     static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 

@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**
  * Base for classes representing a LocoNet communications port
@@ -98,10 +99,9 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
         log.debug("turnout no retry: "+mTurnoutNoRetry);
         log.debug("turnout extra space: "+mTurnoutExtraSpace);
     }
-    public void setDisabled(boolean disabled) { 
-        mDisabled = disabled;
-        if(adaptermemo!=null)
-            adaptermemo.setDisabled(disabled);
+    @Override
+    public LocoNetSystemConnectionMemo getSystemConnectionMemo() {
+        return this.adaptermemo;
     }
     static Logger log = LoggerFactory.getLogger(LnPortController.class.getName());
 }

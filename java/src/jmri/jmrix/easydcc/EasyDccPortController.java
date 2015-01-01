@@ -25,11 +25,11 @@ public abstract class EasyDccPortController extends jmri.jmrix.AbstractSerialPor
 
     protected EasyDccSystemConnectionMemo adaptermemo = null;
     
-    public void setDisabled(boolean disabled) { 
-        mDisabled = disabled;
-        if(adaptermemo!=null)
-            adaptermemo.setDisabled(disabled);
+    @Override
+    public EasyDccSystemConnectionMemo getSystemConnectionMemo() {
+        return this.adaptermemo;
     }
+
 }
 
 

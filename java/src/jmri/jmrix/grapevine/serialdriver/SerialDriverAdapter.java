@@ -17,6 +17,7 @@ import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
+import jmri.jmrix.SystemConnectionMemo;
 
 /**
  * Provide access to ProTrak Grapevine via a serial comm port.

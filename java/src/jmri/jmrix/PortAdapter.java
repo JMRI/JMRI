@@ -130,4 +130,19 @@ public interface PortAdapter {
 
     public void recover();
 
+    /**
+     * Determine if configuration needs to be written to disk.
+     *
+     * @return true if configuration needs to be saved, false otherwise
+     */
+    public boolean isDirty();
+
+    /**
+     * Determine if application needs to be restarted for configuration changes
+     * to be applied.
+     *
+     * @return true if application needs to restart, false otherwise
+     */
+    public boolean isRestartRequired();
+
 }

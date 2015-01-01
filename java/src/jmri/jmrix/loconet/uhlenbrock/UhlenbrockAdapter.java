@@ -25,17 +25,12 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
 
 
     public UhlenbrockAdapter() {
-        super();
+        super(new UhlenbrockSystemConnectionMemo());
         
         // define command station options
         options.remove(option2Name);
         options.put(option2Name, new Option("Command station type:", commandStationOptions(), false));
 
-        if (adaptermemo!=null){
-            adaptermemo.dispose();
-        }
-        adaptermemo = new UhlenbrockSystemConnectionMemo();
-        
         validSpeeds = new String[]{"19200", "38400", "57600", "115200"};
         validSpeedValues = new int[]{19200, 38400, 57600, 115200};
         configureBaudRate("115200"); //Set the default baud rate

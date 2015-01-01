@@ -48,11 +48,6 @@ public class SimulatorAdapter extends SerialPortController implements
         adaptermemo = new SpecificSystemConnectionMemo();
     }
 
-    @Override
-    public SerialSystemConnectionMemo getSystemConnectionMemo() {
-    	return adaptermemo;
-	}
-
     public void dispose(){
         if (adaptermemo!=null)
             adaptermemo.dispose();

@@ -147,16 +147,6 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
 		  }
          return portNameVector;
     }
-    /*This in place here until all systems are converted over to the systemconnection memo
-    this will then become abstract, once all the code has been refactored*/
-    public SystemConnectionMemo getSystemConnectionMemo() { return null; }
-    
-    /*Set disable should be handled by the local port controller in each connection
-    this is abstract in the Portcontroller and can be removed once all the other codes has
-    been refactored */
-    public void setDisabled(boolean disabled) { 
-        mDisabled = disabled;
-    }
     
     /*Dispose should be handled by the port adapters and this should be abstract
     However this is in place until all the other code has been refactored */

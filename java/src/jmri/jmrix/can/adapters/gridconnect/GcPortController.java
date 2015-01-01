@@ -4,6 +4,8 @@ package jmri.jmrix.can.adapters.gridconnect;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 
 /**
  * Abstract base for classes representing a GridConnect communications port
@@ -26,6 +28,11 @@ import java.io.DataOutputStream;
     
     protected jmri.jmrix.can.CanSystemConnectionMemo adaptermemo;
     
+    @Override
+    public CanSystemConnectionMemo getSystemConnectionMemo() {
+        return this.adaptermemo;
+    }
+
 }
 
 

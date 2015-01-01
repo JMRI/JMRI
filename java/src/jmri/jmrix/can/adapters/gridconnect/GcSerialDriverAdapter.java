@@ -15,6 +15,8 @@ import java.io.InputStream;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
+import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 
 /**
  * Implements SerialPortAdapter for the GridConnect protocol.
@@ -184,5 +186,10 @@ public class GcSerialDriverAdapter extends GcPortController  implements jmri.jmr
     public void setManufacturer(String manu) { manufacturerName=manu; }
 
     static Logger log = LoggerFactory.getLogger(GcSerialDriverAdapter.class.getName());
+
+    @Override
+    public CanSystemConnectionMemo getSystemConnectionMemo() {
+        return this.adaptermemo;
+    }
 
 }

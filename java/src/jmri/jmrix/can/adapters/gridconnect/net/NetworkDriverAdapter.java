@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrix.can.adapters.gridconnect.GcTrafficController;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.ConfigurationManager;
 import jmri.jmrix.can.adapters.gridconnect.canrs.MergTrafficController;
 
@@ -73,7 +74,7 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
         adaptermemo = null;
     }
     
-    public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
+    public CanSystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
     
     static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
 

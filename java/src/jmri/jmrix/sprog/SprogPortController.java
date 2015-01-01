@@ -14,10 +14,9 @@ public abstract class SprogPortController extends jmri.jmrix.AbstractSerialPortC
 	// objects to SprogTrafficController classes, who in turn will deal in messages.
     protected SprogSystemConnectionMemo adaptermemo = null;
     
-    public void setDisabled(boolean disabled) { 
-        mDisabled = disabled;
-        if(adaptermemo!=null)
-            adaptermemo.setDisabled(disabled);
+    @Override
+    public SprogSystemConnectionMemo getSystemConnectionMemo() {
+        return this.adaptermemo;
     }
 }
 

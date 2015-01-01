@@ -14,6 +14,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import jmri.jmrix.AbstractMRMessage;
+import jmri.jmrix.SystemConnectionMemo;
 
 /**
  * JUnit tests for the SerialTrafficController class
@@ -138,6 +139,11 @@ public class SerialTrafficControllerTest extends TestCase {
 
         // check that this object is ready to operate
         public boolean status() { return true; }
+
+        @Override
+        public SystemConnectionMemo getSystemConnectionMemo() {
+            return null; // No SystemConnectionMemo
+        }
     }
     static DataOutputStream ostream;  // Traffic controller writes to this
     static DataInputStream  tostream; // so we can read it from this

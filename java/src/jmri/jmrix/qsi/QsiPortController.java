@@ -24,10 +24,9 @@ import java.io.DataOutputStream;
     
     protected QsiSystemConnectionMemo adaptermemo = null;
     
-    public void setDisabled(boolean disabled) { 
-        mDisabled = disabled;
-        if(adaptermemo!=null)
-            adaptermemo.setDisabled(disabled);
+    @Override
+    public QsiSystemConnectionMemo getSystemConnectionMemo() {
+        return this.adaptermemo;
     }
 }
 

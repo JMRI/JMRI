@@ -66,15 +66,9 @@ public class InternalAdapter extends jmri.jmrix.AbstractSerialPortController
      	return null;
     }
     
-    public void setDisabled(boolean disabled) { 
-        mDisabled = disabled;
-        if(adaptermemo!=null)
-            adaptermemo.setDisabled(disabled);
-    }
-    
     @Override
-    public jmri.jmrix.SystemConnectionMemo getSystemConnectionMemo() { 
-    	return adaptermemo; 
+    public InternalSystemConnectionMemo getSystemConnectionMemo() { 
+    	return this.adaptermemo; 
     }
 
     String manufacturerName = jmri.jmrix.DCCManufacturerList.NONE;

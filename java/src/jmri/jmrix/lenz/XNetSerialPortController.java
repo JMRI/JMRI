@@ -100,7 +100,7 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
     protected XNetSystemConnectionMemo adaptermemo = null;
 
     @Override
-    public jmri.jmrix.SystemConnectionMemo getSystemConnectionMemo(){
+    public XNetSystemConnectionMemo getSystemConnectionMemo(){
         if(adaptermemo!=null){
           log.debug("adapter memo not null");
           return adaptermemo;

@@ -15,10 +15,9 @@ public abstract class Dcc4PcPortController extends jmri.jmrix.AbstractSerialPort
 	// objects to Dcc4PcTrafficController classes, who in turn will deal in messages.
     protected Dcc4PcSystemConnectionMemo adaptermemo = null;
     
-    public void setDisabled(boolean disabled) { 
-        mDisabled = disabled;
-        if(adaptermemo!=null)
-            adaptermemo.setDisabled(disabled);
+    @Override
+    public Dcc4PcSystemConnectionMemo getSystemConnectionMemo() {
+        return this.adaptermemo;
     }
 }
 

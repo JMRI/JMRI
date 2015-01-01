@@ -311,8 +311,6 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
     InputStream serialInStream = null;
     OutputStream serialOutStream = null;
     
-    public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
-
     public void dispose(){
         if (adaptermemo!=null)
             adaptermemo.dispose();

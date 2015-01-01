@@ -7,8 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
-import java.util.Hashtable;
-import java.util.Enumeration;
+import java.util.HashMap;
 
 /**
  * Provide an abstract base for *PortController classes.
@@ -96,13 +95,7 @@ abstract public class AbstractPortController implements PortAdapter {
     * Get a list of all the options configured against this adapter.
     */
     public String[] getOptions(){
-        String[] arr = new String[options.size()];
-        Enumeration<String> en = options.keys();
-        int i=0;
-        while (en.hasMoreElements()) {
-            arr[i] = en.nextElement();
-            i++;
-        }
+        String[] arr = options.keySet().toArray(new String[0]);
         java.util.Arrays.sort(arr);
         return arr;
     
@@ -151,7 +144,7 @@ abstract public class AbstractPortController implements PortAdapter {
         return false;
     }
     
-    protected Hashtable<String, Option> options = new Hashtable<String, Option>();
+    protected HashMap<String, Option> options = new HashMap<String, Option>();
     
     static protected class Option {
         
@@ -191,6 +184,10 @@ abstract public class AbstractPortController implements PortAdapter {
         boolean isAdvanced() {
             return advancedOption;
         }
+        
+        boolean isDirty() {
+            return (currentValue != null && !currentValue.equals(options[0]));
+        }
     }
     
     /**
@@ -205,16 +202,40 @@ abstract public class AbstractPortController implements PortAdapter {
     }
     protected String mManufacturer = null;
     
-    public boolean getDisabled() { return mDisabled; }
+    @Override
+    public boolean getDisabled() {
+        if (this.getSystemConnectionMemo() != null) {
+            return this.getSystemConnectionMemo().getDisabled();
+        }
+        return this.mDisabled;
+    }
    
-    /* The set disabled is handled within the local port controller for each system
-    this is because it needs to also needs to set a disabled flag in the system connection memo*/
+    /**
+     * Set the connection disabled or enabled. By default connections are enabled.
+     * 
+     * If the implementing class does not use a
+     * {@link jmri.jmrix.SystemConnectionMemo}, this method must be overridden.
+     * Overriding methods must call <code>super.setDisabled(boolean)</code> to
+     * ensure the configuration change state is correctly set.
+     *
+     * @param disabled true if connection should be disabled
+     */
+    @Override
+    public void setDisabled(boolean disabled) {
+        if (!setDisabledCalled) {
+            this.setDisabledCalled = true;
+            this.loadedDisabled = disabled;
+        }
+        if (this.getSystemConnectionMemo() != null) {
+            this.getSystemConnectionMemo().setDisabled(disabled);
+        }
+        this.mDisabled = disabled;
+    }
     
-    abstract public void setDisabled(boolean disabled);
     protected boolean mDisabled = false;
+    private boolean loadedDisabled = false; 
+    private boolean setDisabledCalled = false;
     
-    abstract public SystemConnectionMemo getSystemConnectionMemo();
-
     protected boolean allowConnectionRecovery = false;
 
     abstract public void recover();
@@ -229,6 +250,27 @@ abstract public class AbstractPortController implements PortAdapter {
           catch (InterruptedException e) {
              log.error("Sleep Exception raised during reconnection attempt" +s);
           }
+    }
+
+    @Override
+    public boolean isDirty() {
+        boolean isDirty = (setDisabledCalled && this.loadedDisabled != this.getDisabled());
+        if (!isDirty) {
+            for (Option option : this.options.values()) {
+                isDirty = option.isDirty();
+                if (isDirty) {
+                    break;
+                }
+            }
+        }
+        return isDirty;
+    }
+
+    @Override
+    public boolean isRestartRequired() {
+        // Override if any option should not be considered when determining if a
+        // change requires JMRI to be restarted.
+        return this.isDirty();
     }
 
     static private Logger log = LoggerFactory.getLogger(AbstractPortController.class.getName());

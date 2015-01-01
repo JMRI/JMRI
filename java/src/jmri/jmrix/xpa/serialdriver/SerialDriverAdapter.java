@@ -13,6 +13,7 @@ import java.io.InputStream;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
+import jmri.jmrix.SystemConnectionMemo;
 
 /**
  * Implements SerialPortAdapter for a modem connected to an XPA.
@@ -179,5 +180,10 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
     public void setManufacturer(String manu) { manufacturerName=manu; }
 
     static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+
+    @Override
+    public SystemConnectionMemo getSystemConnectionMemo() {
+        return null; // no SystemConnectionMemo
+    }
 
 }

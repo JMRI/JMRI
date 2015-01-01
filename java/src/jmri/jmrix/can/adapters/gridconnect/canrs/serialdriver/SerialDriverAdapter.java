@@ -57,8 +57,6 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter  implements jmri.
         adaptermemo.configureManagers();
 
     }
-    
-    public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
         
     public void dispose(){
         if (adaptermemo!=null)

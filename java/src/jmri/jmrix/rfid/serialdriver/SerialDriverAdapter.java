@@ -15,7 +15,6 @@ import java.io.InputStream;
 import java.util.TooManyListenersException;
 import jmri.jmrix.rfid.RfidPortController;
 import jmri.jmrix.rfid.RfidProtocol;
-import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 import jmri.jmrix.rfid.RfidTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,11 +39,6 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         options.put(option1Name, new Option("Adapter:", new String[]{"Generic Stand-alone", "MERG Concentrator"}, false));
         options.put(option2Name, new Option("Concentrator range:", new String[]{"A-H","I-P"}, false));
         options.put(option3Name, new Option("Protocol:", new String[]{"CORE-ID", "Olimex", "Parallax", "SeeedStudio"}, false));
-    }
-
-    @Override
-    public RfidSystemConnectionMemo getSystemConnectionMemo() {
-        return adapterMemo;
     }
 
     @Override

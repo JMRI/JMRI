@@ -9,7 +9,6 @@ import java.io.DataOutputStream;
 import java.io.InputStream;
 
 import jmri.jmrix.can.TrafficController;
-import jmri.jmrix.SystemConnectionMemo;
 
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
@@ -187,8 +186,6 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
             adaptermemo.dispose();
         adaptermemo = null;
     }
-    
-    public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
 
     static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 

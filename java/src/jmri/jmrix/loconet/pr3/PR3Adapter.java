@@ -4,7 +4,6 @@ package jmri.jmrix.loconet.pr3;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 import jmri.jmrix.loconet.*;
 
@@ -21,18 +20,10 @@ public class PR3Adapter extends LocoBufferAdapter {
 
 
     public PR3Adapter() {
-        super();
+        super(new PR3SystemConnectionMemo());
         
         options.remove(option2Name);
         options.put(option2Name, new Option("Command station type:", commandStationOptions(), false));
-        
-        /*As this extends the locobuffer, we need to remove the SystemConnectionMemo,
-        that it has created and replace it with our own. dispose has to be done to
-        the registered connection details.*/
-        if (adaptermemo!=null){
-            adaptermemo.dispose();
-        }
-        adaptermemo = new PR3SystemConnectionMemo();
     }
 
     /**
@@ -163,8 +154,6 @@ public class PR3Adapter extends LocoBufferAdapter {
         retval[retval.length-1] = LnCommandStationType.COMMAND_STATION_STANDALONE.getName();
         return retval;
     }
-    
-    public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
     
     public void dispose(){
         if (adaptermemo!=null)

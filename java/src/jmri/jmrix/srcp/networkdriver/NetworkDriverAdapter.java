@@ -87,12 +87,6 @@ public class NetworkDriverAdapter extends SRCPPortController implements jmri.jmr
         adaptermemo = null;
     }
 
-
-    @Override
-    public jmri.jmrix.SystemConnectionMemo getSystemConnectionMemo() {
-        return adaptermemo;
-    }
-
     static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
 
 }

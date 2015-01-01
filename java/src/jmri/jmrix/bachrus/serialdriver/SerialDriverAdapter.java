@@ -16,6 +16,7 @@ import java.util.TooManyListenersException;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
+import jmri.jmrix.SystemConnectionMemo;
 
 /**
  * Implements SerialPortAdapter for the Bachrus speedo.
@@ -198,5 +199,10 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
         adaptermemo = null;
     }
     static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+
+    @Override
+    public SpeedoSystemConnectionMemo getSystemConnectionMemo() {
+        return this.adaptermemo;
+    }
 
 }

@@ -8,7 +8,7 @@ import jmri.jmrix.AbstractSerialPortController;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 
 /**
  * Loopback connection to simulate a CAN link
@@ -68,7 +68,7 @@ public class Port extends AbstractSerialPortController {
         adaptermemo = null;
     }
     
-    public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
+    public CanSystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
     
     static Logger log = LoggerFactory.getLogger(Port.class.getName());
 }

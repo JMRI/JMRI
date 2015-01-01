@@ -90,6 +90,11 @@ public class XBeeIOStream extends AbstractPortController implements XBeeListener
 
     public String getCurrentPortName(){ return "NONE"; }
 
+    @Override
+    public boolean getDisabled() {
+        return false;
+    }
+    
     public void setDisabled(boolean disabled) {}
 
     public jmri.jmrix.SystemConnectionMemo getSystemConnectionMemo(){ return null; }

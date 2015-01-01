@@ -4,6 +4,7 @@ package jmri.jmrix.grapevine;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import jmri.jmrix.SystemConnectionMemo;
 
 /**
  * Abstract base for classes representing a communications port
@@ -22,7 +23,10 @@ public abstract class SerialPortController extends jmri.jmrix.AbstractSerialPort
 
     // check that this object is ready to operate
     public abstract boolean status();
+
+    @Override
+    public SystemConnectionMemo getSystemConnectionMemo() {
+        return null; // No SystemConnectionMemo
+    }
 }
-
-
 /* @(#)SerialPortController.java */
