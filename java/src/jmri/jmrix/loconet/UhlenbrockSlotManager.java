@@ -78,6 +78,14 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
         super(tc);
     }
 
+    /**
+     * Provide Uhlenbrock-specific slot implementation
+     */
+    protected void loadSlots() {
+        // initialize slot array
+        for (int i=0; i<NUM_SLOTS; i++) _slots[i] = new UhlenbrockSlot(i);
+    }
+
     protected boolean checkLackByte1 (int Byte1) {
     //    log.info("Uhlenbrock checkLackByte1 "+Byte1);
        if ((Byte1 & 0xED) == 0x6D)
@@ -85,6 +93,7 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
         else
             return false;
     }
+    
     protected boolean checkLackTaskAccepted (int Byte2) {
     //    log.info("Uhlenbrock checkLackTaskAccepted "+Byte2);
         if (Byte2 == 1 // task accepted
@@ -93,6 +102,7 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
         else
             return false;
     }
+    
     protected boolean checkLackAcceptedBlind (int Byte2) {
     //    log.info("Uhlenbrock checkLackAcceptedBlind "+Byte2);
         if (Byte2 == 0x40 || Byte2 == 0x7F)
@@ -101,6 +111,28 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
             return false;
     }
 
+    /**
+     * Look for IB-specific messages on the LocoNet, deferring all others to the 
+     * parent SlotManager implementation.
+     *
+     * @param m incoming message
+     */
+    public void message(LocoNetMessage m) {
+
+        // see if message for Intellibox-II functions F9 thru F12
+        if (m.getOpCode()==LnConstants.RE_OPC_IB2_F9_F12) {
+            UhlenbrockSlot slot = (UhlenbrockSlot)slot(m.getElement(1));
+            slot.iB2functionMessage(m);    
+        }
+         
+        // see if message for Intellibox_I and -II functions F9 thru F128
+        if (m.getOpCode()==LnConstants.RE_OPC_IB2_SPECIAL && m.getElement(1)==LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN) {
+            UhlenbrockSlot slot = (UhlenbrockSlot)slot(m.getElement(2));
+            slot.iBfunctionMessage(m);            
+        }
+        
+        super.message(m);
+    }
 
 
     /**

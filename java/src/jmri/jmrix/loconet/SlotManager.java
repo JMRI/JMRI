@@ -55,8 +55,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // need a longer LONG_TIMEOUT for Fleischman command stations
         LONG_TIMEOUT=180000;
         
-        // initialize slot array
-        for (int i=0; i<=127; i++) _slots[i] = new LocoNetSlot(i);
+        loadSlots();
         
         // listen to the LocoNet
         tc.addLocoNetListener(~0, this);
@@ -72,6 +71,11 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         staleSlotCheckTimer.setRepeats(true);
         staleSlotCheckTimer.setInitialDelay( 30000 );
         staleSlotCheckTimer.start();
+    }
+    
+    protected void loadSlots() {
+        // initialize slot array
+        for (int i=0; i<NUM_SLOTS; i++) _slots[i] = new LocoNetSlot(i);
     }
     
     protected LnTrafficController tc;
@@ -115,12 +119,13 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             tc.sendLocoNetMessage(m);
     }
     
+    final static protected int NUM_SLOTS = 128;
     /**
      * Information on slot state is stored in an array of LocoNetSlot objects.
      * This is declared final because we never need to modify the array itself,
      * just its contents.
      */
-    final private LocoNetSlot _slots[] = new LocoNetSlot[128];
+    final protected LocoNetSlot _slots[] = new LocoNetSlot[NUM_SLOTS];
     
     /**
      * Access the information in a specific slot.  Note that this is a
@@ -290,14 +295,6 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 tc.sendLocoNetMessage(mo);             
             }
         }
-        
-        // this is where additional decoding for Uhlenbrock messages should go,
-        // following the pattern of the "extended function" message above:
-        // * Make sure it's the right message type
-        // * Figure out which slot it's addressed to
-        // * Invoke a handler routine in that slot.
-        
-        
     }
     
     /**
