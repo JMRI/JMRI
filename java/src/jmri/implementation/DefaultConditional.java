@@ -1051,7 +1051,7 @@ public class DefaultConditional extends AbstractNamedBean
 						else {
                             String msg = w.setThrottleFactor(getActionString(action));
 							if (msg!=null) {
-								log.info("Warrant "+action.getDeviceName()+" unable to Set Throttle Factor - "+msg);
+								log.info("Warrant "+getActionString(action)+" unable to Set Throttle Factor - "+msg);
                             }
                             actionCount++;
 						}
@@ -1063,7 +1063,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						else {
                             if (!w.setTrainId(getActionString(action))) {
-                            	String s = "Unable to find train Id "+action.getActionString()+" in Roster  - "+action.getDeviceName();
+                            	String s = "Unable to find train Id "+getActionString(action)+" in Roster  - "+action.getDeviceName();
                             	log.info(s);
                                 errorList.add(s);	// could be serious - display error to UI
                             }
@@ -1087,11 +1087,18 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						else {
 							String err = w.setRoute(0, null);
-							if (err!=null) {
+					        if (err==null) {
+					        	err = w.checkForContinuation();
+					        }
+					        if (err==null) {
+					        	err = w.checkStartBlock();
+					        }
+							if (err==null) {
 	                            err = w.setRunMode(Warrant.MODE_RUN, null, null, null, false);								
 							}
                             if (err!=null) {
                                 errorList.add("runAutoTrain error - "+err);
+                                w.stopWarrant(true);
                             }
                             actionCount++;
 						}
@@ -1103,7 +1110,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						else {
 							String err = w.setRoute(0, null);
-							if (err!=null) {
+							if (err==null) {
 	                            err = w.setRunMode(Warrant.MODE_MANUAL, null, null, null, false);								
 							}
                             if (err!=null) {
@@ -1342,7 +1349,7 @@ public class DefaultConditional extends AbstractNamedBean
 
     /** for backward compatibility with config files having system names in lower case
     */
-    private Memory getMemory(String name) {
+    static private Memory getMemory(String name) {
         Memory m = InstanceManager.memoryManagerInstance().getMemory(name);
         if (m==null) {
             String sName = name.toUpperCase().trim();

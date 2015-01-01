@@ -515,7 +515,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     	TrackerTableAction.markNewTracker(getCurrentBlockOrder().getBlock(), _trainName);
     }
 
-    protected void stopWarrant(boolean abort) {
+    public void stopWarrant(boolean abort) {
         _delayStart = false;
         if (_stoppingSignal!=null) {
             log.error("signal "+_stoppingSignal.getSystemName());
@@ -912,7 +912,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     /**
      * Check start block for occupied for start of run
      */
-    protected String checkStartBlock() {
+    public String checkStartBlock() {
      	BlockOrder bo = _orders.get(0);
     	OBlock block = bo.getBlock();
        	String msg = block.allocate(this);
