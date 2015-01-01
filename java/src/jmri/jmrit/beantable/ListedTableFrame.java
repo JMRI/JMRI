@@ -493,14 +493,18 @@ public class ListedTableFrame extends BeanTableFrame {
                 }
             });
             try {
-                clickDelay = ((Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt.multiClickInterval")).intValue();
-            } catch(Exception e){
-                try {
-                    clickDelay = ((Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt_multiclick_time")).intValue();
-                } catch (Exception ex){
-                    clickDelay = 500;
-                    log.error("Unable to get the double click speed, Using JMRI default of half a second" + e.toString());
-                }
+                Object p2 = Toolkit.getDefaultToolkit().getDesktopProperty("awt_multiclick_time");
+                if (p2 != null)
+                    clickDelay = ((Integer)p2).intValue();
+            } catch (Exception e2){
+                log.error("Error parsing DesktopProperty awt_multiclick_time to set double click interval ", e2.toString());
+            }
+            try {
+                Object p2 = Toolkit.getDefaultToolkit().getDesktopProperty("awt.multiClickInterval");
+                if (p2 != null)
+                    clickDelay = ((Integer)p2).intValue();
+            } catch(Exception e1){
+                log.error("Error parsing DesktopProperty awt.multiClickInterval to set double click interval ", e1.toString());
             }
             currentItemSelected=0;
         }
