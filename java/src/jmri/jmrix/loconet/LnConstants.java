@@ -463,19 +463,38 @@ public final static int RE_DPLX_SCAN_QUERY_B4              = 0x00 ;
 public final static int RE_DPLX_SCAN_REPORT_B2             = 0x10 ;
 public final static int RE_DPLX_SCAN_REPORT_B3             = 0x10 ;
 
-// Intellibox-II mobile decoder function control
-// also used for Intellibox ("one") with SW version 2.x for control of functions beyond F8
-// Intellibox-I version 2.x has two ways to control F0-F8:
-//    - with regular LocoNet OPC_LOCO_SND and OPC_LOCO_DIRF
-//    - with special Uhlenbrock RE_OPC_IB2_SPECIAL
-
-//Used by Intellibox-II only, for F9-F12
+/* Intellibox-II mobile decoder function control beyond F8
+ * also used for Intellibox-I ("one") with SW version 2.x for control of functions beyond F8
+ * Intellibox-I version 2.x has two ways to control F0-F8:
+ *    - with regular LocoNet OPC_LOCO_SND and OPC_LOCO_DIRF
+ *    - with special Uhlenbrock RE_OPC_IB2_SPECIAL
+ *
+ * 4 byte MESSAGE with OPCODE = RE_OPC_IB2_F9_F12
+ * Used by Intellibox-II only, for F9-F12
+ * FORMAT = <OPC>,<SLOT>,<FUNC>,<CKSUM>
+ * :
+ *  <SLOT> = Slot number
+ *  <FUNC> = functions F9-F12 mask
+ */
 public final static int RE_OPC_IB2_F9_F12                  = 0xA3; 
 public final static int RE_IB2_F9_MASK                     = 0x01;
 public final static int RE_IB2_F10_MASK                    = 0x02;
 public final static int RE_IB2_F11_MASK                    = 0x04;
 public final static int RE_IB2_F12_MASK                    = 0x08;
 
+/* 6 byte MESSAGE with OPCODE = RE_OPC_IB2_SPECIAL
+ * Used by Intellibox-I for F0-F28 and Intellibox-II for F13-F28
+ * For Intellibox-I, for F0-F8:
+ *      - F0-F8 triggers this message only when controlling function after pressing twice on lok# button
+ *      - Direct control of functions through function buttons triggers the regular LocoNet function message
+ * :
+ * FORMAT = <OPC>,<SPE>,<SLOT>,<FTOK>,<FUNC>,<CKSUM>
+ * :
+ *  <SPE> = Specific value RE_IB2_SPECIAL_FUNCS_TOKEN
+ *  <SLOT> = Slot number
+ *  <FTOK> = functions token
+ *  <FUNC> = functions mask
+ */
 // Common to Intellibox-I and -II :
 public final static int RE_OPC_IB2_SPECIAL                 = 0xD4; //For functions F13-F28 (IB-II) and by IB-I v2.x ("one") for F0-F28
 public final static int RE_IB2_SPECIAL_FUNCS_TOKEN         = 0x20;
