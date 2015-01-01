@@ -26,7 +26,7 @@
     Provides build services for JMRI libraries and applications
     </description>
 
-    <property name="jmri.copyright.year" value="1997-2014"/>
+    <property name="jmri.copyright.year" value="1997-2015"/>
 
     <property environment="env"/>
 
