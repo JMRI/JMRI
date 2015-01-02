@@ -43,7 +43,13 @@
 	<li>If you are using an accessory decoder that can drive the Signal Masts natively and supports the <a href="http://www.nmra.org/standards/DCC/standards_rps/rp921.html#Extended%20Accessory%20Decoder%20Control%20Packet%20Format">NMRA Extended Accessory Protocol</a> (the easiest way) just add the Signal Mast using the 'DCC Signal Mast Decoder driver' and when prompted input the Aspect numbers configured in your decoder against each Aspect. Decoders like the <a href="http://signalist.co.uk">Signalist SC1</a> have different Signal Mast types preconfigured and you just select the correct table with a CV and get the Aspect numbers from the manual. Other decoders will need some setting up to define the Aspects to be displayed to an Aspect number. See your decoder manual for what to do here.</li>
 	<li>If you have more basic signal decoders (the Digitrax SE8c for example) or a command station that does not support the Extended Accessory Protocol (Lenz for example) you will first have to configure the individual Signal Heads that make up each Signal Mast in the Signal Heads Table and then go to the Signal Masts Table, add the appropriate Signal Mast Type (eg. AAR-2 Triple Head Searchlight) and configure it using the Signal Head Controlled Mast driver, adding in the Signal Heads that you have previously defined. </li>
 		</ol>
-Pick one of the available Signaling Systems, such as AAR-2 in our example, and stick with that. It is a bit of a faff but not too much work.</li>
+Pick one of the available 
+<a href="http://jmri.org/xml/signals">Signaling Systems</a>, such as 
+<a href="http://jmri.org/xml/signals/AAR-1946/aspects.xml">AAR-2</a> in our example, and stick with that. 
+It is a bit of a faff but not too much work. (For more information on the 
+individual signal systems, see 
+<a href="http://jmri.org/xml/signals">this page</a>; for more info on how this works, see the page on 
+<a href="AspectSignaling.shtml">aspect signaling</a>)</li>
 	
 	</li>
 
