@@ -1461,8 +1461,9 @@
     these loads when it arrives at a spur, the load name will change to the other, i.e. "E" becomes
     "L" and "L" becomes "E". If a car has a custom load, it too will be replaced by the default
     empty "E" when the program sets a car out to a spur. You can also configure your car to return
-    to a specific location or track when the car's load is removed. See <A HREF="#ReturnWhenEmpty">Return
-     When Empty</A> for more details.
+    to a specific location or track when the car's load is removed, and optionally change the car's
+    default "E" load to a custom empty load. See <A HREF="#ReturnWhenEmpty">Return When Empty</A>
+    for more details.
    </P>
 
    <P>You can if you want, control which trains or routes can pick up or set out cars to your
@@ -1646,6 +1647,7 @@
     want the car go to. Even if it takes several trains to get the car there, the program will
     figure out the best route. Note that when the schedule specifies the ship to destination and
     spur, that the spur doesn't need a schedule to accept the car with the custom load "L(print)".</P>
+    
    <P>Now, if you created another schedule at the destination spur, you could forward the car
     again. By stringing a series of schedules and loads together you can create any car sequence you
     want.</P>
@@ -1664,12 +1666,16 @@
     that is demanding that car type and custom load. Spurs without a schedule can not service a car
     with a custom load, unless the car is shipped directly to that spur.</P>
 
-   <P>One more consideration is empty cars. The program doesn't route cars with the default
-    loads "E" or "L". So if your schedule is requesting an car with the empty default "E", it can
-    take awhile before that car shows up. An alternative is to handle empty cars like cars with
-    custom loads. You could create the custom load "E(mpty)" and use this load to signify an empty
-    car. Now cars with this load will be routed and will have the same characteristics as cars with
-    the "other" custom loads.</P>
+   <P>
+    One more consideration is empty cars. The program doesn't route cars with the default loads "E"
+    or "L". So if your schedule is requesting an car with the empty default "E", it can take awhile
+    before that car shows up. An alternative is to handle empty cars like cars with custom loads.
+    You could create the custom load "E(mpty)" and use this load to signify an empty car. Now cars
+    with this load will be routed and will have the same characteristics as cars with the "other"
+    custom loads. One other option is to ask the program use a custom empty load instead of the
+    default "E" load when removing a car's load. See <A HREF="#ReturnWhenEmpty">Return When
+     Empty</A> for more information.
+   </P>
 
    <P>The examples above used custom loads to help understand car movement, you could if you
     wish just forward cars using schedules without the use of custom loads. Custom loads are
