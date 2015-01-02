@@ -19,7 +19,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
  
-<xsl:stylesheet	version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet	version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:docbook="http://docbook.org/ns/docbook">
       <xsl:param name="JmriCopyrightYear">
         2000 - 2015
       </xsl:param>
@@ -55,14 +55,34 @@
       <xsl:for-each select="comment()">
         <br/><xsl:value-of select="."/>
       </xsl:for-each>
-<!-- display author info -->
-    <br/><span style="font-weight:bold;color:white">
+<!-- display author info from old version tags -->
+    
     <xsl:for-each select="version">
+        <br/><span style="font-weight:bold;color:white">
         Author: <xsl:value-of select="@author"/>
         Version: <xsl:value-of select="@version"/>
-        Updated: <xsl:value-of select="@lastUpdated"/><br/>
+        Updated: <xsl:value-of select="@lastUpdated"/>
+        </span>
     </xsl:for-each>
-    </span></div></p>
+    
+<!-- display author info from new elements -->
+    <xsl:for-each select="docbook:authorgroup/docbook:author/docbook:personname">   
+        <br/><span style="font-weight:bold;color:white">
+        Author: <xsl:value-of select="docbook:firstname"/> 
+                <xsl:value-of select="docbook:surname"/>
+        </span>
+    </xsl:for-each>
+    <xsl:for-each select="docbook:revhistory/docbook:revision">
+        <br/><span style="font-weight:bold;color:white">
+        Revision <xsl:value-of select="docbook:revnumber"/>: <xsl:value-of select="docbook:date"/> 
+            (<xsl:value-of select="docbook:authorinitials"/>)
+            <xsl:value-of select="docbook:revremark"/> 
+        </span>
+    </xsl:for-each>
+
+    </div>    
+    </p>
+
 
 <p>
 JMRI software, including this file, is distributed under license. That
