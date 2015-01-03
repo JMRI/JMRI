@@ -21,9 +21,14 @@
   <!-- works for both Athearn N scale loco types, small errors corrected -->
   <version author="Bill Chown" version="3" lastUpdated="20090109"/>
   <!-- works for both Athearn N scale loco types, comments and tooltips expanded -->
+  <version author="Alain Le Marchand" version="4" lastUpdated="20150103"/>
+  <!-- redundant file with MRC_Athearn_BigBoy_N.xml -->
+  <!-- deprecate this one (hide) and update to Athearn family, file MRC_Athearn_BigBoy_N.xml -->
+  <!-- Revert back to standard definition for CV21 - the specific MRC one brings nothing as item and label are dissociated -->
+  <!-- Refactored CV19, 105 and 106 -->
   <decoder>
     <family name="Brilliance Sound Decoders" mfg="MRC" comment="MRC Brilliance Sound Decoders" lowVersionID="31" highVersionID="31">
-      <model model="Athearn Big Boy or Challenger" maxTotalCurrent="1.5A" extFnsMRC="yes">
+      <model show="no" model="Athearn Big Boy or Challenger" replacementModel="Athearn Big Boy and Challenger NScale" replacementFamily="Athearn" maxTotalCurrent="1.5A" extFnsMRC="yes"  comment="deprecated">
         <!-- note All 28 functions are NMRA compatible -->
         <size length="45" width="18" height="6.2" units="mm"/>
       </model>
@@ -79,7 +84,7 @@
       <!-- CV=19 -->
      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <!-- CV=21 -->
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv21_lsb_MRC.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv21_lsb.xml"/>
       <!-- CV=29 -->
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
@@ -89,7 +94,7 @@
         <label>Master Volume Control</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable CV="50" item="Sound Option 2" default="5" tooltip="range 0-13" comment="MRC claims Range 0-13 on Challenger, 0-18 on Big Boy">
+      <variable CV="50" item="Sound Option 2" default="5" tooltip="range 0-18" comment="MRC claims Range 0-14 on Challenger, 0-18 on Big Boy">
         <decVal max="18"/>
         <label>Whistle Type</label>
         <comment>MRC claims Range 0-13 on Challenger, 0-18 on Big Boy</comment>
@@ -129,7 +134,7 @@
         <label>Brake Squeal Volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable item="Sound Setting 8" CV="58" default="3" tooltip="range 0-3" comment="Range 0-3">
+      <variable CV="58" item="Sound Setting 8" default="3" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Air Release Volume</label>
         <comment>Range 0-3</comment>
@@ -164,26 +169,14 @@
         <label>Rail Clack Volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable CV="105" item="User Id #1" default="0" tooltip="range 0-255, code your own ID">
-        <decVal max="255"/>
-        <label>User ID #1</label>
-        <label xml:lang="it">Id Utente #1</label>
-        <label xml:lang="fr">CV Utilisateur #1</label>
-        <label xml:lang="de">Benutzer-CV #1</label>
-      </variable>
-      <variable CV="106" item="User Id #2" default="0" tooltip="range 0-255, code your own ID">
-        <decVal max="255"/>
-        <label>User ID #2</label>
-        <label xml:lang="it">Id Utente #2</label>
-        <label xml:lang="fr">CV Utilisateur #2</label>
-        <label xml:lang="de">Benutzer-CV #2</label>
-      </variable>
+      <!-- CV=105, 106 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <variable CV="112" item="Sound Setting 16" default="3" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Conductor volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable item="Global lighting option 1" CV="113" default="1" tooltip="range 0(constant) or 1(directional)(Default)">
+      <variable CV="113" item="Global lighting option 1" default="1" tooltip="range 0(constant) or 1(directional)(Default)">
         <enumVal>
           <enumChoice choice="Disable, constant lights">
             <choice>Disable, constant lights</choice>
@@ -199,7 +192,7 @@
         <label>Air Pump Type</label>
         <comment>Range 0-2</comment>
       </variable>
-      <variable item="Sound Option 7" CV="115" default="1" tooltip="range 0(off) or 1(enable)(Default)" comment="MRC docs, not on Big Boy">
+      <variable CV="115" item="Sound Option 7" default="1" tooltip="range 0(off) or 1(enable)(Default)" comment="MRC docs, not on Big Boy">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Air brake squeal enable/disable</label>
         <comment>MRC docs, not on Big Boy</comment>
@@ -256,22 +249,25 @@
   </decoder>
   <pane>
     <column>
-      <label>
-        <text>MRC decoders for Athearn N Challenger and Big Boy locos</text>
-      </label>
-      <label>
-        <text> </text>
-      </label>
-      <display item="Functions Respond To Address"/>
-      <label>
-        <text> </text>
-      </label>
-      <label>
-        <text>Controls whether this loco's functions (lights) respond in the consist,</text>
-      </label>
-      <label>
-        <text>or just to this loco's unique address</text>
-      </label>
+      <label><text>MRC decoders for Athearn N Challenger and H0 &amp; N Big Boy locos</text></label>
+      <separator/>
+      <label><text> </text></label>
+      <display item="Consist Function"/>
+      <label><text> </text></label>
+      <label><text>Controls whether this loco's functions (lights) respond in the consist,</text></label>
+      <label><text>or just to this loco's unique address</text></label>
+      <label><text> </text></label>
+      <separator/>
+      <label><text> </text></label>
+      <label><text>MRC notes: </text></label>
+      <label><text> </text></label>
+      <label><text>This decoder supports all program methods including register mode, paged mode, CV programming, </text></label>
+      <label><text>direct mode and programming on the main (OPS mode programming). Program the locomotive the same </text></label>
+      <label><text>way you would program any other NMRA compatible decoder with your DCC system. </text></label>
+      <label><text> </text></label>
+      <label><text>Some DCC systems do not have enough power on the Program Track for programming sound decoders. </text></label>
+      <label><text>If your system is one of these, there are Program Track Boosters available from aftermarket DCC </text></label>
+      <label><text>suppliers. </text></label>
     </column>
     <name>MRC</name>
   </pane>

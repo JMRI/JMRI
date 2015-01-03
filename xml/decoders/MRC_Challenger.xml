@@ -15,10 +15,17 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Bob Jacobsen" version="1" lastUpdated="20071221"/>
   <!-- made from the MRC_1645 file -->
+  <version author="Alain Le Marchand" version="2" lastUpdated="20150103"/>
+  <!-- redundant file with MRC_Athearn_Challenger.xml -->
+  <!-- hide this one and upgrade to the other definition -->
+  <!-- No CV21 in this model. Removed MRC pane with "Functions Respond To Address" -->
   <decoder>
     <family name="Athearn Genesis Challenger" mfg="MRC" lowVersionID="32" highVersionID="32">
-      <model model="Athearn Genesis Challenger" numOuts="2" numFns="19" maxTotalCurrent="1.5A" extFnsNmraF13="yes">
-                </model>
+      <model show="no" model="Athearn Genesis Challenger" replacementModel="Athearn Genesis Challenger" replacementFamily="Athearn" numOuts="2" numFns="12" maxTotalCurrent="1.5A" extFnsNmraF13="yes" comment="deprecated decoder definition">
+      </model>
+      <!-- Dummy model to workaround show="no" not working if only one model in the family -->
+      <model show="no" model="Athearn Genesis Challenger Dummy" replacementModel="Athearn Genesis Challenger" replacementFamily="Athearn" numOuts="2" numFns="12" maxTotalCurrent="1.5A" extFnsNmraF13="yes">
+      </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <!-- Note Mfg. recognizes CV read back is not 100% correct -->
@@ -101,10 +108,12 @@
       </factReset>
     </resets>
   </decoder>
+  <!-- no function CV in this decoder
   <pane>
     <column>
       <display item="Functions Respond To Address"/>
     </column>
     <name>MRC</name>
   </pane>
+  -->
 </decoder-config>

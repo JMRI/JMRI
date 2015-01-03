@@ -15,13 +15,30 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Bob Jacobsen" version="1" lastUpdated="20071221"/>
   <version author="Marc Fournier forfoum@videotron.ca" version="2" lastUpdated="20090624"/>
+  <version author="Alain Le Marchand" version="3" lastUpdated="20150103"/>
   <!-- Ver 1  Made from the MRC_1645 file                             -->
   <!-- Ver 2  Cleanup, Move consist related items in to consist tab   -->
+  <!-- Ver 3  Add function labels                                     -->
   <decoder>
     <family name="Athearn" mfg="MRC" lowVersionID="32" highVersionID="32">
-      <model model="Athearn Genesis Challenger" numOuts="2" numFns="12" maxTotalCurrent="1.5A" extFnsNmraF13="yes">
-        <!-- note All 28 functions are NMRA compatible -->
+      <model model="Athearn Genesis Challenger" numOuts="2" numFns="12" maxTotalCurrent="1.5A" extFnsNmraF13="yes" formFactor="HO" comment="for HO models released from 2003 to 2007">
+        <!-- note All 12 functions are NMRA compatible -->
       </model>
+      <functionlabels>
+        <functionlabel num="0" lockable="true" functionImage="" functionImageSelected="">Lights (*2 Master volume)</functionlabel>
+        <functionlabel num="1" lockable="true" functionImage="" functionImageSelected="">Bell</functionlabel>
+        <functionlabel num="2" lockable="true" functionImage="" functionImageSelected="">Whistle</functionlabel>
+        <functionlabel num="3" lockable="false" functionImage="" functionImageSelected="">Air Release</functionlabel>
+        <functionlabel num="4" lockable="false" functionImage="" functionImageSelected="">Coupler</functionlabel>
+        <functionlabel num="5" lockable="false" functionImage="" functionImageSelected="">Brake Squeal</functionlabel>
+        <functionlabel num="6" lockable="false" functionImage="" functionImageSelected="">Conductor</functionlabel>
+        <functionlabel num="7" lockable="false" functionImage="" functionImageSelected="">Fire Box</functionlabel>
+        <functionlabel num="8" lockable="false" functionImage="" functionImageSelected="">Sand Release</functionlabel>
+        <functionlabel num="9" lockable="false" functionImage="" functionImageSelected="">Cylinder Cock/Flange Squeal</functionlabel>
+        <functionlabel num="10" lockable="false" functionImage="" functionImageSelected="">Water</functionlabel>
+        <functionlabel num="11" lockable="false" functionImage="" functionImageSelected="">Blower Hiss</functionlabel>
+        <functionlabel num="12" lockable="true" functionImage="" functionImageSelected="">Master Volume</functionlabel>
+      </functionlabels>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <!-- Note Mfg. recognizes CV read back is not 100% correct -->
