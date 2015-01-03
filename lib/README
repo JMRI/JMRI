@@ -75,6 +75,14 @@ jdom-2.0.5.jar
  version 2.0.5
  from <jdom.org>
  
+jackson-annotations-2.0.6.jar
+jackson-core-2.0.6.jar
+jackson-databind-2.0.6.jar
+    JSON processing library com.fasterxml.jackson
+    version 2.0.6
+    see http://www.journaldev.com/2324/jackson-json-processing-api-in-java-example-tutorial
+    JavaDoc http://fasterxml.github.io/jackson-databind/javadoc/2.0.6
+
 jython.jar
  version 2.5.3 from jython.org (was jython-2.5.3.jar)
  
