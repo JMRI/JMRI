@@ -392,8 +392,6 @@
                target="${jre_version}"
                includeantruntime="false"
                fork="true"
-               memoryinitialsize="256m"
-               memorymaximumsize="256m"
                deprecation="${deprecation}"
                debug="${java.debugging}">
             <classpath refid="compile.class.path"/>
