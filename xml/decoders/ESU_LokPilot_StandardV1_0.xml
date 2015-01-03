@@ -13,8 +13,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Mathias Rufer mathias.rufer@gmx.net" version="0.9" lastUpdated="20141002"/>
-  <version author="Dave Heap dgheap@gmail.com" version="1.0" lastUpdated="20150101"/>
+  <version author="Mathias Rufer" version="0.9" lastUpdated="20141002"/>
+  <version author="Dave Heap" version="1.0" lastUpdated="20150103"/>
   <decoder>
     <family name="ESU LokPilot Standard V1.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
       <model model="LokPilot Standard" numOuts="6" maxInputVolts="25 V" maxMotorCurrent="0.9 A" maxTotalCurrent="1.4 A" formFactor="HO">
@@ -321,7 +321,6 @@
       <factReset label="HARD RESET all CVs reset to default values" CV="8" default="8"/>
     </resets>
   </decoder>
-  <!-- TODO should be adapted for Lokpilot Standard -->
   <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4extraPane.xml"/>
 </decoder-config>
