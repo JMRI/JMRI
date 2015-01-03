@@ -25,19 +25,19 @@
         <!-- note All 12 functions are NMRA compatible -->
       </model>
       <functionlabels>
-        <functionlabel num="0" lockable="true" functionImage="" functionImageSelected="">Lights (*2 Master volume)</functionlabel>
-        <functionlabel num="1" lockable="true" functionImage="" functionImageSelected="">Bell</functionlabel>
-        <functionlabel num="2" lockable="true" functionImage="" functionImageSelected="">Whistle</functionlabel>
-        <functionlabel num="3" lockable="false" functionImage="" functionImageSelected="">Air Release</functionlabel>
-        <functionlabel num="4" lockable="false" functionImage="" functionImageSelected="">Coupler</functionlabel>
-        <functionlabel num="5" lockable="false" functionImage="" functionImageSelected="">Brake Squeal</functionlabel>
-        <functionlabel num="6" lockable="false" functionImage="" functionImageSelected="">Conductor</functionlabel>
-        <functionlabel num="7" lockable="false" functionImage="" functionImageSelected="">Fire Box</functionlabel>
-        <functionlabel num="8" lockable="false" functionImage="" functionImageSelected="">Sand Release</functionlabel>
-        <functionlabel num="9" lockable="false" functionImage="" functionImageSelected="">Cylinder Cock/Flange Squeal</functionlabel>
-        <functionlabel num="10" lockable="false" functionImage="" functionImageSelected="">Water</functionlabel>
-        <functionlabel num="11" lockable="false" functionImage="" functionImageSelected="">Blower Hiss</functionlabel>
-        <functionlabel num="12" lockable="true" functionImage="" functionImageSelected="">Master Volume</functionlabel>
+        <functionlabel num="0" lockable="true">Lights (*2 Master volume)</functionlabel>
+        <functionlabel num="1" lockable="true">Bell</functionlabel>
+        <functionlabel num="2" lockable="true">Whistle</functionlabel>
+        <functionlabel num="3" lockable="false">Air Release</functionlabel>
+        <functionlabel num="4" lockable="false">Coupler</functionlabel>
+        <functionlabel num="5" lockable="false">Brake Squeal</functionlabel>
+        <functionlabel num="6" lockable="false">Conductor</functionlabel>
+        <functionlabel num="7" lockable="false">Fire Box</functionlabel>
+        <functionlabel num="8" lockable="false">Sand Release</functionlabel>
+        <functionlabel num="9" lockable="false">Cylinder Cock/Flange Squeal</functionlabel>
+        <functionlabel num="10" lockable="false">Water</functionlabel>
+        <functionlabel num="11" lockable="false">Blower Hiss</functionlabel>
+        <functionlabel num="12" lockable="true">Master Volume</functionlabel>
       </functionlabels>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>

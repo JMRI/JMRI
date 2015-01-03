@@ -41,26 +41,26 @@
         <!-- note All 28 functions are NMRA compatible -->
         <size length="45" width="18" height="6.2" units="mm"/>
         <functionlabels>
-            <functionlabel num="9" lockable="false" functionImage="" functionImageSelected="">Metal Crank</functionlabel>
-            <functionlabel num="15" lockable="false" functionImage="" functionImageSelected="">Loco Sounds</functionlabel>
-            <functionlabel num="17" lockable="false" functionImage="" functionImageSelected="">Crash</functionlabel>
-            <functionlabel num="18" lockable="false" functionImage="" functionImageSelected="">Injector</functionlabel>
-            <functionlabel num="26" lockable="false" functionImage="" functionImageSelected="">Loco Sounds</functionlabel>
-            <functionlabel num="27" lockable="false" functionImage="" functionImageSelected="">Loco Sounds</functionlabel>
-            <functionlabel num="28" lockable="false" functionImage="" functionImageSelected="">Scraping coal shovel</functionlabel>
+            <functionlabel num="9" lockable="false">Metal Crank</functionlabel>
+            <functionlabel num="15" lockable="false">Loco Sounds</functionlabel>
+            <functionlabel num="17" lockable="false">Crash</functionlabel>
+            <functionlabel num="18" lockable="false">Injector</functionlabel>
+            <functionlabel num="26" lockable="false">Loco Sounds</functionlabel>
+            <functionlabel num="27" lockable="false">Loco Sounds</functionlabel>
+            <functionlabel num="28" lockable="false">Scraping coal shovel</functionlabel>
         </functionlabels>
       </model>
       <model model="Athearn N-scale Challenger" maxTotalCurrent="1.5A" extFnsMRC="yes" comment="N-Scale only">
         <!-- note All 28 functions are NMRA compatible -->
         <size length="45" width="18" height="6.2" units="mm"/>
         <functionlabels>
-            <functionlabel num="9" lockable="false" functionImage="" functionImageSelected="">Steam</functionlabel>
-            <functionlabel num="15" lockable="false" functionImage="" functionImageSelected="">Air Release</functionlabel>
-            <functionlabel num="17" lockable="false" functionImage="" functionImageSelected="">Safety Air Pump</functionlabel>
-            <functionlabel num="18" lockable="false" functionImage="" functionImageSelected="">Sand</functionlabel>
-            <functionlabel num="26" lockable="false" functionImage="" functionImageSelected="">Coupler</functionlabel>
-            <functionlabel num="27" lockable="false" functionImage="" functionImageSelected="">Fire Box Close</functionlabel>
-            <functionlabel num="28" lockable="false" functionImage="" functionImageSelected="">Fire Box Open</functionlabel>
+            <functionlabel num="9" lockable="false">Steam</functionlabel>
+            <functionlabel num="15" lockable="false">Air Release</functionlabel>
+            <functionlabel num="17" lockable="false">Safety Air Pump</functionlabel>
+            <functionlabel num="18" lockable="false">Sand</functionlabel>
+            <functionlabel num="26" lockable="false">Coupler</functionlabel>
+            <functionlabel num="27" lockable="false">Fire Box Close</functionlabel>
+            <functionlabel num="28" lockable="false">Fire Box Open</functionlabel>
         </functionlabels>
       </model>
       <model model="Athearn Genesis 4-8-4 FEF" maxTotalCurrent="1.5A" extFnsMRC="yes" comment="HO-Scale">
@@ -68,38 +68,38 @@
         <!-- same functions as Big Boy                  -->
         <size length="45" width="18" height="6.2" units="mm"/>
         <functionlabels>
-            <functionlabel num="9" lockable="false" functionImage="" functionImageSelected="">Metal Crank</functionlabel>
-            <functionlabel num="15" lockable="false" functionImage="" functionImageSelected="">Loco Sounds</functionlabel>
-            <functionlabel num="17" lockable="false" functionImage="" functionImageSelected="">Crash</functionlabel>
-            <functionlabel num="18" lockable="false" functionImage="" functionImageSelected="">Injector</functionlabel>
-            <functionlabel num="26" lockable="false" functionImage="" functionImageSelected="">Loco Sounds</functionlabel>
-            <functionlabel num="27" lockable="false" functionImage="" functionImageSelected="">Loco Sounds</functionlabel>
-            <functionlabel num="28" lockable="false" functionImage="" functionImageSelected="">Scraping coal shovel</functionlabel>
+            <functionlabel num="9" lockable="false">Metal Crank</functionlabel>
+            <functionlabel num="15" lockable="false">Loco Sounds</functionlabel>
+            <functionlabel num="17" lockable="false">Crash</functionlabel>
+            <functionlabel num="18" lockable="false">Injector</functionlabel>
+            <functionlabel num="26" lockable="false">Loco Sounds</functionlabel>
+            <functionlabel num="27" lockable="false">Loco Sounds</functionlabel>
+            <functionlabel num="28" lockable="false">Scraping coal shovel</functionlabel>
         </functionlabels>
       </model>
       <functionlabels>
-        <functionlabel num="0" lockable="true" functionImage="" functionImageSelected="">Lights (*2 Master volume)</functionlabel>
-        <functionlabel num="1" lockable="true" functionImage="" functionImageSelected="">Bell</functionlabel>
-        <functionlabel num="2" lockable="true" functionImage="" functionImageSelected="">Whistle</functionlabel>
-        <functionlabel num="3" lockable="false" functionImage="" functionImageSelected="">Air Release</functionlabel>
-        <functionlabel num="4" lockable="false" functionImage="" functionImageSelected="">Coupler</functionlabel>
-        <functionlabel num="5" lockable="false" functionImage="" functionImageSelected="">Brake Squeal</functionlabel>
-        <functionlabel num="6" lockable="false" functionImage="" functionImageSelected="">Conductor/Toggle Chuff</functionlabel>
-        <functionlabel num="7" lockable="false" functionImage="" functionImageSelected="">Fire Box</functionlabel>
-        <functionlabel num="8" lockable="false" functionImage="" functionImageSelected="">Whistle Select</functionlabel>
-        <functionlabel num="10" lockable="false" functionImage="" functionImageSelected="">Water</functionlabel>
-        <functionlabel num="11" lockable="false" functionImage="" functionImageSelected="">Blower Hiss</functionlabel>
-        <functionlabel num="12" lockable="false" functionImage="" functionImageSelected="">Master Volume</functionlabel>
-        <functionlabel num="13" lockable="false" functionImage="" functionImageSelected="">Coal Auger</functionlabel>
-        <functionlabel num="14" lockable="false" functionImage="" functionImageSelected="">Air Hose Firing</functionlabel>
-        <functionlabel num="16" lockable="false" functionImage="" functionImageSelected="">Shoveling</functionlabel>
-        <functionlabel num="19" lockable="false" functionImage="" functionImageSelected="">Bell Select</functionlabel>
-        <functionlabel num="20" lockable="false" functionImage="" functionImageSelected="">Bell Ring Rate</functionlabel>
-        <functionlabel num="21" lockable="false" functionImage="" functionImageSelected="">Bell Volume</functionlabel>
-        <functionlabel num="22" lockable="false" functionImage="" functionImageSelected="">Whistle Volume</functionlabel>
-        <functionlabel num="23" lockable="false" functionImage="" functionImageSelected="">Chuff Volume</functionlabel>
-        <functionlabel num="24" lockable="false" functionImage="" functionImageSelected="">Chuff Select</functionlabel>
-        <functionlabel num="25" lockable="false" functionImage="" functionImageSelected="">Air Brake Release</functionlabel>
+        <functionlabel num="0" lockable="true">Lights (*2 Master volume)</functionlabel>
+        <functionlabel num="1" lockable="true">Bell</functionlabel>
+        <functionlabel num="2" lockable="true">Whistle</functionlabel>
+        <functionlabel num="3" lockable="false">Air Release</functionlabel>
+        <functionlabel num="4" lockable="false">Coupler</functionlabel>
+        <functionlabel num="5" lockable="false">Brake Squeal</functionlabel>
+        <functionlabel num="6" lockable="false">Conductor/Toggle Chuff</functionlabel>
+        <functionlabel num="7" lockable="false">Fire Box</functionlabel>
+        <functionlabel num="8" lockable="false">Whistle Select</functionlabel>
+        <functionlabel num="10" lockable="false">Water</functionlabel>
+        <functionlabel num="11" lockable="false">Blower Hiss</functionlabel>
+        <functionlabel num="12" lockable="false">Master Volume</functionlabel>
+        <functionlabel num="13" lockable="false">Coal Auger</functionlabel>
+        <functionlabel num="14" lockable="false">Air Hose Firing</functionlabel>
+        <functionlabel num="16" lockable="false">Shoveling</functionlabel>
+        <functionlabel num="19" lockable="false">Bell Select</functionlabel>
+        <functionlabel num="20" lockable="false">Bell Ring Rate</functionlabel>
+        <functionlabel num="21" lockable="false">Bell Volume</functionlabel>
+        <functionlabel num="22" lockable="false">Whistle Volume</functionlabel>
+        <functionlabel num="23" lockable="false">Chuff Volume</functionlabel>
+        <functionlabel num="24" lockable="false">Chuff Select</functionlabel>
+        <functionlabel num="25" lockable="false">Air Brake Release</functionlabel>
       </functionlabels>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
