@@ -19,7 +19,7 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
 	 * 
 	 */
 	private static final long serialVersionUID = -8966988787277300571L;
-	private MyMouseAdapter myMouseAdapter = null;
+	private transient MyMouseAdapter myMouseAdapter = null;
     private String dropFolder;
 
     /**
