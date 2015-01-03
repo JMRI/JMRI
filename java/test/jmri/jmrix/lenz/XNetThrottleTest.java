@@ -15,6 +15,8 @@ import junit.framework.TestSuite;
  */
 public class XNetThrottleTest extends TestCase {
 
+    static final int RELEASE_TIME = 100;
+
     public void testCtor() {
        // infrastructure objects
        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
@@ -72,7 +74,7 @@ public class XNetThrottleTest extends TestCase {
 	// now we're going to wait and verify the throttle eventually has 
         // its status set to idle.
     jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
-        jmri.util.JUnitUtil.releaseThread(this, 1000);  // give the messages
+        jmri.util.JUnitUtil.releaseThread(this, RELEASE_TIME);  // give the messages
                                                         // some time to process;
         
         Assert.assertEquals("Throttle in THROTTLEIDLE state",XNetThrottle.THROTTLEIDLE,t.requestState);

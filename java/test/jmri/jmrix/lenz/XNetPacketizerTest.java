@@ -13,6 +13,8 @@ import junit.framework.TestCase;
  */
 public class XNetPacketizerTest extends TestCase {
 
+    static final int RELEASE_TIME = 100;
+
     /**
      * Local test class to make XNetPacketizer more felicitous to test
      */
@@ -38,7 +40,7 @@ public class XNetPacketizerTest extends TestCase {
         XNetMessage m = XNetMessage.getTurnoutCommandMsg(22, true, false, true);
         m.setTimeout(1);  // don't want to wait a long time
         c.sendXNetMessage(m, null);
-	    jmri.util.JUnitUtil.releaseThread(this, 100); // Allow time for other threads to send 4 characters
+	    jmri.util.JUnitUtil.releaseThread(this, RELEASE_TIME); // Allow time for other threads to send 4 characters
         Assert.assertEquals("total length ", 4, p.tostream.available());
         Assert.assertEquals("Char 0", 0x52, p.tostream.readByte()&0xff);
         Assert.assertEquals("Char 1", 0x05, p.tostream.readByte()&0xff);
@@ -108,7 +110,7 @@ public class XNetPacketizerTest extends TestCase {
         XNetMessage m1 = XNetMessage.getTurnoutCommandMsg(23, true, false, true);
         c.sendXNetMessage(m1, l2);
 
-	jmri.util.JUnitUtil.releaseThread(this, 500); // Allow time for messages to process into the system
+	jmri.util.JUnitUtil.releaseThread(this, RELEASE_TIME); // Allow time for messages to process into the system
 
         // and now we verify l1 is the last sender.
 	Assert.assertEquals("itteration " +i + " Last Sender l1, before l1 reply",l1,c.getLastSender());
@@ -126,7 +128,7 @@ public class XNetPacketizerTest extends TestCase {
         Assert.assertTrue("itteration " + i + " reply received ", waitForReply(l1));
         Assert.assertEquals("itteration " + i +" first char of reply to l1", 0x01, l1.rcvdRply.getElement(0));
 
-	jmri.util.JUnitUtil.releaseThread(this, 500); // Allow time for messages to process into the system
+	jmri.util.JUnitUtil.releaseThread(this, RELEASE_TIME); // Allow time for messages to process into the system
         
         // and now we verify l2 is the last sender.
 	Assert.assertEquals("Last Sender l2",l2,c.getLastSender());
@@ -141,7 +143,7 @@ public class XNetPacketizerTest extends TestCase {
         // check that the message was picked up by the read thread.
         Assert.assertTrue("itteration "+i+" reply received ", waitForReply(l2));
         Assert.assertEquals("itteration "+i+" first char of reply to l2", 0x01, l2.rcvdRply.getElement(0));
-	jmri.util.JUnitUtil.releaseThread(this, 500); // Allow time for messages to process into the system
+	jmri.util.JUnitUtil.releaseThread(this, RELEASE_TIME); // Allow time for messages to process into the system
 	l.rcvdRply=null;
 	l1.rcvdRply=null;
 	l2.rcvdRply=null;
