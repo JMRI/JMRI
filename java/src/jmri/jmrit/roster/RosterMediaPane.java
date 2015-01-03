@@ -56,7 +56,16 @@ public class RosterMediaPane extends JPanel {
 
     final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
 
+    /**
+     * This constructor allows the panel to be used in visual bean editors, but
+     * should not be used in code.
+     */
+    public RosterMediaPane() {
+        super();
+    }
+
     public RosterMediaPane(RosterEntry r) {
+        super();
         _imageFilePath = new EditableResizableImagePanel(r.getImagePath(), 320, 240);
         _imageFilePath.setDropFolder(LocoFile.getFileLocation());
         _imageFilePath.setToolTipText(rb.getString("MediaRosterImageToolTip"));
@@ -167,10 +176,10 @@ public class RosterMediaPane extends JPanel {
     private class RosterAttributesTableModel extends AbstractTableModel {
 
         /**
-		 * 
-		 */
-		private static final long serialVersionUID = -3682548535759237390L;
-		Vector<KeyValueModel> attributes;
+         *
+         */
+        private static final long serialVersionUID = -3682548535759237390L;
+        Vector<KeyValueModel> attributes;
         String titles[];
         boolean wasModified;
 
