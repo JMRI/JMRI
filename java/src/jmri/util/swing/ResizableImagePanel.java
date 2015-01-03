@@ -31,6 +31,8 @@ import org.slf4j.LoggerFactory;
  */
 public class ResizableImagePanel extends JPanel implements ComponentListener {
 
+    public static final String IMAGE_PATH = "imagePath";
+    
     /**
      *
      */
@@ -142,6 +144,7 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
      * @param s
      */
     public void setImagePath(String s) {
+        String old = _imagePath;
         if (s != null && !s.equals("")) {
             _imagePath = s;
         } else {
@@ -168,6 +171,7 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
         if (getParent() != null) {
             getParent().repaint();
         }
+        this.firePropertyChange(IMAGE_PATH, old, _imagePath);
     }
 
     //
