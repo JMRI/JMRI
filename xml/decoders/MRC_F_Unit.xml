@@ -15,10 +15,16 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Bob Jacobsen" version="1" lastUpdated="20071221"/>
   <!-- made from the MRC_1645 file -->
+  <version author="Alain Le Marchand" version="2" lastUpdated="20150104"/>
+  <!-- redundant file with MRC_Athearn_F_Unit.xml -->
+  <!-- hide this one and upgrade to the other definition -->
   <decoder>
     <family name="Athearn Genesis F Unit" mfg="MRC" lowVersionID="32" highVersionID="32">
-      <model model="Athearn Genesis F Unit" numOuts="2" numFns="19" maxTotalCurrent="1.5A" extFnsNmraF13="yes">
-                </model>
+      <model show="no" model="Athearn Genesis F Unit" replacementModel="Athearn Genesis F Unit" replacementFamily="Athearn" numOuts="2" numFns="19" maxTotalCurrent="1.5A" extFnsNmraF13="yes">
+      </model>
+      <!-- Dummy model to workaround show="no" not working if only one model in the family -->
+      <model show="no" model="Athearn Genesis F Unit Dummy" numOuts="2" numFns="19" maxTotalCurrent="1.5A" extFnsNmraF13="yes">
+      </model>                   
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
@@ -202,7 +208,7 @@
   </decoder>
   <pane>
     <column>
-      <display item="Functions Respond To Address"/>
+      <display item="Functions Respond to Address"/>
     </column>
     <name>MRC</name>
   </pane>
