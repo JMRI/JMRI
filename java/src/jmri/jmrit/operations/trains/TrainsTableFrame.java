@@ -335,19 +335,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 			trainManager.buildSelectedTrains(getSortByList());
 		}
 		if (ae.getSource() == printButton) {
-			List<Train> trains = getSortByList();
-			for (Train train : trains) {
-				if (train.isBuildEnabled() && !train.printManifestIfBuilt() && trainManager.isBuildMessagesEnabled()) {
-					JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
-							.getMessage("NeedToBuildBeforePrinting"), new Object[] {
-							train.getName(),
-							(trainManager.isPrintPreviewEnabled() ? Bundle.getMessage("preview") : Bundle
-									.getMessage("print")) }), MessageFormat.format(Bundle
-							.getMessage("CanNotPrintManifest"),
-							new Object[] { trainManager.isPrintPreviewEnabled() ? Bundle.getMessage("preview") : Bundle
-									.getMessage("print") }), JOptionPane.ERROR_MESSAGE);
-				}
-			}
+			trainManager.printSelectedTrains(getSortByList());
 		}
 		if (ae.getSource() == openFileButton) {
 			// open the csv files
@@ -411,24 +399,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 			tslef.initComponents();
 		}
 		if (ae.getSource() == terminateButton) {
-			List<Train> trains = getSortByList();
-			for (Train train : trains) {
-				if (train.isBuildEnabled() && train.isBuilt()) {
-					if (train.isPrinted()) {
-						train.terminate();
-					} else {
-						int status = JOptionPane.showConfirmDialog(null, Bundle
-								.getMessage("WarningTrainManifestNotPrinted"), MessageFormat
-								.format(Bundle.getMessage("TerminateTrain"), new Object[] { train.getName(),
-										train.getDescription() }), JOptionPane.YES_NO_OPTION);
-						if (status == JOptionPane.YES_OPTION)
-							train.terminate();
-						// Quit?
-						if (status == JOptionPane.CLOSED_OPTION)
-							return;
-					}
-				}
-			}
+			trainManager.terminateSelectedTrains(getSortByList());
 		}
 		if (ae.getSource() == saveButton) {
 			storeValues();

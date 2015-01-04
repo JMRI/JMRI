@@ -13,6 +13,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 
 import org.jdom2.Attribute;
 import org.jdom2.Element;
@@ -873,22 +874,46 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	}
 	
 	public boolean printSelectedTrains(List<Train> trains) {
+		boolean status = true;
 		for (Train train : trains) {
-			if (train.isBuildEnabled() && !train.printManifestIfBuilt())
-				return false; // failed to print all selected trains
+			if (train.isBuildEnabled()) {
+				if (train.printManifestIfBuilt())
+					continue;
+				status = false; // failed to print all selected trains
+				if (isBuildMessagesEnabled()) {
+					JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
+							.getMessage("NeedToBuildBeforePrinting"), new Object[] { train.getName(),
+							(isPrintPreviewEnabled() ? Bundle.getMessage("preview") : Bundle.getMessage("print")) }),
+							MessageFormat.format(Bundle.getMessage("CanNotPrintManifest"),
+									new Object[] { isPrintPreviewEnabled() ? Bundle.getMessage("preview") : Bundle
+											.getMessage("print") }), JOptionPane.ERROR_MESSAGE);
+				}
+			}
 		}
-		return true;
+		return status;
 	}
 	
 	public boolean terminateSelectedTrains(List<Train> trains) {
+		boolean status = true;
 		for (Train train : trains) {
-			if (train.isBuildEnabled() && train.isBuilt())
-				if (train.isPrinted())
+			if (train.isBuildEnabled() && train.isBuilt()) {
+				if (train.isPrinted()) {
 					train.terminate();
-				else
-					return false; // train manifest not printed
+				} else {
+					status = false;
+					int response = JOptionPane.showConfirmDialog(null, Bundle
+							.getMessage("WarningTrainManifestNotPrinted"), MessageFormat.format(Bundle
+							.getMessage("TerminateTrain"), new Object[] { train.getName(), train.getDescription() }),
+							JOptionPane.YES_NO_OPTION);
+					if (response == JOptionPane.YES_OPTION)
+						train.terminate();
+					// Quit?
+					if (response == JOptionPane.CLOSED_OPTION)
+						break;
+				}
+			}
 		}
-		return true;
+		return status;
 	}
 
 	public void load(Element root) {

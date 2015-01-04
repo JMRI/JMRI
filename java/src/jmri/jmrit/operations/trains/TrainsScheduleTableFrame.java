@@ -9,7 +9,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.text.MessageFormat;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -19,7 +18,6 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
@@ -243,42 +241,13 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 			trainManager.buildSelectedTrains(getSortByList());
 		}
 		if (ae.getSource() == printButton) {
-			List<Train> trains = getSortByList();
-			for (Train train : trains) {
-				if (train.isBuildEnabled() && !train.printManifestIfBuilt() && trainManager.isBuildMessagesEnabled()) {
-					JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
-							.getMessage("NeedToBuildBeforePrinting"), new Object[] {
-							train.getName(),
-							(trainManager.isPrintPreviewEnabled() ? Bundle.getMessage("preview") : Bundle
-									.getMessage("print")) }), MessageFormat.format(Bundle
-							.getMessage("CanNotPrintManifest"),
-							new Object[] { trainManager.isPrintPreviewEnabled() ? Bundle.getMessage("preview") : Bundle
-									.getMessage("print") }), JOptionPane.ERROR_MESSAGE);
-				}
-			}
+			trainManager.printSelectedTrains(getSortByList());
 		}
 		if (ae.getSource() == switchListsButton) {
 			buildSwitchList();
 		}
 		if (ae.getSource() == terminateButton) {
-			List<Train> trains = getSortByList();
-			for (Train train : trains) {
-				if (train.isBuildEnabled() && train.isBuilt()) {
-					if (train.isPrinted()) {
-						train.terminate();
-					} else {
-						int status = JOptionPane.showConfirmDialog(null, Bundle
-								.getMessage("WarningTrainManifestNotPrinted"), MessageFormat
-								.format(Bundle.getMessage("TerminateTrain"), new Object[] { train.getName(),
-										train.getDescription() }), JOptionPane.YES_NO_OPTION);
-						if (status == JOptionPane.YES_OPTION)
-							train.terminate();
-						// Quit?
-						if (status == JOptionPane.CLOSED_OPTION)
-							return;
-					}
-				}
-			}
+			trainManager.terminateSelectedTrains(getSortByList());
 		}
 		if (ae.getSource() == activateButton) {
 			trainManager.setTrainSecheduleActiveId(getSelectedScheduleId());
