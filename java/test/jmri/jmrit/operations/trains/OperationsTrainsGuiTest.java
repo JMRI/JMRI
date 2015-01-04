@@ -83,7 +83,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertNotNull("train edit frame", tef);
 
 		// create the TrainSwichListEditFrame
-		getHelper().enterClickAndLeave(new MouseEventData(this, f.printSwitchButton));
+		getHelper().enterClickAndLeave(new MouseEventData(this, f.switchListsButton));
 		jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
 		// confirm panel creation
 		JmriJFrame tsle = JmriJFrame.getFrame("Switch Lists by Location");

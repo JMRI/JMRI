@@ -24,7 +24,6 @@ import jmri.jmrit.operations.setup.Control;
  */
 public class TrainScheduleManager implements java.beans.PropertyChangeListener {
 
-	public static final String NONE = ""; // NOI18N
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "trainScheduleListLength"; // NOI18N
 
 	public TrainScheduleManager() {

@@ -321,6 +321,7 @@ public class Setup {
 	// property changes
 	public static final String SWITCH_LIST_CSV_PROPERTY_CHANGE = "setupSwitchListCSVChange";
 	public static final String MANIFEST_CSV_PROPERTY_CHANGE = "setupManifestCSVChange";
+	public static final String REAL_TIME_PROPERTY_CHANGE = "setupSwitchListRealTime";
 
 	public static boolean isMainMenuEnabled() {
 		OperationsSetupXml.instance(); // load file
@@ -750,7 +751,7 @@ public class Setup {
 	public static void setSwitchListRealTime(boolean b) {
 		boolean old = switchListRealTime;
 		switchListRealTime = b;
-		setDirtyAndFirePropertyChange("Switch List Real Time", old, b); // NOI18N
+		setDirtyAndFirePropertyChange(REAL_TIME_PROPERTY_CHANGE, old, b);
 	}
 
 	public static boolean isSwitchListRealTime() {

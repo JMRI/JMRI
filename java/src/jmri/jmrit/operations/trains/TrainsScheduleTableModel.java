@@ -120,9 +120,13 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
 	public synchronized int getRowCount() {
 		return sysList.size();
 	}
+	
+	public int getFixedColumn() {
+		return FIXEDCOLUMN;
+	}
 
 	public int getColumnCount() {
-		return FIXEDCOLUMN + scheduleManager.numEntries();
+		return getFixedColumn() + scheduleManager.numEntries();
 	}
 
 	public String getColumnName(int col) {
@@ -154,7 +158,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
 		case DESCRIPTIONCOLUMN:
 			return String.class;
 		}
-		if (col >= FIXEDCOLUMN && col < getColumnCount()) {
+		if (col >= getFixedColumn() && col < getColumnCount()) {
 			return Boolean.class;
 		}
 		return null;
@@ -241,10 +245,10 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
 		}
 	}
 
-	private TrainSchedule getSchedule(int col) {
-		if (col >= FIXEDCOLUMN && col < getColumnCount()) {
+	public TrainSchedule getSchedule(int col) {
+		if (col >= getFixedColumn() && col < getColumnCount()) {
 			List<TrainSchedule> trainSchedules = scheduleManager.getSchedulesByIdList();
-			TrainSchedule ts = trainSchedules.get(col - FIXEDCOLUMN);
+			TrainSchedule ts = trainSchedules.get(col - getFixedColumn());
 			return ts;
 		}
 		return null;
