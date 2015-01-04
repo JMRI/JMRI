@@ -494,7 +494,6 @@ public class DataSource extends jmri.util.JmriJFrame {
      *
      * @param s The new message to distribute
      */
-    @SuppressWarnings("unchecked")
 	protected void nextLine(String s) {
         // Check for version string
         if (s.startsWith("PRICOM Design DCC")) {
@@ -506,7 +505,7 @@ public class DataSource extends jmri.util.JmriJFrame {
         // make a copy of the listener vector so synchronized not needed for transmit
         Vector<DataListener> v;
         synchronized(this) {
-            v = (Vector<DataListener>) listeners.clone();
+            v = new Vector<DataListener>(listeners);
         }
         // forward to all listeners
         int cnt = v.size();
