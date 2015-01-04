@@ -1899,11 +1899,11 @@ public class ConnectivityUtil
                                                 tr = (TrackSegment)lt.getConnectD();
                                                 prevConnectType = LayoutEditor.SLIP_A;
                                             } else {
-                                                if((ls.getConnectC()!=null) && trackSegmentLeadsTo((TrackSegment)ls.getConnectC(), (Object)ls)){
+                                                if((ls.getConnectC()!=null) && trackSegmentLeadsTo((TrackSegment)ls.getConnectC(), ls)){
                                                     prevConnectType = LayoutEditor.SLIP_C;
                                                     setting = LayoutSlip.STATE_AC;
                                                     tr = (TrackSegment)lt.getConnectC();
-                                                } else if((ls.getConnectD()!=null) && trackSegmentLeadsTo((TrackSegment)ls.getConnectD(), (Object)ls)){
+                                                } else if((ls.getConnectD()!=null) && trackSegmentLeadsTo((TrackSegment)ls.getConnectD(), ls)){
                                                     prevConnectType = LayoutEditor.SLIP_D;
                                                     setting = LayoutSlip.STATE_AD;
                                                     tr = (TrackSegment)lt.getConnectD();
@@ -1942,11 +1942,11 @@ public class ConnectivityUtil
                                                         setting = LayoutSlip.STATE_BC;
                                                         prevConnectType = LayoutEditor.SLIP_B;
                                                     } else {
-                                                        if((ls.getConnectD()!=null) && trackSegmentLeadsTo((TrackSegment)ls.getConnectD(), (Object)ls)){
+                                                        if((ls.getConnectD()!=null) && trackSegmentLeadsTo((TrackSegment)ls.getConnectD(), ls)){
                                                             prevConnectType = LayoutEditor.SLIP_D;
                                                             setting = LayoutSlip.STATE_BD;
                                                             tr = (TrackSegment)lt.getConnectD();
-                                                        } else if((ls.getConnectC()!=null) && trackSegmentLeadsTo((TrackSegment)ls.getConnectC(), (Object)ls)){
+                                                        } else if((ls.getConnectC()!=null) && trackSegmentLeadsTo((TrackSegment)ls.getConnectC(), ls)){
                                                             prevConnectType = LayoutEditor.SLIP_C;
                                                             setting = LayoutSlip.STATE_BC;
                                                             tr = (TrackSegment)lt.getConnectC();
@@ -2000,11 +2000,11 @@ public class ConnectivityUtil
                                                         
                                                         
                                                     } else {
-                                                        if((ls.getConnectA()!=null) && trackSegmentLeadsTo((TrackSegment)ls.getConnectA(), (Object)ls)){
+                                                        if((ls.getConnectA()!=null) && trackSegmentLeadsTo((TrackSegment)ls.getConnectA(), ls)){
                                                             prevConnectType = LayoutEditor.SLIP_A;
                                                             setting = LayoutSlip.STATE_AC;
                                                             tr = (TrackSegment)lt.getConnectA();
-                                                        } else if((ls.getConnectB()!=null) && trackSegmentLeadsTo((TrackSegment)ls.getConnectB(), (Object)ls)){
+                                                        } else if((ls.getConnectB()!=null) && trackSegmentLeadsTo((TrackSegment)ls.getConnectB(), ls)){
                                                             prevConnectType = LayoutEditor.SLIP_B;
                                                             setting = LayoutSlip.STATE_BC;
                                                             tr = (TrackSegment)lt.getConnectB();
@@ -2050,11 +2050,11 @@ public class ConnectivityUtil
                                                 tr = (TrackSegment)lt.getConnectA();
                                                 prevConnectType = LayoutEditor.SLIP_A;
                                             } else {
-                                                if((ls.getConnectA()!=null) && trackSegmentLeadsTo((TrackSegment)ls.getConnectA(), (Object)ls)){
+                                                if((ls.getConnectA()!=null) && trackSegmentLeadsTo((TrackSegment)ls.getConnectA(), ls)){
                                                     prevConnectType = LayoutEditor.SLIP_A;
                                                     setting = LayoutSlip.STATE_AD;
                                                     tr = (TrackSegment)lt.getConnectA();
-                                                } else if((ls.getConnectB()!=null) && trackSegmentLeadsTo((TrackSegment)ls.getConnectB(), (Object)ls)){
+                                                } else if((ls.getConnectB()!=null) && trackSegmentLeadsTo((TrackSegment)ls.getConnectB(), ls)){
                                                     prevConnectType = LayoutEditor.SLIP_B;
                                                     setting = LayoutSlip.STATE_BD;
                                                     tr = (TrackSegment)lt.getConnectB();
@@ -2116,13 +2116,13 @@ public class ConnectivityUtil
                     // both connecting track segments continue in current block, must search further
                     else {
                         // check if continuing track leads to the next block
-                        if ((lt.getConnectB()!=null) && trackSegmentLeadsTo((TrackSegment)lt.getConnectB(),(Object)lt)) {
+                        if ((lt.getConnectB()!=null) && trackSegmentLeadsTo((TrackSegment)lt.getConnectB(),lt)) {
                             prevConnectType = LayoutEditor.TURNOUT_B;
                             setting = Turnout.CLOSED;
                             tr = (TrackSegment)lt.getConnectB();
                         }
                         // check if diverging track leads to the next block
-                        else if ((lt.getConnectC()!=null) && trackSegmentLeadsTo((TrackSegment)lt.getConnectC(),(Object)lt)) {
+                        else if ((lt.getConnectC()!=null) && trackSegmentLeadsTo((TrackSegment)lt.getConnectC(),lt)) {
                             prevConnectType = LayoutEditor.TURNOUT_C;
                             tr = (TrackSegment)lt.getConnectC();
                         }
@@ -2165,13 +2165,13 @@ public class ConnectivityUtil
                         // both connecting track segments continue in current block, must search further
                         else {
                             // check if continuing track leads to the next block
-                            if ((lt.getConnectA()!=null) && trackSegmentLeadsTo((TrackSegment)lt.getConnectA(),(Object)lt)) {
+                            if ((lt.getConnectA()!=null) && trackSegmentLeadsTo((TrackSegment)lt.getConnectA(),lt)) {
                                 prevConnectType = LayoutEditor.TURNOUT_A;
                                 setting = Turnout.CLOSED;
                                 tr = (TrackSegment)lt.getConnectA();
                             }
                             // check if diverging track leads to the next block
-                            else if ((lt.getConnectD()!=null) && trackSegmentLeadsTo((TrackSegment)lt.getConnectD(),(Object)lt)) {
+                            else if ((lt.getConnectD()!=null) && trackSegmentLeadsTo((TrackSegment)lt.getConnectD(),lt)) {
                                 prevConnectType = LayoutEditor.TURNOUT_D;
                                 tr = (TrackSegment)lt.getConnectD();
                             }
@@ -2221,13 +2221,13 @@ public class ConnectivityUtil
                         // both connecting track segments continue in current block, must search further
                         else {
                             // check if continuing track leads to the next block
-                            if ((lt.getConnectD()!=null) && trackSegmentLeadsTo((TrackSegment)lt.getConnectD(),(Object)lt)) {
+                            if ((lt.getConnectD()!=null) && trackSegmentLeadsTo((TrackSegment)lt.getConnectD(), lt)) {
                                 prevConnectType = LayoutEditor.TURNOUT_D;
                                 setting = Turnout.CLOSED;
                                 tr = (TrackSegment)lt.getConnectD();
                             }
                             // check if diverging track leads to the next block
-                            else if ((lt.getConnectA()!=null) && trackSegmentLeadsTo((TrackSegment)lt.getConnectA(),(Object)lt)) {
+                            else if ((lt.getConnectA()!=null) && trackSegmentLeadsTo((TrackSegment)lt.getConnectA(), lt)) {
                                 prevConnectType = LayoutEditor.TURNOUT_A;
                                 tr = (TrackSegment)lt.getConnectA();
                             }
@@ -2280,13 +2280,13 @@ public class ConnectivityUtil
                         // both connecting track segments continue in current block, must search further
                         else {
                             // check if continuing track leads to the next block
-                            if ((lt.getConnectC()!=null) && trackSegmentLeadsTo((TrackSegment)lt.getConnectC(),(Object)lt)) {
+                            if ((lt.getConnectC()!=null) && trackSegmentLeadsTo((TrackSegment)lt.getConnectC(), lt)) {
                                 prevConnectType = LayoutEditor.TURNOUT_C;
                                 setting = Turnout.CLOSED;
                                 tr = (TrackSegment)lt.getConnectC();
                             }
                             // check if diverging track leads to the next block
-                            else if ((lt.getConnectB()!=null) && trackSegmentLeadsTo((TrackSegment)lt.getConnectB(),(Object)lt)) {
+                            else if ((lt.getConnectB()!=null) && trackSegmentLeadsTo((TrackSegment)lt.getConnectB(), lt)) {
                                 prevConnectType = LayoutEditor.TURNOUT_B;
                                 tr = (TrackSegment)lt.getConnectB();
                             }
