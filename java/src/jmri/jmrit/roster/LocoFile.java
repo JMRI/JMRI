@@ -135,7 +135,7 @@ class LocoFile extends XmlFile {
                         cvObject = cvModel.allCvMap().get(piVal+"."+siVal+"."+iCv);
                     }
                     if (cvObject == null) {
-                        log.warn("     Didn't find a match during migration of ID=\"{}\", failed");
+                        log.warn("     Didn't find a match during migration of ID=\"{}\", failed", rosterName);
                         continue;
                     }
                 } 
