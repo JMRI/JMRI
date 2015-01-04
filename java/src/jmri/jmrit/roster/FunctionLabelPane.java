@@ -27,11 +27,11 @@ import org.slf4j.LoggerFactory;
 public class FunctionLabelPane extends javax.swing.JPanel {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -4374849205711874964L;
+     *
+     */
+    private static final long serialVersionUID = -4374849205711874964L;
 
-	RosterEntry re;
+    RosterEntry re;
 
     JTextField[] labels;
     JCheckBox[] lockable;
@@ -45,8 +45,16 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     // The references to maxfunction + 1 are due to F0
     private final int maxfunction = 28;
 
-    public FunctionLabelPane(RosterEntry r) {
+    /**
+     * This constructor allows the panel to be used in visual bean editors, but
+     * should not be used in code.
+     */
+    public FunctionLabelPane() {
+        super();
+    }
 
+    public FunctionLabelPane(RosterEntry r) {
+        super();
         re = r;
 
         GridBagLayout gbLayout = new GridBagLayout();
