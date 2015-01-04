@@ -60,7 +60,7 @@ import jmri.util.table.ButtonRenderer;
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 
-class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener 
+public class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener 
 {
 	/**
 	 * 
@@ -85,7 +85,7 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener
     private WarrantTableModel     _model;    
     private static WarrantTableFrame _instance;
     
-    static WarrantTableFrame getInstance() {
+    public static WarrantTableFrame getInstance() {
     	if (_instance==null) {
     		_instance = new WarrantTableFrame();
     	}
@@ -368,26 +368,36 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener
             return comboBox; 
         }
     }
-    
-    String runTrain(Warrant w) {
-    	String msg =  w.setRoute(0, null);
-        if (msg==null) {
-            msg = w.checkForContinuation();
-        }
-        if (msg==null) {
-            msg = w.setRunMode(Warrant.MODE_RUN, null, null, null, false);
-        }
-        if (msg!=null) {
-        	setStatusText(msg, Color.red, false);
+
+    /**
+     * Return error message if warrant cannot be run.
+     * @param w warrant
+     * @return null if warrant is started
+     */
+    public String runTrain(Warrant w) {
+    	String msg = null;
+        if (w.getRunMode() != Warrant.MODE_NONE) {
+        	msg = w.getRunModeMessage();
+    		setStatusText(msg, Color.red, false);                        		
         	return msg;
         }
-    	msg = w.checkRoute();	// notify about occupation ahead
-    	if (msg!=null) {
-           	setStatusText(msg, WarrantTableModel.myGold, false);                        		
-    	}
-    	msg = w.checkStartBlock();	// notify first block occupied by this train
-    	if (msg!=null) {
-           	setStatusText(msg, WarrantTableModel.myGold, false);                        		
+    	msg = w.setRoute(0, null);
+		setStatusText(msg, WarrantTableModel.myGold, false);                        		
+        if (msg!=null) {
+    		setStatusText(msg, Color.red, false);                        		
+        	return msg;
+        }    
+        msg = w.setRunMode(Warrant.MODE_RUN, null, null, null, false);
+        if (msg!=null) {
+    		setStatusText(msg, Color.red, false);                        		
+        	return msg;
+        } else {
+        	msg = w.checkStartBlock();	// notify first block occupied by this train
+    		setStatusText(msg, WarrantTableModel.myGold, false);                        		
+        }
+    	if (msg==null) {
+        	msg = w.checkRoute();	// notify about occupation ahead
+    		setStatusText(msg, WarrantTableModel.myGreen, false);                        		
     	}
     	return null;
     }

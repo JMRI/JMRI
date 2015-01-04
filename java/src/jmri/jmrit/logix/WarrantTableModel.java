@@ -388,11 +388,7 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
                 }
                break;
             case AUTO_RUN_COLUMN:
-                if (w.getRunMode() == Warrant.MODE_NONE) {
-                	msg = _frame.runTrain(w);
-                } else {
-                	msg = w.getRunModeMessage();
-                }
+            	msg = _frame.runTrain(w);
                 break;
             case MANUAL_RUN_COLUMN:
                 if (w.getRunMode() == Warrant.MODE_NONE) {

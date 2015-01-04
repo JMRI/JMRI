@@ -74,7 +74,7 @@ public class SignalSpeedMap {
             try {
                 _numSteps = Integer.parseInt(e.getText());
             } catch (NumberFormatException nfe) {
-                throw new JDOMException("invalid content for msPerIncrement: "+e.getText());
+                throw new JDOMException("invalid content for stepsPerIncrement: "+e.getText());
             }
             if (_numSteps < 1) {
                 _numSteps = 1;

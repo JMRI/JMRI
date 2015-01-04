@@ -949,24 +949,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
         return msg;
     }
-    /**
-     * Called from Warrant Table list.  This could be bogus
-     */
-    public String checkForContinuation() {
-    	OBlock block = _orders.get(0).getBlock();
-    	Warrant w = block.getWarrant();
-    	if (this.equals(w)) {
-    		return null;
-    	}
-    	// another warrant has the starting block, but that warrant could run first and then trigger
-    	//  this warrant.  Routes must join and addresses be for the same train
-    	if (w.getLastOrder().getBlock().equals(block)     			
-    			&& _dccAddress.equals(w.getDccAddress()) ) {
-        	return null;
-    	}
-    	return Bundle.getMessage("OriginBlockNotSet",Bundle.getMessage("AllocatedToWarrant", 
-    				getDisplayName(), block.getDisplayName()));
-    }
 
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (!(evt.getSource() instanceof NamedBean)) {

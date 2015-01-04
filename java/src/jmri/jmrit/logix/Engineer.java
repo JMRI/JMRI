@@ -2,6 +2,7 @@ package jmri.jmrit.logix;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.concurrent.locks.ReentrantLock;
 
 import jmri.DccThrottle;
@@ -457,7 +458,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      * @param sensorName
      * @param action
      */
-    private void setSensor(String sensorName, String action) {
+    static private void setSensor(String sensorName, String action) {
         action = action.toUpperCase();    
         jmri.Sensor s = InstanceManager.sensorManagerInstance().getSensor(sensorName);
         if (s != null) {
@@ -572,13 +573,52 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         	num--;
             ts.setValue(Integer.toString(num));    		
     	}
+    	String msg = null;
         if (_warrant.equals(w)) {
             _idxCurrentCommand = -1;
         	w.startupWarrant();
+        	msg = "Launching warrant \""+_warrant.getDisplayName()+"\" again.";
         } else {
-            w.stopWarrant(true);        	
+        	if (w.getDccAddress().equals(_warrant.getDccAddress())) {
+            	OBlock block = _warrant.getLastOrder().getBlock();
+            	OBlock b = w.getfirstOrder().getBlock();
+            	if (block.equals(b)) {
+            		block.deAllocate(_warrant);
+            	} else {
+            		msg =  Bundle.getMessage("BadContinuingLocation", w.getDisplayName(), 
+            					w.getDccAddress().getNumber(), block.getDisplayName()); 
+            	}        		
+        	}
+        	WarrantTableFrame f = WarrantTableFrame.getInstance();
+        	if (msg!=null) {
+        		f.setStatusText(msg, java.awt.Color.red, true);        		
+        	} else {
+            	msg = f.runTrain(w);
+            	if (msg !=null) {
+            		f.setStatusText(msg, java.awt.Color.red, true);
+                	w.stopWarrant(true);        		
+            	} else {
+                	msg = "Launching warrant \""+w.getDisplayName()+"\" from warrant \""+_warrant.getDisplayName()+"\".";        		
+            	}        		
+        	}
         }
-        if (log.isDebugEnabled())log.debug("Continuing warrant lanch from \""+_warrant.getDisplayName()+"\"");        	
+        if (log.isDebugEnabled())log.debug(msg);        	
+    }
+    
+    protected float getSpeedIncrement() {
+        float incr = Math.max(_throttle.getSpeedIncrement(), _minSpeed);
+        switch (_throttle.getSpeedStepMode()) {
+            case DccThrottle.SpeedStepMode14:
+                break;
+            case DccThrottle.SpeedStepMode27:
+            case DccThrottle.SpeedStepMode28:
+                incr *= 2;
+                break;
+            default:    // SpeedStepMode128
+                incr *= 4;
+                break;
+        }
+        return incr;
     }
     
     class ThrottleRamp implements Runnable {
@@ -631,18 +671,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
 //                    _warrant.fireRunStatus("SpeedRestriction", old, 
 //                                       (endSpeed > speed ? "increasing" : "decreasing"));
 
-                    float incr = Math.max(_throttle.getSpeedIncrement(), _minSpeed);
-                    switch (_throttle.getSpeedStepMode()) {
-                        case DccThrottle.SpeedStepMode14:
-                            break;
-                        case DccThrottle.SpeedStepMode27:
-                        case DccThrottle.SpeedStepMode28:
-                            incr *= 2;
-                            break;
-                        default:    // SpeedStepMode128
-                            incr *= 4;
-                            break;
-                    }
+                    float incr = getSpeedIncrement();
+                    
                     jmri.implementation.SignalSpeedMap map = Warrant.getSpeedMap();
                     incr *= map.getNumSteps();
                     int delay = map.getStepDelay();

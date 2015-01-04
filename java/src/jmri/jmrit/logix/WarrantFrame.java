@@ -182,6 +182,7 @@ public class WarrantFrame extends WarrantRoute {
             _tabbedPane.setSelectedIndex(1);
         } 
         addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     close();
                 }
@@ -867,7 +868,8 @@ public class WarrantFrame extends WarrantRoute {
         _commandModel.fireTableDataChanged();
         _searchStatus.setText("");
     }
-    
+
+    @Override
 	public void selectedRoute(ArrayList <BlockOrder> orders) {
         _tabbedPane.setSelectedIndex(1);		
 	}
@@ -1065,6 +1067,7 @@ public class WarrantFrame extends WarrantRoute {
     * Property names from RouteFinder:
     *   "RouteSearch" - from run
     */
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         String property = e.getPropertyName();
 //        if (log.isDebugEnabled()) log.debug("propertyChange \""+property+
@@ -1278,6 +1281,7 @@ public class WarrantFrame extends WarrantRoute {
             return _throttleCommands.size();
         }
 
+        @Override
         public String getColumnName(int col) {
             switch (col) {
                 case ROW_NUM: return "#";
@@ -1290,11 +1294,13 @@ public class WarrantFrame extends WarrantRoute {
         }
 
 
+        @Override
         public boolean isCellEditable(int row, int col) {
             if (row==ROW_NUM) { return false; }
             return true;
         }
 
+        @Override
         public Class<?> getColumnClass(int col) {
             return String.class;
         }
@@ -1354,6 +1360,7 @@ public class WarrantFrame extends WarrantRoute {
             return "";
         }
 
+        @Override
         public void setValueAt(Object value, int row, int col) {
             ThrottleSetting ts = _throttleCommands.get(row);
             String msg = null;
@@ -1426,6 +1433,7 @@ public class WarrantFrame extends WarrantRoute {
                         msg = Bundle.getMessage("nullValue", Bundle.getMessage("ValueCol")); 
                         break;
                     }
+                    boolean resetBlockColumn = true;
                     cmd = ts.getCommand().toUpperCase();
                      if ("SPEED".equals(cmd)) {
                         try {
@@ -1487,6 +1495,7 @@ public class WarrantFrame extends WarrantRoute {
                         } else {
                             msg = Bundle.getMessage("badSensorCommand");
                         }
+                        resetBlockColumn = false;
                     } else if ("RUN WARRANT".equals(cmd)) {
                         try {
                             Integer.parseInt((String)value);
@@ -1494,8 +1503,11 @@ public class WarrantFrame extends WarrantRoute {
                         } catch (NumberFormatException nfe) {
                         	msg  = Bundle.getMessage("badValue", value, cmd);
                         }
+                        resetBlockColumn = false;
                     }
-                     ts.setBlockName(getPreviousBlockName(row));
+                     if (resetBlockColumn) {
+                         ts.setBlockName(getPreviousBlockName(row));                    	 
+                     }
                     break;
                 case BLOCK_COLUMN:
                     cmd = ts.getCommand().toUpperCase();

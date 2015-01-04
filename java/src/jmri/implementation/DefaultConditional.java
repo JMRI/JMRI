@@ -2,16 +2,18 @@ package jmri.implementation;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.*;
 import jmri.jmrit.Sound;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.BitSet;
 import java.util.Date;
 import java.beans.PropertyChangeEvent;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -20,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+
 import jmri.jmrit.audio.AudioListener;
 import jmri.jmrit.audio.AudioSource;
 import jmri.jmrit.logix.*;
@@ -1086,16 +1089,11 @@ public class DefaultConditional extends AbstractNamedBean
 							errorList.add("invalid Warrant name in action - "+action.getDeviceName());
 						}
 						else {
-							String err = w.setRoute(0, null);
-					        if (err==null) {
-					        	err = w.checkForContinuation();
-					        }
-					        if (err==null) {
-					        	err = w.checkStartBlock();
-					        }
-							if (err==null) {
-	                            err = w.setRunMode(Warrant.MODE_RUN, null, null, null, false);								
-							}
+							jmri.jmrit.logix.WarrantTableFrame frame = jmri.jmrit.logix.WarrantTableFrame.getInstance();
+				        	String err = frame.runTrain(w);
+			            	if (err !=null) {
+			                	w.stopWarrant(true);
+			            	}
                             if (err!=null) {
                                 errorList.add("runAutoTrain error - "+err);
                                 w.stopWarrant(true);
