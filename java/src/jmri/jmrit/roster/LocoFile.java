@@ -50,6 +50,7 @@ class LocoFile extends XmlFile {
 	public static void loadCvModel(Element loco, CvTableModel cvModel, IndexedCvTableModel iCvModel, String family){
         CvValue cvObject;
         // get the CVs and load
+        String rosterName = loco.getAttributeValue("id");
         Element values = loco.getChild("values");
         
         // Ugly hack because of bug 1898971 in JMRI 2.1.2 - contents may be directly inside the 
@@ -127,14 +128,14 @@ class LocoFile extends XmlFile {
                     log.debug("Matched name "+name+" with iCV "+cvObject);
                     
                 if (cvObject == null) {
-                    log.info("Indexed CV "+name+" was in loco file, but not as iCv in definition; migrating");
+                    log.info("Indexed CV "+name+" was in loco file, but not as iCv in definition; migrated it; while reading ID=\"{}\"", rosterName);
                     // check the two possible orders
                     cvObject = cvModel.allCvMap().get(name);
                     if (cvObject == null) {
                         cvObject = cvModel.allCvMap().get(piVal+"."+siVal+"."+iCv);
                     }
                     if (cvObject == null) {
-                        log.warn("Didn't find match during migration");
+                        log.warn("     Didn't find a match during migration of ID=\"{}\", failed");
                         continue;
                     }
                 } 
@@ -147,7 +148,7 @@ class LocoFile extends XmlFile {
                 }
 
             }
-        } else log.error("no values element found in config file; CVs not configured");
+        } else log.error("no values element found in config file; CVs not configured for ID=\"{}\"",rosterName);
 
         // ugly hack - set CV17 back to fromFile if present
         // this is here because setting CV17, then CV18 seems to set
