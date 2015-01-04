@@ -468,8 +468,8 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      * to perform the actual work.
      *
      * @param name Filename for new file, including path info as needed.
-     * @throws FileNotFoundException
-     * @throws IOException
+     * @throws java.io.FileNotFoundException
+     * @throws java.io.IOException
      */
     void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
         if (log.isDebugEnabled()) {
