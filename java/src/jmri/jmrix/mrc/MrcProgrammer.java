@@ -10,6 +10,7 @@ import jmri.jmrix.AbstractProgrammer;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.*;
+import jmri.managers.DefaultProgrammerManager;
 
 /**
  * Convert the jmri.Programmer interface into commands for the MRC power house.
@@ -40,8 +41,8 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(ProgrammingMode.PAGEMODE);
-        ret.add(ProgrammingMode.REGISTERMODE);
+        ret.add(DefaultProgrammerManager.PAGEMODE);
+        ret.add(DefaultProgrammerManager.REGISTERMODE);
         return ret;
     }
 

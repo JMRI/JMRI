@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import jmri.*;
 import jmri.jmrix.sprog.SprogCommandStation;
 import java.util.*;
+import jmri.managers.DefaultProgrammerManager;
 
 /**
  * Provide an Ops Mode Programmer via a wrapper what works with the SPROG command
@@ -64,7 +65,7 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(ProgrammingMode.OPSBYTEMODE);
+        ret.add(DefaultProgrammerManager.OPSBYTEMODE);
         return ret;
     }
 

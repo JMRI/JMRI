@@ -9,6 +9,7 @@ import jmri.jmrix.AbstractProgrammer;
 import java.util.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import jmri.managers.DefaultProgrammerManager;
 
 /**
  * Implements the jmri.Programmer interface via commands for the SRCP powerstation
@@ -34,8 +35,8 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(ProgrammingMode.DIRECTBYTEMODE);
-        ret.add(ProgrammingMode.REGISTERMODE);
+        ret.add(DefaultProgrammerManager.DIRECTBYTEMODE);
+        ret.add(DefaultProgrammerManager.REGISTERMODE);
         return ret;
     }
 
@@ -67,7 +68,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
             startLongTimer();
 
             // write
-            if (getMode() == ProgrammingMode.DIRECTBYTEMODE)
+            if (getMode() == DefaultProgrammerManager.DIRECTBYTEMODE)
                 m = SRCPMessage.getWriteDirectCV(_bus,_cv, _val);
             else
                 m = SRCPMessage.getWriteRegister(_bus,registerFromCV(_cv), _val);
@@ -94,7 +95,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
             // start the error timer
             startLongTimer();
 	    
-            if (getMode() == ProgrammingMode.DIRECTBYTEMODE)
+            if (getMode() == DefaultProgrammerManager.DIRECTBYTEMODE)
                 m = SRCPMessage.getConfirmDirectCV(_bus,_cv, _confirmVal);
             else
                 m = SRCPMessage.getConfirmRegister(_bus,registerFromCV(_cv), _confirmVal);
@@ -125,7 +126,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
 
             // format and send the write message
 
-            if (getMode() == ProgrammingMode.DIRECTBYTEMODE)
+            if (getMode() == DefaultProgrammerManager.DIRECTBYTEMODE)
                 m = SRCPMessage.getReadDirectCV(_bus,_cv);
             else
                 m = SRCPMessage.getReadRegister(_bus,registerFromCV(_cv));

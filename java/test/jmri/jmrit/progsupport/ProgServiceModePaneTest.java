@@ -34,7 +34,7 @@ public class ProgServiceModePaneTest extends TestCase {
 	public void testCreateHorizontalDIRECTBYTEMODE() {
 	    // add dummy DCC
 	    InstanceManager.setProgrammerManager(new DefaultProgrammerManager(
-	            (new ProgrammerScaffold(ProgrammingMode.DIRECTBYTEMODE))));
+	            (new ProgrammerScaffold(DefaultProgrammerManager.DIRECTBYTEMODE))));
 	    Assert.assertTrue("programer manager available", InstanceManager.programmerManagerInstance()!=null);
 	    // create and show
 	    jmri.util.JmriJFrame f = new jmri.util.JmriJFrame("Horizontal DIRECTBYTEMODE");

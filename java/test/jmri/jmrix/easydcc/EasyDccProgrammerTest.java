@@ -19,6 +19,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import jmri.jmrix.easydcc.EasyDccProgrammer;
+import jmri.managers.DefaultProgrammerManager;
 
 public class EasyDccProgrammerTest extends TestCase {
 
@@ -67,7 +68,7 @@ public class EasyDccProgrammerTest extends TestCase {
 		EasyDccProgrammer p = new EasyDccProgrammer();
 
         // set register mode
-        p.setMode(ProgrammingMode.REGISTERMODE);
+        p.setMode(DefaultProgrammerManager.REGISTERMODE);
 
 		// and do the write
 		p.writeCV(3, 12, l);
@@ -86,7 +87,7 @@ public class EasyDccProgrammerTest extends TestCase {
 		EasyDccProgrammer p = new EasyDccProgrammer();
 
         // set register mode
-        p.setMode(ProgrammingMode.REGISTERMODE);
+        p.setMode(DefaultProgrammerManager.REGISTERMODE);
 
 		// and do the write
 		p.writeCV("3", 12, l);
@@ -161,7 +162,7 @@ public class EasyDccProgrammerTest extends TestCase {
 		EasyDccProgrammer p = new EasyDccProgrammer();
 
         // set register mode
-        p.setMode(ProgrammingMode.REGISTERMODE);
+        p.setMode(DefaultProgrammerManager.REGISTERMODE);
 
 		// and do the read
 		p.readCV(3, l);
@@ -190,7 +191,7 @@ public class EasyDccProgrammerTest extends TestCase {
 		EasyDccProgrammer p = new EasyDccProgrammer();
 
         // set register mode
-        p.setMode(ProgrammingMode.REGISTERMODE);
+        p.setMode(DefaultProgrammerManager.REGISTERMODE);
 
 		// and do the read
 		p.readCV("3", l);

@@ -10,6 +10,7 @@ import jmri.jmrix.AbstractProgrammer;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.*;
+import jmri.managers.DefaultProgrammerManager;
 
 /**
  * Convert the jmri.Programmer interface into commands for the NCE power house.
@@ -31,7 +32,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         		(tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3) || 
         		(tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5) || 
         		(tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN))){
-        	setMode(ProgrammingMode.OPSBYTEMODE);
+        	setMode(DefaultProgrammerManager.OPSBYTEMODE);
         }
     }
 
@@ -47,11 +48,11 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
     		log.debug("NCE USB-SB3/SB5/TWIN getSupportedModes returns no modes");
     		return ret;
     	}
-    	ret.add(ProgrammingMode.PAGEMODE);
-    	ret.add(ProgrammingMode.REGISTERMODE);
+    	ret.add(DefaultProgrammerManager.PAGEMODE);
+    	ret.add(DefaultProgrammerManager.REGISTERMODE);
     	
         if ( tc != null && tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
-        	ret.add(ProgrammingMode.DIRECTBYTEMODE);
+        	ret.add(DefaultProgrammerManager.DIRECTBYTEMODE);
         }
         return ret;
     }
@@ -95,9 +96,9 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         useProgrammer(p);
         // prevent writing Op mode CV > 255 on PowerHouse 2007C and earlier
         if ((CV > 256) && 
-        		((getMode() == ProgrammingMode.PAGEMODE) ||
-    				(getMode() == ProgrammingMode.DIRECTBYTEMODE) ||
-    				(getMode() == ProgrammingMode.REGISTERMODE)
+        		((getMode() == DefaultProgrammerManager.PAGEMODE) ||
+    				(getMode() == DefaultProgrammerManager.DIRECTBYTEMODE) ||
+    				(getMode() == DefaultProgrammerManager.REGISTERMODE)
         		) && ((tc != null) && (
         				(tc.getCommandOptions() == NceTrafficController.OPTION_1999) | 
     					(tc.getCommandOptions() == NceTrafficController.OPTION_2004) | 
@@ -168,17 +169,17 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         // val = -1 for read command; mode is direct, etc
         if (val < 0) {
             // read
-            if (mode == ProgrammingMode.PAGEMODE)
+            if (mode == DefaultProgrammerManager.PAGEMODE)
                 return NceMessage.getReadPagedCV(tc, cvnum);
-            else if (mode == ProgrammingMode.DIRECTBYTEMODE)
+            else if (mode == DefaultProgrammerManager.DIRECTBYTEMODE)
                 return NceMessage.getReadDirectCV(tc, cvnum);
 			else
                 return NceMessage.getReadRegister(tc, registerFromCV(cvnum));
         } else {
             // write
-            if (mode == ProgrammingMode.PAGEMODE)
+            if (mode == DefaultProgrammerManager.PAGEMODE)
                 return NceMessage.getWritePagedCV(tc, cvnum, val);
-            else if (mode == ProgrammingMode.DIRECTBYTEMODE)
+            else if (mode == DefaultProgrammerManager.DIRECTBYTEMODE)
                 return NceMessage.getWriteDirectCV(tc, cvnum, val);
             else
                 return NceMessage.getWriteRegister(tc, registerFromCV(cvnum), val);

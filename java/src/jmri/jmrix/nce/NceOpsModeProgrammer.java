@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.*;
 import jmri.*;
+import jmri.managers.DefaultProgrammerManager;
 
 /**
  * Provide an Ops Mode Programmer via a wrapper what works with the NCE command
@@ -28,7 +29,7 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
         log.debug("NCE ops mode programmer "+pAddress+" "+pLongAddr);
         mAddress = pAddress;
         mLongAddr = pLongAddr;
-        setMode(ProgrammingMode.OPSBYTEMODE);
+        setMode(DefaultProgrammerManager.OPSBYTEMODE);
     }
 
     /**
@@ -100,7 +101,7 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(ProgrammingMode.OPSBYTEMODE);
+        ret.add(DefaultProgrammerManager.OPSBYTEMODE);
         return ret;
     }
 

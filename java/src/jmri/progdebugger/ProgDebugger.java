@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.beans.*;
 import java.util.*;
 import jmri.*;
+import jmri.managers.DefaultProgrammerManager;
 
 /**
  * Debugging implementation of Programmer interface.
@@ -22,13 +23,13 @@ import jmri.*;
 public class ProgDebugger implements AddressedProgrammer  {
 
     public ProgDebugger() {
-        mode = ProgrammingMode.PAGEMODE;
+        mode = DefaultProgrammerManager.PAGEMODE;
     }
 
     public ProgDebugger(boolean pLongAddress, int pAddress) {
         longAddr = pLongAddress;
         address = pAddress;
-        mode = ProgrammingMode.OPSBITMODE;
+        mode = DefaultProgrammerManager.OPSBITMODE;
     }
     
     // write CV is recorded for later use
@@ -209,8 +210,8 @@ public class ProgDebugger implements AddressedProgrammer  {
             return Arrays.asList(
                 new ProgrammingMode[]
                 {
-                    ProgrammingMode.OPSBITMODE,
-                    ProgrammingMode.OPSBYTEMODE
+                    DefaultProgrammerManager.OPSBITMODE,
+                    DefaultProgrammerManager.OPSBYTEMODE
                 }
             );
         } else {
@@ -218,9 +219,9 @@ public class ProgDebugger implements AddressedProgrammer  {
             return Arrays.asList(
                 new ProgrammingMode[]
                 {
-                    ProgrammingMode.PAGEMODE, 
-                    ProgrammingMode.DIRECTBITMODE,
-                    ProgrammingMode.DIRECTBYTEMODE
+                    DefaultProgrammerManager.PAGEMODE, 
+                    DefaultProgrammerManager.DIRECTBITMODE,
+                    DefaultProgrammerManager.DIRECTBYTEMODE
                 }
             );
         }

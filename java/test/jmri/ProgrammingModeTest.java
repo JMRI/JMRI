@@ -2,6 +2,7 @@
 
 package jmri;
 
+import jmri.managers.DefaultProgrammerManager;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -16,8 +17,8 @@ public class ProgrammingModeTest extends TestCase {
 
     public void testStateCtors() {
         // tests that statics exist, are not equal
-        Assert.assertTrue(ProgrammingMode.NONE.equals(ProgrammingMode.NONE));
-        Assert.assertTrue(!ProgrammingMode.NONE.equals(ProgrammingMode.PAGEMODE));        
+        Assert.assertTrue(DefaultProgrammerManager.NONE.equals(DefaultProgrammerManager.NONE));
+        Assert.assertTrue(!DefaultProgrammerManager.NONE.equals(DefaultProgrammerManager.PAGEMODE));        
     }
 
     // from here down is testing infrastructure

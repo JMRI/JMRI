@@ -10,6 +10,7 @@ import jmri.jmrix.AbstractProgrammer;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.*;
+import jmri.managers.DefaultProgrammerManager;
 
 /**
  * Convert the jmri.Programmer interface into commands for the NCE power house.
@@ -35,10 +36,10 @@ public class TamsProgrammer extends AbstractProgrammer implements TamsListener {
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(ProgrammingMode.PAGEMODE);
-        ret.add(ProgrammingMode.DIRECTBITMODE);
-        ret.add(ProgrammingMode.DIRECTBYTEMODE);
-        ret.add(ProgrammingMode.REGISTERMODE);
+        ret.add(DefaultProgrammerManager.PAGEMODE);
+        ret.add(DefaultProgrammerManager.DIRECTBITMODE);
+        ret.add(DefaultProgrammerManager.DIRECTBYTEMODE);
+        ret.add(DefaultProgrammerManager.REGISTERMODE);
         return ret;
     }
 
@@ -121,17 +122,17 @@ public class TamsProgrammer extends AbstractProgrammer implements TamsListener {
         // val = -1 for read command; mode is direct, etc
         if (val < 0) {
             // read
-            if (getMode() == ProgrammingMode.PAGEMODE)
+            if (getMode() == DefaultProgrammerManager.PAGEMODE)
                 return TamsMessage.getReadPagedCV(cvnum);
-            else if (getMode() == ProgrammingMode.DIRECTBYTEMODE)
+            else if (getMode() == DefaultProgrammerManager.DIRECTBYTEMODE)
                 return TamsMessage.getReadDirectByteCV(cvnum);
             else 
                 return TamsMessage.getReadRegister(registerFromCV(cvnum));
         } else {
             // write
-            if (getMode() == ProgrammingMode.PAGEMODE)
+            if (getMode() == DefaultProgrammerManager.PAGEMODE)
                 return TamsMessage.getWritePagedCV(cvnum, val);
-            else if (getMode() == ProgrammingMode.DIRECTBYTEMODE)
+            else if (getMode() == DefaultProgrammerManager.DIRECTBYTEMODE)
                 return TamsMessage.getWriteDirectByteCV(cvnum, val);
             else
                 return TamsMessage.getWriteRegister(registerFromCV(cvnum), val);

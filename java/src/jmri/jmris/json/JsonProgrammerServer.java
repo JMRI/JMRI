@@ -24,6 +24,7 @@ import static jmri.jmris.json.JSON.STATE;
 import static jmri.jmris.json.JSON.TYPE;
 import static jmri.jmris.json.JSON.VALUE;
 import static jmri.jmris.json.JSON.WRITE;
+import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,7 +79,7 @@ public class JsonProgrammerServer extends AbstractProgrammerServer {
 
     public void parseRequest(Locale locale, JsonNode data) throws JmriException, IOException {
         // get a programming mode, if possible
-        jmri.ProgrammingMode mode = jmri.ProgrammingMode.REGISTERMODE;
+        jmri.ProgrammingMode mode = DefaultProgrammerManager.REGISTERMODE;
         String requestMode = data.path(MODE).asText();
         for (jmri.ProgrammingMode check : getProgrammer().getSupportedModes()) {
             if (requestMode.equals(check.toString())) mode = check;

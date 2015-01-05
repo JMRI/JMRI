@@ -12,6 +12,7 @@ import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import jmri.jmrix.can.*;
+import jmri.managers.DefaultProgrammerManager;
 
 /**
  * Implements the jmri.Programmer interface via commands for the CBUS programmer.
@@ -34,10 +35,10 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(ProgrammingMode.PAGEMODE);
-        ret.add(ProgrammingMode.DIRECTBITMODE);
-        ret.add(ProgrammingMode.DIRECTBYTEMODE);
-        ret.add(ProgrammingMode.REGISTERMODE);
+        ret.add(DefaultProgrammerManager.PAGEMODE);
+        ret.add(DefaultProgrammerManager.DIRECTBITMODE);
+        ret.add(DefaultProgrammerManager.DIRECTBYTEMODE);
+        ret.add(DefaultProgrammerManager.REGISTERMODE);
         return ret;
     }
 

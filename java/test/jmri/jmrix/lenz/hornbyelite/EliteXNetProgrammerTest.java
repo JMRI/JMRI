@@ -13,6 +13,7 @@ import jmri.*;
 
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
+import jmri.managers.DefaultProgrammerManager;
 
 import junit.framework.Test;
 import junit.framework.Assert;
@@ -82,7 +83,7 @@ public class EliteXNetProgrammerTest extends TestCase {
 		EliteXNetProgrammer p = new EliteXNetProgrammer(t);
 
         // set register mode
-        p.setMode(ProgrammingMode.REGISTERMODE);
+        p.setMode(DefaultProgrammerManager.REGISTERMODE);
 
 		// and do the write
 		p.writeCV(29, 12, l);
@@ -110,7 +111,7 @@ public class EliteXNetProgrammerTest extends TestCase {
 		EliteXNetProgrammer p = new EliteXNetProgrammer(t);
 
         // set register mode
-        p.setMode(ProgrammingMode.REGISTERMODE);
+        p.setMode(DefaultProgrammerManager.REGISTERMODE);
 
 		// and do the write
 		p.writeCV("29", 12, l);
@@ -188,7 +189,7 @@ public class EliteXNetProgrammerTest extends TestCase {
 		EliteXNetProgrammer p = new EliteXNetProgrammer(t);
 
         // set register mode
-        p.setMode(ProgrammingMode.REGISTERMODE);
+        p.setMode(DefaultProgrammerManager.REGISTERMODE);
 
         // and do the read
         p.readCV(29, l);
@@ -214,7 +215,7 @@ public class EliteXNetProgrammerTest extends TestCase {
 		EliteXNetProgrammer p = new EliteXNetProgrammer(t);
 
         // set register mode
-        p.setMode(ProgrammingMode.REGISTERMODE);
+        p.setMode(DefaultProgrammerManager.REGISTERMODE);
 
         // and do the read
         p.readCV("29", l);

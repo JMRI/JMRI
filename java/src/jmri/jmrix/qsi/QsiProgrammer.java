@@ -10,6 +10,7 @@ import jmri.jmrix.AbstractProgrammer;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.*;
+import jmri.managers.DefaultProgrammerManager;
 
 /**
  * Implements the jmri.Programmer interface via commands for the QSI programmer.
@@ -40,8 +41,8 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(ProgrammingMode.PAGEMODE);
-        ret.add(ProgrammingMode.DIRECTBITMODE);
+        ret.add(DefaultProgrammerManager.PAGEMODE);
+        ret.add(DefaultProgrammerManager.DIRECTBITMODE);
         return ret;
     }
 

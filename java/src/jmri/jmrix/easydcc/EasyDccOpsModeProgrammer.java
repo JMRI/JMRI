@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.*;
 import java.util.*;
+import jmri.managers.DefaultProgrammerManager;
 
 /**
  * Provide an Ops Mode Programmer via a wrapper what works with the EasyDcc command
@@ -78,7 +79,7 @@ public class EasyDccOpsModeProgrammer extends EasyDccProgrammer implements Addre
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(ProgrammingMode.OPSBYTEMODE);
+        ret.add(DefaultProgrammerManager.OPSBYTEMODE);
         return ret;
     }
 

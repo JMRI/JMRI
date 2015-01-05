@@ -9,6 +9,7 @@ import jmri.jmrix.AbstractProgrammer;
 import java.util.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import jmri.managers.DefaultProgrammerManager;
 
 /**
  * Implements the jmri.Programmer interface via commands for the EasyDcc powerstation
@@ -29,8 +30,8 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(ProgrammingMode.PAGEMODE);
-        ret.add(ProgrammingMode.REGISTERMODE);
+        ret.add(DefaultProgrammerManager.PAGEMODE);
+        ret.add(DefaultProgrammerManager.REGISTERMODE);
         return ret;
     }
 
@@ -110,13 +111,13 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
         // val = -1 for read command; mode is direct, etc
         if (val < 0) {
             // read
-            if (getMode().equals(ProgrammingMode.PAGEMODE))
+            if (getMode().equals(DefaultProgrammerManager.PAGEMODE))
                 return EasyDccMessage.getReadPagedCV(cvnum);
             else
                 return EasyDccMessage.getReadRegister(registerFromCV(cvnum));
         } else {
             // write
-            if (getMode().equals(ProgrammingMode.PAGEMODE))
+            if (getMode().equals(DefaultProgrammerManager.PAGEMODE))
                 return EasyDccMessage.getWritePagedCV(cvnum, val);
             else
                 return EasyDccMessage.getWriteRegister(registerFromCV(cvnum), val);

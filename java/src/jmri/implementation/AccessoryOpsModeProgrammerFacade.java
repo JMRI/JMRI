@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import jmri.*;
 import jmri.jmrix.AbstractProgrammerFacade;
 import java.util.*;
+import jmri.managers.DefaultProgrammerManager;
 
 /**
  * Programmer facade for access to Accessory Decoder Ops Mode programming
@@ -47,10 +48,10 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(ProgrammingMode.OPSACCBYTEMODE);
-        ret.add(ProgrammingMode.OPSACCBITMODE);
-        ret.add(ProgrammingMode.OPSACCEXTBYTEMODE);
-        ret.add(ProgrammingMode.OPSACCEXTBITMODE);
+        ret.add(DefaultProgrammerManager.OPSACCBYTEMODE);
+        ret.add(DefaultProgrammerManager.OPSACCBITMODE);
+        ret.add(DefaultProgrammerManager.OPSACCEXTBYTEMODE);
+        ret.add(DefaultProgrammerManager.OPSACCEXTBITMODE);
         return ret;
     }
     

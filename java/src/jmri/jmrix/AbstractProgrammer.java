@@ -9,6 +9,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.*;
+import jmri.managers.DefaultProgrammerManager;
 
 /**
  * Common implementations for the Programmer interface.
@@ -91,7 +92,7 @@ public abstract class AbstractProgrammer implements Programmer {
     }
     
     // handle mode
-    protected ProgrammingMode mode = ProgrammingMode.PAGEMODE;
+    protected ProgrammingMode mode = DefaultProgrammerManager.PAGEMODE;
 
     @Override
     public final void setMode(ProgrammingMode m) {

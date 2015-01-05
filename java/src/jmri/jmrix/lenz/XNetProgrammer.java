@@ -13,6 +13,7 @@ import jmri.jmrix.AbstractProgrammer;
 import java.util.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import jmri.managers.DefaultProgrammerManager;
 
 /**
  * Programmer support for Lenz XpressNet.
@@ -51,7 +52,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
             XNetInterface.INTERFACE,
             this);
 
-        setMode(ProgrammingMode.DIRECTBYTEMODE);
+        setMode(DefaultProgrammerManager.DIRECTBYTEMODE);
     }
 
 
@@ -61,10 +62,10 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(ProgrammingMode.PAGEMODE);
-        ret.add(ProgrammingMode.DIRECTBITMODE);
-        ret.add(ProgrammingMode.DIRECTBYTEMODE);
-        ret.add(ProgrammingMode.REGISTERMODE);
+        ret.add(DefaultProgrammerManager.PAGEMODE);
+        ret.add(DefaultProgrammerManager.DIRECTBITMODE);
+        ret.add(DefaultProgrammerManager.DIRECTBYTEMODE);
+        ret.add(DefaultProgrammerManager.REGISTERMODE);
         return ret;
     }
 
@@ -83,7 +84,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
  		// To be revised if and when a Rocomotion adapter is introduced!!!
  		if (controller().getCommandStation().getCommandStationType() == 0x10) return false;
 
-        if (getMode().equals(ProgrammingMode.DIRECTBITMODE) || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
+        if (getMode().equals(DefaultProgrammerManager.DIRECTBITMODE) || getMode().equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
             switch(controller().getCommandStation().getCommandStationType()) {
               case XNetConstants.CS_TYPE_LZ100:
                    if(controller().getCommandStation()
@@ -110,7 +111,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         if (log.isDebugEnabled()) log.debug("check CV "+addr);
                                   log.error("cs Type: " + controller().getCommandStation().getCommandStationType() + " CS Version: " + controller().getCommandStation().getCommandStationSoftwareVersion());
         if (!getCanWrite()) return false; // check basic implementation first
-        if (getMode().equals(ProgrammingMode.DIRECTBITMODE) || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
+        if (getMode().equals(DefaultProgrammerManager.DIRECTBITMODE) || getMode().equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
              switch(controller().getCommandStation().getCommandStationType()){
                 case XNetConstants.CS_TYPE_LZ100:
                    if(controller().getCommandStation()
@@ -152,10 +153,10 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		   restartTimer(XNetProgrammerTimeout);
 
 		   // format and send message to go to program mode
-        	   if (getMode().equals(ProgrammingMode.PAGEMODE)) {
+        	   if (getMode().equals(DefaultProgrammerManager.PAGEMODE)) {
 		       XNetMessage msg = XNetMessage.getWritePagedCVMsg(CV,val);
 		       controller().sendXNetMessage(msg, this);
-        	   } else if (getMode().equals(ProgrammingMode.DIRECTBITMODE) || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
+        	   } else if (getMode().equals(DefaultProgrammerManager.DIRECTBITMODE) || getMode().equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
 		       XNetMessage msg = XNetMessage.getWriteDirectCVMsg(CV,val);
 		       controller().sendXNetMessage(msg, this);
         	   } else  { // register mode by elimination 
@@ -190,10 +191,10 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		   restartTimer(XNetProgrammerTimeout);
 
 		   // format and send message to go to program mode
-        	   if (getMode().equals(ProgrammingMode.PAGEMODE)) {
+        	   if (getMode().equals(DefaultProgrammerManager.PAGEMODE)) {
 		       XNetMessage msg=XNetMessage.getReadPagedCVMsg(CV);
 		       controller().sendXNetMessage(msg, this);
-		   } else if (getMode().equals(ProgrammingMode.DIRECTBITMODE) || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
+		   } else if (getMode().equals(DefaultProgrammerManager.DIRECTBITMODE) || getMode().equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
 		       XNetMessage msg=XNetMessage.getReadDirectCVMsg(CV);
 		       controller().sendXNetMessage(msg, this);
 		   } else { // register mode by elimination    

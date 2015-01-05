@@ -10,6 +10,7 @@ import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.JmriException;
+import jmri.managers.DefaultProgrammerManager;
 
 /**
  * LI100XNetProgrammerTest.java
@@ -99,7 +100,7 @@ public class LI100XNetProgrammerTest extends TestCase {
                 };
 
                 // set register mode
-                p.setMode(jmri.ProgrammingMode.REGISTERMODE);
+                p.setMode(DefaultProgrammerManager.REGISTERMODE);
 
                 // and do the write
                 p.writeCV(29, 12, l);
@@ -220,7 +221,7 @@ public class LI100XNetProgrammerTest extends TestCase {
                 };
 
         // set register mode
-        p.setMode(jmri.ProgrammingMode.REGISTERMODE);
+        p.setMode(DefaultProgrammerManager.REGISTERMODE);
 
         // and do the read
         p.readCV(29, l);

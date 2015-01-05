@@ -13,6 +13,7 @@ import jmri.jmrix.AbstractProgrammer;
 import java.util.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import jmri.managers.DefaultProgrammerManager;
 
 /**
  * Programmer support for Zimo Mx-1.
@@ -49,7 +50,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(ProgrammingMode.PAGEMODE);
+        ret.add(DefaultProgrammerManager.PAGEMODE);
         return ret;
     }
 
@@ -75,7 +76,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
 		// start the error timer
 		startShortTimer();
         // format and send message to go to program mode
-        if (getMode() == ProgrammingMode.PAGEMODE){
+        if (getMode() == DefaultProgrammerManager.PAGEMODE){
             if(tc.getProtocol()==Mx1Packetizer.ASCII){
                 if (firstTime){
                     tc.sendMx1Message(tc.getCommandStation().resetModeMsg(), this);
@@ -102,7 +103,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
         // start the error timer
 		startShortTimer();
                 // format and send message to go to program mode
-        if (getMode() == ProgrammingMode.PAGEMODE){
+        if (getMode() == DefaultProgrammerManager.PAGEMODE){
             if(tc.getProtocol()==Mx1Packetizer.ASCII){
                 if (firstTime){
                     tc.sendMx1Message(tc.getCommandStation().resetModeMsg(), this);

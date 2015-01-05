@@ -12,10 +12,91 @@ import jmri.*;
  * get a null in response.
  *
  * @see             jmri.ProgrammerManager
- * @author			Bob Jacobsen Copyright (C) 2001
+ * @author			Bob Jacobsen Copyright (C) 2001, 2015
  * @version			$Revision$
  */
 public class DefaultProgrammerManager implements ProgrammerManager {
+    /**
+     * NMRA "Paged" mode
+     */
+    public static final ProgrammingMode PAGEMODE = new ProgrammingMode("PAGEMODE");
+    
+    /**
+     * NMRA "Operations" or "Programming on the main" mode, using only the bit-wise operations
+     */
+    public static final ProgrammingMode OPSBITMODE = new ProgrammingMode("OPSBITMODE");
+    
+    /**
+     * NMRA "Programming on the main" mode for stationary decoders,
+     * using only the byte-wise operations and "extended" addressing.
+     */
+    public static final ProgrammingMode OPSACCEXTBYTEMODE = new ProgrammingMode("OPSACCEXTBYTEMODE");
+    
+    /**
+     * NMRA "Programming on the main" mode for stationary decoders,
+     * using only the bit-wise operations. Note that this is
+     * defined as using the "normal", not "extended" addressing.
+     */
+    public static final ProgrammingMode OPSACCBITMODE = new ProgrammingMode("OPSACCBITMODE");
+    
+    /**
+     * NMRA "Programming on the main" mode for stationary decoders,
+     * using only the bit-wise operations and "extended" addressing.
+     */
+    public static final ProgrammingMode OPSACCEXTBITMODE = new ProgrammingMode("OPSACCEXTBITMODE");
+    
+    /**
+     * NMRA "Programming on the main" mode for stationary decoders,
+     * using only the byte-wise operations. Note that this is
+     * defined as using the "normal", not "extended" addressing.
+     */
+    public static final ProgrammingMode OPSACCBYTEMODE = new ProgrammingMode("OPSACCBYTEMODE");
+    
+    /**
+     * No programming mode available
+     */
+    public static final ProgrammingMode NONE = new ProgrammingMode("NONE");
+    
+    /**
+     * NMRA "Address-only" mode. Often implemented as
+     * a proper subset of "Register" mode, as the
+     * underlying operation is the same.
+     */
+    public static final ProgrammingMode ADDRESSMODE = new ProgrammingMode("ADDRESSMODE");
+    
+    /**
+     * NMRA "Operations" or "Programming on the main" mode, using only the byte-wise operations
+     */
+    public static final ProgrammingMode OPSBYTEMODE = new ProgrammingMode("OPSBYTEMODE");
+    
+    /**
+     * NMRA "Direct" mode, using only the byte-wise operations
+     */
+    public static final ProgrammingMode DIRECTBYTEMODE = new ProgrammingMode("DIRECTBYTEMODE");
+    
+    /**
+     * NMRA "Register" mode
+     */
+    public static final ProgrammingMode REGISTERMODE = new ProgrammingMode("REGISTERMODE");
+    
+    /**
+     * NMRA "Direct" mode, using only the bit-wise operations
+     */
+    public static final ProgrammingMode DIRECTBITMODE = new ProgrammingMode("DIRECTBITMODE");
+
+    // For the record, these were the original numerical definitions:
+    //     public static final ProgrammingMode NONE	    =  new ProgrammingMode("NONE", 0);
+    //     public static final ProgrammingMode REGISTERMODE    = new ProgrammingMode("REGISTERMODE", 11);
+    //     public static final ProgrammingMode PAGEMODE        = new ProgrammingMode("PAGEMODE", 21);
+    //     public static final ProgrammingMode DIRECTBITMODE   = new ProgrammingMode("DIRECTBITMODE", 31);
+    //     public static final ProgrammingMode DIRECTBYTEMODE  = new ProgrammingMode("DIRECTBYTEMODE", 32);
+    //     public static final ProgrammingMode ADDRESSMODE     = new ProgrammingMode("ADDRESSMODE", 41);
+    //     public static final ProgrammingMode OPSBYTEMODE     = new ProgrammingMode("OPSBYTEMODE", 101);
+    //     public static final ProgrammingMode OPSBITMODE      = new ProgrammingMode("OPSBITMODE", 102);
+    //     public static final ProgrammingMode OPSACCBYTEMODE  = new ProgrammingMode("OPSACCBYTEMODE", 111);
+    //     public static final ProgrammingMode OPSACCBITMODE   = new ProgrammingMode("OPSACCBITMODE", 112);
+    //     public static final ProgrammingMode OPSACCEXTBYTEMODE = new ProgrammingMode("OPSACCEXTBYTEMODE", 121);
+    //     public static final ProgrammingMode OPSACCEXTBITMODE  = new ProgrammingMode("OPSACCEXTBITMODE", 122);
 
     private Programmer mProgrammer;
     public DefaultProgrammerManager(Programmer pProgrammer) {
@@ -80,7 +161,7 @@ public class DefaultProgrammerManager implements ProgrammerManager {
      */
     public java.util.List<ProgrammingMode> getDefaultModes() {
         java.util.ArrayList<ProgrammingMode> retval = new java.util.ArrayList<>();
-        retval.add(ProgrammingMode.OPSBYTEMODE);
+        retval.add(OPSBYTEMODE);
         return retval;
     }
 

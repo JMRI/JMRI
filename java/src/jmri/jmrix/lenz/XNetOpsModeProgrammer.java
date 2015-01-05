@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.*;
 import java.util.*;
+import jmri.managers.DefaultProgrammerManager;
 
 /**
  * Provides an Ops mode programing interface for XPressNet
@@ -79,7 +80,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(ProgrammingMode.OPSBYTEMODE);
+        ret.add(DefaultProgrammerManager.OPSBYTEMODE);
         return ret;
     }
 

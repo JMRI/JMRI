@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.*;
+import jmri.managers.DefaultProgrammerManager;
 
 
 /**
@@ -242,11 +243,11 @@ public class CbusMessage {
         m.setElement(1, CbusConstants.SERVICE_HANDLE);
         m.setElement(2, (cv/256) & 0xff);
         m.setElement(3, cv & 0xff);
-        if (mode.equals(ProgrammingMode.PAGEMODE)) {
+        if (mode.equals(DefaultProgrammerManager.PAGEMODE)) {
           m.setElement(4, CbusConstants.CBUS_PROG_PAGED);
-        } else if (mode.equals(ProgrammingMode.DIRECTBITMODE)) {
+        } else if (mode.equals(DefaultProgrammerManager.DIRECTBITMODE)) {
           m.setElement(4, CbusConstants.CBUS_PROG_DIRECT_BIT);
-        } else if (mode.equals(ProgrammingMode.DIRECTBYTEMODE)) {
+        } else if (mode.equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
           m.setElement(4, CbusConstants.CBUS_PROG_DIRECT_BYTE);
         } else {
           m.setElement(4, CbusConstants.CBUS_PROG_REGISTER);
@@ -261,11 +262,11 @@ public class CbusMessage {
         m.setElement(1, CbusConstants.SERVICE_HANDLE);
         m.setElement(2, (cv/256) & 0xff);
         m.setElement(3, cv & 0xff);
-        if (mode.equals(ProgrammingMode.PAGEMODE)) {
+        if (mode.equals(DefaultProgrammerManager.PAGEMODE)) {
           m.setElement(4, CbusConstants.CBUS_PROG_PAGED);
-        } else if (mode.equals(ProgrammingMode.DIRECTBITMODE)) {
+        } else if (mode.equals(DefaultProgrammerManager.DIRECTBITMODE)) {
           m.setElement(4, CbusConstants.CBUS_PROG_DIRECT_BIT);
-        } else if (mode.equals(ProgrammingMode.DIRECTBYTEMODE)) {
+        } else if (mode.equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
           m.setElement(4, CbusConstants.CBUS_PROG_DIRECT_BYTE);
         } else {
           m.setElement(4, CbusConstants.CBUS_PROG_REGISTER);

@@ -9,6 +9,7 @@ import java.util.*;
 import java.beans.*;
 
 import jmri.*;
+import jmri.managers.DefaultProgrammerManager;
 
 /**
  * Provide an Ops Mode Programmer via a wrapper what works with the LocoNet
@@ -55,7 +56,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer  {
     }
 
     // handle mode
-    protected ProgrammingMode mode = ProgrammingMode.OPSBYTEMODE;
+    protected ProgrammingMode mode = DefaultProgrammerManager.OPSBYTEMODE;
 
     @Override
     public final void setMode(ProgrammingMode m) {
@@ -74,7 +75,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer  {
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(ProgrammingMode.OPSBYTEMODE);
+        ret.add(DefaultProgrammerManager.OPSBYTEMODE);
         return ret;
     }
 

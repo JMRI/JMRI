@@ -17,6 +17,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import jmri.jmrix.nce.NceProgrammer;
+import jmri.managers.DefaultProgrammerManager;
 
 /**
  * JUnit tests for the NceProgrammer class
@@ -157,7 +158,7 @@ public class NceProgrammerTest extends TestCase {
         NceProgrammer p = new NceProgrammer(tc);
 
         // set register mode
-        p.setMode(ProgrammingMode.REGISTERMODE);
+        p.setMode(DefaultProgrammerManager.REGISTERMODE);
 
         // and do the write
         p.writeCV(3, 12, l);
@@ -181,7 +182,7 @@ public class NceProgrammerTest extends TestCase {
         NceProgrammer p = new NceProgrammer(tc);
 
         // set register mode
-        p.setMode(ProgrammingMode.REGISTERMODE);
+        p.setMode(DefaultProgrammerManager.REGISTERMODE);
 
         // and do the write
         p.writeCV("3", 12, l);
@@ -205,7 +206,7 @@ public class NceProgrammerTest extends TestCase {
         NceProgrammer p = new NceProgrammer(tc);
 
         // set register mode
-        p.setMode(ProgrammingMode.REGISTERMODE);
+        p.setMode(DefaultProgrammerManager.REGISTERMODE);
 
         // and do the write
         p.writeCV(3, 12, l);
@@ -229,7 +230,7 @@ public class NceProgrammerTest extends TestCase {
         NceProgrammer p = new NceProgrammer(tc);
 
         // set register mode
-        p.setMode(ProgrammingMode.REGISTERMODE);
+        p.setMode(DefaultProgrammerManager.REGISTERMODE);
 
         // and do the write
         p.writeCV("3", 12, l);
@@ -331,7 +332,7 @@ public class NceProgrammerTest extends TestCase {
         NceProgrammer p = new NceProgrammer(tc);
 
         // set register mode
-        p.setMode(ProgrammingMode.REGISTERMODE);
+        p.setMode(DefaultProgrammerManager.REGISTERMODE);
 
         // and do the read
         p.readCV(3, l);
@@ -360,7 +361,7 @@ public class NceProgrammerTest extends TestCase {
         NceProgrammer p = new NceProgrammer(tc);
 
         // set register mode
-        p.setMode(ProgrammingMode.REGISTERMODE);
+        p.setMode(DefaultProgrammerManager.REGISTERMODE);
 
         // and do the read
         p.readCV(3, l);

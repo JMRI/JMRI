@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.*;
 import java.util.*;
+import jmri.managers.DefaultProgrammerManager;
 
 /**
  * Provide an Ops Mode Programmer via a wrapper what works with the TAMS command
@@ -78,7 +79,7 @@ public class TamsOpsModeProgrammer extends TamsProgrammer implements AddressedPr
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(ProgrammingMode.OPSBYTEMODE);
+        ret.add(DefaultProgrammerManager.OPSBYTEMODE);
         return ret;
     }
 

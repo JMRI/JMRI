@@ -13,6 +13,7 @@ import junit.framework.TestSuite;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.TestTrafficController;
+import jmri.managers.DefaultProgrammerManager;
 
 /**
  * Tests for the jmri.jmrix.can.cbus.CbusProgrammer class.
@@ -34,7 +35,7 @@ public class CbusProgrammerTest extends TestCase {
         CbusProgrammer p = new CbusProgrammer(10, new TestTrafficController());
         
         try {
-            p.setMode(ProgrammingMode.PAGEMODE);
+            p.setMode(DefaultProgrammerManager.PAGEMODE);
         } catch (IllegalArgumentException e) { return; }
         Assert.fail("No IllegalArgumentException thrown");
     }

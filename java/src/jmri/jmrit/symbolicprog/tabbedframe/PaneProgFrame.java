@@ -31,6 +31,7 @@ import java.awt.event.ItemEvent;
 import jmri.util.FileUtil;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import jmri.managers.DefaultProgrammerManager;
 
 /**
  * Frame providing a command station programmer from decoder definition files.
@@ -538,17 +539,17 @@ abstract public class PaneProgFrame extends JmriJFrame
         // find a mode to set it to
         
         List<ProgrammingMode> modes = mProgrammer.getSupportedModes();
-        if (modes.contains(ProgrammingMode.DIRECTBITMODE)&&directbit) {
-            mProgrammer.setMode(ProgrammingMode.DIRECTBITMODE);
+        if (modes.contains(DefaultProgrammerManager.DIRECTBITMODE)&&directbit) {
+            mProgrammer.setMode(DefaultProgrammerManager.DIRECTBITMODE);
             log.debug("Set to DIRECTBITMODE");
-        } else if (modes.contains(ProgrammingMode.DIRECTBYTEMODE)&&directbyte) {
-            mProgrammer.setMode(ProgrammingMode.DIRECTBYTEMODE);
+        } else if (modes.contains(DefaultProgrammerManager.DIRECTBYTEMODE)&&directbyte) {
+            mProgrammer.setMode(DefaultProgrammerManager.DIRECTBYTEMODE);
             log.debug("Set to DIRECTBYTEMODE");
-        } else if (modes.contains(ProgrammingMode.PAGEMODE)&&paged) {
-            mProgrammer.setMode(ProgrammingMode.PAGEMODE);
+        } else if (modes.contains(DefaultProgrammerManager.PAGEMODE)&&paged) {
+            mProgrammer.setMode(DefaultProgrammerManager.PAGEMODE);
             log.debug("Set to PAGEMODE");
-        } else if (modes.contains(ProgrammingMode.REGISTERMODE)&&register) {
-            mProgrammer.setMode(ProgrammingMode.REGISTERMODE);
+        } else if (modes.contains(DefaultProgrammerManager.REGISTERMODE)&&register) {
+            mProgrammer.setMode(DefaultProgrammerManager.REGISTERMODE);
             log.debug("Set to REGISTERMODE");
         } else log.warn("No acceptable mode found, leave as found");
 

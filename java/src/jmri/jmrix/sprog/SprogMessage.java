@@ -4,6 +4,7 @@ package jmri.jmrix.sprog;
 
 import jmri.*;
 import jmri.jmrix.sprog.SprogConstants.SprogState;
+import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -297,7 +298,7 @@ public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
     */
     static public SprogMessage getReadCV(int cv, ProgrammingMode mode) {
         SprogMessage m = new SprogMessage(6);
-        if (mode == ProgrammingMode.PAGEMODE) {
+        if (mode == DefaultProgrammerManager.PAGEMODE) {
           m.setOpCode('V');
         } else { // Bit direct mode
           m.setOpCode('C');
@@ -309,7 +310,7 @@ public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
 
     static public SprogMessage getWriteCV(int cv, int val, ProgrammingMode mode) {
         SprogMessage m = new SprogMessage(10);
-        if (mode == ProgrammingMode.PAGEMODE) {
+        if (mode == DefaultProgrammerManager.PAGEMODE) {
           m.setOpCode('V');
         } else { // Bit direct mode
           m.setOpCode('C');

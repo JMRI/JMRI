@@ -3,6 +3,7 @@ package jmri.jmrix.loconet;
 
 import junit.framework.*;
 import jmri.*;
+import jmri.managers.DefaultProgrammerManager;
 
 
 
@@ -18,7 +19,7 @@ public class LnOpsModeProgrammerTest extends TestCase {
                 void reportBadMode(int i){}
             };
         try {
-            lops.setMode(ProgrammingMode.PAGEMODE);
+            lops.setMode(DefaultProgrammerManager.PAGEMODE);
         } catch (IllegalArgumentException e) { return; }
         Assert.fail("No IllegalArgumentException thrown");
 
@@ -27,7 +28,7 @@ public class LnOpsModeProgrammerTest extends TestCase {
         SlotManager val1=  null;
         LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(val1, 1, true);
         ProgrammingMode intRet = lnopsmodeprogrammer.getMode();
-        Assert.assertEquals("OpsByteMode", ProgrammingMode.OPSBYTEMODE, intRet);
+        Assert.assertEquals("OpsByteMode", DefaultProgrammerManager.OPSBYTEMODE, intRet);
     }
     public void testGetCanRead() {
         SlotManager val1=  null;
