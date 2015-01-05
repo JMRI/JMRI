@@ -30,14 +30,9 @@ abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
     protected int cv8val;
     int address = -1;
 
-    int originalMode = Programmer.NONE;
-
     // steps of the identification state machine
     public boolean test1() {
         Programmer p = InstanceManager.programmerManagerInstance().getGlobalProgrammer();
-        // if long address, we have to use some mode other
-        // than register, so remember where we are now
-        originalMode = p.getMode();
         // request contents of CV 29
         statusUpdate(java.util.ResourceBundle.getBundle("jmri/jmrit/roster/JmritRosterBundle").getString("READ CV 29"));
         readCV(29);
@@ -49,28 +44,6 @@ abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
         if ( (value&0x20) != 0 ) {
             // long address needed
             shortAddr = false;
-            // might now be in register mode, which is no good.
-            // can we use original mode?
-            Programmer p = InstanceManager.programmerManagerInstance().getGlobalProgrammer();
-            if (originalMode==Programmer.PAGEMODE ||
-                originalMode==Programmer.DIRECTBITMODE ||
-                originalMode==Programmer.DIRECTBYTEMODE) {
-                // yes, set to that original mode
-                p.setMode(originalMode);
-            } else if (p.hasMode(Programmer.DIRECTBITMODE)) {
-                p.setMode(Programmer.DIRECTBITMODE);
-            } else if (p.hasMode(Programmer.PAGEMODE)) {
-                p.setMode(Programmer.PAGEMODE);
-            } else if (p.hasMode(Programmer.DIRECTBYTEMODE)) {
-                p.setMode(Programmer.DIRECTBYTEMODE);
-            } else {
-                // failed, as couldn't set a useful mode!
-                log.error("can't set programming mode, long address fails");
-                address = -1;
-                statusUpdate(java.util.ResourceBundle.getBundle("jmri/jmrit/roster/JmritRosterBundle").getString("LONG ADDRESS - READ CV 17"));
-                return true;  // Indicates done
-            }
-            // mode OK, continue operation
             statusUpdate(java.util.ResourceBundle.getBundle("jmri/jmrit/roster/JmritRosterBundle").getString("LONG ADDRESS - READ CV 17"));
             readCV(17);
         } else {

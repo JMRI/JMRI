@@ -5,6 +5,7 @@ package jmri.jmrix.qsi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.*;
 
 /**
  * Encodes a message to an QSI command station.
@@ -225,7 +226,7 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
         return m;
     }
     
-    static public QsiMessage getReadCV(int cv, int mode) {
+    static public QsiMessage getReadCV(int cv, ProgrammingMode mode) {
         // OP_REQ_READ_CV
         QsiMessage m = new QsiMessage(4);
         m.setElement(0,9);
@@ -235,7 +236,7 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
         return m;
     }
     
-    static public QsiMessage getWriteCV(int cv, int val, int mode) {
+    static public QsiMessage getWriteCV(int cv, int val, ProgrammingMode mode) {
         // OP_REQ_WRITE_CV
         QsiMessage m = new QsiMessage(5);
         m.setElement(0,30);

@@ -5,6 +5,7 @@ package jmri.jmrix.lenz;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.*;
+import java.util.*;
 
 /**
  * Provides an Ops mode programing interface for XPressNet
@@ -72,24 +73,14 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
            p.programmingOpReply(val,jmri.ProgListener.NotImplemented);
     }
 
-    public void setMode(int mode) {
-        if (mode==Programmer.OPSBYTEMODE) {
-		_mode=mode;
-	} else {
-            reportBadMode(mode);
-        }
-    }
-
-    void reportBadMode(int mode) {
-        log.error("Can't switch to mode "+mode);
-    }
-
-    public int  getMode() {
-        return _mode;
-    }
-
-    public boolean hasMode(int mode) {
-        return (mode==Programmer.OPSBYTEMODE);
+    /**
+     * Types implemented here.
+     */
+    @Override
+    public List<ProgrammingMode> getSupportedModes() {
+        List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
+        ret.add(ProgrammingMode.OPSBYTEMODE);
+        return ret;
     }
 
     /*

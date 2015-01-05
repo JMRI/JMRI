@@ -2,8 +2,9 @@
 
 package jmri;
 
-import jmri.ProgListener;
+import jmri.*;
 import java.beans.PropertyChangeListener;
+import java.util.*;
 
 /**
  * Scaffold implementation of Programmer interface for testing.
@@ -22,15 +23,15 @@ import java.beans.PropertyChangeListener;
  * for more details.
  * <P>
  * @see         jmri.Programmer
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author	Bob Jacobsen Copyright (C) 2008, 2014
  * @version	$Revision$
  */
 public class ProgrammerScaffold implements Programmer  {
 
-    int matchesMode = -1;
-    int lastSeenMode = -1;
+    ProgrammingMode matchesMode;
+    ProgrammingMode lastSeenMode;
     
-    public ProgrammerScaffold(int matchesMode) {
+    public ProgrammerScaffold(ProgrammingMode matchesMode) {
         this.matchesMode = matchesMode;
         this.lastSeenMode = matchesMode;
     }
@@ -51,23 +52,23 @@ public class ProgrammerScaffold implements Programmer  {
         confirmCV(Integer.parseInt(CV), val, p);
     }
     
-    public void setMode(int mode) {
-        lastSeenMode = mode;
+    public void setMode(ProgrammingMode p) {
+        // temporary implementation, have to remove the "mode" int value eventually
+        lastSeenMode = p;
     }
-
-    public int getMode() { return lastSeenMode; }
-
-    public boolean hasMode(int mode) {
-        return mode == matchesMode;
+    public ProgrammingMode getMode() {return lastSeenMode;}
+    public List<ProgrammingMode> getSupportedModes() {
+        return Arrays.asList(
+            new ProgrammingMode[]
+            {matchesMode}
+        );
     }
 
     public boolean getCanRead() { return true; }
     public boolean getCanRead(String addr) { return Integer.parseInt(addr)<=1024; }
-    public boolean getCanRead(int mode, String addr) { return getCanRead(addr); }
     
     public boolean getCanWrite()  { return true; }
     public boolean getCanWrite(String addr) { return Integer.parseInt(addr)<=1024; }
-    public boolean getCanWrite(int mode, String addr)  { return getCanWrite(addr); }
 
     public void addPropertyChangeListener(PropertyChangeListener p) {}
     public void removePropertyChangeListener(PropertyChangeListener p) {}

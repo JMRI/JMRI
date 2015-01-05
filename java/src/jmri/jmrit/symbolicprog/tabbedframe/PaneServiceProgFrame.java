@@ -4,7 +4,7 @@ package jmri.jmrit.symbolicprog.tabbedframe;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.Programmer;
+import jmri.*;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
 import javax.swing.JPanel;
@@ -32,7 +32,14 @@ public class PaneServiceProgFrame extends PaneProgFrame
      */
     protected JPanel getModePane() {
         // ensure initialization, even if invoked in ctor
-        if (modePane == null) modePane = new jmri.jmrit.progsupport.ProgServiceModeComboBox();
+        if (modePane == null) modePane = new jmri.jmrit.progsupport.ProgServiceModeComboBox(){
+            protected java.util.List<GlobalProgrammerManager> getMgrList() {
+                return new java.util.ArrayList<GlobalProgrammerManager>();
+            }
+            public Programmer getProgrammer() {
+                return mProgrammer;
+            }
+        };
         log.debug("invoked getModePane");
         return modePane;
     }

@@ -116,7 +116,9 @@ public class PaneProgAction 			extends AbstractAction {
             };
 
         // load primary frame
-        f.getContentPane().add(modePane);
+        JPanel tempPane = new JPanel();
+        tempPane.add(modePane);
+        f.getContentPane().add(tempPane);
         f.getContentPane().add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
 
         pane1.setAlignmentX(JLabel.CENTER_ALIGNMENT);

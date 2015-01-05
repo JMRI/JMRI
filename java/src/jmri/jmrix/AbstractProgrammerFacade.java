@@ -2,10 +2,9 @@
 
 package jmri.jmrix;
 
-import jmri.ProgListener;
-import jmri.Programmer;
-import jmri.ProgrammerException;
+import jmri.*;
 import java.beans.PropertyChangeListener;
+import java.util.*;
 
 /**
  * Common implementations of the Programmer interface
@@ -22,50 +21,62 @@ public abstract class AbstractProgrammerFacade implements Programmer {
         this.prog = prog;
     }
     
+    @Override
     public String decodeErrorCode(int code) {
         return prog.decodeErrorCode(code);
     }
 
+    @Override
     public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
         prog.addPropertyChangeListener(l);
     }
 
+    @Override
     public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
         prog.removePropertyChangeListener(l);
     }
 
+    @Override
     public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         prog.writeCV(CV, val, p);
     }
+    @Override
     public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {
         prog.writeCV(CV, val, p);
     }
+    @Override
     public void readCV(int CV, ProgListener p) throws ProgrammerException {
         prog.readCV(CV, p);
     }
+    @Override
     public void readCV(String CV, ProgListener p) throws ProgrammerException {
         prog.readCV(CV, p);
     }
+    @Override
     public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
         prog.confirmCV(CV, val, p);
     }
+    @Override
     public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
         prog.confirmCV(CV, val, p);
     }
 
-    public boolean hasMode(int mode) {
-        return prog.hasMode(mode);
-    }
-    public int getMode() { return prog.getMode(); }
-    public void setMode(int mode) { prog.setMode(mode); }
+    @Override
+    public ProgrammingMode getMode() { return prog.getMode(); }
+    @Override
+    public List<ProgrammingMode> getSupportedModes() { return prog.getSupportedModes(); }
+    @Override
+    public void setMode(ProgrammingMode p) { prog.setMode(p); }
 
+    @Override
     public boolean getCanRead() { return prog.getCanRead(); }
+    @Override
     public boolean getCanRead(String addr) { return prog.getCanRead(addr); }
-    public boolean getCanRead(int mode, String addr) { return prog.getCanRead(mode, addr); }
     
+    @Override
     public boolean getCanWrite()  { return prog.getCanWrite(); }
+    @Override
     public boolean getCanWrite(String addr) { return prog.getCanWrite(addr); }
-    public boolean getCanWrite(int mode, String addr)  { return prog.getCanWrite(mode, addr); }
 
 }
 

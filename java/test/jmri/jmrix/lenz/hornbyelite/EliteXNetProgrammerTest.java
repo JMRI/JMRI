@@ -82,7 +82,7 @@ public class EliteXNetProgrammerTest extends TestCase {
 		EliteXNetProgrammer p = new EliteXNetProgrammer(t);
 
         // set register mode
-        p.setMode(Programmer.REGISTERMODE);
+        p.setMode(ProgrammingMode.REGISTERMODE);
 
 		// and do the write
 		p.writeCV(29, 12, l);
@@ -110,7 +110,7 @@ public class EliteXNetProgrammerTest extends TestCase {
 		EliteXNetProgrammer p = new EliteXNetProgrammer(t);
 
         // set register mode
-        p.setMode(Programmer.REGISTERMODE);
+        p.setMode(ProgrammingMode.REGISTERMODE);
 
 		// and do the write
 		p.writeCV("29", 12, l);
@@ -188,7 +188,7 @@ public class EliteXNetProgrammerTest extends TestCase {
 		EliteXNetProgrammer p = new EliteXNetProgrammer(t);
 
         // set register mode
-        p.setMode(Programmer.REGISTERMODE);
+        p.setMode(ProgrammingMode.REGISTERMODE);
 
         // and do the read
         p.readCV(29, l);
@@ -214,7 +214,7 @@ public class EliteXNetProgrammerTest extends TestCase {
 		EliteXNetProgrammer p = new EliteXNetProgrammer(t);
 
         // set register mode
-        p.setMode(Programmer.REGISTERMODE);
+        p.setMode(ProgrammingMode.REGISTERMODE);
 
         // and do the read
         p.readCV("29", l);

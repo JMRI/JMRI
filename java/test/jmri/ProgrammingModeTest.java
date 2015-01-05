@@ -1,0 +1,41 @@
+// ProgrammingModeTest.java
+
+package jmri;
+
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+/**
+ * Tests for the ProgrammingMode class
+ * @author      Bob Jacobsen  Copyright (C) 2014
+ * @version     $Revision$
+ */
+public class ProgrammingModeTest extends TestCase {
+
+    public void testStateCtors() {
+        // tests that statics exist, are not equal
+        Assert.assertTrue(ProgrammingMode.NONE.equals(ProgrammingMode.NONE));
+        Assert.assertTrue(!ProgrammingMode.NONE.equals(ProgrammingMode.PAGEMODE));        
+    }
+
+    // from here down is testing infrastructure
+
+    public ProgrammingModeTest(String s) {
+        super(s);
+    }
+
+    // Main entry point
+    static public void main(String[] args) {
+        String[] testCaseName = {ProgrammingModeTest.class.getName()};
+        junit.swingui.TestRunner.main(testCaseName);
+    }
+    
+    // test suite from all defined tests
+    public static Test suite() {
+        TestSuite suite = new TestSuite(ProgrammingModeTest.class);
+        return suite;
+    }
+
+}

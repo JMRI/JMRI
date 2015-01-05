@@ -8,9 +8,9 @@ package jmri.jmrix.lenz;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.Programmer;
+import jmri.*;
 import jmri.jmrix.AbstractProgrammer;
-import java.util.Vector;
+import java.util.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
@@ -41,66 +41,31 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 	protected boolean _service_mode = false;
 
 	public XNetProgrammer(XNetTrafficController tc) {
-	   // error if more than one constructed?
+    // error if more than one constructed?
 
-           _controller=tc;
+        _controller=tc;
 
-           // connect to listen
-           controller().addXNetListener(XNetInterface.CS_INFO |
-			     XNetInterface.COMMINFO |
-			     XNetInterface.INTERFACE,
-			     this);
+    // connect to listen
+        controller().addXNetListener(XNetInterface.CS_INFO |
+            XNetInterface.COMMINFO |
+            XNetInterface.INTERFACE,
+            this);
 
-        }
-
-
-	// handle mode
-	protected int _mode = Programmer.DIRECTBYTEMODE;
-
-    /**
-     * Switch to a new programming mode.  Lenz can now only
-     * do register, page, and direct mode. If you attempt to 
-     * switch to any others, the new mode will set & notify, 
-     * then set back to the original.  This lets the listeners
-     * know that a change happened, and then was undone.
-     * @param mode The new mode, use values from the jmri.Programmer interface
-     */
-	public synchronized void setMode(int mode) {
-        int oldMode = _mode;  // preserve this in case we need to go back
-		if (mode != _mode) {
-			notifyPropertyChange("Mode", _mode, mode);
-			_mode = mode;
-		}
-		if (_mode != Programmer.PAGEMODE && _mode != Programmer.REGISTERMODE
-                && mode != Programmer.DIRECTBITMODE && mode != Programmer.DIRECTBYTEMODE ) {
-            // attempt to switch to unsupported mode, switch back to previous
-			_mode = oldMode;
-			notifyPropertyChange("Mode", mode, _mode);
-		}
-	}
-	synchronized public int getMode() { return _mode; }
-    /**
-     * Signifies mode's available
-     * @param mode
-     * @return True if paged,register,or Direct Mode (Bit or Byte) mode
-     */
-    public boolean hasMode(int mode) {
-        if ( mode == Programmer.PAGEMODE ||
-             mode == Programmer.REGISTERMODE ||
-             mode == Programmer.DIRECTBITMODE ||
-             mode == Programmer.DIRECTBYTEMODE ) {
-            log.debug("hasMode request on mode "+mode+" returns true");
-            return true;
-        }
-        log.debug("hasMode returns false on mode "+mode);
-        return false;
+        setMode(ProgrammingMode.DIRECTBYTEMODE);
     }
 
+
+    /**
+     * Types implemented here.
+     */
     @Override
-    public boolean getCanRead() {
-		// Multimaus cannot read CVs, unless Rocomotion interface is used, assume other Command Stations do.
-		// To be revised if and when a Rocomotion adapter is introduced!!!
-		return (controller().getCommandStation().getCommandStationType() != 0x10);
+    public List<ProgrammingMode> getSupportedModes() {
+        List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
+        ret.add(ProgrammingMode.PAGEMODE);
+        ret.add(ProgrammingMode.DIRECTBITMODE);
+        ret.add(ProgrammingMode.DIRECTBYTEMODE);
+        ret.add(ProgrammingMode.REGISTERMODE);
+        return ret;
     }
 
     /**
@@ -110,24 +75,26 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
      * stations.
      */
     @Override
-    public boolean getCanRead(int mode, String addr) {
-        if (log.isDebugEnabled()) log.debug("check mode "+mode+" CV "+addr);
+    public boolean getCanRead(String addr) {
+        if (log.isDebugEnabled()) log.debug("check mode "+getMode()+" CV "+addr);
         if (!getCanRead()) return false; // check basic implementation first
-        switch(mode) {
-           case Programmer.DIRECTBITMODE:
-           case Programmer.DIRECTBYTEMODE: {
-                switch(controller().getCommandStation().getCommandStationType()) {
-                  case XNetConstants.CS_TYPE_LZ100:
-                       if(controller().getCommandStation()
-                                      .getCommandStationSoftwareVersion()<=3.5)
-                          return Integer.parseInt(addr)<=256;
-                       else 
-                          return Integer.parseInt(addr)<=1024; 
-                  default:
-                    return Integer.parseInt(addr)<=256; 
-                }
+        
+  		// Multimaus cannot read CVs, unless Rocomotion interface is used, assume other Command Stations do.
+ 		// To be revised if and when a Rocomotion adapter is introduced!!!
+ 		if (controller().getCommandStation().getCommandStationType() == 0x10) return false;
+
+        if (getMode().equals(ProgrammingMode.DIRECTBITMODE) || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
+            switch(controller().getCommandStation().getCommandStationType()) {
+              case XNetConstants.CS_TYPE_LZ100:
+                   if(controller().getCommandStation()
+                                  .getCommandStationSoftwareVersion()<=3.5)
+                      return Integer.parseInt(addr)<=256;
+                   else 
+                      return Integer.parseInt(addr)<=1024; 
+              default:
+                return Integer.parseInt(addr)<=256; 
             }
-           default:
+        } else {
              return Integer.parseInt(addr)<=256; 
         }
     }
@@ -139,13 +106,11 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
      * stations.
      */
     @Override
-    public boolean getCanWrite(int mode, String addr) {
-        if (log.isDebugEnabled()) log.debug("check mode "+mode+" CV "+addr);
+    public boolean getCanWrite(String addr) {
+        if (log.isDebugEnabled()) log.debug("check CV "+addr);
                                   log.error("cs Type: " + controller().getCommandStation().getCommandStationType() + " CS Version: " + controller().getCommandStation().getCommandStationSoftwareVersion());
         if (!getCanWrite()) return false; // check basic implementation first
-        switch(mode) {
-           case Programmer.DIRECTBITMODE:
-           case Programmer.DIRECTBYTEMODE:
+        if (getMode().equals(ProgrammingMode.DIRECTBITMODE) || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
              switch(controller().getCommandStation().getCommandStationType()){
                 case XNetConstants.CS_TYPE_LZ100:
                    if(controller().getCommandStation()
@@ -156,28 +121,11 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
                 default: 
                    return Integer.parseInt(addr)<=256; 
              }
-           default:
+        } else {
              return Integer.parseInt(addr)<=256; 
         }
     }
 
-
-	// notify property listeners - see AbstractProgrammer for more
-
-	@SuppressWarnings("unchecked")
-	protected void notifyPropertyChange(String name, int oldval, int newval) {
-		// make a copy of the listener vector to synchronized not needed for transmit
-		Vector<PropertyChangeListener> v;
-		synchronized(this) {
-			v = (Vector<PropertyChangeListener>) propListeners.clone();
-		}
-		// forward to all listeners
-		int cnt = v.size();
-		for (int i=0; i < cnt; i++) {
-			PropertyChangeListener client = v.elementAt(i);
-			client.propertyChange(new PropertyChangeEvent(this, name,Integer.valueOf(oldval),Integer.valueOf(newval)));
-		}
-	}
 
 	// members for handling the programmer interface
 
@@ -204,10 +152,10 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		   restartTimer(XNetProgrammerTimeout);
 
 		   // format and send message to go to program mode
-        	   if (_mode == Programmer.PAGEMODE) {
+        	   if (getMode().equals(ProgrammingMode.PAGEMODE)) {
 		       XNetMessage msg = XNetMessage.getWritePagedCVMsg(CV,val);
 		       controller().sendXNetMessage(msg, this);
-        	   } else if (_mode == Programmer.DIRECTBITMODE || _mode == Programmer.DIRECTBYTEMODE) {
+        	   } else if (getMode().equals(ProgrammingMode.DIRECTBITMODE) || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
 		       XNetMessage msg = XNetMessage.getWriteDirectCVMsg(CV,val);
 		       controller().sendXNetMessage(msg, this);
         	   } else  { // register mode by elimination 
@@ -242,10 +190,10 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		   restartTimer(XNetProgrammerTimeout);
 
 		   // format and send message to go to program mode
-        	   if (_mode == Programmer.PAGEMODE) {
+        	   if (getMode().equals(ProgrammingMode.PAGEMODE)) {
 		       XNetMessage msg=XNetMessage.getReadPagedCVMsg(CV);
 		       controller().sendXNetMessage(msg, this);
-		   } else if (_mode == Programmer.DIRECTBITMODE || _mode == Programmer.DIRECTBYTEMODE) {
+		   } else if (getMode().equals(ProgrammingMode.DIRECTBITMODE) || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
 		       XNetMessage msg=XNetMessage.getReadDirectCVMsg(CV);
 		       controller().sendXNetMessage(msg, this);
 		   } else { // register mode by elimination    

@@ -4,12 +4,12 @@ package jmri.jmrix.nce;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.Programmer;
+import jmri.*;
 import jmri.jmrix.AbstractProgrammer;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Vector;
+import java.util.*;
 
 /**
  * Convert the jmri.Programmer interface into commands for the NCE power house.
@@ -31,60 +31,30 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         		(tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3) || 
         		(tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5) || 
         		(tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN))){
-        	_mode = Programmer.OPSBYTEMODE;
+        	setMode(ProgrammingMode.OPSBYTEMODE);
         }
     }
 
-    // handle mode
-    protected int _mode = Programmer.PAGEMODE;
 
     /**
-     * Switch to a new programming mode.  Note that NCE can only
-     * do register and page mode. If you attempt to switch to
-     * any others, the new mode will set & notify, then
-     * set back to the original.  This lets the listeners
-     * know that a change happened, and then was undone.
-     * @param mode The new mode, use values from the jmri.Programmer interface
+     * Programming modes available depend on settings
      */
-    public void setMode(int mode) {
-        int oldMode = _mode;  // preserve this in case we need to go back
-        if (mode != _mode) {
-            notifyPropertyChange("Mode", _mode, mode);
-            _mode = mode;
-        }
-        if (!hasMode(_mode)) {
-            // attempt to switch to unsupported mode, switch back to previous
-            _mode = oldMode;
-            notifyPropertyChange("Mode", mode, _mode);
-        }
-    }
-
-    /**
-     * Signifies mode's available
-     * @param mode
-     * @return True if paged or register mode
-     */
-    public boolean hasMode(int mode) {
+    @Override
+    public List<ProgrammingMode> getSupportedModes() {
+        List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
     	if (tc != null && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERCAB &&
     			tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE){
-    		log.debug("NCE USB-SB3/SB5/TWIN hasMode returns false on mode "+mode);
-    		return false;
+    		log.debug("NCE USB-SB3/SB5/TWIN getSupportedModes returns no modes");
+    		return ret;
     	}
-        if ( mode == Programmer.PAGEMODE ||
-             mode == Programmer.REGISTERMODE ) {
-            log.debug("hasMode request on mode "+mode+" returns true (1)");
-            return true;
+    	ret.add(ProgrammingMode.PAGEMODE);
+    	ret.add(ProgrammingMode.REGISTERMODE);
+    	
+        if ( tc != null && tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
+        	ret.add(ProgrammingMode.DIRECTBYTEMODE);
         }
-        if ( mode == Programmer.DIRECTBYTEMODE && tc != null &&
-        		tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
-        	log.debug("hasMode request on mode "+mode+" returns true (2)");
-        	return true;
-        }
-        log.debug("hasMode returns false on mode "+mode);
-        return false;
+        return ret;
     }
-
-    public int getMode() { return _mode; }
 
     @Override
     public boolean getCanRead() {
@@ -95,12 +65,9 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
     		return true;
     	}
 
-    public boolean getCanWrite(int mode, String cv) {
-       if ((Integer.parseInt(cv) > 256) &&
-               ((mode == Programmer.PAGEMODE) ||
-                   (mode == Programmer.DIRECTBYTEMODE) ||
-                   (mode == Programmer.REGISTERMODE)
-               ) && ((tc != null) && (
+    public boolean getCanWrite(String cv) {
+       if ((Integer.parseInt(cv) > 256)
+               && ((tc != null) && (
                        (tc.getCommandOptions() == NceTrafficController.OPTION_1999) |
                        (tc.getCommandOptions() == NceTrafficController.OPTION_2004) |
                        (tc.getCommandOptions() == NceTrafficController.OPTION_2006))
@@ -112,23 +79,6 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         }
     }
     
-    // notify property listeners - see AbstractProgrammer for more
-
-    @SuppressWarnings("unchecked")
-	protected void notifyPropertyChange(String name, int oldval, int newval) {
-        // make a copy of the listener vector to synchronized not needed for transmit
-        Vector<PropertyChangeListener> v;
-        synchronized(this) {
-            v = (Vector<PropertyChangeListener>) propListeners.clone();
-        }
-        // forward to all listeners
-        int cnt = v.size();
-        for (int i=0; i < cnt; i++) {
-            PropertyChangeListener client = v.elementAt(i);
-            client.propertyChange(new PropertyChangeEvent(this, name, Integer.valueOf(oldval), Integer.valueOf(newval)));
-        }
-    }
-
     // members for handling the programmer interface
 
     int progState = 0;
@@ -145,9 +95,9 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         useProgrammer(p);
         // prevent writing Op mode CV > 255 on PowerHouse 2007C and earlier
         if ((CV > 256) && 
-        		((getMode() == Programmer.PAGEMODE) ||
-    				(getMode() == Programmer.DIRECTBYTEMODE) ||
-    				(getMode() == Programmer.REGISTERMODE)
+        		((getMode() == ProgrammingMode.PAGEMODE) ||
+    				(getMode() == ProgrammingMode.DIRECTBYTEMODE) ||
+    				(getMode() == ProgrammingMode.REGISTERMODE)
         		) && ((tc != null) && (
         				(tc.getCommandOptions() == NceTrafficController.OPTION_1999) | 
     					(tc.getCommandOptions() == NceTrafficController.OPTION_2004) | 
@@ -214,21 +164,21 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
     }
 
     // internal method to create the NceMessage for programmer task start
-    protected NceMessage progTaskStart(int mode, int val, int cvnum) throws jmri.ProgrammerException {
+    protected NceMessage progTaskStart(ProgrammingMode mode, int val, int cvnum) throws jmri.ProgrammerException {
         // val = -1 for read command; mode is direct, etc
         if (val < 0) {
             // read
-            if (_mode == Programmer.PAGEMODE)
+            if (mode == ProgrammingMode.PAGEMODE)
                 return NceMessage.getReadPagedCV(tc, cvnum);
-            else if (_mode == Programmer.DIRECTBYTEMODE)
+            else if (mode == ProgrammingMode.DIRECTBYTEMODE)
                 return NceMessage.getReadDirectCV(tc, cvnum);
 			else
                 return NceMessage.getReadRegister(tc, registerFromCV(cvnum));
         } else {
             // write
-            if (_mode == Programmer.PAGEMODE)
+            if (mode == ProgrammingMode.PAGEMODE)
                 return NceMessage.getWritePagedCV(tc, cvnum, val);
-            else if (_mode == Programmer.DIRECTBYTEMODE)
+            else if (mode == ProgrammingMode.DIRECTBYTEMODE)
                 return NceMessage.getWriteDirectCV(tc, cvnum, val);
             else
                 return NceMessage.getWriteRegister(tc, registerFromCV(cvnum), val);

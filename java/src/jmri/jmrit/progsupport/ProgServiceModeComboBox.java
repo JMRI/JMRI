@@ -5,9 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
+import java.util.*;
+import java.beans.*;
+import javax.swing.*;
 import jmri.*;
 
 /**
@@ -41,30 +41,23 @@ import jmri.*;
  * @author			Bob Jacobsen   Copyright (C) 2001
  * @version			$Revision$
  */
-public class ProgServiceModeComboBox extends ProgModeSelector implements java.beans.PropertyChangeListener {
+public class ProgServiceModeComboBox extends ProgModeSelector implements PropertyChangeListener, ActionListener {
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = -337689867042266871L;
 	// GUI member declarations
-    JComboBox<String> box;
+    JComboBox<GlobalProgrammerManager>  progBox;
+    JComboBox<ProgrammingMode>          modeBox;
     ArrayList<Integer> modes = new ArrayList<Integer>();
 
     /**
      * Get the configured programmer
      */
     public Programmer getProgrammer() {
-        if (InstanceManager.programmerManagerInstance() != null) {
-            return InstanceManager.programmerManagerInstance().getGlobalProgrammer();
-        } else {
-            log.warn("request for service mode programmer with no ProgrammerManager configured");
-        }
-        return null;
+        return ((GlobalProgrammerManager)progBox.getSelectedItem()).getGlobalProgrammer();
     }
 
     /**
-     * Are any of the buttons selected?
+     * Are any of the modes selected?
      * @return true
      */
     public boolean isSelected() {
@@ -72,122 +65,87 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements java.be
     }
 
     public ProgServiceModeComboBox() {
-        box = new JComboBox<String>();
+        this(BoxLayout.X_AXIS);
+    }
+    
+    protected List<GlobalProgrammerManager> getMgrList() {
+        return InstanceManager.getList(jmri.GlobalProgrammerManager.class);
+    }
 
+    
+    public ProgServiceModeComboBox(int direction) {
+        modeBox = new JComboBox<ProgrammingMode>();
+        modeBox.addActionListener(this);
+        
+        // general GUI config
+        setLayout(new BoxLayout(this, direction));
+
+        // create the programmer display combo box
+        progBox = new JComboBox<GlobalProgrammerManager>();
+        java.util.Vector<GlobalProgrammerManager> v = new java.util.Vector<GlobalProgrammerManager>();
+        for (GlobalProgrammerManager pm : getMgrList()) {
+            v.add(pm);
+            // listen for changes
+            pm.getGlobalProgrammer().addPropertyChangeListener(this);
+        }
+        add(progBox = new JComboBox<GlobalProgrammerManager>(v));
+        // if only one, don't show
+        if (progBox.getItemCount()<2) {
+            progBox.setVisible(false);
+        } else {
+            progBox.setSelectedItem(InstanceManager.getDefault(jmri.GlobalProgrammerManager.class)); // set default
+            progBox.addActionListener(new java.awt.event.ActionListener(){
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    // new programmer selection
+                    programmerSelected();
+                }
+            });
+        }
+        
         // install items in GUI
         add(new JLabel(Bundle.getMessage("ProgrammingMode")));
-        add(box);
 
-        if (InstanceManager.programmerManagerInstance() != null
-                && InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null) {
-            Programmer p = InstanceManager.programmerManagerInstance().getGlobalProgrammer();
-            if (p.hasMode(Programmer.PAGEMODE)) {
-                box.addItem(Bundle.getMessage("PagedMode"));
-                modes.add(modes.size(), Programmer.PAGEMODE);
-            }
-            if (p.hasMode(Programmer.REGISTERMODE)) {
-                box.addItem(Bundle.getMessage("RegisterMode"));
-                modes.add(modes.size(), Programmer.REGISTERMODE);
-            }
-            if (p.hasMode(Programmer.DIRECTBYTEMODE)) {
-                box.addItem(Bundle.getMessage("DirectByte"));
-                modes.add(modes.size(), Programmer.DIRECTBYTEMODE);
-            }
-            if (p.hasMode(Programmer.DIRECTBITMODE)) {
-                box.addItem(Bundle.getMessage("DirectBit"));
-                modes.add(modes.size(), Programmer.DIRECTBITMODE);
-            }
-            if (p.hasMode(Programmer.ADDRESSMODE)) {
-                box.addItem(Bundle.getMessage("AddressMode"));
-                modes.add(modes.size(), Programmer.ADDRESSMODE);
-            }
-        } else {
-            box.addItem(Bundle.getMessage("NotAvailable"));
-            log.info("No programmer available, so modes not set");
-        }
-        box.setEnabled((!modes.isEmpty()));
-
-        ActionListener boxListener = new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                connect();
-                if (connected) {
-                    try {
-                        setProgrammerMode(modes.get(box.getSelectedIndex()));
-                    } catch (java.lang.ArrayIndexOutOfBoundsException ex) {
-                        //Can be considered normal if there is no service mode programmer available
-                    }
-                }
-            }
-        };
-        box.addActionListener(boxListener);
-
-        // load the state if a programmer exists
-        connect();
-        updateMode();
+        add(modeBox);
+        
+        // and execute the setup for 1st time
+        programmerSelected();
 
     }
 
+    /**
+     * reload the interface with the new programmers
+     */
+    void programmerSelected() {
+        DefaultComboBoxModel<ProgrammingMode> model = new DefaultComboBoxModel<ProgrammingMode>();
+        for (ProgrammingMode mode : getProgrammer().getSupportedModes()) {
+            model.addElement(mode);
+        }
+        modeBox.setModel(model);
+    }
+    
+    /**
+     * Listen to box for mode changes
+     */
+    public void actionPerformed(java.awt.event.ActionEvent e) {
+        // convey change to programmer
+        log.debug("Selected mode: {}", modeBox.getSelectedItem());
+        getProgrammer().setMode((ProgrammingMode)modeBox.getSelectedItem());
+    }
+    
+    /**
+     * Listen to programmer for mode changes
+     */
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if ("Mode".equals(e.getPropertyName())) {
+        if ("Mode".equals(e.getPropertyName()) && getProgrammer().equals(e.getSource())) {
             // mode changed in programmer, change GUI here if needed
             if (isSelected()) {  // if we're not holding a current mode, don't update
-                int mode = ((Integer) e.getNewValue()).intValue();
-                box.setSelectedIndex(modes.indexOf(mode));
-            }
-        } else {
-            log.warn("propertyChange with unexpected propertyName: " + e.getPropertyName());
-        }
-    }
-    // connect to the Programmer interface
-    boolean connected = false;
-
-    private void connect() {
-        if (!connected) {
-            if (InstanceManager.programmerManagerInstance() != null
-                    && InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null) {
-                InstanceManager.programmerManagerInstance().getGlobalProgrammer().addPropertyChangeListener(this);
-                connected = true;
-                log.debug("Connecting to programmer");
-            } else {
-                log.debug("No programmer present to connect");
+                modeBox.setSelectedItem((ProgrammingMode)e.getNewValue());
             }
         }
     }
-
-    // set the programmer to the current mode
-    private void setProgrammerMode(int mode) {
-        if (log.isDebugEnabled()) {
-            log.debug("Setting programmer to mode " + mode);
-        }
-        if (InstanceManager.programmerManagerInstance() != null
-                && InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null) {
-            InstanceManager.programmerManagerInstance().getGlobalProgrammer().setMode(mode);
-        }
-    }
-
-    // Internal routine to update the comboBox to the current state
-    private void updateMode() {
-        if (connected) {
-            int mode = InstanceManager.programmerManagerInstance().getGlobalProgrammer().getMode();
-            if (log.isDebugEnabled()) {
-                log.debug("setting mode buttons: " + mode);
-            }
-            box.setSelectedIndex(modes.indexOf(mode));
-        } else {
-            log.debug("Programmer doesn't exist, can't set default mode");
-        }
-    }
-
+    
     // no longer needed, disconnect if still connected
     public void dispose() {
-        if (connected) {
-            if (InstanceManager.programmerManagerInstance() != null
-                    && InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null) {
-                InstanceManager.programmerManagerInstance().getGlobalProgrammer().removePropertyChangeListener(this);
-            }
-            connected = false;
-        }
     }
     static Logger log = LoggerFactory.getLogger(ProgServiceModeComboBox.class.getName());
 }

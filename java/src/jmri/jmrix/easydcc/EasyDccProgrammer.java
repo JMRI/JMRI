@@ -4,9 +4,9 @@ package jmri.jmrix.easydcc;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.Programmer;
+import jmri.*;
 import jmri.jmrix.AbstractProgrammer;
-import java.util.Vector;
+import java.util.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
@@ -23,60 +23,15 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
         LONG_TIMEOUT=180000;
     }
 
-    // handle mode
-    protected int _mode = Programmer.PAGEMODE;
-
     /**
-     * Switch to a new programming mode.  Note that EasyDCC can only
-     * do register and page mode. If you attempt to switch to
-     * any others, the new mode will set & notify, then
-     * set back to the original.  This lets the listeners
-     * know that a change happened, and then was undone.
-     * @param mode The new mode, use values from the jmri.Programmer interface
+     * Types implemented here.
      */
-    public void setMode(int mode) {
-        int oldMode = _mode;  // preserve this in case we need to go back
-        if (mode != _mode) {
-            notifyPropertyChange("Mode", _mode, mode);
-            _mode = mode;
-        }
-        if (_mode != Programmer.PAGEMODE && _mode != Programmer.REGISTERMODE) {
-            // attempt to switch to unsupported mode, switch back to previous
-            _mode = oldMode;
-            notifyPropertyChange("Mode", mode, _mode);
-        }
-    }
-    /**
-     * Signifies mode's available
-     * @param mode
-     * @return True if paged or register mode
-     */
-    public boolean hasMode(int mode) {
-        if ( mode == Programmer.PAGEMODE ||
-             mode == Programmer.REGISTERMODE ) {
-            log.debug("hasMode request on mode "+mode+" returns true");
-            return true;
-        }
-        log.debug("hasMode returns false on mode "+mode);
-        return false;
-    }
-    public int getMode() { return _mode; }
-
-    // notify property listeners - see AbstractProgrammer for more
-
-    @SuppressWarnings("unchecked")
-	protected void notifyPropertyChange(String name, int oldval, int newval) {
-        // make a copy of the listener vector to synchronized not needed for transmit
-        Vector<PropertyChangeListener> v;
-        synchronized(this) {
-            v = (Vector<PropertyChangeListener>) propListeners.clone();
-        }
-        // forward to all listeners
-        int cnt = v.size();
-        for (int i=0; i < cnt; i++) {
-            PropertyChangeListener client = v.elementAt(i);
-            client.propertyChange(new PropertyChangeEvent(this, name, Integer.valueOf(oldval), Integer.valueOf(newval)));
-        }
+    @Override
+    public List<ProgrammingMode> getSupportedModes() {
+        List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
+        ret.add(ProgrammingMode.PAGEMODE);
+        ret.add(ProgrammingMode.REGISTERMODE);
+        return ret;
     }
 
     // members for handling the programmer interface
@@ -151,17 +106,17 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
     }
 
     // internal method to create the EasyDccMessage for programmer task start
-    protected EasyDccMessage progTaskStart(int mode, int val, int cvnum) throws jmri.ProgrammerException {
+    protected EasyDccMessage progTaskStart(ProgrammingMode mode, int val, int cvnum) throws jmri.ProgrammerException {
         // val = -1 for read command; mode is direct, etc
         if (val < 0) {
             // read
-            if (_mode == Programmer.PAGEMODE)
+            if (getMode().equals(ProgrammingMode.PAGEMODE))
                 return EasyDccMessage.getReadPagedCV(cvnum);
             else
                 return EasyDccMessage.getReadRegister(registerFromCV(cvnum));
         } else {
             // write
-            if (_mode == Programmer.PAGEMODE)
+            if (getMode().equals(ProgrammingMode.PAGEMODE))
                 return EasyDccMessage.getWritePagedCV(cvnum, val);
             else
                 return EasyDccMessage.getWriteRegister(registerFromCV(cvnum), val);

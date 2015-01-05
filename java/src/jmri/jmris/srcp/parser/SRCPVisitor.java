@@ -183,11 +183,11 @@ public class SRCPVisitor implements SRCPParserVisitor {
     else if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("SM")
          && isSupported(bus,"SM") ) {
       // This is a Service Mode read request.
-      int modeno=jmri.Programmer.REGISTERMODE;
+      jmri.ProgrammingMode modeno=jmri.ProgrammingMode.REGISTERMODE;
       if(node.jjtGetChild(3).getClass()==ASTcv.class)
-         modeno=jmri.Programmer.DIRECTBYTEMODE;
+         modeno=jmri.ProgrammingMode.DIRECTBYTEMODE;
       else if(node.jjtGetChild(3).getClass()==ASTcvbit.class)
-         modeno=jmri.Programmer.DIRECTBITMODE;
+         modeno=jmri.ProgrammingMode.DIRECTBITMODE;
      
       int cv = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(4)).jjtGetValue()));
        //try {
@@ -407,11 +407,11 @@ public class SRCPVisitor implements SRCPParserVisitor {
     else if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("SM")
          && isSupported(bus,"SM") ) {
       // This is a Service Mode write request
-      int modeno=jmri.Programmer.REGISTERMODE;
+      jmri.ProgrammingMode modeno=jmri.ProgrammingMode.REGISTERMODE;
       if(node.jjtGetChild(3).getClass()==ASTcv.class)
-         modeno=jmri.Programmer.DIRECTBYTEMODE;
+         modeno=jmri.ProgrammingMode.DIRECTBYTEMODE;
       else if(node.jjtGetChild(3).getClass()==ASTcvbit.class)
-         modeno=jmri.Programmer.DIRECTBITMODE;
+         modeno=jmri.ProgrammingMode.DIRECTBITMODE;
       int cv = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(4)).jjtGetValue()));
       int value = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(5)).jjtGetValue()));
      

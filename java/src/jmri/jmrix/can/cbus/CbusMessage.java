@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
-import jmri.Programmer;
+import jmri.*;
 
 
 /**
@@ -236,17 +236,17 @@ public class CbusMessage {
     /**
      * CBUS programmer commands
     */
-    static public CanMessage getReadCV(int cv, int mode, int header) {
+    static public CanMessage getReadCV(int cv, ProgrammingMode mode, int header) {
         CanMessage m = new CanMessage(5, header);
         m.setElement(0, CbusConstants.CBUS_QCVS);
         m.setElement(1, CbusConstants.SERVICE_HANDLE);
         m.setElement(2, (cv/256) & 0xff);
         m.setElement(3, cv & 0xff);
-        if (mode == Programmer.PAGEMODE) {
+        if (mode.equals(ProgrammingMode.PAGEMODE)) {
           m.setElement(4, CbusConstants.CBUS_PROG_PAGED);
-        } else if (mode == Programmer.DIRECTBITMODE) {
+        } else if (mode.equals(ProgrammingMode.DIRECTBITMODE)) {
           m.setElement(4, CbusConstants.CBUS_PROG_DIRECT_BIT);
-        } else if (mode == Programmer.DIRECTBYTEMODE) {
+        } else if (mode.equals(ProgrammingMode.DIRECTBYTEMODE)) {
           m.setElement(4, CbusConstants.CBUS_PROG_DIRECT_BYTE);
         } else {
           m.setElement(4, CbusConstants.CBUS_PROG_REGISTER);
@@ -255,17 +255,17 @@ public class CbusMessage {
         return m;
     }
 
-    static public CanMessage getWriteCV(int cv, int val, int mode, int header) {
+    static public CanMessage getWriteCV(int cv, int val, ProgrammingMode mode, int header) {
         CanMessage m = new CanMessage(6, header);
         m.setElement(0, CbusConstants.CBUS_WCVS);
         m.setElement(1, CbusConstants.SERVICE_HANDLE);
         m.setElement(2, (cv/256) & 0xff);
         m.setElement(3, cv & 0xff);
-        if (mode == Programmer.PAGEMODE) {
+        if (mode.equals(ProgrammingMode.PAGEMODE)) {
           m.setElement(4, CbusConstants.CBUS_PROG_PAGED);
-        } else if (mode == Programmer.DIRECTBITMODE) {
+        } else if (mode.equals(ProgrammingMode.DIRECTBITMODE)) {
           m.setElement(4, CbusConstants.CBUS_PROG_DIRECT_BIT);
-        } else if (mode == Programmer.DIRECTBYTEMODE) {
+        } else if (mode.equals(ProgrammingMode.DIRECTBYTEMODE)) {
           m.setElement(4, CbusConstants.CBUS_PROG_DIRECT_BYTE);
         } else {
           m.setElement(4, CbusConstants.CBUS_PROG_REGISTER);

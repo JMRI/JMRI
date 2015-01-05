@@ -77,7 +77,13 @@ public class JsonProgrammerServer extends AbstractProgrammerServer {
     }
 
     public void parseRequest(Locale locale, JsonNode data) throws JmriException, IOException {
-        int mode = data.path(MODE).asInt(Programmer.REGISTERMODE);
+        // get a programming mode, if possible
+        jmri.ProgrammingMode mode = jmri.ProgrammingMode.REGISTERMODE;
+        String requestMode = data.path(MODE).asText();
+        for (jmri.ProgrammingMode check : getProgrammer().getSupportedModes()) {
+            if (requestMode.equals(check.toString())) mode = check;
+            if (requestMode.equals(check.getStandardName())) mode = check;            
+        }
         int CV = data.path(NODE_CV).asInt();
         int value = data.path(VALUE).asInt();
         if (WRITE.equals(data.path(OP).asText())) {

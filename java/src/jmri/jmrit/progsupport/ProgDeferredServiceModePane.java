@@ -8,16 +8,10 @@ import java.awt.*;
 import javax.swing.*;
 import jmri.*;
 
-import jmri.Programmer;
-
 /**
  * Provide a JPanel to configure the service mode programmer via a
- * "simple until you need it".  This consists of a label with the
+ * "simple until you need it" pane.  This consists of a label with the
  * current mode, plus a "set" button.
- * <P>
- * The using code should get a configured programmer with getProgrammer. Since
- * there's only one service mode programmer, maybe this isn't critical, but
- * it's a good idea for the future.
  * <P>
  * A ProgModePane may "share" between one of these and an ops-mode selection,
  * which means that there might be _none_ of these modes selected.  When
@@ -44,7 +38,7 @@ import jmri.Programmer;
  * for more details.
  * <P>
  *
- * @author			Bob Jacobsen   Copyright (C) 2001
+ * @author			Bob Jacobsen   Copyright (C) 2001, 2014
  * @version			$Revision$
  */
 public class ProgDeferredServiceModePane extends ProgModeSelector implements java.beans.PropertyChangeListener {
@@ -70,11 +64,7 @@ public class ProgDeferredServiceModePane extends ProgModeSelector implements jav
      * Get the configured programmer
      */
     public Programmer getProgrammer() {
-        if (InstanceManager.programmerManagerInstance()!=null)
-            return InstanceManager.programmerManagerInstance().getGlobalProgrammer();
-        else
-            log.warn("request for service mode programmer with no ProgrammerManager configured");
-        return null;
+        return servicePane.getProgrammer();
     }
 
     /**
@@ -91,14 +81,6 @@ public class ProgDeferredServiceModePane extends ProgModeSelector implements jav
      */
     public ProgDeferredServiceModePane() {
         servicePane = new ProgServiceModePane(BoxLayout.Y_AXIS);
-
-        // update to current status & watch for changes
-        int mode = 0;
-        if (InstanceManager.programmerManagerInstance() != null
-            && InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null)
-            mode = InstanceManager.programmerManagerInstance().getGlobalProgrammer().getMode();
-        updateStatus(mode);
-        connect();
 
         // arrange activation
         setButton.addActionListener(new java.awt.event.ActionListener() {
@@ -117,6 +99,8 @@ public class ProgDeferredServiceModePane extends ProgModeSelector implements jav
         setLayout(new FlowLayout());
         add(currentMode);
         add(setButton);
+
+        log.error("This is missing code to listen to the programmer and update the mode display");
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -124,55 +108,22 @@ public class ProgDeferredServiceModePane extends ProgModeSelector implements jav
             // mode changed in programmer, change GUI here if needed
             // take the mode from the message, not the programmer, to get
             // proper synchronization
-            int mode = ((Integer)e.getNewValue()).intValue();
-            updateStatus(mode);
+            log.error("ProgDeferredServiceModePane isn't handling mode changes yet");
+            //ProgrammingMode mode = (ProgrammingMode)e.getNewValue();
+            //updateStatus(mode);
         } else log.warn("propertyChange with unexpected propertyName: "+e.getPropertyName());
     }
 
     /**
      * Update the display to the current status
      */
-    private void updateStatus(int mode) {
-        currentMode.setText(decodeMode(mode));
+    private void updateStatus(ProgrammingMode mode) {
+        currentMode.setText(mode.toString());
         invalidate();
-    }
-
-    private String decodeMode(int mode) {
-        switch (mode) {
-        case Programmer.ADDRESSMODE:    return Bundle.getMessage("AddressMode");
-        case Programmer.DIRECTBITMODE:  return Bundle.getMessage("DirectBit");
-        case Programmer.DIRECTBYTEMODE: return Bundle.getMessage("DirectByte");
-        case Programmer.PAGEMODE:       return Bundle.getMessage("PagedMode");
-        case Programmer.REGISTERMODE:   return Bundle.getMessage("RegisterMode");
-        default:                        return Bundle.getMessage("UnknownMode");
-        }
-    }
-
-    // connect to the Programmer interface
-    boolean connected = false;
-
-    private void connect() {
-        if (!connected) {
-            if (InstanceManager.programmerManagerInstance() != null
-                && InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null) {
-                InstanceManager.programmerManagerInstance()
-                    .getGlobalProgrammer().addPropertyChangeListener(this);
-                connected = true;
-                log.debug("Connecting to programmer");
-            } else {
-                log.debug("No programmer present to connect");
-            }
-        }
     }
 
     // no longer needed, disconnect if still connected
     public void dispose() {
-        if (connected) {
-            if (InstanceManager.programmerManagerInstance() != null
-                && InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null)
-                InstanceManager.programmerManagerInstance().getGlobalProgrammer().removePropertyChangeListener(this);
-            connected = false;
-        }
     }
 
     static Logger log = LoggerFactory.getLogger(ProgDeferredServiceModePane.class.getName());

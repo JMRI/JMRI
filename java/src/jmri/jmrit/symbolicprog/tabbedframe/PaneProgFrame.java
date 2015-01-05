@@ -4,8 +4,7 @@ package jmri.jmrit.symbolicprog.tabbedframe;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.Programmer;
-import jmri.ShutDownTask;
+import jmri.*;
 import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.decoderdefn.DecoderFile;
@@ -58,6 +57,9 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     Programmer          mProgrammer;
     JPanel              modePane     = null;
+    
+    JPanel              tempPane; // passed around during construction
+    
     boolean             _opsMode;
 
     RosterEntry         _rosterEntry    = null;
@@ -100,7 +102,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // create ShutDownTasks
         if (jmri.InstanceManager.shutDownManagerInstance()!=null) {
-            //if (getModePane()!=null && decoderDirtyTask == null) decoderDirtyTask =
+
             if (decoderDirtyTask == null) decoderDirtyTask =
                                             new SwingShutDownTask("DecoderPro Decoder Window Check", 
                                                                   SymbolicProgBundle.getMessage("PromptQuitWindowNotWrittenDecoder"), 
@@ -183,6 +185,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         // to control size, we need to insert a single
         // JPanel, then have it laid out with BoxLayout
         JPanel pane = new JPanel();
+        tempPane = pane;
 
         // general GUI config
         pane.setLayout(new BorderLayout());
@@ -262,6 +265,14 @@ abstract public class PaneProgFrame extends JmriJFrame
         // which configures the tabPane
         pane.add(tabPane, BorderLayout.CENTER);
 
+        // and put that pane into the JFrame
+        getContentPane().add(pane);
+
+        // add help
+        addHelp();
+    }
+    
+    void setProgrammingGui(JPanel pane) {
         // see if programming mode is available
         modePane = getModePane();
         if (modePane!=null) {
@@ -280,7 +291,9 @@ abstract public class PaneProgFrame extends JmriJFrame
             
             // add programming mode
             bottom.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
-            bottom.add(modePane);
+            JPanel temp = new JPanel();
+            bottom.add(temp);
+            temp.add(modePane);
 
             // add programming status message
             bottom.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
@@ -288,12 +301,6 @@ abstract public class PaneProgFrame extends JmriJFrame
             bottom.add(progStatus);
             pane.add(bottom, BorderLayout.SOUTH);
         }
-
-        // and put that pane into the JFrame
-        getContentPane().add(pane);
-
-        // add help
-        addHelp();
     }
     
     public List<JPanel> getPaneList(){
@@ -454,6 +461,9 @@ abstract public class PaneProgFrame extends JmriJFrame
             }
         }
         
+        // now that programmer is configured, set the programming GUI
+        setProgrammingGui(tempPane);
+        
         pack();
 
         if (log.isDebugEnabled()) log.debug("PaneProgFrame \""+pFrameTitle
@@ -523,21 +533,22 @@ abstract public class PaneProgFrame extends JmriJFrame
             if (a.getValue().equals("no")) register = false;
  
         // is the current mode OK?
-        int currentMode = mProgrammer.getMode();
-        log.debug("XML specifies modes: P "+paged+" DBi "+directbit+" Dby "+directbyte+" R "+register+" now "+currentMode);
+        log.debug("XML specifies modes: P "+paged+" DBi "+directbit+" Dby "+directbyte+" R "+register+" now "+mProgrammer.getMode());
 
         // find a mode to set it to
-        if (mProgrammer.hasMode(Programmer.DIRECTBITMODE)&&directbit) {
-            mProgrammer.setMode(jmri.Programmer.DIRECTBITMODE);
+        
+        List<ProgrammingMode> modes = mProgrammer.getSupportedModes();
+        if (modes.contains(ProgrammingMode.DIRECTBITMODE)&&directbit) {
+            mProgrammer.setMode(ProgrammingMode.DIRECTBITMODE);
             log.debug("Set to DIRECTBITMODE");
-        } else if (mProgrammer.hasMode(Programmer.DIRECTBYTEMODE)&&directbyte) {
-            mProgrammer.setMode(jmri.Programmer.DIRECTBYTEMODE);
+        } else if (modes.contains(ProgrammingMode.DIRECTBYTEMODE)&&directbyte) {
+            mProgrammer.setMode(ProgrammingMode.DIRECTBYTEMODE);
             log.debug("Set to DIRECTBYTEMODE");
-        } else if (mProgrammer.hasMode(Programmer.PAGEMODE)&&paged) {
-            mProgrammer.setMode(jmri.Programmer.PAGEMODE);
+        } else if (modes.contains(ProgrammingMode.PAGEMODE)&&paged) {
+            mProgrammer.setMode(ProgrammingMode.PAGEMODE);
             log.debug("Set to PAGEMODE");
-        } else if (mProgrammer.hasMode(Programmer.REGISTERMODE)&&register) {
-            mProgrammer.setMode(jmri.Programmer.REGISTERMODE);
+        } else if (modes.contains(ProgrammingMode.REGISTERMODE)&&register) {
+            mProgrammer.setMode(ProgrammingMode.REGISTERMODE);
             log.debug("Set to REGISTERMODE");
         } else log.warn("No acceptable mode found, leave as found");
 

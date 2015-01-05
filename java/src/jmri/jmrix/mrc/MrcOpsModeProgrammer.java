@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.*;
+import java.util.*;
 
 /**
  * Provide an Ops Mode Programmer via a wrapper what works with the MRC command
@@ -81,17 +82,14 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
     	super.notifyProgListenerEnd(value, status);
     }
 
-    public void setMode(int mode) {
-        if (mode!=Programmer.OPSBYTEMODE)
-            log.error(MrcOpsModeBundle.getMessage("LogMrcOpsModeProgrammerModeSwitchError"), mode); //IN18N
-    }
-
-    public int  getMode() {
-        return Programmer.OPSBYTEMODE;
-    }
-
-    public boolean hasMode(int mode) {
-        return (mode==Programmer.OPSBYTEMODE);
+    /**
+     * Types implemented here.
+     */
+    @Override
+    public List<ProgrammingMode> getSupportedModes() {
+        List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
+        ret.add(ProgrammingMode.OPSBYTEMODE);
+        return ret;
     }
 
     /**

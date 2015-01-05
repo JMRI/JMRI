@@ -96,6 +96,10 @@ public class DeferringProgrammerManager implements ProgrammerManager {
         return ap.isAddressedModePossible();
     }
 
+    public java.util.List<ProgrammingMode> getDefaultModes() {
+        return InstanceManager.getDefault(AddressedProgrammerManager.class).getDefaultModes();
+    }
+
 
     static Logger log = LoggerFactory.getLogger(DeferringProgrammerManager.class.getName());
 }

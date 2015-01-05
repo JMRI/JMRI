@@ -3,8 +3,7 @@
 package jmri.jmrix.can.cbus;
 
 import org.apache.log4j.Logger;
-import jmri.Programmer;
-import jmri.ProgListener;
+import jmri.*;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -23,33 +22,21 @@ import jmri.jmrix.can.TestTrafficController;
  */
 public class CbusProgrammerTest extends TestCase {
 
-    public void testHasModes() {
-        CbusProgrammer p = new CbusProgrammer(10, new TestTrafficController());
-        
-        Assert.assertTrue("CBUSNODEVARMODE", p.hasMode(Programmer.CBUSNODEVARMODE));
-        Assert.assertTrue("PAGEMODE", !p.hasMode(Programmer.PAGEMODE));
-        Assert.assertTrue("DIRECTBITMODE", !p.hasMode(Programmer.DIRECTBITMODE));
-        Assert.assertTrue("OPSBYTEMODE", !p.hasMode(Programmer.OPSBYTEMODE));
-        Assert.assertTrue("OPSACCBYTEMODE", !p.hasMode(Programmer.OPSACCBYTEMODE));
-        Assert.assertTrue("OPSACCBITMODE", !p.hasMode(Programmer.OPSACCBITMODE));
-        Assert.assertTrue("OPSACCEXTBYTEMODE", !p.hasMode(Programmer.OPSACCEXTBYTEMODE));
-        Assert.assertTrue("OPSACCEXTBITMODE", !p.hasMode(Programmer.OPSACCEXTBITMODE));
-    }
 
     public void testGetMode() {
         CbusProgrammer p = new CbusProgrammer(10, new TestTrafficController());
         
-        Assert.assertEquals("CBUSNODEVARMODE", Programmer.CBUSNODEVARMODE, 
+        Assert.assertEquals("CBUSNODEVARMODE", CbusProgrammer.CBUSNODEVARMODE, 
                                             p.getMode());
     }
     
     public void testSetMode() {
         CbusProgrammer p = new CbusProgrammer(10, new TestTrafficController());
         
-        p.setMode(Programmer.PAGEMODE);
-        
-        Assert.assertEquals("CBUSNODEVARMODE", Programmer.CBUSNODEVARMODE, 
-                                            p.getMode());
+        try {
+            p.setMode(ProgrammingMode.PAGEMODE);
+        } catch (IllegalArgumentException e) { return; }
+        Assert.fail("No IllegalArgumentException thrown");
     }
     
     public void testGetCanRead() {

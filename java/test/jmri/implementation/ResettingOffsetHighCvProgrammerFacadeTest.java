@@ -101,12 +101,8 @@ public class ResettingOffsetHighCvProgrammerFacadeTest extends TestCase {
         Programmer p = new ResettingOffsetHighCvProgrammerFacade(dp, "256", "7", "10", "100", "200");
         Assert.assertTrue("CV limit read OK", p.getCanRead("1024"));  
         Assert.assertTrue("CV limit write OK", p.getCanWrite("1024"));  
-        Assert.assertTrue("CV limit read mode OK", p.getCanRead(0, "1024"));  
-        Assert.assertTrue("CV limit write mode OK", p.getCanWrite(0, "1024"));  
         Assert.assertTrue("CV limit read fail", !p.getCanRead("1025"));  
         Assert.assertTrue("CV limit write fail", !p.getCanWrite("1025"));  
-        Assert.assertTrue("CV limit read mode fail", !p.getCanRead(0, "1025"));  
-        Assert.assertTrue("CV limit write mode fail", !p.getCanWrite(0, "1025"));  
     }
     
     // from here down is testing infrastructure

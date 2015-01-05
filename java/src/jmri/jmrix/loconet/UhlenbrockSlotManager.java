@@ -5,7 +5,7 @@ package jmri.jmrix.loconet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.CommandStation;
-
+import java.util.*;
 
 /**
  * Only change compared to standard Loconet SlotManager is CV programming.

@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.*;
 import java.beans.PropertyChangeListener;
+import java.util.*;
 
 /**
  * Provides an Ops mode proxy programing interface for a RailCom Reader.
@@ -81,16 +82,12 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
         defaultProgrammer.confirmCV(cv, val, new ProxyProgList());
     }
 
-    public void setMode(int mode) {
-        defaultProgrammer.setMode(mode);
-    }
-
-    public int  getMode() {
-        return defaultProgrammer.getMode();
-    }
-
-    public boolean hasMode(int mode) {
-        return defaultProgrammer.hasMode(mode);
+    /**
+     * Types implemented here.
+     */
+    @Override
+    public List<ProgrammingMode> getSupportedModes() {
+        return defaultProgrammer.getSupportedModes();
     }
 
     synchronized protected void timeout(){

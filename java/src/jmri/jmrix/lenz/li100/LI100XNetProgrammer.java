@@ -8,7 +8,9 @@ package jmri.jmrix.lenz.li100;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.Programmer;
+import java.util.*;
+
+import jmri.*;
 import jmri.jmrix.lenz.XNetTrafficController;
 import jmri.jmrix.lenz.XNetProgrammer;
 import jmri.jmrix.lenz.XNetMessage;
@@ -62,12 +64,12 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
                    restartTimer(XNetProgrammerTimeout);
 
                    // format and send message to go to program mode
-                   if (_mode == Programmer.PAGEMODE) {
+                   if (getMode().equals(ProgrammingMode.PAGEMODE)) {
                        XNetMessage msg = XNetMessage.getWritePagedCVMsg(CV,val);
 		       msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
                        lastRequestMessage = new XNetMessage(msg);
                        controller().sendXNetMessage(msg, this);
-                   } else if (_mode == Programmer.DIRECTBITMODE || _mode == Programmer.DIRECTBYTEMODE) {
+                   } else if (getMode().equals(ProgrammingMode.DIRECTBITMODE) || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
                        XNetMessage msg = XNetMessage.getWriteDirectCVMsg(CV,val);
 		       msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
                        lastRequestMessage = new XNetMessage(msg);
@@ -108,12 +110,12 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
                    restartTimer(XNetProgrammerTimeout);
 
                    // format and send message to go to program mode
-                   if (_mode == Programmer.PAGEMODE) {
+                   if (getMode() == ProgrammingMode.PAGEMODE) {
                        XNetMessage msg=XNetMessage.getReadPagedCVMsg(CV);
 		       msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
                        lastRequestMessage = new XNetMessage(msg);
                        controller().sendXNetMessage(msg, this);
-                   } else if (_mode == Programmer.DIRECTBITMODE || _mode == Programmer.DIRECTBYTEMODE) {
+                   } else if (getMode().equals(ProgrammingMode.DIRECTBITMODE) || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
                        XNetMessage msg=XNetMessage.getReadDirectCVMsg(CV);
 		       msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
                        lastRequestMessage = new XNetMessage(msg);

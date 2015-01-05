@@ -75,6 +75,16 @@ public class DefaultProgrammerManager implements ProgrammerManager {
      */
     public boolean isGlobalProgrammerAvailable() {return true;}
 
+    /**
+     * Provide a default implementation of the mode (most) AddressProgrammers make available.
+     */
+    public java.util.List<ProgrammingMode> getDefaultModes() {
+        java.util.ArrayList<ProgrammingMode> retval = new java.util.ArrayList<>();
+        retval.add(ProgrammingMode.OPSBYTEMODE);
+        return retval;
+    }
+
+
     static Logger log = LoggerFactory.getLogger(DefaultProgrammerManager.class.getName());
 }
 /* @(#)DefaultProgrammerManager.java */

@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract interface between the a JMRI Programmer and a network connection
+ *<p>
+ * Connects to default global programmer at construction time.
  *
  * @author Paul Bender Copyright (C) 2012
  * @version $Revision$
@@ -16,6 +18,8 @@ import org.slf4j.LoggerFactory;
 abstract public class AbstractProgrammerServer implements jmri.ProgListener {
 
     private Programmer p = null;
+    protected Programmer getProgrammer() { return p; }
+    
     protected int lastCV = -1;
 
     public AbstractProgrammerServer() {
@@ -28,6 +32,9 @@ abstract public class AbstractProgrammerServer implements jmri.ProgListener {
 
     /*
      * Protocol Specific Abstract Functions
+     * @param CV CV number (in DCC terms)
+     * @param value vale to read/write to CV
+     * @param status Denotes the completion code from a programming operation
      */
     abstract public void sendStatus(int CV, int value, int status) throws IOException;
 
@@ -35,7 +42,7 @@ abstract public class AbstractProgrammerServer implements jmri.ProgListener {
 
     abstract public void parseRequest(String statusString) throws jmri.JmriException, java.io.IOException;
 
-    public void writeCV(int mode, int CV, int value) {
+    public void writeCV(jmri.ProgrammingMode mode, int CV, int value) {
         if (p == null) {
             try {
                 sendNotAvailableStatus();
@@ -58,7 +65,7 @@ abstract public class AbstractProgrammerServer implements jmri.ProgListener {
         }
     }
 
-    public void readCV(int mode, int CV) {
+    public void readCV(jmri.ProgrammingMode mode, int CV) {
         if (p == null || !(p.getCanRead())) {
             try {
                 sendNotAvailableStatus();

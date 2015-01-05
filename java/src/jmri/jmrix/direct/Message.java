@@ -4,7 +4,7 @@ package jmri.jmrix.direct;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.Programmer;
+import jmri.*;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 
@@ -85,9 +85,9 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
         return null;
     }
 
-    static public Message getReadCV(int cv, int mode) {
+    static public Message getReadCV(int cv, ProgrammingMode mode) {
         Message m = new Message(5);
-        if (mode == Programmer.PAGEMODE) {
+        if (mode.equals(ProgrammingMode.PAGEMODE)) {
           m.setOpCode('V');
         } else { // Bit direct mode
           m.setOpCode('C');
@@ -97,9 +97,9 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public Message getWriteCV(int cv, int val, int mode) {
+    static public Message getWriteCV(int cv, int val, ProgrammingMode mode) {
         Message m = new Message(9);
-        if (mode == Programmer.PAGEMODE) {
+        if (mode.equals(ProgrammingMode.PAGEMODE)) {
           m.setOpCode('V');
         } else { // Bit direct mode
           m.setOpCode('C');

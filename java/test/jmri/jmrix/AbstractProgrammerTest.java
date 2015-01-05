@@ -3,6 +3,7 @@ package jmri.jmrix;
 
 import junit.framework.*;
 import jmri.*;
+import java.util.*;
 
 
 /**
@@ -28,9 +29,7 @@ public class AbstractProgrammerTest extends TestCase {
         public void writeCV(int i, int j, ProgListener l) {}
         public void confirmCV(int i, int j, ProgListener l) {}
         public void readCV(int i, ProgListener l) {}
-        public void setMode(int i) {}
-        public boolean hasMode(int i) { return false; }
-        public int getMode() { return 0;}
+        public List<ProgrammingMode> getSupportedModes() { return null; }
         public void timeout() {}
         public boolean getCanRead() { return true; }
     };

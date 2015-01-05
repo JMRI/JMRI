@@ -4,12 +4,12 @@ package jmri.jmrix.qsi;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.Programmer;
+import jmri.*;
 import jmri.jmrix.AbstractProgrammer;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Vector;
+import java.util.*;
 
 /**
  * Implements the jmri.Programmer interface via commands for the QSI programmer.
@@ -34,62 +34,15 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
     }
     static volatile private QsiProgrammer self = null;
 
-    // handle mode
-    protected int _mode = Programmer.DIRECTBITMODE;
-
     /**
-     * Switch to a new programming mode.  QSI currently supports bit
-     * direct and paged mode. If you attempt to switch to any others, the
-     * new mode will set & notify, then set back to the original.  This
-     * lets the listeners know that a change happened, and then was undone.
-     * @param mode The new mode, use values from the jmri.Programmer interface
+     * Types implemented here.
      */
-    public void setMode(int mode) {
-        int oldMode = _mode;  // preserve this in case we need to go back
-        if (mode != _mode) {
-            log.debug("change to mode "+mode);
-            notifyPropertyChange("Mode", _mode, mode);
-            _mode = mode;
-        }
-        if (_mode != Programmer.DIRECTBITMODE && _mode != Programmer.PAGEMODE) {
-            // attempt to switch to unsupported mode, switch back to previous
-            _mode = oldMode;
-            log.debug("switching back to old supported mode "+_mode);
-            notifyPropertyChange("Mode", mode, _mode);
-        }
-    }
-
-    /**
-     * Signifies mode's available
-     * @param mode
-     * @return True if paged or direct mode
-     */
-    public boolean hasMode(int mode) {
-        if ( mode == Programmer.DIRECTBITMODE ||
-             mode == Programmer.PAGEMODE ) {
-            log.debug("hasMode request on mode "+mode+" returns true");
-            return true;
-        }
-        log.debug("hasMode request on mode "+mode+" returns false");
-        return false;
-    }
-    public int getMode() { return _mode; }
-
-    // notify property listeners - see AbstractProgrammer for more
-
-    @SuppressWarnings("unchecked")
-	protected void notifyPropertyChange(String name, int oldval, int newval) {
-        // make a copy of the listener vector to synchronized not needed for transmit
-        Vector<PropertyChangeListener> v;
-        synchronized(this) {
-            v = (Vector<PropertyChangeListener>) propListeners.clone();
-        }
-        // forward to all listeners
-        int cnt = v.size();
-        for (int i=0; i < cnt; i++) {
-            PropertyChangeListener client = v.elementAt(i);
-            client.propertyChange(new PropertyChangeEvent(this, name, Integer.valueOf(oldval), Integer.valueOf(newval)));
-        }
+    @Override
+    public List<ProgrammingMode> getSupportedModes() {
+        List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
+        ret.add(ProgrammingMode.PAGEMODE);
+        ret.add(ProgrammingMode.DIRECTBITMODE);
+        return ret;
     }
 
     // members for handling the programmer interface

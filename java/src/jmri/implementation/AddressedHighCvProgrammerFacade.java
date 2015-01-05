@@ -191,11 +191,9 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
     // Access to full address space provided by this.
     public boolean getCanRead() { return true; }
     public boolean getCanRead(String addr) { return Integer.parseInt(addr)<=1024; }
-    public boolean getCanRead(int mode, String addr) { return getCanRead(addr); }
 
     public boolean getCanWrite()  { return true; }
     public boolean getCanWrite(String addr) { return Integer.parseInt(addr)<=1024; }
-    public boolean getCanWrite(int mode, String addr)  { return getCanWrite(addr); }
 
     static Logger log = LoggerFactory.getLogger(AddressedHighCvProgrammerFacade.class.getName());
 

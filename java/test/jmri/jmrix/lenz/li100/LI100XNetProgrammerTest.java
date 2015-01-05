@@ -20,6 +20,9 @@ import jmri.JmriException;
  */
 public class LI100XNetProgrammerTest extends TestCase {
 
+    static final int RELEASE_TIME = 100;
+    static final int RESTART_TIME =  20;
+
     public void testCtor() {
 // infrastructure objects
         XNetInterfaceScaffold t = new XNetInterfaceScaffold(new LenzCommandStation());
@@ -35,7 +38,7 @@ public class LI100XNetProgrammerTest extends TestCase {
 
                 LI100XNetProgrammer p = new LI100XNetProgrammer(t){
                         protected synchronized void restartTimer(int delay) {
-                            super.restartTimer(200);
+                            super.restartTimer(RESTART_TIME);
                         } 
                 };
 
@@ -77,7 +80,7 @@ public class LI100XNetProgrammerTest extends TestCase {
                 mr3.setElement(2,0x60);
                 t.sendTestMessage(mr3);
 
-                jmri.util.JUnitUtil.releaseThread(this,1000);
+                jmri.util.JUnitUtil.releaseThread(this,RELEASE_TIME);
  
                 //failure in this test occurs with the next line.
                 Assert.assertFalse("Receive Called by Programmer",l.getRcvdInvoked()==0);
@@ -91,12 +94,12 @@ public class LI100XNetProgrammerTest extends TestCase {
 
                 LI100XNetProgrammer p = new LI100XNetProgrammer(t){
                         protected synchronized void restartTimer(int delay) {
-                            super.restartTimer(200);
+                            super.restartTimer(RESTART_TIME);
                         } 
                 };
 
                 // set register mode
-                p.setMode(jmri.Programmer.REGISTERMODE);
+                p.setMode(jmri.ProgrammingMode.REGISTERMODE);
 
                 // and do the write
                 p.writeCV(29, 12, l);
@@ -138,7 +141,7 @@ public class LI100XNetProgrammerTest extends TestCase {
                 mr3.setElement(2,0x60);
                 t.sendTestMessage(mr3);
 
-                jmri.util.JUnitUtil.releaseThread(this,1000);
+                jmri.util.JUnitUtil.releaseThread(this,RELEASE_TIME);
 
                 //failure in this test occurs with the next line.
                 Assert.assertFalse("Receive Called by Programmer",l.getRcvdInvoked()==0);
@@ -153,7 +156,7 @@ public class LI100XNetProgrammerTest extends TestCase {
 
                 LI100XNetProgrammer p = new LI100XNetProgrammer(t){
                         protected synchronized void restartTimer(int delay) {
-                            super.restartTimer(200);
+                            super.restartTimer(RESTART_TIME);
                         } 
                 };
 
@@ -197,7 +200,7 @@ public class LI100XNetProgrammerTest extends TestCase {
                 mr3.setElement(2,0x60);
                 t.sendTestMessage(mr3);
 
-                jmri.util.JUnitUtil.releaseThread(this,1000);
+                jmri.util.JUnitUtil.releaseThread(this,RELEASE_TIME);
 
                 //failure in this test occurs with the next line.
                 Assert.assertFalse("Receive Called by Programmer",l.getRcvdInvoked()==0);
@@ -212,12 +215,12 @@ public class LI100XNetProgrammerTest extends TestCase {
 
                 LI100XNetProgrammer p = new LI100XNetProgrammer(t){
                         protected synchronized void restartTimer(int delay) {
-                            super.restartTimer(200);
+                            super.restartTimer(RESTART_TIME);
                         } 
                 };
 
         // set register mode
-        p.setMode(jmri.Programmer.REGISTERMODE);
+        p.setMode(jmri.ProgrammingMode.REGISTERMODE);
 
         // and do the read
         p.readCV(29, l);
@@ -258,7 +261,7 @@ public class LI100XNetProgrammerTest extends TestCase {
                 mr3.setElement(2,0x60);
                 t.sendTestMessage(mr3);
 
-                jmri.util.JUnitUtil.releaseThread(this,1000);
+                jmri.util.JUnitUtil.releaseThread(this,RELEASE_TIME);
 
         //failure in this test occurs with the next line.
         Assert.assertFalse("Receive Called by Programmer",l.getRcvdInvoked()==0);
@@ -276,7 +279,7 @@ public class LI100XNetProgrammerTest extends TestCase {
 
                 LI100XNetProgrammer p = new LI100XNetProgrammer(t){
                         protected synchronized void restartTimer(int delay) {
-                            super.restartTimer(200);
+                            super.restartTimer(RESTART_TIME);
                         } 
                 };
 
@@ -318,7 +321,7 @@ public class LI100XNetProgrammerTest extends TestCase {
                 mr3.setElement(2,0x60);
                 t.sendTestMessage(mr3);
 
-                jmri.util.JUnitUtil.releaseThread(this,1000);
+                jmri.util.JUnitUtil.releaseThread(this,RELEASE_TIME);
  
                 //failure in this test occurs with the next line.
                 Assert.assertFalse("Receive Called by Programmer",l.getRcvdInvoked()==0);
@@ -336,7 +339,7 @@ public class LI100XNetProgrammerTest extends TestCase {
 
                 LI100XNetProgrammer p = new LI100XNetProgrammer(t){
                         protected synchronized void restartTimer(int delay) {
-                            super.restartTimer(200);
+                            super.restartTimer(RESTART_TIME);
                         } 
                 };
 
@@ -380,7 +383,7 @@ public class LI100XNetProgrammerTest extends TestCase {
                 mr3.setElement(2,0x60);
                 t.sendTestMessage(mr3);
 
-                jmri.util.JUnitUtil.releaseThread(this,1000);
+                jmri.util.JUnitUtil.releaseThread(this,RELEASE_TIME);
 
                 //failure in this test occurs with the next line.
                 Assert.assertFalse("Receive Called by Programmer",l.getRcvdInvoked()==0);

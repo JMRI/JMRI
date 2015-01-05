@@ -4,10 +4,8 @@ package jmri.progdebugger;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.Hashtable;
-import java.util.Vector;
+import java.beans.*;
+import java.util.*;
 import jmri.*;
 
 /**
@@ -23,11 +21,14 @@ import jmri.*;
  */
 public class ProgDebugger implements AddressedProgrammer  {
 
-    public ProgDebugger() {}
+    public ProgDebugger() {
+        mode = ProgrammingMode.PAGEMODE;
+    }
 
     public ProgDebugger(boolean pLongAddress, int pAddress) {
         longAddr = pLongAddress;
         address = pAddress;
+        mode = ProgrammingMode.OPSBITMODE;
     }
     
     // write CV is recorded for later use
@@ -187,22 +188,43 @@ public class ProgDebugger implements AddressedProgrammer  {
 
     }
 
-    // handle mode - default is paged mode
-    protected int _mode = Programmer.PAGEMODE;
+    // handle mode
+    protected ProgrammingMode mode;
 
-    public void setMode(int mode) {
-        log.debug("setMode: old="+_mode+" new="+mode);
-        if (mode != _mode) {
-            notifyPropertyChange("Mode", _mode, mode);
-            _mode = mode;
+    @Override
+    public final void setMode(ProgrammingMode m) {
+        log.debug("Setting mode from {} to {}", mode, m);
+        if (getSupportedModes().contains(m)) {
+            ProgrammingMode oldMode = mode;
+            mode = m;
+            notifyPropertyChange("Mode", oldMode, m);
+        } else {
+            throw new IllegalArgumentException("Invalid requested mode: "+m);
         }
     }
-    public int getMode() { return _mode; }
-    public boolean hasMode(int mode) {
-        log.debug("pretending to have mode "+mode);
-        return true;
+    public final ProgrammingMode getMode() { return mode; }
+    public List<ProgrammingMode> getSupportedModes() {
+        if (address >= 0 ) {
+            // addressed programmer
+            return Arrays.asList(
+                new ProgrammingMode[]
+                {
+                    ProgrammingMode.OPSBITMODE,
+                    ProgrammingMode.OPSBYTEMODE
+                }
+            );
+        } else {
+            // global programmer
+            return Arrays.asList(
+                new ProgrammingMode[]
+                {
+                    ProgrammingMode.PAGEMODE, 
+                    ProgrammingMode.DIRECTBITMODE,
+                    ProgrammingMode.DIRECTBYTEMODE
+                }
+            );
+        }
     }
-
     /**
      * By default, the highest test CV is 256 so that
      * we can test composite operations
@@ -221,11 +243,6 @@ public class ProgDebugger implements AddressedProgrammer  {
         log.debug("getCanRead("+addr+") returns "+(Integer.parseInt(addr)<=readLimit));
         return Integer.parseInt(addr)<=readLimit; 
     }
-    public boolean getCanRead(int mode, String addr) { 
-        boolean retval = getCanRead(addr);
-        log.debug("getCanRead("+mode+","+addr+") returns "+retval);
-        return retval;
-    }
     
     public boolean getCanWrite()  { 
         log.debug("getCanWrite() returns true");
@@ -235,43 +252,29 @@ public class ProgDebugger implements AddressedProgrammer  {
         log.debug("getCanWrite("+addr+") returns "+(Integer.parseInt(addr)<=writeLimit));
         return Integer.parseInt(addr)<=writeLimit;
     }
-    public boolean getCanWrite(int mode, String addr)  { 
-        boolean retval = getCanWrite(addr);
-        log.debug("getCanWrite("+mode+","+addr+") returns "+retval);
-        return retval;
+
+    /**
+     * Provide a {@link java.beans.PropertyChangeSupport} helper.
+     */
+    private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+
+    /**
+     * Add a PropertyChangeListener to the listener list.
+     *
+     * @param listener The PropertyChangeListener to be added
+     */
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.addPropertyChangeListener(listener);
     }
 
-    // data members to hold contact with the property listeners
-    private Vector<PropertyChangeListener> propListeners = new Vector<PropertyChangeListener>();
-
-    public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
-        // add only if not already registered
-        if (!propListeners.contains(l)) {
-            propListeners.addElement(l);
-        }
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.removePropertyChangeListener(listener);
     }
 
-    public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
-        if (propListeners.contains(l)) {
-            propListeners.removeElement(l);
-        }
+    protected void notifyPropertyChange(String key, Object oldValue, Object value) {
+        propertyChangeSupport.firePropertyChange(key, oldValue, value);
     }
 
-    @SuppressWarnings("unchecked")
-	protected void notifyPropertyChange(String name, int oldval, int newval) {
-        // make a copy of the listener vector to synchronized not needed for transmit
-        Vector<PropertyChangeListener> v;
-        synchronized(this)
-            {
-                v = (Vector<PropertyChangeListener>)propListeners.clone();
-            }
-        // forward to all listeners
-        int cnt = v.size();
-        for (int i=0; i < cnt; i++) {
-            PropertyChangeListener client = v.elementAt(i);
-            client.propertyChange(new PropertyChangeEvent(this, name, Integer.valueOf(oldval), Integer.valueOf(newval)));
-        }
-    }
 
     boolean longAddr = true; 
     public boolean getLongAddress() {return true;}

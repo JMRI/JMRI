@@ -2,7 +2,7 @@
 
 package jmri.jmrix.sprog;
 
-import jmri.Programmer;
+import jmri.*;
 
 import junit.framework.Test;
 import junit.framework.Assert;
@@ -23,22 +23,22 @@ public class SprogMessageTest extends TestCase {
 	}
 
 	public void testReadCv() {
-		SprogMessage m = SprogMessage.getReadCV(12, Programmer.PAGEMODE);
+		SprogMessage m = SprogMessage.getReadCV(12, ProgrammingMode.PAGEMODE);
 		Assert.assertEquals("string compare ", "V 0012", m.toString());
 	}
 
 	public void testWriteCV() {
-		SprogMessage m = SprogMessage.getWriteCV(12, 251, Programmer.PAGEMODE);
+		SprogMessage m = SprogMessage.getWriteCV(12, 251, ProgrammingMode.PAGEMODE);
 		Assert.assertEquals("string compare ", "V 0012 251", m.toString());
 	}
 
 	public void testReadCvLarge() {
-		SprogMessage m = SprogMessage.getReadCV(1021, Programmer.PAGEMODE);
+		SprogMessage m = SprogMessage.getReadCV(1021, ProgrammingMode.PAGEMODE);
 		Assert.assertEquals("string compare ", "V 1021", m.toString());
 	}
 
 	public void testWriteCVLarge() {
-		SprogMessage m = SprogMessage.getWriteCV(1021, 251, Programmer.PAGEMODE);
+		SprogMessage m = SprogMessage.getWriteCV(1021, 251, ProgrammingMode.PAGEMODE);
 		Assert.assertEquals("string compare ", "V 1021 251", m.toString());
 	}
 

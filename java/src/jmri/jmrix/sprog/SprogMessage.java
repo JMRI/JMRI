@@ -2,7 +2,7 @@
 
 package jmri.jmrix.sprog;
 
-import jmri.Programmer;
+import jmri.*;
 import jmri.jmrix.sprog.SprogConstants.SprogState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -295,9 +295,9 @@ public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
      * bit direct modes. A single parameter is taken as the CV address to read.
      * Two parametes are taken as the CV address and data to be written.
     */
-    static public SprogMessage getReadCV(int cv, int mode) {
+    static public SprogMessage getReadCV(int cv, ProgrammingMode mode) {
         SprogMessage m = new SprogMessage(6);
-        if (mode == Programmer.PAGEMODE) {
+        if (mode == ProgrammingMode.PAGEMODE) {
           m.setOpCode('V');
         } else { // Bit direct mode
           m.setOpCode('C');
@@ -307,9 +307,9 @@ public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public SprogMessage getWriteCV(int cv, int val, int mode) {
+    static public SprogMessage getWriteCV(int cv, int val, ProgrammingMode mode) {
         SprogMessage m = new SprogMessage(10);
-        if (mode == Programmer.PAGEMODE) {
+        if (mode == ProgrammingMode.PAGEMODE) {
           m.setOpCode('V');
         } else { // Bit direct mode
           m.setOpCode('C');

@@ -2,8 +2,8 @@
 
 package jmri;
 
-import jmri.ProgListener;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 
 /**
  * Provide access to the hardware DCC decoder programming capability.
@@ -47,78 +47,6 @@ import java.beans.PropertyChangeListener;
  * @version	$Revision$
  */
 public interface Programmer  {
-
-    // mode e.g. register, direct, paged
-
-    /**
-     * No programming mode available
-     */
-    public static final int NONE	    =  0;
-    /**
-     * NMRA "Register" mode
-     */
-    public static final int REGISTERMODE    = 11;
-
-    /**
-     * NMRA "Paged" mode
-     */
-    public static final int PAGEMODE        = 21;
-    
-    /**
-     * NMRA "Direct" mode, using only the bit-wise operations
-     */
-    public static final int DIRECTBITMODE   = 31;
-
-    /**
-     * NMRA "Direct" mode, using only the byte-wise operations
-     */
-    public static final int DIRECTBYTEMODE  = 32;
-    /**
-     * NMRA "Address-only" mode. Often implemented as
-     * a proper subset of "Register" mode, as the 
-     * underlying operation is the same.
-     */
-    public static final int ADDRESSMODE     = 41;
-
-    /**
-     * NMRA "Operations" or "Programming on the main" mode, using only the byte-wise operations
-     */
-    public static final int OPSBYTEMODE     = 101;
-    /**
-     * NMRA "Operations" or "Programming on the main" mode, using only the bit-wise operations
-     */
-    public static final int OPSBITMODE      = 102;
-
-    /**
-     * NMRA "Programming on the main" mode for stationary decoders, 
-     * using only the byte-wise operations. Note that this is 
-     * defined as using the "normal", not "extended" addressing.
-     */
-    public static final int OPSACCBYTEMODE  = 111;
-
-    /**
-     * NMRA "Programming on the main" mode for stationary decoders, 
-     * using only the bit-wise operations. Note that this is 
-     * defined as using the "normal", not "extended" addressing.
-     */
-    public static final int OPSACCBITMODE   = 112;
-
-    /**
-     * NMRA "Programming on the main" mode for stationary decoders, 
-     * using only the byte-wise operations and "extended" addressing.
-     */
-    public static final int OPSACCEXTBYTEMODE = 121;
-
-    /**
-     * NMRA "Programming on the main" mode for stationary decoders, 
-     * using only the bit-wise operations and "extended" addressing.
-     */
-    public static final int OPSACCEXTBITMODE  = 122;
-
-    /**
-     * CBUS mode for programming node variables.
-     */
-    public static final int CBUSNODEVARMODE  = 140;
 
     /**
      * Perform a CV write in the system-specific manner,
@@ -208,24 +136,26 @@ public interface Programmer  {
     public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException;
 
     /**
-     * Set the programmer to a particular mode.  Only certain
-     * modes may be available for any particular implementation.
-     * If an invalid mode is requested, the active mode is unchanged.
-     * @param mode One of the class-constant mode values
+     * Get the list of {@link ProgrammingMode} supported by this 
+     * Programmer. If the order is significant, earlier modes are better.
      */
-    public void setMode(int mode);
-    /**
-     * Get the current programming mode
-     * @return one of the class constants identifying a mode
-     */
-    public int  getMode();
+    public List<ProgrammingMode> getSupportedModes();
 
     /**
-     * Check if a given mode is available
-     * @param mode Availability of this mode is returned
-     * @return True if the mode is available
+     * Set the programmer to a particular mode.  
+     * <p>
+     * Mode is a bound parameter; mode changes fire listeneres.
+     * <p>
+     * Only modes
+     * returned by {@link #getSupportedModes} are supported.
+     * If an invalid mode is requested, the active mode is unchanged.
      */
-    public boolean hasMode(int mode);
+    public void setMode(ProgrammingMode p);
+
+    /**
+     * Get the current programming mode
+     */
+    public ProgrammingMode getMode();
 
     /** 
      * Checks the general read capability, regardless of mode
@@ -236,11 +166,6 @@ public interface Programmer  {
      * for a specific address
      */
     public boolean getCanRead(String addr);
-    /** 
-     * Checks the read capability
-     * for a specific address and specific mode.
-     */
-    public boolean getCanRead(int mode, String addr);
     
     /** 
      * Checks the general write capability, regardless of mode
@@ -251,11 +176,6 @@ public interface Programmer  {
      * for a specific address
      */
     public boolean getCanWrite(String addr);
-    /** 
-     * Checks the write capability
-     * for a specific address and specific mode.
-     */
-    public boolean getCanWrite(int mode, String addr);
 
     public void addPropertyChangeListener(PropertyChangeListener p);
     public void removePropertyChangeListener(PropertyChangeListener p);

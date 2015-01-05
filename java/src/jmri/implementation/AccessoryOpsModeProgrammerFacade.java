@@ -6,16 +6,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.*;
 import jmri.jmrix.AbstractProgrammerFacade;
+import java.util.*;
 
 /**
  * Programmer facade for access to Accessory Decoder Ops Mode programming
  * <p>
  * (Eventually implements four modes, passing all others to underlying programmer:
  * <ul>
- * <li>
- * <li>
- * <li>
- * <li>
+ * <li>OPSACCBYTEMODE
+ * <li>OPSACCBITMODE
+ * <li>OPSACCEXTBYTEMODE
+ * <li>OPSACCEXTBITMODE
  * </ul>
  * <P>
  * Used through the String write/read/confirm interface.  Accepts integers
@@ -42,43 +43,29 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
     }
     
     // ops accessory mode can't read locally
-    int mode;
-    boolean checkMode(int mode) {
-        switch (mode) {
-            case Programmer.OPSACCBYTEMODE:
-            case Programmer.OPSACCBITMODE:
-            case Programmer.OPSACCEXTBYTEMODE:
-            case Programmer.OPSACCEXTBITMODE:
-                return true;
-            default: 
-                return false;
-        }
+    ProgrammingMode mode;
+    @Override
+    public List<ProgrammingMode> getSupportedModes() {
+        List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
+        ret.add(ProgrammingMode.OPSACCBYTEMODE);
+        ret.add(ProgrammingMode.OPSACCBITMODE);
+        ret.add(ProgrammingMode.OPSACCEXTBYTEMODE);
+        ret.add(ProgrammingMode.OPSACCEXTBITMODE);
+        return ret;
     }
+    
+    /**
+     * Don't pass this mode through, as the underlying doesn't have it (although we should check)
+     */
+    public void setMode(ProgrammingMode p) {}
     
     AddressedProgrammer aprog;
     
-    public boolean hasMode(int mode) {
-        if (checkMode(mode)) return true;
-        return prog.hasMode(mode);
-    }
-    
-    public int getMode() { return prog.getMode(); }
-    public void setMode(int mode) { 
-        if (checkMode(mode)) {
-            this.mode = mode;
-        } else {
-            prog.setMode(mode); 
-            this.mode = prog.getMode();
-        }
-    }
-
     public boolean getCanRead() { return prog.getCanRead(); }
     public boolean getCanRead(String addr) { return prog.getCanRead(addr); }
-    public boolean getCanRead(int mode, String addr) { return prog.getCanRead(mode, addr); }
-    
+
     public boolean getCanWrite()  { return prog.getCanWrite(); }
     public boolean getCanWrite(String addr) { return prog.getCanWrite(addr); }
-    public boolean getCanWrite(int mode, String addr)  { return prog.getCanWrite(mode, addr); }
 
 
     // members for handling the programmer interface

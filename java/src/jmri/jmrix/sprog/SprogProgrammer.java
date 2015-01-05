@@ -5,12 +5,12 @@ package jmri.jmrix.sprog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.PowerManager;
-import jmri.Programmer;
+import jmri.*;
 import jmri.jmrix.AbstractProgrammer;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Vector;
+import java.util.*;
 
 /**
  * Implements the jmri.Programmer interface via commands for the Sprog programmer.
@@ -38,56 +38,22 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         if (self == null) self = new SprogProgrammer();
         // change default
         if (jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible())
-            _mode = Programmer.OPSBYTEMODE;
+            self.setMode(ProgrammingMode.OPSBYTEMODE);
         return self;
     }
     static volatile private SprogProgrammer self = null;
 
-    // handle mode
-    static int _mode = Programmer.DIRECTBITMODE;
 
     /**
-     * Switch to a new programming mode.  SPROG currently supports bit
-     * direct and paged mode. If you attempt to switch to any others, the
-     * new mode will set & notify, then set back to the original.  This
-     * lets the listeners know that a change happened, and then was undone.
-     * @param mode The new mode, use values from the jmri.Programmer interface
+     * Types implemented here.
      */
-    public void setMode(int mode) {
-        int oldMode = _mode;  // preserve this in case we need to go back
-        if (mode != _mode) {
-            log.debug("change to mode "+mode);
-            notifyPropertyChange("Mode", _mode, mode);
-            _mode = mode;
-        }
-        if (_mode != Programmer.DIRECTBITMODE && _mode != Programmer.PAGEMODE) {
-            // attempt to switch to unsupported mode, switch back to previous
-            _mode = oldMode;
-            log.debug("switching back to old supported mode "+_mode);
-            notifyPropertyChange("Mode", mode, _mode);
-        }
+    @Override
+    public List<ProgrammingMode> getSupportedModes() {
+        List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
+        ret.add(ProgrammingMode.PAGEMODE);
+        ret.add(ProgrammingMode.DIRECTBITMODE);
+        return ret;
     }
-
-    /**
-     * Signifies mode's available
-     * @param mode
-     * @return True if paged or direct mode
-     */
-    public boolean hasMode(int mode) {
-        if (jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()){
-            log.debug("hasMode request on mode "+mode+" returns false");
-            return false;
-        }else{
-            if ( mode == Programmer.DIRECTBITMODE ||
-                 mode == Programmer.PAGEMODE ) {
-                log.debug("hasMode request on mode "+mode+" returns true");
-                return true;
-            }
-            log.debug("hasMode request on mode "+mode+" returns false");
-            return false;
-        }
-    }
-    public int getMode() { return _mode; }
 
     @Override
     public boolean getCanRead() {
@@ -95,23 +61,6 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
             return false;
         else 
             return true;
-    }
-
-    // notify property listeners - see AbstractProgrammer for more
-
-    @SuppressWarnings("unchecked")
-	protected void notifyPropertyChange(String name, int oldval, int newval) {
-        // make a copy of the listener vector to synchronized not needed for transmit
-        Vector<PropertyChangeListener> v;
-        synchronized(this) {
-            v = (Vector<PropertyChangeListener>) propListeners.clone();
-        }
-        // forward to all listeners
-        int cnt = v.size();
-        for (int i=0; i < cnt; i++) {
-            PropertyChangeListener client = v.elementAt(i);
-            client.propertyChange(new PropertyChangeEvent(this, name, Integer.valueOf(oldval), Integer.valueOf(newval)));
-        }
     }
 
     // members for handling the programmer interface
@@ -181,7 +130,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     }
 
     // internal method to create the SprogMessage for programmer task start
-    protected SprogMessage progTaskStart(int mode, int val, int cvnum) {
+    protected SprogMessage progTaskStart(ProgrammingMode mode, int val, int cvnum) {
         // val = -1 for read command; mode is direct, etc
         if (val < 0) {
             return SprogMessage.getReadCV(cvnum, mode);

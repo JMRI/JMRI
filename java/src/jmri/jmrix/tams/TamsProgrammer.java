@@ -4,12 +4,12 @@ package jmri.jmrix.tams;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.Programmer;
+import jmri.*;
 import jmri.jmrix.AbstractProgrammer;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Vector;
+import java.util.*;
 
 /**
  * Convert the jmri.Programmer interface into commands for the NCE power house.
@@ -29,65 +29,17 @@ public class TamsProgrammer extends AbstractProgrammer implements TamsListener {
         super.SHORT_TIMEOUT = 6000;
     }
 
-    // handle mode
-    protected int _mode = Programmer.DIRECTBYTEMODE;
-
     /**
-     * Switch to a new programming mode.  Note that NCE can only
-     * do register and page mode. If you attempt to switch to
-     * any others, the new mode will set & notify, then
-     * set back to the original.  This lets the listeners
-     * know that a change happened, and then was undone.
-     * @param mode The new mode, use values from the jmri.Programmer interface
+     * Types implemented here.
      */
-    public void setMode(int mode) {
-        int oldMode = _mode;  // preserve this in case we need to go back
-		if (mode != _mode) {
-			notifyPropertyChange("Mode", _mode, mode);
-			_mode = mode;
-		}
-		if (_mode != Programmer.PAGEMODE && _mode != Programmer.REGISTERMODE
-                && mode != Programmer.DIRECTBITMODE && mode != Programmer.DIRECTBYTEMODE ) {
-            // attempt to switch to unsupported mode, switch back to previous
-			_mode = oldMode;
-			notifyPropertyChange("Mode", mode, _mode);
-		}
-    }
-
-    /**
-     * Signifies mode's available
-     * @param mode
-     * @return True if paged or register mode
-     */
-    public boolean hasMode(int mode) {
-        if ( mode == Programmer.PAGEMODE ||
-             mode == Programmer.REGISTERMODE ||
-             mode == Programmer.DIRECTBITMODE ||
-             mode == Programmer.DIRECTBYTEMODE ) {
-            log.debug("hasMode request on mode "+mode+" returns true");
-            return true;
-        }
-        log.debug("hasMode returns false on mode "+mode);
-        return false;
-    }
-
-    public int getMode() { return _mode; }
-
-    // notify property listeners - see AbstractProgrammer for more
-
-    @SuppressWarnings("unchecked")
-	protected void notifyPropertyChange(String name, int oldval, int newval) {
-        // make a copy of the listener vector to synchronized not needed for transmit
-        Vector<PropertyChangeListener> v;
-        synchronized(this) {
-            v = (Vector<PropertyChangeListener>) propListeners.clone();
-        }
-        // forward to all listeners
-        int cnt = v.size();
-        for (int i=0; i < cnt; i++) {
-            PropertyChangeListener client = v.elementAt(i);
-            client.propertyChange(new PropertyChangeEvent(this, name, Integer.valueOf(oldval), Integer.valueOf(newval)));
-        }
+    @Override
+    public List<ProgrammingMode> getSupportedModes() {
+        List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
+        ret.add(ProgrammingMode.PAGEMODE);
+        ret.add(ProgrammingMode.DIRECTBITMODE);
+        ret.add(ProgrammingMode.DIRECTBYTEMODE);
+        ret.add(ProgrammingMode.REGISTERMODE);
+        return ret;
     }
 
     // members for handling the programmer interface
@@ -115,7 +67,7 @@ public class TamsProgrammer extends AbstractProgrammer implements TamsListener {
             startLongTimer();
 
             // format and send the write message
-            tc.sendTamsMessage(progTaskStart(getMode(), _val, _cv), this);
+            tc.sendTamsMessage(progTaskStart( _val, _cv), this);
         } catch (jmri.ProgrammerException e) {
             useProgrammer(null);
             progState = NOTPROGRAMMING;
@@ -141,7 +93,7 @@ public class TamsProgrammer extends AbstractProgrammer implements TamsListener {
             startLongTimer();
 
             // format and send the write message
-            tc.sendTamsMessage(progTaskStart(getMode(), -1, _cv), this);
+            tc.sendTamsMessage(progTaskStart(-1, _cv), this);
         } catch (jmri.ProgrammerException e) {
             useProgrammer(null);
             progState = NOTPROGRAMMING;
@@ -165,21 +117,21 @@ public class TamsProgrammer extends AbstractProgrammer implements TamsListener {
     }
 
     // internal method to create the TamsMessage for programmer task start
-    protected TamsMessage progTaskStart(int mode, int val, int cvnum) throws jmri.ProgrammerException {
+    protected TamsMessage progTaskStart(int val, int cvnum) throws jmri.ProgrammerException {
         // val = -1 for read command; mode is direct, etc
         if (val < 0) {
             // read
-            if (_mode == Programmer.PAGEMODE)
+            if (getMode() == ProgrammingMode.PAGEMODE)
                 return TamsMessage.getReadPagedCV(cvnum);
-            else if (_mode == Programmer.DIRECTBYTEMODE)
+            else if (getMode() == ProgrammingMode.DIRECTBYTEMODE)
                 return TamsMessage.getReadDirectByteCV(cvnum);
             else 
                 return TamsMessage.getReadRegister(registerFromCV(cvnum));
         } else {
             // write
-            if (_mode == Programmer.PAGEMODE)
+            if (getMode() == ProgrammingMode.PAGEMODE)
                 return TamsMessage.getWritePagedCV(cvnum, val);
-            else if (_mode == Programmer.DIRECTBYTEMODE)
+            else if (getMode() == ProgrammingMode.DIRECTBYTEMODE)
                 return TamsMessage.getWriteDirectByteCV(cvnum, val);
             else
                 return TamsMessage.getWriteRegister(registerFromCV(cvnum), val);

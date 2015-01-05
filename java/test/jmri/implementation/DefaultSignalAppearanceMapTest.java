@@ -32,7 +32,8 @@ public class DefaultSignalAppearanceMapTest extends TestCase {
             SignalSystemTestUtil.createMockSystem();
                 
             // check that mock (test directory) system is present
-            InstanceManager.signalMastManagerInstance().provideSignalMast("IF$shsm:"+SignalSystemTestUtil.getMockSystemName()+":one-searchlight:h1");
+            InstanceManager.signalMastManagerInstance()
+                    .provideSignalMast("IF$shsm:"+SignalSystemTestUtil.getMockSystemName()+":one-searchlight:h1");
 
         } finally {
             SignalSystemTestUtil.deleteMockSystem();

@@ -57,17 +57,24 @@ public class ProgModePane extends ProgModeSelector {
         // general GUI config
         setLayout(new BoxLayout(this, direction));
 
-        // service mode support, always present
-        mServicePane = new ProgServiceModePane(direction, group);
-        add(mServicePane);
-
-        // ops mode support
-        mOpsPane = null;
+        // create the ops mode 1st, so the service is 2nd,
+        // so it's the one that's selected
+         mOpsPane = null;
         if (InstanceManager.programmerManagerInstance()!=null &&
             InstanceManager.programmerManagerInstance().isAddressedModePossible()) {
 
             add(new JSeparator());
             mOpsPane = new ProgOpsModePane(direction, group);
+        }
+       
+        // service mode support, always present
+        mServicePane = new ProgServiceModePane(direction, group);
+        add(mServicePane);
+
+        // ops mode support added if present
+        if (mOpsPane != null) {
+
+            add(new JSeparator());
             add(mOpsPane);
         }
     }
@@ -99,10 +106,6 @@ public class ProgModePane extends ProgModeSelector {
         if (mOpsPane != null)
             mOpsPane.dispose();
         mOpsPane = null;
-    }
-
-    public void setDefaultMode() {
-        mServicePane.setButtonMode(Programmer.PAGEMODE);
     }
 
     static Logger log = LoggerFactory.getLogger(ProgModePane.class.getName());

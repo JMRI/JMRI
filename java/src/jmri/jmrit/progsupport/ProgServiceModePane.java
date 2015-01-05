@@ -4,7 +4,12 @@ package jmri.jmrit.progsupport;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.swing.*;
+import java.awt.event.*;
+import java.beans.*;
+import java.util.*;
+
 import jmri.*;
 
 /**
@@ -35,44 +40,33 @@ import jmri.*;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
  * <P>
- * @author			Bob Jacobsen   Copyright (C) 2001
+ * @author			Bob Jacobsen   Copyright (C) 2001, 2014
  * @version			$Revision$
  */
-public class ProgServiceModePane extends ProgModeSelector implements java.beans.PropertyChangeListener {
+public class ProgServiceModePane extends ProgModeSelector implements PropertyChangeListener, ActionListener {
 
-    // GUI member declarations
-
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 9075947253729508706L;
 	ButtonGroup modeGroup 		    = new ButtonGroup();
-    JRadioButton addressButton  	= new JRadioButton();
-    JRadioButton pagedButton    	= new JRadioButton();
-    JRadioButton directBitButton   	= new JRadioButton();
-    JRadioButton directByteButton   = new JRadioButton();
-    JRadioButton registerButton 	= new JRadioButton();
+    HashMap<ProgrammingMode, JRadioButton> buttonMap = new HashMap<ProgrammingMode, JRadioButton>();
     JComboBox<GlobalProgrammerManager>   progBox;
-
+    ArrayList<JRadioButton> buttonPool = new ArrayList<JRadioButton>();
+    
     /**
-     * Get the configured programmer
+     * Get the selected programmer
      */
     public Programmer getProgrammer() {
-        if (InstanceManager.programmerManagerInstance()!=null)
-            return InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).getGlobalProgrammer();
-        else
-            log.warn("request for service mode programmer with no ProgrammerManager configured");
-        return null;
+        return ((GlobalProgrammerManager)progBox.getSelectedItem()).getGlobalProgrammer();
     }
 
     /**
-     * Are any of the buttons selected?
+     * Are any of the modes selected?
      * @return true is any button is selected
      */
     public boolean isSelected() {
-        return (addressButton.isSelected() || pagedButton.isSelected()
-                || directBitButton.isSelected() || directByteButton.isSelected()
-                || registerButton.isSelected() );
+        for (JRadioButton button : buttonMap.values()) {
+            if (button.isSelected()) return true;
+        }
+        return false;
     }
 
     /**
@@ -82,219 +76,122 @@ public class ProgServiceModePane extends ProgModeSelector implements java.beans.
         this(direction, new javax.swing.ButtonGroup());
     }
 
+    protected List<GlobalProgrammerManager> getMgrList() {
+        return InstanceManager.getList(jmri.GlobalProgrammerManager.class);
+    }
+    
     /**
      * @param direction controls layout, either BoxLayout.X_AXIS or BoxLayout.Y_AXIS
      */
     public ProgServiceModePane(int direction, javax.swing.ButtonGroup group) {
         modeGroup = group;
 
-        // configure items for GUI
-        pagedButton.setText(Bundle.getMessage("PagedMode"));
-        directBitButton.setText(Bundle.getMessage("DirectBit"));
-        directByteButton.setText(Bundle.getMessage("DirectByte"));
-        registerButton.setText(Bundle.getMessage("RegisterMode"));
-        addressButton.setText(Bundle.getMessage("AddressMode"));
-        modeGroup.add(pagedButton);
-        modeGroup.add(registerButton);
-        modeGroup.add(directByteButton);
-        modeGroup.add(directBitButton);
-        modeGroup.add(addressButton);
-
-        // create the display combo box
-        java.util.Vector<GlobalProgrammerManager> v = new java.util.Vector<GlobalProgrammerManager>();
-        for (Object e : InstanceManager.getList(jmri.GlobalProgrammerManager.class))
-            v.add((GlobalProgrammerManager)e);
-        add(progBox = new JComboBox<GlobalProgrammerManager>(v));
-        // if only one, don't show
-        if (progBox.getItemCount()<2) progBox.setVisible(false);
-        progBox.addActionListener(new java.awt.event.ActionListener(){
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                // new selection
-                //setModes((jmri.GlobalProgrammerManager)progBox.getSelectedItem());
-            }
-        });
-        progBox.setSelectedItem(InstanceManager.getDefault(jmri.GlobalProgrammerManager.class)); // set default
-
-
-        setModes();
-        
-        // add listeners to buttons
-        pagedButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-				// get mode, and tell programmer
-                    connect();
-                    if (connected) setProgrammerMode(getSelectedMode());
-                }
-            });
-        directBitButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-				// get mode, and tell programmer
-                    connect();
-                    if (connected) setProgrammerMode(getSelectedMode());
-                }
-            });
-        directByteButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-				// get mode, and tell programmer
-                    connect();
-                    if (connected) setProgrammerMode(getSelectedMode());
-                }
-            });
-        registerButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-				// get mode, and tell programmer
-                    connect();
-                    if (connected) setProgrammerMode(getSelectedMode());
-                }
-            });
-        addressButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-				// get mode, and tell programmer
-                    connect();
-                    if (connected) setProgrammerMode(getSelectedMode());
-                }
-            });
-
-        // load the state if a programmer exists
-        connect();
-        updateMode();
-
         // general GUI config
         setLayout(new BoxLayout(this, direction));
 
-        // install items in GUI
-        add(pagedButton);
-        add(directBitButton);
-        add(directByteButton);
-        add(registerButton);
-        add(addressButton);
+        // create the programmer display combo box
+        java.util.Vector<GlobalProgrammerManager> v = new java.util.Vector<GlobalProgrammerManager>();
+        for (GlobalProgrammerManager pm : getMgrList()) {
+            v.add(pm);
+            // listen for changes
+            pm.getGlobalProgrammer().addPropertyChangeListener(this);
+        }
+        add(progBox = new JComboBox<GlobalProgrammerManager>(v));
+        // if only one, don't show
+        if (progBox.getItemCount()<2) {
+            // no choice, so don't display, don't monitor for changes
+            progBox.setVisible(false);
+        } else {
+            progBox.setSelectedItem(InstanceManager.getDefault(jmri.GlobalProgrammerManager.class)); // set default
+            progBox.addActionListener(new java.awt.event.ActionListener(){
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    // new programmer selection
+                    programmerSelected();
+                }
+            });
+        }
+        
+        // and execute the setup for 1st time
+        programmerSelected();
+        
     }
 
-    void setModes() {
-        // if a programmer is available, disable buttons for unavailable modes
-        if (InstanceManager.programmerManagerInstance()!=null
-            && InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).getGlobalProgrammer()!=null) {
-            Programmer p = InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).getGlobalProgrammer();
-            if (!p.hasMode(Programmer.PAGEMODE)) pagedButton.setEnabled(false);
-            if (!p.hasMode(Programmer.DIRECTBYTEMODE)) directByteButton.setEnabled(false);
-            if (!p.hasMode(Programmer.DIRECTBITMODE)) directBitButton.setEnabled(false);
-            if (!p.hasMode(Programmer.REGISTERMODE)) registerButton.setEnabled(false);
-            if (!p.hasMode(Programmer.ADDRESSMODE)) addressButton.setEnabled(false);
-        } else {
-            log.info("No programmer available, so modes not set");
+    /**
+     * reload the interface with the new programmers
+     */
+    void programmerSelected() {
+        log.debug("programmerSelected starts with {} buttons", buttonPool.size());
+        // hide buttons
+        for (JRadioButton button : buttonPool ) button.setVisible(false);
+        
+        // clear map
+        buttonMap.clear();
+        
+        // configure buttons
+        int index = 0;
+        List<ProgrammingMode> modes = getProgrammer().getSupportedModes();
+        log.debug("   has {} modes", modes.size());
+        for (ProgrammingMode mode : modes) {
+            JRadioButton button;
+            // need a new button?
+            if (index >= buttonPool.size()) {
+                log.debug("   add button");
+                button = new JRadioButton();
+                buttonPool.add(button);
+                modeGroup.add(button);
+                button.addActionListener(this);
+                add(button); // add to GUI
+            }
+            // configure next button in pool
+            log.debug("   set for {}", mode.toString());
+            button = buttonPool.get(index++);
+            button.setVisible(true);
+            modeGroup.add(button);
+            button.setText(mode.toString());
+            buttonMap.put(mode, button);
+        }
+        setGuiFromProgrammer();
+    }
+    
+    /**
+     * Listen to buttons for mode changes
+     */
+    public void actionPerformed(java.awt.event.ActionEvent e) {
+        // find selected button
+        log.debug("Selected button: {}", e.getActionCommand());
+        for (ProgrammingMode mode : buttonMap.keySet() ) {
+            if (mode.toString().equals(e.getActionCommand())) {
+                log.debug("      set mode {} on {}", mode.toString(), getProgrammer());
+                getProgrammer().setMode(mode);
+                return; // 1st match
+            }
         }
     }
     
     /**
-     * Determine the mode selected by these buttons
-     * @return A mode constant or 0 is no button selected
+     * Listen to programmer for mode changes
      */
-    private int getSelectedMode() {
-        if (pagedButton.isSelected())
-            return jmri.Programmer.PAGEMODE;
-        else if (directBitButton.isSelected())
-            return jmri.Programmer.DIRECTBITMODE;
-        else if (directByteButton.isSelected())
-            return jmri.Programmer.DIRECTBYTEMODE;
-        else if (registerButton.isSelected())
-            return jmri.Programmer.REGISTERMODE;
-        else if (addressButton.isSelected())
-            return jmri.Programmer.ADDRESSMODE;
-        else
-            return 0;
-    }
-
-    protected void setButtonMode(int mode) {
-        switch (mode) {
-        case jmri.Programmer.REGISTERMODE:
-            registerButton.setSelected(true);
-            break;
-        case jmri.Programmer.PAGEMODE:
-            pagedButton.setSelected(true);
-            break;
-        case jmri.Programmer.DIRECTBYTEMODE:
-            directByteButton.setSelected(true);
-            break;
-        case jmri.Programmer.DIRECTBITMODE:
-            directBitButton.setSelected(true);
-            break;
-        case jmri.Programmer.ADDRESSMODE:
-            addressButton.setSelected(true);
-            break;
-        case 0:
-            // don't change anything in this case
-            break;
-            // NMRA "Operations" or "Programming on the main" modes
-        case jmri.Programmer.OPSACCBITMODE:
-        case jmri.Programmer.OPSACCBYTEMODE:
-        case jmri.Programmer.OPSACCEXTBITMODE:
-        case jmri.Programmer.OPSACCEXTBYTEMODE:
-        case jmri.Programmer.OPSBITMODE:
-        case jmri.Programmer.OPSBYTEMODE:
-        	break;
-        default:
-            log.warn("propertyChange without valid mode value");
-            break;
-        }
-    }
-
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (e.getPropertyName() == "Mode") {
+        if ("Mode".equals(e.getPropertyName()) && getProgrammer().equals(e.getSource())) {
             // mode changed in programmer, change GUI here if needed
-            if (isSelected()) {  // if we're not holding a current mode, don't update
-                int mode = ((Integer)e.getNewValue()).intValue();
-                setButtonMode(mode);
-            }
-        } else log.warn("propertyChange with unexpected propertyName: "+e.getPropertyName());
-    }
-
-    // connect to the Programmer interface
-    boolean connected = false;
-
-    private void connect() {
-        if (!connected) {
-            if (InstanceManager.programmerManagerInstance() != null
-                && InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).getGlobalProgrammer() != null) {
-                InstanceManager.getDefault(jmri.GlobalProgrammerManager.class)
-                    .getGlobalProgrammer().addPropertyChangeListener(this);
-                connected = true;
-                log.debug("Connecting to programmer");
-            } else {
-                log.debug("No programmer present to connect");
+            log.debug("Mode propertyChange with {}", isSelected());
+            if (isSelected()) {  // only change mode if we have a selected mode, in case some other selector with shared group has the selection
+                setGuiFromProgrammer();
             }
         }
     }
 
-    // set the programmer to the current mode
-    private void setProgrammerMode(int mode) {
-        log.debug("Setting programmer to mode "+mode);
-        if (InstanceManager.getDefault(jmri.GlobalProgrammerManager.class) != null
-            && InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).getGlobalProgrammer() != null)
-            InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).getGlobalProgrammer().setMode(mode);
+    void setGuiFromProgrammer() {
+        ProgrammingMode mode = getProgrammer().getMode();
+        JRadioButton button = buttonMap.get(mode);
+        log.debug("  setting button for mode {}", mode);
+        button.setSelected(true);
     }
-
-    /**
-     * Internal routine to update the mode buttons to the
-     * current state
-     */
-    void updateMode() {
-        if (connected) {
-            int mode = InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).getGlobalProgrammer().getMode();
-            if (log.isDebugEnabled()) log.debug("setting mode buttons: "+mode);
-            setButtonMode(mode);
-        }
-        else {
-            log.debug("Programmer doesn't exist, can't set default mode");
-        }
-    }
-
+    
     // no longer needed, disconnect if still connected
     public void dispose() {
-        if (connected) {
-            if (InstanceManager.getDefault(jmri.GlobalProgrammerManager.class) != null
-                && InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).getGlobalProgrammer() != null)
-                InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).getGlobalProgrammer().removePropertyChangeListener(this);
-            connected = false;
+        for (GlobalProgrammerManager pm : getMgrList()) {
+            pm.getGlobalProgrammer().removePropertyChangeListener(this);
         }
     }
 

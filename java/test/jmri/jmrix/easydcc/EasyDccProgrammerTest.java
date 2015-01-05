@@ -67,7 +67,7 @@ public class EasyDccProgrammerTest extends TestCase {
 		EasyDccProgrammer p = new EasyDccProgrammer();
 
         // set register mode
-        p.setMode(Programmer.REGISTERMODE);
+        p.setMode(ProgrammingMode.REGISTERMODE);
 
 		// and do the write
 		p.writeCV(3, 12, l);
@@ -86,7 +86,7 @@ public class EasyDccProgrammerTest extends TestCase {
 		EasyDccProgrammer p = new EasyDccProgrammer();
 
         // set register mode
-        p.setMode(Programmer.REGISTERMODE);
+        p.setMode(ProgrammingMode.REGISTERMODE);
 
 		// and do the write
 		p.writeCV("3", 12, l);
@@ -161,7 +161,7 @@ public class EasyDccProgrammerTest extends TestCase {
 		EasyDccProgrammer p = new EasyDccProgrammer();
 
         // set register mode
-        p.setMode(Programmer.REGISTERMODE);
+        p.setMode(ProgrammingMode.REGISTERMODE);
 
 		// and do the read
 		p.readCV(3, l);
@@ -190,7 +190,7 @@ public class EasyDccProgrammerTest extends TestCase {
 		EasyDccProgrammer p = new EasyDccProgrammer();
 
         // set register mode
-        p.setMode(Programmer.REGISTERMODE);
+        p.setMode(ProgrammingMode.REGISTERMODE);
 
 		// and do the read
 		p.readCV("3", l);

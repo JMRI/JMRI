@@ -4,11 +4,11 @@ package jmri.jmrix;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.ProgListener;
-import jmri.Programmer;
-import jmri.ProgrammerException;
+import jmri.*;
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Vector;
+import java.beans.PropertyChangeSupport;
+import java.util.*;
 
 /**
  * Common implementations for the Programmer interface.
@@ -43,21 +43,28 @@ public abstract class AbstractProgrammer implements Programmer {
         else return retval;
     }
 
-    // data members to hold contact with the property listeners
-    protected Vector<PropertyChangeListener> propListeners = new Vector<PropertyChangeListener>();
+    /**
+     * Provide a {@link java.beans.PropertyChangeSupport} helper.
+     */
+    private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
-    public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
-        // add only if not already registered
-        if (!propListeners.contains(l)) {
-            propListeners.addElement(l);
-        }
+    /**
+     * Add a PropertyChangeListener to the listener list.
+     *
+     * @param listener The PropertyChangeListener to be added
+     */
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.addPropertyChangeListener(listener);
     }
 
-    public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
-        if (propListeners.contains(l)) {
-            propListeners.removeElement(l);
-        }
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.removePropertyChangeListener(listener);
     }
+
+    protected void notifyPropertyChange(String key, Object oldValue, Object value) {
+        propertyChangeSupport.firePropertyChange(key, oldValue, value);
+    }
+
 
     public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {
         writeCV(Integer.parseInt(CV), val, p);
@@ -76,22 +83,30 @@ public abstract class AbstractProgrammer implements Programmer {
     public boolean getCanRead() { return true; }
     
     /**
-     * Unless overridden, checks using the current default programming mode
-     * <p>
-     * Final to avoid implementation issues when somebody 
-     * reimplements this, but not getCanRead(int mode, String addr).
+     * Checks using the current default programming mode
      */
-    public final boolean getCanRead(String addr) { return getCanRead(getMode(), addr); }
-
-    /**
-     * Most detailed implementation, requires
-     * that the CV be a valid number and that reading is possible
-     */
-    public boolean getCanRead(int mode, String addr) {
+    public boolean getCanRead(String addr) {
         if (!getCanRead()) return false; // check basic implementation first
         return Integer.parseInt(addr)<=1024; 
     }
     
+    // handle mode
+    protected ProgrammingMode mode = ProgrammingMode.PAGEMODE;
+
+    @Override
+    public final void setMode(ProgrammingMode m) {
+        if (getSupportedModes().contains(m)) {
+            ProgrammingMode oldMode = mode;
+            mode = m;
+            notifyPropertyChange("Mode", oldMode, m);
+        } else {
+            throw new IllegalArgumentException("Invalid requested mode: "+m);
+        }
+    }
+    public final ProgrammingMode getMode() { return mode; }
+    @Override
+    abstract public List<ProgrammingMode> getSupportedModes();
+         
     /**
      * Basic implementation.  
      * Override this to turn writing on and off globally.
@@ -99,19 +114,8 @@ public abstract class AbstractProgrammer implements Programmer {
     public boolean getCanWrite()  { return true; }
     /**
      * Checks using the current default programming mode.
-     * <p>
-     * Final to avoid implementation issues when somebody 
-     * reimplements this, but not getCanWrite(int mode, String addr).
      */
-    public final boolean getCanWrite(String addr) { return getCanWrite(getMode(), addr);  }
-    /**
-     * Most detailed implementation, requires
-     * that the CV be a valid number and that writing is possible
-     */
-    public boolean getCanWrite(int mode, String addr)  { 
-        if (!getCanWrite()) return false; // check basic implementation first
-        return Integer.parseInt(addr)<=1024; 
-    }
+    public boolean getCanWrite(String addr) { return getCanWrite();  }
     
     /**
      * Internal routine to start timer to protect the mode-change.

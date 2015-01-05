@@ -2,6 +2,8 @@
 
 package jmri;
 
+import java.util.List;
+
 /**
  * Get access to available {@link Programmer} objects.
  * <P>
@@ -68,6 +70,17 @@ public interface AddressedProgrammerManager  {
      */
     public boolean isAddressedModePossible();
     
+    /**
+     * Get the list of {@link ProgrammingMode} (generally) supported by 
+     * Programmers provided by this Manager.
+     *<p>
+     * Use this to enquire about modes before you're ready
+     * to request a specific programmer.
+     *<p>
+     * If the order is significant, earlier modes are better.
+     */
+    public List<ProgrammingMode> getDefaultModes();
+
     /**
      * Provides the human-readable 
      * representation for including ProgrammerManagers

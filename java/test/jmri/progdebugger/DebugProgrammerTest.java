@@ -67,12 +67,8 @@ public class DebugProgrammerTest extends TestCase {
         Programmer p = new jmri.progdebugger.ProgDebugger();
         Assert.assertTrue("CV limit read", p.getCanRead("256"));  
         Assert.assertTrue("CV limit write", p.getCanWrite("256"));  
-        Assert.assertTrue("CV limit read mode", p.getCanRead(0, "256"));  
-        Assert.assertTrue("CV limit write mode", p.getCanWrite(0, "256"));  
         Assert.assertTrue("CV limit read", !p.getCanRead("257"));  
         Assert.assertTrue("CV limit write", !p.getCanWrite("257"));  
-        Assert.assertTrue("CV limit read mode", !p.getCanRead(0, "257"));  
-        Assert.assertTrue("CV limit write mode", !p.getCanWrite(0, "257"));  
     }
     
     public void testKnowsWrite() throws jmri.ProgrammerException {

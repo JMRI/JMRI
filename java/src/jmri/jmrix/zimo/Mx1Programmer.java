@@ -8,9 +8,9 @@ package jmri.jmrix.zimo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.Programmer;
+import jmri.*;
 import jmri.jmrix.AbstractProgrammer;
-import java.util.Vector;
+import java.util.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
@@ -43,59 +43,15 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
         this.tc.addMx1Listener(~0, this);
     }
     
-	// handle mode
-	protected int _mode = Programmer.PAGEMODE;
-
     /**
-     * Note that zimo can now only do page mode. If you attempt to switch to
-     * any others, the new mode will set & notify, then
-     * set back to the original.  This lets the listeners
-     * know that a change happened, and then was undone.
-     * @param mode The new mode, use values from the jmri.Programmer interface
+     * Types implemented here.
      */
-	public void setMode(int mode) {
-        int oldMode = _mode;  // preserve this in case we need to go back
-		if (mode != _mode) {
-			notifyPropertyChange("Mode", _mode, mode);
-			_mode = mode;
-		}
-		if (_mode != Programmer.PAGEMODE) {
-                // attempt to switch to unsupported mode, switch back to previous
-			_mode = oldMode;
-			notifyPropertyChange("Mode", mode, _mode);
-		}
-	}
-	public int getMode() { return _mode; }
-    /**
-     * Signifies mode's available
-     * @param mode
-     * @return True if paged mode
-     */
-    public boolean hasMode(int mode) {
-        if ( mode == Programmer.PAGEMODE) {
-            log.debug("hasMode request on mode "+mode+" returns true");
-            return true;
-        }
-        log.debug("hasMode returns false on mode "+mode);
-        return false;
+    @Override
+    public List<ProgrammingMode> getSupportedModes() {
+        List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
+        ret.add(ProgrammingMode.PAGEMODE);
+        return ret;
     }
-
-	// notify property listeners - see AbstractProgrammer for more
-
-	@SuppressWarnings("unchecked")
-	protected void notifyPropertyChange(String name, int oldval, int newval) {
-		// make a copy of the listener vector to synchronized not needed for transmit
-		Vector<PropertyChangeListener> v;
-		synchronized(this) {
-			v = (Vector<PropertyChangeListener>) propListeners.clone();
-		}
-		// forward to all listeners
-		int cnt = v.size();
-		for (int i=0; i < cnt; i++) {
-			PropertyChangeListener client = v.elementAt(i);
-			client.propertyChange(new PropertyChangeEvent(this, name, Integer.valueOf(oldval), Integer.valueOf(newval)));
-		}
-	}
 
 	// members for handling the programmer interface
 
@@ -119,7 +75,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
 		// start the error timer
 		startShortTimer();
         // format and send message to go to program mode
-        if (_mode == Programmer.PAGEMODE){
+        if (getMode() == ProgrammingMode.PAGEMODE){
             if(tc.getProtocol()==Mx1Packetizer.ASCII){
                 if (firstTime){
                     tc.sendMx1Message(tc.getCommandStation().resetModeMsg(), this);
@@ -146,7 +102,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
         // start the error timer
 		startShortTimer();
                 // format and send message to go to program mode
-        if (_mode == Programmer.PAGEMODE){
+        if (getMode() == ProgrammingMode.PAGEMODE){
             if(tc.getProtocol()==Mx1Packetizer.ASCII){
                 if (firstTime){
                     tc.sendMx1Message(tc.getCommandStation().resetModeMsg(), this);

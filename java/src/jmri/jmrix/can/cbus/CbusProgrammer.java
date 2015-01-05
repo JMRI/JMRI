@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import jmri.*;
 import jmri.jmrix.AbstractProgrammer;
 
-import java.util.Vector;
+import java.util.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
@@ -35,56 +35,24 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
         // need a longer LONG_TIMEOUT
         LONG_TIMEOUT=180000;
         this.tc=tc;
+        setMode(CBUSNODEVARMODE);
     }
     
     TrafficController tc;
 
     int nodenumber;
-    /**
-     * Switch to a new programming mode.  Note that CBUS has only
-     * one mode. If you attempt to switch to
-     * any others, the new mode will set & notify, then
-     * set back to the original.  This lets the listeners
-     * know that a change happened, and then was undone.
-     * @param mode The new mode, use values from the jmri.Programmer interface
-     */
-    public void setMode(int mode) {
-        if (mode != Programmer.CBUSNODEVARMODE) {
-            notifyPropertyChange("Mode", Programmer.CBUSNODEVARMODE, mode);
-            notifyPropertyChange("Mode", mode, Programmer.CBUSNODEVARMODE);
-        }
-    }
-    /**
-     * Signifies mode's available
-     * @param mode
-     * @return True if paged or register mode
-     */
-    public boolean hasMode(int mode) {
-        if ( mode == Programmer.CBUSNODEVARMODE ) {
-            log.debug("hasMode request on mode "+mode+" returns true");
-            return true;
-        }
-        log.debug("hasMode returns false on mode "+mode);
-        return false;
-    }
-    public int getMode() { return Programmer.CBUSNODEVARMODE; }
 
-    // notify property listeners - see AbstractProgrammer for more
-
-    @SuppressWarnings("unchecked")
-	protected void notifyPropertyChange(String name, int oldval, int newval) {
-        // make a copy of the listener vector to synchronized not needed for transmit
-        Vector<PropertyChangeListener> v;
-        synchronized(this) {
-            v = (Vector<PropertyChangeListener>) propListeners.clone();
-        }
-        // forward to all listeners
-        int cnt = v.size();
-        for (int i=0; i < cnt; i++) {
-            PropertyChangeListener client = v.elementAt(i);
-            client.propertyChange(new PropertyChangeEvent(this, name, Integer.valueOf(oldval), Integer.valueOf(newval)));
-        }
+    /**
+     * Types implemented here.
+     */
+    @Override
+    public List<ProgrammingMode> getSupportedModes() {
+        List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
+        ret.add(CBUSNODEVARMODE);
+        return ret;
     }
+
+    final static ProgrammingMode CBUSNODEVARMODE = new ProgrammingMode("CBUSNODEVARMODE", "CBUSNODEVARMODE");
 
     // members for handling the programmer interface
 

@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.util.*;
 
 import jmri.*;
 
@@ -92,8 +93,6 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
         add(new JSeparator(JSeparator.HORIZONTAL));
 
         add(modePane);
-        if (modePane.getProgrammer()== null)
-            modePane.setDefaultMode();
     }
 
     public void dispose() {

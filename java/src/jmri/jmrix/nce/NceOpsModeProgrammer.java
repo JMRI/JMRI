@@ -4,6 +4,7 @@ package jmri.jmrix.nce;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.*;
 import jmri.*;
 
 /**
@@ -27,6 +28,7 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
         log.debug("NCE ops mode programmer "+pAddress+" "+pLongAddr);
         mAddress = pAddress;
         mLongAddr = pLongAddr;
+        setMode(ProgrammingMode.OPSBYTEMODE);
     }
 
     /**
@@ -92,17 +94,14 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
     	super.notifyProgListenerEnd(value, status);
     }
 
-    public void setMode(int mode) {
-        if (mode!=Programmer.OPSBYTEMODE)
-            log.error("Can't switch to mode "+mode);
-    }
-
-    public int  getMode() {
-        return Programmer.OPSBYTEMODE;
-    }
-
-    public boolean hasMode(int mode) {
-        return (mode==Programmer.OPSBYTEMODE);
+    /**
+     * Types implemented here.
+     */
+    @Override
+    public List<ProgrammingMode> getSupportedModes() {
+        List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
+        ret.add(ProgrammingMode.OPSBYTEMODE);
+        return ret;
     }
 
     /**
