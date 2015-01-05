@@ -26,6 +26,13 @@ public class ServletUtil {
     public static final String UTF8_APPLICATION_XML = APPLICATION_XML + "; charset=utf-8"; // NOI18N
     public static final String UTF8_TEXT_HTML = TEXT_HTML + "; charset=utf-8"; // NOI18N
 
+    /**
+     * Get the railroad name for HTML documents.
+     *
+     * @param inComments Return the railroad name prepended and appended by
+     * closing and opening comment markers
+     * @return the Railroad name, possibly with formatting
+     */
     public String getRailroadName(boolean inComments) {
         if (inComments) {
             return "-->" + WebServerManager.getWebServerPreferences().getRailRoadName() + "<!--"; // NOI18N
@@ -80,6 +87,11 @@ public class ServletUtil {
         return ServletUtil.instance;
     }
 
+    /**
+     * Set HTTP headers in the response to prevent caching.
+     *
+     * @param response
+     */
     public void setNonCachingHeaders(HttpServletResponse response) {
         Date now = new Date();
         response.setDateHeader("Date", now.getTime()); // NOI18N
@@ -89,6 +101,14 @@ public class ServletUtil {
         response.setHeader("Pragma", "no-cache"); // NOI18N
     }
 
+    /**
+     * Write a file to the given response.
+     *
+     * @param response
+     * @param file
+     * @param contentType
+     * @throws IOException
+     */
     public void writeFile(HttpServletResponse response, File file, String contentType) throws IOException {
         if (file.exists()) {
             if (file.canRead()) {
@@ -107,5 +127,17 @@ public class ServletUtil {
         } else {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
+    }
+
+    /**
+     * Return the complete title for an HTML document given the portion of the
+     * title specific to the document.
+     *
+     * @param locale The requested Locale
+     * @param title Portion of title specific to page
+     * @return The complete title
+     */
+    public String getTitle(Locale locale, String title) {
+        return Bundle.getMessage(locale, "HtmlTitle", this.getRailroadName(false), title);
     }
 }
