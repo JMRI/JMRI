@@ -32,9 +32,9 @@
    cars are located and where they should be eventually positioned on the railroad. The program
    allows you to enter a roster of cars and locomotives, define locations (stations) on the
    railroad, and routes for trains to travel. The car roster includes information about the car,
-   including road name, number, type of car, color, length, weight, load, date built, and owner.
+   including road (reporting mark), number, type of car, color, length, weight, load, date built, and owner.
    Trains are assigned routes that define locations or stations where cars can be picked up or set
-   out. Features include the ability to control what car types, road names, and car loads a location
+   out. Features include the ability to control what car types, roads, and car loads a location
    or industry can service, the available track space for a location, and the maximum length the
    train can be between any two locations in the train's route.
    <P>
@@ -676,7 +676,7 @@
    selected, the program will only deliver a train to a staging track has the same rolling stock,
    road and load name restrictions. This is useful when you want trains delivered to staging tracks
    based on the train's rolling stock preferences. However, if you want certain car types, car
-   loads, or road names to be transported by a train, but not delivered to staging, deselect this
+   roads, or load names to be transported by a train, but not delivered to staging, deselect this
    option.
 
    <P>If you specify a certain train or route to be accepted by a staging track, this option is
@@ -1484,7 +1484,7 @@
    feature and shouldn't be used until you become very familiar with how the program generates
    manifests and switch lists. A schedule provides very fine control on the order types of cars will
    be delivered to a spur. You can specify the car type, when it can be delivered, the car's road
-   name and load. You can also decide the car's new load, destination, and when the car is to be
+   and load. You can also decide the car's new load, destination, and when the car is to be
    picked up. For example, if you wanted two SP boxcars to be delivered followed by a tank car
    loaded with "Oil", you can create a schedule that will do exactly that.
 
@@ -1498,7 +1498,7 @@
     Enter a name for your schedule and press the "Add Schedule" button at the bottom of the window.
     Now add your first delivery for this spur by selecting a car type in the menu box found in the
     lower left corner of the window and pressing the "Add car type" button. A new item should appear
-    in your schedule containing the type of car, pull down menus for delivery, road names, loads,
+    in your schedule containing the type of car, pull down menus for delivery, roads, loads,
     destinations, and pickup. The schedule item also includes count of 1 and a wait of 0. 
     </p>
     <P>You can if
@@ -1819,7 +1819,7 @@
 
    <P>
     If you require a train leaving staging to have a certain number of locomotives, locomotive
-    model, or road name; the program will search all staging tracks at the departure location for a
+    model, or road; the program will search all staging tracks at the departure location for a
     train meeting those requirements. If you set the locomotive requirements to 0, the program will
     select the next available train from staging; and will ignore the number of locomotives leaving
     that staging track. See <A HREF="#TrainRequires">Optional Train Requirements</A> for more info.
@@ -1956,11 +1956,10 @@
 
    You can also restrict which roads a track can service. Under "Tools" in the menu, Select "Road
    Options". In the "Edit Track Road Options" window select "Accept only" if you want to build a
-   list of road names that the track will accept. Select "Exclude" if you want to build a list of
-   road names that you want to exclude from the track. To add a road to the road list, select the
-   road name you want, and then press the "Add Road" button. To remove a road name from the list,
-   select the road name you want to remove, and press "Delete Road". "Delete All" will remove all
-   road names from the road list.
+   list of roads that the track will accept. Select "Exclude" if you want to build a list of roads
+   that you want to exclude from the track. To add a road to the road list, select the road you
+   want, and then press the "Add Road" button. To remove a road from the list, select the road you
+   want to remove, and press "Delete Road". "Delete All" will remove all roads from the road list. 
    
    <A NAME="Pools"></A>
    <H4>Track Pools</H4>
@@ -2135,14 +2134,14 @@
    <A NAME="Cars"></A>
    <H2>Cars</H2>
 
-   The cars window allows you to edit your car roster. You can enter a car's road, number, type, and
-   length. The program will automatically calculate the car's weight based on length and the scale
-   your modeling. You can optionally add the car's color, build date, load and owner. If you want a
-   group of cars to be switched as a unit, you can create a "kernel". You can assign any number of
-   cars to a kernel but the type of the first car assigned will be used by the program to determine
-   if the kernel is allowed at a location. The entire length of the kernel is used to determine if
-   the cars in the kernel will fit. Note that the program also includes space for the car's couplers
-   when calculating the length of a kernel.
+   The cars window allows you to edit your car roster. You can enter a car's road (reporting mark),
+   number, type, and length. The program will automatically calculate the car's weight based on
+   length and the scale your modeling. You can optionally add the car's color, build date, load and
+   owner. If you want a group of cars to be switched as a unit, you can create a "kernel". You can
+   assign any number of cars to a kernel but the type of the first car assigned will be used by the
+   program to determine if the kernel is allowed at a location. The entire length of the kernel is
+   used to determine if the cars in the kernel will fit. Note that the program also includes space
+   for the car's couplers when calculating the length of a kernel.
 
    <P>
     <img src="images/Cars.png">
@@ -2171,9 +2170,9 @@
 
    If you already have a list of cars in a database, you can import the cars into the program. The
    import function requires an ACSII text file, with one line for each car. The car import requires
-   four attributes and the order is car number, road name, type, and length. All four car attributes
-   are required for the import to work correctly. The following shows two examples of the correct
-   format:
+   four attributes and the order is car number, road (reporting mark), type, and length. All four
+   car attributes are required for the import to work correctly. The following shows two examples of
+   the correct format:
 
    <P>
     336 GCR Flat 40 <BR>655578 UP Boxcar 40
@@ -2237,13 +2236,13 @@
    <P>
     <img src="images/EditCar.png">
    </P>
-   <P>Then select the road for the car. If the desired road doesn't exist, press the "Edit"
+   <P>Then select the road (reporting mark) for the car. If the desired road doesn't exist, press the "Edit"
     button to the right of the road select menu box. This will allow you to add a new road or delete
     any that you don't need.</P>
 
    <H3>Road Number</H3>
 
-   Now enter the car's road number in the text box. The program requires a unique road name and
+   Now enter the car's road number in the text box. The program requires a unique road and
    number for each car. If you have cars with identical roads and numbers, simply add a -1, -2, etc.
    to each of the car numbers. The program when printing out the manifest or switch list will drop
    the -1, -2, etc. from the car's road number. 
@@ -2291,7 +2290,7 @@
     the other numbers that are available.</P>
 
    <P>When the utility checkbox is selected, it instructions the program when printing manifests
-    and switch lists to not show the individual car's road and road number, but rather the quantity
+    and switch lists to not show the individual car's road and number, but rather the quantity
     of cars needed of that type. For example, prototype trains when shipping coal don't normally
     list the cars in the train by the car's road number but instead shows the number of cars, the
     type of car, and the car's load on the train's manifest.</P>
@@ -2397,11 +2396,11 @@
 
    If you need to change a specific car attribute (road, type, color, etc) in your entire car
    roster, you can use the "Replace" button found at the bottom right of the edit car attribute
-   window. For example, if you wish to change the car road name attribute "UP" to "UPS" for all of
-   your cars. Press the "Edit" button for any of your cars in the Cars window, and then press the
-   "Edit" button across from Road in the "Car Edit" window. Enter the new road "UPS" in the text
-   box, select "UP" in the menu box, and press "Replace". All cars with "UP" as their road will now
-   have "UPS" as their road name. 
+   window. For example, if you wish to change the car road (reporting mark) attribute "UP" to "UPS"
+   for all of your cars. Press the "Edit" button for any of your cars in the Cars window, and then
+   press the "Edit" button across from Road in the "Car Edit" window. Enter the new road "UPS" in
+   the text box, select "UP" in the menu box, and press "Replace". All cars with "UP" as their road
+   will now have "UPS" as their road. 
    
    <A NAME="EditCarLoads"></A>
    <H3>Edit Car Loads</H3>
@@ -2573,11 +2572,11 @@
    <H2>Locomotives</H2>
 
    The locomotives window allows you to edit your locomotive roster. You can enter a locomotive's
-   number, road, model, type, and length. You can optionally add the locomotive's built date and
-   owner. If you want a group of locomotives to be assigned as a unit, you can create a "consist".
-   The locomotive type is used by the program to determine where locomotives are picked up and or
-   stored at the various locations on your layout. Some of default locomotive types are electric,
-   diesel, gas turbine, and steam.
+   number, road (reporting mark), model, type, and length. You can optionally add the locomotive's
+   built date and owner. If you want a group of locomotives to be assigned as a unit, you can create
+   a "consist". The locomotive type is used by the program to determine where locomotives are picked
+   up and or stored at the various locations on your layout. Some of default locomotive types are
+   electric, diesel, gas turbine, and steam.
 
    <P>
     <img src="images/Locomotives.png">
@@ -2588,7 +2587,7 @@
 
    If you already have a list of locomotives in your JMRI roster or in a database, you can import
    the locomotives into the program. The program will only import locomotives from your JMRI roster
-   that have a road name and number. To get your locomotives from your JMRI roster, select "Import
+   that have a road and number. To get your locomotives from your JMRI roster, select "Import
    from JMRI roster" from the Tools-&gt;Operations-&gt;Locomotives-&gt;Tools menu. Only locomotives
    that don't exist will be added to the programs locomotive roster. This way you can use this tool
    any time you add locomotives to your JMRI locomotive roster. The JMRI locomotive roster doesn't
@@ -2598,9 +2597,9 @@
    <H3>Import Locomotives from a File</H3>
 
    The import from file function requires an ACSII text file, with one line for each locomotive. The
-   locomotive import requires four attributes and order is locomotive number, road name, model, and
-   length. All four attributes are required for the import to work correctly. The following shows
-   two examples of the correct format:
+   locomotive import requires four attributes and order is locomotive number, road (reporting mark),
+   model, and length. All four attributes are required for the import to work correctly. The
+   following shows two examples of the correct format:
 
    <P>
     236 UP RS4 40 <BR> 5578 SP SW1200 42
@@ -2636,12 +2635,12 @@
    <H3>Adding Locomotives to your Roster</H3>
 
    To manually add a locomotive to your roster, press the "Add" button located at the bottom of the
-   "Locomotives" window. Then select the road for the locomotive. If the desired road doesn't exist,
-   press the "Edit" button across from the road select menu box. This will allow you to add a new
-   road or delete any that you don't need. Now enter the locomotive's number, model, type, length
-   and horsepower. The locomotive's horsepower, the train's weight, and track grade is used by the
-   program to calculate how many locomotives are required when using the "Auto" feature when
-   building trains.
+   "Locomotives" window. Then select the road (reporting mark) for the locomotive. If the desired
+   road doesn't exist, press the "Edit" button across from the road select menu box. This will allow
+   you to add a new road or delete any that you don't need. Now enter the locomotive's number,
+   model, type, length and horsepower. The locomotive's horsepower, the train's weight, and track
+   grade is used by the program to calculate how many locomotives are required when using the "Auto"
+   feature when building trains.
 
    <p>Now set the locomotive's location on the layout. If the locomotive is off the layout, set
     the location to none (blank space). If wish this locomotive to be part of a consist, press
@@ -2973,7 +2972,7 @@
    <H3>Optional Train Requirements</H3>
 
    You can control the number of locomotives that will be assigned to this train, and optionally,
-   the locomotive's model and road name. If you don't want the program assigning locomotives to your
+   the locomotive's model and road. If you don't want the program assigning locomotives to your
    train, select 0 as the number of locos required. If you want two or more locomotives assigned to
    a train, the locomotives must be part of a
    <A HREF="#LocomotivesAdd">consist</A>. If you select "Auto", the program will calculate the
@@ -2987,9 +2986,9 @@
 
    <P>
     You can also require a <A HREF="#CabooseFredHazardous">caboose or car with FRED (Flashing
-     Rear End Device)</A> as the last car in the train, and you can optionally specify the road name for
-    the caboose or car with FRED. If you leave the road name blank, the program will try and find a
-    caboose with the same road name as the locomotive.
+     Rear End Device)</A> as the last car in the train, and you can optionally specify the road for
+    the caboose or car with FRED. If you leave the road blank, the program will try and find a
+    caboose with the same road as the locomotive.
    </P>
 
    <A NAME="TrainReset"></A>
@@ -3179,17 +3178,17 @@
    <A NAME="TrainRoadOptions"></A>
    <H3>Train Road Options</H3>
 
-   You can control the road names that the train will service. Select under the "Edit
+   You can control the roads that the train will service. Select under the "Edit
    Train-&gt;Tools-&gt;Train Road Options". This will bring up a new window with several
    options.
 
-   <P>If the train will service any road name, select the "Accept all" radio button. If you want
-    to accept only some road names, select "Accept only" radio button. Then use the menu of road
-    names and "Add Road" button to make a list of road names that the train will service. To remove
-    a road name from your list, select the road name from the menu and use the "Delete Road" button.</P>
+   <P>If the train will service any road, select the "Accept all" radio button. If you want
+    to accept only some roads, select "Accept only" radio button. Then use the menu of roads
+    and "Add Road" button to make a list of roads that the train will service. To remove
+    a road from your list, select the road from the menu and use the "Delete Road" button.</P>
 
-   <P>To build a list of road names that the train will not service, select the "Exclude" radio
-    button. The use the menu of road names and the "Add Road" button to build a list of roads that this
+   <P>To build a list of roads that the train will not service, select the "Exclude" radio
+    button. Then use the menu of roads and the "Add Road" button to build a list of roads that this
     train will not service.</P>
 
    <A NAME="TrainManifestOptions"></A>
