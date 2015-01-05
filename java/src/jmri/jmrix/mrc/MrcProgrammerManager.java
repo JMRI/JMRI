@@ -30,10 +30,7 @@ public class MrcProgrammerManager  extends DefaultProgrammerManager {
     public boolean isAddressedModePossible() {return true;}
     
     /**
-	 * Works with PH command station to provide Service Mode and USB connect to
-	 * PowerCab.
-	 * 
-	 * @return true if not USB connect to SB3,PowerPro,SB5
+	 * @return true
 	 */
     public boolean isGlobalProgrammerAvailable() {
 		return true;

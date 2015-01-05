@@ -9,7 +9,7 @@ import org.jdom2.Element;
  * New MRC Xml Turnout Manager
  * From Xpa
  * Provides load and store functionality for
- * configuring NceTurnoutManagers.
+ * configuring MrcTurnoutManagers.
  * <P>
  * Uses the store method from the abstract base class, but
  * provides a load method here.

@@ -8,8 +8,6 @@ import org.slf4j.LoggerFactory;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

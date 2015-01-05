@@ -104,8 +104,6 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener{
 	 * Send the message to set the state of functions F5, F6, F7, F8.
 	 */
 	protected void sendFunctionGroup2() {
-		// The NCE USB doesn't support the NMRA packet format
-		// Always need speed command before function group command to reset consist pointer
         int data = 0x00 |
         (f8 ? 0x08 : 0) |
         (f7 ? 0x04 : 0)	|
@@ -143,9 +141,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener{
 	 */    
     @Override
     protected void sendFunctionGroup4() {
-		// The NCE USB doesn't support the NMRA packet format
-		// Always need speed command before function group command to reset consist pointer
-        int data = 0x00 |
+		int data = 0x00 |
         (f16 ? 0x08 : 0) |
         (f15 ? 0x04 : 0) |
         (f14 ? 0x02 : 0) |

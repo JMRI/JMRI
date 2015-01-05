@@ -275,7 +275,7 @@ public class MrcPackets {
                         txt.append(" " + MrcPacketBundle.getMessage("MrcPacketsEStop")); //IN18N
                     } else {
                         if(value<0) value = 0;
-                        txt.append(" " + MrcPacketBundle.getMessage("MrcPacketsSpeed") + Integer.toString(value)); //IN18N
+                        txt.append(" " + MrcPacketBundle.getMessage("MrcPacketsSpeed") + " " + Integer.toString(value)); //IN18N
                     }
                 }
 
