@@ -62,7 +62,7 @@ import org.slf4j.LoggerFactory;
  */
 public class RosterEntry extends RosterObject implements BasicRosterEntry {
 
-    // identifiers for property change events
+    // identifiers for property change events and some XML elements
     public static final String ID = "id"; // NOI18N
     public static final String FILENAME = "filename"; // NOI18N
     public static final String ROADNAME = "roadname"; // NOI18N
@@ -81,9 +81,15 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
     public static final String URL = "url"; // NOI18N
     public static final String DATE_UPDATED = "dateupdated"; // NOI18N
     public static final String FUNCTION_IMAGE = "functionImage"; // NOI18N
+    public static final String FUNCTION_LABEL = "functionlabel"; // NOI18N
+    public static final String FUNCTION_LOCKABLE = "functionLockable"; // NOI18N
     public static final String FUNCTION_SELECTED_IMAGE = "functionSelectedImage"; // NOI18N
     public static final String ATTRIBUTE_UPDATED = "attributeUpdated:"; // NOI18N
     public static final String ATTRIBUTE_DELETED = "attributeDeleted"; // NOI18N
+    public static final String MAX_SPEED = "maxSpeed"; // NOI18N
+    public static final String SHUNTING_FUNCTION = "IsShuntingOn"; // NOI18N
+    public static final String SPEED_PROFILE = "speedprofile"; // NOI18N
+    public static final String SOUND_LABEL = "soundlabel"; // NOI18N
 
     // members to remember all the info
     protected String _fileName = null;
@@ -132,7 +138,7 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
     protected boolean[] functionLockables;
     protected String _isShuntingOn = "";
 
-    protected final TreeMap<String, String> attributePairs = new TreeMap<String, String>();
+    protected final TreeMap<String, String> attributePairs = new TreeMap<>();
 
     protected String _imageFilePath = null;
     protected String _iconFilePath = null;
@@ -348,7 +354,9 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
             log.error("Attempting to set a speed profile against the wrong roster entry");
             return;
         }
+        RosterSpeedProfile old = this._sp;
         _sp = sp;
+        this.firePropertyChange(RosterEntry.SPEED_PROFILE, old, this._sp);
     }
 
     @Override
@@ -443,7 +451,9 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
     }
 
     public void setShuntingFunction(String fn) {
+        String old = this._isShuntingOn;
         _isShuntingOn = fn;
+        this.firePropertyChange(RosterEntry.SHUNTING_FUNCTION, old, this._isShuntingOn);
     }
 
     @Override
@@ -563,10 +573,10 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
         if ((a = e.getAttribute("URL")) != null) {
             _URL = a.getValue();
         }
-        if ((a = e.getAttribute("IsShuntingOn")) != null) {
+        if ((a = e.getAttribute(RosterEntry.SHUNTING_FUNCTION)) != null) {
             _isShuntingOn = a.getValue();
         }
-        if ((a = e.getAttribute("maxSpeed")) != null) {
+        if ((a = e.getAttribute(RosterEntry.MAX_SPEED)) != null) {
             _maxSpeedPCT = Integer.parseInt(a.getValue());
         }
         Element e3;
@@ -630,9 +640,9 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
 
         loadAttributes(e.getChild("attributepairs"));
 
-        if (e.getChild("speedprofile") != null) {
+        if (e.getChild(RosterEntry.SPEED_PROFILE) != null) {
             _sp = new RosterSpeedProfile(this);
-            _sp.load(e.getChild("speedprofile"));
+            _sp.load(e.getChild(RosterEntry.SPEED_PROFILE));
         }
 
     }
@@ -665,7 +675,7 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
         }
         if (e3 != null) {
             // load function names
-            List<Element> l = e3.getChildren("functionlabel");
+            List<Element> l = e3.getChildren(RosterEntry.FUNCTION_LABEL);
             for (Element fn : l) {
                 int num = Integer.parseInt(fn.getAttribute("num").getValue());
                 String lock = fn.getAttribute("lockable").getValue();
@@ -730,7 +740,7 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
         }
         if (e3 != null) {
             // load sound names
-            List<Element> l = e3.getChildren("soundlabel");
+            List<Element> l = e3.getChildren(RosterEntry.SOUND_LABEL);
             for (Element fn : l) {
                 int num = Integer.parseInt(fn.getAttribute("num").getValue());
                 String val = fn.getText();
@@ -770,7 +780,9 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
         if (functionLabels == null) {
             functionLabels = new String[MAXFNNUM + 1]; // counts zero
         }
+        String old = functionLabels[fn];
         functionLabels[fn] = label;
+        this.firePropertyChange(RosterEntry.FUNCTION_LABEL + fn, old, label);
     }
 
     /**
@@ -800,7 +812,9 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
         if (soundLabels == null) {
             soundLabels = new String[MAXSOUNDNUM + 1]; // counts zero
         }
+        String old = this.soundLabels[fn];
         soundLabels[fn] = label;
+        this.firePropertyChange(RosterEntry.SOUND_LABEL + fn, old, this.soundLabels[fn]);
     }
 
     /**
@@ -865,7 +879,9 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
                 functionLockables[i] = true;
             }
         }
+        boolean old = this.functionLockables[fn];
         functionLockables[fn] = lockable;
+        this.firePropertyChange(RosterEntry.FUNCTION_LOCKABLE + fn, old, lockable);
     }
 
     /**
@@ -926,7 +942,7 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
      * @return list of roster groups
      */
     public List<RosterGroup> getGroups() {
-        List<RosterGroup> groups = new ArrayList<RosterGroup>();
+        List<RosterGroup> groups = new ArrayList<>();
         if (!this.getAttributes().isEmpty()) {
             Roster roster = Roster.instance();
             for (String attribute : this.getAttributes()) {
@@ -948,7 +964,9 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
     }
 
     public void setMaxSpeedPCT(int maxSpeedPCT) {
+        int old = this._maxSpeedPCT;
         _maxSpeedPCT = maxSpeedPCT;
+        this.firePropertyChange(RosterEntry.MAX_SPEED, old, this._maxSpeedPCT);
     }
 
     /**
@@ -979,12 +997,12 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
         e.setAttribute("dccAddress", getDccAddress());
         //e.setAttribute("protocol",""+getProtocol());
         e.setAttribute("comment", getComment());
-        e.setAttribute("maxSpeed", (Integer.toString(getMaxSpeedPCT())));
+        e.setAttribute(RosterEntry.MAX_SPEED, (Integer.toString(getMaxSpeedPCT())));
         // file path are saved without default xml config path
         e.setAttribute("imageFilePath", (this.getImagePath() != null) ? FileUtil.getPortableFilename(this.getImagePath()) : "");
         e.setAttribute("iconFilePath", (this.getIconPath() != null) ? FileUtil.getPortableFilename(this.getIconPath()) : "");
         e.setAttribute("URL", getURL());
-        e.setAttribute("IsShuntingOn", getShuntingFunction());
+        e.setAttribute(RosterEntry.SHUNTING_FUNCTION, getShuntingFunction());
 
         if (!_dateUpdated.equals("")) {
             e.addContent(new Element("dateUpdated").addContent(getDateUpdated()));
@@ -1007,7 +1025,7 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
             // loop to copy non-null elements
             for (int i = 0; i <= MAXFNNUM; i++) {
                 if (functionLabels[i] != null && !functionLabels[i].equals("")) {
-                    Element fne = new Element("functionlabel");
+                    Element fne = new Element(RosterEntry.FUNCTION_LABEL);
                     fne.setAttribute("num", "" + i);
                     boolean lockable = false;
                     if (functionLockables != null) {
@@ -1033,7 +1051,7 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
             // loop to copy non-null elements
             for (int i = 0; i < MAXSOUNDNUM; i++) {
                 if (soundLabels[i] != null && !soundLabels[i].equals("")) {
-                    Element fne = new Element("soundlabel");
+                    Element fne = new Element(RosterEntry.SOUND_LABEL);
                     fne.setAttribute("num", "" + i);
                     fne.addContent(soundLabels[i]);
                     d.addContent(fne);
@@ -1100,10 +1118,7 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
         // read in the content
         try {
             mRootElement = df.rootFromName(fullFilename);
-            // In Java 1.7+ these two exceptions can be caught in one statement
-        } catch (JDOMException e) {
-            log.error("Exception while loading loco XML file: " + getFileName() + " exception: " + e);
-        } catch (IOException e) {
+        } catch (JDOMException | IOException e) {
             log.error("Exception while loading loco XML file: " + getFileName() + " exception: " + e);
         }
 
@@ -1426,11 +1441,11 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
         //Tokenize the string using \n to separate the text on mulitple lines
         //and create a vector to hold the processed text pieces
         StringTokenizer commentTokens = new StringTokenizer(comment, "\n", true);
-        Vector<String> textVector = new Vector<String>(commentTokens.countTokens());
+        Vector<String> textVector = new Vector<>(commentTokens.countTokens());
         while (commentTokens.hasMoreTokens()) {
             String commentToken = commentTokens.nextToken();
             int startIndex = 0;
-            int endIndex = textSpace;
+            int endIndex;
             //Check each token to see if it needs to have a line wrap.
             //Get a piece of the token, either the size of the allowed space or
             //a shorter piece if there isn't enough text to fill the space
@@ -1471,7 +1486,6 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
                         //It will fit so just insert it, otherwise will cycle through the
                         //while loop and the checks above will take care of the remainder.
                         //Line feed is not required as this is the last part of the token.
-                        tokenPiece = commentToken.substring(startIndex);
                         textVector.addElement(commentToken.substring(startIndex));
                         startIndex += textSpace;
                     }
@@ -1496,9 +1510,7 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
         LocoFile lf = new LocoFile();  // used as a temporary
         try {
             mRootElement = lf.rootFromName(LocoFile.getFileLocation() + getFileName());
-        } catch (JDOMException e) {
-            log.error("Exception while loading loco XML file: " + getFileName() + " exception: " + e);
-        } catch (IOException e) {
+        } catch (JDOMException | IOException e) {
             log.error("Exception while loading loco XML file: " + getFileName() + " exception: " + e);
         }
     }
