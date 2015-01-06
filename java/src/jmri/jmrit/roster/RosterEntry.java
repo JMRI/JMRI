@@ -119,13 +119,13 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
     }
     static private String _defaultOwner = "";
 
-    final static int MAXFNNUM = 28;
+    public final static int MAXFNNUM = 28;
 
     public int getMAXFNNUM() {
         return MAXFNNUM;
     }
 
-    final static int MAXSOUNDNUM = 32;
+    public final static int MAXSOUNDNUM = 32;
 
     public int getMAXSOUNDNUM() {
         return MAXSOUNDNUM;
