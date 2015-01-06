@@ -21,6 +21,10 @@ import jmri.Sensor;
  * <P>
  * For test purposes, one of these objects can be
  * created and invoked by a SampleAutomaton3Action.
+ * <p>
+ * For more information on JMRI support for automation
+ * classes, please see the 
+ * <a href="http://jmri.org/help/en/html/tools/automation/viaJava.shtml">JMRI Layout Automation in Java page</a>.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
  * @version     $Revision$
