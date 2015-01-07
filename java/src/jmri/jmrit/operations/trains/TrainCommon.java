@@ -66,7 +66,7 @@ public class TrainCommon {
 	// for manifests
 	protected int cars = 0;
 	protected int emptyCars = 0;
-	protected boolean newWork = false;
+	protected boolean newWork = false;	// when true there is work at the location, add train departure info to manifest
 
 	// for switch lists
 	protected boolean pickupCars;

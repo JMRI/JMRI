@@ -80,26 +80,27 @@ public class TrainManifest extends TrainCommon {
 			List<Car> carList = carManager.getByTrainDestinationList(train);
 			log.debug("Train has " + carList.size() + " cars assigned to it");
 
-			boolean work = false;
+			boolean hasWork = false;
+			newWork = false;	// when true there is work at the location, add train departure info to manifest
 			String previousRouteLocationName = null;
 			List<RouteLocation> routeList = train.getRoute().getLocationsBySequenceList();
 
 			for (int r = 0; r < routeList.size(); r++) {
 				RouteLocation rl = routeList.get(r);
-				boolean oldWork = work;
+				boolean hadWork = hasWork;
 				boolean printHeader = false;
-				work = isThereWorkAtLocation(carList, engineList, rl);
+				hasWork = isThereWorkAtLocation(carList, engineList, rl);
 
 				// print info only if new location
 				String routeLocationName = splitString(rl.getName());
-				if (!routeLocationName.equals(previousRouteLocationName) || (work && !oldWork && !newWork)) {
-					if (work) {
+				if (!routeLocationName.equals(previousRouteLocationName) || (hasWork && !hadWork && !newWork)) {
+					if (hasWork) {
 						// add line break between locations without work and ones with work
-						// TODO sometimes an extra line break appears when the user has two or more locations with the
-						// "same" name and the second location doesn't have work
-						if (!oldWork)
+						// TODO An extra line break appears when the user has two or more locations with the
+						// "same" name with work and the last location doesn't have work
+						if (!hadWork)
 							newLine(fileOut);
-						newWork = true;
+						newWork = true;	// TODO this shouldn't be needed, other subroutines set this true if there's work
 						printHeader = true;
 						String expectedArrivalTime = train.getExpectedArrivalTime(rl);
 						String workAt = MessageFormat.format(messageFormatText = TrainManifestText
