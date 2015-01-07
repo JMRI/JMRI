@@ -77,7 +77,12 @@ public class JsonManifest extends TrainCommon {
         cars = 0;
         emptyCars = 0;
         newWork = false;
-        String previousLocationName = null;
+		// TODO 1/7/2015 Boudreau Need to fix back to back route locations with the "same" name.
+		// I've commented out code below that deals with back to back locations with the "same" name in a train's route.
+		// It broke the display by not showing all of the work being done at back to back "same" name locations.
+		// See splitString(String name) for the definition of "same". For now show each routelocation in a train's route
+		// as a separate location. this at least gives the user all of the work needed.
+//        String previousLocationName = null;
         ArrayNode locations = this.mapper.createArrayNode();
         ObjectNode jsonLocation = this.mapper.createObjectNode();
         ObjectNode jsonCars = this.mapper.createObjectNode();
@@ -86,7 +91,7 @@ public class JsonManifest extends TrainCommon {
             RouteLocation routeLocation = route.get(r);
             // print info only if new routeLocation
             String locationName = splitString(routeLocation.getName());
-            if (!locationName.equals(previousLocationName)) {
+//            if (!locationName.equals(previousLocationName)) {
                 jsonLocation = this.mapper.createObjectNode();
                 jsonCars = this.mapper.createObjectNode();
                 jsonLocation.put(JSON.NAME, locationName);
@@ -106,7 +111,7 @@ public class JsonManifest extends TrainCommon {
                 locationNode.put(JSON.COMMENT, routeLocation.getLocation().getComment());
                 locationNode.put(JSON.ID, routeLocation.getLocation().getId());
                 jsonLocation.put(JSON.LOCATION, locationNode);
-            }
+ //           }
             jsonLocation.put(JSON.COMMENT, routeLocation.getComment());
             // engine change or helper service?
             if (train.getSecondLegOptions() != Train.NO_CABOOSE_OR_FRED) {
@@ -168,8 +173,8 @@ public class JsonManifest extends TrainCommon {
                         }
                     }
                 }
-                jsonCars.put(JSON.ADD, pickups);
             }
+            jsonCars.put(JSON.ADD, pickups);
             // car set outs
             ArrayNode setouts = this.mapper.createArrayNode();
             for (Car car : carList) {
@@ -190,9 +195,9 @@ public class JsonManifest extends TrainCommon {
 
             if (r != route.size() - 1) {
                 // Is the next routeLocation the same as the previous?
-                RouteLocation nextLocation = route.get(r + 1);
-                String nextRouteLocationName = splitString(nextLocation.getName());
-                if (!locationName.equals(nextRouteLocationName)) {
+//                RouteLocation nextLocation = route.get(r + 1);
+//                String nextRouteLocationName = splitString(nextLocation.getName());
+//                if (!locationName.equals(nextRouteLocationName)) {
                     if (newWork) {
                         jsonLocation.put(JSON.TRACK, this.getTrackComments(routeLocation, carList));
                         jsonLocation.put(JSON.DIRECTION, routeLocation.getTrainDirection());
@@ -205,14 +210,14 @@ public class JsonManifest extends TrainCommon {
                         jsonCars.put(JSON.LOADS, cars - emptyCars);
                         jsonCars.put(JSON.EMPTIES, emptyCars);
                         newWork = false;
-                    }
+//                    }
                 }
             } else {
                 log.debug("Train terminates in {}", locationName);
                 jsonLocation.put("TrainTerminatesIn", locationName);
             }
             jsonLocation.put(JSON.CARS, jsonCars);
-            previousLocationName = locationName;
+//            previousLocationName = locationName;
             locations.add(jsonLocation);
         }
         return locations;
