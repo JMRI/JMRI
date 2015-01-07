@@ -15,9 +15,7 @@ public class LnOpsModeProgrammerTest extends TestCase {
 
     public void testSetMode() {
         SlotManager val1=  null;
-        LnOpsModeProgrammer lops = new LnOpsModeProgrammer(val1, 1, true){
-                void reportBadMode(int i){}
-            };
+        LnOpsModeProgrammer lops = new LnOpsModeProgrammer(val1, 1, true);
         try {
             lops.setMode(DefaultProgrammerManager.PAGEMODE);
         } catch (IllegalArgumentException e) { return; }

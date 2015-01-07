@@ -22,7 +22,6 @@ import jmri.managers.DefaultProgrammerManager;
 public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implements XNetListener, AddressedProgrammer 
 {
 
-    private int _mode;
     int mAddressHigh;
     int mAddressLow;
     int mAddress;
