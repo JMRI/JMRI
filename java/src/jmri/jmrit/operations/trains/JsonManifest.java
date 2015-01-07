@@ -150,8 +150,8 @@ public class JsonManifest extends TrainCommon {
             jsonLocation.put(JSON.ENGINES, engines);
 
             // block cars by destination
+            ArrayNode pickups = this.mapper.createArrayNode();
             for (int j = r; j < route.size(); j++) {
-                ArrayNode pickups = this.mapper.createArrayNode();
                 RouteLocation destination = route.get(j);
                 for (Car car : carList) {
                     if (car.getRouteLocation() == routeLocation
