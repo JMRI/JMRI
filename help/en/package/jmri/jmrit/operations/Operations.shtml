@@ -193,6 +193,7 @@
       <LI><A HREF="#BuildingMultipleTrainsSession">Building Multiple Trains for a Session</A></LI>
      </UL></LI>
     <LI><A HREF="#OperationWindows">Operation Windows</A></LI>
+    <LI><A HREF="#OperationsWebAccess">Operations Web Access</A></LI>
    </UL>
 
    <A NAME="newUserAdvice"></A>
@@ -3839,11 +3840,12 @@
    the last location in the route, the last press of the "Move" button will terminate the train.
    Once a train is terminated, you can build it again.
 
-   <P>Each time a locomotive or car is moved a count associated with them is incremented. The
-    program uses this to determine which cars haven't moved recently and tries to select cars with
-    the least number of moves when building new trains. Each time a location has a car set out, the
-    program increments a count associated with that location. The program tries to move cars to
-    locations that have experienced the least number of car operations.</P>
+   <P>Each time a locomotive or car is assigned to a train during the build process, a count
+    associated with them is incremented. The program uses this count, called "Moves" in the "Cars"
+    window, to determine which cars haven't moved recently and tries to place cars with the least
+    number of moves first when building new trains. Each time a track has a car set out, the program
+    increments a count associated with that track. The program tries to move cars to tracks
+    that have experienced the least number of car operations.</P>
 
    <A NAME="TerminateTrain"></A>
    <H3>Terminate Train</H3>
@@ -3899,6 +3901,12 @@
    <P>OperationsPro&trade; also allows you to resize the Cars, Locomotives, Trains and Timetable table
     column widths. Adjust the column widths to your liking and then press the window's "Save" or
     "Save Builds" to save your preferences.</P>
+    
+    <A NAME="OperationsWebAccess"></A>
+    <H2>Operations Web Access</H2>
+    
+    You can also access some of the OperationPro&trade; windows from a browser.  For more information see
+    <A HREF="http://jmri.sourceforge.net/help/en/html/web/">JMRI Web Access</A>.
 
    <P>End of OperationsPro&trade; help.</P>
   </DIV>
