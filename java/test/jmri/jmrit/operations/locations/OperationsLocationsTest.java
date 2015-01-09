@@ -166,7 +166,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 3", 2, ltsi1.getSequenceId());
 		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 4", 1, ltsi3.getSequenceId());
 
-		ltsi4 = lts.addItem("New Third Test Type", 2);
+		ltsi4 = lts.addItem("New Third Test Item", 1);
 		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 5", 3, ltsi1.getSequenceId());
 		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 6", 1, ltsi3.getSequenceId());
 		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 7", 2, ltsi4.getSequenceId());

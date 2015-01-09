@@ -398,9 +398,9 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 				return false;
 			}
 			if (car.getLocation() != null && car.getDestination() != null && !train.services(car)) {
-				JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
-						.getMessage("carTrainNotService"), new Object[] { train.getName() }), Bundle
-						.getMessage("rsNotMove"), JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carTrainNotService"),
+						new Object[] { car.toString(), train.getName() }), Bundle.getMessage("rsNotMove"),
+						JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
 		}

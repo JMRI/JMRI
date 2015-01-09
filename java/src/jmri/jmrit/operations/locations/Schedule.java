@@ -107,7 +107,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 
 	/**
 	 * Add a schedule item at a specific place (sequence) in the schedule Allowable sequence numbers are 0 to max size
-	 * of schedule;
+	 * of schedule. 0 = start of list.
 	 * 
 	 * @param item
 	 * @param sequence
@@ -117,7 +117,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 		ScheduleItem si = addItem(item);
 		if (sequence < 0 || sequence > _scheduleHashTable.size())
 			return si;
-		for (int i = 0; i < _scheduleHashTable.size() - sequence; i++)
+		for (int i = 0; i < _scheduleHashTable.size() - sequence - 1; i++)
 			moveItemUp(si);
 		return si;
 	}
@@ -240,67 +240,50 @@ public class Schedule implements java.beans.PropertyChangeListener {
 		}
 		return out;
 	}
-
+	
 	/**
-	 * Moves a ScheduleItem earlier in the schedule by decrementing the sequenceId for the ScheduleItem
+	 * Places a ScheduleItem earlier in the schedule
 	 * 
 	 * @param si
 	 */
 	public void moveItemUp(ScheduleItem si) {
 		int sequenceId = si.getSequenceId();
-		sequenceId--;
-		if (sequenceId <= 0)
-			return;
-		si.setSequenceId(sequenceId);
-		int searchId = sequenceId;
-		sequenceId++;
-		// now find and adjust the other item taken by this one
-		boolean found = false;
-		List<ScheduleItem> sortList = getItemsByIdList();
-		while (!found) {
-			for (ScheduleItem siadjust : sortList) {
-				if (siadjust.getSequenceId() == searchId && siadjust != si) {
-					siadjust.setSequenceId(sequenceId);
-					found = true;
-					break;
-				}
-			}
-			searchId--;
-			if (searchId < 1)
-				found = true;
+		if (sequenceId - 1 <= 0) {
+			si.setSequenceId(_sequenceNum + 1); // move to the end of the list
+			resequenceIds();
+		} else {
+			// adjust the other item taken by this one
+			ScheduleItem replaceSi = getItemBySequenceId(sequenceId - 1);
+			replaceSi.setSequenceId(sequenceId);
+			si.setSequenceId(sequenceId - 1);
 		}
 		setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceId));
 	}
 
 	/**
-	 * Moves a ScheduleItem later in the schedule by incrementing the sequenceId for the ScheduleItem
+	 * Places a ScheduleItem later in the schedule
 	 * 
 	 * @param si
 	 */
 	public void moveItemDown(ScheduleItem si) {
 		int sequenceId = si.getSequenceId();
-		sequenceId++;
-		if (sequenceId > _sequenceNum)
-			return;
-		si.setSequenceId(sequenceId);
-		int searchId = sequenceId;
-		sequenceId--;
-		// now find and adjust the other item taken by this one
-		boolean found = false;
-		List<ScheduleItem> sortList = getItemsByIdList();
-		while (!found) {
-			for (ScheduleItem siadjust : sortList) {
-				if (siadjust.getSequenceId() == searchId && siadjust != si) {
-					siadjust.setSequenceId(sequenceId);
-					found = true;
-					break;
-				}
-			}
-			searchId++;
-			if (searchId > _sequenceNum)
-				found = true;
+		if (sequenceId + 1 > _sequenceNum) {
+			si.setSequenceId(0); // move to the start of the list
+			resequenceIds();
+		} else {
+			// adjust the other item taken by this one
+			ScheduleItem replaceSi = getItemBySequenceId(sequenceId + 1);
+			replaceSi.setSequenceId(sequenceId);
+			si.setSequenceId(sequenceId + 1);
 		}
 		setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceId));
+	}
+	
+	public ScheduleItem getItemBySequenceId(int sequenceId) {
+		for (ScheduleItem si : getItemsByIdList())
+			if (si.getSequenceId() == sequenceId)
+				return si;
+		return null;
 	}
 
 	/**
