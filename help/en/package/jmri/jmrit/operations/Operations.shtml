@@ -32,7 +32,7 @@
    cars are located and where they should be eventually positioned on the railroad. The program
    allows you to enter a roster of cars and locomotives, define locations (stations) on the
    railroad, and routes for trains to travel. The car roster includes information about the car,
-   including road (reporting mark), number, type of car, color, length, weight, load, date built, and owner.
+   including road, number, type of car, color, length, weight, load, date built, and owner.
    Trains are assigned routes that define locations or stations where cars can be picked up or set
    out. Features include the ability to control what car types, roads, and car loads a location
    or industry can service, the available track space for a location, and the maximum length the
@@ -128,7 +128,7 @@
         Hazardous Options</A>
       
      <LI><A HREF="#CarLoad">Car Loads</A></LI>
-      <LI><A HREF="#Kernel">Kernel, or Group of Cars</A></LI>
+      <LI><A HREF="#Kernel">Kernel (Group of Cars)</A></LI>
       <LI><A HREF="#EditCarAttributes">Edit Car Attributes (Road, Type, Length, Color,
         Kernel, Owner)</A></LI>
       <LI><A HREF="#EditCarLoads">Edit Car Loads</A></LI>
@@ -184,6 +184,7 @@
       <LI><A HREF="#TrainStatus">Train Status</A></LI>
       <LI><A HREF="#TroubleShootingBuildingTrains">Problems Building Trains How to Fix</A></LI>
       <LI><A HREF="#ReadingBuildReport">Reading the Build Report</A></LI>
+      <LI><A HREF="#BuildReport">Build Report Details</A></LI>
       <LI><A HREF="#PrintingManifests">Printing Manifests</A></LI>
       <LI><A HREF="#SwitchList">Switch Lists</A></LI>
       <LI><A HREF="#CustomSwitchLists">Custom Switch Lists</A></LI>
@@ -383,7 +384,7 @@
    <P>
     <img src="images/Settings.png">
    </P>
-   <H3>Railroad Name</H3>
+   <H4>Railroad Name</H4>
 
    Enter your railroad name in the field across from "Railroad Name". This name will show up on your
    manifests. You can also have a different railroad name for every train in your roster, see
@@ -395,14 +396,14 @@
     railroad name once you've done this, you will need to go to the Preferences window found under
     "Edit" in the main menu bar.</P>
 
-   <H3>Train Directions</H3>
+   <H4>Train Directions</H4>
 
    If your railroad depicts trains traveling north and south select the "North/South" box, if your
    trains travel east and west select the "East/West" box. You must select at least one direction,
    and can if desired select both. 
    
    <A NAME="Scale"></A>
-   <H3>Scale</H3>
+   <H4>Scale</H4>
 
    Next select the scale you are modeling. This is useful when you enter the length of cars and
    tracks. You can enter the number of actual inches and the program will convert to scale feet.
@@ -410,7 +411,7 @@
    automatically assign the proper NMRA weight for a car based on scale and length. 
    
    <A NAME="MaximumTrainLength"></A>
-   <H3>Maximum Train Length</H3>
+   <H4>Maximum Train Length</H4>
 
    Now enter the "Maximum Train Length" you desire for your trains. This field provides the maximum
    scale train length between stations. Later you can override this length if you wish a shorter
@@ -428,19 +429,19 @@
     existing routes, and you can optionally have the program reduce all of your train's routes to
     the new shorter train length.</P>
 
-   <H3>Maximum Number of Locomotives</H3>
+   <H4>Maximum Number of Locomotives</H4>
 
    Now set the maximum number of locomotives that you want the program to assign to a train. If you
    don't want the program assigning locomotives, set this value to 0.
    
    <A NAME="HorsepowerPerTon"></A>
-   <H3>Horsepower per Ton</H3>
+   <H4>Horsepower per Ton</H4>
 
    Enter the minimum horsepower per ton (HPT) that want for your trains when
    <A HREF="#BuildlocoConsist">dynamically building</A> a locomotive consist. Enter 0 if you don't
    want the program to consider the HPT or the train's route grades when building a consist.
 
-   <H3>Switch and Travel Times</H3>
+   <H4>Switch and Travel Times</H4>
 
    OperationsPro&trade; when generating switch lists for the various locations on your railroad, will
    estimate the arrival times for your trains based on the train's departure time and the switch and
@@ -450,7 +451,7 @@
    increase or decrease the train's travel time between any two locations.
    
    <A NAME="CarTypes"></A>
-   <H3>Car Types</H3>
+   <H4>Car Types</H4>
 
    OperationsPro&trade; has two sets of car types for you to use. Descriptive provides type names like
    "Boxcar" and "Tankcar", and AAR Codes provides type names like "XM" and "T" for boxcars and tank cars
@@ -458,18 +459,18 @@
     HREF="#CarTypeLengthWeight">car type edit</A> window. 
     
    <A NAME="UnitOfLength"></A>
-   <H3>Unit of Length</H3>
+   <H4>Unit of Length</H4>
 
    You can use feet or meters when entering the length of your rolling stock and tracks. The program
    can convert actual inches into scale feet when entering car, locomotive, or track lengths. Just
    append a double quote (") to any length. The program can also convert from actual centimeters to
    scale meters, just append "cm" to any length.
 
-   <H3>Optional Year Modeled</H3>
+   <H4>Optional Year Modeled</H4>
 
    You can optionally enter the year you want printed on your train manifests.
 
-   <H3>Add Operations Menu to Main Menu</H3>
+   <H4>Add Operations Menu to Main Menu</H4>
 
    When selected, add the operations menu to the main menu bar. The operations menu will appear the
    next time you restart JMRI.
@@ -480,17 +481,17 @@
      HREF="../../../apps/TabbedPreferences.shtml#Startup">Start Up</A>, and add an "Action".
    </P>
 
-   <H3>Close on Save</H3>
+   <H4>Close on Save</H4>
 
    When selected, close operation windows when the "Save" button is pressed.
 
-   <H3>Auto Save</H3>
+   <H4>Auto Save</H4>
 
    When selected, the program will automatically save the operation files after they have been
    changed. When a change occurs the program will after 1 to 2 minutes automatically save the
    operations files.
 
-   <H3>Auto Backup</H3>
+   <H4>Auto Backup</H4>
 
    When selected, the program will create a set of operation backup files each time the program is
    started. See <A HREF="#BackupRestore">Backup and Restore</A> for more information.
@@ -1307,14 +1308,14 @@
     means that track space is going to be consumed by set outs, and a negative number means that
     track space is going to be freed up by pick ups.</P>
 
-   <H3>Location Service Direction</H3>
+   <H4>Location Service Direction</H4>
 
    You can decide which train direction the location can service. For example, if only east bound
    trains can access the location select "East" and deselect the other directions. This can be
    useful if you want to only support trailing point switching for a given location. If a location
    can support multiple directions then select the ones that are appropriate.
 
-   <H3>Location Rolling Stock</H3>
+   <H4>Location Rolling Stock</H4>
 
    You can control the rolling stock a location can service. Press the "Clear All" button to
    deselect all types, or "Select All" to select all types, then select or deselect the rolling
@@ -1326,7 +1327,7 @@
    by selecting
    <A HREF="#EditCarType">Edit Car Type</A>.
 
-   <H3>Location Comment</H3>
+   <H4>Location Comment</H4>
 
    You can enter an optional comment for your location. If you want the comment to print on your
    manifests you must select the print location comments <A HREF="#ManifestComments">option</A>. 
@@ -1408,7 +1409,7 @@
    Press the "Add Yard Track" button at the bottom of the window and the disabled fields should now
    appear.
 
-   <H3>Rolling Stock Serviced</H3>
+   <H4>Rolling Stock Serviced</H4>
 
    You can control what type of rolling stock the yard can service. Note that the yard rolling stock
    is restricted to the ones that the location can service. If the rolling stock that you wish
@@ -1420,14 +1421,14 @@
     HREF="#EditCarType">Edit Car Type</A>. 
     
     <A NAME="RoadAndLoadOptions"></A>
-    <H3>Road and Load Options</H3>
+    <H4>Road and Load Options</H4>
 
    You can control which car roads and loads your yard can service from the "Tools" menu. See
    <A HREF="#RoadOptions">Road Options</A> and <A HREF="#LoadOptions">Load Options</A> for more
    info. 
    
    <A NAME="PickUpCarOrder"></A>
-   <H3>Pick Up Car Order</H3>
+   <H4>Pick Up Car Order</H4>
 
    There are three options for picking up cars from the yard. "Normal" uses the car's move count to
    determine the order cars are removed from the yard, "FIFO" (First In First Out), and "LIFO" (Last
@@ -1436,7 +1437,7 @@
    service cars. For example storing empty coal cars, it would make more sense to pull an empty coal
    car from the front of the line rather than digging one out from the middle of the yard.
 
-   <H3>Comment</H3>
+   <H4>Comment</H4>
 
    You can enter an optional comment for the yard.
 
@@ -2165,6 +2166,12 @@
    card "*" when entering a car number. For example if you want to find all cars with numbers that
    ended with 345, enter *345, and press find. Each time you press find, the next car with a road
    number ending with "345" will be highlighted. 
+   
+   <H3>Moves, Wait and Last Time Moved</H3>
+
+   You can edit the number of times a car has been moved by the program and the car's wait count
+   directly from the "Cars" window. Double click on the cell in the Cars window to change. The built and
+   owner fields can be found in the "Edit Car" window.  The last time moved is set by the program.
      
    <A NAME="ImportingCars"></A>
    <H3>Importing Cars from a File</H3>
@@ -2237,19 +2244,22 @@
    <P>
     <img src="images/EditCar.png">
    </P>
-   <P>Then select the road (reporting mark) for the car. If the desired road doesn't exist, press the "Edit"
+   
+   <H4>Road</H4>
+   
+   <P>Select the road (reporting mark) for the car. If the desired road doesn't exist, press the "Edit"
     button to the right of the road select menu box. This will allow you to add a new road or delete
     any that you don't need.</P>
 
-   <H3>Road Number</H3>
+   <H4>Road Number</H4>
 
-   Now enter the car's road number in the text box. The program requires a unique road and
+   Enter the car's road number in the text box. The program requires a unique road and
    number for each car. If you have cars with identical roads and numbers, simply add a -1, -2, etc.
    to each of the car numbers. The program when printing out the manifest or switch list will drop
    the -1, -2, etc. from the car's road number. 
    
    <A NAME="CarTypeLengthWeight"></A>
-   <H3>Car Type, Length, Weight</H3>
+   <H4>Type, Length, Weight</H4>
 
    Select the car's type and length from the menu boxes. Use the "Edit" button to the right of the
    menu boxes to add or delete car types, or lengths that you want to add or remove. The car's
@@ -2259,7 +2269,7 @@
    feet to each end of a car for the couplers. Therefore when you place a forty foot car at a spur,
    it will consume 44 feet of track.
 
-   <H3>Car subType</H3>
+   <H4>Car subType</H4>
 
    <P>OperationsPro&trade; supports the ability to add a subType to your car types. Adding a "-subType"
     to your car type will create a new type of car. The "-subType" is not printed on the manifest or
@@ -2269,7 +2279,7 @@
     locations respectively.</P>
 
    <A NAME="CabooseFredHazardous"></A>
-   <H3>Passenger, Caboose, FRED, Utility, and Hazardous Checkboxes</H3>
+   <H4>Passenger, Caboose, FRED, Utility, and Hazardous Checkboxes</H4>
 
    If the car is used in passenger service select the passenger checkbox. The program will place
    passenger cars towards the rear of a mixed service (combination of passenger and freight cars)
@@ -2302,13 +2312,13 @@
     find a car by its road number, it could very well have been shipped out on an earlier train. So
     you have to decide, use road numbers or or not for a given type of car.</P>
 
-   <H3>Car Location and Track</H3>
+   <H4>Location and Track</H4>
 
    Now set the car's location on the layout. If the car is off the layout, set the location to none
    (blank space).
    
    <A NAME="CarLoad"></A>
-   <H3>Car Loads</H3>
+   <H4>Load</H4>
 
    You can optionally set the load state of the car. Select "E" for empty or "L" for loaded. You can
    also create your own custom
@@ -2328,10 +2338,10 @@
    </P>
 
    <A NAME="Kernel"></A>
-   <H3>Kernel, or Group of Cars</H3>
+   <H4>Kernel</H4>
 
-   If wish this car to be part of a kernel which is a group of cars that you want to switch as one
-   unit, press "Edit" across from "Kernel" and enter a kernel name. Then select the kernel from the
+   A "Kernel" is a group of cars that move as a single unit. If wish this car to be part of a kernel
+   press "Edit" across from "Kernel" and create a kernel name. Then select the kernel from the
    menu box. The first car you assign to the kernel becomes the lead car. The program when searching
    for a track to set out the kernel will only use the lead car's attributes when determining if the
    track can accept the kernel. However, the program does use the entire length of the kernel to
@@ -2339,16 +2349,10 @@
    
    Manifest and switch lists will show the cars in the order that you assigned them to the kernel.
 
-   <H3>Optional Fields</H3>
+   <H4>Optional Fields</H4>
 
    Finally you can optionally enter the color, built date, owner and comment for this car. The built
    date can be entered as a four digit year, or in the format of month-year.
-   
-   <H3>Moves, Built, Owner, Wait and Last Time Moved</H3>
-
-   You can edit the number of times a car has been moved by the program and the car's wait count
-   directly from the "Cars" window. Double click on the cell in the Cars window to change. The built and
-   owner fields can be found in the "Edit Car" window.  The last time moved is set by the program.
 
    <H3>Add</H3>
 
@@ -2411,21 +2415,29 @@
    <P>
     <img src="images/EditCarLoads.png">
    </P>
+   
    <P>
     In addition to the Add, Delete, and Replace buttons and fields described above in the <A
      HREF="#EditCarAttributes">Car Edit Attributes</A> section, the edit car loads window allows you
-    to set the load's type, priority, pick up and set out messages. A load type of "Load" means the
+    to set the load's type, priority, pick up and set out messages.</P>
+ 
+    <H4>Load Type</H4>   
+    
+    A load type of "Load" means the
     program will consider the car as being loaded and the maximum car weight is used when
     calculating the train's total weight. A load type of "Empty" tells the program that the car is
     empty as to only use 1/3 of the car's maximum weight when calculating the train's total weight.
     If you use the <A HREF="#ManifestComments">Loads and Empties</A> option when printing your
     manifest, you will want to use the correct load type so that the program prints out the correct
     number of loads and empties in the train.
-   </P>
+   
+   <H4>Priority</H4>
 
    <P>The default load priority is low and you can change the priority to high for a given car
     type and load. High priority car loads are normally serviced before low priority. Useful if you
     need to get your reefer loaded with fruit to the market ASAP!</P>
+    
+    <H4>Optional Load Messages</H4>
 
    <P>You can also provide optional messages for your operators based on the type of car and
     load. The messages can be useful if you have visible car loads that need to be added or removed
@@ -2435,9 +2447,10 @@
    <H3>Set Car</H3>
 
    After creating a car, you can set the car's location, and optionally the car's destination and
-   train by using the "Set" button found for each car in the <A HREF="#Cars">Cars</A> window.
-   Normally the car's destination and assigned train are generated by the program, but you can use
-   these fields to force a car to a specific destination using the specified train.
+   train by using the "Set" button found for each car in the
+   <A HREF="#Cars">Cars</A> window. Normally the car's destination and assigned train are generated
+   by the program, but you can use these fields to force a car to a specific destination using the
+   specified train.
 
    <P>You can remove a car that has been assigned to a train by simply pressing the "Save"
     button. You can also add a car to an already built train that hasn't departed its first
@@ -2446,23 +2459,30 @@
     <img src="images/SetCarLocation.png">
    </P>
 
-   <P>
-    In the upper right hand corner of the set car window is a checkbox labeled "Location Unknown".
-    Selecting the location unknown checkbox does several things. First the program will ignore the
-    car when building new trains. Second, on manifests and switch lists, the program will list all
-    of the misplaced cars. Now your operators can help you find cars that have been <A
-     HREF="#MisplacedCarsComment">misplaced</A>. And finally, when this checkbox is selected, the
-    other fields in the set car window are disabled.
-   </P>
+   <H4>Status</H4>
+
+   In the upper right hand corner of the set car window is a checkbox labeled "Location Unknown".
+   Selecting the location unknown checkbox does several things. First the program will ignore the
+   car when building new trains. Second, on manifests and switch lists, the program will list all of
+   the misplaced cars. Now your operators can help you find cars that have been
+   <A HREF="#MisplacedCarsComment">misplaced</A>. And finally, when this checkbox is selected, the
+   other fields in the set car window are disabled.
+
    <P>The "Out of Service" checkbox when selected instructs the program to ignore the car when
     building new trains. Many operators have a RIP (Repair In Place) track and use this feature to
     hold the car there until repairs have been made.</P>
 
+   <H4>Location and Track</H4>
+
    <P>Use the "Location and Track" set of fields to place the car on the layout. Use the "Auto"
     checkbox to show valid tracks for a given location.</P>
 
+   <H4>Load</H4>
+
    <P>Use the "Load" menu to change the car's load, or create new ones by using the "Edit"
     button located to the right of the load menu.</P>
+
+   <H4>Kernel</H4>
 
    <P>
     You can also place the car into a <A HREF="#Kernel">kernel</A> which is a group of cars that are
@@ -2481,9 +2501,9 @@
    the RWE load also overrides the generation of custom loads out of staging since the "E" load
    isn't used by the program for this car.
 
-   <P>Note that manually changing the load status to empty "E" will not cause the Return When Empty
-    (RWE) destination to become active, only when the car is set out by the program will the RWE
-    destination and RWE load become active.</P>
+   <P>Note that manually changing the load status to empty "E" will not cause the Return When
+    Empty (RWE) destination to become active, only when the car is set out by the program will the
+    RWE destination and RWE load become active.</P>
 
    <H4>Optional -- Normally Set by Program</H4>
 
@@ -2493,27 +2513,32 @@
    destination fields are disabled. Under "Tools" there's an option to enable the destination
    fields.
 
-   <P>The "Destination" is the next location that the car will be delivered to. The destination
-    must be reachable by only one train from the car's current location or the car will not be
-    serviced. Normally we recommend that you don't use the "Destination" pull down menus to forward
-    a car to a location, but use the "Final Destination" as described below. However, if you're
-    manually adding a car to a built train, you must set the car's destination and track.</P>
+   <H4>Destination</H4>
 
-   <P>The next field is the "Final Destination" set of pull down boxes. You can select any
-    destination or track, the program will figure out the best route to ship the car to this
-    destination. The "route" can consist of several trains, interchanges, and yards. When a car is
-    delivered to a spur with a schedule, and the schedule has a shipping destination that requires
-    more than one train, the program uses this set of fields to ship the car. If the track that the
-    final destination specifies happens to be full, the program will search for a yard to place the
-    car. When the track becomes available, the program will move the car from the yard to the track
-    specified.</P>
+   The "Destination" is the next location that the car will be delivered to. The destination must be
+   reachable by only one train from the car's current location or the car will not be serviced.
+   Normally we recommend that you don't use the "Destination" pull down menus to forward a car to a
+   location, but use the "Final Destination" as described below. However, if you're manually adding
+   a car to a built train, you must set the car's destination and track.
+   <A NAME="FinalDestination"></A>
+   <H4>Final Destination</H4>
 
-   <P>The last field is the train assignment. If you want to specify a car's destination or
-    train, you can set them before or after build your trains.</P>
+   The next field is the "Final Destination" set of pull down boxes. You can select any destination
+   or track, the program will figure out the best route to ship the car to this destination. The
+   "route" can consist of several trains, interchanges, and yards. When a car is delivered to a spur
+   with a schedule, and the schedule has a shipping destination that requires more than one train,
+   the program uses this set of fields to ship the car. If the track that the final destination
+   specifies happens to be full, the program will search for a yard to place the car. When the track
+   becomes available, the program will move the car from the yard to the track specified.
 
-   <P>When manually setting a destination, you don't have to specify a track. And when manually
-    setting a destination that is staging, you shouldn't select a destination track, let the program
-    do that for you unless you are adding a car to an already built train.</P>
+   <P>When setting a destination, you don't have to specify a track. And when setting a
+    destination that is staging, you shouldn't select a destination track, let the program do that
+    for you.</P>
+
+   <H4>Train</H4>
+
+   <P>The last field is the train assignment. You can manually decide which train to use before
+    or after build your trains.</P>
 
    <A NAME="SetCars"></A>
    <H3>Set Cars</H3>
@@ -2955,7 +2980,7 @@
     Once a route is selected a list of locations that the train will visit should appear. You can
     deselect any location that you don't want the train to work.</P>
 
-   <H3>Train Departure Time</H3>
+   <H4>Train Departure Time</H4>
 
    Select the time that this train will depart the first location in its route. You can use the
    departure time to sort your trains in the order that you want them built when using the
@@ -2963,14 +2988,14 @@
    train's route has a departure time for the first location, the route's departure time is used and
    the train departure time selection is disabled.
 
-   <H3>Train Rolling Stock</H3>
+   <H4>Train Rolling Stock</H4>
 
    You can decide what type of cars and locomotives the train will service. Select the rolling
    stock the train will carry by clicking on the appropriate checkboxes. A checked box means the
    train will service this type of rolling stock. 
    
    <A NAME="TrainRequires"></A>
-   <H3>Optional Train Requirements</H3>
+   <H4>Optional Train Requirements</H4>
 
    You can control the number of locomotives that will be assigned to this train, and optionally,
    the locomotive's model and road. If you don't want the program assigning locomotives to your
@@ -3577,26 +3602,64 @@
     window.
    </P>
 
-   <H3>More Build Report Details</H3>
+ <A NAME="BuildReport"></A>
+   <H3>Build Report Details</H3>
 
-   For those who want to understand how OperationsPro&trade; builds trains here's the details. If the train
-   requires a locomotive or several locomotives, the program will look for locomotives at the start
-   of the route and then determines if the termination location will accept them. Note that if two
-   or more locomotives are required for the train that the locomotives must be in a <A
-    HREF="#LocomotivesAdd">consist</A>. The program assigns to the rolling stock (locomotives and
-   cars) the number of moves that they experience during each session. The move count is bumped up
-   each time the rolling stock is set out to a new location's track, or if the rolling stock was
-   assigned to a train and the train was reset. The program sorts the rolling stock by the move
-   count, and then tries to assign locomotives and cars with the least number of moves to the train.
-   When building a train only rolling stock at locations that are part of the train's route are
-   used. With regards to cars, in addition to the number of moves a car has experienced, the car's
-   load priority is also considered. The program will try and find destinations for cars with high
-   priority loads before low priority loads.
+   For those who want to understand how OperationsPro&trade; builds trains here's the overview.
 
-   <P>The next step is to optionally assign a caboose or car with FRED to the train. If the
-    program finds the required caboose or car with FRED at the start of the route, the program tries
-    to find a track at the termination location that will accept it. If successful, all other
-    cabooses and cars with FRED are removed from the available car list.</P>
+   <P>The program can create car movement in one of two ways, "random" and "routing". Cars that
+    don't have a final destination or custom load are found destinations using the random method.
+    Cars with a final destination or a custom load are "routed". The term "random" is used to
+    describe car movement from session to session, as using this method causes cars to move but
+    not in a deterministic way. Whereas cars that are "routed" are moved from session to session in
+    a predictable way, closer to their final destination.</P>
+
+   <P>The random method uses a series of counters to determine which cars should travel to which
+    tracks. These counters and the restrictions you place on the trains and tracks determine the
+    possibilities that the program can choose from. Each time a locomotive or car is assigned to a
+    train during the build process, a count associated with them is incremented. The program uses
+    this count, called "Moves" in the "Cars" and "Locomotives" windows, to determine which rolling
+    stock hasn't moved recently and tries to place rolling stock with the least number of moves
+    first when building new trains. Each time a car or locomotive sent to a track, the program
+    increments a count associated with that track. The program tries to move cars and locos to
+    tracks that have experienced the least use.</P>
+
+   <P>
+    The routing method also uses the car's move count to determine which cars to look at first. A
+    car needs to be routed when it has a <A HREF="#FinalDestination">final destination</A> (think
+    ship to address). The program will try and route the car to its final destination using up to
+    five trains. If the car has a custom load and no final destination, the program will search for
+    a spur with a schedule that is demanding that car's load, and then will then give the car a
+    final destination that is the spur, and then route the car to that spur.
+   </P>
+
+   <P>Cars that are routed move with a purpose, they will travel from location to location using
+    the most efficient route the program can find. Most of the time cars are routed though
+    classification or interchange (C/I) tracks, but the program will use yard tracks if needed, and
+    <A HREF="#CarRouting">allowed</A>.</P>
+
+   <H4>More details</H4>
+
+   <P>
+    At the start of the train build process, if the train requires a locomotive or several
+    locomotives, the program will look for locomotives at the start of the route and then determines
+    if the termination location will accept them. Note that if two or more locomotives are required
+    for the train that the locomotives must be in a <A HREF="#LocomotivesAdd">consist</A>, or the
+    option to <A HREF="#TrainBuildOptions">build loco consist from single locos</A> must be enabled.
+   </P>
+
+   <P>When building a train only rolling stock at locations that are part of the train's route
+    are used. With regards to cars, in addition to the number of moves a car has experienced, the
+    car's load priority is also considered. The program will try and find destinations for cars with
+    high priority loads before low priority loads.</P>
+
+   <P>
+    The next step in the build process is to optionally assign a <A HREF="#CabooseFredHazardous">caboose</A>
+    or car with <A HREF="#CabooseFredHazardous">FRED</A> to the train. If the program finds the
+    required caboose or car with FRED at the start of the route, the program tries to find a track
+    at the termination location that will accept it. If successful, all other cabooses and cars with
+    FRED are removed from the available car list.
+   </P>
 
    <P>Next the program will assign cars to the train starting from the departure location. Each
     car goes through the process of searching for a track at each location along the train's route
@@ -3616,27 +3679,30 @@
     value of two passes, the first pass uses 50% of the available moves for each location when
     determining the number of cars to pick up, and the second pass does the remainder. By doing
     multiple passes, the program can "free" up some tracks that already have cars there, thus
-    increasing the number of cars that the train can service. Once a car has been given a
-    destination in aggressive mode, the car's current track space is available for other trains to
+    increasing the number of cars that the train can service. Once a car has been scheduled for a 
+    pick up by a train in aggressive mode, the car's current track space is available for other trains to
     use.
    </P>
 
    <P>
     There is an exception when departing staging in aggressive mode, the program will skip searching
-    for destinations for cars out of staging on the first pass unless the "Use normal mode when
-    building this train" is selected. The thinking is that car pick ups along the train's route will
+    for destinations for cars out of staging on the first pass unless the <A HREF="#TrainBuildOptions">Use normal mode when
+    building this train</A> is selected. The thinking is that car pick ups along the train's route will
     free up space which should provide more possibilities for cars out of staging. However, if you
-    have tight train length restrictions along the train's route, the program might not
-    find destinations for cars out of staging while keeping the train length in check. If you find
-    in the build report that the train length is an issue for cars out of staging, try building the
-    train using the "Use normal mode when building this train" found under <A
-     HREF="#TrainBuildOptions">Train Build Options</A> in the "Tools" menu under Edit Train.
+    have tight train length restrictions along the train's route, the program might not find
+    destinations for cars out of staging while keeping the train length in check. If you find in the
+    build report that the train length is an issue for cars out of staging, try building the train
+    using the "Use normal mode when building this train" found under <A HREF="#TrainBuildOptions">Train
+     Build Options</A> in the "Tools" menu under Edit Train.
    </P>
 
-   <P>When a car has a final destination that was set by a schedule, the program will try and
-    "route" the car to that destination. If the program can't find a train or series of trains that
-    can deliver the car to the destination, it will try and move the car in an attempt to find a way
-    to get the car to the destination.</P>
+   <P>
+    When a car has a final destination which can be set by a <A HREF="#Schedules">schedule</A> or
+    manually using the <A HREF="#CarsSet">Set Car</A> window, the program will try and "route" the
+    car to that destination. If the program can't find a train or series of trains that can deliver
+    the car to the destination, it will try and move the car in an attempt to find a way to get the
+    car to the destination.
+   </P>
 
    <P>
     If a car has a custom load without a destination, the program will search for a spur with a
@@ -3839,13 +3905,6 @@
    of the "Move" button moves the train closer to its terminal location. When the train arrives at
    the last location in the route, the last press of the "Move" button will terminate the train.
    Once a train is terminated, you can build it again.
-
-   <P>Each time a locomotive or car is assigned to a train during the build process, a count
-    associated with them is incremented. The program uses this count, called "Moves" in the "Cars"
-    window, to determine which cars haven't moved recently and tries to place cars with the least
-    number of moves first when building new trains. Each time a track has a car set out, the program
-    increments a count associated with that track. The program tries to move cars to tracks
-    that have experienced the least number of car operations.</P>
 
    <A NAME="TerminateTrain"></A>
    <H3>Terminate Train</H3>
