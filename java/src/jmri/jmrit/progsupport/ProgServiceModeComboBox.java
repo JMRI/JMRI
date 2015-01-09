@@ -53,7 +53,10 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
      * Get the configured programmer
      */
     public Programmer getProgrammer() {
-        return ((GlobalProgrammerManager)progBox.getSelectedItem()).getGlobalProgrammer();
+        if (progBox == null) return null;
+        GlobalProgrammerManager pm = (GlobalProgrammerManager)progBox.getSelectedItem();
+        if (pm == null) return null;
+        return pm.getGlobalProgrammer();
     }
 
     /**
@@ -82,11 +85,14 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
 
         // create the programmer display combo box
         progBox = new JComboBox<GlobalProgrammerManager>();
-        java.util.Vector<GlobalProgrammerManager> v = new java.util.Vector<GlobalProgrammerManager>();
-        for (GlobalProgrammerManager pm : getMgrList()) {
-            v.add(pm);
-            // listen for changes
-            pm.getGlobalProgrammer().addPropertyChangeListener(this);
+        Vector<GlobalProgrammerManager> v = new Vector<GlobalProgrammerManager>();
+        List<GlobalProgrammerManager> mgrList = getMgrList();
+        if (mgrList != null) {
+            for (GlobalProgrammerManager pm : getMgrList()) {
+                v.add(pm);
+                // listen for changes
+                pm.getGlobalProgrammer().addPropertyChangeListener(this);
+            }
         }
         add(progBox = new JComboBox<GlobalProgrammerManager>(v));
         // if only one, don't show
@@ -94,8 +100,8 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
             progBox.setVisible(false);
         } else {
             progBox.setSelectedItem(InstanceManager.getDefault(jmri.GlobalProgrammerManager.class)); // set default
-            progBox.addActionListener(new java.awt.event.ActionListener(){
-                public void actionPerformed(java.awt.event.ActionEvent e) {
+            progBox.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e) {
                     // new programmer selection
                     programmerSelected();
                 }
@@ -117,8 +123,11 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
      */
     void programmerSelected() {
         DefaultComboBoxModel<ProgrammingMode> model = new DefaultComboBoxModel<ProgrammingMode>();
-        for (ProgrammingMode mode : getProgrammer().getSupportedModes()) {
-            model.addElement(mode);
+        Programmer p = getProgrammer();
+        if (p!=null) {
+            for (ProgrammingMode mode : getProgrammer().getSupportedModes()) {
+                model.addElement(mode);
+            }
         }
         modeBox.setModel(model);
     }
