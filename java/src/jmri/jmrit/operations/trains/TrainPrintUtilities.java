@@ -332,8 +332,7 @@ public class TrainPrintUtilities {
 	}
 
 	/**
-	 * This method uses Desktop which is supported in Java 1.6. Since we're currently limiting the code to Java 1.5,
-	 * this method must be commented out.
+	 * This method uses Desktop which is supported in Java 1.6.
 	 */
 	public static void openDesktopEditor(File file) {
 		if (!java.awt.Desktop.isDesktopSupported()) {
@@ -341,14 +340,20 @@ public class TrainPrintUtilities {
 			return;
 		}
 		java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
-		if (!desktop.isSupported(java.awt.Desktop.Action.EDIT)) {
-			log.warn("desktop edit not supported");
-			return;
-		}
-		try {
-			desktop.edit(file);
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (desktop.isSupported(java.awt.Desktop.Action.EDIT)) {
+			try {
+				desktop.edit(file);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else if (desktop.isSupported(java.awt.Desktop.Action.OPEN)) {
+			try {
+				desktop.open(file);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			log.warn("desktop edit or open not supported");
 		}
 	}
 
