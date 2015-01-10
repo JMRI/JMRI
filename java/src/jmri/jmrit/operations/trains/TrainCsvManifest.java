@@ -20,6 +20,7 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.FileUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,9 +60,9 @@ public class TrainCsvManifest extends TrainCsvCommon {
 		addLine(fileOut, PRNTR + ESC
 				+ locationManager.getLocationByName(train.getTrainDepartsName()).getDefaultPrinterName() + ESC);
 		// add logo
-		String logoURL = Setup.getManifestLogoURL();
+		String logoURL = FileUtil.getExternalFilename(Setup.getManifestLogoURL());
 		if (!train.getManifestLogoURL().equals(""))
-			logoURL = train.getManifestLogoURL();
+			logoURL = FileUtil.getExternalFilename(train.getManifestLogoURL());
 		if (!logoURL.equals(""))
 			addLine(fileOut, LOGO + logoURL);
 		addLine(fileOut, VT + getDate(true));
