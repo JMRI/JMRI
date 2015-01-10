@@ -124,7 +124,7 @@ public class Route implements java.beans.PropertyChangeListener {
 		RouteLocation rl = addLocation(location);
 		if (sequence < 0 || sequence > _routeHashTable.size())
 			return rl;
-		for (int i = 0; i < _routeHashTable.size() - sequence; i++)
+		for (int i = 0; i < _routeHashTable.size() - sequence - 1; i++)
 			moveLocationUp(rl);
 		return rl;
 	}
@@ -256,66 +256,58 @@ public class Route implements java.beans.PropertyChangeListener {
 	}
 
 	/**
-	 * Moves a RouteLocation earlier in the route by decrementing the sequenceId for the RouteLocation
+	 * Places a RouteLocation later in the route.
 	 * 
 	 * @param rl
 	 */
 	public void moveLocationUp(RouteLocation rl) {
 		int sequenceId = rl.getSequenceId();
-		sequenceId--;
-		if (sequenceId <= 0)
-			return;
-		rl.setSequenceId(sequenceId);
-		int searchId = sequenceId;
-		sequenceId++;
-		// now find and adjust the other location taken by this one
-		boolean found = false;
-		List<RouteLocation> sortList = getLocationsByIdList();
-		while (!found) {
-			for (RouteLocation rladjust : sortList) {
-				if (rladjust.getSequenceId() == searchId && rladjust != rl) {
-					rladjust.setSequenceId(sequenceId);
-					found = true;
-					break;
-				}
+		if (sequenceId - 1 <= 0) {
+			rl.setSequenceId(_sequenceNum + 1); // move to the end of the list
+			resequenceIds();
+		} else {
+			// adjust the other item taken by this one
+			RouteLocation replaceRl = getItemBySequenceId(sequenceId - 1);
+			if (replaceRl != null) {
+				replaceRl.setSequenceId(sequenceId);
+				rl.setSequenceId(sequenceId - 1);
+			} else {
+				resequenceIds(); // error the sequence number is missing
 			}
-			searchId--;
-			if (searchId < 1)
-				found = true;
 		}
 		setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceId));
 	}
 
 	/**
-	 * Moves a RouteLocation later in the route by incrementing the sequenceId for the RouteLocation
+	 * Moves a RouteLocation later in the route.
 	 * 
 	 * @param rl
 	 */
 	public void moveLocationDown(RouteLocation rl) {
 		int sequenceId = rl.getSequenceId();
-		sequenceId++;
-		if (sequenceId > _sequenceNum)
-			return;
-		rl.setSequenceId(sequenceId);
-		int searchId = sequenceId;
-		sequenceId--;
-		// now find and adjust the other location taken by this one
-		boolean found = false;
-		List<RouteLocation> sortList = getLocationsByIdList();
-		while (!found) {
-			for (RouteLocation rladjust : sortList) {
-				if (rladjust.getSequenceId() == searchId && rladjust != rl) {
-					rladjust.setSequenceId(sequenceId);
-					found = true;
-					break;
-				}
+		if (sequenceId + 1 > _sequenceNum) {
+			rl.setSequenceId(0); // move to the start of the list
+			resequenceIds();
+		} else {
+			// adjust the other item taken by this one
+			RouteLocation replaceRl = getItemBySequenceId(sequenceId + 1);
+			if (replaceRl != null) {
+				replaceRl.setSequenceId(sequenceId);
+				rl.setSequenceId(sequenceId + 1);
+			} else {
+				resequenceIds(); // error the sequence number is missing
 			}
-			searchId++;
-			if (searchId > _sequenceNum)
-				found = true;
 		}
 		setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceId));
 	}
+
+	public RouteLocation getItemBySequenceId(int sequenceId) {
+		for (RouteLocation rl : getLocationsByIdList())
+			if (rl.getSequenceId() == sequenceId)
+				return rl;
+		return null;
+	}
+
 
 	/**
 	 * Gets the status of the route: OKAY ORPHAN ERROR

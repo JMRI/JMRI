@@ -251,8 +251,12 @@ public class Schedule implements java.beans.PropertyChangeListener {
 		} else {
 			// adjust the other item taken by this one
 			ScheduleItem replaceSi = getItemBySequenceId(sequenceId - 1);
-			replaceSi.setSequenceId(sequenceId);
-			si.setSequenceId(sequenceId - 1);
+			if (replaceSi != null) {
+				replaceSi.setSequenceId(sequenceId);
+				si.setSequenceId(sequenceId - 1);
+			} else {
+				resequenceIds(); // error the sequence number is missing
+			}
 		}
 		setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceId));
 	}
@@ -270,8 +274,12 @@ public class Schedule implements java.beans.PropertyChangeListener {
 		} else {
 			// adjust the other item taken by this one
 			ScheduleItem replaceSi = getItemBySequenceId(sequenceId + 1);
-			replaceSi.setSequenceId(sequenceId);
-			si.setSequenceId(sequenceId + 1);
+			if (replaceSi != null) {
+				replaceSi.setSequenceId(sequenceId);
+				si.setSequenceId(sequenceId + 1);
+			} else {
+				resequenceIds();	// error the sequence number is missing
+			}
 		}
 		setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceId));
 	}
