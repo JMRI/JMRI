@@ -18,8 +18,6 @@ import javax.swing.JButton;
 import javax.swing.JRadioButton;
 
 import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
-import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.com.sun.TableSorter;
 
@@ -105,10 +103,9 @@ public class RoutesTableFrame extends OperationsFrame {
 		// make panel a bit wider than minimum if the very first time opened
 		if (getWidth() == Control.panelWidth500)
 			setSize(730, getHeight());
-
-		// now load the cars and engines
-		CarManagerXml.instance();
-		EngineManagerXml.instance();
+		
+		// create ShutDownTasks
+		createShutDownTask();
 	}
 
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {

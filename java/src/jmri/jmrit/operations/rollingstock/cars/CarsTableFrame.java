@@ -32,7 +32,6 @@ import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.ModifyLocationsAction;
 import jmri.jmrit.operations.locations.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainsByCarTypeAction;
@@ -274,8 +273,6 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 
 		// create ShutDownTasks
 		createShutDownTask();
-		// also load the engines
-		EngineManagerXml.instance();
 	}
 
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {

@@ -22,6 +22,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.util.FileUtil;
 import jmri.util.swing.FontComboUtil;
 
 import org.slf4j.Logger;
@@ -409,7 +410,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
             log.debug("add logo button pressed");
             File f = selectFile();
             if (f != null) {
-                Setup.setManifestLogoURL(f.getAbsolutePath());
+                Setup.setManifestLogoURL(FileUtil.getPortableFilename(f));
             }
             updateLogoButtons();
         }

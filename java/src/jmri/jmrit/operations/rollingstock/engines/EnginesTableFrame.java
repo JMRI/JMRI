@@ -29,7 +29,6 @@ import javax.swing.table.TableColumnModel;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.com.sun.TableSorter;
@@ -215,8 +214,6 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 
 		// create ShutDownTasks
 		createShutDownTask();
-		// also load the cars
-		CarManagerXml.instance();
 	}
 
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {

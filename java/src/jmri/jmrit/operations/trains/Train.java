@@ -38,6 +38,7 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.util.FileUtil;
 
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -2812,9 +2813,9 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
 		String logoURL = "";
 		if (!getManifestLogoURL().equals(""))
-			logoURL = getManifestLogoURL();
+			logoURL = FileUtil.getExternalFilename(getManifestLogoURL());
 		else
-			logoURL = Setup.getManifestLogoURL();
+			logoURL = FileUtil.getExternalFilename(Setup.getManifestLogoURL());
 		Location departs = LocationManager.instance().getLocationByName(getTrainDepartsName());
 		String printerName = departs.getDefaultPrinterName();
 		TrainPrintUtilities.printReport(file, getDescription(), isPreview, Setup.getFontName(), false, logoURL,

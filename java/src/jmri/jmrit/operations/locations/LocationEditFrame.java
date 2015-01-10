@@ -289,8 +289,6 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		setMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));
 		setVisible(true);
 
-		// create ShutDownTasks
-		createShutDownTask();
 	}
 
 	YardEditFrame yef = null;

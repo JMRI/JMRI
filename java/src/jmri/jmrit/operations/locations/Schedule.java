@@ -75,7 +75,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 	public void dispose() {
 		setDirtyAndFirePropertyChange(DISPOSE, null, DISPOSE);
 	}
-	
+
 	public void resetHitCounts() {
 		for (ScheduleItem si : getItemsByIdList()) {
 			si.setHits(0);
@@ -98,8 +98,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 		Integer old = Integer.valueOf(_scheduleHashTable.size());
 		_scheduleHashTable.put(si.getId(), si);
 
-		setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_scheduleHashTable
-				.size()));
+		setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_scheduleHashTable.size()));
 		// listen for set out and pick up changes to forward
 		si.addPropertyChangeListener(this);
 		return si;
@@ -137,8 +136,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 		// find highest sequence number
 		if (si.getSequenceId() > _sequenceNum)
 			_sequenceNum = si.getSequenceId();
-		setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_scheduleHashTable
-				.size()));
+		setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_scheduleHashTable.size()));
 		// listen for set out and pick up changes to forward
 		si.addPropertyChangeListener(this);
 	}
@@ -157,8 +155,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 			Integer old = Integer.valueOf(_scheduleHashTable.size());
 			_scheduleHashTable.remove(id);
 			resequenceIds();
-			setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer
-					.valueOf(_scheduleHashTable.size()));
+			setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_scheduleHashTable.size()));
 		}
 	}
 
@@ -240,7 +237,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 		}
 		return out;
 	}
-	
+
 	/**
 	 * Places a ScheduleItem earlier in the schedule
 	 * 
@@ -278,7 +275,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 		}
 		setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceId));
 	}
-	
+
 	public ScheduleItem getItemBySequenceId(int sequenceId) {
 		for (ScheduleItem si : getItemsByIdList())
 			if (si.getSequenceId() == sequenceId)

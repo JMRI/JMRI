@@ -5,8 +5,6 @@ package jmri.jmrit.operations.locations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
-import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.OperationsFrame;
@@ -112,10 +110,9 @@ public class LocationsTableFrame extends OperationsFrame {
 		// make panel a bit wider than minimum if the very first time opened
 		if (getWidth() == Control.panelWidth500)
 			setSize(850, getHeight());
-    	
-     	// now load the cars and engines
-    	CarManagerXml.instance();
-    	EngineManagerXml.instance();
+		
+		// create ShutDownTasks
+		createShutDownTask();
     }
     
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {

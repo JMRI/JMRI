@@ -69,7 +69,6 @@ public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
 		p.maxEngineSizeTextField.setText("6");
 		p.switchTimeTextField.setText("3");
 		p.travelTimeTextField.setText("4");
-		// f.ownerTextField.setText("Bob J");
 
 		getHelper().enterClickAndLeave(new MouseEventData(this, p.scaleHO));
 		getHelper().enterClickAndLeave(new MouseEventData(this, p.typeDesc));
@@ -177,13 +176,11 @@ public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
 		getHelper().enterClickAndLeave(new MouseEventData(this, p.saveButton));
 		// done
 		f.dispose();
-	}
 
-	public void testOptionFrameRead() {
-		OptionFrame f = new OptionFrame();
+		f = new OptionFrame();
 		f.setLocation(0, 0); // entire panel must be visible for tests to work properly
 		f.initComponents();
-		OptionPanel p = (OptionPanel) f.getContentPane();
+		p = (OptionPanel) f.getContentPane();
 
 		Assert.assertFalse("build normal", p.buildNormal.isSelected());
 		Assert.assertTrue("build aggressive", p.buildAggressive.isSelected());

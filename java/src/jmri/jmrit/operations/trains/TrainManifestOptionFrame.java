@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -21,6 +22,7 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.FileUtil;
 
 import java.io.File;
 
@@ -170,7 +172,7 @@ public class TrainManifestOptionFrame extends OperationsFrame {
 			log.debug("add logo button pressed");
 			File f = selectFile();
 			if (f != null && _train != null)
-				_train.setManifestLogoURL(f.getAbsolutePath());
+				_train.setManifestLogoURL(FileUtil.getPortableFilename(f));
 			updateLogoButtons();
 		}
 		if (ae.getSource() == removeLogoButton) {
