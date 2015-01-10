@@ -4,7 +4,9 @@ package jmri.configurexml;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.*;
+
 import java.awt.event.ActionEvent;
 
 import javax.swing.JFileChooser;
@@ -52,6 +54,12 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
         if (file!=null)
             try {
                 results = InstanceManager.configureManagerInstance().load(file);
+                if (results) {
+                	// insure logix etc fire up
+            		InstanceManager.logixManagerInstance().activateAllLogixs();
+            		InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+                    new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
+                }
             } catch (JmriException e) {
                 log.error("Unhandled problem in loadFile: "+e);
             }
