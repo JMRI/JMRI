@@ -13,9 +13,7 @@ import jmri.*;
 /**
  * Provide a JPanel with a JComboBox to configure the service mode programmer.
  * <P>
- * The using code should get a configured programmer with getProgrammer. Since
- * there's only one service mode programmer, maybe this isn't critical, but
- * it's a good idea for the future.
+ * The using code should get a configured programmer with getProgrammer. 
  * <P>
  * A ProgModePane may "share" between one of these and a ProgOpsModePane,
  * which means that there might be _none_ of these buttons selected.  When
