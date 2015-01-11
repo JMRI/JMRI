@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id$ -->
+<title>JMRI: Applications</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+      <!-- Page Body -->
+        <H2>
+		JMRI: Applications
+        </H2>
+
+	<P>
+	JMRI provides several applications that are optimized for 
+	specific purposes. You can of course also write your own.
+	    <dl>
+		<dt><h3><a href="./DecoderPro/index.shtml">DecoderPro</a></h3></dt>
+		<dd>
+		    A better tool for programming decoders.
+		    DecoderPro simplifies the job of configuring complicated DCC decoders
+		    by providing screens on which you can select the various options and
+		    values you want.
+		</dd>
+
+		<dt><h3><a href="./PanelPro/PanelPro.shtml">PanelPro</a></h3></dt>
+		<dd>
+		    Operating CRT based CTC control panels that reflects the real-time
+		    state of your railroad <em>and</em> let you control it - almost like
+		    a Prototype dispatcher!
+		</dd>
+
+		<dt><h3><a href="LocoTools/index.shtml">LocoNet Tools</a></h3></dt>
+		<dd> A set of Digitrax LocoNet-specific tools:
+		    <UL>
+		    <LI><dfn>LocoNet monitor</dfn>
+		    <LI><dfn>Slot monitor</dfn>
+		    <LI><dfn>Packet source</dfn>
+		    <LI><dfn>PM4 programmer</dfn>
+		    <LI><dfn>BDL16 programmer</dfn>
+		    <LI><dfn>SE8C programmer</dfn>
+		    <LI><dfn>DS64 programmer</dfn>
+		    <LI><dfn>LocoIO programmer</dfn>
+		    </UL>
+		These are also available in DecoderPro and PanelPro when those are configured
+		for a LocoNet connection, but LocoTools provides them in a easier-to-use way.
+		</dd>
+
+	    </dl>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

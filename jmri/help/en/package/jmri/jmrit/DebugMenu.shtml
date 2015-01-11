@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author$) 2009 -->
+<!-- $Id$ -->
+<title>JMRI: Debug Menu</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: Debug Menu
+</h1>
+
+The JMRI "Debug" menu contains the following items: 
+<ul>
+  <li>Memory Usage Monitor </li>
+</ul>
+<hr>
+<ul>
+  <li>Import Decoder File</li>
+  <li>Import Decoder URL</li>
+  <li>Recreate Decoder Index</li>
+  <li>Rebuild Roster</li>
+</ul>
+<hr>
+<ul>
+  <li>Check XML file</li>
+  <li>Validate XML file</li>
+  <li>Check Decoder Names </li>
+  <li>Check Programmer Names 
+</ul>
+<hr>
+<ul>
+  <li>Load Logixs Disabled</li>
+  <li>Log Message</li>
+  <li>Display Message Log</li>
+  <li><a href="vsdecoder/VSDecoderFrame.shtml">Virtual Sound Decoder</a></li>
+  <li>PRICOM</li>
+  <li>USB Input Control</li>
+  <li>USB Device Viewer</li>
+  <li>RailDriver Throttle</li>
+  <li><a href="../../../html/web/index.shtml">Start JMRI Web Server</a></li>
+  <li>Start WiThrottle</li>
+</ul>
+
+<p>This is the jmri.jmrit.DebugMenu help page. </p>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

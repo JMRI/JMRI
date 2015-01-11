@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2010</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>8</revnumber>
+      <date>2014-08-20</date>
+      <authorinitials>EF</authorinitials>
+      <revremark>New for CV50</revremark>
+    </revision>
+  </revhistory>
+  <variable CV="50" item="DC Brake Momentum" mask="XXXXXVXX" default="0" comment="Governs how loco acts in DC track block">
+        <enumVal>
+          <enumChoice choice="Loco runs under DC analog voltage control">
+            <choice>Loco runs under DC analog voltage control</choice>
+            <choice xml:lang="it">Loco va in Analogico</choice>
+            <choice xml:lang="de">Loco runs under DC analog voltage control</choice>
+          </enumChoice>
+          <enumChoice choice="Loco brakes to a stop using momentum set in CV4">
+            <choice>Loco brakes to a stop using momentum set in CV4</choice>
+            <choice xml:lang="it">Loco frena fino a fermarsi usando inerzia in CV4</choice>
+            <choice xml:lang="de">Loco brakes to a stop using momentum set in CV4</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Brake Momentum on DC</label>
+        <label xml:lang="it">Inerzia frenata in Analogico</label>
+        <label xml:lang="de">DC Brake Momentum</label>
+        <comment>Governs how loco acts in DC track block</comment>
+        <comment xml:lang="it">Comportamento Loco in blocco analogico</comment>
+        <comment xml:lang="de">Governs how loco acts in DC track block</comment>
+      </variable>
+</variables>

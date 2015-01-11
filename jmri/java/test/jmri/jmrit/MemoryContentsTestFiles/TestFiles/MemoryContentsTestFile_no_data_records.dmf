@@ -1,0 +1,12 @@
+# This file has no data records but has an EOF record
+! Bootloader Version: 1
+! Manufacturer Code: 2
+! Product Code: 4
+! Hardware Version: 8
+! Software Version: 16
+! Options: 32
+! Chunk Size: 64
+! Delay: 19
+! First Address: 2048
+! Last Address: 15992
+:0000000001FF

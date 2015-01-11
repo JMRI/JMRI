@@ -1,0 +1,5 @@
+To recreate the LaunchJMRI.exe:
+
+/opt/local/bin/makensis -V2 LaunchJMRI.nsi
+
+

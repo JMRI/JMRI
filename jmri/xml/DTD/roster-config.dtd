@@ -1,0 +1,80 @@
+<!-- Defines XML documenting a locomotive roster -->
+<!-- $Id$ -->
+
+<!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007.                  -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!ELEMENT roster-config (roster*, rosterGroup*)>
+
+<!ELEMENT roster (locomotive*)>
+
+
+<!-- The locomotive entries each define a specific locomotive -->
+
+<!ELEMENT locomotive (dateupdated?, decoder, locoaddress*, functionlabels?, attributepairs?) >
+
+<!ELEMENT dateupdated (#PCDATA) >
+
+<!-- Key used in lists, etc - User identification for this loco -->
+<!ATTLIST locomotive id	CDATA #REQUIRED>          
+
+<!-- The whole point of this is to identify a definition file, based at prefs/roster/ -->
+<!ATTLIST locomotive fileName	CDATA #REQUIRED>  
+<!ATTLIST locomotive groupName  CDATA #IMPLIED>        
+
+<!-- The identification attributes must be kept the same as the ones in the locomotive DTD -->
+<!-- The copy in the locomotive file is used if we have to import an existing file into a roster -->
+
+<!-- Manual identification -->
+<!ATTLIST locomotive roadName	CDATA #IMPLIED>          
+<!ATTLIST locomotive roadNumber	CDATA #IMPLIED>          
+<!ATTLIST locomotive mfg			CDATA #IMPLIED>
+<!ATTLIST locomotive owner			CDATA #IMPLIED>
+<!ATTLIST locomotive model		CDATA #IMPLIED>
+<!ATTLIST locomotive dccAddress	CDATA #IMPLIED>	<!-- DCC address, obsolete form -->
+<!ATTLIST locomotive comment		CDATA #IMPLIED>
+
+<!ATTLIST locomotive maxSpeed CDATA #IMPLIED>
+
+<!ATTLIST locomotive imageFilePath CDATA #IMPLIED>
+<!ATTLIST locomotive iconFilePath  CDATA #IMPLIED>
+<!ATTLIST locomotive URL  CDATA #IMPLIED>
+
+<!-- The decoder optional section identifies the installed decoder -->
+<!ELEMENT decoder EMPTY >
+<!ATTLIST decoder family			CDATA #REQUIRED>
+<!ATTLIST decoder model			CDATA #REQUIRED>
+<!ATTLIST decoder comment   		CDATA #IMPLIED>
+
+<!-- define general locomotive address -->
+<!ELEMENT locoaddress (dcclocoaddress) >
+
+<!-- define DCC locomotive address -->
+<!ELEMENT dcclocoaddress EMPTY >
+<!ATTLIST dcclocoaddress number      CDATA #IMPLIED>
+<!ATTLIST dcclocoaddress longaddress ( yes | no) "no">
+
+<!ELEMENT functionlabels (functionlabel*) >
+
+<!ELEMENT functionlabel (#PCDATA) >
+<!ATTLIST functionlabel	num	      CDATA #REQUIRED>   
+<!ATTLIST functionlabel	lockable (true | false) "true">
+<!ATTLIST functionlabel functionImage CDATA #IMPLIED>
+<!ATTLIST functionlabel functionImageSelected  CDATA #IMPLIED>
+
+<!ELEMENT attributepairs (keyvaluepair*) >
+<!ELEMENT keyvaluepair (key, value) >
+<!ELEMENT key (#PCDATA) >
+<!ELEMENT value (#PCDATA) >
+
+<!ELEMENT rosterGroup (group*)>
+<!ELEMENT group (#PCDATA)>

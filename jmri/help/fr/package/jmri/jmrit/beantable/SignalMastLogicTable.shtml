@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<!-- UpDated by Herv&#233; Blorec 2013-10-12-->
+<HTML LANG="fr">
+<HEAD>
+<TITLE>JMRI: SignalMast Logic Table Help</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META CONTENT="Kevin Dickerson" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI help Signal Mast Logic Table">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1> Le Tableau Logique M&#226;tSignal</H1>
+
+<P>Une logique M&#226;tSignal, se compose d'un M&#226;t de destination, un ou plusieurs aiguillages,
+canton, de capteurs ou d'autres M&#226;tsSignal qui doivent &#234;tre dans un &#233;tat pr&#233;cis avant le
+M&#226;tSignal source, peut &#234;tre r&#233;gl&#233; &#224; partir d'un aspect "Danger".
+<P> Si vous avez dessin&#233; correctement  votre r&#233;seau sur l'&#233;diteur de r&#233;seau avec toutes les
+informations de cantons, il est possible pour le syst&#232;me de construire automatiquement toutes les paires de M&#226;tSignal source et destination, avec les cantons, les aiguillages et leurs
+param&#232;tres.
+<H2> Colonnes du Tableau Logique M&#226;tSignal</H2>
+
+<DL>
+<DT> Source</DT>
+<DD> C'est le m&#226;t de signal que vous souhaitez mettre en place au d&#233;but de la logique. Il
+peut y avoir plusieurs instances du m&#226;t source dans la table, selon
+le nombre de m&#226;ts de destination diff&#233;rents qui sont accessibles depuis ce m&#226;t.
+ <br>
+Consid&#233;rez cela comme le m&#226;t de signal auquel le conducteur est actuellement confront&#233;.</Dd>
+
+<DT> Apparence</DT>
+ <DD> L'aspect actuel du m&#226;t source</dd>
+
+<DT> Destination</DT>
+<DD> C'est le m&#226;t de signalisation de destination qui est le prochain sur la ligne du
+m&#226;t source. Il peut y avoir plusieurs instances du m&#226;t de destination, tous
+ avec des m&#226;ts source diff&#233;rente.
+</Dd>
+
+ <DT> Apparence</DT>
+ <DD> L'aspect actuel du m&#226;t de destination</dd>
+
+ <DT> Commentaire</DT>
+<DD> Un champ libre pour l'utilisateur sous forme modifiable par l'utilisateur pour attribuer des commentaires sur la la logique</DT>
+
+<DT> Supprimer</DT>
+<DD>Appuyer le bouton "Supprimer" supprimera la logique du m&#226;t de signalisation du
+tableau.
+<p>
+Notez que cela ne supprime pas la logique m&#226;t de signalisation de tous les fichiers que vous avez
+sauvegard&#233;s qui la contiennent. Si vous chargez un de ces fichiers, peut-&#234;tre
+lorsque vous red&#233;marrez le programme, l'itin&#233;raire va r&#233;appara&#238;tre.
+Vous devez utiliser l'une des options "Stocker dans Fichier" dans les menu "Fichier"
+ pour enregistrer de nouvelles versions de tous les fichiers qui contiennent cette voie.
+</Dd>
+
+
+<DT> Activ&#233;</DT>
+<DD> Pour d&#233;sactiver une Logique de M&#226;t de Signalisation depuis un d&#233;clenchement, d&#233;cochez la case "Activ&#233;"
+pour l'itin&#233;raire.</dd>
+
+
+	<DT> Modifier </DT>
+<DD> Appuyez sur ce bouton pour modifier la Logique du M&#226;t de Signalisation. Pour plus d'informations, voir: <a
+HREF= "SignalMastLogicAddEdit.shtml"> Ajout/&#233;dition Logique M&#226;t de Signalisation</A>. </Dd>
+</DL>
+
+<H3> Ajouter Logique M&#226;t de Signalisation </H3>
+
+<DD> Cela se fait via le bouton Ajouter au bas de l'&#233;cran, pour plus d'informations
+sur le montage et l'ajout de  Logique M&#226;t de Signalisation voir
+	<A HREF="../signalling/AddEditSignallingLogic.shtml">Ajout/&#233;dition Logique M&#226;t de Signalisation</A>.</DD>
+</DL>
+<!--#include virtual="/Footer" -->
+</BODY>
+</HTML>
+

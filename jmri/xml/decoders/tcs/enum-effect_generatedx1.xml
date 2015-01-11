@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+          <enumChoice choice="Normal on/off control">
+            <choice>Normal on/off control</choice>
+            <choice xml:lang="it">Controllo Normale on/off</choice>
+          </enumChoice>
+          <enumChoice choice="Random flicker (fire box)">
+            <choice>Random flicker (fire box)</choice>
+            <choice xml:lang="it">Sfarfallio casuale (caldaia)</choice>
+          </enumChoice>
+          <enumChoice choice="Mars light">
+            <choice>Mars light</choice>
+            <choice xml:lang="it">Luci Mars</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing light">
+            <choice>Flashing light</choice>
+            <choice xml:lang="it">Luci Lampeggianti</choice>
+          </enumChoice>
+          <enumChoice choice="Single pulse strobe">
+            <choice>Single pulse strobe</choice>
+            <choice xml:lang="it">Lampeggiante Singolo Impulso</choice>
+          </enumChoice>
+          <enumChoice choice="Double pulse strobe">
+            <choice>Double pulse strobe</choice>
+            <choice xml:lang="it">Lampeggiante Doppio Impulso</choice>
+          </enumChoice>
+          <enumChoice choice="Rotary beacon">
+            <choice>Rotary beacon</choice>
+            <choice xml:lang="it">Faro Rotante</choice>
+          </enumChoice>
+          <enumChoice choice="Gyra lite">
+            <choice>Gyra lite</choice>
+            <choice xml:lang="it">Faro Gyra-Light</choice>
+          </enumChoice>
+          <enumChoice choice="Rule 17 (dimmable light)">
+            <choice>Rule 17 (dimmable light)</choice>
+            <choice xml:lang="it">Regola 17 (regolabile)</choice>
+          </enumChoice>
+          <enumChoice choice="Momentary Pulse" comment="New function definition">
+            <choice>Momentary Pulse</choice>
+            <choice xml:lang="it">Singolo Impulso (momentaneo)</choice>
+          </enumChoice>
+          <enumChoice choice="Ditch Light phase A">
+            <choice>Ditch Light phase A</choice>
+            <choice xml:lang="it">Luce Ditch tipo A</choice>
+          </enumChoice>
+          <enumChoice choice="Ditch Light phase B">
+            <choice>Ditch Light phase B</choice>
+            <choice xml:lang="it">Luce Ditch tipo B</choice>
+          </enumChoice>
+          <enumChoice choice="Constant Dim light (50%)">
+            <choice>Constant Dim light (50%)</choice>
+            <choice xml:lang="it">Smorzamento Costante (50%)</choice>
+          </enumChoice>
+  </enumVal>

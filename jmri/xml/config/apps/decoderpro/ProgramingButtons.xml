@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="http://jmri.org/xml/XSLT/aspecttable.xsl" type="text/xsl"?>
+
+<nodes
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/guinode.xsd"
+>
+  <node>
+    <name>DecoderPro</name>
+    <name xml:lang="it">DecoderPro</name>
+  <node>
+    <name>Read All</name>
+    <name xml:lang="it">Leggi Tutto</name>
+  </node>
+  <node>
+    <name>Write All</name>
+    <name xml:lang="it">Scrivi Tutto</name>
+  </node>
+  <node>
+    <name>Read Changes</name>
+    <name xml:lang="it">Leggi Modifiche</name>
+  </node>
+  <node>
+    <name>Write Changes</name>
+    <name xml:lang="it">Scrivi Modifiche</name>
+  </node>
+ </node>
+</nodes>
+  

@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<html lang="en">
+<head>
+ <TITLE>
+ JMRI Install Guide: Fleischmann Twin Centre via Serial Port
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Michael Beck" name=Author>
+    <META content="John Plocher" name=Author>
+    <META name="keywords" content="Uhlenbrock Intellibox java model railroad JMRI install">
+
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+      <H1> 
+      JMRI Install Guide: Fleischmann Twin Centre
+      </H1>
+
+JMRI can communicate with the Fleischmann Twin Centre
+in several ways.  For more details, see the 
+<a href="Uhlenbrock.shtml">page on configuring Uhlenbrock-compatible devices</a>.
+
+    </div>
+  </div>
+<!--#include virtual="/Footer" -->
+</body>
+</html>

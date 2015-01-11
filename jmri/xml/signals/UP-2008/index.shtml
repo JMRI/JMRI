@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: Suzie_Tall $) 2014 -->
+<!-- $Id: index.shtml 23697 2013-07-01 14:39:59Z ken_c $ -->
+<title>JMRI: UP-2008 Signaling Definition</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: UP-2008 Signalling Definition
+</h1>
+
+This system contains signalling definitions corresponding to the Union Pacific Railroad rules effective November 2008 as described by Joseph Hoevet. 
+<p>
+Signal aspects can be referenced here:-
+<p>
+<a href="http://http://signals.jovet.net/rules/UPRR%20Signal%20Rules.pdf">Union Pacific Railroad - Signal Rules</a>.
+
+<p> An additional mast has been included from the February 2012 rule book which includes the new Approach Restricting aspect with yellow over flashing red. This mast brings the system up to the 2012 specification.
+
+<p>
+Not all of the possible masts have been defined but there is a varied selection here that should cover most requirements. Due to the nature of this being a simplified prototype system it is not always easy to display all the possible variations of the same aspect on a mast and this should not be necessary in most cases. Where a mast can display different variations of an aspect (e.g. Approach Diverging, Diverging Clear, Diverging Advance Approach or Diverging Approach) the lower aspect will apply to any diverging route with a slow speed restriction. Slow speed means the same as Limited speed and is merely used to force the lower head aspect display and is not an official speed designation
+
+<p>
+It is assumed that searchlight heads can only display a maximum of three different colors on an individual head. No 'Darth Vader' style multi-lamp masts have been included - if a Darth Vader style mast with more than three colors on a head is required a new mast will need to be defined.
+
+<p>
+No one searchlight mast can display all of the available aspects so check carefully which aspects you require before choosing a mast.
+
+<p>
+Some aspect sequences can be controlled by setting appropriate speeds on blocks. A 'Sixty' speed block will cause a signal to be proceeded by an Approach 60 indication in most cases, a 'Fifty' speed block Approach 50 and a 'Limited' or 'Slow' speed block Approach Limited. A Slow speed block on a divergance will force the lower head to display Approach Diverging, Diverging Approach, Diverging Advance Approach and Diverging Clear indications on the lower head of a triple head mast instead of the centre head where available, and a Restricting speed block will force a restricting or Restricting (Diverging) and Approach Restricting indications where possible.
+
+<p>
+An additional non-flashing icon set has been provided for where the flashing icons cause display problems. Choosing the non flashing representations does not affect the aspect displayed on the physical signal. Right click on the signal icon when editing the panel to select the 'noflash' alternate icon set for that signal.
+
+<p>
+An additional shaped icon set has been provided to be readable by those with color impaired vision and for printing in black and white. Right click on the signal icon when editing the panel to select the 'shaped' alternate icon set for that signal.
+
+<p>
+Some indications appear in the aspects list several times. In this case there is a seperate entry for each of the possible prescribed speeds that the aspect may apply to in order to get the preceeding signal to display the correct approach aspect. On a diverging route the signal aspect may be determined by the state of a signal some distance ahead and not just the next signal.
+
+<p>
+Track speeds used in this system are Sixty = 60 MPH, Fifty = 50MPH, Limited = 40 MPH, Slow = Officially the same as Limited but needs to be set at least 1MPH slower and Restricted = Restricted speed. Use Slow speed where a diverging route is the secondary diverging route to force the correct aspects to be displayed where alternative diverging aspects are available on a triple head mast.
+
+<p>
+Typical sequences of aspects shown by this signal system :-
+
+<p>
+Searchlight signals leading through a consecutive divergance. The fourth signal is located at the first divergance:
+
+<p>
+<img src="../../../resources/icons/smallschematics/aspects/UP-2008/SL-1-high/rule-9.2.1-a.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/UP-2008/SL-1-high/rule-9.2.4-a.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/UP-2008/SL-3-high/rule-9.2.5-a.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/UP-2008/SL-3-high/rule-9.2.12-a.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/UP-2008/SL-2-high/rule-9.2.9-a.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/UP-2008/SL-1-high/rule-9.2.1-a.gif" /img>
+<p>
+
+Searchlight signals leading through a single secondary divergance. The approach signal can be triple head as shown here to give advance route indication to the secondary divergance. In this instance the approach signals are shown as automatic block signals:
+
+<p>
+<img src="../../../resources/icons/smallschematics/aspects/UP-2008/SL-1-high/rule-9.2.1-s.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/UP-2008/SL-1-high/rule-9.2.4-s.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/UP-2008/SL-3-high/rule-9.2.5-t.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/UP-2008/SL-3-high/rule-9.2.9-b.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/UP-2008/SL-1-high/rule-9.2.1-a.gif" /img>
+
+<p>
+Searchlight signals leading through a single divergance. When there is only one diverging route available double head signal masts can be used:
+
+<p>
+<img src="../../../resources/icons/smallschematics/aspects/UP-2008/SL-1-high/rule-9.2.1-a.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/UP-2008/SL-1-high/rule-9.2.4-a.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/UP-2008/SL-2-high/rule-9.2.5-a.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/UP-2008/SL-2-high/rule-9.2.9-a.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/UP-2008/SL-1-high/rule-9.2.1-a.gif" /img>
+
+<p>
+Searchlight signals with Lunar aspects leading to a restricted siding:
+
+<p>
+<img src="../../../resources/icons/smallschematics/aspects/UP-2008/SL-1-high/rule-9.2.1-a.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/UP-2008/SL-1-high/rule-9.2.1-a.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/UP-2008/SL-2-high/rule-9.2.7-a.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/UP-2008/SL-2-high/rule-9.2.13-c.gif" /img>
+
+<p>
+Automatic block searchlight signals leading to an occupied block:
+
+<p>
+<img src="../../../resources/icons/smallschematics/aspects/UP-2008/SL-1-high/rule-9.2.1-s.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/UP-2008/SL-1-high/rule-9.2.4-s.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/UP-2008/SL-1-high/rule-9.2.6-s.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/UP-2008/SL-1-high/rule-9.2.14-s.gif" /img>
+<p>
+
+Triple head absolute masts will typically only be required at the entrance to a complex interlocking with multiple divergences. Simple single divergences will only require a double head absolute mast. Approach masts can be automatic (with number plate) at the end of an automatic block section with the requisite number of heads required to display the approach aspects.
+
+<p>
+See the 
+<a href="aspects.xml">Aspects page</a> for full details of the available masts and aspects.
+
+<p>
+Searchlight Signal Mast definitions:
+<ul>
+
+<li><a href="appearance-SL-1A.xml">Single head Absolute searchlight signal</a>
+
+<li><a href="appearance-SL-1L.xml">Single head Permissive searchlight signal</a> (with Lunar proceed aspect in place of Green)
+
+<li><a href="appearance-SL-1R.xml">Single head Restricting searchlight signal</a> (with 'G' plate)
+
+<li><a href="appearance-SL-1S.xml">Single head Stop and Proceed searchlight signal</a> (with number plate)
+
+<li><a href="appearance-SL-1D.xml">Single head Distant searchlight signal</a> (with 'D' plate)
+</ul>
+
+<ul>
+<li><a href="appearance-SL-2A.xml">Double head Absolute searchlight signal</a>
+
+<li><a href="appearance-SL-2AA.xml">Double head Absolute searchlight signal (2012 rules)</a>
+
+<li><a href="appearance-SL-2L.xml">Double head Absolute searchlight signal</a> (with Lunar on lower head in place of Red)
+
+<li><a href="appearance-SL-2R.xml">Double head Restricting searchlight signal</a> (with 'G' plate)
+
+<li><a href="appearance-SL-2S.xml">Double head Stop and Proceed searchlight signal</a> (with number plate)
+
+<li><a href="appearance-SL-2SL.xml">Double head Stop and Proceed searchlight signal</a> (with number plate and Lunar in place of Red on lower head)
+
+<li><a href="appearance-SL-2D.xml">Double head Distant searchlight signal</a> (with 'D' plate)
+</ul>
+
+<ul>
+
+<li><a href="appearance-SL-3A.xml">Triple head Absolute searchlight signal</a>
+
+<li><a href="appearance-SL-3L2.xml">Triple head searchlight signal</a> (with Lunar in place of Green on centre head)
+
+<li><a href="appearance-SL-3L3.xml">Triple head searchlight signal</a> (with Lunar in place of Green on lower head)
+
+<li><a href="appearance-SL-3S.xml">Triple head Stop and Proceed searchlight signal</a> (with number plate)
+
+</ul>
+
+	</div>
+</div>
+
+<!--#include virtual="/Footer" -->
+
+</body>
+</html>

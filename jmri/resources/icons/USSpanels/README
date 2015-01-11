@@ -1,0 +1,21 @@
+   US&S Artwork based on images from Mike Burgett of Control Train Components.
+   These files were contributed by Dick Bronson.
+
+
+Some dimensions with the background image at (0,0):
+
+Sections are spaced by 922/14 = 66 pixels
+
+Using the "Lamps" for indicators in the 1st section:
+ the turnout lamps should be at (24, 353) and (53, 353)
+ the signal  lamps should be at (24, 468), (39,452) and (55, 468)
+
+The 1st section turnout plate is at (20, 336)
+and signal plate is at (20, 450)
+
+The levers for the turnout plate are at (36, 392)
+and for the signal plate are at (36, 506)
+
+Code button: (39, 555) in the upper hole
+
+Code indicator: (39, 601) in the lower hole

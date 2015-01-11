@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<html lang="en">
+<head>
+ <TITLE>
+      JMRI Hardware Guide: Zimo MX-1
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="Zimo MX-1 java model railroad JMRI install windows">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+      <H2> 
+      JMRI Hardware Guide: Zimo MX-1
+      </H2>
+
+	<H3>Supported Hardware</H3>
+
+	<UL>
+	<li>Zimo MX-1
+	</UL>
+
+	<H3>Limitations</H3>
+
+	<p>TBD</p>
+
+	<H3>Setup</H3>
+
+	  <ol>
+	  <li> To connect your computer to a Zimo MX-1 system, you can
+	  usually just connect the command station to the computer's serial
+	  port using a serial cable.</li>
+
+	  <li> Then go to the preferences panel of a JMRI-based program.
+	  This opens automatically the first time a program is run, or you
+	  can select it from the "Edit" menu.</li>
+
+	  <li> Select "Zimo MX-1" from the top selection box. You can then
+	  select the proper serial port in the second selection box.</li>
+
+	  <li> The baud rate selection box will give you choices from 1,200
+	  to 38,400 baud. Select the speed that is configured into your
+	  MX-1.</li>
+
+	  <li> The series of radio buttons labelled "GUI style" allows you
+	  to select how the program will look. "Metal" is the native Java
+	  look available on all types. Other choices will vary with your
+	  computer type. "Motif", "Windows", "MacOS" and "MacOS Adaptive"
+	  look native on Linux, Windows, MacOS "Classic" and Mac OS X
+	  respectively.</li>
+
+	  <li> In the bottom selection box, you can pick the default
+	  programmer format. You can override this each time you open the
+	  programmer, so this is here just for convenience.</li>
+
+	  <li> Click "Save". You'll be asked if it's OK for the program to
+	  quit, click "Yes".</li>
+
+	  <li> Restart the program. You should be up and running.</li>
+	  </ol>
+
+	<H3>Debugging</H3>
+
+	<p><a href="http://w3.zimo.at/">Zimo main web site</a></p>
+	<p><a href="http://www.mrsonline.net/html/zimo.html">ZIMO Agency of North America</a></p>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

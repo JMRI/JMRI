@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2011, 2013 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new file includes for Decoder files -->
+<!-- Panes to show Output lines -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Out 2 A</name>
+  <column>
+    <row>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>&lt;html&gt;&lt;strong&gt;JMRI 3.7.4 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>&lt;html&gt;&lt;h1&gt;Output Port 2 Lines #1 - #4&lt;/h1&gt;&lt;/html&gt;</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>MotorMan Output Port Configuration settings. All numbers are entered as their actual</text>
+        </label>
+        <label>
+          <text>event numbers. For example LT9 is entered as Output event number 9.</text>
+        </label>
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <column>
+        <display item="PB1 Output-Input" label=" " tooltip="Line direction">
+          </display>
+      </column>
+      <column>
+        <display item="PB1 Type" label="    Type">
+          </display>
+      </column>
+      <column>
+        <display item="PB1 Inv" format="checkbox" tooltip="Invert output drive" label="Inv"/>
+      </column>
+      <column>
+        <display item="PB1 Timing" label="                                       Debounce">
+          </display>
+      </column>
+      <column>
+        <display item="PB1 TimingA" label="   Timing">
+          </display>
+      </column>
+      <column>
+        <display item="PB1 TimingB" label="      Timing">
+          </display>
+      </column>
+      <column>
+        <display item="IP9 Type" label="Type" tooltip="Line #1 is paired with Line #2">
+          <label>IP9 Type</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PB1 Base Address" label="Primary event #" tooltip="30">
+          </display>
+      </column>
+      <column>
+        <display item="PB1 Input Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PB1 Output Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PB1 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="PB1 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PB1 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PB1 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PB1 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PB1 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PB1 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PB1 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PB1 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PB1 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="PB2 Output-Input" label=" " tooltip="Line direction">
+          </display>
+      </column>
+      <column>
+        <display item="PB2 Type" label="    Type">
+          </display>
+      </column>
+      <column>
+        <display item="PB2 Inv" format="checkbox" tooltip="Invert output drive" label="Inv"/>
+      </column>
+      <column>
+        <display item="PB2 Timing" label="                                       Debounce">
+          </display>
+      </column>
+      <column>
+        <display item="PB2 TimingA" label="   Timing">
+          </display>
+      </column>
+      <column>
+        <display item="PB2 TimingB" label="      Timing">
+          </display>
+      </column>
+      <column>
+        <display item="IP10 Type" label="Type" tooltip="Line #2 is paired with Line #1">
+          <label>IP10 Type</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PB2 Base Address" label="Primary event #" tooltip="30">
+          </display>
+      </column>
+      <column>
+        <display item="PB2 Input Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PB2 Output Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PB2 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="PB2 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PB2 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PB2 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PB2 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PB2 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PB2 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PB2 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PB2 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PB2 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="PB3 Output-Input" label=" " tooltip="Line direction">
+          </display>
+      </column>
+      <column>
+        <display item="PB3 Type" label="    Type">
+          </display>
+      </column>
+      <column>
+        <display item="PB3 Inv" format="checkbox" tooltip="Invert output drive" label="Inv"/>
+      </column>
+      <column>
+        <display item="PB3 Timing" label="                                       Debounce">
+          </display>
+      </column>
+      <column>
+        <display item="PB3 TimingA" label="   Timing">
+          </display>
+      </column>
+      <column>
+        <display item="PB3 TimingB" label="      Timing">
+          </display>
+      </column>
+      <column>
+        <display item="IP11 Type" label="Type" tooltip="Line #3 is paired with Line #4">
+          <label>IP11 Type</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PB3 Base Address" label="Primary event #" tooltip="30">
+          </display>
+      </column>
+      <column>
+        <display item="PB3 Input Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PB3 Output Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PB3 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="PB3 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PB3 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PB3 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PB3 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PB3 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PB3 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PB3 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PB3 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PB3 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="PB4 Output-Input" label=" " tooltip="Line direction">
+          </display>
+      </column>
+      <column>
+        <display item="PB4 Type" label="    Type">
+          </display>
+      </column>
+      <column>
+        <display item="PB4 Inv" format="checkbox" tooltip="Invert output drive" label="Inv"/>
+      </column>
+      <column>
+        <display item="PB4 Timing" label="                                       Debounce">
+          </display>
+      </column>
+      <column>
+        <display item="PB4 TimingA" label="   Timing">
+          </display>
+      </column>
+      <column>
+        <display item="PB4 TimingB" label="      Timing">
+          </display>
+      </column>
+      <column>
+        <display item="IP12 Type" label="Type" tooltip="Line #4 is paired with Line #3">
+          <label>IP12 Type</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PB4 Base Address" label="Primary event #" tooltip="30">
+          </display>
+      </column>
+      <column>
+        <display item="PB4 Input Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PB4 Output Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PB4 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="PB4 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PB4 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PB4 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PB4 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PB4 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PB4 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PB4 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PB4 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PB4 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <column>
+        <display item="IOP2 Port Type" label="Set Port 2 Type" tooltip="Complete Port type setting">
+        </display>
+      </column>
+    </row>
+  </column>
+</pane>

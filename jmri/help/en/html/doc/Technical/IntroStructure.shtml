@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<html lang="en">
+<head>
+    <TITLE>
+ 	JMRI: Introduction to JMRI Library Structure
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code ">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+
+<H1>JMRI: Introduction to JMRI Library Structure</H1>
+
+Because we expect to have different interfaces in the jmrix package, 
+the JMRI tools
+don't directly create the interface objects they need.  
+Rather, they ask for instances
+of interfaces. 
+For interfaces in the jmri package, which might be implemented by
+lots of different layout types, jmri.InstanceManager satisfies these requests.
+
+<P>
+More information on how things (e.g. objects representing items on the layout)
+are named 
+<A HREF="Names.shtml">is available on a separate page</a>.
+
+<p>
+More specifically:
+
+<dl>
+<dt>jmri 
+<dd>contains interfaces and base class implementations
+for the common JMRI objects.  This is the basic interface
+to the overall JMRI library and its capabilities.
+Code in the jmri package 
+should depend on no other JMRI code, though it may depend on
+externals (log4j, etc)
+
+<dt>jmrit 
+<dd>contains commonly useful tools and extensions. It
+  can depend on jmri.* and externals. It must not depend on jmrix.*
+
+<dt>jmrix 
+<dd>contains code that is specific to a particular
+  external system.  This includes implementations of jmri
+  interfaces that are specific to a system, plus system-specific
+  tools (in the long run, those could certainly be separated)
+  jmrix can depend on jmri and externals, but not jmrit.
+
+<dt>util
+<dd>general service classes that are _not_ user level tools.  
+
+<dt>managers
+<dd>Abstract and default implementations of the various 
+JMRI type managers, e.g. the concrete classes from the InstanceManager.
+It's a historical accident that these have a package of their own,
+rather than being rolled into jmri.implementations.
+
+<dt>implementations
+<dd>Abstract and default implementations of the jmri objects;
+no system specific or Swing code allowed here.
+These are in a separate package, rather than in jmri itself,
+to make the jmri package simpler to understand for people
+who just want to use the library.
+
+<dt>apps 
+<dd>contains application bases that can use jmri, jmrit, and
+  jmrix classes, along with anything else.  
+  By having this here, we break the dependency
+  between jmrix and jmrit classes (somebody has to create the
+  general and system-specific tool objects for an application;
+  that dependency is from the apps package)
+</dl>
+
+Basically:
+<PRE>
+
+      apps   ->   jmri
+
+                  A  A
+                 /    \
+                /      \
+              jmrix     jmrit
+
+</PRE>
+(This should show apps using jmrit and jmrix also, but that's too hard to draw in ASCII)
+
+<P>
+Extensive use of Factory pattern via objects we call "Manager" objects.
+
+<P>
+<h3>Example: a Turnout</h3>
+Turnouts involve:
+<UL>
+<LI>Turnout - the basic interface. This is what you should expect to deal with
+ 				when writing your layout automation code; its what you get 
+ 				when you make a request from the TurnoutManager, etc.
+<LI>AbstractTurnout - provided for convenience when implementing the Turnout interface
+				for specific hardware, this provides the basic implementation.
+<LI>LnTurnout - a specific implementation for LocoNet-connected turnouts.
+</UL>
+
+<P>
+To get a specific Turnout instance that represents something on the layout, you
+make a request of a TurnoutManager.  This is also an interface, with a similar
+implementation pattern.
+
+
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+

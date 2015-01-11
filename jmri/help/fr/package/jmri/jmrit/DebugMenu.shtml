@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright ($Author$) 2009 -->
+<!-- $Id$ -->
+<!-- Translated  by Blorec Herv&#233; le 2011-11-3--> 
+<title>JMRI: Debug Menu</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1>Menu D&#233;bogage</h1>
+
+Le menu JMRI "D&#233;boger" contient les &#233;l&#233;ments suivants:
+<ul>
+   <li>Moniteur Utilisation M&#233;moire</li>
+</ul>
+<hr>
+<ul>
+  <li>Importer Fichier D&#233;codeur</li>
+   <li>Importer URL D&#233;codeur</li>
+   <li>Recr&#233;ez Index des D&#233;codeurs</li>
+   <li>Recr&#233;ez Indice Liste</li>
+ <li>Mise &#224; jour d&#233;finitions des d&#233;codeurs</li>	
+</ul>
+<hr>
+<ul> 
+  <li>V&#233;rifiez fichier XML </li>
+   <li>Valider un fichier XML </li>
+   <li>V&#233;rifiez les Noms D&#233;codeur </li>
+   <li> V&#233;rifier les Noms Programmateur</li>
+</ul>
+<hr>
+<ul>
+   <li> Charger Logixs D&#233;sactiv&#233;s </li>
+   <li> Message Connexion </li>
+   <li> Afficher un Message de Connexion </li>
+   <li> Afficher les Cat&#233;gories de Connexions</li>
+</ul>
+<hr>
+<ul>
+   <li> D&#233;codeur Son Virtuel</li>
+</ul>
+<hr>
+<ul>
+   <li> PRICOM </li>
+</ul>
+<hr>
+<ul>
+   <li> Contr&#244;ler  Entr&#233;e USB </li>
+   <li> Visionneur Mat&#233;riel USB </li>
+</ul>
+<hr>
+<ul>
+   <li> R&#233;gulateur RailDriver </li>
+</ul>
+<hr>
+<ul>
+   <li> <a href="../../../html/web/index.shtml">D&#233;marrer Mini Serveur Web </a></li>
+   
+
+<p> Ceci est la page d'aide help/en/package/jmri/jmrit.DebugMenu . </p>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

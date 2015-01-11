@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<!--  UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-11-01-->
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: Scale/Translate Track Diagram Help
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help Layout Editor Track">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>&#201;chelle/Translater diagramme de voie 
+</H1>
+<p>
+Le dialogue &#201;chelle/Translater diagramme de voie fournit pour la r&#233;duction et la translation d'un
+diagramme de la voie dans un panneau cr&#233;&#233; &#224; l'aide de l'&#201;diteur de TCO .</p>
+<p>
+Pour traduire votre diagramme de voie dans la fen&#234;tre du panneau, saisissez le montant &#224; translater
+dans les directions <i>x</i> (horizontal) et <i>y</i> (vertical). Les unit&#233;s sont des
+pixels - les m&#234;mes unit&#233;s indiqu&#233;es dans l'affichage <i>x, y</i> de la position dans la barre d'outil de l'&#201;diteur de TCO. Pour aucune translation dans les deux sens entrez la valeur z&#233;ro. Pour la translation horizontale
+, entrez un nombre n&#233;gatif pour d&#233;placer le diagramme de la voie vers la gauche du nombre de
+pixels indiqu&#233;, entrez un nombre positif pour aller &#224; droite. Pour la translation verticale, entrez une
+nombre n&#233;gatif pour d&#233;placer le diagramme de la voie vers le haut de ce nombre de pixels; entrer un
+nombre positif pour d&#233;placer le diagramme de la voie vers le bas. Pour annuler une translation pr&#233;c&#233;dente,
+il suffit d'entrer les m&#234;mes chiffres avec des signes oppos&#233;s.</p>
+<p>
+Pour redimensionner votre diagramme de voie, entrez les facteurs d'&#233;chelle pour les directions verticale (<i>y</i>) et/ou
+horizontale (<i>x</i>). T. Pour aucune variation dans les deux sens, entrez 1,0 comme facteur d'&#233;chelle
+. Entrez un nombre inf&#233;rieur &#224; 1,0 afin de r&#233;duire la taille du diagramme de la voie; saisir
+un nombre sup&#233;rieur &#224; 1,0 pour augmenter la taille du diagramme de la voie.</p>
+<p>
+<b>Remarques:</b></p>
+<p>
+1. La translation est effectu&#233;e avant la mise &#224; l'&#233;chelle, entrez donc les unit&#233;s de translation appropri&#233;e.
+</P>
+<p>
+2.La mise &#224; l'&#233;chelle n'est pas parfaite. Vous pouvez avoir besoin d'ajuster l'alignement de certains &#233;l&#233;ments apr&#232;s la
+mise &#224; l'&#233;chelle de votre diagramme de la voie.</p>
+<p>
+3.La mise &#224; l'&#233;chelle n'est pas facilement r&#233;versible, alors pensez &#224; sauvegarder votre panneau avant la mise &#224; l'&#233;chelle pour
+permettre un retour facile &#224; la taille pr&#233;c&#233;dente, si vous n'aimez pas le panneau de l'&#233;chelle.</p>
+<p>
+4. L'&#201;diteur de TCO assure le suivi des facteurs d'&#233;chelle que vous avez appliqu&#233;. Lorsque vous
+ajouter un nouvel aiguillage apr&#232;s avoir mis &#224; l'&#233;chelle, l'aiguillage sera cr&#233;&#233; &#224; la nouvelle &#233;chelle.</p>
+<p>
+5. Les positions des ic&#244;nes et des &#233;tiquettes ne sont pas translat&#233;es ou r&#233;duites.
+Seul le dessin du diagramme de la voie est redimensionn&#233; et translat&#233;.</P>
+<p>
+<b> Pour conserver vos modifications, s'il vous pla&#238;t n'oubliez pas d'enregistrer votre panneau!</P></b>
+ 
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

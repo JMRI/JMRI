@@ -1,0 +1,63 @@
+<!-- Defines XML for configuring the ThrottleFrames -->
+<!-- $Id$ -->
+
+<!-- This DTD is part of JMRI. Copyright 2003-2007.                         -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!ELEMENT throttle-config (ThrottleFrame*)>
+<!ATTLIST throttle-config>
+
+<!ELEMENT ThrottleFrame ( (ControlPanel, FunctionPanel, AddressPanel, Jynstrument*)? ) >
+<!ATTLIST ThrottleFrame ThrottleXMLFile CDATA #IMPLIED>
+
+<!ELEMENT ControlPanel (window) >
+<!ATTLIST ControlPanel displaySpeedSlider CDATA #IMPLIED>
+<!ATTLIST ControlPanel trackSlider CDATA #IMPLIED>
+<!ATTLIST ControlPanel trackSliderMinInterval CDATA #IMPLIED>
+<!ATTLIST ControlPanel speedMode CDATA #IMPLIED>
+<!ATTLIST ControlPanel switchSliderOnFunction CDATA #IMPLIED>
+
+<!ELEMENT FunctionPanel (window, FunctionButton*) >
+<!ELEMENT FunctionButton EMPTY >
+<!ATTLIST FunctionButton id CDATA #REQUIRED>
+<!ATTLIST FunctionButton text CDATA #REQUIRED>
+<!ATTLIST FunctionButton isLockable CDATA #REQUIRED>
+<!ATTLIST FunctionButton isVisible CDATA #REQUIRED>
+<!ATTLIST FunctionButton fontSize CDATA #REQUIRED>
+<!ATTLIST FunctionButton iconPath CDATA #REQUIRED>
+<!ATTLIST FunctionButton selectedIconPath CDATA #REQUIRED>
+
+<!ELEMENT AddressPanel (window, address*, locoaddress*) >
+
+<!ELEMENT address EMPTY >   <!-- obsolete -->
+<!ATTLIST address value CDATA #REQUIRED>
+
+<!-- define general locomotive address -->
+<!ELEMENT locoaddress (dcclocoaddress) >
+
+<!-- define DCC locomotive address -->
+<!ELEMENT dcclocoaddress EMPTY >
+<!ATTLIST dcclocoaddress number      CDATA #IMPLIED>
+<!ATTLIST dcclocoaddress longaddress ( yes | no) "no">
+
+<!ELEMENT Jynstrument (window) >
+<!ATTLIST Jynstrument JynstrumentFolder CDATA #IMPLIED>
+
+<!--TODO Here it would be good to include this as a window.dtd -->
+<!-- <!ENTITY % window SYSTEM "window.dtd"> ?? not working ?? -->
+<!ELEMENT window EMPTY >
+<!ATTLIST window x CDATA #REQUIRED>
+<!ATTLIST window y CDATA #REQUIRED>
+<!ATTLIST window width CDATA #REQUIRED>
+<!ATTLIST window height CDATA #REQUIRED>
+<!ATTLIST window isIconified CDATA #IMPLIED>
+<!ATTLIST window isVisible CDATA #IMPLIED>

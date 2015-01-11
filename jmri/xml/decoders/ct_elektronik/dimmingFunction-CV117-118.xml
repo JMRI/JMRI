@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010, 2014 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-07-19</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Initial release as separate file</revremark>
+    </revision>
+  </revhistory>
+  <variable CV="117" item="F-Button Used For Dimming" default="0" exclude="DCX32">
+	<enumVal>
+	  <enumChoice choice="None">
+		<choice>None</choice>
+		<choice xml:lang="de">Kein</choice>			
+	  </enumChoice>
+	  <enumChoice choice="F1">
+		<choice>F1</choice>
+	  </enumChoice>
+	  <enumChoice choice="F2">
+		<choice>F2</choice>
+	  </enumChoice>
+	  <enumChoice choice="F3">
+		<choice>F3</choice>
+	  </enumChoice>
+	  <enumChoice choice="F4">
+		<choice>F4</choice>
+	  </enumChoice>
+	  <enumChoice choice="F5">
+		<choice>F5</choice>
+	  </enumChoice>
+	  <enumChoice choice="F6">
+		<choice>F6</choice>
+	  </enumChoice>
+	  <enumChoice choice="F7">
+		<choice>F7</choice>
+	  </enumChoice>
+	  <enumChoice choice="F8">
+		<choice>F8</choice>
+	  </enumChoice>
+	  <enumChoice choice="F9">
+		<choice>F9</choice>
+	  </enumChoice>
+	  <enumChoice choice="F10">
+		<choice>F10</choice>
+	  </enumChoice>
+	  <enumChoice choice="F11">
+		<choice>F11</choice>
+	  </enumChoice>
+	  <enumChoice choice="F12">
+		<choice>F12</choice>
+	  </enumChoice>
+	</enumVal>
+	<label>F-Button Used For Dimming</label>
+	<label xml:lang="de">Nummer der F-Funktion die abblendet</label>
+	<tooltip>F-Button Used For Dimming</tooltip>
+	<tooltip xml:lang="de">definiert die Taste die man zum Abblenden benützt</tooltip>			
+  </variable>
+  <variable CV="118" mask="XXXXXXXV" item="Dim FL(f)" default="0" minOut="2" exclude="DCX32">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Dim FL(f)</label>
+	<label xml:lang="de">Dimmen FL(f)</label>		
+  </variable>
+  <variable CV="118" mask="XXXXXXVX" item="Dim FL(r)" default="0" minOut="2" exclude="DCX32">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Dim FL(r)</label>
+	<label xml:lang="de">Dimmen FL(r)</label>		
+  </variable>
+  <variable CV="118" mask="XXXXXVXX" item="Dim F 1" default="0" minOut="3" exclude="DCX32">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Dim F1</label>
+	<label xml:lang="de">Dimmen F1</label>		
+  </variable>
+  <variable CV="118" mask="XXXXVXXX" item="Dim F 2" default="0" minOut="4" exclude="DCX32">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Dim F 2</label>
+	<label xml:lang="de">Dimmen F2</label>			
+  </variable>
+  <variable CV="118" mask="XXXVXXXX" item="Dim F 3" default="0" minOut="5" exclude="DCX32">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Dim F3</label>
+	<label xml:lang="de">Dimmen F3</label>			
+  </variable>
+  <variable CV="118" mask="XXVXXXXX" item="Dim F 4" default="0" minOut="6" exclude="DCX32">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Dim F4</label>
+	<label xml:lang="de">Dimmen F4</label>			
+  </variable>
+  <variable CV="118" mask="XVXXXXXX" item="Dim F 5" default="0" minOut="7" exclude="DCX32">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Dim F5</label>
+	<label xml:lang="de">Dimmen F5</label>			
+  </variable>
+  <variable CV="118" mask="VXXXXXXX" item="Dim F 6" default="0" minOut="8" exclude="DCX32">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Dim F6</label>
+	<label xml:lang="de">Dimmen F6</label>			
+  </variable>
+</variables>

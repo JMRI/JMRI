@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <enumChoice choice="Standard on/off function output">
+       <choice>Standard on/off function output</choice>
+       <choice xml:lang="it">Uscita Standard On/Off</choice>
+      </enumChoice>
+      <enumChoice choice="Mars light">
+        <choice>Mars light</choice>
+        <choice xml:lang="it">Luci Mars</choice>
+      </enumChoice>
+      <enumChoice choice="Random Flicker">
+        <choice>Random Flicker</choice>
+        <choice xml:lang="it">Sfarfallio casuale (caldaia)</choice>
+      </enumChoice>
+      <enumChoice choice="Flashing Headlight">
+        <choice>Flashing Headlight</choice>
+        <choice xml:lang="it">Luci Lampeggianti</choice>
+      </enumChoice>
+      <enumChoice choice="Single Pulse Strobe">
+        <choice>Single Pulse Strobe</choice>
+        <choice xml:lang="it">Lampeggiante Singolo Impulso</choice>
+      </enumChoice>
+      <enumChoice choice="Double Pulse Strobe">
+        <choice>Double Pulse Strobe</choice>
+        <choice xml:lang="it">Lampeggiante Doppio Impulso</choice>
+      </enumChoice>
+      <enumChoice choice="Rotary Beacon">
+        <choice>Rotary Beacon</choice>
+        <choice xml:lang="it">Faro Rotante</choice>
+      </enumChoice>
+      <enumChoice choice="Gyralite">
+        <choice>Gyralite</choice>
+        <choice xml:lang="it">Faro Gyra-Light</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 1, right">
+        <choice>Ditch Light Type 1, right</choice>
+        <choice xml:lang="it">Luce Ditch tipo 1, destro</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 1, left">
+        <choice>Ditch Light Type 1, left</choice>
+        <choice xml:lang="it">Luce Ditch tipo 1, sinistro</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 2, right">
+        <choice>Ditch Light Type 2, right</choice>
+        <choice xml:lang="it">Luce Ditch tipo 2, destro</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 2, left">
+        <choice>Ditch Light Type 2, left</choice>
+        <choice xml:lang="it">Luce Ditch tipo 2, sinistro</choice>
+      </enumChoice>
+</enumChoiceGroup>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2010</year><year>2011</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Dick</firstname><surname>Bronson</surname></personname>
+        <email>dick@rr-cirkits.com</email>
+    </author>    
+    <author>
+        <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
+        <email>jake@physics.berkeley.edu</email>
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1.0</revnumber>
+        <date>2013-01-28</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Initial Version</revremark>
+    </revision>    
+  </revhistory>
+
+  <aspecttable>NS</aspecttable>
+  <name>171 Territory</name>
+  <reference>As described in the NS Operating Rules Book Effective May 1, 2008.</reference>
+  <description>Dark Territory boundry</description>
+
+  <appearances>
+    <appearance>
+      <aspectname>171</aspectname>
+      <show>dark</show>
+      <reference>Rule 171</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NS-2008/171/rule-N293.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Stop Signal</aspectname>
+      <show>red</show>
+      <reference>292 (c5)</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NS-2008/171/rule-N292.gif</imagelink>
+    </appearance>
+    
+  </appearances>
+  <specificappearances>
+    <danger>
+      <aspect>171</aspect>
+    </danger>
+    <held>
+      <aspect>171</aspect>
+    </held>
+  </specificappearances>
+
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>171</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach Limited</advancedAspect>
+      <ourAspect>171</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Limited Clear</advancedAspect>
+      <ourAspect>171</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach Medium</advancedAspect>
+      <ourAspect>171</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Advance Approach</advancedAspect>
+      <ourAspect>171</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Medium Clear</advancedAspect>
+      <ourAspect>171</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Medium Approach Medium</advancedAspect>
+      <ourAspect>171</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach Slow</advancedAspect>
+      <ourAspect>171</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>171</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Medium Approach</advancedAspect>
+      <ourAspect>171</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Slow Clear</advancedAspect>
+      <ourAspect>Limited Clear</ourAspect>
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Slow Approach</advancedAspect>
+      <ourAspect>171</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>171</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Stop Signal</advancedAspect>
+      <ourAspect>171</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>171</advancedAspect>
+      <ourAspect>171</ourAspect>
+    </aspectMapping>
+
+  </aspectMappings>
+</appearancetable>  

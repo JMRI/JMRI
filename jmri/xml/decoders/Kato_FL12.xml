@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2003, 2004, 2005 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<!-- $Id$ -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="dat7719@daletripp.com" version="1" lastUpdated="20080321"/>
+  <version author="Martin Jahner jmri@jahner.org" version="2.1" lastUpdated="201300706"/>
+  <decoder>
+    <family name="Function Only, with transponding" mfg="Kato">
+      <model model="FL12" numOuts="2" lowVersionID="254"/>
+    </family>
+    <programming direct="byteOnly" paged="yes" register="yes" ops="no"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/mfgVersionId.xml"/>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <variable CV="61" mask="XXXXXXVX" tooltip="Activates Digitrax Transponding" item="Advanced Ack">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Digitrax Transponding</label>
+        <label xml:lang="it">Transponding Digitrax</label>
+      </variable>
+      <variable CV="64" mask="XXXXXXVV" item="ControlFn">
+        <enumVal>
+          <enumChoice choice="F0"/>
+          <enumChoice choice="F3"/>
+          <enumChoice choice="F5"/>
+          <enumChoice choice="F9"/>
+        </enumVal>
+        <label>Function controlling output</label>
+      </variable>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="8">
+        <label>Reset All CVs</label>
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
+    </resets>
+  </decoder>
+  <pane>
+    <name>Function Output</name>
+    <column>
+      <display item="ControlFn"/>
+    </column>
+  </pane>
+</decoder-config>

@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<!-- UpDated by Herv&#233; Blorec  2013-10-11-->
+<HTML LANG="fr">
+<HEAD>
+<TITLE>JMRI: LRoute Table Help</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META CONTENT="Bob Jacobsen" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI help LRoute Table">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1"
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>Le Tableau L-Itin&#233;raire</H1>
+
+<P>Un L-Itin&#233;raire est une version plus g&#233;n&#233;ralis&#233;e d'un itin&#233;raire mis en &#399;uvre en tant que Logix.
+Il est destin&#233; &#224; &#234;tre utilis&#233; dans des situations o&#249; des d&#233;clenchements suppl&#233;mentaires ou actions sont
+souhait&#233;s au-del&#224; des capacit&#233;s des Itin&#233;raires. Il peut &#234;tre utilis&#233; comme point de d&#233;part pour
+cr&#233;er de nouveaux Logix. Le tableau L-Itin&#233;raire fournit les listes de s&#233;lection des Capteurs, des Aiguillages,
+Lumi&#232;res et T&#234;tes de signal &#224; partir desquels les actions de sortie et les conditions de d&#233;clenchement peuvent &#234;tre
+choisies.</p>
+
+<P> Une fois que vous avez quelques aiguillages, capteurs, t&#234;tes de signal et/ou des lumi&#232;res de g&#233;rer, utiliser le bouton
+<b> Ajouter</b> dans le coin inf&#233;rieur gauche du Tableau L-Itin&#233;raire  pour
+cr&#233;er un nouvel itin&#233;raire Logix. Une fois que vous avez cr&#233;&#233; un itin&#233;raire Logix, vous pouvez ajouter d'autres
+capacit&#233;s en l'&#233;ditant depuis le Tableau Logix.</p>
+
+<p> Logix qui impl&#233;mente le L-Itin&#233;raire a son nom syst&#232;me pr&#233;fix&#233; par "RTX".
+Tous les Logix avec ce pr&#233;fixe sont affich&#233;s dans le tableau L-Itin&#233;raire. S'il vous pla&#238;t noter qu'un
+"RTX" Logix qui a eu ces capacit&#233;s ajout&#233;es avec
+Logix &#233;dition ne peut pas &#234;tre capable d'afficher
+ces capacit&#233;s additionnelles pour l'&#233;dition de L-Itin&#233;raire. Une fois que l'&#233;dition Logix est faite pour un
+L-Itin&#233;raire il est recommand&#233; que les autre &#233;ditions soient faites &#224; partir du tableau Logix.</p>
+
+<H2>Colonnes  Tableau L-Itin&#233;raire</H2>
+
+<DL>
+<DT>Nom Syst&#232;me </DT>
+<DD> Le Nom Syst&#232;me ne peut pas &#234;tre chang&#233; une fois entr&#233; dans le Tableau.
+Le bouton <b>Ajouter</b> situ&#233; dans le coin inf&#233;rieur gauche du Tableau 
+vous permet d'ajouter un nouvel L- Itin&#233;raire au Tableau.</dd>
+
+<DT>Nom Utilisateur </DT>
+<DD> Vous pouvez directement saisir ou modifier le champ "Nom Utilisateur" pour un
+itin&#233;raire Logix existant</.dd>
+
+<DT> Activ&#233;</DT>
+<DD> Pour d&#233;sactiver un L-Itin&#233;raire &#224; partir de d&#233;clenchement, d&#233;cochez la case "Activ&#233;" 
+pour l'itin&#233;raire. Ceci d&#233;finit son Logix &#224; un &#233;tat d&#233;sactiv&#233;. Le L-Itin&#233;raire  peut
+&#234;tre activ&#233; ou d&#233;sactiv&#233; soit &#224; partir du Tableau ou du tableau L-Itin&#233;raire Logix.</dd>
+ 
+<DT> Modifier</DT>
+<DD> Appuyez sur ce bouton pour modifier le L-Itin&#233;raire . Pour plus d'informations, voir: <a
+HREF = "LRouteAddEdit.shtml"> Ajout/Edition Litin&#233;raires</A>.</Dd>
+</DL>
+
+<H3>Commandes du Tableau L-Itin&#233;raire</H3>
+
+Il y a un bouton au bas du Tableau L-Itin&#233;raire
+
+<DL>
+<DT> Ajouter</DT>
+<DD> Appuyez sur ce bouton pour ajouter un nouvel itin&#233;raire Logix. Pour plus d'informations, voir
+<A  HREF="LRouteAddEdit.shtml"> Ajouter/Editer L-Itin&#233;raires</A>.</Dd>
+
+
+
+<!--#include virtual="/Footer" -->
+</BODY>
+</HTML>
+

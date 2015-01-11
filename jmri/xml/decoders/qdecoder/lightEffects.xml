@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
+<!-- $Id$				-->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- no need to translate the following, as it generally only appears -->
+<!-- in the function map selection pane -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-08-30</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Initial creation</revremark>
+    </revision>
+  </revhistory>
+  <!-- Specific for Qdecoder accessory decoder -->
+	<!-- Light effects for All-In-One (+) plus decoders -->
+	<variable item="Light Effect A0" CV="100" mask="VVVVVVVV" default="0" minOut="1">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-LightEffects.xml"/>
+		<label>Light Effect A0</label>
+		<label xml:lang="de">Lichteffekt A0</label>
+		<tooltip>Light Effect</tooltip>
+		<tooltip xml:lang="de">Lichteffekt</tooltip>
+	</variable>
+	<variable item="Light Effect A1" CV="101" mask="VVVVVVVV" default="0" minOut="2">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-LightEffects.xml"/>
+		<label>Light Effect A1</label>
+		<label xml:lang="de">Lichteffekt A1</label>
+		<tooltip>Light Effect</tooltip>
+		<tooltip xml:lang="de">Lichteffekt</tooltip>
+	</variable>
+	<variable item="Light Effect A2" CV="102" mask="VVVVVVVV" default="0" minOut="3">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-LightEffects.xml"/>
+		<label>Light Effect A2</label>
+		<label xml:lang="de">Lichteffekt A2</label>
+		<tooltip>Light Effect</tooltip>
+		<tooltip xml:lang="de">Lichteffekt</tooltip>
+	</variable>
+	<variable item="Light Effect A3" CV="103" mask="VVVVVVVV" default="0" minOut="4">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-LightEffects.xml"/>
+		<label>Light Effect A3</label>
+		<label xml:lang="de">Lichteffekt A3</label>
+		<tooltip>Light Effect</tooltip>
+		<tooltip xml:lang="de">Lichteffekt</tooltip>
+	</variable>
+	<variable item="Light Effect A4" CV="104" mask="VVVVVVVV" default="0" minOut="5">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-LightEffects.xml"/>
+		<label>Light Effect A4</label>
+		<label xml:lang="de">Lichteffekt A4</label>
+		<tooltip>Light Effect</tooltip>
+		<tooltip xml:lang="de">Lichteffekt</tooltip>
+	</variable>
+	<variable item="Light Effect A5" CV="105" mask="VVVVVVVV" default="0" minOut="6">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-LightEffects.xml"/>
+		<label>Light Effect A5</label>
+		<label xml:lang="de">Lichteffekt A5</label>
+		<tooltip>Light Effect</tooltip>
+		<tooltip xml:lang="de">Lichteffekt</tooltip>
+	</variable>
+	<variable item="Light Effect A6" CV="106" mask="VVVVVVVV" default="0" minOut="7">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-LightEffects.xml"/>
+		<label>Light Effect A6</label>
+		<label xml:lang="de">Lichteffekt A6</label>
+		<tooltip>Light Effect</tooltip>
+		<tooltip xml:lang="de">Lichteffekt</tooltip>
+	</variable>
+	<variable item="Light Effect A7" CV="107" mask="VVVVVVVV" default="0" minOut="8">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-LightEffects.xml"/>
+		<label>Light Effect A7</label>
+		<label xml:lang="de">Lichteffekt A7</label>
+		<tooltip>Light Effect</tooltip>
+		<tooltip xml:lang="de">Lichteffekt</tooltip>
+	</variable>
+	<variable item="Light Effect A8" CV="108" mask="VVVVVVVV" default="0" minOut="9">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-LightEffects.xml"/>
+		<label>Light Effect A8</label>
+		<label xml:lang="de">Lichteffekt A8</label>
+		<tooltip>Light Effect</tooltip>
+		<tooltip xml:lang="de">Lichteffekt</tooltip>
+	</variable>
+	<variable item="Light Effect A9" CV="109" mask="VVVVVVVV" default="0" minOut="10">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-LightEffects.xml"/>
+		<label>Light Effect A9</label>
+		<label xml:lang="de">Lichteffekt A9</label>
+		<tooltip>Light Effect</tooltip>
+		<tooltip xml:lang="de">Lichteffekt</tooltip>
+	</variable>
+	<variable item="Light Effect A10" CV="110" mask="VVVVVVVV" default="0" minOut="11">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-LightEffects.xml"/>
+		<label>Light Effect A10</label>
+		<label xml:lang="de">Lichteffekt A10</label>
+		<tooltip>Light Effect</tooltip>
+		<tooltip xml:lang="de">Lichteffekt</tooltip>
+	</variable>
+	<variable item="Light Effect A11" CV="94" mask="VVVVVVVV" default="0" minOut="12">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-LightEffects.xml"/>
+		<label>Light Effect A11</label>
+		<label xml:lang="de">Lichteffekt A11</label>
+		<tooltip>Light Effect</tooltip>
+		<tooltip xml:lang="de">Lichteffekt</tooltip>
+	</variable>
+	<variable item="Light Effect A12" CV="95" mask="VVVVVVVV" default="0" minOut="13">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-LightEffects.xml"/>
+		<label>Light Effect A12</label>
+		<label xml:lang="de">Lichteffekt A12</label>
+		<tooltip>Light Effect</tooltip>
+		<tooltip xml:lang="de">Lichteffekt</tooltip>
+	</variable>
+	<variable item="Light Effect A13" CV="96" mask="VVVVVVVV" default="0" minOut="14">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-LightEffects.xml"/>
+		<label>Light Effect A13</label>
+		<label xml:lang="de">Lichteffekt A13</label>
+		<tooltip>Light Effect</tooltip>
+		<tooltip xml:lang="de">Lichteffekt</tooltip>
+	</variable>
+	<variable item="Light Effect A14" CV="97" mask="VVVVVVVV" default="0" minOut="15">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-LightEffects.xml"/>
+		<label>Light Effect A14</label>
+		<label xml:lang="de">Lichteffekt A14</label>
+		<tooltip>Light Effect</tooltip>
+		<tooltip xml:lang="de">Lichteffekt</tooltip>
+	</variable>
+	<variable item="Light Effect A15" CV="98" mask="VVVVVVVV" default="0" minOut="16">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-LightEffects.xml"/>
+		<label>Light Effect A15</label>
+		<label xml:lang="de">Lichteffekt A15</label>
+		<tooltip>Light Effect</tooltip>
+		<tooltip xml:lang="de">Lichteffekt</tooltip>
+	</variable>
+	<variable item="Light Parameter A0" CV="280" mask="VVVVVVVV" default="0" minOut="1">
+		<decVal max="255"/>
+		<label>Light Parameter A0</label>
+		<label xml:lang="de">Lichtparameter A0</label>
+		<tooltip>Light Parameter</tooltip>
+		<tooltip xml:lang="de">Lichtparameter</tooltip>
+	</variable>
+	<variable item="Light Parameter A1" CV="281" mask="VVVVVVVV" default="0" minOut="2">
+		<decVal max="255"/>
+		<label>Light Parameter A1</label>
+		<label xml:lang="de">Lichtparameter A1</label>
+		<tooltip>Light Parameter</tooltip>
+		<tooltip xml:lang="de">Lichtparameter</tooltip>
+	</variable>
+	<variable item="Light Parameter A2" CV="282" mask="VVVVVVVV" default="0" minOut="3">
+		<decVal max="255"/>
+		<label>Light Parameter A2</label>
+		<label xml:lang="de">Lichtparameter A2</label>
+		<tooltip>Light Parameter</tooltip>
+		<tooltip xml:lang="de">Lichtparameter</tooltip>
+	</variable>
+	<variable item="Light Parameter A3" CV="283" mask="VVVVVVVV" default="0" minOut="4">
+		<decVal max="255"/>
+		<label>Light Parameter A3</label>
+		<label xml:lang="de">Lichtparameter A3</label>
+		<tooltip>Light Parameter</tooltip>
+		<tooltip xml:lang="de">Lichtparameter</tooltip>
+	</variable>
+	<variable item="Light Parameter A4" CV="284" mask="VVVVVVVV" default="0" minOut="5">
+		<decVal max="255"/>
+		<label>Light Parameter A4</label>
+		<label xml:lang="de">Lichtparameter A4</label>
+		<tooltip>Light Parameter</tooltip>
+		<tooltip xml:lang="de">Lichtparameter</tooltip>
+	</variable>
+	<variable item="Light Parameter A5" CV="285" mask="VVVVVVVV" default="0" minOut="6">
+		<decVal max="255"/>
+		<label>Light Parameter A5</label>
+		<label xml:lang="de">Lichtparameter A5</label>
+		<tooltip>Light Parameter</tooltip>
+		<tooltip xml:lang="de">Lichtparameter</tooltip>
+	</variable>
+	<variable item="Light Parameter A6" CV="286" mask="VVVVVVVV" default="0" minOut="7">
+		<decVal max="255"/>
+		<label>Light Parameter A6</label>
+		<label xml:lang="de">Lichtparameter A6</label>
+		<tooltip>Light Parameter</tooltip>
+		<tooltip xml:lang="de">Lichtparameter</tooltip>
+	</variable>
+	<variable item="Light Parameter A7" CV="287" mask="VVVVVVVV" default="0" minOut="8">
+		<decVal max="255"/>
+		<label>Light Parameter A7</label>
+		<label xml:lang="de">Lichtparameter A7</label>
+		<tooltip>Light Parameter</tooltip>
+		<tooltip xml:lang="de">Lichtparameter</tooltip>
+	</variable>
+	<variable item="Light Parameter A8" CV="288" mask="VVVVVVVV" default="0" minOut="9">
+		<decVal max="255"/>
+		<label>Light Parameter A8</label>
+		<label xml:lang="de">Lichtparameter A8</label>
+		<tooltip>Light Parameter</tooltip>
+		<tooltip xml:lang="de">Lichtparameter</tooltip>
+	</variable>
+	<variable item="Light Parameter A9" CV="289" mask="VVVVVVVV" default="0" minOut="10">
+		<decVal max="255"/>
+		<label>Light Parameter A9</label>
+		<label xml:lang="de">Lichtparameter A9</label>
+		<tooltip>Light Parameter</tooltip>
+		<tooltip xml:lang="de">Lichtparameter</tooltip>
+	</variable>
+	<variable item="Light Parameter A10" CV="290" mask="VVVVVVVV" default="0" minOut="11">
+		<decVal max="255"/>
+		<label>Light Parameter A10</label>
+		<label xml:lang="de">Lichtparameter A10</label>
+		<tooltip>Light Parameter</tooltip>
+		<tooltip xml:lang="de">Lichtparameter</tooltip>
+	</variable>
+	<variable item="Light Parameter A11" CV="291" mask="VVVVVVVV" default="0" minOut="12">
+		<decVal max="255"/>
+		<label>Light Parameter A11</label>
+		<label xml:lang="de">Lichtparameter A11</label>
+		<tooltip>Light Parameter</tooltip>
+		<tooltip xml:lang="de">Lichtparameter</tooltip>
+	</variable>
+	<variable item="Light Parameter A12" CV="292" mask="VVVVVVVV" default="0" minOut="13">
+		<decVal max="255"/>
+		<label>Light Parameter A12</label>
+		<label xml:lang="de">Lichtparameter A12</label>
+		<tooltip>Light Parameter</tooltip>
+		<tooltip xml:lang="de">Lichtparameter</tooltip>
+	</variable>
+	<variable item="Light Parameter A13" CV="293" mask="VVVVVVVV" default="0" minOut="14">
+		<decVal max="255"/>
+		<label>Light Parameter A13</label>
+		<label xml:lang="de">Lichtparameter A13</label>
+		<tooltip>Light Parameter</tooltip>
+		<tooltip xml:lang="de">Lichtparameter</tooltip>
+	</variable>
+	<variable item="Light Parameter A14" CV="294" mask="VVVVVVVV" default="0" minOut="15">
+		<decVal max="255"/>
+		<label>Light Parameter A14</label>
+		<label xml:lang="de">Lichtparameter A14</label>
+		<tooltip>Light Parameter</tooltip>
+		<tooltip xml:lang="de">Lichtparameter</tooltip>
+	</variable>
+	<variable item="Light Parameter A15" CV="295" mask="VVVVVVVV" default="0" minOut="16">
+		<decVal max="255"/>
+		<label>Light Parameter A15</label>
+		<label xml:lang="de">Lichtparameter A15</label>
+		<tooltip>Light Parameter</tooltip>
+		<tooltip xml:lang="de">Lichtparameter</tooltip>
+	</variable>
+</variables>

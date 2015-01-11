@@ -1,0 +1,35 @@
+<!-- Sidebar -->
+<hr class="hide">
+<div id="mBody">
+<div id="side"> <!-- Block of text on left side of page -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<!-- Updated  by Blorec Herv&#233; 2013-09-02--> 
+<dl class=toc>
+
+<dt><h3>Informations PanelPro</h3></dt><DD><UL>
+<LI><a href="../../../package/jmri/jmrit/display/PanelEditor.shtml">Editeur de Panneau</A>
+<LI><a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">Editeur de R&#233;seau</A>
+<LI><a href="FAQ.shtml">FAQ</A>
+<LI><A HREF="http://jmri.sf.net/community/examples/Gallery.shtml">Mises en Page Utilisateur</a>
+<LI><A HREF="http://jmri.sf.net/community/examples/Modules.shtml">Exemple de R&#233;seau Modulaire</a>
+<LI><A HREF="ShowPanel.shtml">Affichage Fichier de Panneau</a>
+<LI><A HREF="AdvIcons.shtml">Ic&#244;nes Avanc&#233;es</a>
+</UL>
+
+
+<dt><h3>Autres Infos Utiles</h3></dt><DD><UL>
+
+<LI><a HREF="../../tools/Sensors.shtml">Capteurs</a>
+<LI><A HREF="../../tools/Signalling/index.shtml">Signaux</a>
+<LI><A HREF="../../tools/Routes.shtml">Itin&#233;raires</a>
+<LI><A HREF="../../tools/fastclock/index.shtml">Horloges Rapides</a>
+<LI><A HREF="../../doc/Technical/TurnoutFeedback.shtml">R&#233;troactions Aiguillage</a>
+</UL>
+
+</dl>
+<a href="/donations.shtml">
+ <img src="http://images.sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" ALIGN="RIGHT" alt="Donate to JMRI" />
+</a> 
+
+</div> <!-- End of block of text on left side of page -->
+

@@ -1,0 +1,10 @@
+This directory contains comparison files
+for load/store testing. They are named the
+same as the corresponding file in the 
+"load" directory.
+
+Note that, because various substitutions can 
+be made to simplify testing, these may not 
+be schema-valid.
+
+

@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
+<aspecttable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/aspecttable.xsd">
+  <name>LMS-1932</name>
+  <date>1932</date>
+  <reference>Signaling definitions corresponding to the LMS Mirfield speed signals</reference>
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year>
+    <year>2010</year>
+    <year>2013</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+      <email>suzie_tall@yahoo.co.uk</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2013-07-02</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+  </revhistory>
+  <aspects>
+    <aspect>
+      <name>Stop</name>
+      <indication>Stop</indication>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>0</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Stop and Proceed</name>
+      <indication>Stop and wait one minute before proceeding with caution on occupied line.</indication>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>0</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Caution</name>
+      <indication>Proceed preparing to stop at next signal</indication>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+      <dccAspect>10</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Medium Caution</name>
+      <indication>Proceed at caution through divergance preparing to stop at next signal</indication>
+      <speed>Medium</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+      <dccAspect>5</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Medium Caution Left</name>
+      <indication>Proceed at caution through divergance preparing to stop at next signal</indication>
+      <speed>Medium</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+      <dccAspect>4</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Medium Caution Right</name>
+      <indication>Proceed at caution through divergance preparing to stop at next signal</indication>
+      <speed>Medium</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+      <dccAspect>3</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Pre Caution</name>
+      <indication>Next signal is Caution with a short block </indication>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+      <dccAspect>11</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Medium Pre Caution</name>
+      <indication>Next signal is Caution with a short block </indication>
+      <speed>Normal</speed>
+      <speed2>Medium</speed2>
+      <route>Diverging</route>
+      <dccAspect>6</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Advance Caution</name>
+      <indication>Next signal is Pre Caution</indication>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+      <dccAspect>12</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Clear</name>
+      <indication>Proceed</indication>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+      <dccAspect>15</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Clear Left</name>
+      <indication>Proceed</indication>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+      <dccAspect>14</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Clear Right</name>
+      <indication>Proceed</indication>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+      <dccAspect>13</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Medium Clear</name>
+      <indication>Proceed</indication>
+      <speed>Medium</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+      <dccAspect>9</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Medium Clear Left</name>
+      <indication>Proceed</indication>
+      <speed>Medium</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+      <dccAspect>8</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Medium Clear Right</name>
+      <indication>Proceed</indication>
+      <speed>Medium</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+      <dccAspect>7</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Permissive</name>
+      <indication>Proceed with caution</indication>
+      <speed>Restricting</speed>
+      <speed2>Restricting</speed2>
+      <route>Either</route>
+      <dccAspect>2</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Take Siding</name>
+      <indication>Proceed with caution</indication>
+      <speed>Restricting</speed>
+      <speed2>Restricting</speed2>
+      <route>Diverging</route>
+      <dccAspect>1</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Not Lit</name>
+      <rule>Dark</rule>
+      <indication>(used to indicate dark for e.g. approach lighting)</indication>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Normal</route>
+      <dccAspect>31</dccAspect>
+    </aspect>
+  </aspects>
+  <appearancefiles>
+    <appearancefile href="appearance-Stop.xml" />
+    <appearancefile href="appearance-Stop-1937.xml"></appearancefile>
+    <appearancefile href="appearance-Stop-1959.xml" />
+    <appearancefile href="appearance-New.xml" />
+    <appearancefile href="appearance-New-1937.xml" />
+    <appearancefile href="appearance-Repeater.xml" />
+    <appearancefile href="appearance-Repeater-1937.xml" />
+    <appearancefile href="appearance-Junction.xml"></appearancefile>
+    <appearancefile href="appearance-Junction-1959.xml" />
+    <appearancefile href="appearance-Split-Junction.xml"></appearancefile>
+    <appearancefile href="appearance-Split-Junction-1937.xml" />
+    <appearancefile href="appearance-Split-Distant.xml" />
+    <appearancefile href="appearance-Split-Distant-1959.xml" />
+  </appearancefiles>
+</aspecttable>

@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!--  $Id$ -->
+<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12--> 
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: Signal Lever Help
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help OS Indicator">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1> Levier Signal</H1>
+
+<b> Ce n'est pas encore compl&#232;tement mis en oeuvre </b><p>
+
+Un levier de Signal sur un panneau USS CTC
+poss&#232;de deux entr&#233;es (capteurs) pour le levier lui-m&#234;me,
+un certain nombre d'autres entr&#233;es et sorties
+pour le faire fonctionner. Cet outil vous permet de d&#233;finir ceux-ci, et
+cr&#233;e alors la logique sous-jacente pour les faire agir
+prototypiquement.
+
+<dl>
+<dt>Entr&#233;es signaux <dd>
+Aux fins d'une entr&#233;e multi-capteurs, vous pouvez vouloir avoir 
+un capteur  interne nul pour la position m&#233;diane.
+
+ <dt>T&#234;tes de Signal Gauche et Droite<dd>
+
+Les T&#234;tes de signal qui sont maintenues et lib&#233;r&#233;es quand le levier agit
+
+<dt>Entr&#233;e Cod&#233; <dt> Le 
+<a href="CodeButtonFrame.shtml">bouton cod&#233; </a>d&#233;fini
+qui force ce levier &#224 agir.
+
+<dt> Entr&#233;e inhibition <dd> Un capteur qui est utilis&#233; et ACTIF qui indique
+que les signaux ne peuvent pas changer de position.
+
+</dl>
+
+<p>  
+Ceci  est la page d'aide help/en/package/jmri/jmrit/ussctc/SignalLeverFrame help page
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

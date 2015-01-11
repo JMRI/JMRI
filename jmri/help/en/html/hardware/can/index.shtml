@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author$) 2008 -->
+<!-- $Id$ -->
+<title>JMRI: CAN Network Support</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: CAN Network Support
+</h1>
+
+There's an emerging trend to develop model-railroad control systems
+that are based on standard CAN network technology.  
+JMRI provides 
+support for the development and use of these.
+
+<p>
+Two initial efforts:
+
+<dl>
+<dt>
+<img src="http://www.openlcb.org/trunk/web/logo-ajs-dph.png" align="right" alt="OpenLCB logo" height="43" width="104">
+<a href="http://www.openlcb.org">OpenLCB</a>
+<dd>
+OpenLCB is a group of hobbyists and manufacturers who have 
+come together to produce a future-oriented layout control bus, also called
+<a href="http://openlcb.org">OpenLCB</a>.
+<p>
+JMRI includes 
+<a href="../openlcb/index.shtml">basic support for OpenLCB</a>, 
+and more is being developed along with OpenLCB itself.
+
+<p>
+<img src="http://www.nmra.org/common/nmra_logo.jpg" align="right" alt="NMRA logo" height="45" width="55">
+The <a href="http://www.nmra.org">NMRA</a> has 
+<a href="http://nmranet.org">decided</a> 
+to adopt OpenLCB and standardize it under the 
+<a href="http://nmranet.org">NMRAnet name</a>.
+
+<dt>
+<img src="http://www.merg.org.uk/images/logo1m.gif" align="right" alt="MERG logo" height="45" width="100">
+<a href="http://www.merg.org.uk/">MERG</a>
+<a href="http://www.merg.org.uk/resources/lcb.html">CBUS</a>
+<dd>
+A group of hobbyists, under the umbrella of the Model Electronic Railway Group 
+(<a href="http://www.merg.org.uk/">MERG</a>), 
+are developing a layout control bus called CBUS.
+They are creating 
+<a href="http://www.merg.org.uk/resources/lcb.html">extensive documentation</a>.
+<p>
+JMRI includes 
+<a href="cbus/index.shtml">basic support for CBUS</a>, 
+and more is being developed along with CBUS itself.
+
+
+</dl>
+
+<h2>Capabilities</h2>
+
+JMRI provides a basic 
+<a href="../../../package/jmri/jmrix/AbstractMonFrame.shtml">monitor tool</a> 
+for watching traffic on a CAN bus.
+<p>
+There's also a 
+<a href="../../../package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">tool for sending</a> CAN frames manually and in 
+sequences.
+<p>
+JMRI can provide the usual Sensor and Turnout features once configured for
+<a href="../openlcb/index.shtml">OpenLCB</a> or
+<a href="cbus/index.shtml">CBUS</a> "events".
+
+<p>
+For development, there are 
+<a href="scripting.shtml">scripting tools</a>
+for sending and receiving CAN frames.  
+These can be very useful in testing hardware, etc.
+
+<h2>Configuring a CAN connection</h2>
+<a name="connect"/>
+JMRI can connect to CAN networks several ways.  
+<p>
+There are various CAN-USB adapters available:
+
+<dl>
+<dt>TCH Technology
+<dd><a href="http://www.tchtechnology.com/products/can_usb/">TCH Technology CAN/USB</a>
+which provides a high-speed connection for model railroad use
+<dt>gridconnect
+<dd><a href="http://www.gridconnect.com/canboandto.html">GridConnect</a> CAN_RS,
+which is also the protocol used by the MERG CAN_RS board
+<dt>lawicell
+<dd><a href="http://canusb.com/">LAWICEL AB</a> 
+CANUSB and CAN232 adapters.
+</dl>
+To use any of these, select the appropriate device type in the 
+JMRI preferences.  If using a GridConnect or Lawicel device, be sure to
+set the appropriate baud rate under advanced preferences.  The TCH Technology 
+adapter does this automatically, so no setting is required.
+
+<p>
+It's also possible to attach via a TCP/IP connection (EtherNet or WiFi).
+This can either go to another JMRI instance running e.g. an OpenLCB hub, 
+or directly to an IP-CAN adapter. To configure one of these, open the 
+preferences and select:
+<ul>
+<li>Select your system manufacturer, e.g. OpenLCB
+<li>For System Connection, select "CAN via GridConnect Network Interface"
+<li>Under settings, enter the IP address and TCP/UDP port for the destination.
+
+<p>OpenLCB CAN Adapters advertise under mDNS/Bonjour, so you can use that
+to specify the IP address if JMRI is on the same network segment
+as your adapter.  In that case, put "openlcbcan.local." (note trailing period!)
+in the IP address field.
+<p>The port number for OpenLCB adapters is 23 by default.
+<li>Set the connection protocol as desired, e.g. "OpenLCB", and the
+Connection Prefix (usually "M") and Connection Name as needed.
+<li>Click Save, and restart.
+</ul>
+<!--#include virtual="/Footer" -->
+</body>
+</html>

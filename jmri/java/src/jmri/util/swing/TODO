@@ -1,0 +1,46 @@
+Things to do:
+
+* Default left window content could be a loco & status page.
+
+* How to get back to the main status page? Do we need to?
+
+* A single action provides one pane. Need a way to cache
+    between separate instances, so that e.g. a "Foo" menu
+    item and tool bar button will show the _same_ panel instance?
+    
+* When to clear bottom right?  When top right is loaded?  E.g. if 
+    you have sensors up and move to something else, the "Add Sensor"
+    panel is left
+
+* Do secondary panels (e.g. like the Sensor Add panel) get handled
+    properly? E.g. dispose; getting put back OK.
+
+* Put the right stuff in the help menu depending on what's displayed,
+    and where the focus is?
+    
+* SDI needs to get menu, title and help info right. 
+    src/jmri/jmrit/symbolicprog/tabbedframe/PaneNewProgAction.java
+    is a poster child for this, produces a new window with
+    help, title, menu; yet we probably want to also be
+    able to use it in a paned window
+
+* How do to "double click to open in a new window?"
+
+* Add icons to tree with a custom renderer that looks for one in the Action?
+
+* Have editing Sensor Table, but not merged the two forms (original JmriJFrame
+    and new JmriPanel form)
+
+* Create actions for Window menu - paned mode will have multiple
+    windows with same name?
+    
+* MDI mode hasn't gone far
+
+* Apps3 in apps3.paned needs to move up to apps3, so it forms the
+    new base for multiple kinds, include an SDI mode.
+    
+* documentation of Menu/Tree/ToolBar XML form!
+
+* The MDI chain isn't handling titles, help, dispose
+    properly, needs a JfcTest routine
+    

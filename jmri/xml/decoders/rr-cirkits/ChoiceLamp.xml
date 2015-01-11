@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2013 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new file includes for Signalman files -->
+<!-- Lamp choice for aspects -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice choice="H1-R "/>
+  <enumChoice choice="H1-Y"/>
+  <enumChoice choice="H1-G"/>
+  <enumChoice choice="H1-L"/>
+  <enumChoice choice="H2-R"/>
+  <enumChoice choice="H2-Y"/>
+  <enumChoice choice="H2-G"/>
+  <enumChoice choice="H2-L"/>
+  <enumChoice choice="H3-R"/>
+  <enumChoice choice="H3-Y"/>
+  <enumChoice choice="H3-G"/>
+  <enumChoice choice="H3-L"/>
+  <enumChoice choice="H4-R"/>
+  <enumChoice choice="H4-Y"/>
+  <enumChoice choice="H4-G"/>
+  <enumChoice choice="H4-L"/>
+  <enumChoice choice="H5-R"/>
+  <enumChoice choice="H5-Y"/>
+  <enumChoice choice="H5-G"/>
+  <enumChoice choice="H5-L"/>
+  <enumChoice choice="H6-R"/>
+  <enumChoice choice="H6-Y"/>
+  <enumChoice choice="H6-G"/>
+  <enumChoice choice="H6-L"/>
+  <enumChoice choice="H7-R"/>
+  <enumChoice choice="H7-Y"/>
+  <enumChoice choice="H7-G"/>
+  <enumChoice choice="H7-L"/>
+  <enumChoice choice="H8-R"/>
+  <enumChoice choice="H8-Y"/>
+  <enumChoice choice="H8-G"/>
+  <enumChoice choice="H8-L"/>
+</enumVal>

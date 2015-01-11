@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- $Id$ -->
+<!-- UpDated by Blorec Herv&#233; 2013-09-20 -->  
+
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H2> L'utilitaire de configuration JMRI LI101F </H2>
+<img src="images/LI101ConfigurationUtility.jpg"  alt="LI101 Configuration Tool">
+<P>
+L'outil de configuration LI101 est utilis&#233; pour configurer l'LI101F.
+<P>
+En partant du haut:
+<P>
+La premi&#232;re liste d&#233;roulante permet de s&#233;lectionner l'adresse de l'appareil &#224;
+utiliser sur le XPressNet. Cette adresse doit &#234;tre diff&#233;rente de celle de tous les autres
+p&#233;riph&#233;riques sur votre XpressNet.
+<P>
+La seconde liste d&#233;roulante affiche les boites fixant la vitesse du port LI101F. Cette vitesse devrait
+correspondre &#224; ce que vous avez utilis&#233; pour le "Port Speed" param&#232;tre dans le volet pr&#233;f&#233;rences
+
+<P>
+A partir du c&#244;t&#233; gauche de l'&#233;cran, le bouton "Read from 
+LI101" (Lire depuis
+LI101), va lire les param&#232;tres actuels de l'LI101F.
+<P>
+Le bouton "Write to LI101"(&#233;crire dans LI101), &#233;crira les param&#232;tres sur l'&#233;cran
+de l'LI101F. Si vous avez chang&#233; le r&#233;glage de la vitesse LI101, vous aurez &#233;galement besoin
+de changer le r&#233;glage de la vitesse dans vos pr&#233;f&#233;rences.
+<P>
+Le bouton "Reset to Factory Defaults" (Remettre aux param&#232;tres par d&#233;faut) r&#233;initialise  <b>l'&#233;cran</b>
+d'usine par d&#233;faut. Ceci ne veut pas envoyer une instruction de r&#233;initialisation &#224; l'LI101F &#224; ce
+moment.
+<P>
+Le dernier bouton, &#233;tiquet&#233; "Fermer" va fermer l'&#233;cran, sans envoyer
+aucune information &#224; la LI101F.
+
+
+<hr>
+Paul Bender<BR>
+paul.bender@acm.org
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

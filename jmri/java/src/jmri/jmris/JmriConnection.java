@@ -1,0 +1,103 @@
+package jmri.jmris;
+
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.util.Locale;
+import org.eclipse.jetty.websocket.WebSocket.Connection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * Abstraction of DataOutputStream and WebSocket.Connection classes.
+ *
+ * Used so that that server objects need only to use a single object/method to
+ * send data to any supported object type.
+ *
+ * @author rhwood Randall Wood Copyright (C) 2012, 2014
+ */
+public class JmriConnection {
+
+    private Connection webSocketConnection = null;
+    private DataOutputStream dataOutputStream = null;
+    protected Locale locale = Locale.getDefault();
+    private final static Logger log = LoggerFactory.getLogger(JmriConnection.class);
+
+    /**
+     * Create a JmriConnection that sends output to a WebSocket.
+     *
+     * @param connection
+     */
+    public JmriConnection(Connection connection) {
+        this.webSocketConnection = connection;
+    }
+
+    /**
+     * Create a JmriConnection that sends output to a DataOutputStream.
+     *
+     * @param output
+     */
+    public JmriConnection(DataOutputStream output) {
+        this.dataOutputStream = output;
+    }
+
+    public Connection getWebSocketConnection() {
+        return webSocketConnection;
+    }
+
+    public void setWebSocketConnection(Connection webSocketConnection) {
+        this.webSocketConnection = webSocketConnection;
+    }
+
+    public DataOutputStream getDataOutputStream() {
+        return dataOutputStream;
+    }
+
+    public void setDataOutputStream(DataOutputStream dataOutputStream) {
+        this.dataOutputStream = dataOutputStream;
+    }
+
+    /**
+     * Send a String to the instantiated connection.
+     *
+     * This method throws an IOException so the server or servlet holding the
+     * connection open can respond to the exception.
+     *
+     * @param message
+     * @throws IOException
+     */
+    public void sendMessage(String message) throws IOException {
+        log.debug("Sending {}", message);
+        if (this.dataOutputStream != null) {
+            this.dataOutputStream.writeBytes(message);
+        } else if (this.webSocketConnection != null) {
+            this.webSocketConnection.sendMessage(message);
+        }
+    }
+
+    /**
+     * Close the connection.
+     *
+     * @throws IOException
+     */
+    public void close() throws IOException {
+        if (this.dataOutputStream != null) {
+            this.dataOutputStream.close();
+        } else if (this.webSocketConnection != null) {
+            this.webSocketConnection.close();
+        }
+    }
+
+    /**
+     * @return the locale
+     */
+    public Locale getLocale() {
+        return locale;
+    }
+
+    /**
+     * @param locale the locale to set
+     */
+    public void setLocale(Locale locale) {
+        this.locale = locale;
+    }
+}

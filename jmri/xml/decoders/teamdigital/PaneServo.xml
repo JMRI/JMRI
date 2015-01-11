@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2011 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new file includes for CSC file -->
+<!-- Panes to show Servos -->
+
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<name>Servos</name>
+    <column>
+      <row>
+        <column>
+         <label label="---- Servo Configuration ----"/>
+         <label label=" "/>
+        </column>
+      </row>         
+      <row>
+        <column>
+          <label label="---- Servo 1 Controlled by Logic Cell 17"/>
+          <display item="Servo 1 Positon LC False" tooltip="Range 1-127 position when logic cell goes false"/>
+          <display item="Servo 1 Positon LC True" tooltip="Range 1-127 position when logic cell goes true"/>
+          <display item="Servo 1 Move Speed" tooltip="Range 1-127"/>
+         </column>
+        <column>
+         <label label="   "/>
+        </column>
+        <column>
+          <label label="---- Servo 2 Controlled by Logic Cell 18"/>
+          <display item="Servo 2 Positon LC False" tooltip="Range 1-127 position when logic cell goes false"/>
+          <display item="Servo 2 Positon LC True" tooltip="Range 1-127 position when logic cell goes true"/>
+          <display item="Servo 2 Move Speed" tooltip="Range 1-127"/>
+        </column>
+      </row>
+      <row>
+      	<column>
+      	  <label label=" "/>
+      	  <label label=" "/>
+      	  <label label=" "/>
+          <label label="Servo Test writes to the Vsersion ID but does not change it "/>
+          <label label="To initiate a servo test, select the test and 'Write changes on sheet'"/>
+      	  <label label=" "/>
+      	  <display item="Servo Test" format="radiobuttons"/>
+      	</column>
+      </row>
+    </column>
+ </pane>

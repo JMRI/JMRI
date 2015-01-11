@@ -1,0 +1,1011 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2013 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new file includes for MotorMan files -->
+<!-- Panes to show Moves -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Moves B</name>
+  <qualifier>
+    <variableref>Firmware Version</variableref>
+    <relation>gt</relation>
+    <value>10</value>
+  </qualifier>
+  <column>
+    <row>
+      <column>
+        <label>
+          <text>Select either 'Output mode' (a Serial command - Closed/Thrown plus a Group #) OR 'DCC mode' (a Mast Address plus its Signal Aspect).</text>
+        </label>
+        <label>
+          <text>All commands are entered as their actual Address numbers. For example to respond to LT9 Closed enter Command as 9 C.</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>For Sequential Move (SM) check the box between the stepper entries. Motion will then complete on the first move before starting the second.</text>
+        </label>
+        <label>
+          <text>For Sequential Event (SE) check the box in the event entries. Motion will then complete on the second move before sending the 2nd event.</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <label>
+        <text>Event#    Mode </text>
+      </label>
+      <label>
+        <text>  Command     </text>
+      </label>
+      <separator/>
+      <label>
+        <text>  Stepper #  Motion           </text>
+      </label>
+      <separator/>
+      <label>
+        <text>  Target  Speed  Dir  </text>
+      </label>
+      <separator/>
+      <label>
+        <text> Sequential </text>
+      </label>
+      <separator/>
+      <label>
+        <text>  Stepper #  Motion           </text>
+      </label>
+      <separator/>
+      <label>
+        <text>  Target  Speed  Dir  </text>
+      </label>
+      <separator/>
+      <label>
+        <text>   Motion Effects             </text>
+      </label>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <column>
+        <display item="SA9 Address Mode" format="offradiobutton" label="  9: "/>
+      </column>
+      <column>
+        <display item="SA9 Address Mode" format="onradiobutton" label="    "/>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="SA9 A" tooltip="Select one of 4 available steppers" label=" ">
+          </display>
+      </column>
+      <column>
+        <display item="SA9 A MT" tooltip="Stepper A Move Type" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA9 A TA" tooltip="Stepper A Target" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA9 A Speed" tooltip="Stepper A Speed" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA9 A Dir" tooltip="Stepper A direction" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA9 SM" format="checkbox" tooltip="Check if Sequential Move" label=" SM"/>
+      </column>
+      <column>
+        <display item="SA9 B" tooltip="Select one of 4 available steppers" label=" ">
+          </display>
+      </column>
+      <column>
+        <display item="SA9 B MT" tooltip="Stepper B Move Type" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA9 B TA" tooltip="Stepper B Target" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA9 B Speed" tooltip="Stepper B Speed" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA9 B Dir" tooltip="Stepper B direction" label="">
+          </display>
+      </column>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <column>
+        <display item="SA9 Effect" label="Effect">
+          </display>
+      </column>
+      <label>
+        <text> </text>
+      </label>
+    </row>
+    <row>
+      <column>
+        <display item="SA9a Address" tooltip="Enter the Mast Address" label="  ">
+         </display>
+      </column>
+      <column>
+        <display item="SA9b Address" tooltip="Enter the Serial command #" label="  ">
+         </display>
+      </column>
+      <column>
+        <display item="SA9 CT" tooltip="Respond to Closed/Thrown" label="       ">
+        	 </display>
+      </column>
+      <column>
+        <display item="SA9 Group" tooltip="Selects the group number" label="    ">
+          </display>
+      </column>
+      <column>
+        <display item="SA9 Aspect" tooltip="Signal Aspect" label=" ">
+          </display>
+      </column>
+      <label>
+        <text>   </text>
+      </label>
+      <column>
+        <display item="SA9 SE" format="checkbox" tooltip="Check if Sequential Event" label=" SE"/>
+      </column>
+      <column>
+        <display item="SA9 Secondary Address" tooltip="Serial command #" label="   2nd Event">
+          </display>
+      </column>
+      <column>
+        <display item="SA9 Secondary Polarity" tooltip="Serial Send/Receive" label="   Polarity ">
+          </display>
+      </column>
+      <column>
+        <display item="SA9 Secondary Type" tooltip="Serial message Type" label="   ">
+          </display>
+      </column>
+      <column>
+        <display item="SA9 Transition" tooltip="Serial message sent at" label="   message">
+          </display>
+      </column>
+      <label>
+        <text>     </text>
+      </label>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="SA10 Address Mode" format="offradiobutton" label=" 10: "/>
+      </column>
+      <column>
+        <display item="SA10 Address Mode" format="onradiobutton" label="    "/>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="SA10 A" tooltip="Select one of 4 available steppers" label=" ">
+          </display>
+      </column>
+      <column>
+        <display item="SA10 A MT" tooltip="Stepper A Move Type" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA10 A TA" tooltip="Stepper A Target" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA10 A Speed" tooltip="Stepper A Speed" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA10 A Dir" tooltip="Stepper A direction" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA10 SM" format="checkbox" tooltip="Check if Sequential Move" label=" SM"/>
+      </column>
+      <column>
+        <display item="SA10 B" tooltip="Select one of 4 available steppers" label=" ">
+          </display>
+      </column>
+      <column>
+        <display item="SA10 B MT" tooltip="Stepper B Move Type" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA10 B TA" tooltip="Stepper B Target" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA10 B Speed" tooltip="Stepper B Speed" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA10 B Dir" tooltip="Stepper B direction" label="">
+          </display>
+      </column>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <column>
+        <display item="SA10 Effect" label="Effect">
+          </display>
+      </column>
+      <label>
+        <text> </text>
+      </label>
+    </row>
+    <row>
+      <column>
+        <display item="SA10a Address" tooltip="Enter the Mast Address" label="  ">
+         </display>
+      </column>
+      <column>
+        <display item="SA10b Address" tooltip="Enter the Serial command #" label="  ">
+         </display>
+      </column>
+      <column>
+        <display item="SA10 CT" tooltip="Respond to Closed/Thrown" label="       ">
+        	 </display>
+      </column>
+      <column>
+        <display item="SA10 Group" tooltip="Selects the group number" label="    ">
+          </display>
+      </column>
+      <column>
+        <display item="SA10 Aspect" tooltip="Signal Aspect" label=" ">
+          </display>
+      </column>
+      <label>
+        <text>   </text>
+      </label>
+      <column>
+        <display item="SA10 SE" format="checkbox" tooltip="Check if Sequential Event" label=" SE"/>
+      </column>
+      <column>
+        <display item="SA10 Secondary Address" tooltip="Serial command #" label="   2nd Event">
+          </display>
+      </column>
+      <column>
+        <display item="SA10 Secondary Polarity" tooltip="Serial Send/Receive" label="   Polarity ">
+          </display>
+      </column>
+      <column>
+        <display item="SA10 Secondary Type" tooltip="Serial message Type" label="   ">
+          </display>
+      </column>
+      <column>
+        <display item="SA10 Transition" tooltip="Serial message sent at" label="   message">
+          </display>
+      </column>
+      <label>
+        <text>     </text>
+      </label>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="SA11 Address Mode" format="offradiobutton" label=" 11: "/>
+      </column>
+      <column>
+        <display item="SA11 Address Mode" format="onradiobutton" label="    "/>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="SA11 A" tooltip="Select one of 4 available steppers" label=" ">
+          </display>
+      </column>
+      <column>
+        <display item="SA11 A MT" tooltip="Stepper A Move Type" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA11 A TA" tooltip="Stepper A Target" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA11 A Speed" tooltip="Stepper A Speed" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA11 A Dir" tooltip="Stepper A direction" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA11 SM" format="checkbox" tooltip="Check if Sequential Move" label=" SM"/>
+      </column>
+      <column>
+        <display item="SA11 B" tooltip="Select one of 4 available steppers" label=" ">
+          </display>
+      </column>
+      <column>
+        <display item="SA11 B MT" tooltip="Stepper B Move Type" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA11 B TA" tooltip="Stepper B Target" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA11 B Speed" tooltip="Stepper B Speed" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA11 B Dir" tooltip="Stepper B direction" label="">
+          </display>
+      </column>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <column>
+        <display item="SA11 Effect" label="Effect">
+          </display>
+      </column>
+      <label>
+        <text> </text>
+      </label>
+    </row>
+    <row>
+      <column>
+        <display item="SA11a Address" tooltip="Enter the Mast Address" label="  ">
+         </display>
+      </column>
+      <column>
+        <display item="SA11b Address" tooltip="Enter the Serial command #" label="  ">
+         </display>
+      </column>
+      <column>
+        <display item="SA11 CT" tooltip="Respond to Closed/Thrown" label="       ">
+        	 </display>
+      </column>
+      <column>
+        <display item="SA11 Group" tooltip="Selects the group number" label="    ">
+          </display>
+      </column>
+      <column>
+        <display item="SA11 Aspect" tooltip="Signal Aspect" label=" ">
+          </display>
+      </column>
+      <label>
+        <text>   </text>
+      </label>
+      <column>
+        <display item="SA11 SE" format="checkbox" tooltip="Check if Sequential Event" label=" SE"/>
+      </column>
+      <column>
+        <display item="SA11 Secondary Address" tooltip="Serial command #" label="   2nd Event">
+          </display>
+      </column>
+      <column>
+        <display item="SA11 Secondary Polarity" tooltip="Serial Send/Receive" label="   Polarity ">
+          </display>
+      </column>
+      <column>
+        <display item="SA11 Secondary Type" tooltip="Serial message Type" label="   ">
+          </display>
+      </column>
+      <column>
+        <display item="SA11 Transition" tooltip="Serial message sent at" label="   message">
+          </display>
+      </column>
+      <label>
+        <text>     </text>
+      </label>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="SA12 Address Mode" format="offradiobutton" label=" 12: "/>
+      </column>
+      <column>
+        <display item="SA12 Address Mode" format="onradiobutton" label="    "/>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="SA12 A" tooltip="Select one of 4 available steppers" label=" ">
+          </display>
+      </column>
+      <column>
+        <display item="SA12 A MT" tooltip="Stepper A Move Type" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA12 A TA" tooltip="Stepper A Target" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA12 A Speed" tooltip="Stepper A Speed" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA12 A Dir" tooltip="Stepper A direction" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA12 SM" format="checkbox" tooltip="Check if Sequential Move" label=" SM"/>
+      </column>
+      <column>
+        <display item="SA12 B" tooltip="Select one of 4 available steppers" label=" ">
+          </display>
+      </column>
+      <column>
+        <display item="SA12 B MT" tooltip="Stepper B Move Type" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA12 B TA" tooltip="Stepper B Target" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA12 B Speed" tooltip="Stepper B Speed" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA12 B Dir" tooltip="Stepper B direction" label="">
+          </display>
+      </column>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <column>
+        <display item="SA12 Effect" label="Effect">
+          </display>
+      </column>
+      <label>
+        <text> </text>
+      </label>
+    </row>
+    <row>
+      <column>
+        <display item="SA12a Address" tooltip="Enter the Mast Address" label="  ">
+         </display>
+      </column>
+      <column>
+        <display item="SA12b Address" tooltip="Enter the Serial command #" label="  ">
+         </display>
+      </column>
+      <column>
+        <display item="SA12 CT" tooltip="Respond to Closed/Thrown" label="       ">
+        	 </display>
+      </column>
+      <column>
+        <display item="SA12 Group" tooltip="Selects the group number" label="    ">
+          </display>
+      </column>
+      <column>
+        <display item="SA12 Aspect" tooltip="Signal Aspect" label=" ">
+          </display>
+      </column>
+      <label>
+        <text>   </text>
+      </label>
+      <column>
+        <display item="SA12 SE" format="checkbox" tooltip="Check if Sequential Event" label=" SE"/>
+      </column>
+      <column>
+        <display item="SA12 Secondary Address" tooltip="Serial command #" label="   2nd Event">
+          </display>
+      </column>
+      <column>
+        <display item="SA12 Secondary Polarity" tooltip="Serial Send/Receive" label="   Polarity ">
+          </display>
+      </column>
+      <column>
+        <display item="SA12 Secondary Type" tooltip="Serial message Type" label="   ">
+          </display>
+      </column>
+      <column>
+        <display item="SA12 Transition" tooltip="Serial message sent at" label="   message">
+          </display>
+      </column>
+      <label>
+        <text>     </text>
+      </label>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="SA13 Address Mode" format="offradiobutton" label=" 13: "/>
+      </column>
+      <column>
+        <display item="SA13 Address Mode" format="onradiobutton" label="    "/>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="SA13 A" tooltip="Select one of 4 available steppers" label=" ">
+          </display>
+      </column>
+      <column>
+        <display item="SA13 A MT" tooltip="Stepper A Move Type" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA13 A TA" tooltip="Stepper A Target" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA13 A Speed" tooltip="Stepper A Speed" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA13 A Dir" tooltip="Stepper A direction" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA13 SM" format="checkbox" tooltip="Check if Sequential Move" label=" SM"/>
+      </column>
+      <column>
+        <display item="SA13 B" tooltip="Select one of 4 available steppers" label=" ">
+          </display>
+      </column>
+      <column>
+        <display item="SA13 B MT" tooltip="Stepper B Move Type" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA13 B TA" tooltip="Stepper B Target" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA13 B Speed" tooltip="Stepper B Speed" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA13 B Dir" tooltip="Stepper B direction" label="">
+          </display>
+      </column>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <column>
+        <display item="SA13 Effect" label="Effect">
+          </display>
+      </column>
+      <label>
+        <text> </text>
+      </label>
+    </row>
+    <row>
+      <column>
+        <display item="SA13a Address" tooltip="Enter the Mast Address" label="  ">
+         </display>
+      </column>
+      <column>
+        <display item="SA13b Address" tooltip="Enter the Serial command #" label="  ">
+         </display>
+      </column>
+      <column>
+        <display item="SA13 CT" tooltip="Respond to Closed/Thrown" label="       ">
+        	 </display>
+      </column>
+      <column>
+        <display item="SA13 Group" tooltip="Selects the group number" label="    ">
+          </display>
+      </column>
+      <column>
+        <display item="SA13 Aspect" tooltip="Signal Aspect" label=" ">
+          </display>
+      </column>
+      <label>
+        <text>   </text>
+      </label>
+      <column>
+        <display item="SA13 SE" format="checkbox" tooltip="Check if Sequential Event" label=" SE"/>
+      </column>
+      <column>
+        <display item="SA13 Secondary Address" tooltip="Serial command #" label="   2nd Event">
+          </display>
+      </column>
+      <column>
+        <display item="SA13 Secondary Polarity" tooltip="Serial Send/Receive" label="   Polarity ">
+          </display>
+      </column>
+      <column>
+        <display item="SA13 Secondary Type" tooltip="Serial message Type" label="   ">
+          </display>
+      </column>
+      <column>
+        <display item="SA13 Transition" tooltip="Serial message sent at" label="   message">
+          </display>
+      </column>
+      <label>
+        <text>     </text>
+      </label>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="SA14 Address Mode" format="offradiobutton" label=" 14: "/>
+      </column>
+      <column>
+        <display item="SA14 Address Mode" format="onradiobutton" label="    "/>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="SA14 A" tooltip="Select one of 4 available steppers" label=" ">
+          </display>
+      </column>
+      <column>
+        <display item="SA14 A MT" tooltip="Stepper A Move Type" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA14 A TA" tooltip="Stepper A Target" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA14 A Speed" tooltip="Stepper A Speed" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA14 A Dir" tooltip="Stepper A direction" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA14 SM" format="checkbox" tooltip="Check if Sequential Move" label=" SM"/>
+      </column>
+      <column>
+        <display item="SA14 B" tooltip="Select one of 4 available steppers" label=" ">
+          </display>
+      </column>
+      <column>
+        <display item="SA14 B MT" tooltip="Stepper B Move Type" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA14 B TA" tooltip="Stepper B Target" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA14 B Speed" tooltip="Stepper B Speed" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA14 B Dir" tooltip="Stepper B direction" label="">
+          </display>
+      </column>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <column>
+        <display item="SA14 Effect" label="Effect">
+          </display>
+      </column>
+      <label>
+        <text> </text>
+      </label>
+    </row>
+    <row>
+      <column>
+        <display item="SA14a Address" tooltip="Enter the Mast Address" label="  ">
+         </display>
+      </column>
+      <column>
+        <display item="SA14b Address" tooltip="Enter the Serial command #" label="  ">
+         </display>
+      </column>
+      <column>
+        <display item="SA14 CT" tooltip="Respond to Closed/Thrown" label="       ">
+        	 </display>
+      </column>
+      <column>
+        <display item="SA14 Group" tooltip="Selects the group number" label="    ">
+          </display>
+      </column>
+      <column>
+        <display item="SA14 Aspect" tooltip="Signal Aspect" label=" ">
+          </display>
+      </column>
+      <label>
+        <text>   </text>
+      </label>
+      <column>
+        <display item="SA14 SE" format="checkbox" tooltip="Check if Sequential Event" label=" SE"/>
+      </column>
+      <column>
+        <display item="SA14 Secondary Address" tooltip="Serial command #" label="   2nd Event">
+          </display>
+      </column>
+      <column>
+        <display item="SA14 Secondary Polarity" tooltip="Serial Send/Receive" label="   Polarity ">
+          </display>
+      </column>
+      <column>
+        <display item="SA14 Secondary Type" tooltip="Serial message Type" label="   ">
+          </display>
+      </column>
+      <column>
+        <display item="SA14 Transition" tooltip="Serial message sent at" label="   message">
+          </display>
+      </column>
+      <label>
+        <text>     </text>
+      </label>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="SA15 Address Mode" format="offradiobutton" label=" 15: "/>
+      </column>
+      <column>
+        <display item="SA15 Address Mode" format="onradiobutton" label="    "/>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="SA15 A" tooltip="Select one of 4 available steppers" label=" ">
+          </display>
+      </column>
+      <column>
+        <display item="SA15 A MT" tooltip="Stepper A Move Type" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA15 A TA" tooltip="Stepper A Target" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA15 A Speed" tooltip="Stepper A Speed" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA15 A Dir" tooltip="Stepper A direction" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA15 SM" format="checkbox" tooltip="Check if Sequential Move" label=" SM"/>
+      </column>
+      <column>
+        <display item="SA15 B" tooltip="Select one of 4 available steppers" label=" ">
+          </display>
+      </column>
+      <column>
+        <display item="SA15 B MT" tooltip="Stepper B Move Type" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA15 B TA" tooltip="Stepper B Target" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA15 B Speed" tooltip="Stepper B Speed" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA15 B Dir" tooltip="Stepper B direction" label="">
+          </display>
+      </column>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <column>
+        <display item="SA15 Effect" label="Effect">
+          </display>
+      </column>
+      <label>
+        <text> </text>
+      </label>
+    </row>
+    <row>
+      <column>
+        <display item="SA15a Address" tooltip="Enter the Mast Address" label="  ">
+         </display>
+      </column>
+      <column>
+        <display item="SA15b Address" tooltip="Enter the Serial command #" label="  ">
+         </display>
+      </column>
+      <column>
+        <display item="SA15 CT" tooltip="Respond to Closed/Thrown" label="       ">
+        	 </display>
+      </column>
+      <column>
+        <display item="SA15 Group" tooltip="Selects the group number" label="    ">
+          </display>
+      </column>
+      <column>
+        <display item="SA15 Aspect" tooltip="Signal Aspect" label=" ">
+          </display>
+      </column>
+      <label>
+        <text>   </text>
+      </label>
+      <column>
+        <display item="SA15 SE" format="checkbox" tooltip="Check if Sequential Event" label=" SE"/>
+      </column>
+      <column>
+        <display item="SA15 Secondary Address" tooltip="Serial command #" label="   2nd Event">
+          </display>
+      </column>
+      <column>
+        <display item="SA15 Secondary Polarity" tooltip="Serial Send/Receive" label="   Polarity ">
+          </display>
+      </column>
+      <column>
+        <display item="SA15 Secondary Type" tooltip="Serial message Type" label="   ">
+          </display>
+      </column>
+      <column>
+        <display item="SA15 Transition" tooltip="Serial message sent at" label="   message">
+          </display>
+      </column>
+      <label>
+        <text>     </text>
+      </label>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="SA16 Address Mode" format="offradiobutton" label=" 16: "/>
+      </column>
+      <column>
+        <display item="SA16 Address Mode" format="onradiobutton" label="    "/>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="SA16 A" tooltip="Select one of 4 available steppers" label=" ">
+          </display>
+      </column>
+      <column>
+        <display item="SA16 A MT" tooltip="Stepper A Move Type" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA16 A TA" tooltip="Stepper A Target" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA16 A Speed" tooltip="Stepper A Speed" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA16 A Dir" tooltip="Stepper A direction" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA16 SM" format="checkbox" tooltip="Check if Sequential Move" label=" SM"/>
+      </column>
+      <column>
+        <display item="SA16 B" tooltip="Select one of 4 available steppers" label=" ">
+          </display>
+      </column>
+      <column>
+        <display item="SA16 B MT" tooltip="Stepper B Move Type" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA16 B TA" tooltip="Stepper B Target" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA16 B Speed" tooltip="Stepper B Speed" label="">
+          </display>
+      </column>
+      <column>
+        <display item="SA16 B Dir" tooltip="Stepper B direction" label="">
+          </display>
+      </column>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <column>
+        <display item="SA16 Effect" label="Effect">
+          </display>
+      </column>
+      <label>
+        <text> </text>
+      </label>
+    </row>
+    <row>
+      <column>
+        <display item="SA16a Address" tooltip="Enter the Mast Address" label="  ">
+         </display>
+      </column>
+      <column>
+        <display item="SA16b Address" tooltip="Enter the Serial command #" label="  ">
+         </display>
+      </column>
+      <column>
+        <display item="SA16 CT" tooltip="Respond to Closed/Thrown" label="       ">
+        	 </display>
+      </column>
+      <column>
+        <display item="SA16 Group" tooltip="Selects the group number" label="    ">
+          </display>
+      </column>
+      <column>
+        <display item="SA16 Aspect" tooltip="Signal Aspect" label=" ">
+          </display>
+      </column>
+      <label>
+        <text>   </text>
+      </label>
+      <column>
+        <display item="SA16 SE" format="checkbox" tooltip="Check if Sequential Event" label=" SE"/>
+      </column>
+      <column>
+        <display item="SA16 Secondary Address" tooltip="Serial command #" label="   2nd Event">
+          </display>
+      </column>
+      <column>
+        <display item="SA16 Secondary Polarity" tooltip="Serial Send/Receive" label="   Polarity ">
+          </display>
+      </column>
+      <column>
+        <display item="SA16 Secondary Type" tooltip="Serial message Type" label="   ">
+          </display>
+      </column>
+      <column>
+        <display item="SA16 Transition" tooltip="Serial message sent at" label="   message">
+          </display>
+      </column>
+      <label>
+        <text>     </text>
+      </label>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <column>
+        <display item="MAA Type" label="Type">
+          <label>Masts A Type</label>
+        </display>
+      </column>
+    </row>
+  </column>
+</pane>

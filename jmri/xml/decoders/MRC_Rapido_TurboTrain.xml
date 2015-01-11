@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2006, 2007 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Peter Ulvestad" version="3" lastUpdated="20091115"/>
+  <version author="Peter Ulvestad" version="2" lastUpdated="20091011"/>
+  <version author="Ilidio Serra" version="1" lastUpdated="20090825"/>
+  <!-- made from the MRC_soundbrilliance1636 file by Bob Jacobsen-->
+  <!-- Version 2 - Added consist, moved consist functions to consist pane, added locomotive direction
+		, removed speed table pane and added CV6 to Basic speed pane, corrected factory reset -->
+  <!-- Version 3 - Added tooltips and correct spelling errors -->
+  <decoder>
+    <family name="Rapido" mfg="MRC" lowVersionID="32" highVersionID="32">
+      <model model="TurboTrain" numOuts="0" numFns="26" maxTotalCurrent="0.75A" extFnsMRC="yes" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no">
+        <!-- note only F0 to F12 are NMRA compatible -->
+        <size length="0" width="0" height="0" units="mm"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="2" comment="Range 0-32" item="Vstart" default="0" tooltip="sets the motor voltage at Speed Step 1 [range 0-32]" mask="VVVVVVVV">
+        <decVal max="32"/>
+        <label>Start Volts</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Startspannung</label>
+        <comment>Range 0-32</comment>
+      </variable>
+      <variable CV="3" comment="Range 0-32" item="Accel" default="0" tooltip="sets the acceleration rate [range 0-32]" mask="VVVVVVVV">
+        <decVal max="32"/>
+        <label>Acceleration</label>
+        <label xml:lang="it">Accellerazione (0-32)</label>
+        <label xml:lang="fr">Accelération (0-32)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-32)</label>
+        <comment>Range 0-32</comment>
+      </variable>
+      <variable CV="4" item="Decel" default="0" tooltip="sets the deceleration rate [range 0-32]" comment="Range 0-32" mask="VVVVVVVV">
+        <decVal max="32"/>
+        <label>Deceleration</label>
+        <label xml:lang="it">Decellerazione (1-32)</label>
+        <label xml:lang="fr">Décélération (1-32)</label>
+        <label xml:lang="de">Bremszeit (1-32)</label>
+        <comment>Range 0-32</comment>
+      </variable>
+      <variable CV="5" item="Vhigh" default="32" tooltip="sets the motor voltage at the top Speed Step [range 0-32]" comment="Range 0-32" mask="VVVVVVVV">
+        <decVal max="32"/>
+        <label>Max Voltage</label>
+        <label xml:lang="it">Volt Massimi (0-32):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
+        <comment>Range 0-32</comment>
+      </variable>
+      <variable CV="6" item="Speed Table/Mid Range Cab Speed Step" default="0" tooltip="sets Speed Curve">
+        <enumVal>
+          <enumChoice choice="Linear">
+            <choice>Linear</choice>
+          </enumChoice>
+          <enumChoice choice="Slow increase at slow speed">
+            <choice>Slow increase at slow speed</choice>
+          </enumChoice>
+          <enumChoice choice="Fast increase at slow speed">
+            <choice>Fast increase at slow speed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Speed Curve Select</label>
+      </variable>
+      <!-- CV 7-8 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+      <!-- CV=19 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <variable CV="21" item="Functions Respond To" default="0" tooltip="selects the address accessory functions will respond to" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Function</label>
+      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <variable CV="50" item="Sound Setting 1" default="3" tooltip="Range 0-3" mask="VVVVVVVV">
+        <decVal max="3" min="0"/>
+        <label>Announcement volume</label>
+      </variable>
+      <variable CV="51" item="Sound Setting 2" default="3" tooltip="Range 0-3" mask="VVVVVVVV">
+        <decVal max="3" min="0"/>
+        <label>Horn Volume</label>
+      </variable>
+      <variable CV="53" item="Sound Setting 3" default="3" tooltip="Range 0-3" mask="VVVVVVVV">
+        <decVal max="3" min="0"/>
+        <label>Bell Volume</label>
+      </variable>
+      <variable CV="54" item="Sound Option 1" default="0" tooltip="Range 0-1" mask="VVVVVVVV">
+        <decVal max="1" min="0"/>
+        <label>Bell Ring Rate</label>
+      </variable>
+      <variable CV="55" item="Sound Setting 4" default="2" tooltip="Range 0-4 (4=engine sound off)" mask="VVVVVVVV">
+        <decVal max="4" min="0"/>
+        <label>Turbine Volume</label>
+      </variable>
+      <variable CV="56" item="Sound Setting 5" default="3" tooltip="Range 0-3" mask="VVVVVVVV">
+        <decVal max="3" min="0"/>
+        <label>Brake Squeal Volume</label>
+      </variable>
+      <variable CV="57" item="Sound Setting 6" default="3" tooltip="Range 0-3" mask="VVVVVVVV">
+        <decVal max="3" min="0"/>
+        <label>Air release volume</label>
+      </variable>
+      <variable CV="58" item="Sound Setting 7" default="3" tooltip="Range 0-3" mask="VVVVVVVV">
+        <decVal max="3" min="0"/>
+        <label>Door open/close volume</label>
+      </variable>
+      <variable CV="59" item="Sound Option 2" default="0" tooltip="American = 0 / Canadian = 1" mask="VVVVVVVV">
+        <enumVal>
+          <enumChoice choice="American">
+            <choice>American</choice>
+          </enumChoice>
+          <enumChoice choice="Canadian">
+            <choice>Canadian</choice>
+          </enumChoice>
+        </enumVal>
+        <label>American/Canadian version</label>
+      </variable>
+      <!-- CV 105-106 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="125" default="1">
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
+    </resets>
+  </decoder>
+  <pane nameFmt="label">
+    <column>
+      <label>
+        <text>MRC NOTE: Some DCC systems do not have enough power on the program track for programming</text>
+      </label>
+      <label>
+        <text>sound decoders. If your system is one of these, There are Program Track Boosters availlable</text>
+      </label>
+      <label>
+        <text>from aftermarket DCC suppliers.</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>MRC NOTE: The decoders in your Turbo support all program methods, including: register mode,</text>
+      </label>
+      <label>
+        <text>paged mode, CV programming mode, direct mode, and programming on the main (OPS</text>
+      </label>
+      <label>
+        <text>mode programming). Program the Turbo the same way you would program any other</text>
+      </label>
+      <label>
+        <text>NMRA-compatible decoder with your DCC system. Although the sound decoders in the</text>
+      </label>
+      <label>
+        <text>Turbo support "read back on a program track", there may be some DCC systems that either</text>
+      </label>
+      <label>
+        <text>do not support reading back decoders, or do not have the capability to read back sound</text>
+      </label>
+      <label>
+        <text>decoders.</text>
+      </label>
+    </column>
+    <name>MRC</name>
+  </pane>
+</decoder-config>

@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<!-- Translated  by Blorec Herv&#233; le 2013-09-13-->
+<html lang="fr">
+<head>
+ <TITLE>
+ JMRI Install Guide: Fleischmann Twin Centre via Serial Port
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Michael Beck" name=Author>
+    <META content="John Plocher" name=Author>
+    <META name="keywords" content="Uhlenbrock Intellibox java model railroad JMRI install">
+
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+      <H1> 
+     Guide d'Installation JMRI: Centrale Twin  Fleischmann via Port S&#233;rie
+      </H1>
+
+<P>DecoderPro peut communiquer avec une Centrale Twin  Fleischmann via le port s&#233;rie 
+int&#233;gr&#233; et le protocole LocoNet&reg;.
+<p>
+Notez que cette fonctionnalit&#233; a &#233;t&#233; ajout&#233;e &#224; JMRI en test sur la version 1.5.2,
+et n'est pas pr&#233;sente dans la Version pr&#233;c&#233;dente 1.4 de production.
+Si vous utilisez une version avant la version 1.5.2 JMRI,
+S'il vous pla&#238;t aller &#224; la
+<A HREF="http://jmri.org/download/index.shtml"> page de t&#233;l&#233;chargement </a>
+pour t&#233;l&#233;charger la derni&#232;re version.
+
+<P>
+La Centrale Twin a besoin d'avoir ce logiciel mis &#224; jour
+&#224; la version 1.1 ou ult&#233;rieure.
+<P>
+Configurer les options de votre Centrale Twin &#224;:
+<UL>
+<LI> SO 2 valeur 4
+<LI> SO 5 valeur 1
+<LI> SO 6 valeur 255
+
+<LI>Baudrate 19200
+</UL>
+
+Ensuite, d&#233;marrez le programme JMRI et le configurer pour:
+
+<UL>
+<LI> "LocoNet Intellibox Serial Port" protocole
+<LI> 19200 bauds
+<LI> S&#233;lectionnez mat&#233;riel Handshake
+<LI> S&#233;lectionnez la centrale de commande DCS100
+</UL>
+<p>LocoNet&reg; est une marque d&#233;pos&#233;e de <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

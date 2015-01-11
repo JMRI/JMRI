@@ -1,0 +1,3954 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2005, 2007 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Martin Gostling ingleborough@yahoo.com" version="3" lastUpdated="20080308"/>
+  <version author="Martin Gostling ingleborough@yahoo.com" version="2" lastUpdated="20070430"/>
+  <version author="Martin Gostling ingleborough@yahoo.com" version="1" lastUpdated="20070314"/>
+  <!-- V3 Added family type="stationary" -->
+  <!-- V2 Improved descriptions of routing options -->
+  <!-- Initially created from version 14 of the digitrax_yDS54 file -->
+  <decoder>
+    <family name="DAC10" mfg="CML Systems" type="stationary" comment="DAC10 is a stationary decoder, but it can be programmed in the usual way">
+      <model model="DAC10" lowVersionID="1">
+			</model>
+    </family>
+    <programming direct="no" paged="yes" register="no" ops="no"/>
+    <variables>
+      <!-- CV 7-8 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+      <variable item="Address 1" CV="1" mask="XXVVVVVV" comment="Decoder address LSB">
+        <decVal min="0" max="63"/>
+        <label>Address 1</label>
+        <comment>Decoder address LSB</comment>
+      </variable>
+      <variable item="Address 2" CV="9" mask="XXXXXVVV" comment="Decoder address MSB">
+        <decVal min="0" max="7"/>
+        <label>Address 2</label>
+        <comment>Decoder address MSB</comment>
+      </variable>
+      <variable item="Turnout 1 Output Timing" CV="3" mask="VVVVVVVV" default="19">
+        <enumVal>
+          <enumChoice choice="0.125sec duration">
+            <choice>0.125sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.25sec duration">
+            <choice>0.25sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.375sec duration">
+            <choice>0.375sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.5sec duration">
+            <choice>0.5sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.625sec duration">
+            <choice>0.625sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.75sec duration">
+            <choice>0.75sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.9sec duration">
+            <choice>0.9sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="1 sec duration">
+            <choice>1 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="2 sec duration">
+            <choice>2 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="3 sec duration">
+            <choice>3 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="4 sec duration">
+            <choice>4 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="5 sec duration">
+            <choice>5 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="6 sec duration">
+            <choice>6 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="7.5 sec duration">
+            <choice>7.5 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="10 sec duration">
+            <choice>10 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="12 sec duration">
+            <choice>12 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.125sec duration, CDU delay">
+            <choice>0.125sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.25sec duration, CDU delay">
+            <choice>0.25sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.375sec duration, CDU delay">
+            <choice>0.375sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.5sec duration, CDU delay">
+            <choice>0.5sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.625sec duration, CDU delay">
+            <choice>0.625sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.75sec duration, CDU delay">
+            <choice>0.75sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.9sec duration, CDU delay">
+            <choice>0.9sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="1 sec duration, CDU delay">
+            <choice>1 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="2 sec duration, CDU delay">
+            <choice>2 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="3 sec duration, CDU delay">
+            <choice>3 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="4 sec duration, CDU delay">
+            <choice>4 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="5 sec duration, CDU delay">
+            <choice>5 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="6 sec duration, CDU delay">
+            <choice>6 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="7.5 sec duration, CDU delay">
+            <choice>7.5 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="10 sec duration, CDU delay">
+            <choice>10 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="12 sec duration, CDU delay">
+            <choice>12 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.125sec blink">
+            <choice>0.125sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.25sec blink">
+            <choice>0.25sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.375sec blink">
+            <choice>0.375sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.5sec blink">
+            <choice>0.5sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.625sec blink">
+            <choice>0.625sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.75sec blink">
+            <choice>0.75sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.9sec blink">
+            <choice>0.9sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="1 sec blink">
+            <choice>1 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="2 sec blink">
+            <choice>2 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="3 sec blink">
+            <choice>3 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="4 sec blink">
+            <choice>4 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="5 sec blink">
+            <choice>5 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="6 sec blink">
+            <choice>6 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="7.5 sec blink">
+            <choice>7.5 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="10 sec blink">
+            <choice>10 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="continuous">
+            <choice>continuous</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Turnout 1 Output Timing</label>
+      </variable>
+      <variable item="Turnout 2 Output Timing" CV="4" mask="VVVVVVVV" default="19">
+        <enumVal>
+          <enumChoice choice="0.125sec duration">
+            <choice>0.125sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.25sec duration">
+            <choice>0.25sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.375sec duration">
+            <choice>0.375sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.5sec duration">
+            <choice>0.5sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.625sec duration">
+            <choice>0.625sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.75sec duration">
+            <choice>0.75sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.9sec duration">
+            <choice>0.9sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="1 sec duration">
+            <choice>1 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="2 sec duration">
+            <choice>2 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="3 sec duration">
+            <choice>3 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="4 sec duration">
+            <choice>4 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="5 sec duration">
+            <choice>5 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="6 sec duration">
+            <choice>6 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="7.5 sec duration">
+            <choice>7.5 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="10 sec duration">
+            <choice>10 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="12 sec duration">
+            <choice>12 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.125sec duration, CDU delay">
+            <choice>0.125sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.25sec duration, CDU delay">
+            <choice>0.25sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.375sec duration, CDU delay">
+            <choice>0.375sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.5sec duration, CDU delay">
+            <choice>0.5sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.625sec duration, CDU delay">
+            <choice>0.625sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.75sec duration, CDU delay">
+            <choice>0.75sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.9sec duration, CDU delay">
+            <choice>0.9sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="1 sec duration, CDU delay">
+            <choice>1 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="2 sec duration, CDU delay">
+            <choice>2 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="3 sec duration, CDU delay">
+            <choice>3 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="4 sec duration, CDU delay">
+            <choice>4 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="5 sec duration, CDU delay">
+            <choice>5 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="6 sec duration, CDU delay">
+            <choice>6 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="7.5 sec duration, CDU delay">
+            <choice>7.5 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="10 sec duration, CDU delay">
+            <choice>10 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="12 sec duration, CDU delay">
+            <choice>12 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.125sec blink">
+            <choice>0.125sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.25sec blink">
+            <choice>0.25sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.375sec blink">
+            <choice>0.375sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.5sec blink">
+            <choice>0.5sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.625sec blink">
+            <choice>0.625sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.75sec blink">
+            <choice>0.75sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.9sec blink">
+            <choice>0.9sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="1 sec blink">
+            <choice>1 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="2 sec blink">
+            <choice>2 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="3 sec blink">
+            <choice>3 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="4 sec blink">
+            <choice>4 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="5 sec blink">
+            <choice>5 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="6 sec blink">
+            <choice>6 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="7.5 sec blink">
+            <choice>7.5 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="10 sec blink">
+            <choice>10 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="continuous">
+            <choice>continuous</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Turnout 2 Output Timing</label>
+      </variable>
+      <variable item="Turnout 3 Output Timing" CV="5" mask="VVVVVVVV" default="19">
+        <enumVal>
+          <enumChoice choice="0.125sec duration">
+            <choice>0.125sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.25sec duration">
+            <choice>0.25sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.375sec duration">
+            <choice>0.375sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.5sec duration">
+            <choice>0.5sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.625sec duration">
+            <choice>0.625sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.75sec duration">
+            <choice>0.75sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.9sec duration">
+            <choice>0.9sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="1 sec duration">
+            <choice>1 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="2 sec duration">
+            <choice>2 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="3 sec duration">
+            <choice>3 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="4 sec duration">
+            <choice>4 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="5 sec duration">
+            <choice>5 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="6 sec duration">
+            <choice>6 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="7.5 sec duration">
+            <choice>7.5 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="10 sec duration">
+            <choice>10 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="12 sec duration">
+            <choice>12 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.125sec duration, CDU delay">
+            <choice>0.125sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.25sec duration, CDU delay">
+            <choice>0.25sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.375sec duration, CDU delay">
+            <choice>0.375sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.5sec duration, CDU delay">
+            <choice>0.5sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.625sec duration, CDU delay">
+            <choice>0.625sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.75sec duration, CDU delay">
+            <choice>0.75sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.9sec duration, CDU delay">
+            <choice>0.9sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="1 sec duration, CDU delay">
+            <choice>1 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="2 sec duration, CDU delay">
+            <choice>2 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="3 sec duration, CDU delay">
+            <choice>3 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="4 sec duration, CDU delay">
+            <choice>4 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="5 sec duration, CDU delay">
+            <choice>5 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="6 sec duration, CDU delay">
+            <choice>6 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="7.5 sec duration, CDU delay">
+            <choice>7.5 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="10 sec duration, CDU delay">
+            <choice>10 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="12 sec duration, CDU delay">
+            <choice>12 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.125sec blink">
+            <choice>0.125sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.25sec blink">
+            <choice>0.25sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.375sec blink">
+            <choice>0.375sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.5sec blink">
+            <choice>0.5sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.625sec blink">
+            <choice>0.625sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.75sec blink">
+            <choice>0.75sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.9sec blink">
+            <choice>0.9sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="1 sec blink">
+            <choice>1 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="2 sec blink">
+            <choice>2 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="3 sec blink">
+            <choice>3 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="4 sec blink">
+            <choice>4 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="5 sec blink">
+            <choice>5 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="6 sec blink">
+            <choice>6 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="7.5 sec blink">
+            <choice>7.5 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="10 sec blink">
+            <choice>10 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="continuous">
+            <choice>continuous</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Turnout 3 Output Timing</label>
+      </variable>
+      <variable item="Turnout 4 Output Timing" CV="6" mask="VVVVVVVV" default="19">
+        <enumVal>
+          <enumChoice choice="0.125sec duration">
+            <choice>0.125sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.25sec duration">
+            <choice>0.25sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.375sec duration">
+            <choice>0.375sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.5sec duration">
+            <choice>0.5sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.625sec duration">
+            <choice>0.625sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.75sec duration">
+            <choice>0.75sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.9sec duration">
+            <choice>0.9sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="1 sec duration">
+            <choice>1 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="2 sec duration">
+            <choice>2 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="3 sec duration">
+            <choice>3 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="4 sec duration">
+            <choice>4 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="5 sec duration">
+            <choice>5 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="6 sec duration">
+            <choice>6 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="7.5 sec duration">
+            <choice>7.5 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="10 sec duration">
+            <choice>10 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="12 sec duration">
+            <choice>12 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.125sec duration, CDU delay">
+            <choice>0.125sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.25sec duration, CDU delay">
+            <choice>0.25sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.375sec duration, CDU delay">
+            <choice>0.375sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.5sec duration, CDU delay">
+            <choice>0.5sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.625sec duration, CDU delay">
+            <choice>0.625sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.75sec duration, CDU delay">
+            <choice>0.75sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.9sec duration, CDU delay">
+            <choice>0.9sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="1 sec duration, CDU delay">
+            <choice>1 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="2 sec duration, CDU delay">
+            <choice>2 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="3 sec duration, CDU delay">
+            <choice>3 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="4 sec duration, CDU delay">
+            <choice>4 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="5 sec duration, CDU delay">
+            <choice>5 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="6 sec duration, CDU delay">
+            <choice>6 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="7.5 sec duration, CDU delay">
+            <choice>7.5 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="10 sec duration, CDU delay">
+            <choice>10 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="12 sec duration, CDU delay">
+            <choice>12 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.125sec blink">
+            <choice>0.125sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.25sec blink">
+            <choice>0.25sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.375sec blink">
+            <choice>0.375sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.5sec blink">
+            <choice>0.5sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.625sec blink">
+            <choice>0.625sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.75sec blink">
+            <choice>0.75sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.9sec blink">
+            <choice>0.9sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="1 sec blink">
+            <choice>1 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="2 sec blink">
+            <choice>2 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="3 sec blink">
+            <choice>3 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="4 sec blink">
+            <choice>4 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="5 sec blink">
+            <choice>5 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="6 sec blink">
+            <choice>6 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="7.5 sec blink">
+            <choice>7.5 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="10 sec blink">
+            <choice>10 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="continuous">
+            <choice>continuous</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Turnout 4 Output Timing</label>
+      </variable>
+      <variable item="Turnout 5 Output Timing" CV="10" mask="VVVVVVVV" default="19">
+        <enumVal>
+          <enumChoice choice="0.125sec duration">
+            <choice>0.125sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.25sec duration">
+            <choice>0.25sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.375sec duration">
+            <choice>0.375sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.5sec duration">
+            <choice>0.5sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.625sec duration">
+            <choice>0.625sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.75sec duration">
+            <choice>0.75sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.9sec duration">
+            <choice>0.9sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="1 sec duration">
+            <choice>1 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="2 sec duration">
+            <choice>2 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="3 sec duration">
+            <choice>3 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="4 sec duration">
+            <choice>4 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="5 sec duration">
+            <choice>5 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="6 sec duration">
+            <choice>6 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="7.5 sec duration">
+            <choice>7.5 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="10 sec duration">
+            <choice>10 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="12 sec duration">
+            <choice>12 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.125sec duration, CDU delay">
+            <choice>0.125sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.25sec duration, CDU delay">
+            <choice>0.25sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.375sec duration, CDU delay">
+            <choice>0.375sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.5sec duration, CDU delay">
+            <choice>0.5sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.625sec duration, CDU delay">
+            <choice>0.625sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.75sec duration, CDU delay">
+            <choice>0.75sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.9sec duration, CDU delay">
+            <choice>0.9sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="1 sec duration, CDU delay">
+            <choice>1 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="2 sec duration, CDU delay">
+            <choice>2 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="3 sec duration, CDU delay">
+            <choice>3 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="4 sec duration, CDU delay">
+            <choice>4 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="5 sec duration, CDU delay">
+            <choice>5 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="6 sec duration, CDU delay">
+            <choice>6 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="7.5 sec duration, CDU delay">
+            <choice>7.5 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="10 sec duration, CDU delay">
+            <choice>10 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="12 sec duration, CDU delay">
+            <choice>12 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.125sec blink">
+            <choice>0.125sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.25sec blink">
+            <choice>0.25sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.375sec blink">
+            <choice>0.375sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.5sec blink">
+            <choice>0.5sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.625sec blink">
+            <choice>0.625sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.75sec blink">
+            <choice>0.75sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.9sec blink">
+            <choice>0.9sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="1 sec blink">
+            <choice>1 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="2 sec blink">
+            <choice>2 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="3 sec blink">
+            <choice>3 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="4 sec blink">
+            <choice>4 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="5 sec blink">
+            <choice>5 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="6 sec blink">
+            <choice>6 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="7.5 sec blink">
+            <choice>7.5 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="10 sec blink">
+            <choice>10 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="continuous">
+            <choice>continuous</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Turnout 5 Output Timing</label>
+      </variable>
+      <variable item="Turnout 6 Output Timing" CV="11" mask="VVVVVVVV" default="19">
+        <enumVal>
+          <enumChoice choice="0.125sec duration">
+            <choice>0.125sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.25sec duration">
+            <choice>0.25sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.375sec duration">
+            <choice>0.375sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.5sec duration">
+            <choice>0.5sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.625sec duration">
+            <choice>0.625sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.75sec duration">
+            <choice>0.75sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.9sec duration">
+            <choice>0.9sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="1 sec duration">
+            <choice>1 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="2 sec duration">
+            <choice>2 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="3 sec duration">
+            <choice>3 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="4 sec duration">
+            <choice>4 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="5 sec duration">
+            <choice>5 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="6 sec duration">
+            <choice>6 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="7.5 sec duration">
+            <choice>7.5 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="10 sec duration">
+            <choice>10 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="12 sec duration">
+            <choice>12 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.125sec duration, CDU delay">
+            <choice>0.125sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.25sec duration, CDU delay">
+            <choice>0.25sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.375sec duration, CDU delay">
+            <choice>0.375sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.5sec duration, CDU delay">
+            <choice>0.5sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.625sec duration, CDU delay">
+            <choice>0.625sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.75sec duration, CDU delay">
+            <choice>0.75sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.9sec duration, CDU delay">
+            <choice>0.9sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="1 sec duration, CDU delay">
+            <choice>1 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="2 sec duration, CDU delay">
+            <choice>2 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="3 sec duration, CDU delay">
+            <choice>3 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="4 sec duration, CDU delay">
+            <choice>4 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="5 sec duration, CDU delay">
+            <choice>5 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="6 sec duration, CDU delay">
+            <choice>6 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="7.5 sec duration, CDU delay">
+            <choice>7.5 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="10 sec duration, CDU delay">
+            <choice>10 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="12 sec duration, CDU delay">
+            <choice>12 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.125sec blink">
+            <choice>0.125sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.25sec blink">
+            <choice>0.25sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.375sec blink">
+            <choice>0.375sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.5sec blink">
+            <choice>0.5sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.625sec blink">
+            <choice>0.625sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.75sec blink">
+            <choice>0.75sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.9sec blink">
+            <choice>0.9sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="1 sec blink">
+            <choice>1 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="2 sec blink">
+            <choice>2 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="3 sec blink">
+            <choice>3 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="4 sec blink">
+            <choice>4 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="5 sec blink">
+            <choice>5 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="6 sec blink">
+            <choice>6 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="7.5 sec blink">
+            <choice>7.5 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="10 sec blink">
+            <choice>10 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="continuous">
+            <choice>continuous</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Turnout 6 Output Timing</label>
+      </variable>
+      <variable item="Turnout 7 Output Timing" CV="12" mask="VVVVVVVV" default="19">
+        <enumVal>
+          <enumChoice choice="0.125sec duration">
+            <choice>0.125sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.25sec duration">
+            <choice>0.25sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.375sec duration">
+            <choice>0.375sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.5sec duration">
+            <choice>0.5sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.625sec duration">
+            <choice>0.625sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.75sec duration">
+            <choice>0.75sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.9sec duration">
+            <choice>0.9sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="1 sec duration">
+            <choice>1 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="2 sec duration">
+            <choice>2 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="3 sec duration">
+            <choice>3 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="4 sec duration">
+            <choice>4 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="5 sec duration">
+            <choice>5 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="6 sec duration">
+            <choice>6 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="7.5 sec duration">
+            <choice>7.5 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="10 sec duration">
+            <choice>10 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="12 sec duration">
+            <choice>12 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.125sec duration, CDU delay">
+            <choice>0.125sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.25sec duration, CDU delay">
+            <choice>0.25sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.375sec duration, CDU delay">
+            <choice>0.375sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.5sec duration, CDU delay">
+            <choice>0.5sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.625sec duration, CDU delay">
+            <choice>0.625sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.75sec duration, CDU delay">
+            <choice>0.75sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.9sec duration, CDU delay">
+            <choice>0.9sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="1 sec duration, CDU delay">
+            <choice>1 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="2 sec duration, CDU delay">
+            <choice>2 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="3 sec duration, CDU delay">
+            <choice>3 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="4 sec duration, CDU delay">
+            <choice>4 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="5 sec duration, CDU delay">
+            <choice>5 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="6 sec duration, CDU delay">
+            <choice>6 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="7.5 sec duration, CDU delay">
+            <choice>7.5 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="10 sec duration, CDU delay">
+            <choice>10 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="12 sec duration, CDU delay">
+            <choice>12 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.125sec blink">
+            <choice>0.125sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.25sec blink">
+            <choice>0.25sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.375sec blink">
+            <choice>0.375sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.5sec blink">
+            <choice>0.5sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.625sec blink">
+            <choice>0.625sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.75sec blink">
+            <choice>0.75sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.9sec blink">
+            <choice>0.9sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="1 sec blink">
+            <choice>1 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="2 sec blink">
+            <choice>2 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="3 sec blink">
+            <choice>3 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="4 sec blink">
+            <choice>4 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="5 sec blink">
+            <choice>5 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="6 sec blink">
+            <choice>6 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="7.5 sec blink">
+            <choice>7.5 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="10 sec blink">
+            <choice>10 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="continuous">
+            <choice>continuous</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Turnout 7 Output Timing</label>
+      </variable>
+      <variable item="Turnout 8 Output Timing" CV="13" mask="VVVVVVVV" default="19">
+        <enumVal>
+          <enumChoice choice="0.125sec duration">
+            <choice>0.125sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.25sec duration">
+            <choice>0.25sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.375sec duration">
+            <choice>0.375sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.5sec duration">
+            <choice>0.5sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.625sec duration">
+            <choice>0.625sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.75sec duration">
+            <choice>0.75sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.9sec duration">
+            <choice>0.9sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="1 sec duration">
+            <choice>1 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="2 sec duration">
+            <choice>2 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="3 sec duration">
+            <choice>3 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="4 sec duration">
+            <choice>4 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="5 sec duration">
+            <choice>5 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="6 sec duration">
+            <choice>6 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="7.5 sec duration">
+            <choice>7.5 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="10 sec duration">
+            <choice>10 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="12 sec duration">
+            <choice>12 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.125sec duration, CDU delay">
+            <choice>0.125sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.25sec duration, CDU delay">
+            <choice>0.25sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.375sec duration, CDU delay">
+            <choice>0.375sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.5sec duration, CDU delay">
+            <choice>0.5sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.625sec duration, CDU delay">
+            <choice>0.625sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.75sec duration, CDU delay">
+            <choice>0.75sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.9sec duration, CDU delay">
+            <choice>0.9sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="1 sec duration, CDU delay">
+            <choice>1 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="2 sec duration, CDU delay">
+            <choice>2 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="3 sec duration, CDU delay">
+            <choice>3 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="4 sec duration, CDU delay">
+            <choice>4 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="5 sec duration, CDU delay">
+            <choice>5 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="6 sec duration, CDU delay">
+            <choice>6 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="7.5 sec duration, CDU delay">
+            <choice>7.5 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="10 sec duration, CDU delay">
+            <choice>10 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="12 sec duration, CDU delay">
+            <choice>12 sec duration, CDU delay</choice>
+          </enumChoice>
+          <enumChoice choice="0.125sec blink">
+            <choice>0.125sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.25sec blink">
+            <choice>0.25sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.375sec blink">
+            <choice>0.375sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.5sec blink">
+            <choice>0.5sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.625sec blink">
+            <choice>0.625sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.75sec blink">
+            <choice>0.75sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="0.9sec blink">
+            <choice>0.9sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="1 sec blink">
+            <choice>1 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="2 sec blink">
+            <choice>2 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="3 sec blink">
+            <choice>3 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="4 sec blink">
+            <choice>4 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="5 sec blink">
+            <choice>5 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="6 sec blink">
+            <choice>6 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="7.5 sec blink">
+            <choice>7.5 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="10 sec blink">
+            <choice>10 sec blink</choice>
+          </enumChoice>
+          <enumChoice choice="continuous">
+            <choice>continuous</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Turnout 8 Output Timing</label>
+      </variable>
+      <variable item="CDU discharge delay" CV="14" mask="VVVVVVVV" default="8">
+        <enumVal>
+          <enumChoice choice="0.125sec duration">
+            <choice>0.125sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.25sec duration">
+            <choice>0.25sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.375sec duration">
+            <choice>0.375sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.5sec duration">
+            <choice>0.5sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.625sec duration">
+            <choice>0.625sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.75sec duration">
+            <choice>0.75sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="0.9sec duration">
+            <choice>0.9sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="1 sec duration">
+            <choice>1 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="2 sec duration">
+            <choice>2 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="3 sec duration">
+            <choice>3 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="4 sec duration">
+            <choice>4 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="5 sec duration">
+            <choice>5 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="6 sec duration">
+            <choice>6 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="7.5 sec duration">
+            <choice>7.5 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="10 sec duration">
+            <choice>10 sec duration</choice>
+          </enumChoice>
+          <enumChoice choice="12 sec duration">
+            <choice>12 sec duration</choice>
+          </enumChoice>
+        </enumVal>
+        <label>CDU discharge delay</label>
+      </variable>
+      <variable item="Input 1 event" CV="15" mask="VVVVXXXX" default="1">
+        <enumVal>
+          <enumChoice choice="No trigger">
+            <choice>No trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger OFF to ON, rising edge">
+            <choice>Trigger OFF to ON, rising edge</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger ON to OFF, falling edge">
+            <choice>Trigger ON to OFF, falling edge</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on both edges of input">
+            <choice>Trigger on both edges of input</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN">
+            <choice>Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x05)">
+            <choice>Reserved (0x05)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x06)">
+            <choice>Reserved (0x06)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x07)">
+            <choice>Reserved (0x07)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x08)">
+            <choice>Reserved (0x08)</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger OFF to ON, rising edge, disabled if CD in use">
+            <choice>Trigger OFF to ON, rising edge, disabled if CD in use</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger ON to OFF, falling edge, disabled if CD in use">
+            <choice>Trigger ON to OFF, falling edge, disabled if CD in use</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on both edges of input, disabled if CD in use">
+            <choice>Trigger on both edges of input, disabled if CD in use</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN, disabled if CD in use">
+            <choice>Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN, disabled if CD in use</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Input 1 event</label>
+      </variable>
+      <variable item="Output 1 event" CV="15" mask="XXXXVVVV" default="7">
+        <enumVal>
+          <enumChoice choice="Input trigger has no effect on output">
+            <choice>Input trigger has no effect on output</choice>
+          </enumChoice>
+          <enumChoice choice="Output toggles on every trigger">
+            <choice>Output toggles on every trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Output follows input">
+            <choice>Output follows input</choice>
+          </enumChoice>
+          <enumChoice choice="Output CLOSED on trigger">
+            <choice>Output CLOSED on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Output THROWN on trigger">
+            <choice>Output THROWN on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Output off on trigger">
+            <choice>Output off on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Restore to last state on trigger">
+            <choice>Restore to last state on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Execute local route">
+            <choice>Execute local route</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Output 1 event</label>
+      </variable>
+      <variable item="Input 2 event" CV="16" mask="VVVVXXXX" default="1">
+        <enumVal>
+          <enumChoice choice="No trigger">
+            <choice>No trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger OFF to ON, rising edge">
+            <choice>Trigger OFF to ON, rising edge</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger ON to OFF, falling edge">
+            <choice>Trigger ON to OFF, falling edge</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on both edges of input">
+            <choice>Trigger on both edges of input</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN">
+            <choice>Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x05)">
+            <choice>Reserved (0x05)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x06)">
+            <choice>Reserved (0x06)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x07)">
+            <choice>Reserved (0x07)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x08)">
+            <choice>Reserved (0x08)</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger OFF to ON, rising edge, disabled if CD in use">
+            <choice>Trigger OFF to ON, rising edge, disabled if CD in use</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger ON to OFF, falling edge, disabled if CD in use">
+            <choice>Trigger ON to OFF, falling edge, disabled if CD in use</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on both edges of input, disabled if CD in use">
+            <choice>Trigger on both edges of input, disabled if CD in use</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN, disabled if CD in use">
+            <choice>Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN, disabled if CD in use</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Input 2 event</label>
+      </variable>
+      <variable item="Output 2 event" CV="16" mask="XXXXVVVV" default="7">
+        <enumVal>
+          <enumChoice choice="Input trigger has no effect on output">
+            <choice>Input trigger has no effect on output</choice>
+          </enumChoice>
+          <enumChoice choice="Output toggles on every trigger">
+            <choice>Output toggles on every trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Output follows input">
+            <choice>Output follows input</choice>
+          </enumChoice>
+          <enumChoice choice="Output CLOSED on trigger">
+            <choice>Output CLOSED on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Output THROWN on trigger">
+            <choice>Output THROWN on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Output off on trigger">
+            <choice>Output off on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Restore to last state on trigger">
+            <choice>Restore to last state on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Execute local route">
+            <choice>Execute local route</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Output 2 event</label>
+      </variable>
+      <variable item="Input 3 event" CV="17" mask="VVVVXXXX" default="1">
+        <enumVal>
+          <enumChoice choice="No trigger">
+            <choice>No trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger OFF to ON, rising edge">
+            <choice>Trigger OFF to ON, rising edge</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger ON to OFF, falling edge">
+            <choice>Trigger ON to OFF, falling edge</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on both edges of input">
+            <choice>Trigger on both edges of input</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN">
+            <choice>Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x05)">
+            <choice>Reserved (0x05)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x06)">
+            <choice>Reserved (0x06)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x07)">
+            <choice>Reserved (0x07)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x08)">
+            <choice>Reserved (0x08)</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger OFF to ON, rising edge, disabled if CD in use">
+            <choice>Trigger OFF to ON, rising edge, disabled if CD in use</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger ON to OFF, falling edge, disabled if CD in use">
+            <choice>Trigger ON to OFF, falling edge, disabled if CD in use</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on both edges of input, disabled if CD in use">
+            <choice>Trigger on both edges of input, disabled if CD in use</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN, disabled if CD in use">
+            <choice>Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN, disabled if CD in use</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Input 3 event</label>
+      </variable>
+      <variable item="Output 3 event" CV="17" mask="XXXXVVVV" default="7">
+        <enumVal>
+          <enumChoice choice="Input trigger has no effect on output">
+            <choice>Input trigger has no effect on output</choice>
+          </enumChoice>
+          <enumChoice choice="Output toggles on every trigger">
+            <choice>Output toggles on every trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Output follows input">
+            <choice>Output follows input</choice>
+          </enumChoice>
+          <enumChoice choice="Output CLOSED on trigger">
+            <choice>Output CLOSED on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Output THROWN on trigger">
+            <choice>Output THROWN on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Output off on trigger">
+            <choice>Output off on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Restore to last state on trigger">
+            <choice>Restore to last state on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Execute local route">
+            <choice>Execute local route</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Output 3 event</label>
+      </variable>
+      <variable item="Input 4 event" CV="18" mask="VVVVXXXX" default="1">
+        <enumVal>
+          <enumChoice choice="No trigger">
+            <choice>No trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger OFF to ON, rising edge">
+            <choice>Trigger OFF to ON, rising edge</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger ON to OFF, falling edge">
+            <choice>Trigger ON to OFF, falling edge</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on both edges of input">
+            <choice>Trigger on both edges of input</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN">
+            <choice>Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x05)">
+            <choice>Reserved (0x05)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x06)">
+            <choice>Reserved (0x06)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x07)">
+            <choice>Reserved (0x07)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x08)">
+            <choice>Reserved (0x08)</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger OFF to ON, rising edge, disabled if CD in use">
+            <choice>Trigger OFF to ON, rising edge, disabled if CD in use</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger ON to OFF, falling edge, disabled if CD in use">
+            <choice>Trigger ON to OFF, falling edge, disabled if CD in use</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on both edges of input, disabled if CD in use">
+            <choice>Trigger on both edges of input, disabled if CD in use</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN, disabled if CD in use">
+            <choice>Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN, disabled if CD in use</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Input 4 event</label>
+      </variable>
+      <variable item="Output 4 event" CV="18" mask="XXXXVVVV" default="7">
+        <enumVal>
+          <enumChoice choice="Input trigger has no effect on output">
+            <choice>Input trigger has no effect on output</choice>
+          </enumChoice>
+          <enumChoice choice="Output toggles on every trigger">
+            <choice>Output toggles on every trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Output follows input">
+            <choice>Output follows input</choice>
+          </enumChoice>
+          <enumChoice choice="Output CLOSED on trigger">
+            <choice>Output CLOSED on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Output THROWN on trigger">
+            <choice>Output THROWN on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Output off on trigger">
+            <choice>Output off on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Restore to last state on trigger">
+            <choice>Restore to last state on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Execute local route">
+            <choice>Execute local route</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Output 4 event</label>
+      </variable>
+      <variable item="Input 5 event" CV="19" mask="VVVVXXXX" default="1">
+        <enumVal>
+          <enumChoice choice="No trigger">
+            <choice>No trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger OFF to ON, rising edge">
+            <choice>Trigger OFF to ON, rising edge</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger ON to OFF, falling edge">
+            <choice>Trigger ON to OFF, falling edge</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on both edges of input">
+            <choice>Trigger on both edges of input</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN">
+            <choice>Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x05)">
+            <choice>Reserved (0x05)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x06)">
+            <choice>Reserved (0x06)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x07)">
+            <choice>Reserved (0x07)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x08)">
+            <choice>Reserved (0x08)</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger OFF to ON, rising edge, disabled if CD in use">
+            <choice>Trigger OFF to ON, rising edge, disabled if CD in use</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger ON to OFF, falling edge, disabled if CD in use">
+            <choice>Trigger ON to OFF, falling edge, disabled if CD in use</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on both edges of input, disabled if CD in use">
+            <choice>Trigger on both edges of input, disabled if CD in use</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN, disabled if CD in use">
+            <choice>Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN, disabled if CD in use</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Input 5 event</label>
+      </variable>
+      <variable item="Output 5 event" CV="19" mask="XXXXVVVV" default="7">
+        <enumVal>
+          <enumChoice choice="Input trigger has no effect on output">
+            <choice>Input trigger has no effect on output</choice>
+          </enumChoice>
+          <enumChoice choice="Output toggles on every trigger">
+            <choice>Output toggles on every trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Output follows input">
+            <choice>Output follows input</choice>
+          </enumChoice>
+          <enumChoice choice="Output CLOSED on trigger">
+            <choice>Output CLOSED on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Output THROWN on trigger">
+            <choice>Output THROWN on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Output off on trigger">
+            <choice>Output off on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Restore to last state on trigger">
+            <choice>Restore to last state on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Execute local route">
+            <choice>Execute local route</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Output 5 event</label>
+      </variable>
+      <variable item="Input 6 event" CV="20" mask="VVVVXXXX" default="1">
+        <enumVal>
+          <enumChoice choice="No trigger">
+            <choice>No trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger OFF to ON, rising edge">
+            <choice>Trigger OFF to ON, rising edge</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger ON to OFF, falling edge">
+            <choice>Trigger ON to OFF, falling edge</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on both edges of input">
+            <choice>Trigger on both edges of input</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN">
+            <choice>Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x05)">
+            <choice>Reserved (0x05)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x06)">
+            <choice>Reserved (0x06)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x07)">
+            <choice>Reserved (0x07)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x08)">
+            <choice>Reserved (0x08)</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger OFF to ON, rising edge, disabled if CD in use">
+            <choice>Trigger OFF to ON, rising edge, disabled if CD in use</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger ON to OFF, falling edge, disabled if CD in use">
+            <choice>Trigger ON to OFF, falling edge, disabled if CD in use</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on both edges of input, disabled if CD in use">
+            <choice>Trigger on both edges of input, disabled if CD in use</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN, disabled if CD in use">
+            <choice>Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN, disabled if CD in use</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Input 6 event</label>
+      </variable>
+      <variable item="Output 6 event" CV="20" mask="XXXXVVVV" default="7">
+        <enumVal>
+          <enumChoice choice="Input trigger has no effect on output">
+            <choice>Input trigger has no effect on output</choice>
+          </enumChoice>
+          <enumChoice choice="Output toggles on every trigger">
+            <choice>Output toggles on every trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Output follows input">
+            <choice>Output follows input</choice>
+          </enumChoice>
+          <enumChoice choice="Output CLOSED on trigger">
+            <choice>Output CLOSED on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Output THROWN on trigger">
+            <choice>Output THROWN on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Output off on trigger">
+            <choice>Output off on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Restore to last state on trigger">
+            <choice>Restore to last state on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Execute local route">
+            <choice>Execute local route</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Output 6 event</label>
+      </variable>
+      <variable item="Input 7 event" CV="21" mask="VVVVXXXX" default="1">
+        <enumVal>
+          <enumChoice choice="No trigger">
+            <choice>No trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger OFF to ON, rising edge">
+            <choice>Trigger OFF to ON, rising edge</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger ON to OFF, falling edge">
+            <choice>Trigger ON to OFF, falling edge</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on both edges of input">
+            <choice>Trigger on both edges of input</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN">
+            <choice>Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x05)">
+            <choice>Reserved (0x05)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x06)">
+            <choice>Reserved (0x06)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x07)">
+            <choice>Reserved (0x07)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x08)">
+            <choice>Reserved (0x08)</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger OFF to ON, rising edge, disabled if CD in use">
+            <choice>Trigger OFF to ON, rising edge, disabled if CD in use</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger ON to OFF, falling edge, disabled if CD in use">
+            <choice>Trigger ON to OFF, falling edge, disabled if CD in use</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on both edges of input, disabled if CD in use">
+            <choice>Trigger on both edges of input, disabled if CD in use</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN, disabled if CD in use">
+            <choice>Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN, disabled if CD in use</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Input 7 event</label>
+      </variable>
+      <variable item="Output 7 event" CV="21" mask="XXXXVVVV" default="7">
+        <enumVal>
+          <enumChoice choice="Input trigger has no effect on output">
+            <choice>Input trigger has no effect on output</choice>
+          </enumChoice>
+          <enumChoice choice="Output toggles on every trigger">
+            <choice>Output toggles on every trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Output follows input">
+            <choice>Output follows input</choice>
+          </enumChoice>
+          <enumChoice choice="Output CLOSED on trigger">
+            <choice>Output CLOSED on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Output THROWN on trigger">
+            <choice>Output THROWN on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Output off on trigger">
+            <choice>Output off on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Restore to last state on trigger">
+            <choice>Restore to last state on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Execute local route">
+            <choice>Execute local route</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Output 7 event</label>
+      </variable>
+      <variable item="Input 8 event" CV="22" mask="VVVVXXXX" default="1">
+        <enumVal>
+          <enumChoice choice="No trigger">
+            <choice>No trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger OFF to ON, rising edge">
+            <choice>Trigger OFF to ON, rising edge</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger ON to OFF, falling edge">
+            <choice>Trigger ON to OFF, falling edge</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on both edges of input">
+            <choice>Trigger on both edges of input</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN">
+            <choice>Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x05)">
+            <choice>Reserved (0x05)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x06)">
+            <choice>Reserved (0x06)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x07)">
+            <choice>Reserved (0x07)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x08)">
+            <choice>Reserved (0x08)</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger OFF to ON, rising edge, disabled if CD in use">
+            <choice>Trigger OFF to ON, rising edge, disabled if CD in use</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger ON to OFF, falling edge, disabled if CD in use">
+            <choice>Trigger ON to OFF, falling edge, disabled if CD in use</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on both edges of input, disabled if CD in use">
+            <choice>Trigger on both edges of input, disabled if CD in use</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN, disabled if CD in use">
+            <choice>Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN, disabled if CD in use</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Input 8 event</label>
+      </variable>
+      <variable item="Output 8 event" CV="22" mask="XXXXVVVV" default="7">
+        <enumVal>
+          <enumChoice choice="Input trigger has no effect on output">
+            <choice>Input trigger has no effect on output</choice>
+          </enumChoice>
+          <enumChoice choice="Output toggles on every trigger">
+            <choice>Output toggles on every trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Output follows input">
+            <choice>Output follows input</choice>
+          </enumChoice>
+          <enumChoice choice="Output CLOSED on trigger">
+            <choice>Output CLOSED on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Output THROWN on trigger">
+            <choice>Output THROWN on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Output off on trigger">
+            <choice>Output off on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Restore to last state on trigger">
+            <choice>Restore to last state on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Execute local route">
+            <choice>Execute local route</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Output 8 event</label>
+      </variable>
+      <variable item="Input A event" CV="23" mask="VVVVXXXX" default="3">
+        <enumVal>
+          <enumChoice choice="No trigger">
+            <choice>No trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger OFF to ON, rising edge">
+            <choice>Trigger OFF to ON, rising edge</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger ON to OFF, falling edge">
+            <choice>Trigger ON to OFF, falling edge</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on both edges of input">
+            <choice>Trigger on both edges of input</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN">
+            <choice>Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x05)">
+            <choice>Reserved (0x05)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x06)">
+            <choice>Reserved (0x06)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x07)">
+            <choice>Reserved (0x07)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x08)">
+            <choice>Reserved (0x08)</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger OFF to ON, rising edge, disabled if CD in use">
+            <choice>Trigger OFF to ON, rising edge, disabled if CD in use</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger ON to OFF, falling edge, disabled if CD in use">
+            <choice>Trigger ON to OFF, falling edge, disabled if CD in use</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on both edges of input, disabled if CD in use">
+            <choice>Trigger on both edges of input, disabled if CD in use</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN, disabled if CD in use">
+            <choice>Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN, disabled if CD in use</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Input A event</label>
+      </variable>
+      <variable item="Output A event" CV="23" mask="XXXXVVVV" default="0">
+        <enumVal>
+          <enumChoice choice="Input trigger has no effect on output">
+            <choice>Input trigger has no effect on output</choice>
+          </enumChoice>
+          <enumChoice choice="Output toggles on every trigger">
+            <choice>Output toggles on every trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Output follows input">
+            <choice>Output follows input</choice>
+          </enumChoice>
+          <enumChoice choice="Output CLOSED on trigger">
+            <choice>Output CLOSED on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Output THROWN on trigger">
+            <choice>Output THROWN on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Output off on trigger">
+            <choice>Output off on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Restore to last state on trigger">
+            <choice>Restore to last state on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Execute local route">
+            <choice>Execute local route</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Output A event</label>
+      </variable>
+      <variable item="Input B event" CV="24" mask="VVVVXXXX" default="3">
+        <enumVal>
+          <enumChoice choice="No trigger">
+            <choice>No trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger OFF to ON, rising edge">
+            <choice>Trigger OFF to ON, rising edge</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger ON to OFF, falling edge">
+            <choice>Trigger ON to OFF, falling edge</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on both edges of input">
+            <choice>Trigger on both edges of input</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN">
+            <choice>Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x05)">
+            <choice>Reserved (0x05)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x06)">
+            <choice>Reserved (0x06)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x07)">
+            <choice>Reserved (0x07)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x08)">
+            <choice>Reserved (0x08)</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger OFF to ON, rising edge, disabled if CD in use">
+            <choice>Trigger OFF to ON, rising edge, disabled if CD in use</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger ON to OFF, falling edge, disabled if CD in use">
+            <choice>Trigger ON to OFF, falling edge, disabled if CD in use</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on both edges of input, disabled if CD in use">
+            <choice>Trigger on both edges of input, disabled if CD in use</choice>
+          </enumChoice>
+          <enumChoice choice="Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN, disabled if CD in use">
+            <choice>Trigger on rising edge if output CLOSED, or trigger on falling edge if output THROWN, disabled if CD in use</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Input B event</label>
+      </variable>
+      <variable item="Output B event" CV="24" mask="XXXXVVVV" default="0">
+        <enumVal>
+          <enumChoice choice="Input trigger has no effect on output">
+            <choice>Input trigger has no effect on output</choice>
+          </enumChoice>
+          <enumChoice choice="Output toggles on every trigger">
+            <choice>Output toggles on every trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Output follows input">
+            <choice>Output follows input</choice>
+          </enumChoice>
+          <enumChoice choice="Output CLOSED on trigger">
+            <choice>Output CLOSED on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Output THROWN on trigger">
+            <choice>Output THROWN on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Output off on trigger">
+            <choice>Output off on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Restore to last state on trigger">
+            <choice>Restore to last state on trigger</choice>
+          </enumChoice>
+          <enumChoice choice="Execute local route">
+            <choice>Execute local route</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Output B event</label>
+      </variable>
+      <variable item="Input 1 and Output 1 Message" CV="30" mask="VVVVVVVV" default="0">
+        <enumVal>
+          <enumChoice choice="No message">
+            <choice>No message</choice>
+          </enumChoice>
+          <enumChoice choice="Sensor input">
+            <choice>Sensor input</choice>
+          </enumChoice>
+          <enumChoice choice="Turnout feedback">
+            <choice>Turnout feedback</choice>
+          </enumChoice>
+          <enumChoice choice="System Power off">
+            <choice>System Power off</choice>
+          </enumChoice>
+          <enumChoice choice="Emergency Stop">
+            <choice>Emergency Stop</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x05)">
+            <choice>Reserved (0x05)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x06)">
+            <choice>Reserved (0x06)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x07)">
+            <choice>Reserved (0x07)</choice>
+          </enumChoice>
+          <enumChoice choice="Output state">
+            <choice>Output state</choice>
+          </enumChoice>
+          <enumChoice choice="Output state and Sensor input">
+            <choice>Output state and Sensor input</choice>
+          </enumChoice>
+          <enumChoice choice="Output state and Turnout feedback">
+            <choice>Output state and Turnout feedback</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Input 1 and Output 1 Message</label>
+      </variable>
+      <variable item="Input 2 and Output 2 Message" CV="31" mask="VVVVVVVV" default="0">
+        <enumVal>
+          <enumChoice choice="No message">
+            <choice>No message</choice>
+          </enumChoice>
+          <enumChoice choice="Sensor input">
+            <choice>Sensor input</choice>
+          </enumChoice>
+          <enumChoice choice="Turnout feedback">
+            <choice>Turnout feedback</choice>
+          </enumChoice>
+          <enumChoice choice="System Power off">
+            <choice>System Power off</choice>
+          </enumChoice>
+          <enumChoice choice="Emergency Stop">
+            <choice>Emergency Stop</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x05)">
+            <choice>Reserved (0x05)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x06)">
+            <choice>Reserved (0x06)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x07)">
+            <choice>Reserved (0x07)</choice>
+          </enumChoice>
+          <enumChoice choice="Output state">
+            <choice>Output state</choice>
+          </enumChoice>
+          <enumChoice choice="Output state and Sensor input">
+            <choice>Output state and Sensor input</choice>
+          </enumChoice>
+          <enumChoice choice="Output state and Turnout feedback">
+            <choice>Output state and Turnout feedback</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Input 2 and Output 2 Message</label>
+      </variable>
+      <variable item="Input 3 and Output 3 Message" CV="32" mask="VVVVVVVV" default="0">
+        <enumVal>
+          <enumChoice choice="No message">
+            <choice>No message</choice>
+          </enumChoice>
+          <enumChoice choice="Sensor input">
+            <choice>Sensor input</choice>
+          </enumChoice>
+          <enumChoice choice="Turnout feedback">
+            <choice>Turnout feedback</choice>
+          </enumChoice>
+          <enumChoice choice="System Power off">
+            <choice>System Power off</choice>
+          </enumChoice>
+          <enumChoice choice="Emergency Stop">
+            <choice>Emergency Stop</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x05)">
+            <choice>Reserved (0x05)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x06)">
+            <choice>Reserved (0x06)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x07)">
+            <choice>Reserved (0x07)</choice>
+          </enumChoice>
+          <enumChoice choice="Output state">
+            <choice>Output state</choice>
+          </enumChoice>
+          <enumChoice choice="Output state and Sensor input">
+            <choice>Output state and Sensor input</choice>
+          </enumChoice>
+          <enumChoice choice="Output state and Turnout feedback">
+            <choice>Output state and Turnout feedback</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Input 3 and Output 3 Message</label>
+      </variable>
+      <variable item="Input 4 and Output 4 Message" CV="33" mask="VVVVVVVV" default="0">
+        <enumVal>
+          <enumChoice choice="No message">
+            <choice>No message</choice>
+          </enumChoice>
+          <enumChoice choice="Sensor input">
+            <choice>Sensor input</choice>
+          </enumChoice>
+          <enumChoice choice="Turnout feedback">
+            <choice>Turnout feedback</choice>
+          </enumChoice>
+          <enumChoice choice="System Power off">
+            <choice>System Power off</choice>
+          </enumChoice>
+          <enumChoice choice="Emergency Stop">
+            <choice>Emergency Stop</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x05)">
+            <choice>Reserved (0x05)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x06)">
+            <choice>Reserved (0x06)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x07)">
+            <choice>Reserved (0x07)</choice>
+          </enumChoice>
+          <enumChoice choice="Output state">
+            <choice>Output state</choice>
+          </enumChoice>
+          <enumChoice choice="Output state and Sensor input">
+            <choice>Output state and Sensor input</choice>
+          </enumChoice>
+          <enumChoice choice="Output state and Turnout feedback">
+            <choice>Output state and Turnout feedback</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Input 4 and Output 4 Message</label>
+      </variable>
+      <variable item="Input 5 and Output 5 Message" CV="34" mask="VVVVVVVV" default="0">
+        <enumVal>
+          <enumChoice choice="No message">
+            <choice>No message</choice>
+          </enumChoice>
+          <enumChoice choice="Sensor input">
+            <choice>Sensor input</choice>
+          </enumChoice>
+          <enumChoice choice="Turnout feedback">
+            <choice>Turnout feedback</choice>
+          </enumChoice>
+          <enumChoice choice="System Power off">
+            <choice>System Power off</choice>
+          </enumChoice>
+          <enumChoice choice="Emergency Stop">
+            <choice>Emergency Stop</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x05)">
+            <choice>Reserved (0x05)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x06)">
+            <choice>Reserved (0x06)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x07)">
+            <choice>Reserved (0x07)</choice>
+          </enumChoice>
+          <enumChoice choice="Output state">
+            <choice>Output state</choice>
+          </enumChoice>
+          <enumChoice choice="Output state and Sensor input">
+            <choice>Output state and Sensor input</choice>
+          </enumChoice>
+          <enumChoice choice="Output state and Turnout feedback">
+            <choice>Output state and Turnout feedback</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Input 5 and Output 5 Message</label>
+      </variable>
+      <variable item="Input 6 and Output 6 Message" CV="35" mask="VVVVVVVV" default="0">
+        <enumVal>
+          <enumChoice choice="No message">
+            <choice>No message</choice>
+          </enumChoice>
+          <enumChoice choice="Sensor input">
+            <choice>Sensor input</choice>
+          </enumChoice>
+          <enumChoice choice="Turnout feedback">
+            <choice>Turnout feedback</choice>
+          </enumChoice>
+          <enumChoice choice="System Power off">
+            <choice>System Power off</choice>
+          </enumChoice>
+          <enumChoice choice="Emergency Stop">
+            <choice>Emergency Stop</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x05)">
+            <choice>Reserved (0x05)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x06)">
+            <choice>Reserved (0x06)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x07)">
+            <choice>Reserved (0x07)</choice>
+          </enumChoice>
+          <enumChoice choice="Output state">
+            <choice>Output state</choice>
+          </enumChoice>
+          <enumChoice choice="Output state and Sensor input">
+            <choice>Output state and Sensor input</choice>
+          </enumChoice>
+          <enumChoice choice="Output state and Turnout feedback">
+            <choice>Output state and Turnout feedback</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Input 6 and Output 6 Message</label>
+      </variable>
+      <variable item="Input 7 and Output 7 Message" CV="36" mask="VVVVVVVV" default="0">
+        <enumVal>
+          <enumChoice choice="No message">
+            <choice>No message</choice>
+          </enumChoice>
+          <enumChoice choice="Sensor input">
+            <choice>Sensor input</choice>
+          </enumChoice>
+          <enumChoice choice="Turnout feedback">
+            <choice>Turnout feedback</choice>
+          </enumChoice>
+          <enumChoice choice="System Power off">
+            <choice>System Power off</choice>
+          </enumChoice>
+          <enumChoice choice="Emergency Stop">
+            <choice>Emergency Stop</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x05)">
+            <choice>Reserved (0x05)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x06)">
+            <choice>Reserved (0x06)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x07)">
+            <choice>Reserved (0x07)</choice>
+          </enumChoice>
+          <enumChoice choice="Output state">
+            <choice>Output state</choice>
+          </enumChoice>
+          <enumChoice choice="Output state and Sensor input">
+            <choice>Output state and Sensor input</choice>
+          </enumChoice>
+          <enumChoice choice="Output state and Turnout feedback">
+            <choice>Output state and Turnout feedback</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Input 7 and Output 7 Message</label>
+      </variable>
+      <variable item="Input 8 and Output 8 Message" CV="37" mask="VVVVVVVV" default="0">
+        <enumVal>
+          <enumChoice choice="No message">
+            <choice>No message</choice>
+          </enumChoice>
+          <enumChoice choice="Sensor input">
+            <choice>Sensor input</choice>
+          </enumChoice>
+          <enumChoice choice="Turnout feedback">
+            <choice>Turnout feedback</choice>
+          </enumChoice>
+          <enumChoice choice="System Power off">
+            <choice>System Power off</choice>
+          </enumChoice>
+          <enumChoice choice="Emergency Stop">
+            <choice>Emergency Stop</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x05)">
+            <choice>Reserved (0x05)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x06)">
+            <choice>Reserved (0x06)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x07)">
+            <choice>Reserved (0x07)</choice>
+          </enumChoice>
+          <enumChoice choice="Output state">
+            <choice>Output state</choice>
+          </enumChoice>
+          <enumChoice choice="Output state and Sensor input">
+            <choice>Output state and Sensor input</choice>
+          </enumChoice>
+          <enumChoice choice="Output state and Turnout feedback">
+            <choice>Output state and Turnout feedback</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Input 8 and Output 8 Message</label>
+      </variable>
+      <variable item="Input A Message" CV="38" mask="VVVVVVVV" default="1">
+        <enumVal>
+          <enumChoice choice="No message">
+            <choice>No message</choice>
+          </enumChoice>
+          <enumChoice choice="Sensor input">
+            <choice>Sensor input</choice>
+          </enumChoice>
+          <enumChoice choice="Turnout feedback">
+            <choice>Turnout feedback</choice>
+          </enumChoice>
+          <enumChoice choice="System Power off">
+            <choice>System Power off</choice>
+          </enumChoice>
+          <enumChoice choice="Emergency Stop">
+            <choice>Emergency Stop</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x05)">
+            <choice>Reserved (0x05)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x06)">
+            <choice>Reserved (0x06)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x07)">
+            <choice>Reserved (0x07)</choice>
+          </enumChoice>
+          <enumChoice choice="Output state">
+            <choice>Output state</choice>
+          </enumChoice>
+          <enumChoice choice="Output state and Sensor input">
+            <choice>Output state and Sensor input</choice>
+          </enumChoice>
+          <enumChoice choice="Output state and Turnout feedback">
+            <choice>Output state and Turnout feedback</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Input A Message</label>
+      </variable>
+      <variable item="Input B Message" CV="39" mask="VVVVVVVV" default="1">
+        <enumVal>
+          <enumChoice choice="No message">
+            <choice>No message</choice>
+          </enumChoice>
+          <enumChoice choice="Sensor input">
+            <choice>Sensor input</choice>
+          </enumChoice>
+          <enumChoice choice="Turnout feedback">
+            <choice>Turnout feedback</choice>
+          </enumChoice>
+          <enumChoice choice="System Power off">
+            <choice>System Power off</choice>
+          </enumChoice>
+          <enumChoice choice="Emergency Stop">
+            <choice>Emergency Stop</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x05)">
+            <choice>Reserved (0x05)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x06)">
+            <choice>Reserved (0x06)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x07)">
+            <choice>Reserved (0x07)</choice>
+          </enumChoice>
+          <enumChoice choice="Output state">
+            <choice>Output state</choice>
+          </enumChoice>
+          <enumChoice choice="Output state and Sensor input">
+            <choice>Output state and Sensor input</choice>
+          </enumChoice>
+          <enumChoice choice="Output state and Turnout feedback">
+            <choice>Output state and Turnout feedback</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Input B Message</label>
+      </variable>
+      <variable item="Turnout 1 follows turnout address" CV="40" mask="VVVVVVVV">
+        <decVal min="0" max="8"/>
+        <label>Turnout 1 follows turnout address</label>
+      </variable>
+      <variable item="Turnout 2 follows turnout address" CV="41" mask="VVVVVVVV">
+        <decVal min="0" max="8"/>
+        <label>Turnout 2 follows turnout address</label>
+      </variable>
+      <variable item="Turnout 3 follows turnout address" CV="42" mask="VVVVVVVV">
+        <decVal min="0" max="8"/>
+        <label>Turnout 3 follows turnout address</label>
+      </variable>
+      <variable item="Turnout 4 follows turnout address" CV="43" mask="VVVVVVVV">
+        <decVal min="0" max="8"/>
+        <label>Turnout 4 follows turnout address</label>
+      </variable>
+      <variable item="Turnout 5 follows turnout address" CV="44" mask="VVVVVVVV">
+        <decVal min="0" max="8"/>
+        <label>Turnout 5 follows turnout address</label>
+      </variable>
+      <variable item="Turnout 6 follows turnout address" CV="45" mask="VVVVVVVV">
+        <decVal min="0" max="8"/>
+        <label>Turnout 6 follows turnout address</label>
+      </variable>
+      <variable item="Turnout 7 follows turnout address" CV="46" mask="VVVVVVVV">
+        <decVal min="0" max="8"/>
+        <label>Turnout 7 follows turnout address</label>
+      </variable>
+      <variable item="Turnout 8 follows turnout address" CV="47" mask="VVVVVVVV">
+        <decVal min="0" max="8"/>
+        <label>Turnout 8 follows turnout address</label>
+      </variable>
+      <variable item="Turnout 1 included in local route 1" CV="48" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 1 included in local route 1</label>
+      </variable>
+      <variable item="Local route 1 sets turnout 1" CV="49" mask="XXXXXXXV">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 1 sets turnout 1</label>
+      </variable>
+      <variable item="Turnout 2 included in local route 1" CV="48" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 2 included in local route 1</label>
+      </variable>
+      <variable item="Local route 1 sets turnout 2" CV="49" mask="XXXXXXVX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 1 sets turnout 2</label>
+      </variable>
+      <variable item="Turnout 3 included in local route 1" CV="48" mask="XXXXXVXX">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Turnout 3 included in local route 1</label>
+      </variable>
+      <variable item="Local route 1 sets turnout 3" CV="49" mask="XXXXXVXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 1 sets turnout 3</label>
+      </variable>
+      <variable item="Turnout 4 included in local route 1" CV="48" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 4 included in local route 1</label>
+      </variable>
+      <variable item="Local route 1 sets turnout 4" CV="49" mask="XXXXVXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 1 sets turnout 4</label>
+      </variable>
+      <variable item="Turnout 5 included in local route 1" CV="48" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 5 included in local route 1</label>
+      </variable>
+      <variable item="Local route 1 sets turnout 5" CV="49" mask="XXXVXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 1 sets turnout 5</label>
+      </variable>
+      <variable item="Turnout 6 included in local route 1" CV="48" mask="XXVXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 6 included in local route 1</label>
+      </variable>
+      <variable item="Local route 1 sets turnout 6" CV="49" mask="XXVXXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 1 sets turnout 6</label>
+      </variable>
+      <variable item="Turnout 7 included in local route 1" CV="48" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 7 included in local route 1</label>
+      </variable>
+      <variable item="Local route 1 sets turnout 7" CV="49" mask="XVXXXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 1 sets turnout 7</label>
+      </variable>
+      <variable item="Turnout 8 included in local route 1" CV="48" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 8 included in local route 1</label>
+      </variable>
+      <variable item="Local route 1 sets turnout 8" CV="49" mask="VXXXXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 1 sets turnout 8</label>
+      </variable>
+      <variable item="Turnout 1 included in local route 2" CV="50" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 1 included in local route 2</label>
+      </variable>
+      <variable item="Local route 2 sets turnout 1" CV="51" mask="XXXXXXXV">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 2 sets turnout 1</label>
+      </variable>
+      <variable item="Turnout 2 included in local route 2" CV="50" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 2 included in local route 2</label>
+      </variable>
+      <variable item="Local route 2 sets turnout 2" CV="51" mask="XXXXXXVX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 2 sets turnout 2</label>
+      </variable>
+      <variable item="Turnout 3 included in local route 2" CV="50" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 3 included in local route 2</label>
+      </variable>
+      <variable item="Local route 2 sets turnout 3" CV="51" mask="XXXXXVXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 2 sets turnout 3</label>
+      </variable>
+      <variable item="Turnout 4 included in local route 2" CV="50" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 4 included in local route 2</label>
+      </variable>
+      <variable item="Local route 2 sets turnout 4" CV="51" mask="XXXXVXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 2 sets turnout 4</label>
+      </variable>
+      <variable item="Turnout 5 included in local route 2" CV="50" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 5 included in local route 2</label>
+      </variable>
+      <variable item="Local route 2 sets turnout 5" CV="51" mask="XXXVXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 2 sets turnout 5</label>
+      </variable>
+      <variable item="Turnout 6 included in local route 2" CV="50" mask="XXVXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 6 included in local route 2</label>
+      </variable>
+      <variable item="Local route 2 sets turnout 6" CV="51" mask="XXVXXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 2 sets turnout 6</label>
+      </variable>
+      <variable item="Turnout 7 included in local route 2" CV="50" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 7 included in local route 2</label>
+      </variable>
+      <variable item="Local route 2 sets turnout 7" CV="51" mask="XVXXXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 2 sets turnout 7</label>
+      </variable>
+      <variable item="Turnout 8 included in local route 2" CV="50" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 8 included in local route 2</label>
+      </variable>
+      <variable item="Local route 2 sets turnout 8" CV="51" mask="VXXXXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 2 sets turnout 8</label>
+      </variable>
+      <variable item="Turnout 1 included in local route 3" CV="52" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 1 included in local route 3</label>
+      </variable>
+      <variable item="Local route 3 sets turnout 1" CV="53" mask="XXXXXXXV">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 3 sets turnout 1</label>
+      </variable>
+      <variable item="Turnout 2 included in local route 3" CV="52" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 2 included in local route 3</label>
+      </variable>
+      <variable item="Local route 3 sets turnout 2" CV="53" mask="XXXXXXVX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 3 sets turnout 2</label>
+      </variable>
+      <variable item="Turnout 3 included in local route 3" CV="52" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 3 included in local route 3</label>
+      </variable>
+      <variable item="Local route 3 sets turnout 3" CV="53" mask="XXXXXVXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 3 sets turnout 3</label>
+      </variable>
+      <variable item="Turnout 4 included in local route 3" CV="52" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 4 included in local route 3</label>
+      </variable>
+      <variable item="Local route 3 sets turnout 4" CV="53" mask="XXXXVXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 3 sets turnout 4</label>
+      </variable>
+      <variable item="Turnout 5 included in local route 3" CV="52" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 5 included in local route 3</label>
+      </variable>
+      <variable item="Local route 3 sets turnout 5" CV="53" mask="XXXVXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 3 sets turnout 5</label>
+      </variable>
+      <variable item="Turnout 6 included in local route 3" CV="52" mask="XXVXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 6 included in local route 3</label>
+      </variable>
+      <variable item="Local route 3 sets turnout 6" CV="53" mask="XXVXXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 3 sets turnout 6</label>
+      </variable>
+      <variable item="Turnout 7 included in local route 3" CV="52" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 7 included in local route 3</label>
+      </variable>
+      <variable item="Local route 3 sets turnout 7" CV="53" mask="XVXXXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 3 sets turnout 7</label>
+      </variable>
+      <variable item="Turnout 8 included in local route 3" CV="52" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 8 included in local route 3</label>
+      </variable>
+      <variable item="Local route 3 sets turnout 8" CV="53" mask="VXXXXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 3 sets turnout 8</label>
+      </variable>
+      <variable item="Turnout 1 included in local route 4" CV="54" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 1 included in local route 4</label>
+      </variable>
+      <variable item="Local route 4 sets turnout 1" CV="55" mask="XXXXXXXV">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 4 sets turnout 1</label>
+      </variable>
+      <variable item="Turnout 2 included in local route 4" CV="54" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 2 included in local route 4</label>
+      </variable>
+      <variable item="Local route 4 sets turnout 2" CV="55" mask="XXXXXXVX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 4 sets turnout 2</label>
+      </variable>
+      <variable item="Turnout 3 included in local route 4" CV="54" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 3 included in local route 4</label>
+      </variable>
+      <variable item="Local route 4 sets turnout 3" CV="55" mask="XXXXXVXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 4 sets turnout 3</label>
+      </variable>
+      <variable item="Turnout 4 included in local route 4" CV="54" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 4 included in local route 4</label>
+      </variable>
+      <variable item="Local route 4 sets turnout 4" CV="55" mask="XXXXVXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 4 sets turnout 4</label>
+      </variable>
+      <variable item="Turnout 5 included in local route 4" CV="54" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 5 included in local route 4</label>
+      </variable>
+      <variable item="Local route 4 sets turnout 5" CV="55" mask="XXXVXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 4 sets turnout 5</label>
+      </variable>
+      <variable item="Turnout 6 included in local route 4" CV="54" mask="XXVXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 6 included in local route 4</label>
+      </variable>
+      <variable item="Local route 4 sets turnout 6" CV="55" mask="XXVXXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 4 sets turnout 6</label>
+      </variable>
+      <variable item="Turnout 7 included in local route 4" CV="54" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 7 included in local route 4</label>
+      </variable>
+      <variable item="Local route 4 sets turnout 7" CV="55" mask="XVXXXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 4 sets turnout 7</label>
+      </variable>
+      <variable item="Turnout 8 included in local route 4" CV="54" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 8 included in local route 4</label>
+      </variable>
+      <variable item="Local route 4 sets turnout 8" CV="55" mask="VXXXXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 4 sets turnout 8</label>
+      </variable>
+      <variable item="Turnout 1 included in local route 5" CV="56" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 1 included in local route 5</label>
+      </variable>
+      <variable item="Local route 5 sets turnout 1" CV="57" mask="XXXXXXXV">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 5 sets turnout 1</label>
+      </variable>
+      <variable item="Turnout 2 included in local route 5" CV="56" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 2 included in local route 5</label>
+      </variable>
+      <variable item="Local route 5 sets turnout 2" CV="57" mask="XXXXXXVX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 5 sets turnout 2</label>
+      </variable>
+      <variable item="Turnout 3 included in local route 5" CV="56" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 3 included in local route 5</label>
+      </variable>
+      <variable item="Local route 5 sets turnout 3" CV="57" mask="XXXXXVXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 5 sets turnout 3</label>
+      </variable>
+      <variable item="Turnout 4 included in local route 5" CV="56" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 4 included in local route 5</label>
+      </variable>
+      <variable item="Local route 5 sets turnout 4" CV="57" mask="XXXXVXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 5 sets turnout 4</label>
+      </variable>
+      <variable item="Turnout 5 included in local route 5" CV="56" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 5 included in local route 5</label>
+      </variable>
+      <variable item="Local route 5 sets turnout 5" CV="57" mask="XXXVXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 5 sets turnout 5</label>
+      </variable>
+      <variable item="Turnout 6 included in local route 5" CV="56" mask="XXVXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 6 included in local route 5</label>
+      </variable>
+      <variable item="Local route 5 sets turnout 6" CV="57" mask="XXVXXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 5 sets turnout 6</label>
+      </variable>
+      <variable item="Turnout 7 included in local route 5" CV="56" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 7 included in local route 5</label>
+      </variable>
+      <variable item="Local route 5 sets turnout 7" CV="57" mask="XVXXXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 5 sets turnout 7</label>
+      </variable>
+      <variable item="Turnout 8 included in local route 5" CV="56" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 8 included in local route 5</label>
+      </variable>
+      <variable item="Local route 5 sets turnout 8" CV="57" mask="VXXXXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 5 sets turnout 8</label>
+      </variable>
+      <variable item="Turnout 1 included in local route 6" CV="58" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 1 included in local route 6</label>
+      </variable>
+      <variable item="Local route 6 sets turnout 1" CV="59" mask="XXXXXXXV">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 6 sets turnout 1</label>
+      </variable>
+      <variable item="Turnout 2 included in local route 6" CV="58" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 2 included in local route 6</label>
+      </variable>
+      <variable item="Local route 6 sets turnout 2" CV="59" mask="XXXXXXVX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 6 sets turnout 2</label>
+      </variable>
+      <variable item="Turnout 3 included in local route 6" CV="58" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 3 included in local route 6</label>
+      </variable>
+      <variable item="Local route 6 sets turnout 3" CV="59" mask="XXXXXVXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 6 sets turnout 3</label>
+      </variable>
+      <variable item="Turnout 4 included in local route 6" CV="58" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 4 included in local route 6</label>
+      </variable>
+      <variable item="Local route 6 sets turnout 4" CV="59" mask="XXXXVXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 6 sets turnout 4</label>
+      </variable>
+      <variable item="Turnout 5 included in local route 6" CV="58" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 5 included in local route 6</label>
+      </variable>
+      <variable item="Local route 6 sets turnout 5" CV="59" mask="XXXVXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 6 sets turnout 5</label>
+      </variable>
+      <variable item="Turnout 6 included in local route 6" CV="58" mask="XXVXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 6 included in local route 6</label>
+      </variable>
+      <variable item="Local route 6 sets turnout 6" CV="59" mask="XXVXXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 6 sets turnout 6</label>
+      </variable>
+      <variable item="Turnout 7 included in local route 6" CV="58" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 7 included in local route 6</label>
+      </variable>
+      <variable item="Local route 6 sets turnout 7" CV="59" mask="XVXXXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 6 sets turnout 7</label>
+      </variable>
+      <variable item="Turnout 8 included in local route 6" CV="58" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 8 included in local route 6</label>
+      </variable>
+      <variable item="Local route 6 sets turnout 8" CV="59" mask="VXXXXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 6 sets turnout 8</label>
+      </variable>
+      <variable item="Turnout 1 included in local route 7" CV="60" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 1 included in local route 7</label>
+      </variable>
+      <variable item="Local route 7 sets turnout 1" CV="61" mask="XXXXXXXV">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 7 sets turnout 1</label>
+      </variable>
+      <variable item="Turnout 2 included in local route 7" CV="60" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 2 included in local route 7</label>
+      </variable>
+      <variable item="Local route 7 sets turnout 2" CV="61" mask="XXXXXXVX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 7 sets turnout 2</label>
+      </variable>
+      <variable item="Turnout 3 included in local route 7" CV="60" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 3 included in local route 7</label>
+      </variable>
+      <variable item="Local route 7 sets turnout 3" CV="61" mask="XXXXXVXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 7 sets turnout 3</label>
+      </variable>
+      <variable item="Turnout 4 included in local route 7" CV="60" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 4 included in local route 7</label>
+      </variable>
+      <variable item="Local route 7 sets turnout 4" CV="61" mask="XXXXVXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 7 sets turnout 4</label>
+      </variable>
+      <variable item="Turnout 5 included in local route 7" CV="60" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 5 included in local route 7</label>
+      </variable>
+      <variable item="Local route 7 sets turnout 5" CV="61" mask="XXXVXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 7 sets turnout 5</label>
+      </variable>
+      <variable item="Turnout 6 included in local route 7" CV="60" mask="XXVXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 6 included in local route 7</label>
+      </variable>
+      <variable item="Local route 7 sets turnout 6" CV="61" mask="XXVXXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 7 sets turnout 6</label>
+      </variable>
+      <variable item="Turnout 7 included in local route 7" CV="60" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 7 included in local route 7</label>
+      </variable>
+      <variable item="Local route 7 sets turnout 7" CV="61" mask="XVXXXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 7 sets turnout 7</label>
+      </variable>
+      <variable item="Turnout 8 included in local route 7" CV="60" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 8 included in local route 7</label>
+      </variable>
+      <variable item="Local route 7 sets turnout 8" CV="61" mask="VXXXXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 7 sets turnout 8</label>
+      </variable>
+      <variable item="Turnout 1 included in local route 8" CV="62" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 1 included in local route 8</label>
+      </variable>
+      <variable item="Local route 8 sets turnout 1" CV="63" mask="XXXXXXXV">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 8 sets turnout 1</label>
+      </variable>
+      <variable item="Turnout 2 included in local route 8" CV="62" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 2 included in local route 8</label>
+      </variable>
+      <variable item="Local route 8 sets turnout 2" CV="63" mask="XXXXXXVX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 8 sets turnout 2</label>
+      </variable>
+      <variable item="Turnout 3 included in local route 8" CV="62" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 3 included in local route 8</label>
+      </variable>
+      <variable item="Local route 8 sets turnout 3" CV="63" mask="XXXXXVXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 8 sets turnout 3</label>
+      </variable>
+      <variable item="Turnout 4 included in local route 8" CV="62" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 4 included in local route 8</label>
+      </variable>
+      <variable item="Local route 8 sets turnout 4" CV="63" mask="XXXXVXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 8 sets turnout 4</label>
+      </variable>
+      <variable item="Turnout 5 included in local route 8" CV="62" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 5 included in local route 8</label>
+      </variable>
+      <variable item="Local route 8 sets turnout 5" CV="63" mask="XXXVXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 8 sets turnout 5</label>
+      </variable>
+      <variable item="Turnout 6 included in local route 8" CV="62" mask="XXVXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 6 included in local route 8</label>
+      </variable>
+      <variable item="Local route 8 sets turnout 6" CV="63" mask="XXVXXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 8 sets turnout 6</label>
+      </variable>
+      <variable item="Turnout 7 included in local route 8" CV="62" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 7 included in local route 8</label>
+      </variable>
+      <variable item="Local route 8 sets turnout 7" CV="63" mask="XVXXXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 8 sets turnout 7</label>
+      </variable>
+      <variable item="Turnout 8 included in local route 8" CV="62" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 8 included in local route 8</label>
+      </variable>
+      <variable item="Local route 8 sets turnout 8" CV="63" mask="VXXXXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 8 sets turnout 8</label>
+      </variable>
+      <variable item="Turnout 1 included in local route 9" CV="64" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 1 included in local route 9</label>
+      </variable>
+      <variable item="Local route 9 sets turnout 1" CV="65" mask="XXXXXXXV">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 9 sets turnout 1</label>
+      </variable>
+      <variable item="Turnout 2 included in local route 9" CV="64" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 2 included in local route 9</label>
+      </variable>
+      <variable item="Local route 9 sets turnout 2" CV="65" mask="XXXXXXVX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 9 sets turnout 2</label>
+      </variable>
+      <variable item="Turnout 3 included in local route 9" CV="64" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 3 included in local route 9</label>
+      </variable>
+      <variable item="Local route 9 sets turnout 3" CV="65" mask="XXXXXVXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 9 sets turnout 3</label>
+      </variable>
+      <variable item="Turnout 4 included in local route 9" CV="64" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 4 included in local route 9</label>
+      </variable>
+      <variable item="Local route 9 sets turnout 4" CV="65" mask="XXXXVXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 9 sets turnout 4</label>
+      </variable>
+      <variable item="Turnout 5 included in local route 9" CV="64" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 5 included in local route 9</label>
+      </variable>
+      <variable item="Local route 9 sets turnout 5" CV="65" mask="XXXVXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 9 sets turnout 5</label>
+      </variable>
+      <variable item="Turnout 6 included in local route 9" CV="64" mask="XXVXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 6 included in local route 9</label>
+      </variable>
+      <variable item="Local route 9 sets turnout 6" CV="65" mask="XXVXXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 9 sets turnout 6</label>
+      </variable>
+      <variable item="Turnout 7 included in local route 9" CV="64" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 7 included in local route 9</label>
+      </variable>
+      <variable item="Local route 9 sets turnout 7" CV="65" mask="XVXXXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 9 sets turnout 7</label>
+      </variable>
+      <variable item="Turnout 8 included in local route 9" CV="64" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 8 included in local route 9</label>
+      </variable>
+      <variable item="Local route 9 sets turnout 8" CV="65" mask="VXXXXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 9 sets turnout 8</label>
+      </variable>
+      <variable item="Turnout 1 included in local route 10" CV="66" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 1 included in local route 10</label>
+      </variable>
+      <variable item="Local route 10 sets turnout 1" CV="67" mask="XXXXXXXV">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 10 sets turnout 1</label>
+      </variable>
+      <variable item="Turnout 2 included in local route 10" CV="66" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 2 included in local route 10</label>
+      </variable>
+      <variable item="Local route 10 sets turnout 2" CV="67" mask="XXXXXXVX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 10 sets turnout 2</label>
+      </variable>
+      <variable item="Turnout 3 included in local route 10" CV="66" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 3 included in local route 10</label>
+      </variable>
+      <variable item="Local route 10 sets turnout 3" CV="67" mask="XXXXXVXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 10 sets turnout 3</label>
+      </variable>
+      <variable item="Turnout 4 included in local route 10" CV="66" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 4 included in local route 10</label>
+      </variable>
+      <variable item="Local route 10 sets turnout 4" CV="67" mask="XXXXVXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 10 sets turnout 4</label>
+      </variable>
+      <variable item="Turnout 5 included in local route 10" CV="66" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 5 included in local route 10</label>
+      </variable>
+      <variable item="Local route 10 sets turnout 5" CV="67" mask="XXXVXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 10 sets turnout 5</label>
+      </variable>
+      <variable item="Turnout 6 included in local route 10" CV="66" mask="XXVXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 6 included in local route 10</label>
+      </variable>
+      <variable item="Local route 10 sets turnout 6" CV="67" mask="XXVXXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 10 sets turnout 6</label>
+      </variable>
+      <variable item="Turnout 7 included in local route 10" CV="66" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 7 included in local route 10</label>
+      </variable>
+      <variable item="Local route 10 sets turnout 7" CV="67" mask="XVXXXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 10 sets turnout 7</label>
+      </variable>
+      <variable item="Turnout 8 included in local route 10" CV="66" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turnout 8 included in local route 10</label>
+      </variable>
+      <variable item="Local route 10 sets turnout 8" CV="67" mask="VXXXXXXX">
+        <enumVal>
+          <enumChoice choice="thrown">
+            <choice>thrown</choice>
+          </enumChoice>
+          <enumChoice choice="closed">
+            <choice>closed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Local route 10 sets turnout 8</label>
+      </variable>
+    </variables>
+  </decoder>
+  <pane>
+    <column>
+      <display item="Turnout 1 Output Timing"/>
+      <display item="Turnout 2 Output Timing"/>
+      <display item="Turnout 3 Output Timing"/>
+      <display item="Turnout 4 Output Timing"/>
+      <display item="Turnout 5 Output Timing"/>
+      <display item="Turnout 6 Output Timing"/>
+      <display item="Turnout 7 Output Timing"/>
+      <display item="Turnout 8 Output Timing"/>
+      <display item="CDU discharge delay"/>
+    </column>
+    <name>DAC10 Timings</name>
+  </pane>
+  <pane>
+    <column>
+      <display item="Input 1 event"/>
+      <display item="Input 2 event"/>
+      <display item="Input 3 event"/>
+      <display item="Input 4 event"/>
+      <display item="Input 5 event"/>
+      <display item="Input 6 event"/>
+      <display item="Input 7 event"/>
+      <display item="Input 8 event"/>
+      <display item="Input A event"/>
+      <display item="Input B event"/>
+      <display item="Output 1 event"/>
+      <display item="Output 2 event"/>
+      <display item="Output 3 event"/>
+      <display item="Output 4 event"/>
+      <display item="Output 5 event"/>
+      <display item="Output 6 event"/>
+      <display item="Output 7 event"/>
+      <display item="Output 8 event"/>
+      <display item="Output A event"/>
+      <display item="Output B event"/>
+    </column>
+    <name>DAC10 Events</name>
+  </pane>
+  <pane>
+    <column>
+      <display item="Input 1 and Output 1 Message"/>
+      <display item="Input 2 and Output 2 Message"/>
+      <display item="Input 3 and Output 3 Message"/>
+      <display item="Input 4 and Output 4 Message"/>
+      <display item="Input 5 and Output 5 Message"/>
+      <display item="Input 6 and Output 6 Message"/>
+      <display item="Input 7 and Output 7 Message"/>
+      <display item="Input 8 and Output 8 Message"/>
+      <display item="Input A Message"/>
+      <display item="Input B Message"/>
+    </column>
+    <name>DAC10 Messages</name>
+  </pane>
+  <pane>
+    <column>
+      <display item="Turnout 1 follows turnout address"/>
+      <display item="Turnout 2 follows turnout address"/>
+      <display item="Turnout 3 follows turnout address"/>
+      <display item="Turnout 4 follows turnout address"/>
+      <display item="Turnout 5 follows turnout address"/>
+      <display item="Turnout 6 follows turnout address"/>
+      <display item="Turnout 7 follows turnout address"/>
+      <display item="Turnout 8 follows turnout address"/>
+    </column>
+    <name>DAC10 Cascaded Turnouts</name>
+  </pane>
+  <pane>
+    <column>
+      <display item="Turnout 1 included in local route 1"/>
+      <display item="Turnout 2 included in local route 1"/>
+      <display item="Turnout 3 included in local route 1"/>
+      <display item="Turnout 4 included in local route 1"/>
+      <display item="Turnout 5 included in local route 1"/>
+      <display item="Turnout 6 included in local route 1"/>
+      <display item="Turnout 7 included in local route 1"/>
+      <display item="Turnout 8 included in local route 1"/>
+      <row>
+        <column>
+          <display item="Local route 1 sets turnout 1"/>
+          <display item="Local route 1 sets turnout 2"/>
+          <display item="Local route 1 sets turnout 3"/>
+          <display item="Local route 1 sets turnout 4"/>
+          <display item="Local route 1 sets turnout 5"/>
+          <display item="Local route 1 sets turnout 6"/>
+          <display item="Local route 1 sets turnout 7"/>
+          <display item="Local route 1 sets turnout 8"/>
+        </column>
+      </row>
+    </column>
+    <name>DAC10 Route 1</name>
+  </pane>
+  <pane>
+    <column>
+      <display item="Turnout 1 included in local route 2"/>
+      <display item="Turnout 2 included in local route 2"/>
+      <display item="Turnout 3 included in local route 2"/>
+      <display item="Turnout 4 included in local route 2"/>
+      <display item="Turnout 5 included in local route 2"/>
+      <display item="Turnout 6 included in local route 2"/>
+      <display item="Turnout 7 included in local route 2"/>
+      <display item="Turnout 8 included in local route 2"/>
+      <row>
+        <column>
+          <display item="Local route 2 sets turnout 1"/>
+          <display item="Local route 2 sets turnout 2"/>
+          <display item="Local route 2 sets turnout 3"/>
+          <display item="Local route 2 sets turnout 4"/>
+          <display item="Local route 2 sets turnout 5"/>
+          <display item="Local route 2 sets turnout 6"/>
+          <display item="Local route 2 sets turnout 7"/>
+          <display item="Local route 2 sets turnout 8"/>
+        </column>
+      </row>
+    </column>
+    <name>DAC10 Route 2</name>
+  </pane>
+  <pane>
+    <column>
+      <display item="Turnout 1 included in local route 3"/>
+      <display item="Turnout 2 included in local route 3"/>
+      <display item="Turnout 3 included in local route 3"/>
+      <display item="Turnout 4 included in local route 3"/>
+      <display item="Turnout 5 included in local route 3"/>
+      <display item="Turnout 6 included in local route 3"/>
+      <display item="Turnout 7 included in local route 3"/>
+      <display item="Turnout 8 included in local route 3"/>
+      <row>
+        <column>
+          <display item="Local route 3 sets turnout 1"/>
+          <display item="Local route 3 sets turnout 2"/>
+          <display item="Local route 3 sets turnout 3"/>
+          <display item="Local route 3 sets turnout 4"/>
+          <display item="Local route 3 sets turnout 5"/>
+          <display item="Local route 3 sets turnout 6"/>
+          <display item="Local route 3 sets turnout 7"/>
+          <display item="Local route 3 sets turnout 8"/>
+        </column>
+      </row>
+    </column>
+    <name>DAC10 Route 3</name>
+  </pane>
+  <pane>
+    <column>
+      <display item="Turnout 1 included in local route 4"/>
+      <display item="Turnout 2 included in local route 4"/>
+      <display item="Turnout 3 included in local route 4"/>
+      <display item="Turnout 4 included in local route 4"/>
+      <display item="Turnout 5 included in local route 4"/>
+      <display item="Turnout 6 included in local route 4"/>
+      <display item="Turnout 7 included in local route 4"/>
+      <display item="Turnout 8 included in local route 4"/>
+      <row>
+        <column>
+          <display item="Local route 4 sets turnout 1"/>
+          <display item="Local route 4 sets turnout 2"/>
+          <display item="Local route 4 sets turnout 3"/>
+          <display item="Local route 4 sets turnout 4"/>
+          <display item="Local route 4 sets turnout 5"/>
+          <display item="Local route 4 sets turnout 6"/>
+          <display item="Local route 4 sets turnout 7"/>
+          <display item="Local route 4 sets turnout 8"/>
+        </column>
+      </row>
+    </column>
+    <name>DAC10 Route 4</name>
+  </pane>
+  <pane>
+    <column>
+      <display item="Turnout 1 included in local route 5"/>
+      <display item="Turnout 2 included in local route 5"/>
+      <display item="Turnout 3 included in local route 5"/>
+      <display item="Turnout 4 included in local route 5"/>
+      <display item="Turnout 5 included in local route 5"/>
+      <display item="Turnout 6 included in local route 5"/>
+      <display item="Turnout 7 included in local route 5"/>
+      <display item="Turnout 8 included in local route 5"/>
+      <row>
+        <column>
+          <display item="Local route 5 sets turnout 1"/>
+          <display item="Local route 5 sets turnout 2"/>
+          <display item="Local route 5 sets turnout 3"/>
+          <display item="Local route 5 sets turnout 4"/>
+          <display item="Local route 5 sets turnout 5"/>
+          <display item="Local route 5 sets turnout 6"/>
+          <display item="Local route 5 sets turnout 7"/>
+          <display item="Local route 5 sets turnout 8"/>
+        </column>
+      </row>
+    </column>
+    <name>DAC10 Route 5</name>
+  </pane>
+  <pane>
+    <column>
+      <display item="Turnout 1 included in local route 6"/>
+      <display item="Turnout 2 included in local route 6"/>
+      <display item="Turnout 3 included in local route 6"/>
+      <display item="Turnout 4 included in local route 6"/>
+      <display item="Turnout 5 included in local route 6"/>
+      <display item="Turnout 6 included in local route 6"/>
+      <display item="Turnout 7 included in local route 6"/>
+      <display item="Turnout 8 included in local route 6"/>
+      <row>
+        <column>
+          <display item="Local route 6 sets turnout 1"/>
+          <display item="Local route 6 sets turnout 2"/>
+          <display item="Local route 6 sets turnout 3"/>
+          <display item="Local route 6 sets turnout 4"/>
+          <display item="Local route 6 sets turnout 5"/>
+          <display item="Local route 6 sets turnout 6"/>
+          <display item="Local route 6 sets turnout 7"/>
+          <display item="Local route 6 sets turnout 8"/>
+        </column>
+      </row>
+    </column>
+    <name>DAC10 Route 6</name>
+  </pane>
+  <pane>
+    <column>
+      <display item="Turnout 1 included in local route 7"/>
+      <display item="Turnout 2 included in local route 7"/>
+      <display item="Turnout 3 included in local route 7"/>
+      <display item="Turnout 4 included in local route 7"/>
+      <display item="Turnout 5 included in local route 7"/>
+      <display item="Turnout 6 included in local route 7"/>
+      <display item="Turnout 7 included in local route 7"/>
+      <display item="Turnout 8 included in local route 7"/>
+      <row>
+        <column>
+          <display item="Local route 7 sets turnout 1"/>
+          <display item="Local route 7 sets turnout 2"/>
+          <display item="Local route 7 sets turnout 3"/>
+          <display item="Local route 7 sets turnout 4"/>
+          <display item="Local route 7 sets turnout 5"/>
+          <display item="Local route 7 sets turnout 6"/>
+          <display item="Local route 7 sets turnout 7"/>
+          <display item="Local route 7 sets turnout 8"/>
+        </column>
+      </row>
+    </column>
+    <name>DAC10 Route 7</name>
+  </pane>
+  <pane>
+    <column>
+      <display item="Turnout 1 included in local route 8"/>
+      <display item="Turnout 2 included in local route 8"/>
+      <display item="Turnout 3 included in local route 8"/>
+      <display item="Turnout 4 included in local route 8"/>
+      <display item="Turnout 5 included in local route 8"/>
+      <display item="Turnout 6 included in local route 8"/>
+      <display item="Turnout 7 included in local route 8"/>
+      <display item="Turnout 8 included in local route 8"/>
+      <row>
+        <column>
+          <display item="Local route 8 sets turnout 1"/>
+          <display item="Local route 8 sets turnout 2"/>
+          <display item="Local route 8 sets turnout 3"/>
+          <display item="Local route 8 sets turnout 4"/>
+          <display item="Local route 8 sets turnout 5"/>
+          <display item="Local route 8 sets turnout 6"/>
+          <display item="Local route 8 sets turnout 7"/>
+          <display item="Local route 8 sets turnout 8"/>
+        </column>
+      </row>
+    </column>
+    <name>DAC10 Route 8</name>
+  </pane>
+  <pane>
+    <column>
+      <display item="Turnout 1 included in local route 9"/>
+      <display item="Turnout 2 included in local route 9"/>
+      <display item="Turnout 3 included in local route 9"/>
+      <display item="Turnout 4 included in local route 9"/>
+      <display item="Turnout 5 included in local route 9"/>
+      <display item="Turnout 6 included in local route 9"/>
+      <display item="Turnout 7 included in local route 9"/>
+      <display item="Turnout 8 included in local route 9"/>
+      <row>
+        <column>
+          <display item="Local route 9 sets turnout 1"/>
+          <display item="Local route 9 sets turnout 2"/>
+          <display item="Local route 9 sets turnout 3"/>
+          <display item="Local route 9 sets turnout 4"/>
+          <display item="Local route 9 sets turnout 5"/>
+          <display item="Local route 9 sets turnout 6"/>
+          <display item="Local route 9 sets turnout 7"/>
+          <display item="Local route 9 sets turnout 8"/>
+        </column>
+      </row>
+    </column>
+    <name>DAC10 Route 9</name>
+  </pane>
+  <pane>
+    <column>
+      <display item="Turnout 1 included in local route 10"/>
+      <display item="Turnout 2 included in local route 10"/>
+      <display item="Turnout 3 included in local route 10"/>
+      <display item="Turnout 4 included in local route 10"/>
+      <display item="Turnout 5 included in local route 10"/>
+      <display item="Turnout 6 included in local route 10"/>
+      <display item="Turnout 7 included in local route 10"/>
+      <display item="Turnout 8 included in local route 10"/>
+      <row>
+        <column>
+          <display item="Local route 10 sets turnout 1"/>
+          <display item="Local route 10 sets turnout 2"/>
+          <display item="Local route 10 sets turnout 3"/>
+          <display item="Local route 10 sets turnout 4"/>
+          <display item="Local route 10 sets turnout 5"/>
+          <display item="Local route 10 sets turnout 6"/>
+          <display item="Local route 10 sets turnout 7"/>
+          <display item="Local route 10 sets turnout 8"/>
+        </column>
+      </row>
+    </column>
+    <name>DAC10 Route 10</name>
+  </pane>
+</decoder-config>

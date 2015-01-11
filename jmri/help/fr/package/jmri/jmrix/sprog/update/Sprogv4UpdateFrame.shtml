@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright 2008 -->
+<!-- $Id$ --> 
+<!-- UpDated  by Blorec Hervé bzh56420@yahoo.fr 2013-11-14 -->
+<title>JMRI: SPROG V4 Update Tool</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h2> 
+JMRI: Outil de mise à jour SPROG V4 
+</h2>
+
+L'outil de mise à jour SPROG V4T vous permet de charger une nouveau firmware dans un  SPROG V4.
+
+<p>
+Ceci est la page d'aide package/jmri/jmrix/sprog/update/Sprogv4UpdateFrame.
+    
+<!--#include virtual="/Footer" -->
+</body>
+</html>

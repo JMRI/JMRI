@@ -1,0 +1,5 @@
+Files in this directory should fail schema validation, for the
+reason given either in their file name, or in a comment near
+the top of the file.
+
+These files should be short, and test only one thing.

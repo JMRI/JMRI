@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!--  $Id$ -->
+<!-- UpDlated  by Blorec Herv&#233; le 2013-09-10-->
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI Hardware Guide: EasyDCC
+</TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="EasyDCC CVP Products java model railroad JMRI install windows">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+      <H2> 
+     Guide Mat&#233;riel JMRI: EasyDCC
+     </H2>
+
+	<H3>Mat&#233;riel Support&#233;</H3>
+
+	<UL>
+	<li>EDCSK -  EasyDCC Kit Centrale de Commande
+	<li>EDCSA -  EasyDCC Centrale de Commande assembl&#233;e
+	<li>EDCSB -  EasyDCC "Circuit seul" de la Centrale de Commande
+	</UL>
+
+	<H3>Limites</H3>
+
+	<p> Certains anciens syst&#232;mes EasyDCC peuvent avoir besoin d'une mise &#224; jour de leur programme.
+Ceci est fait en rempla&#231;ant la "PROM" dans la centrale de commande
+avec une version plus r&#233;cente. La version 207 est connue pour bien fonctionner, et
+ la version 022 est connue pour avoir des probl&#232;mes de communication avec l'
+ordinateur. La plupart des stations de commande r&#233;centes sont OK.</p>
+
+	<H3>D&#233;marrage</H3>
+
+	  <ol>
+	  <li> Pour connecter votre ordinateur &#224; un syst&#232;me EasyDCC, vous devez
+connecter la centrale de commande au port s&#233;rie de l'ordinateur en utilisant un
+c&#226;ble sp&#233;cial. Malheureusement, ce n'est pas un &#233;l&#233;ment que les
+magasins ont g&#233;n&#233;ralement en stock, due au connecteur RJ11 n&#233;cessaire &#224; l'extr&#233;mit&#233;
+du c&#226;ble de la centrale de commande. Vous aurez probablement &#224; faire ce
+c&#226;ble vous-m&#234;me ou un autre utilisateur CVP le faire &#224; votre place.
+<P>
+Pour plus d'informations sur la fa&#231;on dont le c&#226;ble est connect&#233;, voir page
+134 du manuel de la centrale de commande EasyDCC V4  ou de la page 143 du manuel de V6
+(une 
+<A HREF="http://www.cvpusa.com/doc_center/6_97_easydcc_manual_web_sec.pdf"> version dans un fichier PDF</a>
+ disponible sur le web)
+<P>
+Un moyen facile de le faire est d'acheter un c&#226;ble s&#233;rie &#224; 9 broches et d'un c&#226;ble de t&#233;l&#233;phone
+, puis les couper et les &#233;pissurrer ensemble.
+</ li>
+
+<li>Ensuite aller dans le panneau des pr&#233;f&#233;rences d'un programme bas&#233; sur JMRI.
+Celui ci s'ouvre automatiquement la premi&#232;re fois qu'un programme est ex&#233;cut&#233;, ou vous
+pouvez le s&#233;lectionner dans le menu "Modification".</li>
+
+	  <li>   S&#233;lectionnez "EasyDCC" dans la bo&#238;te de s&#233;lection en haut. Vous pouvez ensuite
+s&#233;lectionnez le port s&#233;rie appropri&#233; dans la seconde bo&#238;te de s&#233;lection.</li>
+
+	  <li> La vitesse de transmission s&#233;lectionn&#233;e sera fix&#233;e &#224; 9600 bauds.</li>
+
+<li> La s&#233;rie de boutons radio "style graphique" vous permet
+de s&#233;lectionner la fa&#231;on dont se fait l'affichage. "Metal" est l'apparence native de Java
+disponible sur tous les types. D'autres choix sont possiblev en fonction de votre type d'
+ordinateur . "Motif", "Windows", "MacOS"et "MacOS Adaptive"
+apparence native sous Linux, Windows, MacOS "Classic" et Mac OS X
+respectivement.</li>
+
+<li> Dans la bo&#238;te de s&#233;lection en bas, vous pouvez choisir la valeur par d&#233;faut du
+format programmateur . Vous pouvez le remplacer chaque fois que vous ouvrez le
+programmateur, il s'agit donc ici seulement d'une commodit&#233;.</ li>
+
+<li> Cliquez sur "Enregistrer". Il vous sera demand&#233; si c'est OK pour quitter le programme
+, cliquez sur "Oui".</li>
+
+<li> Red&#233;marrez le programme. Vous devez &#234;tre op&#233;rationnel.</li>
+
+	 </ol>
+
+	<H3>D&#233;bogage</H3>
+
+	<p><a href="http://www.cvpusa.com/easydcc/default.htm">Manuels CVP EasyDCC</a></p>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!--  $Id$ --> -->
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-14--> 
+
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: Send CAN Frame
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help send loconet packets">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>Envoi Trame OpenLCB </H1>
+    
+<a href="SendFrame.jpg">
+    <img src="SendFrame.jpg"
+         width="221" height="176"
+         alt="Send Frame Tool image" align="right"></a>
+<br>
+
+L'outil "Envoyer trame OpenLCB"  vous permet d'envoyer directement
+<a href="../../../../../../html/hardware/can/index.shtml"> des  trames CAN </a>,
+et certains types de messages OpenLCB.
+
+<p> Il fonctionne mieux en combinaison avec l'option
+"Afficher des donn&#233;es brutes" dans la fen&#234;tre du moniteur,
+parce que les paquets sont entr&#233;s ici en format hexad&#233;cimal .
+
+<p>
+La section sup&#233;rieure de la fen&#234;tre vous permet d'envoyer une trame unique.
+Il suffit de taper le contenu du paquet de donn&#233;es en tant que
+nombres hexad&#233;cimaux, par exemple "83 7C". Si vous voulez sp&#233;cifier
+le contenu d'en-t&#234;te, faites pr&#233;c&#233;der le paquet de donn&#233;es avec la t&#234;te dans
+"()" Caract&#232;res ou «[]» caract&#232;res pour un en-t&#234;te standard ou &#233;tendu,
+respectivement. (OpenLCB utilise uniquement l'en-t&#234;te &#233;tendu, mais nous
+permet d'envoyer les deux de sorte que vous pouvez les exp&#233;rimenter).
+Une fois que vous avez entr&#233; le paquet, cliquez sur "envoyer".
+<p>
+La deuxi&#232;me section vous permet d'entrer d'une &#224; quatre trames
+qui seront envoy&#233;es &#224; plusieurs reprises dans l'ordre, avec des retards d&#233;finis par l'utilisateur entre les deux envois.
+Appuyez sur le bouton "Go" pour d&#233;marrer la s&#233;quence de transmission, et appuyez de nouveau
+pour arr&#234;ter la s&#233;quence.
+
+<p>
+Ci-dessoussont des sections pour  envoyer des messages OpenLCB divers.
+
+<p>
+Dans "Envoyer cadre sp&#233;cial",le bouton "Envoyer CIM" formates en place une trame
+"CIM" de l'alias source de noeud que vous fournissez et l'envoie ensuite.
+Cela fait partie de la technique d'allocation OpenLCB alias noeud
+
+<p>
+
+Dans le champ "Envoyer un message OpenLCB";, vous pouvez
+formater et envoyer des trames qui contiennent des messages sp&#233;cifiques OpenLCB:
+<ul>
+<li> "Envoyer V&#233;rifiez Noeud";: en utilisant l'alias de source
+que vous avez fournie dans la section sup&#233;rieure
+et un ID de noeud sp&#233;cifi&#233; ici, cela envoie une demande de v&#233;rification de la r&#233;ponse du noeud.
+
+<li> "Envoyer Demande &#233;v&#233;nements": en utilisant l'alias de source que vous avez fournie dans la section sup&#233;rieure
+et un ID de nœud sp&#233;cifi&#233; ici, cela envoie une demande pour obtenir des renseignements sur les noeuds produits et consomm&#233; par le noeud.
+
+<li> "Envoyer Demande Utilisateurs": En utilisant l'alias de source que vous avez fournie dans la section sup&#233;rieure
+et un ID d'&#233;v&#233;nement sp&#233;cifi&#233; ici, cela envoie une demande d'une r&#233;ponse de tout noeud qui utilise cette ID d'&#233;v&#233;nement.
+
+<li> "Envoyer Demande Producteurs": en utilisant l'alias de source que vous avez fournie dans la section sup&#233;rieure
+et un ID d'&#233;v&#233;nement sp&#233;cifi&#233; ici, cela envoie une demande d'une r&#233;ponse de tout noeud qui produit cette ID d'&#233;v&#233;nement.
+
+<li> "Envoyer &#233;v&#233;nement Produit": en utilisant l'alias de source que vous avez fournie dans la section sup&#233;rieure
+et un ID d'&#233;v&#233;nement sp&#233;cifi&#233; ici, cela envoie un communiqu&#233; que l'&#233;v&#233;nement donn&#233; a &#233;t&#233; produit.
+
+<li> "Envoyer Datagram": En utilisant l'alias source et l'alias destination  que vous avez fournis dans la section sup&#233;rieure
+et les octets de donn&#233;es que vous fournissez ici
+Cela envoie un datagramme au noeud de destination.
+Le bouton "Envoyer Confirmation" envoie une r&#233;ponse de confirmation &#224; tout datagramme re&#231;u.
+
+</ul>
+
+<p>
+Dans le champ "Envoyer la commande de configuration OpenLCB", vous pouvez
+utiliser le protocole de configuration OpenLCB pour lire et &#233;crire depuis le
+noeud M&#233;moire. R&#233;glez votre alias noeud source et l'alias noeud de destination
+ dans le "Cadre sp&#233;cial Envoyer"ci-dessus.
+<p>
+Ensuite, s&#233;lectionnez l'adresse de m&#233;moire pour commencer &#224; lire ou &#224; &#233;crire, et &#224; partir de quel espace d'adressage vous souhaitez lire ou d'&#233;crire .
+(Informations d&#233;finition de configuration, etc.)
+
+<p>
+Ensuite, soit entrer le nombre d&#233;sir&#233; d'octets et cliquez sur Lire,
+ou
+les donn&#233;es &#224; &#233;crire (deux octets dans cette mise en œuvre) et appuyer sur "&#233;crire".
+
+<p>
+"Envoyer Confirmation" envoie la confirmation de tous les datagrammes que vous recevez en r&#233;ponse.
+
+
+</ul>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2010</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-08-19</date>
+      <authorinitials>EF</authorinitials>
+      <revremark>New for LSB only</revremark>
+    </revision>
+  </revhistory>
+  <variable item="Directional Headlights" CV="51" default="0" comment="output A" mask="XXXXXXXV" tooltip="Enables Rule 17 for headlights (independent control)">
+        <enumVal>
+          <enumChoice choice="Headlights are directional and operate automatically">
+            <choice>Headlights are directional and operate automatically</choice>
+            <choice xml:lang="it">Luci di testa direzionali e automatiche</choice>
+            <choice xml:lang="de">Headlights are directional and operate automatically</choice>
+          </enumChoice>
+          <enumChoice choice="Headlights are independantly controlled (F0-Front, F1-Rear)">
+            <choice>Rule 17, Headlights are independantly controlled (F0-Front, F1-Rear)</choice>
+            <choice xml:lang="it">Luci di testa controllate indipendentemente (F0-Avanti, F1-Retro)</choice>
+            <choice xml:lang="de">Headlights are independantly controlled (F0-Front, F1-Rear)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Directional Headlights</label>
+        <label xml:lang="it">Luci di testa direzionali</label>
+        <label xml:lang="de">Directional Headlights</label>
+        <comment>output A</comment>
+        <comment xml:lang="it">Uscita A</comment>
+        <comment xml:lang="de">output A</comment>
+        <tooltip xml:lang="it">Abilita Regola 17 per luci frontali (controllo independentel)</tooltip>
+        <tooltip xml:lang="de">Enables Rule 17 for headlights (independent control)</tooltip>
+      </variable>
+</variables>

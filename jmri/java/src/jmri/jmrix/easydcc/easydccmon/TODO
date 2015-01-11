@@ -1,0 +1,6 @@
+The code that handle the text buffer is lame, and needs to be improved.
+
+Use an explicit StringBuffer instead of temporaries in Strings
+
+This is closely related to the similar NCE classes, and they should
+be rationalized (somehow).

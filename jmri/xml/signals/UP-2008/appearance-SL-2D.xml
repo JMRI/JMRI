@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-01-17</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+    <revision>
+      <revnumber>1.2</revnumber>
+      <date>2014-02-10</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Added shaped aspects</revremark>
+    </revision>
+  </revhistory>
+  <aspecttable>UP-2008</aspecttable>
+  <name>Double head distant searchlight signal</name>
+  <reference>November 2008 signal rules</reference>
+  <description>Appearances for a double head searchlight distant signal used in Automatic Block, CTC and Interlocking Systems</description>
+  <appearances>
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <show>dark</show>
+      <reference>Rule 9.1.1</reference>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/UP-2008/SL-2-high/rule-9.1.1-d.gif</imagelink>
+      <imagelink type="shaped">../../../resources/icons/smallschematics/aspects/UP-2008/SL-2-high/rule-9.1.1-h.gif</imagelink>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/UP-2008/SL-2-high/rule-9.1.1-d.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Approach Diverging</aspectname>
+      <show>yellow</show>
+      <show>yellow</show>
+      <reference>Rule 9.1.3</reference>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/UP-2008/SL-2-high/rule-9.1.3-d.gif</imagelink>
+      <imagelink type="shaped">../../../resources/icons/smallschematics/aspects/UP-2008/SL-2-high/rule-9.1.3-h.gif</imagelink>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/UP-2008/SL-2-high/rule-9.1.3-d.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Approach</aspectname>
+      <show>yellow</show>
+      <show>dark</show>
+      <reference>Rule 9.1.2</reference>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/UP-2008/SL-2-high/rule-9.1.2-d.gif</imagelink>
+      <imagelink type="shaped">../../../resources/icons/smallschematics/aspects/UP-2008/SL-2-high/rule-9.1.2-h.gif</imagelink>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/UP-2008/SL-2-high/rule-9.1.2-d.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Unlit</aspectname>
+      <show>dark</show>
+      <show>dark</show>
+      <reference>-</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/UP-2008/SL-2-high/unlit-d.gif</imagelink>
+    </appearance>
+  </appearances>
+  <specificappearances>
+    <!-- Start of Specific Appearances list -->
+    <danger>
+      <aspect>Approach</aspect>
+    </danger>
+    <permissive>
+      <aspect>Approach</aspect>
+    </permissive>
+    <held>
+      <aspect>Approach</aspect>
+    </held>
+    <dark>
+      <aspect>Unlit</aspect>
+    </dark>
+  </specificappearances>
+  <!-- End of Specific Appearances list -->
+  <aspectMappings>
+    <!-- Start of Aspect Mapping -->
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Clear Sixty</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Clear Fifty</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Diverging</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Diverging (Slow)</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Advance Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Restricting</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Clear</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Clear (Fifty)</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Clear Limited</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Clear (Slow)</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Approach Diverging</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Approach Clear Fifty</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Approach Diverging (Limited)</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Advance Approach</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Advance Approach (Slow)</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Approach</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Approach (Slow)</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Restricting (Diverging)</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Restricted Proceed</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Unlit</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
+  <!-- End of Aspect Mapping -->
+</appearancetable>

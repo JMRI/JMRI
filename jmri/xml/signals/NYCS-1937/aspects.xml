@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
+
+<aspecttable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
+>
+  <name>NYCS</name>
+  <date>1937</date>
+  <reference>As described in the New York Central System publication "Rules for the Governmant of the Operating Department."</reference>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Dick</firstname><surname>Bronson</surname></personname>
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2010-01-01</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2010-01-11</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Typo Correction</revremark>
+    </revision>    
+  </revhistory>
+
+  <aspects>
+
+    <aspect>
+      <name>Clear-alt</name>
+      <rule>Rule 281-alt</rule>
+      <indication>Proceed</indication>
+      <reference>Page 92</reference>
+      <comment>Unofficial Rule and Aspect Name to allow for optional appearance</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Clear</name>
+      <rule>Rule 281</rule>
+      <indication>Proceed</indication>
+      <reference>Page 92</reference>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Advance Approach Medium</name>
+      <rule>Rule 281A</rule>
+      <indication>Proceed approaching second signal at medium speed</indication>
+      <reference>Page 93</reference>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Approach Limited</name>
+      <rule>Rule 281B</rule>
+      <indication>Proceed approaching next signal at limited speed</indication>
+      <reference>Hand written note</reference>
+      <speed>Limited</speed>
+      <speed2>Limited</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Limited-Clear</name>
+      <rule>Rule 281C</rule>
+      <indication>Proceed; limited speed within interlocking limits</indication>
+      <reference>Hand written note</reference>
+      <speed>Limited</speed>
+      <speed2>Limited</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Approach Medium</name>
+      <rule>Rule 282</rule>
+      <indication>Proceed approaching next signal at medium speed</indication>
+      <reference>Page 94</reference>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Advance Approach</name>
+      <rule>Rule 282A</rule>
+      <indication>Proceed preparing to stop at second signal</indication>
+      <reference>Page 95</reference>
+      <speed>Medium</speed>
+      <speed2>Approach</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Medium-Clear</name>
+      <rule>Rule 283</rule>
+      <indication>Proceed; medium speed within interlocking limits</indication>
+      <reference>Page 45</reference>
+      <speed>Medium</speed>
+      <speed2>Clear</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Medium-Advance Approach</name>
+      <rule>Rule 283A</rule>
+      <indication>Proceed preparing to stop at second signal; medium speed within interlocking limits</indication>
+      <reference>Page 96</reference>
+      <speed>Medium</speed>
+      <speed2>Approach</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Medium-Approach Slow</name>
+      <rule>Rule 283B</rule>
+      <indication>Proceed at medium speed approaching next signal at slow speed</indication>
+      <reference>Page 96</reference>
+      <speed>Medium</speed>
+      <speed2>Slow</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Approach Slow</name>
+      <rule>Rule 284</rule>
+      <indication>Proceed approaching next signal at slow speed. Train exceeding medium speed must at once reduce to that speed.</indication>
+      <reference>Page 97</reference>
+      <speed>Approach</speed>
+      <speed2>Slow</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Approach</name>
+      <rule>Rule 285</rule>
+      <indication>Proceed preparing to stop at next signal. Train exceeding medium speed must at once reduce to that speed.</indication>
+      <reference>Page 98</reference>
+      <speed>Approach</speed>
+      <speed2>Approach</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Medium-Approach</name>
+      <rule>Rule 286</rule>
+      <indication>Proceed at medium speed preparing to stop at next signal</indication>
+      <reference>Page 99</reference>
+      <speed>Medium</speed>
+      <speed2>Approach</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Slow-Clear</name>
+      <rule>Rule 287</rule>
+      <indication>Proceed; slow speed within interlocking limits.</indication>
+      <reference>Page 100</reference>
+      <speed>Slow</speed>
+      <speed2>Clear</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Slow-Approach</name>
+      <rule>Rule 288</rule>
+      <indication>Proceed preparing to stop at next signal; slow speed within interlocking limits.</indication>
+      <reference>Page 100</reference>
+      <speed>Slow</speed>
+      <speed2>Approach</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Proceed</name>
+      <rule>Rule 289</rule>
+      <indication>Proceed; Manual Block</indication>
+      <reference>Page 101</reference>
+      <speed>Clear</speed>
+      <speed2>Clear</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Block Occupied</name>
+      <rule>Rule 289A</rule>
+      <indication>Block occupied; proceed prepared to stop short of train ahead. Manual Block</indication>
+      <reference>Page 101</reference>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Stop</name>
+      <rule>Rule 289B</rule>
+      <indication>Stop; Manual Block</indication>
+      <reference>Page 102</reference>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+    </aspect>
+
+    <aspect>
+      <name>No Train Orders</name>
+      <rule>Rule 289C</rule>
+      <indication>Proceed; Train Orders</indication>
+      <reference>Page 102</reference>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Train Orders</name>
+      <rule>Rule 289E</rule>
+      <indication>Stop; Train Orders</indication>
+      <reference>Page 49</reference>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Restricting</name>
+      <rule>Rule 290</rule>
+      <indication>Proceed at restricted speed.</indication>
+      <reference>Page 103</reference>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Stop and Proceed</name>
+      <rule>Rule 291</rule>
+      <indication>Stop; then proceed at restricted speed.</indication>
+      <reference>Page 104</reference>
+      <speed>Stop</speed>
+      <speed2>Restricted</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Stop</name>
+      <rule>Rule 292</rule>
+      <indication>Stop.</indication>
+      <reference>Page 105</reference>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+    </aspect>
+
+  </aspects>
+
+  <appearancefiles>
+    <appearancefile href="appearance-SL-1-manual-block.xml"/>
+    <appearancefile href="appearance-SL-1-trainorder.xml"/>
+    <appearancefile href="appearance-SL-1-low.xml"/>
+    <appearancefile href="appearance-SL-2-high-abs.xml"/>
+    <appearancefile href="appearance-SL-2-high-pbs.xml"/>
+    <appearancefile href="appearance-SL-2-low.xml"/>
+    <appearancefile href="appearance-SL-3-high.xml"/>
+  </appearancefiles>
+  
+</aspecttable>
+  

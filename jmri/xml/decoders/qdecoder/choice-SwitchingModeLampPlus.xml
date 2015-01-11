@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
+<!-- $Id$	-->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-08-24</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Initial creation</revremark>
+    </revision>
+  </revhistory>
+  <!-- Specific for Qdecoder accessory decoder -->
+  <!-- Switching modes for Lamps - additional modes  -->
+ 	<enumChoice choice="[41]" value="41">
+		<choice>[41] Permanent (1x relay)</choice>
+		<choice xml:lang="de">[41] Dauerbetrieb (1x Relais)</choice>
+  </enumChoice>
+  <enumChoice choice="[42]" value="42">
+		<choice>[42] Permanent (2x relay)</choice>
+		<choice xml:lang="de">[42] Dauerbetrieb (2x Relais)</choice>
+  </enumChoice>
+  <enumChoice choice="[43]" value="43">
+		<choice>[43] 3 Lamps/LEDs (relay)</choice>
+		<choice xml:lang="de">[43] 3 Lampen/LEDs (Relais)</choice>
+  </enumChoice>
+	<enumChoice choice="[44]" value="44">
+		<choice>[44] 4 Lamps/LEDs (relay)</choice>
+		<choice xml:lang="de">[44] 4 Lampen/LEDs (Relais)</choice>
+  </enumChoice>
+  <enumChoice choice="[45]" value="45">
+		<choice>[45] 5 Lamps/LEDs (relay)</choice>
+		<choice xml:lang="de">[45] 5 Lampen/LEDs (Relais)</choice>
+  </enumChoice>
+	<enumChoice choice="[46]" value="46">
+		<choice>[46] 6 Lamps/LEDs (relay)</choice>
+		<choice xml:lang="de">[46] 6 Lampen/LEDs (Relais)</choice>
+  </enumChoice>
+  <enumChoice choice="[47]" value="47">
+		<choice>[47] 7 Lamps/LEDs (relay)</choice>
+		<choice xml:lang="de">[47] 7 Lampen/LEDs (Relais)</choice>
+  </enumChoice>
+	<enumChoice choice="[48]" value="48">
+		<choice>[48] 8 Lamps/LEDs (relay)</choice>
+		<choice xml:lang="de">[48] 8 Lampen/LEDs (Relais)</choice>
+  </enumChoice>
+  <enumChoice choice="[49]" value="49">
+		<choice>[49] 9 Lamps/LEDs (relay)</choice>
+		<choice xml:lang="de">[49] 9 Lampen/LEDs (Relais)</choice>
+  </enumChoice>
+	<enumChoice choice="[50]" value="50">
+		<choice>[50] 10 Lamps/LEDs (relay)</choice>
+		<choice xml:lang="de">[50] 10 Lampen/LEDs (Relais)</choice>
+  </enumChoice>
+  <enumChoice choice="[51]" value="51">
+		<choice>[51] 1 Lamp/LED (+ all Off)</choice>
+		<choice xml:lang="de">[51] 1 Lampe/LED (+ alles aus)</choice>
+  </enumChoice>
+  <enumChoice choice="[52]" value="52">
+		<choice>[52] 2 Lamps/LEDs (+ all Off)</choice>
+		<choice xml:lang="de">[52] 2 Lampen/LEDs (+ alles aus)</choice>
+  </enumChoice>
+  <enumChoice choice="[53]" value="53">
+		<choice>[53] 3 Lamps/LEDs (+ all Off)</choice>
+		<choice xml:lang="de">[53] 3 Lampen/LEDs (+ alles aus)</choice>
+  </enumChoice>
+  <enumChoice choice="[54]" value="54">
+		<choice>[54] 4 Lamps/LEDs (+ all Off)</choice>
+		<choice xml:lang="de">[54] 4 Lampen/LEDs (+ alles aus)</choice>
+  </enumChoice>
+  <enumChoice choice="[55]" value="55">
+		<choice>[55] 5 Lamps/LEDs (+ all Off)</choice>
+		<choice xml:lang="de">[55] 5 Lampen/LEDs (+ alles aus)</choice>
+  </enumChoice>
+  <enumChoice choice="[56]" value="56">
+		<choice>[56] 6 Lamps/LEDs (+ all Off)</choice>
+		<choice xml:lang="de">[56] 6 Lampen/LEDs (+ alles aus)</choice>
+  </enumChoice>
+  <enumChoice choice="[57]" value="57">
+		<choice>[57] 7 Lamps/LEDs (+ all Off)</choice>
+		<choice xml:lang="de">[57] 7 Lampen/LEDs (+ alles aus)</choice>
+  </enumChoice>
+  <enumChoice choice="[58]" value="58">
+		<choice>[58] 8 Lamps/LEDs (+ all Off)</choice>
+		<choice xml:lang="de">[58] 8 Lampen/LEDs (+ alles aus)</choice>
+  </enumChoice>
+  <enumChoice choice="[59]" value="59">
+		<choice>[59] 9 Lamps/LEDs (+ all Off)</choice>
+		<choice xml:lang="de">[59] 9 Lampen/LEDs (+ alles aus)</choice>
+  </enumChoice>
+  <enumChoice choice="[60]" value="60">
+		<choice>[60] 10 Lamps/LEDs (+ all Off)</choice>
+		<choice xml:lang="de">[60] 10 Lampen/LEDs (+ alles aus)</choice>
+  </enumChoice>
+</enumChoiceGroup>

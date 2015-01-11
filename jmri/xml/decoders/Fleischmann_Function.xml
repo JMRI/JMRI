@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!--Copyright (C) JMRI 2003, 2004, 2008 All rights reserved -->
+<!--$Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Peter Mansvelder pman@mac.com" version="0.1" lastUpdated="20100825"/>
+  <!--
+     This decoder configuration file is based on ESU_LokPilotDCC.xml
+     V 4, dated 20050619, by Walter Thompson. Which also acknowledged
+     "the contribution of many others" including 'jake'.
+
+     Based on ....
+
+     This decoder XML is meant to be used with the "Comprehensive" programmer format.
+     Continued the practice of using unrelated "item" names to place ESU unique
+     variables on the proper pane of the Comprehensive programmer.
+
+     Any and all feedback on this file would be appreciated.
+
+     Version History:
+
+        0.1 - Initial release 25 August 2010
+
+-->
+  <decoder>
+    <family name="Fleischmann function decoders" mfg="Fleischmann" lowVersionID="10" comment="Fleischmann 686401">
+      <model model="686401" maxInputVolts="25 V" maxTotalCurrent="0.80 A">
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="7" readOnly="yes" default="10" item="Decoder Version" tooltip="The decoder version number (read only)">
+        <decVal/>
+        <label>Software Version Number</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+      </variable>
+      <variable CV="8" readOnly="yes" default="155" item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
+        <decVal/>
+        <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+      </variable>
+      <variable CV="12" default="1" item="Analog mode" tooltip="Analog Mode">
+        <enumVal>
+          <enumChoice choice="Digital Operation Only">
+            <choice>Digital Operation Only</choice>
+          </enumChoice>
+          <enumChoice choice="Digital + Analog Operation">
+            <choice>Digital + Analog Operation</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Analog Mode</label>
+      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29RailCom.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+      <variable CV="30" readOnly="yes" item="Error Condition" tooltip="Decoder Error condition (read only)">
+        <decVal/>
+        <label>Error Information</label>
+      </variable>
+      <variable CV="33" mask="XXXXXXXV" default="1" item="Function F0F behavior">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>Active</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Light Forward</label>
+      </variable>
+      <variable CV="34" mask="XXXXXXVX" default="1" item="Function F0R behavior">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>Active</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Light Reverse</label>
+      </variable>
+      <variable CV="35" mask="XVXXXXXX" default="1" item="Delay on/off">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>Active</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Delay on/off</label>
+      </variable>
+      <variable CV="36" mask="VXXXXXXX" default="1" item="Shunt on/off">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>Active</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Shunting</label>
+      </variable>
+      <variable CV="37" default="16" item="Function F3">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>Active</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Function F3</label>
+      </variable>
+      <variable CV="38" default="4" item="Function F4">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>Active</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Function F4</label>
+      </variable>
+      <variable CV="39" default="8" item="Function F5">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>Active</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Function F5</label>
+      </variable>
+      <variable CV="40" default="16" item="Function F6">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>Active</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Function F6</label>
+      </variable>
+      <variable CV="49" mask="XXXXXXXV" default="1" item="Dither option">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="Active">
+            <choice>Active</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Load control</label>
+      </variable>
+      <variable CV="49" mask="XXXXXXVX" default="1" item="Total PWM Period">
+        <enumVal>
+          <enumChoice choice="20 kHz Tact frequency on">
+            <choice>20 kHz Tact frequency on</choice>
+          </enumChoice>
+          <enumChoice choice="40 kHz Tact frequency on">
+            <choice>40 kHz Tact frequency on</choice>
+          </enumChoice>
+        </enumVal>
+        <label>DC Motor PWM frequency</label>
+      </variable>
+      <variable item="Marklin Delta Mode" CV="49" mask="XXXXXVXX" default="0">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Marklin Delta Mode</label>
+      </variable>
+      <variable item="Marklin 2. address" CV="49" mask="XXXXVXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Marklin 2. address</label>
+      </variable>
+      <variable item="Automatic speed step detection" CV="49" mask="XXXVXXXX" default="1">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Automatic speed step detection</label>
+      </variable>
+      <variable item="LGB Function button mode" CV="49" mask="XXVXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>LGB Function button mode</label>
+      </variable>
+      <variable item="ZIMO Manual function" CV="49" mask="XVXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>ZIMO Manual function</label>
+      </variable>
+      <variable item="Function key triggered at each change of function status" CV="49" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Function key triggered at each change of function status</label>
+      </variable>
+      <variable item="BEMF on/off" CV="51" mask="XXXXXXXV" default="1">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>BEMF on/off</label>
+      </variable>
+      <variable item="Motor Cycle Integration on/off" CV="51" mask="XXXXXXVX" default="1">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Motor Cycle Integration on/off</label>
+      </variable>
+      <variable item="Fleischmann Function #3" CV="51" mask="XXXXXVXX" default="0">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Fleischmann Function #3</label>
+      </variable>
+      <variable item="Fleischmann Function #4" CV="51" mask="XXXXVXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Fleischmann Function #4</label>
+      </variable>
+      <variable item="Fleischmann Function #5" CV="51" mask="XXXVXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Fleischmann Function #5</label>
+      </variable>
+      <variable item="Fleischmann Function #6" CV="51" mask="XXVXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Fleischmann Function #6</label>
+      </variable>
+      <variable item="Overload Light Blink" CV="51" mask="XVXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Overload Light Blink</label>
+      </variable>
+      <variable item="Fleischmann Function #8" CV="51" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Fleischmann Function #8</label>
+      </variable>
+      <variable CV="64" default="24" item="RESET" tooltip="Writing 1 in this CV will reset the decoder">
+        <decVal/>
+        <label>RESET</label>
+      </variable>
+    </variables>
+    <resets>
+      <factReset label="HARD RESET all CVs reset to default values" CV="64" default="1"/>
+    </resets>
+  </decoder>
+</decoder-config>

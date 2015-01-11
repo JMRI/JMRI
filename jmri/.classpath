@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="**/.cvsignore|**/COPYING" kind="src" path="java/src"/>
+	<classpathentry excluding="**/.cvsignore|**/COPYING" kind="src" path="java/test"/>
+	<classpathentry excluding="**/.cvsignore|**/COPYING" kind="src" path="java/tmp"/>
+	<classpathentry excluding="**/Thumbs.db" kind="src" path="resources"/>
+	<classpathentry kind="lib" path="lib/annotations.jar"/>
+	<classpathentry kind="lib" path="lib/ch.ntb.usb.jar"/>
+	<classpathentry kind="lib" path="lib/commons-lang3-3.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/ecj.jar"/>
+	<classpathentry kind="lib" path="lib/gluegen-rt.jar"/>
+	<classpathentry kind="lib" path="lib/jakarta-regexp-1.5.jar"/>
+	<classpathentry kind="lib" path="lib/javacc.jar"/>
+	<classpathentry kind="lib" path="lib/javacsv.jar"/>
+	<classpathentry kind="lib" path="lib/jdom-2.0.5.jar"/>
+	<classpathentry kind="lib" path="lib/jdom.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-core-2.0.6.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-continuation-8.1.11.v20130520.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-http-8.1.11.v20130520.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-io-8.1.11.v20130520.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-security-8.1.11.v20130520.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-server-8.1.11.v20130520.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-servlet-8.1.11.v20130520.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-util-8.1.11.v20130520.jar"/>
+	<classpathentry kind="lib" path="lib/jfcunit.jar"/>
+	<classpathentry kind="lib" path="lib/jhall.jar"/>
+	<classpathentry kind="lib" path="lib/jhidrawplugin.jar"/>
+	<classpathentry kind="lib" path="lib/jinput.jar"/>
+	<classpathentry kind="lib" path="lib/jmdns.jar"/>
+	<classpathentry kind="lib" path="lib/joal.jar"/>
+	<classpathentry kind="lib" path="lib/jsr305.jar"/>
+	<classpathentry kind="lib" path="lib/junit.jar"/>
+	<classpathentry kind="lib" path="lib/jython.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="lib/mailapi.jar"/>
+	<classpathentry kind="lib" path="lib/AppleJavaExtensions.jar"/>
+	<classpathentry kind="lib" path="lib/openlcb.jar"/>
+	<classpathentry kind="lib" path="lib/jlfgr-1_0.jar"/>
+	<classpathentry kind="lib" path="lib/rscbundlecheck.jar"/>
+	<classpathentry kind="lib" path="lib/RXTXcomm.jar"/>
+	<classpathentry kind="lib" path="lib/Serialio.jar"/>
+	<classpathentry kind="lib" path="lib/servlet-api-3.0.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-api-1.7.6.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-log4j12-1.7.6.jar"/>
+	<classpathentry kind="lib" path="lib/smtp.jar"/>
+	<classpathentry kind="lib" path="lib/UmlGraph-5.6.jar"/>
+	<classpathentry kind="lib" path="lib/vecmath.jar"/>
+	<classpathentry kind="lib" path="lib/WinRegistry-4.4.jar"/>
+	<classpathentry kind="lib" path="lib/xAPlib.jar"/>
+	<classpathentry kind="lib" path="lib/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-websocket-8.1.11.v20130520.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/jackson-databind-2.0.6.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-annotations-2.0.6.jar"/>
+	<classpathentry kind="lib" path="lib/i18nchecker.jar"/>
+	<classpathentry kind="lib" path="lib/xbee-api-0.9.jar"/>
+	<classpathentry kind="output" path="java/classes"/>
+</classpath>

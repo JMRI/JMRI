@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright ($Author$) 2009 -->
+<!-- <!-- $Id$ --> -->
+<!-- Translated by Herv&#233; Blorec bzh56420@yahoo.fr 2013-11-04
+--> 
+<title>JMRI: Send Problem Report</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html;charset=iso-8859-1"> 
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: T&#233;l&#233;chargement des Informations de D&#233;bogage
+</h1>
+
+L'&#233;l&#233;ment "Transf&#233;rer les informations de d&#233;bogage"  dans les menus d'aide JMRI
+vous permet de stocker des informations de d&#233;bogage, o&#249; les d&#233;veloppeurs JMRI
+peuvent facilement les trouver. Les informations contiennent tous
+les d&#233;tails sp&#233;cifiques de votre installation JMRI, y compris le
+journal de la session la plus r&#233;cente du programme,
+mais ne contiennent aucune de vos informations priv&#233;es.
+Vous pouvez voir les rapports des probl&#232;mes ant&#233;rieurs dans le
+<a href="http://groups.google.com/group/jmri-problem-reports">jmri-problem-reports Google group </a>.
+
+<p>
+Pour rendre l'information plus utile, vous devriez
+t&#233;l&#233;charger d&#232;s que possible apr&#232;s avoir rencontr&#233;
+le probl&#232;me, de sorte que toute information utile n'ait pas &#233;t&#233;
+&#233;cras&#233;e.
+
+<p>
+L'&#233;l&#233;ment "T&#233;l&#233;charger Informations d&#233;bogage" va aider en ouvrant une nouvelle fen&#234;tre
+avec trois champs et deux cases &#224; cocher.
+Entrez votre adresse email dans la ligne du haut.
+elle ne sera pas rendue visible pour le public, mais nous
+avons besoin d'une adresse courriel valide pour r&#233;duire les spams.
+Dans le champ suivant, entrez un r&#233;sum&#233; en une ligne du probl&#232;me
+qui appara&#238;tra comme le sujet du t&#233;l&#233;chargement.
+Enfin, tapez quelques lignes d&#233;crivant ce qui s'est mal pass&#233;, que vous avez
+recr&#233;er, etc
+
+<p>
+Normalement, vous laissez les deux cases &#224; cocher afin que le rapport
+contienne les informations de contexte (version JMRI, la version Java,
+types de mat&#233;riel, etc) et les fichiers journaux les plus r&#233;cents. Si vous
+ne voulez pas inclure ceux-ci pour une raison quelconque, il suffit de d&#233;cocher leur case
+
+<p>
+Enfin,appuyer sur envoyer. Si tout va bien, la fen&#234;tre va se fermer
+ quelques secondes apr&#232;s que l'information ait &#233;t&#233; envoy&#233;.
+
+    
+<!--#include virtual="/Footer" -->
+</body>
+</html>

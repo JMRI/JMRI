@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+</head>
+<body bgcolor="white">
+
+This directory contains XML files to configure GUI
+elements for JMRI.
+
+<h2>Contents</h2>
+
+The {@link jmri.util.swing} package can build
+toolbars, menus, and navigation trees from XML files
+for decorating windows. This directory
+is the default location for storing files 
+used for configuration by JMRI applications.
+
+<p>
+The default organization is a triplet of files:
+<ul>
+    <li>Gui3LeftTree.xml
+    <li>Gui3MainToolBar.xml
+    <li>Gui3Menus.xml
+</ul>
+that together decorate a window.
+
+<h2>Organization</h2>
+
+apps - general structure of an application
+    decoderpro
+    demo
+    panelpro
+
+parts  - for use with XInclude
+    HelpMenu.xml	
+    WindowsMenu.xml
+    jmri (and child packages; wrong place? e.g. is
+            apps really a source tree directory,
+            so jmri should be top level?)
+
+test - for use with JUnit tests, not for production use;
+        should be moved to test/ source tree?
+    Gui3LeftTree.xml
+    Gui3MainToolBar.xml
+    Gui3Menus.xml
+
+<h2>Related Documentation</h2>
+
+For overviews, tutorials, examples, guides, and tool documentation, please see:
+<ul>
+  <li><a href="">##### REFER TO NON-SPEC DOCUMENTATION HERE #####</a>
+</ul>
+
+@see jmri.util.swing
+@since 2.9.1
+
+</body>
+</html>

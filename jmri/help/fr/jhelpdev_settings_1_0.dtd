@@ -1,0 +1,18 @@
+<!-- DTD for JHelpDev Environment Settings not related to a single project -->
+<!-- author James Iry   02/18/04 -->
+<!-- xml version="1.0" encoding="ISO-8859-1" -->
+
+<!-- jhelpdev_settings. It is versioned. -->
+<!ELEMENT jhelpdevsettings (lastdirectory, maxrecentfiles, recentfile*)>
+  <!ATTLIST jhelpdevsettings version CDATA #IMPLIED>
+  <!ATTLIST jhelpdevsettings xml:lang CDATA #IMPLIED>
+
+
+<!ELEMENT lastdirectory (#PCDATA)>
+
+<!ELEMENT maxrecentfiles (#PCDATA)>
+
+<!ELEMENT recentfile (#PCDATA)>
+
+
+

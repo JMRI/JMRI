@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2013 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - for Unified Software -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Volume Level 3</name>
+  <column>
+    <row>
+      <column>
+        <label>
+          <text>   </text>
+        </label>
+        <label>
+          <text>Must have JMRI 3.3.6 or later.</text>
+          <text xml:lang="it">Dovete avere JMRI 3.3.6 o successivo.</text>
+        </label>
+        <label>
+          <text>   </text>
+        </label>
+        <label>
+          <text>To set individual sound volume to level 3</text>
+          <text xml:lang="it">Per impostare Volume individuale a livello 3</text>
+        </label>
+        <label>
+          <text>Pick sound group (high byte) first then from list of sounds of just that group</text>
+          <text xml:lang="it">prima seleziona Gruppo Suono (byte alto) poi scegli dalla lista dei suoni solo di quel gruppo</text>
+        </label>
+        <label>
+          <text>Then press Write full sheet</text>
+          <text xml:lang="it">Poi premi Scrivi tutto il foglio</text>
+        </label>
+        <label>
+          <text>Repeat for other sounds</text>
+          <text xml:lang="it">Ripeti per gli altri suoni</text>
+        </label>
+        <label>
+          <text>To change to different volume level, choose different Volume Level tab</text>
+          <text xml:lang="it">Per cambiare livello del volume, Seleziona il Tab con altri Volumi</text>
+        </label>
+        <label>
+          <text>   </text>
+        </label>
+        <display item="Volume Level 3"/>
+        <display item="Volume Level 3 0" label=""/>
+        <display item="Volume Level 3 1" label=""/>
+        <display item="Volume Level 3 255" label=""/>
+      </column>
+    </row>
+  </column>
+  <name xml:lang="it">Volume Livello 3</name>
+</pane>

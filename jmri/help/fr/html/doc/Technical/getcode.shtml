@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<!-- UpDated by Blorec Herv&#233;  2013-09-04--> 
+<html lang="fr">
+<head>
+    <TITLE>
+ 	JMRI: Getting the Code 
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code CVS download">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset= iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+	    <!-- ------------- -->
+	    <!-- Page Contents --> <!-- Required -->
+	    <!-- ------------- -->
+
+	    <H1>JMRI: Obtention du Code</H1>
+
+
+<h2>Lancement Rapide</h2>
+
+Vous pouvez t&#233;l&#233;charger le code source le plus r&#233;cent via SVN en utilisant:
+<code> <PRE>
+svn checkout svn://svn.code.sf.net/p/jmri/code/trunk/jmri
+</PRE> </code>
+
+
+<h2>D&#233;tails</h2>
+Notre code source est distribu&#233; en utilisant <a
+  href="http://subversion.apache.org/">Subversion</a>
+(Nous gardons aussi le
+<A href="WebSite.shtml"> site web </a>
+dans le SVN, si vous souhaitez travailler directement avec lui.)
+Si vous voulez travailler avec le
+code, cela vaut la peine de prendre quelques minutes pour installer SVN. Nous sommes d&#233;sol&#233;s, mais
+nous ne pouvons pas accepterr d'autres m&#233;thodes (envoi des fichiers. zip, etc), car ils sont
+tout simplement sources de trop d'erreurs.
+<p>
+Quelques ordinateurs sont livr&#233;s avec Subversion install&#233;, principalement divers syst&#232;mes Linux
+. Si il n'est pas install&#233; sur votre ordinateur, vous aurez besoin
+de trouver et d'installer le logiciel client n&#233;cessaire. voir les pages
+<a href="http://subversion.apache.org/packages.html"> t&#233;l&#233;chargements binaires Subversion
+ </a> pour des paquets pour plusieurs syst&#232;mes d'exploitation
+(y compris Mac OS X, Windows et diff&#233;rentes distibution Linux).</p>
+
+<p>De nombreux environnements de d&#233;veloppement (par exemple, Netbeans ou Eclipse) auront
+le support pour Subversion, soit directement, soit comme un add-on. V&#233;rifiez la
+documentation de votre IDE favori pour v&#233;rifier le support SVN.</p>
+
+<p> <a href="https://sourceforge.net/apps/trac/sourceforge/wiki/Subversion">
+Serveur Subversion sur SourceForge </a> ne n&#233;cessite aucune information utilisateur
+lorsque vous extrayez une copie du code. </p>
+
+<p>
+Si vous avez une copie existante du code et que vous vouliez la mettre &#224; jour
+, la commande est:
+<pre>
+svn update
+</pre> </p>
+
+<p> Voir aussi la <a href="SVNFAQ.shtml"> page FAQ Subversion</a>. </p>
+
+<p> Apr&#232;s que la v&#233;rification soit termin&#233;e, vous trouverez un r&#233;pertoire de haut niveau
+    appel&#233; <tt> java </tt>, avec des sous-r&#233;pertoires <tt> xml </tt>,
+   ressources <tt> </tt>, <tt> jython </tt>, <tt> aide </tt>, <tt> lib </tt>,
+   <tt> java </tt> et d'autres. </p>
+
+   <p> Changement de <tt> java </tt>. L&#224;, vous trouverez un r&#233;pertoire <tt> src </tt>
+    qui contient le code source pour JMRI lui-m&#234;me, et un r&#233;pertoire de <tt> test </tt>
+    qui contient divers tests. </p>
+
+<p> Vous pouvez consulter le code avec votre &#233;diteur de texte favori. Pour
+   compiler et ex&#233;cuter, vous avez besoin d'un des outils de compilation d&#233;crit
+   sur la barre &#224; gauche: <a href="Ant.shtml"> Ant </a>, <a
+    href = "Eclipse.shtml"> Eclipse </a>, <a
+    href = " NetBeans.shtml"> NetBeans </a>, <a
+    href = "JBuilder.shtml"> JBuilder </a>, etc (Ant peut-&#234;tre le plus facile &#224;
+   installer et &#224; utiliser, et c'est le principal exemple dans la documentation) </p>
+
+   <p> Une fois que vous travaillez avec le code, vous aurez probablement cr&#233;er quelques am&#233;liorations
+   que vous souhaitez contribuer en retour au projet. C'est l&#224; que Subversion a un &#233;norme
+   avantage, avec les autorisations et les commandes appropri&#233;s, vous pouvez fusionner vos
+   modifications dans la source commune automagiquement. Contactez-nous si vous &#234;tes pr&#234;t &#224;
+   faire ou voir la <a info sur href="index.shtml#contributing">
+   contribution </a>. </p>
+
+<h2> Acc&#232;s aux anciennes Versions  </h2>
+
+   <p> La meilleure fa&#231;on de r&#233;cup&#233;rer la source pour les versions 2.12 et ant&#233;rieures
+   est d'utiliser le <a href="getoldcode.shtml"> CVS Repository </a>. s'il vous pla&#238;t
+   Voir les instructions pour plus de d&#233;tails. </p>
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+

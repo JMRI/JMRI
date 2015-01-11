@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+    <head>
+        <!-- Copyright 2012 -->
+        <!-- $Id$ -->
+	<!-- $Id$ -->
+        <title>JMRI: Json Servlet</title>
+
+        <!-- Style -->
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+        <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+        <link rel="home" title="Home" href="/">
+        <STYLE type="text/css">
+            table#jsonResponses {
+                border-collapse:collapse;
+            }
+            table#jsonResponses td {
+                border: 1px solid grey;
+                width: 33%;
+            }
+            code {
+                white-space: normal;
+            }
+        </STYLE>
+        <!-- /Style -->
+    </head>
+
+    <body>
+        <!--#include virtual="/Header" -->
+
+        <!--#include virtual="Sidebar" -->
+        <div id="mainContent">
+
+            <h1>
+                JMRI: Servlet Json 
+            </h1>
+            <p>Le <b>Servlet Json JMRI</b> fournit l'acc&#232;s web &#224; des listes et des valeurs pour de nombreuses entit&#233;s JMRI d&#233;finies, dans le format
+                <a href='http://en.wikipedia.org/wiki/JSON' target=_new> moderne JSON</a>.  Il fournit aussi une interface
+                <a href='http://en.wikipedia.org/wiki/WebSocket' target=_new>WebSocket</a> pour faire changer les statuts de ces entit&#233;s, et &#233;couter les changements externes.</p>
+
+            La fonction <b>HTTP GET</b> du servlet r&#233;pond au mod&#233;le URL suivant:
+            <ul>
+                <li>/json/cars</li>
+                <li>/json/cars/&lt;ID&gt;</li>
+                <li>/json/sensors</li>
+                <li>/json/sensors/&lt;name&gt;</li>
+            </ul>actuellement, le servlet supporte wagons, machines, lumi&#232;res, emplacements, m&#233;moiress, m&#233;tadata, panneau, alimentation, chemins de fer, rapports, liste, itin&#233;raires, capteurs, T&#234;tes signal, M&#226;ts signal, convois, et aiguillages.
+
+            Lafonction WebSocket de ce servlet
+            actuellement g&#232;re les cha&#238;nes JSON sous quatre formes diff&#233;rentes:
+            <ul>
+                <li>les demandes de liste dans le formulaire: <code>{"type":"list","list":"trains"}</code>
+                    qui sont pass&#233;es &#224; JsonLister pour gestion.</li>
+                <li>status individuelle des &#233;l&#233;ments requis dans le formulaire<code>{"type":"turnout","data":{"name":"LT14"}}</code>
+                    qui sont transmises aux gestionnaires sp&#233;cifiques. Ces demandes initieront les "auditeurs" qui enverront r&#233;ponses mises &#224; jour &#224; chaque changement d'&#233;tat de l'&#233;l&#233;ment.
+                    <ul>
+                        <li>l'&#233;tat d'un &#233;l&#233;ment peut &#234;tre r&#233;gl&#233; par l'ajout d'un n&#339;ud  d'<strong>&#233;tat</strong> au n&#339;ud <em>donn&#233;es</ em> dans une requ&#234;te HTTP POST:
+                            <code>{"type":"turnout","data":{"name":"LT14","state":4}}</code>
+                        <li>Des types diff&#233;rents peuvent &#234;tre cr&#233;&#233;s si la requ&#234;te est une requ&#234;te HTTP PU.Notez que tous les types supportent ceci</li>
+                    </ul>
+                </li>
+                <li>une pulsation dans le formulaire <code>*</code> ou <code>{"type":"ping"}</code>. La <code>*</code> Pulsation
+                    n'obtient pas de r&#233;ponse, tandis que la pulsation JSON provoque une<code>{"type":"pong"}</code> r&#233;ponse.</li>
+                <li>un signoff dans le formulaire: <code>{"type":"goodbye"}</code> pour lequel une r&#233;ponse identique est envoy&#233;e avant que la connexion ne se ferme.</li>
+            </ul>
+            La fonction <b>WebSocket</b> du Servlet peut &#234;tre vue.
+            en acc&#233;dant &#224; l' url <b>/JSON/</b>, o&#249; une console <b>JSON</b> est fourni pour le test.<br>
+            Exemple de commandes et r&#233;ponses:
+            <table id="jsonResponses"><tr><th>commande</th><th>r&#233;ponse</th><th>notes</th></tr>
+                <tr><td><code>{"type":"sensor","data":{"name":"IS2"}}</code></td><td><code>{"type":"sensor","data":{"name":"IS2","state":4}}</code></td><td>demande l'&#233;tat actuel du capteur IS2</td></tr>
+                <tr><td><code>{"type":"sensor","data":{"name":"IS2","state":4}}</code></td><td><code>{"type":"sensor","data":{"name":"IS2","state":4}}</code></td><td>D&#233;finit le capteur IS2 &#224; InActif (4)</td></tr>
+                <tr><td><code>{"type":"turnout","data":{"name":"IT99","state":0}}</code></td><td><code>{"type":"turnout","data":{"name":"IT99","state":4}}</code></td><td>Envoyer l'&#233;tat=0 est aussi trait&#233; comme  une requ&#234;te pour le statut actuel</td></tr>
+                <tr><td><code>{"type":"power","data":{}}</code></td><td><code>{"type":"power","data":{"state":2}}</code></td><td>L'alimentation ne n&#233;cessite pas de nom </td></tr>
+                <tr><td><code>{"type":"ping"}</code></td><td><code>{"type":"pong"}</code></td><td>ping Requ&#234;te et R&#233;ponse </td></tr>
+                <tr><td><code>{"type":"list","list":"panels"}</code></td><td><code>{"type":"list","list":[{"name":"Panel/Panel",
+                            "URL":"/panel/Panel/Panel?format=json","userName":"Panel","type":"Panel"},
+                            {"name":"Layout/Waccamaw%20Coast%20Line",
+                            "URL":"/panel/Layout/Waccamaw%20Coast%20Line?format=json",
+                            "userName":"Waccamaw Coast Line","type":"Layout"}]}</code></td><td>requi&#232;re une liste de panneaux, r&#233;pond avec un ensemble des d&#233;tails de deux panneaux</td></tr>
+
+            </table>
+        </div>
+        <!--#include virtual="/Footer" -->
+    </body>
+</html>

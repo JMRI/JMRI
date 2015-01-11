@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2004 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="jefflaw@datamasta.co.nz" version="1.00" lastUpdated="20040809"/>
+  <!-- version 1.00 - initial version             -->
+  <decoder>
+    <family name="Umelec ATLPlus Engine Module" mfg="Umelec Ing Buero">
+      <model model="ATL2051" lowVersionID="59" highVersionID="59" comment="For DC Motors, or AC Motors with Infrared Light Barrier" maxInputVolts="12V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="HO" numOuts="9" numFns="8">
+	  	</model>
+      <model model="ATL2054" lowVersionID="19" highVersionID="19" comment="For DC Motors, includes EMP control" maxInputVolts="12V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="HO" numOuts="9" numFns="8">
+	  	</model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="2" default="8" comment="Range 0-15" item="Vstart">
+        <decVal max="15"/>
+        <label>Vstart</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Startspannung</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable CV="3" default="4" mask="XXXXVVVV" item="Accel Normal">
+        <decVal min="0" max="15"/>
+        <label>Acceleration - Normal Mode</label>
+        <label xml:lang="it">Accellerazione (0-15)</label>
+        <label xml:lang="fr">Accelération (0-15)</label>
+        <label xml:lang="de">Anfahrverzögerung (015)</label>
+      </variable>
+      <variable CV="3" default="4" mask="VVVVXXXX" item="Accel Signal">
+        <decVal min="0" max="15"/>
+        <label>Acceleration - Signal Mode</label>
+      </variable>
+      <variable CV="4" default="4" mask="XXXXVVVV" item="Decel Normal">
+        <decVal min="0" max="15"/>
+        <label xml:lang="it">Decellerazione (0-15)</label>
+        <label xml:lang="fr">Décélération (0-15)</label>
+        <label xml:lang="de">Bremszeit (0-15)</label>
+        <label>Deceleration - Normal Mode</label>
+      </variable>
+      <variable CV="4" default="4" mask="VVVVXXXX" item="Decel Signal">
+        <decVal min="0" max="15"/>
+        <label>Deceleration - Signal Mode</label>
+      </variable>
+      <variable CV="6" default="40" comment="Range 30-63" item="Vmax Signal Mode">
+        <decVal min="30" max="63"/>
+        <label>Vmax Signal Mode</label>
+        <comment>Range 30-63</comment>
+      </variable>
+      <variable CV="7" readOnly="yes" item="Decoder Version" default="59">
+        <decVal/>
+        <label>Decoder Version No</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+      </variable>
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="147">
+        <decVal/>
+        <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+      </variable>
+      <variable item="Total PWM Period" CV="9" default="17" comment="Range 0-252, default is 240 on ATL2054">
+        <decVal/>
+        <label>Total PWM Period</label>
+        <label xml:lang="it">Periodo PWM (Frequenza pilotaggio Motore)</label>
+        <comment>Range 0-252, default is 240 on ATL2054</comment>
+      </variable>
+      <variable CV="10" default="48" comment="Range 30-63" item="Vmax Normal Mode">
+        <decVal/>
+        <label>Vmax Normal Mode</label>
+        <comment>Range 30-63</comment>
+      </variable>
+      <variable CV="11" default="64" comment="Range 0-255, default is 127 on ATL2054" item="Sound Group 1 Option 1">
+        <decVal/>
+        <label>Exhaust Divider (ATL2051)</label>
+        <comment>Range 0-255, default is 127 on ATL2054</comment>
+      </variable>
+      <variable CV="11" default="127" comment="Range 0-255, default is 127 on ATL2054" item="Sound Group 1 Option 2">
+        <decVal/>
+        <label>Exhaust Divider (ATL2054)</label>
+        <comment>Range 0-255, default is 127 on ATL2054</comment>
+      </variable>
+      <variable CV="12" default="44" comment="Range 44-63" item="Sound Group 2 Option 1">
+        <decVal min="44" max="63"/>
+        <label>Whistle Tone Start Pointer 1</label>
+        <comment>Range 44-63</comment>
+      </variable>
+      <variable CV="13" default="44" comment="Range 44-63" item="Sound Group 2 Option 2">
+        <decVal min="44" max="63"/>
+        <label>Whistle Tone Start Pointer 2</label>
+        <comment>Range 44-63</comment>
+      </variable>
+      <variable CV="19" default="0" item="Consist Address" comment="Allows permanent storage of consist address. Range 0-255">
+        <decVal min="0" max="255"/>
+        <label>Consist Address</label>
+        <comment>Allows permanent storage of consist address. Range 0-255</comment>
+      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <variable CV="29" mask="XXXVXXXX" item="Use Speed Table">
+        <enumVal>
+          <enumChoice choice="Use Vstart (CV29, bit 4)">
+            <choice>Use Vstart (CV29, bit 4)</choice>
+          </enumChoice>
+          <enumChoice choice="Use Table (CV's 30-44)">
+            <choice>Use Table (CV's 30-44)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Use Speed Table</label>
+      </variable>
+      <!-- Non-Standard Speed Table -->
+      <variable CV="30" default="1" comment="Range 1-63" item="Speed Table 1">
+        <decVal min="1" max="63"/>
+        <label>Speed Step 1</label>
+        <comment>Range 1-63</comment>
+      </variable>
+      <variable CV="31" default="3" comment="Range 1-63" item="Speed Table 2">
+        <decVal min="1" max="63"/>
+        <label>Speed Step 2</label>
+        <comment>Range 1-63</comment>
+      </variable>
+      <variable CV="32" default="5" comment="Range 1-63" item="Speed Table 3">
+        <decVal min="1" max="63"/>
+        <label>Speed Step 3</label>
+        <comment>Range 1-63</comment>
+      </variable>
+      <variable CV="33" default="7" comment="Range 1-63" item="Speed Table 4">
+        <decVal min="1" max="63"/>
+        <label>Speed Step 4</label>
+        <comment>Range 1-63</comment>
+      </variable>
+      <variable CV="34" default="9" comment="Range 1-63" item="Speed Table 5">
+        <decVal min="1" max="63"/>
+        <label>Speed Step 5</label>
+        <comment>Range 1-63</comment>
+      </variable>
+      <variable CV="35" default="11" comment="Range 1-63" item="Speed Table 6">
+        <decVal min="1" max="63"/>
+        <label>Speed Step 6</label>
+        <comment>Range 1-63</comment>
+      </variable>
+      <variable CV="36" default="13" comment="Range 1-63" item="Speed Table 7">
+        <decVal min="1" max="63"/>
+        <label>Speed Step 7</label>
+        <comment>Range 1-63</comment>
+      </variable>
+      <variable CV="37" default="15" comment="Range 1-63" item="Speed Table 8">
+        <decVal min="1" max="63"/>
+        <label>Speed Step 8</label>
+        <comment>Range 1-63</comment>
+      </variable>
+      <variable CV="38" default="17" comment="Range 1-63" item="Speed Table 9">
+        <decVal min="1" max="63"/>
+        <label>Speed Step 9</label>
+        <comment>Range 1-63</comment>
+      </variable>
+      <variable CV="39" default="19" comment="Range 1-63" item="Speed Table 10">
+        <decVal min="1" max="63"/>
+        <label>Speed Step 10</label>
+        <comment>Range 1-63</comment>
+      </variable>
+      <variable CV="40" default="21" comment="Range 1-63" item="Speed Table 11">
+        <decVal min="1" max="63"/>
+        <label>Speed Step 11</label>
+        <comment>Range 1-63</comment>
+      </variable>
+      <variable CV="41" default="23" comment="Range 1-63" item="Speed Table 12">
+        <decVal min="1" max="63"/>
+        <label>Speed Step 12</label>
+        <comment>Range 1-63</comment>
+      </variable>
+      <variable CV="42" default="25" comment="Range 1-63" item="Speed Table 13">
+        <decVal min="1" max="63"/>
+        <label>Speed Step 13</label>
+        <comment>Range 1-63</comment>
+      </variable>
+      <variable CV="43" default="27" comment="Range 1-63" item="Speed Table 14">
+        <decVal min="1" max="63"/>
+        <label>Speed Step 14</label>
+        <comment>Range 1-63</comment>
+      </variable>
+      <variable CV="44" default="29" comment="Range 1-126" item="Speed Table 15">
+        <decVal min="1" max="126"/>
+        <label>Speed Step 15</label>
+        <comment>Range 1-126</comment>
+      </variable>
+      <!-- Whistle Table -->
+      <variable CV="45" default="0" comment="Range 0-255" item="Whistle Table 1">
+        <decVal min="0" max="255"/>
+        <label>Whistle Memory 1</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="46" default="255" comment="Range 0-255" item="Whistle Table 2">
+        <decVal min="0" max="255"/>
+        <label>Whistle Memory 2</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="47" default="128" comment="Range 0-255" item="Whistle Table 3">
+        <decVal min="0" max="255"/>
+        <label>Whistle Memory 3</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="48" default="252" comment="Range 0-255" item="Whistle Table 4">
+        <decVal min="0" max="255"/>
+        <label>Whistle Memory 4</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="49" default="15" comment="Range 0-255" item="Whistle Table 5">
+        <decVal min="0" max="255"/>
+        <label>Whistle Memory 5</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="50" default="231" comment="Range 0-255" item="Whistle Table 6">
+        <decVal min="0" max="255"/>
+        <label>Whistle Memory 6</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="51" default="65" comment="Range 0-255" item="Whistle Table 7">
+        <decVal min="0" max="255"/>
+        <label>Whistle Memory 7</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="52" default="243" comment="Range 0-255" item="Whistle Table 8">
+        <decVal min="0" max="255"/>
+        <label>Whistle Memory 8</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="53" default="120" comment="Range 0-255" item="Whistle Table 9">
+        <decVal min="0" max="255"/>
+        <label>Whistle Memory 9</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="54" default="31" comment="Range 0-255" item="Whistle Table 10">
+        <decVal min="0" max="255"/>
+        <label>Whistle Memory 10</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="55" default="0" comment="Range 0-255" item="Whistle Table 11">
+        <decVal min="0" max="255"/>
+        <label>Whistle Memory 11</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="56" default="255" comment="Range 0-255" item="Whistle Table 12">
+        <decVal min="0" max="255"/>
+        <label>Whistle Memory 12</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="57" default="0" comment="Range 0-255" item="Whistle Table 13">
+        <decVal min="0" max="255"/>
+        <label>Whistle Memory 13</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="58" default="252" comment="Range 0-255" item="Whistle Table 14">
+        <decVal min="0" max="255"/>
+        <label>Whistle Memory 14</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="59" default="31" comment="Range 0-255" item="Whistle Table 15">
+        <decVal min="0" max="255"/>
+        <label>Whistle Memory 15</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="60" default="135" comment="Range 0-255" item="Whistle Table 16">
+        <decVal min="0" max="255"/>
+        <label>Whistle Memory 16</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="61" default="192" comment="Range 0-255" item="Whistle Table 17">
+        <decVal min="0" max="255"/>
+        <label>Whistle Memory 17</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="62" default="255" comment="Range 0-255" item="Whistle Table 18">
+        <decVal min="0" max="255"/>
+        <label>Whistle Memory 18</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="63" default="96" comment="Range 0-255" item="Whistle Table 19">
+        <decVal min="0" max="255"/>
+        <label>Whistle Memory 19</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="64" default="127" comment="Range 0-255" item="Whistle Table 20">
+        <decVal min="0" max="255"/>
+        <label>Whistle Memory 20</label>
+        <comment>Range 0-255</comment>
+      </variable>
+    </variables>
+  </decoder>
+  <pane nameFmt="label">
+    <column>
+      <display item="Use Speed Table" layout="left" format="default"/>
+      <display item="Speed Table 1" layout="left" format="default"/>
+      <display item="Speed Table 2" layout="left" format="default"/>
+      <display item="Speed Table 3" layout="left" format="default"/>
+      <display item="Speed Table 4" layout="left" format="default"/>
+      <display item="Speed Table 5" layout="left" format="default"/>
+      <display item="Speed Table 6" layout="left" format="default"/>
+      <display item="Speed Table 7" layout="left" format="default"/>
+      <display item="Speed Table 8" layout="left" format="default"/>
+      <display item="Speed Table 9" layout="left" format="default"/>
+      <display item="Speed Table 10" layout="left" format="default"/>
+      <display item="Speed Table 11" layout="left" format="default"/>
+      <display item="Speed Table 12" layout="left" format="default"/>
+      <display item="Speed Table 13" layout="left" format="default"/>
+      <display item="Speed Table 14" layout="left" format="default"/>
+      <display item="Speed Table 15" layout="left" format="default"/>
+    </column>
+    <name>Speed Table</name>
+  </pane>
+  <pane nameFmt="label">
+    <column>
+      <display item="Whistle Table 1" layout="left" format="default"/>
+      <display item="Whistle Table 2" layout="left" format="default"/>
+      <display item="Whistle Table 3" layout="left" format="default"/>
+      <display item="Whistle Table 4" layout="left" format="default"/>
+      <display item="Whistle Table 5" layout="left" format="default"/>
+      <display item="Whistle Table 6" layout="left" format="default"/>
+      <display item="Whistle Table 7" layout="left" format="default"/>
+      <display item="Whistle Table 8" layout="left" format="default"/>
+      <display item="Whistle Table 9" layout="left" format="default"/>
+      <display item="Whistle Table 10" layout="left" format="default"/>
+      <display item="Whistle Table 11" layout="left" format="default"/>
+      <display item="Whistle Table 12" layout="left" format="default"/>
+      <display item="Whistle Table 13" layout="left" format="default"/>
+      <display item="Whistle Table 14" layout="left" format="default"/>
+      <display item="Whistle Table 15" layout="left" format="default"/>
+      <display item="Whistle Table 16" layout="left" format="default"/>
+      <display item="Whistle Table 17" layout="left" format="default"/>
+      <display item="Whistle Table 18" layout="left" format="default"/>
+      <display item="Whistle Table 19" layout="left" format="default"/>
+      <display item="Whistle Table 20" layout="left" format="default"/>
+    </column>
+    <name>Whistle</name>
+  </pane>
+  <pane nameFmt="label">
+    <column>
+      <display item="Vmax Normal Mode" layout="left" format="default"/>
+      <display item="Vmax Signal Mode" layout="left" format="default"/>
+      <display item="Accel Normal" layout="left" format="default"/>
+      <display item="Accel Signal" layout="left" format="default"/>
+      <display item="Decel Normal" layout="left" format="default"/>
+      <display item="Decel Signal" layout="left" format="default"/>
+    </column>
+    <name>ATL Motor</name>
+  </pane>
+</decoder-config>

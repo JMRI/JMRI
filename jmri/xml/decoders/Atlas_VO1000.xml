@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Paul Bender (paul.bender@acm.org)" version="1" lastUpdated="20040802"/>
+  <!-- Version 2 - added factory reset menu items (Paul Bender) -->
+  <decoder>
+    <family name="Atlas N-Scale" mfg="Atlas" lowVersionID="46" highVersionID="46">
+      <model model="VO1000 (Part #500099)" numOuts="2" numFns="0" lowVersionID="46" highVersionID="46">
+		</model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="2" item="Vstart" default="10" comment="Range 1-15">
+        <decVal min="1" max="15"/>
+        <label>Start Volts</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Anfahrspannung</label>
+        <comment>Range 1-15</comment>
+      </variable>
+      <variable item="Accel" CV="3" default="1" comment="Range 1-31">
+        <decVal min="1" max="31"/>
+        <label>Accel</label>
+        <label xml:lang="it">Accellerazione (0-31)</label>
+        <label xml:lang="fr">Accelération (0-31)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-31)</label>
+        <comment>Range 1-31</comment>
+      </variable>
+      <variable item="Decel" CV="4" default="1" comment="Range 1-31">
+        <decVal min="1" max="31"/>
+        <label>Decel</label>
+        <label xml:lang="it">Decellerazione (0-31)</label>
+        <label xml:lang="fr">Décélération (0-31)</label>
+        <label xml:lang="de">Bremszeit (0-31)</label>
+        <comment>Range 1-31</comment>
+      </variable>
+      <variable CV="7" readOnly="yes" item="Decoder Version">
+        <decVal/>
+        <label>Version ID</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+      </variable>
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="127">
+        <decVal/>
+        <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+      </variable>
+      <variable CV="8" item="Reset" comment="Writing a value of 33 will reset decoder to factory defaults">
+        <decVal/>
+        <label>Manufacturer ID - Reset</label>
+        <label xml:lang="it">Reset ai valori di fabbrica: </label>
+        <comment>Writing a value of 33 will reset decoder to factory defaults</comment>
+        <comment xml:lang="it">Scrivere un valore di 33 per ripristinare i valori originali delle CV</comment>
+      </variable>
+      <!-- CV=19 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+     <!-- CV=29 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <!-- CV=50 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv50_DCbrake.xml"/>
+      <!-- Define the fixed Function-Output mapping -->
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="33">
+         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
+    </resets>
+  </decoder>
+</decoder-config>
