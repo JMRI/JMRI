@@ -31,6 +31,7 @@ public class PackageTest extends TestCase {
 		suite.addTest(NamedBeanTest.suite());
 		suite.addTest(RouteTest.suite());
 		suite.addTest(AbstractLocoAddressTest.suite());
+		suite.addTest(DefaultLogixTest.suite());
 		suite.addTest(DefaultSignalSystemTest.suite());
 		suite.addTest(DefaultSignalAppearanceMapTest.suite());
 		suite.addTest(DccSignalMastTest.suite());
