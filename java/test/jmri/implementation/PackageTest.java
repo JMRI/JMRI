@@ -28,28 +28,33 @@ public class PackageTest extends TestCase {
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite("jmri.implementation");   // no tests in this class itself
+		
+		// fundamental aspects
 		suite.addTest(NamedBeanTest.suite());
-		suite.addTest(RouteTest.suite());
+		
+		// implementations
 		suite.addTest(AbstractLocoAddressTest.suite());
+        suite.addTest(AccessoryOpsModeProgrammerFacadeTest.suite());
+        suite.addTest(AddressedHighCvProgrammerFacadeTest.suite());
+		suite.addTest(DccSignalHeadTest.suite());
+		suite.addTest(DccSignalMastTest.suite());
+        suite.addTest(DefaultIdTagTest.suite());
 		suite.addTest(DefaultLogixTest.suite());
 		suite.addTest(DefaultSignalSystemTest.suite());
 		suite.addTest(DefaultSignalAppearanceMapTest.suite());
-		suite.addTest(DccSignalMastTest.suite());
-		suite.addTest(DccSignalHeadTest.suite());
-		suite.addTest(SE8cSignalHeadTest.suite());
-        suite.addTest(SignalHeadSignalMastTest.suite());
-        suite.addTest(AccessoryOpsModeProgrammerFacadeTest.suite());
+        suite.addTest(MultiIndexProgrammerFacadeTest.suite());
         suite.addTest(OffsetHighCvProgrammerFacadeTest.suite());
         suite.addTest(ResettingOffsetHighCvProgrammerFacadeTest.suite());
-        suite.addTest(AddressedHighCvProgrammerFacadeTest.suite());
-        suite.addTest(MultiIndexProgrammerFacadeTest.suite());
-        suite.addTest(TwoIndexTcsProgrammerFacadeTest.suite());
-        suite.addTest(SingleTurnoutSignalHeadTest.suite());
+		suite.addTest(RouteTest.suite());
+		suite.addTest(SE8cSignalHeadTest.suite());
+        suite.addTest(SignalHeadSignalMastTest.suite());
         suite.addTest(SignalSystemFileCheckTest.suite());
+        suite.addTest(SingleTurnoutSignalHeadTest.suite());
+        suite.addTest(TwoIndexTcsProgrammerFacadeTest.suite());
 
+        // sub-packages
         suite.addTest(jmri.implementation.swing.SwingShutDownTaskTest.suite());
         suite.addTest(ReporterTest.suite());
-        suite.addTest(DefaultIdTagTest.suite());
 
 		return suite;
 	}
