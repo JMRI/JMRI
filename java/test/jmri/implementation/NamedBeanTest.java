@@ -10,14 +10,24 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Tests for the NamedBean interface
- * @author	Bob Jacobsen  Copyright (C) 2009
+ * Tests for the NamedBean interface implementation.
+ *<p>
+ * Inherit from this and override "createInstance" if 
+ * you want to include these tests in a test class
+ * for your own NamedBean class
+ *
+ * @author	Bob Jacobsen  Copyright (C) 2009, 2015
  * @version $Revision$
  */
 public class NamedBeanTest extends TestCase {
 
-	public void testSetParameter() {
-	    NamedBean n = new AbstractNamedBean("sys", "usr"){
+    /**
+     * This is a separate protected method, 
+     * instead of part of setUp(), to 
+     * make subclassing easier.
+     */
+    protected NamedBean createInstance() {
+	    return new AbstractNamedBean("sys", "usr"){
 	        /**
 			 * 
 			 */
@@ -26,35 +36,23 @@ public class NamedBeanTest extends TestCase {
 	        public void setState(int i) {}
             public String getBeanType(){ return ""; }
 	    };
+    }
+    
+	public void testSetBeanParameter() {
+        NamedBean n = createInstance();
 
 	    n.setProperty("foo", "bar");
 	}
 
-	public void testGetParameter() {
-	    NamedBean n = new AbstractNamedBean("sys", "usr"){
-	        /**
-			 * 
-			 */
-			private static final long serialVersionUID = -6325024894936622293L;
-			public int getState() {return 0;}
-	        public void setState(int i) {}
-            public String getBeanType(){ return ""; }
-	    };
+	public void testGetBeanParameter() {
+        NamedBean n = createInstance();
 	    
 	    n.setProperty("foo", "bar");
 	    Assert.assertEquals("bar", n.getProperty("foo"));
 	}
 
-	public void testGetSetNull() {
-	    NamedBean n = new AbstractNamedBean("sys", "usr"){
-	        /**
-			 * 
-			 */
-			private static final long serialVersionUID = -3084037234443687552L;
-			public int getState() {return 0;}
-	        public void setState(int i) {}
-            public String getBeanType(){ return ""; }
-	    };
+	public void testGetSetNullBeanParameter() {
+        NamedBean n = createInstance();
 	    
 	    n.setProperty("foo", "bar");
 	    Assert.assertEquals("bar", n.getProperty("foo"));
@@ -62,16 +60,8 @@ public class NamedBeanTest extends TestCase {
 	    Assert.assertEquals(null, n.getProperty("foo"));
 	}
 
-	public void testGetPropertyKeys() {
-	    NamedBean n = new AbstractNamedBean("sys", "usr"){
-	        /**
-			 * 
-			 */
-			private static final long serialVersionUID = 2218307529643925912L;
-			public int getState() {return 0;}
-	        public void setState(int i) {}
-            public String getBeanType(){ return ""; }
-	    };
+	public void testGetBeanPropertyKeys() {
+        NamedBean n = createInstance();
 
 	    n.setProperty("foo", "bar");
 	    n.setProperty("biff", "bar");
