@@ -89,10 +89,7 @@ public class ProgModePane extends ProgModeSelector {
      * Get the configured programmer
      */
     public Programmer getProgrammer() {
-        if (InstanceManager.programmerManagerInstance()==null) {
-            log.warn("request for programmer with no ProgrammerManager configured");
-            return null;
-        } else if (mServicePane.isSelected()) {
+        if (mServicePane.isSelected()) {
             return mServicePane.getProgrammer();
         } else if (mOpsPane!=null && mOpsPane.isSelected()) {
             return mOpsPane.getProgrammer();
