@@ -71,8 +71,16 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
     public boolean getCanRead() {
     	return true;
     }
-    /*Need to check this out */
+    
+    @Override
+    public boolean getCanWrite() { return true;}
+    
+    @Override
+    /** CV1 to 1024 valid */
     public boolean getCanWrite(int mode, String cv) {
+        if (Integer.parseInt(cv) > 1024) {
+        	return false;
+        }
         return true;
     }
     
@@ -177,7 +185,7 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
             
             m = MrcMessage.getReadCV(cvnum);
         } else {
-            m = MrcMessage.getWriteCV((byte)cvnum, (byte)val);
+            m = MrcMessage.getWriteCV(cvnum, val);
         }
         m.setTimeout(PACKET_TIMEOUT);
         m.setSource(this);
