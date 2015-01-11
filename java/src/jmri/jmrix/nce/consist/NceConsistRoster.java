@@ -211,7 +211,6 @@ public class NceConsistRoster extends XmlFile {
      * to be done separately. See writeRosterFile() for a function that
      * finds the default location, does a backup and then calls this.
      * @param name Filename for new file, including path info as needed.
-     * @throws IOException
      */
     void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
         if (log.isDebugEnabled()) log.debug("writeFile "+name);

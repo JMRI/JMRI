@@ -272,7 +272,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
      * <P>
      * (This is public for testing purposes)
      * Runs in the "Receive" thread.
-     * @throws IOException
+     * @throws java.io.IOException
      */
     public void handleOneIncomingReply() throws java.io.IOException {
         // we sit in this until the message is complete, relying on

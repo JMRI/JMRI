@@ -154,7 +154,7 @@ public class GcTrafficController extends TrafficController {
      *
      * @param msg message to fill
      * @param istream character source.
-     * @throws IOException when presented by the input source.
+     * @throws java.io.IOException when presented by the input source.
      */
     protected void loadChars(AbstractMRReply msg, DataInputStream istream)
                            throws java.io.IOException {

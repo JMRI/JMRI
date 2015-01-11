@@ -11,7 +11,7 @@ package jmri;
  * <p>
  * A ProgrammingMode has a user-readable name to help humans select it.
  *<P>
- * We define a number of modes as constants in {@link jmri.implementation.DefaultProgrammerManager}
+ * We define a number of modes as constants in {@link jmri.managers.DefaultProgrammerManager}
  * because they are common across so
  * many DCC-specific implementations, they've become defacto standards.
  * <p>

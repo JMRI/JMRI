@@ -235,8 +235,6 @@ public class z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
      * Handle each reply when complete.
      * <P>
      * (This is public for testing purposes) Runs in the "Receive" thread.
-     *
-     * @throws IOException
      */
     public void handleOneIncomingReply() throws java.io.IOException {
         // we sit in this until the message is complete, relying on

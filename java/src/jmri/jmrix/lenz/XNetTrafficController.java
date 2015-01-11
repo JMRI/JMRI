@@ -242,7 +242,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
      *
      * @param msg message to fill
      * @param istream character source.  
-     * @throws IOException when presented by the input source.
+     * @throws java.io.IOException when presented by the input source.
      */
     @Override
     protected void loadChars(AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {

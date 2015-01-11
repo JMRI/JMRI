@@ -35,7 +35,7 @@ public class XnTcpXNetPacketizer extends XNetPacketizer {
      *
      * @param msg message to fill
      * @param istream character source. 
-     * @throws IOException when presented by the input source.
+     * @throws java.io.IOException when presented by the input source.
      */
 	 
 		@Override

@@ -87,7 +87,7 @@ public class OlcbSensor extends AbstractSensor implements CanListener {
      * In turn, the code in this class should use setOwnState to handle
      * internal sets and bean notifies.
      * @param s
-     * @throws JmriException
+     * @throws jmri.JmriException
      */
     public void setKnownState(int s) throws jmri.JmriException {
         CanMessage m;

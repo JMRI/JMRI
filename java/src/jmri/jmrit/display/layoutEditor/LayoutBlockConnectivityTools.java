@@ -70,9 +70,9 @@ public class LayoutBlockConnectivityTools{
      * block boundary are reachable.
      *
      * @return true if source and destination beans are reachable, or false if they are not
-     * @throws Jmri.Exception if no blocks can be found that related to the named beans.
+     * @throws jmri.JmriException if no blocks can be found that related to the named beans.
      */
-    public boolean checkValidDest(NamedBean sourceBean, NamedBean destBean, int pathMethod) throws jmri.JmriException{
+    public boolean checkValidDest(NamedBean sourceBean, NamedBean destBean, int pathMethod) throws jmri.JmriException {
         if(log.isDebugEnabled())
             log.debug("check valid des with source/dest bean" + sourceBean.getDisplayName() + "  " + destBean.getDisplayName());
         LayoutBlock facingBlock = null;
@@ -212,7 +212,7 @@ public class LayoutBlockConnectivityTools{
      * the destBlock comes before the destBlock+1.
      * @return true if destBlock comes before destBlock+1 or 
      * false if destBlock comes after destBlock+1
-     * @throws Jmri.Exception if any Block is null;
+     * @throws jmri.JmriException if any Block is null;
      */
      
      public boolean checkValidDest(LayoutBlock currentBlock, LayoutBlock nextBlock, LayoutBlock destBlock, LayoutBlock destBlockn1, int pathMethod) throws jmri.JmriException {

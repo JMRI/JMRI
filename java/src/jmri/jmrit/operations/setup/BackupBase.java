@@ -60,8 +60,6 @@ public abstract class BackupBase {
 	/**
 	 * Creates a BackupBase instance and initializes the Operations root
 	 * directory to its normal value.
-	 * 
-	 * @throws IOException
 	 */
 	protected BackupBase(String rootName) {
 		// A root directory name for the backups must be supplied, which will be
@@ -92,7 +90,7 @@ public abstract class BackupBase {
 	 * 
 	 * @param setName
 	 *            The name of the new backup set
-	 * @throws Exception
+	 * @throws java.io.IOException
 	 */
 	public void backupFilesToSetName(String setName) throws IOException {
 		validateNotNullOrEmpty(setName);
@@ -116,7 +114,7 @@ public abstract class BackupBase {
 	 * 
 	 * @param backupDirectory
 	 *            The directory to use for the backup.
-	 * @throws Exception
+	 * @throws java.io.IOException
 	 */
 	public void backupFilesToDirectory(File backupDirectory) throws IOException {
 		copyBackupSet(_operationsRoot, backupDirectory);
@@ -181,7 +179,7 @@ public abstract class BackupBase {
 	 * Restores a Backup Set with the given name from the backup store.
 	 * 
 	 * @param setName
-	 * @throws Exception
+	 * @throws java.io.IOException
 	 */
 	public void restoreFilesFromSetName(String setName) throws IOException {
 		copyBackupSet(new File(_backupRoot, setName), _operationsRoot);
@@ -191,7 +189,7 @@ public abstract class BackupBase {
 	 * Restores a Backup Set from the given directory.
 	 * 
 	 * @param directory
-	 * @throws Exception
+	 * @throws java.io.IOException
 	 */
 	public void restoreFilesFromDirectory(File directory) throws IOException {
 		log.debug("restoring files from directory {}",  directory.getAbsolutePath());
@@ -208,8 +206,7 @@ public abstract class BackupBase {
 	 * 
 	 * @param sourceDir
 	 * @param destDir
-	 * @throws IOException
-	 * @throws SetupException
+	 * @throws java.io.IOException
 	 */
 	public void copyBackupSet(File sourceDir, File destDir) throws IOException {
 		log.debug("copying backup set from: {} to: {}", sourceDir, destDir);
@@ -303,7 +300,7 @@ public abstract class BackupBase {
 	/**
 	 * Reloads the demo Operations files that are distributed with JMRI.
 	 * 
-	 * @throws Exception
+	 * @throws java.io.IOException
 	 */
 	public void loadDemoFiles() throws IOException {
 		File fromDir = new File(XmlFile.xmlDir(), "demoOperations"); // NOI18N
