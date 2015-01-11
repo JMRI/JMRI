@@ -245,7 +245,7 @@ public class FnMapPanelESU extends JPanel {
                         String bitMask = "00000000"+Integer.toBinaryString(bitValue);
                         bitMask = (bitMask.substring(bitMask.length() - 8));
                         String bitPattern = bitMask.replace("0","X").replace("1","V");
-    //                     if ( iRow == 0 ) log.info("nextFreeBit="+nextFreeBit+",thisCV="+thisCV+",bitPattern="+bitPattern);
+//                         if ( iRow == 0 ) log.info("nextFreeBit="+nextFreeBit+",thisCV="+thisCV+",bitPattern="+bitPattern);
                 
                         // Get Cv value from file. We need to do this to get the GUI synchronised with cvModel initially
                         int savedValue = 0;
@@ -353,6 +353,7 @@ public class FnMapPanelESU extends JPanel {
                             }
                             VariableValue var = _varModel.getVariable(iVar);
                             varComp.setToolTipText(PaneProgPane.addCvDescription(("Row "+Integer.toString(iRow+1)+", "+fullOutName), var.getCvDescription(), var.getMask()));
+                            if (cvObject == null) cvObject = cvModel.allCvMap().get(thisCV); // case of new loco
                             cvObject.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
                                     public void propertyChange(java.beans.PropertyChangeEvent e) {
                                         String propertyName = e.getPropertyName();
