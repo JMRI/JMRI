@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 20150111-0337-jake on Sat Jan 10 19:37:11 PST 2015 $Id$-->
-  <decoderIndex version="504">
+  <!--Written by JMRI version 20150111-0508-heap on Sun Jan 11 16:08:42 EST 2015 $Id$-->
+  <decoderIndex version="508">
     <mfgList nmraListDate="2014-09-22" updated="2014-10-11" lastadd="107,124">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -2848,16 +2848,16 @@
         </model>
       </family>
       <family name="ESU LokPilot V4.0" mfg="Electronic Solutions Ulm GmbH" file="ESU_LokPilotV4.0.xml">
-        <model model="LokPilot V4.0" numOuts="105" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LPV4">
-          <output name="97" label="|" />
-          <output name="98" label="|" />
-          <output name="99" label="|" />
-          <output name="100" label="|" />
-          <output name="101" label="|" />
-          <output name="102" label="|" />
-          <output name="103" label="|" />
-          <output name="104" label="|" />
-          <output name="105" label="Virtual|Drv Snd" />
+        <model model="LokPilot V4.0" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LPV4">
+          <output name="61" label="|" />
+          <output name="62" label="|" />
+          <output name="63" label="|" />
+          <output name="64" label="|" />
+          <output name="65" label="|" />
+          <output name="66" label="|" />
+          <output name="67" label="|" />
+          <output name="68" label="|" />
+          <output name="69" label="Virtual drive sound" />
           <size length="21.3" width="15.5" height="5.5" units="mm" />
           <!-- connector="NEM651, NEM 652, 21MTC, Plux12, wires" -->
           <protocols>
@@ -2866,29 +2866,29 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="LokPilot DCC V4.0" numOuts="105" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LPV4DCC">
-          <output name="97" label="|" />
-          <output name="98" label="|" />
-          <output name="99" label="|" />
-          <output name="100" label="|" />
-          <output name="101" label="|" />
-          <output name="102" label="|" />
-          <output name="103" label="|" />
-          <output name="104" label="|" />
-          <output name="105" label="Virtual|Drv Snd" />
+        <model model="LokPilot DCC V4.0" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LPV4DCC">
+          <output name="61" label="|" />
+          <output name="62" label="|" />
+          <output name="63" label="|" />
+          <output name="64" label="|" />
+          <output name="65" label="|" />
+          <output name="66" label="|" />
+          <output name="67" label="|" />
+          <output name="68" label="|" />
+          <output name="69" label="Virtual drive sound" />
           <size length="21.3" width="15.5" height="5.5" units="mm" />
           <!-- connector="NEM651, NEM 652, 21MTC" -->
         </model>
-        <model model="LokPilot Micro V4.0" numOuts="105" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LPmV4">
-          <output name="97" label="|" />
-          <output name="98" label="|" />
-          <output name="99" label="|" />
-          <output name="100" label="|" />
-          <output name="101" label="|" />
-          <output name="102" label="|" />
-          <output name="103" label="|" />
-          <output name="104" label="|" />
-          <output name="105" label="Virtual|Drv Snd" />
+        <model model="LokPilot Micro V4.0" numOuts="69" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LPmV4">
+          <output name="61" label="|" />
+          <output name="62" label="|" />
+          <output name="63" label="|" />
+          <output name="64" label="|" />
+          <output name="65" label="|" />
+          <output name="66" label="|" />
+          <output name="67" label="|" />
+          <output name="68" label="|" />
+          <output name="69" label="Virtual drive sound" />
           <size length="10.5" width="5.8" height="2.8" units="mm" />
           <!-- connector="NEM651, NEM 652, Next18" -->
           <protocols>
@@ -2897,37 +2897,37 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="LokPilot Micro DCC V4.0" numOuts="105" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LPmV4DCC">
-          <output name="97" label="|" />
-          <output name="98" label="|" />
-          <output name="99" label="|" />
-          <output name="100" label="|" />
-          <output name="101" label="|" />
-          <output name="102" label="|" />
-          <output name="103" label="|" />
-          <output name="104" label="|" />
-          <output name="105" label="Virtual|Drv Snd" />
-          <size length="10.5" width="5.8" height="2.8" units="mm" />
-          <!-- connector="NEM651, Next18" -->
-        </model>
-        <model model="LokPilot Fx V4.0" numOuts="105" numFns="32" extFnsESU="yes" productID="LPfxV4">
+        <model model="LokPilot Micro DCC V4.0" numOuts="69" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LPmV4DCC">
+          <output name="61" label="|" />
+          <output name="62" label="|" />
+          <output name="63" label="|" />
+          <output name="64" label="|" />
           <output name="65" label="|" />
           <output name="66" label="|" />
           <output name="67" label="|" />
           <output name="68" label="|" />
-          <output name="69" label="|" />
-          <output name="70" label="|" />
-          <output name="71" label="|" />
-          <output name="72" label="|" />
-          <output name="97" label="|" />
-          <output name="98" label="|" />
-          <output name="99" label="|" />
-          <output name="100" label="|" />
-          <output name="101" label="|" />
-          <output name="102" label="|" />
-          <output name="103" label="|" />
-          <output name="104" label="|" />
-          <output name="105" label="Virtual|Drv Snd" />
+          <output name="69" label="Virtual drive sound" />
+          <size length="10.5" width="5.8" height="2.8" units="mm" />
+          <!-- connector="NEM651, Next18" -->
+        </model>
+        <model model="LokPilot Fx V4.0" numOuts="69" numFns="32" extFnsESU="yes" productID="LPfxV4">
+          <output name="29" label="|" />
+          <output name="30" label="|" />
+          <output name="31" label="|" />
+          <output name="32" label="|" />
+          <output name="33" label="|" />
+          <output name="34" label="|" />
+          <output name="35" label="|" />
+          <output name="36" label="|" />
+          <output name="61" label="|" />
+          <output name="62" label="|" />
+          <output name="63" label="|" />
+          <output name="64" label="|" />
+          <output name="65" label="|" />
+          <output name="66" label="|" />
+          <output name="67" label="|" />
+          <output name="68" label="|" />
+          <output name="69" label="Virtual drive sound" />
           <size length="17.5" width="15.5" height="5.5" units="mm" />
           <!-- connector="NEM651, 21MTC" -->
           <protocols>
@@ -2936,16 +2936,16 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="LokPilot XL V4.0" numOuts="105" numFns="32" maxMotorCurrent="4A" extFnsESU="yes" productID="LPV4">
-          <output name="97" label="|" />
-          <output name="98" label="|" />
-          <output name="99" label="|" />
-          <output name="100" label="|" />
-          <output name="101" label="|" />
-          <output name="102" label="|" />
-          <output name="103" label="|" />
-          <output name="104" label="|" />
-          <output name="105" label="Virtual|Drv Snd" />
+        <model model="LokPilot XL V4.0" numOuts="69" numFns="32" maxMotorCurrent="4A" extFnsESU="yes" productID="LPV4">
+          <output name="61" label="|" />
+          <output name="62" label="|" />
+          <output name="63" label="|" />
+          <output name="64" label="|" />
+          <output name="65" label="|" />
+          <output name="66" label="|" />
+          <output name="67" label="|" />
+          <output name="68" label="|" />
+          <output name="69" label="Virtual drive sound" />
           <size length="55" width="25" height="10" units="mm" />
           <!-- connector="screw terminals" -->
           <protocols>
@@ -3050,25 +3050,25 @@
         </functionlabels>
       </family>
       <family name="ESU LokSound V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255" file="ESU_LokSoundV4_0.xml">
-        <model model="LokSound V4.0 NEM652" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="54400">
+        <model model="LokSound V4.0 NEM652" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="54400">
           <size length="30.5" width="15.5" height="5.5" units="mm" />
         </model>
-        <model model="LokSound V4.0 21MTC" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="54499">
+        <model model="LokSound V4.0 21MTC" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="54499">
           <size length="30.5" width="15.5" height="5.5" units="mm" />
         </model>
-        <model model="LokSound Micro V4.0 NEM651" numOuts="128" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="54800">
+        <model model="LokSound Micro V4.0 NEM651" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="54800">
           <size length="25.3" width="10.6" height="3.8" units="mm" />
         </model>
-        <model model="LokSound Micro V4.0 NEM652" numOuts="128" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="54899">
+        <model model="LokSound Micro V4.0 NEM652" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="54899">
           <size length="25.3" width="10.6" height="3.8" units="mm" />
         </model>
-        <model model="LokSound Micro V4.0 Next18" numOuts="128" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="54898">
+        <model model="LokSound Micro V4.0 Next18" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="54898">
           <size length="25.3" width="10.6" height="3.8" units="mm" />
         </model>
-        <model model="LokSound XL V4.0 Screw Terminals" numOuts="128" numFns="40" maxMotorCurrent="4A (peak=5A)" extFnsESU="yes" productID="54500">
+        <model model="LokSound XL V4.0 Screw Terminals" numOuts="92" numFns="40" maxMotorCurrent="4A (peak=5A)" extFnsESU="yes" productID="54500">
           <size length="51" width="41" height="14" units="mm" />
         </model>
-        <model model="LokSound XL V4.0 PIN connector" numOuts="128" numFns="40" maxMotorCurrent="4A (peak=5A)" extFnsESU="yes" productID="54599">
+        <model model="LokSound XL V4.0 PIN connector" numOuts="92" numFns="40" maxMotorCurrent="4A (peak=5A)" extFnsESU="yes" productID="54599">
           <size length="51" width="41" height="14" units="mm" />
         </model>
         <functionlabels>
@@ -3142,82 +3142,82 @@
         </functionlabels>
       </family>
       <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="168" highVersionID="168" file="ESU_LokSound_Select.xml">
-        <model model="LokSound Select Alco 244" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73401">
+        <model model="LokSound Select Alco 244" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73401">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Alco 251" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73402">
+        <model model="LokSound Select Alco 251" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73402">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Alco 251-16" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73427">
+        <model model="LokSound Select Alco 251-16" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73427">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Alco 539T" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73411">
+        <model model="LokSound Select Alco 539T" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73411">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Baldwin 606_606NA" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73446">
+        <model model="LokSound Select Baldwin 606_606NA" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73446">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Baldwin 606SC_606A" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73447">
+        <model model="LokSound Select Baldwin 606SC_606A" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73447">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Baldwin VO-6" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73405">
+        <model model="LokSound Select Baldwin VO-6" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73405">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 567" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73406">
+        <model model="LokSound Select EMD 567" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73406">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 645E" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73407">
+        <model model="LokSound Select EMD 645E" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73407">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 12-645 non turbo" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73443">
+        <model model="LokSound Select EMD 12-645 non turbo" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73443">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 12-645E3" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73439">
+        <model model="LokSound Select EMD 12-645E3" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73439">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 16-645 non turbo" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73426">
+        <model model="LokSound Select EMD 16-645 non turbo" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73426">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD F40PH" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73430">
+        <model model="LokSound Select EMD F40PH" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73430">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 16-645F" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73450">
+        <model model="LokSound Select EMD 16-645F" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73450">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 645E/F" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73408">
+        <model model="LokSound Select EMD 645E/F" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73408">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 710GB" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73410">
+        <model model="LokSound Select EMD 710GB" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73410">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD SD70M-2" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73425">
+        <model model="LokSound Select EMD SD70M-2" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73425">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD SD80MAC" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73461">
+        <model model="LokSound Select EMD SD80MAC" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73461">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD SD90MAC" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73431">
+        <model model="LokSound Select EMD SD90MAC" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73431">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD MP40PH-2C" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73428">
+        <model model="LokSound Select EMD MP40PH-2C" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73428">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select GE Cat-44" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73444">
+        <model model="LokSound Select GE Cat-44" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73444">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select GE FDL" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73403">
+        <model model="LokSound Select GE FDL" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73403">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select GE FDL-16" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73445">
+        <model model="LokSound Select GE FDL-16" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73445">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select GE 7FDL" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73404">
+        <model model="LokSound Select GE 7FDL" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73404">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Baldwin" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73405">
+        <model model="LokSound Select Baldwin" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73405">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select PCC trolley steetcar" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73418">
+        <model model="LokSound Select PCC trolley steetcar" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73418">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
         <functionlabels>
@@ -3266,28 +3266,28 @@
         </soundlabels>
       </family>
       <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="168" highVersionID="168" file="ESU_LokSound_Select_Steam.xml">
-        <model model="LokSound Select Big Boy 4-8-8-4" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
+        <model model="LokSound Select Big Boy 4-8-8-4" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select SP Cab Forward" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73409">
+        <model model="LokSound Select SP Cab Forward" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73409">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Y6B 2-8-8-2" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73457">
+        <model model="LokSound Select Y6B 2-8-8-2" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73457">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Steam 3 Driven Axles" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73413">
+        <model model="LokSound Select Steam 3 Driven Axles" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73413">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Steam 4 Driven Axles" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73414">
+        <model model="LokSound Select Steam 4 Driven Axles" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73414">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Steam Geared" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73415">
+        <model model="LokSound Select Steam Geared" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73415">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Steam Articulated" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
+        <model model="LokSound Select Steam Articulated" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Steam Collection" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73417">
+        <model model="LokSound Select Steam Collection" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73417">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
         <functionlabels>
@@ -3796,8 +3796,8 @@
           <output name="5" label="E" maxcurrent="0.5A" />
         </model>
         <model model="Gold+ mini wired 10410-01" numOuts="2" numFns="31" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
-          <output name="1" label="A - White" maxcurrent="0.3A" />
-          <output name="2" label="B - Yellow" maxcurrent="0.3A" />
+          <output name="1" label="A|White" maxcurrent="0.3A" />
+          <output name="2" label="B|Yellow" maxcurrent="0.3A" />
         </model>
         <model model="Gold+ mini NEM651 10411-01" numOuts="2" numFns="31" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
           <output name="1" label="A" maxcurrent="0.3A" />
