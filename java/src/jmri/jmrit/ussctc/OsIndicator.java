@@ -27,9 +27,9 @@ public class OsIndicator implements Constants {
     
     /**
      * Create one from scratch
-     * @param output Output turnout to be driven
-     * @param osSensor Sensor checking for OS occupancy
-     * @param lock Lock NamedBean (type to be decided)
+     * @param output User- or System name of output turnout to be driven
+     * @param osSensor User- or System name of Sensor determining OS occupancy
+     * @param lock Name of NamedBean used for Locking (type to be decided)
      */
     public OsIndicator(String output, String osSensor, String lock) {
         this.lock = lock;
