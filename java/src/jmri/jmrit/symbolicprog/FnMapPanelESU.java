@@ -184,7 +184,7 @@ public class FnMapPanelESU extends JPanel {
         cs = new GridBagConstraints();
         setLayout(gl);
 
-        labelAt(outputLabelRow,firstCol, "Mapping Row");
+        labelAt(outputLabelRow,firstCol, "Row");
         
         cs.anchor = GridBagConstraints.LINE_START;
                 
@@ -420,7 +420,7 @@ public class FnMapPanelESU extends JPanel {
 //                                         JOptionPane.showMessageDialog(blockPanel,"OK, all variables in file are known");
 //                                         JOptionPane.showMessageDialog(blockPanel,blockItemsScrollPane,"Information",JOptionPane.INFORMATION_MESSAGE);
                                         JOptionPane.showMessageDialog(
-                                            blockPanel,blockItemsScrollPane,"Row "+params[0]+", "+
+                                            blockPanel,blockItemsScrollPane,"Row "+(Integer.valueOf(params[0])+1)+", "+
                                             outBlockName[Integer.valueOf(params[1])],JOptionPane.PLAIN_MESSAGE);
 //                                         log.info("propertyName="+propertyName);
                                     }
@@ -441,9 +441,11 @@ public class FnMapPanelESU extends JPanel {
             
             labelAt( currentRow++, currentCol, Integer.toString(iRow+1));
 //             labelAt( currentRow, currentCol, Integer.toString(iRow+1));
-            currentRow++;
+//             currentRow++;
         }  // end row loop
 
+//         log.info("currentRow="+currentRow);
+        labelAt(outputLabelRow,currentCol, "Row");
         // tally used columns
         int currentBlock = -1;
         int blockStart = 0;
