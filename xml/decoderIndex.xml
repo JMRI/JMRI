@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 20150101-0428-heap on Thu Jan 01 15:28:30 EST 2015 $Id$-->
-  <decoderIndex version="502">
+  <!--Written by JMRI version 20150111-0337-jake on Sat Jan 10 19:37:11 PST 2015 $Id$-->
+  <decoderIndex version="504">
     <mfgList nmraListDate="2014-09-22" updated="2014-10-11" lastadd="107,124">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -3796,8 +3796,8 @@
           <output name="5" label="E" maxcurrent="0.5A" />
         </model>
         <model model="Gold+ mini wired 10410-01" numOuts="2" numFns="31" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
-          <output name="1" label="A|White" maxcurrent="0.3A" />
-          <output name="2" label="B|Yellow" maxcurrent="0.3A" />
+          <output name="1" label="A - White" maxcurrent="0.3A" />
+          <output name="2" label="B - Yellow" maxcurrent="0.3A" />
         </model>
         <model model="Gold+ mini NEM651 10411-01" numOuts="2" numFns="31" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
           <output name="1" label="A" maxcurrent="0.3A" />
@@ -3959,19 +3959,98 @@
         <model model="Athearn Genesis SD45-2" numOuts="2" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes" />
       </family>
       <family name="Athearn" mfg="MRC" lowVersionID="32" highVersionID="32" file="MRC_Athearn_BigBoy.xml">
-        <model model="Athearn Big Boy and 4-8-4 FEF" numOuts="2" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes">
+        <model show="no" model="Athearn Big Boy and 4-8-4 FEF" replacementModel="Athearn Big Boy and Challenger NScale" replacementFamily="Athearn" numOuts="2" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes" comment="deprecated">
           <!-- note All 28 functions are NMRA compatible -->
         </model>
       </family>
-      <family name="Athearn" mfg="MRC" lowVersionID="32" highVersionID="32" file="MRC_Athearn_BigBoy_N.xml">
-        <model model="Athearn Big Boy and Challenger NScale" numOuts="2" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes">
+      <family name="Athearn" mfg="MRC" lowVersionID="31" highVersionID="32" file="MRC_Athearn_BigBoy_N.xml">
+        <model show="no" model="Athearn Big Boy and Challenger NScale" numOuts="2" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes" comment="deprecated">
           <!-- note All 28 functions are NMRA compatible -->
         </model>
+        <model model="Athearn Big Boy" maxTotalCurrent="1.5A" extFnsMRC="yes" comment="HO and N-Scale">
+          <!-- note All 28 functions are NMRA compatible -->
+          <size length="45" width="18" height="6.2" units="mm" />
+          <functionlabels>
+            <functionlabel num="9" lockable="false">Metal Crank</functionlabel>
+            <functionlabel num="15" lockable="false">Loco Sounds</functionlabel>
+            <functionlabel num="17" lockable="false">Crash</functionlabel>
+            <functionlabel num="18" lockable="false">Injector</functionlabel>
+            <functionlabel num="26" lockable="false">Loco Sounds</functionlabel>
+            <functionlabel num="27" lockable="false">Loco Sounds</functionlabel>
+            <functionlabel num="28" lockable="false">Scraping coal shovel</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Athearn N-scale Challenger" maxTotalCurrent="1.5A" extFnsMRC="yes" comment="N-Scale only">
+          <!-- note All 28 functions are NMRA compatible -->
+          <size length="45" width="18" height="6.2" units="mm" />
+          <functionlabels>
+            <functionlabel num="9" lockable="false">Steam</functionlabel>
+            <functionlabel num="15" lockable="false">Air Release</functionlabel>
+            <functionlabel num="17" lockable="false">Safety Air Pump</functionlabel>
+            <functionlabel num="18" lockable="false">Sand</functionlabel>
+            <functionlabel num="26" lockable="false">Coupler</functionlabel>
+            <functionlabel num="27" lockable="false">Fire Box Close</functionlabel>
+            <functionlabel num="28" lockable="false">Fire Box Open</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Athearn Genesis 4-8-4 FEF" maxTotalCurrent="1.5A" extFnsMRC="yes" comment="HO-Scale">
+          <!-- note All 28 functions are NMRA compatible  -->
+          <!-- same functions as Big Boy                  -->
+          <size length="45" width="18" height="6.2" units="mm" />
+          <functionlabels>
+            <functionlabel num="9" lockable="false">Metal Crank</functionlabel>
+            <functionlabel num="15" lockable="false">Loco Sounds</functionlabel>
+            <functionlabel num="17" lockable="false">Crash</functionlabel>
+            <functionlabel num="18" lockable="false">Injector</functionlabel>
+            <functionlabel num="26" lockable="false">Loco Sounds</functionlabel>
+            <functionlabel num="27" lockable="false">Loco Sounds</functionlabel>
+            <functionlabel num="28" lockable="false">Scraping coal shovel</functionlabel>
+          </functionlabels>
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Lights (*2 Master volume)</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="true">Whistle</functionlabel>
+          <functionlabel num="3" lockable="false">Air Release</functionlabel>
+          <functionlabel num="4" lockable="false">Coupler</functionlabel>
+          <functionlabel num="5" lockable="false">Brake Squeal</functionlabel>
+          <functionlabel num="6" lockable="false">Conductor/Toggle Chuff</functionlabel>
+          <functionlabel num="7" lockable="false">Fire Box</functionlabel>
+          <functionlabel num="8" lockable="false">Whistle Select</functionlabel>
+          <functionlabel num="10" lockable="false">Water</functionlabel>
+          <functionlabel num="11" lockable="false">Blower Hiss</functionlabel>
+          <functionlabel num="12" lockable="false">Master Volume</functionlabel>
+          <functionlabel num="13" lockable="false">Coal Auger</functionlabel>
+          <functionlabel num="14" lockable="false">Air Hose Firing</functionlabel>
+          <functionlabel num="16" lockable="false">Shoveling</functionlabel>
+          <functionlabel num="19" lockable="false">Bell Select</functionlabel>
+          <functionlabel num="20" lockable="false">Bell Ring Rate</functionlabel>
+          <functionlabel num="21" lockable="false">Bell Volume</functionlabel>
+          <functionlabel num="22" lockable="false">Whistle Volume</functionlabel>
+          <functionlabel num="23" lockable="false">Chuff Volume</functionlabel>
+          <functionlabel num="24" lockable="false">Chuff Select</functionlabel>
+          <functionlabel num="25" lockable="false">Air Brake Release</functionlabel>
+        </functionlabels>
       </family>
       <family name="Athearn" mfg="MRC" lowVersionID="32" highVersionID="32" file="MRC_Athearn_Challenger.xml">
-        <model model="Athearn Genesis Challenger" numOuts="2" numFns="12" maxTotalCurrent="1.5A" extFnsNmraF13="yes">
-          <!-- note All 28 functions are NMRA compatible -->
+        <model model="Athearn Genesis Challenger" numOuts="2" numFns="12" maxTotalCurrent="1.5A" extFnsNmraF13="yes" formFactor="HO" comment="for HO models released from 2003 to 2007">
+          <!-- note All 12 functions are NMRA compatible -->
         </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Lights (*2 Master volume)</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="true">Whistle</functionlabel>
+          <functionlabel num="3" lockable="false">Air Release</functionlabel>
+          <functionlabel num="4" lockable="false">Coupler</functionlabel>
+          <functionlabel num="5" lockable="false">Brake Squeal</functionlabel>
+          <functionlabel num="6" lockable="false">Conductor</functionlabel>
+          <functionlabel num="7" lockable="false">Fire Box</functionlabel>
+          <functionlabel num="8" lockable="false">Sand Release</functionlabel>
+          <functionlabel num="9" lockable="false">Cylinder Cock/Flange Squeal</functionlabel>
+          <functionlabel num="10" lockable="false">Water</functionlabel>
+          <functionlabel num="11" lockable="false">Blower Hiss</functionlabel>
+          <functionlabel num="12" lockable="true">Master Volume</functionlabel>
+        </functionlabels>
       </family>
       <family name="Athearn" mfg="MRC" lowVersionID="32" highVersionID="32" file="MRC_Athearn_F45.xml">
         <model model="Athearn Genesis F45/FP45" numOuts="2" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes">
@@ -3992,10 +4071,14 @@
         <model model="Athearn SD45/SD60 MRC-1825" numOuts="2" numFns="19" maxTotalCurrent="1.5A" extFnsNmraF13="yes" />
       </family>
       <family name="Athearn Genesis Challenger" mfg="MRC" lowVersionID="32" highVersionID="32" file="MRC_Challenger.xml">
-        <model model="Athearn Genesis Challenger" numOuts="2" numFns="19" maxTotalCurrent="1.5A" extFnsNmraF13="yes" />
+        <model show="no" model="Athearn Genesis Challenger" replacementModel="Athearn Genesis Challenger" replacementFamily="Athearn" numOuts="2" numFns="12" maxTotalCurrent="1.5A" extFnsNmraF13="yes" comment="deprecated decoder definition" />
+        <!-- Dummy model to workaround show="no" not working if only one model in the family -->
+        <model show="no" model="Athearn Genesis Challenger Dummy" replacementModel="Athearn Genesis Challenger" replacementFamily="Athearn" numOuts="2" numFns="12" maxTotalCurrent="1.5A" extFnsNmraF13="yes" />
       </family>
       <family name="Athearn Genesis F Unit" mfg="MRC" lowVersionID="32" highVersionID="32" file="MRC_F_Unit.xml">
-        <model model="Athearn Genesis F Unit" numOuts="2" numFns="19" maxTotalCurrent="1.5A" extFnsNmraF13="yes" />
+        <model show="no" model="Athearn Genesis F Unit" replacementModel="Athearn Genesis F Unit" replacementFamily="Athearn" numOuts="2" numFns="19" maxTotalCurrent="1.5A" extFnsNmraF13="yes" />
+        <!-- Dummy model to workaround show="no" not working if only one model in the family -->
+        <model show="no" model="Athearn Genesis F Unit Dummy" numOuts="2" numFns="19" maxTotalCurrent="1.5A" extFnsNmraF13="yes" />
       </family>
       <family name="N Scale - No Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" file="MRC_N_scale_Non_sound.xml">
         <model model="N Gauge Atlas GP and Others - 1641" numOuts="2" numFns="4" maxTotalCurrent="1.0A" />
@@ -4725,7 +4808,7 @@
         </functionlabels>
       </family>
       <family name="Brilliance Sound Decoders" mfg="MRC" comment="MRC Brilliance Sound Decoders" lowVersionID="31" highVersionID="31" file="MRC_soundbrillianceBigBoy.xml">
-        <model model="Athearn Big Boy or Challenger" maxTotalCurrent="1.5A" extFnsMRC="yes">
+        <model show="no" model="Athearn Big Boy or Challenger" replacementModel="Athearn Big Boy and Challenger NScale" replacementFamily="Athearn" maxTotalCurrent="1.5A" extFnsMRC="yes" comment="deprecated">
           <!-- note All 28 functions are NMRA compatible -->
           <size length="45" width="18" height="6.2" units="mm" />
         </model>

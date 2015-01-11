@@ -101,7 +101,7 @@
 		<name>horn</name>
 		<enumChoice choice="Horn Nathan K5LA Short" value="90"/>
 		<enumChoice choice="Horn Nathan K5LA Long" value="91"/>
-		<enumChoice choice="Horn Nathan K5LA Quill" value="92" />
+		<enumChoice choice="Horn Nathan K5LA Quill" value="92"/>
 	</enumChoiceGroup>
 	<enumChoice choice="Idling Sounds 1" value="396"/>
 	<enumChoiceGroup>
