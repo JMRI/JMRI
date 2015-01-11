@@ -5,7 +5,7 @@
 <!-- $Id$ -->
 <title>JMRI: Aspect Signaling</title>
 <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
-<meta name="Date.Modified" content="20140515"/>
+<meta name="Date.Modified" content="20150102"/>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -20,6 +20,7 @@
 <!--#include virtual="/Header" -->
 
 <!--#include virtual="Sidebar" -->
+
 <div id="mainContent">
 
 
@@ -85,31 +86,43 @@ JMRI users have provided the following pre-defined Aspect Signal Systems:
 <dt><a href="../../../../../xml/signals/basic/index.shtml">Basic</a>
     <dd>A non-prototypical set of aspects and appearances that most 
         model railroaders will understand easily.
+		
 <dt><a href="../../../../../xml/signals/AAR-1946/index.shtml">AAR-1946</a>
     <dd>American Association of Railroads 1946 rule book
 
 <dt><a href="../../../../../xml/signals/Amtrak-2010/index.shtml">Amtrak-2010</a>
     <dd>Amtrak Northeast Corridor Color Position Light signals
 
-		<dt><a href="../../../../../xml/signals/BN-1989/index.shtml">BN-1989</a>
+<dt><a href="B&O-1957/index.shtml">B&amp;O-1957</a>
+    <dd>1957 B&amp;O
+    <br>
+    (<i>Incomplete, not finished as of JMRI 3.10.</i>)
+
+<dt><a href="B&O-2009/index.shtml">B&amp;O-2009</a>
+    <dd>2009 B&amp;O (CSX)
+ 
+<dt><a href="../../../../../xml/signals/BN-1989/index.shtml">BN-1989</a>
     <dd>Burlington Northern Oct. 1989 rule book
 
 <dt><a href="../../../../../xml/signals/BNSF-1996/index.shtml">BNSF-1996</a>
     <dd>BNSF Railway 1996 rule book
 
-		<dt><a href="../../../../../xml/signals/BR-2003/index.shtml">BR-2003</a>
+<dt><a href="../../../../../xml/signals/BR-2003/index.shtml">BR-2003</a>
     <dd>British Rail 2003 rule book
+
+<dt><a href="CFL-2014/index.shtml">CFL-2014</a>
+    <dd>Current (2014) Luxemburg railways (Societ&eacute; Nationale des Chemins de Fer Luxembourgeois)
 
 <dt><a href="../../../../../xml/signals/CROR-2008/index.shtml">CROR-2008</a>
     <dd>Transport Canada (TC) 2008 O-0-93 rule book
 
-		<dt><a href="../../../../../xml/signals/CSX-1998/index.shtml">CSX-1998</a>
-			<dd>CSX 1998 rule book<br/>
-				(<i>Some errors in aspect mapping, not finished as of JMRI 3.6.</i>)
+<dt><a href="../../../../../xml/signals/CSX-1998/index.shtml">CSX-1998</a>
+	<dd>CSX Transportation Signal Rules - 281-298, January 1998<br/>
+				(<i>Some errors in aspect mapping, not finished as of JMRI 3.10.</i>)
 
 <dt><a href="../../../../../xml/signals/DB-HV-1969/index.shtml">DB HV 1969</a>
 	<dd>1969 Deutsche Bundesbahn "Einheitsbauform" Home Signal/Distant signal (Hauptsignal/Vorsignal) system revision<br/>
-		(<i>Missing aspect mapping, not finished as of JMRI 3.6.</i>)
+		(<i>Missing aspect mapping, not finished as of JMRI 3.10.</i>)
 
 <dt><a href="../../../../../xml/signals/GWR-1931/index.shtml">GWR-1931</a>
     <dd>Great Western Railway 1931 searchlight signals (British)
@@ -130,14 +143,14 @@ JMRI users have provided the following pre-defined Aspect Signal Systems:
     <dd>From the New York Central System publication "Rules of the Operating Department, Effective October 28, 1956."
 
 		<dt><a href="../../../../../xml/signals/ProRail-1954/index.shtml">ProRail-1954</a>
-    <dd>1954 Prorail rule book, still in use in 2014 (Netherlands)
+    <dd>1954 Prorail rule book, still in use in 2015 (the Netherlands)
 
 <dt><a href="../../../../../xml/signals/RG-1965/index.shtml">RG-1965</a>
     <dd>1965 Rio Grande Rules of the Operating Department
 
 <dt><a href="../../../../../xml/signals/SLSF-1973/index.shtml">SLSF-1973</a>
     <dd>St. Louis - San Francisco Railroad (Frisco) 1973 rule book
-    <br>(<i>Missing some icons, not finished as of JMRI 3.6.</i>)
+    <br>(<i>Missing some icons, not finished as of JMRI 3.10.</i>)
 
 		<dt><a href="../../../../../xml/signals/SPTCO-1930/index.shtml">SPTCO-1930</a>
     <dd>Southern Pacific Railway and Transportation Company 1930 rule book
@@ -149,6 +162,8 @@ JMRI users have provided the following pre-defined Aspect Signal Systems:
     <dd>Union Pacific Railroad 2008 rule book
     <br>
 </dl>
+	
+	<p>The most current list of Aspect Signal Systems supported in JMRI can be found at <a href="http://jmri.org/xml/signals/">http://jmri.org/xml/signals/</a>.
 
 	<p>To create your own Signaling System
 Definition follow these <a href="DefineNewAspects.shtml">Instructions</a>.

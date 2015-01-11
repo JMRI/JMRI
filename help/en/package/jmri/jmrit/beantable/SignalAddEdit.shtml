@@ -8,7 +8,7 @@
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
 <meta name="Author" content="Bob Jacobsen">
 <meta name="Author" content="Egbert Broerse">
-	<meta name="Date.Modified" content="20140515"/>
+	<meta name="Date.Modified" content="20150102"/>
     <META name="keywords" content="JMRI help Signal Heads Add Edit">
 
 <!-- Style -->
@@ -21,7 +21,35 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!-- Header -->
+  <p class="skipLink"><a href="#mainContent" accesskey="2">Skip to main content</a></p>
+
+  <div id="header">
+	<!-- Logo -->
+	<a href="/" title="Return to home page" accesskey="1">
+	    <img src="/images/logo-jmri.gif" width="160" height="135" alt="JMRI Logo"> </a>
+	<!-- /Logo -->
+	<ul id="mainNav"> <!-- Top tool bar -->
+	   <li><a href="/download/index.shtml"  title="Get the latest software">Download</a></li>
+	   <li><a href="/help/en/html/apps/index.shtml"      title="Learn about JMRI applications">Applications</a></li>
+	   <li><a href="/help/en/html/hardware/index.shtml"  title="What hardware does JMRI support">Hardware</a></li>
+	   <li><a href="/help/en/webtoc.shtml"   title="JMRI Help Screens">Help</a></li>
+	   <li><a href="/help/en/manual/index.shtml"   title="DecoderPro Manual">Manual</a></li>
+	   <li><a href="/help/en/html/doc/Technical/index.shtml" title="Developing and extending JMRI">Developers</a></li>
+	   <li><A href="/help/en/Acknowledgements.shtml" title="Who is JMRI">Acknowledgements</a></li>
+	</ul>
+
+	<div id="searchform"> <!--  Search Form -->
+          <form method="get" action="http://www.google.com/search">
+            <label for="q" title="Search JMRI.org">search JMRI: </label>
+            <input type="hidden" name="sitesearch" value="jmri.org">
+            <input type="text" id="q" name="q" accesskey="s" size="30">
+	    <input type="submit" id="submit" value="go">
+          </form>
+    </div> <!--  End #searchform -->
+  </div> <!-- closes #header-->
+<!-- /Header -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -63,17 +91,19 @@ Head information.  Click "Cancel" to exit without making any changes. Closing th
   <a href="http://www.nmra.org/standards/DCC/DCCHome.html">NMRA DCC Working Group</a> for control. 
   (You might be able to find information on those DCC packets on page 9 at 
   <a href="http://www.nmra.org/sites/default/files/s-9.2.1_2012_07.pdf">this link</a>; the 
-  NMRA has deliberately made their web site difficult to link into, so if that doesn't work, search
+  NMRA web site is difficult to link into, so if that doesn't work, search
   for "NMRA 9.2.1 Extended Accessory Decoder Control Packet Format").
   
   This is a special protocol defined for driving Signal Heads, and is different from how
   "accessory decoders" (e.g. Turnout outputs) are controlled. 
 	  <p>
-  Enter the DCC address as a number. The Offset check box uses an alternative interpretation of the addressing scheme that might be in use.
+  Enter the DCC address as a number. The Offset Address check box uses an alternative interpretation of the addressing scheme that might be in use.
 	  <br/>
 		  <!-- from JMRI user group 5/4/2014 thanks to Suzie Tall and Ken Cameron-->
 		  Each possible Appearance of the Signal Head is assigned a different number; from here you can assign different numbers for each Aspect to suit the hardware being used.<br/>
-		  The <a href="http://www.teamdigital1.com/prod_catalogue/shd2_product/shd2.html">Team Digital SHD2</a> Signal Decoder is a Signal Head decoder having a different address for each Signal Head. A Signal Mast attached to the SHD2 must be configured as one or more Signal Head controlled masts. Note: The Signalist SC1 can also be configured as individual Signal Heads (searchlight with bicolour, tricoclour or RGB LEDs or multi-lamp with individual LEDs), but is much easier to use when configured as a complete Signal Mast with all Signal Heads on a single DCC address using the <a href="signalmasttable.shtml#dccsmd">DCC Signal Mast driver</a>. In that case you don't need to add Signal Heads for the signal. 
+		  The <a href="http://www.teamdigital1.com/prod_catalogue/shd2_product/shd2.html">Team Digital SHD2</a> Signal Decoder is a Signal Head decoder using a different address for each Signal Head. A Signal Mast attached to the SHD2 must be configured as one or more Signal Head controlled masts using the DCC Signal connection type. Instructions can be found on the Team Digital website under the <a href="http://www.teamdigital1.com/applications/shd2_apps/shd2_jmri_application.html">Applications &gt; SHD2</a> menu.
+		  <br/>
+Note: The Signalist SC1 can also be configured as individual Signal Heads (searchlight with bicolor, tricolor or RGB LEDs or multi-lamp with individual LEDs), but is much easier to use when configured as a complete Signal Mast with all Signal Heads on a single DCC address using the <a href="signalmasttable.shtml#dccsmd">DCC Signal Mast driver</a>. In that case you don't need to add Signal Heads for your signal. 
 Key difference between a Signal Head and a Signal Mast is the number of different states each might have. A Signal Head only has (up to ) 8 Appearance entries but a Signal Mast can have up to 32 (0-31) possible states, called Aspects in that case. The command going out is the same but the number of possible values will differ.
   </dd>
 
@@ -283,7 +313,40 @@ Approach, all three On controls the Restricting, and all three Closed (Off) make
 		</ul>
 		
 <p>Back to the <a href="SignalHeadTable.shtml">Signal Heads Table help page</a>.
-<!--#include virtual="/Footer" -->
+<!-- Footer -->
+    <hr class="hide">
+    <div id="footer">
+	<ul id="bn">
+	<li>Contact us via the <a href="http://groups.yahoo.com/group/jmriusers">JMRI users</a> mailing list</li>
+	</ul>
+
+	<p>Thanks and congratulations to
+	   <A href="/help/en/Acknowledgements.shtml" title="Who is JMRI">
+	   	all who contributed</A>! </p>
+
+	<p>Copyright &copy; 1997 - 2015 JMRI Community. 
+	<P>JMRI&reg;, DecoderPro&reg;, PanelPro&trade;, SignalPro&trade;, TrainPro&trade;, DispatcherPro&trade;, OperationsPro&trade; and associated logos are our trademarks.
+	<P><A href="/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a></p>
+    
+       <BR/>Site hosted by: <BR/>
+<a href="http://sourceforge.net/projects/jmri"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=26788&type=12" width="120" height="30" border="0" alt="Get JMRI Model Railroad Interface at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a>
+    </div>
+
+<!-- Piwik -->
+<script type="text/javascript">
+var pkBaseURL = (("https:" == document.location.protocol) ? "https://apps.sourceforge.net/piwik/jmri/" : "http://apps.sourceforge.net/piwik/jmri/");
+document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script type="text/javascript">
+piwik_action_name = '';
+piwik_idsite = 1;
+piwik_url = pkBaseURL + "piwik.php";
+piwik_log(piwik_action_name, piwik_idsite, piwik_url);
+</script>
+<object><noscript><p><img src="http://apps.sourceforge.net/piwik/jmri/piwik.php?idsite=1" alt="piwik"/></p></noscript></object>
+<!-- End Piwik Tag -->
+
+<!-- /Footer -->
+
 </body>
 </html>
 
