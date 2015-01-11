@@ -13,7 +13,14 @@ import junit.framework.TestSuite;
  * Test the DefaultLogixTest implementation class
  * @author      Bob Jacobsen  Copyright (C) 2015
  */
-public class DefaultLogixTest extends TestCase {
+public class DefaultLogixTest extends NamedBeanTest {
+
+    /**
+     * Operate parent NamedBeanTest tests.
+     */
+    protected NamedBean createInstance() {
+	    return new DefaultLogix("IX 0");
+    }
 
     public void testCtorDouble() {
         new DefaultLogix("IX 1", "IX 1 user name");
