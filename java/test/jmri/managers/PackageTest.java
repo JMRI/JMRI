@@ -28,14 +28,18 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.managers.ManagersTest");  // no tests in this class itself
-		suite.addTest(InternalLightManagerTest.suite());
+		suite.addTest(DefaultConditionalManagerTest.suite());
+        suite.addTest(DefaultIdTagManagerTest.suite());
+		suite.addTest(DefaultLogixManagerTest.suite());
 		suite.addTest(DefaultSignalSystemManagerTest.suite());
 		suite.addTest(DefaultUserMessagePreferencesTest.suite());
+		suite.addTest(InternalLightManagerTest.suite());
 		suite.addTest(ProxyLightManagerTest.suite());
 		suite.addTest(ProxySensorManagerTest.suite());
 		suite.addTest(ProxyTurnoutManagerTest.suite());
+
 		suite.addTest(jmri.managers.configurexml.PackageTest.suite());
-                suite.addTest(DefaultIdTagManagerTest.suite());
+
         return suite;
     }
 
