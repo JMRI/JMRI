@@ -38,6 +38,8 @@ public class PackageTest extends TestCase {
         suite.addTest(AddressedHighCvProgrammerFacadeTest.suite());
 		suite.addTest(DccSignalHeadTest.suite());
 		suite.addTest(DccSignalMastTest.suite());
+        suite.addTest(DefaultConditionalTest.suite());
+        suite.addTest(DefaultConditionalActionTest.suite());
         suite.addTest(DefaultIdTagTest.suite());
 		suite.addTest(DefaultLogixTest.suite());
 		suite.addTest(DefaultSignalSystemTest.suite());
