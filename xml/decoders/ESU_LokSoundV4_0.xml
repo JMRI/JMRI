@@ -52,25 +52,25 @@
   <version author="Dave Heap" version="15" lastUpdated="20140114"/>
   <decoder>
     <family name="ESU LokSound V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
-      <model model="LokSound V4.0 NEM652" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="54400">
+      <model model="LokSound V4.0 NEM652" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="54400">
         <size length="30.5" width="15.5" height="5.5" units="mm"/>
       </model>
-      <model model="LokSound V4.0 21MTC" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="54499">
+      <model model="LokSound V4.0 21MTC" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="54499">
         <size length="30.5" width="15.5" height="5.5" units="mm"/>
       </model>
-      <model model="LokSound Micro V4.0 NEM651" numOuts="128" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="54800">
+      <model model="LokSound Micro V4.0 NEM651" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="54800">
         <size length="25.3" width="10.6" height="3.8" units="mm"/>
       </model>
-      <model model="LokSound Micro V4.0 NEM652" numOuts="128" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="54899">
+      <model model="LokSound Micro V4.0 NEM652" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="54899">
         <size length="25.3" width="10.6" height="3.8" units="mm"/>
       </model>
-      <model model="LokSound Micro V4.0 Next18" numOuts="128" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="54898">
+      <model model="LokSound Micro V4.0 Next18" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="54898">
         <size length="25.3" width="10.6" height="3.8" units="mm"/>
       </model>
-      <model model="LokSound XL V4.0 Screw Terminals" numOuts="128" numFns="40" maxMotorCurrent="4A (peak=5A)" extFnsESU="yes" productID="54500">
+      <model model="LokSound XL V4.0 Screw Terminals" numOuts="92" numFns="40" maxMotorCurrent="4A (peak=5A)" extFnsESU="yes" productID="54500">
         <size length="51" width="41" height="14" units="mm"/>
       </model>
-      <model model="LokSound XL V4.0 PIN connector" numOuts="128" numFns="40" maxMotorCurrent="4A (peak=5A)" extFnsESU="yes" productID="54599">
+      <model model="LokSound XL V4.0 PIN connector" numOuts="92" numFns="40" maxMotorCurrent="4A (peak=5A)" extFnsESU="yes" productID="54599">
         <size length="51" width="41" height="14" units="mm"/>
       </model>
       <functionlabels>

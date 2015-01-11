@@ -54,28 +54,28 @@
   <version author="Dave Heap" version="16" lastUpdated="20140324"/>
   <decoder>
     <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="168" highVersionID="168">
-      <model model="LokSound Select Big Boy 4-8-8-4" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
+      <model model="LokSound Select Big Boy 4-8-8-4" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select SP Cab Forward" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73409">
+      <model model="LokSound Select SP Cab Forward" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73409">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select Y6B 2-8-8-2" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73457">
+      <model model="LokSound Select Y6B 2-8-8-2" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73457">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select Steam 3 Driven Axles" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73413">
+      <model model="LokSound Select Steam 3 Driven Axles" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73413">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select Steam 4 Driven Axles" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73414">
+      <model model="LokSound Select Steam 4 Driven Axles" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73414">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select Steam Geared" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73415">
+      <model model="LokSound Select Steam Geared" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73415">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select Steam Articulated" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
+      <model model="LokSound Select Steam Articulated" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select Steam Collection" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73417">
+      <model model="LokSound Select Steam Collection" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73417">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
       <functionlabels>

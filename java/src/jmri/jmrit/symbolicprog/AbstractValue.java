@@ -89,6 +89,27 @@ public abstract class AbstractValue {
     public boolean isToWrite() { return _toWrite; }
     private boolean _toWrite = false;
 
+    public static Color stateColorFromValue(int val) {
+        switch (val) {
+            case UNKNOWN:
+                return COLOR_UNKNOWN;
+            case EDITED:
+                return COLOR_EDITED;
+            case READ:
+                return COLOR_READ;
+            case STORED:
+                return COLOR_STORED;
+            case FROMFILE:
+                return COLOR_FROMFILE;
+            case SAME:
+                return COLOR_SAME;
+            case DIFF:
+                return COLOR_DIFF;
+            default:
+                return null;
+        }
+    }
+
     public static String stateNameFromValue(int val) {
         switch (val) {
             case UNKNOWN:

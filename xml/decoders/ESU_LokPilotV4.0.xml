@@ -53,16 +53,16 @@
   <version author="Dave Heap" version="10" lastUpdated="20140324"/>
   <decoder>
     <family name="ESU LokPilot V4.0" mfg="Electronic Solutions Ulm GmbH">
-      <model model="LokPilot V4.0" numOuts="105" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LPV4">
-        <output name="97" label="|"/>
-        <output name="98" label="|"/>
-        <output name="99" label="|"/>
-        <output name="100" label="|"/>
-        <output name="101" label="|"/>
-        <output name="102" label="|"/>
-        <output name="103" label="|"/>
-        <output name="104" label="|"/>
-        <output name="105" label="Virtual|Drv Snd"/>
+      <model model="LokPilot V4.0" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LPV4">
+        <output name="61" label="|"/>
+        <output name="62" label="|"/>
+        <output name="63" label="|"/>
+        <output name="64" label="|"/>
+        <output name="65" label="|"/>
+        <output name="66" label="|"/>
+        <output name="67" label="|"/>
+        <output name="68" label="|"/>
+        <output name="69" label="Virtual drive sound"/>
         <size length="21.3" width="15.5" height="5.5" units="mm"/>
         <!-- connector="NEM651, NEM 652, 21MTC, Plux12, wires" -->
         <protocols>
@@ -71,29 +71,29 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="LokPilot DCC V4.0" numOuts="105" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LPV4DCC">
-        <output name="97" label="|"/>
-        <output name="98" label="|"/>
-        <output name="99" label="|"/>
-        <output name="100" label="|"/>
-        <output name="101" label="|"/>
-        <output name="102" label="|"/>
-        <output name="103" label="|"/>
-        <output name="104" label="|"/>
-        <output name="105" label="Virtual|Drv Snd"/>
+      <model model="LokPilot DCC V4.0" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LPV4DCC">
+        <output name="61" label="|"/>
+        <output name="62" label="|"/>
+        <output name="63" label="|"/>
+        <output name="64" label="|"/>
+        <output name="65" label="|"/>
+        <output name="66" label="|"/>
+        <output name="67" label="|"/>
+        <output name="68" label="|"/>
+        <output name="69" label="Virtual drive sound"/>
         <size length="21.3" width="15.5" height="5.5" units="mm"/>
         <!-- connector="NEM651, NEM 652, 21MTC" -->
       </model>
-      <model model="LokPilot Micro V4.0" numOuts="105" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LPmV4">
-        <output name="97" label="|"/>
-        <output name="98" label="|"/>
-        <output name="99" label="|"/>
-        <output name="100" label="|"/>
-        <output name="101" label="|"/>
-        <output name="102" label="|"/>
-        <output name="103" label="|"/>
-        <output name="104" label="|"/>
-        <output name="105" label="Virtual|Drv Snd"/>
+      <model model="LokPilot Micro V4.0" numOuts="69" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LPmV4">
+        <output name="61" label="|"/>
+        <output name="62" label="|"/>
+        <output name="63" label="|"/>
+        <output name="64" label="|"/>
+        <output name="65" label="|"/>
+        <output name="66" label="|"/>
+        <output name="67" label="|"/>
+        <output name="68" label="|"/>
+        <output name="69" label="Virtual drive sound"/>
         <size length="10.5" width="5.8" height="2.8" units="mm"/>
         <!-- connector="NEM651, NEM 652, Next18" -->
         <protocols>
@@ -102,37 +102,37 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="LokPilot Micro DCC V4.0" numOuts="105" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LPmV4DCC">
-        <output name="97" label="|"/>
-        <output name="98" label="|"/>
-        <output name="99" label="|"/>
-        <output name="100" label="|"/>
-        <output name="101" label="|"/>
-        <output name="102" label="|"/>
-        <output name="103" label="|"/>
-        <output name="104" label="|"/>
-        <output name="105" label="Virtual|Drv Snd"/>
-        <size length="10.5" width="5.8" height="2.8" units="mm"/>
-        <!-- connector="NEM651, Next18" -->
-      </model>
-      <model model="LokPilot Fx V4.0" numOuts="105" numFns="32" extFnsESU="yes" productID="LPfxV4">
+      <model model="LokPilot Micro DCC V4.0" numOuts="69" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LPmV4DCC">
+        <output name="61" label="|"/>
+        <output name="62" label="|"/>
+        <output name="63" label="|"/>
+        <output name="64" label="|"/>
         <output name="65" label="|"/>
         <output name="66" label="|"/>
         <output name="67" label="|"/>
         <output name="68" label="|"/>
-        <output name="69" label="|"/>
-        <output name="70" label="|"/>
-        <output name="71" label="|"/>
-        <output name="72" label="|"/>
-        <output name="97" label="|"/>
-        <output name="98" label="|"/>
-        <output name="99" label="|"/>
-        <output name="100" label="|"/>
-        <output name="101" label="|"/>
-        <output name="102" label="|"/>
-        <output name="103" label="|"/>
-        <output name="104" label="|"/>
-        <output name="105" label="Virtual|Drv Snd"/>
+        <output name="69" label="Virtual drive sound"/>
+        <size length="10.5" width="5.8" height="2.8" units="mm"/>
+        <!-- connector="NEM651, Next18" -->
+      </model>
+      <model model="LokPilot Fx V4.0" numOuts="69" numFns="32" extFnsESU="yes" productID="LPfxV4">
+        <output name="29" label="|"/>
+        <output name="30" label="|"/>
+        <output name="31" label="|"/>
+        <output name="32" label="|"/>
+        <output name="33" label="|"/>
+        <output name="34" label="|"/>
+        <output name="35" label="|"/>
+        <output name="36" label="|"/>
+        <output name="61" label="|"/>
+        <output name="62" label="|"/>
+        <output name="63" label="|"/>
+        <output name="64" label="|"/>
+        <output name="65" label="|"/>
+        <output name="66" label="|"/>
+        <output name="67" label="|"/>
+        <output name="68" label="|"/>
+        <output name="69" label="Virtual drive sound"/>
         <size length="17.5" width="15.5" height="5.5" units="mm"/>
         <!-- connector="NEM651, 21MTC" -->
         <protocols>
@@ -141,16 +141,16 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="LokPilot XL V4.0" numOuts="105" numFns="32" maxMotorCurrent="4A" extFnsESU="yes" productID="LPV4">
-        <output name="97" label="|"/>
-        <output name="98" label="|"/>
-        <output name="99" label="|"/>
-        <output name="100" label="|"/>
-        <output name="101" label="|"/>
-        <output name="102" label="|"/>
-        <output name="103" label="|"/>
-        <output name="104" label="|"/>
-        <output name="105" label="Virtual|Drv Snd"/>
+      <model model="LokPilot XL V4.0" numOuts="69" numFns="32" maxMotorCurrent="4A" extFnsESU="yes" productID="LPV4">
+        <output name="61" label="|"/>
+        <output name="62" label="|"/>
+        <output name="63" label="|"/>
+        <output name="64" label="|"/>
+        <output name="65" label="|"/>
+        <output name="66" label="|"/>
+        <output name="67" label="|"/>
+        <output name="68" label="|"/>
+        <output name="69" label="Virtual drive sound"/>
         <size length="55" width="25" height="10" units="mm"/>
         <!-- connector="screw terminals" -->
         <protocols>
