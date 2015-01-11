@@ -270,6 +270,8 @@
 
 <mapID target="manual.DecoderPro.Main_XpressNet_InfoDialog" url="manual/DecoderPro/Main_XpressNet.shtml#InfoDialog"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_FinalDestination" url="package/jmri/jmrit/operations/Operations.shtml#FinalDestination"/>
+
 <mapID target="html.apps.DecoderPro.RosterFile" url="html/apps/DecoderPro/RosterFile.shtml"/>
 
 <mapID target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel_SimplexInteract" url="package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml#SimplexInteract"/>
@@ -1200,6 +1202,8 @@
 
 <mapID target="html.tools.signaling.SignalMastLogic" url="html/tools/signaling/SignalMastLogic.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_OperationsWebAccess" url="package/jmri/jmrit/operations/Operations.shtml#OperationsWebAccess"/>
+
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_AddTrain_Top" url="manual/JMRI_OPS_UsersGuide/Ops_AddTrain.shtml#Top"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_EditLocation" url="manual/JMRI_OPS_UsersGuide/Ops_EditLocation.shtml"/>
@@ -1547,6 +1551,8 @@
 <mapID target="html.hardware.loconet.KeyspanUSB" url="html/hardware/loconet/KeyspanUSB.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_Interchange" url="package/jmri/jmrit/operations/Operations.shtml#Interchange"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_BuildReport" url="package/jmri/jmrit/operations/Operations.shtml#BuildReport"/>
 
 <mapID target="package.jmri.jmrit.beantable.ReporterAddEdit" url="package/jmri/jmrit/beantable/ReporterAddEdit.shtml"/>
 
