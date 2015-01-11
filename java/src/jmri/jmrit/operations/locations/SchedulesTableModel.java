@@ -287,7 +287,8 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 	private void selectJComboBox(Object value, int row) {
 		Schedule schedule = sysList.get(row);
 		JComboBox<?> box = (JComboBox<?>) value;
-		comboSelect.put(schedule, Integer.toString(box.getSelectedIndex()));
+		if (box.getSelectedIndex() >= 0)
+			comboSelect.put(schedule, Integer.toString(box.getSelectedIndex()));
 		fireTableRowsUpdated(row, row);
 	}
 
@@ -383,8 +384,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 			if (row >= 0)
 				fireTableRowsUpdated(row, row);
 		}
-		if (e.getPropertyName().equals(Track.SCHEDULE_MODE_CHANGED_PROPERTY)
-				|| e.getPropertyName().equals(Track.DISPOSE_CHANGED_PROPERTY)) {
+		if (e.getSource().getClass().equals(Track.class)) {
 			Track track = (Track) e.getSource();
 			Schedule schedule = track.getSchedule();
 			int row = sysList.indexOf(schedule);
