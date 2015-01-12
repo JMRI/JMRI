@@ -4,6 +4,8 @@ package jmri.jmrit.operations.locations;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.awt.event.ActionEvent;
 import java.beans.*;
 
 import javax.swing.*;
@@ -12,10 +14,12 @@ import javax.swing.table.TableColumnModel;
 
 import java.text.MessageFormat;
 import java.util.List;
+
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
+
 import java.util.Hashtable;
 
 /**
@@ -83,8 +87,10 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 	}
 
 	List<Schedule> sysList = null;
+	JTable table;
 
 	void initTable(SchedulesTableFrame frame, JTable table) {
+		this.table = table;
 		// Install the button handlers
 		TableColumnModel tcm = table.getColumnModel();
 		ButtonRenderer buttonRenderer = new ButtonRenderer();
@@ -200,25 +206,20 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 		}
 		if (row >= sysList.size())
 			return "ERROR row " + row; // NOI18N
-		Schedule s = sysList.get(row);
-		if (s == null)
+		Schedule schedule = sysList.get(row);
+		if (schedule == null)
 			return "ERROR schedule unknown " + row; // NOI18N
 		switch (col) {
 		case ID_COLUMN:
-			return s.getId();
+			return schedule.getId();
 		case NAME_COLUMN:
-			return s.getName();
+			return schedule.getName();
 		case SCHEDULE_STATUS_COLUMN:
 			return getScheduleStatus(row);
 		case SPUR_NUMBER_COLUMN:
-			return scheduleManager.getSpursByScheduleComboBox(s).getItemCount();
+			return scheduleManager.getSpursByScheduleComboBox(schedule).getItemCount();
 		case SPUR_COLUMN: {
-			JComboBox<LocationTrackPair> box = scheduleManager.getSpursByScheduleComboBox(s);
-			String index = comboSelect.get(sysList.get(row));
-			if (index != null && box.getItemCount() > Integer.parseInt(index)) {
-				box.setSelectedIndex(Integer.parseInt(index));
-			}
-			return box;
+			return getComboBox(row, schedule);
 		}
 		case STATUS_COLUMN:
 			return getSpurStatus(row);
@@ -315,6 +316,25 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 				return Bundle.getMessage("Error");
 		}
 		return Bundle.getMessage("Okay");
+	}
+	
+	private JComboBox<LocationTrackPair> getComboBox(int row, Schedule schedule) {
+		JComboBox<LocationTrackPair> box = scheduleManager.getSpursByScheduleComboBox(schedule);
+		String index = comboSelect.get(sysList.get(row));
+		if (index != null && box.getItemCount() > Integer.parseInt(index)) {
+			box.setSelectedIndex(Integer.parseInt(index));
+		}
+		box.addActionListener((ActionEvent e) -> {
+			comboBoxActionPerformed(e);
+		});
+		return box;
+	}
+	
+	protected void comboBoxActionPerformed(ActionEvent ae) {
+		log.debug("combobox action");
+		if (table.isEditing()) {
+			table.getCellEditor().stopCellEditing(); // Allows the table contents to update
+		}
 	}
 
 	private String getSpurStatus(int row) {
