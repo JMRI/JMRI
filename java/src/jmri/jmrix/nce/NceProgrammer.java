@@ -28,12 +28,8 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
     public NceProgrammer(NceTrafficController tc) {
     	this.tc = tc;
         super.SHORT_TIMEOUT = 4000;
-        if ((tc != null) && (
-        		(tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3) || 
-        		(tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5) || 
-        		(tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN))){
-        	setMode(DefaultProgrammerManager.OPSBYTEMODE);
-        }
+        if (getSupportedModes().size() > 0)
+            setMode(getSupportedModes().get(0));
     }
 
 
@@ -45,7 +41,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
     	if (tc != null && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERCAB &&
     			tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE){
-    		log.debug("NCE USB-SB3/SB5/TWIN getSupportedModes returns no modes");
+    		log.warn("NCE USB-SB3/SB5/TWIN getSupportedModes returns no modes");
     		return ret;
     	}
     	ret.add(DefaultProgrammerManager.PAGEMODE);
