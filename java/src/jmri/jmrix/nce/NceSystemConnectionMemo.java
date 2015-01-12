@@ -179,7 +179,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         
         if (getNceUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
             if (getNceUsbSystem() != NceTrafficController.USB_SYSTEM_POWERHOUSE) {
-                jmri.InstanceManager.setProgrammerManager(new NceProgrammerManager(new NceProgrammer(getNceTrafficController()), this));
+                // don't set a service mode programmer
             }
         } else {
             InstanceManager.setProgrammerManager(
