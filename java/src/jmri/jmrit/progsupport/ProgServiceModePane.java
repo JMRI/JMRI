@@ -129,6 +129,7 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
         
         // configure buttons
         int index = 0;
+        if (getProgrammer() == null) return;
         List<ProgrammingMode> modes = getProgrammer().getSupportedModes();
         log.debug("   has {} modes", modes.size());
         for (ProgrammingMode mode : modes) {
@@ -185,6 +186,10 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
         ProgrammingMode mode = getProgrammer().getMode();
         JRadioButton button = buttonMap.get(mode);
         log.debug("  setting button for mode {}", mode);
+        if (button == null) {
+            log.debug("   didn't find button, returning");
+            return;
+        }
         button.setSelected(true);
     }
     
