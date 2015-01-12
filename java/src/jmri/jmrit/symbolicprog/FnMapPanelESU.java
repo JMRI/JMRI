@@ -191,14 +191,11 @@ public class FnMapPanelESU extends JPanel {
         // loop through rows
         for (int iRow = 0; iRow < numRows; iRow++) {
             currentCol = firstCol;
-//             currentRow = firstRow+iRow;
             int outBlockNum = -1;
             int nextOutBlockStart = 0;
             int nextFreeBit = 0;
             cs.anchor = GridBagConstraints.LINE_END;
-            labelAt( currentRow, currentCol, Integer.toString(iRow+1));
-//             labelAt( currentRow + 1, currentCol, Integer.toString(iRow+1));
-            currentCol++;
+            labelAt( currentRow, currentCol++, Integer.toString(iRow+1));
             cs.anchor = GridBagConstraints.LINE_START;
 
             // loop through outputs (columns)
@@ -218,7 +215,6 @@ public class FnMapPanelESU extends JPanel {
                     outBlockStartCol[outBlockNum] = iOut;
                     nextOutBlockStart = iOut+outBlockLength[outBlockNum];
                     blockItemsSelectorPanel = new JPanel();
-//                     panelList.add(blockItemsSelectorPane);
                     bIsPlay = new GridBagLayout();
                     bIsPcs = new GridBagConstraints();
                     blockItemsSelectorPanel.setLayout(bIsPlay);
@@ -245,7 +241,6 @@ public class FnMapPanelESU extends JPanel {
                         String bitMask = "00000000"+Integer.toBinaryString(bitValue);
                         bitMask = (bitMask.substring(bitMask.length() - 8));
                         String bitPattern = bitMask.replace("0","X").replace("1","V");
-//                         if ( iRow == 0 ) log.info("nextFreeBit="+nextFreeBit+",thisCV="+thisCV+",bitPattern="+bitPattern);
                 
                         // Get Cv value from file. We need to do this to get the GUI synchronised with cvModel initially
                         int savedValue = 0;
@@ -357,9 +352,6 @@ public class FnMapPanelESU extends JPanel {
                             cvObject.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
                                     public void propertyChange(java.beans.PropertyChangeEvent e) {
                                         String propertyName = e.getPropertyName();
-//                                         String newValue = e.toString();
-//                                         log.info("propertyName="+propertyName+",String="+newValue);
-//                                         log.info("propertyName="+propertyName);
                                         updateAllSummaryLines();                                        
                                     }
                                 });
@@ -376,7 +368,6 @@ public class FnMapPanelESU extends JPanel {
 
                             outIsUsed[iOut] = true;
                             iVarIndex[iOut][iRow] = iVar;
-//                             log.info("iVarIndex[iOut][iRow]="+iVarIndex[iOut][iRow]);
                         } else {
                             if (log.isDebugEnabled()) log.debug("Did not find var: "+name);
                         }
@@ -390,8 +381,6 @@ public class FnMapPanelESU extends JPanel {
                 JScrollPane blockItemsScrollPane = new JScrollPane(blockItemsSelectorPanel);
                 blockItemsScrollPane.setPreferredSize(new Dimension(400, 400));
 
-//                 log.info("iRow="+iRow+",outBlockNum="+outBlockNum);
-//                 saveAt(currentRow, currentCol, summaryLine[iRow][outBlockNum]);
                 blockPanelCs.anchor = GridBagConstraints.LINE_START;
                 blockPanelCs.gridx = 0;
                 blockPanelCs.gridy = 0;
@@ -399,33 +388,17 @@ public class FnMapPanelESU extends JPanel {
                 blockPanel.add(summaryLine[iRow][outBlockNum],blockPanelCs);
                 updateSummaryLine(iRow, outBlockNum);
                 
-
-//                 saveAt(currentRow + 1, currentCol, blockItemsScrollPane);
-//                 blockPanelCs.anchor = GridBagConstraints.FIRST_LINE_START;
-//                 blockPanelCs.gridx = 0;
-//                 blockPanelCs.gridy = 1;
-//                 blockPanelCs.gridwidth = GridBagConstraints.REMAINDER;
-//                 blockPanel.add(blockItemsScrollPane,blockPanelCs);
-
-//                 blockItemsScrollPane.setVisible(false);
-
                 JButton button = new JButton("Change");
                             button.setActionCommand(iRow+","+outBlockNum);
                             button.addActionListener(new java.awt.event.ActionListener() {
                                     public void actionPerformed(java.awt.event.ActionEvent e) {
                                         String propertyName = e.getActionCommand();
                                         String params[] = e.getActionCommand().split(",");
-//                                         blockItemsScrollPane.setVisible(!blockItemsScrollPane.isVisible());
-//                                         log.info("action="+propertyName);
-//                                         JOptionPane.showMessageDialog(blockPanel,"OK, all variables in file are known");
-//                                         JOptionPane.showMessageDialog(blockPanel,blockItemsScrollPane,"Information",JOptionPane.INFORMATION_MESSAGE);
                                         JOptionPane.showMessageDialog(
                                             blockPanel,blockItemsScrollPane,"Row "+(Integer.valueOf(params[0])+1)+", "+
                                             outBlockName[Integer.valueOf(params[1])],JOptionPane.PLAIN_MESSAGE);
-//                                         log.info("propertyName="+propertyName);
                                     }
                                 });
-//                 saveAt(currentRow, currentCol, button);
                 blockPanelCs.anchor = GridBagConstraints.LINE_START;
                 blockPanelCs.gridx = 1;
                 blockPanelCs.gridy = 0;
@@ -440,11 +413,8 @@ public class FnMapPanelESU extends JPanel {
             } while  (iOut < Math.min(numOut,maxOut) ); // end outputs (columns) loop
             
             labelAt( currentRow++, currentCol, Integer.toString(iRow+1));
-//             labelAt( currentRow, currentCol, Integer.toString(iRow+1));
-//             currentRow++;
         }  // end row loop
 
-//         log.info("currentRow="+currentRow);
         labelAt(outputLabelRow,currentCol, "Row");
         // tally used columns
         int currentBlock = -1;
@@ -473,43 +443,12 @@ public class FnMapPanelESU extends JPanel {
         }
 
         // warn if using OS X GUI
-//         if (SystemType.isMacOSX() && UIManager.getLookAndFeel().isNativeLookAndFeel()) {
-//             String warnMsg = "<html><center>";
-//             String osVersion = System.getProperty("os.version");
-//             String javaVersion = System.getProperty("java.version");
-//             if ( javaVersion.startsWith("1.6.") ) {
-//                 warnMsg = warnMsg + "<span style=\"font-size:1.5em;color:red\"><strong>WARNING: The version of Java installed on your system (" + javaVersion +") has a bug<br/>" +
-//                      "that may cause JMRI to generate an error when using with this definition.<br/>" +
-//                      "</strong></span>";
-//                  if ( osVersion.startsWith("10.5.") || osVersion.startsWith("10.6.") ) {
-//                     warnMsg = warnMsg + "<span style=\"font-size:1.2em\"><strong>To avoid this problem, change GUI as per the suggestion below.<br/>" +
-//                          "</strong></span><br/>";
-//                      } else {
-//                     warnMsg = warnMsg + "<span style=\"font-size:1.2em\"><strong>To avoid this problem, change GUI as per the suggestion below<br/>" +
-//                          "or update to Oracle Java from http://www.java.com/<br/>" +
-//                          "</strong></span><br/>";
-//                      }
-//             }
-//             warnMsg = warnMsg + "<strong>You are using the Mac OS X native GUI<br/>" +
-//                 "and may experience slow scrolling.</strong><br/>" +
-//                 "If affected, change GUI in "+Application.getApplicationName() +
-//                 "-&gt;Preferences-&gt;Display-&gt;GUI.<br/><br/>" +
-//                 "</center></html>";
-//             JLabel l = new JLabel(warnMsg);
-//             cs.gridy = guiWarningRow;
-//             cs.gridx = 0;
-//             cs.gridwidth = GridBagConstraints.REMAINDER;
-//             cs.anchor = GridBagConstraints.CENTER;
-//             gl.setConstraints(l, cs);
-//             add(l);
-//         }
         if (log.isDebugEnabled()) log.debug("Function map complete");
     }
     
     void updateAllSummaryLines() {
         for (int row = 0; row < numRows; row++) {
             for (int block = 0; block < outBlockLength.length; block++) {
-//                 log.info("row="+row+",block="+block);
                 updateSummaryLine(row, block);
             }
         }
@@ -529,7 +468,6 @@ public class FnMapPanelESU extends JPanel {
                 } else if ( retState != state ){
                     retState = AbstractValue.EDITED;
                 }
-//                 if ( state != AbstractValue.FROMFILE ) log.info("default="+_varModel.getVariable(iVarIndex[iOut][row]));
                 if (value > 0) {
                     if (outBlockItemBits[block] == 1) {
                         if ( outLabel[iOut].equals("") ) {
@@ -538,7 +476,6 @@ public class FnMapPanelESU extends JPanel {
                             retString = retString + "," + outLabel[iOut];
                         } 
                     } else if (outBlockItemBits[block] == 2) {
-//                         log.info("iOut="+iOut+",value="+value);
                         if ( value > 2 ) {
                             retString = retString + "," + "reserved value "+value;
                         } else if ( outName[iOut][value].equals("") ) {
@@ -557,7 +494,6 @@ public class FnMapPanelESU extends JPanel {
 
         if (retString.startsWith(",")) retString = retString.substring(1);
         if (retString.equals("")) retString = "-";
-//         retString = retString + " state="+retState;
 
         summaryLine[row][block].setBackground(AbstractValue.stateColorFromValue(retState));
         summaryLine[row][block].setText(retString);
