@@ -231,6 +231,7 @@
 	<a href="http://model-railroad-hobbyist.com/mrht_decoderpro">JMRI clinics from the NMRA 2008 Anaheim convention</a> on the web.
 <a name="G"></A>
     <LI>William C Gage provided an MRC decoder definition
+	<li>Brian Gilhuly, who helped debug a programmer problem in JMRI 3.11.1
 	<LI>Simon Ginsburg has helped with advanced consisting, provided some Digitrax 
 	definition files, and translated much of DecoderPro into German
 	<LI>Joseph Goldstone, who put together the javax.comm implementation for Mac OS X
@@ -447,6 +448,7 @@
 	who provide site hosting, download servers and computing resources
 	for JMRI development
 	<LI>Ron Sommer, who provided the PanelPro icon for Windows
+	<li>Richard Stamm, who helped debug a programmer problem in JMRI 3.11.1
 	<li>Tom Starbuck, who updated and organized the model numbers in the TCS BEMF decoder definitions.
 	<li>John Stather fixed some issues with the DCC Concepts locomotive decoder definition.
 	<LI>Dima Stepanchuk, who provided a fix for the Packet Analyzer
