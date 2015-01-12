@@ -57,13 +57,14 @@ public class ProgModePane extends ProgModeSelector {
         // general GUI config
         setLayout(new BoxLayout(this, direction));
 
+        boolean addSep = false;
+        
         // create the ops mode 1st, so the service is 2nd,
         // so it's the one that's selected
-         mOpsPane = null;
+        mOpsPane = null;
         if (InstanceManager.getDefault(AddressedProgrammerManager.class)!=null &&
             InstanceManager.getDefault(AddressedProgrammerManager.class).isAddressedModePossible()) {
 
-            add(new JSeparator());
             mOpsPane = new ProgOpsModePane(direction, group);
         }
        
@@ -72,12 +73,13 @@ public class ProgModePane extends ProgModeSelector {
 
             mServicePane = new ProgServiceModePane(direction, group);
             add(mServicePane);
+            addSep = true;
         }
         
         // ops mode support added if present
         if (mOpsPane != null) {
 
-            add(new JSeparator());
+            if (addSep) add(new JSeparator());
             add(mOpsPane);
         }
     }
