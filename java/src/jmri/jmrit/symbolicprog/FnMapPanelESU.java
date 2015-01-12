@@ -157,7 +157,7 @@ public class FnMapPanelESU extends JPanel {
     final int iVarIndex[][] =new int[maxOut][numRows];
                                            
     public FnMapPanelESU(VariableTableModel v, List<Integer> varsUsed, Element model, RosterEntry rosterEntry, CvTableModel cvModel) {
-        if (log.isDebugEnabled()) log.debug("ESU Function map starts");
+        log.debug("ESU Function map starts");
         _varModel = v;
         
         // set up default names and labels
@@ -338,7 +338,7 @@ public class FnMapPanelESU extends JPanel {
                             String fullOutName = outName[iOut][0];
                             if ( outLabel[iOut] != "") fullOutName = fullOutName + (": " + outLabel[iOut]);
                             
-                            if (log.isDebugEnabled()) log.debug("Process var: "+name+" as index "+iVar);
+                            log.debug("Process var: "+name+" as index "+iVar);
                             varsUsed.add(Integer.valueOf(iVar));
                             JComponent varComp;
                             if (outBlockItemBits[outBlockNum] == 1) {
@@ -369,7 +369,7 @@ public class FnMapPanelESU extends JPanel {
                             outIsUsed[iOut] = true;
                             iVarIndex[iOut][iRow] = iVar;
                         } else {
-                            if (log.isDebugEnabled()) log.debug("Did not find var: "+name);
+                            log.debug("Did not find var: "+name);
                         }
                     }
                     nextFreeBit = nextFreeBit + outBlockItemBits[outBlockNum];
@@ -442,8 +442,7 @@ public class FnMapPanelESU extends JPanel {
             }
         }
 
-        // warn if using OS X GUI
-        if (log.isDebugEnabled()) log.debug("Function map complete");
+        log.debug("Function map complete");
     }
     
     void updateAllSummaryLines() {
@@ -537,7 +536,7 @@ public class FnMapPanelESU extends JPanel {
         a = model.getAttribute("numFns");
         try { if (a!=null) numRows = Integer.valueOf(a.getValue()).intValue();}
         catch (Exception e) {log.error("error handling decoder's numFns value");}
-        if (log.isDebugEnabled()) log.debug("numFns, numOuts "+numRows+","+numOut);
+        log.debug("numFns, numOuts "+numRows+","+numOut);
         
         // add ESU default split labels before reading custom ones
         for (int iOut=0; iOut<maxOut; iOut++) {
@@ -546,7 +545,7 @@ public class FnMapPanelESU extends JPanel {
 
         // take all "output" children
         List<Element> elemList = model.getChildren("output");
-        if (log.isDebugEnabled()) log.debug("output scan starting with "+elemList.size()+" elements");
+        log.debug("output scan starting with "+elemList.size()+" elements");
         for (int i=0; i<elemList.size(); i++) {
             Element e = elemList.get(i);
             String name = e.getAttribute("name").getValue();
