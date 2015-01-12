@@ -35,10 +35,10 @@ import java.awt.event.ActionEvent;
      // disable ourself if programming is not possible
         boolean enabled = false;
         if ( (InstanceManager.getList(GlobalProgrammerManager.class) != null) 
-                || (InstanceManager.getList(GlobalProgrammerManager.class).size() > 0) )
+                && (InstanceManager.getList(GlobalProgrammerManager.class).size() > 0) )
                 enabled = true;
         if ( (InstanceManager.getList(AddressedProgrammerManager.class) != null) 
-                || (InstanceManager.getList(AddressedProgrammerManager.class).size() > 0) )
+                && (InstanceManager.getList(AddressedProgrammerManager.class).size() > 0) )
                 enabled = true;
         
         setEnabled(enabled);
