@@ -237,10 +237,11 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     protected ThrottleManager throttleManager;
     
     public ThrottleManager getThrottleManager() { 
-        log.debug("GetThrottleManager for {}",getSlotManager().getCommandStationType());
+        if (getSlotManager() != null)
+            log.debug("GetThrottleManager for {}",getSlotManager().getCommandStationType());
         if (getDisabled())
             return null;
-        if (throttleManager == null) {
+        if (throttleManager == null && getSlotManager() != null) {
             // ask command station type for specific throttle manager
             LnCommandStationType cmdstation = getSlotManager().getCommandStationType();
             log.debug("getThrottleManager constructs for {}",cmdstation.getName());
