@@ -148,7 +148,7 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
         if ("Mode".equals(e.getPropertyName()) && getProgrammer().equals(e.getSource())) {
             // mode changed in programmer, change GUI here if needed
             if (isSelected()) {  // if we're not holding a current mode, don't update
-                modeBox.setSelectedItem((ProgrammingMode)e.getNewValue());
+                modeBox.setSelectedItem(e.getNewValue());
             }
         }
     }
