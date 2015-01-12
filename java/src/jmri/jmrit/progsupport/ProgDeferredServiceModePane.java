@@ -114,14 +114,6 @@ public class ProgDeferredServiceModePane extends ProgModeSelector implements jav
         } else log.warn("propertyChange with unexpected propertyName: "+e.getPropertyName());
     }
 
-    /**
-     * Update the display to the current status
-     */
-    private void updateStatus(ProgrammingMode mode) {
-        currentMode.setText(mode.toString());
-        invalidate();
-    }
-
     // no longer needed, disconnect if still connected
     public void dispose() {
     }
