@@ -1,8 +1,10 @@
 // SimpleProgAction.java
 
- package jmri.jmrit.simpleprog;
+package jmri.jmrit.simpleprog;
 
- import jmri.util.swing.JmriAbstractAction;
+import jmri.*;
+
+import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
 import java.awt.event.ActionEvent;
@@ -31,9 +33,15 @@ import java.awt.event.ActionEvent;
          super(s);
 
      // disable ourself if programming is not possible
-        if (jmri.InstanceManager.programmerManagerInstance()==null) { 
-            setEnabled(false);
-        }
+        boolean enabled = false;
+        if ( (InstanceManager.getList(GlobalProgrammerManager.class) != null) 
+                || (InstanceManager.getList(GlobalProgrammerManager.class).size() > 0) )
+                enabled = true;
+        if ( (InstanceManager.getList(AddressedProgrammerManager.class) != null) 
+                || (InstanceManager.getList(AddressedProgrammerManager.class).size() > 0) )
+                enabled = true;
+        
+        setEnabled(enabled);
      }
      
      public SimpleProgAction() {
