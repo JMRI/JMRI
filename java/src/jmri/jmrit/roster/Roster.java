@@ -185,8 +185,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         }
         int i = _list.size() - 1;// Last valid index
         while (i >= 0) {
-            // compareToIgnoreCase not present in Java 1.1.8
-            if (e.getId().toUpperCase().compareTo(_list.get(i).getId().toUpperCase()) > 0) {
+            if (e.getId().compareToIgnoreCase(_list.get(i).getId()) > 0) {
                 break; // I can never remember whether I want break or continue here
             }
             i--;
