@@ -83,43 +83,44 @@
         <functionlabel num="1" lockable="true">Bell</functionlabel>
         <functionlabel num="2" lockable="false">Whistle</functionlabel>
         <functionlabel num="3" lockable="false">Coupler</functionlabel>
-        <functionlabel num="4" lockable="true">Blow Down</functionlabel>
+        <functionlabel num="4" lockable="true">Blower</functionlabel>
         <functionlabel num="5" lockable="false">AUX3</functionlabel>
         <functionlabel num="6" lockable="false">AUX1+AUX2</functionlabel>
         <functionlabel num="7" lockable="true">Switching</functionlabel>
-        <functionlabel num="8" lockable="true">Mute</functionlabel>
+        <functionlabel num="8" lockable="true">Sound On</functionlabel>
         <functionlabel num="9" lockable="true">Dimmer</functionlabel>
-        <functionlabel num="10" lockable="false">Oil Burner</functionlabel>
-        <functionlabel num="11" lockable="true">Coal Shovel</functionlabel>
-        <functionlabel num="12" lockable="false">Air Pump</functionlabel>
+        <functionlabel num="10" lockable="false">Air Pump</functionlabel>
+        <functionlabel num="11" lockable="true">Oil Burner</functionlabel>
+        <functionlabel num="12" lockable="false">Coal Shovelling</functionlabel>
         <functionlabel num="13" lockable="false">AUX4</functionlabel>
         <functionlabel num="14" lockable="false">Injector</functionlabel>
-        <functionlabel num="15" lockable="false">Crossing</functionlabel>
-        <functionlabel num="16" lockable="false">Rail Clack</functionlabel>
+        <functionlabel num="15" lockable="false">Crossing Comm</functionlabel>
+        <functionlabel num="16" lockable="false">Rail Clank</functionlabel>
         <functionlabel num="17" lockable="false">Brake Set/Rel</functionlabel>
-        <functionlabel num="18" lockable="false">Cylinder Cocks</functionlabel>
+        <functionlabel num="18" lockable="false">Sanding Valve</functionlabel>
+        <functionlabel num="19" lockable="false">Cylinder Cocks</functionlabel>
         <functionlabel num="20" lockable="false">Short Whistle</functionlabel>
       </functionlabels>
       <soundlabels>
-        <soundlabel num="1">Chuff Right volume</soundlabel>
-        <soundlabel num="2">Chuff Left volume</soundlabel>
-        <soundlabel num="3">Whistle volume</soundlabel>
-        <soundlabel num="4">Bell volume</soundlabel>
-        <soundlabel num="5">Coupler volume</soundlabel>
-        <soundlabel num="6">Dynamo volume</soundlabel>
-        <soundlabel num="7">Air Pump volume</soundlabel>
-        <soundlabel num="8">Blower volume</soundlabel>
-        <soundlabel num="9">Injector volume</soundlabel>
-        <soundlabel num="10">Crossing Comm volume</soundlabel>
-        <soundlabel num="11">Railclack volume</soundlabel>
-        <soundlabel num="12">Brake Set/Release volume</soundlabel>
-        <soundlabel num="13">Sanding Valve volume</soundlabel>
-        <soundlabel num="14">Oil Burner volume</soundlabel>
-        <soundlabel num="15">Coal Shoveling volume</soundlabel>
-        <soundlabel num="16">Short Whistle volume</soundlabel>
-        <soundlabel num="17">Johnson Bar volume</soundlabel>
-        <soundlabel num="18">Cylinder Cocks volume</soundlabel>
-        <soundlabel num="24">Steam Hissing volume</soundlabel>
+        <soundlabel num="1">Chuff #1</soundlabel>
+        <soundlabel num="2">Chuff #2</soundlabel>
+        <soundlabel num="3">Whistle</soundlabel>
+        <soundlabel num="4">Bell</soundlabel>
+        <soundlabel num="5">Coupler</soundlabel>
+        <soundlabel num="6">Dynamo</soundlabel>
+        <soundlabel num="7">Air Pump</soundlabel>
+        <soundlabel num="8">Blower</soundlabel>
+        <soundlabel num="9">Injector</soundlabel>
+        <soundlabel num="10">Crossing Comm</soundlabel>
+        <soundlabel num="11">Rail Clank</soundlabel>
+        <soundlabel num="12">Brake Set/Rel</soundlabel>
+        <soundlabel num="13">Sanding Valve</soundlabel>
+        <soundlabel num="14">Oil Burner</soundlabel>
+        <soundlabel num="15">Coal Shovelling</soundlabel>
+        <soundlabel num="16">Short Whistle</soundlabel>
+        <soundlabel num="17">Johnson Bar</soundlabel>
+        <soundlabel num="18">Cylinder Cocks</soundlabel>
+        <soundlabel num="24">Steam Hissing</soundlabel>
         <soundlabel num="25">Random sounds</soundlabel>
         <soundlabel num="26">Automatic brake sound</soundlabel>
       </soundlabels>
