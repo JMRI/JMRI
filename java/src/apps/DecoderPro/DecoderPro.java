@@ -1,5 +1,4 @@
 // DecoderPro.java
-
 package apps.DecoderPro;
 
 import apps.Apps;
@@ -19,35 +18,30 @@ import org.slf4j.LoggerFactory;
 /**
  * The JMRI application for configuring DCC decoders.
  * <P>
- * If an argument is provided at startup, it will be used as the name of
- * the configuration file.  Note that this is just the name, not the path;
- * the file is searched for in the usual way, first in the preferences tree and then in
+ * If an argument is provided at startup, it will be used as the name of the
+ * configuration file. Note that this is just the name, not the path; the file
+ * is searched for in the usual way, first in the preferences tree and then in
  * xml/
  *
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Bob Jacobsen   Copyright 2003, 2004, 2007
- * @version     $Revision$
+ * @author	Bob Jacobsen Copyright 2003, 2004, 2007
+ * @version $Revision$
  */
 public class DecoderPro extends Apps {
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = -3951875421070292360L;
+    private static final long serialVersionUID = -3951875421070292360L;
 
-	DecoderPro(JFrame p) {
+    DecoderPro(JFrame p) {
         super(p);
     }
 
@@ -56,12 +50,12 @@ public class DecoderPro extends Apps {
     }
 
     protected String mainWindowHelpID() {
-            return "package.apps.DecoderPro.DecoderPro";
+        return "package.apps.DecoderPro.DecoderPro";
     }
 
     protected String line1() {
         return MessageFormat.format(Bundle.getMessage("DecoderProVersionCredit"),
-                                new Object[]{jmri.Version.name()});
+                new Object[]{jmri.Version.name()});
     }
 
     protected String line2() {
@@ -74,26 +68,25 @@ public class DecoderPro extends Apps {
         j.add(super.statusPanel());
 
        // Buttons
-
         Action serviceprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction(Bundle.getMessage("DpButtonUseProgrammingTrack"));
         Action opsprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(Bundle.getMessage("DpButtonProgramOnMainTrack"));
-        Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")){
-                /**
-			 * 
-			 */
-			private static final long serialVersionUID = -3633527961661923859L;
+        Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")) {
+            /**
+             *
+             */
+            private static final long serialVersionUID = -3633527961661923859L;
 
-				public void actionPerformed(ActionEvent e) {
-					Apps.handleQuit();
-                }
-            };
+            public void actionPerformed(ActionEvent e) {
+                Apps.handleQuit();
+            }
+        };
 
         JButton b1 = new JButton(Bundle.getMessage("DpButtonUseProgrammingTrack"));
         b1.addActionListener(serviceprog);
         b1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         j.add(b1);
-        if (jmri.InstanceManager.programmerManagerInstance()==null ||
-            !jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()) {
+        if (jmri.InstanceManager.programmerManagerInstance() == null
+                || !jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()) {
             b1.setEnabled(false);
             b1.setToolTipText(Bundle.getMessage("MsgServiceButtonDisabled"));
         }
@@ -101,8 +94,8 @@ public class DecoderPro extends Apps {
         m1.addActionListener(opsprog);
         m1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         j.add(m1);
-        if (jmri.InstanceManager.programmerManagerInstance()==null ||
-            !jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()) {
+        if (jmri.InstanceManager.programmerManagerInstance() == null
+                || !jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()) {
             m1.setEnabled(false);
             m1.setToolTipText(Bundle.getMessage("MsgOpsButtonDisabled"));
         }
@@ -141,5 +134,3 @@ public class DecoderPro extends Apps {
 
     static Logger log = LoggerFactory.getLogger(DecoderPro.class.getName());
 }
-
-
