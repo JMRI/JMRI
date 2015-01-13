@@ -23,49 +23,46 @@ import org.jdom2.*;
  * Each row represents a possible mapping between input conditions (function keys, etc.)
  * and logical, physical or sound outputs.</p>
  * <p>Uses data from the "model" element from the decoder definition file
- * to configure the number of rows and columns and set up any
- * custom column names:</p>
+ * to configure the number of rows and items and set up any
+ * custom item names:</p>
  *  <dl>
  *   <dt>extFnsESU="yes"</dt>
  *     <dd>Uses the ESU-style function map rather than the NMRA style.</dd>
  *     <dd>&nbsp;</dd>
  *   <dt>numOuts</dt>
- *     <dd>Highest column number to display.</dd>
+ *     <dd>Highest item number to display.</dd>
  *     <dd>&nbsp;</dd>
  *   <dt>numFns</dt>
  *     <dd>Number of mapping rows to display.</dd>
  *     <dd>&nbsp;</dd>
  *   <dt>output</dt>
- *     <dd>name="n" label="yyy"</dd>
- *       <dd>&nbsp;-&nbsp;Set lower line of heading for column number "n" to "yyy".</dd>
+ *     <dd>name="n" label="theName"</dd>
+ *       <dd>&nbsp;-&nbsp;Set name of item number "n" to "theName".</dd>
  *       <dd>&nbsp;</dd>
- *     <dd>name="n" label="xxx|yyy"</dd>
- *       <dd>&nbsp;-&nbsp;Set upper line of heading for column number "n" to "xxx" and lower line to "yyy".</dd>
+ *     <dd>name="n" label="theName|OnChoice|OffChoice"</dd>
+ *       <dd>&nbsp;-&nbsp;Set name of item number "n" to "theName" and replace the default "On and "Off" choices for enumChoice items.</dd>
  *       <dd>&nbsp;</dd>
  *     <dd>name="n" label="|"</dd>
- *       <dd>&nbsp;-&nbsp;Sets both lines of heading for column number "n" to blank, causing the column to be suppressed from the table.</dd>
+ *       <dd>&nbsp;-&nbsp;Cause item number "n" to be suppressed from the table.</dd>
  *       <dd>&nbsp;</dd>
- *     <dd>name="text1" label="text2"</dd>
- *       <dd>&nbsp;-&nbsp;Set upper line of heading of the nth column to "xxx" and lower line to "yyy",
+ *     <dd>name="theName" label="OnChoice|OffChoice"</dd>
+ *       <dd>&nbsp;-&nbsp;Set name of the nth item to "theName" and replace the default "On and "Off" choices for enumChoice items,
  *     where this line is the nth "output" element of the "model" element in the decoder definition file.</dd>
  * </dl>
  *  <dl>
- *  <dt>Default column headings:</dt>
- *   <dd>Coded in String array outDescESU[] of this class.</dd>
- *   <dd>Column headings can be overridden by the "output" elements documented above.</dd>
- *   <dd>&nbsp;</dd>
- *  <dt>Two rows are available for column headings:</dt>
- *   <dd>Use the "|" character to designate a row break.</dd>
+ *  <dt>Default item headings:</dt>
+ *   <dd>Coded in String array itemDescESU[] of this class.</dd>
+ *   <dd>Item headings can be overridden by the "output" elements documented above.</dd>
  * </dl>
  *  <dl>
- *  <dt>Columns will be suppressed if any of the following are true:</dt>
- *   <dd>No variables are found for that column.</dd>
- *   <dd>The column output name is of the form name="n" label="|".</dd>
- *   <dd>Column number is &gt; numOuts.</dd>
+ *  <dt>Items will be suppressed if any of the following are true:</dt>
+ *   <dd>No variables are found for that item.</dd>
+ *   <dd>The item output name is of the form name="n" label="|".</dd>
+ *   <dd>Item number is &gt; numOuts.</dd>
  * </dl>
  *  <dl>
  *  <dt>Variable definitions:</dt>
- *   <dd>Are of the form "ESU Function Row xx Column yy" and are created "on the fly" by this class.
+ *   <dd>Are of the form "ESU Function Row xx Item yy" and are created "on the fly" by this class.
  *     Up to 5,120 variables are needed to populate the function map. It is more efficient to create
  *     these in code than to use XML in the decoder file. <strong>DO NOT</strong> specify them in the decoder file.</dd>
  * </dl>
@@ -137,9 +134,9 @@ public class FnMapPanelESU extends JPanel {
      *  <dt>Two rows are available for column labels</dt>
      *   <dd>Use the '|' character to designate a row break</dd>
      * </dl></p>
-     * <p>Column labels can be overridden by the "output" element of the "model" element from the decoder definition file.</p>
+     * <p>Item labels can be overridden by the "output" element of the "model" element from the decoder definition file.</p>
      */
-    final String[] outDescESU = new String[] {"Motion|Drive|Stop","Direction|Forward|Reverse"
+    final String[] itemDescESU = new String[] {"Motion|Drive|Stop","Direction|Forward|Reverse"
         ,"F0","F1","F2","F3","F4","F5","F6","F7","F8","F9"
         ,"F10","F11","F12","F13","F14","F15","F16","F17","F18","F19"
         ,"F20","F21","F22","F23","F24","F25","F26","F27","F28"
@@ -150,25 +147,25 @@ public class FnMapPanelESU extends JPanel {
         ,"Sound slot 13","Sound slot 14","Sound slot 15","Sound slot 16","Sound slot 17","Sound slot 18","Sound slot 19","Sound slot 20","Sound slot 21","Sound slot 22","Sound slot 23","Sound slot 24"
     };
 
-    final int maxOut = outDescESU.length;
-    final String[] outLabel = new String[maxOut];
-    final String[][] outName = new String[maxOut][3];
-    final boolean[] outIsUsed = new boolean[maxOut];
-    final int iVarIndex[][] =new int[maxOut][numRows];
+    final int maxItems = itemDescESU.length;
+    final String[] itemLabel = new String[maxItems];
+    final String[][] itemName = new String[maxItems][3];
+    final boolean[] itemIsUsed = new boolean[maxItems];
+    final int iVarIndex[][] =new int[maxItems][numRows];
                                            
     public FnMapPanelESU(VariableTableModel v, List<Integer> varsUsed, Element model, RosterEntry rosterEntry, CvTableModel cvModel) {
         log.debug("ESU Function map starts");
         _varModel = v;
         
         // set up default names and labels
-        for (int iOut=0; iOut<maxOut; iOut++) {
-            outLabel[iOut] = "";
-            outName[iOut][0] = "";
-            outName[iOut][1] = "";
-            outName[iOut][2] = "";
-            outIsUsed[iOut] = false;
+        for (int item=0; item<maxItems; item++) {
+            itemLabel[item] = "";
+            itemName[item][0] = "";
+            itemName[item][1] = "";
+            itemName[item][2] = "";
+            itemIsUsed[item] = false;
             for (int iRow = 0; iRow < numRows; iRow++) {
-                iVarIndex[iOut][iRow] = 0;
+                iVarIndex[item][iRow] = 0;
                 for (int outBlockNum = 0; outBlockNum < outBlockLength.length; outBlockNum++) {
                     summaryLine[iRow][outBlockNum] = new JTextField(20);
                     summaryLine[iRow][outBlockNum].setHorizontalAlignment(JTextField.LEFT);
@@ -199,7 +196,7 @@ public class FnMapPanelESU extends JPanel {
             cs.anchor = GridBagConstraints.LINE_START;
 
             // loop through outputs (columns)
-            int iOut = 0;
+            int item = 0;
             do {
                     JPanel blockPanel = new JPanel();
                     GridBagLayout blockPanelLay = new GridBagLayout();
@@ -210,10 +207,10 @@ public class FnMapPanelESU extends JPanel {
                     GridBagConstraints bIsPcs = new GridBagConstraints();
 
                 // check for block separators
-                if (iOut == nextOutBlockStart) {
+                if (item == nextOutBlockStart) {
                     outBlockNum++;
-                    outBlockStartCol[outBlockNum] = iOut;
-                    nextOutBlockStart = iOut+outBlockLength[outBlockNum];
+                    outBlockStartCol[outBlockNum] = item;
+                    nextOutBlockStart = item+outBlockLength[outBlockNum];
                     blockItemsSelectorPanel = new JPanel();
                     bIsPlay = new GridBagLayout();
                     bIsPcs = new GridBagConstraints();
@@ -231,9 +228,9 @@ public class FnMapPanelESU extends JPanel {
                 // block loop
                 do {
                     // if column is not suppressed by blank headers
-                    if ( !outName[iOut][0].equals("") ) {
+                    if ( !itemName[item][0].equals("") ) {
                         // set up the variable using the output label
-                        String name = "ESU Function Row "+Integer.toString(iRow+1)+" Column "+Integer.toString(iOut+1);
+                        String name = "ESU Function Row "+Integer.toString(iRow+1)+" Item "+Integer.toString(item+1);
                         int siCV = SI_START_CV + (iRow / SI_CV_MODULUS);
                         int iCV = START_CV + (((SI_CV_MODULUS * iRow) + (nextFreeBit / BIT_MODULUS)) % CV_MODULUS);
                         String thisCV = PI_CV+"."+siCV+"."+iCV;
@@ -259,8 +256,8 @@ public class FnMapPanelESU extends JPanel {
                             // set up choices
                             String defChoice1 = "On";
                             String defChoice2 = "Off";
-                            if ( !outName[iOut][1].equals("")  ) defChoice1 = outName[iOut][1];
-                            if ( !outName[iOut][2].equals("")  ) defChoice2 = outName[iOut][2];
+                            if ( !itemName[item][1].equals("")  ) defChoice1 = itemName[item][1];
+                            if ( !itemName[item][2].equals("")  ) defChoice2 = itemName[item][2];
 
                             // add some elements
                             Element thisVar;
@@ -322,21 +319,21 @@ public class FnMapPanelESU extends JPanel {
                     
                         // hopefully we found it!
                         if (iVar>=0) {
-                            // try to find item  labels for outLabel[iOut]
-                            if ( outName[iOut][0].startsWith("Sound slot") ) {
+                            // try to find item  labels for itemLabel[item]
+                            if ( itemName[item][0].startsWith("Sound slot") ) {
                                 try {
-                                    outLabel[iOut] = rosterEntry.getSoundLabel(Integer.valueOf(outName[iOut][0].substring( ("Sound slot"+" ").length())));
+                                    itemLabel[item] = rosterEntry.getSoundLabel(Integer.valueOf(itemName[item][0].substring( ("Sound slot"+" ").length())));
                                 } catch (Exception e) {}
-                            } else if ( outName[iOut][0].startsWith("F") ) {
+                            } else if ( itemName[item][0].startsWith("F") ) {
                                 try {
-                                    outLabel[iOut] = rosterEntry.getFunctionLabel(Integer.valueOf(outName[iOut][0].substring(1))) ;
+                                    itemLabel[item] = rosterEntry.getFunctionLabel(Integer.valueOf(itemName[item][0].substring(1))) ;
                                 } catch (Exception e) {}
                             }
-                            if (outLabel[iOut] == null) outLabel[iOut]= "";
+                            if (itemLabel[item] == null) itemLabel[item]= "";
                             
-                            // generate a fullOutName
-                            String fullOutName = outName[iOut][0];
-                            if ( outLabel[iOut] != "") fullOutName = fullOutName + (": " + outLabel[iOut]);
+                            // generate a fullItemName
+                            String fullItemName = itemName[item][0];
+                            if ( itemLabel[item] != "") fullItemName = fullItemName + (": " + itemLabel[item]);
                             
                             log.debug("Process var: {} as index {}", name, iVar);
                             varsUsed.add(Integer.valueOf(iVar));
@@ -347,18 +344,17 @@ public class FnMapPanelESU extends JPanel {
                                 varComp = (JComponent)(_varModel.getRep(iVar, ""));
                             }
                             VariableValue var = _varModel.getVariable(iVar);
-                            varComp.setToolTipText(PaneProgPane.addCvDescription(("Row "+Integer.toString(iRow+1)+", "+fullOutName), var.getCvDescription(), var.getMask()));
+                            varComp.setToolTipText(PaneProgPane.addCvDescription(("Row "+Integer.toString(iRow+1)+", "+fullItemName), var.getCvDescription(), var.getMask()));
                             if (cvObject == null) cvObject = cvModel.allCvMap().get(thisCV); // case of new loco
                             cvObject.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
                                     public void propertyChange(java.beans.PropertyChangeEvent e) {
-                                        String propertyName = e.getPropertyName();
                                         updateAllSummaryLines();                                        
                                     }
                                 });
 
                             // add line to scroll pane
-                            String label = outName[iOut][0];
-                            if ( outBlockItemBits[outBlockNum] == 1 ) label = fullOutName;
+                            String label = itemName[item][0];
+                            if ( outBlockItemBits[outBlockNum] == 1 ) label = fullItemName;
                             bIsPcs.anchor = GridBagConstraints.LINE_START;
                             bIsPcs.gridx = outBlockItemBits[outBlockNum] % 2;
                             blockItemsSelectorPanel.add(new JLabel(label),bIsPcs);
@@ -366,16 +362,16 @@ public class FnMapPanelESU extends JPanel {
                             blockItemsSelectorPanel.add(varComp,bIsPcs);
                             bIsPcs.gridy++;
 
-                            outIsUsed[iOut] = true;
-                            iVarIndex[iOut][iRow] = iVar;
+                            itemIsUsed[item] = true;
+                            iVarIndex[item][iRow] = iVar;
                         } else {
                             log.debug("Did not find var: {}", name);
                         }
                     }
                     nextFreeBit = nextFreeBit + outBlockItemBits[outBlockNum];
 
-                    iOut++;
-                } while ( (iOut < nextOutBlockStart) && (iOut < numOut) ); // end block loop
+                    item++;
+                } while ( (item < nextOutBlockStart) && (item < numOut) ); // end block loop
 
                 // display block
                 JScrollPane blockItemsScrollPane = new JScrollPane(blockItemsSelectorPanel);
@@ -410,7 +406,7 @@ public class FnMapPanelESU extends JPanel {
 
 
 
-            } while  (iOut < Math.min(numOut,maxOut) ); // end outputs (columns) loop
+            } while  (item < Math.min(numOut,maxItems) ); // end outputs (columns) loop
             
             labelAt( currentRow++, currentCol, Integer.toString(iRow+1));
         }  // end row loop
@@ -419,13 +415,13 @@ public class FnMapPanelESU extends JPanel {
         // tally used columns
         int currentBlock = -1;
         int blockStart = 0;
-        for (int iOut=0; iOut<maxOut; iOut++) {
-            if (iOut == blockStart) {
+        for (int item=0; item<maxItems; item++) {
+            if (item == blockStart) {
                 currentBlock++;
                 blockStart = blockStart + outBlockLength[currentBlock];
                 outBlockUsed[currentBlock] = 0;
             }
-            if (outIsUsed[iOut]) outBlockUsed[currentBlock]++;
+            if (itemIsUsed[item]) outBlockUsed[currentBlock]++;
         }
 
         for (int iBlock=0; iBlock<outBlockLength.length; iBlock++) {
@@ -458,33 +454,33 @@ public class FnMapPanelESU extends JPanel {
         String retString = "";
         int retState = 0;
 
-        for (int iOut = outBlockStartCol[block]; iOut < (outBlockStartCol[block] + outBlockLength[block]); iOut++) {
-            if (outIsUsed[iOut]) {
-                int value =  Integer.valueOf(_varModel.getValString(iVarIndex[iOut][row]));
-                int state = _varModel.getState(iVarIndex[iOut][row]);
-                if ( iOut == outBlockStartCol[block]) {
+        for (int item = outBlockStartCol[block]; item < (outBlockStartCol[block] + outBlockLength[block]); item++) {
+            if (itemIsUsed[item]) {
+                int value =  Integer.valueOf(_varModel.getValString(iVarIndex[item][row]));
+                int state = _varModel.getState(iVarIndex[item][row]);
+                if ( item == outBlockStartCol[block]) {
                     retState = state;
                 } else if ( retState != state ){
                     retState = AbstractValue.EDITED;
                 }
                 if (value > 0) {
                     if (outBlockItemBits[block] == 1) {
-                        if ( outLabel[iOut].equals("") ) {
-                            retString = retString + "," + outName[iOut][0];
+                        if ( itemLabel[item].equals("") ) {
+                            retString = retString + "," + itemName[item][0];
                         } else {
-                            retString = retString + "," + outLabel[iOut];
+                            retString = retString + "," + itemLabel[item];
                         } 
                     } else if (outBlockItemBits[block] == 2) {
                         if ( value > 2 ) {
                             retString = retString + "," + "reserved value "+value;
-                        } else if ( outName[iOut][value].equals("") ) {
+                        } else if ( itemName[item][value].equals("") ) {
                             if ( value == 1 ) {
-                                retString = retString + "," + outName[iOut][0];
+                                retString = retString + "," + itemName[item][0];
                             } else if ( value == 2 ) {
-                                retString = retString + ",not " + outName[iOut][0];
+                                retString = retString + ",not " + itemName[item][0];
                             }
                         } else {
-                            retString = retString + "," + outName[iOut][value];
+                            retString = retString + "," + itemName[item][value];
                         }
                     }
                 }
@@ -539,8 +535,8 @@ public class FnMapPanelESU extends JPanel {
         log.debug("numFns, numOuts {}, {}", numRows, numOut);
         
         // add ESU default split labels before reading custom ones
-        for (int iOut=0; iOut<maxOut; iOut++) {
-            loadSplitLabel(iOut, outDescESU[iOut]);
+        for (int item=0; item<maxItems; item++) {
+            loadSplitLabel(item, itemDescESU[item]);
         } 
 
         // take all "output" children
@@ -560,39 +556,37 @@ public class FnMapPanelESU extends JPanel {
                 }
             } catch (java.lang.NumberFormatException ex) {
                 // not a number, must be a name
-                if (i<maxOut) {
-                    outName[i][0] = name;
-                    outName[i][1] = "";
-                    outName[i][2] = "";
+                if (i<maxItems) {
+                    itemName[i][0] = name;
+                    itemName[i][1] = "";
+                    itemName[i][2] = "";
                     String at;
                     if ((at=LocaleSelector.getAttribute(e, "label"))!=null)
-                        outName[i][0] = at;
-                    else
-                        outName[i][0] ="";
+                        loadSplitLabel(i, name+"|"+at);
                 }
             }
         }
     }
     
     // split and load labels
-    void loadSplitLabel(int iOut, String theLabel) {
-        if (iOut < maxOut) {
+    void loadSplitLabel(int item, String theLabel) {
+        if (item < maxItems) {
             String itemList[] = theLabel.split("\\|");
             if ( theLabel.equals("|") ) {
-                outName[iOut][0] = "";
-                outName[iOut][1] = "";
-                outName[iOut][2] = "";
+                itemName[item][0] = "";
+                itemName[item][1] = "";
+                itemName[item][2] = "";
             } else if (itemList.length == 1) {
-                outName[iOut][0] = itemList[0];
-                outName[iOut][1] = "";
+                itemName[item][0] = itemList[0];
+                itemName[item][1] = "";
             } else if (itemList.length == 2) {
-                outName[iOut][0] = itemList[0];
-                outName[iOut][1] = itemList[1];
-                outName[iOut][2] = "";
+                itemName[item][0] = itemList[0];
+                itemName[item][1] = itemList[1];
+                itemName[item][2] = "";
             } else if (itemList.length > 2) {
-                outName[iOut][0] = itemList[0];
-                outName[iOut][1] = itemList[1];
-                outName[iOut][2] = itemList[2];
+                itemName[item][0] = itemList[0];
+                itemName[item][1] = itemList[1];
+                itemName[item][2] = itemList[2];
             }
         }
     }
