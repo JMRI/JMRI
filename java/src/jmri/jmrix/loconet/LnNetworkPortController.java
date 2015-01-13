@@ -51,7 +51,14 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
      * ones.
      */
     public void setCommandStationType(String name) {
-        setCommandStationType(LnCommandStationType.getByName(name));
+        try {
+            setCommandStationType(LnCommandStationType.getByName(name));
+        } catch (IllegalArgumentException e) {
+            // not a valid command station type, force
+            log.error("Invalid command station name: \"{}\", defaulting to {}", name, commandStationTypes[0]);
+            setCommandStationType(commandStationTypes[0]);
+        }
+
     }
     
     /**
