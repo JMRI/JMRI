@@ -2,6 +2,7 @@
 package apps.DecoderPro;
 
 import apps.Apps;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
 import javax.swing.AbstractAction;
@@ -11,6 +12,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import jmri.InstanceManager;
+import jmri.jmrit.roster.swing.RosterFrameAction;
+import jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction;
+import jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction;
+import jmri.util.HelpUtil;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,48 +51,55 @@ public class DecoderPro extends Apps {
         super(p);
     }
 
+    @Override
     protected String logo() {
         return "resources/decoderpro.gif";
     }
 
+    @Override
     protected String mainWindowHelpID() {
         return "package.apps.DecoderPro.DecoderPro";
     }
 
+    @Override
     protected String line1() {
         return MessageFormat.format(Bundle.getMessage("DecoderProVersionCredit"),
                 new Object[]{jmri.Version.name()});
     }
 
+    @Override
     protected String line2() {
         return "http://jmri.org/DecoderPro";
     }
 
+    @Override
     protected JPanel statusPanel() {
         JPanel j = new JPanel();
         j.setLayout(new BoxLayout(j, BoxLayout.Y_AXIS));
         j.add(super.statusPanel());
 
-       // Buttons
-        Action serviceprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction(Bundle.getMessage("DpButtonUseProgrammingTrack"));
-        Action opsprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(Bundle.getMessage("DpButtonProgramOnMainTrack"));
+        // Buttons
+        Action serviceprog = new PaneProgAction(Bundle.getMessage("DpButtonUseProgrammingTrack"));
+        Action opsprog = new PaneOpsProgAction(Bundle.getMessage("DpButtonProgramOnMainTrack"));
         Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")) {
-            /**
-             *
-             */
+
             private static final long serialVersionUID = -3633527961661923859L;
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 Apps.handleQuit();
             }
         };
 
+        JButton roster = new JButton(new RosterFrameAction());
+        roster.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        j.add(roster);
         JButton b1 = new JButton(Bundle.getMessage("DpButtonUseProgrammingTrack"));
         b1.addActionListener(serviceprog);
         b1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         j.add(b1);
-        if (jmri.InstanceManager.programmerManagerInstance() == null
-                || !jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()) {
+        if (InstanceManager.programmerManagerInstance() == null
+                || !InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()) {
             b1.setEnabled(false);
             b1.setToolTipText(Bundle.getMessage("MsgServiceButtonDisabled"));
         }
@@ -94,16 +107,16 @@ public class DecoderPro extends Apps {
         m1.addActionListener(opsprog);
         m1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         j.add(m1);
-        if (jmri.InstanceManager.programmerManagerInstance() == null
-                || !jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()) {
+        if (InstanceManager.programmerManagerInstance() == null
+                || !InstanceManager.programmerManagerInstance().isAddressedModePossible()) {
             m1.setEnabled(false);
             m1.setToolTipText(Bundle.getMessage("MsgOpsButtonDisabled"));
         }
 
         JPanel p3 = new JPanel();
-        p3.setLayout(new java.awt.FlowLayout());
+        p3.setLayout(new FlowLayout());
         JButton h1 = new JButton(Bundle.getMessage("ButtonHelp"));
-        jmri.util.HelpUtil.addHelpToComponent(h1, "html.apps.DecoderPro.index");
+        HelpUtil.addHelpToComponent(h1, "html.apps.DecoderPro.index");
         h1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         p3.add(h1);
         JButton q1 = new JButton(Bundle.getMessage("ButtonQuit"));
