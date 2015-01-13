@@ -3445,7 +3445,7 @@
    <P>
     You can also create custom switch lists. Place the programs in the
     JMRI/operations/csvSwitchList directory. You can configure the name of the Excel program by
-    opening the "Switch List by Location" window using the "Switch List" button at the bottom of the
+    opening the "Switch List by Location" window using the "Switch Lists" button at the bottom of the
     "Trains" window. Then under "Tools" in the "Switch List by Location" window, select "Setup Excel
     Program (Manifest Creator)". You must also enable the creation of CSV switch list files, see
     <a HREF="#ManifestOptions">Options</a> "Generate CSV Switch Lists" for more information.
@@ -3792,7 +3792,7 @@
     <img src="images/SwitchList.png">
    </P>
 
-   <P>Press the "Switch List" button found at the bottom of the "Trains" window if you want a
+   <P>Press the "Switch Lists" button found at the bottom of the "Trains" window if you want a
     switch list for a given location. A menu will appear that allows you to select which locations
     to preview or print. Once you've determined which locations you want to print or preview, press
     the "Save" button to keep your selections.</P>
@@ -3844,7 +3844,7 @@
     larger one. Use this mode if you want to save paper, otherwise don't bother, as it can be
     difficult to use. It's a bit complicated, so here's the order you need to do things:</P>
    <uL>
-    <li>Press the "Switch List" button found at the bottom the "Trains" window.</li>
+    <li>Press the "Switch Lists" button found at the bottom the "Trains" window.</li>
     <li>Select which locations you want switch lists for in the "Switch Lists by Location"
      window.</li>
     <li>Deselect the "Real Time" checkbox and press "Save".

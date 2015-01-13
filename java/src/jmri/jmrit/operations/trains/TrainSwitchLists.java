@@ -34,6 +34,7 @@ public class TrainSwitchLists extends TrainCommon {
 	TrainManager trainManager = TrainManager.instance();
 	private static final char FORM_FEED = '\f';
 	private static final boolean isManifest = false;
+	private static final boolean printHeader = true;
 
 	String messageFormatText = ""; // the text being formated in case there's an exception
 
@@ -47,7 +48,7 @@ public class TrainSwitchLists extends TrainCommon {
 		// Append switch list data if not operating in real time
 		boolean newTrainsOnly = !Setup.isSwitchListRealTime();
 		boolean append = false;
-		boolean nextTrain = false;
+		boolean checkFormFeed = true; // used to determine if FF needed between trains
 		if (newTrainsOnly) {
 			if (!location.getStatus().equals(Location.MODIFIED) && !Setup.isSwitchListAllTrainsEnabled())
 				return; // nothing to add
@@ -107,7 +108,7 @@ public class TrainSwitchLists extends TrainCommon {
 					continue;
 				}
 				// we're now going to add to the switch list
-				if (!nextTrain) {
+				if (checkFormFeed) {
 					if (append && !Setup.getSwitchListPageFormat().equals(Setup.PAGE_NORMAL)) {
 						fileOut.write(FORM_FEED);
 					}
@@ -116,7 +117,7 @@ public class TrainSwitchLists extends TrainCommon {
 				} else if (!Setup.getSwitchListPageFormat().equals(Setup.PAGE_NORMAL)) {
 					fileOut.write(FORM_FEED);
 				}
-				nextTrain = true;
+				checkFormFeed = false; // done with FF for this train
 				// some cars booleans and the number of times this location get's serviced
 				pickupCars = false;
 				dropCars = false;
@@ -147,16 +148,17 @@ public class TrainSwitchLists extends TrainCommon {
 										splitString(train.getTrainDepartsName()), expectedArrivalTime,
 										rl.getTrainDirectionString() }));
 							}
-						} else {
-							if (r == 0 && routeList.size() > 1)
+						} else if (!train.isLocalSwitcher()) {
+							if (r == 0) {
 								newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
 										.getStringDepartsAt(), new Object[] { splitString(train.getTrainDepartsName()),
 										rl.getTrainDirectionString(), train.getFormatedDepartureTime() }));
-							else if (routeList.size() > 1)
+							} else {
 								newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
 										.getStringDepartsAtExpectedArrival(), new Object[] {
 										splitString(train.getTrainDepartsName()), train.getFormatedDepartureTime(),
 										expectedArrivalTime, rl.getTrainDirectionString() }));
+							}
 						}
 					} else {
 						// multiple visits to this location
@@ -200,7 +202,8 @@ public class TrainSwitchLists extends TrainCommon {
 							if (rl.getTrainDirection() != rlPrevious.getTrainDirection())
 								newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
 										.getStringTrainDirectionChange(), new Object[] { train.getName(),
-										rl.getTrainDirectionString(), train.getDescription() }));
+										rl.getTrainDirectionString(), train.getDescription(),
+										train.getTrainTerminatesName() }));
 						}
 					}
 
@@ -211,18 +214,48 @@ public class TrainSwitchLists extends TrainCommon {
 					if (Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {
 						pickupEngines(fileOut, engineList, rl, isManifest);
 						dropEngines(fileOut, engineList, rl, isManifest);
-						blockCarsByTrack(fileOut, train, carList, routeList, rl, r, true, isManifest);
+						blockCarsByTrack(fileOut, train, carList, routeList, rl, r, printHeader, isManifest);
 					} else if (Setup.getManifestFormat().equals(Setup.TWO_COLUMN_FORMAT)) {
 						blockLocosTwoColumn(fileOut, engineList, rl, isManifest);
-						blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, r, true, isManifest);
+						blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, r, printHeader, isManifest);
 					} else {
 						blockLocosTwoColumn(fileOut, engineList, rl, isManifest);
-						blockCarsByTrackNameTwoColumn(fileOut, train, carList, routeList, rl, r, true, isManifest);
+						blockCarsByTrackNameTwoColumn(fileOut, train, carList, routeList, rl, r, printHeader,
+								isManifest);
 					}
 					if (Setup.isPrintHeadersEnabled() || !Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT))
 						printHorizontalLine(fileOut, isManifest);
 
 					stops++;
+
+					if (routeList.size() > r + 1) {
+						RouteLocation nextRl = routeList.get(r + 1);
+						if (splitString(rl.getName()).equals(splitString(nextRl.getName())))
+							continue; // the current location name is the "same" as the next
+						// print departure text if not a switcher and not the last location in the route
+						if (!train.isLocalSwitcher()) {
+							String trainDeparts = "";
+							if (Setup.isPrintLoadsAndEmptiesEnabled()) {
+								int emptyCars = train.getNumberEmptyCarsInTrain(rl);
+								// Message format: Train departs Boston Westbound with 12 cars, 450 feet, 3000 tons
+								trainDeparts = MessageFormat.format(TrainSwitchListText.getStringTrainDepartsLoads(),
+										new Object[] { TrainCommon.splitString(rl.getName()),
+												rl.getTrainDirectionString(),
+												train.getNumberCarsInTrain(rl) - emptyCars, emptyCars,
+												train.getTrainLength(rl), Setup.getLengthUnit().toLowerCase(),
+												train.getTrainWeight(rl), train.getTrainTerminatesName() });
+							} else {
+								// Message format: Train departs Boston Westbound with 4 loads, 8 empties, 450 feet,
+								// 3000 tons
+								trainDeparts = MessageFormat.format(TrainSwitchListText.getStringTrainDepartsCars(),
+										new Object[] { TrainCommon.splitString(rl.getName()),
+												rl.getTrainDirectionString(), train.getNumberCarsInTrain(rl),
+												train.getTrainLength(rl), Setup.getLengthUnit().toLowerCase(),
+												train.getTrainWeight(rl), train.getTrainTerminatesName() });
+							}
+							newLine(fileOut, trainDeparts);
+						}
+					}
 				}
 				if (trainDone && !pickupCars && !dropCars) {
 					newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText.getStringTrainDone(),

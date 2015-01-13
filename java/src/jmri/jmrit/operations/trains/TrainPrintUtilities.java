@@ -125,6 +125,7 @@ public class TrainPrintUtilities {
 			}
 			if (line == null)
 				break;
+//			log.debug("Line: {}", line.toString());
 			// check for build report print level
 			if (isBuildReport) {
 				line = filterBuildReport(line, false); // no indent
@@ -133,17 +134,19 @@ public class TrainPrintUtilities {
 				// printing the train manifest
 			} else {
 				// determine if there's a line separator
-				boolean horizontialLineSeparatorFound = true;
-				for (int i = 0; i < line.length(); i++) {
-					if (line.charAt(i) != HORIZONTAL_LINE_SEPARATOR) {
-						horizontialLineSeparatorFound = false;
-						break;
+				if (line.length() > 0) {
+					boolean horizontialLineSeparatorFound = true;
+					for (int i = 0; i < line.length(); i++) {
+						if (line.charAt(i) != HORIZONTAL_LINE_SEPARATOR) {
+							horizontialLineSeparatorFound = false;
+							break;
+						}
 					}
-				}
-				if (horizontialLineSeparatorFound) {
-					writer.write(writer.getCurrentLineNumber(), 0, writer.getCurrentLineNumber(), line.length() + 1);
-					c = null;
-					continue;
+					if (horizontialLineSeparatorFound) {
+						writer.write(writer.getCurrentLineNumber(), 0, writer.getCurrentLineNumber(), line.length() + 1);
+						c = null;
+						continue;
+					}
 				}
 				for (int i = 0; i < line.length(); i++) {
 					if (line.charAt(i) == VERTICAL_LINE_SEPARATOR) {

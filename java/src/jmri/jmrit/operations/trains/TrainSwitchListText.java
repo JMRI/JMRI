@@ -30,6 +30,9 @@ public class TrainSwitchListText {
 	private static String noCarPickUps = Bundle.getMessage("NoCarPickUps");
 	private static String noCarDrops = Bundle.getMessage("NoCarDrops");	
 	private static String trainDone = Bundle.getMessage("TrainDone");
+	
+	private static String trainDepartsCars = Bundle.getMessage("TrainDepartsCars");
+	private static String trainDepartsLoads = Bundle.getMessage("TrainDepartsLoads");
 
 	public static String getStringSwitchListFor() {
 		return switchListFor;
@@ -139,6 +142,22 @@ public class TrainSwitchListText {
 	public static void setStringTrainDone(String s) {
 		trainDone = s;
 	}
+	
+	public static String getStringTrainDepartsCars() {
+		return trainDepartsCars;
+	}
+
+	public static void setStringTrainDepartsCars(String s) {
+		trainDepartsCars = s;
+	}
+
+	public static String getStringTrainDepartsLoads() {
+		return trainDepartsLoads;
+	}
+
+	public static void setStringTrainDepartsLoads(String s) {
+		trainDepartsLoads = s;
+	}
 
 	// must synchronize changes with operation-config.dtd
 	public static Element store() {
@@ -204,6 +223,15 @@ public class TrainSwitchListText {
 			e.addContent(values = new Element(Xml.TRAIN_DONE));
 			values.setAttribute(Xml.TEXT, getStringTrainDone());
 		}
+		if (!getStringTrainDepartsCars().equals(Bundle.getMessage("TrainDepartsCars"))) {
+			e.addContent(values = new Element(Xml.TRAIN_DEPARTS_CARS));
+			values.setAttribute(Xml.TEXT, getStringTrainDepartsCars());
+		}
+		if (!getStringTrainDepartsLoads().equals(Bundle.getMessage("TrainDepartsLoads"))) {
+			e.addContent(values = new Element(Xml.TRAIN_DEPARTS_LOADS));
+			values.setAttribute(Xml.TEXT, getStringTrainDepartsLoads());
+		}
+
 		return e;
 	}
 
@@ -285,5 +313,16 @@ public class TrainSwitchListText {
 				setStringTrainDone(a.getValue());
 			}
 		}
+		if (emts.getChild(Xml.TRAIN_DEPARTS_CARS) != null) {
+			if ((a = emts.getChild(Xml.TRAIN_DEPARTS_CARS).getAttribute(Xml.TEXT)) != null) {
+				setStringTrainDepartsCars(a.getValue());
+			}
+		}
+		if (emts.getChild(Xml.TRAIN_DEPARTS_LOADS) != null) {
+			if ((a = emts.getChild(Xml.TRAIN_DEPARTS_LOADS).getAttribute(Xml.TEXT)) != null) {
+				setStringTrainDepartsLoads(a.getValue());
+			}
+		}
+
 	}
 }

@@ -3708,8 +3708,7 @@ public class TrainBuilder extends TrainCommon {
 								testTrack.getReservedLengthDrops() - testTrack.getReserved(), available }));
 					}
 					String status = car.testDestination(testDestination, testTrack);
-					// TODO the following code isn't really needed anymore. All spurs were already checked, but
-					// this code does report why the spur wasn't used.
+					// Could be a caboose or car with FRED with a custom load
 					// is the destination a spur with a schedule demanding this car's custom load?
 					if (status.equals(Track.OKAY) && !testTrack.getScheduleId().equals(Track.NONE)
 							&& !car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName())
@@ -3788,7 +3787,9 @@ public class TrainBuilder extends TrainCommon {
 					// No local moves from yard to yard
 					if (_train.isLocalSwitcher() && !Setup.isLocalYardMovesEnabled()
 							&& testTrack.getTrackType().equals(Track.YARD)
-							&& car.getTrack().getTrackType().equals(Track.YARD)) {
+							&& car.getTrack().getTrackType().equals(Track.YARD)
+							&& !car.isCaboose()
+							&& !car.hasFred()) {
 						addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildNoYardToYardMove"),
 								new Object[] { car.getTrackName(), testTrack.getName() }));
 						continue;

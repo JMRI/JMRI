@@ -3,12 +3,14 @@ package jmri.jmrit.operations.setup;
 
 import java.awt.GridBagLayout;
 import java.util.ResourceBundle;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+
 import jmri.jmrit.operations.trains.TrainSwitchListText;
 
 /**
@@ -50,6 +52,8 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
     JTextField noCarPickUpsTextField = new JTextField(60);
     JTextField noCarDropsTextField = new JTextField(60);
     JTextField trainDoneTextField = new JTextField(60);
+    JTextField trainDepartsCarsTextField = new JTextField(60);
+    JTextField trainDepartsLoadsTextField = new JTextField(60);
 
     public EditSwitchListTextPanel() {
 
@@ -158,6 +162,21 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
         trainDoneTextField.setText(TrainSwitchListText.getStringTrainDone());
         trainDoneTextField.setToolTipText(rb.getString("ToolTipTrainDone"));
         pSwitchList.add(pTrainDone);
+        
+        JPanel pTrainDepartsCars = new JPanel();
+        pTrainDepartsCars.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainDepartsCars")));
+        pTrainDepartsCars.add(trainDepartsCarsTextField);
+        trainDepartsCarsTextField.setText(TrainSwitchListText.getStringTrainDepartsCars());
+        trainDepartsCarsTextField.setToolTipText(rb.getString("ToolTipTrainDepartsCars"));
+        pSwitchList.add(pTrainDepartsCars);
+
+        JPanel pTrainDepartsLoadsTextField = new JPanel();
+        pTrainDepartsLoadsTextField.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainDepartsLoads")));
+        pTrainDepartsLoadsTextField.add(trainDepartsLoadsTextField);
+        trainDepartsLoadsTextField.setText(TrainSwitchListText.getStringTrainDepartsLoads());
+        trainDepartsLoadsTextField.setToolTipText(rb.getString("ToolTipTrainDepartsLoads"));
+        pSwitchList.add(pTrainDepartsLoadsTextField);
+
 
         // add tool tips
         saveButton.setToolTipText(Bundle.getMessage("SaveToolTip"));
@@ -200,6 +219,8 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
             noCarPickUpsTextField.setText(rb.getString("NoCarPickUps"));
             noCarDropsTextField.setText(rb.getString("NoCarDrops"));
             trainDoneTextField.setText(rb.getString("TrainDone"));
+            trainDepartsCarsTextField.setText(rb.getString("TrainDepartsCars"));
+            trainDepartsLoadsTextField.setText(rb.getString("TrainDepartsLoads"));
         }
         if (ae.getSource() == saveButton) {
             this.savePreferences();
@@ -238,6 +259,8 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
         TrainSwitchListText.setStringNoCarPickUps(noCarPickUpsTextField.getText());
         TrainSwitchListText.setStringNoCarDrops(noCarDropsTextField.getText());
         TrainSwitchListText.setStringTrainDone(trainDoneTextField.getText());
+        TrainSwitchListText.setStringTrainDepartsCars(trainDepartsCarsTextField.getText());
+        TrainSwitchListText.setStringTrainDepartsLoads(trainDepartsLoadsTextField.getText());
 
         OperationsSetupXml.instance().writeOperationsFile();
     }
@@ -257,6 +280,8 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
                 || TrainSwitchListText.getStringTrainDirectionChange().equals(trainDirectionChangeTextField.getText())
                 || TrainSwitchListText.getStringNoCarPickUps().equals(noCarPickUpsTextField.getText())
                 || TrainSwitchListText.getStringNoCarDrops().equals(noCarDropsTextField.getText())
-                || TrainSwitchListText.getStringTrainDone().equals(trainDoneTextField.getText()));
+                || TrainSwitchListText.getStringTrainDone().equals(trainDoneTextField.getText()))
+                || TrainSwitchListText.getStringTrainDepartsCars().equals(trainDepartsCarsTextField.getText())
+                || TrainSwitchListText.getStringTrainDepartsLoads().equals(trainDepartsLoadsTextField.getText());
     }
 }
