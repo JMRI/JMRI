@@ -477,8 +477,10 @@ public class RollingStockManager {
 	protected static final int BY_ROAD = 1;
 	protected static final int BY_TYPE = 2;
 	protected static final int BY_COLOR = 3;
-	// BY_LOAD = 4 BY_MODEL = 4
-	// BY_KERNEL = 5 BY_CONSIST = 5
+	// BY_LOAD = 4 
+	// BY_MODEL = 4
+	// BY_KERNEL = 5 
+	// BY_CONSIST = 5
 	protected static final int BY_LOCATION = 6;
 	protected static final int BY_DESTINATION = 7;
 	protected static final int BY_TRAIN = 8;
