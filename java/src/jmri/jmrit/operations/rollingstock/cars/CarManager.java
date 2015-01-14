@@ -32,7 +32,7 @@ import org.jdom2.Element;
  */
 public class CarManager extends RollingStockManager {
 
-	 // stores Kernels
+	// stores Kernels
 	protected Hashtable<String, Kernel> _kernelHashTable = new Hashtable<String, Kernel>();
 
 	public static final String KERNEL_LISTLENGTH_CHANGED_PROPERTY = "KernelListLength"; // NOI18N
@@ -59,8 +59,7 @@ public class CarManager extends RollingStockManager {
 	}
 
 	/**
-	 * Finds an existing Car or creates a new Car if needed requires car's road
-	 * and number
+	 * Finds an existing Car or creates a new Car if needed requires car's road and number
 	 * 
 	 * @param road
 	 *            car road
@@ -98,8 +97,7 @@ public class CarManager extends RollingStockManager {
 	}
 
 	/**
-	 * Get a Car by type and road. Used to test that a car with a specific type
-	 * and road exists.
+	 * Get a Car by type and road. Used to test that a car with a specific type and road exists.
 	 * 
 	 * @param type
 	 *            car type.
@@ -123,7 +121,8 @@ public class CarManager extends RollingStockManager {
 			kernel = new Kernel(name);
 			Integer oldSize = Integer.valueOf(_kernelHashTable.size());
 			_kernelHashTable.put(name, kernel);
-			setDirtyAndFirePropertyChange(KERNEL_LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_kernelHashTable.size()));
+			setDirtyAndFirePropertyChange(KERNEL_LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_kernelHashTable
+					.size()));
 		}
 		return kernel;
 	}
@@ -139,7 +138,8 @@ public class CarManager extends RollingStockManager {
 			kernel.dispose();
 			Integer oldSize = Integer.valueOf(_kernelHashTable.size());
 			_kernelHashTable.remove(name);
-			setDirtyAndFirePropertyChange(KERNEL_LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_kernelHashTable.size()));
+			setDirtyAndFirePropertyChange(KERNEL_LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_kernelHashTable
+					.size()));
 		}
 	}
 
@@ -152,7 +152,7 @@ public class CarManager extends RollingStockManager {
 	public Kernel getKernelByName(String name) {
 		return _kernelHashTable.get(name);
 	}
-	
+
 	public void replaceKernelName(String oldName, String newName) {
 		Kernel oldKernel = getKernelByName(oldName);
 		if (oldKernel != null) {
@@ -213,7 +213,7 @@ public class CarManager extends RollingStockManager {
 			out.add(name);
 		return out;
 	}
-	
+
 	public int getKernelMaxNameLength() {
 		int maxLength = 0;
 		for (String name : getKernelNameList()) {
@@ -272,7 +272,7 @@ public class CarManager extends RollingStockManager {
 	public List<RollingStock> getByWaitList() {
 		return getByIntList(getByIdList(), BY_WAIT);
 	}
-	
+
 	public List<RollingStock> getByPickupList() {
 		return getByList(getByIdList(), BY_PICKUP);
 	}
@@ -299,17 +299,16 @@ public class CarManager extends RollingStockManager {
 			return car.getFinalDestinationName() + car.getFinalDestinationTrackName();
 		case BY_WAIT:
 			return car.getWait(); // returns an integer
-		case BY_PICKUP: 
+		case BY_PICKUP:
 			return car.getPickupScheduleName();
 		default:
 			return super.getRsAttribute(car, attribute);
 		}
 	}
-	
+
 	/**
-	 * Return a list available cars (no assigned train or car
-	 * already assigned to this train) on a route, cars are ordered least
-	 * recently moved to most recently moved.
+	 * Return a list available cars (no assigned train or car already assigned to this train) on a route, cars are
+	 * ordered least recently moved to most recently moved.
 	 * 
 	 * @param train
 	 * @return List of cars with no assigned train on a route
@@ -329,7 +328,7 @@ public class CarManager extends RollingStockManager {
 			// include all cars
 			for (int i = 0; i < routeList.size() - 1; i++) {
 				if (destination.getName().equals(routeList.get(i).getName())) {
-					destination = null; //include cars at destination
+					destination = null; // include cars at destination
 					break;
 				}
 			}
@@ -354,7 +353,7 @@ public class CarManager extends RollingStockManager {
 		}
 		return out;
 	}
-	
+
 	// sorts the high priority cars to the start of the list
 	protected List<RollingStock> sortByPriority(List<RollingStock> list) {
 		List<RollingStock> out = new ArrayList<RollingStock>();
@@ -375,17 +374,19 @@ public class CarManager extends RollingStockManager {
 
 	/**
 	 * Get a list of Cars assigned to a train sorted by destination track names. Passenger cars will be placed at the
-	 * end of the list. Caboose or car with FRED will be the last car(s) in the list
+	 * end of the list. Caboose or car with FRED will be the last car(s) in the list. Kernels are placed together by
+	 * blocking number.
 	 * 
 	 * @param train
 	 * @return Ordered list of Cars assigned to the train
 	 */
 	public List<Car> getByTrainDestinationList(Train train) {
-		List<RollingStock> inTrain = getByTrainList(train);
+		List<RollingStock> byFinal = getByList(getList(train), BY_FINAL_DEST);
+		List<RollingStock> byLocation = getByList(byFinal, BY_LOCATION);
 		// now sort by track destination
 		List<Car> out = new ArrayList<Car>();
 		int lastCarsIndex = 0; // incremented each time a car is added to the end of the list
-		for (RollingStock rs : inTrain) {
+		for (RollingStock rs : byLocation) {
 			Car car = (Car) rs;
 			if (car.getKernel() != null && !car.getKernel().isLead(car)) {
 				continue; // not the lead car, skip for now.
@@ -535,11 +536,11 @@ public class CarManager extends RollingStockManager {
 			}
 		}
 
-//		if (root.getChild(Xml.OPTIONS) != null) {
-//			Element options = root.getChild(Xml.OPTIONS);
-//			if (log.isDebugEnabled())
-//				log.debug("ctor from element " + options);
-//		}
+		// if (root.getChild(Xml.OPTIONS) != null) {
+		// Element options = root.getChild(Xml.OPTIONS);
+		// if (log.isDebugEnabled())
+		// log.debug("ctor from element " + options);
+		// }
 
 		if (root.getChild(Xml.CARS) != null) {
 			@SuppressWarnings("unchecked")
@@ -553,8 +554,8 @@ public class CarManager extends RollingStockManager {
 	}
 
 	/**
-	 * Create an XML element to represent this Entry. This member has to remain
-	 * synchronized with the detailed DTD in operations-cars.dtd.
+	 * Create an XML element to represent this Entry. This member has to remain synchronized with the detailed DTD in
+	 * operations-cars.dtd.
 	 */
 	public void store(Element root) {
 		root.addContent(new Element(Xml.OPTIONS)); // nothing to save under

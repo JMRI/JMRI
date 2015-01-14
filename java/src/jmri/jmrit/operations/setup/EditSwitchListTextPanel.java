@@ -140,6 +140,7 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
         pTrainDirectionChange.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainDirectionChange")));
         pTrainDirectionChange.add(trainDirectionChangeTextField);
         trainDirectionChangeTextField.setText(TrainSwitchListText.getStringTrainDirectionChange());
+        trainDirectionChangeTextField.setToolTipText(rb.getString("ToolTipDirectionChange"));
         pSwitchList.add(pTrainDirectionChange);
 
         JPanel pNoCarPickUps = new JPanel();
