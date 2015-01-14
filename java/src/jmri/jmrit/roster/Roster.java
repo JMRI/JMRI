@@ -191,6 +191,12 @@ public class Roster extends XmlFile implements RosterGroupSelector {
             i--;
         }
         _list.add(i + 1, e);
+        e.getAttributes().stream().filter((attribute)
+                -> (attribute.startsWith(Roster.ROSTER_GROUP_PREFIX)
+                && "yes".equals(e.getAttribute(attribute))))
+                .forEach((attribute) -> {
+                    this.addRosterGroup(attribute.substring(Roster.ROSTER_GROUP_PREFIX.length()));
+                });
         setDirty(true);
         firePropertyChange(ADD, null, e);
     }

@@ -768,9 +768,6 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
                 String key = fn.getChild("key").getText();
                 String value = fn.getChild("value").getText();
                 this.putAttribute(key, value);
-                if (key.startsWith(Roster.ROSTER_GROUP_PREFIX)) {
-                    Roster.instance().addRosterGroup(key.substring(Roster.ROSTER_GROUP_PREFIX.length()));
-                }
             }
         }
     }
