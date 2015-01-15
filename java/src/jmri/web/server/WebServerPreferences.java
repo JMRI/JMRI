@@ -40,7 +40,7 @@ public class WebServerPreferences extends Bean {
     private int refreshDelay = 5;
     private boolean useAjax = true;
     private boolean plain = false;
-    private ArrayList<String> disallowedFrames = new ArrayList<String>(Arrays.asList(Bundle.getMessage("DefaultDisallowedFrames").split(";")));
+    private ArrayList<String> disallowedFrames = new ArrayList<>(Arrays.asList(Bundle.getMessage("DefaultDisallowedFrames").split(";")));
     private String railRoadName = Bundle.getMessage("DefaultRailroadName");
     private boolean allowRemoteConfig = false;
     protected boolean readonlyPower = true;
@@ -169,13 +169,10 @@ public class WebServerPreferences extends Bean {
         try {
             root = prefsXml.rootFromFile(file);
         } catch (java.io.FileNotFoundException ea) {
-            log.info("Could not find Web Server preferences file.  Normal if preferences have not been saved before.");
+            log.info("Could not find Web Server preferences file. Normal if preferences have not been saved before.");
             root = null;
-        } catch (IOException eb) {
-            log.error("Exception while loading throttles preferences: " + eb);
-            root = null;
-        } catch (JDOMException ec) {
-            log.error("Exception while loading throttles preferences: " + ec);
+        } catch (IOException | JDOMException eb) {
+            log.error("Exception while loading web server preferences: " + eb);
             root = null;
         }
         if (root != null) {
