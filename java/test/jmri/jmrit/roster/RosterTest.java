@@ -8,7 +8,6 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.List;
-
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.util.FileUtil;
 import junit.framework.Assert;
@@ -26,7 +25,7 @@ public class RosterTest extends TestCase {
     public void testDirty() {
         Roster r = new Roster();
         Assert.assertEquals("new object ", false, r.isDirty());
-        r.addEntry(null);
+        r.addEntry(new RosterEntry());
         Assert.assertEquals("after add ", true, r.isDirty());
     }
 
