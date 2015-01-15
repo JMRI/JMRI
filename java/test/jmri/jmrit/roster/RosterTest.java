@@ -35,6 +35,35 @@ public class RosterTest extends TestCase {
         r.addEntry(new RosterEntry("file name Bob"));
         Assert.assertEquals("one item ", 1, r.numEntries());
     }
+    
+    public void testDontAddNullEntriesLater() {
+        // test as documentation...
+        Roster r = new Roster();
+        r.addEntry(new RosterEntry());
+        r.addEntry(new RosterEntry());
+        
+        boolean pass = false;
+        try {
+            r.addEntry(null);
+        } catch (NullPointerException e) { 
+            pass = true;
+        }
+        Assert.assertTrue("Adding null entry should have caused NPE", pass);
+    }
+    
+    public void testDontAddNullEntriesFirst() {
+        // test as documentation...
+        Roster r = new Roster();
+        
+        boolean pass = false;
+        try {
+            r.addEntry(null);
+        } catch (NullPointerException e) { 
+            pass = true;
+        }
+        Assert.assertTrue("Adding null entry should have caused NPE", pass);
+    }
+    
 
     public void testAddrSearch() {
         Roster r = new Roster();
