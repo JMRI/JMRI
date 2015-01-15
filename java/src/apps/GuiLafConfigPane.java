@@ -41,16 +41,15 @@ import org.slf4j.LoggerFactory;
  */
 public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -3846942336860819413L;
-
     static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
 
-    HashMap<String, String> installedLAFs;
-    ButtonGroup LAFGroup;
-    String selectedLAF;
+    private final JComboBox<String> localeBox = new JComboBox<>(new String[]{
+        Locale.getDefault().getDisplayName(),
+        "(Please Wait)"});
+    private final HashMap<String, Locale> locale = new HashMap<>();
+    private final ButtonGroup LAFGroup = new ButtonGroup();
+    public JCheckBox mouseEvent;
     private boolean dirty = false;
 
     public GuiLafConfigPane() {
@@ -71,30 +70,25 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         panel.add(mouseEvent);
     }
 
-    public JCheckBox mouseEvent;
-
     void doLAF(JPanel panel) {
         // find L&F definitions
         panel.setLayout(new FlowLayout());
         UIManager.LookAndFeelInfo[] plafs = UIManager.getInstalledLookAndFeels();
-        installedLAFs = new HashMap<>(plafs.length);
+        HashMap<String, String> installedLAFs = new HashMap<>(plafs.length);
         for (UIManager.LookAndFeelInfo plaf : plafs) {
             installedLAFs.put(plaf.getName(), plaf.getClassName());
         }
         // make the radio buttons
-        LAFGroup = new ButtonGroup();
         for (String name : installedLAFs.keySet()) {
             JRadioButton jmi = new JRadioButton(name);
             panel.add(jmi);
             LAFGroup.add(jmi);
             jmi.setActionCommand(name);
             jmi.addActionListener((ActionEvent e) -> {
-                selectedLAF = e.getActionCommand();
                 this.dirty = true;
             });
             if (installedLAFs.get(name).equals(UIManager.getLookAndFeel().getClass().getName())) {
                 jmi.setSelected(true);
-                selectedLAF = name;
             }
         }
     }
@@ -111,16 +105,12 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         JPanel panel = new JPanel();
         // add JComboBoxen for language and country
         panel.setLayout(new FlowLayout());
-        localeBox = new JComboBox<>(new String[]{
-            Locale.getDefault().getDisplayName(),
-            "(Please Wait)"});
         panel.add(localeBox);
 
         // create object to find locales in new Thread
         Runnable r = () -> {
             Locale[] locales = Locale.getAvailableLocales();
-            localeNames = new String[locales.length];
-            locale = new HashMap<>();
+            String[] localeNames = new String[locales.length];
             for (int i = 0; i < locales.length; i++) {
                 locale.put(locales[i].getDisplayName(), locales[i]);
                 localeNames[i] = locales[i].getDisplayName();
@@ -137,10 +127,6 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         return panel;
     }
 
-    JComboBox<String> localeBox;
-    HashMap<String, Locale> locale;
-    String[] localeNames;
-
     public void setLocale(String loc) {
         localeBox.setSelectedItem(loc);
     }
@@ -153,11 +139,8 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
      */
     @Override
     public Locale getLocale() {
-        if (localeBox == null || locale == null) {
-            return Locale.getDefault();
-        }
-        String desired = (String) localeBox.getSelectedItem();
-        return locale.get(desired);
+        Locale desired = locale.get(localeBox.getSelectedItem().toString());
+        return (desired != null) ? desired : Locale.getDefault();
     }
 
     static int fontSize = 0;
@@ -272,7 +255,7 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     public boolean isDirty() {
         return (this.dirty
                 || SwingSettings.getNonStandardMouseEvent() != mouseEvent.isSelected()
-                || !Locale.getDefault().equals(this.localeBox.getSelectedItem()));
+                || !Locale.getDefault().equals(this.locale.get(this.localeBox.getSelectedItem().toString())));
     }
 
     @Override
