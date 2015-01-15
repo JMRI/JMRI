@@ -207,7 +207,19 @@ public class TabbedPreferences extends AppConfigBase {
     private boolean invokeSaveOptions() {
         boolean restartRequired = false;
         for (PreferencesPanel panel : this.preferencesPanels.values()) {
+            if (log.isDebugEnabled()) {
+                log.debug("PreferencesPanel {} ({}) is {}.",
+                        panel.getClass().getName(),
+                        (panel.getTabbedPreferencesTitle() != null) ? panel.getTabbedPreferencesTitle() : panel.getPreferencesItemText(),
+                        (panel.isDirty()) ? "dirty" : "clean");
+            }
             panel.savePreferences();
+            if (log.isDebugEnabled()) {
+                log.debug("PreferencesPanel {} ({}) restart is {}required.",
+                        panel.getClass().getName(),
+                        (panel.getTabbedPreferencesTitle() != null) ? panel.getTabbedPreferencesTitle() : panel.getPreferencesItemText(),
+                        (panel.isRestartRequired()) ? "" : "not ");
+            }
             if (!restartRequired) {
                 restartRequired = panel.isRestartRequired();
             }
