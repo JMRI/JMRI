@@ -48,10 +48,10 @@ import org.slf4j.LoggerFactory;
 public class CommonConductorYardmasterPanel extends OperationsPanel implements PropertyChangeListener {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 4524775039808820663L;
-	protected static final String Tab = "     "; // used to space out headers
+     *
+     */
+    private static final long serialVersionUID = 4524775039808820663L;
+    protected static final String Tab = "     "; // used to space out headers
     protected static final String Space = " "; // used to pad out panels
 
     protected Location _location = null;
@@ -89,12 +89,8 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
     protected JPanel pRailRoadName = new JPanel();
 
     protected JPanel pTrainDescription = new JPanel();
-    protected JPanel pTrainComment = new JPanel();
-    protected JPanel pTrainRouteComment = new JPanel();
-    protected JPanel pTrainRouteLocationComment = new JPanel();
 
     protected JPanel pLocationName = new JPanel();
-    protected JPanel pLocationComment = new JPanel();
 
     protected JPanel pLocos = new JPanel();
     protected JPanel pPickupLocos = new JPanel();
@@ -151,8 +147,7 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
         pLocationName.add(textLocationName);
 
         // location comment
-        pLocationComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("LocationComment")));
-        pLocationComment.add(textLocationComment);
+        textLocationComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("LocationComment")));
         textLocationComment.setBackground(null);
 
         // train description
@@ -160,19 +155,16 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
         pTrainDescription.add(textTrainDescription);
 
         // train comment
-        pTrainComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrainComment")));
-        pTrainComment.add(textTrainComment);
+        textTrainComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrainComment")));
         textTrainComment.setBackground(null);
 
         // train route comment
-        pTrainRouteComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("RouteComment")));
-        pTrainRouteComment.add(textTrainRouteComment);
+        textTrainRouteComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("RouteComment")));
         textTrainRouteComment.setBackground(null);
 
         // train route location comment
-        pTrainRouteLocationComment.setBorder(BorderFactory
+        textTrainRouteLocationComment.setBorder(BorderFactory
                 .createTitledBorder(Bundle.getMessage("RouteLocationComment")));
-        pTrainRouteLocationComment.add(textTrainRouteLocationComment);
         textTrainRouteLocationComment.setBackground(null);
 
         // row 12
@@ -242,8 +234,8 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
         pSetoutLocos.setVisible(false);
         movePane.setVisible(false);
 
-        pTrainRouteLocationComment.setVisible(false);
-        pLocationComment.setVisible(false);
+        textTrainRouteLocationComment.setVisible(false);
+        textLocationComment.setVisible(false);
 
         setButtonText();
     }
@@ -290,7 +282,7 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
         check();
     }
 
-	// Determines if all car checkboxes are selected. Disables the Set button if
+    // Determines if all car checkboxes are selected. Disables the Set button if
     // all checkbox are selected.
     protected void check() {
         Enumeration<JCheckBox> en = carCheckBoxes.elements();
@@ -365,6 +357,7 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
      * three panes are pick up, set out, or local move. To keep track of each
      * car and which pane to use, they are placed in the list "rollingStock"
      * with the prefix "p", "s" or "m" and the car's unique id.
+     *
      * @param rl
      * @param isManifest
      */
@@ -569,8 +562,7 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         // if (Control.showProperty && log.isDebugEnabled())
-        log.debug("Property change " + e.getPropertyName() + " for: " + e.getSource().toString() + " old: "
-                + e.getOldValue() + " new: " + e.getNewValue()); // NOI18N
+        log.debug("Property change {} for: {} old: {} new: {}", e.getPropertyName(), e.getSource().toString(), e.getOldValue(), e.getNewValue()); // NOI18N
     }
 
     private static final Logger log = LoggerFactory.getLogger(CommonConductorYardmasterPanel.class.getName());
