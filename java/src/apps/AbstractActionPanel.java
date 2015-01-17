@@ -65,6 +65,7 @@ abstract public class AbstractActionPanel extends JPanel implements PreferencesP
         for (int i = 0; i < n; i++) {
             AbstractActionModel m = (AbstractActionModel) rememberedObjects().get(i);
             add(new Item(m));
+            this.dirty = false; // reset to false - setting the model in the Item ctor sets this true
         }
         jmri.InstanceManager.getDefault(apps.CreateButtonModel.class).addPropertyChangeListener((java.beans.PropertyChangeEvent e) -> {
             if (e.getPropertyName().equals("length")) {
@@ -135,9 +136,6 @@ abstract public class AbstractActionPanel extends JPanel implements PreferencesP
 
     public class Item extends JPanel implements ActionListener {
 
-        /**
-         *
-         */
         private static final long serialVersionUID = -2499516926618516181L;
         JButton removeButton = new JButton(rb.getString(removeButtonKey));
 
