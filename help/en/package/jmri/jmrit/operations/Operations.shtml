@@ -885,6 +885,16 @@
      <td>Set out loco</td>
      <td>See below</td>
     </tr>
+        <tr>
+     <td>SMC</td>
+     <td>Search for Missing Car</td>
+     <td>See below</td>
+    </tr>
+        <tr>
+     <td>SMCM</td>
+     <td>Missing Car Message</td>
+     <td>Message</td>
+    </tr>
     <tr>
      <td>TKCB</td>
      <td>Track Comment</td>
@@ -953,6 +963,7 @@
     name, kernel name, car comment, pick up comment, set out comment, C, F, H, RFID, RWE location
     name, RWE track name, U, utility car count, final destination name, final destination track
     name. Where C = Caboose, F = FRED, H = Hazardous, and U = Utility.</P>
+   <P>The Search for Missing Car (SMC) parameters are identical to the above for (PC) or (SC).</P>
    <P>The loco parameters for pick up loco (PL) and set out loco (SL) are: road, number, model,
     length, type, hp, location name, track name, destination name, destination track name, owner
     name, consist name, is lead loco in consist, loco comment, RFID.</P>
