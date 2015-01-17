@@ -11,7 +11,6 @@ import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -28,11 +27,8 @@ import jmri.util.FileUtil;
 
 public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = -5008747256799742063L;
-	JCheckBox eStopCB;
+    private static final long serialVersionUID = -5008747256799742063L;
+    JCheckBox eStopCB;
     JSpinner delaySpinner;
 
     JCheckBox momF2CB;
@@ -47,20 +43,14 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
     JRadioButton wifiRB;
     JRadioButton dccRB;
 
-    JButton saveB;
-    JButton cancelB;
-
     WiThrottlePreferences localPrefs;
     JFrame parentFrame = null;
-    boolean enableSave;
 
     public WiThrottlePrefsPanel() {
         if (InstanceManager.getDefault(WiThrottlePreferences.class) == null) {
             InstanceManager.store(new WiThrottlePreferences(FileUtil.getUserFilesPath() + "throttle" + File.separator + "WiThrottlePreferences.xml"), WiThrottlePreferences.class);
         }
         localPrefs = InstanceManager.getDefault(WiThrottlePreferences.class);
-        //  set local prefs to match instance prefs
-        //localPrefs.apply(WiThrottleManager.withrottlePreferencesInstance());
         initGUI();
         setGUI();
     }
@@ -76,8 +66,6 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         add(functionsPanel());
         add(socketPortPanel());
         add(allowedControllers());
-        add(cancelApplySave());
-
     }
 
     private void setGUI() {
@@ -95,14 +83,6 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         consistCB.setSelected(localPrefs.isAllowConsist());
         wifiRB.setSelected(localPrefs.isUseWiFiConsist());
         dccRB.setSelected(!localPrefs.isUseWiFiConsist());
-    }
-
-    /**
-     * Show the save and cancel buttons if displayed in its own frame.
-     */
-    public void enableSave() {
-        saveB.setVisible(true);
-        cancelB.setVisible(true);
     }
 
     /**
@@ -148,25 +128,13 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
     public void storeValues() {
         if (setValues()) {
-            WiThrottleManager.withrottlePreferencesInstance().apply(localPrefs);
-            WiThrottleManager.withrottlePreferencesInstance().save();
+            this.localPrefs.save();
 
             if (parentFrame != null) {
                 parentFrame.dispose();
             }
         }
 
-    }
-
-    /**
-     * Update the singleton instance of prefs, then mark (isDirty) that the
-     * values have changed and needs to save to xml file.
-     */
-    protected void applyValues() {
-        if (setValues()) {
-            WiThrottleManager.withrottlePreferencesInstance().apply(localPrefs);
-            WiThrottleManager.withrottlePreferencesInstance().setIsDirty(true); //  mark to save later
-        }
     }
 
     protected void cancelValues() {
@@ -265,38 +233,6 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         return panel;
     }
 
-    private JPanel cancelApplySave() {
-        JPanel panel = new JPanel();
-        cancelB = new JButton(Bundle.getMessage("ButtonCancel"));
-        cancelB.setVisible(false);
-        cancelB.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                cancelValues();
-            }
-        });
-        JButton applyB = new JButton(Bundle.getMessage("ButtonApply"));
-        applyB.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                applyValues();
-            }
-        });
-        saveB = new JButton(Bundle.getMessage("ButtonSave"));
-        saveB.setVisible(false);
-        saveB.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                storeValues();
-            }
-        });
-        panel.add(cancelB);
-        panel.add(saveB);
-        panel.add(new JLabel(Bundle.getMessage("LabelApplyWarning")));
-        panel.add(applyB);
-        return panel;
-    }
-
     private void updatePortField() {
         if (portCB.isSelected()) {
             port.setText(localPrefs.getPort());
@@ -356,6 +292,6 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
     @Override
     public boolean isRestartRequired() {
-        return true;
+        return this.localPrefs.isRestartRequired();
     }
 }
