@@ -53,10 +53,10 @@ import org.slf4j.LoggerFactory;
 public final class ProfilePreferencesPanel extends JPanel implements PreferencesPanel, ListSelectionListener {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -1375670900469426701L;
-	private static final Logger log = LoggerFactory.getLogger(ProfilePreferencesPanel.class);
+     *
+     */
+    private static final long serialVersionUID = -1375670900469426701L;
+    private static final Logger log = LoggerFactory.getLogger(ProfilePreferencesPanel.class);
 
     /**
      * Creates new form ProfilePreferencesPanel
@@ -644,8 +644,13 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
 
     @Override
     public boolean isRestartRequired() {
-        // true if the next profile to use has changed, false otherwise
-        return !ProfileManager.defaultManager().getActiveProfile().equals(ProfileManager.defaultManager().getNextActiveProfile());
+        // true if the next profile to use has changed, false otherwise.
+        // Since next profile defaults to null when application starts, restart
+        // is required only if next profile is not null and is not the same
+        // profile as the current profile
+        return ProfileManager.defaultManager().getNextActiveProfile() != null
+                && !ProfileManager.defaultManager().getActiveProfile().equals(ProfileManager.defaultManager().getNextActiveProfile()
+                );
     }
     /* Comment out until I get around to utilizing this, so Jenkins does not throw warnings.
      private static class ZipFileFilter extends FileFilter {
