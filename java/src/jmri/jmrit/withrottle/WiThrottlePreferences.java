@@ -1,26 +1,24 @@
 package jmri.jmrit.withrottle;
 
-
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision$
+ * @author Brett Hoffman Copyright (C) 2010
+ * @version $Revision$
  */
-public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
-    
+public class WiThrottlePreferences extends AbstractWiThrottlePreferences {
+
     //  Flag that prefs have not been saved:
     private boolean isDirty = false;
 
-
     private boolean useEStop = true;
     private int eStopDelay = 10;
-    
+
     private boolean useMomF2 = true;
-    
+
     private boolean useFixedPort = false;
     private String port = null;
 
@@ -29,52 +27,91 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
     private boolean allowRoute = true;
     private boolean allowConsist = true;
     private boolean useWiFiConsist = true;
-    
-    public WiThrottlePreferences(String fileName){
+
+    public WiThrottlePreferences(String fileName) {
         super.openFile(fileName);
-            
     }
-    
-    public WiThrottlePreferences(){}
+
+    public WiThrottlePreferences() {
+    }
 
     @Override
     public void load(Element child) {
         Attribute a;
-    	if ((a = child.getAttribute("isUseEStop")) != null )  setUseEStop(a.getValue().equalsIgnoreCase("true"));
-    	if ((a = child.getAttribute("getEStopDelay")) != null )
-            try{
+        if ((a = child.getAttribute("isUseEStop")) != null) {
+            setUseEStop(a.getValue().equalsIgnoreCase("true"));
+        }
+        if ((a = child.getAttribute("getEStopDelay")) != null) {
+            try {
                 setEStopDelay(Integer.valueOf(a.getValue()));
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 log.debug(e.getLocalizedMessage(), e);
             }
-        if ((a = child.getAttribute("isUseMomF2")) != null )  setUseMomF2(a.getValue().equalsIgnoreCase("true"));
-    	if ((a = child.getAttribute("isUseFixedPort")) != null )  setUseFixedPort(a.getValue().equalsIgnoreCase("true"));
-    	if ((a = child.getAttribute("getPort")) != null ) setPort(a.getValue());
-            
-    	if ((a = child.getAttribute("isAllowTrackPower")) != null )  setAllowTrackPower(a.getValue().equalsIgnoreCase("true"));
-        if ((a = child.getAttribute("isAllowTurnout")) != null )  setAllowTurnout(a.getValue().equalsIgnoreCase("true"));
-        if ((a = child.getAttribute("isAllowRoute")) != null )  setAllowRoute(a.getValue().equalsIgnoreCase("true"));
-        if ((a = child.getAttribute("isAllowConsist")) != null )  setAllowConsist(a.getValue().equalsIgnoreCase("true"));
-        if ((a = child.getAttribute("isUseWiFiConsist")) != null )  setUseWiFiConsist(a.getValue().equalsIgnoreCase("true"));
+        }
+        if ((a = child.getAttribute("isUseMomF2")) != null) {
+            setUseMomF2(a.getValue().equalsIgnoreCase("true"));
+        }
+        if ((a = child.getAttribute("isUseFixedPort")) != null) {
+            setUseFixedPort(a.getValue().equalsIgnoreCase("true"));
+        }
+        if ((a = child.getAttribute("getPort")) != null) {
+            setPort(a.getValue());
+        }
+
+        if ((a = child.getAttribute("isAllowTrackPower")) != null) {
+            setAllowTrackPower(a.getValue().equalsIgnoreCase("true"));
+        }
+        if ((a = child.getAttribute("isAllowTurnout")) != null) {
+            setAllowTurnout(a.getValue().equalsIgnoreCase("true"));
+        }
+        if ((a = child.getAttribute("isAllowRoute")) != null) {
+            setAllowRoute(a.getValue().equalsIgnoreCase("true"));
+        }
+        if ((a = child.getAttribute("isAllowConsist")) != null) {
+            setAllowConsist(a.getValue().equalsIgnoreCase("true"));
+        }
+        if ((a = child.getAttribute("isUseWiFiConsist")) != null) {
+            setUseWiFiConsist(a.getValue().equalsIgnoreCase("true"));
+        }
 
     }
 
-    public boolean compareValuesDifferent(WiThrottlePreferences prefs){
-        if (isAllowTrackPower() != prefs.isAllowTrackPower()) return true;
-        if (isAllowTurnout() != prefs.isAllowTurnout()) return true;
-        if (isAllowRoute() != prefs.isAllowRoute()) return true;
-        if (isAllowConsist() != prefs.isAllowConsist()) return true;
-        if (isUseWiFiConsist() != prefs.isUseWiFiConsist()) return true;
+    public boolean compareValuesDifferent(WiThrottlePreferences prefs) {
+        if (isAllowTrackPower() != prefs.isAllowTrackPower()) {
+            return true;
+        }
+        if (isAllowTurnout() != prefs.isAllowTurnout()) {
+            return true;
+        }
+        if (isAllowRoute() != prefs.isAllowRoute()) {
+            return true;
+        }
+        if (isAllowConsist() != prefs.isAllowConsist()) {
+            return true;
+        }
+        if (isUseWiFiConsist() != prefs.isUseWiFiConsist()) {
+            return true;
+        }
 
-        if (isUseEStop() != prefs.isUseEStop()) return true;
-        if (getEStopDelay() != prefs.getEStopDelay()) return true;
-        if (isUseMomF2() != prefs.isUseMomF2()) return true;
-        if (isUseFixedPort() != prefs.isUseFixedPort()) return true;
-        if (!(getPort().equals(prefs.getPort()))) return true;
+        if (isUseEStop() != prefs.isUseEStop()) {
+            return true;
+        }
+        if (getEStopDelay() != prefs.getEStopDelay()) {
+            return true;
+        }
+        if (isUseMomF2() != prefs.isUseMomF2()) {
+            return true;
+        }
+        if (isUseFixedPort() != prefs.isUseFixedPort()) {
+            return true;
+        }
+        if (!(getPort().equals(prefs.getPort()))) {
+            return true;
+        }
         return false;
     }
 
-    public void apply(WiThrottlePreferences prefs){
+    public void apply(WiThrottlePreferences prefs) {
         setUseEStop(prefs.isUseEStop());
         setEStopDelay(prefs.getEStopDelay());
         setUseMomF2(prefs.isUseMomF2());
@@ -89,7 +126,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
 
     @Override
     public Element store() {
-    	Element element = new Element("WiThrottlePreferences");
+        Element element = new Element("WiThrottlePreferences");
         element.setAttribute("isUseEStop", "" + isUseEStop());
         element.setAttribute("getEStopDelay", "" + getEStopDelay());
         element.setAttribute("isUseMomF2", "" + isUseMomF2());
@@ -103,85 +140,95 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
         setIsDirty(false);  //  Resets only when stored
         return element;
     }
-    
-    public boolean isDirty(){
+
+    public boolean isDirty() {
         return isDirty;
     }
-    public void setIsDirty(boolean value){
+
+    public void setIsDirty(boolean value) {
         isDirty = value;
     }
 
-
-    public boolean isUseEStop(){
+    public boolean isUseEStop() {
         return useEStop;
     }
-    public void setUseEStop(boolean value){
+
+    public void setUseEStop(boolean value) {
         useEStop = value;
     }
 
-    public int getEStopDelay(){
+    public int getEStopDelay() {
         return eStopDelay;
     }
-    public void setEStopDelay(int value){
+
+    public void setEStopDelay(int value) {
         eStopDelay = value;
     }
-    
-    public boolean isUseMomF2(){
+
+    public boolean isUseMomF2() {
         return useMomF2;
     }
-    public void setUseMomF2(boolean value){
+
+    public void setUseMomF2(boolean value) {
         useMomF2 = value;
     }
 
-    public boolean isUseFixedPort(){
+    public boolean isUseFixedPort() {
         return useFixedPort;
     }
-    public void setUseFixedPort(boolean value){
+
+    public void setUseFixedPort(boolean value) {
         useFixedPort = value;
     }
 
-    public String getPort(){
+    public String getPort() {
         return port;
     }
-    public void setPort(String value){
+
+    public void setPort(String value) {
         port = value;
     }
 
-    public boolean isAllowTrackPower(){
+    public boolean isAllowTrackPower() {
         return allowTrackPower;
     }
-    public void setAllowTrackPower(boolean value){
+
+    public void setAllowTrackPower(boolean value) {
         allowTrackPower = value;
     }
 
-    public boolean isAllowTurnout(){
+    public boolean isAllowTurnout() {
         return allowTurnout;
     }
-    public void setAllowTurnout(boolean value){
+
+    public void setAllowTurnout(boolean value) {
         allowTurnout = value;
     }
 
-    public boolean isAllowRoute(){
+    public boolean isAllowRoute() {
         return allowRoute;
     }
-    public void setAllowRoute(boolean value){
+
+    public void setAllowRoute(boolean value) {
         allowRoute = value;
     }
 
-    public boolean isAllowConsist(){
+    public boolean isAllowConsist() {
         return allowConsist;
     }
-    public void setAllowConsist(boolean value){
+
+    public void setAllowConsist(boolean value) {
         allowConsist = value;
     }
-    
-    public boolean isUseWiFiConsist(){
+
+    public boolean isUseWiFiConsist() {
         return useWiFiConsist;
     }
-    public void setUseWiFiConsist(boolean value){
+
+    public void setUseWiFiConsist(boolean value) {
         useWiFiConsist = value;
     }
 
-    private static Logger log = LoggerFactory.getLogger(WiThrottlePreferences.class.getName());
+    private static Logger log = LoggerFactory.getLogger(WiThrottlePreferences.class);
 
 }
