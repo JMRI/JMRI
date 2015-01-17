@@ -97,9 +97,7 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
      * values have changed and needs to save to xml file.
      */
     protected void applyValues() {
-        if (setValues()) {
-            preferences.setIsDirty(true);
-        }
+        this.setValues();
     }
 
     protected void cancelValues() {
@@ -180,9 +178,6 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
 
     @Override
     public boolean isRestartRequired() {
-        // Always return true; once the JsonServer heartbeat interval can be
-        // updated, return true only if the server port changes.
-        return true;
-        // return this.restartRequired;
+        return this.preferences.isRestartRequired();
     }
 }

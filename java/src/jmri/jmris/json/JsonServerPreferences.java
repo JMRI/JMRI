@@ -17,11 +17,12 @@ public class JsonServerPreferences extends Bean {
     static final String XML_PREFS_ELEMENT = "JSONServerPreferences"; // NOI18N
     static final String HEARTBEAT_INTERVAL = "heartbeatInterval"; // NOI18N
     static final String PORT = "port"; // NOI18N
-    //  Flag that prefs have not been saved:
-    private boolean isDirty = false;
     // initial defaults if prefs not found
     private int heartbeatInterval = 15000;
     private int port = DEFAULT_PORT;
+    // as loaded prefences
+    private int asLoadedHeartbeatInterval = 15000;
+    private int asLoadedPort = DEFAULT_PORT;
     private static Logger log = LoggerFactory.getLogger(JsonServerPreferences.class);
 
     public JsonServerPreferences(String fileName) {
@@ -36,6 +37,7 @@ public class JsonServerPreferences extends Bean {
         if ((a = child.getAttribute(HEARTBEAT_INTERVAL)) != null) {
             try {
                 this.setHeartbeatInterval(a.getIntValue());
+                this.asLoadedHeartbeatInterval = this.getHeartbeatInterval();
             } catch (DataConversionException e) {
                 this.setHeartbeatInterval(15000);
                 log.error("Unable to read heartbeat interval. Setting to default value.", e);
@@ -44,6 +46,7 @@ public class JsonServerPreferences extends Bean {
         if ((a = child.getAttribute(PORT)) != null) {
             try {
                 this.setPort(a.getIntValue());
+                this.asLoadedPort = this.getPort();
             } catch (DataConversionException e) {
                 this.setPort(2056);
                 log.error("Unable to read port. Setting to default value.", e);
@@ -67,7 +70,8 @@ public class JsonServerPreferences extends Bean {
         Element prefs = new Element(XML_PREFS_ELEMENT);
         prefs.setAttribute(HEARTBEAT_INTERVAL, Integer.toString(this.getHeartbeatInterval()));
         prefs.setAttribute(PORT, Integer.toString(this.getPort()));
-        this.setIsDirty(false);  //  Resets only when stored
+        this.asLoadedHeartbeatInterval = this.getHeartbeatInterval();
+        this.asLoadedPort = this.getPort();
         return prefs;
     }
     private String fileName;
@@ -82,10 +86,7 @@ public class JsonServerPreferences extends Bean {
         } catch (java.io.FileNotFoundException ea) {
             log.info("Could not find JSON Server preferences file.  Normal if preferences have not been saved before.");
             root = null;
-        } catch (IOException eb) {
-            log.error("Exception while loading JSON server preferences: {}", eb.getLocalizedMessage());
-            root = null;
-        } catch (JDOMException eb) {
+        } catch (IOException | JDOMException eb) {
             log.error("Exception while loading JSON server preferences: {}", eb.getLocalizedMessage());
             root = null;
         }
@@ -126,11 +127,15 @@ public class JsonServerPreferences extends Bean {
     }
 
     public boolean isDirty() {
-        return this.isDirty;
+        return (this.getHeartbeatInterval() != this.asLoadedHeartbeatInterval
+                || this.getPort() != this.asLoadedPort);
     }
 
-    public void setIsDirty(boolean value) {
-        this.isDirty = value;
+    public boolean isRestartRequired() {
+        // Once the JsonServer heartbeat interval can be updated, return true
+        // only if the server port changes.
+        return (this.getHeartbeatInterval() != this.asLoadedHeartbeatInterval
+                || this.getPort() != this.asLoadedPort);
     }
 
     public int getHeartbeatInterval() {
