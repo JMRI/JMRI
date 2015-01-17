@@ -1976,7 +1976,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * Returns a formated string providing the train's description.  {0} = lead engine number, {1} = train's departure direction.
 	 */
 	public String getDescription() {
-		String description = MessageFormat.format(_description, new Object[] { getLeadEngineNumber(), getTrainDepartsDirection() });
+		String description = MessageFormat.format(_description, new Object[] { getLeadEngineRoadAndNumber(), getTrainDepartsDirection() });
 		return description;
 	}
 
@@ -3067,6 +3067,12 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (getLeadEngine() != null)
 			number = getLeadEngine().getNumber();
 		return number;	
+	}
+	
+	public String getLeadEngineRoadAndNumber() {
+		if (getLeadEngine() == null)
+			return "";
+		return getLeadEngine().toString();
 	}
 
 	/**
