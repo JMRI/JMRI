@@ -33,7 +33,7 @@ public class RollingStockGroup {
 
 	public void add(RollingStock rs) {
 		if (_group.contains(rs)) {
-			log.debug("rs ({}) alreay part of group ({})",  rs.getId(),  getName());
+			log.debug("rs ({}) already part of group ({})",  rs.toString(),  getName());
 			return;
 		}
 		if (_group.size() <= 0) {
