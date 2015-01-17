@@ -284,25 +284,13 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Preferen
 
     @Override
     public boolean isDirty() {
-        for (PreferencesPanel panel : this.configPanes) {
-            if (panel.isDirty()) {
-                return true;
-            }
-        }
-        return false;
+        return this.configPanes.stream().anyMatch((panel) -> (panel.isDirty()));
     }
 
     @Override
     public boolean isRestartRequired() {
-        if (!this.restartRequired) {
-            for (PreferencesPanel panel : this.configPanes) {
-                restartRequired = panel.isRestartRequired();
-                if (restartRequired) {
-                    break;
-                }
-            }
-        }
-        return this.restartRequired;
+        return this.restartRequired
+                || this.configPanes.stream().anyMatch((panel) -> (panel.isRestartRequired()));
     }
 
 }
