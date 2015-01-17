@@ -1,4 +1,4 @@
-// XNetInitilizationManager.java
+// XNetInitializationManager.java
 
 package jmri.jmrix.lenz;
 
@@ -8,16 +8,16 @@ import org.slf4j.LoggerFactory;
 /**
  * This class performs Command Station dependant initilization for 
  * XPressNet.  
- * It adds the appropriate Managers via the Initilization Manager
+ * It adds the appropriate Managers via the Initialization Manager
  * based on the Command Station Type.
  *
  * @author			Paul Bender  Copyright (C) 2003-2010
  * @author			Giorgio Terdina  Copyright (C) 2007
  * @version			$Revision$
  */
-public class XNetInitilizationManager extends AbstractXNetInitilizationManager{
+public class XNetInitializationManager extends AbstractXNetInitializationManager{
 
-    public XNetInitilizationManager(XNetSystemConnectionMemo memo){
+    public XNetInitializationManager(XNetSystemConnectionMemo memo){
       super(memo);
     }
 
@@ -126,9 +126,9 @@ public class XNetInitilizationManager extends AbstractXNetInitilizationManager{
                     jmri.InstanceManager.setSensorManager(systemMemo.getSensorManager());
                 }
             }
-	if (log.isDebugEnabled()) log.debug("XPressNet Initilization Complete");
+	if (log.isDebugEnabled()) log.debug("XPressNet Initialization Complete");
     }
     
-    static Logger log = LoggerFactory.getLogger(XNetInitilizationManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(XNetInitializationManager.class.getName());
     
 }

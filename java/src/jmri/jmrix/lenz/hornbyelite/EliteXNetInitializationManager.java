@@ -1,23 +1,23 @@
-// EliteXNetInitilizationManager.java
+// EliteXNetInitializationManager.java
 
 package jmri.jmrix.lenz.hornbyelite;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.lenz.AbstractXNetInitilizationManager;
+import jmri.jmrix.lenz.AbstractXNetInitializationManager;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 
 /**
  * This class performs Command Station dependant initilization for 
  * The Hornby Elite.  
- * It adds the appropriate Managers via the Initilization Manager
+ * It adds the appropriate Managers via the Initialization Manager
  * based on the Command Station Type.
  *
  * @author			Paul Bender  Copyright (C) 2003,2008
  * @version			$Revision$
  */
-public class EliteXNetInitilizationManager extends AbstractXNetInitilizationManager{
+public class EliteXNetInitializationManager extends AbstractXNetInitializationManager{
 
-    public EliteXNetInitilizationManager(XNetSystemConnectionMemo memo){
+    public EliteXNetInitializationManager(XNetSystemConnectionMemo memo){
       super(memo);
     }
 
@@ -50,9 +50,9 @@ public class EliteXNetInitilizationManager extends AbstractXNetInitilizationMana
         systemMemo.setProgrammerManager(new jmri.jmrix.lenz.XNetProgrammerManager(new jmri.jmrix.lenz.hornbyelite.EliteXNetProgrammer(systemMemo.getXNetTrafficController()),systemMemo));
         jmri.InstanceManager.setProgrammerManager(systemMemo.getProgrammerManager());
 
-	if(log.isDebugEnabled()) log.debug("XPressNet Initilization Complete");
+	if(log.isDebugEnabled()) log.debug("XPressNet Initialization Complete");
     }
 
-    static Logger log = LoggerFactory.getLogger(EliteXNetInitilizationManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(EliteXNetInitializationManager.class.getName());
 
 }

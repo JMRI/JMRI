@@ -1,4 +1,4 @@
-// AbstractXNetInitilizationManager.java
+// AbstractXNetInitializationManager.java
 
 package jmri.jmrix.lenz;
 
@@ -8,13 +8,13 @@ import org.slf4j.LoggerFactory;
 /**
  * This class provides a base implementation for Command Station/interface 
  * dependent initilization for XPressNet.  
- * It adds the appropriate Managers via the Initilization Manager
+ * It adds the appropriate Managers via the Initialization Manager
  * based on the Command Station Type.
  *
  * @author			Paul Bender  Copyright (C) 2003-2010
  * @version			$Revision$
  */
-abstract public class AbstractXNetInitilizationManager {
+abstract public class AbstractXNetInitializationManager {
 
     protected Thread initThread = null;
 
@@ -27,12 +27,12 @@ abstract public class AbstractXNetInitilizationManager {
         return 30000;
     }
     
-    public AbstractXNetInitilizationManager(XNetSystemConnectionMemo memo) {
+    public AbstractXNetInitializationManager(XNetSystemConnectionMemo memo) {
         /* spawn a thread to request version information and wait for the 
            command station to respond */
-        if(log.isDebugEnabled()) log.debug("Starting XPressNet Initilization Process");
+        if(log.isDebugEnabled()) log.debug("Starting XPressNet Initialization Process");
             systemMemo=memo;
-        initThread= new Thread(new XNetInitilizer(this));
+        initThread= new Thread(new XNetInitializer(this));
     
         // Since we can't currently reconfigure the user interface after  
         // initilization, We need to wait for the initilization thread 
@@ -50,7 +50,7 @@ abstract public class AbstractXNetInitilizationManager {
     abstract protected void init();
 
     /* Interal class to configure the XNet implementation */
-    protected class XNetInitilizer implements Runnable, XNetListener {
+    protected class XNetInitializer implements Runnable, XNetListener {
 
        private javax.swing.Timer initTimer; // Timer used to let he 
 					    // command station response time 
@@ -58,7 +58,7 @@ abstract public class AbstractXNetInitilizationManager {
 	
        private Object parent = null;
 
-       public XNetInitilizer(Object Parent) {
+       public XNetInitializer(Object Parent) {
 
 	  parent = Parent;
 
@@ -76,7 +76,7 @@ abstract public class AbstractXNetInitilizationManager {
 	}
 
     protected javax.swing.Timer setupInitTimer() {
-	  // Initilize and start initilization timeout timer.
+	  // Initialize and start initilization timeout timer.
 	  javax.swing.Timer retVal = new javax.swing.Timer(getInitTimeout(),
 				new java.awt.event.ActionListener() {
 				   public void actionPerformed(
@@ -148,6 +148,6 @@ abstract public class AbstractXNetInitilizationManager {
        }
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractXNetInitilizationManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractXNetInitializationManager.class.getName());
 
 }

@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetPacketizer;
 import jmri.jmrix.lenz.XNetSimulatorPortController;
-import jmri.jmrix.lenz.XNetInitilizationManager;
+import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetConstants;
@@ -107,7 +107,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         sourceThread = new Thread(this);
         sourceThread.start();
 
-        new XNetInitilizationManager(adaptermemo);
+        new XNetInitializationManager(adaptermemo);
         
         jmri.jmrix.lenz.ActiveFlag.setActive();
     }

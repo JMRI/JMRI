@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetPacketizer;
 import jmri.jmrix.lenz.XNetSerialPortController;
-import jmri.jmrix.lenz.XNetInitilizationManager;
+import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetTrafficController;
 
 import java.io.DataInputStream;
@@ -180,7 +180,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
        
         adaptermemo.setXNetTrafficController(packets);
  
-        new XNetInitilizationManager(adaptermemo);
+        new XNetInitializationManager(adaptermemo);
         
         jmri.jmrix.lenz.ActiveFlag.setActive();
     }

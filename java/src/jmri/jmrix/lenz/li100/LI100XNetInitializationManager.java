@@ -1,23 +1,23 @@
-// LI100XNetInitilizationManager.java
+// LI100XNetInitializationManager.java
 
 package jmri.jmrix.lenz.li100;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.lenz.AbstractXNetInitilizationManager;
+import jmri.jmrix.lenz.AbstractXNetInitializationManager;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 
 /**
  * This class performs Command Station dependant initilization for 
  * XPressNet.  
- * It adds the appropriate Managers via the Initilization Manager
+ * It adds the appropriate Managers via the Initialization Manager
  * based on the Command Station Type.
  *
  * @author			Paul Bender  Copyright (C) 2003
  * @version			$Revision$
  */
-public class LI100XNetInitilizationManager extends AbstractXNetInitilizationManager{
+public class LI100XNetInitializationManager extends AbstractXNetInitializationManager{
 
-    public LI100XNetInitilizationManager(XNetSystemConnectionMemo memo){
+    public LI100XNetInitializationManager(XNetSystemConnectionMemo memo){
       super(memo);
     }
 
@@ -131,9 +131,9 @@ public class LI100XNetInitilizationManager extends AbstractXNetInitilizationMana
               jmri.InstanceManager.setSensorManager(systemMemo.getSensorManager());
             }
         }
-	if(log.isDebugEnabled()) log.debug("XPressNet Initilization Complete");
+	if(log.isDebugEnabled()) log.debug("XPressNet Initialization Complete");
     }
 
-    static Logger log = LoggerFactory.getLogger(LI100XNetInitilizationManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(LI100XNetInitializationManager.class.getName());
 
 }

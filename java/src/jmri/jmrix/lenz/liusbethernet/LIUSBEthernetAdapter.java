@@ -5,7 +5,7 @@ package jmri.jmrix.lenz.liusbethernet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrix.lenz.LenzCommandStation;
-import jmri.jmrix.lenz.XNetInitilizationManager;
+import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetNetworkPortController;
 import jmri.jmrix.lenz.XNetTrafficController;
 
@@ -78,7 +78,7 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
             // packets.startThreads();
             adaptermemo.setXNetTrafficController(packets);
  
-            new XNetInitilizationManager(adaptermemo);
+            new XNetInitializationManager(adaptermemo);
 
             jmri.jmrix.lenz.ActiveFlag.setActive();
 	

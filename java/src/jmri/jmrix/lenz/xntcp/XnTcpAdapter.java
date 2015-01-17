@@ -5,7 +5,7 @@ package jmri.jmrix.lenz.xntcp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrix.lenz.LenzCommandStation;
-import jmri.jmrix.lenz.XNetInitilizationManager;
+import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetNetworkPortController;
 import jmri.jmrix.lenz.XNetTrafficController;
 
@@ -244,7 +244,7 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
             XNetTrafficController packets = new XnTcpXNetPacketizer(new LenzCommandStation());
             packets.connectPort(this);
             adaptermemo.setXNetTrafficController(packets);
-            new XNetInitilizationManager(adaptermemo);
+            new XNetInitializationManager(adaptermemo);
 		
             jmri.jmrix.lenz.ActiveFlag.setActive();
 	}

@@ -183,7 +183,7 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
         // packets.startThreads();
         adaptermemo.setXNetTrafficController(packets); 
 
-        new EliteXNetInitilizationManager(adaptermemo);
+        new EliteXNetInitializationManager(adaptermemo);
 	
         jmri.jmrix.lenz.ActiveFlag.setActive();
     }

@@ -30,7 +30,7 @@ public class XNetStreamPortController extends jmri.jmrix.AbstractStreamPortContr
 
         ((XNetSystemConnectionMemo)adaptermemo).setXNetTrafficController(packets);
 
-        new XNetInitilizationManager((XNetSystemConnectionMemo)adaptermemo);
+        new XNetInitializationManager((XNetSystemConnectionMemo)adaptermemo);
 
         jmri.jmrix.lenz.ActiveFlag.setActive();
     }
