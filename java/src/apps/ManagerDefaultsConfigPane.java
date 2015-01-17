@@ -64,7 +64,6 @@ public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesP
         } else {
             matrix.add(new JLabel("No new-form system connections configured"));
         }
-        this.dirty = true;
     }
 
     void reloadConnections(List<SystemConnectionMemo> connList) {
@@ -85,7 +84,7 @@ public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesP
             int i = 0;
             for (ManagerDefaultSelector.Item item : ManagerDefaultSelector.instance.knownManagers) {
                 if (memo.provides(item.managerClass)) {
-                    JRadioButton r = new SelectionButton(name, item.managerClass);
+                    JRadioButton r = new SelectionButton(name, item.managerClass, this);
                     matrix.add(r);
                     groups[i].add(r);
                     if (x == connList.size() - 1 && ManagerDefaultSelector.instance.getDefault(item.managerClass) == null) {
@@ -166,7 +165,7 @@ public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesP
          */
         private static final long serialVersionUID = -2572336492673634333L;
 
-        SelectionButton(String name, Class<?> managerClass) {
+        SelectionButton(String name, Class<?> managerClass, ManagerDefaultsConfigPane pane) {
             super();
             this.managerClass = managerClass;
             this.name = name;
@@ -178,6 +177,7 @@ public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesP
             addActionListener((ActionEvent e) -> {
                 if (isSelected()) {
                     ManagerDefaultSelector.instance.setDefault(SelectionButton.this.managerClass, SelectionButton.this.name);
+                    pane.dirty = true;
                 }
             });
 
