@@ -20,9 +20,6 @@ import jmri.swing.PreferencesPanel;
  */
 public class ProgrammerConfigPane extends JPanel implements PreferencesPanel {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 3341676760826030384L;
     private final ResourceBundle apb = ResourceBundle.getBundle("apps.AppsConfigBundle");
 
@@ -120,7 +117,7 @@ public class ProgrammerConfigPane extends JPanel implements PreferencesPanel {
     public boolean isDirty() {
         return (this.getShowEmptyTabs() != PaneProgFrame.getShowEmptyPanes()
                 || this.getShowCvNums() != PaneProgFrame.getShowCvNumbers()
-                || this.getSelectedItem().equals(ProgDefault.getDefaultProgFile()));
+                || !this.getSelectedItem().equals(ProgDefault.getDefaultProgFile()));
     }
 
     @Override
