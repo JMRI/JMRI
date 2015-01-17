@@ -26,6 +26,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a comma separated value (csv) switch list for a location on the railroad
  * 
  * @author Daniel Boudreau (C) Copyright 2011, 2013, 2014
+ * @version $Revision: 1 $
  * 
  */
 public class TrainCsvSwitchLists extends TrainCsvCommon {
@@ -209,9 +210,9 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 				}
 			}
 		}
-		// TODO Are there any cars that need to be found?
-		// getCarsLocationUnknown(fileOut);
 		addLine(fileOut, END); // done with switch list
+		// Are there any cars that need to be found?
+		listCarsLocationUnknown(fileOut);
 		fileOut.flush();
 		fileOut.close();
 		location.setStatus(Location.CSV_GENERATED);

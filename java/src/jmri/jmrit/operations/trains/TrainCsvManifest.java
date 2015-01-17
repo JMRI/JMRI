@@ -202,8 +202,8 @@ public class TrainCsvManifest extends TrainCsvCommon {
 			}
 			previousRouteLocationName = routeLocationName;
 		}
-		// TODO Are there any cars that need to be found?
-		// getCarsLocationUnknown(fileOut);
+		// Are there any cars that need to be found?
+		listCarsLocationUnknown(fileOut);
 
 		fileOut.flush();
 		fileOut.close();
