@@ -28,14 +28,10 @@ import jmri.util.FileUtil;
  */
 public class RosterConfigPane extends JPanel implements PreferencesPanel {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -8185051724790761792L;
     JLabel filename;
     JTextField owner = new JTextField(20);
     JFileChooser fc;
-    JPanel parent;
     private final ResourceBundle apb = ResourceBundle.getBundle("apps.AppsConfigBundle");
 
     public RosterConfigPane() {
@@ -73,7 +69,6 @@ public class RosterConfigPane extends JPanel implements PreferencesPanel {
         }
         JButton b = new JButton(Bundle.getMessage("ButtonSetDots"));
 
-        parent = this;
         b.addActionListener(new AbstractAction() {
             /**
              *
@@ -83,7 +78,7 @@ public class RosterConfigPane extends JPanel implements PreferencesPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // prompt with instructions
-                if (JOptionPane.OK_OPTION != JOptionPane.showConfirmDialog(parent.getTopLevelAncestor(),
+                if (JOptionPane.OK_OPTION != JOptionPane.showConfirmDialog(RosterConfigPane.this.getTopLevelAncestor(),
                         Bundle.getMessage("DialogMsgMoveWarning"),
                         Bundle.getMessage("DialogMsgMoveQuestion"),
                         JOptionPane.OK_CANCEL_OPTION
@@ -189,13 +184,18 @@ public class RosterConfigPane extends JPanel implements PreferencesPanel {
 
     @Override
     public boolean isDirty() {
-        return (!Roster.getFileLocation().equals(this.getSelectedItem())
+        return (this.isFileLocationChanged()
                 || !RosterEntry.getDefaultOwner().equals(this.getDefaultOwner()));
     }
 
     @Override
     public boolean isRestartRequired() {
-        return !Roster.getFileLocation().equals(this.getSelectedItem());
+        return this.isFileLocationChanged();
     }
 
+    private boolean isFileLocationChanged() {
+        return (this.getSelectedItem() == null || this.getSelectedItem().equals(""))
+                ? !Roster.getFileLocation().equals(FileUtil.getUserFilesPath())
+                : !Roster.getFileLocation().equals(this.getSelectedItem());
+    }
 }
