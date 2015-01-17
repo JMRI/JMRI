@@ -29,7 +29,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
 	
 	/* According to the specification, XPressNet has a maximum timing 
 	   interval of 500 milliseconds durring normal communications */
-	static private final int XNetProgrammingTimeout = 10000;
+	static protected final int XNetProgrammingTimeout = 10000;
 	static private int XNetMessageTimeout = 5000;
 
 
