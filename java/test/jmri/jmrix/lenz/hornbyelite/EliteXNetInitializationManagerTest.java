@@ -12,13 +12,13 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * EliteXNetInitilizationManagerTest.java
+ * EliteXNetInitializationManagerTest.java
  *
- * Description:	    tests for the jmri.jmrix.lenz.EliteXNetInitilizationManager class
+ * Description:	    tests for the jmri.jmrix.lenz.EliteXNetInitializationManager class
  * @author			Paul Bender
  * @version         $Revision$
  */
-public class EliteXNetInitilizationManagerTest extends TestCase {
+public class EliteXNetInitializationManagerTest extends TestCase {
 
     public void testCtor() {
 
@@ -28,7 +28,7 @@ public class EliteXNetInitilizationManagerTest extends TestCase {
 
         XNetSystemConnectionMemo memo=new XNetSystemConnectionMemo(t);
 
-        EliteXNetInitilizationManager m = new EliteXNetInitilizationManager(memo){
+        EliteXNetInitializationManager m = new EliteXNetInitializationManager(memo){
             protected int getInitTimeout() {
                 return 50;   // shorten, because this will fail & delay test
             }  
@@ -40,19 +40,19 @@ public class EliteXNetInitilizationManagerTest extends TestCase {
     }
 
 	// from here down is testing infrastructure
-        public EliteXNetInitilizationManagerTest(String s) {
+        public EliteXNetInitializationManagerTest(String s) {
 		super(s);
 	}
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {"-noloading", EliteXNetInitilizationManagerTest.class.getName()};
+		String[] testCaseName = {"-noloading", EliteXNetInitializationManagerTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 
 	// test suite from all defined tests
 	public static Test suite() {
-		TestSuite suite = new TestSuite(EliteXNetInitilizationManagerTest.class);
+		TestSuite suite = new TestSuite(EliteXNetInitializationManagerTest.class);
 		return suite;
 	}
 
@@ -66,6 +66,6 @@ public class EliteXNetInitilizationManagerTest extends TestCase {
         apps.tests.Log4JFixture.tearDown(); 
     }
 
-    static Logger log = Logger.getLogger(EliteXNetInitilizationManagerTest.class.getName());
+    static Logger log = Logger.getLogger(EliteXNetInitializationManagerTest.class.getName());
 
 }

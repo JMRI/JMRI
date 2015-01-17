@@ -31,7 +31,7 @@ public class LI100Test extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.lenz.li100.LI100Test");  // no tests in this class itself
         suite.addTest(new TestSuite(LI100AdapterTest.class));
-        suite.addTest(new TestSuite(LI100XNetInitilizationManagerTest.class));
+        suite.addTest(new TestSuite(LI100XNetInitializationManagerTest.class));
         suite.addTest(new TestSuite(LI100XNetProgrammerTest.class));
         return suite;
     }
