@@ -1,12 +1,11 @@
 // AbstractPortController.java
 package jmri.jmrix;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-
 import java.util.HashMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provide an abstract base for *PortController classes.
@@ -266,8 +265,7 @@ abstract public class AbstractPortController implements PortAdapter {
      */
     @Override
     public void setDisabled(boolean disabled) {
-        if (!setDisabledCalled) {
-            this.setDisabledCalled = true;
+        if (this.loadedDisabled == null) {
             this.loadedDisabled = disabled;
         }
         if (this.getSystemConnectionMemo() != null) {
@@ -277,8 +275,7 @@ abstract public class AbstractPortController implements PortAdapter {
     }
 
     protected boolean mDisabled = false;
-    private boolean loadedDisabled = false;
-    private boolean setDisabledCalled = false;
+    private Boolean loadedDisabled = null;
 
     protected boolean allowConnectionRecovery = false;
 
@@ -298,7 +295,7 @@ abstract public class AbstractPortController implements PortAdapter {
 
     @Override
     public boolean isDirty() {
-        boolean isDirty = (setDisabledCalled && this.loadedDisabled != this.getDisabled());
+        boolean isDirty = (this.loadedDisabled != this.getDisabled());
         if (!isDirty) {
             for (Option option : this.options.values()) {
                 isDirty = option.isDirty();
