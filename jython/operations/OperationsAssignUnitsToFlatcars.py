@@ -160,7 +160,7 @@ class AssignTrailersToCars(jmri.jmrit.automat.AbstractAutomaton):
                         message = "Error (" + unit.toString() + ") not assigned to a flatcar, train (" + self.trainName + ")"
                         print message
                         javax.swing.JOptionPane.showMessageDialog(None, message, title, javax.swing.JOptionPane.WARNING_MESSAGE)
-
+    print "Done!"
     return False  # all done, don't repeat again
 
 AssignTrailersToCars().start()  # create one of these, and start it running
