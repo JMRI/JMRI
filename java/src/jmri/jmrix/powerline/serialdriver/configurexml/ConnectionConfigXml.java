@@ -1,14 +1,15 @@
 package jmri.jmrix.powerline.serialdriver.configurexml;
 
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.powerline.serialdriver.ConnectionConfig;
 import jmri.jmrix.powerline.serialdriver.SerialDriverAdapter;
-//import jmri.jmrix.powerline.*;
+
 import java.util.List;
-import org.jdom2.*;
 
 /**
  * Handle XML persistance of layout connections by persisting

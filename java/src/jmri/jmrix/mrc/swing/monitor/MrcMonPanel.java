@@ -17,12 +17,15 @@ package jmri.jmrix.mrc.swing.monitor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.jmrix.mrc.*;
-import jmri.jmrix.mrc.swing.*;
-
 import java.util.Date;
 
 import javax.swing.JCheckBox;
+
+import jmri.jmrix.mrc.MrcInterface;
+import jmri.jmrix.mrc.MrcMessage;
+import jmri.jmrix.mrc.MrcSystemConnectionMemo;
+import jmri.jmrix.mrc.MrcTrafficListener;
+import jmri.jmrix.mrc.swing.MrcPanelInterface;
 
 
 public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTrafficListener, MrcPanelInterface{

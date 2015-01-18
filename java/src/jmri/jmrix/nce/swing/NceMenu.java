@@ -3,7 +3,9 @@
 package jmri.jmrix.nce.swing;
 
 import java.util.ResourceBundle;
-import javax.swing.*;
+
+import javax.swing.JMenu;
+
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
 

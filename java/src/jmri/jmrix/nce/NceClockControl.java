@@ -147,8 +147,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
         log.error("message received: " + m);
     }  
     
-    @SuppressWarnings("unused")
-	public void reply(NceReply r) {
+    public void reply(NceReply r) {
     	if (false && log.isDebugEnabled()){
             log.debug("NceReply(len " + r.getNumDataElements() + ") waiting: " + waiting +
         		" watingForRead: " + waitingForCmdRead +

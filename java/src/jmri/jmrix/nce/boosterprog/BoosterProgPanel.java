@@ -4,11 +4,18 @@
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.ResourceBundle;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
-import jmri.*;
+import jmri.AddressedProgrammer;
+import jmri.ProgListener;
+import jmri.ProgrammerException;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 
 /**

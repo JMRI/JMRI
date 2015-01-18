@@ -2,8 +2,9 @@
 
 package jmri.jmrix.nce;
 
+import jmri.AddressedProgrammer;
+import jmri.Programmer;
 import jmri.managers.DefaultProgrammerManager;
-import jmri.*;
 
 /**
  * Extend DefaultProgrammerManager to provide ops mode programmers for NCE systems

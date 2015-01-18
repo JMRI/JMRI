@@ -2,12 +2,14 @@
 
 package jmri.jmrix.nce.swing;
 
+import javax.swing.Icon;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.swing.*;
 
 import jmri.jmrix.nce.NceSystemConnectionMemo;
-import jmri.util.swing.*;
+import jmri.util.swing.JmriPanel;
+import jmri.util.swing.WindowInterface;
 
 /**
  * Action to create and load a JmriPanel from just its name.

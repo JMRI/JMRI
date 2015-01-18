@@ -2,7 +2,8 @@
 
 package jmri.jmrix.powerline.insteon2412s;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
 
 /**
  * Definition of objects to handle configuring a layout connection

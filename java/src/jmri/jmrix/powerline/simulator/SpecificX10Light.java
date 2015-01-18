@@ -2,10 +2,11 @@
 
 package jmri.jmrix.powerline.simulator;
 
+import jmri.jmrix.powerline.SerialTrafficController;
+import jmri.jmrix.powerline.X10Sequence;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.powerline.*;
-
 /**
  * Implementation of the Light Object for X10 receivers on Insteon 2412S interfaces.
  * <P>

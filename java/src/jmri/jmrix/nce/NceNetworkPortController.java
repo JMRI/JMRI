@@ -2,8 +2,6 @@
 
 package jmri.jmrix.nce;
 
-import jmri.jmrix.SystemConnectionMemo;
-
 /*
  * Identifying class representing a NCE communications port
  * @author			Bob Jacobsen    Copyright (C) 2001

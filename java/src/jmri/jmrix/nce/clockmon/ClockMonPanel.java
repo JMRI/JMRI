@@ -4,6 +4,7 @@ package jmri.jmrix.nce.clockmon;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.Timebase;
 import jmri.TimebaseRateException;
@@ -18,11 +19,21 @@ import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.ArrayList;
 import java.text.DecimalFormat;
-import java.awt.event.*;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 
 /**
  * Frame displaying and programming a NCE clock monitor.

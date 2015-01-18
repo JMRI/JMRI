@@ -2,9 +2,10 @@
 
 package jmri.jmrix.powerline;
 
-import jmri.*;
-
 import java.util.ResourceBundle;
+
+import jmri.InstanceManager;
+import jmri.ProgrammerManager;
 
 /**
  * Lightweight class to denote that a system is active,

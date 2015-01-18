@@ -2,7 +2,8 @@
 
 package jmri.jmrix.powerline.cp290;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
 
 /**
  * Definition of objects to handle configuring a layout connection

@@ -2,7 +2,8 @@
 
 package jmri.jmrix.mrc.swing;
 
-import javax.swing.*;
+import javax.swing.JMenu;
+
 import jmri.jmrix.mrc.MrcSystemConnectionMemo;
 
 /**

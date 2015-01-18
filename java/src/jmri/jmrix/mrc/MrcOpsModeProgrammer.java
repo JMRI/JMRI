@@ -2,11 +2,15 @@
 
 package jmri.jmrix.mrc;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.*;
-import java.util.*;
+import jmri.ProgListener;
+import jmri.ProgrammerException;
+import jmri.ProgrammingMode;
 import jmri.managers.DefaultProgrammerManager;
 
 /**

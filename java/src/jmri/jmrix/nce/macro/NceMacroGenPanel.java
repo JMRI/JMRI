@@ -3,12 +3,20 @@
 
 package jmri.jmrix.nce.macro;
 
-import jmri.jmrix.nce.*;
-
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.util.ResourceBundle;
 
-import javax.swing.*;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import jmri.jmrix.nce.NceBinaryCommand;
+import jmri.jmrix.nce.NceMessage;
+import jmri.jmrix.nce.NceReply;
+import jmri.jmrix.nce.NceSystemConnectionMemo;
+import jmri.jmrix.nce.NceTrafficController;
 
 /**
  * Pane for user input of Nce macros

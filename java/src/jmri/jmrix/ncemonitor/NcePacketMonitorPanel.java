@@ -9,15 +9,25 @@ import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 
-import javax.swing.*;
-
-import java.awt.*;
 import java.util.Enumeration;
 import java.util.ResourceBundle;
 import java.util.Vector;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.DataInputStream;
+
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JToggleButton;
 
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.swing.NcePanelInterface;

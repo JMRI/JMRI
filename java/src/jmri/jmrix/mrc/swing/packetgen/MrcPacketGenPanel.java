@@ -2,16 +2,17 @@
 
 package jmri.jmrix.mrc.swing.packetgen;
 
+import java.awt.Dimension;
+
+import javax.swing.BoxLayout;
+
+import jmri.jmrix.mrc.MrcMessage;
+import jmri.jmrix.mrc.MrcSystemConnectionMemo;
+import jmri.jmrix.mrc.MrcTrafficController;
+import jmri.util.StringUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import jmri.util.*;
-import jmri.jmrix.mrc.*;
-
-import java.awt.*;
-
-import javax.swing.*;
-
 
 /**
  * Frame for user input of Mrc messages

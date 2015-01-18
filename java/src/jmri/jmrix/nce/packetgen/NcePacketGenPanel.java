@@ -4,14 +4,18 @@ package jmri.jmrix.nce.packetgen;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.util.*;
-import jmri.jmrix.nce.*;
 
-import java.awt.*;
+import java.awt.Dimension;
 import java.util.ResourceBundle;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JOptionPane;
 
+import jmri.jmrix.nce.NceMessage;
+import jmri.jmrix.nce.NceReply;
+import jmri.jmrix.nce.NceSystemConnectionMemo;
+import jmri.jmrix.nce.NceTrafficController;
+import jmri.util.StringUtil;
 
 /**
  * Frame for user input of Nce messages

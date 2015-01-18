@@ -4,7 +4,9 @@ package jmri.jmrix.powerline.insteon2412s;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.powerline.*;
+
+import jmri.jmrix.powerline.InsteonSequence;
+import jmri.jmrix.powerline.SerialTrafficController;
 import jmri.util.StringUtil;
 
 /**

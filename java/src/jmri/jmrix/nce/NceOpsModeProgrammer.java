@@ -2,10 +2,17 @@
 
 package jmri.jmrix.nce;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.*;
-import jmri.*;
+
+import jmri.AddressedProgrammer;
+import jmri.NmraPacket;
+import jmri.ProgListener;
+import jmri.ProgrammerException;
+import jmri.ProgrammingMode;
 import jmri.managers.DefaultProgrammerManager;
 
 /**

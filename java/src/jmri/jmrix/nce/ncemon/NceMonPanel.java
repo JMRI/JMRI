@@ -16,9 +16,14 @@ package jmri.jmrix.nce.ncemon;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.nce.*;
-import jmri.jmrix.nce.swing.*;
+
 import javax.swing.JOptionPane;
+
+import jmri.jmrix.nce.NceListener;
+import jmri.jmrix.nce.NceMessage;
+import jmri.jmrix.nce.NceReply;
+import jmri.jmrix.nce.NceSystemConnectionMemo;
+import jmri.jmrix.nce.swing.NcePanelInterface;
 
 
 public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListener, NcePanelInterface{
