@@ -63,7 +63,7 @@ public class z21XPressNetTunnel implements z21Listener,XNetListener,Runnable {
 
        // Then use those pipes as the input and output pipes for
        // a new XNetStreamPortController object.
-       xsc = new XNetStreamPortController(pin,pout,"None");       
+       xsc = new z21XNetStreamPortController(pin,pout,"None");       
 
        // configure the XPressNet connections properties.
        xsc.getSystemConnectionMemo().setSystemPrefix(_memo.getSystemPrefix()+"X");
