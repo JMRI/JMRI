@@ -73,9 +73,7 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
         pRow2.add(pRailRoadName); // row 2b (railroad name)
 
         // row 5 (switch list comment)
-        JPanel pSwitchListComment = new JPanel();
-        pSwitchListComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Comment")));
-        pSwitchListComment.add(textSwitchListComment);
+        textSwitchListComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Comment")));
         textSwitchListComment.setBackground(null);
 
         // row 6
@@ -100,9 +98,9 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
         pButtons.setMaximumSize(new Dimension(2000, 200));
 
         add(pRow2);
-        add(textLocationComment);
-        add(pSwitchListComment);
         add(pRow6);
+        add(textLocationComment);
+        add(textSwitchListComment);
         add(textTrainComment);
         add(textTrainRouteComment);
         add(textTrainRouteLocationComment);
@@ -117,7 +115,7 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
             textLocationComment.setText(_location.getComment());
             textLocationComment.setVisible(!_location.getComment().equals(Location.NONE) && Setup.isPrintLocationCommentsEnabled());
             textSwitchListComment.setText(_location.getSwitchListComment());
-            pSwitchListComment.setVisible(!_location.getSwitchListComment().equals(Location.NONE));
+            textSwitchListComment.setVisible(!_location.getSwitchListComment().equals(Location.NONE));
             updateTrainsComboBox();
         }
 

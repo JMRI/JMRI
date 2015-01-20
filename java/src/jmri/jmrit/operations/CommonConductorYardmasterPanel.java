@@ -235,7 +235,6 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
         movePane.setVisible(false);
 
         textTrainRouteLocationComment.setVisible(false);
-        textLocationComment.setVisible(false);
 
         setButtonText();
     }
