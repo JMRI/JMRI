@@ -226,7 +226,12 @@ public class BlockTableAction extends AbstractTableAction {
             		fireTableRowsUpdated(row,row);
         		}
 				else if (col==LENGTHCOL) {
-					float len = Float.valueOf((String)value).floatValue();
+					float len = 0.0f;
+                    try {
+                        len = jmri.util.IntlUtilities.floatValue((String)value);
+                    } catch (java.text.ParseException ex2) {
+                        log.error("Error parsing length value of \"{}\"",(String)value);
+                    }
 					if (inchBox.isSelected()) 
 						b.setLength(len*25.4f);
 					else

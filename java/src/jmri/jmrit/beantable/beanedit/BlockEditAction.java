@@ -143,7 +143,11 @@ public class BlockEditAction extends BeanEditAction {
             }
             public void keyReleased(KeyEvent keyEvent) {
                 String text = lengthField.getText();
-                if (!validateNumericalInput(text)){
+                
+                // ensure data valid
+                try {
+                    jmri.util.IntlUtilities.floatValue(text);
+                } catch (java.text.ParseException e) {
                     String msg = java.text.MessageFormat.format(Bundle.getMessage("ShouldBeNumber"), new Object[] { Bundle.getMessage("BlockLengthColName") });
                     jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).showInfoMessage(Bundle.getMessage("ErrorTitle"), msg, "Block Details", "length", false, false);
                 }
@@ -207,8 +211,12 @@ public class BlockEditAction extends BeanEditAction {
                 if (!speedList.contains(speed) && !speed.contains(Bundle.getMessage("UseGlobal"))){
                     speedList.add(speed);
                 }
-                String length = lengthField.getText();
-                float len = Float.valueOf(length).floatValue();
+                float len = 0.0f;
+                try {
+                    len = jmri.util.IntlUtilities.floatValue(lengthField.getText());
+                } catch (java.text.ParseException ex2) {
+                    log.error("Error parsing length value of \"{}\"",lengthField.getText());
+                }
                 if (inch.isSelected()) 
                     blk.setLength(len*25.4f);
                 else
@@ -224,7 +232,7 @@ public class BlockEditAction extends BeanEditAction {
 
 			public void actionPerformed(ActionEvent e) {
                 Block blk = (Block) bean;
-                lengthField.setText(""+((Block)bean).getLengthMm());
+                lengthField.setText(twoDigit.format(((Block)bean).getLengthMm()));
 
                 if (blk.getCurvature()==Block.NONE) curvatureField.setSelectedItem(0);
                 else if (blk.getCurvature()==Block.GRADUAL) curvatureField.setSelectedItem(gradualText);
