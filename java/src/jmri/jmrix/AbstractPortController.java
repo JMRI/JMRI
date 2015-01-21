@@ -295,7 +295,10 @@ abstract public class AbstractPortController implements PortAdapter {
 
     @Override
     public boolean isDirty() {
-        boolean isDirty = (this.loadedDisabled != this.getDisabled());
+        boolean isDirty = false;
+        if (this.loadedDisabled != null) {
+            isDirty = (this.loadedDisabled.booleanValue() != this.getDisabled());
+        }
         if (!isDirty) {
             for (Option option : this.options.values()) {
                 isDirty = option.isDirty();
