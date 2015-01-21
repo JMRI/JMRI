@@ -4,13 +4,16 @@ package jmri.jmrix.nce.consist;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.util.davidflanagan.*;
-import java.awt.*;
-import java.awt.event.*;
 
-import javax.swing.*;
-
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
 import java.util.List;
+
+import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
+import jmri.util.davidflanagan.HardcopyWriter;
 
 
 /**

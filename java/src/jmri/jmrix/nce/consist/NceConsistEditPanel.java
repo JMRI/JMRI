@@ -67,7 +67,12 @@ import jmri.jmrix.nce.NceTrafficController;
 public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implements
 		jmri.jmrix.nce.NceListener {
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.consist.NceConsistBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7857105641140192352L;
+
+	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.consist.NceConsistBundle");
     
 	private static final int CONSIST_MIN = 1; 			// NCE doesn't use consist 0
 	private static final int CONSIST_MAX = 127;
@@ -256,7 +261,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 		textStatus.setText(rb.getString("L_Status"));
 		textStatus.setVisible(true);
 
-		consistStatus.setText(rb.getString("UNKNOWN"));
+		consistStatus.setText(rb.getString("EditStateUNKNOWN"));
 		consistStatus.setVisible(true);
 
 		previousButton.setText(rb.getString("KeyPREVIOUS"));
@@ -473,9 +478,9 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 				return;
 			// check to see if user modified the roster
 			if (canLoad()){
-				consistStatus.setText(rb.getString("OKAY"));
+				consistStatus.setText(rb.getString("EditStateOKAY"));
 			} else {
-				consistStatus.setText(rb.getString("ERROR"));
+				consistStatus.setText(rb.getString("EditStateERROR"));
 				saveLoadButton.setEnabled(false);
 				return;
 			}
@@ -736,9 +741,9 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 		}
 		if (consistSearchNext || consistSearchPrevious) {
 			consistCount = 0; // used to determine if all 127 consist have been read
-			consistStatus.setText(rb.getString("SEARCH"));
+			consistStatus.setText(rb.getString("EditStateSEARCH"));
 		} else {
-			consistStatus.setText(rb.getString("WAIT"));
+			consistStatus.setText(rb.getString("EditStateWAIT"));
 			if (cN == consistNum) {
 				newConsist = false;
 			}
@@ -763,7 +768,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 	private boolean validConsist() {
 		int cN = validConsist(consistTextField.getText());
 		if (cN == -1) {
-			consistStatus.setText(rb.getString("ERROR"));
+			consistStatus.setText(rb.getString("EditStateERROR"));
 			JOptionPane.showMessageDialog(this,
 					rb.getString("ToolTipConsist"), rb.getString("DIALOG_NceConsist"),
 					JOptionPane.ERROR_MESSAGE);
@@ -856,7 +861,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 				saveLoadButton.setEnabled(false);
 			} else {
 				log.error("roster consist number is out of range: " + consistNum);
-				consistStatus.setText(rb.getString("ERROR"));
+				consistStatus.setText(rb.getString("EditStateERROR"));
 			}
 		}
 	}
@@ -972,7 +977,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 			textConRoadNumber.setText(cre.getRoadNumber());	
 			textConModel.setText(cre.getModel());	
 		} else {
-			consistStatus.setText(rb.getString("UNKNOWN"));
+			consistStatus.setText(rb.getString("EditStateUNKNOWN"));
 			return false;
 		}
 		if (locoTextField2.getText().equals(cre.getLoco2DccAddress())){
@@ -990,7 +995,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 		if (locoTextField6.getText().equals(cre.getLoco6DccAddress())){
 			dirButton6.setText(convertDTD(cre.getLoco6Direction()));
 		}
-		consistStatus.setText(rb.getString("MODIFIED"));
+		consistStatus.setText(rb.getString("EditStateMODIFIED"));
 		return true;
 	}
 
@@ -1271,7 +1276,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 		waiting--;
 
 		if (r.getNumDataElements() != replyLen) {
-			consistStatus.setText(rb.getString("ERROR"));
+			consistStatus.setText(rb.getString("EditStateERROR"));
 			log.error("reply length error, expecting: " + replyLen + " got: "
 					+ r.getNumDataElements());
 			return;
@@ -1285,7 +1290,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 			if (recChar == '!') {
 				if (locoSearch && waiting == 0) {
 					readConsistMemory(consistNumVerify, LEAD);
-					consistStatus.setText(rb.getString("VERIFY"));
+					consistStatus.setText(rb.getString("EditStateVERIFY"));
 					return;
 				}
 				if (refresh && waiting == 0) {
@@ -1294,9 +1299,9 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 					readConsistMemory(consistNum, LEAD);
 					return;
 				}
-				consistStatus.setText(rb.getString("OKAY"));
+				consistStatus.setText(rb.getString("EditStateOKAY"));
 			} else {
-				consistStatus.setText(rb.getString("ERROR"));
+				consistStatus.setText(rb.getString("EditStateERROR"));
 			}
 			return;
 		}
@@ -1321,7 +1326,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 							// loco
 							if (consistNumVerify != consistNum) {
 								locoSearch = false; // quit the search
-								consistStatus.setText(rb.getString("ERROR"));
+								consistStatus.setText(rb.getString("EditStateERROR"));
 								locoNumInUse = rC & 0x3FFF;
 								queueError (ERROR_LOCO_IN_USE);
 								return;
@@ -1338,7 +1343,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 					} else {
 						// verify complete, loco address is unique
 						locoSearch = false;
-						consistStatus.setText(rb.getString("OKAY"));
+						consistStatus.setText(rb.getString("EditStateOKAY"));
 						// determine the type of verification
 						if (verifyType == VERIFY_LEAD_REAR){
 							if (refresh && waiting == 0) {
@@ -1381,7 +1386,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 							// found an empty consist!
 							consistSearchNext = false;
 							emptyConsistSearch = false;
-							consistStatus.setText(rb.getString("OKAY"));
+							consistStatus.setText(rb.getString("EditStateOKAY"));
 							saveLoadButton.setEnabled(canLoad());
 							return;
 						}
@@ -1404,7 +1409,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 					if (++consistCount > CONSIST_MAX) {
 						// could not find a consist
 						consistSearchNext = false;
-						consistStatus.setText(rb.getString("NONE"));
+						consistStatus.setText(rb.getString("EditStateNONE"));
 						if (emptyConsistSearch) {
 							emptyConsistSearch = false;
 							queueError(ERROR_NO_EMPTY_CONSIST);
@@ -1446,7 +1451,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 						}
 					}
 					if (++consistCount > CONSIST_MAX) {
-						consistStatus.setText(rb.getString("NONE"));
+						consistStatus.setText(rb.getString("EditStateNONE"));
 						consistSearchPrevious = false;
 						return;		// don't update the panel
 					}
@@ -1484,7 +1489,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 						adrButton5, dirButton5, cmdButton5);
 				updateLocoFields(r, 6, locoRosterBox6, locoTextField6,
 						adrButton6, dirButton6, cmdButton6);
-				consistStatus.setText(rb.getString("OKAY"));
+				consistStatus.setText(rb.getString("EditStateOKAY"));
 				checkForRosterMatch();
 				saveLoadButton.setEnabled(canLoad());
 			}
@@ -1504,7 +1509,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 			cre = NceConsistRoster.instance().entryFromTitle(locoTextField1.getText());
 		if (cre == null){
 			if (checkBoxConsist.isSelected() && !locoTextField1.getText().equals(""))
-				consistStatus.setText(rb.getString("UNKNOWN"));
+				consistStatus.setText(rb.getString("EditStateUNKNOWN"));
 			else
 			textConRoadName.setText("");
 			textConRoadNumber.setText("");	
@@ -1863,7 +1868,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 				locoVerifyList[i] = 0;
 			locoSearch = true;
 			consistNumVerify = 0;
-			consistStatus.setText(rb.getString("VERIFY"));
+			consistStatus.setText(rb.getString("EditStateVERIFY"));
 			readConsistMemory(consistNumVerify, LEAD);
 			return true;
 		}
@@ -2125,6 +2130,11 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
      */
     static public class Default extends jmri.jmrix.nce.swing.NceNamedPaneAction {
 
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 3301881443857178333L;
 
 		public Default() {
             super("Open NCE Consist Editor", 

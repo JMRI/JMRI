@@ -17,7 +17,6 @@ import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceTrafficController;
 import jmri.util.FileUtil;
 
-
 /**
  * Backups NCE Consists to a text file format defined by NCE.
  * 
