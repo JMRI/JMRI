@@ -420,7 +420,6 @@ public class FnMapPanelESU extends JPanel {
                             button.setActionCommand(iRow+","+outBlockNum);
                             button.addActionListener(new java.awt.event.ActionListener() {
                                     public void actionPerformed(java.awt.event.ActionEvent e) {
-                                        String propertyName = e.getActionCommand();
                                         String params[] = e.getActionCommand().split(",");
                                         JOptionPane.showMessageDialog(
                                             blockPanel,blockItemsScrollPane,"Row "+(Integer.valueOf(params[0])+1)+", "+
