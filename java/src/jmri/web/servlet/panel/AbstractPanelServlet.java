@@ -54,7 +54,9 @@ abstract class AbstractPanelServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.debug("Handling GET request for {}", request.getRequestURI());
-        if (request.getRequestURI().endsWith("/")) {
+        if (request.getParameter(JSON.NAME) != null) {
+            response.sendRedirect("/panel/" + request.getParameter(JSON.NAME));
+        } else if (request.getRequestURI().endsWith("/")) {
             listPanels(request, response);
         } else {
             String[] path = request.getRequestURI().split("/");
