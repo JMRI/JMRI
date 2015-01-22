@@ -106,9 +106,8 @@ import org.slf4j.LoggerFactory;
  * Provide JSON formatted responses for requests to requests for information
  * from the JMRI Web Server.
  *
- * Note that unlike the XMLIO server, this server does not monitor items in
- * response to a request, but does provide a WebSocket for clients capable of
- * using WebSockets to provide that capability.
+ * This server supports long polling in some GET requests, but also provides a
+ * WebSocket to provide a more extensive control and monitoring capability.
  *
  * This server responds to HTTP requests for objects in following manner:
  * <table>
@@ -128,7 +127,7 @@ public class JsonServlet extends WebSocketServlet {
     private static final long serialVersionUID = -671593634343578915L;
     private static final long longPollTimeout = 30000; // 5 minutes
     private ObjectMapper mapper;
-    private final Set<JsonWebSocket> sockets = new CopyOnWriteArraySet<JsonWebSocket>();
+    private final Set<JsonWebSocket> sockets = new CopyOnWriteArraySet<>();
     private static final Logger log = LoggerFactory.getLogger(JsonServlet.class);
     private final PropertyChangeListener instanceManagerListener = new PropertyChangeListener() {
 
@@ -176,7 +175,7 @@ public class JsonServlet extends WebSocketServlet {
     }
 
     /**
-     * handle HTTP get requests for json data examples:
+     * Handle HTTP get requests for JSON data. Examples:
      * <ul>
      * <li>/json/sensor/IS22 (return data for sensor with system name
      * "IS22")</li>
@@ -187,7 +186,7 @@ public class JsonServlet extends WebSocketServlet {
      * <li>{"type":"sensor","data":{"name":"IS22","userName":"FarEast","comment":null,"inverted":false,"state":4}}</li>
      * <li>[{"type":"sensor","data":{"name":"IS22","userName":"FarEast","comment":null,"inverted":false,"state":4}}]</li>
      * </ul>
-     * note that data will vary for each type
+     * Note that data will vary for each type.
      *
      * @param request an HttpServletRequest object that contains the request the
      * client has made of the servlet
