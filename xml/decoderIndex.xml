@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 20150113-1523-jake on Tue Jan 13 07:23:19 PST 2015 $Id$-->
-  <decoderIndex version="524">
+  <!--Written by JMRI version 20150122-0411-heap on Thu Jan 22 15:11:50 EST 2015 $Id$-->
+  <decoderIndex version="540">
     <mfgList nmraListDate="2014-09-22" updated="2014-10-11" lastadd="107,124">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -3050,25 +3050,34 @@
         </functionlabels>
       </family>
       <family name="ESU LokSound V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255" file="ESU_LokSoundV4_0.xml">
-        <model model="LokSound V4.0 NEM652" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="54400">
+        <model model="LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="54400">
           <size length="30.5" width="15.5" height="5.5" units="mm" />
         </model>
-        <model model="LokSound V4.0 21MTC" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="54499">
+        <model show="no" model="LokSound V4.0 NEM652" replacementModel="LokSound V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="54400">
           <size length="30.5" width="15.5" height="5.5" units="mm" />
         </model>
-        <model model="LokSound Micro V4.0 NEM651" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="54800">
+        <model show="no" model="LokSound V4.0 21MTC" replacementModel="LokSound V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="54499">
+          <size length="30.5" width="15.5" height="5.5" units="mm" />
+        </model>
+        <model model="LokSound Micro V4.0" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="54800">
           <size length="25.3" width="10.6" height="3.8" units="mm" />
         </model>
-        <model model="LokSound Micro V4.0 NEM652" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="54899">
+        <model show="no" model="LokSound Micro V4.0 NEM651" replacementModel="LokSound Micro V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="54800">
           <size length="25.3" width="10.6" height="3.8" units="mm" />
         </model>
-        <model model="LokSound Micro V4.0 Next18" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="54898">
+        <model show="no" model="LokSound Micro V4.0 NEM652" replacementModel="LokSound Micro V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="54899">
           <size length="25.3" width="10.6" height="3.8" units="mm" />
         </model>
-        <model model="LokSound XL V4.0 Screw Terminals" numOuts="92" numFns="40" maxMotorCurrent="4A (peak=5A)" extFnsESU="yes" productID="54500">
+        <model show="no" model="LokSound Micro V4.0 Next18" replacementModel="LokSound Micro V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="54898">
+          <size length="25.3" width="10.6" height="3.8" units="mm" />
+        </model>
+        <model model="LokSound XL V4.0" numOuts="92" numFns="40" maxMotorCurrent="4A (peak=5A)" extFnsESU="yes" productID="54500">
           <size length="51" width="41" height="14" units="mm" />
         </model>
-        <model model="LokSound XL V4.0 PIN connector" numOuts="92" numFns="40" maxMotorCurrent="4A (peak=5A)" extFnsESU="yes" productID="54599">
+        <model show="no" model="LokSound XL V4.0 Screw Terminals" replacementModel="LokSound XL V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="4A (peak=5A)" extFnsESU="yes" productID="54500">
+          <size length="51" width="41" height="14" units="mm" />
+        </model>
+        <model show="no" model="LokSound XL V4.0 PIN connector" replacementModel="LokSound XL V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="4A (peak=5A)" extFnsESU="yes" productID="54599">
           <size length="51" width="41" height="14" units="mm" />
         </model>
         <functionlabels>
@@ -3797,8 +3806,8 @@
           <output name="5" label="E" maxcurrent="0.5A" />
         </model>
         <model model="Gold+ mini wired 10410-01" numOuts="2" numFns="31" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
-          <output name="1" label="A - White" maxcurrent="0.3A" />
-          <output name="2" label="B - Yellow" maxcurrent="0.3A" />
+          <output name="1" label="A|White" maxcurrent="0.3A" />
+          <output name="2" label="B|Yellow" maxcurrent="0.3A" />
         </model>
         <model model="Gold+ mini NEM651 10411-01" numOuts="2" numFns="31" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
           <output name="1" label="A" maxcurrent="0.3A" />
@@ -15274,8 +15283,34 @@
           <size length="275" width="11" height="3" units="mm" />
         </model>
       </family>
-      <family name="Minitrix" mfg="Trix Modelleisenbahn" highVersionID="65" lowVersionID="65" comment="Trix Selectrix &amp; DCC decoder" file="Trix_66838.xml">
-        <model model="66838" numOuts="0" numFns="0" lowVersionID="65" />
+      <family name="Minitrix" mfg="Trix Modelleisenbahn" file="Trix_66838.xml">
+        <model model="66838" numOuts="0" numFns="0" highVersionID="65" lowVersionID="65" comment="Trix Selectrix &amp; DCC decoder" />
+      </family>
+      <family name="Minitrix" mfg="Trix Modelleisenbahn" file="Trix_66840.xml">
+        <model model="66840" lowVersionID="3" highVersionID="3" numOuts="4" productID="Trix 66840" comment="Trix Selectrix &amp; DCC decoder, designed by Doehler &amp; Haass" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="other">
+          <output name="1" label="Front Light" maxcurrent="150mA" />
+          <output name="2" label="Rear Light" maxcurrent="150mA" />
+          <output name="3" label="AUX 1" maxcurrent="300mA" />
+          <output name="4" label="AUX 2" maxcurrent="300mA" />
+          <output name="5" label="|" />
+          <!-- AUX 3 not available for this decoder -->
+          <output name="6" label="|" />
+          <!-- AUX 4 not available for this decoder -->
+          <output name="7" label="Dimmed|Headlights" />
+          <!-- not a physical output -->
+          <output name="8" label="Shunting|Speed" />
+          <!-- not a physical output -->
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+          </protocols>
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Lights</functionlabel>
+          <functionlabel num="4" lockable="true">Shunting Speed</functionlabel>
+          <functionlabel num="6" lockable="true">Rear lights off</functionlabel>
+          <functionlabel num="8" lockable="true">Front lights off</functionlabel>
+        </functionlabels>
       </family>
       <family name="Trix_Sound_HO" mfg="Trix Modelleisenbahn" type="locomotive" file="Trix_BB12000_Snd.xml">
         <model model="Trix_Sound_BB12000" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
