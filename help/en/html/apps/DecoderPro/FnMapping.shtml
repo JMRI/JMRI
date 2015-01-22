@@ -64,7 +64,7 @@ user can't change.  An example of using this to display
 a fixed map is displayed below.</li>
 </ul>
 <P>
-Several attributes and elements are ignored by a fnmapping element:
+Several attributes and elements are ignored by a fnmapping element and <strong><em>should not</em></strong> be added to a definition file:
 </p>
 <ul>
 <li>label - individual checkboxes do not display any labels.</li>
