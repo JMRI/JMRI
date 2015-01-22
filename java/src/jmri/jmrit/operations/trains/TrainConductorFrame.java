@@ -1,9 +1,13 @@
 // TrainConductorFrame.java
 package jmri.jmrit.operations.trains;
 
+import java.awt.Dimension;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.setup.Control;
 
 /**
  * Conductor Frame. Shows work for a train one location at a time.
@@ -35,8 +39,7 @@ public class TrainConductorFrame extends OperationsFrame {
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true); // NOI18N
 
-        pack();
-        setVisible(true);
+        initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));
     }
 
 //   private static final Logger log = LoggerFactory.getLogger(TrainConductorFrame.class.getName());

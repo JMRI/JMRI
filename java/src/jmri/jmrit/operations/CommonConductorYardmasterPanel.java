@@ -149,6 +149,7 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
         // location comment
         textLocationComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("LocationComment")));
         textLocationComment.setBackground(null);
+        textLocationComment.setEditable(false);
 
         // train description
         pTrainDescription.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Description")));
@@ -157,15 +158,18 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
         // train comment
         textTrainComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrainComment")));
         textTrainComment.setBackground(null);
+        textTrainComment.setEditable(false);
 
         // train route comment
         textTrainRouteComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("RouteComment")));
         textTrainRouteComment.setBackground(null);
+        textTrainRouteComment.setEditable(false);
 
         // train route location comment
         textTrainRouteLocationComment.setBorder(BorderFactory
                 .createTitledBorder(Bundle.getMessage("RouteLocationComment")));
         textTrainRouteLocationComment.setBackground(null);
+        textTrainRouteLocationComment.setEditable(false);
 
         // row 12
         if ((getPreferredSize().width > Control.panelWidth1025 && Setup.isTabEnabled())

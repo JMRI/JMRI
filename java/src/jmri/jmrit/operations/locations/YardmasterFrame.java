@@ -1,10 +1,14 @@
 // YardmasterFrame.java
 package jmri.jmrit.operations.locations;
 
+import java.awt.Dimension;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
 /**
@@ -45,8 +49,7 @@ public class YardmasterFrame extends OperationsFrame {
 
         addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true); // NOI18N
 
-        pack();
-        setVisible(true);
+        initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));
     }
 
 //    private static final Logger log = LoggerFactory.getLogger(YardmasterFrame.class.getName());
