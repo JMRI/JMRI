@@ -185,6 +185,7 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
      * set up all of the other objects to operate
      * connected to this port
      */
+    @Override
     public void configure() {
         log.debug("configure() called.");
         XBeeTrafficController tc = new XBeeTrafficController() ;
@@ -212,6 +213,14 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
     @Override
     public String[] validBaudRates() {
         return validSpeeds;
+    }
+
+    @Override 
+    public XBeeConnectionMemo getSystemConnectionMemo(){
+        if (adaptermemo == null)
+           adaptermemo= new XBeeConnectionMemo();
+        return (XBeeConnectionMemo) adaptermemo;
+
     }
 
     protected String [] validSpeeds = new String[]{"1,200 baud","2,400 baud",

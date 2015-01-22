@@ -162,6 +162,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
      * set up all of the other objects to operate
      * connected to this port
      */
+    @Override
     public void configure() {
         log.debug("configure() called.");
         SerialTrafficController tc = new SerialTrafficController() ; 
