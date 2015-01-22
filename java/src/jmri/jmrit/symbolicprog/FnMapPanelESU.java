@@ -76,22 +76,23 @@ public class FnMapPanelESU extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = -5897048084177413562L;
-	// columns
-    int firstCol = 0;
-    int firstOut = 1;
+
+        // columns
+    final int firstCol = 0;
+    final int firstOut = 2;
+
     int currentCol = firstCol;
     
     // rows
-    int guiWarningRow = 0;
-    int outputNumRow = guiWarningRow+1;
-    int outputLabelRow = outputNumRow+1;
-    int blockNameRow = guiWarningRow+1;
-    int firstRow = blockNameRow+2;
-    int currentRow = firstRow;
-    
-    // these will eventually be passed in from the ctor
-    int numRows = 40;
-    int numOut = 20;
+    static final int HINTS_ROW = 0;
+    static final int MOVE_ARROWS_TOP_ROW = 1;
+    static final int BLOCK_NAME_ROW = 1;
+    static final int FIRST_ROW = BLOCK_NAME_ROW + 2;
+    static final int ROW_LABEL_ROW = FIRST_ROW - 1;
+
+    static final int MAX_ROWS = 40;
+
+    int currentRow = FIRST_ROW;
 
     static final int PI_CV = 16;
     static final int SI_START_CV = 2;
@@ -103,11 +104,6 @@ public class FnMapPanelESU extends JPanel {
     GridBagLayout gl = null;
     GridBagConstraints cs = null;
     VariableTableModel _varModel;
-    
-    /**
-     * How many columns between GUI warning intervals
-     */
-    final int GUIwarningInterval = 26;
     
     /**
      * Titles for blocks of items
@@ -126,7 +122,7 @@ public class FnMapPanelESU extends JPanel {
 
     final int[] outBlockStartCol = new int[outBlockLength.length]; // Starting column column of block
     final int[] outBlockUsed = new int[outBlockLength.length]; // Number of used items per block
-    final JTextField[][] summaryLine = new JTextField[numRows][outBlockLength.length];
+    final JTextField[][] summaryLine = new JTextField[MAX_ROWS][outBlockLength.length];
     
     /**
      * <p>Default column labels.
@@ -147,18 +143,26 @@ public class FnMapPanelESU extends JPanel {
         ,"Sound slot 13","Sound slot 14","Sound slot 15","Sound slot 16","Sound slot 17","Sound slot 18","Sound slot 19","Sound slot 20","Sound slot 21","Sound slot 22","Sound slot 23","Sound slot 24"
     };
 
-    final int maxItems = itemDescESU.length;
-    final String[] itemLabel = new String[maxItems];
-    final String[][] itemName = new String[maxItems][3];
-    final boolean[] itemIsUsed = new boolean[maxItems];
-    final int iVarIndex[][] =new int[maxItems][numRows];
-                                           
+    final int MAX_ITEMS = itemDescESU.length;
+    final String[] itemLabel = new String[MAX_ITEMS];
+    final String[][] itemName = new String[MAX_ITEMS][3];
+    final boolean[] itemIsUsed = new boolean[MAX_ITEMS];
+    final int iVarIndex[][] =new int[MAX_ITEMS][MAX_ROWS];
+    
+       // default values
+    int numItems = MAX_ITEMS;
+    int numRows = MAX_ROWS;
+
+    // for row moves
+    int selectedRow = -1;
+    final JRadioButton rowButton[];
+    
     public FnMapPanelESU(VariableTableModel v, List<Integer> varsUsed, Element model, RosterEntry rosterEntry, CvTableModel cvModel) {
         log.debug("ESU Function map starts");
         _varModel = v;
         
         // set up default names and labels
-        for (int item=0; item<maxItems; item++) {
+        for (int item=0; item<MAX_ITEMS; item++) {
             itemLabel[item] = "";
             itemName[item][0] = "";
             itemName[item][1] = "";
@@ -173,15 +177,28 @@ public class FnMapPanelESU extends JPanel {
                 }
             }
         }
-        // configure numRows(from numFns), numOuts & any custom labels from decoder file
+        // configure numRows(from numFns), numItems(from numOuts) & any custom labels from decoder file
         configOutputs(model);
         
         // initialize the layout
         gl = new GridBagLayout();
         cs = new GridBagConstraints();
         setLayout(gl);
+        
+        cs.anchor = GridBagConstraints.LINE_START;
+        cs.gridwidth = GridBagConstraints.REMAINDER;
+        saveAt(HINTS_ROW,0 , new JLabel("<html><em>(For hints and instructions for using this pane, see the </em><strong>&quot;Function Map&quot;</strong><em> section of the </em><strong>&quot;Read Me - IMPORTANT&quot;</strong><em> pane.)</em><br />&nbsp;</html>"));
+        cs.gridwidth = 1;
+        
+        // for row moves
+        ButtonGroup group = new ButtonGroup();
+        rowButton = new JRadioButton[numRows];
 
-        labelAt(outputLabelRow,firstCol, "Row");
+        // add row move buttons
+        AddRowMoveButtons();
+
+        cs.anchor = GridBagConstraints.LINE_END;
+        saveAt(ROW_LABEL_ROW ,firstOut -1 ,  new JLabel("Row"));
         
         cs.anchor = GridBagConstraints.LINE_START;
                 
@@ -191,8 +208,23 @@ public class FnMapPanelESU extends JPanel {
             int outBlockNum = -1;
             int nextOutBlockStart = 0;
             int nextFreeBit = 0;
+            // add row shift buttons
+            {
+                rowButton[iRow] = new JRadioButton();
+                rowButton[iRow].setActionCommand(String.valueOf(iRow));
+                rowButton[iRow].setToolTipText(Bundle.getMessage("FnMapESURowSelect"));
+                rowButton[iRow].addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent e) {
+                    selectedRow = Integer.valueOf(e.getActionCommand());
+//                     log.info("selectedRow="+selectedRow);
+                   }
+                });
+                group.add(rowButton[iRow]);
+                cs.anchor = GridBagConstraints.CENTER;
+                saveAt(currentRow, currentCol++, rowButton[iRow]);
+            }
             cs.anchor = GridBagConstraints.LINE_END;
-            labelAt( currentRow, currentCol++, Integer.toString(iRow+1));
+            saveAt(currentRow, currentCol++,  new JLabel(Integer.toString(iRow+1)));
             cs.anchor = GridBagConstraints.LINE_START;
 
             // loop through outputs (columns)
@@ -371,7 +403,7 @@ public class FnMapPanelESU extends JPanel {
                     nextFreeBit = nextFreeBit + outBlockItemBits[outBlockNum];
 
                     item++;
-                } while ( (item < nextOutBlockStart) && (item < numOut) ); // end block loop
+                } while ( (item < nextOutBlockStart) && (item < numItems) ); // end block loop
 
                 // display block
                 JScrollPane blockItemsScrollPane = new JScrollPane(blockItemsSelectorPanel);
@@ -406,16 +438,16 @@ public class FnMapPanelESU extends JPanel {
 
 
 
-            } while  (item < Math.min(numOut,maxItems) ); // end outputs (columns) loop
+            } while  (item < numItems ); // end outputs (columns) loop
             
-            labelAt( currentRow++, currentCol, Integer.toString(iRow+1));
+            saveAt(currentRow++, currentCol,  new JLabel(Integer.toString(iRow+1)));
         }  // end row loop
 
-        labelAt(outputLabelRow,currentCol, "Row");
+        saveAt(ROW_LABEL_ROW, currentCol,  new JLabel("Row"));
         // tally used columns
         int currentBlock = -1;
         int blockStart = 0;
-        for (int item=0; item<maxItems; item++) {
+        for (int item=0; item<MAX_ITEMS; item++) {
             if (item == blockStart) {
                 currentBlock++;
                 blockStart = blockStart + outBlockLength[currentBlock];
@@ -428,7 +460,7 @@ public class FnMapPanelESU extends JPanel {
             if (outBlockUsed[iBlock] > 0) {
                 JLabel lx = new JLabel("<html><strong>&nbsp;"+outBlockName[iBlock]+"&nbsp;</strong></html>");
                 GridBagConstraints csx = new GridBagConstraints();
-                csx.gridy = blockNameRow;
+                csx.gridy = BLOCK_NAME_ROW;
                 csx.gridx = firstOut + iBlock;
                 csx.insets = new Insets(0,40,0,0);
                 csx.gridwidth = 1;
@@ -504,16 +536,92 @@ public class FnMapPanelESU extends JPanel {
         add(j);
     }
     
-    void labelAt(int row, int column, String name) {
-        this.labelAt(row, column, name, null);
+    /**
+     * Moves rows up or down
+     * <p>Row moves are for convenience purposes only.
+     * Decoder functioning is unaffected by row position in mapping table.</p>
+     *@param increment number of rows to move by
+     */
+    void moveRow(int increment) {
+        if ( selectedRow == -1 ) return;
+        if ( (selectedRow + increment) < 0 ) return;
+        if ( (selectedRow + increment) >= numRows ) return;
+        int newRow = selectedRow + increment;
+//         log.info("selectedRow="+selectedRow+",newRow="+newRow);
+        // now to swap the data
+        for (int item = 0; item < MAX_ITEMS; item++) {
+            if (itemIsUsed[item]) {
+                int selectedRowValue =  Integer.valueOf(_varModel.getValString(iVarIndex[item][selectedRow]));
+                int newRowValue =  Integer.valueOf(_varModel.getValString(iVarIndex[item][newRow]));
+                _varModel.setIntValue(iVarIndex[item][selectedRow], newRowValue);
+                _varModel.setIntValue(iVarIndex[item][newRow], selectedRowValue);
+            }
+        }
+        
+        selectedRow = newRow;
+        rowButton[selectedRow].setSelected(true);
+        
+        
     }
 
-    void labelAt(int row, int column, String name, String toolTip) {
-        if (row<0 || column<0) return;
-        JLabel t = new JLabel(" "+name+" ");
-        if ( toolTip != null ) t.setToolTipText(toolTip);
-        saveAt(row, column, t);
+    /**
+     * Adds the Row Move buttons at top and bottom
+     */
+    void AddRowMoveButtons() {
+        {
+            JButton button = new JButton(new ImageIcon("resources/icons/misc/ArrowUp-16.png"));
+            button.setActionCommand(String.valueOf(-1));
+            button.setToolTipText(Bundle.getMessage("FnMapESUMoveUp"));
+//             button.setBorderPainted(false);
+                button.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent e) {
+                        moveRow( Integer.valueOf(e.getActionCommand()) );
+                    }
+                });
+            cs.anchor = GridBagConstraints.CENTER;
+            saveAt(MOVE_ARROWS_TOP_ROW, 0, button);
+        }
+        {
+            JButton button = new JButton(new ImageIcon("resources/icons/misc/ArrowDown-16.png"));
+            button.setActionCommand(String.valueOf(1));
+            button.setToolTipText(Bundle.getMessage("FnMapESUMoveDown"));
+//             button.setBorderPainted(false);
+            button.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    moveRow( Integer.valueOf(e.getActionCommand()) );
+                }
+            });
+            cs.anchor = GridBagConstraints.CENTER;
+            saveAt(MOVE_ARROWS_TOP_ROW, 1, button);
+        }
+        {
+            JButton button = new JButton(new ImageIcon("resources/icons/misc/ArrowUp-16.png"));
+            button.setActionCommand(String.valueOf(-1));
+            button.setToolTipText(Bundle.getMessage("FnMapESUMoveUp"));
+//             button.setBorderPainted(false);
+                button.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent e) {
+                        moveRow( Integer.valueOf(e.getActionCommand()) );
+                    }
+                });
+            cs.anchor = GridBagConstraints.CENTER;
+            saveAt(FIRST_ROW + numRows, 0, button);
+        }
+        {
+            JButton button = new JButton(new ImageIcon("resources/icons/misc/ArrowDown-16.png"));
+            button.setActionCommand(String.valueOf(1));
+            button.setToolTipText(Bundle.getMessage("FnMapESUMoveDown"));
+//             button.setBorderPainted(false);
+            button.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    moveRow( Integer.valueOf(e.getActionCommand()) );
+                }
+            });
+            cs.anchor = GridBagConstraints.CENTER;
+            saveAt(FIRST_ROW + numRows, 1, button);
+        }
     }
+
     
     /**
      * Use the "model" element from the decoder definition file
@@ -527,15 +635,23 @@ public class FnMapPanelESU extends JPanel {
         }
         // get numOuts, numFns or leave the defaults
         Attribute a = model.getAttribute("numOuts");
-        try { if (a!=null) numOut = Integer.valueOf(a.getValue()).intValue();}
+        try { if (a!=null) numItems = Integer.valueOf(a.getValue()).intValue();}
         catch (Exception e) {log.error("error handling decoder's numOuts value");}
+        if (numItems > MAX_ITEMS) {
+            log.error("numOuts="+numItems+" exceeds the maximum number of items ("+MAX_ITEMS+") defined in the code");
+            numItems= Math.min(numItems,MAX_ITEMS);
+        }
         a = model.getAttribute("numFns");
         try { if (a!=null) numRows = Integer.valueOf(a.getValue()).intValue();}
         catch (Exception e) {log.error("error handling decoder's numFns value");}
-        log.debug("numFns, numOuts {}, {}", numRows, numOut);
+        if (numRows > MAX_ROWS) {
+            log.error("numFns="+numRows+" exceeds the maximum number of rows ("+MAX_ROWS+") defined in the code");
+            numRows= Math.min(numRows,MAX_ROWS);
+        }
+        log.debug("numFns, numOuts {}, {}", numRows, numItems);
         
         // add ESU default split labels before reading custom ones
-        for (int item=0; item<maxItems; item++) {
+        for (int item=0; item<MAX_ITEMS; item++) {
             loadSplitLabel(item, itemDescESU[item]);
         } 
 
@@ -556,7 +672,7 @@ public class FnMapPanelESU extends JPanel {
                 }
             } catch (java.lang.NumberFormatException ex) {
                 // not a number, must be a name
-                if (i<maxItems) {
+                if (i<MAX_ITEMS) {
                     itemName[i][0] = name;
                     itemName[i][1] = "";
                     itemName[i][2] = "";
@@ -570,7 +686,7 @@ public class FnMapPanelESU extends JPanel {
     
     // split and load labels
     void loadSplitLabel(int item, String theLabel) {
-        if (item < maxItems) {
+        if (item < MAX_ITEMS) {
             String itemList[] = theLabel.split("\\|");
             if ( theLabel.equals("|") ) {
                 itemName[item][0] = "";

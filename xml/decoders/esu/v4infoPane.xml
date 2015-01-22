@@ -6,8 +6,8 @@
       <text> </text>
     </label>
     <label>
-      <text>&lt;html&gt;&lt;strong&gt;JMRI 3.7.7 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;</text>
-      <text xml:lang="it">"&lt;html&gt;&lt;strong&gt;Richiesto JMRI 3.7.7 o seguenti per poter utilizzare queste definizioni.&lt;/strong&gt;&lt;/html&gt;"</text>
+      <text>&lt;html&gt;&lt;strong&gt;JMRI 3.11.3 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;</text>
+      <text xml:lang="it">"&lt;html&gt;&lt;strong&gt;Richiesto JMRI 3.11.3 o seguenti per poter utilizzare queste definizioni.&lt;/strong&gt;&lt;/html&gt;"</text>
     </label>
     <label>
       <text> </text>
@@ -67,19 +67,19 @@
       <text> </text>
     </label>
     <label>
-      <text>Servo Function Output has been added. Also many corrections and improvements</text>
-      <text xml:lang="it">="Aggiunta funzione uscita comando Servo."</text>
+      <text></text>
     </label>
     <label>
-      <text>since JMRI 3.7.4.</text>
-      <text xml:lang="it">="Oltre a varie correzioni e miglioramenti dalla versione JMRI 3.7.4."</text>
+      <text>The Function Map pane has been rewritten to be more like the one used by the</text>
     </label>
     <label>
-      <text> </text>
+      <text>ESU LokProgrammer® software and now also includes Row Move buttons. For help</text>
     </label>
     <label>
-      <text>LokPilot Fx V4.0 and LokPilot XL V4.0 decoder definitions have been added.</text>
-      <text xml:lang="it">="Aggiunti i decoder LokPilot Fx V4.0 e LokPilot XL V4.0."</text>
+      <text>&lt;html&gt;with use of this pane see the &lt;strong&gt;Function Map&lt;/strong&gt; section below.&lt;/html&gt;</text>
+    </label>
+    <label>
+      <text></text>
     </label>
     <label>
       <text> </text>
@@ -125,25 +125,6 @@
     <label>
       <text>or write any CVs in this definition.</text>
       <text xml:lang="it">="per leggere e scrivere qualsiasi CV."</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <label>
-      <text>The naming convention for Indexed CVs has been changed for these decoders to</text>
-      <text xml:lang="it">="La convenzione per le CV indicizzate di questi decoders è cambiata"</text>
-    </label>
-    <label>
-      <text>conform to the MNRA/ESU concept of Indexed CVs and hence they will appear in the</text>
-      <text xml:lang="it">="in conformità alla ENMRA/ESU e quindi queste CV appaiono"</text>
-    </label>
-    <label>
-      <text>CVs list in the same order as in the ESU documentation and LokProgrammer software.</text>
-      <text xml:lang="it">="nella lista delle CV nello stesso ordine della documentazione ESU e del LokProgrammer"</text>
-    </label>
-    <label>
-      <text>The new order is 'PI.SI.CV', that is '(value in CV31).(value in CV32).(CV number)'.</text>
-      <text xml:lang="it">="Il nuovo ordine è: PI-SI-CV, cioè (valore di CV31) (lvalore di CV32) (numero CV)."</text>
     </label>
     <label>
       <text> </text>
@@ -196,49 +177,87 @@
     </label>
     <label>
       <text>The ESU Function Map has 40 lines and these lines are not sequentially mapped to</text>
-      <text xml:lang="it">="La tabella ESU delle Funzioni ha 40 linee e queste linee non sono mappate in sequenza"</text>
     </label>
     <label>
-      <text>functions. Instead, any line can be set to be activated by any one or</text>
-      <text xml:lang="it">="alle funzioni. Ogni linea può essere programmata per essere attivata da un pulsante"</text>
+      <text>functions. Instead, any line can be set to be activated by any one (or</text>
     </label>
     <label>
-      <text>combination of function buttons. There are 640 CVs involved and 5,120 checkboxes.</text>
-      <text xml:lang="it">="o combinazione di pulsanti funzione. Ci sono 640 CV coinvolte e 5.120 check-box!"</text>
+      <text>combination of) function buttons.</text>
     </label>
     <label>
       <text> </text>
     </label>
     <label>
       <text>Function mapping is explained in the ESU LokSound V4 manual (pages 51 onwards).</text>
-      <text xml:lang="it">="La mappatura delle Funzioni è dettagliata nel manuale ESU LokSound V4 (pagine 51 e seguenti)."</text>
     </label>
     <label>
       <text>The information in the ESU LokSound Select manual is oversimplified and may not give.</text>
-      <text xml:lang="it">="Le informazioni nel manuale ESU LokSound Select sono invece semplificate e potrebbero non essere"</text>
     </label>
     <label>
-      <text>satisfactory results. Use the V4 manual for Select decoders as well, or ask for asistance</text>
-      <text xml:lang="it">="sufficenti. Usate il manuale V4 per il decoder select o chiedete assistenza"</text>
-    </label>
-    <label>
-      <text>on the LokSound Yahoo® group.</text>
-      <text xml:lang="it">="sul gruppo LokSound su Yahoo®."</text>
+      <text>satisfactory results. Use the V4 manual for Select decoders as well..</text>
     </label>
     <label>
       <text> </text>
     </label>
     <label>
-      <text>You may experience very slow scrolling of the Function Map table with some Mac OS X computers.</text>
-      <text xml:lang="it">="Su alcuni MAC con OS X potreste sperimentare uno scrolling della Mappa Funztioni molto lento."</text>
+      <text>This version of JMRI now uses a very similar layout to the ESU LokProgrammer®</text>
     </label>
     <label>
-      <text>If affected, change the JMRI GUI setting in Decoder Pro &gt; Preferences &gt; Display &gt; GUI to any</text>
-      <text xml:lang="it">="In questi casi, modificate la programmazione dell'Interfaccia Utente di JMRI GUI in Decoder Pro &gt; Preferenze &gt; Display &gt; GUI"</text>
+      <text>software. A good guide to the Function Map pane is available at pages 14 and 15</text>
     </label>
     <label>
-      <text>setting other than Mac OS X.</text>
-      <text xml:lang="it">="con un parametro diverso da MAC OS X"</text>
+      <text>of the LokProgrammer® V4.0 manual. This manual can be downloaded from the</text>
+    </label>
+    <label>
+      <text>LokSound Yahoo® group at https://groups.yahoo.com/neo/groups/loksound/files</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text>There are 640 CVs involved in the Function Map pane and it will take quite a</text>
+    </label>
+    <label>
+      <text>long while to read or write them all.</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text>If you have difficulty understanding the Function Map pane, ask for assistance</text>
+    </label>
+    <label>
+      <text>on the JMRI or (preferably) LokSound Yahoo® group.</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text>P.S. (Not described in the manual are the Row Move buttons/arrows. These are for</text>
+    </label>
+    <label>
+      <text>advanced users and allow the row order to be reorganised by moving the selected</text>
+    </label>
+    <label>
+      <text>row up or down in the table. Reorganising rows is purely for cosmetic</text>
+    </label>
+    <label>
+      <text>organisational purposes and makes no difference to the way the function map is</text>
+    </label>
+    <label>
+      <text>interpreted. To select a row for moving, click on the Radio Button at the</text>
+    </label>
+    <label>
+      <text>beginning of the row you wish to move and then use the arrow buttons above the</text>
+    </label>
+    <label>
+      <text>top row or below the bottom row. If you move rows, you will then need to Write</text>
+    </label>
+    <label>
+      <text>Changes on Sheet to rewrite the CVs in the decoder. Row moving should only be</text>
+    </label>
+    <label>
+      <text>done if you are very familiar with the use of the Function Map pane.)</text>
     </label>
     <label>
       <text> </text>
