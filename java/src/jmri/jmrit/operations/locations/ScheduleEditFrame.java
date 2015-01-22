@@ -104,11 +104,10 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
 		p1.setMaximumSize(new Dimension(2000, 200));
 		
-//		JScrollPane p1Pane = new JScrollPane(p1);
-//		p1Pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-//		p1Pane.setMinimumSize(new Dimension(300,
-//				3 * scheduleNameTextField.getPreferredSize().height));
-//		p1Pane.setBorder(BorderFactory.createTitledBorder(""));
+		JScrollPane p1Pane = new JScrollPane(p1);
+		p1Pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+		p1Pane.setMinimumSize(new Dimension(300,
+				3 * scheduleNameTextField.getPreferredSize().height));
 
 		// row 1a name
 		JPanel pName = new JPanel();
@@ -169,7 +168,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		addItem(pB, addScheduleButton, 1, 0);
 		addItem(pB, saveScheduleButton, 3, 0);
 
-		getContentPane().add(p1);
+		getContentPane().add(p1Pane);
 		getContentPane().add(schedulePane);
 		getContentPane().add(p3);
 		getContentPane().add(pB);
@@ -203,9 +202,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		_track.addPropertyChangeListener(this);
 
 		// set frame size and schedule for display
-		initMinimumSize();
-		if (getWidth() < Control.panelWidth1025)
-			setSize(Control.panelWidth1025, getHeight());
+		initMinimumSize(new Dimension(Control.panelWidth700, Control.panelHeight400));
 	}
 
 	// Save, Delete, Add
