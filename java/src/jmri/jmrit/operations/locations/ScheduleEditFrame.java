@@ -102,12 +102,12 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		// Layout the panel by rows
 		JPanel p1 = new JPanel();
 		p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
-		p1.setMaximumSize(new Dimension(2000, 200));
-		
+	
 		JScrollPane p1Pane = new JScrollPane(p1);
 		p1Pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
 		p1Pane.setMinimumSize(new Dimension(300,
 				3 * scheduleNameTextField.getPreferredSize().height));
+		p1Pane.setMaximumSize(new Dimension(2000, 200));
 
 		// row 1a name
 		JPanel pName = new JPanel();
