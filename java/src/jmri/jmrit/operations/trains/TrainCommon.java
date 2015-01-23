@@ -198,7 +198,7 @@ public class TrainCommon {
 	 * Block cars by track, then pick up and set out for each location in a train's route.
 	 */
 	protected void blockCarsByTrack(PrintWriter file, Train train, List<Car> carList, List<RouteLocation> routeList,
-			RouteLocation rl, int r, boolean printHeader, boolean isManifest) {
+			RouteLocation rl, boolean printHeader, boolean isManifest) {
 		if (printHeader) {
 			printPickupHeader = true;
 			printSetoutHeader = true;
@@ -212,8 +212,11 @@ public class TrainCommon {
 				continue;
 			trackNames.add(splitString(track.getName())); // use a track name once
 			// block pick up cars by destination
-			for (int j = r; j < routeList.size(); j++) {
-				RouteLocation rld = routeList.get(j);
+			boolean found = false;	// begin blocking at rl
+			for (RouteLocation rld : routeList) {
+				if (rld != rl && !found)
+					continue;
+				found = true;
 				for (Car car : carList) {
 					if (Setup.isSortByTrackEnabled()
 							&& !splitString(track.getName()).equals(splitString(car.getTrackName())))
@@ -299,7 +302,7 @@ public class TrainCommon {
 	 * Produces a two column format for car pick ups and set outs. Sorted by track and then by destination.
 	 */
 	protected void blockCarsByTrackTwoColumn(PrintWriter file, Train train, List<Car> carList,
-			List<RouteLocation> routeList, RouteLocation rl, int r, boolean printHeader, boolean isManifest) {
+			List<RouteLocation> routeList, RouteLocation rl, boolean printHeader, boolean isManifest) {
 		index = 0;
 		int lineLength = getLineLength(isManifest);
 		List<Track> tracks = rl.getLocation().getTrackByNameList(null);
@@ -312,8 +315,11 @@ public class TrainCommon {
 				continue;
 			trackNames.add(splitString(track.getName())); // use a track name once
 			// block car pick ups by destination
-			for (int j = r; j < routeList.size(); j++) {
-				RouteLocation rld = routeList.get(j);
+			boolean found = false;	// begin blocking at rl
+			for (RouteLocation rld : routeList) {
+				if (rld != rl && !found)
+					continue;
+				found = true;
 				for (int k = 0; k < carList.size(); k++) {
 					Car car = carList.get(k);
 					if (car.getRouteLocation() == rl && !car.getTrackName().equals("")
@@ -372,7 +378,7 @@ public class TrainCommon {
 	 * in header format.
 	 */
 	protected void blockCarsByTrackNameTwoColumn(PrintWriter file, Train train, List<Car> carList,
-			List<RouteLocation> routeList, RouteLocation rl, int r, boolean printHeader, boolean isManifest) {
+			List<RouteLocation> routeList, RouteLocation rl, boolean printHeader, boolean isManifest) {
 		index = 0;
 		int lineLength = getLineLength(isManifest);
 		List<Track> tracks = rl.getLocation().getTrackByNameList(null);
@@ -386,8 +392,11 @@ public class TrainCommon {
 			if (trackNames.contains(trackName))
 				continue;
 			// block car pick ups by destination
-			for (int j = r; j < routeList.size(); j++) {
-				RouteLocation rld = routeList.get(j);
+			boolean found = false;	// begin blocking at rl
+			for (RouteLocation rld : routeList) {
+				if (rld != rl && !found)
+					continue;
+				found = true;
 				for (Car car : carList) {
 					if (car.getRouteLocation() == rl && !car.getTrackName().equals("")
 							&& car.getRouteDestination() == rld && trackName.equals(splitString(car.getTrackName()))) {
@@ -431,6 +440,32 @@ public class TrainCommon {
 					if (test.length() > 1) // null line contains |
 						addLine(file, so);
 				}
+			}
+		}
+	}
+	
+	protected void printTrackComments(PrintWriter file, RouteLocation rl, List<Car> carList, boolean isManifest) {
+		Location location = rl.getLocation();
+		if (location != null) {
+			List<Track> tracks = location.getTrackByNameList(null);
+			for (Track track : tracks) {
+				// any pick ups or set outs to this track?
+				boolean pickup = false;
+				boolean setout = false;
+				for (Car car : carList) {
+					if (car.getRouteLocation() == rl && car.getTrack() != null && car.getTrack() == track)
+						pickup = true;
+					if (car.getRouteDestination() == rl && car.getDestinationTrack() != null
+							&& car.getDestinationTrack() == track)
+						setout = true;
+				}
+				// print the appropriate comment if there's one
+				if (pickup && setout && !track.getCommentBoth().equals(Track.NONE))
+					newLine(file, track.getCommentBoth(), isManifest);
+				else if (pickup && !setout && !track.getCommentPickup().equals(Track.NONE))
+					newLine(file, track.getCommentPickup(), isManifest);
+				else if (!pickup && setout && !track.getCommentSetout().equals(Track.NONE))
+					newLine(file, track.getCommentSetout(), isManifest);
 			}
 		}
 	}

@@ -12,7 +12,6 @@ import java.text.MessageFormat;
 import java.util.List;
 
 import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.Route;
@@ -25,7 +24,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Builds a train's manifest.
  * 
- * @author Daniel Boudreau Copyright (C) 2011, 2012, 2013
+ * @author Daniel Boudreau Copyright (C) 2011, 2012, 2013, 2015
  * @version $Revision: 1 $
  */
 public class TrainManifest extends TrainCommon {
@@ -86,8 +85,7 @@ public class TrainManifest extends TrainCommon {
 			String previousRouteLocationName = null;
 			List<RouteLocation> routeList = train.getRoute().getLocationsBySequenceList();
 
-			for (int r = 0; r < routeList.size(); r++) {
-				RouteLocation rl = routeList.get(r);
+			for (RouteLocation rl : routeList) {
 				boolean hadWork = hasWork;
 				boolean printHeader = false;
 				hasWork = isThereWorkAtLocation(carList, engineList, rl);
@@ -130,11 +128,12 @@ public class TrainManifest extends TrainCommon {
 						} else {
 							newLine(fileOut, workAt);
 						}
-						// add route comment
+						// add route location comment
 						if (!rl.getComment().trim().equals(RouteLocation.NONE))
 							newLine(fileOut, rl.getComment());
-
-						printTrackComments(fileOut, rl, carList);
+						
+						// add track comments
+						printTrackComments(fileOut, rl, carList, isManifest);
 
 						// add location comment
 						if (Setup.isPrintLocationCommentsEnabled() && !rl.getLocation().getComment().equals(Location.NONE))
@@ -163,20 +162,20 @@ public class TrainManifest extends TrainCommon {
 				if (Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {
 					pickupEngines(fileOut, engineList, rl, isManifest);
 					dropEngines(fileOut, engineList, rl, isManifest);
-					blockCarsByTrack(fileOut, train, carList, routeList, rl, r, printHeader, isManifest);
+					blockCarsByTrack(fileOut, train, carList, routeList, rl, printHeader, isManifest);
 				} else if (Setup.getManifestFormat().equals(Setup.TWO_COLUMN_FORMAT)) {
 					blockLocosTwoColumn(fileOut, engineList, rl, isManifest);
-					blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, r, printHeader, isManifest);
+					blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, printHeader, isManifest);
 				} else {
 					blockLocosTwoColumn(fileOut, engineList, rl, isManifest);
-					blockCarsByTrackNameTwoColumn(fileOut, train, carList, routeList, rl, r, printHeader, isManifest);
+					blockCarsByTrackNameTwoColumn(fileOut, train, carList, routeList, rl, printHeader, isManifest);
 				}
 
 				if (rl != train.getRoute().getTerminatesRouteLocation()) {
 					// Is the next location the same as the previous?
-					RouteLocation rlNext = routeList.get(r + 1);
+					RouteLocation rlNext = train.getRoute().getNextRouteLocation(rl);
 					if (!routeLocationName.equals(splitString(rlNext.getName()))) {
-						if (newWork) {
+						if (hasWork) {
 							if (Setup.isPrintHeadersEnabled()
 									|| !Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT))
 								printHorizontalLine(fileOut, isManifest);
@@ -278,32 +277,6 @@ public class TrainManifest extends TrainCommon {
 				|| (legOptions & Train.ADD_CABOOSE) == Train.ADD_CABOOSE)
 			newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText.getStringCabooseChange(),
 					new Object[] { splitString(rl.getName()), train.getName(), train.getDescription() }));
-	}
-
-	private void printTrackComments(PrintWriter fileOut, RouteLocation rl, List<Car> carList) {
-		Location location = rl.getLocation();
-		if (location != null) {
-			List<Track> tracks = location.getTrackByNameList(null);
-			for (Track track : tracks) {
-				// any pick ups or set outs to this track?
-				boolean pickup = false;
-				boolean setout = false;
-				for (Car car : carList) {
-					if (car.getRouteLocation() == rl && car.getTrack() != null && car.getTrack() == track)
-						pickup = true;
-					if (car.getRouteDestination() == rl && car.getDestinationTrack() != null
-							&& car.getDestinationTrack() == track)
-						setout = true;
-				}
-				// print the appropriate comment if there's one
-				if (pickup && setout && !track.getCommentBoth().equals(Track.NONE))
-					newLine(fileOut, track.getCommentBoth());
-				else if (pickup && !setout && !track.getCommentPickup().equals(Track.NONE))
-					newLine(fileOut, track.getCommentPickup());
-				else if (!pickup && setout && !track.getCommentSetout().equals(Track.NONE))
-					newLine(fileOut, track.getCommentSetout());
-			}
-		}
 	}
 
 	private void newLine(PrintWriter file, String string) {

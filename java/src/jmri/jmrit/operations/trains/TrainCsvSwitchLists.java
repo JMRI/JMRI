@@ -89,7 +89,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 				RouteLocation rl = routeList.get(routeIndex);
 				if (splitString(rl.getName()).equals(splitString(location.getName()))) {
 					String expectedArrivalTime = train.getExpectedArrivalTime(rl);
-					if (expectedArrivalTime.equals("-1")) { // NOI18N
+					if (expectedArrivalTime.equals(Train.ALREADY_SERVICED)) {
 						trainDone = true;
 					}
 					// First time a train stops at a location provide:

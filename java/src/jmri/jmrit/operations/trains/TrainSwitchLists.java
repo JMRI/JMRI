@@ -25,7 +25,7 @@ import jmri.util.FileUtil;
 /**
  * Builds a switch list for a location on the railroad
  * 
- * @author Daniel Boudreau (C) Copyright 2008, 2011, 2012, 2013
+ * @author Daniel Boudreau (C) Copyright 2008, 2011, 2012, 2013, 2015
  * @version $Revision: 21846 $
  * 
  */
@@ -127,13 +127,13 @@ public class TrainSwitchLists extends TrainCommon {
 				List<Engine> engineList = engineManager.getByTrainBlockingList(train);
 				List<Car> carList = carManager.getByTrainDestinationList(train);
 				List<RouteLocation> routeList = route.getLocationsBySequenceList();
+				RouteLocation rlPrevious = null;
 				// does the train stop once or more at this location?
-				for (int r = 0; r < routeList.size(); r++) {
-					RouteLocation rl = routeList.get(r);
+				for (RouteLocation rl : routeList) {
 					if (!splitString(rl.getName()).equals(splitString(location.getName())))
 						continue;
 					String expectedArrivalTime = train.getExpectedArrivalTime(rl);
-					if (expectedArrivalTime.equals("-1")) { // NOI18N
+					if (expectedArrivalTime.equals(Train.ALREADY_SERVICED)) {
 						trainDone = true;
 					}
 					// first time at this location?
@@ -149,7 +149,7 @@ public class TrainSwitchLists extends TrainCommon {
 										rl.getTrainDirectionString() }));
 							}
 						} else if (!train.isLocalSwitcher()) {
-							if (r == 0) {
+							if (rl == train.getRoute().getDepartsRouteLocation()) {
 								newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
 										.getStringDepartsAt(), new Object[] { splitString(train.getTrainDepartsName()),
 										rl.getTrainDirectionString(), train.getFormatedDepartureTime() }));
@@ -163,18 +163,17 @@ public class TrainSwitchLists extends TrainCommon {
 					} else {
 						// multiple visits to this location
 						// Print visit number only if previous location wasn't the same
-						RouteLocation rlPrevious = routeList.get(r - 1);
-						if (!splitString(rl.getName()).equals(splitString(rlPrevious.getName()))) {
+						if (rlPrevious == null || !splitString(rl.getName()).equals(splitString(rlPrevious.getName()))) {
 							if (Setup.getSwitchListPageFormat().equals(Setup.PAGE_PER_VISIT)) {
 								fileOut.write(FORM_FEED);
 							}
 							newLine(fileOut);
 							if (train.isTrainInRoute()) {
-								if (expectedArrivalTime.equals("-1")) // NOI18N
+								if (expectedArrivalTime.equals(Train.ALREADY_SERVICED))
 									newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
 											.getStringVisitNumberDone(), new Object[] { stops, train.getName(),
 											train.getDescription() }));
-								else if (r != routeList.size() - 1)
+								else if (rl != train.getRoute().getTerminatesRouteLocation())
 									newLine(fileOut, MessageFormat
 											.format(messageFormatText = TrainSwitchListText
 													.getStringVisitNumberDeparted(), new Object[] { stops,
@@ -186,7 +185,8 @@ public class TrainSwitchLists extends TrainCommon {
 											train.getName(), expectedArrivalTime, splitString(rl.getName()),
 											train.getDescription() }));
 							} else {
-								if (r != routeList.size() - 1)
+								// train hasn't departed
+								if (rl != train.getRoute().getTerminatesRouteLocation())
 									newLine(fileOut, MessageFormat
 											.format(messageFormatText = TrainSwitchListText.getStringVisitNumber(),
 													new Object[] { stops, train.getName(), expectedArrivalTime,
@@ -199,13 +199,16 @@ public class TrainSwitchLists extends TrainCommon {
 						} else {
 							stops--; // don't bump stop count, same location
 							// Does the train reverse direction?
-							if (rl.getTrainDirection() != rlPrevious.getTrainDirection())
+							if (rl.getTrainDirection() != rlPrevious.getTrainDirection()
+									&& !TrainSwitchListText.getStringTrainDirectionChange().equals(""))
 								newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
 										.getStringTrainDirectionChange(), new Object[] { train.getName(),
 										rl.getTrainDirectionString(), train.getDescription(),
 										train.getTrainTerminatesName() }));
 						}
 					}
+					
+					rlPrevious = rl;	// save current location in case there's back to back location with the same name
 
 					// add route comment
 					if (Setup.isSwitchListRouteLocationCommentEnabled() && !rl.getComment().trim().equals(""))
@@ -214,13 +217,13 @@ public class TrainSwitchLists extends TrainCommon {
 					if (Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {
 						pickupEngines(fileOut, engineList, rl, isManifest);
 						dropEngines(fileOut, engineList, rl, isManifest);
-						blockCarsByTrack(fileOut, train, carList, routeList, rl, r, printHeader, isManifest);
+						blockCarsByTrack(fileOut, train, carList, routeList, rl, printHeader, isManifest);
 					} else if (Setup.getManifestFormat().equals(Setup.TWO_COLUMN_FORMAT)) {
 						blockLocosTwoColumn(fileOut, engineList, rl, isManifest);
-						blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, r, printHeader, isManifest);
+						blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, printHeader, isManifest);
 					} else {
 						blockLocosTwoColumn(fileOut, engineList, rl, isManifest);
-						blockCarsByTrackNameTwoColumn(fileOut, train, carList, routeList, rl, r, printHeader,
+						blockCarsByTrackNameTwoColumn(fileOut, train, carList, routeList, rl, printHeader,
 								isManifest);
 					}
 					if (Setup.isPrintHeadersEnabled() || !Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT))
@@ -228,8 +231,8 @@ public class TrainSwitchLists extends TrainCommon {
 
 					stops++;
 
-					if (routeList.size() > r + 1) {
-						RouteLocation nextRl = routeList.get(r + 1);
+					if (rl != train.getRoute().getTerminatesRouteLocation()) {
+						RouteLocation nextRl = train.getRoute().getNextRouteLocation(rl);
 						if (splitString(rl.getName()).equals(splitString(nextRl.getName())))
 							continue; // the current location name is the "same" as the next
 						// print departure text if not a switcher and not the last location in the route

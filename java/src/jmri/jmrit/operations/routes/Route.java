@@ -210,6 +210,19 @@ public class Route implements java.beans.PropertyChangeListener {
 		}
 		return null;
 	}
+	/**
+	 * Gets the next route location in a route
+	 * @param rl the current route location
+	 * @return the next route location, null if rl is the last location in a route.
+	 */
+	public RouteLocation getNextRouteLocation(RouteLocation rl) {
+		List<RouteLocation> list = getLocationsBySequenceList();
+		for (int i = 0; i < list.size() - 1; i++) {
+			if (rl == list.get(i))
+				return list.get(i + 1);
+		}
+		return null;
+	}
 
 	/**
 	 * Get location by name (gets last route location with name)
