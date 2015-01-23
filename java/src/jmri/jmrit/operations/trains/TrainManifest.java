@@ -15,6 +15,7 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
+import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 
@@ -49,7 +50,7 @@ public class TrainManifest extends TrainCommon {
 
 		try {
 			// build header
-			if (!train.getRailroadName().equals(""))
+			if (!train.getRailroadName().equals(Train.NONE))
 				newLine(fileOut, train.getRailroadName());
 			else
 				newLine(fileOut, Setup.getRailroadName());
@@ -69,19 +70,19 @@ public class TrainManifest extends TrainCommon {
 			if (Setup.isPrintValidEnabled())
 				newLine(fileOut, valid);
 
-			if (!train.getComment().equals(""))
+			if (!train.getComment().equals(Train.NONE))
 				newLine(fileOut, train.getComment());
 
 			List<Engine> engineList = engineManager.getByTrainBlockingList(train);
 
-			if (Setup.isPrintRouteCommentsEnabled() && !train.getRoute().getComment().equals(""))
+			if (Setup.isPrintRouteCommentsEnabled() && !train.getRoute().getComment().equals(Route.NONE))
 				newLine(fileOut, train.getRoute().getComment());
 
 			List<Car> carList = carManager.getByTrainDestinationList(train);
 			log.debug("Train has " + carList.size() + " cars assigned to it");
 
 			boolean hasWork = false;
-			newWork = false;	// when true there is work at the location, add train departure info to manifest
+			newWork = false; // when true there is work at the location, add train departure info to manifest
 			String previousRouteLocationName = null;
 			List<RouteLocation> routeList = train.getRoute().getLocationsBySequenceList();
 
@@ -100,7 +101,8 @@ public class TrainManifest extends TrainCommon {
 						// "same" name with work and the last location doesn't have work
 						if (!hadWork)
 							newLine(fileOut);
-						newWork = true;	// TODO this shouldn't be needed, other subroutines set this true if there's work
+						newWork = true; // TODO this shouldn't be needed, other subroutines set this true if there's
+										// work
 						printHeader = true;
 						String expectedArrivalTime = train.getExpectedArrivalTime(rl);
 						String workAt = MessageFormat.format(messageFormatText = TrainManifestText
@@ -108,19 +110,20 @@ public class TrainManifest extends TrainCommon {
 								train.getDescription() });
 						if (!train.isShowArrivalAndDepartureTimesEnabled()) {
 							newLine(fileOut, workAt);
-						} else if (r == 0) {
+						} else if (rl == train.getRoute().getDepartsRouteLocation()) {
 							newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText
 									.getStringWorkDepartureTime(), new Object[] { routeLocationName,
 									train.getFormatedDepartureTime(), train.getName(), train.getDescription() }));
-						} else if (!rl.getDepartureTime().equals("")) {
+						} else if (!rl.getDepartureTime().equals(RouteLocation.NONE)) {
 							newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText
 									.getStringWorkDepartureTime(), new Object[] { routeLocationName,
 									rl.getFormatedDepartureTime(), train.getName(), train.getDescription() }));
-						} else if (Setup.isUseDepartureTimeEnabled() && r != routeList.size() - 1) {
+						} else if (Setup.isUseDepartureTimeEnabled()
+								&& rl != train.getRoute().getTerminatesRouteLocation()) {
 							newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText
 									.getStringWorkDepartureTime(), new Object[] { routeLocationName,
 									train.getExpectedDepartureTime(rl), train.getName(), train.getDescription() }));
-						} else if (!expectedArrivalTime.equals("-1")) {// NOI18N
+						} else if (!expectedArrivalTime.equals(Train.ALREADY_SERVICED)) {
 							newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText
 									.getStringWorkArrivalTime(), new Object[] { routeLocationName, expectedArrivalTime,
 									train.getName(), train.getDescription() }));
@@ -128,13 +131,13 @@ public class TrainManifest extends TrainCommon {
 							newLine(fileOut, workAt);
 						}
 						// add route comment
-						if (!rl.getComment().trim().equals(""))
+						if (!rl.getComment().trim().equals(RouteLocation.NONE))
 							newLine(fileOut, rl.getComment());
 
 						printTrackComments(fileOut, rl, carList);
 
 						// add location comment
-						if (Setup.isPrintLocationCommentsEnabled() && !rl.getLocation().getComment().equals(""))
+						if (Setup.isPrintLocationCommentsEnabled() && !rl.getLocation().getComment().equals(Location.NONE))
 							newLine(fileOut, rl.getLocation().getComment());
 					}
 				}
@@ -169,7 +172,7 @@ public class TrainManifest extends TrainCommon {
 					blockCarsByTrackNameTwoColumn(fileOut, train, carList, routeList, rl, r, printHeader, isManifest);
 				}
 
-				if (r != routeList.size() - 1) {
+				if (rl != train.getRoute().getTerminatesRouteLocation()) {
 					// Is the next location the same as the previous?
 					RouteLocation rlNext = routeList.get(r + 1);
 					if (!routeLocationName.equals(splitString(rlNext.getName()))) {
@@ -177,15 +180,17 @@ public class TrainManifest extends TrainCommon {
 							if (Setup.isPrintHeadersEnabled()
 									|| !Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT))
 								printHorizontalLine(fileOut, isManifest);
-							// Message format: Train departs Boston Westbound with 12 cars, 450 feet, 3000 tons
-							String trainDeparts = MessageFormat.format(messageFormatText = TrainManifestText
-									.getStringTrainDepartsCars(), new Object[] { routeLocationName,
-									rl.getTrainDirectionString(), cars, train.getTrainLength(rl),
-									Setup.getLengthUnit().toLowerCase(), train.getTrainWeight(rl),
-									train.getTrainTerminatesName() });
-							if (Setup.isPrintLoadsAndEmptiesEnabled())
-								// Message format: Train departs Boston Westbound with 4 loads, 8 empties, 450 feet, 3000
-								// tons
+							String trainDeparts = "";
+							if (!Setup.isPrintLoadsAndEmptiesEnabled())
+								// Message format: Train departs Boston Westbound with 12 cars, 450 feet, 3000 tons
+								trainDeparts = MessageFormat.format(messageFormatText = TrainManifestText
+										.getStringTrainDepartsCars(), new Object[] { routeLocationName,
+										rl.getTrainDirectionString(), cars, train.getTrainLength(rl),
+										Setup.getLengthUnit().toLowerCase(), train.getTrainWeight(rl),
+										train.getTrainTerminatesName() });
+							else
+								// Message format: Train departs Boston Westbound with 4 loads, 8 empties, 450 feet,
+								// 3000 tons
 								trainDeparts = MessageFormat.format(messageFormatText = TrainManifestText
 										.getStringTrainDepartsLoads(), new Object[] { routeLocationName,
 										rl.getTrainDirectionString(), cars - emptyCars, emptyCars,
@@ -201,7 +206,7 @@ public class TrainManifest extends TrainCommon {
 									train.getDescription() });
 							// if a route comment, then only use location name and route comment, useful for passenger
 							// trains
-							if (!rl.getComment().equals("")) {
+							if (!rl.getComment().equals(RouteLocation.NONE)) {
 								s = routeLocationName;
 								if (rl.getComment().trim().length() > 0)
 									s = MessageFormat.format(messageFormatText = TrainManifestText
@@ -210,30 +215,28 @@ public class TrainManifest extends TrainCommon {
 													train.getDescription() });
 							}
 							if (train.isShowArrivalAndDepartureTimesEnabled()) {
-								if (r == 0)
-									s = s
-											+ MessageFormat.format(messageFormatText = TrainManifestText
-													.getStringDepartTime(), new Object[] { train.getDepartureTime() });
-								else if (!rl.getDepartureTime().equals(""))
-									s = s
-											+ MessageFormat.format(messageFormatText = TrainManifestText
-													.getStringDepartTime(), new Object[] { rl
-													.getFormatedDepartureTime() });
-								else if (Setup.isUseDepartureTimeEnabled() && !rl.getComment().equals("")
-										&& r != routeList.size() - 1)
-									s = s
-											+ MessageFormat.format(messageFormatText = TrainManifestText
-													.getStringDepartTime(), new Object[] { train
-													.getExpectedDepartureTime(rl) });
+								if (rl == train.getRoute().getDepartsRouteLocation())
+									s += MessageFormat.format(messageFormatText = TrainManifestText
+											.getStringDepartTime(), new Object[] { train.getDepartureTime() });
+								else if (!rl.getDepartureTime().equals(RouteLocation.NONE))
+									s += MessageFormat.format(messageFormatText = TrainManifestText
+											.getStringDepartTime(), new Object[] { rl.getFormatedDepartureTime() });
+								else if (Setup.isUseDepartureTimeEnabled()
+										&& !rl.getComment().equals(RouteLocation.NONE))
+									s += MessageFormat
+											.format(messageFormatText = TrainManifestText.getStringDepartTime(),
+													new Object[] { train.getExpectedDepartureTime(rl) });
 							}
 							newLine(fileOut, s);
 
 							// add location comment
-							if (Setup.isPrintLocationCommentsEnabled() && !rl.getLocation().getComment().equals(""))
+							if (Setup.isPrintLocationCommentsEnabled()
+									&& !rl.getLocation().getComment().equals(Location.NONE))
 								newLine(fileOut, rl.getLocation().getComment());
 						}
 					}
 				} else {
+					// last location in the train's route, print train terminates message
 					if (Setup.isPrintHeadersEnabled() || !Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT))
 						printHorizontalLine(fileOut, isManifest);
 					newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText
@@ -293,11 +296,11 @@ public class TrainManifest extends TrainCommon {
 						setout = true;
 				}
 				// print the appropriate comment if there's one
-				if (pickup && setout && !track.getCommentBoth().equals(""))
+				if (pickup && setout && !track.getCommentBoth().equals(Track.NONE))
 					newLine(fileOut, track.getCommentBoth());
-				else if (pickup && !setout && !track.getCommentPickup().equals(""))
+				else if (pickup && !setout && !track.getCommentPickup().equals(Track.NONE))
 					newLine(fileOut, track.getCommentPickup());
-				else if (!pickup && setout && !track.getCommentSetout().equals(""))
+				else if (!pickup && setout && !track.getCommentSetout().equals(Track.NONE))
 					newLine(fileOut, track.getCommentSetout());
 			}
 		}

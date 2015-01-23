@@ -136,6 +136,8 @@ public class TrainBuilder extends TrainCommon {
 			addLine(_buildReport, ONE, BLANK_LINE);
 			addLine(_buildReport, ONE, Setup.getComment());
 		}
+		
+		addLine(_buildReport, ONE, BLANK_LINE);
 
 		if (_train.getRoute() == null) {
 			throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorRoute"),
@@ -161,7 +163,6 @@ public class TrainBuilder extends TrainCommon {
 		}
 
 		// show train build options in detailed mode
-		addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
 		addLine(_buildReport, FIVE, Bundle.getMessage("MenuItemBuildOptions") + ":");
 		if (Setup.isBuildAggressive()) {
 			addLine(_buildReport, FIVE, Bundle.getMessage("BuildModeAggressive"));

@@ -1238,7 +1238,7 @@ public class TrainCommon {
 			return " " + padAndTruncateString(rs.getOwner(), CarOwners.instance().getMaxNameLength());
 		else if (attribute.equals(Setup.COMMENT))
 			return " " + rs.getComment();
-		else if (attribute.equals(Setup.NONE))
+		else if (attribute.equals(Setup.BLANK))
 			return "";
 		// the three utility attributes that don't get printed but need to be tabbed out
 		else if (attribute.equals(Setup.NO_NUMBER))
@@ -1395,7 +1395,7 @@ public class TrainCommon {
 	private String getHeader(String[] format, boolean isPickup, boolean isLocal, boolean isEngine) {
 		StringBuffer buf = new StringBuffer();
 		for (String attribute : format) {
-			if (attribute.equals(Setup.NONE))
+			if (attribute.equals(Setup.BLANK))
 				continue;
 			if (attribute.equals(Setup.ROAD))
 				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Road(), CarRoads.instance()

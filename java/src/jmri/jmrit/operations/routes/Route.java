@@ -25,10 +25,12 @@ import org.jdom2.Element;
  * @version $Revision$
  */
 public class Route implements java.beans.PropertyChangeListener {
+	
+	public static final String NONE = "";
 
-	protected String _id = "";
-	protected String _name = "";
-	protected String _comment = "";
+	protected String _id = NONE;
+	protected String _name = NONE;
+	protected String _comment = NONE;
 
 	// stores location names for this route
 	protected Hashtable<String, RouteLocation> _routeHashTable = new Hashtable<String, RouteLocation>();
@@ -192,6 +194,19 @@ public class Route implements java.beans.PropertyChangeListener {
 		List<RouteLocation> list = getLocationsBySequenceList();
 		if (list.size() > 0) {
 			return list.get(0);
+		}
+		return null;
+	}
+	
+	/**
+	 * Get the last location in a route
+	 * 
+	 * @return the last route location
+	 */
+	public RouteLocation getTerminatesRouteLocation() {
+		List<RouteLocation> list = getLocationsBySequenceList();
+		if (list.size() > 0) {
+			return list.get(list.size()-1);
 		}
 		return null;
 	}

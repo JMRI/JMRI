@@ -553,7 +553,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
     private void removeComboBox(JPanel panel, List<JComboBox<String>> list) {
         for (int i = 0; i < list.size(); i++) {
             JComboBox<?> cb = list.get(i);
-            if (cb.getSelectedItem() == Setup.NONE) {
+            if (cb.getSelectedItem() == Setup.BLANK) {
                 list.remove(i);
                 panel.remove(cb);
                 panel.validate();

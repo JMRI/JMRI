@@ -25,6 +25,8 @@ import org.slf4j.LoggerFactory;
  * @version $Revision$
  */
 public class Setup {
+	
+	public static final String NONE = "";
 
 	// scale ratios from NMRA
 	private static final int Z_RATIO = 220;
@@ -143,7 +145,7 @@ public class Setup {
 	public static final String DROP_COMMENT = Bundle.getMessage("SetOut_Msg");
 	public static final String PICKUP_COMMENT = Bundle.getMessage("PickUp_Msg");
 	public static final String HAZARDOUS = Bundle.getMessage("Hazardous");
-	public static final String NONE = " "; // none has be a character or a space
+	public static final String BLANK = " "; // blank has be a character or a space
 	public static final String TAB = Bundle.getMessage("Tab"); // used to tab out in tabular mode
 	public static final String TAB2 = Bundle.getMessage("Tab2");
 	public static final String TAB3 = Bundle.getMessage("Tab3");
@@ -187,14 +189,14 @@ public class Setup {
 	private static int ratioTons = HO_RATIO_TONS;
 	private static int initWeight = HO_INITIAL_WEIGHT;
 	private static int addWeight = HO_ADD_WEIGHT;
-	private static String railroadName = "";
+	private static String railroadName = NONE;
 	private static int traindir = EAST + WEST + NORTH + SOUTH;
 	private static int maxTrainLength = 1000; // maximum train length
 	private static int maxEngineSize = 6; // maximum number of engines that can be assigned to a train
 	private static int horsePowerPerTon = 1; // Horsepower per ton
 	private static int carMoves = 5; // default number of moves when creating a route
 	private static String carTypes = DESCRIPTIVE;
-	private static String ownerName = "";
+	private static String ownerName = NONE;
 	private static String fontName = MONOSPACED;
 	private static int manifestFontSize = 10;
 	private static int buildReportFontSize = 10;
@@ -203,8 +205,8 @@ public class Setup {
 	private static String pickupColor = BLACK;
 	private static String dropColor = BLACK;
 	private static String localColor = BLACK;
-	private static String[] pickupEngineMessageFormat = { ROAD, NUMBER, NONE, MODEL, NONE, NONE, LOCATION, COMMENT };
-	private static String[] dropEngineMessageFormat = { ROAD, NUMBER, NONE, MODEL, NONE, NONE, DESTINATION, COMMENT };
+	private static String[] pickupEngineMessageFormat = { ROAD, NUMBER, BLANK, MODEL, BLANK, BLANK, LOCATION, COMMENT };
+	private static String[] dropEngineMessageFormat = { ROAD, NUMBER, BLANK, MODEL, BLANK, BLANK, DESTINATION, COMMENT };
 	private static String[] pickupCarMessageFormat = { ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
 			COMMENT, PICKUP_COMMENT };
 	private static String[] dropCarMessageFormat = { ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, DESTINATION,
@@ -228,20 +230,20 @@ public class Setup {
 	private static String switchListLocalPrefix = BOX + Bundle.getMessage("LocalCarPrefix");
 	private static String miaComment = Bundle.getMessage("misplacedCars");
 	private static String hazardousMsg = "(" + Bundle.getMessage("Hazardous") + ")";
-	private static String logoURL = "";
+	private static String logoURL = NONE;
 	private static String panelName = "Panel"; // NOI18N
 	private static String buildReportLevel = BUILD_REPORT_VERY_DETAILED;
 	private static String routerBuildReportLevel = BUILD_REPORT_NORMAL;
 	private static int carSwitchTime = 3; // how long it takes to move a car in minutes
 	private static int travelTime = 4; // how long it takes a train to move from one location to another in minutes
-	private static String yearModeled = ""; // year being modeled
+	private static String yearModeled = NONE; // year being modeled
 	private static String lengthUnit = FEET;
-	private static String iconNorthColor = "";
-	private static String iconSouthColor = "";
-	private static String iconEastColor = "";
-	private static String iconWestColor = "";
-	private static String iconLocalColor = "";
-	private static String iconTerminateColor = "";
+	private static String iconNorthColor = NONE;
+	private static String iconSouthColor = NONE;
+	private static String iconEastColor = NONE;
+	private static String iconWestColor = NONE;
+	private static String iconLocalColor = NONE;
+	private static String iconTerminateColor = NONE;
 
 	private static boolean tab = false; // when true, tab out manifest and switch lists
 	private static int tab1CharLength = Control.max_len_string_attibute;
@@ -265,7 +267,7 @@ public class Setup {
 
 	private static boolean enableTrainIconXY = true;
 	private static boolean appendTrainIcon = false; // when true, append engine number to train name
-	private static String setupComment = "";
+	private static String setupComment = NONE;
 
 	private static boolean mainMenuEnabled = false; // when true add operations menu to main menu bar
 	private static boolean closeWindowOnSave = false; // when true, close window when save button is activated
@@ -1521,7 +1523,7 @@ public class Setup {
 
 	public static JComboBox<String> getEngineMessageComboBox() {
 		JComboBox<String> box = new JComboBox<>();
-		box.addItem(NONE);
+		box.addItem(BLANK);
 		for (String attribute : getEngineAttributes()) {
 			box.addItem(attribute);
 		}
@@ -1535,7 +1537,7 @@ public class Setup {
 
 	public static JComboBox<String> getCarMessageComboBox() {
 		JComboBox<String> box = new JComboBox<>();
-		box.addItem(NONE);
+		box.addItem(BLANK);
 		for (String attribute : getCarAttributes()) {
 			box.addItem(attribute);
 		}
@@ -1705,7 +1707,7 @@ public class Setup {
 		storeXmlMessageFormat(values, getLocalPrefix(), getLocalMessageFormat());
 
 		e.addContent(values = new Element(Xml.MISSING_CAR_FORMAT));
-		storeXmlMessageFormat(values, "", getMissingCarMessageFormat());
+		storeXmlMessageFormat(values, NONE, getMissingCarMessageFormat());
 
 		e.addContent(values = new Element(Xml.SWITCH_LIST));
 		values.setAttribute(Xml.SAME_AS_MANIFEST, isSwitchListFormatSameAsManifest() ? Xml.TRUE : Xml.FALSE);
@@ -1785,7 +1787,7 @@ public class Setup {
 			value = Xml.TWO_COLUMN_TRACK;
 		values.setAttribute(Xml.VALUE, value);
 
-		if (!getManifestLogoURL().equals("")) {
+		if (!getManifestLogoURL().equals(NONE)) {
 			values = new Element(Xml.MANIFEST_LOGO);
 			values.setAttribute(Xml.NAME, getManifestLogoURL());
 			e.addContent(values);
@@ -2726,7 +2728,7 @@ public class Setup {
 	 */
 	private static void keyToStringConversion(String[] keys) {
 		for (int i = 0; i < keys.length; i++) {
-			if (keys[i].equals(NONE))
+			if (keys[i].equals(BLANK))
 				continue;
 			try {
 				keys[i] = Bundle.getMessage(keys[i]);
@@ -2749,7 +2751,7 @@ public class Setup {
 		Locale locale = Locale.ROOT;
 		for (int i = 0; i < strings.length; i++) {
 			String old = strings[i];
-			if (old.equals(NONE))
+			if (old.equals(BLANK))
 				continue;
 			for (String attribute : attributtes) {
 				if (strings[i].equals(Bundle.getMessage(attribute))) {

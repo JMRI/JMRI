@@ -237,7 +237,8 @@ public class TrainSwitchLists extends TrainCommon {
 							String trainDeparts = "";
 							if (Setup.isPrintLoadsAndEmptiesEnabled()) {
 								int emptyCars = train.getNumberEmptyCarsInTrain(rl);
-								// Message format: Train departs Boston Westbound with 12 cars, 450 feet, 3000 tons
+								// Message format: Train departs Boston Westbound with 4 loads, 8 empties, 450 feet,
+								// 3000 tons
 								trainDeparts = MessageFormat.format(TrainSwitchListText.getStringTrainDepartsLoads(),
 										new Object[] { TrainCommon.splitString(rl.getName()),
 												rl.getTrainDirectionString(),
@@ -245,8 +246,7 @@ public class TrainSwitchLists extends TrainCommon {
 												train.getTrainLength(rl), Setup.getLengthUnit().toLowerCase(),
 												train.getTrainWeight(rl), train.getTrainTerminatesName() });
 							} else {
-								// Message format: Train departs Boston Westbound with 4 loads, 8 empties, 450 feet,
-								// 3000 tons
+								// Message format: Train departs Boston Westbound with 12 cars, 450 feet, 3000 tons
 								trainDeparts = MessageFormat.format(TrainSwitchListText.getStringTrainDepartsCars(),
 										new Object[] { TrainCommon.splitString(rl.getName()),
 												rl.getTrainDirectionString(), train.getNumberCarsInTrain(rl),
