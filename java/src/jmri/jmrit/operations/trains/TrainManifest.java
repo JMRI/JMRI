@@ -78,7 +78,7 @@ public class TrainManifest extends TrainCommon {
 				newLine(fileOut, train.getRoute().getComment());
 
 			List<Car> carList = carManager.getByTrainDestinationList(train);
-			log.debug("Train has " + carList.size() + " cars assigned to it");
+			log.debug("Train has {} cars assigned to it", carList.size());
 
 			boolean hasWork = false;
 			newWork = false; // when true there is work at the location, add train departure info to manifest
@@ -131,15 +131,16 @@ public class TrainManifest extends TrainCommon {
 						// add route location comment
 						if (!rl.getComment().trim().equals(RouteLocation.NONE))
 							newLine(fileOut, rl.getComment());
-						
-						// add track comments
-						printTrackComments(fileOut, rl, carList, isManifest);
 
 						// add location comment
-						if (Setup.isPrintLocationCommentsEnabled() && !rl.getLocation().getComment().equals(Location.NONE))
+						if (Setup.isPrintLocationCommentsEnabled()
+								&& !rl.getLocation().getComment().equals(Location.NONE))
 							newLine(fileOut, rl.getLocation().getComment());
 					}
 				}
+				
+				// add track comments
+				printTrackComments(fileOut, rl, carList, isManifest);
 
 				// engine change or helper service?
 				if (train.getSecondLegOptions() != Train.NO_CABOOSE_OR_FRED) {
@@ -180,14 +181,7 @@ public class TrainManifest extends TrainCommon {
 									|| !Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT))
 								printHorizontalLine(fileOut, isManifest);
 							String trainDeparts = "";
-							if (!Setup.isPrintLoadsAndEmptiesEnabled())
-								// Message format: Train departs Boston Westbound with 12 cars, 450 feet, 3000 tons
-								trainDeparts = MessageFormat.format(messageFormatText = TrainManifestText
-										.getStringTrainDepartsCars(), new Object[] { routeLocationName,
-										rl.getTrainDirectionString(), cars, train.getTrainLength(rl),
-										Setup.getLengthUnit().toLowerCase(), train.getTrainWeight(rl),
-										train.getTrainTerminatesName() });
-							else
+							if (Setup.isPrintLoadsAndEmptiesEnabled())
 								// Message format: Train departs Boston Westbound with 4 loads, 8 empties, 450 feet,
 								// 3000 tons
 								trainDeparts = MessageFormat.format(messageFormatText = TrainManifestText
@@ -195,6 +189,13 @@ public class TrainManifest extends TrainCommon {
 										rl.getTrainDirectionString(), cars - emptyCars, emptyCars,
 										train.getTrainLength(rl), Setup.getLengthUnit().toLowerCase(),
 										train.getTrainWeight(rl), train.getTrainTerminatesName() });
+							else
+								// Message format: Train departs Boston Westbound with 12 cars, 450 feet, 3000 tons
+								trainDeparts = MessageFormat.format(messageFormatText = TrainManifestText
+										.getStringTrainDepartsCars(), new Object[] { routeLocationName,
+										rl.getTrainDirectionString(), cars, train.getTrainLength(rl),
+										Setup.getLengthUnit().toLowerCase(), train.getTrainWeight(rl),
+										train.getTrainTerminatesName() });
 							newLine(fileOut, trainDeparts);
 							newWork = false;
 							newLine(fileOut);

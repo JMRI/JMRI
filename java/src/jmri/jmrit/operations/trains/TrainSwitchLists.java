@@ -130,8 +130,10 @@ public class TrainSwitchLists extends TrainCommon {
 				RouteLocation rlPrevious = null;
 				// does the train stop once or more at this location?
 				for (RouteLocation rl : routeList) {
-					if (!splitString(rl.getName()).equals(splitString(location.getName())))
+					if (!splitString(rl.getName()).equals(splitString(location.getName()))) {
+						rlPrevious = rl;
 						continue;
+					}
 					String expectedArrivalTime = train.getExpectedArrivalTime(rl);
 					if (expectedArrivalTime.equals(Train.ALREADY_SERVICED)) {
 						trainDone = true;
