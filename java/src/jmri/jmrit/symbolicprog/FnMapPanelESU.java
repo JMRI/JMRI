@@ -481,18 +481,19 @@ public class FnMapPanelESU extends JPanel {
         return;
     }
 
+    /**
+     * Updates a summary line, including setting appropriate state.
+     */
     void updateSummaryLine(int row, int block) {
         String retString = "";
-        int retState = 0;
+        int retState = 2048;
 
         for (int item = outBlockStartCol[block]; item < (outBlockStartCol[block] + outBlockLength[block]); item++) {
             if (itemIsUsed[item]) {
                 int value =  Integer.valueOf(_varModel.getValString(iVarIndex[item][row]));
                 int state = _varModel.getState(iVarIndex[item][row]);
-                if ( item == outBlockStartCol[block]) {
+                if ( (item == outBlockStartCol[block]) || (priorityValue(state) > priorityValue(retState)) ) {
                     retState = state;
-                } else if ( retState != state ){
-                    retState = AbstractValue.EDITED;
                 }
                 if (value > 0) {
                     if (outBlockItemBits[block] == 1) {
@@ -526,6 +527,26 @@ public class FnMapPanelESU extends JPanel {
         summaryLine[row][block].setToolTipText(retString);
         return;
     }
+
+    /**
+     * Assigns a priority value to a given state.
+     */
+    int priorityValue(int state) {
+        int value = 0;
+        switch (state) {
+            case AbstractValue.UNKNOWN:
+                value++;
+            case AbstractValue.DIFF:
+                value++;
+            case AbstractValue.EDITED:
+                value++;
+            case AbstractValue.FROMFILE:
+                value++;
+            default:
+                return value;
+        }
+    }
+
     
     void saveAt(int row, int column, JComponent j) {
         if (row<0 || column<0) return;
